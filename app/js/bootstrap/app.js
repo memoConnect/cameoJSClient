@@ -36,9 +36,10 @@ define(['angularAMD', 'angular-route', 'angular-cookies'], function (angularAMD)
         otherwise({
             redirectTo: '/login'
         });
-    }])
-    /*.run(['$rootScope', '$locationProvider', '$cookieStore',
-    function($rootScope, $locationProvider, $cookieStore){
+    }]);
+
+    app.run(['$rootScope', '$location', '$cookieStore',
+    function($rootScope, $location, $cookieStore){
 
         function goToHome(){
             if(angular.isUndefined($cookieStore.get("token"))){
@@ -59,7 +60,7 @@ define(['angularAMD', 'angular-route', 'angular-cookies'], function (angularAMD)
         });
 
         goToHome();
-    }]);*/
+    }]);
 
     // Bootstrap Angular when DOM is ready
     angularAMD.bootstrap(app);

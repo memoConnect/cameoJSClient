@@ -1,5 +1,5 @@
 'use strict';
-define(['app', 'angular-resource'], function (app) {
+define(['bootstrap/app', 'angular-resource'], function (app) {
     app.register.factory('Assets',
     function($http){
         return {

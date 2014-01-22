@@ -1,5 +1,5 @@
 'use strict';
-define(['app', '_s/talks'], function (app) {
+define(['bootstrap/', '_s/talks'], function (app) {
     app.register.controller('TalksCtrl', ['$scope', '$location', 'Talks',
     function($scope, $location, Talks) {
         $scope.limit = 10;

@@ -12,6 +12,7 @@ require.config({
        ,'ngload': 'vendor/requirejs/ngload'
 
        ,'LoginCtrl': 'controller/login'
+       ,'StartCtrl': 'controller/start'
     }
     // shortcuts for loading in controller define(['app','_s(means service)/auth'],...
    ,packages: [

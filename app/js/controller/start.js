@@ -1,5 +1,5 @@
 'use strict';
-define(['app', 'angular-cookies'], function (app) {
+define(['bootstrap/app', 'angular-cookies'], function (app) {
     app.register.controller('StartCtrl', ['$scope', '$cookieStore', '$location',
     function($scope, $cookieStore, $location) {
         $scope.logout = function(){
