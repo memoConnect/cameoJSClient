@@ -5,65 +5,57 @@ var cameo = {
    ,token: null
 };
 
-define(['angularAMD', 'angular-route', 'angular-cookies'], function (angularAMD) {
+var app = angular.module('cameoClient', ['ngRoute','ngCookies']);
 
-    var app = angular.module('cameoClientAngular', ['ngRoute','ngCookies']);
+app.config(['$routeProvider', '$locationProvider',
+function($routeProvider, $locationProvider){
+    //$locationProvider.html5Mode(true);
+    $routeProvider.
+    when('/login', {
+        templateUrl: 'tpl/form/login.html',
+        controller: 'LoginCtrl'
+    }).
+    when('/start', {
+        templateUrl: 'tpl/start.html',
+        controller: 'StartCtrl'
+    }).
+    when('/talks', {
+        templateUrl: 'tpl/list/talks.html',
+        controller: 'TalksCtrl'
+    }).
+    when('/mediawall', {
+        templateUrl: 'tpl/list/mediawall.html',
+        controller: 'MediaWallCtrl'
+    }).
+    when('/conversation/:conversationId', {
+        templateUrl: 'tpl/conversation.html',
+        controller: 'ConversationCtrl'
+    }).
+    otherwise({
+        redirectTo: '/login'
+    });
+}]);
 
-    app.config(['$routeProvider', '$locationProvider',
-    function($routeProvider, $locationProvider){
-        //$locationProvider.html5Mode(true);
-        $routeProvider.
-        when('/login', angularAMD.route({
-            templateUrl: 'tpl/form/login.html',
-            controller: 'LoginCtrl'
-        })).
-        when('/start', angularAMD.route({
-            templateUrl: 'tpl/start.html',
-            controller: 'StartCtrl'
-        })).
-        when('/talks', angularAMD.route({
-            templateUrl: 'tpl/list/talks.html',
-            controller: 'TalksCtrl'
-        })).
-        when('/mediawall', angularAMD.route({
-            templateUrl: 'tpl/list/mediawall.html',
-            controller: 'MediaWallCtrl'
-        })).
-        when('/conversation/:conversationId', angularAMD.route({
-            templateUrl: 'tpl/conversation.html',
-            controller: 'ConversationCtrl'
-        })).
-        otherwise({
-            redirectTo: '/login'
-        });
-    }]);
+app.run(['$rootScope', '$location', '$cookieStore',
+function($rootScope, $location, $cookieStore){
 
-    app.run(['$rootScope', '$location', '$cookieStore',
-    function($rootScope, $location, $cookieStore){
-
-        function goToHome(){
-            if(angular.isUndefined($cookieStore.get("token"))){
-                $location.path("/login");
-            } else if($location.$$path == "/login"){
-                $location.path("/start");
-            }
+    function goToHome(){
+        if(angular.isUndefined($cookieStore.get("token"))){
+            $location.path("/login");
+        } else if($location.$$path == "/login"){
+            $location.path("/start");
         }
+    }
 
-        $rootScope.$on( "$routeChangeStart", function(){
-
-            goToHome();
-
-            if(angular.isDefined($cookieStore.get("token"))){
-                // set token
-                cameo.token = $cookieStore.get("token");
-            }
-        });
+    $rootScope.$on( "$routeChangeStart", function(){
 
         goToHome();
-    }]);
 
-    // Bootstrap Angular when DOM is ready
-    angularAMD.bootstrap(app);
+        if(angular.isDefined($cookieStore.get("token"))){
+            // set token
+            cameo.token = $cookieStore.get("token");
+        }
+    });
 
-    return app;
-});
+    goToHome();
+}]);
