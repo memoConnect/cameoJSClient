@@ -1,4 +1,4 @@
-cameoClientAngular
+cameoJSClient
 ==================
 
-angularjs as framework for the cameo client
+cameo Web / MobileWeb / Hybrid client
