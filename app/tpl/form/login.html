@@ -16,8 +16,9 @@
     </pre>
 </form>
 
-<div>
-  <button ng-click="changeLanguage('de')">{{'BUTTON_TEXT_DE' | translate}}</button>
-  <button ng-click="changeLanguage('en')">{{'BUTTON_TEXT_EN' | translate}}</button>
+<div ng-controller="LanguageCtrl">
+  <button ng-click="switchLanguage('de_DE')">{{'BUTTON_TEXT_DE' | translate}}</button>
+  <button ng-click="switchLanguage('en_US')">{{'BUTTON_TEXT_EN' | translate}}</button>
+  <button ng-click="switchLanguage('fr_FR')">{{'BUTTON_TEXT_FR' | translate}}</button>
 </div>
 

@@ -1,8 +1,9 @@
 'use strict';
 var cameo = {
-    //restApi: "http://"+location.host+"/api"
-    restApi: "https://s.kolibritalk.com/api/v1"
-   ,token: null
+    //restApi:              "http://"+location.host+"/api"
+    restApi:                "https://s.kolibritalk.com/api/v1"
+   ,token:                  null
+   ,supported_lanugages:    ['de_DE', 'en_US']
 };
 
 var app = angular.module('cameoClient', 
@@ -40,49 +41,6 @@ function($routeProvider, $locationProvider){
         redirectTo: '/login'
     });
 }]);
-
-
-
-
-
-/* Langugae support */
-
-var translations =  {
-                        HEADLINE:       'What an awesome module!',
-                        PARAGRAPH:      'Srsly!',
-                        NAMESPACE:      {
-                                            PARAGRAPH: 'And it comes with awesome features!'
-                                        },
-                        AUTO_LOGIN:     'auto login (Max)',
-                        BUTTON_TEXT_DE: 'de',                        
-                        BUTTON_TEXT_EN: 'en',
-                    };
-                     
-app.config(['$translateProvider', function ($translateProvider) {
-
-    $translateProvider.useStaticFilesLoader({
-      prefix: 'languages/',            //neue route BE
-      suffix: '.json'
-    });
-
-    $translateProvider.preferredLanguage('en_US');
-    //$translateProvider.useLocalStorage();
-}]);
-
-
-app.controller('TranslateCtrl', ['$translate', '$scope', function ($translate, $scope) {
-
-    // Make language switch available to the application scope:
-    //  Example ng-click="changeLanguage('de')"
-    $scope.changeLanguage = function (langKey) {
-        $translate.uses(langKey);
-    };
-}]);
-
-
-
-
-
 
 
 
