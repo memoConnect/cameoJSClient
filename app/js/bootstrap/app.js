@@ -5,7 +5,12 @@ var cameo = {
    ,token: null
 };
 
-var app = angular.module('cameoClient', ['ngRoute','ngCookies']);
+var app = angular.module('cameoClient', 
+            [
+                'ngRoute',
+                'ngCookies', 
+                'pascalprecht.translate'        //language support
+            ]);
 
 app.config(['$routeProvider', '$locationProvider',
 function($routeProvider, $locationProvider){
@@ -35,6 +40,54 @@ function($routeProvider, $locationProvider){
         redirectTo: '/login'
     });
 }]);
+
+
+
+
+
+/* Langugae support */
+
+var translations =  {
+                        HEADLINE:       'What an awesome module!',
+                        PARAGRAPH:      'Srsly!',
+                        NAMESPACE:      {
+                                            PARAGRAPH: 'And it comes with awesome features!'
+                                        },
+                        AUTO_LOGIN:     'auto login (Max)',
+                        BUTTON_TEXT_DE: 'de',                        
+                        BUTTON_TEXT_EN: 'en',
+                    };
+                     
+app.config(['$translateProvider', function ($translateProvider) {
+
+    $translateProvider.useStaticFilesLoader({
+      prefix: 'languages/',            //neue route BE
+      suffix: '.json'
+    });
+
+    $translateProvider.preferredLanguage('en_US');
+    //$translateProvider.useLocalStorage();
+}]);
+
+
+app.controller('TranslateCtrl', ['$translate', '$scope', function ($translate, $scope) {
+
+    // Make language switch available to the application scope:
+    //  Example ng-click="changeLanguage('de')"
+    $scope.changeLanguage = function (langKey) {
+        $translate.uses(langKey);
+    };
+}]);
+
+
+
+
+
+
+
+
+
+
 
 app.run(['$rootScope', '$location', '$cookieStore',
 function($rootScope, $location, $cookieStore){
