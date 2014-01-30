@@ -1,0 +1,10 @@
+{
+	"SWITCHED_LANGUAGE_TO":		"Sprache auf {{lang}} gestellt.",
+	"AUTO_LOGIN":				"Automatisches Login (Max)",
+	"BUTTON_TEXT_DE":			"Deutsch",                        
+	"BUTTON_TEXT_EN":			"Englisch",
+
+	"ERROR": {
+		"SWITCHED_LANGUAGE_TO":		"Konnte Sprache nicht auf {{lang}} stellen."
+	}
+}
