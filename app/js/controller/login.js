@@ -1,6 +1,6 @@
 'use strict';
-app.controller('LoginCtrl', ['$scope', '$cookieStore', '$location', 'Auth',
-    function ($scope, $cookieStore, $location, Auth) {
+app.controller('LoginCtrl', ['$scope', '$cookieStore', '$location', 'Auth', 'cmLogger',
+    function ($scope, $cookieStore, $location, Auth, cmLogger) {
         $scope.placeholder = {
             user: "Username"
             ,pass: "Passwort"
@@ -11,6 +11,7 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', '$location', 'Auth',
         $scope.token = $cookieStore.get("token")+" go to start"||"none";
 
         $scope.autologin = function(){
+            cmLogger.debug("autologin called")
             $scope.formData = {
                 user: "Max"
                 ,pass: "moepmoep"
@@ -18,6 +19,7 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', '$location', 'Auth',
         };
 
         $scope.getToken = function(){
+            cmLogger.debug("getToken called")
             Auth.getToken(Base64.encode($scope.formData.user + ":" + $scope.formData.pass)).
                 success(function(res){
                     $scope.formRes = res.data;
