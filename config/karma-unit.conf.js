@@ -6,33 +6,31 @@ module.exports = function(config){
 
     files : [
         'app/js/vendor/angular/angular.js',
-        'app/js/vendor/angular/*.js',
-        //'app/js/vendor/angular-translate/*.js',              
+        'app/js/vendor/angular-translate/angular-translate.min.js',
+        'app/js/vendor/**/*.js',        
+        'app/js/bootstrap/*.js',
+        'app/js/**/*.js',
         'test/lib/angular/*.js',
-        'test/unit/*.js'           
+        'test/unit/language.test.js'           
     ],
 
-    autoWatch : false,
+    exclude: [                                                         
+        '**/angular-scenario.js',
+        '**/requirejs/*',
+        '**/bootstrap/main.js'
+    ],
 
-    browsers : [],
+    autoWatch : true,
+
+    browsers : ['Firefox'],
 
     frameworks: ['jasmine'],
 
-    singleRun : true,
+    singleRun : false,
 
     proxies : {
-      '/': 'http://localhost:8000/'
-    },
-
-    plugins : [
-            'karma-chrome-launcher',
-            'karma-firefox-launcher',
-            'karma-jasmine',
-            ],
-
-    junitReporter : {
-      outputFile: 'test_out/e2e.xml',
-      suite: 'e2e'
+      //'/': 'http://localhost:9000/'
+      '/app': 'http://localhost:9000'
     }
 
 })}
