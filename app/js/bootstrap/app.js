@@ -1,7 +1,7 @@
 'use strict';
 var cameo = {
     //restApi:              "http://"+location.host+"/api"
-    restApi:                "https://s.kolibritalk.com/api/v1"
+    restApi:                "https://dev.cameo.io/api/v1/"
    ,token:                  null
    ,supported_languages:    ['de_DE', 'en_US']
    ,path_to_languages:      'languages'
