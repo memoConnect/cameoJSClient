@@ -1,6 +1,6 @@
 'use strict';
-app.controller('LoginCtrl', ['$scope', '$cookieStore', '$location', 'Auth',
-    function ($scope, $cookieStore, $location, Auth) {
+app.controller('LoginCtrl', ['$scope', '$cookieStore', '$location', 'Auth', 'cmCrypt',
+    function ($scope, $cookieStore, $location, Auth, cmCrypt) {
         $scope.placeholder = {
             user: "Username"
             ,pass: "Passwort"
