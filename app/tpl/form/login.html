@@ -1,1 +1,24 @@
-<cameo-login></cameo-login>
+<form name="auth" ng-controller="LoginCtrl" ng-submit="getToken()" autocomplete="off">
+    <div>
+        <input ng-model="formData.user" name="user" placeholder="{{ placeholder.user }}" type="text" value="" required />
+    </div>
+    <div>
+        <input ng-model="formData.pass" name="pass" placeholder="{{ placeholder.pass }}" type="password" value="" required />
+    </div>
+
+    <button ng-click="autologin()">{{'AUTO_LOGIN' | translate}}</button>
+
+    <button type="submit">einloggen</button>
+
+    <pre>
+        Token: {{ token }} <br />
+        Res: {{ formRes }}
+    </pre>
+</form>
+
+<div ng-controller="LanguageCtrl">
+  <button ng-click="switchLanguage('de_DE')">{{'BUTTON_TEXT_DE' | translate}}</button>
+  <button ng-click="switchLanguage('en_US')">{{'BUTTON_TEXT_EN' | translate}}</button>
+  <button ng-click="switchLanguage('fr_FR')">{{'BUTTON_TEXT_FR' | translate}}</button>
+</div>
+

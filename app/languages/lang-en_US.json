@@ -1,0 +1,10 @@
+{
+	"SWITCHED_LANGUAGE_TO":		"Switched language to {{lang}}.",
+	"AUTO_LOGIN":				"auto login (Max)",
+	"BUTTON_TEXT_DE": 			"german",                        
+	"BUTTON_TEXT_EN": 			"english",
+
+	"ERROR": {
+		"SWITCHED_LANGUAGE_TO":		"Unable to switch language to {{lang}}."
+	}
+}
