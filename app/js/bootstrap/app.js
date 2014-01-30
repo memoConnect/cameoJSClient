@@ -36,6 +36,10 @@ function($routeProvider, $locationProvider){
         templateUrl: 'tpl/conversation.html',
         controller: 'ConversationCtrl'
     }).
+    when('/registry', {
+        templateUrl: 'tpl/form/registry.html',
+        controller: 'RegistryCtrl'
+    }).
     otherwise({
         redirectTo: '/login'
     });
@@ -91,24 +95,20 @@ app.controller('TranslateCtrl', ['$translate', '$scope', function ($translate, $
 
 app.run(['$rootScope', '$location', '$cookieStore',
 function($rootScope, $location, $cookieStore){
+    $rootScope.$on( "$routeChangeStart", function(){
+//        var path_exceptions = ['/login', '/registry'];
+        var path = $location.$$path;
 
-    function goToHome(){
         if(angular.isUndefined($cookieStore.get("token"))){
-            $location.path("/login");
+            if(path != "/login" && path != "/registry"){
+                $location.path("/login");
+            }
         } else if($location.$$path == "/login"){
             $location.path("/start");
         }
-    }
-
-    $rootScope.$on( "$routeChangeStart", function(){
-
-        goToHome();
 
         if(angular.isDefined($cookieStore.get("token"))){
-            // set token
             cameo.token = $cookieStore.get("token");
         }
     });
-
-    goToHome();
 }]);
