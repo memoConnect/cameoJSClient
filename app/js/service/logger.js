@@ -7,9 +7,6 @@
 app.factory('cmLogger',
     function($log){
 
-        console.log = function(loggerMessage) {}
-        console.info = function(loggerMessage) {}
-
         return {
             /**
              * simple info log wrapper
