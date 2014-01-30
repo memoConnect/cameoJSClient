@@ -1,6 +1,6 @@
 describe("Language Support", function() {            
     var ctrl, scope,         
-        language_tables = [];
+        language_tables = {};
 
     beforeEach(module("cameoClient"))
     beforeEach(function(){});
@@ -20,10 +20,10 @@ describe("Language Support", function() {
         var count = cameo.supported_languages.length
 
         runs(function(){
-            cameo.supported_languages.forEach(function(langKey){           
-                var file = '/app/'+cameo.path_to_languages+'/lang-'+langKey+'.json'
+            cameo.supported_languages.forEach(function(lang_key){           
+                var file = '/app/'+cameo.path_to_languages+'/lang-'+lang_key+'.json'
                 $.getJSON(file)
-                .done(  function(data)  { language_tables.push(data) })
+                .done(  function(data)  { language_tables[lang_key] = data })
                 .fail(  function(xhr, status, error) { console.log('Error getting JSON from '+file+': '+status) })
                 .always(function()      { count-- })
             })
@@ -34,7 +34,7 @@ describe("Language Support", function() {
         }, "Language files should be queried.", 1000)
 
         runs(function(){
-            expect(language_tables.length).toEqual(cameo.supported_languages.length)
+            expect(Object.keys(language_tables).length).toEqual(cameo.supported_languages.length)
         })        
     })
 
@@ -67,7 +67,7 @@ describe("Language Support", function() {
         var list = [],
             all_the_same = true
 
-        language_tables.forEach(function(language_data){
+        $.each(language_tables, function(lang_key, language_data){
             if(list.length == 0){
                 extendList(list, '', language_data)            
             }else{
@@ -77,7 +77,7 @@ describe("Language Support", function() {
                 extendList(next_list, '', language_data)            
                 last_diff = diffLists(list, next_list)
 
-                if(last_diff) console.log('Missing or surplus message id: '+last_diff)
+                if(last_diff) console.log('Missing or surplus message id in '+lang_key+': '+last_diff)
 
                 all_the_same = all_the_same && !last_diff
                 list = next_list
