@@ -5,7 +5,7 @@ module.exports = function (config) {
     config.set({
 
         // base path, that will be used to resolve files and exclude
-        basePath: '',
+        basePath: '../',
 
 
         // frameworks to use
@@ -14,20 +14,24 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            '../app/js/vendor/angular/angular.js',
-            '../app/js/vendor/angular/angular-resource.js',
-            '../app/js/vendor/angular/angular-cookies.js',
-            '../app/js/vendor/angular/angular-route.js',
-            '../test/lib/angular/angular-mocks.js',
-            '../app/js/vendor/sjcl/main.js',
-            '../app/js/bootstrap/app.js',
-            '../app/js/service/*.js',
-            '../test/**/*Spec.js'
+            'app/js/vendor/angular/angular.js',
+            'app/js/vendor/angular/angular-resource.js',
+            'app/js/vendor/angular/angular-cookies.js',
+            'app/js/vendor/angular/angular-route.js',
+            'test/lib/angular/angular-mocks.js',
+            'app/js/vendor/sjcl/*.js',
+            'app/js/vendor/util/*.js',
+            'app/js/bootstrap/app.js',
+            'app/js/service/*.js',
+            'app/js/directives/*.js',
+            'app/js/controller/*.js',
+            'test/**/*Spec.js'
         ],
 
 
         // list of files to exclude
         exclude: [
+            '/app/js/**/*.min.js'
         ],
 
 
@@ -71,6 +75,6 @@ module.exports = function (config) {
 
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit
-        singleRun: false
+        singleRun: true
     });
 };
