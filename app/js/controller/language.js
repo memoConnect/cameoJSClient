@@ -1,3 +1,5 @@
+'use strict';
+
 // Provides:
 // filter 'translate', usage: {{'MESSAGE_ID' | translate}}
 // controller 'languageCtrl' for language switch 

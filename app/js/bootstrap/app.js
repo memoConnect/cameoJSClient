@@ -1,18 +1,29 @@
 'use strict';
-var cameo = {
-    //restApi:              "http://"+location.host+"/api"
-    restApi:                "https://dev.cameo.io/api/v1/"
-   ,token:                  null
-   ,supported_languages:    ['de_DE', 'en_US']
-   ,path_to_languages:      'languages'
-};
+var cameo   =   {
+                    //restApi:              "http://"+location.host+"/api"
+                    restApi:                "https://dev.cameo.io/api/v1/"
+                   ,token:                  null
+                   ,supported_languages:    ['de_DE', 'en_US']
+                   ,path_to_languages:      'languages'
+                };
 
-var app = angular.module('cameoClient', 
-            [
-                'ngRoute',
-                'ngCookies', 
-                'pascalprecht.translate'        //language support
-            ]);
+var app     =   angular.module('cameoClient', [
+                    'ngRoute',
+                    'ngCookies', 
+                    'pascalprecht.translate',       //language support;         https://github.com/PascalPrecht/angular-translate
+                    'angular-growl'                 // notification, growl;     https://github.com/marcorinck/angular-growl
+                ]);
+
+app.factory('cm',[
+    'cmLogger',
+    'cmNotify',
+    function(cmLogger, cmNotify){
+        return {
+            log:    cmLogger,
+            notify: cmNotify
+        }
+    }
+])
 
 app.config(['$routeProvider', '$locationProvider',
 function($routeProvider, $locationProvider){
