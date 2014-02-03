@@ -3,6 +3,12 @@ describe("Language Support", function() {
         language_tables = {};
 
     beforeEach(module("cameoClient"))
+    beforeEach(inject(function($rootScope, $controller){
+        //create an empty scope
+        scope = $rootScope.$new();
+        //declare the controller and inject our empty scope
+        ctrl = $controller('LanguageCtrl', {$scope: scope});
+    }))
 
 
     it('should find an array of correctly formatted keys for supported languages at cameo.supported_languages', function() {
@@ -96,11 +102,6 @@ describe("Language Support", function() {
    
 
     it('should provide a controller "LanguageCtrl".', function() {            
-        inject(function($controller, $rootScope, $translate) {        
-            scope   = $rootScope.$new()
-            ctrl    = $controller("LanguageCtrl", {$translate: $translate, $scope: scope})        
-        })
-
         expect(ctrl).toBeDefined()
     })
 
@@ -140,11 +141,11 @@ describe("Language Support", function() {
             */
 
             /*
-            //cameo.supported_languages.forEach(function(lang_key){        
+            cameo.supported_languages.forEach(function(lang_key){        
                 var lang_key = 'de_DE'
-                runs(function(){ 
-                    scope.digest()
+                runs(function(){                     
                     scope.switchLanguage(lang_key)                    
+                    scope.$digest()
                 })
                 
                 waitsFor(function() {
@@ -161,8 +162,8 @@ describe("Language Support", function() {
                     expect(all_good).toEqual(true)
                 }) 
                 
-            //})
-            */
+            })
+            */            
         })
 
 
