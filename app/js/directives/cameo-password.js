@@ -1,4 +1,7 @@
 'use strict';
+/**
+ * This directive needs passchk_fast.js
+ */
 app.directive('cameoPassword', function () {
     return  {
         restrict: 'E',
@@ -25,21 +28,9 @@ app.directive('cameoPassword', function () {
             $scope.checkPWStrength = function(){
                 var pw = $scope.pw;
 
-                console.log(pw.length)
-
                 if(pw.length > 3){
                     $scope.showStrengthMeter= true;
                     var bits = passchk_fast.passEntropy(pw);
-
-//                    if(pw.length <= 4){
-//                     //very short
-//                     } else if(pw.length < 8){
-//                     //short
-//                     }
-
-//                    if(passchk_fast.passCommon(pw)){
-//                        //common pw
-//                    }
 
                     if(bits < 28){
                         $scope.percent = 10;
@@ -70,6 +61,9 @@ app.directive('cameoPassword', function () {
                 }
             };
 
+            /**
+             * validates both password inputs
+             */
             $scope.confirmPW = function(){
                 if($scope.pw == $scope.pwConfirm){
                     $scope.showConfirmPWStatus = true;
