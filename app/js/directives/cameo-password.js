@@ -28,7 +28,7 @@ app.directive('cameoPassword', function () {
             $scope.checkPWStrength = function(){
                 var pw = $scope.pw;
 
-                if(pw.length > 3){
+                if(pw != undefined && pw.length > 3){
                     $scope.showStrengthMeter= true;
                     var bits = passchk_fast.passEntropy(pw);
 

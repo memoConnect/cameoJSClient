@@ -11,5 +11,11 @@ function($http){
                 }
             })
         }
+       ,createUser: function(data){
+            return $http({
+                method: 'POST'
+               ,url: cameo.restApi+'/account'
+            })
+        }
     }
 });

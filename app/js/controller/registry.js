@@ -1,17 +1,28 @@
 'use strict';
 app.controller('RegistryCtrl', ['$scope', 'Auth',
     function($scope, Auth){
-        $scope.formData = {};
-//        $scope.formData.password = cameoPassword.getPassword();
+        $scope.formData = {loginName:'',password:'',email:'',phoneNumber:'',name:''};
 
         $scope.regUser = function(){
-            console.log($scope.formData)
+            /**
+             * @ ToDo validate formData?
+             */
+            var data = {
+                loginName: $scope.formData.cameoName,
+                password: $scope.formData.password,
+                email: $scope.formData.email,
+                phoneNumber: $scope.formData.phone,
+                name: $scope.formData.name
+            };
+
+            Auth.createUser(data).
+            success(function(res){
+                console.log(res);
+            }).
+            error(function(){
+                console.log('createUser Error');
+            });
         };
 
-
-        $scope.setPassword = function(password){
-            console.log(password)
-            $scope.pwCheck = password;
-        };
     }
 ]);
