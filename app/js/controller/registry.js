@@ -18,6 +18,7 @@ app.controller('RegistryCtrl', ['$scope', 'Auth',
             Auth.createUser(data).
             success(function(res){
                 console.log(res);
+                //$location.path("/login");
             }).
             error(function(){
                 console.log('createUser Error');

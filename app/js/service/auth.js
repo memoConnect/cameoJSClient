@@ -15,6 +15,7 @@ function($http){
             return $http({
                 method: 'POST'
                ,url: cameo.restApi+'/account'
+               ,data: data
             })
         }
     }
