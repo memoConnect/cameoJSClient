@@ -1,37 +1,37 @@
 module.exports = function(config){
     config.set({
 
+        basePath : '../',
 
-    basePath : '../',
+        files : [
+            'app/js/vendor/angular/angular.js',
+            'app/js/vendor/angular-translate/angular-translate.min.js',
+            'app/js/vendor/**/*.js',        
+            'app/js/bootstrap/*.js',
+            'app/js/**/*.js',
+            'test/lib/angular/*.js',
+            'test/unit/language.test.js'           
+        ],
 
-    files : [
-        'app/js/vendor/angular/angular.js',
-        'app/js/vendor/angular-translate/angular-translate.min.js',
-        'app/js/vendor/**/*.js',        
-        'app/js/bootstrap/*.js',
-        'app/js/**/*.js',
-        'test/lib/angular/*.js',
-        'test/unit/language.test.js'           
-    ],
+        exclude: [                                                         
+            '**/angular-scenario.js',
+            '**/requirejs/*',
+            '**/bootstrap/main.js'
+        ],
 
-    exclude: [                                                         
-        '**/angular-scenario.js',
-        '**/requirejs/*',
-        '**/bootstrap/main.js'
-    ],
+        autoWatch : true,
 
-    autoWatch : true,
+        browsers : ['Firefox'],
 
-    browsers : ['Firefox'],
+        frameworks: ['jasmine'],
 
-    frameworks: ['jasmine'],
+        singleRun : false,
 
-    singleRun : false,
+        proxies : {
+          //'/': 'http://localhost:9000/'
+          '/app': 'http://localhost:9000/'
+        }
 
-    proxies : {
-      //'/': 'http://localhost:9000/'
-      '/app': 'http://localhost:9000'
     }
-
-})}
+)}
 

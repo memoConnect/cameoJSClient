@@ -8,7 +8,7 @@
         <input ng-model="formData.pass" name="pass" placeholder="{{ placeholder.pass }}" type="password" value="" required />
     </div>
 
-    <button ng-click="autologin()">{{'AUTO_LOGIN' | translate}}</button>
+    <button ng-click="autologin()">{{'LOGIN.AUTO.LABEL' | translate}}</button>
 
     <button type="submit">einloggen</button>
 
@@ -19,9 +19,9 @@
 </form>
 
 <div ng-controller="LanguageCtrl">
-  <button ng-click="switchLanguage('de_DE')">{{'BUTTON_TEXT_DE' | translate}}</button>
-  <button ng-click="switchLanguage('en_US')">{{'BUTTON_TEXT_EN' | translate}}</button>
-  <button ng-click="switchLanguage('fr_FR')">{{'BUTTON_TEXT_FR' | translate}}</button>
+  <button ng-click="switchLanguage('de_DE')">{{'LANG.SWITCH.LABEL.DE_DE' | translate}}</button>
+  <button ng-click="switchLanguage('en_US')">{{'LANG.SWITCH.LABEL.EN_US' | translate}}</button>
+  <button ng-click="switchLanguage('fr_FR')">{{'LANG.SWITCH.LABEL.FR_FR' | translate}}</button>
 </div>
 
 <button ng-click="cm.notify.error('zzz')">growl</button>
