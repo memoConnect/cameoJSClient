@@ -42,19 +42,19 @@ app.directive('cameoPassword', function () {
 //                    }
 
                     if(bits < 28){
-                        $scope.percent = 20;
+                        $scope.percent = 10;
                         $scope.color = '#d9534f';
                         //very weak
                     } else if(bits < 36){
-                        $scope.percent = 40;
+                        $scope.percent = 25;
                         $scope.color = '#f0ad4e';
                         //weak
                     } else if(bits < 60){
-                        $scope.percent = 60;
+                        $scope.percent = 50;
                         $scope.color = '#f0df43';
                         //reasonable || normal
                     } else if(bits < 128){
-                        $scope.percent = 80;
+                        $scope.percent = 75;
                         $scope.color = '#c4f04e';
                         //strong
                     } else {
@@ -74,11 +74,15 @@ app.directive('cameoPassword', function () {
                 if($scope.pw == $scope.pwConfirm){
                     $scope.showConfirmPWStatus = true;
                     setPassword($scope.pw);
+                } else {
+                    $scope.showConfirmPWStatus = false;
+                    setPassword('none');
                 }
             };
 
             /**
              * Wrapper Function to inject Password in extern Controller
+             * if password (empty || none) it is wrong, else it is right
              */
             function setPassword(pw){
                 if(angular.isDefined(pw)){
