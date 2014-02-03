@@ -3,7 +3,7 @@ describe("Language Support", function() {
         language_tables = {};
 
     beforeEach(module("cameoClient"))
-    beforeEach(function(){});
+
 
     it('should find an array of correctly formatted keys for supported languages at cameo.supported_languages', function() {
         expect(Object.prototype.toString.call( cameo.supported_languages )).toEqual('[object Array]')                
@@ -12,9 +12,13 @@ describe("Language Support", function() {
         })
     })
 
+
+
     it('should find string with path to languages files at cameo.path_to_language files.', function(){
         expect(typeof cameo.path_to_languages).toEqual('string')        
     })
+
+
 
     it('should find and load correctly named and json formatted files for all supported languages within 1 second.', function() {        
         var count = cameo.supported_languages.length
@@ -31,7 +35,7 @@ describe("Language Support", function() {
 
         waitsFor(function() {
             return(count==0)   
-        }, "Language files should be queried.", 1000)
+        }, "languages files.", 1000)
 
         runs(function(){
             expect(Object.keys(language_tables).length).toEqual(cameo.supported_languages.length)
@@ -40,19 +44,21 @@ describe("Language Support", function() {
 
 
 
-    it('should provide a translation of each message_id for all supported langauges.', function(){
+    it('should provide a translation for each message_id for all supported langauges.', function(){
         var message_ids = {}
 
+        //Helper function to serialize all message ids
         function extendList(list, str, obj){          
             if(typeof obj == 'string') {
                 list.push(str)
             } else {
                 $.each(obj, function(key, value){
-                    extendList(list, str+'.'+key, value)
+                    extendList(list, str+(str?'.':'')+key, value)
                 })                
             }            
         }
 
+        //Helper function to compare language lists od message ids
         function diffLists(list1, list2){            
             list1.sort()
             list2.sort()
@@ -87,7 +93,7 @@ describe("Language Support", function() {
         expect(all_the_same).toEqual(true)
     })
 
-
+   
 
     it('should provide a controller "LanguageCtrl".', function() {            
         inject(function($controller, $rootScope, $translate) {        
@@ -101,8 +107,64 @@ describe("Language Support", function() {
 
 
     describe("LangaugeCtrl", function() {
-        it('should provide a functionen on its scope to switch between supported languages.', function(){
+
+        it('should provide a functionen "switchLanguage" on its scope to switch between supported languages.', function(){
             expect(typeof scope.switchLanguage).toEqual('function')            
         })
+
+
+        it('should provide a functionen "getLanguageName" on its scope to get the translation of a languages\'s name by its key.', function(){
+            expect(typeof scope.getLanguageName).toEqual('function')            
+        })
+
+
+        it('should provide a functionen "getCurrentLanguage" on its scope to return the currently active languages\'s key.', function(){
+            expect(typeof scope.getCurrentLanguage).toEqual('function')            
+        })
+
+
+        it('should switch languages within 1 second and have a translation for every language\'s name', function($translate){
+
+            /*
+            inject(function($compile, $rootScope){
+                var el      = $('<span> {{"LANG.DE_DE"|translate}}</span>'),
+                    scope   = $rootScope.$new()
+
+                runs(function(){
+                    $compile(el)(scope)
+                    scope.$digest()
+
+                    console.log(el.html())
+                })
+            })
+            */
+
+            /*
+            //cameo.supported_languages.forEach(function(lang_key){        
+                var lang_key = 'de_DE'
+                runs(function(){ 
+                    scope.digest()
+                    scope.switchLanguage(lang_key)                    
+                })
+                
+                waitsFor(function() {
+                    console.log(scope.getLanguageName(lang_key))
+                    return(false)   
+                }, "translation: "+lang_key, 2000)                
+
+                runs(function(){
+                    var all_good  = true
+
+                    cameo.supported_languages.forEach(function(lang_key_j){
+                        all_good = all_good && (scope.getLanguageName(lang_key_j) != undefined)
+                    })
+                    expect(all_good).toEqual(true)
+                }) 
+                
+            //})
+            */
+        })
+
+
     })   
 })

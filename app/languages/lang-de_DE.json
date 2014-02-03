@@ -1,10 +1,20 @@
 {
-	"SWITCHED_LANGUAGE_TO":		"Sprache auf {{lang}} gestellt.",
-	"AUTO_LOGIN":				"Automatisches Login (Max)",
-	"BUTTON_TEXT_DE":			"Deutsch",                        
-	"BUTTON_TEXT_EN":			"Englisch",
+	"LOGIN": {
+		"AUTO": {
+			"LABEL":		"Automatisches Login (Max)"			
+		}
+	},
 
-	"ERROR": {
-		"SWITCHED_LANGUAGE_TO":		"Konnte Sprache nicht auf {{lang}} stellen."
+	"LANG":	{
+		"DE_DE":		"Deutsch",
+		"EN_US":		"Englisch",
+		"SWITCH": {
+			"SUCCESS":		"Sprache auf {{lang}} gestellt.",
+			"ERROR":		"Konnte Sprache nicht auf {{lang}} stellen.",
+			"LABEL": {
+				"DE_DE":		"@:LANG.DE_DE",
+				"EN_US":		"@:LANG.EN_US"
+			}
+		}
 	}
 }
