@@ -3,7 +3,10 @@
 /**
  * collection of client side crypt stuff
  */
-app.factory('cmCrypt',
+
+var cmCrypt = angular.module('cmCrypt', ['cmLogger'])
+
+cmCrypt.factory('cmCrypt',
     function ($log) {
 
         return {
