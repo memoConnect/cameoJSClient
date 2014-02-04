@@ -4,11 +4,22 @@
  * Simple wrapper around AngularJS Logger
  * Timestamp and log level will be added to each log message
  */
-app.factory('cmLogger',
-    function($log){
 
-        console.log = function(loggerMessage) {}
-        console.info = function(loggerMessage) {}
+
+var cmLogger = angular.module('cmLogger', [])
+
+cmLogger.factory('cmLogger', [
+
+    '$log',
+
+    function($log){
+        /**
+         * Format date as a string
+         */
+        function getTimestampAsString() {
+            var d = (new Date()+'').split(' ');
+            return [d[3], d[1], d[2], d[4]].join(' ');
+        }
 
         return {
             /**
@@ -72,12 +83,5 @@ app.factory('cmLogger',
                 this.debug(loggerMessage + ": " + (object != null ? object.toString() : "NULL"))
             }
         }
-    });
-
-/**
- * Format date as a string
- */
-function getTimestampAsString() {
-    var d = (new Date()+'').split(' ');
-    return [d[3], d[1], d[2], d[4]].join(' ');
-}
+    }
+]);
