@@ -1,11 +1,20 @@
-describe ('cmCrypt Test', function(){
-    var cmCrypt = null;
+describe('cmCrypt test', function(){
 
-    beforeEach(module("cameoClient"))
 
-    it('it should be the same string', function(){
-        console.log("hello willy")
-        expect(cmCrypt.hash('moepmoep')).toEqual('6fbedb8efa1025ba524c1654d15573d6c486698ce5365c3966ce4ed7c8d3fd4e!');
-    });
+    beforeEach(module("cmCrypt"));
+    beforeEach(inject(function($rootScope, $compile, cmCrypt){
+        crypt 	= cmCrypt
+    }))
 
+    describe('calling hash with a string', function(){
+        it('returns a hash', function(){
+            expect( crypt.hash("Wumms") ).toEqual("155de1086ab65e6443f52894bda880359e30f19bd44e494e4b74c7615cb3e1da");
+        })
+    })
+
+    describe('calling hash with empty string', function(){
+        it('returns "', function(){
+            expect( crypt.hash() ).toEqual("");
+        })
+    })
 });

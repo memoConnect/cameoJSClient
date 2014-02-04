@@ -44,6 +44,6 @@
         "node": ">=0.8.0"
     },
     "scripts": {
-        "test": "karma start config/karma.headless.conf.js"
+        "test": "karma start config/karma-unit.conf.js"
     }
 }

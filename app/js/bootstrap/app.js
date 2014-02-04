@@ -66,7 +66,7 @@ function($routeProvider, $locationProvider){
 app.run(['$rootScope', '$location', '$cookieStore',
 function($rootScope, $location, $cookieStore){
     $rootScope.$on( "$routeChangeStart", function(){
-        //        var path_exceptions = ['/login', '/registry'];
+//        var path_exceptions = ['/login', '/registry'];
         var path = $location.$$path;
 
         if(angular.isUndefined($cookieStore.get("token"))){
