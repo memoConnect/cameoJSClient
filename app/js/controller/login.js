@@ -20,7 +20,7 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', '$location', 'Auth', 'cm'
 
         $scope.getToken = function(){
             cm.log.debug("getToken called")
-            Auth.getToken(Base64.encode($scope.formData.user + ":" + $scope.formData.pass)).
+            Auth.getToken(Base64.encode($scope.formData.user + ":" + cmCrypt.hash($scope.formData.pass))).
                 success(function(res){
                     $scope.formRes = res.data;
                     $cookieStore.put("token",res.data.token);
