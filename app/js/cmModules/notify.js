@@ -11,6 +11,26 @@ cmNotify.config(['growlProvider', function(growlProvider) {
     growlProvider.globalTimeToLive(5000);
 }]);
 
+cmNotify.config(['growlProvider', '$httpProvider', function(growlProvider, $httpProvider) {
+	//intercept messages from Backend:
+	/*
+		{
+			"someOtherData": {...},
+			"messages": [
+			    {"text":"this is a server message", "severity": "warn"},
+			    {"text":"this is another server message", "severity": "info"},
+			    {"text":"and another", "severity": "error"}
+			]
+		}
+	*/
+	//if the backend respond with the above json 'messages' will be fetched:
+
+	growlProvider.messagesKey("message");
+    growlProvider.messageTextKey("text");
+    growlProvider.messageSeverityKey("severity");
+    $httpProvider.responseInterceptors.push(growlProvider.serverMessagesInterceptor);
+}]);
+
 cmNotify.service('cmNotify', [
 	'growl',
 	function(growl){
