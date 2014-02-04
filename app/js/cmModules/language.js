@@ -21,10 +21,12 @@
 // Todo: new logger, add notify
 
 
+var cmLanguage = angular.module('cmLanguage', ['pascalprecht.translate', 'cmNotify'])
 
+cmLanguage.config([
 
-app.config([
-    '$translateProvider',		//from angular-translate
+    '$translateProvider', //from angular-translate
+
     function ($translateProvider) {    	
     	//tell translation service where to find language tables
         $translateProvider.useStaticFilesLoader({
@@ -43,35 +45,46 @@ app.config([
 ])
 
 
-app.controller('LanguageCtrl', [
-	'$translate', 				//from angular-translate
-	'$scope', 
-	function ($translate, $scope) {
+cmLanguage.service('cmTranslate', ['$translate', function($translate){ return $translate }])
+
+cmLanguage.filter('cmTranslate', ['translateFilter', function(translateFilter){ return translateFilter }])
+
+
+//Does not work as intendet <div cm-translate="LANG.DE_DE"></div> stays empty
+cmLanguage.directive('cmTranslate', ['translateDirective', function(translateDirective){ return translateDirective[0] }])
+
+cmLanguage.controller('LanguageCtrl', [
+
+	'$scope',
+	'cmTranslate', 
+	'cmNotify',	 
+	
+	function ($scope, cmTranslate, cmNotify) {
 		// Make language switch available to the scope:		
 		// Todo: new logger, add notify
 
 		$scope.getLanguageName = function (lang_key){			
 			lang_key = lang_key || $translate.uses()
 
-			var translation = $translate('LANG.'+lang_key.toUpperCase())
+			var translation = cmTranslate('LANG.'+lang_key.toUpperCase())
 
 			//translation = (translation == 'LANG.'+lang_key.toUpperCase() ? undefined : translation)
 			return(translation)
 		}
 
 		$scope.getCurrentLanguage = function(){
-			return($translate.uses())
+			return(cmTranslate.uses())
 		}
 
 		$scope.switchLanguage = function (lang_key) {	
 			return (			
-				$translate.uses(lang_key)
+				cmTranslate.uses(lang_key)
 				.then(
 					function(){
-						console.log($translate('LANG.SWITCH.SUCCESS', { lang : $scope.getLanguageName(lang_key) }))
+						cmNotify.info(cmTranslate('LANG.SWITCH.SUCCESS', { lang : $scope.getLanguageName(lang_key) }))
 					},
 					function(){
-						console.log($translate('LANG.SWITCH.ERROR', { lang : $scope.getLanguageName(lang_key) }))
+						cmNotify.error(cmTranslate('LANG.SWITCH.ERROR', { lang : $scope.getLanguageName(lang_key) }))
 					}
 				)
 			)

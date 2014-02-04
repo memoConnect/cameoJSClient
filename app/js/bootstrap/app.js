@@ -7,20 +7,26 @@ var cameo   =   {
                    ,path_to_languages:      'languages'
                 };
 
+
 var app     =   angular.module('cameoClient', [
                     'ngRoute',
-                    'ngCookies', 
-                    'pascalprecht.translate',       //language support;         https://github.com/PascalPrecht/angular-translate
-                    'angular-growl'                 // notification, growl;     https://github.com/marcorinck/angular-growl
+                    'ngCookies',                     
+                    'cmLogger',
+                    'cmNotify',
+                    'cmLanguage'
                 ]);
 
-app.factory('cm',[
+app.service('cm',[
+
     'cmLogger',
     'cmNotify',
-    function(cmLogger, cmNotify){
+    'cmTranslate',
+
+    function(cmLogger, cmNotify, cmTranslate){
         return {
-            log:    cmLogger,
-            notify: cmNotify
+            log:        cmLogger,
+            notify:     cmNotify,
+            translate:  cmTranslate
         }
     }
 ])

@@ -4,7 +4,14 @@
 //wrapper
 //todo: growl directive wrappen?
 
-app.factory('cmNotify',[
+var cmNotify = angular.module('cmNotify', ['angular-growl'])
+
+cmNotify.config(['growlProvider', function(growlProvider) {
+	//notifications should disappear after 5 seconds
+    growlProvider.globalTimeToLive(5000);
+}]);
+
+cmNotify.service('cmNotify', [
 	'growl',
 	function(growl){
 		return {
@@ -22,4 +29,7 @@ app.factory('cmNotify',[
 						}
 		}
 	}
-]) 
+])
+
+//does not work:
+cmNotify.directive('cmNotify', ['growlDirective', function(growlDirective){ return growlDirective }])
