@@ -1,4 +1,4 @@
 #!/bin/bash
 echo "starting tests headless"
 npm install
-npm test
+karma start config/karma-headless.conf.js

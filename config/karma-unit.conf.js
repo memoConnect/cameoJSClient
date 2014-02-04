@@ -30,11 +30,11 @@ module.exports = function (config) {
             // - PhantomJS
             // - IE (only Windows)
             //browsers: ['PhantomJS'],
-            browsers: ['PhantomJS'],
+            browsers: ['Firefox'],
 
             frameworks: ['jasmine'],
 
-            singleRun: true,
+            singleRun: false,
 
             proxies: {
                 //'/': 'http://localhost:9000/'
