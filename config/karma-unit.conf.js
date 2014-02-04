@@ -10,7 +10,7 @@ module.exports = function(config){
             'app/js/bootstrap/*.js',
             'app/js/**/*.js',
             'test/lib/angular/*.js',
-            'test/unit/*.test.js'           
+            'test/unit/empu.test.js'
         ],
 
         exclude: [                                                         
@@ -28,8 +28,8 @@ module.exports = function(config){
         singleRun : false,
 
         proxies : {
-          '/app/': 'http://localhost:9000/'   // rh
-//          '/app/': 'http://localhost/cameoJSClient/app/' // empu
+//          '/app/': 'http://localhost:9000/'   // rh
+          '/app/': 'http://localhost/cameoJSClient/app/' // empu
         }
     }
 )}
