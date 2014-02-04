@@ -1,7 +1,7 @@
-module.exports = function(config){
+module.exports = function (config) {
     config.set({
 
-        basePath : '../',
+            basePath: '../',
 
         files : [
             'app/js/vendor/angular/angular.js',
@@ -29,7 +29,6 @@ module.exports = function(config){
           //'/': 'http://localhost:9000/'
           '/app/': 'http://localhost:9000/'
         }
-
-    }
-)}
+    )
+}
 
