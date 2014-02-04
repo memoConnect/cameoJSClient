@@ -13,24 +13,15 @@ module.exports = function (config) {
 
 
         // list of files / patterns to load in the browser
-        files: [
+        files : [
             'app/js/vendor/angular/angular.js',
-            'app/js/vendor/angular-translate/*.js',
-            'app/js/vendor/angular/angular-resource.js',
-            'app/js/vendor/angular/angular-cookies.js',
-            'app/js/vendor/angular/angular-route.js',
-            'app/js/vendor/angular-growl/*.js',
-            'test/lib/angular/angular-mocks.js',
-            'app/js/vendor/sjcl/*.js',
-            'app/js/vendor/util/*.js',
-            'app/js/bootstrap/app.js',
-            'app/js/cmModules/*.js',
-            'app/js/service/*.js',
-            'app/js/directives/*.js',
-            'app/js/controller/*.js',
+            'app/js/vendor/angular-translate/angular-translate.min.js',
+            'app/js/vendor/**/*.js',
+            'app/js/bootstrap/*.js',
+            'app/js/**/*.js',
+            'test/lib/angular/*.js',
             'test/**/*Spec.js'
         ],
-
 
         // list of files to exclude
         exclude: [
