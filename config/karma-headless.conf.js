@@ -3,9 +3,9 @@ module.exports = function (config) {
 
             basePath: '../',
 
-            files: [
+            files : [
                 'app/js/vendor/angular/angular.js',
-                'app/js/vendor/angular-translate/angular-translate.min.js',
+                'app/js/vendor/angular-translate/angular-translate.js',
                 'app/js/vendor/**/*.js',
                 'app/js/bootstrap/*.js',
                 'app/js/**/*.js',
@@ -14,9 +14,7 @@ module.exports = function (config) {
             ],
 
             exclude: [
-                '**/angular-scenario.js',
-                '**/requirejs/*',
-                '**/bootstrap/main.js'
+                '**/angular-scenario.js'
             ],
 
             autoWatch: true,
