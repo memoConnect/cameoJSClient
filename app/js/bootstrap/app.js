@@ -62,10 +62,6 @@ function($routeProvider, $locationProvider){
         templateUrl: 'tpl/form/registry.html',
         controller: 'RegistryCtrl'
     }).
-    when('/profile', {
-        templateUrl: 'tpl/form/profile.html',
-        controller: 'ProfileCtrl'
-    }).
     otherwise({
         redirectTo: '/login'
     });

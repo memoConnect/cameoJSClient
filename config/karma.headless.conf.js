@@ -17,7 +17,7 @@ module.exports = function (config) {
             'app/js/vendor/angular/angular.js',
             'app/js/vendor/angular-translate/angular-translate.js',
             'app/js/vendor/**/*.js',
-            'app/js/cmModule/*.js'
+            'app/js/cmModule/*.js',
             'app/js/bootstrap/*.js',
             'app/js/**/*.js',
             'test/lib/angular/*.js',
