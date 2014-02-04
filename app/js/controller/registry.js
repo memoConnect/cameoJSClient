@@ -1,6 +1,6 @@
 'use strict';
-app.controller('RegistryCtrl', ['$scope','$location','Auth','cm',
-    function($scope,$location, Auth,cm){
+app.controller('RegistryCtrl', ['$scope','$location','AuthService','cm',
+    function($scope,$location, AuthService, cm){
         $scope.formData = {loginName:'',password:'',email:'',phoneNumber:'',name:''};
 
         $scope.regUser = function(){
@@ -20,7 +20,7 @@ app.controller('RegistryCtrl', ['$scope','$location','Auth','cm',
                 name: $scope.formData.name
             };
 
-            Auth.createUser(data).
+            AuthService.createUser(data).
             success(function(r){
                 cm.log.debug('createUser success')
                 if(r.res == "OK"){

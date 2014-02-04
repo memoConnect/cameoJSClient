@@ -1,5 +1,5 @@
 'use strict';
-app.factory('Auth',
+app.factory('AuthService',
 function($http){
     return {
         getToken: function(auth){
