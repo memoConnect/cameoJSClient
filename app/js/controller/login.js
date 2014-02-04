@@ -14,7 +14,7 @@ app.controller('LoginCtrl', ['$scope', '$cookieStore', '$location', 'Auth', 'cm'
             cm.log.debug("autologin called")
             $scope.formData = {
                 user: "Max"
-                ,pass: cmCrypt.hash("moepmoep")
+                ,pass: "max.mustermann"
             };
         };
 
