@@ -61,6 +61,12 @@ function($routeProvider, $locationProvider){
         templateUrl: 'tpl/form/registry.html',
         controller: 'RegistryCtrl'
     }).
+    when('/agb', {
+        templateUrl: 'tpl/agb.html'
+    }).
+    when('/disclaimer', {
+        templateUrl: 'tpl/disclaimer.html'
+    }).
     otherwise({
         redirectTo: '/login'
     });
@@ -73,7 +79,7 @@ function($rootScope, $location, $cookieStore){
         var path = $location.$$path;
 
         if(angular.isUndefined($cookieStore.get("token"))){
-            if(path != "/login" && path != "/registry"){
+            if(path != "/login" && path != "/registry" && path != "/agb" && path != "/disclaimer"){
                 $location.path("/login");
             }
         } else if($location.$$path == "/login"){
