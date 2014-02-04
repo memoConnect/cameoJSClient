@@ -1,0 +1,20 @@
+{
+	"LOGIN": {
+		"AUTO": {
+			"LABEL":		"Auto login (Max)"			
+		}
+	},
+
+	"LANG":	{
+		"DE_DE":		"German",
+		"EN_US":		"English",
+		"SWITCH": {
+			"SUCCESS":		"Language switched to {{lang}}.",
+			"ERROR":		"Unable to switch to {{lang}}.",
+			"LABEL": {
+				"DE_DE":		"@:LANG.DE_DE",
+				"EN_US":		"@:LANG.EN_US"
+			}
+		}
+	}
+}

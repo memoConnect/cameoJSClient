@@ -1,11 +1,35 @@
 'use strict';
-var cameo = {
-    //restApi: "http://"+location.host+"/api"
-    restApi: "https://s.kolibritalk.com/api/v1"
-   ,token: null
-};
+var cameo   =   {
+                    //restApi:              "http://"+location.host+"/api"
+                    restApi:                "https://dev.cameo.io/api/v1/"
+                   ,token:                  null
+                   ,supported_languages:    ['de_DE', 'en_US']
+                   ,path_to_languages:      'languages'
+                };
 
-var app = angular.module('cameoClient', ['ngRoute','ngCookies']);
+
+var app     =   angular.module('cameoClient', [
+                    'ngRoute',
+                    'ngCookies',                     
+                    'cmLogger',
+                    'cmNotify',
+                    'cmLanguage'
+                ]);
+
+app.service('cm',[
+
+    'cmLogger',
+    'cmNotify',
+    'cmTranslate',
+
+    function(cmLogger, cmNotify, cmTranslate){
+        return {
+            log:        cmLogger,
+            notify:     cmNotify,
+            translate:  cmTranslate
+        }
+    }
+])
 
 app.config(['$routeProvider', '$locationProvider',
 function($routeProvider, $locationProvider){
@@ -31,31 +55,36 @@ function($routeProvider, $locationProvider){
         templateUrl: 'tpl/conversation.html',
         controller: 'ConversationCtrl'
     }).
+    when('/registry', {
+        templateUrl: 'tpl/form/registry.html',
+        controller: 'RegistryCtrl'
+    }).
     otherwise({
         redirectTo: '/login'
     });
 }]);
 
+
+
+
+
+
 app.run(['$rootScope', '$location', '$cookieStore',
 function($rootScope, $location, $cookieStore){
+    $rootScope.$on( "$routeChangeStart", function(){
+//        var path_exceptions = ['/login', '/registry'];
+        var path = $location.$$path;
 
-    function goToHome(){
         if(angular.isUndefined($cookieStore.get("token"))){
-            $location.path("/login");
+            if(path != "/login" && path != "/registry"){
+                $location.path("/login");
+            }
         } else if($location.$$path == "/login"){
             $location.path("/start");
         }
-    }
-
-    $rootScope.$on( "$routeChangeStart", function(){
-
-        goToHome();
 
         if(angular.isDefined($cookieStore.get("token"))){
-            // set token
             cameo.token = $cookieStore.get("token");
         }
     });
-
-    goToHome();
 }]);
