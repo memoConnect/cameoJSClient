@@ -21,12 +21,14 @@ app.service('cm',[
     'cmLogger',
     'cmNotify',
     'cmTranslate',
+    'cmCrypt',
 
     function(cmLogger, cmNotify, cmTranslate){
         return {
             log:        cmLogger,
             notify:     cmNotify,
-            translate:  cmTranslate
+            translate:  cmTranslate,
+            crypt:      cmCrypt
         }
     }
 ])

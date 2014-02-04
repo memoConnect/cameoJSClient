@@ -26,7 +26,7 @@ describe("cmLanguage", function() {
 
 
 
-    it('should find and load correctly named and json formatted files for all supported languages within 1 second.', function() {        
+    it('should find and load correctly named and json formatted files for all supported languages within 5 second.', function() {        
         var count = cameo.supported_languages.length
 
         runs(function(){
@@ -41,7 +41,7 @@ describe("cmLanguage", function() {
 
         waitsFor(function() {
             return(count==0)   
-        }, "languages files.", 1000)
+        }, "languages files.", 5000)
 
         runs(function(){
             expect(Object.keys(language_tables).length).toEqual(cameo.supported_languages.length)
