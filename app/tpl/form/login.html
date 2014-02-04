@@ -1,3 +1,5 @@
+ <div growl></div>
+
 <form name="auth" ng-controller="LoginCtrl" ng-submit="getToken()" autocomplete="off">
     <div>
         <input ng-model="formData.user" name="user" placeholder="{{ placeholder.user }}" type="text" value="" required />
@@ -20,5 +22,10 @@
   <button ng-click="switchLanguage('de_DE')">{{'LANG.SWITCH.LABEL.DE_DE' | translate}}</button>
   <button ng-click="switchLanguage('en_US')">{{'LANG.SWITCH.LABEL.EN_US' | translate}}</button>
   <button ng-click="switchLanguage('fr_FR')">{{'LANG.SWITCH.LABEL.FR_FR' | translate}}</button>
+  <button ng-click="switchLanguage('ru_RU')" cm-translate="LANG.SWITCH.LABEL.IT_IT"></button>
+  <button ng-click="switchLanguage('it_IT')" translate="LANG.SWITCH.LABEL.IT_IT"></button>
+  {{'LANG.DE_DE'|cmTranslate}}
 </div>
+
+<button ng-click="cm.notify.error('zzz')">growl</button>
 
