@@ -5,7 +5,7 @@ module.exports = function (config) {
 
         files : [
             'app/js/vendor/angular/angular.js',
-            'app/js/vendor/angular-translate/angular-translate.min.js',
+            'app/js/vendor/angular-translate/angular-translate.js',
             'app/js/vendor/**/*.js',        
             'app/js/bootstrap/*.js',
             'app/js/**/*.js',
@@ -29,6 +29,6 @@ module.exports = function (config) {
           //'/': 'http://localhost:9000/'
           '/app/': 'http://localhost:9000/'
         }
-    )
+    })
 }
 
