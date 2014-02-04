@@ -1,3 +1,5 @@
 /.idea/
 /node_modules/
 /cameoJSClient.iml
+/target/
+/project/

@@ -6,11 +6,6 @@
 
 var cmNotify = angular.module('cmNotify', ['angular-growl'])
 
-cmNotify.config(['growlProvider', function(growlProvider) {
-	//notifications should disappear after 5 seconds
-    growlProvider.globalTimeToLive(5000);
-}]);
-
 cmNotify.config(['growlProvider', '$httpProvider', function(growlProvider, $httpProvider) {
 	//intercept messages from Backend:
 	/*
@@ -29,6 +24,9 @@ cmNotify.config(['growlProvider', '$httpProvider', function(growlProvider, $http
     growlProvider.messageTextKey("text");
     growlProvider.messageSeverityKey("severity");
     $httpProvider.responseInterceptors.push(growlProvider.serverMessagesInterceptor);
+
+    //notifications should disappear after 5 seconds
+    //growlProvider.globalTimeToLive(5000);
 }]);
 
 cmNotify.service('cmNotify', [
@@ -51,5 +49,9 @@ cmNotify.service('cmNotify', [
 	}
 ])
 
-//does not work:
-cmNotify.directive('cmNotify', ['growlDirective', function(growlDirective){ return growlDirective }])
+cmNotify.directive('cmNotify', function(){
+	return {		
+		priority:	10000,		
+		template:	'<div growl></div>'
+	}
+})
