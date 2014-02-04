@@ -13,7 +13,8 @@ var app = angular.module('cameoClient', [
     'ngCookies',
     'cmLogger',
     'cmNotify',
-    'cmLanguage'
+    'cmLanguage',
+    'cmCrypt'
 ]);
 
 app.service('cm',[
