@@ -1,4 +1,4 @@
-describe("Language Support", function() {            
+describe("cmLanguage", function() {            
     var ctrl, scope,         
         language_tables = {};
 
