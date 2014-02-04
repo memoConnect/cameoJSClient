@@ -14,9 +14,7 @@ module.exports = function(config){
         ],
 
         exclude: [                                                         
-            '**/angular-scenario.js',
-            '**/requirejs/*',
-            '**/bootstrap/main.js'
+            '**/angular-scenario.js'
         ],
 
         autoWatch : true,
