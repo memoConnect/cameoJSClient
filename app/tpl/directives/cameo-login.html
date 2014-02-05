@@ -1,20 +1,16 @@
-<form name="auth" ng-submit="getToken()" autocomplete="off">
-    <div>
-        <input ng-model="formData.user" name="user" placeholder="{{ placeholder.user }}" type="text" value="" required />
-    </div>
-    <div>
-        <input ng-model="formData.pass" name="pass" placeholder="{{ placeholder.pass }}" type="password" value="" required />
-    </div>
+<div class="container">
+    <form class="form-signin" role="form" ng-submit="getToken()" autocomplete="off">
+        <h2 class="form-signin-heading">Login</h2>
 
-    <button ng-click="autologin()">autologin with Max</button>
+        <input ng-model="formData.user" class="form-control" id="user" name="user" placeholder="Username" type="text" value="" required />
+        <input ng-model="formData.pass" class="form-control" id="pw" name="pw" placeholder="Password" type="password" value="" required />
 
-    <button type="submit">einloggen</button>
+        <label class="checkbox">
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
 
-    <a href="#registry">sign in</a>
-
-    <pre>
-        Token: {{ token }} <br />
-        Res: {{ formRes }}
-    </pre>
-</form>
-
+        <button class="btn btn-lg btn-default btn-block" ng-click="autologin()">autologin with Max</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">login</button>
+        <a href="#registry">sign in</a>
+    </form>
+</div>

@@ -9,7 +9,6 @@
 var cmLogger = angular.module('cmLogger', [])
 
 cmLogger.factory('cmLogger', [
-
     '$log',
 
     function($log){

@@ -1,5 +1,5 @@
 'use strict';
-app.factory('Auth',
+app.factory('AuthService',
 function($http){
     return {
         getToken: function(auth){
@@ -9,6 +9,13 @@ function($http){
                 ,headers: {
                     'Authorization': 'Basic '+auth
                 }
+            })
+        }
+       ,createUser: function(data){
+            return $http({
+                method: 'POST'
+               ,url: cameo.restApi+'/account'
+               ,data: data
             })
         }
     }
