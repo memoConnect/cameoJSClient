@@ -1,10 +1,14 @@
 <div class="page-header"><h2>Registry</h2></div>
 
-<form class="form-horizontal" role="form" ng-submit="regUser()" autocomplete="off">
+<form name="registryForm" class="form-horizontal" role="form" ng-submit="regUser()" autocomplete="off" novalidate>
+
     <div class="form-group">
         <label for="cameoName" class="col-sm-1 control-label">Username<sup>*</sup></label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" id="cameoName" placeholder="Username" ng-model="formData.cameoName" required />
+            <input type="text" class="form-control" id="cameoName" name="cameoName" placeholder="Username" ng-model="cameoName" required />
+            <div class="custom-error" ng-show="registryForm.cameoName.$dirty && registryForm.cameoName.$invalid">
+                Invalid: <span ng-show="registryForm.cameoName.$error.required">Username is required.</span>
+            </div>
         </div>
     </div>
 
@@ -33,7 +37,7 @@
 
     <div class="checkbox mb10">
         <label class="col-sm-offset-1 col-sm-5">
-            <input type="checkbox" id="agb" name="agb" ng-model="formData.agb" required /> <a href="#/agb">AGB</a> akzeptieren
+            <input type="checkbox" id="agb" name="agb" ng-model="formData.agb"  /> <a href="#/agb">AGB</a> akzeptieren
         </label>
     </div>
 
