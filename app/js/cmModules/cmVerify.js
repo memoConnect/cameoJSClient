@@ -3,7 +3,7 @@
 //E-mail, Phone etc. verification
 
 
-var cmVerify = angular.module('cmVerify', [])
+var cmVerify = angular.module('cmVerify', ['cmApiAuth'])
 
 
 cmVerify.controller('ProfileCtrl', [
@@ -17,34 +17,20 @@ cmVerify.controller('ProfileCtrl', [
 ]);
 
 
-
-cmVerify.controller('ConfirmCtrl', [
-
-    '$scope',
-    '$routeParams',
-
-    function ($scope, $routeParams) {        
-        $scope.secret = $routeParams.secret
-    }
-]);
-
-
-
 //send a verification request
 
 cmVerify.directive('cmVerify', [
 
-	'$http',
-	'$cookieStore',
+	'cmApi',
 	'cmNotify',
 
-	function () {
+	function (cmApi, cmNotify) {
 	    return  {
 	        restrict    :   'AE',
 	        scope       :   true,
 	        template	:	'<span><span>{{status}}</span><button ng-click="verify()">{{"VERIFICATION.REQUEST.LABEL"|cmTranslate}}</button></span>',     
 
-	        controller  :   function($scope, $element, $attrs, $http, $cookieStore, cmNotify) {
+	        controller  :   function($scope, $element, $attrs, cmNotify) {
 	        					var item 	= $attrs.cmVerify,
 	        						key		= $.camelCase('verification'+item)
 
@@ -53,7 +39,7 @@ cmVerify.directive('cmVerify', [
 	        					}
 	        					
 	        					$scope.verify = function(){	        						
-	        						$http.post(cameo.restApi+'/verify?token='+$cookieStore.get("token"), {data: {key: true}})
+	        						cmApi.post('/verify', {data: {key: true}})
 	        						.then(
 
 	        							function(response){  
