@@ -93,5 +93,6 @@ function($rootScope, $location, $cookieStore){
                 cameo.token = $cookieStore.get("token");
             }
         }
+        
     });
 }]);
