@@ -2,7 +2,7 @@
 
 var cmAPI = angular.module('cmAPI', [])
 
-cmAPI.fayctory('cmAPI', [
+cmAPI.factory('cmAPI', [
 
 	'$http',
 	'$cookiestore',
@@ -14,7 +14,7 @@ cmAPI.fayctory('cmAPI', [
 									path+				// path to specific method
 									(path.match(/\?/) ? '&token=' : '?token=')+		//add or extend paramters
 									$cookieStore.get("token")						//add auth token			TODO cmAuth							
-						})
+						},
 
 			get:		function(path, config){ return $http.get	(getUrl(path), config) },
 			post:		function(path, config){ return $http.post	(getUrl(path), config) },
