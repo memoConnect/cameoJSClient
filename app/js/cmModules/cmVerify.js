@@ -41,42 +41,32 @@ cmVerify.directive('cmVerify', [
 	function () {
 	    return  {
 	        restrict    :   'AE',
-	        scope       :   true,        
+	        scope       :   true,
+	        template	:	'<span><span>{{status}}</span><button ng-click="verify()">{{"VERIFICATION.REQUEST.LABEL"|cmTranslate}}</button></span>',     
 
 	        controller  :   function($scope, $element, $attrs, $http, $cookieStore, cmNotify) {
-	        					var params 		= $attrs.cmVerify.replace(/\s/, '').split(","),
-	        						to_verify 	= {}
+	        					var item 	= $attrs.cmVerify,
+	        						key		= $.camelCase('verification'+item)
 
-	        					params.forEach(function(param){
-	        						to_verify[$.camelCase('verify-'+param)] = true
-	        					})
-
-	        					$scope.getData = function(){
-	        						$scope.status = {}
-	        						$.each(params, function(key, value){
-	        							$scope.status[$.camelCase(value)] = Math.random(0) > 0.5 ? 'verified' : 'rejected'
-	        						})
+	        					$scope.getStatus = function(){
+	        						$scope.status = 'unknown'
 	        					}
-
+	        					
 	        					$scope.verify = function(){	        						
-	        						$http.post(cameo.restApi+'/verify?token='+$cookieStore.get("token"), to_verify)
+	        						$http.post(cameo.restApi+'/verify?token='+$cookieStore.get("token"), {data: {key: true}})
 	        						.then(
 
-	        							function(){        							
-	        								$element.addClass('verified')	        								
+	        							function(response){  
+	        								cmNotify.info('XX Request sent: '+item)
 	        							},
 
 	        							function(){
-	        								$element.addClass('rejected')
-		        							//cm.log.error('error: unable to verify.')	
+	        								cmNotify.error('XX Unable to send request: '+item)
 		        						}
-		        					)
-
-	        						cmNotify.info('verification pending')
-	        						$element.addClass('pending')        						
+		        					)	        						
 	        					}
 
-	        					$scope.getData()
+	        					$scope.getStatus()
 	        				}
 	    }
 	}

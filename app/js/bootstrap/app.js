@@ -66,9 +66,8 @@ function($routeProvider, $locationProvider){
         templateUrl: 'tpl/form/profile.html',
         controller: 'ProfileCtrl'
     }).
-    when('/confirm/:secret', {
-        templateUrl: 'tpl/form/confirm.html',
-        controller:  'ConfirmCtrl'
+    when('/verification/:secret', {
+        templateUrl: 'tpl/verification.html',
     }).
     otherwise({
         redirectTo: '/login'

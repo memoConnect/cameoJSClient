@@ -1,10 +1,10 @@
 <div cm-notify></div>
 <form ng-controller="ProfileCtrl" autocomplete="off">
-	<div cm-verify="email">		
-		<input type="text" placeholder="{{'PROFILE.E-MAIL' | cmTranslate}}" value={{mail}}> <span>{{status.mail}}</span><button ng-click="verify()">verfiy</button>
+	<div>		
+		<input type="text" placeholder="{{'PROFILE.E-MAIL' | cmTranslate}}" value={{mail}}> <span cm-verify="email"></span>
 	</div>
-	<div cm-verify="phone-number">
-		<input type="text" placeholder="{{'PROFILE.MOBILE' | cmTranslate}}" value={{phoneNumber}}> <span>{{status.phoneNumber}}</span><button ng-click="verify()">verfiy</button>
+	<div>
+		<input type="text" placeholder="{{'PROFILE.MOBILE' | cmTranslate}}" value={{phoneNumber}}> <span cm-verify="phone-number"></span>
 	</div>
 </form>
 
