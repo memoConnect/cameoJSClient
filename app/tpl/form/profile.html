@@ -1,5 +1,6 @@
+<div cm-notify></div>
 <form ng-controller="ProfileCtrl" autocomplete="off">
-	<div cm-verify="mail">		
+	<div cm-verify="email">		
 		<input type="text" placeholder="{{'PROFILE.E-MAIL' | cmTranslate}}" value={{mail}}> <span>{{status.mail}}</span><button ng-click="verify()">verfiy</button>
 	</div>
 	<div cm-verify="phone-number">

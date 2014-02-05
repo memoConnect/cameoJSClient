@@ -81,18 +81,16 @@ function($rootScope, $location, $cookieStore){
 //        var path_exceptions = ['/login', '/registry'];
         var path = $location.$$path;
 
-        if(false){ //Zum testen
-            if(angular.isUndefined($cookieStore.get("token"))){
-                if(path != "/login" && path != "/registry"){
-                    $location.path("/login");
-                }
-            } else if($location.$$path == "/login"){
-                $location.path("/start");
+       if(angular.isUndefined($cookieStore.get("token"))){
+            if(path != "/login" && path != "/registry"){
+                $location.path("/login");
             }
+        } else if($location.$$path == "/login"){
+            $location.path("/start");
+        }
 
-            if(angular.isDefined($cookieStore.get("token"))){
-                cameo.token = $cookieStore.get("token");
-            }
+        if(angular.isDefined($cookieStore.get("token"))){
+            cameo.token = $cookieStore.get("token");
         }
         
     });

@@ -35,13 +35,15 @@ cmVerify.controller('ConfirmCtrl', [
 cmVerify.directive('cmVerify', [
 
 	'$http',
+	'$cookieStore',
+	'cmNotify',
 
 	function () {
 	    return  {
 	        restrict    :   'AE',
 	        scope       :   true,        
 
-	        controller  :   function($scope, $element, $attrs, $http) {
+	        controller  :   function($scope, $element, $attrs, $http, $cookieStore, cmNotify) {
 	        					var params 		= $attrs.cmVerify.replace(/\s/, '').split(","),
 	        						to_verify 	= {}
 
@@ -56,20 +58,21 @@ cmVerify.directive('cmVerify', [
 	        						})
 	        					}
 
-	        					$scope.verify = function(){
-	        						$http.post('/verify', to_verify)
-	        						.success(function(){        							
-	        							$element.addClass('verified')
-	        							//cm.log.debug('verified!')
-	        						})
-	        						.error(function(){
-	        							$element.addClass('rejected')
-	        							//cm.log.error('error: unable to verify.')	
-	        						})
-	        						.always(function(){
-	        							$element.removeClass('pending')
-	        						})
+	        					$scope.verify = function(){	        						
+	        						$http.post(cameo.restApi+'/verify?token='+$cookieStore.get("token"), to_verify)
+	        						.then(
 
+	        							function(){        							
+	        								$element.addClass('verified')	        								
+	        							},
+
+	        							function(){
+	        								$element.addClass('rejected')
+		        							//cm.log.error('error: unable to verify.')	
+		        						}
+		        					)
+
+	        						cmNotify.info('verification pending')
 	        						$element.addClass('pending')        						
 	        					}
 
