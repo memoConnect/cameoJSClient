@@ -65,6 +65,10 @@ function($routeProvider, $locationProvider){
         templateUrl: 'tpl/form/profile.html',
         controller: 'ProfileCtrl'
     }).
+    when('/verification/:secret', {
+        template: '<button>bestätigen {{$routeParams}}</button>'
+        //controller: 'ConfirmCtrl'
+    }).
     otherwise({
         redirectTo: '/login'
     });
