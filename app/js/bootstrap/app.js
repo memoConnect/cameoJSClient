@@ -15,6 +15,7 @@ var app = angular.module('cameoClient', [
     'cmNotify',
     'cmLanguage',
     'cmCrypt'
+    'cmAPI'
 ]);
 
 app.service('cm',[
@@ -22,6 +23,7 @@ app.service('cm',[
     'cmNotify',
     'cmTranslate',
     'cmCrypt',
+    'cmAPI'
 
     function(cmLogger, cmNotify, cmTranslate){
         return {
@@ -29,6 +31,7 @@ app.service('cm',[
             notify:     cmNotify,
             translate:  cmTranslate,
             crypt:      cmCrypt
+            api:        cmAPI
         }
     }
 ])
