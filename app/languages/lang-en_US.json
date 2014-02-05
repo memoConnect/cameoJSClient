@@ -16,5 +16,7 @@
 				"EN_US":		"@:LANG.EN_US"
 			}
 		}
-	}
+	},
+
+    "AGB_LABEL":  "General Business Conditions"
 }
