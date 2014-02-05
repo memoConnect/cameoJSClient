@@ -1,25 +1,29 @@
 {
 	"LOGIN": {
 		"AUTO": {
-			"LABEL":		"Automatisches Login (Max)"			
+			"LABEL": "Automatisches Login (Max)"
 		}
 	},
 
 	"PROFILE": {
-		"E-MAIL":		"E-Mail",
-		"MOBILE":		"Mobiltelfon"
+		"E-MAIL": "E-Mail",
+		"MOBILE": "Mobiltelfon"
 	},
 
 	"LANG":	{
-		"DE_DE":		"Deutsch",
-		"EN_US":		"Englisch",
+		"DE_DE": "Deutsch",
+		"EN_US": "Englisch",
 		"SWITCH": {
-			"SUCCESS":		"Sprache auf {{lang}} gestellt.",
-			"ERROR":		"Konnte Sprache nicht auf {{lang}} stellen.",
+			"SUCCESS": "Sprache auf {{lang}} gestellt.",
+			"ERROR": "Konnte Sprache nicht auf {{lang}} stellen.",
 			"LABEL": {
-				"DE_DE":		"@:LANG.DE_DE",
-				"EN_US":		"@:LANG.EN_US"
+				"DE_DE": "@:LANG.DE_DE",
+				"EN_US": "@:LANG.EN_US"
 			}
 		}
-	}
+	},
+
+    "AGB" : {
+        "LABEL": "AGB"
+    }
 }

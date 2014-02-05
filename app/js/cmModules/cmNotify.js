@@ -47,11 +47,11 @@ cmNotify.service('cmNotify', [
 						}
 		}
 	}
-])
+]);
 
 cmNotify.directive('cmNotify', function(){
 	return {		
 		priority:	10000,		
 		template:	'<div growl></div>'
 	}
-})
+});

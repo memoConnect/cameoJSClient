@@ -1,25 +1,29 @@
 {
-	"LOGIN": {
-		"AUTO": {
-			"LABEL":		"Auto login (Max)"			
-		}
-	},
+    "LOGIN": {
+        "AUTO": {
+        "LABEL": "Auto login (Max)"
+        }
+    },
 
 	"PROFILE": {
-		"E-MAIL":		"E-mail",
-		"MOBILE":		"mobile"
+		"E-MAIL": "E-mail",
+		"MOBILE": "mobile"
 	},
 
-	"LANG":	{
-		"DE_DE":		"German",
-		"EN_US":		"English",
-		"SWITCH": {
-			"SUCCESS":		"Language switched to {{lang}}.",
-			"ERROR":		"Unable to switch to {{lang}}.",
-			"LABEL": {
-				"DE_DE":		"@:LANG.DE_DE",
-				"EN_US":		"@:LANG.EN_US"
-			}
-		}
-	}
+    "LANG":	{
+        "DE_DE": "German",
+        "EN_US": "English",
+        "SWITCH": {
+            "SUCCESS": "Language switched to {{lang}}.",
+            "ERROR": "Unable to switch to {{lang}}.",
+            "LABEL": {
+                "DE_DE": "@:LANG.DE_DE",
+                "EN_US": "@:LANG.EN_US"
+            }
+        }
+    },
+
+    "AGB" : {
+        "LABEL": "General Business Conditions"
+    }
 }
