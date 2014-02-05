@@ -40,9 +40,8 @@ cmLanguage.config([
         	return('en_US')
         }
 
-        $translateProvider.preferredLanguage( getBrowserLangugage() );        
-        $translateProvider.useLocalStorage();                
-        
+        $translateProvider.preferredLanguage( getBrowserLangugage() );                
+        // Breaks test: $translateProvider.useLocalStorage();
     }
 ])
 

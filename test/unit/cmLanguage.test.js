@@ -100,8 +100,7 @@ describe("cmLanguage", function() {
 
         var ctrl, scope, translate, compile
         
-
-        beforeEach(module('cmLanguage', function($translateProvider){
+        beforeEach(module('cmLanguage', function($translateProvider){            
             $translateProvider.translations('en_US', {
                 'TEST': 'works',            
             })
@@ -110,11 +109,10 @@ describe("cmLanguage", function() {
 
         
         beforeEach(inject(function($rootScope, $controller, _$compile_, cmTranslate){
-            scope       = $rootScope.$new()            
-            ctrl        = $controller('LanguageCtrl', {$scope: scope})            
-            translate   = cmTranslate
-            $compile    = _$compile_           
-           
+            scope        = $rootScope.$new()            
+            ctrl         = $controller('LanguageCtrl', {$scope: scope})            
+            translate    = cmTranslate
+            $compile     = _$compile_       
         }))
         
         
@@ -126,12 +124,6 @@ describe("cmLanguage", function() {
 
         it('should provude a service "cmTranslate".', function(){
             expect(translate).toBeDefined()
-        })
-
-
-
-        it('shoudl translate the names of all supported languages', function(){
-            console.log(cameo)
         })
 
 
@@ -150,8 +142,7 @@ describe("cmLanguage", function() {
         })
 
 
-        it('should return translate with filter \'cmTranslate\'', function(){
-            
+        it('should provide translation filter \'cmTranslate\'', function(){            
             var el = $('<span>{{"TEST"|cmTranslate}}</span>')
                   
             $compile(el)(scope)
