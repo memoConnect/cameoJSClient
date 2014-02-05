@@ -1,6 +1,7 @@
 describe("cmLanguage", function() {
 
-    xdescribe("setup", function(){
+    
+    describe("setup", function(){
 
         var language_tables = {};
 
@@ -96,7 +97,8 @@ describe("cmLanguage", function() {
     })
 
 
-    describe("Module", function() {
+    console.log('test disabled cmLanguage')
+    xdescribe("Module", function() {
 
         var ctrl, scope, translate
 
