@@ -1,9 +1,9 @@
 <form ng-controller="ProfileCtrl" autocomplete="off">
 	<div cm-verify="mail">		
-		<input type="text" placeholder="{{'PROFILE.E-MAIL' | cmTranslate}}"> <span>{{status.mail}}</span><button ng-click="verify()">verfiy</button>
+		<input type="text" placeholder="{{'PROFILE.E-MAIL' | cmTranslate}}" value={{mail}}> <span>{{status.mail}}</span><button ng-click="verify()">verfiy</button>
 	</div>
 	<div cm-verify="phone-number">
-		<input type="text" placeholder="{{'PROFILE.MOBILE' | cmTranslate}}"> <span>{{status.phoneNumber}}</span><button ng-click="verify()">verfiy</button>
+		<input type="text" placeholder="{{'PROFILE.MOBILE' | cmTranslate}}" value={{phoneNumber}}> <span>{{status.phoneNumber}}</span><button ng-click="verify()">verfiy</button>
 	</div>
 </form>
 
