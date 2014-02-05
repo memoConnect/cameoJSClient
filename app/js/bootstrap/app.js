@@ -31,7 +31,7 @@ app.service('cm',[
             crypt:      cmCrypt
         }
     }
-])
+]);
 
 app.config(['$routeProvider', '$locationProvider',
 function($routeProvider, $locationProvider){
@@ -78,7 +78,6 @@ function($rootScope, $location, $cookieStore){
 //        var path_exceptions = ['/login', '/registry'];
         var path = $location.$$path;
 
-        /*
         if(angular.isUndefined($cookieStore.get("token"))){
             if(path != "/login" && path != "/registry" && path != "/agb" && path != "/disclaimer"){
                 $location.path("/login");
@@ -90,6 +89,6 @@ function($rootScope, $location, $cookieStore){
         if(angular.isDefined($cookieStore.get("token"))){
             cameo.token = $cookieStore.get("token");
         }
-        */
+
     });
 }]);

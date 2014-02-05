@@ -18,5 +18,7 @@
 		}
 	},
 
-    "AGB_LABEL": "AGB"
+    "AGB" : {
+        "LABEL": "AGB"
+    }
 }
