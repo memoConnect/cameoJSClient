@@ -90,10 +90,5 @@ function($rootScope, $location, $cookieStore){
         if(angular.isDefined($cookieStore.get("token"))){
             cameo.token = $cookieStore.get("token");
         }
-<<<<<<< HEAD
-
-=======
-        
->>>>>>> refs/heads/dev
     });
 }]);
