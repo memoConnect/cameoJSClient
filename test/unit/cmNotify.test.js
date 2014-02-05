@@ -7,17 +7,11 @@ describe("cmNotify", function() {
 
 	beforeEach(module("cmNotify"))
 	beforeEach(inject(function($rootScope, $compile, _$http_, _$httpBackend_, cmNotify){
-		notify 		= cmNotify
-		el			= $('<div cm-notify></div>')
-		scope		= $rootScope.$new()
-		$backend	= _$httpBackend_
-		$http		= _$http_
-
-		$backend.whenGET('/anyurl').respond({
-			"messages":	[
-				{text: 		"my message", severity:	"warn"}
-			]
-		})
+		notify 			= cmNotify
+		el				= $('<div cm-notify></div>')
+		scope			= $rootScope.$new()
+		$httpBackend	= _$httpBackend_
+		$http			= _$http_	
 
 		$compile(el)(scope)
 		scope.$digest()
@@ -65,7 +59,16 @@ describe("cmNotify", function() {
 	})
 
 	it('should intercept messages in backend communication.', function(){
-		$http.get('/anyurl')
-		expect(el.find('.growl').children().length).toEqual(1)	
+		$httpBackend.whenGET('/any').respond({
+			"messages":	[
+				{text: 		"my warning", severity:	"warn"},
+				{text: 		"my error", severity:	"error"},
+			]
+		})
+
+		$http.get('/any')
+		$httpBackend.flush();				
+
+		expect(el.find('.growl').children().length).toEqual(2)	
 	})
 })
