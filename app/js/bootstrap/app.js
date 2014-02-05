@@ -14,7 +14,8 @@ var app = angular.module('cameoClient', [
     'cmLogger',
     'cmNotify',
     'cmLanguage',
-    'cmCrypt'
+    'cmCrypt',
+    'cmVerify'
 ]);
 
 app.service('cm',[
@@ -65,9 +66,9 @@ function($routeProvider, $locationProvider){
         templateUrl: 'tpl/form/profile.html',
         controller: 'ProfileCtrl'
     }).
-    when('/verification/:secret', {
-        template: '<button>bestätigen {{$routeParams}}</button>'
-        //controller: 'ConfirmCtrl'
+    when('/confirm/:secret', {
+        templateUrl: 'tpl/form/confirm.html',
+        controller:  'ConfirmCtrl'
     }).
     otherwise({
         redirectTo: '/login'
