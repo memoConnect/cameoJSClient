@@ -1,2 +1,17 @@
-body {padding:20px;text-align:center}
+body {padding:20px}
 pre {text-align:left}
+
+.mt5 {margin-top:5px}
+.mb5 {margin-bottom:5px}
+.mb10 {margin-bottom:10px !important}
+
+i {display:inline-block;margin:0;padding:0;background-repeat: no-repeat;width:18px;height:18px;background-position:center}
+i.ok {background-image: url('../gfx/glyphicons_206_ok_2.png');background-size:18px 14px}
+i.rm {background-image: url('../gfx/glyphicons_207_remove_2.png')}
+i.eye-open {background-image: url('../gfx/glyphicons_051_eye_open.png');background-size:18px 10px}
+i.eye-close {background-image: url('../gfx/glyphicons_052_eye_close.png');background-size:18px 14px}
+
+.input-group-addon {background-color: transparent}
+
+.form-signin {max-width: 330px;padding:15px;margin:0 auto}
+input[type="checkbox"] {border:none !important;box-shadow: none !important}

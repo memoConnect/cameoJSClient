@@ -28,6 +28,7 @@ module.exports = function (config) {
         proxies : {
           //'/': 'http://localhost:9000/'
           '/app/': 'http://localhost:9000/'
+//          '/app/': 'http://localhost/cameoJSClient/app/' // empu
         }
     })
 }
