@@ -6,6 +6,7 @@ module.exports = function (config) {
         files : [
             'app/js/vendor/angular/angular.js',
             'app/js/vendor/angular-translate/angular-translate.js',
+            'app/js/cmModules/*.js',
             'app/js/vendor/**/*.js',        
             'app/js/bootstrap/*.js',
             'app/js/**/*.js',
