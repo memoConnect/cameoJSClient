@@ -19,7 +19,7 @@ var app = angular.module('cameoClient', [
 ]);
 
 app.service('cm',[
-    'cmAPI'
+    'cmAPI',
     'cmCrypt',
     'cmLogger',
     'cmNotify',
@@ -32,7 +32,7 @@ app.service('cm',[
             log:        cmLogger,
             notify:     cmNotify,
             translate:  cmTranslate,
-            crypt:      cmCrypt
+            crypt:      cmCrypt,
             api:        cmAPI
         }
     }

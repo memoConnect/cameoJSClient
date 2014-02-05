@@ -2,7 +2,7 @@
 
 //Authentications Module
 
-var cmAuth = angular.Module(cmAuth, ['cmAPI'])
+var cmAuth = angular.module(cmAuth, ['cmAPI'])
 
 cmAuth.factory('cmAuth',[
 
