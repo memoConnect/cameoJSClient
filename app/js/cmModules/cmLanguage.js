@@ -50,7 +50,7 @@ cmLanguage.service('cmTranslate', ['$translate', function($translate){ return $t
 cmLanguage.filter('cmTranslate', ['translateFilter', function(translateFilter){ return translateFilter }])
 
 
-//Does not work as intendet <div cm-translate="LANG.DE_DE"></div> stays empty
+//Does not work as intended <div cm-translate="LANG.DE_DE"></div> stays empty
 cmLanguage.directive('cmTranslate', ['translateDirective', function(translateDirective){ return translateDirective[0] }])
 
 cmLanguage.controller('LanguageCtrl', [
