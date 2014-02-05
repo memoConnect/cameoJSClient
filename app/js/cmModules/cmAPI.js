@@ -5,7 +5,7 @@ var cmAPI = angular.module('cmAPI', [])
 cmAPI.fayctory('cmAPI', [
 
 	'$http',
-	'$cookiestore'
+	'$cookiestore',
 
 	function($http){
 		return {
