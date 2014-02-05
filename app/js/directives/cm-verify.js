@@ -2,9 +2,9 @@
 app.directive('cmVerify', function () {
     return  {
         restrict    :   'AE',
-        scope       :   false,        
+        scope       :   true,        
 
-        controller  :   function($scope, $element, $attrs) {
+        controller  :   ['$scope', '$element', '$attrs', 'cm', function($scope, $element, $attrs) {
         					var params 		= $attrs.cmVerify.replace(/\s/, '').split(","),
         						to_verify 	= {}
 
@@ -12,12 +12,31 @@ app.directive('cmVerify', function () {
         						to_verify[$.camelCase('verify-'+param)] = true
         					})
 
+        					$scope.getData = function(){
+        						$scope.status = {}
+        						$.each(params, function(key, value){
+        							$scope.status[$.camelCase(value)] = Math.random(0) > 0.5 ? 'verified' : 'rejected'
+        						})
+        					}
+
         					$scope.verify = function(){
         						$.post('/verify', to_verify)
-        						.success(function(){})
+        						.success(function(){        							
+        							$element.addClass('verified')
+        							//cm.log.debug('verified!')
+        						})
+        						.error(function(){
+        							$element.addClass('rejected')
+        							//cm.log.error('error: unable to verify.')	
+        						})
+        						.always(function(){
+        							$element.removeClass('pending')
+        						})
 
         						$element.addClass('pending')        						
         					}
-        				}
+
+        					$scope.getData()
+        				}]
     }
 });
