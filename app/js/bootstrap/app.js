@@ -11,7 +11,7 @@ var cameo = {
 var app = angular.module('cameoClient', [
     'ngRoute',
     'ngCookies',    
-    'cmAPI',
+    'cmApiAuth',
     'cmCrypt',
     'cmLanguage',
     'cmLogger',
@@ -19,7 +19,7 @@ var app = angular.module('cameoClient', [
 ]);
 
 app.service('cm',[
-    'cmAPI',
+    'cmApiAuth',
     'cmCrypt',
     'cmLogger',
     'cmNotify',
@@ -33,7 +33,8 @@ app.service('cm',[
             notify:     cmNotify,
             translate:  cmTranslate,
             crypt:      cmCrypt,
-            api:        cmAPI
+            api:        cmApi,
+            auth:       cmAuth
         }
     }
 ])

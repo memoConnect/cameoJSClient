@@ -1,11 +1,40 @@
 //API Wrapper
 
-var cmAPI = angular.module('cmAPI', [])
+var cmApiAuth = angular.module('cmApiAuth', [])
 
-cmAPI.factory('cmAPI', [
+
+//TODO config cameo
+
+cmApiAuth.factory('cmAuth',[
 
 	'$http',
-	'$cookiestore',
+
+	function(cmAPI){
+	    return {
+	        requestToken: function(auth){  //formerlry getToken
+	            return	$http.get({
+	                		url: cameo.restApi+'/token',
+	                		headers: {
+	                    		'Authorization': 'Basic '+auth
+	                		}
+	            		})
+	        }
+
+	       ,createUser: function(data){
+	            return	$http.post({
+	               			url: cameo.restApi+'/account',
+	               			data: data
+	            		})
+	        }
+	    }
+	}
+
+]);
+
+cmApiAuth.factory('cmAPI', [
+
+	'$http',
+	'cmAuth',
 
 	function($http){
 		return {
@@ -13,7 +42,7 @@ cmAPI.factory('cmAPI', [
 							return  cameo.restApi+		// base url API
 									path+				// path to specific method
 									(path.match(/\?/) ? '&token=' : '?token=')+		//add or extend paramters
-									$cookieStore.get("token")						//add auth token			TODO cmAuth							
+									cmAuth.getToken()								//add auth token							
 						},
 
 			get:		function(path, config){ return $http.get	(getUrl(path), config) },
@@ -25,3 +54,4 @@ cmAPI.factory('cmAPI', [
 		}
 	}
 ])
+
