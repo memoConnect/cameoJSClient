@@ -12,15 +12,15 @@ cmNotify.config(['growlProvider', '$httpProvider', function(growlProvider, $http
 		{
 			"someOtherData": {...},
 			"messages": [
-			    {"text":"this is a server message", "severity": "warn"},
-			    {"text":"this is another server message", "severity": "info"},
-			    {"text":"and another", "severity": "error"}
+			    {"text":"this is a server message", 		"severity": "warn"},
+			    {"text":"this is another server message", 	"severity": "info"},
+			    {"text":"and another", 						"severity": "error"}
 			]
 		}
 	*/
 	//if the backend respond with the above json 'messages' will be fetched:
 
-	growlProvider.messagesKey("message");
+	growlProvider.messagesKey("messages");
     growlProvider.messageTextKey("text");
     growlProvider.messageSeverityKey("severity");
     $httpProvider.responseInterceptors.push(growlProvider.serverMessagesInterceptor);
@@ -47,11 +47,11 @@ cmNotify.service('cmNotify', [
 						}
 		}
 	}
-])
+]);
 
 cmNotify.directive('cmNotify', function(){
 	return {		
 		priority:	10000,		
 		template:	'<div growl></div>'
 	}
-})
+});

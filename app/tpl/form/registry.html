@@ -5,9 +5,11 @@
     <div class="form-group">
         <label for="cameoName" class="col-sm-1 control-label">Username<sup>*</sup></label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" id="cameoName" name="cameoName" placeholder="Username" ng-model="cameoName" required />
+            <input id="cameoName" name="cameoName" type="text" class="form-control" ng-model="formData.cameoName" placeholder="Username" ng-minlength="6" ng-maxlength="20"  maxlength="20" required />
             <div class="custom-error" ng-show="registryForm.cameoName.$dirty && registryForm.cameoName.$invalid">
-                Invalid: <span ng-show="registryForm.cameoName.$error.required">Username is required.</span>
+                <div ng-show="registryForm.cameoName.$error.required">Username is required.</div>
+                <!--<br />-->
+                <div ng-show="registryForm.cameoName.$error.minlength || registryForm.cameoName.$error.maxlength">min 6 letters</div>
             </div>
         </div>
     </div>
@@ -24,7 +26,7 @@
     <div class="form-group">
         <label for="email" class="col-sm-1 control-label">E-Mail</label>
         <div class="col-sm-5">
-            <input type="email" class="form-control" id="email" placeholder="E-Mail" ng-model="formData.email" />
+            <input id="email" name="email" type="text" class="form-control" placeholder="E-Mail" ng-model="formData.email" ng-pattern="/^[a-zA-Z0-9.-_]+@[a-zA-Z0-9.-_]+.[a-zA-Z][a-zA-Z]+$/" />
         </div>
     </div>
 

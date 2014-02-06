@@ -10,11 +10,12 @@ var cameo = {
 
 var app = angular.module('cameoClient', [
     'ngRoute',
-    'ngCookies',
+    'ngCookies',    
+//    'cmApiAuth',
+    'cmCrypt',
+    'cmLanguage',
     'cmLogger',
     'cmNotify',
-    'cmLanguage',
-    'cmCrypt'
 ]);
 
 app.service('cm',[
@@ -22,16 +23,18 @@ app.service('cm',[
     'cmNotify',
     'cmTranslate',
     'cmCrypt',
+//    'cmApiAuth',
 
-    function(cmLogger, cmNotify, cmTranslate){
+    function(cmLogger, cmNotify, cmTranslate, cmCrypt, cmApiAuth){
         return {
             log:        cmLogger,
             notify:     cmNotify,
             translate:  cmTranslate,
-            crypt:      cmCrypt
+            crypt:      cmCrypt,
+//            apiAuth:    cmApiAuth
         }
     }
-])
+]);
 
 app.config(['$routeProvider', '$locationProvider',
 function($routeProvider, $locationProvider){
@@ -78,6 +81,7 @@ function($rootScope, $location, $cookieStore){
 //        var path_exceptions = ['/login', '/registry'];
         var path = $location.$$path;
 
+        
         if(angular.isUndefined($cookieStore.get("token"))){
             if(path != "/login" && path != "/registry" && path != "/agb" && path != "/disclaimer"){
                 $location.path("/login");

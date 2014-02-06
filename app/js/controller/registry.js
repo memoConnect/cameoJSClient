@@ -20,13 +20,19 @@ app.controller('RegistryCtrl', ['$scope','$location','AuthService','cm',
              * if phone then form ok?
              *
              */
-
             // validate cameoName / loginName
+            if($scope.registryForm.cameoName.$valid == false){
+                cm.notify.warn("Username is required!");
+                return false;
+            } else {
+                data.loginName = $scope.formData.cameoName;
+            }
 
 
             //validate email
-            if($scope.formData.email != "" && validateEmail($scope.formData.email)){
-                data.email = $scope.formData.email;
+            if($scope.registryForm.email.$valid == false){
+                cm.notify.warn("E-Mail has wrong format!");
+                return false;
             }
 
 

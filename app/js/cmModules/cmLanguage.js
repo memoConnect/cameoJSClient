@@ -23,11 +23,12 @@
 
 var cmLanguage = angular.module('cmLanguage', ['pascalprecht.translate', 'cmNotify'])
 
+
 cmLanguage.config([
 
     '$translateProvider', //from angular-translate
 
-    function ($translateProvider) {    	
+    function ($translateProvider) {    	    	
     	//tell translation service where to find language tables
         $translateProvider.useStaticFilesLoader({
        		prefix: 'languages/lang-',            //neue route BE
@@ -39,8 +40,8 @@ cmLanguage.config([
         	return('en_US')
         }
 
-        $translateProvider.preferredLanguage( getBrowserLangugage() );
-        $translateProvider.useLocalStorage();        
+        $translateProvider.preferredLanguage( getBrowserLangugage() );                
+        // Breaks test: $translateProvider.useLocalStorage();
     }
 ])
 
@@ -50,7 +51,7 @@ cmLanguage.service('cmTranslate', ['$translate', function($translate){ return $t
 cmLanguage.filter('cmTranslate', ['translateFilter', function(translateFilter){ return translateFilter }])
 
 
-//Does not work as intendet <div cm-translate="LANG.DE_DE"></div> stays empty
+//Does not work as intended <div cm-translate="LANG.DE_DE"></div> stays empty
 cmLanguage.directive('cmTranslate', ['translateDirective', function(translateDirective){ return translateDirective[0] }])
 
 cmLanguage.controller('LanguageCtrl', [
