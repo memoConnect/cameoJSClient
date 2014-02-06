@@ -1,4 +1,4 @@
-app.directive('cmValidatePhone',function(){
+app.directive('cmValidatePhone',['$http', function($http){
     //http://stackoverflow.com/questions/16863389/angular-js-email-validation-with-unicode-characters
     return {
         require: 'ngModel',
@@ -6,19 +6,30 @@ app.directive('cmValidatePhone',function(){
             element.on('blur', function(evt){
                 scope.$apply(function(){
                     var val = element.val();
-                    var check = true;
                     if(val != ""){
-                        // http://stackoverflow.com/a/46181/11236
-                        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                        check = re.test(val);
-                    }
-                    if(check !== true){
-                        model.$setValidity('email', false);
+                        $http({
+                            method: 'POST',
+                            url: cameo.restApi+'/services/checkPhoneNumber',
+                            data: {phoneNumber:val}
+                        }).success(function(r){
+                            if(angular.isDefined(r) && angular.isDefined(r.res) && r.res == 'OK' ){
+                                model.$setValidity('phone', true);
+
+                                if(angular.isDefined(r.data) && angular.isDefined(r.data.phoneNumber) && r.data.phoneNumber != ''){
+                                    model.$setViewValue(r.data.phoneNumber);
+                                    model.$render();
+                                }
+                            } else {
+                                model.$setValidity('phone', false);
+                            }
+                        }).error(function(r){
+                            model.$setValidity('phone', false);
+                        });
                     } else {
-                        model.$setValidity('email', true);
+                        model.$setValidity('phone', true);
                     }
                 });
             });
         }
     }
-});
+}]);
