@@ -1,26 +1,23 @@
 'use strict';
 app.controller('RegistryCtrl', ['$scope','$location','AuthService','cm',
     function($scope,$location, AuthService, cm){
-        $scope.formData = {loginName:'',password:'',email:'',phoneNumber:'',name:''};
+        $scope.formData = {loginName:'',password:'',email:'',phoneNumber:'',name:'',agb:''};
 
+        /**
+         * @ ToDo validate formData
+         * if phone then form ok?
+         * @ ToDo check LoginName
+         */
         $scope.regUser = function(){
             var data = {
-                loginName: $scope.formData.cameoName,
-                password: $scope.formData.password,
+                loginName: '',
+                password: '',
                 email: "",
-                phoneNumber: $scope.formData.phone,
-                name: $scope.formData.name
+                phoneNumber: '',
+                name: ''
             };
 
-            /**
-             * @ ToDo validate formData
-             * if pw !empty && != none
-             * if cameoName != '' && not exists && min length
-             * if email then form ok?
-             * if phone then form ok?
-             *
-             */
-            // validate cameoName / loginName
+            // check cameoName == loginName
             if($scope.registryForm.cameoName.$valid == false){
                 cm.notify.warn("Username is required!");
                 return false;
@@ -28,17 +25,26 @@ app.controller('RegistryCtrl', ['$scope','$location','AuthService','cm',
                 data.loginName = $scope.formData.cameoName;
             }
 
-
-            //validate email
-            if($scope.registryForm.email.$valid == false){
-                // http://stackoverflow.com/a/46181/11236
-
-                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                console.log(re.test(email));
-                cm.notify.warn("E-Mail has wrong format!");
+            // check password
+            if($scope.formData.password == '' || $scope.formData.password == 'none'){
+                cm.notify.warn("Password is required!");
                 return false;
             }
 
+            // check email
+            if($scope.registryForm.email.$valid == false){
+                // http://stackoverflow.com/a/46181/11236
+                cm.notify.warn("E-Mail has wrong format!");
+                return false;
+            } else {
+                data.email = $scope.formData.email;
+            }
+
+            // check agb
+            if($scope.registryForm.agb.$valid == false){
+                cm.notify.warn("Confirm AGB!");
+                return false;
+            }
 
             console.log(data)
             cm.log.debug("ende");
@@ -58,20 +64,6 @@ app.controller('RegistryCtrl', ['$scope','$location','AuthService','cm',
                 // Notifiation to User res,error
             });
         };
-
-        function validateEmail(mail){
-            if(angular.isUndefined(mail)){
-                return false;
-            }
-
-            var regex = '^[a-zA-Z0-9.-_]+@[a-zA-Z0-9.-_]+.[a-zA-Z][a-zA-Z]+$';
-            if(regex.test(mail)){
-                return true;
-            }
-
-            return false;
-        }
-
     }
 ]);
 
@@ -89,9 +81,10 @@ app.directive('cmValidateEmail',function(){
                         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                         check = re.test(val);
                     }
-                    console.log(check);
                     if(check !== true){
                         model.$setValidity('email', false);
+                    } else {
+                        model.$setValidity('email', true);
                     }
                 });
             });
