@@ -1,7 +1,7 @@
 'use strict';
 app.controller('RegistryCtrl', ['$scope','$location','AuthService','cm',
     function($scope,$location, AuthService, cm){
-        $scope.formData = {loginName:'',password:'',email:'',phoneNumber:'',name:'',agb:''};
+        $scope.formData = {loginName:'',password:'',email:'',phoneNumber:'',name:''};
 
         /**
          * @ ToDo validate formData
@@ -10,11 +10,11 @@ app.controller('RegistryCtrl', ['$scope','$location','AuthService','cm',
          */
         $scope.regUser = function(){
             var data = {
-                loginName: '',
-                password: '',
-                email: "",
-                phoneNumber: '',
-                name: ''
+                loginName: null,
+                password: null,
+                email: null,
+                phoneNumber: null,
+                name: null
             };
 
             // check cameoName == loginName
@@ -29,6 +29,8 @@ app.controller('RegistryCtrl', ['$scope','$location','AuthService','cm',
             if($scope.formData.password == '' || $scope.formData.password == 'none'){
                 cm.notify.warn("Password is required!");
                 return false;
+            } else {
+                data.password = $scope.formData.password;
             }
 
             // check email
@@ -37,7 +39,14 @@ app.controller('RegistryCtrl', ['$scope','$location','AuthService','cm',
                 cm.notify.warn("E-Mail has wrong format!");
                 return false;
             } else {
-                data.email = $scope.formData.email;
+                if($scope.formData.email != ''){
+                    data.email = $scope.formData.email;
+                }
+            }
+
+            // check name
+            if($scope.formData.name != ''){
+                data.name = $scope.formData.name;
             }
 
             // check agb
@@ -66,28 +75,3 @@ app.controller('RegistryCtrl', ['$scope','$location','AuthService','cm',
         };
     }
 ]);
-
-app.directive('cmValidateEmail',function(){
-    //http://stackoverflow.com/questions/16863389/angular-js-email-validation-with-unicode-characters
-    return {
-        require: 'ngModel',
-        link: function(scope,element,attrs,model){
-            element.on('blur', function(evt){
-                scope.$apply(function(){
-                    var val = element.val();
-                    var check = true;
-                    if(val != ""){
-                        // http://stackoverflow.com/a/46181/11236
-                        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                        check = re.test(val);
-                    }
-                    if(check !== true){
-                        model.$setValidity('email', false);
-                    } else {
-                        model.$setValidity('email', true);
-                    }
-                });
-            });
-        }
-    }
-});
