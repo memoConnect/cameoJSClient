@@ -1,3 +1,4 @@
+<div cm-notify></div>
 <div class="page-header"><h2>Registry</h2></div>
 
 <form name="registryForm" class="form-horizontal" role="form" ng-submit="regUser()" autocomplete="off" novalidate>
@@ -26,7 +27,7 @@
     <div class="form-group">
         <label for="email" class="col-sm-1 control-label">E-Mail</label>
         <div class="col-sm-5">
-            <input id="email" name="email" type="text" class="form-control" placeholder="E-Mail" ng-model="formData.email" ng-pattern="/^[a-zA-Z0-9.-_]+@[a-zA-Z0-9.-_]+.[a-zA-Z][a-zA-Z]+$/" />
+            <input id="email" name="email" type="text" class="form-control" placeholder="E-Mail" ng-model="formData.email" cm-validate-email />
         </div>
     </div>
 
