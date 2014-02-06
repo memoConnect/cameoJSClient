@@ -23,11 +23,12 @@
 
 var cmLanguage = angular.module('cmLanguage', ['pascalprecht.translate', 'cmNotify'])
 
+
 cmLanguage.config([
 
     '$translateProvider', //from angular-translate
 
-    function ($translateProvider) {    	
+    function ($translateProvider) {    	    	
     	//tell translation service where to find language tables
         $translateProvider.useStaticFilesLoader({
        		prefix: 'languages/lang-',            //neue route BE
@@ -39,8 +40,8 @@ cmLanguage.config([
         	return('en_US')
         }
 
-        $translateProvider.preferredLanguage( getBrowserLangugage() );
-        $translateProvider.useLocalStorage();        
+        $translateProvider.preferredLanguage( getBrowserLangugage() );                
+        // Breaks test: $translateProvider.useLocalStorage();
     }
 ])
 

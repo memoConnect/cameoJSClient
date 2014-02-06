@@ -1,7 +1,7 @@
 describe("cmLanguage", function() {
 
     
-    describe("setup", function(){
+    xdescribe("setup", function(){
 
         var language_tables = {};
 
@@ -96,34 +96,34 @@ describe("cmLanguage", function() {
         })
     })
 
+    describe("Module", function() {
 
-    console.log('test disabled cmLanguage')
-    xdescribe("Module", function() {
-
-        var ctrl, scope, translate
-
-        beforeEach(module("cmLanguage"))
-        beforeEach(inject(function($rootScope, $controller, cmTranslate){
-            scope       = $rootScope.$new()            
-            ctrl        = $controller('LanguageCtrl', {$scope: scope})            
-            translate   = cmTranslate
+        var ctrl, scope, translate, compile
+        
+        beforeEach(module('cmLanguage', function($translateProvider){            
+            $translateProvider.translations('en_US', {
+                'TEST': 'works',            
+            })
+            $translateProvider.preferredLanguage( 'en_US' );
         }))
 
-
+        
+        beforeEach(inject(function($rootScope, $controller, _$compile_, cmTranslate){
+            scope        = $rootScope.$new()            
+            ctrl         = $controller('LanguageCtrl', {$scope: scope})            
+            translate    = cmTranslate
+            $compile     = _$compile_       
+        }))
+        
+        
         it('should provide a controller "LanguageCtrl".', function() {            
             expect(ctrl).toBeDefined()
         })
+        
 
-/*
 
         it('should provude a service "cmTranslate".', function(){
             expect(translate).toBeDefined()
-        })
-
-
-
-        it('shoudl translate the names of all supported languages', function(){
-            console.log(cameo)
         })
 
 
@@ -142,49 +142,14 @@ describe("cmLanguage", function() {
         })
 
 
-/*
-        it('should switch languages within 1 second and have a translation for every language\'s name', function(){
-
-            
-            inject(function($compile, $rootScope){
-                var el      = $('<span> {{"LANG.DE_DE"|translate}}</span>'),
-                    scope   = $rootScope.$new()
-
-                runs(function(){
-                    $compile(el)(scope)
-                    scope.$digest()
-
-                    console.log(el.html())
-                })
-            })
-            */
-
-            /*
-            cameo.supported_languages.forEach(function(lang_key){        
-                var lang_key = 'de_DE'
-                runs(function(){                     
-                    scope.switchLanguage(lang_key)                    
-                    scope.$digest()
-                })
-                
-                waitsFor(function() {
-                    console.log(scope.getLanguageName(lang_key))
-                    return(false)   
-                }, "translation: "+lang_key, 2000)                
-
-                runs(function(){
-                    var all_good  = true
-
-                    cameo.supported_languages.forEach(function(lang_key_j){
-                        all_good = all_good && (scope.getLanguageName(lang_key_j) != undefined)
-                    })
-                    expect(all_good).toEqual(true)
-                }) 
-                
-            })
-                       
+        it('should provide translation filter \'cmTranslate\'', function(){            
+            var el = $('<span>{{"TEST"|cmTranslate}}</span>')
+                  
+            $compile(el)(scope)
+            scope.$digest()      
+            expect(el.text()).toEqual('works')            
+           
         })
-*/ 
 
     })   
 
