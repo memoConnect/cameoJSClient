@@ -6,7 +6,6 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
         $scope.userNameAlternatives = [];
         $scope.showUserNameAlternatives = false;
 
-
         $scope.checkUserName = function(){
             if($scope.registryForm.cameoName.$valid){
                 console.log($scope.registryForm.cameoName.$viewValue)
@@ -26,7 +25,7 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
                         $scope.registryForm.cameoName.$invalid = true;
                     }
                 }).error(function(r){
-                        cm.notify.info("Username exists, please choose an other one, thx!");
+                        cm.notify.info("Username exists, please choose an other one, thx!",{ttl:5000});
                     if(angular.isDefined(r) && angular.isDefined(r.data)){
                         if(angular.isDefined(r.data.alternative)){
                             // show alternatives

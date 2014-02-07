@@ -33,17 +33,17 @@ cmNotify.service('cmNotify', [
     'growl',
     function (growl) {
         return {
-            warn: function (msg) {
-                growl.addWarnMessage(msg);
+            warn: function (msg, options) {
+                growl.addWarnMessage(msg, options);
             },
-            info: function (msg) {
-                growl.addInfoMessage(msg);
+            info: function (msg, options) {
+                growl.addInfoMessage(msg, options);
             },
-            success: function (msg) {
-                growl.addSuccessMessage(msg);
+            success: function (msg, options) {
+                growl.addSuccessMessage(msg, options);
             },
-            error: function (msg) {
-                growl.addErrorMessage(msg);
+            error: function (msg, options) {
+                growl.addErrorMessage(msg, options);
             }
         }
     }
