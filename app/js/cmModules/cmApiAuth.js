@@ -42,21 +42,23 @@ cmApiAuth.factory('cmApi', [
 	'cmAuth',
 
 	function($http, cmAuth){
-		return {
-			getUrl:		function(path){ 
-							return  cameo.restApi+		// base url API
-									path+				// path to specific method
-									(path.match(/\?/) ? '&token=' : '?token=')+		//add or extend paramters
-									cmAuth.getToken()								//add auth token							
-						},
+		var api 	=	function(method, path, config){
+							config.method	= 	method
+							config.url		= 	cameo.restApi+		// base url API
+												path+				// path to specific method
+												(path.match(/\?/) ? '&token=' : '?token=')+		//add or extend paramters
+												cmAuth.getToken()								//add auth token							
+							return $http(config)
+						}
 
-			get:		function(path, config){ return $http.get	(this.getUrl(path), config) },
-			post:		function(path, config){ return $http.post	(this.getUrl(path), config) },
-			delete:		function(path, config){ return $http.delete	(this.getUrl(path), config) },
-			head:		function(path, config){ return $http.head	(this.getUrl(path), config) },
-			put:		function(path, config){ return $http.put	(this.getUrl(path), config) },
-			jsonp:		function(path, config){ return $http.jsonp	(this.getUrl(path), config) },
-		}
+		api.get		=	function(path, config){ return api('GET',		path, config) }
+		api.post	=	function(path, config){ return api('POST',		path, config) }
+		api.delete	=	function(path, config){ return api('DELETE',	path, config) }
+		api.head	=	function(path, config){ return api('HEAD', 		path, config) }
+		api.put		=	function(path, config){ return api('PUT', 		path, config) }
+		api.jsonp	=	function(path, config){ return api('JSONP',		path, config) }						
+		
+		return api
 	}
 ])
 
