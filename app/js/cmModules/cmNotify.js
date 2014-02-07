@@ -6,21 +6,21 @@
 
 var cmNotify = angular.module('cmNotify', ['angular-growl'])
 
-cmNotify.config(['growlProvider', '$httpProvider', function (growlProvider, $httpProvider) {
-    //intercept messages from Backend:
-    /*
-     {
-     "someOtherData": {...},
-     "messages": [
-     {"text":"this is a server message", 		"severity": "warn"},
-     {"text":"this is another server message", 	"severity": "info"},
-     {"text":"and another", 						"severity": "error"}
-     ]
-     }
-     */
-    //if the backend respond with the above json 'messages' will be fetched:
+cmNotify.config(['growlProvider', '$httpProvider', function(growlProvider, $httpProvider) {
+	//intercept messages from Backend:
+	/*
+		{
+			"someOtherData": {...},
+			"messages": [
+			    {"text":"this is a server message", 		"severity": "warn"},
+			    {"text":"this is another server message", 	"severity": "info"},
+			    {"text":"and another", 						"severity": "error"}
+			]
+		}
+	*/
+	//if the backend respond with the above json 'messages' will be fetched:
 
-    growlProvider.messagesKey("messages");
+	growlProvider.messagesKey("messages");
     growlProvider.messageTextKey("text");
     growlProvider.messageSeverityKey("severity");
     $httpProvider.responseInterceptors.push(growlProvider.serverMessagesInterceptor);
@@ -30,28 +30,28 @@ cmNotify.config(['growlProvider', '$httpProvider', function (growlProvider, $htt
 }]);
 
 cmNotify.service('cmNotify', [
-    'growl',
-    function (growl) {
-        return {
-            warn: function (msg) {
-                growl.addWarnMessage(msg);
-            },
-            info: function (msg) {
-                growl.addInfoMessage(msg);
-            },
-            success: function (msg) {
-                growl.addSuccessMessage(msg);
-            },
-            error: function (msg) {
-                growl.addErrorMessage(msg);
-            }
-        }
-    }
+	'growl',
+	function(growl){
+		return {
+			warn:		function(msg){
+							growl.addWarnMessage(msg);
+						},
+			info:		function(msg){
+							growl.addInfoMessage(msg);
+						},
+			success:	function(msg){
+							growl.addSuccessMessage(msg);
+						},
+			error:		function(msg){
+							growl.addErrorMessage(msg);
+						}
+		}
+	}
 ]);
 
-cmNotify.directive('cmNotify', function () {
-    return {
-        priority: 10000,
-        template: '<div growl></div>'
-    }
+cmNotify.directive('cmNotify', function(){
+	return {		
+		priority:	10000,		
+		template:	'<div growl></div>'
+	}
 });

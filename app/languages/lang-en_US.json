@@ -6,8 +6,14 @@
     },
 
 	"PROFILE": {
-		"E-MAIL": "E-mail",
-		"MOBILE": "mobile"
+		"E-MAIL":		"E-mail",
+		"MOBILE":		"mobile"
+	},	
+
+	"VERIFICATION": {
+		"REQUEST": {
+			"LABEL":		"Request verification"
+		}
 	},
 
     "LANG":	{
