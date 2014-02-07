@@ -1,6 +1,7 @@
 'use strict';
 app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', 'cm',
     function ($scope, $location, $http, AuthService, cm) {
+        var reservationSecret = '';
         $scope.formData = {loginName: '', password: '', email: '', phoneNumber: '', name: ''};
         $scope.userNameAlternatives = [];
         $scope.showUserNameAlternatives = false;
@@ -9,6 +10,29 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
         $scope.checkUserName = function(){
             if($scope.registryForm.cameoName.$valid){
                 console.log($scope.registryForm.cameoName.$viewValue)
+
+                AuthService.checkAccountName({loginName:$scope.registryForm.cameoName.$viewValue}).
+                success(function(r){
+                    if(angular.isDefined(r) && angular.isDefined(r.res) && r.res == 'OK'){
+                        if(angular.isDefined(r.data) && angular.isDefined(r.data.reservationSecret)){
+                            reservationSecret = r.data.reservationSecret;
+                            $scope.registryForm.cameoName.$valid = true;
+                        } else {
+                            cm.notify.info("Error, check Username again!");
+                            $scope.registryForm.cameoName.$invalid = true;
+                        }
+                    } else {
+                        cm.notify.info("Error, check Username again!");
+                        $scope.registryForm.cameoName.$invalid = true;
+                    }
+                }).error(function(r){
+                        cm.notify.info("Username exists, please choose an other one, thx!");
+                    if(angular.isDefined(r) && angular.isDefined(r.data)){
+                        if(angular.isDefined(r.data.alternative)){
+                            // show alternatives
+                        }
+                    }
+                });
             }
         }
 
@@ -31,7 +55,7 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
                 cm.notify.warn("Username is required!");
                 return false;
             } else {
-                data.loginName = $scope.formData.cameoName;
+                data.loginName = $scope.registryForm.cameoName.$viewValue;
             }
 
             // check password
@@ -44,18 +68,27 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
 
             // check email
             if ($scope.registryForm.email.$valid == false) {
-                // http://stackoverflow.com/a/46181/11236
                 cm.notify.warn("E-Mail has wrong format!");
                 return false;
             } else {
-                if ($scope.formData.email != '') {
-                    data.email = $scope.formData.email;
+                if ($scope.registryForm.email.$viewValue != '') {
+                    data.email = $scope.registryForm.email.$viewValue;
+                }
+            }
+
+            // check phone
+            if ($scope.registryForm.phone.$valid == false) {
+                cm.notify.warn("Phone has wrong format!");
+                return false;
+            } else {
+                if ($scope.registryForm.phone.$viewValue != '') {
+                    data.phoneNumber = $scope.registryForm.phone.$viewValue;
                 }
             }
 
             // check name
-            if ($scope.formData.name != '') {
-                data.name = $scope.formData.name;
+            if ($scope.registryForm.name.$viewValue != '') {
+                data.name = $scope.registryForm.name.$viewValue;
             }
 
             // check agb
@@ -63,6 +96,14 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
                 cm.notify.warn("Confirm AGB!");
                 return false;
             }
+
+            if(reservationSecret == ''){
+                $scope.checkUserName();
+                return false;
+            } else {
+                data.reservationSecret = reservationSecret;
+            }
+
 
             console.log(data)
             cm.log.debug("ende");
