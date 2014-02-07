@@ -1,5 +1,9 @@
 /.idea/
 /node_modules/
+<<<<<<< HEAD
 /*.iml
+=======
+/cameoJSClient.iml
+>>>>>>> refs/heads/dev
 /target/
 /project/

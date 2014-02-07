@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
     // Do grunt-related things in here
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
@@ -49,7 +49,18 @@ module.exports = function(grunt) {
                 }
             }
         }
+        ,jshint: {
+            all: ['Gruntfile.js'
+                , 'app/js/bootstrap/*.js'
+                , 'app/js/service/*.js'
+                , 'app/js/bootstrap/*.js'
+                , 'app/js/directives/*.js'
+                , 'app/js/controller/*.js'
+                , 'test/jasmine/**/*.js']
+        }
     });
+
+    
 
 //    grunt.registerTask('default', ['concat','uglify']);
 //    grunt.registerTask('coffeeTest', 'coffee');

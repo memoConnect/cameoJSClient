@@ -1,0 +1,31 @@
+{
+	"LOGIN": {
+		"AUTO": {
+			"LABEL":		"Automatisches Login (Max)"			
+		}
+	},
+
+	"PROFILE": {
+		"E-MAIL":		"E-Mail",
+		"MOBILE":		"Mobiltelfon"
+	},
+
+	"VERIFICATION": {
+		"REQUEST": {
+			"LABEL":		"Verifizierung anfragen"
+		}
+	},
+
+	"LANG":	{
+		"DE_DE":		"Deutsch",
+		"EN_US":		"Englisch",
+		"SWITCH": {
+			"SUCCESS":		"Sprache auf {{lang}} gestellt.",
+			"ERROR":		"Konnte Sprache nicht auf {{lang}} stellen.",
+			"LABEL": {
+				"DE_DE":		"@:LANG.DE_DE",
+				"EN_US":		"@:LANG.EN_US"
+			}
+		}
+	}
+}

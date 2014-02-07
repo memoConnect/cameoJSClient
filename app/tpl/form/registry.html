@@ -1,0 +1,45 @@
+<div class="page-header"><h2>Registry</h2></div>
+
+<form class="form-horizontal" role="form" ng-submit="regUser()" autocomplete="off">
+    <div class="form-group">
+        <label for="cameoName" class="col-sm-1 control-label">Username<sup>*</sup></label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="cameoName" placeholder="Username" ng-model="formData.cameoName" required />
+        </div>
+    </div>
+
+    <cameo-password data-parent-item="formData.password"></cameo-password>
+
+    <div class="form-group">
+        <label for="name" class="col-sm-1 control-label">Name</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="name" placeholder="Name" ng-model="formData.name" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="email" class="col-sm-1 control-label">E-Mail</label>
+        <div class="col-sm-5">
+            <input type="email" class="form-control" id="email" placeholder="E-Mail" ng-model="formData.email" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="phone" class="col-sm-1 control-label">Phone</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="phone" placeholder="+491" ng-model="formData.phone">
+        </div>
+    </div>
+
+    <div class="checkbox mb10">
+        <label class="col-sm-offset-1 col-sm-5">
+            <input type="checkbox" id="agb" name="agb" ng-model="formData.agb" required /> AGB akzeptieren
+        </label>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-5">
+            <button type="submit" class="btn btn-primary btn-sm" ng-disabled="stateBusy">create User</button>
+        </div>
+    </div>
+</form>
