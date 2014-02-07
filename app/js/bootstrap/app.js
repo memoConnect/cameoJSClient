@@ -9,6 +9,7 @@ var cameo = {
 
 
 var app = angular.module('cameoClient', [
+
     'ngRoute',
     'ngCookies',    
     'cmApiAuth',
@@ -16,18 +17,21 @@ var app = angular.module('cameoClient', [
     'cmLanguage',
     'cmLogger',
     'cmNotify',
+    'cmVerify'
+
 ]);
 
 app.service('cm',[
-    'cmApiAuth',
+
+    'cmApi',
+    'cmAuth',
     'cmCrypt',
     'cmLogger',
     'cmNotify',
-    'cmTranslate',
-    
+    'cmTranslate',    
     
 
-    function(cmLogger, cmNotify, cmTranslate){
+    function(cmApi, cmAuth, cmCrypt, cmLogger, cmNotify, cmTranslate){
         return {
             log:        cmLogger,
             notify:     cmNotify,
@@ -67,6 +71,13 @@ function($routeProvider, $locationProvider){
         templateUrl: 'tpl/form/registry.html',
         controller: 'RegistryCtrl'
     }).
+    when('/profile', {
+        templateUrl: 'tpl/form/profile.html',
+        controller: 'ProfileCtrl'
+    }).
+    when('/verification/:secret', {
+        templateUrl: 'tpl/verification.html',
+    }).
     otherwise({
         redirectTo: '/login'
     });
@@ -78,8 +89,7 @@ function($rootScope, $location, $cookieStore){
 //        var path_exceptions = ['/login', '/registry'];
         var path = $location.$$path;
 
-        
-        if(angular.isUndefined($cookieStore.get("token"))){
+       if(angular.isUndefined($cookieStore.get("token"))){
             if(path != "/login" && path != "/registry"){
                 $location.path("/login");
             }
