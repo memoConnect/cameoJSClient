@@ -16,9 +16,9 @@ i.eye-close {background-image: url('../gfx/glyphicons_052_eye_close.png');backgr
 .form-signin {max-width: 330px;padding:15px;margin:0 auto}
 input[type="checkbox"] {border:none !important;box-shadow: none !important}
 
-.ng-dirty .ng-invalid {
-    border:1px solid Red;
-}
-.ng-valid {
-    border:1px solid green;
-}
+/*.ng-dirty .ng-invalid {*/
+    /*border:1px solid Red;*/
+/*}*/
+/*.ng-valid {*/
+    /*border:1px solid green;*/
+/*}*/
