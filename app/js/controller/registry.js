@@ -6,10 +6,11 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
         $scope.userNameAlternatives = [];
         $scope.showUserNameAlternatives = false;
 
+        /**
+         * Checks with Promise?!?!
+         */
         $scope.checkUserName = function(){
             if($scope.registryForm.cameoName.$valid){
-                console.log($scope.registryForm.cameoName.$viewValue)
-
                 AuthService.checkAccountName({loginName:$scope.registryForm.cameoName.$viewValue}).
                 success(function(r){
                     if(angular.isDefined(r) && angular.isDefined(r.res) && r.res == 'OK'){
@@ -38,10 +39,6 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
             }
         }
 
-        /**
-         * @ ToDo validate formData
-         * check LoginName -> reservation Secrect!
-         */
         $scope.regUser = function () {
             var data = {
                 loginName: null,
