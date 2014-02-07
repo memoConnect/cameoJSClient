@@ -1,11 +1,20 @@
 'use strict';
-app.controller('RegistryCtrl', ['$scope', '$location', 'AuthService', 'cm',
-    function ($scope, $location, AuthService, cm) {
+app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', 'cm',
+    function ($scope, $location, $http, AuthService, cm) {
         $scope.formData = {loginName: '', password: '', email: '', phoneNumber: '', name: ''};
+        $scope.userNameAlternatives = [];
+        $scope.showUserNameAlternatives = false;
+
+
+        $scope.checkUserName = function(){
+            if($scope.registryForm.cameoName.$valid){
+                console.log($scope.registryForm.cameoName.$viewValue)
+            }
+        }
 
         /**
          * @ ToDo validate formData
-         * check LoginName -> reservation Secrect
+         * check LoginName -> reservation Secrect!
          */
         $scope.regUser = function () {
             var data = {

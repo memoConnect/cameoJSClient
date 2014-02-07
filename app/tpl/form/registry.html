@@ -3,14 +3,23 @@
 
 <form name="registryForm" class="form-horizontal" role="form" ng-submit="regUser()" autocomplete="off" novalidate>
 
-    <cm-validate-cameo-name data-parent-item="formData.reservationSecret"></cm-validate-cameo-name>
+    <div class="form-group">
+        <label for="cameoName" class="col-sm-1 control-label">Username<sup>*</sup></label>
+        <div class="col-sm-5">
+            <input id="cameoName" name="cameoName" type="text" class="form-control" ng-model="formData.cameoName" ng-blur="checkUserName();" ng-minlength="6" ng-maxlength="20" maxlength="20" placeholder="Username" required />
+            <div class="custom-error" ng-show="registryForm.cameoName.$dirty && registryForm.cameoName.$invalid">
+                <!--<div ng-show="registryForm.cameoName.$error.required">Username is required.</div>-->
+                <div ng-show="registryForm.cameoName.$dirty && registryForm.cameoName.$invalid && registryForm.cameoName.$error.minlength">min 6 letters</div>
+            </div>
+        </div>
+    </div>
 
     <cameo-password data-parent-item="formData.password"></cameo-password>
 
     <div class="form-group">
         <label for="name" class="col-sm-1 control-label">Name</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" id="name" placeholder="Name" ng-model="formData.name" />
+            <input type="text" class="form-control" id="name" placeholder="Name" ng-model="formData.name" ng-blur="" />
         </div>
     </div>
 
