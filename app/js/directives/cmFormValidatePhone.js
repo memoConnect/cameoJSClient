@@ -1,5 +1,4 @@
 app.directive('cmValidatePhone',['$http', function($http){
-    //http://stackoverflow.com/questions/16863389/angular-js-email-validation-with-unicode-characters
     return {
         require: 'ngModel',
         link: function(scope,element,attrs,model){
@@ -27,6 +26,7 @@ app.directive('cmValidatePhone',['$http', function($http){
                         });
                     } else {
                         model.$setValidity('phone', true);
+                        model.$setPristine();
                     }
                 });
             });

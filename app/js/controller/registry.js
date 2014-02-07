@@ -5,8 +5,7 @@ app.controller('RegistryCtrl', ['$scope','$location','AuthService','cm',
 
         /**
          * @ ToDo validate formData
-         * if phone then form ok?
-         * @ ToDo check LoginName
+         * check LoginName -> reservation Secrect
          */
         $scope.regUser = function(){
             var data = {
@@ -14,7 +13,8 @@ app.controller('RegistryCtrl', ['$scope','$location','AuthService','cm',
                 password: null,
                 email: null,
                 phoneNumber: null,
-                name: null
+                name: null,
+                reservationSecret: null
             };
 
             // check cameoName == loginName

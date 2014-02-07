@@ -3,17 +3,7 @@
 
 <form name="registryForm" class="form-horizontal" role="form" ng-submit="regUser()" autocomplete="off" novalidate>
 
-    <div class="form-group">
-        <label for="cameoName" class="col-sm-1 control-label">Username<sup>*</sup></label>
-        <div class="col-sm-5">
-            <input id="cameoName" name="cameoName" type="text" class="form-control" ng-model="formData.cameoName" placeholder="Username" ng-minlength="6" ng-maxlength="20"  maxlength="20" required />
-            <div class="custom-error" ng-show="registryForm.cameoName.$dirty && registryForm.cameoName.$invalid">
-                <div ng-show="registryForm.cameoName.$error.required">Username is required.</div>
-                <!--<br />-->
-                <div ng-show="registryForm.cameoName.$error.minlength || registryForm.cameoName.$error.maxlength">min 6 letters</div>
-            </div>
-        </div>
-    </div>
+    <cm-validate-cameo-name data-parent-item="formData.reservationSecret"></cm-validate-cameo-name>
 
     <cameo-password data-parent-item="formData.password"></cameo-password>
 
@@ -34,7 +24,7 @@
     <div class="form-group">
         <label for="phone" class="col-sm-1 control-label">Phone</label>
         <div class="col-sm-5">
-            <input id="phone" name="phone" type="text" class="form-control" placeholder="+49....." ng-model="formData.phone" cm-validate-phone />
+            <input id="phone" name="phone" type="text" class="form-control" placeholder="+49" ng-model="formData.phone" ng-minlength="6" cm-validate-phone />
             <div class="custom-error" ng-show="registryForm.phone.$dirty && registryForm.phone.$invalid">
                 <div ng-show="registryForm.cameoName.$error.required">The string supplied did not seem to be a phone number</div>
             </div>

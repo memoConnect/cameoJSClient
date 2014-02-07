@@ -10,7 +10,7 @@ app.directive('cameoPassword', ['cmCrypt',
             scope: {
                 password: '=parentItem'
             },
-            controller  :   function($scope, $element, $attrs){
+            controller: function($scope, $element, $attrs){
                 $scope.showConfirmPWStatus = false;
                 $scope.showStrengthMeter = false;
                 $scope.passwordType = 'password';
