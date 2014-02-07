@@ -1,7 +1,7 @@
 'use strict';
 var cameo = {
-    //restApi:              "http://"+location.host+"/api"
-    restApi:                "https://dev.cameo.io/api/v1"
+    restApi:              "http://localhost:9000/api/v1"
+//    restApi:                "https://dev.cameo.io/api/v1"
    ,token:                  null
    ,supported_languages:    ['de_DE', 'en_US']
    ,path_to_languages:      'languages'
@@ -60,6 +60,10 @@ function($routeProvider, $locationProvider){
     when('/registry', {
         templateUrl: 'tpl/form/registry.html',
         controller: 'RegistryCtrl'
+    }).
+    when('/filter', {
+        templateUrl: 'tpl/form/filter.html',
+        controller: 'FilterCtrl'
     }).
     otherwise({
         redirectTo: '/login'
