@@ -1,7 +1,10 @@
 'use strict';
 var cameo = {
     //restApi:              "http://"+location.host+"/api"
-    restApi: "https://dev.cameo.io/api/v1", token: null, supported_languages: ['de_DE', 'en_US'], path_to_languages: 'languages'
+    restApi: "https://dev.cameo.io/api/v1",
+    token: null,
+    supported_languages: ['de_DE', 'en_US'],
+    path_to_languages: 'languages'
 };
 
 
