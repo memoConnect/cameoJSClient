@@ -71,7 +71,6 @@ function($routeProvider, $locationProvider){
     }).
     when('/agb', {
         templateUrl: 'tpl/agb.html'
-        controller: 'ProfileCtrl'
     }).
     when('/disclaimer', {
         templateUrl: 'tpl/disclaimer.html'
@@ -82,6 +81,10 @@ function($routeProvider, $locationProvider){
     }).
     when('/verification/:secret', {
         templateUrl: 'tpl/verification.html',
+    }).
+    when('/filter', {
+        templateUrl: 'tpl/form/filter.html',
+        controller: 'FilterCtrl'
     }).
     otherwise({
         redirectTo: '/login'

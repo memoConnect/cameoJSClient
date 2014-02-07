@@ -15,3 +15,15 @@ i.eye-close {background-image: url('../gfx/glyphicons_052_eye_close.png');backgr
 
 .form-signin {max-width: 330px;padding:15px;margin:0 auto}
 input[type="checkbox"] {border:none !important;box-shadow: none !important}
+
+li.message-list {
+    width : 800px;
+    min-height : 50px;
+    overflow: hidden;
+    border: 1px solid black;
+    margin-bottom: 10px;
+    padding: 5px;
+    word-wrap: break-word;
+    background-color: #d3d3d3
+
+}
