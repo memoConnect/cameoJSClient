@@ -30,6 +30,16 @@ module.exports = function (config) {
             //browsers: ['PhantomJS'],
             browsers: ['PhantomJS'],
 
+            // test results reporter to use
+            // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
+            reporters: ['progress', 'junit'],
+
+            // the default configuration
+            junitReporter: {
+                outputFile: 'target/test-reports/test-results.xml',
+                suite: ''
+            },
+
             frameworks: ['jasmine'],
 
             singleRun: true,
