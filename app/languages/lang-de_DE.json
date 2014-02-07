@@ -16,6 +16,11 @@
 		}
 	},
 
+	"PROFILE": {
+		"E-MAIL": "E-Mail",
+		"MOBILE": "Mobiltelfon"
+	},
+
 	"LANG":	{
 		"DE_DE": "Deutsch",
 		"EN_US": "Englisch",

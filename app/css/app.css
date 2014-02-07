@@ -27,3 +27,10 @@ li.message-list {
     background-color: #d3d3d3
 
 }
+
+/*.ng-dirty .ng-invalid {*/
+    /*border:1px solid Red;*/
+/*}*/
+/*.ng-valid {*/
+    /*border:1px solid green;*/
+/*}*/

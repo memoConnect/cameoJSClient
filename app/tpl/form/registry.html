@@ -1,10 +1,16 @@
+<div cm-notify></div>
 <div class="page-header"><h2>Registry</h2></div>
 
-<form class="form-horizontal" role="form" ng-submit="regUser()" autocomplete="off">
+<form name="registryForm" class="form-horizontal" role="form" ng-submit="regUser()" autocomplete="off" novalidate>
+
     <div class="form-group">
         <label for="cameoName" class="col-sm-1 control-label">Username<sup>*</sup></label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" id="cameoName" placeholder="Username" ng-model="formData.cameoName" required />
+            <input id="cameoName" name="cameoName" type="text" class="form-control" ng-model="formData.cameoName" ng-blur="checkUserName();" ng-minlength="6" ng-maxlength="20" maxlength="20" placeholder="Username" required />
+            <div class="custom-error" ng-show="registryForm.cameoName.$dirty && registryForm.cameoName.$invalid">
+                <!--<div ng-show="registryForm.cameoName.$error.required">Username is required.</div>-->
+                <div ng-show="registryForm.cameoName.$dirty && registryForm.cameoName.$invalid && registryForm.cameoName.$error.minlength">min 6 letters</div>
+            </div>
         </div>
     </div>
 
@@ -13,27 +19,30 @@
     <div class="form-group">
         <label for="name" class="col-sm-1 control-label">Name</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" id="name" placeholder="Name" ng-model="formData.name" />
+            <input id="name" name="name" type="text" class="form-control" placeholder="Name" ng-model="formData.name" ng-blur="" />
         </div>
     </div>
 
     <div class="form-group">
         <label for="email" class="col-sm-1 control-label">E-Mail</label>
         <div class="col-sm-5">
-            <input type="email" class="form-control" id="email" placeholder="E-Mail" ng-model="formData.email" />
+            <input id="email" name="email" type="text" class="form-control" placeholder="E-Mail" ng-model="formData.email" cm-validate-email />
         </div>
     </div>
 
     <div class="form-group">
         <label for="phone" class="col-sm-1 control-label">Phone</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" id="phone" placeholder="+491" ng-model="formData.phone">
+            <input id="phone" name="phone" type="text" class="form-control" placeholder="+49" ng-model="formData.phone" ng-minlength="6" cm-validate-phone />
+            <div class="custom-error" ng-show="registryForm.phone.$dirty && registryForm.phone.$invalid">
+                <div ng-show="registryForm.cameoName.$error.required">The string supplied did not seem to be a phone number</div>
+            </div>
         </div>
     </div>
 
     <div class="checkbox mb10">
         <label class="col-sm-offset-1 col-sm-5">
-            <input type="checkbox" id="agb" name="agb" ng-model="formData.agb" required /> <a href="#/agb">AGB</a> akzeptieren
+            <input id="agb" name="agb" type="checkbox" ng-model="formData.agb" required /> <a href="#/agb">AGB</a> akzeptieren
         </label>
     </div>
 

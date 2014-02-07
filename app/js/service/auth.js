@@ -18,5 +18,12 @@ function($http){
                ,data: data
             })
         }
+       ,checkAccountName: function(data){
+            return $http({
+                method: 'POST'
+                ,url: cameo.restApi+'/account/check'
+                ,data: data
+            })
+        }
     }
 });
