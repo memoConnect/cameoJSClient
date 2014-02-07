@@ -16,18 +16,20 @@ var app = angular.module('cameoClient', [
     'cmLanguage',
     'cmLogger',
     'cmNotify',
+    'cmVerify'
+
 ]);
 
 app.service('cm',[
-    'cmApiAuth',
+    'cmApi',
+    'cmAuth',
     'cmCrypt',
     'cmLogger',
     'cmNotify',
     'cmTranslate',
     
-    
 
-    function(cmLogger, cmNotify, cmTranslate){
+    function(cmApi, cmAuth, cmCrypt, cmLogger, cmNotify, cmTranslate){
         return {
             log:        cmLogger,
             notify:     cmNotify,
@@ -69,9 +71,17 @@ function($routeProvider, $locationProvider){
     }).
     when('/agb', {
         templateUrl: 'tpl/agb.html'
+        controller: 'ProfileCtrl'
     }).
     when('/disclaimer', {
         templateUrl: 'tpl/disclaimer.html'
+    }).
+    when('/profile', {
+        templateUrl: 'tpl/form/profile.html',
+        controller: 'ProfileCtrl'
+    }).
+    when('/verification/:secret', {
+        templateUrl: 'tpl/verification.html',
     }).
     otherwise({
         redirectTo: '/login'

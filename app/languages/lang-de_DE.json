@@ -10,6 +10,12 @@
 		"MOBILE": "Mobiltelfon"
 	},
 
+	"VERIFICATION": {
+		"REQUEST": {
+			"LABEL":		"Verifizierung anfragen"
+		}
+	},
+
 	"LANG":	{
 		"DE_DE": "Deutsch",
 		"EN_US": "Englisch",
