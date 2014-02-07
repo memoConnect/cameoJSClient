@@ -71,6 +71,9 @@ function($routeProvider, $locationProvider){
         templateUrl: 'tpl/form/registry.html',
         controller: 'RegistryCtrl'
     }).
+    when('/filter', {
+        templateUrl: 'tpl/form/filter.html',
+        controller: 'FilterCtrl'
     when('/profile', {
         templateUrl: 'tpl/form/profile.html',
         controller: 'ProfileCtrl'

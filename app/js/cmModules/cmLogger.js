@@ -79,7 +79,7 @@ cmLogger.factory('cmLogger', [
              * @object any object that will be logged using toString()
              */
             ,debugData: function(loggerMessage, object){
-                this.debug(loggerMessage + ": " + (object != null ? object.toString() : "NULL"))
+                this.debug(loggerMessage + ": " + (object != null ? JSON.stringify(object) : "NULL"))
             }
         }
     }
