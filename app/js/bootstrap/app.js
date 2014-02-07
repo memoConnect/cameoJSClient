@@ -9,26 +9,36 @@ var cameo = {
 
 
 var app = angular.module('cameoClient', [
+
     'ngRoute',
-    'ngCookies',
+    'ngCookies',    
+    'cmApiAuth',
+    'cmCrypt',
+    'cmLanguage',
     'cmLogger',
     'cmNotify',
-    'cmLanguage',
-    'cmCrypt'
+    'cmVerify'
+
 ]);
 
 app.service('cm',[
+
+    'cmApi',
+    'cmAuth',
+    'cmCrypt',
     'cmLogger',
     'cmNotify',
-    'cmTranslate',
-    'cmCrypt',
+    'cmTranslate',    
+    
 
-    function(cmLogger, cmNotify, cmTranslate){
+    function(cmApi, cmAuth, cmCrypt, cmLogger, cmNotify, cmTranslate){
         return {
             log:        cmLogger,
             notify:     cmNotify,
             translate:  cmTranslate,
-            crypt:      cmCrypt
+            crypt:      cmCrypt,
+            api:        cmApi,
+            auth:       cmAuth
         }
     }
 ])
@@ -61,6 +71,13 @@ function($routeProvider, $locationProvider){
         templateUrl: 'tpl/form/registry.html',
         controller: 'RegistryCtrl'
     }).
+    when('/profile', {
+        templateUrl: 'tpl/form/profile.html',
+        controller: 'ProfileCtrl'
+    }).
+    when('/verification/:secret', {
+        templateUrl: 'tpl/verification.html',
+    }).
     otherwise({
         redirectTo: '/login'
     });
@@ -72,8 +89,7 @@ function($rootScope, $location, $cookieStore){
 //        var path_exceptions = ['/login', '/registry'];
         var path = $location.$$path;
 
-        
-        if(angular.isUndefined($cookieStore.get("token"))){
+       if(angular.isUndefined($cookieStore.get("token"))){
             if(path != "/login" && path != "/registry"){
                 $location.path("/login");
             }
