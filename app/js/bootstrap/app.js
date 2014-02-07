@@ -21,6 +21,7 @@ var app = angular.module('cameoClient', [
 ]);
 
 app.service('cm', [
+
     'cmApi',
     'cmAuth',
     'cmCrypt',
