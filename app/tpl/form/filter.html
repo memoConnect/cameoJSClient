@@ -1,0 +1,48 @@
+<div cm-notify></div>
+<div class="page-header"><h2>filter</h2></div>
+
+<form class="form-horizontal" role="form" ng-submit="getMessages()" autocomplete="off">
+
+    <div class="form-group">
+        <label for="filter" class="col-sm-1 control-label">Filter</label>
+
+        <div class="col-sm-5">
+            <textarea class="form-control" id="filter" ng-model="filter">
+
+            </textarea>
+        </div>
+    </div>
+
+    <div class="form-group  ">
+        <div class="col-sm-5 col-sm-offset-1">
+            <select class="form-control" ng-change="setFilter()" ng-options="filter.name for filter in filters"
+                    ng-model="filterSelect">
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-5">
+            <button type="submit" class="btn btn-primary btn-sm">get Messages</button>
+            <button type="button" class="btn btn-default btn-sm" ng-click="getMessages()">next Messages</button>
+            <button type="button" class="btn btn-default btn-sm" ng-click="getMessageCount()">get Message Count</button>
+        </div>
+    </div>
+
+    <div>
+        Time[ms]: {{totalTime}} <br> <br>
+        Total number of Messages: {{messageCount}} <br>
+        Offset: {{offset}} <br>
+        Messages:<br> <br>
+
+        <ul>
+            <li class="message-list" ng-repeat="message in messages">
+                {{message.messageBody}}<br>
+                <b>{{message.created}}</b>
+            </li>
+        </ul>
+
+
+    </div>
+
+</form>
