@@ -70,7 +70,7 @@ app.config(['$routeProvider', '$locationProvider',
                 controller: 'RegistryCtrl'
             }).
             when('/agb', {
-        		templateUrl: 'tpl/agb.html'
+                templateUrl: 'tpl/agb.html'
             }).
             when('/disclaimer', {
                 templateUrl: 'tpl/disclaimer.html'
@@ -81,10 +81,10 @@ app.config(['$routeProvider', '$locationProvider',
             }).
             when('/verification/:secret', {
                 templateUrl: 'tpl/verification.html',
-    }).
-    when('/filter', {
-        templateUrl: 'tpl/form/filter.html',
-        controller: 'FilterCtrl'
+            }).
+            when('/filter', {
+                templateUrl: 'tpl/form/filter.html',
+                controller: 'FilterCtrl'
             }).
             otherwise({
                 redirectTo: '/login'

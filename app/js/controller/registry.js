@@ -9,33 +9,33 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
         /**
          * Checks with Promise?!?!
          */
-        $scope.checkUserName = function(){
-            if($scope.registryForm.cameoName.$valid){
-                AuthService.checkAccountName({loginName:$scope.registryForm.cameoName.$viewValue}).
-                success(function(r){
-                    if(angular.isDefined(r) && angular.isDefined(r.res) && r.res == 'OK'){
-                        if(angular.isDefined(r.data) && angular.isDefined(r.data.reservationSecret)){
-                            reservationSecret = r.data.reservationSecret;
-                            $scope.registryForm.cameoName.$valid = true;
+        $scope.checkUserName = function () {
+            if ($scope.registryForm.cameoName.$valid) {
+                AuthService.checkAccountName({loginName: $scope.registryForm.cameoName.$viewValue}).
+                    success(function (r) {
+                        if (angular.isDefined(r) && angular.isDefined(r.res) && r.res == 'OK') {
+                            if (angular.isDefined(r.data) && angular.isDefined(r.data.reservationSecret)) {
+                                reservationSecret = r.data.reservationSecret;
+                                $scope.registryForm.cameoName.$valid = true;
+                            } else {
+                                cm.notify.info("Error, check Username again!", {ttl: 5000});
+                                $scope.registryForm.cameoName.$invalid = true;
+                            }
                         } else {
-                            cm.notify.info("Error, check Username again!",{ttl:5000});
+                            cm.notify.info("Error, check Username again!", {ttl: 5000});
                             $scope.registryForm.cameoName.$invalid = true;
                         }
-                    } else {
-                        cm.notify.info("Error, check Username again!",{ttl:5000});
-                        $scope.registryForm.cameoName.$invalid = true;
-                    }
-                }).error(function(r){
-                    cm.notify.info("Username exists, please choose an other one, thx!",{ttl:5000});
-                    if(angular.isDefined(r) && angular.isDefined(r.data)){
-                        if(angular.isDefined(r.data.alternative)){
-                            /**
-                             * @TODO
-                             * show alternatives
-                             */
+                    }).error(function (r) {
+                        cm.notify.info("Username exists, please choose an other one, thx!", {ttl: 5000});
+                        if (angular.isDefined(r) && angular.isDefined(r.data)) {
+                            if (angular.isDefined(r.data.alternative)) {
+                                /**
+                                 * @TODO
+                                 * show alternatives
+                                 */
+                            }
                         }
-                    }
-                });
+                    });
             }
         }
 
@@ -51,7 +51,7 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
 
             // check cameoName == loginName
             if ($scope.registryForm.cameoName.$valid == false) {
-                cm.notify.warn("Username is required!",{ttl:5000});
+                cm.notify.warn("Username is required!", {ttl: 5000});
                 return false;
             } else {
                 data.loginName = $scope.registryForm.cameoName.$viewValue;
@@ -59,7 +59,7 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
 
             // check password
             if ($scope.formData.password == '' || $scope.formData.password == 'none') {
-                cm.notify.warn("Password is required!",{ttl:5000});
+                cm.notify.warn("Password is required!", {ttl: 5000});
                 return false;
             } else {
                 data.password = $scope.formData.password;
@@ -67,7 +67,7 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
 
             // check email
             if ($scope.registryForm.email.$valid == false) {
-                cm.notify.warn("E-Mail has wrong format!",{ttl:5000});
+                cm.notify.warn("E-Mail has wrong format!", {ttl: 5000});
                 return false;
             } else {
                 if ($scope.registryForm.email.$viewValue != '') {
@@ -77,7 +77,7 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
 
             // check phone
             if ($scope.registryForm.phone.$valid == false) {
-                cm.notify.warn("Phone has wrong format!",{ttl:5000});
+                cm.notify.warn("Phone has wrong format!", {ttl: 5000});
                 return false;
             } else {
                 if ($scope.registryForm.phone.$viewValue != '') {
@@ -92,11 +92,11 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
 
             // check agb
             if ($scope.registryForm.agb.$valid == false) {
-                cm.notify.warn("Confirm AGB!",{ttl:5000});
+                cm.notify.warn("Confirm AGB!", {ttl: 5000});
                 return false;
             }
 
-            if(reservationSecret == ''){
+            if (reservationSecret == '') {
                 $scope.checkUserName();
                 return false;
             } else {
@@ -109,12 +109,12 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
                         $location.path("/login");
                     } else {
                         // Notifiation to User
-                        cm.notify.warn("Something went wrong. Pls check your data and try again!!",{ttl:5000});
+                        cm.notify.warn("Something went wrong. Pls check your data and try again!!", {ttl: 5000});
                     }
                 }).
                 error(function (r) {
                     // Notifiation to User res,error
-                    cm.notify.warn("Something went wrong. Pls check your data and try again!!",{ttl:5000});
+                    cm.notify.warn("Something went wrong. Pls check your data and try again!!", {ttl: 5000});
                 });
         };
     }
