@@ -108,20 +108,12 @@ describe("cmLanguage", function() {
         }))
 
         
-        beforeEach(inject(function($rootScope, $controller, _$compile_, cmTranslate){
-            scope        = $rootScope.$new()            
-            ctrl         = $controller('LanguageCtrl', {$scope: scope})            
+        beforeEach(inject(function($rootScope, _$compile_, cmTranslate){
+            scope        = $rootScope.$new()                        
             translate    = cmTranslate
             $compile     = _$compile_       
         }))
         
-        
-        it('should provide a controller "LanguageCtrl".', function() {            
-            expect(ctrl).toBeDefined()
-        })
-        
-
-
         it('should provude a service "cmTranslate".', function(){
             expect(translate).toBeDefined()
         })

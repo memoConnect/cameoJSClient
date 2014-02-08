@@ -57,6 +57,8 @@ app.config([
         cmAuthProvider.setRestApiUrl( cameo.restApi )
         cmLanguageProvider.setSupportedLanguages( cameo.supported_languages)
         cmLanguageProvider.setPathToLanguages( cameo.path_to_languages)
+        cmLanguageProvider.useLocalStorage()
+        cmLanguageProvider.preferredLanguage('en_US')   //for now
     }
 ])
 

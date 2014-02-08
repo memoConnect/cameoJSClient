@@ -24,28 +24,6 @@
 var cmLanguage = angular.module('cmLanguage', ['pascalprecht.translate', 'cmNotify'])
 
 
-cmLanguage.config([
-
-    '$translateProvider', //from angular-translate
-
-    function ($translateProvider) {    	    	
-    	//tell translation service where to find language tables
-        $translateProvider.useStaticFilesLoader({
-       		prefix: 'languages/lang-',            //neue route BE
-       		suffix: '.json'
-        });
-
-        function getBrowserLangugage(){
-        	//dummy
-        	return('en_US')
-        }
-
-        $translateProvider.preferredLanguage( getBrowserLangugage() );                
-        // Breaks test: $translateProvider.useLocalStorage();
-    }
-])
-
-
 cmLanguage.service('cmTranslate', ['$translate', function($translate){ return $translate }])
 
 cmLanguage.filter('cmTranslate', ['translateFilter', function(translateFilter){ return translateFilter }])
@@ -55,65 +33,82 @@ cmLanguage.filter('cmTranslate', ['translateFilter', function(translateFilter){ 
 cmLanguage.directive('cmTranslate', ['translateDirective', function(translateDirective){ return translateDirective[0] }])
 
 
-cmLanguage.provider('cmLanguage', function(){
+cmLanguage.provider('cmLanguage', [
 
-	var supported_languages = [],
-		path_to_languages = ''
+	'$translateProvider', 
 
-	this.setSupportedLanguages = function(languages){
-		supported_languages = languages
-	}
+	function($translateProvider){
 
-	this.setPathToLanguages = function(path){
-		path_to_languages = path
-	}
+		var supported_languages = [],
+			path_to_languages = ''
 
-	this.$get = [
-
-		'cmTranslate',
-		'cmNotify',
-		'cmLogger',
-
-		function(cmTranslate, cmNotify, cmLogger){
-			
-			if(supported_languages.length == 0) cmLogger.error('No supported languages found. Try cmLanguageProvider.setSupportedLanguages().')			
-
-			return {
-				getSupportedLanguages: function(){
-					return	supported_languages							
-				},
-
-				getLanguagePath: function(path){
-					return	path_to_languages
-				},
-
-				getLanguageName: function(lang_key){			
-					lang_key = lang_key || cmTranslate.uses()
-					console.log('DSDSD: '+cmTranslate('LANG.'+lang_key.toUpperCase()))
-					return	cmTranslate('LANG.'+lang_key.toUpperCase())
-				},
-
-				switchLanguage: function(lang_key){
-					var self = this
-					return 	cmTranslate.uses(lang_key)
-							.then(
-								function(){
-									cmNotify.info(cmTranslate('LANG.SWITCH.SUCCESS', { lang : self.getLanguageName(lang_key) }))
-								},
-								function(){
-									cmNotify.error(cmTranslate('LANG.SWITCH.ERROR', { lang : self.getLanguageName(lang_key) }))
-								}
-							)
-				},
-
-				getCurrentLanguage:  function(){
-					return	cmTranslate.uses() || cmTranslate.preferredLanguage()
-				}
-
-			}
+		this.setSupportedLanguages = function(languages){
+			supported_languages = languages
 		}
-	]
-})
+
+		this.setPathToLanguages = function(path){
+			path_to_languages = path
+
+			$translateProvider.useStaticFilesLoader({
+       			prefix: path+'/lang-',            
+       			suffix: '.json'
+        	});
+		}
+
+		this.useLocalStorage = function(){
+			$translateProvider.useLocalStorage()
+		}
+
+		this.preferredLanguage = function(lang_key){
+			$translateProvider.preferredLanguage(lang_key);      
+		}
+
+		this.$get = [
+
+			'cmTranslate',
+			'cmNotify',
+			'cmLogger',
+
+			function(cmTranslate, cmNotify, cmLogger){
+				
+				if(supported_languages.length == 0) cmLogger.error('No supported languages found. Try cmLanguageProvider.setSupportedLanguages().')			
+
+				return {
+					getSupportedLanguages: function(){
+						return	supported_languages							
+					},
+
+					getLanguagePath: function(path){
+						return	path_to_languages
+					},
+
+					getLanguageName: function(lang_key){			
+						lang_key = lang_key || cmTranslate.uses()
+						return	cmTranslate('LANG.'+lang_key.toUpperCase())
+					},
+
+					switchLanguage: function(lang_key){
+						var self = this
+						return 	cmTranslate.uses(lang_key)
+								.then(
+									function(){
+										cmNotify.info(cmTranslate('LANG.SWITCH.SUCCESS', { lang : self.getLanguageName(lang_key) }))
+									},
+									function(){
+										cmNotify.error(cmTranslate('LANG.SWITCH.ERROR', { lang : self.getLanguageName(lang_key) }))
+									}
+								)
+					},
+
+					getCurrentLanguage:  function(){
+						return	cmTranslate.uses() || cmTranslate.preferredLanguage()
+					}
+
+				}
+			}	
+		]
+	}
+])
 
 
 cmLanguage.directive('cmLanguageSelect', [
