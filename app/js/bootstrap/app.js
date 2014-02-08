@@ -42,13 +42,21 @@ app.service('cm', [
     }
 ]);
 
-app.config(['$routeProvider', '$locationProvider',
-    function ($routeProvider, $locationProvider) {
-        //$locationProvider.html5Mode(true);
+
+
+
+app.config([
+
+    '$routeProvider',
+    '$locationProvider',
+    '$compileProvider',
+    
+    function ($routeProvider, $locationProvider, $compileProvider) {
+        //$locationProvider.html5Mode(true);    
+
         $routeProvider.
             when('/login', {
                 templateUrl: 'tpl/form/login.html',
-                controller: 'LoginCtrl'
             }).
             when('/start', {
                 templateUrl: 'tpl/start.html',
