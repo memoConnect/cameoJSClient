@@ -3,7 +3,7 @@
 //E-mail, Phone etc. verification
 
 
-var cmVerify = angular.module('cmVerify', ['cmApiAuth'])
+var cmVerify = angular.module('cmVerify', ['cmApi'])
 
 
 cmVerify.controller('ProfileCtrl', [
@@ -57,25 +57,3 @@ cmVerify.directive('cmVerify', [
 	    }
 	}
 ]);
-
-
-//send a confirmation
-
-cmVerify.directive('cmConfirm', [
-
-	'$http',
-
-	function () {
-	    return  {
-	        restrict    :   'AE',
-	        scope       :   true,        
-
-	        controller  :   function($scope, $element, $attrs, $http) {
-	        					$scope.confirm = function(){
-	        						$http.post('/confirm', $attrs.cmConfirm)
-	        					}
-	        				}
-	    }
-	}
-]);
-

@@ -1,10 +1,10 @@
-//This Module handels api calls and authorization
+//This Module handels authorization
 //requires: 
 //	passchk_fast.js
 
 
 
-var cmApiAuth = angular.module('cmApiAuth', [])
+var cmAuth = angular.module('cmAuth', ['cmCrypt', 'cmLogger'])
 
 
 //TODO config cameo
@@ -14,57 +14,66 @@ var cmApiAuth = angular.module('cmApiAuth', [])
 
 //Service to handle all authenticateion matters
 
-cmApiAuth.factory('cmAuth',[
+cmAuth.provider('cmAuth', function(){
+    
+    var rest_api = ''
 
-	'$http',
-	'$cookieStore',
+    this.setRestApiUrl = function(url){
+        rest_api = url
+    }
 
-	function($http, $cookieStore){
-	    return {
+    this.$get = [
 
-	    	//ask the api for a new authentication token:
-	        requestToken: 		function(auth){
-						            return	$http({
-						            			method:		'GET',
-						                		url: 		cameo.restApi+'/token',
-						                		headers:	{ 'Authorization': 'Basic '+auth }
-						            		})
-						        },
+    	'$http',
+    	'$cookieStore',
 
-			//store the token in a cookie:
-			storeToken:			function(token){
-									return $cookieStore.put("token", token);
-								},
+    	function($http, $cookieStore){
+    	    return {
 
-			//retrieve thr token from a cookie
-	        getToken:			function(){
-			        				return $cookieStore.get('token');
-			        			},
+    	    	//ask the api for a new authentication token:
+    	        requestToken: 		function(auth){
+    						            return	$http({
+    						            			method:		'GET',
+    						                		url: 		cameo.restApi+'/token',
+    						                		headers:	{ 'Authorization': 'Basic '+auth }
+    						            		})
+    						        },
 
-	       	createUser: 		function(data){
-		            				return	$http.post({
-		               							url: cameo.restApi+'/account',
-		               							data: data
-		            						})
-		        				},
+    			//store the token in a cookie:
+    			storeToken:			function(token){
+                                        return  $cookieStore.put("token", token);
+    								},
 
-   			checkAccountName:	function(data){
-								    return	$http({
-										        method: 'POST'
-										        ,url: cameo.restApi+'/account/check'
-										        ,data: data
-										    })
-    							}
-		}
-	}
+    			//retrieve thr token from a cookie
+    	        getToken:			function(){
+    			        				return  $cookieStore.get('token');
+    			        			},
 
-]);
+    	       	createUser: 		function(data){                                    
+    		            				return	$http({
+                                                    method:     'POST',
+    		               							url:        cameo.restApi+'/account',
+    		               							data:       data
+    		            						})
+    		        				},
+
+       			checkAccountName:	function(data){
+    								    return	$http({
+                                                    method:     'POST',
+                                                    url:        cameo.restApi+'/account/check',
+                                                    data:       data
+    										    })
+        							}
+    		}
+    	}
+    ]
+});
 
 
 
 //Service to handle all api calls
 
-cmApiAuth.factory('cmApi', [
+cmAuth.factory('cmApi', [
 
 	'$http',
 	'cmAuth',
@@ -102,7 +111,7 @@ cmApiAuth.factory('cmApi', [
  * This directive needs passchk_fast.js
  */
 
-cmApiAuth.directive('cameoPassword', ['cmCrypt',
+cmAuth.directive('cameoPassword', ['cmCrypt',
     function (cmCrypt) {
         return  {
             restrict: 'E',
@@ -190,7 +199,7 @@ cmApiAuth.directive('cameoPassword', ['cmCrypt',
 
 
 
-cmApiAuth.directive('cmValidateEmail',function(){
+cmAuth.directive('cmValidateEmail',function(){
     //http://stackoverflow.com/questions/16863389/angular-js-email-validation-with-unicode-characters
     return {
         require: 'ngModel',
@@ -220,7 +229,7 @@ cmApiAuth.directive('cmValidateEmail',function(){
 
 
 
-cmApiAuth.directive('cmValidatePhone',['cmApi', function($http){
+cmAuth.directive('cmValidatePhone',['cmApi', function($http){
     return {
         require: 'ngModel',
         link: function(scope,element,attrs,model){
@@ -228,7 +237,7 @@ cmApiAuth.directive('cmValidatePhone',['cmApi', function($http){
                 scope.$apply(function(){
                     var val = element.val();
                     if(val != ""){
-                        $cmApi({
+                        cmApi({
                             method: 'POST',
                             url: cameo.restApi+'/services/checkPhoneNumber',
                             data: {phoneNumber:val}
@@ -260,7 +269,7 @@ cmApiAuth.directive('cmValidatePhone',['cmApi', function($http){
 
 
 
-cmApiAuth.directive('cameoLogin', function () {
+cmAuth.directive('cameoLogin', function () {
     return  {
         restrict    :   'E',
         templateUrl :   'tpl/directives/cameo-login.html',
@@ -292,7 +301,7 @@ cmApiAuth.directive('cameoLogin', function () {
 		        };
 
 		        $scope.getToken = function(){
-		            cmLogger.debug("getToken called")
+		            cmLogger.debug("requestToken called")
 		            cmAuth.requestToken(Base64.encode($scope.formData.user + ":" + cmCrypt.hash($scope.formData.pass))).
 		                success(function(res){
 		                    $scope.formRes = res.data;

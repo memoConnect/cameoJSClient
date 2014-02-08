@@ -54,41 +54,96 @@ cmLanguage.filter('cmTranslate', ['translateFilter', function(translateFilter){ 
 //Does not work as intended <div cm-translate="LANG.DE_DE"></div> stays empty
 cmLanguage.directive('cmTranslate', ['translateDirective', function(translateDirective){ return translateDirective[0] }])
 
-cmLanguage.controller('LanguageCtrl', [
 
-	'$scope',
-	'cmTranslate', 
-	'cmNotify',	 
-	
-	function ($scope, cmTranslate, cmNotify) {
-		// Make language switch available to the scope:		
-		// Todo: new logger, add notify
+cmLanguage.provider('cmLanguage', function(){
 
-		$scope.getLanguageName = function (lang_key){			
-			lang_key = lang_key || $translate.uses()
+	var supported_languages = [],
+		path_to_languages = ''
 
-			var translation = cmTranslate('LANG.'+lang_key.toUpperCase())
+	this.setSupportedLanguages = function(languages){
+		supported_languages = languages
+	}
 
-			//translation = (translation == 'LANG.'+lang_key.toUpperCase() ? undefined : translation)
-			return(translation)
+	this.setPathToLanguages = function(path){
+		path_to_languages = path
+	}
+
+	this.$get = [
+
+		'cmTranslate',
+		'cmNotify',
+		'cmLogger',
+
+		function(cmTranslate, cmNotify, cmLogger){
+			
+			if(supported_languages.length == 0) cmLogger.error('No supported languages found. Try cmLanguageProvider.setSupportedLanguages().')			
+
+			return {
+				getSupportedLanguages: function(){
+					return	supported_languages							
+				},
+
+				getLanguagePath: function(path){
+					return	path_to_languages
+				},
+
+				getLanguageName: function(lang_key){			
+					lang_key = lang_key || cmTranslate.uses()
+					return	cmTranslate('LANG.'+lang_key.toUpperCase())
+				},
+
+				switchLanguage: function(lang_key){
+					var self = this
+					return 	cmTranslate.uses(lang_key)
+							.then(
+								function(){
+									cmNotify.info(cmTranslate('LANG.SWITCH.SUCCESS', { lang : self.getLanguageName(lang_key) }))
+								},
+								function(){
+									cmNotify.error(cmTranslate('LANG.SWITCH.ERROR', { lang : self.getLanguageName(lang_key) }))
+								}
+							)
+				},
+
+				getCurrentLanguage:  function(){
+					return	cmTranslate.uses() || cmTranslate.preferredLanguage()
+				}
+
+			}
 		}
+	]
+})
 
-		$scope.getCurrentLanguage = function(){
-			return(cmTranslate.uses())
-		}
 
-		$scope.switchLanguage = function (lang_key) {	
-			return (			
-				cmTranslate.uses(lang_key)
-				.then(
-					function(){
-						cmNotify.info(cmTranslate('LANG.SWITCH.SUCCESS', { lang : $scope.getLanguageName(lang_key) }))
-					},
-					function(){
-						cmNotify.error(cmTranslate('LANG.SWITCH.ERROR', { lang : $scope.getLanguageName(lang_key) }))
-					}
-				)
-			)
+cmLanguage.directive('cmLanguageSelect', [
+
+	'cmLanguage',
+
+	function(cmLanguage){
+		return {
+
+			restrict: 'AE',
+			transclude: true,
+			template: '<select ng-transclude></select>',
+
+			link: function(scope, element, attrs ){
+				var	select	= element.find('select'),
+					html	= '<option value="%1" %2>%3</option>'
+
+				cmLanguage.getSupportedLanguages().forEach(function(lang_key){					
+					select.append(
+						html
+						.replace(/%1/, lang_key)
+						.replace(/%2/, cmLanguage.getCurrentLanguage() == lang_key ? 'selected="selected"' : '')
+						.replace(/%3/, cmLanguage.getLanguageName(lang_key))
+					)
+				})
+
+				console.log(cmLanguage.getCurrentLanguage())
+				select.val(cmLanguage.getCurrentLanguage())
+
+				select.on('change', function(){ cmLanguage.switchLanguage(select.val()) })
+			}
 		}
 	}
 ])
