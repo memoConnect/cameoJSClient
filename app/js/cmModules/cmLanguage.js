@@ -89,6 +89,7 @@ cmLanguage.provider('cmLanguage', function(){
 
 				getLanguageName: function(lang_key){			
 					lang_key = lang_key || cmTranslate.uses()
+					console.log('DSDSD: '+cmTranslate('LANG.'+lang_key.toUpperCase()))
 					return	cmTranslate('LANG.'+lang_key.toUpperCase())
 				},
 
@@ -124,25 +125,16 @@ cmLanguage.directive('cmLanguageSelect', [
 
 			restrict: 'AE',
 			transclude: true,
-			template: '<select ng-transclude></select>',
+			template: '<select ng-model="language" ng-options="getLanguageName(lang_key) for lang_key in languages"><a ng-repeat="key in languages">{{languages}}</a></select>',
 
 			link: function(scope, element, attrs ){
-				var	select	= element.find('select'),
-					html	= '<option value="%1" %2>%3</option>'
+				element.find('select').on('change', function(){ cmLanguage.switchLanguage(scope.language) })
+			},
 
-				cmLanguage.getSupportedLanguages().forEach(function(lang_key){					
-					select.append(
-						html
-						.replace(/%1/, lang_key)
-						.replace(/%2/, cmLanguage.getCurrentLanguage() == lang_key ? 'selected="selected"' : '')
-						.replace(/%3/, cmLanguage.getLanguageName(lang_key))
-					)
-				})
-
-				console.log(cmLanguage.getCurrentLanguage())
-				select.val(cmLanguage.getCurrentLanguage())
-
-				select.on('change', function(){ cmLanguage.switchLanguage(select.val()) })
+			controller: function($scope, $element, $attrs){
+				$scope.languages 			= cmLanguage.getSupportedLanguages()
+				$scope.getLanguageName		= cmLanguage.getLanguageName				
+				$scope.language = cmLanguage.getCurrentLanguage()
 			}
 		}
 	}
