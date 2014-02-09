@@ -1,4 +1,4 @@
-//This Module handels authorization
+//This Module handels authorization and all api calls prior to authorization
 //requires: 
 //	passchk_fast.js
 
@@ -63,42 +63,20 @@ cmAuth.provider('cmAuth', function(){
                                                     url:        rest_api+'/account/check',
                                                     data:       data
     										    })
-        							}
+        							},
+
+                checkPhoneNumber:   function(number){
+                                        return  $http({
+                                                    method: 'POST',
+                                                    url: rest_api+'/services/checkPhoneNumber',
+                                                    data: {phoneNumber:number}
+                                                })
+
+                                    }
     		}
     	}
     ]
 });
-
-
-
-//Service to handle all api calls
-
-cmAuth.factory('cmApi', [
-
-	'$http',
-	'cmAuth',
-
-	function($http, cmAuth){
-		var api 	=	function(method, path, config){
-							config.method	= 	method
-							config.url		= 	cameo.restApi+		// base url API
-												path+				// path to specific method
-												(path.match(/\?/) ? '&token=' : '?token=')+		//add or extend paramters
-												cmAuth.getToken()								//add auth token							
-							return $http(config)
-						}
-
-		api.get		=	function(path, config){ return api('GET',		path, config) }
-		api.post	=	function(path, config){ return api('POST',		path, config) }
-		api.delete	=	function(path, config){ return api('DELETE',	path, config) }
-		api.head	=	function(path, config){ return api('HEAD', 		path, config) }
-		api.put		=	function(path, config){ return api('PUT', 		path, config) }
-		api.jsonp	=	function(path, config){ return api('JSONP',		path, config) }						
-		
-		return api
-	}
-])
-
 
 
 
@@ -229,41 +207,43 @@ cmAuth.directive('cmValidateEmail',function(){
 
 
 
-cmAuth.directive('cmValidatePhone',['cmApi', function($http){
-    return {
-        require: 'ngModel',
-        link: function(scope,element,attrs,model){
-            element.on('blur', function(evt){
-                scope.$apply(function(){
-                    var val = element.val();
-                    if(val != ""){
-                        cmApi({
-                            method: 'POST',
-                            url: cameo.restApi+'/services/checkPhoneNumber',
-                            data: {phoneNumber:val}
-                        }).success(function(r){
-                            if(angular.isDefined(r) && angular.isDefined(r.res) && r.res == 'OK' ){
-                                model.$setValidity('phone', true);
+cmAuth.directive('cmValidatePhone',[
 
-                                if(angular.isDefined(r.data) && angular.isDefined(r.data.phoneNumber) && r.data.phoneNumber != ''){
-                                    model.$setViewValue(r.data.phoneNumber);
-                                    model.$render();
+    'cmAuth',
+
+    function(cmAuth){
+        return {
+            require: 'ngModel',
+            link: function(scope,element,attrs,model){
+                element.on('blur', function(evt){
+                    scope.$apply(function(){
+                        var val = element.val();
+                        if(val != ""){
+                            cmAuth.checkPhoneNumber(val)
+                            .success(function(r){
+                                if(angular.isDefined(r) && angular.isDefined(r.res) && r.res == 'OK' ){
+                                    model.$setValidity('phone', true);
+
+                                    if(angular.isDefined(r.data) && angular.isDefined(r.data.phoneNumber) && r.data.phoneNumber != ''){
+                                        model.$setViewValue(r.data.phoneNumber);
+                                        model.$render();
+                                    }
+                                } else {
+                                    model.$setValidity('phone', false);
                                 }
-                            } else {
+                            }).error(function(r){
                                 model.$setValidity('phone', false);
-                            }
-                        }).error(function(r){
-                            model.$setValidity('phone', false);
-                        });
-                    } else {
-                        model.$setValidity('phone', true);
-                        model.$setPristine();
-                    }
+                            });
+                        } else {
+                            model.$setValidity('phone', true);
+                            model.$setPristine();
+                        }
+                    });
                 });
-            });
+            }
         }
     }
-}]);
+]);
 
 
 
