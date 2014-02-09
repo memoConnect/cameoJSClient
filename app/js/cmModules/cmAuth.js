@@ -4,13 +4,8 @@
 
 
 
-var cmAuth = angular.module('cmAuth', ['cmCrypt', 'cmLogger'])
+var cmAuth = angular.module('cmAuth', ['cmApi', 'cmCrypt', 'cmLogger'])
 
-
-//TODO config cameo
-
-
-//	SERVICES:  -----------------
 
 //Service to handle all authenticateion matters
 
