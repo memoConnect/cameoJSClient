@@ -23,13 +23,10 @@ cmApi.provider('cmApi',  [
 			'$injector',
 
 			function($http, $injector){
-
-				//DOES NOR WORK :(
-
-				console.log($injector.has('cmAuthProvider'))
+				
 				//cmApi can only perfom calls that need authentication if cmAuth is present
-				var getToken = 	$injector.has('cmAuthService')
-								?	$injector.get('cmAuthService').getToken
+				var getToken = 	$injector.has('cmAuth')
+								?	$injector.get('cmAuth').getToken
 								:	undefined 
 
 				var api 	=	function(method, path, config){
