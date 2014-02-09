@@ -34,7 +34,7 @@ cmAuth.provider('cmAuth', function(){
     	        requestToken: 		function(auth){
     						            return	$http({
     						            			method:		'GET',
-    						                		url: 		cameo.restApi+'/token',
+    						                		url: 		rest_api+'/token',
     						                		headers:	{ 'Authorization': 'Basic '+auth }
     						            		})
     						        },
@@ -52,7 +52,7 @@ cmAuth.provider('cmAuth', function(){
     	       	createUser: 		function(data){                                    
     		            				return	$http({
                                                     method:     'POST',
-    		               							url:        cameo.restApi+'/account',
+    		               							url:        rest_api+'/account',
     		               							data:       data
     		            						})
     		        				},
@@ -60,7 +60,7 @@ cmAuth.provider('cmAuth', function(){
        			checkAccountName:	function(data){
     								    return	$http({
                                                     method:     'POST',
-                                                    url:        cameo.restApi+'/account/check',
+                                                    url:        rest_api+'/account/check',
                                                     data:       data
     										    })
         							}

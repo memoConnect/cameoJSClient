@@ -1,9 +1,21 @@
 {
 	"LOGIN": {
-		"AUTO": {
-			"LABEL": "Automatisches Login (Max)"
-		}
-	},
+        "HEADING":  "Login",
+        "LABEL": {
+            "SUBMIT":       "Login",
+            "REMEMBER_ME":  "merken.",
+            "AUTO":         "Automatisches Login (Max)"
+        },
+        "PLACEHOLDER": {
+            "USERNAME":     "Benutzername",
+            "PASSWORD":     "Passwort"
+        }
+
+    },
+
+    "REGISTER": {
+        "LINK" :    "Registrieren."
+    },
 
 	"PROFILE": {
 		"E-MAIL": "E-Mail",
