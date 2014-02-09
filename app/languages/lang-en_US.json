@@ -14,7 +14,28 @@
     },
 
     "REGISTER": {
-        "LINK" :    "Sign in."
+        "HEADING":  "Registry",
+        "LINK" :    "Sign in.",
+        "LABEL": {
+            "SUBMIT":   "create user",
+            "USERNAME": "Username",
+            "NAME":     "Name",
+            "EMAIL":    "Email",
+            "PHONE":    "Phone"
+        },
+
+        "PLACEHOLDER": {            
+            "USERNAME": "username",
+            "NAME":     "Name",
+            "EMAIL":    "example@example.com",
+            "PHONE":    "+49..."
+        },
+
+        "INFO": {            
+            "MIN_LETTER_COUNT":     "Please use at least {{count}} letters.",            
+            "INVALID_PHONE_NUMBER": "The string supplied did not seem to be a phone number."
+        }
+
     },
 
 	"PROFILE": {
