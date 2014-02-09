@@ -44,6 +44,7 @@ cmLanguage.provider('cmLanguage', [
 
 		this.setSupportedLanguages = function(languages){
 			supported_languages = languages
+			return(this)
 		}
 
 		this.setPathToLanguages = function(path){
@@ -52,15 +53,19 @@ cmLanguage.provider('cmLanguage', [
 			$translateProvider.useStaticFilesLoader({
        			prefix: path+'/lang-',            
        			suffix: '.json'
-        	});
+        	})
+
+			return(this)
 		}
 
 		this.useLocalStorage = function(){
 			$translateProvider.useLocalStorage()
+			return(this)
 		}
 
 		this.preferredLanguage = function(lang_key){
-			$translateProvider.preferredLanguage(lang_key);      
+			$translateProvider.preferredLanguage(lang_key)
+			return(this)   
 		}
 
 		this.$get = [

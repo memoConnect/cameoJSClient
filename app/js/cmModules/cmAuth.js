@@ -11,62 +11,41 @@ var cmAuth = angular.module('cmAuth', ['cmApi', 'cmCrypt', 'cmLogger'])
 
 cmAuth.provider('cmAuth', function(){
     
-    var rest_api = ''
-
-    this.setRestApiUrl = function(url){
-        rest_api = url
-    }
+    //Config stuff here
 
     this.$get = [
 
-    	'$http',
+    	'cmApi',
     	'$cookieStore',
 
-    	function($http, $cookieStore){
+    	function(cmApi, $cookieStore){
     	    return {
 
     	    	//ask the api for a new authentication token:
     	        requestToken: 		function(auth){
-    						            return	$http({
-    						            			method:		'GET',
-    						                		url: 		rest_api+'/token',
-    						                		headers:	{ 'Authorization': 'Basic '+auth }
-    						            		})
+    						            return cmApi.get('/token', { headers: { 'Authorization': 'Basic '+auth } })
     						        },
 
     			//store the token in a cookie:
     			storeToken:			function(token){
-                                        return  $cookieStore.put("token", token);
+                                        return $cookieStore.put("token", token);
     								},
 
     			//retrieve thr token from a cookie
     	        getToken:			function(){
-    			        				return  $cookieStore.get('token');
+    			        				return $cookieStore.get('token');
     			        			},
 
     	       	createUser: 		function(data){                                    
-    		            				return	$http({
-                                                    method:     'POST',
-    		               							url:        rest_api+'/account',
-    		               							data:       data
-    		            						})
+    		            				return cmApi.post('/account', { data: data })
     		        				},
 
-       			checkAccountName:	function(data){
-    								    return	$http({
-                                                    method:     'POST',
-                                                    url:        rest_api+'/account/check',
-                                                    data:       data
-    										    })
+       			checkAccountName:	function(name){
+    								    return cmApi.post('/account/check', { data: { loginName: name } })
         							},
 
                 checkPhoneNumber:   function(number){
-                                        return  $http({
-                                                    method: 'POST',
-                                                    url: rest_api+'/services/checkPhoneNumber',
-                                                    data: {phoneNumber:number}
-                                                })
-
+                                        return cmApi.post('/services/checkPhoneNumber', { data: { phoneNumber:number } })
                                     }
     		}
     	}

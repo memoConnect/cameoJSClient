@@ -15,6 +15,7 @@ cmApi.provider('cmApi',  [
 
 		this.setRestApiUrl = function(url){
 			rest_api = url
+			return(this)
 		}
 
 		this.$get = [
@@ -23,14 +24,15 @@ cmApi.provider('cmApi',  [
 			'$injector',
 
 			function($http, $injector){
-				
+
 				//cmApi can only perfom calls that need authentication if cmAuth is present
-				var getToken = 	$injector.has('cmAuth')
-								?	$injector.get('cmAuth').getToken
-								:	undefined 
+				
 
 				var api 	=	function(method, path, config){
-									var token = (getToken != undefined) ? getToken() : undefined,							
+									var token 		= 	$injector.has('cmAuth')
+														?	$injector.get('cmAuth').getToken()
+														:	undefined,
+
 										token_param = 	token 
 														?	(path.match(/\?/) ? '&token=' : '?token=') +	//add or extend paramters
 															token											//add auth token							

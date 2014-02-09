@@ -53,12 +53,14 @@ app.config([
     'cmLanguageProvider',
 
     function (cmApiProvider, cmAuthProvider, cmLanguageProvider){
-        cmApiProvider.setRestApiUrl( cameo.restApi )
-        cmAuthProvider.setRestApiUrl( cameo.restApi )
-        cmLanguageProvider.setSupportedLanguages( cameo.supported_languages)
-        cmLanguageProvider.setPathToLanguages( cameo.path_to_languages)
-        cmLanguageProvider.useLocalStorage()
-        cmLanguageProvider.preferredLanguage('en_US')   //for now
+        cmApiProvider
+            .setRestApiUrl( cameo.restApi )
+            
+        cmLanguageProvider
+            .setSupportedLanguages( cameo.supported_languages)
+            .setPathToLanguages( cameo.path_to_languages)
+            .useLocalStorage()
+            .preferredLanguage('en_US')   //for now
     }
 ])
 

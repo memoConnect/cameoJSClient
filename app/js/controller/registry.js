@@ -17,7 +17,7 @@ app.controller('RegistryCtrl', [
          */
         $scope.checkUserName = function () {            
             if ($scope.registryForm.cameoName.$valid) {
-                cmAuth.checkAccountName({loginName: $scope.registryForm.cameoName.$viewValue}).
+                cmAuth.checkAccountName($scope.registryForm.cameoName.$viewValue).
                     success(function (r) {
                         if (angular.isDefined(r) && angular.isDefined(r.res) && r.res == 'OK') {
                             if (angular.isDefined(r.data) && angular.isDefined(r.data.reservationSecret)) {
