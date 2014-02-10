@@ -32,14 +32,18 @@ cmVerify.directive('cmVerify', [
 
 	        controller  :   function($scope, $element, $attrs, cmNotify) {
 	        					var item 	= $attrs.cmVerify,
-	        						key		= $.camelCase('verification'+item)
+	        						key		= $.camelCase('verify-'+item)
 
 	        					$scope.getStatus = function(){
 	        						$scope.status = 'unknown'
 	        					}
 	        					
-	        					$scope.verify = function(){	        						
-	        						cmApi.post('/verify', {data: {key: true}})
+	        					$scope.verify = function(){
+	        						var data = {}
+
+	        						data[key] = true
+
+	        						cmApi.post('/verify', {data: data})
 	        						.then(
 
 	        							function(response){  

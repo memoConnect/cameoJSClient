@@ -22,6 +22,7 @@ describe('cmAuth', function(){
 
 	describe('service', function(){
 
+		
 		it('should provide a function to request authentication tokens.', function(){
 			$httpBackend.expectGET('/token').respond(200)
 			cmAuth.requestToken()
@@ -29,26 +30,29 @@ describe('cmAuth', function(){
 		})
 
 
-		it('should provide one function to store and one get tokens.', function(){
+		
+		it('should provide one function to store and one function get tokens.', function(){
 			cmAuth.storeToken('test')
-			expect(cmAuth.getToken()).toEqual('tests')
+			expect(cmAuth.getToken()).toEqual('test')
 		})
 
+		
 		it('should provide a function to request user account creation.', function(){
-			$httpBackend.expectGET('/account').respond(200)
-			cmAuth.requestToken()
+			$httpBackend.expectPOST('/account').respond(200)
+			cmAuth.createUser()
 			$httpBackend.flush()			
 		})
+		
 
 		it('should provide a function to check if user name already exists.', function(){
-			$httpBackend.expectGET('/account/check').respond(200)
-			cmAuth.requestToken()
+			$httpBackend.expectPOST('/account/check').respond(200)
+			cmAuth.checkAccountName()
 			$httpBackend.flush()			
 		})
 
 		it('should provide a function to check if a phone number is valid.', function(){
-			$httpBackend.expectGET('/services/checkPhoneNumber').respond(200)
-			cmAuth.requestToken()
+			$httpBackend.expectPOST('/services/checkPhoneNumber').respond(200)
+			cmAuth.checkPhoneNumber()
 			$httpBackend.flush()			
 		})
 	})
