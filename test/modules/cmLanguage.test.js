@@ -1,3 +1,5 @@
+'use strict';
+
 describe("cmLanguage", function() {
 
     
@@ -96,49 +98,79 @@ describe("cmLanguage", function() {
         })
     })
 
-    describe("Module", function() {
+    describe("module", function() {
 
-        var ctrl, scope, translate, compile
+        var ctrl, scope, cmLanguage, cmTranslate, $compile, $httpBackend
         
-        beforeEach(module('cmLanguage', function($translateProvider){            
-            $translateProvider.translations('en_US', {
-                'TEST': 'works',            
+        beforeEach(module('cmLanguage', [
+
+            'cmLanguageProvider',
+
+            function(cmLanguageProvider){            
+                cmLanguageProvider
+                .preferredLanguage( 'en_US' )
+                .supportedLanguages(['en_US, de_DE'])
+                .pathToLanguages('languages')
+                .translations('en_US', {
+                    'LANG.EN_US' : 'english',
+                    'TEST': 'works'            
+                })
+            }
+        ]))
+
+        
+        beforeEach(inject(function(_$rootScope_, _$compile_, _cmLanguage_, _cmTranslate_, _$httpBackend_){
+            scope        = _$rootScope_.$new()                        
+            cmLanguage   = _cmLanguage_
+            cmTranslate  = _cmTranslate_
+            $compile     = _$compile_  
+            $httpBackend = _$httpBackend_     
+        }))
+
+        it('should provide a service "cmTranslate".', function(){
+            expect(cmTranslate).toBeDefined()
+        })
+        
+        it('should provide a service "cmLanguage".', function(){
+            expect(cmLanguage).toBeDefined()
+        })
+
+        describe("cmLanguage filter", function(){
+
+            it('should provide a functionen "getLanguageName" to get the translation of a languages\'s name by its key.', function(){
+                expect(cmLanguage.getLanguageName('en_US')).toEqual('english')            
             })
-            $translateProvider.preferredLanguage( 'en_US' );
-        }))
-
-        
-        beforeEach(inject(function($rootScope, $controller, _$compile_, cmTranslate){
-            scope        = $rootScope.$new()            
-            ctrl         = $controller('LanguageCtrl', {$scope: scope})            
-            translate    = cmTranslate
-            $compile     = _$compile_       
-        }))
-        
-        
-        it('should provide a controller "LanguageCtrl".', function() {            
-            expect(ctrl).toBeDefined()
-        })
-        
 
 
-        it('should provude a service "cmTranslate".', function(){
-            expect(translate).toBeDefined()
-        })
+            it('should provide a functionen "getCurrentLanguage" to return the currently active languages\'s key.', function(){
+                expect(cmLanguage.getCurrentLanguage()).toEqual('en_US')            
+            })
 
 
-        it('should provide a functionen "switchLanguage" on controller\'s scope to switch between supported languages.', function(){
-            expect(typeof scope.switchLanguage).toEqual('function')            
-        })
+            it('should provide a functionen "getSupportedLanguages" to return the keys of supported languages\'.', function(){
+                expect(cmLanguage.getSupportedLanguages()).toEqual(['en_US, de_DE'])            
+            })
 
 
-        it('should provide a functionen "getLanguageName" on controller\'s scope to get the translation of a languages\'s name by its key.', function(){
-            expect(typeof scope.getLanguageName).toEqual('function')            
-        })
+            it('should provide a functionen "getPathToLanguage" to return the path to language files.', function(){
+                expect(cmLanguage.getPathToLanguage()).toEqual('languages')            
+            })
 
+            it('should provide a functionen "switchLanguage" to switch between supported languages.', function(){
+                expect(typeof cmLanguage.switchLanguage).toEqual('function')            
 
-        it('should provide a functionen "getCurrentLanguage" on controllers\'s scope to return the currently active languages\'s key.', function(){
-            expect(typeof scope.getCurrentLanguage).toEqual('function')            
+                $httpBackend.whenGET('languages/lang-de_DE.json')
+                .respond('{"LANG": {"FR_FR":"Französisch"} }')
+
+                //return a promise
+                cmLanguage.switchLanguage('de_DE')
+
+                //resolves all promises
+                $httpBackend.flush();
+                
+                expect(cmLanguage.getLanguageName('fr_FR')).toBe('Französisch')
+                $httpBackend.verifyNoOutstandingExpectation()
+            })
         })
 
 
@@ -147,10 +179,9 @@ describe("cmLanguage", function() {
                   
             $compile(el)(scope)
             scope.$digest()      
-            expect(el.text()).toEqual('works')            
-           
+            expect(el.text()).toEqual('works')                       
         })
-
+        
     })   
 
 })

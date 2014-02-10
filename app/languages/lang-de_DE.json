@@ -1,9 +1,42 @@
 {
 	"LOGIN": {
-		"AUTO": {
-			"LABEL": "Automatisches Login (Max)"
-		}
-	},
+        "HEADING":  "Login",
+        "LABEL": {
+            "SUBMIT":       "Login",
+            "REMEMBER_ME":  "merken.",
+            "AUTO":         "Automatisches Login (Max)"
+        },
+        "PLACEHOLDER": {
+            "USERNAME":     "Benutzername",
+            "PASSWORD":     "Passwort"
+        }
+
+    },
+
+    "REGISTER": {
+        "HEADING":  "Registrierung",
+        "LINK" :    "registrieren.",
+        "LABEL": {
+            "SUBMIT":   "Benutzerkonto anlegen",
+            "USERNAME": "Benutzername",
+            "NAME":     "Name",
+            "EMAIL":    "E-Mail",
+            "PHONE":    "Telefon"
+        },
+
+        "PLACEHOLDER": {            
+            "USERNAME": "Benutzername",
+            "NAME":     "Name",
+            "EMAIL":    "example@example.com",
+            "PHONE":    "+49..."
+        },
+
+        "INFO": {            
+            "MIN_LETTER_COUNT":     "Bitte mindestens {{count}} Zeichen verwenden.",            
+            "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein."
+        }
+
+    },
 
 	"PROFILE": {
 		"E-MAIL": "E-Mail",

@@ -1,6 +1,12 @@
 'use strict';
-app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', 'cm',
-    function ($scope, $location, $http, AuthService, cm) {
+app.controller('RegistryCtrl', [
+
+    '$scope', 
+    '$location', 
+    'cmAuth', 
+    'cmNotify',
+
+    function ($scope, $location, cmAuth, cmNotify) {
         var reservationSecret = '';
         $scope.formData = {loginName: '', password: '', email: '', phoneNumber: '', name: ''};
         $scope.userNameAlternatives = [];
@@ -9,24 +15,24 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
         /**
          * Checks with Promise?!?!
          */
-        $scope.checkUserName = function () {
+        $scope.checkUserName = function () {            
             if ($scope.registryForm.cameoName.$valid) {
-                AuthService.checkAccountName({loginName: $scope.registryForm.cameoName.$viewValue}).
+                cmAuth.checkAccountName($scope.registryForm.cameoName.$viewValue).
                     success(function (r) {
                         if (angular.isDefined(r) && angular.isDefined(r.res) && r.res == 'OK') {
                             if (angular.isDefined(r.data) && angular.isDefined(r.data.reservationSecret)) {
                                 reservationSecret = r.data.reservationSecret;
                                 $scope.registryForm.cameoName.$valid = true;
                             } else {
-                                cm.notify.info("Error, check Username again!", {ttl: 5000});
+                                cmNotify.info("Error, check Username again!", {ttl: 5000});
                                 $scope.registryForm.cameoName.$invalid = true;
                             }
                         } else {
-                            cm.notify.info("Error, check Username again!", {ttl: 5000});
+                            cmNotify.info("Error, check Username again!", {ttl: 5000});
                             $scope.registryForm.cameoName.$invalid = true;
                         }
                     }).error(function (r) {
-                        cm.notify.info("Username exists, please choose an other one, thx!", {ttl: 5000});
+                        cmNotify.info("Username exists, please choose an other one, thx!", {ttl: 5000});
                         if (angular.isDefined(r) && angular.isDefined(r.data)) {
                             if (angular.isDefined(r.data.alternative)) {
                                 /**
@@ -51,7 +57,7 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
 
             // check cameoName == loginName
             if ($scope.registryForm.cameoName.$valid == false) {
-                cm.notify.warn("Username is required!", {ttl: 5000});
+                cmNotify.warn("Username is required!", {ttl: 5000});
                 return false;
             } else {
                 data.loginName = $scope.registryForm.cameoName.$viewValue;
@@ -59,7 +65,7 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
 
             // check password
             if ($scope.formData.password == '' || $scope.formData.password == 'none') {
-                cm.notify.warn("Password is required!", {ttl: 5000});
+                cmNotify.warn("Password is required!", {ttl: 5000});
                 return false;
             } else {
                 data.password = $scope.formData.password;
@@ -67,7 +73,7 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
 
             // check email
             if ($scope.registryForm.email.$valid == false) {
-                cm.notify.warn("E-Mail has wrong format!", {ttl: 5000});
+                cmNotify.warn("E-Mail has wrong format!", {ttl: 5000});
                 return false;
             } else {
                 if ($scope.registryForm.email.$viewValue != '') {
@@ -77,7 +83,7 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
 
             // check phone
             if ($scope.registryForm.phone.$valid == false) {
-                cm.notify.warn("Phone has wrong format!", {ttl: 5000});
+                cmNotify.warn("Phone has wrong format!", {ttl: 5000});
                 return false;
             } else {
                 if ($scope.registryForm.phone.$viewValue != '') {
@@ -92,7 +98,7 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
 
             // check agb
             if ($scope.registryForm.agb.$valid == false) {
-                cm.notify.warn("Confirm AGB!", {ttl: 5000});
+                cmNotify.warn("Confirm AGB!", {ttl: 5000});
                 return false;
             }
 
@@ -103,18 +109,21 @@ app.controller('RegistryCtrl', ['$scope', '$location', '$http', 'AuthService', '
                 data.reservationSecret = reservationSecret;
             }
 
-            AuthService.createUser(data).
+            //differnt name have different secrets, may cause trouble here
+
+
+            cmAuth.createUser(data).
                 success(function (r) {
                     if (r.res == "OK") {
                         $location.path("/login");
                     } else {
                         // Notifiation to User
-                        cm.notify.warn("Something went wrong. Pls check your data and try again!!", {ttl: 5000});
+                        cmNotify.warn("Something went wrong. Pls check your data and try again!!", {ttl: 5000});
                     }
                 }).
                 error(function (r) {
                     // Notifiation to User res,error
-                    cm.notify.warn("Something went wrong. Pls check your data and try again!!", {ttl: 5000});
+                    cmNotify.warn("Something went wrong. Pls check your data and try again!!", {ttl: 5000});
                 });
         };
     }

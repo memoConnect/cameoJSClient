@@ -1,15 +1,14 @@
-<div cm-notify></div>
-<div class="page-header"><h2>Registry</h2></div>
+<div class="page-header"><h2>{{'REGISTER.HEADING' | cmTranslate}}</h2></div>
 
 <form name="registryForm" class="form-horizontal" role="form" ng-submit="regUser()" autocomplete="off" novalidate>
 
     <div class="form-group">
-        <label for="cameoName" class="col-sm-1 control-label">Username<sup>*</sup></label>
+        <label for="cameoName" class="col-sm-1 control-label">{{'REGISTER.LABEL.USERNAME' |cmTranslate}}<sup>*</sup></label>
         <div class="col-sm-5">
-            <input id="cameoName" name="cameoName" type="text" class="form-control" ng-model="formData.cameoName" ng-blur="checkUserName();" ng-minlength="6" ng-maxlength="20" maxlength="20" placeholder="Username" required />
+            <input id="cameoName" name="cameoName" type="text" class="form-control" ng-model="formData.cameoName" ng-blur="checkUserName();" ng-minlength="6" ng-maxlength="20" maxlength="20" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}}" required />
             <div class="custom-error" ng-show="registryForm.cameoName.$dirty && registryForm.cameoName.$invalid">
                 <!--<div ng-show="registryForm.cameoName.$error.required">Username is required.</div>-->
-                <div ng-show="registryForm.cameoName.$dirty && registryForm.cameoName.$invalid && registryForm.cameoName.$error.minlength">min 6 letters</div>
+                <div ng-show="registryForm.cameoName.$dirty && registryForm.cameoName.$invalid && registryForm.cameoName.$error.minlength">{{'REGISTER.INFO.MIN_LETTER_COUNT' | cmTranslate : {count: 6} }}</div>
             </div>
         </div>
     </div>
@@ -17,25 +16,25 @@
     <cameo-password data-parent-item="formData.password"></cameo-password>
 
     <div class="form-group">
-        <label for="name" class="col-sm-1 control-label">Name</label>
+        <label for="name" class="col-sm-1 control-label">{{'REGISTER.LABEL.NAME' |cmTranslate}}</label>
         <div class="col-sm-5">
-            <input id="name" name="name" type="text" class="form-control" placeholder="Name" ng-model="formData.name" ng-blur="" />
+            <input id="name" name="name" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.NAME' |cmTranslate}}" ng-model="formData.name" ng-blur="" />
         </div>
     </div>
 
     <div class="form-group">
-        <label for="email" class="col-sm-1 control-label">E-Mail</label>
+        <label for="email" class="col-sm-1 control-label">{{'REGISTER.LABEL.EMAIL' |cmTranslate}}</label>
         <div class="col-sm-5">
-            <input id="email" name="email" type="text" class="form-control" placeholder="E-Mail" ng-model="formData.email" cm-validate-email />
+            <input id="email" name="email" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.EMAIL' |cmTranslate}}" ng-model="formData.email" cm-validate-email />
         </div>
     </div>
 
     <div class="form-group">
-        <label for="phone" class="col-sm-1 control-label">Phone</label>
+        <label for="phone" class="col-sm-1 control-label">{{'REGISTER.LABEL.PHONE' |cmTranslate}}</label>
         <div class="col-sm-5">
-            <input id="phone" name="phone" type="text" class="form-control" placeholder="+49" ng-model="formData.phone" ng-minlength="6" cm-validate-phone />
+            <input id="phone" name="phone" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.PHONE' |cmTranslate}}" ng-model="formData.phone" ng-minlength="6" cm-validate-phone />
             <div class="custom-error" ng-show="registryForm.phone.$dirty && registryForm.phone.$invalid">
-                <div ng-show="registryForm.cameoName.$error.required">The string supplied did not seem to be a phone number</div>
+                <div ng-show="registryForm.cameoName.$error.required">{{'REGISTER.INFO.INVALID_PHONE_NUMBER' |cmTranslate}}</div>
             </div>
         </div>
     </div>
@@ -48,7 +47,7 @@
 
     <div class="form-group">
         <div class="col-sm-offset-1 col-sm-5">
-            <button type="submit" class="btn btn-primary btn-sm" ng-disabled="stateBusy">create User</button>
+            <button type="submit" class="btn btn-primary btn-sm" ng-disabled="stateBusy">{{'REGISTER.LABEL.SUBMIT' |cmTranslate}}</button>
         </div>
     </div>
 </form>

@@ -7,12 +7,13 @@ var cameo = {
     path_to_languages: 'languages'
 };
 
-
 var app = angular.module('cameoClient', [
+
     'ngRoute',
     'ngCookies',
-    'cmApiAuth',
-    'cmCrypt',
+    'cmApi',
+    'cmAuth',
+    'cmCrypt',    
     'cmLanguage',
     'cmLogger',
     'cmNotify',
@@ -42,13 +43,44 @@ app.service('cm', [
     }
 ]);
 
-app.config(['$routeProvider', '$locationProvider',
-    function ($routeProvider, $locationProvider) {
-        //$locationProvider.html5Mode(true);
+
+//Module Configuration:
+
+app.config([
+
+    'cmApiProvider',
+    'cmAuthProvider',
+    'cmLanguageProvider',
+
+    function (cmApiProvider, cmAuthProvider, cmLanguageProvider){
+        cmApiProvider
+            .restApiUrl( cameo.restApi )
+            
+        cmLanguageProvider
+            .supportedLanguages( cameo.supported_languages)
+            .pathToLanguages( cameo.path_to_languages)
+            .preferredLanguage('en_US')   //for now
+            .useLocalStorage()
+            
+    }
+])
+
+
+
+
+
+app.config([
+
+    '$routeProvider',
+    '$locationProvider',
+    //'$compileProvider',    
+    
+    function ($routeProvider, $locationProvider) { // do we need this: ", $compileProvider" ?
+        //$locationProvider.html5Mode(true);    
+
         $routeProvider.
             when('/login', {
                 templateUrl: 'tpl/form/login.html',
-                controller: 'LoginCtrl'
             }).
             when('/start', {
                 templateUrl: 'tpl/start.html',

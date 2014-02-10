@@ -3,7 +3,7 @@
 //E-mail, Phone etc. verification
 
 
-var cmVerify = angular.module('cmVerify', ['cmApiAuth'])
+var cmVerify = angular.module('cmVerify', ['cmApi'])
 
 
 cmVerify.controller('ProfileCtrl', [
@@ -32,14 +32,18 @@ cmVerify.directive('cmVerify', [
 
 	        controller  :   function($scope, $element, $attrs, cmNotify) {
 	        					var item 	= $attrs.cmVerify,
-	        						key		= $.camelCase('verification'+item)
+	        						key		= $.camelCase('verify-'+item)
 
 	        					$scope.getStatus = function(){
 	        						$scope.status = 'unknown'
 	        					}
 	        					
-	        					$scope.verify = function(){	        						
-	        						cmApi.post('/verify', {data: {key: true}})
+	        					$scope.verify = function(){
+	        						var data = {}
+
+	        						data[key] = true
+
+	        						cmApi.post('/verify', {data: data})
 	        						.then(
 
 	        							function(response){  
@@ -57,25 +61,3 @@ cmVerify.directive('cmVerify', [
 	    }
 	}
 ]);
-
-
-//send a confirmation
-
-cmVerify.directive('cmConfirm', [
-
-	'$http',
-
-	function () {
-	    return  {
-	        restrict    :   'AE',
-	        scope       :   true,        
-
-	        controller  :   function($scope, $element, $attrs, $http) {
-	        					$scope.confirm = function(){
-	        						$http.post('/confirm', $attrs.cmConfirm)
-	        					}
-	        				}
-	    }
-	}
-]);
-

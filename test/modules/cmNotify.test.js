@@ -1,15 +1,19 @@
+'use strict';
+
 describe("cmNotify", function() {   
-	var notify,
+	var cmNotify,
 		el,
 		scope,
-		$backend,
+		$compile, 
+		$httpBackend,
 		$http
 
 	beforeEach(module("cmNotify"))
-	beforeEach(inject(function($rootScope, $compile, _$http_, _$httpBackend_, cmNotify){
-		notify 			= cmNotify
+	beforeEach(inject(function(_$rootScope_, _$compile_, _$http_, _$httpBackend_, _cmNotify_){
+		cmNotify 			= _cmNotify_
 		el				= $('<div cm-notify></div>')
-		scope			= $rootScope.$new()
+		scope			= _$rootScope_.$new()
+		$compile		= _$compile_
 		$httpBackend	= _$httpBackend_
 		$http			= _$http_	
 
@@ -19,41 +23,41 @@ describe("cmNotify", function() {
 
 
 	it('should provide a service "cmNotify".', function(){
-		expect(notify).toBeDefined()				
+		expect(cmNotify).toBeDefined()				
 	})
 
 
 	it('should display warnings.', function(){
-		notify.warn('waring_1')
-		notify.warn('waring_2')
-		notify.warn('waring_3')
+		cmNotify.warn('waring_1')
+		cmNotify.warn('waring_2')
+		cmNotify.warn('waring_3')
 		scope.$digest()
 		expect(el.find('.growl').children().length).toEqual(3)
 	})
 
 
 	it('should display infos.', function(){
-		notify.info('info_1')
-		notify.info('info_2')
-		notify.info('info_3')
+		cmNotify.info('info_1')
+		cmNotify.info('info_2')
+		cmNotify.info('info_3')
 		scope.$digest()
 		expect(el.find('.growl').children().length).toEqual(3)
 	})
 
 
 	it('should display success messages.', function(){
-		notify.success('info_1')
-		notify.success('info_2')
-		notify.success('info_3')
+		cmNotify.success('info_1')
+		cmNotify.success('info_2')
+		cmNotify.success('info_3')
 		scope.$digest()
 		expect(el.find('.growl').children().length).toEqual(3)
 	})
 
 
 	it('should display error messages.', function(){
-		notify.error('info_1')
-		notify.error('info_2')
-		notify.error('info_3')
+		cmNotify.error('info_1')
+		cmNotify.error('info_2')
+		cmNotify.error('info_3')
 		scope.$digest()
 		expect(el.find('.growl').children().length).toEqual(3)
 	})
