@@ -35,7 +35,7 @@ module.exports = function (config) {
 
         frameworks: ['jasmine'],
 
-        singleRun : false
+        singleRun : true
     })
 }
 
