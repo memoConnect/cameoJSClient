@@ -57,7 +57,6 @@ cmLanguage.provider('cmLanguage', [
 
 			return(this)
 		}
-
 		this.useLocalStorage = function(){
 			$translateProvider.useLocalStorage()
 			return(this)
