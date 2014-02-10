@@ -21,7 +21,7 @@
 // Todo: new logger, add notify
 
 
-var cmLanguage = angular.module('cmLanguage', ['pascalprecht.translate', 'cmNotify'])
+var cmLanguage = angular.module('cmLanguage', ['pascalprecht.translate', 'cmNotify', 'cmLogger'])
 
 
 cmLanguage.service('cmTranslate', ['$translate', function($translate){ return $translate }])
@@ -42,12 +42,12 @@ cmLanguage.provider('cmLanguage', [
 		var supported_languages = [],
 			path_to_languages = ''
 
-		this.setSupportedLanguages = function(languages){
+		this.supportedLanguages = function(languages){
 			supported_languages = languages
 			return(this)
 		}
 
-		this.setPathToLanguages = function(path){
+		this.pathToLanguages = function(path){
 			path_to_languages = path
 
 			$translateProvider.useStaticFilesLoader({
@@ -68,6 +68,10 @@ cmLanguage.provider('cmLanguage', [
 			return(this)   
 		}
 
+		this.translations = function(lang_key, data){
+			$translateProvider.translations(lang_key, data)
+		}
+
 		this.$get = [
 
 			'cmTranslate',
@@ -83,7 +87,7 @@ cmLanguage.provider('cmLanguage', [
 						return	supported_languages							
 					},
 
-					getLanguagePath: function(path){
+					getPathToLanguage: function(path){
 						return	path_to_languages
 					},
 
@@ -94,6 +98,7 @@ cmLanguage.provider('cmLanguage', [
 
 					switchLanguage: function(lang_key){
 						var self = this
+						
 						return 	cmTranslate.uses(lang_key)
 								.then(
 									function(){

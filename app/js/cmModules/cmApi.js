@@ -1,3 +1,5 @@
+'use strict';
+
 //This Module handels api calls 
 
 var cmApi = angular.module('cmApi', [])
@@ -13,7 +15,7 @@ cmApi.provider('cmApi',  [
 	function($injector){
 		var rest_api = ""
 
-		this.setRestApiUrl = function(url){
+		this.restApiUrl = function(url){
 			rest_api = url
 			return(this)
 		}
@@ -39,6 +41,7 @@ cmApi.provider('cmApi',  [
 														:	''
 
 									//extend or overwrite config
+									config			=	config || {}
 									config.method	= 	method
 									config.url		= 	rest_api +		// base url API
 														path +			// path to specific method
