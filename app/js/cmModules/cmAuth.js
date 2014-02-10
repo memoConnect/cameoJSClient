@@ -4,7 +4,7 @@
 
 
 
-var cmAuth = angular.module('cmAuth', ['$cookieStore', 'cmApi', 'cmCrypt', 'cmLogger'])
+var cmAuth = angular.module('cmAuth', ['ngCookies', 'cmApi', 'cmCrypt', 'cmLogger'])
 
 
 //Service to handle all authenticateion matters
