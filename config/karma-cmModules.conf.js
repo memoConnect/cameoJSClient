@@ -21,17 +21,21 @@ module.exports = function (config) {
 
         autoWatch : true,
 
+                // test results reporter to use
+        // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
+        reporters: ['progress', 'junit'],
+
+        // the default configuration
+        junitReporter: {
+            outputFile: 'target/test-reports/test-results.xml',
+            suite: ''
+        },
+
         browsers : ['Firefox'],
 
         frameworks: ['jasmine'],
 
-        singleRun : false,
-
-        proxies : {
-          //'/': 'http://localhost:9000/'
-          '/app/': 'http://localhost:9000/'
-//          '/app/': 'http://localhost/cameoJSClient/app/' // empu
-        }
+        singleRun : false
     })
 }
 
