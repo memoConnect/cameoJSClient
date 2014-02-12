@@ -19,6 +19,7 @@
         "LABEL": {
             "SUBMIT":   "create user",
             "USERNAME": "Username",
+            "CAMEOID":  "CameoID",
             "NAME":     "Name",
             "EMAIL":    "Email",
             "PHONE":    "Phone",

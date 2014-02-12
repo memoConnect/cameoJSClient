@@ -19,6 +19,7 @@
         "LABEL": {
             "SUBMIT":   "Benutzerkonto anlegen",
             "USERNAME": "Benutzername",
+            "CAMEOID":  "CameoID",
             "NAME":     "Name",
             "EMAIL":    "E-Mail",
             "PHONE":    "Telefon",
