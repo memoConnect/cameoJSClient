@@ -1,9 +1,10 @@
 define([
 
+	'jquery',
     'angularAMD',
     'app'
 
-], function () {
+], function ($) {
     'use strict';
 
 //E-mail, Phone etc. verification

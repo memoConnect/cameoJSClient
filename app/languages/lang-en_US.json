@@ -35,7 +35,8 @@
 
         "INFO": {            
             "MIN_LETTER_COUNT":     "Please use at least {{count}} letters.",            
-            "INVALID_PHONE_NUMBER": "The string supplied did not seem to be a phone number."
+            "INVALID_PHONE_NUMBER": "The string supplied did not seem to be a phone number.",
+            "TERMS":                "Confirm terms!"
         }
 
     },

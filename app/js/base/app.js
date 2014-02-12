@@ -64,8 +64,12 @@ define([
         'cmApiProvider',
         'cmAuthProvider',
         'cmLanguageProvider',
+        'cmLoggerProvider',
 
-        function (cmApiProvider, cmAuthProvider, cmLanguageProvider){
+        function (cmApiProvider, cmAuthProvider, cmLanguageProvider, cmLoggerProvider){
+            cmLoggerProvider
+                .debugEnabled(true)
+
             cmApiProvider
                 .restApiUrl( app.cameo.restApi );
 
@@ -116,8 +120,7 @@ define([
                     controllerUrl: 'controller/registry'
                 })).
                 when('/profile', angularAMD.route({
-                    templateUrl: 'tpl/form/profile.html',
-                    controllerUrl: 'controller/profile'
+                    templateUrl: 'tpl/form/profile.html'
                 })).
                 when('/filter', angularAMD.route({
                     templateUrl: 'tpl/form/filter.html',
@@ -152,7 +155,7 @@ define([
                 }
 
                 if (angular.isDefined($cookieStore.get("token"))) {
-                    cameo.token = $cookieStore.get("token");
+                    app.cameo.token = $cookieStore.get("token");
                 }
             });
         }

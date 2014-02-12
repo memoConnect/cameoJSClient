@@ -35,9 +35,9 @@ require.config({
         'cmLanguage': 'cmModules/cmLanguage',
         'cmLogger': 'cmModules/cmLogger',
         'cmNotify': 'cmModules/cmNotify',
-        'cmProfile': 'cmModules/cmProfile'
+        'cmProfile': 'cmModules/cmProfile',
 
-//        'jquery': 'vendor/jquery/jquery.min',
+        'jquery': 'vendor/jquery/jquery-2.1.0',
 //        'bootstrap': 'vendor/bootstrap/bootstrap.min',
     },
     packages: [

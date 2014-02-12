@@ -10,7 +10,8 @@ define([
     'cmApi',
     'cmCrypt',
     'cmLogger',
-    'util-base64'
+    'util-base64',
+    'util-passchk-fast'
 
 
 
@@ -61,17 +62,20 @@ cmAuth.provider('cmAuth', function(){
     	       	createUser: 		function(data){                                    
     		            				return  cmApi.post({ 
                                                     url:    '/account',
-                                                    data:   data 
+                                                    data:   data
                                                 })
     		        				},
 
-       			checkAccountName:	function(name){                               
+       			checkAccountName:	function(name, reservationSecret){                               
 
                                         return  cmApi.post({ 
                                                     url:    '/account/check',
-                                                    data:   { loginName: name },
+                                                    data:   { 
+                                                                loginName: name,
+                                                                reservationSecret: reservationSecret
+                                                            },
                                                     exp_ok: 'reservationSecret',
-                                                    exp_ko: 'alternatives'
+                                                    exp_ko: 'alternative'
                                                 })
         							},
 
@@ -93,11 +97,11 @@ cmAuth.provider('cmAuth', function(){
      * This directive needs passchk_fast.js
      */
 
-    cmAuth.directive('cameoPassword', ['cmCrypt',
+    cmAuth.directive('cmPassword', ['cmCrypt',
         function (cmCrypt) {
             return  {
                 restrict: 'E',
-                templateUrl: 'tpl/directives/cameo-password.html',
+                templateUrl: 'tpl/directives/cm-password.html',
                 scope: {
                     password: '=parentItem'
                 },

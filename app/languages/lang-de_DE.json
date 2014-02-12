@@ -35,7 +35,8 @@
 
         "INFO": {            
             "MIN_LETTER_COUNT":     "Bitte mindestens {{count}} Zeichen verwenden.",            
-            "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein."
+            "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
+            "TERMS":                "Bitte AGB akzeptieren."
         }
 
     },

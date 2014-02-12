@@ -1,5 +1,6 @@
 define([
 
+
     'angularAMD',
     'app'
 
@@ -53,9 +54,8 @@ define([
 										config.url		= 	rest_api +		// base url API
 															config.url +	// path to specific method
 															token_param
-										config.headers	=	config.headers || {}
+										config.headers	=	angular.extend({}, {'Authorization': token}, config.headers || {})
 
-										$.extend(config.headers, {'Authorization': token})
 
 										function responseValid(response, exp_ok_key, exp_ko_key){
 											var valid =    response

@@ -13,7 +13,8 @@ define([
         'cmNotify',
 
         function ($scope, $location, cmAuth, cmNotify) {
-            var reservationSecret = '';
+            var reservation_secrets = {};
+
             $scope.formData = {loginName: '', password: '', email: '', phoneNumber: '', name: ''};
             $scope.userNameAlternatives = [];
             $scope.showUserNameAlternatives = false;
@@ -23,17 +24,22 @@ define([
              */
             $scope.checkUserName = function () {
                 if ($scope.registryForm.cameoName.$valid) {
-                    cmAuth.checkAccountName($scope.registryForm.cameoName.$viewValue).
 
-                    function(reservation_secret){
-                        $scope.registryForm.cameoName.$valid = true;
-                    },
+                    var last_checked = $scope.registryForm.cameoName.$viewValue.toString()
 
-                    function(){
-                        cmNotify.info("Error, check Username again!", {ttl: 5000});                        
-                        $scope.registryForm.cameoName.$valid = false;
-                    }
-                )
+                    cmAuth.checkAccountName($scope.registryForm.cameoName.$viewValue)
+                    .then(
+
+                        function(reservationSecret){
+                            $scope.registryForm.cameoName.$valid = true;
+                            reservation_secrets[last_checked] = reservationSecret;
+                        },
+
+                        function(alternative){
+                            cmNotify.info("Error, check Username again!", {ttl: 5000});                        
+                            $scope.registryForm.cameoName.$valid = false;
+                        }
+                    )
 
 
                     /*
@@ -76,6 +82,9 @@ define([
                     name: null,
                     reservationSecret: null
                 };
+
+
+
 
                 // check cameoName == loginName
                 if ($scope.registryForm.cameoName.$valid == false) {
@@ -120,33 +129,24 @@ define([
 
                 // check agb
                 if ($scope.registryForm.agb.$valid == false) {
-                    cmNotify.warn("Confirm AGB!", {ttl: 5000});
+                    cmNotify.warn("REGISTER.INFO.TERMS", {ttl: 5000});
                     return false;
                 }
 
-                if (reservationSecret == '') {
+                if (!data.name in reservation_secrets) {
                     $scope.checkUserName();
                     return false;
                 } else {
-                    data.reservationSecret = reservationSecret;
+                    data.reservationSecret = reservation_secrets[data.name];
                 }
 
-                //differnt name have different secrets, may cause trouble here
 
-
-                cmAuth.createUser(data).
-                    success(function (r) {
-                        if (r.res == "OK") {
-                            $location.path("/login");
-                        } else {
-                            // Notifiation to User
-                            cmNotify.warn("Something went wrong. Pls check your data and try again!!", {ttl: 5000});
-                        }
-                    }).
-                    error(function (r) {
-                        // Notifiation to User res,error
-                        cmNotify.warn("Something went wrong. Pls check your data and try again!!", {ttl: 5000});
-                    });
+                cmAuth.createUser(data)
+                .then(
+                    function (data) {                        
+                        $location.path("/login");                        
+                    }
+                )
             };
         }
     ]);
