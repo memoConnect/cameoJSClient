@@ -17,7 +17,7 @@ var app = angular.module('cameoClient', [
     'cmLanguage',
     'cmLogger',
     'cmNotify',
-    'cmVerify'
+    'cmProfile'
 
 ]);
 
