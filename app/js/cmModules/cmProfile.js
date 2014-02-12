@@ -46,7 +46,7 @@ cmProfile.service('cmProfile', [
 				if(typeof items == 'string') items = [items]
 
 				return cmApi.get({
-							url:	'/account/'+cmAuth.getLogin(),
+							url:	'/identity',
 							exp_ok:	'token'
 						})
 			},

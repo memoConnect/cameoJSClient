@@ -50,6 +50,8 @@ cmApi.provider('cmApi',  [
 															config.url +	// path to specific method
 															token_param
 
+										$.extend(config.headers, {'CAMEO-TOKEN': token})
+
 										function responseValid(response, exp_ok_key, exp_ko_key){
 											var valid =    response
 														&& response.res

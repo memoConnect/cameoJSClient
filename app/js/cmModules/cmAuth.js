@@ -36,16 +36,6 @@ cmAuth.provider('cmAuth', function(){
                                                 })
     						        },
 
-                //storeLogin and getLogin should become absolete, once BE handles requests by auth token only
-
-                storeLogin:         function(login){
-                                        return $cookieStore.put("login", login);
-                                    },
-
-                getLogin:           function(){
-                                        return $cookieStore.get("login");
-                                    },
-
     			//store the token in a cookie:
     			storeToken:			function(token){
                                         return $cookieStore.put("token", token);
