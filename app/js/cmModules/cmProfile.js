@@ -27,8 +27,7 @@ cmProfile.service('cmProfile', [
 
 			//Tells the BE to start the verification process for email, phone or some items		
 			initiateVerification: function(items){
-				var request = {},
-					deferred = $q.defer()
+				var request = {}
 
 				if(typeof items != 'object') items = [items]
 
@@ -36,47 +35,26 @@ cmProfile.service('cmProfile', [
 					request[$.camelCase('verify-'+item)] = true
 				})		
 
-				cmApi.post('/verify', {data: request}).then(
-					function(response){
-						console.log(response)
-						response.res == 'OK'
-						? deferred.resolve(response.data)
-						: deferred.reject(response.data)
-					},
-
-					function(error){
-						deferred.reject(error)
-					}
-				)
-
-				return deferred.promise
-				//Response message should be handled by BE!
+				return	cmApi.post({
+							url:	'/verify',
+							data: 	request
+						})
 			},		
 
 			//Gets the status of the possibly ongoing verfication process
 			getVerificationStatus: function(items){
-				var deferred = $q.defer()
-
 				if(typeof items == 'string') items = [items]
 
-				cmApi.get('/account/'+cmAuth.getLogin()).then(
-					function(response){
-						//just for now, TODO!!:
-						deferred.resolve(response.data.identities[0].email.isverified)
-					},
-
-					function(error){
-						deferred.reject(data)
-						//Response message should be handled by BE!
-					}
-				)
-
-				return deferred.promise
+				return cmApi.get({
+							url:	'/account/'+cmAuth.getLogin(),
+							exp_ok:	'token'
+						})
 			},
 
 			verify: function(secret){
-				return cmApi.get('verify/'+secret)
-				//Response message should be handled by BE!
+				return	cmApi.get({
+							url: 	'verify/'+secret
+						})
 			}
 		}
 	}

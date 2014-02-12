@@ -48,11 +48,15 @@ app.service('cm', [
 
 app.config([
 
+    'cmLoggerProvider',
     'cmApiProvider',
     'cmAuthProvider',
     'cmLanguageProvider',
 
-    function (cmApiProvider, cmAuthProvider, cmLanguageProvider){
+    function (cmLoggerProvider, cmApiProvider, cmAuthProvider, cmLanguageProvider){
+
+        cmLoggerProvider.debugEnabled(true)
+
         cmApiProvider
             .restApiUrl( cameo.restApi )
             

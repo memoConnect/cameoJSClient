@@ -24,39 +24,16 @@ cmAuth.provider('cmAuth', function(){
     	function(cmApi, cmCrypt, cmLogger, $cookieStore, $q){
     	    return {
 
-                //check if the response of an api call has the expected entries
-                responseValid:      function(response, key, alt){
-                                        return     response
-                                                && 'res'  in response
-                                                && (response.res == "OK"           ? response.data !== undefined        : true)  //if the result is OK, response.data must be defined
-                                                && (response.res == "OK" && key    ? response.data[key]!== undefined    : true)  //if the result is OK and key expected, response.data[key] must be defined
-                                                && (response.res == "KO" && alt    ? response.data[alt]!== undefined    : true)
-                                    },
-
+                
     	    	//ask the api for a new authentication token:
     	        requestToken: 		function(login, pass){                    
-                                        var auth        = Base64.encode(login + ":" + cmCrypt.hash(pass)),
-                                            deferred    = $q.defer(),
-                                            self        = this
+                                        var auth        = Base64.encode(login + ":" + cmCrypt.hash(pass))
 
-                                        this.storeLogin(login)
-
-                                        cmApi.get('/token', { headers: { 'Authorization': 'Basic '+auth } }).then(
-
-                                            function(response){
-                                                var valid = self.responseValid(response, 'token')
-
-                                                if(!valid) cmLogger.error('Invalid response to authorization request.')
-
-                                                valid && response.res == "OK"
-                                                ? deferred.resolve(response.data.token)
-                                                : deferred.reject(response)  
-                                            }
-
-                                            //error already handled in cmApi                                            
-                                        )
-
-    						            return deferred.promise
+                                        return  cmApi.get({ 
+                                                    url:        '/token',
+                                                    headers:    { 'Authorization': 'Basic '+auth } ,
+                                                    exp_ok:     'token'
+                                                })
     						        },
 
                 //storeLogin and getLogin should become absolete, once BE handles requests by auth token only
@@ -80,28 +57,27 @@ cmAuth.provider('cmAuth', function(){
     			        			},
 
     	       	createUser: 		function(data){                                    
-    		            				return cmApi.post('/account', { data: data })
+    		            				return  cmApi.post({ 
+                                                    url:    '/account',
+                                                    data:   data 
+                                                })
     		        				},
 
-       			checkAccountName:	function(name){
-                                        var deferred = $q.defer(),
-                                            self     = this                                            
+       			checkAccountName:	function(name){                               
 
-                                        cmApi.post('/account/check', { data: { loginName: name } }).then(
-                                            function(response){
-                                                var valid = self.responseValid(response, 'reservationSecret', 'alternatives')
-
-                                                valid && response.res == "OK"
-                                                ? deferred.resolve(response.data)
-                                                : deferred.reject(response.data)
-                                            }                                            
-                                        )
-
-    								    return deferred.promise
+                                        return  cmApi.post({ 
+                                                    url:    '/account/check',
+                                                    data:   { loginName: name },
+                                                    exp_ok: 'reservationSecret',
+                                                    exp_ko: 'alternatives'
+                                                })
         							},
 
                 checkPhoneNumber:   function(number){
-                                        return cmApi.post('/services/checkPhoneNumber', { data: { phoneNumber:number } })
+                                        return  cmApi.post({ 
+                                                    url:    '/services/checkPhoneNumber',
+                                                    data:   { phoneNumber:number } 
+                                                })
                                     }
     		}
     	}

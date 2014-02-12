@@ -2,7 +2,7 @@
 
 //This Module handels api calls 
 
-var cmApi = angular.module('cmApi', [])
+var cmApi = angular.module('cmApi', ['cmLogger'])
 
 
 //TODO config cameo
@@ -22,58 +22,75 @@ cmApi.provider('cmApi',  [
 
 		this.$get = [
 
+			'cmLogger',
 			'$http',
 			'$injector',
 			'$q',
 
-			function($http, $injector, $q){
+			function(cmLogger, $http, $injector, $q){
 
 				//cmApi can only perfom calls that need authentication if cmAuth is present
-				
+				var api 		=	function(method, config){
+										var deferred	=	$q.defer(),
+											token 		= 	$injector.has('cmAuth')
+															?	$injector.get('cmAuth').getToken()
+															:	undefined,
 
-				var api 	=	function(method, path, config){
-									var deferred	=	$q.defer(),
-										token 		= 	$injector.has('cmAuth')
-														?	$injector.get('cmAuth').getToken()
-														:	undefined,
+											token_param = 	token 
+															?	(config.url.match(/\?/) ? '&token=' : '?token=') +	//add or extend paramters
+																token												//add auth token							
+															:	''
 
-										token_param = 	token 
-														?	(path.match(/\?/) ? '&token=' : '?token=') +	//add or extend paramters
-															token											//add auth token							
-														:	''
+										if(!config.url.match(/^\//g)) cmLogger.error('Api calls are restricted to '+rest_api+' . You tried:', config)
 
-									//extend or overwrite config
-									config			=	config || {}
-									config.method	= 	method
-									config.url		= 	rest_api +		// base url API
-														path +			// path to specific method
-														token_param
-											
-									$http(config).then(
+										//extend or overwrite config
+										config			=	config || {}
+										config.method	= 	method
+										config.url		= 	rest_api +		// base url API
+															config.url +	// path to specific method
+															token_param
 
-										//$http call success and error function with an object containing config AND data, we only need the data:
+										function responseValid(response, exp_ok_key, exp_ko_key){
+											var valid =    response
+														&& response.res
+														&& (response.res == "OK" && exp_ok_key ? response.data[exp_ok_key] !== undefined : true)
+														&& (response.res == "KO" && exp_ko_key ? response.data[exp_ko_key] !== undefined : true) 
 
-										function(response){											
-											'data' in response
-											? deferred.resolve(response.data)
-											: deferred.reject(response)
-										},
+											if(!valid) cmLogger.error('Api response invalid; expected '+ exp_ok_key||'' +', '+exp_ko_key||'', response)
 
-										function(response){
-											//error messages should come trough backend, maybe it would still be nice to do something here?
-											deferred.reject(response)
+											return(valid)
 										}
-									)
-														
-									return deferred.promise
-								}
+												
+										$http(config).then(											
 
-				api.get		=	function(path, config){ return api('GET',		path, config) }
-				api.post	=	function(path, config){ return api('POST',		path, config) }
-				api.delete	=	function(path, config){ return api('DELETE',	path, config) }
-				api.head	=	function(path, config){ return api('HEAD', 		path, config) }
-				api.put		=	function(path, config){ return api('PUT', 		path, config) }
-				api.jsonp	=	function(path, config){ return api('JSONP',		path, config) }						
+											function(response){	
+												//$http calls success and error function with an object containing config AND data, we only need the data:
+												var response = response.data
+
+												responseValid(response, config.exp_ok, config. exp_ko)
+												?	//response valid, check if OK:
+													response.res =='OK'
+													? deferred.resolve(	config.exp_ok ? response.data[config.exp_ok] : response)
+													: deferred.reject(	config.exp_ko ? response.data[config.exp_ko] : response)
+												:	//response invalid, call through:
+													deferred.reject(response)
+											},
+
+											function(response){
+												//error messages should come trough backend
+												deferred.reject(response)
+											}
+										)
+															
+										return deferred.promise
+									}
+
+				api.get				=	function(config){ return api('GET',		config) }
+				api.post			=	function(config){ return api('POST',	config) }
+				api.delete			=	function(config){ return api('DELETE',	config) }
+				api.head			=	function(config){ return api('HEAD', 	config) }
+				api.put				=	function(config){ return api('PUT', 	config) }
+				api.jsonp			=	function(config){ return api('JSONP',	config) }						
 				
 				return api
 			}
