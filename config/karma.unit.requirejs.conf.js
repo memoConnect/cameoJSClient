@@ -27,10 +27,13 @@ module.exports = function(config) {
 
         // test results reporter to use
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-        reporters: ['progress'],
+        reporters: ['progress', 'junit'],
 
-        // web server port
-        port: 9876,
+        // the default configuration
+        junitReporter: {
+            outputFile: 'target/test-reports/test-results.xml',
+            suite: ''
+        },
 
         // enable / disable colors in the output (reporters and logs)
         colors: true,
