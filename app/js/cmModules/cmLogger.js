@@ -1,9 +1,15 @@
-'use strict';
+define([
 
-/**
- * Simple wrapper around AngularJS Logger
- * Timestamp and log level will be added to each log message
- */
+    'angularAMD',
+    'app'
+
+], function () {
+    'use strict';
+
+    /**
+     * Simple wrapper around AngularJS Logger
+     * Timestamp and log level will be added to each log message
+     */
 
 
 var cmLogger = angular.module('cmLogger', [])
@@ -74,3 +80,5 @@ cmLogger.provider('cmLogger', [
         ]
     }
 ])
+
+});

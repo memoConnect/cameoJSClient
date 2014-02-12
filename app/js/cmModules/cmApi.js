@@ -1,26 +1,30 @@
-'use strict';
+define([
 
-//This Module handels api calls 
+    'angularAMD',
+    'app'
 
-var cmApi = angular.module('cmApi', ['cmLogger'])
+], function () {
+    'use strict';
 
+    //This Module handels api calls
 
-//TODO config cameo
+    var cmApi = angular.module('cmApi', []);
 
-//Service to handle all api calls
+    //TODO config cameo
 
+    //Service to handle all api calls
 
-cmApi.provider('cmApi',  [
+    cmApi.provider('cmApi',  [
 
-	function($injector){
-		var rest_api = ""
+        function($injector){
+            var rest_api = "";
 
-		this.restApiUrl = function(url){
-			rest_api = url
-			return(this)
-		}
+            this.restApiUrl = function(url){
+                rest_api = url;
+                return(this)
+            };
 
-		this.$get = [
+            this.$get = [
 
 			'cmLogger',
 			'$http',
@@ -101,3 +105,4 @@ cmApi.provider('cmApi',  [
 	}
 ])
 
+});
