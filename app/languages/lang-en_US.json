@@ -21,7 +21,9 @@
             "USERNAME": "Username",
             "NAME":     "Name",
             "EMAIL":    "Email",
-            "PHONE":    "Phone"
+            "PHONE":    "Phone",
+            "TERMS":    "Terms",
+            "TERMS_ACCEPT":    "accpect"
         },
 
         "PLACEHOLDER": {            
@@ -38,16 +40,21 @@
 
     },
 
-	"PROFILE": {
-		"E-MAIL":		"E-mail",
-		"MOBILE":		"mobile"
-	},	
+    "START": {
+        "WELCOME":  "Welcome dear {{cameoId}}",
+        "LOGOUT":   "logout"
+    },
 
 	"VERIFICATION": {
 		"REQUEST": {
 			"LABEL":		"Request verification"
 		}
 	},
+
+    "PROFILE": {
+        "E-MAIL":		"E-mail",
+        "MOBILE":		"mobile"
+    },
 
     "LANG":	{
         "DE_DE": "German",
@@ -62,7 +69,7 @@
         }
     },
 
-    "AGB" : {
+    "TERMS" : {
         "LABEL": "General Business Conditions"
     }
 }

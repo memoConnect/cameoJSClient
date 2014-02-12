@@ -3,3 +3,6 @@
 /cameoJSClient.iml
 /target/
 /project/
+*.iml
+tree.txt
+*.log
