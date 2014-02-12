@@ -8,7 +8,7 @@ define([
 
     //This Module handels api calls
 
-    var cmApi = angular.module('cmApi', []);
+    var cmApi = angular.module('cmApi', ['cmLogger']);
 
     //TODO config cameo
 

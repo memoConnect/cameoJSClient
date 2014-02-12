@@ -10,6 +10,7 @@ define([
     'cmApi',
     'cmCrypt',
     'cmLogger',
+    'util-base64'
 
 
 
@@ -85,42 +86,6 @@ cmAuth.provider('cmAuth', function(){
     ]
 });
 
-            'cmApi',
-            '$cookieStore',
-
-            function(cmApi, $cookieStore){
-                return {
-
-                    //ask the api for a new authentication token:
-                    requestToken: function(auth){
-                        return cmApi.get('/token', { headers: { 'Authorization': 'Basic '+auth } })
-                    },
-
-                    //store the token in a cookie:
-                    storeToken: function(token){
-                        return $cookieStore.put("token", token);
-                    },
-
-                    //retrieve thr token from a cookie
-                    getToken: function(){
-                        return $cookieStore.get('token');
-                    },
-
-                    createUser: function(data){
-                        return cmApi.post('/account', { data: data })
-                    },
-
-                    checkAccountName: function(name){
-                        return cmApi.post('/account/check', { data: { loginName: name } })
-                    },
-
-                    checkPhoneNumber: function(number){
-                        return cmApi.post('/services/checkPhoneNumber', { data: { phoneNumber:number } })
-                    }
-                }
-            }
-        ]
-    });
 
     //	DIRECTIVES:  -----------------
 
@@ -238,15 +203,8 @@ cmAuth.provider('cmAuth', function(){
             }
         }
 
-    }
-]);
+    })
 
-
-
-
-
-
-    });
 
     cmAuth.directive('cmValidatePhone',[
 

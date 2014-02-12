@@ -48,7 +48,7 @@ requirejs.config({
         'cmLanguage': 'cmModules/cmLanguage',
         'cmLogger': 'cmModules/cmLogger',
         'cmNotify': 'cmModules/cmNotify',
-        'cmVerify': 'cmModules/cmVerify'
+        'cmProfile': 'cmModules/cmProfile'
     },
 
     packages: [
