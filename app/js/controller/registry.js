@@ -17,7 +17,20 @@ app.controller('RegistryCtrl', [
          */
         $scope.checkUserName = function () {            
             if ($scope.registryForm.cameoName.$valid) {
-                cmAuth.checkAccountName($scope.registryForm.cameoName.$viewValue).
+                cmAuth.checkAccountName($scope.registryForm.cameoName.$viewValue).then(
+
+                    function(reservation_secret){
+                        $scope.registryForm.cameoName.$valid = true;
+                    },
+
+                    function(){
+                        cmNotify.info("Error, check Username again!", {ttl: 5000});                        
+                        $scope.registryForm.cameoName.$valid = false;
+                    }
+                )
+
+
+                    /*
                     success(function (r) {
                         if (angular.isDefined(r) && angular.isDefined(r.res) && r.res == 'OK') {
                             if (angular.isDefined(r.data) && angular.isDefined(r.data.reservationSecret)) {
@@ -39,9 +52,12 @@ app.controller('RegistryCtrl', [
                                  * @TODO
                                  * show alternatives
                                  */
+
+                                /*
                             }
                         }
                     });
+                    */
             }
         }
 

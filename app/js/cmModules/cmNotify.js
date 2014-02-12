@@ -14,7 +14,7 @@ cmNotify.config(['growlProvider', '$httpProvider', function (growlProvider, $htt
      "messages": [
      {"text":"this is a server message", 		"severity": "warn"},
      {"text":"this is another server message", 	"severity": "info"},
-     {"text":"and another", 						"severity": "error"}
+     {"text":"and another", 					"severity": "error"}
      ]
      }
      */

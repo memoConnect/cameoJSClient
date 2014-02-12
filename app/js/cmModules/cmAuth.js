@@ -16,14 +16,24 @@ cmAuth.provider('cmAuth', function(){
     this.$get = [
 
     	'cmApi',
+        'cmCrypt',
+        'cmLogger',
     	'$cookieStore',
+        '$q',
 
-    	function(cmApi, $cookieStore){
+    	function(cmApi, cmCrypt, cmLogger, $cookieStore, $q){
     	    return {
 
+                
     	    	//ask the api for a new authentication token:
-    	        requestToken: 		function(auth){
-    						            return cmApi.get('/token', { headers: { 'Authorization': 'Basic '+auth } })
+    	        requestToken: 		function(login, pass){                    
+                                        var auth        = Base64.encode(login + ":" + cmCrypt.hash(pass))
+
+                                        return  cmApi.get({ 
+                                                    url:        '/token',
+                                                    headers:    { 'Authorization': 'Basic '+auth } ,
+                                                    exp_ok:     'token'
+                                                })
     						        },
 
     			//store the token in a cookie:
@@ -37,15 +47,27 @@ cmAuth.provider('cmAuth', function(){
     			        			},
 
     	       	createUser: 		function(data){                                    
-    		            				return cmApi.post('/account', { data: data })
+    		            				return  cmApi.post({ 
+                                                    url:    '/account',
+                                                    data:   data 
+                                                })
     		        				},
 
-       			checkAccountName:	function(name){
-    								    return cmApi.post('/account/check', { data: { loginName: name } })
+       			checkAccountName:	function(name){                               
+
+                                        return  cmApi.post({ 
+                                                    url:    '/account/check',
+                                                    data:   { loginName: name },
+                                                    exp_ok: 'reservationSecret',
+                                                    exp_ko: 'alternatives'
+                                                })
         							},
 
                 checkPhoneNumber:   function(number){
-                                        return cmApi.post('/services/checkPhoneNumber', { data: { phoneNumber:number } })
+                                        return  cmApi.post({ 
+                                                    url:    '/services/checkPhoneNumber',
+                                                    data:   { phoneNumber:number } 
+                                                })
                                     }
     		}
     	}
@@ -63,11 +85,11 @@ cmAuth.provider('cmAuth', function(){
  * This directive needs passchk_fast.js
  */
 
-cmAuth.directive('cameoPassword', ['cmCrypt',
+cmAuth.directive('cmPassword', ['cmCrypt',
     function (cmCrypt) {
         return  {
             restrict: 'E',
-            templateUrl: 'tpl/directives/cameo-password.html',
+            templateUrl: 'tpl/directives/cm-password.html',
             scope: {
                 password: '=parentItem'
             },
@@ -223,50 +245,39 @@ cmAuth.directive('cmValidatePhone',[
 
 
 
-cmAuth.directive('cameoLogin', function () {
-    return  {
-        restrict    :   'E',
-        templateUrl :   'tpl/directives/cameo-login.html',
-        scope       :   {},
-        controller  :   [
+cmAuth.directive('cmLogin', [
 
-        	'$scope', 
-        	'$location', 
-        	'cmAuth',
-        	'cmLogger', 
-        	'cmCrypt',
+    'cmAuth', 
+    'cmLogger',
+    '$location',
 
-    		function ($scope, $location, cmAuth, cmLogger, cmCrypt) {
-		        $scope.placeholder = {
-		            user: "Username"
-		            ,pass: "Passwort"
-		        };
-		        $scope.formData = {};
-		        $scope.formRes = {};
+    function (cmAuth, cmLogger, $location) {
+        return  {
+            restrict    :   'E',
+            templateUrl :   'tpl/directives/cm-login.html',
+            scope       :   {},
+            controller  :   function ($scope, $element, $attrs) {                
+                		        $scope.formData = {};	        
 
-		        $scope.token = cmAuth.getToken()+" go to start"||"none";
+                		        $scope.autologin = function(){
+                		            cmLogger.debug("autologin called")
+                		            $scope.formData = {
+                		                user: "Max"
+                		                ,pass: "max.mustermann"
+                		            };
+                		        };
 
-		        $scope.autologin = function(){
-		            cmLogger.debug("autologin called")
-		            $scope.formData = {
-		                user: "Max"
-		                ,pass: "max.mustermann"
-		            };
-		        };
-
-		        $scope.getToken = function(){
-		            cmLogger.debug("requestToken called")
-		            cmAuth.requestToken(Base64.encode($scope.formData.user + ":" + cmCrypt.hash($scope.formData.pass))).
-		                success(function(res){
-		                    $scope.formRes = res.data;
-		                    cmAuth.storeToken(res.data.token);
-		                    $scope.token = res.data.token;
-		                    $location.path("/start");
-		                }).
-		                error(function(res){
-		                    $scope.formRes = res;
-		                })
-		        };
-			}]
+                		        $scope.getToken = function(){
+                		            cmLogger.debug("requestToken called")
+                		            cmAuth.requestToken($scope.formData.user, $scope.formData.pass).then(
+                		                function(token){		                    
+                		                    cmAuth.storeToken(token);		                    
+                		                    $location.path("/start");
+                		                }
+                                        //error handling is done by cmAuth
+                                    )
+                		        };
+                			}
+        }
     }
-});
+]);
