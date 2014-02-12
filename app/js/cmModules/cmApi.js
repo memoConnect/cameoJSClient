@@ -46,6 +46,9 @@ cmApi.provider('cmApi',  [
 									config.url		= 	rest_api +		// base url API
 														path +			// path to specific method
 														token_param
+									config.headers	=	config.headers || {}
+
+									$.extend(config.headers, {'Authorization': token})
 														
 									return $http(config)
 								}
