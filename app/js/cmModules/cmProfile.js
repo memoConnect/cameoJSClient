@@ -1,4 +1,10 @@
-'use strict';
+define([
+
+    'angularAMD',
+    'app'
+
+], function () {
+    'use strict';
 
 //E-mail, Phone etc. verification
 
@@ -120,3 +126,5 @@ cmProfile.directive('cmVerify', [
 	    }
 	}
 ]);
+
+});
