@@ -5,14 +5,14 @@
 module.exports = function(config) {
     config.set({
         // base path, that will be used to resolve files and exclude
-        basePath: '..',
+        basePath: '../',
 
         // frameworks to use
         frameworks: ['jasmine', 'requirejs'],
 
         // list of files / patterns to load in the browser
         files: [
-            {pattern: 'app/languages/*.jsons', included: false, served: true, autoWatch: true},
+//            {pattern: 'app/languages/*.jsons', included: false, served: true, autoWatch: true},
             {pattern: 'app/js/**/*.js', included: false, autoWatch: true},
             {pattern: 'test/unit/**/*.spec.js', included: false, autoWatch: true},
             {pattern: 'test/lib/**/*.js', included: false},
@@ -50,13 +50,13 @@ module.exports = function(config) {
         // - Safari (only Mac; has to be installed with `npm install karma-safari-launcher`)
         // - PhantomJS
         // - IE (only Windows; has to be installed with `npm install karma-ie-launcher`)
-        browsers: ['Chrome'],
+        browsers: ['PhantomJS'],
 
         // If browser does not capture in given timeout [ms], kill it
         captureTimeout: 60000,
 
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit
-        singleRun: false
+        singleRun: true
     });
 };
