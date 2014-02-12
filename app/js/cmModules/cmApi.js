@@ -49,8 +49,9 @@ cmApi.provider('cmApi',  [
 										config.url		= 	rest_api +		// base url API
 															config.url +	// path to specific method
 															token_param
+										config.headers	=	config.headers || {}
 
-										$.extend(config.headers, {'CAMEO-TOKEN': token})
+										$.extend(config.headers, {'Authorization': token})
 
 										function responseValid(response, exp_ok_key, exp_ko_key){
 											var valid =    response
@@ -58,7 +59,7 @@ cmApi.provider('cmApi',  [
 														&& (response.res == "OK" && exp_ok_key ? response.data[exp_ok_key] !== undefined : true)
 														&& (response.res == "KO" && exp_ko_key ? response.data[exp_ko_key] !== undefined : true) 
 
-											if(!valid) cmLogger.error('Api response invalid; expected '+ exp_ok_key||'' +', '+exp_ko_key||'', response)
+											if(!valid) cmLogger.error('Api response invalid; expected '+ (exp_ok_key||'') +', '+(exp_ko_key||''), response)
 
 											return(valid)
 										}
@@ -69,11 +70,11 @@ cmApi.provider('cmApi',  [
 												//$http calls success and error function with an object containing config AND data, we only need the data:
 												var response = response.data
 
-												responseValid(response, config.exp_ok, config. exp_ko)
+												responseValid(response, config.exp_ok, config.exp_ko)
 												?	//response valid, check if OK:
 													response.res =='OK'
-													? deferred.resolve(	config.exp_ok ? response.data[config.exp_ok] : response)
-													: deferred.reject(	config.exp_ko ? response.data[config.exp_ko] : response)
+													? deferred.resolve(	config.exp_ok ? response.data[config.exp_ok] : response.data || response)
+													: deferred.reject(	config.exp_ko ? response.data[config.exp_ko] : response.data || response)
 												:	//response invalid, call through:
 													deferred.reject(response)
 											},

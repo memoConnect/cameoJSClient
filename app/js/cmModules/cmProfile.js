@@ -42,13 +42,28 @@ cmProfile.service('cmProfile', [
 			},		
 
 			//Gets the status of the possibly ongoing verfication process
-			getVerificationStatus: function(items){
-				if(typeof items == 'string') items = [items]
+			getVerificationStatus: function(item){
 
-				return cmApi.get({
-							url:	'/identity',
-							exp_ok:	'token'
-						})
+				var deferred = $q.defer()
+
+				cmApi.get({
+					url:	'/identity'
+				})
+				.then(
+
+					function(data){
+						data[item] && data[item].verified
+						? deferred.resolve(data[item].verified)
+						: deferred.reject(data)
+					},
+
+					function(data){
+						cmLogger.error('Unable to get verfication status for' +item+'.')
+						deferred.reject(data)
+					}
+				)
+
+				return deferred.promise
 			},
 
 			verify: function(secret){
@@ -70,13 +85,13 @@ cmProfile.directive('cmVerify', [
 	    return  {
 	        restrict    :   'AE',
 	        scope       :   true,
-	        template	:	'<span><span>{{"VERIFICATION.STATUS."+status.toUpperCase()| cmTranslate}}</span><button ng-click="verify()">{{"VERIFICATION.REQUEST.LABEL"|cmTranslate}}</button></span>',     
+	        template	:	'<span><span>{{"VERIFICATION.STATUS."+status.toUpperCase()| cmTranslate}}</span><button ng-click="initiate()">{{"VERIFICATION.REQUEST.LABEL"|cmTranslate}}</button></span>',     
 
-	        controller  :   function($scope, $element, $attrs, cmProfile) {	        	
+	        controller  :   function($scope, $element, $attrs, cmProfile) {	  
+	        					$scope.item = $attrs.cmVerify
+
 	        					$scope.getStatus = function(){
-	        						$scope.status = 'unknown'
-
-	        						return	cmProfile.getVerificationStatus($attrs.cmVerify).then(
+	        						return	cmProfile.getVerificationStatus($scope.item).then(
 			        							function(status){
 			        								status 
 			        								? $scope.status = 'verified'
@@ -85,14 +100,14 @@ cmProfile.directive('cmVerify', [
 			        						)	        						
 	        					}
 
-	        					$scope.verify = function(){
-	        						cmProfile.initiateVerification($attrs.cmVerify)
+	        					$scope.initiate = function(){
+	        						cmProfile.initiateVerification($scope.item)
 	        						$scope.status = 'pending'
 
 	        						var interval = setInterval (function(){
-	        							$scope.getStatus().then(
+	        							$scope.getStatus($scope.item).then(
 	        								function(status){
-	        									status 
+	        									status
 	        									? clearInterval(interval)
 	        									: null
 	        								}
