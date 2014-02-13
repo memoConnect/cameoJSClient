@@ -5,7 +5,7 @@ define([
 ], function (app) {
     'use strict';
 
-    app.register.controller('RegistryCtrl', [
+    app.register.controller('RegistrationCtrl', [
 
         '$scope',
         '$location',
