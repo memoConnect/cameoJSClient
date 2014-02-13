@@ -14,7 +14,7 @@
     },
 
     "REGISTER": {
-        "HEADING":  "Registry",
+        "HEADING":  "Registration",
         "LINK" :    "Sign in.",
         "LABEL": {
             "SUBMIT":   "create user",
