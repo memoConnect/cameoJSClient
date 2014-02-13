@@ -1,14 +1,57 @@
 {
-	"LOGIN": {
-		"AUTO": {
-			"LABEL":		"Auto login (Max)"			
-		}
-	},
+    "LOGIN": {
+        "HEADING":  "Login",
+        "LABEL": {
+            "SUBMIT":       "submit",
+            "REMEMBER_ME":  "remember me.",
+            "AUTO":         "auto login (Max)"
+        },
+        "PLACEHOLDER": {
+            "USERNAME":     "username",
+            "PASSWORD":     "password"
+        }
 
-	"PROFILE": {
-		"E-MAIL":		"E-mail",
-		"MOBILE":		"mobile"
-	},	
+    },
+
+    "REGISTER": {
+        "HEADING":  "Registration",
+        "LINK" :    "Sign in.",
+        "LABEL": {
+            "SUBMIT":   "create user",
+            "USERNAME": "Username",
+            "CAMEOID":  "CameoID",
+            "NAME":     "Name",
+            "EMAIL":    "Email",
+            "PHONE":    "Phone",
+            "TERMS":    "Terms",
+            "TERMS_ACCEPT":    "accpect"
+        },
+
+        "PLACEHOLDER": {            
+            "USERNAME": "username",
+            "CAMEOID": "CameoId",
+            "NAME":     "Display Name",
+            "EMAIL":    "example@example.com",
+            "PHONE":    "+49..."
+        },
+
+        "INFO": {            
+            "MIN_LETTER_COUNT":     "Please use at least {{count}} letters.",            
+            "INVALID_PHONE_NUMBER": "The string supplied did not seem to be a phone number.",
+            "TERMS":                "Confirm terms!"
+        },
+
+        "TITLE": {
+            "HEAD_LOGIN": "Login Information",
+            "HEAD_IDENTITY": "User Information"
+        }
+
+    },
+
+    "START": {
+        "WELCOME":  "Welcome dear {{cameoId}}",
+        "LOGOUT":   "logout"
+    },
 
 	"VERIFICATION": {
 		"REQUEST": {
@@ -16,16 +59,32 @@
 		}
 	},
 
-	"LANG":	{
-		"DE_DE":		"German",
-		"EN_US":		"English",
-		"SWITCH": {
-			"SUCCESS":		"Language switched to {{lang}}.",
-			"ERROR":		"Unable to switch to {{lang}}.",
-			"LABEL": {
-				"DE_DE":		"@:LANG.DE_DE",
-				"EN_US":		"@:LANG.EN_US"
-			}
-		}
-	}
+    "PROFILE": {
+        "E-MAIL":		"E-mail",
+        "MOBILE":		"mobile"
+    },
+
+    "LANG":	{
+        "DE_DE": "German",
+        "EN_US": "English",
+        "SWITCH": {
+            "SUCCESS": "Language switched to {{lang}}.",
+            "ERROR": "Unable to switch to {{lang}}.",
+            "LABEL": {
+                "DE_DE": "@:LANG.DE_DE",
+                "EN_US": "@:LANG.EN_US"
+            }
+        }
+    },
+
+    "TERMS" : {
+        "LABEL": "General Business Conditions"
+    },
+
+    "PASSWORD": {
+        "LABEL_PW": "Password",
+        "LABEL_CONFIRM": "Confirm Password"
+    }
+	
+	
 }

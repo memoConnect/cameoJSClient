@@ -1,13 +1,56 @@
 {
 	"LOGIN": {
-		"AUTO": {
-			"LABEL":		"Automatisches Login (Max)"			
-		}
-	},
+        "HEADING":  "Login",
+        "LABEL": {
+            "SUBMIT":       "Login",
+            "REMEMBER_ME":  "merken.",
+            "AUTO":         "Automatisches Login (Max)"
+        },
+        "PLACEHOLDER": {
+            "USERNAME":     "Benutzername",
+            "PASSWORD":     "Passwort"
+        }
 
-	"PROFILE": {
-		"E-MAIL":		"E-Mail",
-		"MOBILE":		"Mobiltelfon"
+    },
+
+    "REGISTER": {
+        "HEADING":  "Registrierung",
+        "LINK" :    "registrieren.",
+        "LABEL": {
+            "SUBMIT":   "Benutzerkonto anlegen",
+            "USERNAME": "Benutzername",
+            "CAMEOID":  "CameoID",
+            "NAME":     "Anzeigename",
+            "EMAIL":    "E-Mail",
+            "PHONE":    "Telefon",
+            "TERMS":    "AGB",
+            "TERMS_ACCEPT":    "akzeptieren"
+        },
+
+        "PLACEHOLDER": {            
+            "USERNAME": "Benutzername",
+            "CAMEOID": "CameoId",
+            "NAME":     "Name",
+            "EMAIL":    "example@example.com",
+            "PHONE":    "+49..."
+        },
+
+        "INFO": {            
+            "MIN_LETTER_COUNT":     "Bitte mindestens {{count}} Zeichen verwenden.",            
+            "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
+            "TERMS":                "Bitte AGB akzeptieren."
+        },
+
+        "TITLE": {
+            "HEAD_LOGIN": "Login Information",
+            "HEAD_IDENTITY": "User Information"
+        }
+
+    },
+
+	"START": {
+		"WELCOME":  "Willkommen lieber {{cameoId}}",
+		"LOGOUT":   "ausloggen"
 	},
 
 	"VERIFICATION": {
@@ -16,16 +59,32 @@
 		}
 	},
 
+	"PROFILE": {
+		"E-MAIL": "E-Mail",
+		"MOBILE": "Mobiltelfon"
+	},
+
 	"LANG":	{
-		"DE_DE":		"Deutsch",
-		"EN_US":		"Englisch",
+		"DE_DE": "Deutsch",
+		"EN_US": "Englisch",
 		"SWITCH": {
-			"SUCCESS":		"Sprache auf {{lang}} gestellt.",
-			"ERROR":		"Konnte Sprache nicht auf {{lang}} stellen.",
+			"SUCCESS": "Sprache auf {{lang}} gestellt.",
+			"ERROR": "Konnte Sprache nicht auf {{lang}} stellen.",
 			"LABEL": {
-				"DE_DE":		"@:LANG.DE_DE",
-				"EN_US":		"@:LANG.EN_US"
+				"DE_DE": "@:LANG.DE_DE",
+				"EN_US": "@:LANG.EN_US"
 			}
 		}
-	}
+	},
+
+    "TERMS" : {
+        "LABEL": "AGB"
+    },
+
+    "PASSWORD": {
+        "LABEL_PW": "Passwort",
+        "LABEL_CONFIRM": "Passwort bestätigen"
+    }
+	
+	
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="cameoClient">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,66 +8,18 @@
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/app.css">
-
-    <!-- Vendor JQuery, has to load before Anguluar -->
-    <script src="js/vendor/jquery/jquery-2.1.0.js" type="text/javascript"></script>
-    <!-- Angular -->
-    <script src="js/vendor/angular/angular.js" type="text/javascript"></script>
-    <script src="js/vendor/angular/angular-cookies.js" type="text/javascript"></script>
-    <script src="js/vendor/angular/angular-resource.js" type="text/javascript"></script>
-    <script src="js/vendor/angular/angular-route.js" type="text/javascript"></script>
-
-    <script src="js/vendor/angular-translate/angular-translate.js" type="text/javascript"></script>
-    <script src="js/vendor/angular-translate/angular-translate-loader-static-files.js" type="text/javascript"></script>
-    <script src="js/vendor/angular-translate/angular-translate-storage-cookie.js" type="text/javascript"></script>
-    <script src="js/vendor/angular-translate/angular-translate-storage-local.js" type="text/javascript"></script>
-    <script src="js/vendor/angular-growl/angular-growl.js" type="text/javascript"></script>
-    <!-- Utils -->
-    <script src="js/vendor/util/base64.js" type="text/javascript"></script>
-    <script src="js/vendor/util/passchk_fast.js" type="text/javascript"></script>
-
-    <!-- Stanford Javascript Crypto Library (SJCL), http://crypto.stanford.edu/sjcl/ -->
-    <script src="js/vendor/sjcl/main.js" type="text/javascript"></script>
-
-    <!--Web Toolkit Base64, http://www.webtoolkit.info/javascript-base64.html -->
-    <script src="js/vendor/webtoolkit/base64.js" type="text/javascript"></script>
-
-    <!-- App -->
-    <script src="js/bootstrap/app.js" type="text/javascript"></script>
-
-    <!-- cmModules -->
-    <script src="js/cmModules/cmLanguage.js" type="text/javascript"></script>
-    <script src="js/cmModules/cmLogger.js" type="text/javascript"></script>
-    <script src="js/cmModules/cmNotify.js" type="text/javascript"></script>
-    <script src="js/cmModules/cmCrypt.js" type="text/javascript"></script>
-    <script src="js/cmModules/cmApiAuth.js" type="text/javascript"></script>
-    <script src="js/cmModules/cmVerify.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="css/font-awesome.css">
 
 
 
-    <script src="js/controller/start.js" type="text/javascript"></script>
-    <script src="js/controller/login.js" type="text/javascript"></script>
-    <script src="js/controller/talks.js" type="text/javascript"></script>
-    <script src="js/controller/registry.js" type="text/javascript"></script>
-
-    <script src="js/service/assets.js" type="text/javascript"></script>
-    <script src="js/service/auth.js" type="text/javascript"></script>
-    <script src="js/service/talks.js" type="text/javascript"></script>
-
-    <!--directives-->
-    <script src="js/directives/cameo-login.js" type="text/javascript"></script>
-    <script src="js/directives/cameo-password.js" type="text/javascript"></script>
-
-    <!--controller-->
-    <script src="js/controller/start.js" type="text/javascript"></script>
-    <script src="js/controller/login.js" type="text/javascript"></script>
-    <script src="js/controller/talks.js" type="text/javascript"></script>
-    <script src="js/controller/registry.js" type="text/javascript"></script>
-
+    <script data-main="js/base/main.js" src="js/vendor/requirejs/require.js"></script>
 </head>
 <body>
-    <div class="view-container">
-        <div ng-view class="view-frame"></div>
+    <div cm-language-select style="text-align:right"></div>
+    <div cm-notify></div>
+
+    <div class="view-container container">
+        <div ng-view class="view-frame center-block"></div>
     </div>
 </body>
 </html>

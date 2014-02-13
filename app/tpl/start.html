@@ -1,10 +1,14 @@
-cameo home<br />
+<div ng-controller="StartCtrl">
+    <div class="page-header">
+        <h1><i class="fa fa-html5"></i> &nbsp; {{'START.WELCOME' | cmTranslate : {cameoId: 'Max'} }}</h1>
+    </div>
 
-<p>
-    <a href="#/talks">myTalks</a>
-    <a href="#/mediawall">mediaWall</a>
-    <a href="#/contacts">contacts</a>
-</p>
+    <div class="navbar">
+        <a href="#/talks">myTalks</a>
+        <a href="#/mediawall">mediaWall</a>
+        <a href="#/contacts">contacts</a>
+        <a href="#/filter">filter</a>
+    </div>
 
-<button ng-click="logout()">ausloggen</button>
-
+    <button class="btn btn-primary" ng-click="logout()">{{'START.LOGOUT' | cmTranslate }}</button>
+</div>

@@ -31,11 +31,11 @@ module.exports = function (config) {
             suite: ''
         },
 
-        browsers : ['PhantomJS'],
+        browsers : ['Firefox'],
 
         frameworks: ['jasmine'],
 
-        singleRun : true
+        singleRun : false
     })
 }
 

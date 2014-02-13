@@ -1,0 +1,14 @@
+<form class="form-signin" role="form" ng-submit="getToken()" autocomplete="off">
+    <h2 class="form-signin-heading">{{'LOGIN.HEADING' | cmTranslate}}</h2>
+
+    <input ng-model="formData.user" class="form-control" id="user" name="user" placeholder="{{'LOGIN.PLACEHOLDER.USERNAME' | cmTranslate}}" type="text" value="" required />
+    <input ng-model="formData.pass" class="form-control" id="pw" name="pw" placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD' | cmTranslate}}" type="password" value="" required />
+
+    <label class="checkbox">
+        <input type="checkbox" value="remember-me"> {{'LOGIN.LABEL.REMEMBER_ME' | cmTranslate}}
+    </label>
+
+    <button class="btn btn-lg btn-block" ng-click="autologin()">{{'LOGIN.LABEL.AUTO' | cmTranslate}}</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">{{'LOGIN.LABEL.SUBMIT' | cmTranslate}}</button>
+    <a href="#registry">{{'REGISTER.LINK' | cmTranslate}}</a>
+</form>

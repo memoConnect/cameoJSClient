@@ -1,45 +1,67 @@
-<div class="page-header"><h2>Registry</h2></div>
+<div class="page-header"><h2>{{'REGISTER.HEADING' | cmTranslate}}</h2></div>
 
-<form class="form-horizontal" role="form" ng-submit="regUser()" autocomplete="off">
+<form ng-controller="RegistryCtrl" name="registryForm" class="form-horizontal" role="form" ng-submit="regUser()" autocomplete="off" novalidate>
+
+    <div class="form-registry-head">
+
+        <h4>{{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}</h4>
+
+        <div class="form-group">
+            <label for="loginName" class="col-sm-2 control-label">{{'REGISTER.LABEL.USERNAME' |cmTranslate}}<sup>*</sup></label>
+            <div class="col-sm-6">
+                <input id="loginName" name="loginName" type="text" class="form-control" ng-model="formData.loginName" ng-blur="checkLoginName();" ng-minlength="6" ng-maxlength="20" maxlength="20" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}}" required />
+                <div class="custom-error" ng-show="registryForm.loginName.$dirty && registryForm.loginName.$invalid">
+                    <div ng-show="registryForm.loginName.$dirty && registryForm.loginName.$invalid && registryForm.loginName.$error.minlength">{{'REGISTER.INFO.MIN_LETTER_COUNT' | cmTranslate : {count: 6} }}</div>
+                </div>
+            </div>
+        </div>
+
+        <cm-password data-parent-item="formData.password"></cm-password>
+
+    </div>
+
+    <h4>{{'REGISTER.TITLE.HEAD_IDENTITY' | cmTranslate}}</h4>
+
     <div class="form-group">
-        <label for="cameoName" class="col-sm-1 control-label">Username<sup>*</sup></label>
-        <div class="col-sm-5">
-            <input type="text" class="form-control" id="cameoName" placeholder="Username" ng-model="formData.cameoName" required />
+        <label for="cameoId" class="col-sm-2 control-label">{{'REGISTER.LABEL.CAMEOID' |cmTranslate}}</label>
+        <div class="col-sm-6">
+            <input id="cameoId" name="cameoId" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.CAMEOID' |cmTranslate}}" ng-model="formData.cameoId" ng-blur="checkCameoId();" />
         </div>
     </div>
 
-    <cameo-password data-parent-item="formData.password"></cameo-password>
-
     <div class="form-group">
-        <label for="name" class="col-sm-1 control-label">Name</label>
-        <div class="col-sm-5">
-            <input type="text" class="form-control" id="name" placeholder="Name" ng-model="formData.name" />
+        <label for="name" class="col-sm-2 control-label">{{'REGISTER.LABEL.NAME' |cmTranslate}}</label>
+        <div class="col-sm-6">
+            <input id="name" name="name" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.NAME' |cmTranslate}}" ng-model="formData.name" />
         </div>
     </div>
 
     <div class="form-group">
-        <label for="email" class="col-sm-1 control-label">E-Mail</label>
-        <div class="col-sm-5">
-            <input type="email" class="form-control" id="email" placeholder="E-Mail" ng-model="formData.email" />
+        <label for="email" class="col-sm-2 control-label">{{'REGISTER.LABEL.EMAIL' |cmTranslate}}</label>
+        <div class="col-sm-6">
+            <input id="email" name="email" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.EMAIL' |cmTranslate}}" ng-model="formData.email" cm-validate-email />
         </div>
     </div>
 
     <div class="form-group">
-        <label for="phone" class="col-sm-1 control-label">Phone</label>
-        <div class="col-sm-5">
-            <input type="text" class="form-control" id="phone" placeholder="+491" ng-model="formData.phone">
+        <label for="phone" class="col-sm-2 control-label">{{'REGISTER.LABEL.PHONE' |cmTranslate}}</label>
+        <div class="col-sm-6">
+            <input id="phone" name="phone" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.PHONE' |cmTranslate}}" ng-model="formData.phone" ng-minlength="6" cm-validate-phone />
+            <div class="custom-error" ng-show="registryForm.phone.$dirty && registryForm.phone.$invalid">
+                <div ng-show="registryForm.cameoName.$error.required">{{'REGISTER.INFO.INVALID_PHONE_NUMBER' |cmTranslate}}</div>
+            </div>
         </div>
     </div>
 
     <div class="checkbox mb10">
-        <label class="col-sm-offset-1 col-sm-5">
-            <input type="checkbox" id="agb" name="agb" ng-model="formData.agb" required /> AGB akzeptieren
+        <label class="col-sm-offset-2 col-sm-6">
+            <input id="agb" name="agb" type="checkbox" ng-model="formData.agb" required /> <a href="#/terms">{{'REGISTER.LABEL.TERMS' |cmTranslate}}</a> {{'REGISTER.LABEL.TERMS_ACCEPT' |cmTranslate}}
         </label>
     </div>
 
     <div class="form-group">
-        <div class="col-sm-offset-1 col-sm-5">
-            <button type="submit" class="btn btn-primary btn-sm" ng-disabled="stateBusy">create User</button>
+        <div class="col-sm-offset-2 col-sm-4">
+            <button type="submit" class="btn btn-primary btn-sm" ng-disabled="stateBusy">{{'REGISTER.LABEL.SUBMIT' |cmTranslate}}</button>
         </div>
     </div>
 </form>
