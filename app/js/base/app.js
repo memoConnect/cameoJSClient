@@ -33,7 +33,8 @@ define([
         restApi: "https://dev.cameo.io/api/v1",
         token: null,
         supported_languages: ['de_DE', 'en_US'],
-        path_to_languages: 'languages'
+        path_to_languages: 'languages',
+        cache_lang_files: false
     };
 
     app.service('cm', [
@@ -74,6 +75,7 @@ define([
                 .restApiUrl( app.cameo.restApi );
 
             cmLanguageProvider
+                .cacheLangFiles(app.cameo.cache_lang_files)
                 .supportedLanguages( app.cameo.supported_languages)
                 .pathToLanguages( app.cameo.path_to_languages)
                 .preferredLanguage('en_US')   //for now

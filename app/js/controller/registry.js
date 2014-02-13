@@ -11,33 +11,34 @@ define([
         '$location',
         'cmAuth',
         'cmNotify',
+        'cmLogger',
 
-        function ($scope, $location, cmAuth, cmNotify) {
+        function ($scope, $location, cmAuth, cmNotify, cmLogger) {
             var reservation_secrets = {};
 
-            $scope.formData = {loginName: '', password: '', email: '', phoneNumber: '', name: ''};
+            $scope.formData = {loginName: '', password: '', email: '', phoneNumber: '', name: '',cameoId: ''};
             $scope.userNameAlternatives = [];
             $scope.showUserNameAlternatives = false;
 
             /**
-             * Checks with Promise?!?!
+             * checks if LoginName exists, because Login Name have to be unique
              */
-            $scope.checkUserName = function () {
-                if ($scope.registryForm.cameoName.$valid) {
+            $scope.checkLoginName = function () {
+                if ($scope.registryForm.loginName.$valid) {
 
-                    var last_checked = $scope.registryForm.cameoName.$viewValue.toString()
+                    var last_checked = $scope.registryForm.loginName.$viewValue.toString()
 
-                    cmAuth.checkAccountName($scope.registryForm.cameoName.$viewValue)
+                    cmAuth.checkAccountName($scope.registryForm.loginName.$viewValue)
                     .then(
 
                         function(reservationSecret){
-                            $scope.registryForm.cameoName.$valid = true;
+                            $scope.registryForm.loginName.$valid = true;
                             reservation_secrets[last_checked] = reservationSecret;
                         },
 
                         function(alternative){
                             cmNotify.info("Error, check Username again!", {ttl: 5000});                        
-                            $scope.registryForm.cameoName.$valid = false;
+                            $scope.registryForm.loginName.$valid = false;
                         }
                     )
 
@@ -70,13 +71,22 @@ define([
                         }
                     });
                     */
-            }
+                }
+            };
+
+            /**
+            * checks if LoginName exists, because Login Name have to be unique
+             * @TODO add API CALl
+            */
+            $scope.checkCameoId = function(){
+                cmLogger.debug("cameoID", $scope.registryForm.cameoId.$viewValue);
             };
 
             $scope.regUser = function () {
                 var data = {
                     loginName: null,
                     password: null,
+                    canmeoId: null,
                     email: null,
                     phoneNumber: null,
                     name: null,
@@ -84,14 +94,12 @@ define([
                 };
 
 
-
-
                 // check cameoName == loginName
-                if ($scope.registryForm.cameoName.$valid == false) {
+                if ($scope.registryForm.loginName.$valid == false) {
                     cmNotify.warn("Username is required!", {ttl: 5000});
                     return false;
                 } else {
-                    data.loginName = $scope.registryForm.cameoName.$viewValue;
+                    data.loginName = $scope.registryForm.loginName.$viewValue;
                 }
 
                 // check password
@@ -101,6 +109,12 @@ define([
                 } else {
                     data.password = $scope.formData.password;
                 }
+
+                // check cameoId
+                if($scope.registryForm.cameoid.$viewValue != ''){
+                    data.cameoId = $scope.registryForm.cameoid.$viewValue;
+                }
+
 
                 // check email
                 if ($scope.registryForm.email.$valid == false) {

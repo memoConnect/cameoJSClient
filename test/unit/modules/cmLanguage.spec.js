@@ -111,7 +111,7 @@ describe("cmLanguage", function() {
                 cmLanguageProvider
                 .preferredLanguage( 'en_US' )
                 .supportedLanguages(['en_US, de_DE'])
-                .pathToLanguages('languages')
+                .pathToLanguages('app/languages')
                 .translations('en_US', {
                     'LANG.EN_US' : 'english',
                     'TEST': 'works'            
@@ -154,13 +154,13 @@ describe("cmLanguage", function() {
 
 
             it('should provide a functionen "getPathToLanguage" to return the path to language files.', function(){
-                expect(cmLanguage.getPathToLanguage()).toEqual('languages')            
+                expect(cmLanguage.getPathToLanguage()).toEqual('app/languages')
             })
 
             it('should provide a functionen "switchLanguage" to switch between supported languages.', function(){
                 expect(typeof cmLanguage.switchLanguage).toEqual('function')            
 
-                $httpBackend.whenGET('languages/lang-de_DE.json')
+                $httpBackend.whenGET('app/languages/lang-de_DE.json')
                 .respond('{"LANG": {"FR_FR":"Französisch"} }')
 
                 //return a promise
