@@ -14,11 +14,12 @@
     },
 
     "REGISTER": {
-        "HEADING":  "Registry",
+        "HEADING":  "Registration",
         "LINK" :    "Sign in.",
         "LABEL": {
             "SUBMIT":   "create user",
             "USERNAME": "Username",
+            "CAMEOID":  "CameoID",
             "NAME":     "Name",
             "EMAIL":    "Email",
             "PHONE":    "Phone",
@@ -28,7 +29,8 @@
 
         "PLACEHOLDER": {            
             "USERNAME": "username",
-            "NAME":     "Name",
+            "CAMEOID": "CameoId",
+            "NAME":     "Display Name",
             "EMAIL":    "example@example.com",
             "PHONE":    "+49..."
         },
@@ -37,6 +39,11 @@
             "MIN_LETTER_COUNT":     "Please use at least {{count}} letters.",            
             "INVALID_PHONE_NUMBER": "The string supplied did not seem to be a phone number.",
             "TERMS":                "Confirm terms!"
+        },
+
+        "TITLE": {
+            "HEAD_LOGIN": "Login Information",
+            "HEAD_IDENTITY": "User Information"
         }
 
     },
@@ -72,5 +79,12 @@
 
     "TERMS" : {
         "LABEL": "General Business Conditions"
+    },
+
+    "PASSWORD": {
+        "LABEL_PW": "Password",
+        "LABEL_CONFIRM": "Confirm Password"
     }
+	
+	
 }
