@@ -1,6 +1,6 @@
 <div class="page-header"><h2>{{'REGISTER.HEADING' | cmTranslate}}</h2></div>
 
-<form ng-controller="RegistrationCtrl" name="registrationForm" class="form-horizontal" role="form" ng-submit="regUser()" autocomplete="off" novalidate>
+<form ng-controller="RegistrationCtrl" name="registrationForm" class="form-horizontal" role="form" ng-submit="createUser()" autocomplete="off" novalidate>
 
     <div class="form-registry-head">
 
@@ -25,7 +25,10 @@
     <div class="form-group">
         <label for="cameoId" class="col-sm-2 control-label">{{'REGISTER.LABEL.CAMEOID' |cmTranslate}}</label>
         <div class="col-sm-6">
-            <input id="cameoId" name="cameoId" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.CAMEOID' |cmTranslate}}" ng-model="formData.cameoId" ng-blur="checkCameoId();" /> <small>@cameo</small>
+            <div class="input-group">
+                <input id="cameoId" name="cameoId" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.CAMEOID' |cmTranslate}}" ng-model="formData.cameoId" ng-blur="checkCameoId();" />
+                <small class="input-group-addon">@cameo</small>
+            </div>
         </div>
     </div>
 

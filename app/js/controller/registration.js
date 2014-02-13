@@ -26,7 +26,7 @@ define([
             $scope.checkLoginName = function () {
                 if ($scope.registrationForm.loginName.$valid) {
 
-                    var last_checked = $scope.registrationForm.loginName.$viewValue.toString()
+                    var last_checked = $scope.registrationForm.loginName.$viewValue.toString();
 
                     cmAuth.checkAccountName($scope.registrationForm.loginName.$viewValue)
                     .then(
@@ -34,6 +34,13 @@ define([
                         function(reservationSecret){
                             $scope.registrationForm.loginName.$valid = true;
                             reservation_secrets[last_checked] = reservationSecret;
+
+                            /** Update cameoId in Form **/
+                            if($scope.registrationForm.cameoId.$viewValue.toString() == ''){
+                                $scope.registrationForm.cameoId.$setViewValue(last_checked);
+                                $scope.registrationForm.cameoId.$render();
+                                $scope.checkCameoId();
+                            }
                         },
 
                         function(alternative){
@@ -79,10 +86,10 @@ define([
              * @TODO add API CALl
             */
             $scope.checkCameoId = function(){
-                cmLogger.debug("cameoID", $scope.registrationForm.cameoId.$viewValue);
+                cmLogger.debug("cameoID", $scope.registrationForm.cameoId.$viewValue.toString());
             };
 
-            $scope.regUser = function () {
+            $scope.createUser = function () {
                 var data = {
                     loginName: null,
                     password: null,
@@ -92,7 +99,6 @@ define([
                     name: null,
                     reservationSecret: null
                 };
-
 
                 // check cameoName == loginName
                 if ($scope.registrationForm.loginName.$valid == false) {
@@ -162,6 +168,5 @@ define([
                     }
                 )
             };
-        }
-    ]);
+    }]);
 });
