@@ -20,7 +20,7 @@
             "SUBMIT":   "Benutzerkonto anlegen",
             "USERNAME": "Benutzername",
             "CAMEOID":  "CameoID",
-            "NAME":     "Name",
+            "NAME":     "Anzeigename",
             "EMAIL":    "E-Mail",
             "PHONE":    "Telefon",
             "TERMS":    "AGB",
@@ -29,6 +29,7 @@
 
         "PLACEHOLDER": {            
             "USERNAME": "Benutzername",
+            "CAMEOID": "CameoId",
             "NAME":     "Name",
             "EMAIL":    "example@example.com",
             "PHONE":    "+49..."
@@ -38,6 +39,11 @@
             "MIN_LETTER_COUNT":     "Bitte mindestens {{count}} Zeichen verwenden.",            
             "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
             "TERMS":                "Bitte AGB akzeptieren."
+        },
+
+        "TITLE": {
+            "HEAD_LOGIN": "Login Information",
+            "HEAD_IDENTITY": "User Information"
         }
 
     },
@@ -73,5 +79,12 @@
 
     "TERMS" : {
         "LABEL": "AGB"
+    },
+
+    "PASSWORD": {
+        "LABEL_PW": "Passwort",
+        "LABEL_CONFIRM": "Passwort bestätigen"
     }
+	
+	
 }

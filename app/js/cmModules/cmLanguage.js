@@ -1,5 +1,4 @@
 define([
-
     'angularAMD',
 
     'angular-translate',
@@ -11,7 +10,7 @@ define([
     'cmNotify',
     'cmLogger'
 
-], function () {
+], function (app) {
     'use strict';
 
     // Provides:
@@ -50,7 +49,8 @@ define([
         function($translateProvider){
 
             var supported_languages = [],
-                path_to_languages = '';
+                path_to_languages = '',
+                cache_lang_files = true;
 
             this.supportedLanguages = function(languages){
                 supported_languages = languages;
@@ -62,7 +62,7 @@ define([
 
                 $translateProvider.useStaticFilesLoader({
                     prefix: path+'/lang-',
-                    suffix: '.json'
+                    suffix: '.json' + (cache_lang_files ? '' : '?bust=' + (new Date()).getTime())
                 });
 
                 return(this)
@@ -77,6 +77,11 @@ define([
                 $translateProvider.preferredLanguage(lang_key);
                 return(this)
             };
+
+            this.cacheLangFiles = function(bool){
+                cache_lang_files = bool;
+                return(this)
+            }
 
             this.translations = function(lang_key, data){
                 $translateProvider.translations(lang_key, data)

@@ -23,6 +23,8 @@ i.eye-close {background-image: url('../gfx/glyphicons_052_eye_close.png');backgr
 
 input[type="checkbox"] {border:none !important;box-shadow: none !important}
 
+.form-registry-head {border-bottom: 1px solid #EEEEEE;margin-bottom: 40px}
+
 li.message-list {
     width : 800px;
     min-height : 50px;
