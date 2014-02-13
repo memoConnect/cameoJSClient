@@ -82,7 +82,8 @@ cmAuth.provider('cmAuth', function(){
                 checkPhoneNumber:   function(number){
                                         return  cmApi.post({ 
                                                     url:    '/services/checkPhoneNumber',
-                                                    data:   { phoneNumber:number } 
+                                                    data:   { phoneNumber:number },
+                                                    exp_ok: "phoneNumber"
                                                 })
                                     }
     		}
@@ -222,21 +223,19 @@ cmAuth.provider('cmAuth', function(){
                         scope.$apply(function(){
                             var val = element.val();
                             if(val != ""){
-                                cmAuth.checkPhoneNumber(val)
-                                .success(function(r){
-                                    if(angular.isDefined(r) && angular.isDefined(r.res) && r.res == 'OK' ){
+                                cmAuth.checkPhoneNumber(val).
+                                then(
+                                    //sucess
+                                    function (phoneNumber){
                                         model.$setValidity('phone', true);
-
-                                        if(angular.isDefined(r.data) && angular.isDefined(r.data.phoneNumber) && r.data.phoneNumber != ''){
-                                            model.$setViewValue(r.data.phoneNumber);
-                                            model.$render();
-                                        }
-                                    } else {
+                                        model.$setViewValue(phoneNumber);
+                                        model.$render();
+                                    },
+                                    //error
+                                    function (){
                                         model.$setValidity('phone', false);
                                     }
-                                }).error(function(r){
-                                    model.$setValidity('phone', false);
-                                });
+                                );
                             } else {
                                 model.$setValidity('phone', true);
                                 model.$setPristine();
