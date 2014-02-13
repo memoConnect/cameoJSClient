@@ -54,7 +54,7 @@ define([
 				Authentication and error handling is dealt with automatically.
 
 
-				example:
+				example: (!!check tests in cmApi.spec.js!!)
 
                 cmApi.get({
                     url:     '/pony',
@@ -155,7 +155,7 @@ define([
 				var api 		=	function(method, config){
 										var deferred	=	$q.defer(),
 
-											//get authentification token from cmAuth
+											//get authentification token from cmAuth if present
 											token 		= 	$injector.has('cmAuth')
 															?	$injector.get('cmAuth').getToken()
 															:	undefined											
@@ -168,18 +168,18 @@ define([
 										config.method	= 	method			// overwrite method
 										config.url		= 	rest_api +		// base url API
 															config.url 		// path to specific method															
-										config.headers	=	angular.extend({}, {'Authorization': token}, config.headers || {})	//add authorization token to the header
+										config.headers	=	angular.extend(token ? {'Authorization': token} : {}, config.headers || {})	//add authorization token to the header
 
 
 										//check if the response matches the api conventions
 										function responseValid(response, exp_ok, exp_ko){
 											var valid =    response			
 															//response must have a res key that equals 'OK' or 'KO':
-														&& (response.res == 'OK' || response.res == 'OK')
+														&& (response.res == 'OK' || response.res == 'KO')
 															//if your request was granted and something was expected in return, it must be present:
-														&& (response.res == "OK" && exp_ok ? response.data[exp_ok] !== undefined : true)
+														&& (response.res == "OK" && exp_ok ? exp_ok in response.data : true)
 															//if your request was denied and something was expected in return, it must be present:
-														&& (response.res == "KO" && exp_ko ? response.data[exp_ko] !== undefined : true) 
+														&& (response.res == "KO" && exp_ko ? exp_ko in response.data : true) 
 
 											if(!valid) cmLogger.error('Api response invalid; '+(exp_ok||exp_ko ? 'expected: ':'') + (exp_ok||'') +', '+(exp_ko||''), response)
 
