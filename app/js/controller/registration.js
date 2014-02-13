@@ -35,12 +35,7 @@ define([
                             $scope.registrationForm.loginName.$valid = true;
                             reservation_secrets[last_checked] = reservationSecret;
 
-                            /** Update cameoId in Form **/
-                            if($scope.registrationForm.cameoId.$viewValue.toString() == ''){
-                                $scope.registrationForm.cameoId.$setViewValue(last_checked);
-                                $scope.registrationForm.cameoId.$render();
-                                $scope.checkCameoId();
-                            }
+                            $scope.setCameoID(last_checked);
                         },
 
                         function(alternative){
@@ -88,6 +83,15 @@ define([
             $scope.checkCameoId = function(){
                 cmLogger.debug("cameoID", $scope.registrationForm.cameoId.$viewValue.toString());
             };
+
+            /** Update cameoId in Form **/
+            $scope.setCameoID = function(id){
+                if(angular.isDefined(id) && $scope.registrationForm.cameoId.$viewValue.toString() == ''){
+                    $scope.registrationForm.cameoId.$setViewValue(id);
+                    $scope.registrationForm.cameoId.$render();
+                    $scope.checkCameoId();
+                }
+            }
 
             $scope.createUser = function () {
                 var data = {
