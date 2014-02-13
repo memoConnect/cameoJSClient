@@ -1,6 +1,6 @@
 <div class="page-header"><h2>{{'REGISTER.HEADING' | cmTranslate}}</h2></div>
 
-<form ng-controller="RegistrationCtrl" name="registryForm" class="form-horizontal" role="form" ng-submit="regUser()" autocomplete="off" novalidate>
+<form ng-controller="RegistrationCtrl" name="registrationForm" class="form-horizontal" role="form" ng-submit="regUser()" autocomplete="off" novalidate>
 
     <div class="form-registry-head">
 
@@ -10,8 +10,8 @@
             <label for="loginName" class="col-sm-2 control-label">{{'REGISTER.LABEL.USERNAME' |cmTranslate}}<sup>*</sup></label>
             <div class="col-sm-6">
                 <input id="loginName" name="loginName" type="text" class="form-control" ng-model="formData.loginName" ng-blur="checkLoginName();" ng-minlength="6" ng-maxlength="20" maxlength="20" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}}" required />
-                <div class="custom-error" ng-show="registryForm.loginName.$dirty && registryForm.loginName.$invalid">
-                    <div ng-show="registryForm.loginName.$dirty && registryForm.loginName.$invalid && registryForm.loginName.$error.minlength">{{'REGISTER.INFO.MIN_LETTER_COUNT' | cmTranslate : {count: 6} }}</div>
+                <div class="custom-error" ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid">
+                    <div ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid && registrationForm.loginName.$error.minlength">{{'REGISTER.INFO.MIN_LETTER_COUNT' | cmTranslate : {count: 6} }}</div>
                 </div>
             </div>
         </div>
@@ -47,8 +47,8 @@
         <label for="phone" class="col-sm-2 control-label">{{'REGISTER.LABEL.PHONE' |cmTranslate}}</label>
         <div class="col-sm-6">
             <input id="phone" name="phone" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.PHONE' |cmTranslate}}" ng-model="formData.phone" ng-minlength="6" cm-validate-phone />
-            <div class="custom-error" ng-show="registryForm.phone.$dirty && registryForm.phone.$invalid">
-                <div ng-show="registryForm.cameoName.$error.required">{{'REGISTER.INFO.INVALID_PHONE_NUMBER' |cmTranslate}}</div>
+            <div class="custom-error" ng-show="registrationForm.phone.$dirty && registrationForm.phone.$invalid">
+                <div ng-show="registrationForm.cameoName.$error.required">{{'REGISTER.INFO.INVALID_PHONE_NUMBER' |cmTranslate}}</div>
             </div>
         </div>
     </div>
