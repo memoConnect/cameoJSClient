@@ -84,7 +84,9 @@
     "PASSWORD": {
         "LABEL_PW": "Passwort",
         "LABEL_CONFIRM": "Passwort bestätigen"
-    }
+    },
 	
-	
+	"CONTACTS": {
+		"WELCOME": "Kontakte"
+	}
 }

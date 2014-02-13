@@ -3,7 +3,7 @@ define([
 ], function(app){
    'use strict';
 
-    app.regsiter.controller('ContactsCtrl',[
+    app.register.controller('ContactsCtrl',[
         '$scope',
         '$location',
         'cmNotify',
