@@ -87,9 +87,15 @@
     },
 	
 	"CONTACTS": {
-		"WELCOME": "Kontakte",
+		"WELCOME": "Adressbuch",
         "PLACEHOLDER": {
             "ADD_NEW_CONTACT": "geben Sie hier eine cameoId ein"
+        },
+        "SEARCH_CAMEO_ID": {
+            "HEADER": "Kontakt hinzufügen"
+        },
+        "CONTACTS_LIST": {
+            "HEADER": "Kontakte"
         }
 	}
 }

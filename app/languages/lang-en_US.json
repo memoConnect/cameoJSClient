@@ -87,9 +87,15 @@
     },
 	
 	"CONTACTS": {
-		"WELCOME": "Contacts",
+		"WELCOME": "Addressbook",
         "PLACEHOLDER": {
             "ADD_NEW_CONTACT": "please insert a cameoId"
+        },
+        "SEARCH_CAMEO_ID": {
+            "HEADER": "Add Contact"
+        },
+        "CONTACTS_LIST": {
+            "HEADER": "Contacts"
         }
 	}
 }
