@@ -31,7 +31,7 @@ define([
                     };
 
                     $scope.sendFriendshipRequest = function(){
-                        cmLogger.log('sendFriendshipRequest');
+                        cmLogger.debug('sendFriendshipRequest');
                     };
                 }
             }
