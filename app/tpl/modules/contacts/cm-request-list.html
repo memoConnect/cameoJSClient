@@ -1,1 +1,12 @@
-Hier sieht man die Freundschaftsanfragen!
+<h3>{{'CONTACTS.REQUEST_LIST.HEADER'|cmTranslate}}</h3>
+<div class="col-sm-6">
+    <ul class="nav nav-pills nav-stacked">
+        <li ng-repeat="result in results">
+            <a>
+                {{result}}
+                <i class="fa fa-minus pull-right" ng-click="rejectRequest(result);"></i>
+                <i class="fa fa-plus pull-right" ng-click="acceptRequest(result);"></i>
+            </a>
+        </li>
+    </ul>
+</div>

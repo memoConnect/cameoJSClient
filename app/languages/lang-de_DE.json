@@ -96,6 +96,9 @@
         },
         "CONTACTS_LIST": {
             "HEADER": "Kontakte"
-        }
+        },
+		"REQUEST_LIST": {
+			"HEADER": "Freundschaftsanfragen"
+		}	
 	}
 }

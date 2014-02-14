@@ -69,7 +69,17 @@ define([
                 scope: {},
                 templateUrl: 'tpl/modules/contacts/cm-request-list.html',
                 controller: function($scope, $element, $attrs){
+                    $scope.results = mockResults;
 
+                    $scope.acceptRequest = function(cameoId){
+                        cmLogger.debug('acceptRequest' + cameoId);
+                        // TODO: cmApi stuff
+                    };
+
+                    $scope.rejectRequest = function(cameoId){
+                        cmLogger.debug('rejectRequest' + cameoId);
+                        // TODO: cmApi stuff
+                    }
                 }
             }
         });
