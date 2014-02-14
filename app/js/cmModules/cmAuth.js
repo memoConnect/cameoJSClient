@@ -13,83 +13,77 @@ define([
     'util-base64',
     'util-passchk-fast'
 
-
-
 ], function () {
     'use strict';
 
-var cmAuth = angular.module('cmAuth', ['ngCookies', 'cmApi', 'cmCrypt', 'cmLogger'])
-    
-//Service to handle all authenticateion matters
+    var cmAuth = angular.module('cmAuth', ['ngCookies', 'cmApi', 'cmCrypt', 'cmLogger'])
 
-cmAuth.provider('cmAuth', function(){
-    
-    //Config stuff here
+    //Service to handle all authenticateion matters
+    cmAuth.provider('cmAuth', function(){
 
-    this.$get = [
+        //Config stuff here
+        this.$get = [
 
-    	'cmApi',
-        'cmCrypt',
-        'cmLogger',
-    	'$cookieStore',
-        '$q',
+            'cmApi',
+            'cmCrypt',
+            'cmLogger',
+            '$cookieStore',
+            '$q',
 
-    	function(cmApi, cmCrypt, cmLogger, $cookieStore, $q){
-    	    return {
+            function(cmApi, cmCrypt, cmLogger, $cookieStore, $q){
+                return {
 
-                
-    	    	//ask the api for a new authentication token:
-    	        requestToken: 		function(login, pass){                    
-                                        var auth        = Base64.encode(login + ":" + cmCrypt.hash(pass))
+                    //ask the api for a new authentication token:
+                    requestToken: function(login, pass){
+                        var auth = Base64.encode(login + ":" + cmCrypt.hash(pass));
 
-                                        return  cmApi.get({ 
-                                                    url:        '/token',
-                                                    headers:    { 'Authorization': 'Basic '+auth } ,
-                                                    exp_ok:     'token'
-                                                })
-    						        },
+                        return  cmApi.get({
+                            url: '/token',
+                            headers: { 'Authorization': 'Basic '+auth } ,
+                            exp_ok: 'token'
+                        })
+                    },
 
-    			//store the token in a cookie:
-    			storeToken:			function(token){
-                                        return $cookieStore.put("token", token);
-    								},
+                    //store the token in a cookie:
+                    storeToken: function(token){
+                        return $cookieStore.put("token", token);
+                    },
 
-    			//retrieve thr token from a cookie
-    	        getToken:			function(){
-    			        				return $cookieStore.get('token');
-    			        			},
+                    //retrieve thr token from a cookie
+                    getToken: function(){
+                        return $cookieStore.get('token');
+                    },
 
-    	       	createUser: 		function(data){                                    
-    		            				return  cmApi.post({ 
-                                                    url:    '/account',
-                                                    data:   data
-                                                })
-    		        				},
+                    createUser: function(data){
+                        return  cmApi.post({
+                            url: '/account',
+                            data: data
+                        })
+                    },
 
-       			checkAccountName:	function(name, reservationSecret){                               
+                    checkAccountName: function(name, reservationSecret){
+                        return  cmApi.post({
+                            url: '/account/check',
+                            data: {
+                                loginName: name,
+                                reservationSecret: reservationSecret
+                            },
+                            exp_ok: 'reservationSecret',
+                            exp_ko: 'alternative'
+                        })
+                    },
 
-                                        return  cmApi.post({ 
-                                                    url:    '/account/check',
-                                                    data:   { 
-                                                                loginName: name,
-                                                                reservationSecret: reservationSecret
-                                                            },
-                                                    exp_ok: 'reservationSecret',
-                                                    exp_ko: 'alternative'
-                                                })
-        							},
-
-                checkPhoneNumber:   function(number){
-                                        return  cmApi.post({ 
-                                                    url:    '/services/checkPhoneNumber',
-                                                    data:   { phoneNumber:number },
-                                                    exp_ok: "phoneNumber"
-                                                })
-                                    }
-    		}
-    	}
-    ]
-});
+                    checkPhoneNumber: function(number){
+                        return  cmApi.post({
+                            url: '/services/checkPhoneNumber',
+                            data: { phoneNumber:number },
+                            exp_ok: 'phoneNumber'
+                        })
+                    }
+                }
+            }
+        ]
+    });
 
 
     //	DIRECTIVES:  -----------------
@@ -98,7 +92,8 @@ cmAuth.provider('cmAuth', function(){
      * This directive needs passchk_fast.js
      */
 
-    cmAuth.directive('cmPassword', ['cmCrypt',
+    cmAuth.directive('cmPassword', [
+        'cmCrypt',
         function (cmCrypt) {
             return  {
                 restrict: 'E',
@@ -120,7 +115,7 @@ cmAuth.provider('cmAuth', function(){
                             $scope.showPassword = true;
                             $scope.passwordType = 'text';
                         }
-                    }
+                    };
 
                     $scope.checkPWStrength = function(){
                         var pw = $scope.pw;
@@ -182,7 +177,8 @@ cmAuth.provider('cmAuth', function(){
                     }
                 }
             }
-    }]);
+        }
+    ]);
 
     cmAuth.directive('cmValidateEmail',function(){
         //http://stackoverflow.com/questions/16863389/angular-js-email-validation-with-unicode-characters
@@ -207,14 +203,10 @@ cmAuth.provider('cmAuth', function(){
                 });
             }
         }
-
-    })
-
+    });
 
     cmAuth.directive('cmValidatePhone',[
-
         'cmAuth',
-
         function(cmAuth){
             return {
                 require: 'ngModel',
@@ -225,7 +217,7 @@ cmAuth.provider('cmAuth', function(){
                             if(val != ""){
                                 cmAuth.checkPhoneNumber(val).
                                 then(
-                                    //sucess
+                                    //success
                                     function (phoneNumber){
                                         model.$setValidity('phone', true);
                                         model.$setViewValue(phoneNumber);
@@ -247,41 +239,39 @@ cmAuth.provider('cmAuth', function(){
         }
     ]);
 
-   cmAuth.directive('cmLogin', [
+    cmAuth.directive('cmLogin', [
+        'cmAuth',
+        'cmLogger',
+        '$location',
+        function (cmAuth, cmLogger, $location) {
+            return  {
+                restrict    :   'E',
+                templateUrl :   'tpl/directives/cm-login.html',
+                scope       :   {},
+                controller  :   function ($scope, $element, $attrs) {
+                    $scope.formData = {};
 
-    'cmAuth', 
-    'cmLogger',
-    '$location',
+                    $scope.autologin = function(){
+                        cmLogger.debug("autologin called");
+                        $scope.formData = {
+                            user: "Max"
+                            ,pass: "max.mustermann"
+                        };
+                    };
 
-    function (cmAuth, cmLogger, $location) {
-        return  {
-            restrict    :   'E',
-            templateUrl :   'tpl/directives/cm-login.html',
-            scope       :   {},
-            controller  :   function ($scope, $element, $attrs) {                
-                		        $scope.formData = {};	        
-
-                		        $scope.autologin = function(){
-                		            cmLogger.debug("autologin called")
-                		            $scope.formData = {
-                		                user: "Max"
-                		                ,pass: "max.mustermann"
-                		            };
-                		        };
-
-                		        $scope.getToken = function(){
-                		            cmLogger.debug("requestToken called")
-                		            cmAuth.requestToken($scope.formData.user, $scope.formData.pass).then(
-                		                function(token){		                    
-                		                    cmAuth.storeToken(token);		                    
-                		                    $location.path("/start");
-                		                }
-                                        //error handling is done by cmAuth
-                                    )
-                		        };
-                			}
+                    $scope.getToken = function(){
+                        cmLogger.debug("requestToken called");
+                        cmAuth.requestToken($scope.formData.user, $scope.formData.pass).then(
+                            function(token){
+                                cmAuth.storeToken(token);
+                                $location.path("/start");
+                            }
+                            //error handling is done by cmAuth
+                        )
+                    };
+                }
+            }
         }
-    }
-]);
+    ]);
 
 });

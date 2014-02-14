@@ -47,7 +47,13 @@ define([
                 scope: {},
                 templateUrl: 'tpl/modules/contacts/cm-contacts-list.html',
                 controller: function($scope, $element, $attrs){
-                    $scope.contacts = mockResults;
+                    $scope.contacts = [];
+
+                    $scope.getContacts = function(){
+                        $scope.contacts = cmApi.post({
+                            url: '/contacts'
+                        });
+                    };
 
                     $scope.editContact = function(){
                         cmLogger.debug('editContact '+cameoId);
