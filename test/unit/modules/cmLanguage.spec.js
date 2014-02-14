@@ -11,8 +11,6 @@ describe("cmLanguage", function() {
         beforeEach(module('cameoClient'))
 
         it('should find an array of correctly formatted keys for supported languages at cameo.supported_languages', function() {
-            console.log(cameo)
-
             expect(Object.prototype.toString.call( cameo.supported_languages )).toEqual('[object Array]')
             cameo.supported_languages.forEach(function(lang_key){                        
                 expect(lang_key.match(/^[a-z]{2}_[A-Z]{2}$/)).not.toEqual(null) // de_DE

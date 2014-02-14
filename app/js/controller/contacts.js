@@ -27,8 +27,8 @@ define([
                     $scope.showNoResults = false;
 
                     $scope.search = function(){
-                       $scope.showResults = true;
-                       $scope.results = mockResults;
+                        $scope.showResults = true;
+                        $scope.results = mockResults;
                         // TODO: cmApi stuff
                     };
 
@@ -51,7 +51,7 @@ define([
 
                     $scope.getContacts = function(){
                         cmApi.get({
-                            url: '/contacts?token='+cmAuth.getToken()
+                            url: '/contacts?limit=10'
                         }).then(
                             function(data){
                                 $scope.contacts = data;
@@ -75,7 +75,7 @@ define([
             }
         });
 
-      app.register.directive('cmContactRequestList',
+    app.register.directive('cmContactRequestList',
         function(cmApi, cmLogger){
             return {
                 restrict: 'A',
