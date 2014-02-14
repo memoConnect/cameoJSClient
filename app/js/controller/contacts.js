@@ -13,7 +13,7 @@ define([
         }]);
 
     app.register.directive('cmSearchCameoId',
-        function(cmLogger){
+        function(cmApi,cmLogger){
             return {
                 restrict: 'E',
                 scope: {},
