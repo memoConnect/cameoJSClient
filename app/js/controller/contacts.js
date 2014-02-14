@@ -3,6 +3,8 @@ define([
 ], function(app){
    'use strict';
 
+    var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];
+
     app.register.controller('ContactsCtrl',[
         '$scope',
         '$location',
@@ -19,7 +21,6 @@ define([
                 scope: {},
                 templateUrl: 'tpl/modules/contacts/cm-search-cameo-id.html',
                 controller: function($scope, $element, $attrs){
-                    var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];
                     $scope.results = [];
 
                     $scope.showResults = false;
@@ -39,7 +40,29 @@ define([
             }
         });
 
-    app.register.directive('cmContactRequestList',
+    app.register.directive('cmContactsList',
+        function(cmApi, cmLogger){
+            return {
+                restrict: 'E',
+                scope: {},
+                templateUrl: 'tpl/modules/contacts/cm-contacts-list.html',
+                controller: function($scope, $element, $attrs){
+                    $scope.contacts = mockResults;
+
+                    $scope.editContact = function(){
+                        cmLogger.debug('editContact '+cameoId);
+                        // TODO: cmApi stuff
+                    };
+
+                    $scope.deleteContact = function(cameoId){
+                        cmLogger.debug('deleteContact '+cameoId);
+                        // TODO: cmApi stuff
+                    };
+                }
+            }
+        });
+
+      app.register.directive('cmContactRequestList',
         function(cmApi, cmLogger){
             return {
                 restrict: 'E',

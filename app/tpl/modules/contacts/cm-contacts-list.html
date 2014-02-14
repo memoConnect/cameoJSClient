@@ -1,0 +1,10 @@
+<h3>{{'CONTACTS.CONTACTS_LIST.HEADER'|cmTranslate}}</h3>
+<ul class="nav nav-pills nav-stacked">
+    <li ng-repeat="cameoId in contacts">
+        <a>
+            {{cameoId}}
+            <i class="fa fa-trash-o pull-right" ng-click="deleteContact(cameoID)"></i>
+            <i class="fa fa-pencil pull-right" ng-click="editContact(cameoID)"></i>
+        </a>
+    </li>
+</ul>
