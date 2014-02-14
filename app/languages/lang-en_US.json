@@ -91,14 +91,13 @@
         "PLACEHOLDER": {
             "ADD_NEW_CONTACT": "please insert a cameoId"
         },
-        "SEARCH_CAMEO_ID": {
-            "HEADER": "Add Contact"
+        "HEADER": {
+            "SEARCH_CAMEO_ID": "Add Contact",
+            "CONTACTS_LIST": "Contacts",
+            "REQUEST_LIST": "Friendship Requests"
         },
-        "CONTACTS_LIST": {
-            "HEADER": "Contacts"
-        },
-		"REQUEST_LIST": {
-			"HEADER": "Friendship Requests"
-		}	
+        "INFO": {
+            "NO_CONTACTS": "No contacts exists"
+        }
 	}
 }

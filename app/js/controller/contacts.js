@@ -17,7 +17,7 @@ define([
     app.register.directive('cmSearchCameoId',
         function(cmApi, cmLogger){
             return {
-                restrict: 'E',
+                restrict: 'A',
                 scope: {},
                 templateUrl: 'tpl/modules/contacts/cm-search-cameo-id.html',
                 controller: function($scope, $element, $attrs){
@@ -41,18 +41,25 @@ define([
         });
 
     app.register.directive('cmContactsList',
-        function(cmApi, cmLogger){
+        function(cmApi, cmLogger, cmAuth){
             return {
-                restrict: 'E',
+                restrict: 'A',
                 scope: {},
                 templateUrl: 'tpl/modules/contacts/cm-contacts-list.html',
                 controller: function($scope, $element, $attrs){
                     $scope.contacts = [];
 
                     $scope.getContacts = function(){
-                        $scope.contacts = cmApi.post({
-                            url: '/contacts'
-                        });
+                        cmApi.get({
+                            url: '/contacts?token='+cmAuth.getToken()
+                        }).then(
+                            function(data){
+                                $scope.contacts = data;
+                            },
+                            function(){
+                                $scope.contacts = [];
+                            }
+                        );
                     };
 
                     $scope.editContact = function(){
@@ -71,7 +78,7 @@ define([
       app.register.directive('cmContactRequestList',
         function(cmApi, cmLogger){
             return {
-                restrict: 'E',
+                restrict: 'A',
                 scope: {},
                 templateUrl: 'tpl/modules/contacts/cm-request-list.html',
                 controller: function($scope, $element, $attrs){

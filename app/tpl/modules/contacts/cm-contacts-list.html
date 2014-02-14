@@ -1,12 +1,19 @@
-<h3>{{'CONTACTS.CONTACTS_LIST.HEADER'|cmTranslate}}</h3>
-<div class="col-sm-6">
-    <ul class="nav nav-pills nav-stacked">
-        <li ng-repeat="cameoId in contacts">
-            <a>
-                {{cameoId}}
-                <i class="fa fa-trash-o pull-right" ng-click="deleteContact(cameoId)"></i>
-                <i class="fa fa-pencil pull-right" ng-click="editContact(cameoId)"></i>
-            </a>
-        </li>
-    </ul>
+<h3>{{'CONTACTS.HEADER.CONTACTS_LIST'|cmTranslate}}</h3>
+<div class="container-fluid">
+    <div class="row">
+        <ul class="nav nav-pills nav-stacked col-sm-6" ng-init="getContacts()">
+            <li ng-repeat="cameoId in contacts">
+                <a>
+                    {{cameoId}}
+                    <i class="fa fa-trash-o pull-right" ng-click="deleteContact(cameoId)"></i>
+                    <i class="fa fa-pencil pull-right" ng-click="editContact(cameoId)"></i>
+                </a>
+            </li>
+            <li ng-show="contacts.length == 0">
+                <a class="alert alert-warning">
+                    {{'CONTACTS.INFO.NO_CONTACTS'|cmTranslate}}
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>

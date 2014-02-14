@@ -96,7 +96,7 @@ define([
         'cmCrypt',
         function (cmCrypt) {
             return  {
-                restrict: 'E',
+                restrict: 'A',
                 templateUrl: 'tpl/directives/cm-password.html',
                 scope: {
                     password: '=parentItem'
@@ -245,7 +245,7 @@ define([
         '$location',
         function (cmAuth, cmLogger, $location) {
             return  {
-                restrict    :   'E',
+                restrict    :   'A',
                 templateUrl :   'tpl/directives/cm-login.html',
                 scope       :   {},
                 controller  :   function ($scope, $element, $attrs) {
