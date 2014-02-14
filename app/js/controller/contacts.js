@@ -28,7 +28,11 @@ define([
                     $scope.search = function(){
                        $scope.showResults = true;
                        $scope.results = mockResults;
-                    }
+                    };
+
+                    $scope.sendFriendshipRequest = function(){
+                        cmLogger.log('sendFriendshipRequest');
+                    };
                 }
             }
         });
