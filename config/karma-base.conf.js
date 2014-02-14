@@ -1,28 +1,29 @@
-module.exports = function (config) {
+module.exports = function(config) {
     config.set({
-
+        // base path, that will be used to resolve files and exclude
         basePath: '../',
 
-        files : [
-            'app/js/vendor/angular/angular.js',
-            'app/js/vendor/angular/*.js',
-            'app/js/vendor/angular-translate/angular-translate.js', 
-            'app/js/vendor/angular-translate/*.js',
-            'app/js/vendor/**/*.js',        
-            'app/js/cmModules/*.js',            
-            'app/js/bootstrap/*.js',
-            'app/js/**/*.js',
-            'test/lib/angular/*.js',
-            'test/unit/*.test.js'           
+        // frameworks to use
+        frameworks: ['jasmine', 'requirejs'],
+
+        // list of files / patterns to load in the browser
+        files: [
+//            {pattern: 'app/languages/*.jsons', included: false, served: true, autoWatch: true},
+            {pattern: 'app/js/**/*.js', included: false},
+            {pattern: 'test/unit/**/*.spec.js', included: false},
+            {pattern: 'test/lib/**/*.js', included: false},
+            // included true!!! requirejs wrapper
+            {pattern: 'test/unit/test.main.js', included: true}
         ],
 
-        exclude: [                                                         
-            '**/angular-scenario.js'
+        // list of files to exclude
+        exclude: [
+            'app/js/**/main.js'
         ],
 
         // test results reporter to use
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-        reporters: ['progress', 'junit'],
+        reporters: ['progress'],
 
         // the default configuration
         junitReporter: {
@@ -30,16 +31,21 @@ module.exports = function (config) {
             suite: ''
         },
 
-        autoWatch : true,
+        // enable / disable colors in the output (reporters and logs)
+        colors: true,
 
-        browsers : ['Firefox'],
+        // level of logging
+        // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+        logLevel: config.LOG_INFO,
 
-        frameworks: ['jasmine'],
+        // enable / disable watching file and executing tests whenever any file changes
+        autoWatch: true,
 
-        singleRun : false,
+        // If browser does not capture in given timeout [ms], kill it
+        captureTimeout: 60000,
 
-        proxies : {
-        }
-    })
-}
-
+        // Continuous Integration mode
+        // if true, it capture browsers, run tests and exit
+        singleRun: true
+    });
+};
