@@ -55,6 +55,7 @@ requirejs.config({
         {name: '_b', location: ''},
         {name: '_v', location: 'vendor'},
         {name: '_s', location: 'service'},
+        {name: '_c', location: 'controller'},
         {name: '_d', location: 'directive'}
     ],
 
