@@ -8,12 +8,12 @@ define([
         '$location',
         'cmNotify',
         'cmLogger',
-        function($scope,$location,cmNotify,cmLogger){
+        function($scope, $location, cmNotify, cmLogger){
 
         }]);
 
     app.register.directive('cmSearchCameoId',
-        function(cmApi,cmLogger){
+        function(cmApi, cmLogger){
             return {
                 restrict: 'E',
                 scope: {},
@@ -28,10 +28,12 @@ define([
                     $scope.search = function(){
                        $scope.showResults = true;
                        $scope.results = mockResults;
+                        // TODO: cmApi stuff
                     };
 
-                    $scope.sendFriendshipRequest = function(){
-                        cmLogger.debug('sendFriendshipRequest');
+                    $scope.sendFriendshipRequest = function(cameoId){
+                        cmLogger.debug('sendFriendshipRequest to '+cameoId);
+                        // TODO: cmApi stuff
                     };
                 }
             }

@@ -14,7 +14,7 @@
         <div class="col-sm-6">
             <ul class="nav nav-pills nav-stacked">
                 <li ng-repeat="result in results">
-                    <a href="#">
+                    <a ng-click="sendFriendshipRequest(result);">
                         {{result}}
                         <i class="fa fa-plus pull-right"></i>
                     </a>
@@ -26,7 +26,4 @@
     <div class="form-group" ng-show="showNoResults">
         <p class="text-warning">No Results!</p>
     </div>
-</div>
-<div class="form-horizontal">
-
 </div>
