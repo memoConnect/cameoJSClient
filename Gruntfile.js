@@ -1,9 +1,51 @@
 module.exports = function (grunt) {
+    // Do grunt-related things in here
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-contrib-coffee');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-protractor-runner');
+    grunt.loadNpmTasks('grunt-contrib-connect');
 
     grunt.initConfig({
-        jshint: {
+        connect: {
+            server: {
+                options: {
+                    port: 9000,
+                    base: 'app'
+                }
+            }
+        },
+        pkg: grunt.file.readJSON('package.json'), concat: {
+            options: {
+                separator: '\n'
+            },
+            js: {
+                src: ['app/js/controller/login.js', 'app/js/controller/start.js', 'app/js/controller/talks.js'],
+                dest: 'app/js/controller/built.raw.js'
+            }
+        }, uglify: {
+            jsController: {
+                files: {
+                    'app/js/controller/build.min.js': '<%= concat.js.dest %>'
+                }
+            }
+        }, coffee: {
+            compile: {
+                files: [
+                    {
+                        expand: true, cwd: 'app/coffee/', src: ['**/*.coffee'], dest: 'app/coffee/', ext: '.js'
+                    }
+                ]
+            }
+        }, watch: {
+            coffee: {
+                files: ['app/coffee/**/*.coffee'], tasks: ['coffee'], options: {
+                    event: 'all'
+                }
+            }
+        }, jshint: {
             all: ['Gruntfile.js'
                 , 'app/js/bootstrap/*.js'
                 , 'app/js/service/*.js'
@@ -11,6 +53,59 @@ module.exports = function (grunt) {
                 , 'app/js/directives/*.js'
                 , 'app/js/controller/*.js'
                 , 'test/jasmine/**/*.js']
+        },
+        karma: {
+            options: {
+                configFile: 'config/karma-base.conf.js'
+            },
+            jenkins: {
+                reporters: ['progress', 'junit'],
+                browsers: ['PhantomJS']
+            },
+            unit: {
+                singleRun: false,
+                autoWatch: true,
+                runnerPort: 9999,
+                browsers: ['Chrome']
+            }
+
+        },
+
+        protractor: {
+            options: {
+                // The address of a running selenium server.
+                seleniumAddress: 'http://localhost:4444/wd/hub',
+
+                // Capabilities to be passed to the webdriver instance.
+                capabilities: {
+                    'browserName': 'chrome'
+                },
+
+                baseUrl: 'http://localhost:9000',
+
+                // Spec patterns are relative to the current working directly when
+                // protractor is called.
+                specs: ['test/e2e/*.spec.js'],
+
+                // Override the timeout for webdriver to 20 seconds.
+                allScriptsTimeout: 20000,
+
+                webdriverLoglevel: 'DEBUG',
+
+                // Options to be passed to Jasmine-node.
+                jasmineNodeOpts: {
+                    showColors: true, defaultTimeoutInterval: 30000, isVerbose: false, includeStackTrace: true
+                }
+
+            }
+
         }
     });
+
+
+//    grunt.registerTask('default', ['concat','uglify']);
+//    grunt.registerTask('coffeeTest', 'coffee');
+    grunt.registerTask('coffeeTest', 'watch');
+
+    grunt.registerTask('teste2e', ['connect', 'protractor']);
 };
