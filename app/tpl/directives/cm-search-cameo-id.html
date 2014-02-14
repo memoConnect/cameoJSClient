@@ -2,8 +2,8 @@
     <div class="form-group">
         <div class="col-sm-6">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="" ng-model="searchCameoId" ng-keyup="search();" />
-                <span class="input-group-addon" ng-click="search();">
+                <input class="form-control" type="text" placeholder="{{'CONTACTS.PLACEHOLDER.ADD_NEW_CONTACT' | cmTranslate}}" ng-model="searchCameoId" ng-keyup="search()" />
+                <span class="input-group-addon" ng-click="search()">
                     <i class="fa fa-search"></i>
                 </span>
             </div>
@@ -13,8 +13,11 @@
     <div class="form-group" ng-show="showResults">
         <div class="col-sm-6">
             <ul class="nav nav-pills nav-stacked">
-                <li ng-repeat="result in results | filter:searchCameoId">
-                    <a href="#">{{result}}</a>
+                <li ng-repeat="result in results">
+                    <a href="#">
+                        {{result}}
+                        <i class="fa fa-plus pull-right"></i>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -23,4 +26,7 @@
     <div class="form-group" ng-show="showNoResults">
         <p class="text-warning">No Results!</p>
     </div>
+</div>
+<div class="form-horizontal">
+
 </div>

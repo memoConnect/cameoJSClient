@@ -87,6 +87,9 @@
     },
 	
 	"CONTACTS": {
-		"WELCOME": "Contacts"
+		"WELCOME": "Contacts",
+        "PLACEHOLDER": {
+            "ADD_NEW_CONTACT": "please insert a cameoId"
+        }
 	}
 }
