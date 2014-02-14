@@ -17,7 +17,7 @@ define([
             return {
                 restrict: 'E',
                 scope: {},
-                templateUrl: 'tpl/directives/cm-search-cameo-id.html',
+                templateUrl: 'tpl/modules/contacts/cm-search-cameo-id.html',
                 controller: function($scope, $element, $attrs){
                     var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];
                     $scope.results = [];
@@ -35,6 +35,18 @@ define([
                         cmLogger.debug('sendFriendshipRequest to '+cameoId);
                         // TODO: cmApi stuff
                     };
+                }
+            }
+        });
+
+    app.register.directive('cmContactRequestList',
+        function(cmApi, cmLogger){
+            return {
+                restrict: 'E',
+                scope: {},
+                templateUrl: 'tpl/modules/contacts/cm-request-list.html',
+                controller: function($scope, $element, $attrs){
+
                 }
             }
         });
