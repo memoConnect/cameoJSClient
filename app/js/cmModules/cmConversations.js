@@ -55,8 +55,15 @@ define([
 				templateUrl:	'/tpl/modules/conversations/cm-conversations',
 
 				controller:		function($scope, $element, $attrs){
-									$scope.conversation_id = $attrs.cmConversation ||$attrs.data
-									$scope.conversation = cmConversation.getConversation($scope.conversation_id, 0, 10)
+									$scope.conversation_id 		= $attrs.cmConversation ||$attrs.data
+									$scope.conversation_offset 	= $attrs.offset
+									$scope.conversation_limit 	= $attrs.limit
+
+									cmConversation.getConversation($scope.conversation_id, 0, 10)
+									.then(function(conversation){
+										$scope.conversation = conversation
+									})
+									 
 								}
 			}
 		}
