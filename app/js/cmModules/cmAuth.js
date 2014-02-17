@@ -249,19 +249,36 @@ define([
                 templateUrl :   'tpl/directives/cm-login.html',
                 scope       :   {},
                 controller  :   function ($scope, $element, $attrs) {
-                    $scope.formData = {};
+                    var loginData = {
+                        'Max': {
+                            user: 'Max',
+                            pass: 'max.mustermann'
+                        },
+                        'Dumpuser': {
+                            user: 'r1Zhpq8e',
+                            pass: 'password'
+                        }
+                    };
 
-                    $scope.autologin = function(){
-                        cmLogger.debug("autologin called");
-                        $scope.formData = {
-                            user: "Max"
-                            ,pass: "max.mustermann"
-                        };
+                    $scope.formData = {
+                        autologin:'none'
+                    };
+
+                    $scope.changeAutologin = function(){
+                        if($scope.formData.autologin != 'none'){
+                            $scope.formData.user = loginData[$scope.formData.autologin].user
+                            $scope.formData.pass = loginData[$scope.formData.autologin].pass
+                        } else {
+                            $scope.formData.user = ""
+                            $scope.formData.pass = ""
+                        }
                     };
 
                     $scope.getToken = function(){
                         cmLogger.debug("requestToken called");
-                        cmAuth.requestToken($scope.formData.user, $scope.formData.pass).then(
+
+                        cmAuth.requestToken($scope.formData.user, $scope.formData.pass).
+                        then(
                             function(token){
                                 cmAuth.storeToken(token);
                                 $location.path("/start");

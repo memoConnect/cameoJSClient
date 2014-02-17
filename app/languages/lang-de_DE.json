@@ -4,13 +4,12 @@
         "LABEL": {
             "SUBMIT":       "Login",
             "REMEMBER_ME":  "merken.",
-            "AUTO":         "Automatisches Login (Max)"
+            "AUTO":         "Automatisches Login auswählen"
         },
         "PLACEHOLDER": {
             "USERNAME":     "Benutzername",
             "PASSWORD":     "Passwort"
         }
-
     },
 
     "REGISTER": {
@@ -90,6 +89,12 @@
 		"WELCOME": "Adressbuch",
         "PLACEHOLDER": {
             "ADD_NEW_CONTACT": "geben Sie hier eine cameoId ein"
+        },
+        "NAVIGATION":{
+            "BACK": "zurück",
+            "ADD": "hinzufügen",
+            "CONTACTS": "Kontakte",
+            "REQUESTS": "Anfragen"
         },
         "HEADER": {
             "SEARCH_CAMEO_ID": "Kontakt hinzufügen",
