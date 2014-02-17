@@ -102,6 +102,8 @@
             "REQUEST_LIST": "Freundschaftsanfragen"
         },
         "INFO": {
+            "NO_RESULTS": "Keine cameo Kontakte gefunden",
+            "MORE_CHARS_NEEDED": "Bitte geben Sie mehr Buchstaben ein",
             "NO_CONTACTS": "Keine Kontakte vorhanden"
         }
 	}

@@ -31,9 +31,22 @@ define([
                 }
 
                 return s;
-            };
+            }
 
             return {
+                /**
+                 * Search for cameoId Users
+                 * @param string
+                 * @returns {*|HttpPromise}
+                 */
+                searchCameoId: function(string){
+                    return cmApi.post({
+                        url:'/identity/search',
+                        data: {
+                            cameoId: string
+                        }
+                    });
+                },
                 /**
                  * Get Contact List
                  * @param limit
