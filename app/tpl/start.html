@@ -1,11 +1,11 @@
 <div ng-controller="StartCtrl">
     <div class="page-header">
-        <h1><i class="fa fa-html5"></i> &nbsp; {{'START.WELCOME' | cmTranslate : {cameoId: 'Max'} }}</h1>
+        <h1><i class="fa fa-smile-o"></i> {{'START.WELCOME' | cmTranslate : {cameoId: 'Max'} }}</h1>
     </div>
 
     <div class="navbar">
         <a href="#/talks">myTalks</a>
-        <a href="#/mediawall">mediaWall</a>
+        <a href="#/mediawall" ng-hide="true">mediaWall</a>
         <a href="#/contacts">contacts</a>
         <a href="#/filter">filter</a>
     </div>

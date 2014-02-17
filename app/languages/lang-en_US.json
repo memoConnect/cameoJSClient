@@ -103,6 +103,8 @@
             "REQUEST_LIST": "Friendship Requests"
         },
         "INFO": {
+            "NO_RESULTS": "No cameo contacts found",
+            "MORE_CHARS_NEEDED": "Please type more chars",
             "NO_CONTACTS": "No contacts exists"
         }
 	}

@@ -14,10 +14,10 @@ define([
         'cmLogger',
         function($scope, $location, cmContacts, cmNotify, cmLogger){
             $scope.navigation = [
-                {id:'BACK',icon:'fa-chevron-left'},
-                {id:'ADD'},
-                {id:'CONTACTS'},
-                {id:'REQUESTS'}
+                {id:'BACK',icon:'fa-chevron-left',href:'#/start'},
+                {id:'ADD',icon:'fa-plus'},
+                {id:'CONTACTS',icon:'fa-group'},
+                {id:'REQUESTS',icon:'fa-link'}
             ];
             $scope.activeTab = 'ADD';
             $scope.setActiveTab = function(tab){
@@ -34,13 +34,24 @@ define([
                 controller: function($scope, $element, $attrs){
                     $scope.results = [];
 
-                    $scope.showResults = false;
-                    $scope.showNoResults = false;
-
                     $scope.search = function(){
-                        $scope.showResults = true;
-                        $scope.results = mockResults;
-                        // TODO: cmApi/cmContacts stuff
+                        if($scope.searchCameoId.string.$invalid){
+                            $scope.results = [];
+                            return false;
+                        }
+
+                        cmLogger.debug($scope.string);
+
+                        cmContacts.searchCameoId($scope.string).
+                        then(
+                            function(data){
+                                $scope.results = data;
+                            },
+                            function(){
+
+                            }
+                        );
+                        return true;
                     };
 
                     $scope.sendFriendshipRequest = function(cameoId){

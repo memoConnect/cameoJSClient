@@ -1,17 +1,23 @@
 <h3>{{'CONTACTS.HEADER.SEARCH_CAMEO_ID'|cmTranslate}}</h3>
-<div class="form-horizontal">
+<form class="form-horizontal" name="searchCameoId">
     <div class="form-group">
         <div class="col-sm-6">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="{{'CONTACTS.PLACEHOLDER.ADD_NEW_CONTACT' | cmTranslate}}" ng-model="searchCameoId" ng-keyup="search()" />
+                <input class="form-control" type="text" placeholder="{{'CONTACTS.PLACEHOLDER.ADD_NEW_CONTACT' | cmTranslate}}" ng-model="string" name="string" ng-minlength="4" ng-keyup="search()" required />
                 <span class="input-group-addon" ng-click="search()">
                     <i class="fa fa-search"></i>
                 </span>
             </div>
+            <div class="alert alert-warning" ng-show="searchCameoId.string.$valid && results.length < 1">
+                {{'CONTACTS.INFO.NO_RESULTS'|cmTranslate}}
+            </div>
+            <div class="alert alert-danger" ng-show="searchCameoId.string.$error.minlength">
+                {{'CONTACTS.INFO.MORE_CHARS_NEEDED'|cmTranslate}}
+            </div>
         </div>
     </div>
 
-    <div class="form-group" ng-show="showResults">
+    <div class="form-group" ng-show="results.length > 0">
         <div class="col-sm-6">
             <ul class="nav nav-pills nav-stacked">
                 <li ng-repeat="result in results">
@@ -23,8 +29,4 @@
             </ul>
         </div>
     </div>
-
-    <div class="form-group" ng-show="showNoResults">
-        <p class="text-warning">No Results!</p>
-    </div>
-</div>
+</form>
