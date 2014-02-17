@@ -50,6 +50,9 @@ define([
                 controller: function($scope, $element, $attrs){
                     $scope.contacts = null;
 
+                    /**
+                     * Get Contact List
+                     */
                     $scope.getContacts = function(){
                         cmContacts.getAll(10,0).then(
                             function(data){

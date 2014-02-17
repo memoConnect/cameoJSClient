@@ -11,6 +11,12 @@ define([
         'cmApi',
         'cmLogger',
         function(cmApi, cmLogger){
+            /**
+             * Creates a String for Limit-Offset Handling in Api-Calls
+             * @param limit
+             * @param offset
+             * @returns {string}
+             */
             function handleLimitOffset(limit,offset){
                 var s = '';
 
@@ -28,21 +34,43 @@ define([
             };
 
             return {
+                /**
+                 * Get Contact List
+                 * @param limit
+                 * @param offset
+                 * @returns {*|Array|Object|Mixed|promise|!webdriver.promise.Promise}
+                 */
                 getAll: function(limit, offset){
                     return cmApi.get({
                         url:'/contacts' + handleLimitOffset(limit,offset)
                     });
                 },
+                /**
+                 * Get one Contact in Detail
+                 * @param id
+                 * @returns {*|Array|Object|Mixed|promise|!webdriver.promise.Promise}
+                 */
                 getOne: function(id){
                     return cmApi.get({
                         url:'/contact/'+id
                     })
                 },
+                /**
+                 * Get User Groups
+                 * @returns {*|Array|Object|Mixed|promise|!webdriver.promise.Promise}
+                 */
                 getGroups: function(){
                     return cmApi.get({
                         url:'contact-groups'
                     })
                 },
+                /**
+                 * Get User from one User Group
+                 * @param group
+                 * @param limit
+                 * @param offset
+                 * @returns {*|Array|Object|Mixed|promise|!webdriver.promise.Promise}
+                 */
                 getAllFromGroup: function(group,limit,offset){
                     return cmApi.get({
                         url:'contact-group/' + group + handleLimitOffset(limit,offset)
