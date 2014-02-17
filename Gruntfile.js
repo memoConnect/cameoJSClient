@@ -7,6 +7,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-selenium-launcher');
 
     grunt.initConfig({
         connect: {
@@ -74,11 +75,11 @@ module.exports = function (grunt) {
         protractor: {
             options: {
                 // The address of a running selenium server.
-                seleniumAddress: 'http://localhost:4444/wd/hub',
+                seleniumAddress: 'http://localhost:'+selenium.port ,
 
                 // Capabilities to be passed to the webdriver instance.
                 capabilities: {
-                    'browserName': 'chrome'
+                    'browserName': 'firefox'
                 },
 
                 baseUrl: 'http://localhost:9000',
@@ -107,5 +108,10 @@ module.exports = function (grunt) {
 //    grunt.registerTask('coffeeTest', 'coffee');
     grunt.registerTask('coffeeTest', 'watch');
 
-    grunt.registerTask('teste2e', ['connect', 'protractor']);
+    /*var driver = new require("selenium-webdriver").Builder()
+        .usingServer(process.env.SELENIUM_HUB)
+        .withCapabilities(webdriver.Capabilities.firefox())
+        .build()*/
+
+    grunt.registerTask('teste2e', ['connect', 'selenium-launch', 'protractor']);
 };
