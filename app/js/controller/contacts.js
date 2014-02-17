@@ -4,6 +4,7 @@ define([
    'use strict';
 
     var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];
+    var mockRequestResults = [{cameoId:'derMicha',requestId:'qwertz1'},{cameoId:'dasEmpu',requestId:'qwerrtz2'},{cameoId:'dutscher',requestId:'qwerrtz3'},{cameoId:'reimerei',requestId:'qwerrtz4'},{cameoId:'rhotp',requestId:'qwerrtz5'}];
 
     app.register.controller('ContactsCtrl',[
         '$scope',
@@ -93,16 +94,34 @@ define([
                 scope: {},
                 templateUrl: 'tpl/modules/contacts/cm-request-list.html',
                 controller: function($scope, $element, $attrs){
-                    $scope.results = mockResults;
+                    $scope.results = mockRequestResults;
 
-                    $scope.acceptRequest = function(cameoId){
-                        cmLogger.debug('acceptRequest' + cameoId);
+                    $scope.acceptRequest = function(requestId){
+                        cmLogger.debug('acceptRequest ' + requestId);
                         // TODO: cmApi/cmContacts stuff
+//                        cmContacts.answerFriendRequest(requestId, 'accept').then(
+//
+//                        );
+                        rmFromModel(requestId);
                     };
 
-                    $scope.rejectRequest = function(cameoId){
-                        cmLogger.debug('rejectRequest' + cameoId);
+                    $scope.rejectRequest = function(requestId){
+                        cmLogger.debug('rejectRequest ' + requestId);
                         // TODO: cmApi/cmContacts stuff
+//                        cmContacts.answerFriendRequest(requestId, 'reject').then(
+//
+//                        );
+                        rmFromModel(requestId);
+                    }
+
+                    function rmFromModel(requestId){
+                        if(angular.isDefined(requestId)){
+                            angular.forEach($scope.results,function(value, key){
+                               if(value.requestId == requestId){
+                                   $scope.results.splice(key, 1);
+                               }
+                            });
+                        }
                     }
                 }
             }
