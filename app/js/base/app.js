@@ -97,8 +97,7 @@ define([
             // client dynamic pages
             $routeProvider.
                 when('/login', angularAMD.route({
-                    templateUrl: 'tpl/form/login.html',
-                    controllerUrl: 'controller/login'
+                    templateUrl: 'tpl/form/login.html'
                 })).
                 otherwise({
                     redirectTo: '/login'

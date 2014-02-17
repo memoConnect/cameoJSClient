@@ -12,7 +12,16 @@ define([
         'cmNotify',
         'cmLogger',
         function($scope, $location, cmContacts, cmNotify, cmLogger){
-
+            $scope.navigation = [
+                {id:'BACK',icon:'fa-chevron-left'},
+                {id:'ADD'},
+                {id:'CONTACTS'},
+                {id:'REQUESTS'}
+            ];
+            $scope.activeTab = 'ADD';
+            $scope.setActiveTab = function(tab){
+                $scope.activeTab = tab;
+            };
         }]);
 
     app.register.directive('cmSearchCameoId',

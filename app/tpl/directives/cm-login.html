@@ -8,7 +8,12 @@
         <input type="checkbox" value="remember-me"> {{'LOGIN.LABEL.REMEMBER_ME' | cmTranslate}}
     </label>
 
-    <button class="btn btn-lg btn-block" ng-click="autologin()" type="button">{{'LOGIN.LABEL.AUTO' | cmTranslate}}</button>
+    <select ng-model="formData.autologin" class="form-control btn-block" ng-change="changeAutologin()">
+        <option value="none">{{'LOGIN.LABEL.AUTO' | cmTranslate}}</option>
+        <option>Max</option>
+        <option>Dumpuser</option>
+    </select>
+
     <button class="btn btn-lg btn-primary btn-block" type="submit">{{'LOGIN.LABEL.SUBMIT' | cmTranslate}}</button>
     <a href="#registration">{{'REGISTER.LINK' | cmTranslate}}</a>
 </form>
