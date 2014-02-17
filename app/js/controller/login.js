@@ -26,8 +26,10 @@ define([
             $scope.autologin = function(){
                 cm.log.debug("autologin called");
                 $scope.formData = {
-                    user: "Max"
-                   ,pass: "max.mustermann"
+//                    user: "Max"
+//                   ,pass: "max.mustermann"
+                    user: "r1Zhpq8e",
+                    pass: "password"
                 };
             };
 
