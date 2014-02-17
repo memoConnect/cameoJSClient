@@ -88,6 +88,23 @@ define([
                     return cmApi.get({
                         url:'contact-group/' + group + handleLimitOffset(limit,offset)
                     })
+                },
+                getFriendRequests: function(){
+                    return cmApi.get({
+                        url:'identity/friendRequests'
+                    })
+                },
+                sendFriendRequest: function(id){
+                    return cmApi.post({
+                        url:'/identity/friendRequest',
+                        data: {cameoId: id}
+                    })
+                },
+                answerFriendRequest: function(requestId, type){
+                    return cmApi.post({
+                        url:'/identity/friendRequest/' + requestId,
+                        data: {type:type}
+                    })
                 }
             }
         }
