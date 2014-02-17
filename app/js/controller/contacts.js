@@ -51,12 +51,12 @@ define([
                     $scope.contacts = null;
 
                     $scope.getContacts = function(){
-                        cmContacts.getAll().then(
+                        cmContacts.getAll(10,0).then(
                             function(data){
                                 $scope.contacts = data;
                             },
                             function(){
-                                $scope.contacts = [];
+                                $scope.contacts = null;
                             }
                         );
                     };
