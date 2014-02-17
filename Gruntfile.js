@@ -75,7 +75,7 @@ module.exports = function (grunt) {
         protractor: {
             options: {
                 // The address of a running selenium server.
-                seleniumAddress: 'http://localhost:'+selenium.port ,
+                seleniumAddress: 'http://localhost:4444' ,
 
                 // Capabilities to be passed to the webdriver instance.
                 capabilities: {
