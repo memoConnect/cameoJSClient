@@ -9,7 +9,7 @@ define([
         '$location',
         'cmAuth',
         function($scope, $cookieStore, $location, cmAuth) {
-            $scope.identity = {cameoId:''};
+            $scope.identity = {cameoId:'is loading...'};
 
             cmAuth.getIdentity().
             then(

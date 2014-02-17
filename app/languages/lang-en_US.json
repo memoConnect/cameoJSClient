@@ -2,7 +2,7 @@
     "LOGIN": {
         "HEADING":  "Login",
         "LABEL": {
-            "SUBMIT":       "submit",
+            "SUBMIT":       "login",
             "REMEMBER_ME":  "remember me.",
             "AUTO":         "auto login chooser"
         },
@@ -49,13 +49,13 @@
     },
 
     "START": {
-        "WELCOME":  "Welcome dear {{cameoId}}",
-        "LOGOUT":   "logout"
+        "WELCOME": "Welcome",
+        "LOGOUT": "logout"
     },
 
 	"VERIFICATION": {
 		"REQUEST": {
-			"LABEL":		"Request verification"
+			"LABEL": "Request verification"
 		}
 	},
 

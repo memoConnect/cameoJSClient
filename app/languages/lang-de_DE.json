@@ -2,7 +2,7 @@
 	"LOGIN": {
         "HEADING":  "Login",
         "LABEL": {
-            "SUBMIT":       "Login",
+            "SUBMIT":       "einloggen",
             "REMEMBER_ME":  "merken.",
             "AUTO":         "Automatisches Login auswählen"
         },
@@ -48,13 +48,13 @@
     },
 
 	"START": {
-		"WELCOME":  "Willkommen lieber {{cameoId}}",
+		"WELCOME":  "Willkommen",
 		"LOGOUT":   "ausloggen"
 	},
 
 	"VERIFICATION": {
 		"REQUEST": {
-			"LABEL":		"Verifizierung anfragen"
+			"LABEL": "Verifizierung anfragen"
 		}
 	},
 
