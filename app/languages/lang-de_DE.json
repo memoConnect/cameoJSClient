@@ -48,8 +48,9 @@
     },
 
 	"START": {
-		"WELCOME":  "Willkommen",
-		"LOGOUT":   "ausloggen"
+		"WELCOME": "Willkommen",
+        "YOUR_ID": "Deine cameoId",
+		"LOGOUT": "ausloggen"
 	},
 
 	"VERIFICATION": {
