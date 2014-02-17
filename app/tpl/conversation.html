@@ -1,7 +1,3 @@
-<span>{{ conversation.numberOfMessages }}</span>
-<ul>
-    <li ng-repeat="message in conversation.messages">
-        {{ message.from }}: {{ message.messageBody }}
-        <span>{{ message.created }}</span>
-    </li>
-</ul>
+<div ng-controller="ConversationCtrl">
+	<cm-conversation conversation-id ="{{conversation_id}}"></cm-conversation>
+</div>

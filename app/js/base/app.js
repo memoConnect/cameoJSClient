@@ -115,7 +115,7 @@ define([
                 })).
                 when('/conversation/:conversationId', angularAMD.route({
                     templateUrl: 'tpl/conversation.html',
-                    controllerUrl: 'controller/conversation'
+                    controllerUrl: 'controller/conversations'
                 })).
                 when('/registry', angularAMD.route({
                     templateUrl: 'tpl/form/registry.html',

@@ -55,7 +55,7 @@ define([
 				templateUrl:	'/tpl/modules/conversations/cm-conversations',
 
 				controller:		function($scope, $element, $attrs){
-									$scope.conversation_id 		= $attrs.cmConversation ||$attrs.data
+									$scope.conversation_id 		= $attrs.cmConversation || $attrs.conversationID
 									$scope.conversation_offset 	= $attrs.offset
 									$scope.conversation_limit 	= $attrs.limit
 
@@ -64,6 +64,22 @@ define([
 										$scope.conversation = conversation
 									})
 									 
+								}
+			}
+		}
+	])
+
+	cmConversations.directive('cmMessage',[
+
+		function(){
+			return {
+
+				restrict: 		'AE',
+				transclude: 	true,
+				templateUrl:	'/tpl/modules/conversations/cm-message',
+
+				controller:		function($scope, $element, $attrs){
+									$scope.message		= $attrs.data									 
 								}
 			}
 		}
