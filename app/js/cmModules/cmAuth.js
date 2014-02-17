@@ -55,14 +55,14 @@ define([
                     },
 
                     createUser: function(data){
-                        return  cmApi.post({
+                        return cmApi.post({
                             url: '/account',
                             data: data
                         })
                     },
 
                     checkAccountName: function(name, reservationSecret){
-                        return  cmApi.post({
+                        return cmApi.post({
                             url: '/account/check',
                             data: {
                                 loginName: name,
@@ -74,10 +74,16 @@ define([
                     },
 
                     checkPhoneNumber: function(number){
-                        return  cmApi.post({
+                        return cmApi.post({
                             url: '/services/checkPhoneNumber',
                             data: { phoneNumber:number },
                             exp_ok: 'phoneNumber'
+                        })
+                    },
+
+                    getIdentity: function(){
+                        return cmApi.get({
+                            url: '/identity'
                         })
                     }
                 }

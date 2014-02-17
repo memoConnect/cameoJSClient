@@ -4,9 +4,16 @@
     </div>
 
     <ul class="nav nav-tabs">
-        <li ng-repeat="tab in navigation" ng-class="{active:activeTab == tab.id}" ng-click="setActiveTab(tab.id)">
-            <a ng-hide="tab.icon != undefined">{{'CONTACTS.NAVIGATION.'+tab.id|cmTranslate}}</a>
-            <a ng-show="tab.icon != undefined" href="{{tab.href}}"><i class="fa {{tab.icon}}"></i></a>
+        <li ng-repeat="tab in navigation" ng-class="{active:activeTab == tab.id}" ng-click="setActiveTab(tab.id)" title="{{'CONTACTS.NAVIGATION.'+tab.id|cmTranslate}}" >
+            <a ng-hide="tab.icon != undefined">
+                {{'CONTACTS.NAVIGATION.'+tab.id|cmTranslate}}
+            </a>
+            <a ng-show="tab.icon != undefined && tab.href == undefined">
+                <i class="fa {{tab.icon}}"></i>
+            </a>
+            <a ng-show="tab.icon != undefined && tab.href != undefined" href="{{tab.href}}">
+                <i class="fa {{tab.icon}}"></i>
+            </a>
         </li>
     </ul>
 
