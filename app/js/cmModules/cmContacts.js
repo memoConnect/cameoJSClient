@@ -11,6 +11,8 @@ define([
         'cmApi',
         'cmLogger',
         function(cmApi, cmLogger){
+            var contacts = [];
+
             /**
              * Creates a String for Limit-Offset Handling in Api-Calls
              * @param limit
