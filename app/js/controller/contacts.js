@@ -42,8 +42,6 @@ define([
                             return false;
                         }
 
-                        cmLogger.debug($scope.string);
-
                         cmContacts.searchCameoId($scope.string).
                         then(
                             function(data){

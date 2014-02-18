@@ -1,5 +1,5 @@
 define([
-    'angular',
+    'app',
     'util'
 ], function () {
    'use strict';
