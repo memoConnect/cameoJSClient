@@ -50,6 +50,7 @@
 
     "START": {
         "WELCOME": "Welcome",
+        "YOUR_ID": "Your cameoId",
         "LOGOUT": "logout"
     },
 
