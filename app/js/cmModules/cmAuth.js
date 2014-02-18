@@ -1,24 +1,15 @@
-//This Module handels authorization and all api calls prior to authorization
-//requires:
-//	passchk_fast.js
 define([
-
-    'angularAMD',
-    'app',
+    'angular',
     'angular-cookies',
 
-    'cmApi',
-    'cmCrypt',
-    'cmLogger',
     'util-base64',
     'util-passchk-fast'
-
 ], function () {
     'use strict';
 
     var cmAuth = angular.module('cmAuth', ['ngCookies', 'cmApi', 'cmCrypt', 'cmLogger'])
 
-    //Service to handle all authenticateion matters
+    // Service to handle all authenticateion matters
     cmAuth.provider('cmAuth', function(){
 
         //Config stuff here
@@ -91,13 +82,7 @@ define([
         ]
     });
 
-
-    //	DIRECTIVES:  -----------------
-
-    /**
-     * This directive needs passchk_fast.js
-     */
-
+    // DIRECTIVES:
     cmAuth.directive('cmPassword', [
         'cmCrypt',
         function (cmCrypt) {

@@ -1,9 +1,6 @@
 define([
-
-    'angularAMD',
-    'app',
+    'angular',
     'crypto-sjcl'
-
 ], function () {
     'use strict';
 

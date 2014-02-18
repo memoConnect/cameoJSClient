@@ -1,131 +1,124 @@
 define([
-
 	'jquery',
-    'angularAMD',
-    'app'
-
+    'angular'
 ], function ($) {
     'use strict';
+    // E-mail, Phone etc. verification
+    var cmProfile = angular.module('cmProfile', ['cmApi', 'cmAuth']) //cmAuth should not be needed here
 
-//E-mail, Phone etc. verification
+    cmProfile.controller('ProfileCtrl', [
 
+        '$scope',
 
-var cmProfile = angular.module('cmProfile', ['cmApi', 'cmAuth']) //cmAuth should not be needed here
+        function ($scope) {
+            $scope.mail = 'test@cameo.io'
+            $scope.phoneNumber = '+491234567890'
+        }
+    ]);
 
+    cmProfile.service('cmProfile', [
 
-cmProfile.controller('ProfileCtrl', [
+        'cmApi',
+        'cmAuth',	//should not be need here!
+        '$q',
 
-    '$scope',
+        function(cmApi, cmAuth, $q) {
+            return {
 
-    function ($scope) {
-        $scope.mail = 'test@cameo.io'
-        $scope.phoneNumber = '+491234567890'
-    }
-]);
+                //Tells the BE to start the verification process for email, phone or some items
+                initiateVerification: function(items){
+                    var request = {}
 
-cmProfile.service('cmProfile', [
+                    if(typeof items != 'object') items = [items]
 
-	'cmApi',
-	'cmAuth',	//should not be need here!
-	'$q',
+                    items.forEach(function(item){
+                        request[$.camelCase('verify-'+item)] = true
+                    })
 
-	function(cmApi, cmAuth, $q) {
-		return {
+                    return	cmApi.post({
+                                url:	'/verify',
+                                data: 	request
+                            })
+                },
 
-			//Tells the BE to start the verification process for email, phone or some items		
-			initiateVerification: function(items){
-				var request = {}
+                //Gets the status of the possibly ongoing verfication process
+                getVerificationStatus: function(item){
 
-				if(typeof items != 'object') items = [items]
+                    var deferred = $q.defer()
 
-				items.forEach(function(item){
-					request[$.camelCase('verify-'+item)] = true
-				})		
+                    cmApi.get({
+                        url:	'/identity'
+                    })
+                    .then(
 
-				return	cmApi.post({
-							url:	'/verify',
-							data: 	request
-						})
-			},		
+                        function(data){
+                            data[item] && data[item].verified
+                            ? deferred.resolve(data[item].verified)
+                            : deferred.reject(data)
+                        },
 
-			//Gets the status of the possibly ongoing verfication process
-			getVerificationStatus: function(item){
+                        function(data){
+                            cmLogger.error('Unable to get verfication status for' +item+'.')
+                            deferred.reject(data)
+                        }
+                    )
 
-				var deferred = $q.defer()
+                    return deferred.promise
+                },
 
-				cmApi.get({
-					url:	'/identity'
-				})
-				.then(
-
-					function(data){
-						data[item] && data[item].verified
-						? deferred.resolve(data[item].verified)
-						: deferred.reject(data)
-					},
-
-					function(data){
-						cmLogger.error('Unable to get verfication status for' +item+'.')
-						deferred.reject(data)
-					}
-				)
-
-				return deferred.promise
-			},
-
-			verify: function(secret){
-				return	cmApi.get({
-							url: 	'verify/'+secret
-						})
-			}
-		}
-	}
-])
+                verify: function(secret){
+                    return	cmApi.get({
+                                url: 	'verify/'+secret
+                            })
+                }
+            }
+        }
+    ])
 
 
-//send a verification request after click on a button and report status
-cmProfile.directive('cmVerify', [
+    //send a verification request after click on a button and report status
+    cmProfile.directive('cmVerify', [
 
-	'cmProfile',
+        'cmProfile',
 
-	function (cmProfile) {
-	    return  {
-	        restrict    :   'AE',
-	        scope       :   true,
-	        template	:	'<span><span>{{"VERIFICATION.STATUS."+status.toUpperCase()| cmTranslate}}</span><button ng-click="initiate()">{{"VERIFICATION.REQUEST.LABEL"|cmTranslate}}</button></span>',     
+        function (cmProfile) {
+            return  {
+                restrict    :   'AE',
+                scope       :   true,
+                template	:	'<span><span>{{"VERIFICATION.STATUS."+status.toUpperCase()| cmTranslate}}</span><button ng-click="initiate()">{{"VERIFICATION.REQUEST.LABEL"|cmTranslate}}</button></span>',
 
-	        controller  :   function($scope, $element, $attrs, cmProfile) {	  
-	        					$scope.item = $attrs.cmVerify
+                controller  :   function($scope, $element, $attrs, cmProfile) {
+                                    $scope.item = $attrs.cmVerify
 
-	        					$scope.getStatus = function(){
-	        						return	cmProfile.getVerificationStatus($scope.item).then(
-			        							function(status){
-			        								status 
-			        								? $scope.status = 'verified'
-			        								: null
-			        							}
-			        						)	        						
-	        					}
+                                    $scope.getStatus = function(){
+                                        return	cmProfile.getVerificationStatus($scope.item).then(
+                                                    function(status){
+                                                        status
+                                                        ? $scope.status = 'verified'
+                                                        : null
+                                                    }
+                                                )
+                                    }
 
-	        					$scope.initiate = function(){
-	        						cmProfile.initiateVerification($scope.item)
-	        						$scope.status = 'pending'
+                                    $scope.initiate = function(){
+                                        cmProfile.initiateVerification($scope.item)
+                                        $scope.status = 'pending'
 
-	        						var interval = setInterval (function(){
-	        							$scope.getStatus($scope.item).then(
-	        								function(status){
-	        									status
-	        									? clearInterval(interval)
-	        									: null
-	        								}
-	        							)
-	        						}, 1000)
-	        					}
+                                        var interval = setInterval (function(){
+                                            $scope.getStatus($scope.item).then(
+                                                function(status){
+                                                    status
+                                                    ? clearInterval(interval)
+                                                    : null
+                                                }
+                                            )
+                                        }, 1000)
+                                    }
 
-	        					$scope.getStatus()
-	        				}
-	    }
-	}
-]);
+                                    $scope.getStatus()
+                                }
+            }
+        }
+    ]);
 
 });

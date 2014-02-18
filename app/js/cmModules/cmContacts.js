@@ -1,7 +1,5 @@
 define([
-    'angularAMD',
-    'cmApi',
-    'cmLogger'
+    'angular'
 ], function () {
    'use strict';
 
