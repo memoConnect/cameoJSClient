@@ -9,10 +9,11 @@ define([
     app.register.controller('ConversationCtrl', [
 
     	'$scope',
+        '$element',
         '$routeParams',
 
-        function($scope, $routeParams){
-        	$scope.conversation_id = $routeParams.conversationId
+        function($scope, $element, $routeParams){            
+        	$scope.conversationId = $routeParams.conversationId
         }
     ])
 })

@@ -10,6 +10,7 @@ define([
     'cmLogger',
     'cmNotify',
     'cmProfile',
+    'cmConversation'
 
 ], function (angularAMD) {
     'use strict';
@@ -24,7 +25,8 @@ define([
         'cmLanguage',
         'cmLogger',
         'cmNotify',
-        'cmProfile'
+        'cmProfile',
+        'cmConversation'
 
     ]);
 
@@ -115,7 +117,7 @@ define([
                 })).
                 when('/conversation/:conversationId', angularAMD.route({
                     templateUrl: 'tpl/conversation.html',
-                    controllerUrl: 'controller/conversations'
+                    controllerUrl: 'controller/conversation'
                 })).
                 when('/registry', angularAMD.route({
                     templateUrl: 'tpl/form/registry.html',

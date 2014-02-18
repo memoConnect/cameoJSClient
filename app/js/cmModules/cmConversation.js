@@ -15,15 +15,15 @@ define([
 ], function () {
     'use strict';
 
-	var cmConversations = angular.module('cmConversations', ['cmApi', 'cmLogger'])
+	var cmConversation = angular.module('cmConversation', ['cmApi', 'cmLogger'])
 
-	cmConversations.provider('cmConversations', function(){
+	cmConversation.provider('cmConversation', function(){
 		//config stuff here
 
 		this.$get = [
 
 			'$q',
-			'cmApi'
+			'cmApi',
 
 			function($q, cmApi){
 				return {
@@ -37,13 +37,14 @@ define([
 									exp_ok:	'messages'
 								})
 					}
+
 				}
 			}
 		]	
 	})
 
 
-	cmConversations.directive('cmConversation',[
+	cmConversation.directive('cmConversation',[
 
 		'cmConversation',
 
@@ -51,11 +52,11 @@ define([
 			return {
 
 				restrict: 		'AE',
-				transclude: 	true,
-				templateUrl:	'/tpl/modules/conversations/cm-conversations',
+				templateUrl:	'tpl/modules/conversation/cm-conversation.html',
+				scope:			true,
 
-				controller:		function($scope, $element, $attrs){
-									$scope.conversation_id 		= $attrs.cmConversation || $attrs.conversationID
+				controller:		function($scope, $element, $attrs){									
+									$scope.conversation_id 		= $scope.$eval($attrs.cmConversation || $attrs.conversationId)
 									$scope.conversation_offset 	= $attrs.offset
 									$scope.conversation_limit 	= $attrs.limit
 
@@ -63,20 +64,20 @@ define([
 									.then(function(conversation){
 										$scope.conversation = conversation
 									})
+									
 									 
 								}
 			}
 		}
 	])
 
-	cmConversations.directive('cmMessage',[
+	cmConversation.directive('cmMessage',[
 
 		function(){
 			return {
 
 				restrict: 		'AE',
-				transclude: 	true,
-				templateUrl:	'/tpl/modules/conversations/cm-message',
+				templateUrl:	'tpl/modules/conversation/cm-message.html',
 
 				controller:		function($scope, $element, $attrs){
 									$scope.message		= $attrs.data									 

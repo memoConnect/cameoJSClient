@@ -1,17 +1,27 @@
 <section>
 	<div class="cm-tools">
-		<cm-security></cm-security>
+		Recipients:
+		<!-- alles eine Direktive? -->
 		<cm-recipients></cm-recipients>
+		<cm-security></cm-security>
+		<cm-add-recipient></cm-add-recipient>
 	</div>
 	<div class="cm-messages">
 		<!-- performance ?? -->
+		Messages:
 		<cm-message data = "message" ng-repeat = "message in conversation.messages"></cm-message>
 	</div>
 	<div>
 		<cm-message-input></cm-message-input>
 	</div>
 	<div class="cm-tools">
-		<cm-upload></cm-upload>
+		Security:
+		<cm-security></cm-security>
 		<cm-captcha></cm-captcha>
+	</div>
+	<div>
+		<cm-upload></cm-upload>
+		<button>{{"CONVERSATION.LABEL.SEND" | cmTranslate}}</button>
+		<cm-emoticons></cm-emoticons>
 	</div>
 </section>
