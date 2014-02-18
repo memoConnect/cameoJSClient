@@ -206,6 +206,15 @@ define([
 										})
 									}
 									
+									$scope.removeRecipient = function(recipient_id){
+										var index
+
+										$scope.conversation.recipients.forEach(function(recipient, i){
+											if(recipient.id == recipient_id) index = i
+										})
+
+										$scope.conversation.recipients.splice(index,1)
+									}
 									 
 								}
 			}
@@ -331,7 +340,6 @@ define([
 			}
 		}
 	])
-
 
 
 

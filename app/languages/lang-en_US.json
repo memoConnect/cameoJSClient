@@ -84,6 +84,12 @@
     "PASSWORD": {
         "LABEL_PW": "Password",
         "LABEL_CONFIRM": "Confirm Password"
+    },
+
+    "CONVERSATION" : {
+        "LABEL" : {
+            "SEND" : "send"
+        }
     }
 	
 	

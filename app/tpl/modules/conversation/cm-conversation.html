@@ -2,7 +2,16 @@
 	<div class="cm-tools">
 		Recipients:
 		<!-- alles eine Direktive? -->
-		<cm-recipients></cm-recipients>
+		<span ng-repeat = "recipient in conversation.recipients">
+			{{recipient.displayName}}
+			<i
+				class		= "fa fa-times"
+				style		= "cursor:pointer"
+				ng-click	= "removeRecipient(recipient.id)"
+			>
+			</i> 
+			{{$last? '' : ','}}
+		</span> 
 		<cm-security></cm-security>
 		<cm-add-recipient></cm-add-recipient>
 	</div>
