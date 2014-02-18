@@ -1,1 +1,23 @@
-my message
+<article class="{{ is_my_own_message ? 'right' : 'left'}}">
+    <header>
+        {{ message.fromIdentity }} 
+    </header>
+    <div>
+        <cm-avatar 
+            cm-identity = "message.fromIdentity"
+            class       = "{{ is_my_own_message ? 'pull-right' : 'pull-left'}}"
+        >
+        </cm-avatar> 
+
+        
+        <p>{{ message.messageBody }}</p>
+    </div>
+    <cm-attachments></cm-attachments>
+    <footer>
+        {{ message.created }}
+    </footer>
+</article>
+
+<br/>
+<br/>
+<br/>

@@ -39,3 +39,26 @@ li.message-list {
 /*.ng-valid {*/
     /*border:1px solid green;*/
 /*}*/
+
+
+cm-message,
+cm-conversation {
+    display:        block;
+}
+
+
+cm-message {
+    margin:         2em 0;
+}
+
+cm-message article.left{
+    text-align:     left;
+}
+
+cm-message article.right{
+    text-align:     right;
+}
+
+cm-message footer{
+    clear:          both;
+}
