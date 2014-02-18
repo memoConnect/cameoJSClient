@@ -10,9 +10,7 @@ define([
     'cmLogger',
     'cmNotify',
     'cmProfile',
-    'cmContacts',
-//    'mContacts'
-
+    'cmContacts'
 ], function (angularAMD) {
     'use strict';
 
@@ -28,6 +26,7 @@ define([
         'cmLanguage',
         'cmLogger',
         'cmNotify',
+
         'cmProfile',
         'cmContacts',
 

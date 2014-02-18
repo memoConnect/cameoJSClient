@@ -49,7 +49,7 @@ requirejs.config({
         'cmLogger': 'cmModules/cmLogger',
         'cmNotify': 'cmModules/cmNotify',
         'cmProfile': 'cmModules/cmProfile',
-        'cmContacts': 'cmModules/cmContacts',
+        //'cmContacts': 'cmModules/cmContacts',
 
         // shared
         'util': 'shared/util'

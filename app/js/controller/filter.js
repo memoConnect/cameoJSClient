@@ -1,8 +1,6 @@
 define([
-
     'app',
     'util-base64'
-
 ], function (app) {
     'use strict';
 
