@@ -11,10 +11,9 @@
 
         
         <p>{{ message.messageBody }}</p>
-    </div>
-    <cm-attachments></cm-attachments>
+    </div>    
     <footer>
-        {{ message.created }}
+        <cm-attachments></cm-attachments> {{ message.created }}
     </footer>
 </article>
 

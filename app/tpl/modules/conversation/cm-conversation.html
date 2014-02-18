@@ -12,7 +12,7 @@
 		<cm-message cm-data = "message" ng-repeat = "message in conversation.messages"></cm-message>
 	</div>
 	<div>
-		<cm-message-input></cm-message-input>
+		<textarea cm-message-input ng-model="my_message"></textarea>
 	</div>
 	<div class="cm-tools">
 		Security:
@@ -21,7 +21,7 @@
 	</div>
 	<div>
 		<cm-upload></cm-upload>
-		<button>{{"CONVERSATION.LABEL.SEND" | cmTranslate}}</button>
+		<button ng-click="sendMessage()">{{"CONVERSATION.LABEL.SEND" | cmTranslate}}</button>
 		<cm-emoticons></cm-emoticons>
 	</div>
 </section>

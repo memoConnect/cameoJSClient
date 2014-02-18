@@ -27,7 +27,17 @@ define([
 
 			function($q, cmApi){
 				return {
-					getConversation: function(id, offset, limit){
+
+					newConversation: function(subject) {
+						return	cmApi.post({
+									url: 	'/conversation',
+									data:	{
+												subject: subject
+											}
+								})
+					},
+
+					getConversation: function(id, offset, limit) {
 						/*
 						return 	cmApi.get({
 									url: 	'/conversation/'+id,
@@ -135,12 +145,22 @@ define([
 						})
 
 						return deferred.promise
+					},
+
+					sendMessage: function(id, messageBody){
+						return	cmApi.post({
+									url:	"/conversation/%1/message".replace(/%1/, id),
+									data: 	{
+												messageBody: messageBody
+											}							
+								})
 					}
 
 				}
 			}
 		]	
 	})
+
 
 
 	cmConversation.directive('cmConversation',[
@@ -155,20 +175,43 @@ define([
 				scope:			true,
 
 				controller:		function($scope, $element, $attrs){									
-									$scope.conversation_id 		= $scope.$eval($attrs.cmConversation || $attrs.conversationId)
-									$scope.conversation_offset 	= $attrs.offset
-									$scope.conversation_limit 	= $attrs.limit
+									var conversation_id 		= $scope.$eval($attrs.cmConversation || $attrs.conversationId),
+										conversation_subject	= $scope.$eval($attrs.cmSubject),
+										conversation_offset 	= $attrs.offset,
+										conversation_limit 		= $attrs.limit
 
-									cmConversation.getConversation($scope.conversation_id, 0, 10)
-									.then(function(conversation){
-										$scope.conversation = conversation
-									})
+									$scope.my_message = ""
+
+
+									conversation_id
+									?	cmConversation.getConversation($scope.conversation_id, 0, 10)
+										.then(function(conversation){
+											$scope.conversation = conversation
+										})
+
+									:	cmConversation.newConversation($scope.conversation_subject)
+										.then(function(conversation){
+											$scope.conversation = conversation
+										})
+
+
+
+
+									$scope.sendMessage = function(message){
+										//MOCK
+										cmConversation.sendMessage($scope.conversation.id, $scope.my_message)
+										.then(function(message){
+											$scope.conversation.messages.push(message)
+											$scope.my_message = ""
+										})
+									}
 									
 									 
 								}
 			}
 		}
 	])
+
 
 
 	cmConversation.directive('cmMessage',[
@@ -195,6 +238,7 @@ define([
 	])
 
 
+
 	cmConversation.directive('cmAvatar',[
 
 		function(){
@@ -202,10 +246,10 @@ define([
 
 				restrict: 		'AE',
 				template:		'<i class="fa fa-user"></i>', //MOCK
+
 				link:			function(scope, element, attrs){
 									 //mocked, get avatar pic an set background of element
 									 element.css({
-									 	"display":			"inline-block",
 									 	"cssFloat":			"left",
 									 	"font-size":		"3em",
 									 	"vertical-align":	"top",
@@ -218,17 +262,18 @@ define([
 		}
 	])
 
+
 	cmConversation.directive('cmAttachments',[
 
 		function(){
 			return {
 
 				restrict: 		'AE',
-				template:		'<i class="fa fa-paper-clip"></i>', //MOCK
+				template:		'<i class="fa fa-paperclip"></i>', //MOCK
+
 				link:			function(scope, element, attrs){
 									 //mocked
-									 element.css({
-									 	"display":			"inline-block",									 	
+									 element.css({								 	
 									 	"font-size":		"2em",
 									 	"vertical-align":	"middle"
 									 })
@@ -238,5 +283,56 @@ define([
 			}
 		}
 	])
+
+
+
+	cmConversation.directive('cmMessageInput',[
+
+		function(){
+			return {
+
+				restrict: 		'A',
+				require:		'^cmConversation',
+				scope:			false,
+
+				link:			function(scope, element, attrs){									
+
+									element.css({
+										"overflow": 	"hidden",
+										"resize":		"none"
+									})
+
+									function resize(){
+										var ta = element[0]
+
+										while (
+											ta.rows > 1 &&
+											ta.scrollHeight < ta.offsetHeight
+										){
+											ta.rows--
+										}
+										var h = 0;
+										while (ta.scrollHeight > ta.offsetHeight && h!==ta.offsetHeight)
+										{
+											h = ta.offsetHeight
+											ta.rows++
+										}
+										ta.rows++
+									}
+
+									element.on('keyup redo undo change', function(){										
+										resize()										
+									})
+
+
+									resize()
+								}
+				
+			}
+		}
+	])
+
+
+
 
 })

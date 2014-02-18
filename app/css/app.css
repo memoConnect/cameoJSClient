@@ -42,8 +42,14 @@ li.message-list {
 
 
 cm-message,
-cm-conversation {
+cm-conversation,
+cm-message-input {
     display:        block;
+}
+
+cm-avatar,
+cm-attachments {
+    display:        inline-block;
 }
 
 
@@ -61,4 +67,9 @@ cm-message article.right{
 
 cm-message footer{
     clear:          both;
+}
+
+textarea[cm-message-input] {
+    width:          100%;
+    min-height:     3em;
 }

@@ -115,7 +115,7 @@ define([
                     templateUrl: 'tpl/list/mediawall.html',
                     controllerUrl: 'controller/mediawall'
                 })).
-                when('/conversation/:conversationId', angularAMD.route({
+                when('/conversation/:conversationId?', angularAMD.route({
                     templateUrl: 'tpl/conversation.html',
                     controllerUrl: 'controller/conversation'
                 })).
