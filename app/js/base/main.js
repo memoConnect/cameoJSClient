@@ -41,7 +41,10 @@ require.config({
         // Models
         'mContacts': 'model/mContacts',
 
-        'jquery': 'vendor/jquery/jquery-2.1.0',
+        // shared
+        'util': 'shared/util',
+
+        'jquery': 'vendor/jquery/jquery-2.1.0'
 //        'bootstrap': 'vendor/bootstrap/bootstrap.min',
     },
     packages: [

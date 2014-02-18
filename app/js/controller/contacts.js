@@ -1,8 +1,8 @@
 define([
-    'app',
-    'mContacts'
+    'app'
+//    'mContacts'
 ], function(app){
-   'use strict';
+    'use strict';
 
     var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];
     var mockRequestResults = [{cameoId:'derMicha',requestId:'qwertz1'},{cameoId:'dasEmpu',requestId:'qwerrtz2'},{cameoId:'dutscher',requestId:'qwerrtz3'},{cameoId:'reimerei',requestId:'qwerrtz4'},{cameoId:'rhotp',requestId:'qwerrtz5'}];
@@ -101,13 +101,13 @@ define([
         });
 
     app.register.directive('cmContactRequestList',
-        function(cmContacts, cmLogger, ModelContacts){
+        function(cmLogger, cmContacts){
             return {
                 restrict: 'A',
                 scope: {},
                 templateUrl: 'tpl/modules/contacts/cm-request-list.html',
                 controller: function($scope, $element, $attrs){
-                    $scope.results = ModelContacts.getAll();
+                    $scope.results = mockRequestResults;
 
                     $scope.acceptRequest = function(requestId){
                         cmLogger.debug('acceptRequest ' + requestId);

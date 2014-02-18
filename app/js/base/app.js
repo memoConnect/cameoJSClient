@@ -11,8 +11,7 @@ define([
     'cmNotify',
     'cmProfile',
     'cmContacts',
-
-    'mContacts'
+//    'mContacts'
 
 ], function (angularAMD) {
     'use strict';
@@ -33,7 +32,7 @@ define([
         'cmContacts',
 
         // Models
-        'mContacts'
+//        'mContacts'
 
     ]);
 
