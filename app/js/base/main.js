@@ -38,6 +38,9 @@ require.config({
         'cmProfile': 'cmModules/cmProfile',
         'cmContacts': 'cmModules/cmContacts',
 
+        // Models
+        'mContacts': 'model/mContacts',
+
         'jquery': 'vendor/jquery/jquery-2.1.0',
 //        'bootstrap': 'vendor/bootstrap/bootstrap.min',
     },

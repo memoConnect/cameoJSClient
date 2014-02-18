@@ -12,6 +12,8 @@ define([
     'cmProfile',
     'cmContacts',
 
+    'mContacts'
+
 ], function (angularAMD) {
     'use strict';
 
@@ -19,6 +21,8 @@ define([
 
         'ngRoute',
         'ngCookies',
+
+        // Module
         'cmApi',
         'cmAuth',
         'cmCrypt',
@@ -26,7 +30,10 @@ define([
         'cmLogger',
         'cmNotify',
         'cmProfile',
-        'cmContacts'
+        'cmContacts',
+
+        // Models
+        'mContacts'
 
     ]);
 

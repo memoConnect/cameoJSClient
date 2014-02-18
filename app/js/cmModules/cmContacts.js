@@ -1,7 +1,5 @@
 define([
-    'angularAMD',
-    'cmApi',
-    'cmLogger'
+    'app'
 ], function () {
    'use strict';
 
@@ -11,8 +9,8 @@ define([
         'cmApi',
         'cmLogger',
         function(cmApi, cmLogger){
-            var contacts = [];
 
+            cmLogger.debug('cmContacts');
             /**
              * Creates a String for Limit-Offset Handling in Api-Calls
              * @param limit

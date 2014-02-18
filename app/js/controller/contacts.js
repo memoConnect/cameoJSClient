@@ -1,5 +1,6 @@
 define([
-    'app'
+    'app',
+    'mContacts'
 ], function(app){
    'use strict';
 
@@ -12,6 +13,7 @@ define([
         'cmContacts',
         'cmNotify',
         'cmLogger',
+
         function($scope, $location, cmContacts, cmNotify, cmLogger){
             $scope.navigation = [
                 {id:'BACK',icon:'fa-chevron-left',href:'#/start'},
@@ -99,13 +101,13 @@ define([
         });
 
     app.register.directive('cmContactRequestList',
-        function(cmContacts, cmLogger){
+        function(cmContacts, cmLogger, ModelContacts){
             return {
                 restrict: 'A',
                 scope: {},
                 templateUrl: 'tpl/modules/contacts/cm-request-list.html',
                 controller: function($scope, $element, $attrs){
-                    $scope.results = mockRequestResults;
+                    $scope.results = ModelContacts.getAll();
 
                     $scope.acceptRequest = function(requestId){
                         cmLogger.debug('acceptRequest ' + requestId);
