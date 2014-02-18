@@ -127,7 +127,7 @@ define([
 
                     $scope.acceptRequest = function(id){
                         cmLogger.debug('acceptRequest ' + id);
-                        // TODO: cmApi/cmContacts stuff
+                        // TODO: notify
                         cmContacts.answerFriendRequest(id, 'accept').then(
                             function(){
                                 rmFromModel(id);
@@ -137,7 +137,7 @@ define([
 
                     $scope.rejectRequest = function(id){
                         cmLogger.debug('rejectRequest ' + id);
-                        // TODO: cmApi/cmContacts stuff
+                        // TODO: notify
                         cmContacts.answerFriendRequest(id, 'reject').then(
                             function(){
                                 rmFromModel(id);
