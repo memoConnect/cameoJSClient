@@ -21,8 +21,8 @@
         <div class="col-sm-6">
             <ul class="nav nav-pills nav-stacked">
                 <li ng-repeat="result in results">
-                    <a ng-click="sendFriendshipRequest(result);">
-                        {{result}}
+                    <a ng-click="sendFriendRequest(result.id);">
+                        {{result.displayName}} ({{result.cameoId}})
                         <i class="fa fa-plus pull-right"></i>
                     </a>
                 </li>

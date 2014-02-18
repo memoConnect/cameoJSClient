@@ -69,18 +69,18 @@ define([
                 },
                 getFriendRequests: function(){
                     return cmApi.get({
-                        url:'identity/friendRequests'
+                        url:'/friendRequests'
                     })
                 },
                 sendFriendRequest: function(id){
                     return cmApi.post({
-                        url:'/identity/friendRequest',
-                        data: {cameoId: id}
+                        url:'/friendRequest',
+                        data: {identityId: id}
                     })
                 },
-                answerFriendRequest: function(requestId, type){
+                answerFriendRequest: function(id, type){
                     return cmApi.post({
-                        url:'/identity/friendRequest/' + requestId,
+                        url:'/friendRequest/' + id,
                         data: {type:type}
                     })
                 }
