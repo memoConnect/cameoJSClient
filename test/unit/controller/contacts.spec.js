@@ -33,7 +33,7 @@ define([
         })
     })
 
-    describe('Directive cmSearchCameoId', function () {
+    xdescribe('Directive cmSearchCameoId', function () {
         var $scope, directive
         // karma-ng-html2js-preprocessor-requirejs edit with loadOnlyHtml
         angularAMD.inject(function ($rootScope, $compile, $templateCache) {

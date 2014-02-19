@@ -14,6 +14,7 @@ $ cameoJSClient
 |  |- base
 |  |  |- app.js
 |  |  `- main.js
+|  |
 |  |- shared
 |  |  |- api
 |  |  |  `- apiProv.js
@@ -44,9 +45,9 @@ $ cameoJSClient
 |  |     `- languageProv.js
 |  |
 |  |- routes
-|  |  |- login
-|  |  |  |- loginDirv.js
-|  |  |  `- login.html
+|  |  |- contacts
+|  |  |  |- contactsCtrl.js
+|  |  |  `- contacts.html
 |  |  |
 |  |  |- registration
 |  |  |  |- registrationCtrl.js
@@ -54,20 +55,7 @@ $ cameoJSClient
 |  |  |
 |  |  |- start
 |  |  |
-|  |  |- contacts
-|  |  |  |- contactsCtrl.js
-|  |  |  |- contacts.html
-|  |  |  |- contactsSrvc.js
-|  |  |  |- searchCameoIdDirv.js
-|  |  |  |- searchCameoId.html
-|  |  |  |- contactsListDirv.js
-|  |  |  |- contactslist.html
-|  |  |  |- contactRequestListDirv.js
-|  |  |  `- contactRequestList.html
-|  |  |
-|  |  |- profile (aio: js/cmModules/cmProfile.js)
-|  |  |  |- verifyDirv.js
-|  |  |  |- profileSrvc.js
+|  |  |- profile
 |  |  |  `- profileCtrl.js
 |  |  |
 |  |  |- filter
@@ -78,6 +66,24 @@ $ cameoJSClient
 |  |  |
 |  |  `- settings
 |  |     `- settingsCtrl.js
+|  |
+|  |- comps
+|  |  |- login
+|  |  |  |- loginDirv.js
+|  |  |  `- login.html
+|  |  |
+|  |  |- contacts
+|  |  |  |- contactsSrvc.js
+|  |  |  |- searchCameoIdDirv.js
+|  |  |  |- searchCameoId.html
+|  |  |  |- contactsListDirv.js
+|  |  |  |- contactslist.html
+|  |  |  |- contactRequestListDirv.js
+|  |  |  `- contactRequestList.html
+|  |  |
+|  |  `- profile (aio: js/cmModules/cmProfile.js)
+|  |     |- verifyDirv.js
+|  |     `- profileSrvc.js
 |  |
 |  |- i18n (languages)
 |  |    |- lang_de_DE.json

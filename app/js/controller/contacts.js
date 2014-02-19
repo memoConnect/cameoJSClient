@@ -148,5 +148,6 @@ define([
                 }
             }
         });
+
     return app;
 });
