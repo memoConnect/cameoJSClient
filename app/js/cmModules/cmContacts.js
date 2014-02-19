@@ -1,5 +1,6 @@
 define([
     'app',
+    'cmApi',
     'util'
 ], function () {
    'use strict';
@@ -80,8 +81,8 @@ define([
                 },
                 answerFriendRequest: function(id, type){
                     return cmApi.post({
-                        url:'/friendRequest/' + id,
-                        data: {type:type}
+                        url:'/friendRequest/answer',
+                        data: {identityId:id, answerType:type}
                     })
                 }
             }
