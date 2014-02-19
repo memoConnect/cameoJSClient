@@ -1,5 +1,6 @@
 define([
-    '_c/contacts', 'angularAMD', 'tpl/searchCameoId'
+    '_c/contacts', 'angularAMD',
+//    '_c/contacts', 'angularAMD', 'tpl/searchCameoId'
 ], function (app, angularAMD, tpl) {
     'use strict';
 
