@@ -88,6 +88,13 @@ define([
                                 $scope.contacts = null;
                             }
                         );
+=======
+                    $scope.contacts = [];
+
+                    $scope.getContacts = function(){
+                        $scope.contacts = cmApi.post({
+                            url: '/contacts'
+                        });
                     };
 
                     $scope.editContact = function(){
