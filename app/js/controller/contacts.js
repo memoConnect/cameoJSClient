@@ -86,13 +86,13 @@ define([
                         );
                     };
 
-                    $scope.contacts = [];
-
-                    $scope.getContacts = function(){
-                        $scope.contacts = cmApi.post({
-                            url: '/contacts'
-                        });
-                    };
+//                    $scope.contacts = [];
+//
+//                    $scope.getContacts = function(){
+//                        $scope.contacts = cmApi.post({
+//                            url: '/contacts'
+//                        });
+//                    };
 
                     $scope.editContact = function(){
                         cmLogger.debug('editContact '+cameoId);
@@ -126,7 +126,7 @@ define([
 
                     $scope.acceptRequest = function(id){
                         cmLogger.debug('acceptRequest ' + id);
-                        // TODO: notify
+                        // TODO: notify, update ContactList
                         ModelContacts.answerFriendRequest(id, 'accept').then(
                             function(){
                                 rmFromModel(id);
@@ -136,7 +136,7 @@ define([
 
                     $scope.rejectRequest = function(id){
                         cmLogger.debug('rejectRequest ' + id);
-                        // TODO: notify
+                        // TODO: notify, update ContactList
                         ModelContacts.answerFriendRequest(id, 'reject').then(
                             function(){
                                 rmFromModel(id);
