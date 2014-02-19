@@ -10,7 +10,9 @@ define([
     'cmLogger',
     'cmNotify',
     'cmProfile',
-    'cmContacts'
+    'cmContacts',
+
+    'mContacts'
 ], function (angularAMD) {
     'use strict';
 
@@ -30,9 +32,7 @@ define([
         'cmProfile',
         'cmContacts',
 
-        // Models
-//        'mContacts'
-
+        'mContacts'
     ]);
 
     app.cameo = {
