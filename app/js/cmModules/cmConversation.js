@@ -15,7 +15,7 @@ define([
 ], function () {
     'use strict';
 
-	var cmConversation = angular.module('cmConversation', ['cmApi', 'cmLogger'])
+	var cmConversation = angular.module('cmConversation', ['cmApi', 'cmLogger', 'cmCrypt'])
 
 	cmConversation.provider('cmConversation', function(){
 		//config stuff here
@@ -166,8 +166,9 @@ define([
 	cmConversation.directive('cmConversation',[
 
 		'cmConversation',
+		'cmCrypt',
 
-		function(cmConversation){
+		function(cmConversation, cmCrypt){
 			return {
 
 				restrict: 		'AE',
@@ -180,29 +181,41 @@ define([
 										conversation_offset 	= $attrs.offset,
 										conversation_limit 		= $attrs.limit
 
-									$scope.my_message = ""
+
+
+									$scope.my_message_text = ""
+									$scope.passphrase = ""
 
 
 									conversation_id
 									?	cmConversation.getConversation($scope.conversation_id, 0, 10)
 										.then(function(conversation){
-											$scope.conversation = conversation
+											$scope.init(conversation)
 										})
 
 									:	cmConversation.newConversation($scope.conversation_subject)
 										.then(function(conversation){
-											$scope.conversation = conversation
+											$scope.init(conversation)
 										})
 
 
+									$scope.init = function(conversation){
 
+										$scope.conversation = conversation
+
+										$scope.$watch("passphrase", function(new_passphrase){
+											$scope.decryptMessages()
+										})
+									}	
 
 									$scope.sendMessage = function(message){
-										//MOCK
-										cmConversation.sendMessage($scope.conversation.id, $scope.my_message)
+										
+										var encrypted_message_text = cmCrypt.encryptWithShortKey('dummy', $scope.my_message_text) //MOCK!!
+
+										cmConversation.sendMessage($scope.conversation.id, encrypted_message_text)
 										.then(function(message){
 											$scope.conversation.messages.push(message)
-											$scope.my_message = ""
+											$scope.my_message_text = ""
 										})
 									}
 									
@@ -215,6 +228,12 @@ define([
 
 										$scope.conversation.recipients.splice(index,1)
 									}
+
+									$scope.decryptMessages = function() {										
+										$scope.conversation.messages.forEach(function(message){
+											message.decryptedBody = cmCrypt.decrypt($scope.passphrase, message.messageBody)
+										})
+									}
 									 
 								}
 			}
@@ -226,27 +245,30 @@ define([
 	cmConversation.directive('cmMessage',[
 
 		'cmAuth',
+		'cmConversation',
 
 		function(cmAuth){
 			return {
 
 				restrict: 		'AE',
+				require:		'^cmConversation',
 				scope:			true,
 				templateUrl:	'tpl/modules/conversation/cm-message.html',
 
 				controller:		function($scope, $element, $attrs){
 
-									function getMyOwnIdentity(){
-										//MOCK
-										return "ZVtXkxMmPj4WtLYea8ci"
-									}
-
 									$scope.message			 = $scope.$eval($attrs.cmMessage || $attrs.cmData)
+
+									//console.dir($conversationCtrl)
+
+									$scope.decrypt = function(text) {
+										cmConversation.decrypt(text)
+									}
 
 									cmAuth.getIdentity()
 									.then(function(identity){
 										$scope.is_my_own_message = ($scope.message.fromIdentity == identity.id)
-									})									
+									})
 								}
 			}
 		}
@@ -258,7 +280,7 @@ define([
 
 		function(){
 			return {
-
+		
 				restrict: 		'AE',
 				template:		'<i class="fa fa-user"></i>', //MOCK
 
@@ -298,8 +320,6 @@ define([
 			}
 		}
 	])
-
-
 
 	cmConversation.directive('cmMessageInput',[
 

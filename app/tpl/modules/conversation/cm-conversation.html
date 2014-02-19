@@ -15,13 +15,17 @@
 		<cm-security></cm-security>
 		<cm-add-recipient></cm-add-recipient>
 	</div>
+	<div>
+		<input type ="text" ng-model="passphrase">
+	</div>
+
 	<div class="cm-messages">
 		<!-- performance ?? -->
 		Messages:		
 		<cm-message cm-data = "message" ng-repeat = "message in conversation.messages"></cm-message>
 	</div>
 	<div>
-		<textarea cm-message-input ng-model="my_message"></textarea>
+		<textarea cm-message-input ng-model="my_message_text"></textarea>
 	</div>
 	<div class="cm-tools">
 		Security:
