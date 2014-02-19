@@ -1,18 +1,14 @@
 define([
     'app'
 ], function(app){
-   'use strict';
+    'use strict';
 
     var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];
     var mockRequestResults = [{cameoId:'derMicha',requestId:'qwertz1'},{cameoId:'dasEmpu',requestId:'qwerrtz2'},{cameoId:'dutscher',requestId:'qwerrtz3'},{cameoId:'reimerei',requestId:'qwerrtz4'},{cameoId:'rhotp',requestId:'qwerrtz5'}];
 
     app.register.controller('ContactsCtrl',[
         '$scope',
-        '$location',
-        'cmContacts',
-        'cmNotify',
-        'cmLogger',
-        function($scope, $location, cmContacts, cmNotify, cmLogger){
+        function($scope){
             $scope.navigation = [
                 {id:'BACK',icon:'fa-chevron-left',href:'#/start'},
                 {id:'ADD',icon:'fa-plus'},
@@ -137,4 +133,5 @@ define([
                 }
             }
         });
+    return app;
 });

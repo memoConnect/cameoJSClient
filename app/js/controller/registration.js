@@ -171,4 +171,5 @@ define([
                 )
             };
     }]);
+    return app;
 });

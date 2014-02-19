@@ -10,11 +10,35 @@ module.exports = function(config) {
         files: [
 //            {pattern: 'app/languages/*.jsons', included: false, served: true, autoWatch: true},
             {pattern: 'app/js/**/*.js', included: false},
-            {pattern: 'test/unit/**/*.spec.js', included: false},
+
+//            {pattern: 'test/unit/**/*.spec.js', included: false},
+            {pattern: 'test/unit/app.spec.js', included: false},
+            {pattern: 'test/unit/controller/contacts.spec.js', included: false},
+
             {pattern: 'test/lib/**/*.js', included: false},
             // included true!!! requirejs wrapper
-            {pattern: 'test/unit/test.main.js', included: true}
+            {pattern: 'test/unit/test.main.js', included: true},
+            // load templates
+            {pattern: 'app/tpl/**/*.html', included: false}
         ],
+
+        // generate js files from html templates to expose them during testing.
+        preprocessors: {
+            'app/tpl/**/*.html': ['ng-html2js']
+        },
+
+        ngHtml2JsPreprocessor: {
+            // strip this from the file path
+            stripPrefix: 'app/',
+            // prepend this to the
+//            prependPrefix: 'served/',
+
+            returnOnlyHTML: true
+
+            // setting this option will create only a single module that contains templates
+            // from all the files, so you can load them all with module('foo')
+//            moduleName: 'templates'
+        },
 
         // list of files to exclude
         exclude: [
@@ -46,6 +70,8 @@ module.exports = function(config) {
 
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit
-        singleRun: true
+        singleRun: true,
+
+        browsers: ['Chrome']
     });
 };

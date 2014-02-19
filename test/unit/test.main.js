@@ -1,4 +1,6 @@
 var tests = [];
+//var tests = ['/base/test/unit/app.spec.js'];
+//console.log(window.__karma__.files)
 for (var file in window.__karma__.files) {
     if (window.__karma__.files.hasOwnProperty(file)) {
         if (/\.spec\.js$/.test(file)) {
@@ -49,7 +51,9 @@ requirejs.config({
         'cmLogger': 'cmModules/cmLogger',
         'cmNotify': 'cmModules/cmNotify',
         'cmProfile': 'cmModules/cmProfile',
-        'cmContacts': 'cmModules/cmContacts'
+        'cmContacts': 'cmModules/cmContacts',
+
+        'tpl/searchCameoId': '../tpl/modules/contacts/cm-search-cameo-id.html'
     },
 
     packages: [
@@ -75,7 +79,7 @@ requirejs.config({
 
         'angular-mocks': ['angular'],
 
-        'login_ctrl': ['app']
+        'controller/contacts': ['app']
     },
 
     // ask Require.js to load these files (all our tests)
