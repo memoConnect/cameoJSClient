@@ -84,7 +84,8 @@ define([
                                 $scope.contacts = null;
                             }
                         );
-=======
+                    };
+
                     $scope.contacts = [];
 
                     $scope.getContacts = function(){
