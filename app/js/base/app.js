@@ -18,6 +18,8 @@ define([
 
         'ngRoute',
         'ngCookies',
+
+        // Module
         'cmApi',
         'cmAuth',
         'cmCrypt',
@@ -26,7 +28,10 @@ define([
         'cmNotify',
 
         'cmProfile',
-        'cmContacts'
+        'cmContacts',
+
+        // Models
+//        'mContacts'
 
     ]);
 

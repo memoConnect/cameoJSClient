@@ -1,10 +1,12 @@
 define([
     'app'
+//    'mContacts'
 ], function(app){
     'use strict';
 
     var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];
     var mockRequestResults = [{cameoId:'derMicha',requestId:'qwertz1'},{cameoId:'dasEmpu',requestId:'qwerrtz2'},{cameoId:'dutscher',requestId:'qwerrtz3'},{cameoId:'reimerei',requestId:'qwerrtz4'},{cameoId:'rhotp',requestId:'qwerrtz5'}];
+    var mockSearchResults = [{"id":"vCXqmtXycssTuENaa3rh","cameoId":"oOqn9Nj3lDQeMGLFdHM5","displayName":"NoName"}];
 
     app.register.controller('ContactsCtrl',[
         '$scope',
@@ -36,8 +38,6 @@ define([
                             return false;
                         }
 
-                        cmLogger.debug($scope.string);
-
                         cmContacts.searchCameoId($scope.string).
                         then(
                             function(data){
@@ -50,9 +50,18 @@ define([
                         return true;
                     };
 
-                    $scope.sendFriendshipRequest = function(cameoId){
-                        cmLogger.debug('sendFriendshipRequest to '+cameoId);
-                        // TODO: cmApi/cmContacts stuff
+                    $scope.sendFriendRequest = function(id){
+                        // TODO: Notification
+                        if(angular.isDefined(id)){
+                            cmContacts.sendFriendRequest(id).then(
+                                function(){
+                                    cmLogger.debug("FriendRequest success");
+                                },
+                                function(){
+                                    cmLogger.debug("FriendRequest error");
+                                }
+                            )
+                        }
                     };
                 }
             }
@@ -95,36 +104,46 @@ define([
         });
 
     app.register.directive('cmContactRequestList',
-        function(cmContacts, cmLogger){
+        function(cmLogger, cmContacts){
             return {
                 restrict: 'A',
                 scope: {},
                 templateUrl: 'tpl/modules/contacts/cm-request-list.html',
                 controller: function($scope, $element, $attrs){
-                    $scope.results = mockRequestResults;
+                    $scope.results = [];
 
-                    $scope.acceptRequest = function(requestId){
-                        cmLogger.debug('acceptRequest ' + requestId);
-                        // TODO: cmApi/cmContacts stuff
-//                        cmContacts.answerFriendRequest(requestId, 'accept').then(
-//
-//                        );
-                        rmFromModel(requestId);
-                    };
-
-                    $scope.rejectRequest = function(requestId){
-                        cmLogger.debug('rejectRequest ' + requestId);
-                        // TODO: cmApi/cmContacts stuff
-//                        cmContacts.answerFriendRequest(requestId, 'reject').then(
-//
-//                        );
-                        rmFromModel(requestId);
+                    $scope.loadFriendRequests = function(){
+                        cmContacts.getFriendRequests().then(
+                            function(data){
+                                $scope.results = data;
+                            }
+                        )
                     }
 
-                    function rmFromModel(requestId){
-                        if(angular.isDefined(requestId)){
+                    $scope.acceptRequest = function(id){
+                        cmLogger.debug('acceptRequest ' + id);
+                        // TODO: notify
+                        cmContacts.answerFriendRequest(id, 'accept').then(
+                            function(){
+                                rmFromModel(id);
+                            }
+                        );
+                    };
+
+                    $scope.rejectRequest = function(id){
+                        cmLogger.debug('rejectRequest ' + id);
+                        // TODO: notify
+                        cmContacts.answerFriendRequest(id, 'reject').then(
+                            function(){
+                                rmFromModel(id);
+                            }
+                        );
+                    }
+
+                    function rmFromModel(id){
+                        if(angular.isDefined(id)){
                             angular.forEach($scope.results,function(value, key){
-                               if(value.requestId == requestId){
+                               if(value.id == id){
                                    $scope.results.splice(key, 1);
                                }
                             });

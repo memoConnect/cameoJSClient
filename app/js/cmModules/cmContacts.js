@@ -1,36 +1,16 @@
 define([
-    'angular'
+    'app',
+    'util'
 ], function () {
    'use strict';
 
-    var cmContacts = angular.module('cmContacts',['cmApi','cmLogger']);
+    var cmContacts = angular.module('cmContacts',['cmApi','cmLogger','Util']);
 
     cmContacts.service('cmContacts',[
         'cmApi',
         'cmLogger',
-        function(cmApi, cmLogger){
-            /**
-             * Creates a String for Limit-Offset Handling in Api-Calls
-             * @param limit
-             * @param offset
-             * @returns {string}
-             */
-            function handleLimitOffset(limit,offset){
-                var s = '';
-
-                if(angular.isDefined(limit)){
-                    s = '?limit=' + parseInt(limit);
-                } else {
-                    //default limit
-                }
-
-                if(s != '' && angular.isDefined(offset)){
-                    s += '&offset=' + parseInt(offset);
-                }
-
-                return s;
-            }
-
+        'Util',
+        function(cmApi, cmLogger, Util){
             return {
                 /**
                  * Search for cameoId Users
@@ -53,7 +33,7 @@ define([
                  */
                 getAll: function(limit, offset){
                     return cmApi.get({
-                        url:'/contacts' + handleLimitOffset(limit,offset)
+                        url:'/contacts' + Util.handleLimitOffset(limit,offset)
                     });
                 },
                 /**
@@ -84,23 +64,23 @@ define([
                  */
                 getAllFromGroup: function(group,limit,offset){
                     return cmApi.get({
-                        url:'contact-group/' + group + handleLimitOffset(limit,offset)
+                        url:'contact-group/' + group + Util.handleLimitOffset(limit,offset)
                     })
                 },
                 getFriendRequests: function(){
                     return cmApi.get({
-                        url:'identity/friendRequests'
+                        url:'/friendRequests'
                     })
                 },
                 sendFriendRequest: function(id){
                     return cmApi.post({
-                        url:'/identity/friendRequest',
-                        data: {cameoId: id}
+                        url:'/friendRequest',
+                        data: {identityId: id}
                     })
                 },
-                answerFriendRequest: function(requestId, type){
+                answerFriendRequest: function(id, type){
                     return cmApi.post({
-                        url:'/identity/friendRequest/' + requestId,
+                        url:'/friendRequest/' + id,
                         data: {type:type}
                     })
                 }

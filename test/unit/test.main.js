@@ -53,7 +53,9 @@ requirejs.config({
         'cmProfile': 'cmModules/cmProfile',
         'cmContacts': 'cmModules/cmContacts',
 
-        'tpl/searchCameoId': '../tpl/modules/contacts/cm-search-cameo-id.html'
+        'tpl/searchCameoId': '../tpl/modules/contacts/cm-search-cameo-id.html',
+		// shared
+        'util': 'shared/util'
     },
 
     packages: [
