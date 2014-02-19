@@ -152,5 +152,6 @@ define([
                 }
             }
         });
+
     return app;
 });
