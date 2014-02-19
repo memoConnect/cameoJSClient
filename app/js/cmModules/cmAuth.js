@@ -84,6 +84,12 @@ cmAuth.provider('cmAuth', function(){
                                                     url:    '/services/checkPhoneNumber',
                                                     data:   { phoneNumber:number } 
                                                 })
+                                    },
+
+                getIdentity:        function(id){
+                                        return  cmAPi.get({
+                                                    url:    '/identiy' + id ? id : ''                                                    
+                                                })
                                     }
     		}
     	}
