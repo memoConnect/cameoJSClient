@@ -87,8 +87,8 @@ cmAuth.provider('cmAuth', function(){
                                     },
 
                 getIdentity:        function(id){
-                                        return  cmAPi.get({
-                                                    url:    '/identiy' + id ? id : ''                                                    
+                                        return  cmApi.get({
+                                                    url:    '/identity' + (id ? id : '')                                                    
                                                 })
                                     }
     		}

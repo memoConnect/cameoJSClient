@@ -225,7 +225,9 @@ define([
 
 	cmConversation.directive('cmMessage',[
 
-		function(){
+		'cmAuth',
+
+		function(cmAuth){
 			return {
 
 				restrict: 		'AE',
@@ -239,8 +241,12 @@ define([
 										return "ZVtXkxMmPj4WtLYea8ci"
 									}
 
-									$scope.message			 = $scope.$eval($attrs.cmMessage || $attrs.cmData)									
-									$scope.is_my_own_message = ($scope.message.fromIdentity == getMyOwnIdentity())
+									$scope.message			 = $scope.$eval($attrs.cmMessage || $attrs.cmData)
+
+									cmAuth.getIdentity()
+									.then(function(identity){
+										$scope.is_my_own_message = ($scope.message.fromIdentity == identity.id)
+									})									
 								}
 			}
 		}
