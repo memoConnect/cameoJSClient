@@ -11,9 +11,9 @@ module.exports = function(config) {
 //            {pattern: 'app/languages/*.jsons', included: false, served: true, autoWatch: true},
             {pattern: 'app/js/**/*.js', included: false},
 
-//            {pattern: 'test/unit/**/*.spec.js', included: false},
-            {pattern: 'test/unit/app.spec.js', included: false},
-            {pattern: 'test/unit/controller/contacts.spec.js', included: false},
+            {pattern: 'test/unit/**/*.spec.js', included: false},
+//            {pattern: 'test/unit/app.spec.js', included: false},
+//            {pattern: 'test/unit/controller/contacts.spec.js', included: false},
 
             {pattern: 'test/lib/**/*.js', included: false},
             // included true!!! requirejs wrapper

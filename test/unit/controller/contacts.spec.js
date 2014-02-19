@@ -1,5 +1,5 @@
 define([
-    'controller/contacts', 'angularAMD', 'tpl/searchCameoId'
+    '_c/contacts', 'angularAMD', 'tpl/searchCameoId'
 ], function (app, angularAMD, tpl) {
     'use strict';
 
@@ -67,8 +67,8 @@ define([
             expect(typeof $scope.search).toBe('function')
         })
 
-        it('should have sendFriendshipRequest as function',function(){
-            expect(typeof $scope.sendFriendshipRequest).toBe('function')
+        it('should have sendFriendRequest as function',function(){
+            expect(typeof $scope.sendFriendRequest).toBe('function')
         })
     })
 })
