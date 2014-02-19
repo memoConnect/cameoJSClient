@@ -24,6 +24,7 @@ define([
                 var deferred = $q.defer();
 
                 if(contacts.length < 1){
+                    cmLogger.debug('ModelContacts getAll API Call');
                     cmContacts.getAll(limit, offset).then(
                         function(data){
                             contacts = data;
@@ -33,6 +34,9 @@ define([
                             deferred.reject();
                         }
                     )
+                } else {
+                    cmLogger.debug('ModelContacts getAll');
+                    deferred.resolve(contacts);
                 }
 
                 return deferred.promise;
