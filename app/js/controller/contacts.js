@@ -1,12 +1,8 @@
 define([
-    'app'
-//    'mContacts'
+    'app',
+    'mContacts'
 ], function(app){
     'use strict';
-
-    var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];
-    var mockRequestResults = [{cameoId:'derMicha',requestId:'qwertz1'},{cameoId:'dasEmpu',requestId:'qwerrtz2'},{cameoId:'dutscher',requestId:'qwerrtz3'},{cameoId:'reimerei',requestId:'qwerrtz4'},{cameoId:'rhotp',requestId:'qwerrtz5'}];
-    var mockSearchResults = [{"id":"vCXqmtXycssTuENaa3rh","cameoId":"oOqn9Nj3lDQeMGLFdHM5","displayName":"NoName"}];
 
     app.register.controller('ContactsCtrl',[
         '$scope',
@@ -24,7 +20,7 @@ define([
         }]);
 
     app.register.directive('cmSearchCameoId',
-        function(cmContacts, cmLogger){
+        function(ModelContacts, cmLogger){
             return {
                 restrict: 'A',
                 scope: {},
@@ -38,7 +34,7 @@ define([
                             return false;
                         }
 
-                        cmContacts.searchCameoId($scope.string).
+                        ModelContacts.searchCameoId($scope.string).
                         then(
                             function(data){
                                 $scope.results = data;
@@ -53,7 +49,7 @@ define([
                     $scope.sendFriendRequest = function(id){
                         // TODO: Notification
                         if(angular.isDefined(id)){
-                            cmContacts.sendFriendRequest(id).then(
+                            ModelContacts.sendFriendRequest(id).then(
                                 function(){
                                     cmLogger.debug("FriendRequest success");
                                 },
@@ -68,7 +64,7 @@ define([
         });
 
     app.register.directive('cmContactsList',
-        function(cmContacts, cmLogger){
+        function(ModelContacts, cmLogger){
             return {
                 restrict: 'A',
                 scope: {},
@@ -80,7 +76,7 @@ define([
                      * Get Contact List
                      */
                     $scope.getContacts = function(){
-                        cmContacts.getAll(10,0).then(
+                        ModelContacts.getAll(10,0).then(
                             function(data){
                                 $scope.contacts = data;
                             },
@@ -111,7 +107,7 @@ define([
         });
 
     app.register.directive('cmContactRequestList',
-        function(cmLogger, cmContacts){
+        function(cmLogger, ModelContacts){
             return {
                 restrict: 'A',
                 scope: {},
@@ -120,7 +116,7 @@ define([
                     $scope.results = [];
 
                     $scope.loadFriendRequests = function(){
-                        cmContacts.getFriendRequests().then(
+                        ModelContacts.getFriendRequests().then(
                             function(data){
                                 $scope.results = data;
                             }
@@ -130,7 +126,7 @@ define([
                     $scope.acceptRequest = function(id){
                         cmLogger.debug('acceptRequest ' + id);
                         // TODO: notify
-                        cmContacts.answerFriendRequest(id, 'accept').then(
+                        ModelContacts.answerFriendRequest(id, 'accept').then(
                             function(){
                                 rmFromModel(id);
                             }
@@ -140,7 +136,7 @@ define([
                     $scope.rejectRequest = function(id){
                         cmLogger.debug('rejectRequest ' + id);
                         // TODO: notify
-                        cmContacts.answerFriendRequest(id, 'reject').then(
+                        ModelContacts.answerFriendRequest(id, 'reject').then(
                             function(){
                                 rmFromModel(id);
                             }

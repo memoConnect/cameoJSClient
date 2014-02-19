@@ -53,6 +53,9 @@ requirejs.config({
         'cmProfile': 'cmModules/cmProfile',
         'cmContacts': 'cmModules/cmContacts',
 
+        // Model
+        'mContacts': 'model/mContacts',
+
         'tpl/searchCameoId': '../tpl/modules/contacts/cm-search-cameo-id.html',
 		// shared
         'util': 'shared/util'
@@ -81,7 +84,9 @@ requirejs.config({
 
         'angular-mocks': ['angular'],
 
-        'controller/contacts': ['app']
+        'controller/contacts': ['app'],
+
+        'mContacts': ['angular']
     },
 
     // ask Require.js to load these files (all our tests)
