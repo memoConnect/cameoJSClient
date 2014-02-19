@@ -2,9 +2,9 @@
     "LOGIN": {
         "HEADING":  "Login",
         "LABEL": {
-            "SUBMIT":       "submit",
+            "SUBMIT":       "login",
             "REMEMBER_ME":  "remember me.",
-            "AUTO":         "auto login (Max)"
+            "AUTO":         "auto login chooser"
         },
         "PLACEHOLDER": {
             "USERNAME":     "username",
@@ -49,13 +49,14 @@
     },
 
     "START": {
-        "WELCOME":  "Welcome dear {{cameoId}}",
-        "LOGOUT":   "logout"
+        "WELCOME": "Welcome",
+        "YOUR_ID": "Your cameoId",
+        "LOGOUT": "logout"
     },
 
 	"VERIFICATION": {
 		"REQUEST": {
-			"LABEL":		"Request verification"
+			"LABEL": "Request verification"
 		}
 	},
 
@@ -84,7 +85,28 @@
     "PASSWORD": {
         "LABEL_PW": "Password",
         "LABEL_CONFIRM": "Confirm Password"
-    }
+    },
 	
-	
+	"CONTACTS": {
+		"WELCOME": "Addressbook",
+        "PLACEHOLDER": {
+            "ADD_NEW_CONTACT": "please insert a cameoId"
+        },
+        "NAVIGATION":{
+            "BACK": "back",
+            "ADD": "add",
+            "CONTACTS": "Contacts",
+            "REQUESTS": "Requests"
+        },
+        "HEADER": {
+            "SEARCH_CAMEO_ID": "Add Contact",
+            "CONTACTS_LIST": "Contacts",
+            "REQUEST_LIST": "Friendship Requests"
+        },
+        "INFO": {
+            "NO_RESULTS": "No cameo contacts found",
+            "MORE_CHARS_NEEDED": "Please type more chars",
+            "NO_CONTACTS": "No contacts exists"
+        }
+	}
 }

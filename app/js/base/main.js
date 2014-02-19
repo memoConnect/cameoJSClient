@@ -36,8 +36,15 @@ require.config({
         'cmLogger': 'cmModules/cmLogger',
         'cmNotify': 'cmModules/cmNotify',
         'cmProfile': 'cmModules/cmProfile',
+        'cmContacts': 'cmModules/cmContacts',
 
-        'jquery': 'vendor/jquery/jquery-2.1.0',
+        // Models
+        'mContacts': 'model/mContacts',
+
+        // shared
+        'util': 'shared/util',
+
+        'jquery': 'vendor/jquery/jquery-2.1.0'
 //        'bootstrap': 'vendor/bootstrap/bootstrap.min',
     },
     packages: [

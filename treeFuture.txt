@@ -1,0 +1,92 @@
+$ cameoJSClient
+    - aio = all in one
+    - Ctrl = Controller
+    - Srvc = Service
+    - Prov = Provider
+    - Dirv = Directive
+    - Filt = Filter
+    - Fact = Factory
+    - Conf = Config
+.
+|- app
+|  |- css
+|  |  `- fonts
+|  |- base
+|  |  |- app.js
+|  |  `- main.js
+|  |
+|  |- shared
+|  |  |- api
+|  |  |  `- apiProv.js
+|  |  |
+|  |  |- auth (aio: js/cmModules/cmAuth.js)
+|  |  |  |- authProv.js
+|  |  |  |- passwordDirv.js
+|  |  |  |- password.html
+|  |  |  |- validateEmailDirv.js
+|  |  |  `- ValidatePhoneDirv.js
+|  |  |
+|  |  |- crypt
+|  |  |  `- cryptFact.js
+|  |  |
+|  |  |- logger
+|  |  |  `- loggerProv.js
+|  |  |
+|  |  |- notify (aio: js/cmModules/cmNotify.js)
+|  |  |  |- notifyConf.js
+|  |  |  |- notifySrvc.js
+|  |  |  `- notifyDirv.js
+|  |  |
+|  |  `- language (aio: js/cmModules/cmLanguage.js)
+|  |     |- translateSrvc.js
+|  |     |- translateFilt.js
+|  |     |- translateDirv.js
+|  |     |- languageSelectDirv.js
+|  |     `- languageProv.js
+|  |
+|  |- routes
+|  |  |- contacts
+|  |  |  |- contactsCtrl.js
+|  |  |  `- contacts.html
+|  |  |
+|  |  |- registration
+|  |  |  |- registrationCtrl.js
+|  |  |  `- registration.html
+|  |  |
+|  |  |- start
+|  |  |
+|  |  |- profile
+|  |  |  `- profileCtrl.js
+|  |  |
+|  |  |- filter
+|  |  |  `- filterCtrl.js
+|  |  |
+|  |  |- conversations
+|  |  |  `- conversationsCtrl.js
+|  |  |
+|  |  `- settings
+|  |     `- settingsCtrl.js
+|  |
+|  |- comps
+|  |  |- login
+|  |  |  |- loginDirv.js
+|  |  |  `- login.html
+|  |  |
+|  |  |- contacts
+|  |  |  |- contactsSrvc.js
+|  |  |  |- searchCameoIdDirv.js
+|  |  |  |- searchCameoId.html
+|  |  |  |- contactsListDirv.js
+|  |  |  |- contactslist.html
+|  |  |  |- contactRequestListDirv.js
+|  |  |  `- contactRequestList.html
+|  |  |
+|  |  `- profile (aio: js/cmModules/cmProfile.js)
+|  |     |- verifyDirv.js
+|  |     `- profileSrvc.js
+|  |
+|  |- i18n (languages)
+|  |    |- lang_de_DE.json
+|  |    `- lang_en_US.json
+|  |
+|  |- vendor

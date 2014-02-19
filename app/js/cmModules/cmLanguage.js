@@ -1,16 +1,11 @@
 define([
-    'angularAMD',
-
+    'angular',
     'angular-translate',
     'angular-translate-loader-static-files',
     'angular-translate-storage-cookie',
     'angular-translate-storage-local',
-    'angular-growl',
-
-    'cmNotify',
-    'cmLogger'
-
-], function (app) {
+    'angular-growl'
+], function () {
     'use strict';
 
     // Provides:
