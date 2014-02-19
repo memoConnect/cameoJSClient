@@ -1,4 +1,4 @@
-define(['jquery', 'angular-mocks'], function ($) {
+ define(['jquery', 'angular-mocks'], function ($) {
 'use strict';
 
 describe('cmApi', function(){

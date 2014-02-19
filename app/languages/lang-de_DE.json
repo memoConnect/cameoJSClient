@@ -2,15 +2,14 @@
 	"LOGIN": {
         "HEADING":  "Login",
         "LABEL": {
-            "SUBMIT":       "Login",
+            "SUBMIT":       "einloggen",
             "REMEMBER_ME":  "merken.",
-            "AUTO":         "Automatisches Login (Max)"
+            "AUTO":         "Automatisches Login auswählen"
         },
         "PLACEHOLDER": {
             "USERNAME":     "Benutzername",
             "PASSWORD":     "Passwort"
         }
-
     },
 
     "REGISTER": {
@@ -49,13 +48,14 @@
     },
 
 	"START": {
-		"WELCOME":  "Willkommen lieber {{cameoId}}",
-		"LOGOUT":   "ausloggen"
+		"WELCOME": "Willkommen",
+        "YOUR_ID": "Deine cameoId",
+		"LOGOUT": "ausloggen"
 	},
 
 	"VERIFICATION": {
 		"REQUEST": {
-			"LABEL":		"Verifizierung anfragen"
+			"LABEL": "Verifizierung anfragen"
 		}
 	},
 
@@ -84,12 +84,35 @@
     "PASSWORD": {
         "LABEL_PW": "Passwort",
         "LABEL_CONFIRM": "Passwort bestätigen"
+
     },	
 
     "CONVERSATION" : {
         "LABEL" : {
             "SEND" : "abschicken"
         }
-    }
+    },
 	
+	"CONTACTS": {
+		"WELCOME": "Adressbuch",
+        "PLACEHOLDER": {
+            "ADD_NEW_CONTACT": "geben Sie hier eine cameoId ein"
+        },
+        "NAVIGATION":{
+            "BACK": "zurück",
+            "ADD": "hinzufügen",
+            "CONTACTS": "Kontakte",
+            "REQUESTS": "Anfragen"
+        },
+        "HEADER": {
+            "SEARCH_CAMEO_ID": "Kontakt hinzufügen",
+            "CONTACTS_LIST": "Kontakte",
+            "REQUEST_LIST": "Freundschaftsanfragen"
+        },
+        "INFO": {
+            "NO_RESULTS": "Keine cameo Kontakte gefunden",
+            "MORE_CHARS_NEEDED": "Bitte geben Sie mehr Buchstaben ein",
+            "NO_CONTACTS": "Keine Kontakte vorhanden"
+        }
+	}
 }

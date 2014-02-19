@@ -10,8 +10,9 @@ define([
     'cmLogger',
     'cmNotify',
     'cmProfile',
-    'cmConversation'
-
+    'cmConversation',
+    'cmContacts',
+    'mContacts'
 ], function (angularAMD) {
     'use strict';
 
@@ -19,6 +20,8 @@ define([
 
         'ngRoute',
         'ngCookies',
+
+        // Module
         'cmApi',
         'cmAuth',
         'cmCrypt',
@@ -26,8 +29,11 @@ define([
         'cmLogger',
         'cmNotify',
         'cmProfile',
-        'cmConversation'
+        'cmConversation',
+        'cmProfile',
+        'cmContacts',
 
+        'mContacts'
     ]);
 
     app.cameo = {
@@ -97,8 +103,7 @@ define([
             // client dynamic pages
             $routeProvider.
                 when('/login', angularAMD.route({
-                    templateUrl: 'tpl/form/login.html',
-                    controllerUrl: 'controller/login'
+                    templateUrl: 'tpl/form/login.html'
                 })).
                 otherwise({
                     redirectTo: '/login'
@@ -119,9 +124,13 @@ define([
                     templateUrl: 'tpl/conversation.html',
                     controllerUrl: 'controller/conversation'
                 })).
-                when('/registry', angularAMD.route({
-                    templateUrl: 'tpl/form/registry.html',
-                    controllerUrl: 'controller/registry'
+                when('/registration', angularAMD.route({
+                    templateUrl: 'tpl/form/registration.html',
+                    controllerUrl: 'controller/registration'
+                })).
+                when('/contacts', angularAMD.route({
+                    templateUrl: 'tpl/contacts.html',
+                    controllerUrl: 'controller/contacts'
                 })).
                 when('/profile', angularAMD.route({
                     templateUrl: 'tpl/form/profile.html'
@@ -151,7 +160,7 @@ define([
                 var path = $location.$$path;
 
                 if (angular.isUndefined($cookieStore.get("token"))) {
-                    if (path != "/login" && path != "/registry" && path != "/terms" && path != "/disclaimer") {
+                    if (path != "/login" && path != "/registration" && path != "/terms" && path != "/disclaimer") {
                         $location.path("/login");
                     }
                 } else if ($location.$$path == "/login") {

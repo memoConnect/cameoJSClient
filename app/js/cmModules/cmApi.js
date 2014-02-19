@@ -1,10 +1,6 @@
 define([
-
-
-    'angularAMD',
-    'app'
-
-], function () {
+    'angular'
+],function () {
     'use strict';
 
     //This Module handels api calls

@@ -11,7 +11,7 @@ describe("cmNotify", function() {
 
 	beforeEach(module("cmNotify"))
 	beforeEach(inject(function(_$rootScope_, _$compile_, _$http_, _$httpBackend_, _cmNotify_){
-		cmNotify 			= _cmNotify_
+		cmNotify 	    = _cmNotify_
 		el				= $('<div cm-notify></div>')
 		scope			= _$rootScope_.$new()
 		$compile		= _$compile_

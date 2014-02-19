@@ -1,7 +1,6 @@
 define([
-    'app',
+    'angular',
     'crypto-sjcl'
-
 ], function () {
     'use strict';
 
