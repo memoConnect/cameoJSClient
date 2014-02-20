@@ -53,7 +53,7 @@ define([
                  */
                 getGroups: function(){
                     return cmApi.get({
-                        url:'contact-groups'
+                        url:'/contact-groups'
                     })
                 },
                 /**
@@ -65,7 +65,7 @@ define([
                  */
                 getAllFromGroup: function(group,limit,offset){
                     return cmApi.get({
-                        url:'contact-group/' + group + Util.handleLimitOffset(limit,offset)
+                        url:'/contact-group/' + group + Util.handleLimitOffset(limit,offset)
                     })
                 },
                 getFriendRequests: function(){

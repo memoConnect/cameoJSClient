@@ -152,8 +152,8 @@ define([
         }
     ]);
 
-    app.run(['$rootScope', '$location', '$cookieStore',
-        function ($rootScope, $location, $cookieStore) {
+    app.run(['$rootScope', '$location', '$cookieStore','ModelContacts',
+        function ($rootScope, $location, $cookieStore, ModelContacts) {
             $rootScope.$on("$routeChangeStart", function () {
     //        var path_exceptions = ['/login', '/registry'];
                 var path = $location.$$path;

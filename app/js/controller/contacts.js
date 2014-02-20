@@ -6,7 +6,8 @@ define([
 
     app.register.controller('ContactsCtrl',[
         '$scope',
-        function($scope){
+        'ModelContacts',
+        function($scope, ModelContacts){
             $scope.navigation = [
                 {id:'BACK',icon:'fa-chevron-left',href:'#/start'},
                 {id:'ADD',icon:'fa-plus'},
@@ -17,6 +18,20 @@ define([
             $scope.setActiveTab = function(tab){
                 $scope.activeTab = tab;
             };
+
+
+            $scope.contactsQty = 0;
+            $scope.getContactsQty = function(){
+                ModelContacts.getQuantity().then(
+                    function(qty){
+                        $scope.contactsQty = qty;
+                    },
+                    function(){
+                        $scope.contactsQty = 0;
+                    }
+                )
+            };
+
         }]);
 
     app.register.directive('cmSearchCameoId',
@@ -71,6 +86,7 @@ define([
                 templateUrl: 'tpl/modules/contacts/cm-contacts-list.html',
                 controller: function($scope, $element, $attrs){
                     $scope.contacts = null;
+                    $scope.contactsQty = 0;
 
                     /**
                      * Get Contact List
@@ -85,6 +101,17 @@ define([
                             }
                         );
                     };
+
+                    $scope.getContactsQty = function(){
+                        ModelContacts.getQuantity().then(
+                            function(qty){
+                                $scope.contactsQty = qty;
+                            },
+                            function(){
+                                $scope.contactsQty = 0;
+                            }
+                        )
+                    }
 
                     $scope.editContact = function(){
                         cmLogger.debug('editContact '+cameoId);
