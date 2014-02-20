@@ -12,6 +12,7 @@ define([
     'cmProfile',
     'cmContacts',
 
+    'mUser',
     'mContacts'
 ], function (angularAMD) {
     'use strict';
@@ -32,7 +33,9 @@ define([
         'cmProfile',
         'cmContacts',
 
+        'mUser',
         'mContacts'
+
     ]);
 
     app.cameo = {

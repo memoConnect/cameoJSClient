@@ -39,6 +39,7 @@ require.config({
         'cmContacts': 'cmModules/cmContacts',
 
         // Models
+        'mUser': 'model/mUser',
         'mContacts': 'model/mContacts',
 
         // shared

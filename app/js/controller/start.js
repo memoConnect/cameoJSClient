@@ -1,5 +1,6 @@
 define([
-    'app'
+    'app',
+    'mUser'
 ], function (app) {
     'use strict';
 
@@ -7,19 +8,12 @@ define([
         '$scope',
         '$cookieStore',
         '$location',
-        'cmAuth',
-        function($scope, $cookieStore, $location, cmAuth) {
+        'ModelUser',
+        function($scope, $cookieStore, $location, ModelUser) {
             $scope.identity = {cameoId:'is loading...'};
 
-            cmAuth.getIdentity().
-            then(
-                function(data){
-                    $scope.identity = data;
-                }
-            );
-
             $scope.logout = function(){
-                $cookieStore.remove("token");
+                ModelUser.doLogout();
                 $location.path("/login");
             };
         }]
