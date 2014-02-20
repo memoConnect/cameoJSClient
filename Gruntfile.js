@@ -8,13 +8,15 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-selenium-launcher');
+    grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-shell-spawn');
 
     grunt.initConfig({
         connect: {
             server: {
                 options: {
                     port: 9000,
-                    base: 'app'
+                    base: './'
                 }
             }
         },
@@ -75,14 +77,14 @@ module.exports = function (grunt) {
         protractor: {
             options: {
                 // The address of a running selenium server.
-                seleniumAddress: 'http://localhost:4444' ,
+                // seleniumAddress: 'http://localhost:4444' ,
 
                 // Capabilities to be passed to the webdriver instance.
                 capabilities: {
                     'browserName': 'firefox'
                 },
 
-                baseUrl: 'http://localhost:9000',
+                baseUrl: 'http://localhost:1337',
 
                 // Spec patterns are relative to the current working directly when
                 // protractor is called.
@@ -100,6 +102,20 @@ module.exports = function (grunt) {
 
             }
 
+        },
+        shell: {
+            runProtractor: {
+                command: './node_modules/protractor/bin/protractor config/ptor.e2e.conf.js',
+                options: {
+                    async: false
+                }
+            },
+            runSelenium: {
+                command: './node_modules/protractor/bin/webdriver-manager start',
+                options: {
+                    async: true
+                }
+            }
         }
     });
 
@@ -109,9 +125,9 @@ module.exports = function (grunt) {
     grunt.registerTask('coffeeTest', 'watch');
 
     /*var driver = new require("selenium-webdriver").Builder()
-        .usingServer(process.env.SELENIUM_HUB)
-        .withCapabilities(webdriver.Capabilities.firefox())
-        .build()*/
+     .usingServer(process.env.SELENIUM_HUB)
+     .withCapabilities(webdriver.Capabilities.firefox())
+     .build()*/
 
-    grunt.registerTask('teste2e', ['connect', 'selenium-launch', 'protractor']);
+    grunt.registerTask('teste2e', ['connect', 'shell:runSelenium', 'shell:runProtractor']);
 };

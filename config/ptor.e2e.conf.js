@@ -24,7 +24,7 @@ exports.config = {
         'browserName': 'chrome'
     },
 
-    baseUrl: 'http://localhost:1337/app/',
+    baseUrl: 'http://localhost:9000/app',
 //    baseUrl: 'http://localhost/cameoJSClient/app/', // empu
 
     // Spec patterns are relative to the current working directly when
