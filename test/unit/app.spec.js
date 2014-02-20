@@ -18,4 +18,6 @@ define(['app','angularAMD'], function (app, angularAMD) {
             expect(typeof app.register.controller).toBe('function');
         });
     });
+
+    return app;
 });

@@ -17,19 +17,15 @@ describe('cameoApp', function() {
         ptor = protractor.getInstance();
         ptor.ignoreSynchronization = true;
         browser.ignoreSynchronization = true;
+
+        ptor.get(ptor.baseUrl);
     });
 
-    it('open app and should redirect to #/login', function(){
-        ptor.get(ptor.baseUrl);
-        ptor.sleep(3000);
-        ptor.getCurrentUrl().
-            then(function(url) {
-                expect(url).toMatch('#/login');
-
-                ptor.findElement(by.css('.form-signin-heading')).getText().
-                    then(function(cssClass) {
-                        expect(cssClass).toBe('Login');
-                    });
-            });
+    describe('Route without Token', function(){
+        it('#/contacts should route to #/login', function(){
+            var route = "#/contacts";
+            redirect(route);
+            expect(ptor.getCurrentUrl()).toContain(route);
+        });
     });
 });

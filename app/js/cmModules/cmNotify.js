@@ -1,8 +1,5 @@
 define([
-
-    'angularAMD',
-    'app'
-
+    'angular'
 ], function () {
     'use strict';
 

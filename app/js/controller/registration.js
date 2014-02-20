@@ -1,11 +1,9 @@
 define([
-
     'app'
-
 ], function (app) {
     'use strict';
 
-    app.register.controller('RegistryCtrl', [
+    app.register.controller('RegistrationCtrl', [
 
         '$scope',
         '$location',
@@ -24,21 +22,23 @@ define([
              * checks if LoginName exists, because Login Name have to be unique
              */
             $scope.checkLoginName = function () {
-                if ($scope.registryForm.loginName.$valid) {
+                if ($scope.registrationForm.loginName.$valid) {
 
-                    var last_checked = $scope.registryForm.loginName.$viewValue.toString()
+                    var last_checked = $scope.registrationForm.loginName.$viewValue.toString();
 
-                    cmAuth.checkAccountName($scope.registryForm.loginName.$viewValue)
+                    cmAuth.checkAccountName($scope.registrationForm.loginName.$viewValue)
                     .then(
 
                         function(reservationSecret){
-                            $scope.registryForm.loginName.$valid = true;
+                            $scope.registrationForm.loginName.$valid = true;
                             reservation_secrets[last_checked] = reservationSecret;
+
+                            $scope.setCameoID(last_checked);
                         },
 
                         function(alternative){
                             cmNotify.info("Error, check Username again!", {ttl: 5000});                        
-                            $scope.registryForm.loginName.$valid = false;
+                            $scope.registrationForm.loginName.$valid = false;
                         }
                     )
 
@@ -48,14 +48,14 @@ define([
                             if (angular.isDefined(r) && angular.isDefined(r.res) && r.res == 'OK') {
                                 if (angular.isDefined(r.data) && angular.isDefined(r.data.reservationSecret)) {
                                     reservationSecret = r.data.reservationSecret;
-                                    $scope.registryForm.cameoName.$valid = true;
+                                    $scope.registrationForm.cameoName.$valid = true;
                             } else {
                                 cmNotify.info("Error, check Username again!", {ttl: 5000});
-                                $scope.registryForm.cameoName.$invalid = true;
+                                $scope.registrationForm.cameoName.$invalid = true;
                             }
                         } else {
                             cmNotify.info("Error, check Username again!", {ttl: 5000});
-                            $scope.registryForm.cameoName.$invalid = true;
+                            $scope.registrationForm.cameoName.$invalid = true;
                         }
                     }).error(function (r) {
                         cmNotify.info("Username exists, please choose an other one, thx!", {ttl: 5000});
@@ -79,10 +79,19 @@ define([
              * @TODO add API CALl
             */
             $scope.checkCameoId = function(){
-                cmLogger.debug("cameoID", $scope.registryForm.cameoId.$viewValue);
+                cmLogger.debug("cameoID", $scope.registrationForm.cameoId.$viewValue.toString());
             };
 
-            $scope.regUser = function () {
+            /** Update cameoId in Form **/
+            $scope.setCameoID = function(id){
+                if(angular.isDefined(id) && $scope.registrationForm.cameoId.$viewValue.toString() == ''){
+                    $scope.registrationForm.cameoId.$setViewValue(id);
+                    $scope.registrationForm.cameoId.$render();
+                    $scope.checkCameoId();
+                }
+            }
+
+            $scope.createUser = function () {
                 var data = {
                     loginName: null,
                     password: null,
@@ -93,13 +102,12 @@ define([
                     reservationSecret: null
                 };
 
-
                 // check cameoName == loginName
-                if ($scope.registryForm.loginName.$valid == false) {
+                if ($scope.registrationForm.loginName.$valid == false) {
                     cmNotify.warn("Username is required!", {ttl: 5000});
                     return false;
                 } else {
-                    data.loginName = $scope.registryForm.loginName.$viewValue;
+                    data.loginName = $scope.registrationForm.loginName.$viewValue;
                 }
 
                 // check password
@@ -111,38 +119,38 @@ define([
                 }
 
                 // check cameoId
-                if($scope.registryForm.cameoid.$viewValue != ''){
-                    data.cameoId = $scope.registryForm.cameoid.$viewValue;
+                if($scope.registrationForm.cameoid.$viewValue != ''){
+                    data.cameoId = $scope.registrationForm.cameoid.$viewValue;
                 }
 
 
                 // check email
-                if ($scope.registryForm.email.$valid == false) {
+                if ($scope.registrationForm.email.$valid == false) {
                     cmNotify.warn("E-Mail has wrong format!", {ttl: 5000});
                     return false;
                 } else {
-                    if ($scope.registryForm.email.$viewValue != '') {
-                        data.email = $scope.registryForm.email.$viewValue;
+                    if ($scope.registrationForm.email.$viewValue != '') {
+                        data.email = $scope.registrationForm.email.$viewValue;
                     }
                 }
 
                 // check phone
-                if ($scope.registryForm.phone.$valid == false) {
+                if ($scope.registrationForm.phone.$valid == false) {
                     cmNotify.warn("Phone has wrong format!", {ttl: 5000});
                     return false;
                 } else {
-                    if ($scope.registryForm.phone.$viewValue != '') {
-                        data.phoneNumber = $scope.registryForm.phone.$viewValue;
+                    if ($scope.registrationForm.phone.$viewValue != '') {
+                        data.phoneNumber = $scope.registrationForm.phone.$viewValue;
                     }
                 }
 
                 // check name
-                if ($scope.registryForm.name.$viewValue != '') {
-                    data.name = $scope.registryForm.name.$viewValue;
+                if ($scope.registrationForm.name.$viewValue != '') {
+                    data.name = $scope.registrationForm.name.$viewValue;
                 }
 
                 // check agb
-                if ($scope.registryForm.agb.$valid == false) {
+                if ($scope.registrationForm.agb.$valid == false) {
                     cmNotify.warn("REGISTER.INFO.TERMS", {ttl: 5000});
                     return false;
                 }
@@ -162,6 +170,6 @@ define([
                     }
                 )
             };
-        }
-    ]);
+    }]);
+    return app;
 });

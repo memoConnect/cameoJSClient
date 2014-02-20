@@ -1,0 +1,75 @@
+$ cameoJSClient
+.
+|- app
+|  |- css
+|  |- fonts
+|  |- js
+|  |  |- base
+|  |  |  |- app.js
+|  |  |  |      @req: angularAMD, angular-route, angular-cookies,
+|  |  |  |            cmApi, cmAuth, cmCrypt, cmLanguage, cmLogger,
+|  |  |  |            cmNotify, cmProfile, cmContacts
+|  |  |  `- main.js
+|  |  |
+|  |  |- cmModules @req: angular
+|  |  |  |- cmApi.js
+|  |  |  |- cmAuth.js
+|  |  |  |      @req: angular-cookies, util-base64, util-passchk-fast
+|  |  |  |- cmCrypt.js @req: crypto-sjcl
+|  |  |  |- cmLanguage.js
+|  |  |  |      @req: angular-translate, angular-translate-loader-static-files,
+|  |  |  |            angular-translate-storage-cookie, angular-translate-storage-local,
+|  |  |  |            angular-growl
+|  |  |  |- cmLogger.js
+|  |  |  |- cmNotify.js
+|  |  |  `- cmProfile.js @req: jquery
+|  |  |
+|  |  |- controller @req: app
+|  |  |  |- filter.js @req: util-base64
+|  |  |  |- registration.js
+|  |  |  |- contacts.js
+|  |  |  |- start.js
+|  |  |  `- talks.js @deleted
+|  |  |
+|  |  |- service
+|  |  |  |- assets.js
+|  |  |  `- talks.js
+|  |  |
+|  |  `- vendor
+|  |     |- angular
+|  |     |- jquery
+|  |     |- requirejs
+|  |     |  |- require.js
+|  |     |  |- angularAMD.js
+|  |     |  `- ngload.js
+|  |     |
+|  |     |- sjcl
+|  |     `- util
+|  |        |- base64.js
+|  |        `- passchk_fast.js
+|  |
+|  |- languages
+|  |- tpl
+|  `- index.html
+|
+|- config
+|  |- karma-base.conf.js
+|  `- ptor.e2e.conf.js
+|
+`- test
+   |- unit
+   |  |- modules
+   |  |  |- cmApi.spec.js
+   |  |  |- cmAuth.spec.js
+   |  |  |- cmCrypt.spec.js
+   |  |  |- cmLanguage.spec.js
+   |  |  |- cmLogger.spec.js
+   |  |  `- cmNotify.spec.js
+   |  |
+   |  |- app.spec.js
+   |  `- test.main.js
+   |
+   |- e2e
+   |  `- www.spec.js
+   |
+   `- lib

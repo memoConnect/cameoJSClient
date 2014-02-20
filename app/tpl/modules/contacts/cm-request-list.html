@@ -1,0 +1,19 @@
+<h3 ng-init="loadFriendRequests();">{{'CONTACTS.HEADER.REQUEST_LIST'|cmTranslate}} <span class="badge">{{results.length}}</span></h3>
+<div class="container-fluid">
+    <div class="row">
+        <ul class="nav nav-pills nav-stacked col-sm-6">
+            <li ng-repeat="result in results">
+                <a>
+                    {{result.displayName}} ({{result.cameoId}})
+                    <i class="fa fa-times pull-right" ng-click="rejectRequest(result.id);"></i>
+                    <i class="fa fa-check pull-right" ng-click="acceptRequest(result.id);"></i>
+                </a>
+            </li>
+        </ul>
+        <li ng-show="contacts.length == 0">
+            <a class="alert alert-warning">
+                {{'CONTACTS.INFO.NO_CONTACTS'|cmTranslate}}
+            </a>
+        </li>
+    </div>
+</div>
