@@ -9,8 +9,8 @@ define([
     'cmLogger',
     'cmContacts',
     'util-base64',
-    'util-passchk-fast'
-
+    'util-passchk-fast',    
+   '_v/captchagen/captchagen',
 
 
 ], function () {
@@ -275,6 +275,11 @@ define([
 									$scope.decryptMessage = function(message) {
 										message.decryptedBody = cmCrypt.decrypt($scope.passphrase, message.messageBody)
 									}
+
+									$scope.getRandomPassphrase = function(){
+										var date = new Date()
+										$scope.passphrase = Base64.encode(cmCrypt.hash(Math.random()*date.getTime())).substr(5, 12)
+									}
 									 
 								}
 			}
@@ -408,6 +413,9 @@ define([
 		}
 	])
 
+
+
+
 	cmConversation.directive('cmPassphrase',[
 
 		function() {
@@ -432,8 +440,7 @@ define([
 										window.clearTimeout(timeout)
 
 										timeout = window.setTimeout(function(){
-											scope.$apply(function() {
-							                    ngModelCtrl.$setViewValue(element.val())
+											scope.$apply(function() {							                    
 							                    scope.refresh()
 							                })
 										},500)
@@ -443,14 +450,61 @@ define([
 										element.val()
 										?	status.addClass('fa-lock').removeClass('fa-unlock')
 										:	status.addClass('fa-unlock').removeClass('fa-lock')	
+
+										ngModelCtrl.$setViewValue(element.val())
 									}
 
 									scope.refresh()
+									scope.$watch('passphrase', scope.refresh)
 								}
 
 			}
 		}
 	])
+
+
+
+	cmConversation.directive('cmCaptcha',[
+
+		function(){
+			return {
+
+				restrict: 		'AE',
+				require:		'^cmConversation',			
+				template:		'<canvas id="canvas" width="100" height="37"></canvas>', //MOCK
+
+				controller:		function($scope, $element, $attrs){
+   
+						            var captcha;
+
+						            $scope.captchaDim = "700x150";
+						            $scope.captchaFont = "sans";
+
+						            $scope.create = function(){
+						                var dim = $scope.captchaDim.split("x");
+						                captcha = new Captchagen({
+						                    width: dim[0]
+						                    ,height: dim[1]
+						                    ,text: $scope.passphrase
+						                    ,font: $scope.captchaFont
+						                });
+						                captcha.generate();
+
+						                $scope.pass = captcha.text();
+						            };
+
+						            $scope.refreshCaptcha = function(){
+						                captcha.refresh($scope.passphrase);
+						            }					            
+
+						            $scope.create();        
+								}
+
+				
+			}
+		}
+	])
+
 
 
 })
