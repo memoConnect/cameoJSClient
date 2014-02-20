@@ -59,7 +59,7 @@ define([
             if(contacts.length < 1){
                 this.getAll().then(
                     function(data){
-                        return deferred.resolve(data.length);
+                        deferred.resolve(data.length);
                     },
                     function(){
                         deferred.reject();
