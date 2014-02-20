@@ -8,10 +8,10 @@ define([
      * collection of client side crypt stuff
      */
 
-    var cmCrypt = angular.module('cmCrypt', ['cmLogger', 'cmNotify']);
+    var cmCrypt = angular.module('cmCrypt', ['cmLogger']);
 
     cmCrypt.factory('cmCrypt',
-        function (cmLogger, cmNotify) {
+        function (cmLogger) {
 
             return {
                 /**
@@ -78,7 +78,7 @@ define([
                     try {
                         decryptedString = sjcl.decrypt(secretKey, decodedSecretString)
                     } catch (e) {
-                        cmNotify.warn('Unable to decrypt.', e)
+                        cmLogger.warn('Unable to decrypt.', e)
                     }
 
                     return decryptedString || secretString

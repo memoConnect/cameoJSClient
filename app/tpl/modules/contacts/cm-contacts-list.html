@@ -1,9 +1,10 @@
 <h3>{{'CONTACTS.HEADER.CONTACTS_LIST'|cmTranslate}} <span class="badge">{{contacts.length}}</span></h3>
+{{'CONTACTS.TAG.FILTER'|cmTranslate}}: <input type = "text" ng-model="name_filter"/>
 <div class="container-fluid">
     <div class="row">
         <ul class="nav nav-pills nav-stacked col-sm-6" ng-init="getContacts()">
-            <li ng-repeat="cameoUser in contacts">
-                <a>
+            <li ng-repeat="cameoUser in contacts | filter:name_filter">
+                <a ng-click="selectIdentity(cameoUser.identity)">
                     {{cameoUser.identity.cameoId}}
                     <i class="fa fa-trash-o pull-right" ng-click="deleteContact(cameoUser.identityId)"></i>
                     <i class="fa fa-pencil pull-right" ng-click="editContact(cameoUser.identityId)"></i>

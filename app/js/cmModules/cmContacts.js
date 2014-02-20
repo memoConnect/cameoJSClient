@@ -8,9 +8,11 @@ define([
     var cmContacts = angular.module('cmContacts',['cmApi','cmLogger','Util']);
 
     cmContacts.service('cmContacts',[
+
         'cmApi',
         'cmLogger',
         'Util',
+
         function(cmApi, cmLogger, Util){
             return {
                 /**
@@ -88,4 +90,63 @@ define([
             }
         }
     ])
+
+
+
+
+    cmContacts.directive('cmContactsList',[
+
+        'ModelContacts',
+        'cmLogger',
+
+        function(ModelContacts, cmLogger){
+            return {
+
+                restrict: 'AE',
+                templateUrl: 'tpl/modules/contacts/cm-contacts-list.html',
+
+                controller: function($scope, $element, $attrs){
+                    $scope.contacts = null;
+
+                    /**
+                     * Get Contact List
+                     */
+                    $scope.getContacts = function(){
+                        ModelContacts.getAll(10,0).then(
+                            function(data){
+                                $scope.contacts = data;
+                            },
+                            function(){
+                                $scope.contacts = null;
+                            }
+                        );
+                    };
+
+//                    $scope.contacts = [];
+//
+//                    $scope.getContacts = function(){
+//                        $scope.contacts = cmApi.post({
+//                            url: '/contacts'
+//                        });
+//                    };
+
+                    $scope.editContact = function(){
+                        cmLogger.debug('editContact '+cameoId);
+                        // TODO: cmApi stuff
+                    };
+
+                    $scope.deleteContact = function(cameoId){
+                        cmLogger.debug('deleteContact '+cameoId);
+                        // TODO: cmApi stuff
+                    };
+
+                    $scope.selectIdentity = function(cameoId){
+                        //communicates a cameoId to parent directives (e.g. conversation)
+                        $scope.$broadcast('identity-selected', cameoId)
+                    }
+                }
+            }
+        }
+    ]);
+    
 });

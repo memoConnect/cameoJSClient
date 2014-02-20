@@ -1,27 +1,45 @@
 <section>
-	<div class="cm-tools">
-		Recipients:
-		<!-- alles eine Direktive? -->
+	<div class="cm-tools">		
+		<i
+			class	 = "fa fa-plus-square" 			
+			style	 = "cursor:pointer"
+			ng-click = "show_contacts = !show_contacts"
+			ng-hide	 = "show_contacts"
+		>
+		</i>
+
+		<i
+			class	 = "fa fa-minus-square" 			
+			style	 = "cursor:pointer"
+			ng-click = "show_contacts = !show_contacts"
+			ng-show	 = "show_contacts"
+		>
+		</i>
+
+		{{'CONVERSATION.TAG.RECIPIENTS' |cmTranslate}}:
+
 		<span ng-repeat = "recipient in conversation.recipients">
 			{{recipient.displayName}}
 			<i
-				class		= "fa fa-times"
+				class		= "fa fa-times-circle"
 				style		= "cursor:pointer"
-				ng-click	= "removeRecipient(recipient.id)"
+				ng-click	= "removeRecipient(recipient)"
 			>
 			</i> 
 			{{$last? '' : ','}}
-		</span> 
-		<cm-security></cm-security>
-		<cm-add-recipient></cm-add-recipient>
+		</span> 				
+
+		<!-- should be a modal here!-->
+		<cm-contacts-list ng-show ="show_contacts"></cm-contacts-list>
+
 	</div>
 	<div>
-		<input type ="text" ng-model="passphrase">
+		<input type ="text" ng-model="passphrase" cm-passphrase>
 	</div>
 
 	<div class="cm-messages">
 		<!-- performance ?? -->
-		Messages:		
+		{{'CONVERSATION.TAG.MESSAGES' |cmTranslate}}:
 		<cm-message cm-data = "message" ng-repeat = "message in conversation.messages"></cm-message>
 	</div>
 	<div>

@@ -63,49 +63,9 @@ define([
             }
         });
 
-    app.register.directive('cmContactsList',
-        function(ModelContacts, cmLogger){
-            return {
-                restrict: 'A',
-                scope: {},
-                templateUrl: 'tpl/modules/contacts/cm-contacts-list.html',
-                controller: function($scope, $element, $attrs){
-                    $scope.contacts = null;
+    // app.register.directive('cmContactsList', ... nach cmContacts verschoben    
 
-                    /**
-                     * Get Contact List
-                     */
-                    $scope.getContacts = function(){
-                        ModelContacts.getAll(10,0).then(
-                            function(data){
-                                $scope.contacts = data;
-                            },
-                            function(){
-                                $scope.contacts = null;
-                            }
-                        );
-                    };
-
-//                    $scope.contacts = [];
-//
-//                    $scope.getContacts = function(){
-//                        $scope.contacts = cmApi.post({
-//                            url: '/contacts'
-//                        });
-//                    };
-
-                    $scope.editContact = function(){
-                        cmLogger.debug('editContact '+cameoId);
-                        // TODO: cmApi stuff
-                    };
-
-                    $scope.deleteContact = function(cameoId){
-                        cmLogger.debug('deleteContact '+cameoId);
-                        // TODO: cmApi stuff
-                    };
-                }
-            }
-        });
+    
 
     app.register.directive('cmContactRequestList',
         function(cmLogger, ModelContacts){

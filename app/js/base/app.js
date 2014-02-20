@@ -32,7 +32,6 @@ define([
         'cmConversation',
         'cmProfile',
         'cmContacts',
-
         'mContacts'
     ]);
 

@@ -7,6 +7,7 @@ define([
     'cmApi',
     'cmCrypt',
     'cmLogger',
+    'cmContacts',
     'util-base64',
     'util-passchk-fast'
 
@@ -15,7 +16,7 @@ define([
 ], function () {
     'use strict';
 
-	var cmConversation = angular.module('cmConversation', ['cmApi', 'cmLogger', 'cmCrypt'])
+	var cmConversation = angular.module('cmConversation', ['cmApi', 'cmLogger', 'cmCrypt', 'cmContacts'])
 
 	cmConversation.provider('cmConversation', function(){
 		//config stuff here
@@ -147,6 +148,21 @@ define([
 						return deferred.promise
 					},
 
+					addRecipient: function(id, recipient_id){
+						return	cmApi.post({
+									url:	'/conversation/%1/recipient'.replace(/%1/, id),
+									data:	{
+												recipients: [recipient_id]
+											}
+								})
+					},
+
+					removeRecipient: function(id, recipient_id){
+						return	cmApi.delete({
+									url:	'/conversation/%1/recipient/%2'.replace(/%1/, id).replace(/%2/, recipient_id)
+								})	
+					},
+
 					sendMessage: function(id, messageBody){
 						return	cmApi.post({
 									url:	"/conversation/%1/message".replace(/%1/, id),
@@ -185,6 +201,7 @@ define([
 
 									$scope.my_message_text = ""
 									$scope.passphrase = ""
+									$scope.show_contacts = false
 
 
 									conversation_id
@@ -204,35 +221,59 @@ define([
 										$scope.conversation = conversation
 
 										$scope.$watch("passphrase", function(new_passphrase){
-											$scope.decryptMessages()
+											$scope.decryptAllMessages()
+										})
+
+										$scope.$on('identity-selected', function(event, identity){
+											$scope.addRecipient(identity)
 										})
 									}	
 
 									$scope.sendMessage = function(message){
 										
-										var encrypted_message_text = cmCrypt.encryptWithShortKey('dummy', $scope.my_message_text) //MOCK!!
+										var encrypted_message_text = cmCrypt.encryptWithShortKey($scope.passphrase, $scope.my_message_text) 
 
 										cmConversation.sendMessage($scope.conversation.id, encrypted_message_text)
 										.then(function(message){
+											$scope.decryptMessage(message)
 											$scope.conversation.messages.push(message)
 											$scope.my_message_text = ""
 										})
 									}
-									
-									$scope.removeRecipient = function(recipient_id){
-										var index
 
-										$scope.conversation.recipients.forEach(function(recipient, i){
-											if(recipient.id == recipient_id) index = i
+									$scope.addRecipient = function(recipient){
+										cmConversation.addRecipient($scope.conversation.id, recipient.id)
+										.then(function(){
+											//Das sollte besser gleich in cmConversation passieren
+											$scope.conversation.recipients.push({
+												//VORLÄUFIG!:
+												id: recipient.id,
+												displayName: recipient.cameoId
+											}) 
 										})
-
-										$scope.conversation.recipients.splice(index,1)
 									}
 
-									$scope.decryptMessages = function() {										
-										$scope.conversation.messages.forEach(function(message){
-											message.decryptedBody = cmCrypt.decrypt($scope.passphrase, message.messageBody)
+									$scope.removeRecipient = function(recipient){
+										cmConversation.removeRecipient($scope.conversation.id, recipient.id)
+										.then(function(){
+											var index
+
+											$scope.conversation.recipients.forEach(function(rec, i){
+												if(rec.id == recipient.id) index = i
+											})
+
+											$scope.conversation.recipients.splice(index,1)
 										})
+									}
+
+									$scope.decryptAllMessages = function() {										
+										$scope.conversation.messages.forEach(function(message){
+											$scope.decryptMessage(message)
+										})
+									}
+
+									$scope.decryptMessage = function(message) {
+										message.decryptedBody = cmCrypt.decrypt($scope.passphrase, message.messageBody)
 									}
 									 
 								}
@@ -367,6 +408,49 @@ define([
 		}
 	])
 
+	cmConversation.directive('cmPassphrase',[
+
+		function() {
+			return {
+
+				restrict: 		'A',
+				require:		'ngModel',
+				scope:			false,
+
+				link:			function(scope, element, attrs, ngModelCtrl){									
+									//inputs with this directive will not update the scope on simple keydown-events
+
+									var status = angular.element('<i></i>').addClass('fa'),
+										timeout
+
+									element.after(status)
+
+									element
+									.unbind('input')
+									.unbind('keydown')
+									.on('keydown', function(){
+										window.clearTimeout(timeout)
+
+										timeout = window.setTimeout(function(){
+											scope.$apply(function() {
+							                    ngModelCtrl.$setViewValue(element.val())
+							                    scope.refresh()
+							                })
+										},500)
+									})
+
+									scope.refresh = function(){
+										element.val()
+										?	status.addClass('fa-lock').removeClass('fa-unlock')
+										:	status.addClass('fa-unlock').removeClass('fa-lock')	
+									}
+
+									scope.refresh()
+								}
+
+			}
+		}
+	])
 
 
 })
