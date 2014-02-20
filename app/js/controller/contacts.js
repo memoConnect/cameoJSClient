@@ -86,14 +86,6 @@ define([
                         );
                     };
 
-//                    $scope.contacts = [];
-//
-//                    $scope.getContacts = function(){
-//                        $scope.contacts = cmApi.post({
-//                            url: '/contacts'
-//                        });
-//                    };
-
                     $scope.editContact = function(){
                         cmLogger.debug('editContact '+cameoId);
                         // TODO: cmApi stuff
