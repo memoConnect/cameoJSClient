@@ -16,9 +16,9 @@ define([
         var groups = [];
 
         /**
-         * Constructor
+         * Init Object
          */
-        function constructor(){
+        function init(){
             console.log('ModelContacts constructor');
             self.getAll();
             self.getGroups();
@@ -114,6 +114,6 @@ define([
             return cmContacts.answerFriendRequest(id, type);
         }
 
-        constructor();
+        init();
     });
 });
