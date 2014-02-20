@@ -6,7 +6,7 @@ define([
     describe('ModelContacts', function(){
         var model;
 
-        beforeEach(module('mContacts','cmContacts'));
+        beforeEach(module('mContacts','cmContacts','mUser','cmAuth'));
 
         beforeEach(inject(function(_ModelContacts_){
             model = _ModelContacts_;
@@ -55,4 +55,4 @@ define([
 
         });
     });
-})
+});
