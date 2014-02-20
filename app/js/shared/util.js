@@ -1,5 +1,5 @@
 define([
-    'angular'
+    'angular-mocks'
 ], function () {
     'use strict';
 

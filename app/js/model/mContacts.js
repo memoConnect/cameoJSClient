@@ -19,7 +19,6 @@ define([
          * Init Object
          */
         function init(){
-            console.log('ModelContacts constructor');
             self.getAll();
             self.getGroups();
         }
