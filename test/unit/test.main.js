@@ -55,8 +55,8 @@ requirejs.config({
 
         // Model
         'mContacts': 'model/mContacts',
+        'mUser': 'model/mUser',
 
-        'tpl/searchCameoId': '../tpl/modules/contacts/cm-search-cameo-id.html',
 		// shared
         'util': 'shared/util'
     },
@@ -66,7 +66,7 @@ requirejs.config({
         {name: '_v', location: 'vendor'},
         {name: '_s', location: 'service'},
         {name: '_c', location: 'controller'},
-        {name: '_d', location: 'directive'}
+        {name: '_d', location: 'directives'}
     ],
 
     shim: {
@@ -84,9 +84,7 @@ requirejs.config({
 
         'angular-mocks': ['angular'],
 
-        'controller/contacts': ['app'],
-
-        'mContacts': ['angular']
+        'controller/contacts': ['app']
     },
 
     // ask Require.js to load these files (all our tests)

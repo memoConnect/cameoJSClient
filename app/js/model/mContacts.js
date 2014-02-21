@@ -1,66 +1,155 @@
 define([
     'app',
-    'cmContacts'
+    'cmContacts',
+    'cmLogger',
+    'mUser'
 ], function () {
     'use strict';
 
-    var ModelContacts = function(cmContacts, cmLogger, $q){
-        var contacts = [];
+    var mContacts = angular.module('mContacts',[]);
 
+    mContacts.service('ModelContacts',function(ModelUser, cmContacts, cmLogger, $q, $rootScope){
+        var self = this;
         var mockContacts = ['derMicha','dasEmpu'];
         var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];
         var mockRequestResults = [{cameoId:'derMicha',requestId:'qwertz1'},{cameoId:'dasEmpu',requestId:'qwerrtz2'},{cameoId:'dutscher',requestId:'qwerrtz3'},{cameoId:'reimerei',requestId:'qwerrtz4'},{cameoId:'rhotp',requestId:'qwerrtz5'}];
 
-//        cmLogger.debug("mContacts");
+        var contacts = [];
+        var groups = [];
+
+        /**
+         * Init Object
+         */
+        function init(){
+            self.getAll();
+            self.getGroups();
+        }
 
         /**
          * Model Logic
          */
-        return {
-            searchCameoId: function(cameoId){
-                return cmContacts.searchCameoId(cameoId);
-            },
-            getAll: function(limit, offset){
-                var deferred = $q.defer();
+        this.searchCameoId = function(cameoId){
+            return cmContacts.searchCameoId(cameoId);
+        };
 
-                if(contacts.length < 1){
-                    cmLogger.debug('ModelContacts getAll API Call');
-                    cmContacts.getAll(limit, offset).then(
-                        function(data){
-                            contacts = data;
-                            deferred.resolve(contacts);
-                        },
-                        function(){
-                            deferred.reject();
-                        }
-                    )
-                } else {
-                    cmLogger.debug('ModelContacts getAll');
-                    deferred.resolve(contacts);
-                }
+        this.getAll = function(limit, offset){
+            var deferred = $q.defer();
 
-                return deferred.promise;
-            },
-            getOne: function(id){
-                return cmContacts.getOne(id);
-            },
-            getGroups: function(){
-                return cmContacts.getGroups();
-            },
-            getAllFromGroup: function(group,limit,offset){
-                return cmContacts.getAllFromGroup(group,limit,offset);
-            },
-            getFriendRequests: function(){
-                return cmContacts.getFriendRequests();
-            },
-            sendFriendRequest: function(id){
-                return cmContacts.sendFriendRequest(id);
-            },
-            answerFriendRequest: function(id, type){
-                return cmContacts.answerFriendRequest(id, type);
+            if(contacts.length < 1 && ModelUser.isAuth() !== false){
+                cmContacts.getAll().then(
+                    function(data){
+                        contacts = data;
+                        deferred.resolve(contacts);
+                    },
+                    function(){
+                        deferred.reject();
+                    }
+                )
+            } else {
+                deferred.resolve(contacts);
             }
-        }
-    }
 
-    var mContacts = angular.module('mContacts',[]).factory('ModelContacts', ModelContacts);
+            return deferred.promise;
+        };
+
+        this.getQuantity = function(){
+            var deferred = $q.defer();
+
+            if(contacts.length < 1 && ModelUser.isAuth() !== false){
+                this.getAll().then(
+                    function(data){
+                        deferred.resolve(data.length);
+                    },
+                    function(){
+                        deferred.reject();
+                    }
+                )
+            } else {
+                deferred.resolve(contacts.length);
+            }
+
+            return deferred.promise;
+        };
+
+        this.getOne = function(id){
+            return cmContacts.getOne(id);
+        };
+
+        this.getGroups = function(){
+            var deferred = $q.defer();
+
+            if(groups.length < 1 && ModelUser.isAuth() !== false){
+                cmContacts.getGroups().then(
+                    function(data){
+                        groups = data;
+                        deferred.resolve(groups);
+                    },
+                    function(){
+                        deferred.reject();
+                    }
+                );
+            } else {
+                deferred.resolve(groups);
+            }
+
+            return deferred.promise;
+        };
+
+        this.getAllFromGroup = function(group,limit,offset){
+            return cmContacts.getAllFromGroup(group,limit,offset);
+        };
+
+        this.getFriendRequests = function(){
+            return cmContacts.getFriendRequests();
+        };
+
+        this.sendFriendRequest = function(id){
+            return cmContacts.sendFriendRequest(id);
+        };
+
+        this.answerFriendRequest = function(id, type){
+            return cmContacts.answerFriendRequest(id, type);
+        };
+
+        this.checkDisplayName = function(displayName){
+            var defer = $q.defer();
+            // TODO: check displayName in local contacts
+            if(displayName != 'WummsBrumms'){
+                defer.resolve();
+            } else {
+                defer.reject();
+            }
+
+            return defer.promise;
+        };
+
+        this.addContact = function(data){
+            // TODO: add to contacts and send to api
+            var defer = $q.defer();
+            cmContacts
+            .addContact(data.identity)
+            .then(
+                function(data){
+                    contacts.push(data);
+                    defer.resolve();
+                },
+                function(){
+                    defer.reject();
+                }
+            );
+
+            return defer.promise;
+        };
+
+        function resetContacts(){
+            contacts = [];
+            groups = [];
+        }
+
+        $rootScope.$on('logout', function(){
+            resetContacts();
+        });
+
+        init();
+    });
 });

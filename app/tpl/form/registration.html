@@ -26,7 +26,7 @@
         <label for="cameoId" class="col-sm-2 control-label">{{'REGISTER.LABEL.CAMEOID' |cmTranslate}}</label>
         <div class="col-sm-6">
             <div class="input-group">
-                <input id="cameoId" name="cameoId" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.CAMEOID' |cmTranslate}}" ng-model="formData.cameoId" ng-blur="checkCameoId();" />
+                <input id="cameoId" name="cameoId" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.CAMEOID'|cmTranslate}}" ng-model="formData.cameoId" ng-blur="checkCameoId();" />
                 <small class="input-group-addon">@cameo</small>
             </div>
         </div>
@@ -35,23 +35,23 @@
     <div class="form-group">
         <label for="name" class="col-sm-2 control-label">{{'REGISTER.LABEL.NAME' |cmTranslate}}</label>
         <div class="col-sm-6">
-            <input id="name" name="name" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.NAME' |cmTranslate}}" ng-model="formData.name" />
+            <input id="name" name="name" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.NAME'|cmTranslate}}" ng-model="formData.name" />
         </div>
     </div>
 
     <div class="form-group">
-        <label for="email" class="col-sm-2 control-label">{{'REGISTER.LABEL.EMAIL' |cmTranslate}}</label>
+        <label for="email" class="col-sm-2 control-label">{{'DIRV.VALIDATE_EMAIL.LABEL'|cmTranslate}}</label>
         <div class="col-sm-6">
-            <input id="email" name="email" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.EMAIL' |cmTranslate}}" ng-model="formData.email" cm-validate-email />
+            <input id="email" name="email" type="text" class="form-control" placeholder="{{'DIRV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}" ng-model="formData.email" cm-validate-email />
         </div>
     </div>
 
     <div class="form-group">
-        <label for="phone" class="col-sm-2 control-label">{{'REGISTER.LABEL.PHONE' |cmTranslate}}</label>
+        <label for="phone" class="col-sm-2 control-label">{{'DIRV.VALIDATE_PHONE.LABEL'|cmTranslate}}</label>
         <div class="col-sm-6">
-            <input id="phone" name="phone" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.PHONE' |cmTranslate}}" ng-model="formData.phone" ng-minlength="6" cm-validate-phone />
+            <input id="phone" name="phone" type="text" class="form-control" placeholder="{{'DIRV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}" ng-model="formData.phone" ng-minlength="6" cm-validate-phone />
             <div class="custom-error" ng-show="registrationForm.phone.$dirty && registrationForm.phone.$invalid">
-                <div ng-show="registrationForm.cameoName.$error.required">{{'REGISTER.INFO.INVALID_PHONE_NUMBER' |cmTranslate}}</div>
+                <div ng-show="registrationForm.phone.$error.required">{{'DIRV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}</div>
             </div>
         </div>
     </div>

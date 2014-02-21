@@ -28,19 +28,17 @@ define([
 
                     cmAuth.checkAccountName($scope.registrationForm.loginName.$viewValue)
                     .then(
-
                         function(reservationSecret){
                             $scope.registrationForm.loginName.$valid = true;
                             reservation_secrets[last_checked] = reservationSecret;
 
                             $scope.setCameoID(last_checked);
                         },
-
                         function(alternative){
                             cmNotify.info("Error, check Username again!", {ttl: 5000});                        
                             $scope.registrationForm.loginName.$valid = false;
                         }
-                    )
+                    );
 
 
                     /*
@@ -76,21 +74,26 @@ define([
 
             /**
             * checks if LoginName exists, because Login Name have to be unique
-             * @TODO add API CALl
+             * @TODO add API CALL
             */
             $scope.checkCameoId = function(){
                 cmLogger.debug("cameoID", $scope.registrationForm.cameoId.$viewValue.toString());
             };
 
-            /** Update cameoId in Form **/
+            /**
+             * Update cameoId in Form
+             **/
             $scope.setCameoID = function(id){
                 if(angular.isDefined(id) && $scope.registrationForm.cameoId.$viewValue.toString() == ''){
                     $scope.registrationForm.cameoId.$setViewValue(id);
                     $scope.registrationForm.cameoId.$render();
                     $scope.checkCameoId();
                 }
-            }
+            };
 
+            /**
+             * Form Validation and Apicall to create user
+             */
             $scope.createUser = function () {
                 var data = {
                     loginName: null,
@@ -104,7 +107,7 @@ define([
 
                 // check cameoName == loginName
                 if ($scope.registrationForm.loginName.$valid == false) {
-                    cmNotify.warn("Username is required!", {ttl: 5000});
+                    cmNotify.warn('REGISTER.INFO.EMPTY.USERNAME', {ttl: 5000});
                     return false;
                 } else {
                     data.loginName = $scope.registrationForm.loginName.$viewValue;
@@ -112,7 +115,7 @@ define([
 
                 // check password
                 if ($scope.formData.password == '' || $scope.formData.password == 'none') {
-                    cmNotify.warn("Password is required!", {ttl: 5000});
+                    cmNotify.warn('REGISTER.INFO.EMPTY.PASSWORD', {ttl: 5000});
                     return false;
                 } else {
                     data.password = $scope.formData.password;
@@ -126,7 +129,7 @@ define([
 
                 // check email
                 if ($scope.registrationForm.email.$valid == false) {
-                    cmNotify.warn("E-Mail has wrong format!", {ttl: 5000});
+                    cmNotify.warn('DIRV.VALIDATE_EMAIL.INFO.INVALID', {ttl: 5000});
                     return false;
                 } else {
                     if ($scope.registrationForm.email.$viewValue != '') {
@@ -136,7 +139,7 @@ define([
 
                 // check phone
                 if ($scope.registrationForm.phone.$valid == false) {
-                    cmNotify.warn("Phone has wrong format!", {ttl: 5000});
+                    cmNotify.warn('DIRV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER', {ttl: 5000});
                     return false;
                 } else {
                     if ($scope.registrationForm.phone.$viewValue != '') {
@@ -151,7 +154,7 @@ define([
 
                 // check agb
                 if ($scope.registrationForm.agb.$valid == false) {
-                    cmNotify.warn("REGISTER.INFO.TERMS", {ttl: 5000});
+                    cmNotify.warn('REGISTER.INFO.TERMS', {ttl: 5000});
                     return false;
                 }
 
@@ -162,13 +165,14 @@ define([
                     data.reservationSecret = reservation_secrets[data.name];
                 }
 
-
+                // everything is fine an let's create the user
                 cmAuth.createUser(data)
                 .then(
-                    function (data) {                        
+                    function () {
                         $location.path("/login");                        
                     }
-                )
+                );
+                return true;
             };
     }]);
     return app;
