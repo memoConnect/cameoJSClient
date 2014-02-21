@@ -12,6 +12,7 @@ define([
     'cmProfile',
     'cmContacts',
 
+    'mUser',
     'mContacts'
 ], function (angularAMD) {
     'use strict';
@@ -32,7 +33,9 @@ define([
         'cmProfile',
         'cmContacts',
 
+        'mUser',
         'mContacts'
+
     ]);
 
     app.cameo = {
@@ -153,7 +156,7 @@ define([
     ]);
 
     app.run(['$rootScope', '$location', '$cookieStore','ModelContacts',
-        function ($rootScope, $location, $cookieStore, ModelContacts) {
+        function ($rootScope, $location, $cookieStore) {
             $rootScope.$on("$routeChangeStart", function () {
     //        var path_exceptions = ['/login', '/registry'];
                 var path = $location.$$path;

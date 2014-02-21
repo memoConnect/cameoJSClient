@@ -1,12 +1,14 @@
 define([
     'app',
-    'cmContacts'
+    'cmContacts',
+    'cmLogger',
+    'mUser'
 ], function () {
     'use strict';
 
     var mContacts = angular.module('mContacts',[]);
 
-    mContacts.service('ModelContacts',function(cmContacts, cmLogger, $q){
+    mContacts.service('ModelContacts',function(ModelUser, cmContacts, cmLogger, $q, $rootScope){
         var self = this;
         var mockContacts = ['derMicha','dasEmpu'];
         var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];
@@ -19,7 +21,6 @@ define([
          * Init Object
          */
         function init(){
-            console.log('ModelContacts constructor');
             self.getAll();
             self.getGroups();
         }
@@ -34,8 +35,7 @@ define([
         this.getAll = function(limit, offset){
             var deferred = $q.defer();
 
-            if(contacts.length < 1){
-                cmLogger.debug('ModelContacts getAll API Call');
+            if(contacts.length < 1 && ModelUser.isAuth() !== false){
                 cmContacts.getAll().then(
                     function(data){
                         contacts = data;
@@ -46,7 +46,6 @@ define([
                     }
                 )
             } else {
-                cmLogger.debug('ModelContacts getAll');
                 deferred.resolve(contacts);
             }
 
@@ -56,7 +55,7 @@ define([
         this.getQuantity = function(){
             var deferred = $q.defer();
 
-            if(contacts.length < 1){
+            if(contacts.length < 1 && ModelUser.isAuth() !== false){
                 this.getAll().then(
                     function(data){
                         deferred.resolve(data.length);
@@ -79,8 +78,7 @@ define([
         this.getGroups = function(){
             var deferred = $q.defer();
 
-            if(groups.length < 1){
-                cmLogger.debug('ModelContacts getGroups API Call');
+            if(groups.length < 1 && ModelUser.isAuth() !== false){
                 cmContacts.getGroups().then(
                     function(data){
                         groups = data;
@@ -91,7 +89,6 @@ define([
                     }
                 );
             } else {
-                cmLogger.debug('ModelContacts getGroups');
                 deferred.resolve(groups);
             }
 
@@ -113,6 +110,15 @@ define([
         this.answerFriendRequest = function(id, type){
             return cmContacts.answerFriendRequest(id, type);
         }
+
+        function resetContacts(){
+            contacts = [];
+            groups = [];
+        };
+
+        $rootScope.$on('logout', function(){
+            resetContacts();
+        });
 
         init();
     });
