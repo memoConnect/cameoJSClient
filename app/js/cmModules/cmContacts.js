@@ -84,6 +84,12 @@ define([
                         url:'/friendRequest/answer',
                         data: {identityId:id, answerType:type}
                     })
+                },
+                addContact: function(data){
+                    return cmApi.post({
+                        url:'/contact',
+                        data: {identity:data, groups:[]}
+                    })
                 }
             }
         }

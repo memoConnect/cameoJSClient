@@ -19,12 +19,12 @@ module.exports = function(config) {
             // included true!!! requirejs wrapper
             {pattern: 'test/unit/test.main.js', included: true},
             // load templates
-//            {pattern: 'app/tpl/**/*.html', included: false}
+//            {pattern: 'app/**/*.html', included: false}
         ],
 
         // generate js files from html templates to expose them during testing.
         preprocessors: {
-            'app/tpl/**/*.html': ['ng-html2js']
+            'app/**/*.html': ['ng-html2js']
         },
 
         ngHtml2JsPreprocessor: {

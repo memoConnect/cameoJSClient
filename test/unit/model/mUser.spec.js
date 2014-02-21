@@ -30,7 +30,7 @@ define([
             });
         });
 
-        describe('Authentication',function(){
+        xdescribe('Authentication',function(){
 
             it('should be true, when user is active and has id',function(){
                 model.data.isActive = true;

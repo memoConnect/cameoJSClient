@@ -28,19 +28,17 @@ define([
 
                     cmAuth.checkAccountName($scope.registrationForm.loginName.$viewValue)
                     .then(
-
                         function(reservationSecret){
                             $scope.registrationForm.loginName.$valid = true;
                             reservation_secrets[last_checked] = reservationSecret;
 
                             $scope.setCameoID(last_checked);
                         },
-
                         function(alternative){
                             cmNotify.info("Error, check Username again!", {ttl: 5000});                        
                             $scope.registrationForm.loginName.$valid = false;
                         }
-                    )
+                    );
 
 
                     /*
@@ -76,21 +74,26 @@ define([
 
             /**
             * checks if LoginName exists, because Login Name have to be unique
-             * @TODO add API CALl
+             * @TODO add API CALL
             */
             $scope.checkCameoId = function(){
                 cmLogger.debug("cameoID", $scope.registrationForm.cameoId.$viewValue.toString());
             };
 
-            /** Update cameoId in Form **/
+            /**
+             * Update cameoId in Form
+             **/
             $scope.setCameoID = function(id){
                 if(angular.isDefined(id) && $scope.registrationForm.cameoId.$viewValue.toString() == ''){
                     $scope.registrationForm.cameoId.$setViewValue(id);
                     $scope.registrationForm.cameoId.$render();
                     $scope.checkCameoId();
                 }
-            }
+            };
 
+            /**
+             * Form Validation and Apicall to create user
+             */
             $scope.createUser = function () {
                 var data = {
                     loginName: null,
@@ -165,10 +168,11 @@ define([
 
                 cmAuth.createUser(data)
                 .then(
-                    function (data) {                        
+                    function () {
                         $location.path("/login");                        
                     }
-                )
+                );
+                return true;
             };
     }]);
     return app;

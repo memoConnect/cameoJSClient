@@ -131,8 +131,8 @@ define([
                     controllerUrl: 'controller/registration'
                 })).
                 when('/contacts', angularAMD.route({
-                    templateUrl: 'tpl/contacts.html',
-                    controllerUrl: 'controller/contacts'
+                    templateUrl: 'js/controller/contacts.html',
+                    controllerUrl: 'controller/contactsCtrl'
                 })).
                 when('/profile', angularAMD.route({
                     templateUrl: 'tpl/form/profile.html'

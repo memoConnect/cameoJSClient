@@ -3,66 +3,49 @@ define([
 ], function(app){
     'use strict';
 
-    app.register.directive('cmTypeChooser',
-        function(cmLogger){
-            // defined types
-            var types = {
-                types: [
-                    {i18n:'DIRV.TYPE_CHOOSER.PRIVATE',value:'private'},
-                    {i18n:'DIRV.TYPE_CHOOSER.BUSINESS',value:'business'},
-                    {i18n:'DIRV.TYPE_CHOOSER.OTHER',value:'other','default':true}
-                ],
-                provider: [
-                    {i18n:'DIRV.TYPE_CHOOSER.LANDLINE',value:'landline'},
-                    {i18n:'DIRV.TYPE_CHOOSER.IP',value:'ip'},
-                    {i18n:'DIRV.TYPE_CHOOSER.FAX',value:'fax'},
-                    {i18n:'DIRV.TYPE_CHOOSER.MOBILE',value:'mobile','default':true}
-                ]
-            };
+    app.register.directive('cmContactsList',
+    function(ModelContacts, cmLogger){
+        return {
+            restrict: 'A',
+            scope: {},
+            templateUrl: 'js/directives/contactsList.html',
+            controller: function($scope, $element, $attrs){
+                $scope.contacts = null;
+                $scope.contactsQty = 0;
 
-            return {
-                scope: true,
-                templateUrl: 'js/directives/typeChooser.html',
-                controller: function($scope, $element, $attrs){
-                    // handle special type of choose default
-                    if('chooseType' in $attrs && $attrs.chooseType in types){
-                        $scope.buttons = types[$attrs.chooseType];
-                    } else {
-                        $scope.buttons = types.types;
-                    }
+                /**
+                 * Get contacts via model
+                 */
+                $scope.getContacts = function(){
+                    ModelContacts.getAll(10,0).then(
+                        function(data){
+                            $scope.contacts = data;
+                        },
+                        function(){
+                            $scope.contacts = null;
+                        }
+                    );
+                };
 
-                    /**
-                     * search in buttons array for value or default
-                     * @string value
-                     * @boolean searchDefault
-                     * @returns {string}
-                     */
-                    function find(value, searchDefault){
-                        var btn = "";
-                        angular.forEach($scope.buttons, function(button){
-                            if(searchDefault != undefined && 'default' in button){
-                                btn = button.value;
-                            }
-                            if(value != undefined && button.value == value){
-                                btn = button.value;
-                            }
-                        });
-                        return btn
-                    }
+                /**
+                 * handle every single contact via model
+                 */
+                $scope.editContact = function(cameoId){
+                    cmLogger.debug('editContact '+cameoId);
+                    // TODO: cmApi stuff
+                };
 
-                    /**
-                     * set button to active and set parent scope variable
-                     * @string value
-                     */
-                    $scope.setActive = function(value){
-                        $scope.active = find(value);
-                        $scope.data[$attrs.chooseToData] = $scope.active;
-                    };
-
-                    // set default button
-                    $scope.setActive(find(null, true))
-                }
+                /**
+                 * delete contact via model
+                 * @param cameoId
+                 */
+                $scope.deleteContact = function(cameoId){
+                    cmLogger.debug('deleteContact '+cameoId);
+                    // TODO: cmApi stuff
+                };
             }
-        });
+        }
+    });
+
     return app;
 });

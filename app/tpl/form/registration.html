@@ -51,7 +51,7 @@
         <div class="col-sm-6">
             <input id="phone" name="phone" type="text" class="form-control" placeholder="{{'DIRV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}" ng-model="formData.phone" ng-minlength="6" cm-validate-phone />
             <div class="custom-error" ng-show="registrationForm.phone.$dirty && registrationForm.phone.$invalid">
-                <div ng-show="registrationForm.cameoName.$error.required">{{'DIRV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}</div>
+                <div ng-show="registrationForm.phone.$error.required">{{'DIRV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}</div>
             </div>
         </div>
     </div>

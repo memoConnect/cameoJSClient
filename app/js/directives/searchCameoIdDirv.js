@@ -1,73 +1,62 @@
 define([
-    'app',
-    '_d/typeChooserDirv'
+    'app'
 ], function(app){
-    'use strict'
+    'use strict';
 
-    app.register.directive('cmAddExternContact',
-        function(ModelContacts, cmLogger){
+    app.register.directive('cmSearchCameoId',
+    function(ModelContacts, cmLogger){
+        return {
+            restrict: 'A',
+            scope: {},
+            templateUrl: 'js/directives/searchCameoId.html',
+            controller: function($scope, $element, $attrs){
+                $scope.results = [];
 
-            function fulltrim(string){
-                return string.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,'');
+                /**
+                 * searching for an existing cameoId
+                 * @returns {boolean}
+                 */
+                $scope.search = function(){
+                    if($scope.searchCameoId.string.$invalid){
+                        $scope.results = [];
+                        return false;
+                    }
+
+                    ModelContacts
+                    .searchCameoId($scope.string)
+                    .then(
+                        function(data){
+                            $scope.results = data;
+                        },
+                        function(){
+
+                        }
+                    );
+                    return true;
+                };
+
+                /**
+                 * Send friendship via model to api
+                 * @param id
+                 */
+                $scope.sendFriendRequest = function(id){
+                    // TODO: Notification
+                    if(angular.isDefined(id)){
+                        ModelContacts
+                        .sendFriendRequest(id)
+                        .then(
+                            function(){
+                                cmLogger.debug("FriendRequest success");
+                            },
+                            function(){
+                                cmLogger.debug("FriendRequest error");
+                            }
+                        )
+                    }
+                };
             }
+        }
+    });
 
-            return {
-                restrict: 'A',
-                scope: {},
-                templateUrl: 'js/directives/addExternContact.html',
-                controller: function($scope, $element, $attrs){
-                    var pristineDisplayName = true;
-                    $scope.formVisible = false;
-
-                    $scope.data = {
-                        displayName: '',
-                        name: '',
-                        surname: ''
-                    };
-
-                    /**
-                     * simple toggle for form visibility
-                     */
-                    $scope.toggleForm = function(){
-                        if($scope.formVisible == true)
-                            $scope.formVisible = false;
-                        else
-                            $scope.formVisible = true;
-                    };
-
-                    /**
-                     * handle the nickname input
-                     * change lock Nickname boolean
-                     * and trim all white spaces
-                     */
-                    $scope.handleDisplayName = function(){
-                        pristineDisplayName = false;
-                        $scope.data.nickname = fulltrim($scope.data.displayName);
-                    };
-
-                    /**
-                     * concat name and surname to nickname if the input isnt locked
-                     */
-                    $scope.createDisplayName = function(){
-                        if($scope.data.displayName == "")
-                            pristineDisplayName = true;
-
-                        if(pristineDisplayName === false)
-                            return false;
-
-                        $scope.data.displayName = fulltrim($scope.data.name+" "+$scope.data.surName);
-                    };
-
-                    /**
-                     * Validateform and create external contact
-                     */
-                    $scope.checkForm = function(){
-                        console.log($scope.addExternContact);
-
-                        //ModelContacts.addContact($scope.data);
-                    };
-                }
-            }
-        })
     return app;
 });

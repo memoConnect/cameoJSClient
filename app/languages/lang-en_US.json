@@ -105,7 +105,7 @@
             "NO_CONTACTS": "No contacts exists"
         },
         "LABEL": {
-            "NICKNAME": "Nickname",
+            "DISPLAYNAME": "Displayname",
             "NAME": "Name",
             "SURNAME": "Surname"
         },
@@ -118,7 +118,10 @@
     "DIRV": {
         "VALIDATE_EMAIL": {
             "LABEL": "Email",
-            "PLACEHOLDER": "example@example.com"
+            "PLACEHOLDER": "example@example.com",
+            "INFO": {
+                "INVALID": "The email isn't right. Please check!"
+            }
         },
         "VALIDATE_PHONE": {
             "LABEL": "Phone",
@@ -131,10 +134,10 @@
             "PRIVATE": "private",
             "BUSINESS": "business",
             "OTHER": "other",
-            "MOBILE": "Mobile",
-            "LANDLINE": "Landline",
-            "IP": "IP",
-            "FAX": "Fax"
+            "MOBILE": "mobile",
+            "LANDLINE": "landline",
+            "IP": "ip",
+            "FAX": "fax"
         }
     }
 }
