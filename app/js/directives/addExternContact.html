@@ -1,8 +1,6 @@
-<h3>{{'CONTACTS.HEADER.ADD_EXTERN'|cmTranslate}}</h3>
-
-<button type="button" class="btn btn-primary btn-sm" ng-click="toggleForm()">
-    <i class="fa fa-toggle-down" ng-class="{'fa-toggle-up':formVisible}"></i> {{'CONTACTS.BUTTON.TOOGLE_FORM'|cmTranslate}}
-</button>
+<h3 ng-click="toggleForm()">
+    {{'CONTACTS.HEADER.ADD_EXTERN'|cmTranslate}} <i class="fa fa-toggle-down" ng-class="{'fa-toggle-up':formVisible}"></i>
+</h3>
 
 <form class="form-horizontal" name="addExternContact" ng-show="formVisible">
     <div class="form-group">

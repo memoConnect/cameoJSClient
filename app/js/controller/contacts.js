@@ -9,10 +9,12 @@ define([
         '$scope',
         'ModelContacts',
         function($scope, ModelContacts){
+
+            $scope.contactsQty = 0;
             $scope.navigation = [
                 {id:'BACK',icon:'fa-chevron-left',href:'#/start'},
                 {id:'ADD',icon:'fa-plus'},
-                {id:'CONTACTS',icon:'fa-group'},
+                {id:'CONTACTS',icon:'fa-group',badge:'contactsQty'},
                 {id:'REQUESTS',icon:'fa-link'}
             ];
             $scope.activeTab = 'ADD';
@@ -20,9 +22,7 @@ define([
                 $scope.activeTab = tab;
             };
 
-
-            $scope.contactsQty = 0;
-            $scope.getContactsQty = function(){
+            function getQuantity(){
                 ModelContacts.getQuantity().then(
                     function(qty){
                         $scope.contactsQty = qty;
@@ -31,7 +31,9 @@ define([
                         $scope.contactsQty = 0;
                     }
                 )
-            };
+            }
+
+            getQuantity();
 
         }]);
 

@@ -109,7 +109,6 @@
             "SURNAME": "Nachname"
         },
         "BUTTON": {
-            "TOOGLE_FORM": "Formular anzeigen",
             "RESET": "zurücksetzen",
             "SUBMIT": "speichern"
         }
