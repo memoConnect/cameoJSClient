@@ -69,7 +69,7 @@ define([
             }
 
             return deferred.promise;
-        }
+        };
 
         this.getOne = function(id){
             return cmContacts.getOne(id);
@@ -111,12 +111,34 @@ define([
             return cmContacts.answerFriendRequest(id, type);
         };
 
+        this.checkDisplayName = function(displayName){
+            var defer = $q.defer();
+            // TODO: check displayName in local contacts
+            if(displayName != 'WummsBrumms'){
+                defer.resolve();
+            } else {
+                defer.reject();
+            }
+
+            return defer.promise;
+        };
+
         this.addContact = function(data){
-            // TODO add to contacts and send to api
-            console.log(data);
+            // TODO: add to contacts and send to api
+            var defer = $q.defer();
+            cmContacts
+            .addContact(data.identity)
+            .then(
+                function(data){
+                    contacts.push(data);
+                    defer.resolve();
+                },
+                function(){
+                    defer.reject();
+                }
+            );
 
-            //cmContacts.addContact({});
-
+            return defer.promise;
         };
 
         function resetContacts(){

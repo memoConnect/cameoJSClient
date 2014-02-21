@@ -10,32 +10,32 @@
             "USERNAME":     "username",
             "PASSWORD":     "password"
         }
-
     },
 
     "REGISTER": {
-        "HEADING":  "Registration",
-        "LINK" :    "Sign in.",
+        "HEADING": "Registration",
+        "LINK": "Sign in.",
         "LABEL": {
-            "SUBMIT":   "create user",
+            "SUBMIT": "create user",
             "USERNAME": "Username",
-            "CAMEOID":  "CameoID",
-            "NAME":     "Name",
-            "TERMS":    "Terms",
-            "TERMS_ACCEPT":    "accpect"
+            "CAMEOID": "CameoID",
+            "NAME": "Name",
+            "TERMS": "Terms",
+            "TERMS_ACCEPT": "accpect"
         },
-
-        "PLACEHOLDER": {            
+        "PLACEHOLDER": {
             "USERNAME": "username",
             "CAMEOID": "CameoId",
-            "NAME":     "Display Name"
+            "NAME": "Display Name"
         },
-
-        "INFO": {            
-            "MIN_LETTER_COUNT":     "Please use at least {{count}} letters.",            
-            "TERMS":                "Confirm terms!"
+        "INFO": {
+            "MIN_LETTER_COUNT": "Please use at least {{count}} letters.",
+            "TERMS": "Confirm terms!",
+            "EMPTY": {
+                "USERNAME": "Please insert a username.",
+                "PASSWORD": "Please insert a password."
+            }
         },
-
         "TITLE": {
             "HEAD_LOGIN": "Login Information",
             "HEAD_IDENTITY": "User Information"
@@ -56,8 +56,8 @@
 	},
 
     "PROFILE": {
-        "E-MAIL":		"E-mail",
-        "MOBILE":		"mobile"
+        "E-MAIL": "E-mail",
+        "MOBILE": "mobile"
     },
 
     "LANG":	{
@@ -90,12 +90,11 @@
         "NAVIGATION":{
             "BACK": "back",
             "ADD": "add",
-            "CONTACTS": "Contacts",
+            "ALL": "Contacts",
             "REQUESTS": "Requests"
         },
         "HEADER": {
             "SEARCH_CAMEO_ID": "Add contact",
-            "ADD_EXTERN": "Add extern contact",
             "CONTACTS_LIST": "Contacts",
             "REQUEST_LIST": "Friendship requests"
         },
@@ -120,14 +119,29 @@
             "LABEL": "Email",
             "PLACEHOLDER": "example@example.com",
             "INFO": {
-                "INVALID": "The email isn't right. Please check!"
+                "INVALID": "The email isn't right. Please check!",
+                "EMPTY": "The email field is empty"
             }
         },
         "VALIDATE_PHONE": {
             "LABEL": "Phone",
             "PLACEHOLDER": "+49...",
             "INFO": {
-                "INVALID_PHONE_NUMBER": "The string supplied did not seem to be a phone number."
+                "INVALID_PHONE_NUMBER": "The string supplied did not seem to be a phone number.",
+                "EMPTY": "The phone field is empty"
+            }
+        },
+        "EXTERN_CONTACT": {
+            "HEADER": "Add extern contact",
+            "INFO": {
+                "DISPLAYNAME_EXISTS": "The displayname exists already in your addressbook.",
+                "EMPTY":{
+                    "DISPLAYNAME": "The Displayname is empty.",
+                    "NAME": "Your Name is empty.",
+                    "SURNAME": "Your surname is empty.",
+                    "PHONE_OR_EMAIL": "Please enter a phonenumber or a email address."
+                },
+                "SAVE_FAIL": "Saving of your new contact failed."
             }
         },
         "TYPE_CHOOSER": {

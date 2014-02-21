@@ -107,7 +107,7 @@ define([
 
                 // check cameoName == loginName
                 if ($scope.registrationForm.loginName.$valid == false) {
-                    cmNotify.warn("Username is required!", {ttl: 5000});
+                    cmNotify.warn('REGISTER.INFO.EMPTY.USERNAME', {ttl: 5000});
                     return false;
                 } else {
                     data.loginName = $scope.registrationForm.loginName.$viewValue;
@@ -115,7 +115,7 @@ define([
 
                 // check password
                 if ($scope.formData.password == '' || $scope.formData.password == 'none') {
-                    cmNotify.warn("Password is required!", {ttl: 5000});
+                    cmNotify.warn('REGISTER.INFO.EMPTY.PASSWORD', {ttl: 5000});
                     return false;
                 } else {
                     data.password = $scope.formData.password;
@@ -129,7 +129,7 @@ define([
 
                 // check email
                 if ($scope.registrationForm.email.$valid == false) {
-                    cmNotify.warn("E-Mail has wrong format!", {ttl: 5000});
+                    cmNotify.warn('DIRV.VALIDATE_EMAIL.INFO.INVALID', {ttl: 5000});
                     return false;
                 } else {
                     if ($scope.registrationForm.email.$viewValue != '') {
@@ -139,7 +139,7 @@ define([
 
                 // check phone
                 if ($scope.registrationForm.phone.$valid == false) {
-                    cmNotify.warn("Phone has wrong format!", {ttl: 5000});
+                    cmNotify.warn('DIRV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER', {ttl: 5000});
                     return false;
                 } else {
                     if ($scope.registrationForm.phone.$viewValue != '') {
@@ -154,7 +154,7 @@ define([
 
                 // check agb
                 if ($scope.registrationForm.agb.$valid == false) {
-                    cmNotify.warn("REGISTER.INFO.TERMS", {ttl: 5000});
+                    cmNotify.warn('REGISTER.INFO.TERMS', {ttl: 5000});
                     return false;
                 }
 
@@ -165,7 +165,7 @@ define([
                     data.reservationSecret = reservation_secrets[data.name];
                 }
 
-
+                // everything is fine an let's create the user
                 cmAuth.createUser(data)
                 .then(
                     function () {

@@ -1,14 +1,14 @@
 {
 	"LOGIN": {
-        "HEADING":  "Login",
+        "HEADING": "Login",
         "LABEL": {
-            "SUBMIT":       "einloggen",
-            "REMEMBER_ME":  "merken.",
-            "AUTO":         "Automatisches Login auswählen"
+            "SUBMIT": "einloggen",
+            "REMEMBER_ME": "merken.",
+            "AUTO": "Automatisches Login auswählen"
         },
         "PLACEHOLDER": {
-            "USERNAME":     "Benutzername",
-            "PASSWORD":     "Passwort"
+            "USERNAME": "Benutzername",
+            "PASSWORD": "Passwort"
         }
     },
 
@@ -23,18 +23,19 @@
             "TERMS": "AGB",
             "TERMS_ACCEPT": "akzeptieren"
         },
-
-        "PLACEHOLDER": {            
+        "PLACEHOLDER": {
             "USERNAME": "Benutzername",
             "CAMEOID": "CameoId",
             "NAME": "Name"
         },
-
-        "INFO": {            
+        "INFO": {
             "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden.",
-            "TERMS": "Bitte AGB akzeptieren."
+            "TERMS": "Bitte AGB akzeptieren.",
+            "EMPTY": {
+                "USERNAME": "Bitte suchen Sie sich einen Benutzernamen aus.",
+                "PASSWORD": "Bitte geben Sie ein Passwort ein."
+            }
         },
-
         "TITLE": {
             "HEAD_LOGIN": "Login Information",
             "HEAD_IDENTITY": "User Information"
@@ -89,12 +90,11 @@
         "NAVIGATION":{
             "BACK": "zurück",
             "ADD": "hinzufügen",
-            "CONTACTS": "Kontakte",
+            "ALL": "Kontakte",
             "REQUESTS": "Anfragen"
         },
         "HEADER": {
             "SEARCH_CAMEO_ID": "Kontakt hinzufügen",
-            "ADD_EXTERN": "Externen Kontakt hinzufügen",
             "CONTACTS_LIST": "Kontakte",
             "REQUEST_LIST": "Freundschaftsanfragen"
         },
@@ -118,13 +118,30 @@
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",
             "PLACEHOLDER": "example@example.com",
-
+            "INFO": {
+                "INVALID": "Bitte geben Sie eine richtige E-Mail Adresse an!",
+                "EMPTY": "Die E-Mail Adresse ist leer"
+            }
         },
         "VALIDATE_PHONE": {
             "LABEL": "Telefon",
             "PLACEHOLDER": "+49...",
             "INFO": {
-                "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein."
+                "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
+                "EMPTY": "Das Telefonfeld ist leer"
+            }
+        },
+        "EXTERN_CONTACT": {
+            "HEADER": "Externen Kontakt hinzufügen",
+            "INFO": {
+                "DISPLAYNAME_EXISTS": "Der gewählte Displayname existiert bereits im Adressbuch.",
+                "EMPTY":{
+                    "DISPLAYNAME": "Bitte einen Displaynamen eingeben!",
+                    "NAME": "Bitte auch einen Vornamen eingeben.",
+                    "SURNAME": "Bitte den Hinternamen eingeben.",
+                    "PHONE_OR_EMAIL": "Bitte geben Sie eine Telefonnummer oder eine E-Mail-Adresse an"
+                },
+                "SAVE_FAIL": "Das Speichern des Kontaktes ist fehlgeschlagen."
             }
         },
         "TYPE_CHOOSER": {

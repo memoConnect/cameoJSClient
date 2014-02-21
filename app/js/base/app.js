@@ -130,10 +130,6 @@ define([
                     templateUrl: 'tpl/form/registration.html',
                     controllerUrl: 'controller/registration'
                 })).
-                when('/contacts', angularAMD.route({
-                    templateUrl: 'js/controller/contacts.html',
-                    controllerUrl: 'controller/contactsCtrl'
-                })).
                 when('/profile', angularAMD.route({
                     templateUrl: 'tpl/form/profile.html'
                 })).
@@ -141,6 +137,15 @@ define([
                     templateUrl: 'tpl/form/filter.html',
                     controllerUrl: 'controller/filter'
                 }));
+
+            var routeContacts = angularAMD.route({
+                templateUrl: 'js/controller/contacts.html',
+                controllerUrl: 'controller/contactsCtrl'
+            });
+            $routeProvider.
+                when('/contacts', routeContacts).
+                when('/contacts/:tab', routeContacts);
+
             // static pages
             $routeProvider.
                 when('/verification/:secret', angularAMD.route({

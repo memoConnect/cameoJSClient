@@ -76,7 +76,7 @@ define([
             this.cacheLangFiles = function(bool){
                 cache_lang_files = bool;
                 return(this)
-            }
+            };
 
             this.translations = function(lang_key, data){
                 $translateProvider.translations(lang_key, data)

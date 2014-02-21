@@ -4,7 +4,7 @@
     </div>
 
     <ul class="nav nav-tabs">
-        <li ng-repeat="tab in navigation" ng-class="{active:activeTab == tab.id}" ng-click="setActiveTab(tab.id)" title="{{'CONTACTS.NAVIGATION.'+tab.id|cmTranslate}}" >
+        <li ng-repeat="tab in navigation" ng-class="{active:activeTab == tab.i18n}" ng-click="setActiveTab(tab.i18n)" title="{{'CONTACTS.NAVIGATION.'+tab.i18n|cmTranslate}}" >
             <a ng-show="tab.icon != undefined && tab.href == undefined">
                 <i class="fa {{tab.icon}}"></i>
                 <span class="badge" ng-show="tab.badge != undefined">{{contactsQty}}</span>
@@ -21,7 +21,7 @@
         <div cm-add-extern-contact></div>
     </div>
 
-    <div cm-contacts-list ng-show="activeTab == 'CONTACTS'"></div>
+    <div cm-contacts-list ng-show="activeTab == 'ALL'"></div>
 
     <div cm-contact-request-list ng-show="activeTab == 'REQUESTS'"></div>
 </div>
