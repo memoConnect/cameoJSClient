@@ -110,6 +110,7 @@
             "SURNAME": "Surname"
         },
         "BUTTON": {
+            "TOOGLE_FORM": "shows form",
             "RESET": "reset",
             "SUBMIT": "save"
         }
