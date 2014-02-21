@@ -13,31 +13,26 @@
     },
 
     "REGISTER": {
-        "HEADING":  "Registrierung",
-        "LINK" :    "registrieren.",
+        "HEADING": "Registrierung",
+        "LINK" : "registrieren.",
         "LABEL": {
-            "SUBMIT":   "Benutzerkonto anlegen",
+            "SUBMIT": "Benutzerkonto anlegen",
             "USERNAME": "Benutzername",
-            "CAMEOID":  "CameoID",
-            "NAME":     "Anzeigename",
-            "EMAIL":    "E-Mail",
-            "PHONE":    "Telefon",
-            "TERMS":    "AGB",
-            "TERMS_ACCEPT":    "akzeptieren"
+            "CAMEOID": "CameoID",
+            "NAME": "Anzeigename",
+            "TERMS": "AGB",
+            "TERMS_ACCEPT": "akzeptieren"
         },
 
         "PLACEHOLDER": {            
             "USERNAME": "Benutzername",
             "CAMEOID": "CameoId",
-            "NAME":     "Name",
-            "EMAIL":    "example@example.com",
-            "PHONE":    "+49..."
+            "NAME": "Name"
         },
 
         "INFO": {            
-            "MIN_LETTER_COUNT":     "Bitte mindestens {{count}} Zeichen verwenden.",            
-            "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
-            "TERMS":                "Bitte AGB akzeptieren."
+            "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden.",
+            "TERMS": "Bitte AGB akzeptieren."
         },
 
         "TITLE": {
@@ -99,6 +94,7 @@
         },
         "HEADER": {
             "SEARCH_CAMEO_ID": "Kontakt hinzufügen",
+            "ADD_EXTERN": "Externen Kontakt hinzufügen",
             "CONTACTS_LIST": "Kontakte",
             "REQUEST_LIST": "Freundschaftsanfragen"
         },
@@ -106,6 +102,38 @@
             "NO_RESULTS": "Keine cameo Kontakte gefunden",
             "MORE_CHARS_NEEDED": "Bitte geben Sie mehr Buchstaben ein",
             "NO_CONTACTS": "Keine Kontakte vorhanden"
+        },
+        "LABEL": {
+            "NICKNAME": "Nickname",
+            "NAME": "Vorname",
+            "SURNAME": "Nachname"
+        },
+        "BUTTON": {
+            "RESET": "zurücksetzen",
+            "SUBMIT": "speichern"
         }
-	}
+	},
+
+    "DIRV": {
+        "VALIDATE_EMAIL": {
+            "LABEL": "E-Mail",
+            "PLACEHOLDER": "example@example.com"
+        },
+        "VALIDATE_PHONE": {
+            "LABEL": "Telefon",
+            "PLACEHOLDER": "+49...",
+            "INFO": {
+                "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein."
+            }
+        },
+        "TYPE_CHOOSER": {
+            "PRIVATE": "privat",
+            "BUSINESS": "geschäftlich",
+            "OTHER": "sonstiges",
+            "MOBILE": "Mobil",
+            "LANDLINE": "Festnetz",
+            "IP": "IP",
+            "FAX": "Fax"
+        }
+    }
 }

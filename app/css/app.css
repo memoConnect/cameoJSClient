@@ -11,6 +11,8 @@ span.input-group-addon i {width:18px;height:18px}
 
 .input-group-addon {background-color: transparent}
 
+.page-header h1{text-wrap:none}
+
 .form-signin{max-width:330px;padding:15px;margin:0 auto}
 .form-signin .form-control{position:relative;font-size:16px;height:auto;padding:10px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
 .form-signin .form-control:focus {z-index:2}

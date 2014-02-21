@@ -1,6 +1,7 @@
 define([
     'app',
-    'mContacts'
+    'mContacts',
+    '_d/addExternContactDirv'
 ], function(app){
     'use strict';
 
@@ -49,7 +50,8 @@ define([
                             return false;
                         }
 
-                        ModelContacts.searchCameoId($scope.string).
+                        ModelContacts.
+                        searchCameoId($scope.string).
                         then(
                             function(data){
                                 $scope.results = data;
@@ -64,7 +66,9 @@ define([
                     $scope.sendFriendRequest = function(id){
                         // TODO: Notification
                         if(angular.isDefined(id)){
-                            ModelContacts.sendFriendRequest(id).then(
+                            ModelContacts.
+                            sendFriendRequest(id).
+                            then(
                                 function(){
                                     cmLogger.debug("FriendRequest success");
                                 },
@@ -127,7 +131,7 @@ define([
         });
 
     app.register.directive('cmContactRequestList',
-        function(cmLogger, ModelContacts){
+        function(ModelContacts, cmLogger){
             return {
                 restrict: 'A',
                 scope: {},
