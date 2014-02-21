@@ -134,7 +134,7 @@ define([
                     templateUrl: 'tpl/contacts.html',
                     controllerUrl: 'controller/contacts'
                 })).
-                when('/purl/:idPurl', angularAMD.route({
+                when('/purl/:idPurl?', angularAMD.route({
                     templateUrl: 'tpl/purl.html',
                     controllerUrl: 'controller/purl'
                 })).
