@@ -1,6 +1,6 @@
 define([
-    '_d/searchCameoIdDirv', 'angularAMD', '_d/searchCameoId.html'
-], function (app, angularAMD, tpl) {
+    'angularAMD', '_d/searchCameoIdDirv', '_d/searchCameoId.html'
+], function (angularAMD, app, tpl) {
     'use strict';
 
     describe('Directive cmSearchCameoId', function () {
