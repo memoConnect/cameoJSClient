@@ -10,11 +10,12 @@ define([
     app.register.controller('PurlCtrl',[
         '$scope',
         '$routeParams',
+        '$location',
         'ModelUser',
         'cmApi',
         'cmLogger',
         'Util',
-        function($scope, $routeParams, ModelUser, cmApi, cmLogger, Util){
+        function($scope, $routeParams, $location, ModelUser, cmApi, cmLogger, Util){
             $scope.data = null;
 
             if(Util.checkKeyExists($routeParams,'idPurl') && Util.validateString($routeParams.idPurl)){
@@ -24,6 +25,7 @@ define([
                     },
                     function(){
                         cmLogger.error('cant get PURL Message');
+                        $location.path('/404');
                     }
                 );
             }

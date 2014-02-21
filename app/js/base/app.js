@@ -155,6 +155,9 @@ define([
                 })).
                 when('/disclaimer', angularAMD.route({
                     templateUrl: 'tpl/disclaimer.html'
+                })).
+                when('/404', angularAMD.route({
+                    templateUrl: 'tpl/404.html'
                 }));
         }
     ]);
@@ -162,7 +165,7 @@ define([
     app.run(['$rootScope', '$location', '$cookieStore','ModelContacts',
         function ($rootScope, $location, $cookieStore) {
             $rootScope.$on("$routeChangeStart", function () {
-                var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/purl\/[a-zA-Z0-9]{1,})$/;
+                var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/purl\/[a-zA-Z0-9]{1,})$/;
                 var path = $location.$$path;
 
                 if (angular.isUndefined($cookieStore.get("token"))) {
