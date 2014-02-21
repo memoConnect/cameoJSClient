@@ -24,7 +24,8 @@ module.exports = function(config) {
 
         // generate js files from html templates to expose them during testing.
         preprocessors: {
-            'app/**/*.html': ['ng-html2js']
+            'app/tpl/**/*.html': ['ng-html2js']
+//            'app/js/**/*.js': ['coverage']
         },
 
         ngHtml2JsPreprocessor: {
@@ -54,6 +55,11 @@ module.exports = function(config) {
             outputFile: 'target/test-reports/test-results.xml',
             suite: ''
         },
+
+//        coverageReporter: {
+//            type : 'html',
+//            dir : 'coverage/'
+//        },
 
         // enable / disable colors in the output (reporters and logs)
         colors: true,

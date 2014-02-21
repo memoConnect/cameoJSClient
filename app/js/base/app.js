@@ -130,6 +130,10 @@ define([
                     templateUrl: 'tpl/form/registration.html',
                     controllerUrl: 'controller/registration'
                 })).
+                when('/purl/:idPurl?', angularAMD.route({
+                    templateUrl: 'js/controller/purl.html',
+                    controllerUrl: 'controller/purl'
+                })).
                 when('/profile', angularAMD.route({
                     templateUrl: 'tpl/form/profile.html'
                 })).
@@ -156,6 +160,9 @@ define([
                 })).
                 when('/disclaimer', angularAMD.route({
                     templateUrl: 'tpl/disclaimer.html'
+                })).
+                when('/404', angularAMD.route({
+                    templateUrl: 'tpl/404.html'
                 }));
         }
     ]);
@@ -163,11 +170,11 @@ define([
     app.run(['$rootScope', '$location', '$cookieStore','ModelContacts',
         function ($rootScope, $location, $cookieStore) {
             $rootScope.$on("$routeChangeStart", function () {
-    //        var path_exceptions = ['/login', '/registry'];
+                var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/purl\/[a-zA-Z0-9]{1,})$/;
                 var path = $location.$$path;
 
                 if (angular.isUndefined($cookieStore.get("token"))) {
-                    if (path != "/login" && path != "/registration" && path != "/terms" && path != "/disclaimer") {
+                    if (!path_regex.test(path)) {
                         $location.path("/login");
                     }
                 } else if ($location.$$path == "/login") {

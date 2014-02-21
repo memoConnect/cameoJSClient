@@ -33,6 +33,28 @@ define(['angular-mocks'], function () {
             });
         });
 
+        describe('validateString', function(){
+            it('should be defined', function(){
+                expect(util.validateString).toBeDefined();
+            });
+
+            it('should be true, if param is alphanumeric', function(){
+                expect(util.validateString('moep123moep')).toBeTruthy();
+            });
+
+            it('should be wrong, if param is contains special characters and whitespace', function(){
+                expect(util.validateString('moep sdvdsv')).toBeFalsy(); // whitespace
+                expect(util.validateString('moep$3fewe')).toBeFalsy(); // $
+                expect(util.validateString('moep_')).toBeFalsy(); // _
+                expect(util.validateString('moep*')).toBeFalsy(); // *
+                expect(util.validateString('moep@')).toBeFalsy(); // @
+                expect(util.validateString('moep+')).toBeFalsy(); // +
+                expect(util.validateString('moep-')).toBeFalsy(); // -
+                expect(util.validateString('moep/')).toBeFalsy(); // /
+                expect(util.validateString('moep\\')).toBeFalsy(); // \
+            });
+        });
+
         describe('handleLimitOffset', function(){
             it('should be defined', function(){
                 expect(util.handleLimitOffset).toBeDefined();
@@ -55,5 +77,48 @@ define(['angular-mocks'], function () {
             });
 
         });
+
+        describe('checkKeyExists', function(){
+            it('should be defined', function(){
+                expect(util.checkKeyExists).toBeDefined();
+            });
+
+            it('should return true if key exists in object/ associative array', function(){
+                var object = {moep: 4, data: 'test'};
+                expect(util.checkKeyExists(object, 'moep')).toBeTruthy();
+            });
+
+            it('should return false if no key is given', function(){
+                var object = {moep: 4, data: 'test'};
+                expect(util.checkKeyExists(object)).toBeFalsy();
+            });
+
+            it('should return false if no object/array is given', function(){
+                expect(util.checkKeyExists('moep','moep')).toBeFalsy();
+                expect(util.checkKeyExists(123,'moep')).toBeFalsy();
+            });
+
+            it('should return false if array is not associative', function(){
+                var array = ['moep','data'];
+                expect(util.checkKeyExists(array, 'moep')).toBeFalsy();
+            });
+
+            it('should return false if array/object is empty', function(){
+                var array = [];
+                expect(util.checkKeyExists(array, 'moep')).toBeFalsy();
+            });
+
+            it('should return false if array/object is empty', function(){
+                var object = {};
+                expect(util.checkKeyExists(object, 'moep')).toBeFalsy();
+            });
+
+            it('should return false if array/object is empty', function(){
+                var object = {};
+                expect(util.checkKeyExists(object, 'moep')).toBeFalsy();
+            });
+
+        });
+
     })
 });

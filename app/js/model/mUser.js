@@ -15,13 +15,22 @@ define([
             id: '',
             userKey: '',
             displayName: '',
-            cameoId: '',
+            cameoId: 'loading...',
             email: {},
             phoneNumber: {},
             preferredMessageType: 'default',
             created: '',
             lastUpdated: '',
             userType: 'external'
+        }
+
+        /**
+         * Init Object
+         */
+        function init(){
+            if(self.isAuth() !== false){
+                loadIdentity();
+            }1
         }
 
         this.data = dataModel;
@@ -72,5 +81,7 @@ define([
         $rootScope.$on('logout', function(){
             resetUser();
         });
+
+        init();
     });
 });
