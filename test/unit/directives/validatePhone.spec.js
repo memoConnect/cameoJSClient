@@ -30,7 +30,6 @@ define([
             expect(form.phone.$invalid).toBe(false);
         });
 
-
         /**
          * TODO add MockUp Tests for httpBackend with Promises
          */
