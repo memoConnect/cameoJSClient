@@ -10,7 +10,7 @@ define([
         '$location',
         'ModelUser',
         function($scope, $cookieStore, $location, ModelUser) {
-            $scope.identity = {cameoId:'is loading...'};
+            $scope.identity = ModelUser.data;
 
             $scope.logout = function(){
                 ModelUser.doLogout();
