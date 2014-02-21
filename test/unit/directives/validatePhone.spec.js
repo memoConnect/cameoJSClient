@@ -8,12 +8,11 @@ define([
         var element,
             form,
             scope,
-            httpBackend,
-            service;
+            httpBackend;
 
         beforeEach(module('cmAuth'));
 
-        beforeEach(inject(function($compile, $rootScope, $httpBackend, cmAuth){
+        beforeEach(inject(function($compile, $rootScope, $httpBackend){
             httpBackend = $httpBackend;
 
             scope = $rootScope;
@@ -22,8 +21,6 @@ define([
             $compile(element)($rootScope);
             scope.$digest();
             form = scope.form;
-
-            service = cmAuth;
         }));
 
         it('should be valid, if element is empty', function(){
