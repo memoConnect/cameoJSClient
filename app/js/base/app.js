@@ -134,6 +134,10 @@ define([
                     templateUrl: 'tpl/contacts.html',
                     controllerUrl: 'controller/contacts'
                 })).
+                when('/purl/:idPurl', angularAMD.route({
+                    templateUrl: 'tpl/purl.html',
+                    controllerUrl: 'controller/purl'
+                })).
                 when('/profile', angularAMD.route({
                     templateUrl: 'tpl/form/profile.html'
                 })).
@@ -162,7 +166,7 @@ define([
                 var path = $location.$$path;
 
                 if (angular.isUndefined($cookieStore.get("token"))) {
-                    if (path != "/login" && path != "/registration" && path != "/terms" && path != "/disclaimer") {
+                    if (path != "/login" && path != "/registration" && path != "/terms" && path != "/disclaimer" && path != "/purl") {
                         $location.path("/login");
                     }
                 } else if ($location.$$path == "/login") {
