@@ -135,7 +135,7 @@ define([
                     controllerUrl: 'controller/contactsCtrl'
                 })).
                 when('/purl/:idPurl?', angularAMD.route({
-                    templateUrl: 'tpl/purl.html',
+                    templateUrl: 'js/controller/purl.html',
                     controllerUrl: 'controller/purl'
                 })).
                 when('/profile', angularAMD.route({
@@ -162,11 +162,11 @@ define([
     app.run(['$rootScope', '$location', '$cookieStore','ModelContacts',
         function ($rootScope, $location, $cookieStore) {
             $rootScope.$on("$routeChangeStart", function () {
-    //        var path_exceptions = ['/login', '/registry'];
+                var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/purl\/[a-zA-Z0-9]{1,})$/;
                 var path = $location.$$path;
 
                 if (angular.isUndefined($cookieStore.get("token"))) {
-                    if (path != "/login" && path != "/registration" && path != "/terms" && path != "/disclaimer" && path != "/purl") {
+                    if (!path_regex.test(path)) {
                         $location.path("/login");
                     }
                 } else if ($location.$$path == "/login") {

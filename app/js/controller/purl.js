@@ -10,6 +10,8 @@ define([
         'ModelUser',
         function($scope, $routeParams,ModelUser){
             console.log($routeParams)
+
+
         }
     ]);
 });

@@ -117,8 +117,7 @@
     "DIRV": {
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",
-            "PLACEHOLDER": "example@example.com",
-
+            "PLACEHOLDER": "example@example.com"
         },
         "VALIDATE_PHONE": {
             "LABEL": "Telefon",
