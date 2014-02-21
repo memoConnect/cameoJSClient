@@ -17,7 +17,11 @@
         </li>
     </ul>
 
-    <div cm-search-cameo-id ng-show="activeTab == 'ADD'"></div>
+    <div ng-show="activeTab == 'ADD'">
+        <div cm-search-cameo-id></div>
+
+        <div cm-add-extern-contact></div>
+    </div>
 
     <div cm-contacts-list ng-show="activeTab == 'CONTACTS'"></div>
 

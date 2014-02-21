@@ -1,44 +1,43 @@
 <h3>{{'CONTACTS.HEADER.ADD_EXTERN'|cmTranslate}}</h3>
 <form class="form-horizontal" name="addExternContact">
-    {{data}}
     <div class="form-group">
         <label class="col-sm-2 control-label">{{'CONTACTS.LABEL.NICKNAME'|cmTranslate}}</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" ng-model="data.nickname" />
+            <input type="text" class="form-control" ng-model="data.nickname" ng-keyup="handleNickname()" />
+
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">{{'CONTACTS.LABEL.NAME'|cmTranslate}}</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" ng-model="data.prename" />
+            <input type="text" class="form-control" ng-model="data.name" ng-keyup="createNickname()" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">{{'CONTACTS.LABEL.SURNAME'|cmTranslate}}</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" ng-model="data.name" />
+            <input type="text" class="form-control" ng-model="data.surname" ng-keyup="createNickname()" />
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label">{{'CONTACTS.LABEL.TEL'|cmTranslate}}</label>
+        <label class="col-sm-2 control-label">{{'DIRV.VALIDATE_PHONE.LABEL'|cmTranslate}}</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" ng-model="data.tel" />
-            {{data.tel_type}}
-            <div cm-type-chooser chooseValue="data.tel_type"></div>
+            <input type="text" class="form-control" ng-model="data.tel" placeholder="{{'DIRV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}"  cm-validate-phone />
+            <div cm-type-chooser choose-to-data="tel_prov" choose-type="provider"></div>
+            <div cm-type-chooser choose-to-data="tel_type"></div>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label">{{'CONTACTS.LABEL.EMAIL'|cmTranslate}}</label>
+        <label class="col-sm-2 control-label">{{'DIRV.VALIDATE_EMAIL.LABEL'|cmTranslate}}</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" ng-model="data.email" />
-            {{data.email_type}}
-            <div cm-type-chooser chooseValue="data.email_type"></div>
+            <input type="text" class="form-control" ng-model="data.email" placeholder="{{'DIRV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}" cm-validate-email />
+            <div cm-type-chooser choose-to-data="email_type"></div>
         </div>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-4">
-            <button type="reset" class="btn btn-sm">{{'CONTACTS.BUTTON.RESET' |cmTranslate}}</button>
             <button type="submit" class="btn btn-primary btn-sm" ng-disabled="stateBusy">{{'CONTACTS.BUTTON.SUBMIT' |cmTranslate}}</button>
+            <button type="reset" class="btn btn-sm btn-link">{{'CONTACTS.BUTTON.RESET'|cmTranslate}}</button>
         </div>
     </div>
 </form>

@@ -1,6 +1,6 @@
 <div class="btn-group btn-group-justified">
     <div class="btn-group" ng-repeat="button in buttons">
-        <button type="button" class="btn btn-default" ng-class="{'btn-primary':(chooseValue == button.value)}" ng-click="setActive(button.value)">
+        <button type="button" class="btn btn-default btn-xs" ng-class="{'btn-primary':(active == button.value)}" ng-click="setActive(button.value)">
             {{button.i18n|cmTranslate}}
         </button>
     </div>

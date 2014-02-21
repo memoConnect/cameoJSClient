@@ -21,8 +21,6 @@
             "USERNAME": "Username",
             "CAMEOID":  "CameoID",
             "NAME":     "Name",
-            "EMAIL":    "Email",
-            "PHONE":    "Phone",
             "TERMS":    "Terms",
             "TERMS_ACCEPT":    "accpect"
         },
@@ -30,14 +28,11 @@
         "PLACEHOLDER": {            
             "USERNAME": "username",
             "CAMEOID": "CameoId",
-            "NAME":     "Display Name",
-            "EMAIL":    "example@example.com",
-            "PHONE":    "+49..."
+            "NAME":     "Display Name"
         },
 
         "INFO": {            
             "MIN_LETTER_COUNT":     "Please use at least {{count}} letters.",            
-            "INVALID_PHONE_NUMBER": "The string supplied did not seem to be a phone number.",
             "TERMS":                "Confirm terms!"
         },
 
@@ -99,14 +94,47 @@
             "REQUESTS": "Requests"
         },
         "HEADER": {
-            "SEARCH_CAMEO_ID": "Add Contact",
+            "SEARCH_CAMEO_ID": "Add contact",
+            "ADD_EXTERN": "Add extern contact",
             "CONTACTS_LIST": "Contacts",
-            "REQUEST_LIST": "Friendship Requests"
+            "REQUEST_LIST": "Friendship requests"
         },
         "INFO": {
             "NO_RESULTS": "No cameo contacts found",
             "MORE_CHARS_NEEDED": "Please type more chars",
             "NO_CONTACTS": "No contacts exists"
+        },
+        "LABEL": {
+            "NICKNAME": "Nickname",
+            "NAME": "Name",
+            "SURNAME": "Surname"
+        },
+        "BUTTON": {
+            "RESET": "reset",
+            "SUBMIT": "save"
         }
-	}
+	},
+
+    "DIRV": {
+        "VALIDATE_EMAIL": {
+            "LABEL": "Email",
+            "PLACEHOLDER": "example@example.com"
+        },
+        "VALIDATE_PHONE": {
+            "LABEL": "Phone",
+            "PLACEHOLDER": "+49...",
+            "INFO": {
+                "INVALID_PHONE_NUMBER": "The string supplied did not seem to be a phone number."
+            }
+        },
+        "TYPE_CHOOSER": {
+            "PRIVATE": "private",
+            "BUSINESS": "business",
+            "OTHER": "other",
+            "MOBILE": "Mobile",
+            "LANDLINE": "Landline",
+            "IP": "IP",
+            "FAX": "Fax"
+        }
+    }
 }
