@@ -1,5 +1,10 @@
 <h3>{{'CONTACTS.HEADER.ADD_EXTERN'|cmTranslate}}</h3>
-<form class="form-horizontal" name="addExternContact">
+
+<button type="button" class="btn btn-primary btn-sm" ng-click="toggleForm()">
+    <i class="fa fa-toggle-down" ng-class="{'fa-toggle-up':formVisible}"></i> {{'CONTACTS.BUTTON.TOOGLE_FORM'|cmTranslate}}
+</button>
+
+<form class="form-horizontal" name="addExternContact" ng-show="formVisible">
     <div class="form-group">
         <label class="col-sm-2 control-label">{{'CONTACTS.LABEL.NICKNAME'|cmTranslate}}</label>
         <div class="col-sm-6">
