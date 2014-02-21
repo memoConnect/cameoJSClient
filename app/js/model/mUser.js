@@ -27,7 +27,7 @@ define([
         this.data = dataModel;
 
         this.isAuth = function(){
-            if(this.data.isActive !== false && this.data.id !== ''){
+            if(cmAuth.getToken() != undefined && cmAuth.getToken() != 'undefined'){
                 return true;
             }
 
