@@ -114,10 +114,6 @@ define([
                     templateUrl: 'tpl/start.html',
                     controllerUrl: 'controller/start'
                 })).
-                when('/talks', angularAMD.route({
-                    templateUrl: 'tpl/list/talks.html',
-                    controllerUrl: 'controller/talks'
-                })).
                 when('/mediawall', angularAMD.route({
                     templateUrl: 'tpl/list/mediawall.html',
                     controllerUrl: 'controller/mediawall'

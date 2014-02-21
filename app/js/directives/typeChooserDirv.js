@@ -24,6 +24,7 @@ define([
             scope: true,
             templateUrl: 'js/directives/typeChooser.html',
             controller: function($scope, $element, $attrs){
+                $scope.buttons = [];
                 // TODO: reset parent form must reset types
                 // handle special type of choose default
                 if('chooseType' in $attrs && $attrs.chooseType in types){
@@ -57,7 +58,8 @@ define([
                  */
                 $scope.setActive = function(value){
                     $scope.active = find(value);
-                    $scope.data[$attrs.chooseToData] = $scope.active;
+                    if($scope.data != undefined)
+                        $scope.data[$attrs.chooseToData] = $scope.active;
                 };
 
                 // set default button
