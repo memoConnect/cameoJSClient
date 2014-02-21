@@ -8,10 +8,10 @@
                     <i class="fa fa-search"></i>
                 </span>
             </div>
-            <div class="alert alert-warning" ng-show="searchCameoId.string.$valid && results.length < 1">
+            <div class="alert alert-warning alert-mini-padding" ng-show="searchCameoId.string.$valid && results.length < 1">
                 {{'CONTACTS.INFO.NO_RESULTS'|cmTranslate}}
             </div>
-            <div class="alert alert-danger" ng-show="searchCameoId.string.$error.minlength">
+            <div class="alert alert-danger alert-mini-padding" ng-show="searchCameoId.string.$error.minlength">
                 {{'CONTACTS.INFO.MORE_CHARS_NEEDED'|cmTranslate}}
             </div>
         </div>

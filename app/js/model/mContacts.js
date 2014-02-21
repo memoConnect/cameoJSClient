@@ -109,12 +109,20 @@ define([
 
         this.answerFriendRequest = function(id, type){
             return cmContacts.answerFriendRequest(id, type);
-        }
+        };
+
+        this.addContact = function(data){
+            // TODO add to contacts and send to api
+            console.log(data);
+
+            //cmContacts.addContact({});
+
+        };
 
         function resetContacts(){
             contacts = [];
             groups = [];
-        };
+        }
 
         $rootScope.$on('logout', function(){
             resetContacts();

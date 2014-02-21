@@ -1,42 +1,46 @@
-<h3>{{'CONTACTS.HEADER.ADD_EXTERN'|cmTranslate}}</h3>
+<h3 ng-click="toggleForm()">
+    {{'CONTACTS.HEADER.ADD_EXTERN'|cmTranslate}} <i class="fa fa-toggle-down" ng-class="{'fa-toggle-up':formVisible}"></i>
+</h3>
 
-<button type="button" class="btn btn-primary btn-sm" ng-click="toggleForm()">
-    <i class="fa fa-toggle-down" ng-class="{'fa-toggle-up':formVisible}"></i> {{'CONTACTS.BUTTON.TOOGLE_FORM'|cmTranslate}}
-</button>
-
-<form class="form-horizontal" name="addExternContact" ng-show="formVisible">
+<form class="form-horizontal" name="addExternContact" ng-show="!formVisible" ng-submit="checkForm()">
     <div class="form-group">
-        <label class="col-sm-2 control-label">{{'CONTACTS.LABEL.NICKNAME'|cmTranslate}}</label>
+        <label class="col-sm-2 control-label">{{'CONTACTS.LABEL.DISPLAYNAME'|cmTranslate}}</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" ng-model="data.nickname" ng-keyup="handleNickname()" />
+            <input type="text" class="form-control" ng-model="data.displayName" ng-keyup="handleDisplayName()" />
 
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">{{'CONTACTS.LABEL.NAME'|cmTranslate}}</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" ng-model="data.name" ng-keyup="createNickname()" />
+            <input type="text" class="form-control" ng-model="data.name" ng-keyup="createDisplayName()" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">{{'CONTACTS.LABEL.SURNAME'|cmTranslate}}</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" ng-model="data.surname" ng-keyup="createNickname()" />
+            <input type="text" class="form-control" ng-model="data.surName" ng-keyup="createDisplayName()" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">{{'DIRV.VALIDATE_PHONE.LABEL'|cmTranslate}}</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" ng-model="data.tel" placeholder="{{'DIRV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}"  cm-validate-phone />
-            <div cm-type-chooser choose-to-data="tel_prov" choose-type="provider"></div>
-            <div cm-type-chooser choose-to-data="tel_type"></div>
+            <input type="text" class="form-control" name="phone" ng-model="data.phone" placeholder="{{'DIRV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}"  cm-validate-phone />
+            <div cm-type-chooser choose-to-data="phoneProvider" choose-type="provider"></div>
+            <div cm-type-chooser choose-to-data="phoneType"></div>
+            <div class="alert alert-danger alert-mini-padding" ng-show="addExternContact.phone.$dirty && addExternContact.phone.$invalid">
+                {{'DIRV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}
+            </div>
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">{{'DIRV.VALIDATE_EMAIL.LABEL'|cmTranslate}}</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" ng-model="data.email" placeholder="{{'DIRV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}" cm-validate-email />
+            <input type="text" class="form-control" name="email" ng-model="data.email" placeholder="{{'DIRV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}" cm-validate-email />
             <div cm-type-chooser choose-to-data="email_type"></div>
+            <div class="alert alert-danger alert-mini-padding" ng-show="addExternContact.email.$dirty && addExternContact.email.$invalid">
+                {{'DIRV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}
+            </div>
         </div>
     </div>
     <div class="form-group">

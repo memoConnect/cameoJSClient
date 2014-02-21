@@ -57,7 +57,6 @@ requirejs.config({
         'mContacts': 'model/mContacts',
         'mUser': 'model/mUser',
 
-        'tpl/searchCameoId': '../tpl/modules/contacts/cm-search-cameo-id.html',
 		// shared
         'util': 'shared/util'
     },

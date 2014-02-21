@@ -1,15 +1,13 @@
 <div ng-controller="ContactsCtrl">
     <div class="page-header">
-        <h1><i class="fa fa-users"></i> &nbsp; {{'CONTACTS.WELCOME' | cmTranslate }}</h1>
+        <h1><i class="fa fa-users"></i> {{'CONTACTS.WELCOME' | cmTranslate }}</h1>
     </div>
 
     <ul class="nav nav-tabs">
         <li ng-repeat="tab in navigation" ng-class="{active:activeTab == tab.id}" ng-click="setActiveTab(tab.id)" title="{{'CONTACTS.NAVIGATION.'+tab.id|cmTranslate}}" >
-            <a ng-hide="tab.icon != undefined">
-                {{'CONTACTS.NAVIGATION.'+tab.id|cmTranslate}}
-            </a>
             <a ng-show="tab.icon != undefined && tab.href == undefined">
                 <i class="fa {{tab.icon}}"></i>
+                <span class="badge" ng-show="tab.badge != undefined">{{contactsQty}}</span>
             </a>
             <a ng-show="tab.icon != undefined && tab.href != undefined" href="{{tab.href}}">
                 <i class="fa {{tab.icon}}"></i>

@@ -35,9 +35,4 @@ li.message-list {
 
 }
 
-/*.ng-dirty .ng-invalid {*/
-    /*border:1px solid Red;*/
-/*}*/
-/*.ng-valid {*/
-    /*border:1px solid green;*/
-/*}*/
+.alert-mini-padding{padding:5px}
