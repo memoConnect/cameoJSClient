@@ -1,15 +1,16 @@
 body {padding:20px}
 pre {text-align:left}
 
-.mt5 {margin-top:5px}
-.mb5 {margin-bottom:5px}
-.mb10 {margin-bottom:10px !important}
-
-span.input-group-addon i {width:18px;height:18px}
+.mt5{margin-top:5px}
+.mb5{margin-bottom:5px}
+.mb10{margin-bottom:10px !important}
 
 .center-block{max-width:768px}
 
-.input-group-addon {background-color: transparent}
+.input-group-addon{background-color: transparent}
+.input-group-addon.self-size i{width:14px}
+
+.page-header h1{text-wrap:none}
 
 .form-signin{max-width:330px;padding:15px;margin:0 auto}
 .form-signin .form-control{position:relative;font-size:16px;height:auto;padding:10px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
@@ -32,6 +33,7 @@ li.message-list {
     background-color: #d3d3d3
 
 }
+
 
 /*.ng-dirty .ng-invalid {*/
     /*border:1px solid Red;*/
@@ -73,3 +75,6 @@ textarea[cm-message-input] {
     width:          100%;
     min-height:     3em;
 }
+
+.alert-mini-padding{padding:5px}
+

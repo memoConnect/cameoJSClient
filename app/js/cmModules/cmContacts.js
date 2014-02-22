@@ -55,7 +55,7 @@ define([
                  */
                 getGroups: function(){
                     return cmApi.get({
-                        url:'contact-groups'
+                        url:'/contact-groups'
                     })
                 },
                 /**
@@ -67,7 +67,7 @@ define([
                  */
                 getAllFromGroup: function(group,limit,offset){
                     return cmApi.get({
-                        url:'contact-group/' + group + Util.handleLimitOffset(limit,offset)
+                        url:'/contact-group/' + group + Util.handleLimitOffset(limit,offset)
                     })
                 },
                 getFriendRequests: function(){
@@ -85,6 +85,12 @@ define([
                     return cmApi.post({
                         url:'/friendRequest/answer',
                         data: {identityId:id, answerType:type}
+                    })
+                },
+                addContact: function(data){
+                    return cmApi.post({
+                        url:'/contact',
+                        data: {identity:data, groups:[]}
                     })
                 }
             }

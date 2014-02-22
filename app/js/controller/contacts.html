@@ -1,0 +1,27 @@
+<div ng-controller="ContactsCtrl">
+    <div class="page-header">
+        <h1><i class="fa fa-users"></i> {{'CONTACTS.WELCOME' | cmTranslate }}</h1>
+    </div>
+
+    <ul class="nav nav-tabs">
+        <li ng-repeat="tab in navigation" ng-class="{active:activeTab == tab.i18n}" ng-click="setActiveTab(tab.i18n)" title="{{'CONTACTS.NAVIGATION.'+tab.i18n|cmTranslate}}" >
+            <a ng-show="tab.icon != undefined && tab.href == undefined">
+                <i class="fa {{tab.icon}}"></i>
+                <span class="badge" ng-show="tab.badge != undefined">{{contactsQty}}</span>
+            </a>
+            <a ng-show="tab.icon != undefined && tab.href != undefined" href="{{tab.href}}">
+                <i class="fa {{tab.icon}}"></i>
+            </a>
+        </li>
+    </ul>
+
+    <div ng-show="activeTab == 'ADD'">
+        <div cm-search-cameo-id></div>
+
+        <div cm-add-extern-contact></div>
+    </div>
+
+    <div cm-contacts-list ng-show="activeTab == 'ALL'"></div>
+
+    <div cm-contact-request-list ng-show="activeTab == 'REQUESTS'"></div>
+</div>

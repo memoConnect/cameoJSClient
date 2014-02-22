@@ -3,7 +3,9 @@ define([
     'angular-cookies',
 
     'util-base64',
-    'util-passchk-fast'
+    'util-passchk-fast',
+
+    'mUser'
 ], function () {
     'use strict';
 
@@ -33,6 +35,11 @@ define([
                             headers: { 'Authorization': 'Basic '+auth } ,
                             exp_ok: 'token'
                         })
+                    },
+
+                    //delete Token
+                    removeToken: function(){
+                        return $cookieStore.remove("token");
                     },
 
                     //store the token in a cookie:
@@ -234,7 +241,8 @@ define([
         'cmAuth',
         'cmLogger',
         '$location',
-        function (cmAuth, cmLogger, $location) {
+        'ModelUser',
+        function (cmAuth, cmLogger, $location, ModelUser) {
             return  {
                 restrict    :   'A',
                 templateUrl :   'tpl/directives/cm-login.html',
@@ -265,13 +273,9 @@ define([
                         }
                     };
 
-                    $scope.getToken = function(){
-                        cmLogger.debug("requestToken called");
-
-                        cmAuth.requestToken($scope.formData.user, $scope.formData.pass).
-                        then(
-                            function(token){
-                                cmAuth.storeToken(token);
+                    $scope.doLogin = function(){
+                        ModelUser.doLogin($scope.formData.user, $scope.formData.pass).then(
+                            function(){
                                 $location.path("/start");
                             }
                             //error handling is done by cmAuth
