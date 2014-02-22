@@ -148,7 +148,7 @@ define([
 
 				*/
 
-				var api 		=	function(method, config){
+				var api 		=	function(method, config){										
 										var deferred	=	$q.defer(),
 
 											//get authentification token from cmAuth if present
@@ -184,7 +184,7 @@ define([
 												
 										$http(config).then(											
 
-											function(response){	
+											function(response){													
 												//$http call was successfull:
 												//reponse includes config and data, we only need the data:
 												var response = response.data
@@ -210,6 +210,7 @@ define([
 											},
 
 											function(response){
+												cmLogger.error('Api call failed.', response)
 												//error messages should come trough backend
 												deferred.reject(undefined, response)
 											}
