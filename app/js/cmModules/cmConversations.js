@@ -16,9 +16,9 @@ define([
 ], function () {
     'use strict';
 
-	var cmConversation = angular.module('cmConversation', ['cmApi', 'cmLogger', 'cmCrypt', 'cmContacts'])
+	var cmConversations = angular.module('cmConversations', ['cmApi', 'cmLogger', 'cmCrypt', 'cmContacts'])
 
-	cmConversation.provider('cmConversation', function(){
+	cmConversations.provider('cmConversationsAdapter', function(){
 		//config stuff here
 
 		this.$get = [
@@ -38,8 +38,18 @@ define([
 								})
 					},
 
+					getConversations: function(offset, limit) {
+						return	cmApi.get({
+									url: 	'/conversations',
+									data:	{
+												offset:	offset,
+												limit:	limit
+											},
+									//exp_ok:	'messages'
+								})		
+					},
+
 					getConversation: function(id, offset, limit) {
-						/*
 						return 	cmApi.get({
 									url: 	'/conversation/'+id,
 									data:	{
@@ -47,105 +57,7 @@ define([
 												limit:	limit
 											},
 									exp_ok:	'messages'
-								})
-						*/
-
-						//Mock:
-						var deferred = $q.defer()
-
-						deferred.resolve({
-						    "id": "WvbpPu2X8btdAOpA4IRF",
-						    "messages": [
-						      {
-						        "id": "vwUmVfjkn5lXXwXGvxzS",
-						        "messageBody": "text",
-						        "fromIdentity": "ZVtXkxMmPj4WtLYea8cix",
-						        "messageStatus": [
-						          {
-						            "identityId": "s29FpU4TFhxXOdRGfzLk",
-						            "status": "queued",
-						            "message": "default"
-						          },
-						          {
-						            "identityId": "V8SXRiE4o1lfN2WmGf0S",
-						            "status": "queued",
-						            "message": "sms"
-						          },
-						          {
-						            "identityId": "j07EKjJiGOXdfx2wqs0N",
-						            "status": "queued",
-						            "message": "default"
-						          }
-						        ],
-						        "created": "22.01.2014 16:34:55"
-						      },
-						      {
-						        "id": "6ftwTSBMiQfmlOphLND3",
-						        "messageBody": "text2",
-						        "fromIdentity": "ZVtXkxMmPj4WtLYea8ci",
-						        "messageStatus": [
-						          {
-						            "identityId": "s29FpU4TFhxXOdRGfzLk",
-						            "status": "queued",
-						            "message": "default"
-						          },
-						          {
-						            "identityId": "V8SXRiE4o1lfN2WmGf0S",
-						            "status": "queued",
-						            "message": "sms"
-						          },
-						          {
-						            "identityId": "j07EKjJiGOXdfx2wqs0N",
-						            "status": "queued",
-						            "message": "default"
-						          }
-						        ],
-						        "created": "22.01.2014 16:34:55"
-						      },
-						      {
-						        "id": "O5uz1fBnuWFRwnqOCGuN",
-						        "messageBody": "text3",
-						        "fromIdentity": "ZVtXkxMmPj4WtLYea8cix",
-						        "messageStatus": [
-						          {
-						            "identityId": "s29FpU4TFhxXOdRGfzLk",
-						            "status": "queued",
-						            "message": "default"
-						          },
-						          {
-						            "identityId": "V8SXRiE4o1lfN2WmGf0S",
-						            "status": "queued",
-						            "message": "sms"
-						          },
-						          {
-						            "identityId": "j07EKjJiGOXdfx2wqs0N",
-						            "status": "queued",
-						            "message": "default"
-						          }
-						        ],
-						        "created": "22.01.2014 16:34:55"
-						      }
-						    ],
-						    "numberOfMessages": 3,
-						    "created": "22.01.2014 16:34:55",
-						    "lastUpdated": "22.01.2014 16:34:55",
-						    "recipients": [
-						      {
-						        "id": "s29FpU4TFhxXOdRGfzLk",
-						        "displayName": "NoName"
-						      },
-						      {
-						        "id": "V8SXRiE4o1lfN2WmGf0S",
-						        "displayName": "Ulrich"
-						      },
-						      {
-						        "id": "j07EKjJiGOXdfx2wqs0N",
-						        "displayName": "Aaron"
-						      }
-						    ]
-						})
-
-						return deferred.promise
+								})						
 					},
 
 					addRecipient: function(id, recipient_id){
@@ -178,13 +90,115 @@ define([
 	})
 
 
+	cmConversations.service('cmConversationsModel', [
 
-	cmConversation.directive('cmConversation',[
+		'cmConversationsAdapter',
 
-		'cmConversation',
+		function(cmConversationsAdapter){
+
+			//self:
+			var conversations = []
+
+
+			//Classes:
+
+			function Conversation(data) {
+
+				//Attributes:
+				this.id = ''
+				this.subject = ''
+				this.messages = []
+				this.recipients = []
+
+
+				this.init = function(conversation_data) {				
+					this.id = conversation_data.id
+					this.subject = conversation_data.subject
+
+					// register all messages as Message objects
+					if(conversation_data.messages){
+						conversation_data.messages.forEach(function(message_data){
+							this.messages.push(new Message(message_data))
+						})
+					}
+
+					// register all recipients as Recipient objects
+					if(conversation_data.recipients){
+						conversation_data.recipients.forEach(function(recipient_data){
+							this.messages.push(new Identity(recipient_data))
+						})
+					}
+				}
+
+				
+				typeof data == 'object'
+				?	this.init(data)
+				:	conversations.newConversation()
+					.then( function(data) {
+						this.init(data)
+					})								
+			}
+
+			function Message(message_data) {
+
+				//Attributes:
+				this.id = ''
+				this.body = ''
+				this.decryptedBody = ''
+				this.from = ''
+				this.status = ''
+				this.lastUpdated = ''
+				this.created = ''
+				this.lastMessage = ''
+
+
+				this.init = function() {
+					this.id = message_data.id
+					this.body = message_data.messageBody
+					this.decryptedBody = message_data.messageBody
+					this.from = message_data.fromIdentity
+					this.status = message_data.messageStatus
+					this.lastUpdated = message_data.lastUpdated
+					this.created = message_data.created     
+					this.lastMessage = message_data.lastMessage
+				}
+			}
+
+			function Identity(identity_id) {
+				return(identity_id)
+			}
+
+
+			//Methods:
+
+			conversations.newConversation = function(subject){
+				return cmConversationsAdapter.newConversation(subject)
+			}
+
+			conversations.init = function() {
+				cmConversationsAdapter.getConversations()
+				.then( function(data) {
+					data.forEach(function(conversation_data){
+						conversations.push(new Conversation(conversation_data))
+					})
+				})
+			}
+
+			conversations.init()
+
+			return(conversations)
+		}
+	])
+
+	
+
+
+	cmConversations.directive('cmConversations',[
+
+		'cmConversations',
 		'cmCrypt',
 
-		function(cmConversation, cmCrypt){
+		function(cmConversations, cmCrypt){
 			return {
 
 				restrict: 		'AE',
@@ -192,7 +206,7 @@ define([
 				scope:			true,
 
 				controller:		function($scope, $element, $attrs){									
-									var conversation_id 		= $scope.$eval($attrs.cmConversation || $attrs.conversationId),
+									var conversation_id 		= $scope.$eval($attrs.cmConversations || $attrs.conversationId),
 										conversation_subject	= $scope.$eval($attrs.cmSubject),
 										conversation_offset 	= $attrs.offset,
 										conversation_limit 		= $attrs.limit
@@ -205,12 +219,12 @@ define([
 
 
 									conversation_id
-									?	cmConversation.getConversation($scope.conversation_id, 0, 10)
+									?	cmConversations.getConversation($scope.conversation_id, 0, 10)
 										.then(function(conversation){
 											$scope.init(conversation)
 										})
 
-									:	cmConversation.newConversation($scope.conversation_subject)
+									:	cmConversations.newConversation($scope.conversation_subject)
 										.then(function(conversation){
 											$scope.init(conversation)
 										})
@@ -233,7 +247,7 @@ define([
 										
 										var encrypted_message_text = cmCrypt.encryptWithShortKey($scope.passphrase, $scope.my_message_text) 
 
-										cmConversation.sendMessage($scope.conversation.id, encrypted_message_text)
+										cmConversations.sendMessage($scope.conversation.id, encrypted_message_text)
 										.then(function(message){
 											$scope.decryptMessage(message)
 											$scope.conversation.messages.push(message)
@@ -242,9 +256,9 @@ define([
 									}
 
 									$scope.addRecipient = function(recipient){
-										cmConversation.addRecipient($scope.conversation.id, recipient.id)
+										cmConversations.addRecipient($scope.conversation.id, recipient.id)
 										.then(function(){
-											//Das sollte besser gleich in cmConversation passieren
+											//Das sollte besser gleich in cmConversations passieren
 											$scope.conversation.recipients.push({
 												//VORLÄUFIG!:
 												id: recipient.id,
@@ -254,7 +268,7 @@ define([
 									}
 
 									$scope.removeRecipient = function(recipient){
-										cmConversation.removeRecipient($scope.conversation.id, recipient.id)
+										cmConversations.removeRecipient($scope.conversation.id, recipient.id)
 										.then(function(){
 											var index
 
@@ -288,10 +302,10 @@ define([
 
 
 
-	cmConversation.directive('cmMessage',[
+	cmConversations.directive('cmMessage',[
 
 		'cmAuth',
-		'cmConversation',
+		'cmConversations',
 
 		function(cmAuth){
 			return {
@@ -308,7 +322,7 @@ define([
 									//console.dir($conversationCtrl)
 
 									$scope.decrypt = function(text) {
-										cmConversation.decrypt(text)
+										cmConversations.decrypt(text)
 									}
 
 									cmAuth.getIdentity()
@@ -322,7 +336,7 @@ define([
 
 
 
-	cmConversation.directive('cmAvatar',[
+	cmConversations.directive('cmAvatar',[
 
 		function(){
 			return {
@@ -346,7 +360,7 @@ define([
 	])
 
 
-	cmConversation.directive('cmAttachments',[
+	cmConversations.directive('cmAttachments',[
 
 		function(){
 			return {
@@ -367,7 +381,7 @@ define([
 		}
 	])
 
-	cmConversation.directive('cmMessageInput',[
+	cmConversations.directive('cmMessageInput',[
 
 		function(){
 			return {
@@ -416,7 +430,7 @@ define([
 
 
 
-	cmConversation.directive('cmPassphrase',[
+	cmConversations.directive('cmPassphrase',[
 
 		function() {
 			return {
@@ -464,7 +478,7 @@ define([
 
 
 
-	cmConversation.directive('cmCaptcha',[
+	cmConversations.directive('cmCaptcha',[
 
 		function(){
 			return {

@@ -10,7 +10,7 @@ define([
     'cmLogger',
     'cmNotify',
     'cmProfile',
-    'cmConversation',
+    'cmConversations',
     'cmContacts',
     'mUser',
     'mContacts'
@@ -30,7 +30,7 @@ define([
         'cmLogger',
         'cmNotify',
         'cmProfile',
-        'cmConversation',
+        'cmConversations',
         'cmProfile',
         'cmContacts',
         'mUser',
@@ -122,6 +122,10 @@ define([
                     templateUrl: 'tpl/list/mediawall.html',
                     controllerUrl: 'controller/mediawall'
                 })).
+                when('/conversations', angularAMD.route({
+                    templateUrl: 'tpl/conversations.html',
+                    controllerUrl: 'controller/conversations'
+                })).
                 when('/conversation/:conversationId?', angularAMD.route({
                     templateUrl: 'tpl/conversation.html',
                     controllerUrl: 'controller/conversation'
@@ -146,6 +150,7 @@ define([
                 templateUrl: 'js/controller/contacts.html',
                 controllerUrl: 'controller/contactsCtrl'
             });
+            
             $routeProvider.
                 when('/contacts', routeContacts).
                 when('/contacts/:tab', routeContacts);

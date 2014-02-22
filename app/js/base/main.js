@@ -36,7 +36,7 @@ require.config({
         'cmLogger': 'cmModules/cmLogger',
         'cmNotify': 'cmModules/cmNotify',
         'cmProfile': 'cmModules/cmProfile',
-        'cmConversation': 'cmModules/cmConversation',
+        'cmConversations': 'cmModules/cmConversations',
         'cmContacts': 'cmModules/cmContacts',
 
         // Models
