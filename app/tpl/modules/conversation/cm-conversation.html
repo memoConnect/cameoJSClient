@@ -42,22 +42,35 @@
 			style	 =	"cursor: pointer"
 			ng-click =	"generatePassphrase()"
 		>
-		</i>				
+		</i>
+
+		<i
+			class	 =	"fa fa-circle"
+			style	 =	"color: {{passphrase_valid ? 'green' : 'red'}}"			
+		>
+		</i>
+
 
 		<br/>
 
 		<i
-			class	 =	"fa fa-th-large"
-			style	 =	"cursor: pointer"
-			ng-click =	"show_captcha = !show_captcha"
+			class	 = "fa fa-th-large"
+			style	 = "cursor: pointer"
+			ng-click = "show_captcha = !show_captcha"
+			ng-hide	 = "new_conversation"
 		>
-		</i>		
+		</i>				
+
 		<br/>
-		
-		<div ng-show="show_captcha">
-			<cm-captcha ></cm-captcha>			
+		<div
+			ng-show = "show_captcha"			
+		>
 			<i class="fa fa-refresh" style ="cursor:pointer" ng-click="refreshCaptcha()"></i>
-			<button ng-click="sendCaptcha()">send captcha</button>
+			<button ng-click = "requestCaptcha()"> {{"CONVERSATION.LABEL.REQUEST_CAPTCHA" | cmTranslate}}</button>
+			<button ng-click = "sendCaptcha()"> {{"CONVERSATION.LABEL.SEND_CAPTCHA" | cmTranslate}}</button>
+			<cm-captcha ></cm-captcha><br/>
+			
+			
 		</div>
 
 	</div>

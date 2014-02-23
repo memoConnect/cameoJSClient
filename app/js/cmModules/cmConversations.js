@@ -178,7 +178,14 @@ define([
 					// register all recipients as Recipient objects
 					if(conversation_data.recipients){
 						conversation_data.recipients.forEach(function(recipient_data){
-							self.addRecipient(new Recipient(recipient_data))
+							if(typeof recipient_data == 'string'){
+								cmAuth.getIdentity(recipient_data)
+								.then(function(identity){
+									self.addRecipient(new Recipient(identity))
+								})
+							}else{
+								self.addRecipient(new Recipient(recipient_data))
+							}
 						})
 					}
 				}
@@ -226,6 +233,10 @@ define([
 					}
 				}
 
+				this.passphraseValid = function() {
+					return !this.messages[0] || this.messages[0].decryptWith(this.passphrase)
+				}
+
 				this.update = function() {
 					cmConversationsAdapter.getConversation(this.id)
 					.then(
@@ -261,8 +272,9 @@ define([
 				}
 
 				this.decryptWith = function(passphrase) {
-					this.decryptedBody = cmCrypt.decrypt(passphrase, this.body)
-					return this
+					var decrypted_text = cmCrypt.decrypt(passphrase, this.body)
+					this.decryptedBody = decrypted_text || this.body
+					return !!decrypted_text
 				}
 
 				this.attachCaptcha = function(image_data) {
@@ -334,8 +346,10 @@ define([
 		'cmConversationsModel',
 		'cmCrypt',
 		'cmLogger',
+		'cmNotify',
+		'$location',
 
-		function(cmConversationsModel, cmCrypt, cmLogger){
+		function(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $location){
 			return {
 
 				restrict: 		'AE',
@@ -348,6 +362,7 @@ define([
 										conversation_offset 	= $attrs.offset,
 										conversation_limit 		= $attrs.limit
 
+
 									conversation_id
 									?	cmConversationsModel.getConversation(conversation_id, conversation_offset, conversation_limit)
 										.then(function(conversation){											
@@ -357,6 +372,7 @@ define([
 									:	cmConversationsModel.createConversation(conversation_subject)
 										.then(function(conversation){
 											$scope.init(conversation)
+											$scope.new_conversation = true											
 										})
 
 									
@@ -366,10 +382,12 @@ define([
 										$scope.my_message_text 	= ""
 										$scope.passphrase 		= ""
 										$scope.show_contacts 	= false
+										$scope.passphrase_valid = $scope.conversation.passphraseValid()
 
 										$scope.$watch("passphrase", function(new_passphrase){
 											$scope.conversation.setPassphrase(new_passphrase)
-											$scope.conversation.decrypt()
+											$scope.passphrase_valid = $scope.conversation.passphraseValid()
+											if($scope.passphrase_valid) $scope.conversation.decrypt()
 										})
 
 										$scope.$on('identity-selected', function(event, identity_data){
@@ -385,12 +403,15 @@ define([
 
 
 									$scope.sendMessage = function(){
-										$scope.my_message_text
+										$scope.my_message_text && $scope.conversation.passphraseValid()
 										?	$scope.conversation										
 											.newMessage($scope.my_message_text)
 											.encryptWith($scope.passphrase) 
 											.sendTo($scope.conversation)
-										:	null
+											.then(function(){
+												if($scope.new_conversation) $location.url('/conversation/'+$scope.conversation.id)
+											})
+										:	($scope.my_message_text ? cmNotify.warn('CONVERSTAION.WARN.PASSPHRASE_INVALID') : null)
 
 										$scope.my_message_text = ""
 									}
@@ -403,6 +424,12 @@ define([
 											.newMessage(captchaImageData)
 											.sendTo($scope.conversation)
 										:	null
+									}
+
+									$scope.requestCaptcha = function() {																				
+										$scope.conversation										
+										.newMessage("CONVERSATION.TEXT.REQUEST_CAPTCHA")
+										.sendTo($scope.conversation)										
 									}
 
 									$scope.generatePassphrase = function(){
@@ -529,6 +556,29 @@ define([
 
 									element.on('keyup redo undo change', function(){										
 										resize()										
+									})
+
+									function insertTextAtCursor(el, text) {
+									    var val = el.value, endIndex, range;
+									    if (typeof el.selectionStart != "undefined" && typeof el.selectionEnd != "undefined") {
+									        endIndex = el.selectionEnd;
+									        el.value = val.slice(0, el.selectionStart) + text + val.slice(endIndex);
+									        el.selectionStart = el.selectionEnd = endIndex + text.length;
+									    } else if (typeof document.selection != "undefined" && typeof document.selection.createRange != "undefined") {
+									        el.focus();
+									        range = document.selection.createRange();
+									        range.collapse(false);
+									        range.text = text;
+									        range.select();
+									    }
+									}
+
+									element.on('keydown', function(event){
+										if(event.which == 9){
+											insertTextAtCursor(this, '\t')
+											return(false)
+										}
+										scope.update()
 									})
 
 

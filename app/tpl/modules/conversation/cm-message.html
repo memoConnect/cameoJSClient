@@ -8,10 +8,8 @@
             class       = "{{ is_my_own_message ? 'pull-right' : 'pull-left'}}"
         >
         </cm-avatar>         
-        <img ng-show ="hasCaptcha" src ="{{message.body}}"/>        
-        <span ng-hide ="hasCaptcha">
-            {{ message.decryptedBody }}
-        <span>
+        <img ng-if="hasCaptcha" src ="{{message.body}}" class="img-responsive img-rounded"/>        
+        <pre ng-if ="!hasCaptcha" style ="text-align:left">{{ message.decryptedBody }}</pre>
     </div>    
     <footer>
         <cm-attachments></cm-attachments> {{ message.created }}

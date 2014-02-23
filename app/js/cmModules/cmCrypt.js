@@ -70,7 +70,7 @@ define([
                  */
                 decrypt: function (secretKey, secretString) {
                     if (null == secretString)
-                        return "";
+                        return false
 
                     var decodedSecretString = Base64.decode(secretString),
                         decryptedString
@@ -81,7 +81,7 @@ define([
                         cmLogger.warn('Unable to decrypt.', e)
                     }
 
-                    return decryptedString || secretString
+                    return decryptedString || false
                 }
 
             }
