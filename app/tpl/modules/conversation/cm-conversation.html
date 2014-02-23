@@ -35,20 +35,26 @@
 	</div>
 
 	<div>
-		<input type ="text" ng-model="passphrase" cm-passphrase>
+		<input type ="{{revealPassword ? 'text' : 'password'}}" ng-model="passphrase" cm-passphrase>
+		 
+
+        <i
+        	class	 = "fa"
+        	style	 = "cursor:pointer" 
+        	ng-class = "{'fa-eye':revealPassword,'fa-eye-slash': !revealPassword}"
+        	ng-click = "revealPassword = !revealPassword"
+        ></i>
 
 		<i
 			class	 =	"fa fa-key"
 			style	 =	"cursor: pointer"
 			ng-click =	"generatePassphrase()"
-		>
-		</i>
+		></i>
 
 		<i
 			class	 =	"fa fa-circle"
 			style	 =	"color: {{passphrase_valid ? 'green' : 'red'}}"			
-		>
-		</i>
+		></i>
 
 
 		<br/>
@@ -58,8 +64,7 @@
 			style	 = "cursor: pointer"
 			ng-click = "show_captcha = !show_captcha"
 			ng-hide	 = "new_conversation"
-		>
-		</i>				
+		></i>				
 
 		<br/>
 		<div
