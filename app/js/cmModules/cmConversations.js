@@ -38,7 +38,7 @@ define([
 								})
 					},
 
-					getConversations: function(offset, limit) {
+					getConversations: function(offset, limit) {						
 						return	cmApi.get({
 									url: 	'/conversations',
 									data:	{
@@ -55,8 +55,7 @@ define([
 									data:	{
 												offset:	offset,
 												limit:	limit
-											},
-									exp_ok:	'messages'
+											}
 								})						
 					},
 
@@ -93,11 +92,61 @@ define([
 	cmConversations.service('cmConversationsModel', [
 
 		'cmConversationsAdapter',
+		'cmCrypt',
+		'$q',
+		'cmAuth',
 
-		function(cmConversationsAdapter){
+		function(cmConversationsAdapter, cmCrypt, $q, cmAuth){
 
 			//self:
 			var conversations = []
+
+
+
+			//Methods:
+
+			conversations.createConversation = function(subject) {			
+				var deferred = $q.defer()
+
+				cmConversationsAdapter.newConversation(subject)
+				.then( function(conversation_data){
+					var conversation = new Conversation(conversation_data)
+
+					conversations.push(conversation)
+					deferred.resolve(conversation)					
+				})
+
+				return  deferred.promise
+			}
+
+			//nicht schön:
+			conversations.getConversation = function(id) {				
+				var deferred = $q.defer()
+
+				cmConversationsAdapter.getConversation(id)
+				.then(
+
+					function(conversation_data){
+						deferred.resolve(new Conversation(conversation_data))
+					},
+
+					function(){ deferred.reject() }
+				)
+
+				return	deferred.promise
+			}
+
+			conversations.init = function() {				
+				cmConversationsAdapter.getConversations()
+				.then( function(data) {						
+					data.forEach(function(conversation_data){						
+						conversations.push(new Conversation(conversation_data))
+					})
+				})
+			}
+
+
+
 
 
 			//Classes:
@@ -105,143 +154,253 @@ define([
 			function Conversation(data) {
 
 				//Attributes:
-				this.id = ''
-				this.subject = ''
-				this.messages = []
+				this.id 		= ''
+				this.subject 	= ''
+				this.messages 	= []
 				this.recipients = []
+				this.passphrase = ''
+				this.count		= 0
+
+				var self = this
 
 
 				this.init = function(conversation_data) {				
-					this.id = conversation_data.id
-					this.subject = conversation_data.subject
+					this.id 		= conversation_data.id
+					this.subject 	= conversation_data.subject
+					this.count		= conversation_data.numberOfMessages
 
 					// register all messages as Message objects
 					if(conversation_data.messages){
 						conversation_data.messages.forEach(function(message_data){
-							this.messages.push(new Message(message_data))
+							self.addMessage(new Message(message_data))
 						})
 					}
 
 					// register all recipients as Recipient objects
 					if(conversation_data.recipients){
 						conversation_data.recipients.forEach(function(recipient_data){
-							this.messages.push(new Identity(recipient_data))
+							self.addRecipient(new Recipient(recipient_data))
 						})
 					}
 				}
 
+				this.addMessage = function(message){					
+					this.messages.push(message)
+					if(this.passphrase) message.decryptWith(this.passphrase)
+					return this
+				}				
+
+				this.addRecipient = function(recipient){
+					this.recipients.push(recipient)										
+					return this
+				}
+
+				this.removeRecipient = function(recipient) {
+					var i = this.recipients.length
+
+					while(i){ i--
+						if(this.recipients[i] == recipient) this.recipients.splice(i,1)
+					}
+					return this
+				}
+
+				this.newMessage = function(message_data) {
+					var message_data = (typeof message_data == 'string' ? {messageBody : message_data} : message_data )
+					return new Message( message_data )
+				}
+
+				this.newRecipient = function(identity_data) {										
+					var identity_data = (typeof identity_data == 'string' ? {id : identity_data} : identity_data )					
+					return new Recipient( identity_data )
+				}
+
+				this.setPassphrase = function(passphrase) {
+					this.passphrase = passphrase
+					return this
+				}
+
+				this.decrypt = function() {
+					if(this.passphrase){
+						this.messages.forEach(function(message){
+							message.decryptWith(self.passphrase)
+						})
+					}
+				}
+
+				this.update = function() {
+					cmConversationsAdapter.getConversation(this.id)
+					.then(
+						function(data){
+							console.dir(data)
+						}
+					)
+				}
 				
-				typeof data == 'object'
-				?	this.init(data)
-				:	conversations.newConversation()
-					.then( function(data) {
-						this.init(data)
-					})								
+				this.init(data)			
 			}
+
+
+
 
 			function Message(message_data) {
 
 				//Attributes:
-				this.id = ''
-				this.body = ''
-				this.decryptedBody = ''
-				this.from = ''
-				this.status = ''
-				this.lastUpdated = ''
-				this.created = ''
-				this.lastMessage = ''
+				this.id 			= ''
+				this.body 			= ''
+				this.decryptedBody 	= ''
+				this.from 			= ''
+				this.status 		= ''
+				this.lastUpdated 	= ''
+				this.created 		= ''
+				this.lastMessage 	= ''
 
+				var self = this
 
-				this.init = function() {
-					this.id = message_data.id
-					this.body = message_data.messageBody
-					this.decryptedBody = message_data.messageBody
-					this.from = message_data.fromIdentity
-					this.status = message_data.messageStatus
-					this.lastUpdated = message_data.lastUpdated
-					this.created = message_data.created     
-					this.lastMessage = message_data.lastMessage
+				this.encryptWith = function(passphrase) {
+					this.body = cmCrypt.encryptWithShortKey(passphrase, this.body) 					
+					return this
 				}
+
+				this.decryptWith = function(passphrase) {
+					this.decryptedBody = cmCrypt.decrypt(passphrase, this.body)
+					return this
+				}
+
+				this.sendTo = function (conversation) {
+					return	cmConversationsAdapter.sendMessage(conversation.id, this.body)
+							.then(function(message_data){
+								conversation.addMessage(new Message(message_data))
+							})
+				}
+
+				this.init = function(message_data) {
+					this.id 			= message_data.id
+					this.body 			= message_data.messageBody
+					this.decryptedBody 	= message_data.messageBody
+					this.from 			= message_data.fromIdentity
+					this.status 		= message_data.messageStatus
+					this.lastUpdated 	= message_data.lastUpdated
+					this.created 		= message_data.created     
+					this.lastMessage 	= message_data.lastMessage
+				}
+
+				this.init(message_data)
 			}
 
-			function Identity(identity_id) {
-				return(identity_id)
+
+
+			function Recipient(itdentity_data) {
+				this.id 			= ''
+				this.displayName	= ''
+
+				var self = this
+
+				this.addTo = function(conversation) {					
+					return 	cmConversationsAdapter.addRecipient(conversation.id, this.id)
+							.then(function(){ conversation.addRecipient(self) })					
+				}
+
+				this.removeFrom = function(conversation) {
+					return	cmConversationsAdapter.removeRecipient(conversation.id, this.id)
+							.then(function(){ conversation.removeRecipient(self) })					
+				}
+
+				this.init = function(identity_data) {					
+					this.id 			= identity_data.id
+					this.displayName	= identity_data.displayName || identity_data.cameoId || identity_data.id
+				}
+
+				this.init(itdentity_data)				
 			}
 
 
-			//Methods:
 
-			conversations.newConversation = function(subject){
-				return cmConversationsAdapter.newConversation(subject)
-			}
 
-			conversations.init = function() {
-				cmConversationsAdapter.getConversations()
-				.then( function(data) {
-					data.forEach(function(conversation_data){
-						conversations.push(new Conversation(conversation_data))
-					})
-				})
-			}
 
 			conversations.init()
 
-			return(conversations)
+			return conversations
 		}
 	])
 
 	
 
 
-	cmConversations.directive('cmConversations',[
+	cmConversations.directive('cmConversation',[
 
-		'cmConversations',
+		'cmConversationsModel',
 		'cmCrypt',
+		'cmLogger',
 
-		function(cmConversations, cmCrypt){
+		function(cmConversationsModel, cmCrypt, cmLogger){
 			return {
 
 				restrict: 		'AE',
 				templateUrl:	'tpl/modules/conversation/cm-conversation.html',
 				scope:			true,
 
-				controller:		function($scope, $element, $attrs){									
-									var conversation_id 		= $scope.$eval($attrs.cmConversations || $attrs.conversationId),
-										conversation_subject	= $scope.$eval($attrs.cmSubject),
+				controller:		function($scope, $element, $attrs){	
+									var conversation_id 		= $scope.$eval($attrs.cmConversations) || $scope.$eval($attrs.conversationId),
+										conversation_subject 	= $scope.$eval($attrs.cmSubject),
 										conversation_offset 	= $attrs.offset,
 										conversation_limit 		= $attrs.limit
 
-
-
-									$scope.my_message_text = ""
-									$scope.passphrase = ""
-									$scope.show_contacts = false
-
-
 									conversation_id
-									?	cmConversations.getConversation($scope.conversation_id, 0, 10)
+									?	cmConversationsModel.getConversation(conversation_id, conversation_offset, conversation_limit)
+										.then(function(conversation){											
+											$scope.init(conversation)
+										})
+
+									:	cmConversationsModel.createConversation(conversation_subject)
 										.then(function(conversation){
 											$scope.init(conversation)
 										})
 
-									:	cmConversations.newConversation($scope.conversation_subject)
-										.then(function(conversation){
-											$scope.init(conversation)
-										})
-
-
+									
 									$scope.init = function(conversation){
 
-										$scope.conversation = conversation
+										$scope.conversation 	= conversation
+										$scope.my_message_text 	= ""
+										$scope.passphrase 		= ""
+										$scope.show_contacts 	= false
 
 										$scope.$watch("passphrase", function(new_passphrase){
-											$scope.decryptAllMessages()
+											$scope.conversation.setPassphrase(new_passphrase)
+											$scope.conversation.decrypt()
 										})
 
-										$scope.$on('identity-selected', function(event, identity){
-											$scope.addRecipient(identity)
-										})
+										$scope.$on('identity-selected', function(event, identity_data){
+											identity_data
+											?	$scope.conversation
+												.newRecipient(identity_data)
+												.addTo($scope.conversation)
+											:	null
+										})										
+
+										$scope.conversation.update()
 									}	
+
+
+									$scope.sendMessage = function(){
+										$scope.my_message_text
+										?	$scope.conversation										
+											.newMessage($scope.my_message_text)
+											.encryptWith($scope.passphrase) 
+											.sendTo($scope.conversation)
+										:	null
+
+										$scope.my_message_text = ""
+									}
+
+									$scope.generatePassphrase = function(){
+										var date = new Date()
+										$scope.passphrase = Base64.encode(cmCrypt.hash(Math.random()*date.getTime())).substr(5, 10)
+									}
+									
+									/*
+									var conversation_id 		= $scope.$eval($attrs.cmConversations || $attrs.conversationId),
+										conversation_subject	= $scope.$eval($attrs.cmSubject),
+										
 
 									$scope.sendMessage = function(message){
 										
@@ -280,20 +439,9 @@ define([
 										})
 									}
 
-									$scope.decryptAllMessages = function() {										
-										$scope.conversation.messages.forEach(function(message){
-											$scope.decryptMessage(message)
-										})
-									}
+																	
 
-									$scope.decryptMessage = function(message) {
-										message.decryptedBody = cmCrypt.decrypt($scope.passphrase, message.messageBody)
-									}
-
-									$scope.getRandomPassphrase = function(){
-										var date = new Date()
-										$scope.passphrase = Base64.encode(cmCrypt.hash(Math.random()*date.getTime())).substr(5, 12)
-									}
+									*/
 									 
 								}
 			}
@@ -305,7 +453,6 @@ define([
 	cmConversations.directive('cmMessage',[
 
 		'cmAuth',
-		'cmConversations',
 
 		function(cmAuth){
 			return {
@@ -317,42 +464,36 @@ define([
 
 				controller:		function($scope, $element, $attrs){
 
-									$scope.message			 = $scope.$eval($attrs.cmMessage || $attrs.cmData)
+									$scope.message = $scope.$eval($attrs.cmData) || $scope.$eval($attrs.cmMessage)									
 
-									//console.dir($conversationCtrl)
-
-									$scope.decrypt = function(text) {
-										cmConversations.decrypt(text)
-									}
+									$scope.message.decryptWith($scope.passphrase)							
 
 									cmAuth.getIdentity()
 									.then(function(identity){
-										$scope.is_my_own_message = ($scope.message.fromIdentity == identity.id)
+										$scope.is_my_own_message = ($scope.message.from == identity.id)
 									})
 								}
 			}
 		}
 	])
 
-
-
 	cmConversations.directive('cmAvatar',[
 
 		function(){
 			return {
 		
-				restrict: 		'AE',
-				template:		'<i class="fa fa-user"></i>', //MOCK
+				restrict:	'AE',
+				template:	'<i class="fa fa-user"></i>', //MOCK
 
-				link:			function(scope, element, attrs){
-									 //mocked, get avatar pic an set background of element
-									 element.css({
-									 	"cssFloat":			"left",
-									 	"font-size":		"3em",
-									 	"vertical-align":	"top",
-									 	"padding-right":	"0.3em"
-									 })
-								}
+				link:		function(scope, element, attrs){
+								 //mocked, get avatar pic an set background of element
+								 element.css({
+								 	"cssFloat":			"left",
+								 	"font-size":		"3em",
+								 	"vertical-align":	"top",
+								 	"padding-right":	"0.3em"
+								 })
+							}
 
 				
 			}

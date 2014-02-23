@@ -1,7 +1,9 @@
 define([
 
     'app',
-    'util-base64'
+    'util-base64',
+    'mContacts',
+    '_d/contactsListDirv'
 
 ], function (app) {
     'use strict';
@@ -10,10 +12,10 @@ define([
 
     	'$scope',
         '$element',
-        '$routeParams',
+        '$routeParams',        
 
-        function($scope, $element, $routeParams){            
-        	$scope.conversationId = $routeParams.conversationId
+        function($scope, $element, $routeParams){               
+        	$scope.conversationId = $routeParams.conversationId      
         }
     ])
 })

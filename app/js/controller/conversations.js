@@ -13,7 +13,6 @@ define([
         'cmConversationsModel',
 
         function($scope, cmConversationsModel) {
-            console.dir(cmConversationsModel)
             $scope.conversations = cmConversationsModel
         }
 

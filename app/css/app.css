@@ -57,6 +57,7 @@ cm-attachments {
 
 cm-message {
     margin:         2em 0;
+    word-wrap:      break-word;
 }
 
 cm-message article.left{

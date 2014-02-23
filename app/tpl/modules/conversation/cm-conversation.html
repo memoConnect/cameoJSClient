@@ -23,7 +23,7 @@
 			<i
 				class		= "fa fa-times-circle"
 				style		= "cursor:pointer"
-				ng-click	= "removeRecipient(recipient)"
+				ng-click	= "recipient.removeFrom(conversation)"
 			>
 			</i> 
 			{{$last? '' : ','}}
@@ -40,7 +40,7 @@
 		<i
 			class	 =	"fa fa-key"
 			style	 =	"cursor: pointer"
-			ng-click =	"getRandomPassphrase()"
+			ng-click =	"generatePassphrase()"
 		>
 		</i>				
 
@@ -64,7 +64,10 @@
 	<div class="cm-messages">
 		<!-- performance ?? -->
 		{{'CONVERSATION.TAG.MESSAGES' |cmTranslate}}:
-		<cm-message cm-data = "message" ng-repeat = "message in conversation.messages"></cm-message>
+		<cm-message 
+			ng-repeat		= "message in conversation.messages"
+			cm-data 		= "message" 
+		></cm-message>
 	</div>
 	<div>
 		<textarea cm-message-input ng-model="my_message_text"></textarea>

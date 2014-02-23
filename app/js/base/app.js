@@ -14,6 +14,7 @@ define([
     'cmContacts',
     'mUser',
     'mContacts'
+    
 ], function (angularAMD) {
     'use strict';
 
