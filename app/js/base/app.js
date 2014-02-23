@@ -13,7 +13,9 @@ define([
     'cmConversations',
     'cmContacts',
     'mUser',
-    'mContacts'
+    'mContacts',
+
+    'jquery'
     
 ], function (angularAMD) {
     'use strict';

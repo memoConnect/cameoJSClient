@@ -10,8 +10,7 @@ define([
     'cmContacts',
     'util-base64',
     'util-passchk-fast',    
-   '_v/captchagen/captchagen',
-
+   	'_v/captcha/captchagen/captchagen',
 
 ], function () {
     'use strict';
@@ -184,11 +183,11 @@ define([
 					}
 				}
 
-				this.addMessage = function(message){					
+				this.addMessage = function(message) {					
 					this.messages.push(message)
 					if(this.passphrase) message.decryptWith(this.passphrase)
 					return this
-				}				
+				}
 
 				this.addRecipient = function(recipient){
 					this.recipients.push(recipient)										
@@ -264,6 +263,10 @@ define([
 				this.decryptWith = function(passphrase) {
 					this.decryptedBody = cmCrypt.decrypt(passphrase, this.body)
 					return this
+				}
+
+				this.attachCaptcha = function(image_data) {
+					this.body += '::'+image_data
 				}
 
 				this.sendTo = function (conversation) {
@@ -392,56 +395,21 @@ define([
 										$scope.my_message_text = ""
 									}
 
+									$scope.sendCaptcha = function(){
+										var captchaImageData = $element.find('canvas')[0].toDataURL("image/png")  
+
+										captchaImageData
+										?	$scope.conversation										
+											.newMessage(captchaImageData)
+											.sendTo($scope.conversation)
+										:	null
+									}
+
 									$scope.generatePassphrase = function(){
 										var date = new Date()
 										$scope.passphrase = Base64.encode(cmCrypt.hash(Math.random()*date.getTime())).substr(5, 10)
-									}
-									
-									/*
-									var conversation_id 		= $scope.$eval($attrs.cmConversations || $attrs.conversationId),
-										conversation_subject	= $scope.$eval($attrs.cmSubject),
-										
-
-									$scope.sendMessage = function(message){
-										
-										var encrypted_message_text = cmCrypt.encryptWithShortKey($scope.passphrase, $scope.my_message_text) 
-
-										cmConversations.sendMessage($scope.conversation.id, encrypted_message_text)
-										.then(function(message){
-											$scope.decryptMessage(message)
-											$scope.conversation.messages.push(message)
-											$scope.my_message_text = ""
-										})
-									}
-
-									$scope.addRecipient = function(recipient){
-										cmConversations.addRecipient($scope.conversation.id, recipient.id)
-										.then(function(){
-											//Das sollte besser gleich in cmConversations passieren
-											$scope.conversation.recipients.push({
-												//VORLÄUFIG!:
-												id: recipient.id,
-												displayName: recipient.cameoId
-											}) 
-										})
-									}
-
-									$scope.removeRecipient = function(recipient){
-										cmConversations.removeRecipient($scope.conversation.id, recipient.id)
-										.then(function(){
-											var index
-
-											$scope.conversation.recipients.forEach(function(rec, i){
-												if(rec.id == recipient.id) index = i
-											})
-
-											$scope.conversation.recipients.splice(index,1)
-										})
-									}
-
-																	
-
-									*/
+									}				
+								
 									 
 								}
 			}
@@ -467,6 +435,9 @@ define([
 									$scope.message = $scope.$eval($attrs.cmData) || $scope.$eval($attrs.cmMessage)									
 
 									$scope.message.decryptWith($scope.passphrase)							
+
+
+									if($scope.message.body.match(/^data:image/)) $scope.hasCaptcha = true
 
 									cmAuth.getIdentity()
 									.then(function(identity){
@@ -632,8 +603,9 @@ define([
    
 						            var captcha;
 
-						            $scope.captchaDim = "700x150";
-						            $scope.captchaFont = "sans";
+						            $scope.captchaDim = "700x150"
+						            $scope.captchaFont = "sans"
+						            $scope.captchaImageData = ''
 
 						            $scope.create = function(){
 						                var dim = $scope.captchaDim.split("x");
@@ -649,10 +621,14 @@ define([
 						            };
 
 						            $scope.refreshCaptcha = function(){
-						                captcha.refresh($scope.passphrase);
-						            }					            
+						                captcha.refresh($scope.passphrase);						                
+						            }
 
-						            $scope.create();        
+						            $scope.$watch('passphrase', $scope.refreshCaptcha)	    
+
+						            $scope.create();
+						            
+
 								}
 
 				
