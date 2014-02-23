@@ -84,8 +84,20 @@
 
 
     "CONVERSATION" : {
+        "HEADING": "Conversation",
         "LABEL" : {
-            "SEND" : "send"
+            "SEND" : "send",
+            "REQUEST_CAPTCHA" : "ask for Captcha",
+            "SEND_CAPTCHA" : "send Captcha"
+        },
+        "TAG" : {
+            "RECIPIENTS" : "Recipients",
+            "SUBJECT": "Subject",            
+            "PASSPHRASE": "Passphrase",
+            "MESSAGES" : "Messages"
+        },
+        "TEXT" : {
+            "REQUEST_CAPTCHA" : "Please send a (new) captcha."
         }
     },
 
@@ -119,7 +131,11 @@
         "BUTTON": {
             "RESET": "reset",
             "SUBMIT": "save"
+        },
+        "TAG" : {
+            "FILTER": "Filter"
         }
+
 	},
 
     "DIRV": {

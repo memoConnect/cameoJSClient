@@ -1,4 +1,5 @@
 <section>
+	<h3>{{"CONVERSATION.HEADING"|cmTranslate}}</h3>	
 	<div class="cm-tools">		
 		<i
 			class	 = "fa fa-plus-square" 			
@@ -15,6 +16,7 @@
 			ng-show	 = "show_contacts"
 		>
 		</i>
+
 
 		{{'CONVERSATION.TAG.RECIPIENTS' |cmTranslate}}:
 
@@ -33,8 +35,14 @@
 		<cm-contacts-list ng-show ="show_contacts"></cm-contacts-list>
 
 	</div>
+	<div>
+		{{'CONVERSATION.TAG.SUBJECT' |cmTranslate}}:
+		<input type="text" ng-model = "conversation.subject" ng-if ="new_conversation ">
+		<span ng-if ="!new_conversation && conversation.subject "> {{conversation.subject}} </span>
+	</div>
 
 	<div>
+		{{"CONVERSATION.TAG.PASSPHRASE"|cmTranslate}}:
 		<input type ="{{revealPassword ? 'text' : 'password'}}" ng-model="passphrase" cm-passphrase>
 		 
 
@@ -70,19 +78,19 @@
 		<div
 			ng-show = "show_captcha"			
 		>
+			<cm-captcha ></cm-captcha><br/>
 			<i class="fa fa-refresh" style ="cursor:pointer" ng-click="refreshCaptcha()"></i>
 			<button ng-click = "requestCaptcha()"> {{"CONVERSATION.LABEL.REQUEST_CAPTCHA" | cmTranslate}}</button>
 			<button ng-click = "sendCaptcha()"> {{"CONVERSATION.LABEL.SEND_CAPTCHA" | cmTranslate}}</button>
-			<cm-captcha ></cm-captcha><br/>
-			
-			
 		</div>
 
 	</div>
 
+	<br/>
+
 	<div class="cm-messages">
 		<!-- performance ?? -->
-		{{'CONVERSATION.TAG.MESSAGES' |cmTranslate}}:
+		<h4>{{'CONVERSATION.TAG.MESSAGES' |cmTranslate}}:</h4>
 		<cm-message 
 			ng-repeat		= "message in conversation.messages"
 			cm-data 		= "message" 
@@ -90,12 +98,7 @@
 	</div>
 	<div>
 		<textarea cm-message-input ng-model="my_message_text"></textarea>
-	</div>
-	<div class="cm-tools">
-		Security:
-		<cm-security></cm-security>
-		<cm-captcha></cm-captcha>
-	</div>
+	</div>	
 	<div>
 		<cm-upload></cm-upload>
 		<button ng-click="sendMessage()">{{"CONVERSATION.LABEL.SEND" | cmTranslate}}</button>

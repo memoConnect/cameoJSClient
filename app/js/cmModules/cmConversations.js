@@ -238,12 +238,14 @@ define([
 				}
 
 				this.update = function() {
+					/*
 					cmConversationsAdapter.getConversation(this.id)
 					.then(
 						function(data){
 							console.dir(data)
 						}
 					)
+					*/
 				}
 				
 				this.init(data)			
@@ -275,10 +277,6 @@ define([
 					var decrypted_text = cmCrypt.decrypt(passphrase, this.body)
 					this.decryptedBody = decrypted_text || this.body
 					return !!decrypted_text
-				}
-
-				this.attachCaptcha = function(image_data) {
-					this.body += '::'+image_data
 				}
 
 				this.sendTo = function (conversation) {
@@ -403,32 +401,44 @@ define([
 
 
 									$scope.sendMessage = function(){
-										$scope.my_message_text && $scope.conversation.passphraseValid()
+										var passphrase_valid 	= !!$scope.conversation.passphraseValid(),
+											message_empty		= !$scope.my_message_text,
+											recipients_missing	= $scope.conversation.recipients.length <=1
+
+										!message_empty && passphrase_valid && !recipients_missing
 										?	$scope.conversation										
 											.newMessage($scope.my_message_text)
 											.encryptWith($scope.passphrase) 
 											.sendTo($scope.conversation)
 											.then(function(){
 												if($scope.new_conversation) $location.url('/conversation/'+$scope.conversation.id)
+												$scope.my_message_text = ""
 											})
-										:	($scope.my_message_text ? cmNotify.warn('CONVERSTAION.WARN.PASSPHRASE_INVALID') : null)
+										:	null
 
-										$scope.my_message_text = ""
+										if(!passphrase_valid)	cmNotify.warn('CONVERSTAION.WARN.PASSPHRASE_INVALID')
+										if(message_empty)		cmNotify.warn('CONVERSTAION.WARN.MESSAGE_EMPTY')
+										if(recipients_missing)	cmNotify.warn('CONVERSTAION.WARN.RECIPIENTS_MISSING')
+
+										
 									}
 
 									$scope.sendCaptcha = function(){
-										var captchaImageData = $element.find('canvas')[0].toDataURL("image/png")  
+										var passphrase_valid 	= !!$scope.conversation.passphraseValid(),
+											captchaImageData = $element.find('canvas')[0].toDataURL("image/png")  
 
-										captchaImageData
+										captchaImageData && passphrase_valid
 										?	$scope.conversation										
 											.newMessage(captchaImageData)
 											.sendTo($scope.conversation)
 										:	null
+
+										if(!passphrase_valid)	cmNotify.warn('CONVERSTAION.WARN.PASSPHRASE_INVALID')
 									}
 
 									$scope.requestCaptcha = function() {																				
 										$scope.conversation										
-										.newMessage("CONVERSATION.TEXT.REQUEST_CAPTCHA")
+										.newMessage(":requestCaptcha")
 										.sendTo($scope.conversation)										
 									}
 
@@ -464,7 +474,9 @@ define([
 									$scope.message.decryptWith($scope.passphrase)							
 
 
-									if($scope.message.body.match(/^data:image/)) $scope.hasCaptcha = true
+									if($scope.message.body.match(/^data:image/)) 		$scope.hasCaptcha = true
+									if($scope.message.body.match(/:requestCaptcha/)) 	$scope.captchaRequest = true
+										
 
 									cmAuth.getIdentity()
 									.then(function(identity){
@@ -577,8 +589,7 @@ define([
 										if(event.which == 9){
 											insertTextAtCursor(this, '\t')
 											return(false)
-										}
-										scope.update()
+										}										
 									})
 
 
@@ -647,7 +658,7 @@ define([
 
 				restrict: 		'AE',
 				require:		'^cmConversation',			
-				template:		'<canvas id="canvas" width="100" height="37"></canvas>', //MOCK
+				template:		'<canvas id="canvas" width="100" height="37" class="img-rounded"></canvas>', //MOCK
 
 				controller:		function($scope, $element, $attrs){
    

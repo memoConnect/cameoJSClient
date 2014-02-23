@@ -84,8 +84,20 @@
     },	
 
     "CONVERSATION" : {
+        "HEADING": "Conversation",
         "LABEL" : {
-            "SEND" : "abschicken"
+            "SEND" : "abschicken",
+            "REQUEST_CAPTCHA" : "Captcha anfordern",
+            "SEND_CAPTCHA" : "Captcha senden"
+        },
+        "TAG" : {
+            "RECIPIENTS" : "Empfänger",
+            "SUBJECT": "Betreff",            
+            "PASSPHRASE": "Schlüssel",
+            "MESSAGES" : "Nachrichten"
+        },
+        "TEXT" : {
+            "REQUEST_CAPTCHA" : "Bitte ein (neues) Captcha senden."
         }
     },
 	
@@ -118,6 +130,9 @@
         "BUTTON": {
             "RESET": "zurücksetzen",
             "SUBMIT": "speichern"
+        },
+        "TAG":{
+            "FILTER" : "Filter"
         }
 	},
 
