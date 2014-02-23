@@ -24,7 +24,7 @@ module.exports = function(config) {
 
         // generate js files from html templates to expose them during testing.
         preprocessors: {
-            'app/tpl/**/*.html': ['ng-html2js']
+            'app/**/*.html': ['ng-html2js']
 //            'app/js/**/*.js': ['coverage']
         },
 
