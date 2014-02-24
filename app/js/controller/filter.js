@@ -4,7 +4,7 @@ define([
 ], function (app) {
     'use strict';
 
-    app.controller('FilterCtrl', [
+    app.register.controller('FilterCtrl', [
         '$scope',
         'cm',
         '$http',
@@ -39,7 +39,7 @@ define([
 
                 $http({
                         method: "POST",
-                        url: cameo.restApi + "/message/filter?token=" + $cookieStore.get("token") + "&offset=" + $scope.offset + "&limit=" + $scope.limit,
+                        url: app.cameo.restApi + "/message/filter?token=" + $cookieStore.get("token") + "&offset=" + $scope.offset + "&limit=" + $scope.limit,
                         data: $scope.filter
                     }
                 ).success(function (res) {
@@ -54,7 +54,7 @@ define([
             $scope.getMessageCount = function () {
                 $http({
                     method: "POST",
-                    url: cameo.restApi + "/message/filter/count?token=" + $cookieStore.get("token"),
+                    url: app.cameo.restApi + "/message/filter/count?token=" + $cookieStore.get("token"),
                     data: $scope.filter
                 }).success(function (res) {
                     $scope.messageCount = res.data;

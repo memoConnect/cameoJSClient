@@ -122,8 +122,8 @@ define([
                 }
 
                 // check cameoId
-                if($scope.registrationForm.cameoid.$viewValue != ''){
-                    data.cameoId = $scope.registrationForm.cameoid.$viewValue;
+                if($scope.registrationForm.cameoId.$viewValue != ''){
+                    data.cameoId = $scope.registrationForm.cameoId.$viewValue;
                 }
 
 
