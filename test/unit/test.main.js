@@ -52,6 +52,7 @@ requirejs.config({
         'cmNotify': 'cmModules/cmNotify',
         'cmProfile': 'cmModules/cmProfile',
         'cmContacts': 'cmModules/cmContacts',
+        'cmConversations': 'cmModules/cmConversations',
 
         // Model
         'mContacts': 'model/mContacts',

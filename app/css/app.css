@@ -34,4 +34,48 @@ li.message-list {
 
 }
 
+
+/*.ng-dirty .ng-invalid {*/
+    /*border:1px solid Red;*/
+/*}*/
+/*.ng-valid {*/
+    /*border:1px solid green;*/
+/*}*/
+
+
+cm-message,
+cm-conversation,
+cm-message-input {
+    display:        block;
+}
+
+cm-avatar,
+cm-attachments {
+    display:        inline-block;
+}
+
+
+cm-message {
+    margin:         2em 0;
+    word-wrap:      break-word;
+}
+
+cm-message article.left{
+    text-align:     left;
+}
+
+cm-message article.right{
+    text-align:     right;
+}
+
+cm-message footer{
+    clear:          both;
+}
+
+textarea[cm-message-input] {
+    width:          100%;
+    min-height:     3em;
+}
+
 .alert-mini-padding{padding:5px}
+
