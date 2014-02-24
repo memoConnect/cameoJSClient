@@ -79,9 +79,9 @@ define([
                         })
                     },
 
-                    getIdentity: function(){
+                    getIdentity: function(id){
                         return cmApi.get({
-                            url: '/identity'
+                            url: '/identity'+ (id ? '/'+id : '')
                         })
                     }
                 }

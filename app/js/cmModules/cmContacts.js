@@ -8,9 +8,11 @@ define([
     var cmContacts = angular.module('cmContacts',['cmApi','cmLogger','Util']);
 
     cmContacts.service('cmContacts',[
+
         'cmApi',
         'cmLogger',
         'Util',
+
         function(cmApi, cmLogger, Util){
             return {
                 /**
@@ -94,4 +96,5 @@ define([
             }
         }
     ])
+    
 });

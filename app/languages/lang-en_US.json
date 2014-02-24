@@ -81,6 +81,31 @@
         "LABEL_PW": "Password",
         "LABEL_CONFIRM": "Confirm Password"
     },
+
+
+    "CONVERSATION" : {
+        "HEADING": "Conversation",
+        "LABEL" : {
+            "SEND" : "send",
+            "REQUEST_CAPTCHA" : "ask for Captcha",
+            "SEND_CAPTCHA" : "send Captcha"
+        },
+        "TAG" : {
+            "RECIPIENTS" : "Recipients",
+            "SUBJECT": "Subject",            
+            "PASSPHRASE": "Passphrase",
+            "MESSAGES" : "Messages"
+        },
+        "TEXT" : {
+            "REQUEST_CAPTCHA" : "Please send a (new) captcha."
+        },
+        "WARN" : {
+            "MESSAGE_EMPTY" : "The input field is empty.",
+            "RECIPIENTS_MISSING" : "Please add at least one recipient.",
+            "PASSPHRASE_INVALID" : "Passphrase invalid."
+        }
+    },
+
 	
 	"CONTACTS": {
 		"WELCOME": "Addressbook",
@@ -111,7 +136,11 @@
         "BUTTON": {
             "RESET": "reset",
             "SUBMIT": "save"
+        },
+        "TAG" : {
+            "FILTER": "Filter"
         }
+
 	},
 
     "DIRV": {

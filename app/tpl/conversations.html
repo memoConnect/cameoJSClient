@@ -1,0 +1,22 @@
+<div ng-controller="ConversationsCtrl">
+    <h3>Conversations</h3>
+    <a href="#/conversation">new conversation</a>
+    <br/>
+    <br/>
+    <ul>
+        <li ng-repeat = "conversation in conversations">
+            <a href = "#/conversation/{{conversation.id}}">
+                Subject :   {{conversation.subject}} <br/>
+                Id:         {{conversation.id}} <br/>
+                Recipients:                
+                <span ng-repeat ="recipient in conversation.recipient">
+                        {{recipient}}
+                        {{$last ? '' : ','}}
+                </span> <br/>
+                Messages:   {{conversation.count}}
+            </a>
+            <br/>
+            <br/>
+        </li>
+    </ul>
+</div>

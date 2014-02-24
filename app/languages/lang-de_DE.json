@@ -80,6 +80,30 @@
     "PASSWORD": {
         "LABEL_PW": "Passwort",
         "LABEL_CONFIRM": "Passwort bestätigen"
+
+    },	
+
+    "CONVERSATION" : {
+        "HEADING": "Conversation",
+        "LABEL" : {
+            "SEND" : "abschicken",
+            "REQUEST_CAPTCHA" : "Captcha anfordern",
+            "SEND_CAPTCHA" : "Captcha senden"
+        },
+        "TAG" : {
+            "RECIPIENTS" : "Empfänger",
+            "SUBJECT": "Betreff",            
+            "PASSPHRASE": "Schlüssel",
+            "MESSAGES" : "Nachrichten"
+        },
+        "TEXT" : {
+            "REQUEST_CAPTCHA" : "Bitte ein (neues) Captcha senden."
+        },
+        "WARN" : {
+            "MESSAGE_EMPTY" : "Das Textfeld ist leer.",
+            "RECIPIENTS_MISSING" : "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
+            "PASSPHRASE_INVALID" : "Ungültiger Schlüssel."
+        }
     },
 	
 	"CONTACTS": {
@@ -111,6 +135,9 @@
         "BUTTON": {
             "RESET": "zurücksetzen",
             "SUBMIT": "speichern"
+        },
+        "TAG":{
+            "FILTER" : "Filter"
         }
 	},
 

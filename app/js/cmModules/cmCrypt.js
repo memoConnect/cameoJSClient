@@ -11,7 +11,7 @@ define([
     var cmCrypt = angular.module('cmCrypt', ['cmLogger']);
 
     cmCrypt.factory('cmCrypt',
-        function ($log) {
+        function (cmLogger) {
 
             return {
                 /**
@@ -46,7 +46,7 @@ define([
                 /**
                  * this method encrypts strings
                  * @param secretKey a secret key with min len of 60 chars
-                 * @param secretString a string that should be enrypted
+                 * @param secretString a string that should be encrypted
                  * @returns base64 encoded encrypted string
                  */
                 encrypt: function (secretKey, secretString) {
@@ -54,6 +54,7 @@ define([
 
                     if (null == secretString)
                         return "";
+
                     if (secretKey.length < 60)
                         return "";
 
@@ -64,16 +65,23 @@ define([
                 /**
                  * this method decrypts uuencoded strings
                  * @param secretKey a secret key
-                 * @param secretString a base64 encoded string that should be derypted
+                 * @param secretString a base64 encoded string that should be decrypted
                  * @returns decrypted string
                  */
                 decrypt: function (secretKey, secretString) {
                     if (null == secretString)
-                        return "";
+                        return false
 
-                    var decodedSecretString = Base64.decode(secretString);
+                    var decodedSecretString = Base64.decode(secretString),
+                        decryptedString
 
-                    return sjcl.decrypt(secretKey, decodedSecretString)
+                    try {
+                        decryptedString = sjcl.decrypt(secretKey, decodedSecretString)
+                    } catch (e) {
+                        cmLogger.warn('Unable to decrypt.', e)
+                    }
+
+                    return decryptedString || false
                 }
 
             }
