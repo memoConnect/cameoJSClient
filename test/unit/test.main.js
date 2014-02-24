@@ -14,6 +14,7 @@ requirejs.config({
 
     paths: {
         'app': 'base/app',
+        'env': 'base/env',
         // angular library
         'angular': 'vendor/angular/angular',
         'angular-mocks': '../../test/lib/angular/angular-mocks',
