@@ -6,3 +6,4 @@
 *.iml
 tree.txt
 *.log
+/app/js/base/env.js
