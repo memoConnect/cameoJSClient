@@ -98,6 +98,11 @@
         },
         "TEXT" : {
             "REQUEST_CAPTCHA" : "Bitte ein (neues) Captcha senden."
+        },
+        "WARN" : {
+            "MESSAGE_EMPTY" : "Das Textfeld ist leer.",
+            "RECIPIENTS_MISSING" : "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
+            "PASSPHRASE_INVALID" : "Ungültiger Schlüssel."
         }
     },
 	

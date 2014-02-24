@@ -416,9 +416,9 @@ define([
 											})
 										:	null
 
-										if(!passphrase_valid)	cmNotify.warn('CONVERSTAION.WARN.PASSPHRASE_INVALID')
-										if(message_empty)		cmNotify.warn('CONVERSTAION.WARN.MESSAGE_EMPTY')
-										if(recipients_missing)	cmNotify.warn('CONVERSTAION.WARN.RECIPIENTS_MISSING')
+										if(!passphrase_valid)	cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID')
+										if(message_empty)		cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY')
+										if(recipients_missing)	cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING')
 
 										
 									}
