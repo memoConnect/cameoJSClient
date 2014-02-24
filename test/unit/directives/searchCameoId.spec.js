@@ -5,9 +5,9 @@ define([
 
     describe('Directive cmSearchCameoId', function () {
         var $scope, directive
-        // karma-ng-html2js-preprocessor-requirejs edit with loadOnlyHtml
+
         angularAMD.inject(function ($rootScope, $compile, $templateCache) {
-            $templateCache.put('js/directives/searchCameoId.html', tpl)
+            $templateCache.put('js/directives/searchCameoId.html', tpl);
 
             directive = angular.element('<div cm-search-cameo-id></div>')
             directive = $compile(directive)($rootScope);
