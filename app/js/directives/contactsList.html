@@ -4,7 +4,7 @@
         <ul class="nav nav-pills nav-stacked col-sm-6" ng-init="getContacts()">
             <li ng-repeat="cameoUser in contacts">
                 <a>
-                    {{cameoUser.identity.cameoId}}
+                    {{cameoUser.identity.displayName}} ({{cameoUser.identity.cameoId}})
                     <i class="fa fa-trash-o pull-right" ng-click="deleteContact(cameoUser.identityId)"></i>
                     <i class="fa fa-pencil pull-right" ng-click="editContact(cameoUser.identityId)"></i>
                 </a>
