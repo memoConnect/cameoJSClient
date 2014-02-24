@@ -3,7 +3,6 @@ define([
 ], function (angularAMD, app, tpl) {
     'use strict';
 
-    // karma-ng-html2js-preprocessor-requirejs edit with loadOnlyHtml
     //<div cm-type-chooser choose-to-data="phoneProvider" choose-type="provider"></div>
     //<div cm-type-chooser choose-to-data="phoneProvider"></div>
     //<div cm-type-chooser></div>

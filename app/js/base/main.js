@@ -4,6 +4,7 @@ require.config({
     urlArgs: "bust=" + (new Date()).getTime(),
     paths: {
         'app': 'base/app',
+        'env': 'base/env',
         // angular library
         'angular': 'vendor/angular/angular',
         'angular-route': 'vendor/angular/angular-route',
@@ -68,5 +69,5 @@ require.config({
 //        'bootstrap': ['jquery']
     },
     // kick start application
-    deps: ['app']
+    deps: ['app','env']
 });

@@ -8,37 +8,27 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-//            {pattern: 'app/languages/*.jsons', included: false, served: true, autoWatch: true},
+            // all frontend files
             {pattern: 'app/js/**/*.js', included: false},
-
+            // tests
             {pattern: 'test/unit/**/*.spec.js', included: false},
-//            {pattern: 'test/unit/app.spec.js', included: false},
-//            {pattern: 'test/unit/controller/contacts.spec.js', included: false},
-
+            // test lib
             {pattern: 'test/lib/**/*.js', included: false},
-            // included true!!! requirejs wrapper
+            // requirejs main file
             {pattern: 'test/unit/test.main.js', included: true},
-            // load templates
-//            {pattern: 'app/**/*.html', included: false}
+            // load and json templates
+            {pattern: 'app/**/*.html', included: false},
+            {pattern: 'app/**/*.json', included: false}
         ],
 
         // generate js files from html templates to expose them during testing.
         preprocessors: {
-            'app/**/*.html': ['ng-html2js']
-//            'app/js/**/*.js': ['coverage']
+            'app/**/*.html': ['html2js-requirejs'],
+            'app/**/*.json': ['html2js-requirejs']
         },
 
-        ngHtml2JsPreprocessor: {
-            // strip this from the file path
-            stripPrefix: 'app/',
-            // prepend this to the
-//            prependPrefix: 'served/',
-
-            returnOnlyHTML: true
-
-            // setting this option will create only a single module that contains templates
-            // from all the files, so you can load them all with module('foo')
-//            moduleName: 'templates'
+        html2JsRequireJsPreprocessor: {
+            stripPrefix: 'app/'
         },
 
         // list of files to exclude

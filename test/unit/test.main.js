@@ -1,5 +1,4 @@
 var tests = [];
-//var tests = ['/base/test/unit/app.spec.js'];
 //console.log(window.__karma__.files)
 for (var file in window.__karma__.files) {
     if (window.__karma__.files.hasOwnProperty(file)) {
@@ -15,6 +14,7 @@ requirejs.config({
 
     paths: {
         'app': 'base/app',
+        'env': 'base/env',
         // angular library
         'angular': 'vendor/angular/angular',
         'angular-mocks': '../../test/lib/angular/angular-mocks',
@@ -67,13 +67,13 @@ requirejs.config({
         {name: '_v', location: 'vendor'},
         {name: '_s', location: 'service'},
         {name: '_c', location: 'controller'},
-        {name: '_d', location: 'directives'}
+        {name: '_d', location: 'directives'},
+        {name: '_l', location: '../languages'}
     ],
 
     shim: {
         'app': ['angularAMD'],
 
-        'angularAMD': ['angular'],
         'angular-route': ['angular'],
         'angular-cookies': ['angular'],
         'angular-translate': ['angular'],
