@@ -1,5 +1,5 @@
 require.config({
-    baseUrl: "js",
+    baseUrl: "",
     // alias libraries paths
     urlArgs: "bust=" + (new Date()).getTime(),
     paths: {

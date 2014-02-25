@@ -56,7 +56,7 @@ define([
                 path_to_languages = path;
 
                 $translateProvider.useStaticFilesLoader({
-                    prefix: path+'/lang-',
+                    prefix: path+'/',
                     suffix: '.json' + (cache_lang_files ? '' : '?bust=' + (new Date()).getTime())
                 });
 

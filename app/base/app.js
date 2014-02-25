@@ -42,11 +42,10 @@ define([
     ]);
 
     app.cameo = {
-//        restApi:              "http://localhost:9000/api/v1",
         restApi: "https://dev.cameo.io/api/v1",
         token: null,
         supported_languages: ['de_DE', 'en_US'],
-        path_to_languages: 'languages',
+        path_to_languages: 'i18n',
         cache_lang_files: false
     };
 
