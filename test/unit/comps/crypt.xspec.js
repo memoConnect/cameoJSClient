@@ -1,4 +1,4 @@
-define(['angularAMD','cmCrypt','util-base64'], function (angularAMD) {
+define(['angularAMD','ngload!cmCrypt','util-base64'], function (angularAMD) {
     'use strict';
 
     describe('cmCrypt', function () {
