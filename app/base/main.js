@@ -29,13 +29,15 @@ require.config({
         // crypto
         'crypto-sjcl': 'vendor/sjcl/main.min',
 
-        // cmModules
+        // global provider without AMD
         'cmApi': 'shared/api/api',
-        'cmAuth': 'shared/auth/auth',
-        'cmCrypt': 'shared/crypt/crypt',
         'cmLanguage': 'shared/i18n/language',
         'cmLogger': 'shared/logger/logger',
         'cmNotify': 'shared/notify/notify',
+
+        // ??? modules
+        'cmAuth': 'shared/auth/auth',
+        'cmCrypt': 'shared/crypt/crypt',
 
         'cmProfile': 'comps/cmProfile',
         'cmConversations': 'comps/conversation/cmConversations',

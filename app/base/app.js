@@ -3,7 +3,7 @@ define([
     'angular-route',
     'angular-cookies',
 //
-//    'cmApi',
+    'cmApi',
 //    'cmAuth',
 //    'cmCrypt',
     'cmLanguage',
@@ -24,7 +24,7 @@ define([
         'ngCookies',
 
         // Module
-//        'cmApi',
+        'cmApi',
 //        'cmAuth',
 //        'cmCrypt',
         'cmLanguage',
@@ -48,11 +48,12 @@ define([
 
     //Module Configuration:
     app.config([
-        'cmApiProvider',
-        'cmAuthProvider',
         'cmLanguageProvider',
         'cmLoggerProvider',
-        function (cmApiProvider, cmAuthProvider, cmLanguageProvider, cmLoggerProvider){
+        'cmApiProvider',
+//        'cmAuthProvider',
+        function (cmLanguageProvider, cmLoggerProvider, cmApiProvider){
+//            cmApiProvider, cmAuthProvider,
             cmLoggerProvider
             .debugEnabled(true)
 
@@ -79,7 +80,8 @@ define([
             // client dynamic pages
             $routeProvider.
             when('/login', angularAMD.route({
-                templateUrl: 'routes/login/login.html'
+                templateUrl: 'routes/login/login.html',
+                controllerUrl: 'routes/login/login-ctrl'
             })).
             otherwise({
                 redirectTo: '/login'
@@ -115,12 +117,11 @@ define([
                 templateUrl: 'routes/filter/filter.html',
                 controllerUrl: 'routes/filter/filter-ctrl'
             }));
-
+            // double route for contacts while angular doesn't support wildcard
             var routeContacts = angularAMD.route({
                 templateUrl: 'routes/contacts/contacts.html',
                 controllerUrl: 'routes/contacts/contacts-ctrl'
             });
-            
             $routeProvider.
                 when('/contacts', routeContacts).
                 when('/contacts/:tab', routeContacts);
@@ -142,7 +143,7 @@ define([
         }
     ]);
 
-    app.run(['$rootScope', '$location', '$cookieStore','ModelContacts',
+    app.run(['$rootScope', '$location', '$cookieStore',
         function ($rootScope, $location, $cookieStore) {
             $rootScope.$on("$routeChangeStart", function () {
                 var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/purl\/[a-zA-Z0-9]{1,})$/;
@@ -164,6 +165,8 @@ define([
     ]);
 
     angularAMD.bootstrap(app);
+
+//    require('ModelContacts')
 
     return app;
 });

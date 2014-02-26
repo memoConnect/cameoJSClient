@@ -2,12 +2,11 @@ define([
     'app',
     'cmAuth',
     'cmLogger',
-], function () {
+], function (app) {
     'use strict';
 
-    var mUser = angular.module('mUser',[]);
-
-    mUser.service('ModelUser', function(cmAuth, $q, $rootScope){
+    app.register.service('ModelUser',['cmAuth', '$q', '$rootScope',
+    function(cmAuth, $q, $rootScope){
         var self = this;
 
         var dataModel = {
@@ -67,7 +66,7 @@ define([
 
         function resetUser(){
             self.data = dataModel;
-        };
+        }
 
         function loadIdentity(){
             cmAuth.getIdentity().then(
@@ -76,12 +75,12 @@ define([
                     self.data.isActive = true;
                 }
             )
-        };
+        }
 
         $rootScope.$on('logout', function(){
             resetUser();
         });
 
         init();
-    });
+    }]);
 });

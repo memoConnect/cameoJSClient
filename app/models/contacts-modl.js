@@ -3,12 +3,10 @@ define([
     'cmLogger',
     'cmContacts',
     'mUser'
-], function () {
+], function (app) {
     'use strict';
 
-    var mContacts = angular.module('mContacts',[]);
-
-    mContacts.service('ModelContacts',[
+    app.register.service('ModelContacts',[
         'ModelUser',
         'cmContacts',
         'cmLogger',
