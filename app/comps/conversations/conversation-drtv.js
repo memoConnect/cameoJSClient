@@ -23,7 +23,7 @@ define([
         function (cmConversationsModel, cmCrypt, cmLogger, cmNotify, $location) {
             return {
                 restrict: 'AE',
-                templateUrl: 'comps/conversation/conversation.html',
+                templateUrl: 'comps/conversations/conversation.html',
                 scope: true,
 
                 controller: function ($scope, $element, $attrs) {
