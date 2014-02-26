@@ -1,3 +1,4 @@
+/*
 define([
     'app',
 
@@ -10,9 +11,10 @@ define([
     'util-passchk-fast',
     '_v/captcha/captchagen/captchagen'
 ], function (app) {
+*/    
     'use strict';
 
-    app.register.directive('cmMessageInput', [
+    cmConversations.directive('cmMessageInput', [
         function () {
             return {
 
@@ -77,4 +79,6 @@ define([
             }
         }
     ])
+/*
 });
+*/

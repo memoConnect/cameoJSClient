@@ -1,4 +1,5 @@
-require.config({
+
+var config = {
     baseUrl: "",
     // alias libraries paths
     urlArgs: "bust=" + (new Date()).getTime(),
@@ -40,7 +41,7 @@ require.config({
         'cmCrypt': 'shared/crypt/crypt',
 
         'cmProfile': 'comps/cmProfile',
-        'cmConversations': 'comps/conversation/cmConversations',
+        //'cmConversations': 'comps/conversation/cmConversations',
         'cmContacts': 'comps/contacts/cmContacts',
 
         // Models
@@ -50,9 +51,30 @@ require.config({
         // shared
         'util': 'shared/util',
 
-        'jquery': 'vendor/jquery/jquery-2.1.0'
+        'jquery': 'vendor/jquery/jquery-2.1.0',
 //        'bootstrap': 'vendor/bootstrap/bootstrap.min',
+
+        'blub' : 'comps/conversations/test'
+        
+
     },
+
+    bundles : {
+        'pckConversations' : [
+            'conversationsAdapter-srvc',
+            /*
+            'serviceConversationsAdapter',
+            'serviceConversationsModel',
+            'directiveAttachments',
+            'directiveAvatar',
+            'directiveCaptcha',
+            'directiveConversation',
+            'directiveCconversation-input',
+            'directiveMessage'
+        */
+        ]
+    },
+
     packages: [
         {name: '_v', location: 'vendor'},
 //        {name: '_s', location: 'service'},
@@ -68,9 +90,41 @@ require.config({
         'angular-translate-storage-cookie': ['angular'],
         'angular-translate-storage-local': ['angular'],
         'angular-growl': ['angular'],
-        'cmLanguage': ['angular-translate']
+        'cmLanguage': ['angular-translate'],
 //        'bootstrap': ['jquery']
     },
     // kick start application
     deps: ['app','env']
-});
+}
+
+
+
+function addPackage(package_name, package) {
+    for(var alias in package.resources){
+        config.paths[alias] = package.resources[alias]
+        config.shim[alias]  = package_name+'-root'
+    }
+
+    config.paths[package_name+'-root'] = package.root
+    config.paths[package_name] = 'comps/conversations/test'
+    config.shim[package_name] = Object.keys(package.resources) 
+}
+
+
+addPackage('pckConversations', {
+    root:  'comps/conversations/conversations-module',
+    resources : {
+        'serviceConversationsAdapter'   : 'comps/conversations/conversationsAdapter-srvc',
+        'serviceConversationsModel'     : 'comps/conversationsModel-srvc',
+        'directiveAttachments'          : 'comps/conversations/attachments-drtv',
+        'directiveAvatar'               : 'comps/conversations/avatar-drtv',
+        'directiveCaptcha'              : 'comps/conversations/captcha-drtv',
+        'directiveConversation'         : 'comps/conversations/conversation-drtv',
+        'directiveConversation-input'   : 'comps/conversations/conversation-input-drtv',
+        'directiveMessage'              : 'comps/conversations/message-drtv' 
+    }
+})
+
+console.dir(config)
+
+require.config(config)
