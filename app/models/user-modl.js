@@ -32,7 +32,7 @@ define([
             }1
         }
 
-        this.data = dataModel;
+        this.data = angular.extend({}, dataModel);
 
         this.isAuth = function(){
             if(cmAuth.getToken() != undefined && cmAuth.getToken() != 'undefined'){
@@ -65,7 +65,7 @@ define([
         };
 
         function resetUser(){
-            self.data = dataModel;
+            self.data = angular.extend({}, dataModel);
         }
 
         function loadIdentity(){
