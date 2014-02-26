@@ -166,7 +166,5 @@ define([
 
     angularAMD.bootstrap(app);
 
-//    require('ModelContacts')
-
     return app;
 });
