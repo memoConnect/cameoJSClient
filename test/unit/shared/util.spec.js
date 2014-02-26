@@ -1,4 +1,7 @@
-define(['angularAMD','util'], function (angularAMD) {
+define([
+    'angularAMD',
+    'ngload!util'
+], function (angularAMD) {
     'use strict';
 
     var util;

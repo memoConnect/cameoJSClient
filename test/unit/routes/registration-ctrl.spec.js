@@ -1,6 +1,6 @@
 define([
     'angularAMD',
-    'routes/registration/registration-ctrl'
+    'ngload!routes/registration/registration-ctrl'
 ], function (angularAMD) {
     'use strict';
 

@@ -80,4 +80,5 @@ define([
             }
         }
     ]);
+    return app;
 });

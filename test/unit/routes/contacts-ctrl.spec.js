@@ -1,6 +1,6 @@
 define([
     'angularAMD',
-    'routes/contacts/contacts-ctrl'
+    'ngload!routes/contacts/contacts-ctrl'
 ], function (angularAMD) {
     'use strict';
 

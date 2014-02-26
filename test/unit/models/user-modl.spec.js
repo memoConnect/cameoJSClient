@@ -1,4 +1,4 @@
-define(['angularAMD','mUser'], function (angularAMD) {
+define(['angularAMD','ngload!mUser','ngload!cmAuth'], function (angularAMD) {
     'use strict';
 
     describe('ModelUser', function(){

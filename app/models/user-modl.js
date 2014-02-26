@@ -1,7 +1,7 @@
 define([
     'app',
     'cmAuth',
-    'cmLogger',
+    'cmLogger'
 ], function (app) {
     'use strict';
 

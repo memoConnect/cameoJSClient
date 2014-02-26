@@ -1,6 +1,6 @@
 define([
     'angularAMD',
-    'cmAuth',
+    'ngload!cmAuth',
     'angular-mocks'
 ], function (angularAMD) {
     'use strict';
