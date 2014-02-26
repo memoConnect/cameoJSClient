@@ -7,9 +7,7 @@ define([
 ], function (app) {
     'use strict';
 
-    app
-    .register
-    .controller('RegistrationCtrl', [
+    app.register.controller('RegistrationCtrl', [
     '$scope',
     '$location',
     'cmAuth',
@@ -179,5 +177,4 @@ define([
             return true;
         };
     }]);
-    return app;
 });

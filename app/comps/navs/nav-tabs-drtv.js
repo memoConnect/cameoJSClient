@@ -8,9 +8,7 @@ define([
             return {
                 scope: true,
                 templateUrl: 'comps/navs/nav-tabs.html',
-                controller: function($scope, $rootScope, $element, $attrs, $routeParams){
-//                    $scope.tabs = $rootScope.tabs;
-
+                controller: function($rootScope, $routeParams, $scope){
                     /**
                      * search in tabs array for default
                      * @returns {string}
@@ -30,11 +28,9 @@ define([
                         $rootScope.activeTab = tab;
                     };
 
-                    $scope.setActiveTab($routeParams.tab ? $routeParams.tab.toUpperCase() : findDefault())
+                    $scope.setActiveTab($routeParams.tab && $routeParams.tab != '' ? $routeParams.tab.toUpperCase() : findDefault().toUpperCase())
                 }
             }
         }
     );
-
-    return app;
 });

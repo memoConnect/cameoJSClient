@@ -8,7 +8,7 @@ for (var file in window.__karma__.files) {
 }
 
 //console.log("\nkarma loaded "+Object.keys(window.__karma__.files).length+" files:\n"+Object.keys(window.__karma__.files).join('\n')+"\n")
-//console.log(""+tests.length+" specs:\n"+tests.join('\n')+"\n");
+console.log(""+tests.length+" specs:\n"+tests.join('\n')+"\n");
 
 requirejs.config({
     // Karma serves files from '/base'
@@ -71,6 +71,7 @@ requirejs.config({
     ],
 
     shim: {
+        'angular-mocks': ['angular'],
         'angularAMD': ['angular'],
 
         'angular-route': ['angular'],
@@ -80,9 +81,7 @@ requirejs.config({
         'angular-translate-storage-cookie': ['angular'],
         'angular-translate-storage-local': ['angular'],
         'angular-growl': ['angular'],
-        'cmLanguage': ['angular-translate'],
-
-        'angular-mocks': ['angular']
+        'cmLanguage': ['angular-translate']
     },
 
     // ask Require.js to load these files (all our tests)

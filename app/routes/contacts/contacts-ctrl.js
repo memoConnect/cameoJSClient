@@ -9,9 +9,7 @@ define([
 ], function(app){
     'use strict';
 
-    app
-    .register
-    .controller('ContactsCtrl',[
+    app.register.controller('ContactsCtrl',[
     '$scope',
     '$rootScope',
     '$routeParams',
@@ -58,6 +56,4 @@ define([
         ];
 
     }]);
-
-    return app;
 });
