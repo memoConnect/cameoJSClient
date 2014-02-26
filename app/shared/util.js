@@ -3,9 +3,12 @@ define([
 ], function () {
     'use strict';
 
-    var util = angular.module('Util',[]);
+    angular
+    .module('Util',[]);
 
-    util.service('Util', function(){
+    angular
+    .module('Util')
+    .service('Util', function(){
 
         /**
          * Checks if Key exists in an Object or Array
@@ -23,7 +26,7 @@ define([
             }
 
             return false;
-        }
+        };
 
         /**
          * Creates a String for Limit-Offset Handling in Api-Calls
@@ -45,7 +48,7 @@ define([
             }
 
             return s;
-        }
+        };
 
         /**
          * Validate Numbers
@@ -56,7 +59,7 @@ define([
             var reg = /^\d+$/;
 
             return reg.test(val);
-        }
+        };
 
         /**
          * Validate Strings without Special Characters and Whitespaces
@@ -67,6 +70,6 @@ define([
             var reg = /^[a-zA-Z0-9]{1,}$/;
 
             return reg.test(val);
-        }
+        };
     });
 });

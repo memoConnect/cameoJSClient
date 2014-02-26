@@ -1,12 +1,23 @@
-require.config({
-    baseUrl: "",
-    // alias libraries paths
-    urlArgs: "bust=" + (new Date()).getTime(),
+var tests = [];
+//console.log("\nkarma loaded "+Object.keys(window.__karma__.files).length+" files:\n"+Object.keys(window.__karma__.files).join('\n')+"\n")
+for (var file in window.__karma__.files) {
+    if (window.__karma__.files.hasOwnProperty(file)) {
+        if (/\.spec\.js$/.test(file)) {
+            tests.push(file);
+        }
+    }
+}
+
+requirejs.config({
+    // Karma serves files from '/base'
+    baseUrl: '/base/app/',
+
     paths: {
         'app': 'base/app',
         'env': 'base/env',
         // angular library
         'angular': 'vendor/angular/angular',
+        'angular-mocks': '../test/lib/angular/angular-mocks',
         'angular-route': 'vendor/angular/angular-route',
         'angular-resource': 'vendor/angular/angular-resource',
         'angular-cookies': 'vendor/angular/angular-cookies',
@@ -21,6 +32,9 @@ require.config({
         // requirejs stuff
         'angularAMD': 'vendor/requirejs/angularAMD',
         'ngload': 'vendor/requirejs/ngload',
+
+        'jquery': 'vendor/jquery/jquery-2.1.0',
+        'jasmine-jquery': '../test/lib/jasmine-jquery/jasmine-jquery',
 
         // utils
         'util-base64': 'vendor/util/base64',
@@ -41,24 +55,22 @@ require.config({
         'cmConversations': 'comps/conversation/cmConversations',
         'cmContacts': 'comps/contacts/cmContacts',
 
-        // Models
-        'mUser': 'models/user-modl',
+        // Model
         'mContacts': 'models/contacts-modl',
+        'mUser': 'models/user-modl',
 
-        // shared
-        'util': 'shared/util',
-
-        'jquery': 'vendor/jquery/jquery-2.1.0'
-//        'bootstrap': 'vendor/bootstrap/bootstrap.min',
+		// shared
+        'util': 'shared/util'
     },
+
     packages: [
-        {name: '_v', location: 'vendor'},
-//        {name: '_s', location: 'service'},
-//        {name: '_d', location: 'directives'}
+        {name: '_b', location: ''},
+        {name: '_v', location: 'vendor'}
     ],
-    // Add angular modules that does not support AMD out of the box, put it in a shim
+
     shim: {
-        'angularAMD': ['angular'],
+        'app': ['angularAMD'],
+
         'angular-route': ['angular'],
         'angular-cookies': ['angular'],
         'angular-translate': ['angular'],
@@ -66,9 +78,16 @@ require.config({
         'angular-translate-storage-cookie': ['angular'],
         'angular-translate-storage-local': ['angular'],
         'angular-growl': ['angular'],
-        'cmLanguage': ['angular-translate']
-//        'bootstrap': ['jquery']
+        'cmLanguage': ['angular-translate'],
+
+        'angular-mocks': ['angular'],
+
+        'controller/contacts': ['app']
     },
-    // kick start application
-    deps: ['app','env']
+
+    // ask Require.js to load these files (all our tests)
+    deps: tests,
+
+    // start test run, once Require.js is done
+    callback: window.__karma__.start
 });

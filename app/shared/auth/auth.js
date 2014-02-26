@@ -1,0 +1,286 @@
+define([
+    'angular',
+    'angular-cookies',
+
+    'util-base64',
+    'util-passchk-fast',
+
+    'mUser'
+], function () {
+    'use strict';
+
+    var cmAuth = angular.module('cmAuth', ['ngCookies', 'cmApi', 'cmCrypt', 'cmLogger'])
+
+    // Service to handle all authenticateion matters
+    cmAuth.provider('cmAuth', function(){
+
+        //Config stuff here
+        this.$get = [
+            'cmApi',
+            'cmCrypt',
+            'cmLogger',
+            '$cookieStore',
+            '$q',
+            function(cmApi, cmCrypt, cmLogger, $cookieStore, $q){
+                return {
+
+                    //ask the api for a new authentication token:
+                    requestToken: function(login, pass){
+                        var auth = Base64.encode(login + ":" + cmCrypt.hash(pass));
+
+                        return cmApi.get({
+                            url: '/token',
+                            headers: { 'Authorization': 'Basic '+auth } ,
+                            exp_ok: 'token'
+                        })
+                    },
+
+                    //delete Token
+                    removeToken: function(){
+                        return $cookieStore.remove("token");
+                    },
+
+                    //store the token in a cookie:
+                    storeToken: function(token){
+                        return $cookieStore.put("token", token);
+                    },
+
+                    //retrieve thr token from a cookie
+                    getToken: function(){
+                        return $cookieStore.get('token');
+                    },
+
+                    createUser: function(data){
+                        return cmApi.post({
+                            url: '/account',
+                            data: data
+                        })
+                    },
+
+                    checkAccountName: function(name, reservationSecret){
+                        return cmApi.post({
+                            url: '/account/check',
+                            data: {
+                                loginName: name,
+                                reservationSecret: reservationSecret
+                            },
+                            exp_ok: 'reservationSecret',
+                            exp_ko: 'alternative'
+                        })
+                    },
+
+                    checkPhoneNumber: function(number){
+                        return cmApi.post({
+                            url: '/services/checkPhoneNumber',
+                            data: { phoneNumber:number },
+                            exp_ok: 'phoneNumber'
+                        })
+                    },
+
+                    getIdentity: function(id){
+                        return cmApi.get({
+                            url: '/identity'+ (id ? '/'+id : '')
+                        })
+                    }
+                }
+            }
+        ]
+    });
+
+    // DIRECTIVES:
+    cmAuth.directive('cmPassword', [
+        'cmCrypt',
+        function (cmCrypt) {
+            return  {
+                restrict: 'A',
+                templateUrl: 'comps/password/password.html',
+                scope: {
+                    password: '=parentItem'
+                },
+                controller: function($scope, $element, $attrs){
+                    $scope.showConfirmPWStatus = false;
+                    $scope.showStrengthMeter = false;
+                    $scope.passwordType = 'password';
+                    $scope.showPassword = false;
+
+                    $scope.togglePassword = function(){
+                        if($scope.showPassword){
+                            $scope.showPassword = false;
+                            $scope.passwordType = 'password';
+                        } else {
+                            $scope.showPassword = true;
+                            $scope.passwordType = 'text';
+                        }
+                    };
+
+                    $scope.checkPWStrength = function(){
+                        var pw = $scope.pw;
+
+                        if(pw != undefined && pw.length > 3){
+                            $scope.showStrengthMeter= true;
+                            var bits = passchk_fast.passEntropy(pw);
+
+                            if(bits < 28){
+                                $scope.percent = 10;
+                                $scope.color = '#d9534f';
+                                //very weak
+                            } else if(bits < 36){
+                                $scope.percent = 25;
+                                $scope.color = '#f0ad4e';
+                                //weak
+                            } else if(bits < 60){
+                                $scope.percent = 50;
+                                $scope.color = '#f0df43';
+                                //reasonable || normal
+                            } else if(bits < 128){
+                                $scope.percent = 75;
+                                $scope.color = '#c4f04e';
+                                //strong
+                            } else {
+                                $scope.percent = 100;
+                                $scope.color = '#5cb85c';
+                                //very strong
+                            }
+
+                            $scope.pwStrength = pw;
+                        } else {
+                            $scope.percent = 0;
+                            $scope.color = '#d9534f';
+                        }
+                    };
+
+                    /**
+                     * validates both password inputs
+                     */
+                    $scope.confirmPW = function(){
+                        if($scope.pw == $scope.pwConfirm){
+                            $scope.showConfirmPWStatus = true;
+                            setPassword(cmCrypt.hash($scope.pw));
+                        } else {
+                            $scope.showConfirmPWStatus = false;
+                            setPassword('none');
+                        }
+                    };
+
+                    /**
+                     * Wrapper Function to inject Password in extern Controller
+                     * if password (empty || none) it is wrong, else it is right
+                     */
+                    function setPassword(pw){
+                        if(angular.isDefined(pw)){
+                            $scope.password = pw;
+                        }
+                    }
+                }
+            }
+        }
+    ]);
+
+    cmAuth.directive('cmValidateEmail',function(){
+        //http://stackoverflow.com/questions/16863389/angular-js-email-validation-with-unicode-characters
+        return {
+            require: 'ngModel',
+            link: function(scope,element,attrs,model){
+                element.on('blur', function(evt){
+                    scope.$apply(function(){
+                        var val = element.val();
+                        var check = true;
+                        if(val != ""){
+                            // http://stackoverflow.com/a/46181/11236
+                            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                            check = re.test(val);
+                        }
+                        if(check !== true){
+                            model.$setValidity('email', false);
+                        } else {
+                            model.$setValidity('email', true);
+                        }
+                    });
+                });
+            }
+        }
+    });
+
+    cmAuth.directive('cmValidatePhone',[
+        'cmAuth',
+        function(cmAuth){
+            return {
+                require: 'ngModel',
+                link: function(scope,element,attrs,model){
+                    element.on('blur', function(evt){
+                        scope.$apply(function(){
+                            var val = element.val();
+                            if(val != ""){
+                                cmAuth.checkPhoneNumber(val).
+                                then(
+                                    //success
+                                    function (phoneNumber){
+                                        model.$setValidity('phone', true);
+                                        model.$setViewValue(phoneNumber);
+                                        model.$render();
+                                    },
+                                    //error
+                                    function (){
+                                        model.$setValidity('phone', false);
+                                    }
+                                );
+                            } else {
+                                model.$setValidity('phone', true);
+                                model.$setPristine();
+                            }
+                        });
+                    });
+                }
+            }
+        }
+    ]);
+
+    cmAuth.directive('cmLogin', [
+        'cmAuth',
+        'cmLogger',
+        '$location',
+        'ModelUser',
+        function (cmAuth, cmLogger, $location, ModelUser) {
+            return  {
+                restrict    :   'A',
+                templateUrl :   'comps/login/login.html',
+                scope       :   {},
+                controller  :   function ($scope, $element, $attrs) {
+                    var loginData = {
+                        'Max': {
+                            user: 'Max',
+                            pass: 'max.mustermann'
+                        },
+                        'Dumpuser': {
+                            user: 'r1Zhpq8e',
+                            pass: 'password'
+                        }
+                    };
+
+                    $scope.formData = {
+                        autologin:'none'
+                    };
+
+                    $scope.changeAutologin = function(){
+                        if($scope.formData.autologin != 'none'){
+                            $scope.formData.user = loginData[$scope.formData.autologin].user
+                            $scope.formData.pass = loginData[$scope.formData.autologin].pass
+                        } else {
+                            $scope.formData.user = ""
+                            $scope.formData.pass = ""
+                        }
+                    };
+
+                    $scope.doLogin = function(){
+                        ModelUser.doLogin($scope.formData.user, $scope.formData.pass).then(
+                            function(){
+                                $location.path("/start");
+                            }
+                            //error handling is done by cmAuth
+                        )
+                    };
+                }
+            }
+        }
+    ]);
+});

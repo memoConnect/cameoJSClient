@@ -81,7 +81,11 @@
         "LABEL_PW": "Passwort",
         "LABEL_CONFIRM": "Passwort bestätigen"
 
-    },	
+    },
+
+    "TALKS": {
+        "HEADING": "Talks"
+    },
 
     "CONVERSATION" : {
         "HEADING": "Conversation",

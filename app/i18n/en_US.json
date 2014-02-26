@@ -82,6 +82,9 @@
         "LABEL_CONFIRM": "Confirm Password"
     },
 
+    "TALKS": {
+        "HEADING": "Talks"
+    },
 
     "CONVERSATION" : {
         "HEADING": "Conversation",
