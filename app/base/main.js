@@ -32,7 +32,7 @@ require.config({
         // global provider without AMD
         'cmApi': 'shared/api/api',
         'cmLanguage': 'shared/i18n/language',
-        'cmLogger': 'shared/logger/logger',
+        'cmLogger': 'shared/logger/cmLogger',
         'cmNotify': 'shared/notify/notify',
 
         // ??? modules
