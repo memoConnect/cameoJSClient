@@ -18,7 +18,7 @@ module.exports = function(config) {
             // requirejs main file
             {pattern: 'test/unit/base/main.js', included: true},
             // load and json templates
-            {pattern: 'app/**/*.html', included: false},
+            {pattern: 'app/**/*.html', included: false}
 //            {pattern: 'app/**/*.json', included: false}
         ],
 

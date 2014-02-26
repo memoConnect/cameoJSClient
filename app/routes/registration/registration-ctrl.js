@@ -3,6 +3,7 @@ define([
     'cmAuth',
     'cmNotify',
     'cmLogger',
+    'comps/validate/password-drtv',
     'comps/validate/email-drtv'
 ], function (app) {
     'use strict';
