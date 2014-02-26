@@ -4,7 +4,7 @@ define([
 ], function(app){
     'use strict';
 
-    cmAuth.directive('cmPassword', [
+    app.register.directive('cmPassword', [
         'cmCrypt',
         function (cmCrypt) {
             return  {
@@ -91,4 +91,6 @@ define([
             }
         }
     ]);
+
+    return app;
 });

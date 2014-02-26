@@ -1,14 +1,11 @@
 define([
-    'angular'
-], function () {
+    'app'
+], function (app) {
     'use strict';
 
-    angular
-    .module('Util',[]);
+//    angular.module('Util',[]);
 
-    angular
-    .module('Util')
-    .service('Util', function(){
+    app.register.service('Util', function(){
 
         /**
          * Checks if Key exists in an Object or Array
@@ -72,4 +69,6 @@ define([
             return reg.test(val);
         };
     });
+
+    return app;
 });

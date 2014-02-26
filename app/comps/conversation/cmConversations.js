@@ -1,7 +1,5 @@
 define([
-    'angularAMD',
     'app',
-    'angular-cookies',
 
     'cmApi',
     'cmCrypt',
@@ -10,12 +8,12 @@ define([
     'util-base64',
     'util-passchk-fast',    
    	'_v/captcha/captchagen/captchagen'
-], function () {
+], function (app) {
     'use strict';
 
-	var cmConversations = angular.module('cmConversations', ['cmApi', 'cmLogger', 'cmCrypt', 'cmContacts'])
+//	var cmConversations = angular.module('cmConversations', ['cmApi', 'cmLogger', 'cmCrypt', 'cmContacts']);
 
-	cmConversations.provider('cmConversationsAdapter', function(){
+	app.register.provider('cmConversationsAdapter', function(){
 		//config stuff here
 
 		this.$get = [
@@ -86,7 +84,7 @@ define([
 	});
 
 
-	cmConversations.service('cmConversationsModel', [
+	app.register.service('cmConversationsModel', [
 
 		'cmConversationsAdapter',
 		'cmCrypt',
@@ -337,7 +335,7 @@ define([
 	
 
 
-	cmConversations.directive('cmConversation',[
+	app.register.directive('cmConversation',[
 
 		'cmConversationsModel',
 		'cmCrypt',
@@ -453,7 +451,7 @@ define([
 
 
 
-	cmConversations.directive('cmMessage',[
+	app.register.directive('cmMessage',[
 
 		'cmAuth',
 
@@ -485,7 +483,7 @@ define([
 		}
 	])
 
-	cmConversations.directive('cmAvatar',[
+    app.register.directive('cmAvatar',[
 
 		function(){
 			return {
@@ -509,7 +507,7 @@ define([
 	])
 
 
-	cmConversations.directive('cmAttachments',[
+    app.register.directive('cmAttachments',[
 
 		function(){
 			return {
@@ -530,7 +528,7 @@ define([
 		}
 	])
 
-	cmConversations.directive('cmMessageInput',[
+    app.register.directive('cmMessageInput',[
 
 		function(){
 			return {
@@ -601,7 +599,7 @@ define([
 
 
 
-	cmConversations.directive('cmPassphrase',[
+    app.register.directive('cmPassphrase',[
 
 		function() {
 			return {
@@ -649,7 +647,7 @@ define([
 
 
 
-	cmConversations.directive('cmCaptcha',[
+    app.register.directive('cmCaptcha',[
 
 		function(){
 			return {
@@ -695,6 +693,6 @@ define([
 		}
 	])
 
-
+    return app;
 
 })

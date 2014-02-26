@@ -1,17 +1,17 @@
 define([
-    'angular',
+    'app',
     'crypto-sjcl',
     'cmLogger'
-], function () {
+], function (app) {
     'use strict';
 
     /**
      * collection of client side crypt stuff
      */
 
-    var cmCrypt = angular.module('cmCrypt', ['cmLogger']);
+//    var cmCrypt = angular.module('cmCrypt', ['cmLogger']);
 
-    cmCrypt.factory('cmCrypt',
+    app.register.factory('cmCrypt',
         function (cmLogger) {
 
             return {
@@ -88,4 +88,6 @@ define([
             }
         }
     );
+
+    return app;
 });

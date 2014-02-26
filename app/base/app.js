@@ -2,18 +2,18 @@ define([
     'angularAMD',
     'angular-route',
     'angular-cookies',
-
-    'cmApi',
-    'cmAuth',
-    'cmCrypt',
+//
+//    'cmApi',
+//    'cmAuth',
+//    'cmCrypt',
     'cmLanguage',
     'cmLogger',
     'cmNotify',
-    'cmProfile',
-    'cmConversations',
-    'cmContacts',
-    'mUser',
-    'mContacts',
+//    'cmProfile',
+//    'cmConversations',
+//    'cmContacts',
+//    'mUser',
+//    'mContacts',
 
     'jquery'
 ], function (angularAMD) {
@@ -24,18 +24,18 @@ define([
         'ngCookies',
 
         // Module
-        'cmApi',
-        'cmAuth',
-        'cmCrypt',
+//        'cmApi',
+//        'cmAuth',
+//        'cmCrypt',
         'cmLanguage',
-        'cmLogger',
         'cmNotify',
-        'cmProfile',
-        'cmConversations',
-        'cmProfile',
-        'cmContacts',
-        'mUser',
-        'mContacts'
+        'cmLogger'
+//        'cmProfile',
+//        'cmConversations',
+//        'cmProfile',
+//        'cmContacts',
+//        'mUser',
+//        'mContacts'
     ]);
 
     app.cameo = {

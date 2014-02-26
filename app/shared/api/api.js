@@ -1,18 +1,18 @@
 define([
-    'angular',
+    'app',
     'cmLogger'
-],function () {
+],function (app) {
     'use strict';
 
     //This Module handels api calls
 
-    var cmApi = angular.module('cmApi', ['cmLogger']);
+//    var cmApi = angular.module('cmApi', ['cmLogger']);
 
     //TODO config cameo
 
     //Service to handle all api calls
 
-    cmApi.provider('cmApi',  [
+    app.register.provider('cmApi',  [
 
         function($injector){
             var rest_api = "";
@@ -231,6 +231,7 @@ define([
 			}
 		]
 	}
-])
+]);
+    return app;
 
 });

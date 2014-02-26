@@ -34,5 +34,7 @@ define([
                 }
             }
         }
-    )
+    );
+
+    return app;
 });

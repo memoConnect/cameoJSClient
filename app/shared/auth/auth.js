@@ -1,6 +1,6 @@
 define([
-    'angular',
-    'angular-cookies',
+    'app',
+//    'angular-cookies',
 
     'util-base64',
     'util-passchk-fast',
@@ -8,13 +8,13 @@ define([
     'cmApi',
     'cmCrypt',
     'cmLogger'
-], function () {
+], function (app) {
     'use strict';
 
-    var cmAuth = angular.module('cmAuth', ['ngCookies', 'cmApi', 'cmCrypt', 'cmLogger'])
+//    var cmAuth = angular.module('cmAuth', ['ngCookies', 'cmApi', 'cmCrypt', 'cmLogger']);
 
     // Service to handle all authenticateion matters
-    cmAuth.provider('cmAuth', function(){
+    app.register.provider('cmAuth', function(){
 
         //Config stuff here
         this.$get = [
@@ -88,4 +88,6 @@ define([
             }
         ]
     });
+
+    return app;
 });

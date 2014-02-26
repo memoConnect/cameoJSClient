@@ -78,4 +78,6 @@ define([
         }
     ]);
 
+    return cmLogger;
+
 });
