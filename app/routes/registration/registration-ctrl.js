@@ -2,7 +2,8 @@ define([
     'app',
     'cmAuth',
     'cmNotify',
-    'cmLogger'
+    'cmLogger',
+    'comps/validate/email-drtv'
 ], function (app) {
     'use strict';
 

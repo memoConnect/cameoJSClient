@@ -50,7 +50,7 @@ requirejs.config({
         'cmAuth': 'shared/auth/auth',
         'cmCrypt': 'shared/crypt/crypt',
         'cmLanguage': 'shared/i18n/language',
-        'cmLogger': 'shared/logger/logger',
+        'cmLogger': 'shared/logger/cmLogger',
         'cmNotify': 'shared/notify/notify',
 
         'cmProfile': 'comps/cmProfile',

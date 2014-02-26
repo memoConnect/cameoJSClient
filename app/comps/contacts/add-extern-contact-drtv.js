@@ -5,7 +5,8 @@ define([
     'cmLogger',
     'mContacts',
 
-    'comps/type-chooser/type-chooser-drtv'
+    'comps/type-chooser/type-chooser-drtv',
+    'comps/validate/email-drtv'
 ], function(app){
     'use strict';
 

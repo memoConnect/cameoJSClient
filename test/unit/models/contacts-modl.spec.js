@@ -1,16 +1,12 @@
-define([
-    'angular-mocks'
-], function () {
+define(['angularAMD','mContacts'], function (angularAMD) {
     'use strict';
 
     describe('ModelContacts', function(){
         var model;
 
-        beforeEach(module('mContacts','cmContacts','mUser','cmAuth'));
-
-        beforeEach(inject(function(_ModelContacts_){
+        angularAMD.inject(function(_ModelContacts_) {
             model = _ModelContacts_;
-        }));
+        });
 
         it('should exists', function(){
             expect(model).toBeDefined();

@@ -1,6 +1,4 @@
-define([
-    'angular-mocks'
-], function () {
+define(['angularAMD','comps/validate/phone-drtv'], function (angularAMD) {
     'use strict';
 
     // thx to http://stackoverflow.com/questions/15219717/to-test-a-custom-validation-angular-directive
@@ -10,9 +8,7 @@ define([
             scope,
             httpBackend;
 
-        beforeEach(module('cmAuth'));
-
-        beforeEach(inject(function($compile, $rootScope, $httpBackend){
+        angularAMD.inject(function($compile, $rootScope, $httpBackend){
             httpBackend = $httpBackend;
 
             scope = $rootScope;
@@ -21,7 +17,7 @@ define([
             $compile(element)($rootScope);
             scope.$digest();
             form = scope.form;
-        }));
+        });
 
         it('should be valid, if element is empty', function(){
             element.find('input').val('');

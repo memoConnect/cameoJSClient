@@ -1,7 +1,4 @@
-define([
-    'jquery',
-    'angular-mocks'
-], function ($) {
+define(['angularAMD','comps/validate/email-drtv'], function (angularAMD) {
     'use strict';
 
     // thx to http://stackoverflow.com/questions/15219717/to-test-a-custom-validation-angular-directive
@@ -10,16 +7,14 @@ define([
             form,
             scope;
 
-        beforeEach(module('cmAuth'));
-
-        beforeEach(inject(function($compile, $rootScope){
+        angularAMD.inject(function($compile, $rootScope){
             scope = $rootScope;
             element = angular.element('<form name="form"><input name="email" cm-validate-email ng-model="email" /></form>');
 
             $compile(element)($rootScope);
             scope.$digest();
             form = scope.form;
-        }));
+        });
 
         it('should be valid, if element is empty', function(){
             element.find('input').val('');

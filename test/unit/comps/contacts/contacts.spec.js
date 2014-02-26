@@ -1,14 +1,12 @@
-define(['angular-mocks'], function () {
+define(['angularAMD','cmContacts'], function (angularAMD) {
     'use strict';
 
     describe('cmContacts', function(){
-
         var cmContacts;
 
-        beforeEach(module('cmContacts'));
-        beforeEach(inject(function(_cmContacts_){
-            cmContacts = _cmContacts_
-        }));
+        angularAMD.inject(function(_cmContacts_) {
+            cmContacts = _cmContacts_;
+        });
 
         it('should provide an searchCameoId function', function(){
             expect(cmContacts.searchCameoId).toBeDefined()
