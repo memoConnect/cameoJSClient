@@ -1,7 +1,8 @@
 define([
     'app',
     'util-base64',
-    'comps/navs/nav-tabs-drtv'
+    'comps/navs/nav-tabs-drtv',
+    'comps/conversation/cmConversations'
 ], function (app) {
     'use strict';
 

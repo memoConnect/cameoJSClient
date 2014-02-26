@@ -2,6 +2,7 @@ define([
     'app',
 
     'cmApi',
+    'cmAuth',
     'cmCrypt',
     'cmLogger',
     'cmContacts',
@@ -13,76 +14,69 @@ define([
 
 //	var cmConversations = angular.module('cmConversations', ['cmApi', 'cmLogger', 'cmCrypt', 'cmContacts']);
 
-	app.register.provider('cmConversationsAdapter', function(){
-		//config stuff here
+	app.register.factory('cmConversationsAdapter', [
+        '$q',
+        'cmApi',
+        function($q, cmApi){
+            return {
 
-		this.$get = [
+                newConversation: function(subject) {
+                    return	cmApi.post({
+                                url: 	'/conversation',
+                                data:	{
+                                            subject: subject
+                                        }
+                            })
+                },
 
-			'$q',
-			'cmApi',
+                getConversations: function(offset, limit) {
+                    return	cmApi.get({
+                                url: 	'/conversations',
+                                data:	{
+                                            offset:	offset,
+                                            limit:	limit
+                                        }
+                                //exp_ok:	'messages'
+                            })
+                },
 
-			function($q, cmApi){
-				return {
+                getConversation: function(id, offset, limit) {
+                    return 	cmApi.get({
+                                url: 	'/conversation/'+id,
+                                data:	{
+                                            offset:	offset,
+                                            limit:	limit
+                                        }
+                            })
+                },
 
-					newConversation: function(subject) {
-						return	cmApi.post({
-									url: 	'/conversation',
-									data:	{
-												subject: subject
-											}
-								})
-					},
+                addRecipient: function(id, recipient_id){
+                    return	cmApi.post({
+                                url:	'/conversation/%1/recipient'.replace(/%1/, id),
+                                data:	{
+                                            recipients: [recipient_id]
+                                        }
+                            })
+                },
 
-					getConversations: function(offset, limit) {						
-						return	cmApi.get({
-									url: 	'/conversations',
-									data:	{
-												offset:	offset,
-												limit:	limit
-											}
-									//exp_ok:	'messages'
-								})		
-					},
+                removeRecipient: function(id, recipient_id){
+                    return	cmApi.delete({
+                                url:	'/conversation/%1/recipient/%2'.replace(/%1/, id).replace(/%2/, recipient_id)
+                            })
+                },
 
-					getConversation: function(id, offset, limit) {
-						return 	cmApi.get({
-									url: 	'/conversation/'+id,
-									data:	{
-												offset:	offset,
-												limit:	limit
-											}
-								})						
-					},
+                sendMessage: function(id, messageBody){
+                    return	cmApi.post({
+                                url:	"/conversation/%1/message".replace(/%1/, id),
+                                data: 	{
+                                            messageBody: messageBody
+                                        }
+                            })
+                }
 
-					addRecipient: function(id, recipient_id){
-						return	cmApi.post({
-									url:	'/conversation/%1/recipient'.replace(/%1/, id),
-									data:	{
-												recipients: [recipient_id]
-											}
-								})
-					},
-
-					removeRecipient: function(id, recipient_id){
-						return	cmApi.delete({
-									url:	'/conversation/%1/recipient/%2'.replace(/%1/, id).replace(/%2/, recipient_id)
-								})	
-					},
-
-					sendMessage: function(id, messageBody){
-						return	cmApi.post({
-									url:	"/conversation/%1/message".replace(/%1/, id),
-									data: 	{
-												messageBody: messageBody
-											}							
-								})
-					}
-
-				}
-			}
-		]	
-	});
-
+            }
+        }]
+	);
 
 	app.register.service('cmConversationsModel', [
 
@@ -332,9 +326,6 @@ define([
 		}
 	])
 
-	
-
-
 	app.register.directive('cmConversation',[
 
 		'cmConversationsModel',
@@ -449,8 +440,6 @@ define([
 		}
 	])
 
-
-
 	app.register.directive('cmMessage',[
 
 		'cmAuth',
@@ -484,7 +473,6 @@ define([
 	])
 
     app.register.directive('cmAvatar',[
-
 		function(){
 			return {
 		
@@ -505,7 +493,6 @@ define([
 			}
 		}
 	])
-
 
     app.register.directive('cmAttachments',[
 
@@ -596,9 +583,6 @@ define([
 		}
 	])
 
-
-
-
     app.register.directive('cmPassphrase',[
 
 		function() {
@@ -644,8 +628,6 @@ define([
 			}
 		}
 	])
-
-
 
     app.register.directive('cmCaptcha',[
 
