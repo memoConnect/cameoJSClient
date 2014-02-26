@@ -1,5 +1,6 @@
 define([
-    'angular'
+    'angular',
+    'cmLogger'
 ],function () {
     'use strict';
 

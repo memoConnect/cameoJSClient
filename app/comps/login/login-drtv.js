@@ -2,7 +2,7 @@ define([
     'app',
     'cmAuth',
     'cmLogger',
-    'ModelUser'
+    'mUser'
 ], function(app){
     'use strict';
 

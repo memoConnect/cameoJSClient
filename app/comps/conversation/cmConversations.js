@@ -9,7 +9,7 @@ define([
     'cmContacts',
     'util-base64',
     'util-passchk-fast',    
-   	'_v/captcha/captchagen/captchagen',
+   	'_v/captcha/captchagen/captchagen'
 ], function () {
     'use strict';
 
@@ -41,7 +41,7 @@ define([
 									data:	{
 												offset:	offset,
 												limit:	limit
-											},
+											}
 									//exp_ok:	'messages'
 								})		
 					},
@@ -83,7 +83,7 @@ define([
 				}
 			}
 		]	
-	})
+	});
 
 
 	cmConversations.service('cmConversationsModel', [

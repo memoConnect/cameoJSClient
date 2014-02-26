@@ -1,6 +1,6 @@
 define([
     'app',
-    'cmApi',
+    'cmAuth',
     'cmLogger',
 ], function () {
     'use strict';

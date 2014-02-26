@@ -1,6 +1,7 @@
 define([
     'app',
-    'util-base64'
+    'util-base64',
+    'cmLogger'
 ], function (app) {
     'use strict';
 

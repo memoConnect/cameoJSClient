@@ -1,6 +1,7 @@
 define([
     'angular',
-    'crypto-sjcl'
+    'crypto-sjcl',
+    'cmLogger'
 ], function () {
     'use strict';
 

@@ -1,7 +1,8 @@
 define([
     'app',
     'cmApi',
-    'util'
+    'util',
+    'cmLogger'
 ], function () {
    'use strict';
 

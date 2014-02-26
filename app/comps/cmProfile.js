@@ -1,6 +1,8 @@
 define([
     'jquery',
-    'angular'
+    'angular',
+    'cmApi',
+    'cmAuth'
 ], function ($) {
     'use strict';
     // E-mail, Phone etc. verification

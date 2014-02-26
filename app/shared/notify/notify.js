@@ -1,5 +1,6 @@
 define([
-    'angular'
+    'angular',
+    'cmNotify'
 ], function () {
     'use strict';
 

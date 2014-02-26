@@ -1,5 +1,7 @@
 define([
-    'app'
+    'app',
+    'cmLogger',
+    'mContacts'
 ], function(app){
     'use strict';
 

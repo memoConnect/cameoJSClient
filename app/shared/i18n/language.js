@@ -4,7 +4,10 @@ define([
     'angular-translate-loader-static-files',
     'angular-translate-storage-cookie',
     'angular-translate-storage-local',
-    'angular-growl'
+    'angular-growl',
+
+    'cmNotify',
+    'cmLogger'
 ], function () {
     'use strict';
 

@@ -1,5 +1,10 @@
 define([
     'app',
+
+    'cmNotify',
+    'cmLogger',
+    'mContacts',
+
     'comps/type-chooser/type-chooser-drtv'
 ], function(app){
     'use strict';
