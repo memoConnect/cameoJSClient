@@ -72,5 +72,5 @@ require.config({
 //        'bootstrap': ['jquery']
     },
     // kick start application
-    deps: ['app','env']
+    deps: ['env','app']
 });
