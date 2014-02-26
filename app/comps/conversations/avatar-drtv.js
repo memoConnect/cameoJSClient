@@ -1,3 +1,4 @@
+/*
 define([
     'app',
 
@@ -11,8 +12,9 @@ define([
     '_v/captcha/captchagen/captchagen'
 ], function (app) {
     'use strict';
+*/    
 
-    app.register.directive('cmAvatar', [
+    cmConversations.directive('cmAvatar', [
         function () {
             return {
                 restrict: 'AE',
@@ -29,4 +31,6 @@ define([
             }
         }
     ]);
+/*    
 });
+*/

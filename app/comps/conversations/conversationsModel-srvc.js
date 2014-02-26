@@ -12,7 +12,7 @@ define([
 ], function (app) {
     'use strict';
 
-    app.register.service('cmConversationsModel', [
+    cmConversations.service('cmConversationsModel', [
 
         'cmConversationsAdapter',
         'cmCrypt',

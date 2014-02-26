@@ -1,3 +1,4 @@
+/*
 define([
     'app',
 
@@ -10,11 +11,12 @@ define([
     'util-passchk-fast',    
    	'_v/captcha/captchagen/captchagen'
 ], function (app) {
+*/    
     'use strict';
 
 //	var cmConversations = angular.module('cmConversations', ['cmApi', 'cmLogger', 'cmCrypt', 'cmContacts']);
 
-	app.register.factory('cmConversationsAdapter', [
+	cmConversations.factory('cmConversationsAdapter', [
         '$q',
         'cmApi',
         function($q, cmApi){
@@ -77,7 +79,8 @@ define([
             }
         }]
 	);
-
+/*
     return app;
 
 });
+*/

@@ -1,15 +1,16 @@
 define([
     'app',
-    'util-base64',
-    'comps/navs/nav-tabs-drtv',
-    'comps/conversation/cmConversations'
+    'util-base64',    
+    'pckConversations'
 ], function (app) {
     'use strict';
-
+    
     app.register.controller('ConversationsCtrl',[
+
         '$scope',
         '$rootScope',
         'cmConversationsModel',
+        
         function($scope, $rootScope, cmConversationsModel) {
             $scope.conversations = cmConversationsModel;
 
@@ -19,4 +20,5 @@ define([
             ];
         }
     ]);
+
 });

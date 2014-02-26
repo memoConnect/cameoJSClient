@@ -1,3 +1,4 @@
+/*
 define([
     'app',
 
@@ -8,6 +9,8 @@ define([
     'comps/type-chooser/type-chooser-drtv',
     'comps/validate/email-drtv'
 ], function(app){
+*/
+
     'use strict';
 
     app.register.directive('cmAddExternContact',[
@@ -180,5 +183,7 @@ define([
         }
     ]);
 
+/*
     return app;
 });
+*/
