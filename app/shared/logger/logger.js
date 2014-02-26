@@ -19,7 +19,9 @@ define([
                 debug_enabled = flag;
             };
 
-            this.$get = ['$log', function($log){
+            this.$get = [
+                '$log',
+                function($log){
                 /**
                 * Format date as a string
                 */
@@ -74,6 +76,6 @@ define([
                 }
             }];
         }
-    ])
+    ]);
 
 });
