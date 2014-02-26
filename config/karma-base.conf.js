@@ -12,12 +12,13 @@ module.exports = function(config) {
             {pattern: 'app/**/*.js', included: false},
             // tests
             {pattern: 'test/unit/**/*.spec.js', included: false},
+//            {pattern: 'test/unit/**/*.AMDspec.js', included: false},
             // test lib
             {pattern: 'test/lib/**/*.js', included: false},
             // requirejs main file
             {pattern: 'test/unit/base/main.js', included: true},
             // load and json templates
-            {pattern: 'app/**/*.html', included: false},
+//            {pattern: 'app/**/*.html', included: false},
             {pattern: 'app/**/*.json', included: false}
         ],
 

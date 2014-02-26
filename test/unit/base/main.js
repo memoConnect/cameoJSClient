@@ -1,19 +1,21 @@
 var tests = [];
-//console.log("\nkarma loaded "+Object.keys(window.__karma__.files).length+" files:\n"+Object.keys(window.__karma__.files).join('\n')+"\n")
 for (var file in window.__karma__.files) {
     if (window.__karma__.files.hasOwnProperty(file)) {
-        if (/\.spec\.js$/.test(file)) {
+        if (/spec\.js$/.test(file)) {
             tests.push(file);
         }
     }
 }
+
+//console.log("\nkarma loaded "+Object.keys(window.__karma__.files).length+" files:\n"+Object.keys(window.__karma__.files).join('\n')+"\n")
+//console.log(""+tests.length+" specs:\n"+tests.join('\n')+"\n");
 
 requirejs.config({
     // Karma serves files from '/base'
     baseUrl: '/base/app/',
 
     paths: {
-        'app': 'base/app',
+        'app': 'base/app',// means /base/app/base/app.js
         'env': 'base/env',
         // angular library
         'angular': 'vendor/angular/angular',
@@ -69,7 +71,7 @@ requirejs.config({
     ],
 
     shim: {
-        'app': ['angularAMD'],
+        'angularAMD': ['angular'],
 
         'angular-route': ['angular'],
         'angular-cookies': ['angular'],
@@ -80,9 +82,7 @@ requirejs.config({
         'angular-growl': ['angular'],
         'cmLanguage': ['angular-translate'],
 
-        'angular-mocks': ['angular'],
-
-        'controller/contacts': ['app']
+        'angular-mocks': ['angular']
     },
 
     // ask Require.js to load these files (all our tests)

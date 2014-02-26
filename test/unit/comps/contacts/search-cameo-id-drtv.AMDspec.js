@@ -9,7 +9,7 @@ define([
         var $scope, directive;
 
         angularAMD.inject(function ($rootScope, $compile, $templateCache) {
-//            $templateCache.put('comps/contacts/search-cameo-id.html', tpl);
+            $templateCache.put('comps/contacts/search-cameo-id.html', tpl);
 
             directive = angular.element('<div cm-search-cameo-id></div>')
             directive = $compile(directive)($rootScope);

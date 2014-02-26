@@ -1,20 +1,13 @@
 define([
     'angular-mocks',
     'app',
-    'angularAMD',
-    'i18n/en_US.json'
+    'angularAMD'
 ], function (mocks, app, angularAMD, lang) {
     'use strict';
 
     describe("cmLanguage", function() {
 
         xdescribe("setup", function(){
-
-            beforeEach(inject(function($httpBackend){
-//            $httpBackend('GET','languages/lang-en_US.json',null,function(){return lang})
-                $httpBackend.whenGET('languages/lang-en_US.json').respond(lang)
-//            $httpBackend.expectGET('languages/lang-en_US.json').passThrough();
-            }))
 
             var language_tables = {};
 
@@ -34,11 +27,11 @@ define([
 
                 runs(function(){
                     app.cameo.supported_languages.forEach(function(lang_key){
-                        var file = app.cameo.path_to_languages+'/lang-'+lang_key+'.json'
-                        $.getJSON(file)
-                        .done(  function(data)  { language_tables[lang_key] = data })
-                        .fail(  function(xhr, status, error) { console.log('Error getting JSON from '+file+': '+status) })
-                        .always(function()      { count-- })
+                        var file = app.cameo.path_to_languages+'/'+lang_key+'.json';
+//                        $.getJSON(file)
+//                        .done(  function(data)  { language_tables[lang_key] = data })
+//                        .fail(  function(xhr, status, error) { console.log('Error getting JSON from '+file+': '+status) })
+//                        .always(function()      { count-- })
                     })
                 })
 
@@ -113,7 +106,7 @@ define([
                     cmLanguageProvider
                     .preferredLanguage( 'en_US' )
                     .supportedLanguages(['en_US, de_DE'])
-                    .pathToLanguages('languages')
+                    .pathToLanguages('i18n')
                     .translations('en_US', {
                         'LANG.EN_US' : 'english',
                         'TEST': 'works'
@@ -156,13 +149,13 @@ define([
 
 
                 it('should provide a functionen "getPathToLanguage" to return the path to language files.', function(){
-                    expect(cmLanguage.getPathToLanguage()).toEqual('languages')
+                    expect(cmLanguage.getPathToLanguage()).toEqual('i18n')
                 })
 
                 it('should provide a functionen "switchLanguage" to switch between supported languages.', function(){
                     expect(typeof cmLanguage.switchLanguage).toEqual('function')
 
-                    $httpBackend.whenGET('languages/lang-de_DE.json')
+                    $httpBackend.whenGET('i18n/de_DE.json')
                     .respond('{"LANG": {"FR_FR":"Französisch"} }')
 
                     //return a promise

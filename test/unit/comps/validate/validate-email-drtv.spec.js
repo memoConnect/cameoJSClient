@@ -1,6 +1,7 @@
 define([
+    'jquery',
     'angular-mocks'
-], function () {
+], function ($) {
     'use strict';
 
     // thx to http://stackoverflow.com/questions/15219717/to-test-a-custom-validation-angular-directive

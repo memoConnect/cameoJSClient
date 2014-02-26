@@ -15,6 +15,5 @@ define([
         it('should be defined', function () {
             expect(ctrl).toBeDefined();
         });
-
     });
 });

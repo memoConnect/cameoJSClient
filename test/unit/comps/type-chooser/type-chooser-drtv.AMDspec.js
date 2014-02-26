@@ -14,7 +14,7 @@ define([
         describe('default',function(){
             var $scopeDirv, directive;
             angularAMD.inject(function ($rootScope, $compile, $templateCache) {
-//                $templateCache.put('js/directives/typeChooser.html', tpl);
+                $templateCache.put('comps/type-chooser/type-chooser.html', tpl);
 
                 directive = angular.element('<div cm-type-chooser></div>');
                 directive = $compile(directive)($rootScope);
