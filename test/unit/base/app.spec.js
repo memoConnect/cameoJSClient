@@ -1,4 +1,7 @@
-define(['app','angularAMD'], function (app, angularAMD) {
+define([
+    'app',
+    'angularAMD'
+], function (app, angularAMD) {
     'use strict';
 
     describe('angularAMD', function () {
@@ -18,6 +21,4 @@ define(['app','angularAMD'], function (app, angularAMD) {
             expect(typeof app.register.controller).toBe('function');
         });
     });
-
-    return app;
 });
