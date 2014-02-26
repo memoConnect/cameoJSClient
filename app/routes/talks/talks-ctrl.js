@@ -1,10 +1,11 @@
 define([
     'app',
     'util-base64',    
-    'pckConversations'
+    'ngload!pckConversations'
 ], function (app) {
     'use strict';
-    
+  
+  
     app.register.controller('ConversationsCtrl',[
 
         '$scope',
