@@ -71,6 +71,16 @@ define([
         }
     };
 
+    /**
+     * Check for local Env restApi URL
+     */
+    if(typeof env !== 'undefined'){
+        if(env.restApi != undefined && env.restApi != ""){
+            app.cameo.restApi = env.restApi;
+        }
+    }
+
+
     // cameo configuration for our providers
     app.config([
         'cmLanguageProvider',
