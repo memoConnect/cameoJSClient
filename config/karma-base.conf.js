@@ -13,6 +13,7 @@ module.exports = function(config) {
             // tests
 //            {pattern: 'test/unit/**/crypt.spec.js', included: false},
             {pattern: 'test/unit/**/*.spec.js', included: false},
+            {pattern: 'test/unit/**/*.amd-spec.js', included: false},
             // test lib
             {pattern: 'test/lib/**/*.js', included: false},
             // requirejs main file
