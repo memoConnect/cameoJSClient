@@ -1,8 +1,8 @@
 define([
     'app',
-    'util-base64',
-    'crypto-sjcl',
-    'cmLogger'
+//    'util-base64',
+//    'crypto-sjcl',
+//    'cmLogger'
 ], function (app) {
     'use strict';
 
@@ -69,7 +69,7 @@ define([
                  */
                 decrypt: function (secretKey, secretString) {
                     if (null == secretString)
-                        return false
+                        return false;
 
                     var decodedSecretString = Base64.decode(secretString),
                         decryptedString
