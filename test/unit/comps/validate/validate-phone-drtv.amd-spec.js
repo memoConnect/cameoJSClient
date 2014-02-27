@@ -1,7 +1,8 @@
 define([
+    'app',
     'angularAMD',
     'ngload!comps/validate/phone-drtv'
-], function (angularAMD) {
+], function (app, angularAMD) {
     'use strict';
 
     // thx to http://stackoverflow.com/questions/15219717/to-test-a-custom-validation-angular-directive

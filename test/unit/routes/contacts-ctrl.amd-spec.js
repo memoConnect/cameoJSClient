@@ -1,7 +1,8 @@
 define([
+    'app',
     'angularAMD',
     'ngload!routes/contacts/contacts-ctrl'
-], function (angularAMD) {
+], function (app, angularAMD) {
     'use strict';
 
     describe('ContactsCtrl', function () {

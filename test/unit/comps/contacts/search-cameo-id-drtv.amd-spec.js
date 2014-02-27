@@ -1,8 +1,9 @@
 define([
+    'app',
     'angularAMD',
     'comps/contacts/search-cameo-id.html',
     'ngload!comps/contacts/search-cameo-id-drtv'
-], function (angularAMD, tpl) {
+], function (app, angularAMD, tpl) {
     'use strict';
 
     describe('Directive cmSearchCameoId', function () {

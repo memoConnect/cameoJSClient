@@ -1,8 +1,9 @@
 define([
+    'app',
     'angularAMD',
     'ngload!mUser',
     'ngload!cmAuth'
-], function (angularAMD) {
+], function (app, angularAMD) {
     'use strict';
 
     describe('ModelUser', function(){

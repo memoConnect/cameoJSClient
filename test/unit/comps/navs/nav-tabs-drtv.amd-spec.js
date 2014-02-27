@@ -1,8 +1,9 @@
 define([
+    'app',
     'angularAMD',
     'comps/navs/nav-tabs.html',
     'ngload!comps/navs/nav-tabs-drtv'
-], function (angularAMD, tpl) {
+], function (app, angularAMD, tpl) {
     'use strict';
 
     var inject = angularAMD.inject;

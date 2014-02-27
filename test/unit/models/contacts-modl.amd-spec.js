@@ -1,7 +1,8 @@
 define([
+    'app',
     'angularAMD',
     'ngload!mContacts'
-], function (angularAMD) {
+], function (app, angularAMD) {
     'use strict';
 
     describe('ModelContacts', function(){
