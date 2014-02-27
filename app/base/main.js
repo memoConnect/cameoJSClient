@@ -23,13 +23,6 @@ var config = {
         'angularAMD': 'vendor/requirejs/angularAMD',
         'ngload': 'vendor/requirejs/ngload',
 
-        // utils
-        'util-base64': 'vendor/util/base64',
-        'util-passchk-fast': 'vendor/util/passchk_fast',
-
-        // crypto
-        'crypto-sjcl': 'vendor/sjcl/main.min',
-
         // global provider without AMD
         'cmApi': 'shared/api/api',
         'cmLanguage': 'shared/i18n/language',
@@ -50,15 +43,17 @@ var config = {
 
         // shared
         'util': 'shared/util',
+        'util-base64': 'vendor/util/base64',
+        'util-passchk-fast': 'vendor/util/passchk_fast',
+        // crypto
+        'crypto-sjcl': 'vendor/sjcl/sjcl.min',
 
-        'jquery': 'vendor/jquery/jquery-2.1.0',
+        'jquery': 'vendor/jquery/jquery-2.1.0'
 //        'bootstrap': 'vendor/bootstrap/bootstrap.min',
-        
-
     },
 
     packages: [
-        {name: '_v', location: 'vendor'},
+        {name: '_v', location: 'vendor'}
 //        {name: '_s', location: 'service'},
 //        {name: '_d', location: 'directives'}
     ],
@@ -90,10 +85,7 @@ function addPackage(package_name, package) {
     config.paths[package_name+'-root'] = package.root
     config.paths[package_name] = 'comps/conversations/require'
     config.shim[package_name] = Object.keys(package.resources) 
-
-
 }
-
 
 addPackage('pckConversations', {
     root:  'comps/conversations/conversations-module',
@@ -108,8 +100,6 @@ addPackage('pckConversations', {
         'directiveMessage'              : 'comps/conversations/message-drtv' 
     }
 })
-
-console.dir(config)
 
 require.config(config)
 
