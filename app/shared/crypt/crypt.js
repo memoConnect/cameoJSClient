@@ -1,6 +1,7 @@
 define([
     'app',
     'crypto-sjcl',
+    'util-base64',
     'cmLogger'
 ], function (app) {
     'use strict';
