@@ -1,4 +1,3 @@
-
 var config = {
     baseUrl: "",
     // alias libraries paths

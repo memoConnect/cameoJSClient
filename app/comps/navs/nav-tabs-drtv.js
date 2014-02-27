@@ -33,6 +33,4 @@ define([
             }
         }
     );
-
-    return app;
 });
