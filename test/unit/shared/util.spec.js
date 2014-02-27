@@ -1,15 +1,16 @@
-define(['angular-mocks'], function () {
+define([
+    'angularAMD',
+    'ngload!util'
+], function (angularAMD) {
     'use strict';
 
     var util;
 
     describe('Util', function(){
 
-        beforeEach(module('Util'));
-
-        beforeEach(inject(function(_Util_){
-            util = _Util_
-        }));
+        angularAMD.inject(function(_Util_) {
+            util = _Util_;
+        });
 
         it('should exists', function(){
             expect(util).toBeDefined();
