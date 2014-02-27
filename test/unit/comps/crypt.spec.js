@@ -1,6 +1,6 @@
 define([
     'angularAMD',
-    'ngload!cmCrypt',
+    'cmCrypt',
     'util-base64'
 ], function (angularAMD) {
     'use strict';
@@ -57,6 +57,5 @@ define([
                 expect(encryptedShit).toEqual("");
             })
         })
-    });
-
+    })
 })
