@@ -85,4 +85,6 @@ define([
             }
         }
     );
+
+    return app;
 });
