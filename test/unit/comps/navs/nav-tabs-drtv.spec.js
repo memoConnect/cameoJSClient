@@ -67,8 +67,6 @@ define([
             drtv.$scope.$apply();
             drtv.digest();
 
-            console.log('set tabs')
-
             describe('directive scope', function(){
                 it('should have rootScope tabs equal 4', function(){
                     expect(drtv.$scope.tabs.length).toEqual(4);
@@ -99,8 +97,6 @@ define([
             drtv.$routeParams.tab = 'whoop';
             drtv.$scope.$apply();
             drtv.digest();
-
-            console.log('route tab')
 
             it('activeTab should be whoop.toUpperCase == WHOOP', function(){
                 expect(drtv.$scope.activeTab).toBe('WHOOP');
