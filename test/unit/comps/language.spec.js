@@ -1,8 +1,7 @@
 define([
     'angular-mocks',
-    'app',
-    'angularAMD'
-], function (mocks, app, angularAMD, lang) {
+    'app'
+], function (mocks, app) {
     'use strict';
 
     describe("cmLanguage", function() {
@@ -178,5 +177,4 @@ define([
             })
         })
     })
-
 })

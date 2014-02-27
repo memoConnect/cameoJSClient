@@ -38,13 +38,6 @@ requirejs.config({
         'jquery': 'vendor/jquery/jquery-2.1.0',
         'jasmine-jquery': '../test/lib/jasmine-jquery/jasmine-jquery',
 
-        // utils
-        'util-base64': 'vendor/util/base64',
-        'util-passchk-fast': 'vendor/util/passchk_fast',
-
-        // crypto
-        'crypto-sjcl': 'vendor/sjcl/main.min',
-
         // cmModules
         'cmApi': 'shared/api/api',
         'cmAuth': 'shared/auth/auth',
@@ -62,7 +55,13 @@ requirejs.config({
         'mUser': 'models/user-modl',
 
 		// shared
-        'util': 'shared/util'
+        'util': 'shared/util',
+        // utils
+        'util-base64': 'vendor/util/base64',
+        'util-passchk-fast': 'vendor/util/passchk_fast',
+
+        // crypto
+        'crypto-sjcl': 'vendor/sjcl/sjcl.min'
     },
 
     packages: [
