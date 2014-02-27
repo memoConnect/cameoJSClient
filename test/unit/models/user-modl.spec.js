@@ -28,6 +28,7 @@ define(['angularAMD','ngload!mUser','ngload!cmAuth'], function (angularAMD) {
 
         /**
          * Mock cmAuth.getToken for testing
+         * TODO cmAuth Mock?!?
          */
         xdescribe('Authentication',function(){
 

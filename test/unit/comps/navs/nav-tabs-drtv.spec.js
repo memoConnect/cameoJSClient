@@ -90,6 +90,9 @@ define([
             })
         })
 
+        /**
+         * TODO Rout
+         */
         xdescribe('route has tab variable', function(){
             var drtv = createDrtv(false);
             drtv.$rootScope.tabs = tabMock;
