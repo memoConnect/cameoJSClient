@@ -4,7 +4,8 @@ define([
     'cmNotify',
     'cmLogger',
     'comps/validate/password-drtv',
-    'comps/validate/email-drtv'
+    'comps/validate/email-drtv',
+    'comps/navs/nav-tabs-drtv'
 ], function (app) {
     'use strict';
 
@@ -15,6 +16,13 @@ define([
     'cmNotify',
     'cmLogger',
     function ($scope, $location, cmAuth, cmNotify, cmLogger) {
+        /**
+         * tab directive defines
+         */
+        $scope.tabs = [
+            {i18n:'BACK',icon:'fa-chevron-left',href:'#/login','default':true},
+        ];
+
         var reservation_secrets = {};
 
         $scope.formData = {loginName: '', password: '', email: '', phoneNumber: '', name: '',cameoId: ''};
