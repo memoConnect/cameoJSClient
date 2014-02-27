@@ -173,7 +173,7 @@ define([
                 } else if ($location.$$path == "/login") {
                     $location.path("/start");
                 }
-                // stro token if is defined
+                // store token if is defined
                 if (angular.isDefined($cookieStore.get("token"))) {
                     app.cameo.token = $cookieStore.get("token");
                 }
