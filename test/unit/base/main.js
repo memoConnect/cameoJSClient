@@ -41,7 +41,7 @@ requirejs.config({
         // cmModules
         'cmApi': 'shared/api/api',
         'cmAuth': 'shared/auth/auth',
-        'cmCrypt': 'shared/crypt/cmCrypt',
+        'cmCrypt': 'shared/crypt/crypt',
         'cmLanguage': 'shared/i18n/language',
         'cmLogger': 'shared/logger/cmLogger',
         'cmNotify': 'shared/notify/notify',

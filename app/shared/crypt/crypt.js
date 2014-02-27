@@ -15,7 +15,7 @@ define([
             return {
                 /**
                  * this method calculates a secure hash
-                 * @param secureString String that should be hashed
+                 * @param secretString String that should be hashed
                  */
                 hash: function (secretString) {
                     if (null == secretString)
@@ -72,7 +72,7 @@ define([
                         return false;
 
                     var decodedSecretString = Base64.decode(secretString),
-                        decryptedString
+                        decryptedString;
 
                     try {
                         decryptedString = sjcl.decrypt(secretKey, decodedSecretString)

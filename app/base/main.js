@@ -29,9 +29,9 @@ var config = {
         'cmLogger': 'shared/logger/cmLogger',
         'cmNotify': 'shared/notify/notify',
 
-        // ??? modules
+        // cameo modules
         'cmAuth': 'shared/auth/auth',
-        'cmCrypt': 'shared/crypt/cmCrypt',
+        'cmCrypt': 'shared/crypt/crypt',
 
         'cmProfile': 'comps/cmProfile',
         //'cmConversations': 'comps/conversation/cmConversations',
