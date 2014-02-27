@@ -11,8 +11,8 @@ module.exports = function(config) {
             // all frontend files
             {pattern: 'app/**/*.js', included: false},
             // tests
-//            {pattern: 'test/unit/**/auth.spec.js', included: false},
-            {pattern: 'test/unit/**/*.spec.js', included: false},
+            {pattern: 'test/unit/**/crypt.spec.js', included: false},
+//            {pattern: 'test/unit/**/*.spec.js', included: false},
             // test lib
             {pattern: 'test/lib/**/*.js', included: false},
             // requirejs main file

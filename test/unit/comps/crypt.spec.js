@@ -1,6 +1,6 @@
 define([
     'angularAMD',
-    'cmCrypt',
+    'ngload!cmCrypt',
     'util-base64'
 ], function (angularAMD) {
     'use strict';
