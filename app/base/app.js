@@ -51,9 +51,8 @@ define([
         'cmLanguageProvider',
         'cmLoggerProvider',
         'cmApiProvider',
-//        'cmAuthProvider',
+//        'cmNotifyProvider',
         function (cmLanguageProvider, cmLoggerProvider, cmApiProvider){
-//            cmApiProvider, cmAuthProvider,
             cmLoggerProvider
             .debugEnabled(true)
 

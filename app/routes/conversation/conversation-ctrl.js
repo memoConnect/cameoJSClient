@@ -1,5 +1,6 @@
 define([
     'app',
+    'cmAuth',
     'util-base64',
     'mContacts',
     'comps/navs/nav-tabs-drtv',

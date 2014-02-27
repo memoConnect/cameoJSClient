@@ -3,13 +3,12 @@ define([
     'cmAuth',
     'cmNotify',
     'cmLogger',
+    'comps/validate/password-drtv',
     'comps/validate/email-drtv'
 ], function (app) {
     'use strict';
 
-    app
-    .register
-    .controller('RegistrationCtrl', [
+    app.register.controller('RegistrationCtrl', [
     '$scope',
     '$location',
     'cmAuth',
@@ -179,5 +178,4 @@ define([
             return true;
         };
     }]);
-    return app;
 });

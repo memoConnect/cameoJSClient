@@ -88,6 +88,4 @@ define([
             }
         }
     );
-
-    return app;
 });

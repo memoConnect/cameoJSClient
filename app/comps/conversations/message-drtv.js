@@ -21,7 +21,7 @@ define([
                 restrict: 'AE',
                 require: '^cmConversation',
                 scope: true,
-                templateUrl: 'comps/conversation/message.html',
+                templateUrl: 'comps/conversations/message.html',
                 controller: function ($scope, $element, $attrs) {
                     $scope.message = $scope.$eval($attrs.cmData) || $scope.$eval($attrs.cmMessage);
 

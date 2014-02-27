@@ -1,18 +1,18 @@
 define([
     'app',
-    'cmLogger',
     'cmContacts',
-    'mUser'
+    'mUser',
+    'cmLogger'
 ], function (app) {
     'use strict';
 
     app.register.service('ModelContacts',[
-        'ModelUser',
-        'cmContacts',
-        'cmLogger',
-        '$q',
-        '$rootScope',
-        function(ModelUser, cmContacts, cmLogger, $q, $rootScope){
+    'ModelUser',
+    'cmContacts',
+    'cmLogger',
+    '$q',
+    '$rootScope',
+    function(ModelUser, cmContacts, cmLogger, $q, $rootScope){
         var self = this;
         var mockContacts = ['derMicha','dasEmpu'];
         var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];

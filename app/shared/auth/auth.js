@@ -1,17 +1,13 @@
 define([
     'app',
-//    'angular-cookies',
-
     'util-base64',
     'util-passchk-fast',
-
-    'cmApi',
     'cmCrypt',
-    'cmLogger'
+    'mUser'
 ], function (app) {
     'use strict';
 
-//    var cmAuth = angular.module('cmAuth', ['ngCookies', 'cmApi', 'cmCrypt', 'cmLogger']);
+//    var cmAuth = angular.module('cmAuth', ['ngCookies', 'cmApi', 'cmCrypt', 'cmLogger'])
 
     // Service to handle all authenticateion matters
     app.register.factory('cmAuth', [
@@ -20,7 +16,7 @@ define([
         'cmLogger',
         '$cookieStore',
         '$q',
-        function(cmApi, cmCrypt, cmLogger, $cookieStore, $q){
+        function(cmApi, cmCrypt, cmLogger, $cookieStore){
             return {
 
                 //ask the api for a new authentication token:
@@ -84,6 +80,5 @@ define([
             }
         }
     ]);
-
     return app;
 });

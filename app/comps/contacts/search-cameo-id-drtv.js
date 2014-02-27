@@ -1,7 +1,7 @@
 define([
     'app',
-    'cmLogger',
-    'mContacts'
+    'mContacts',
+    'cmLogger'
 ], function(app){
     'use strict';
 
@@ -11,7 +11,7 @@ define([
             restrict: 'A',
             scope: {},
             templateUrl: 'comps/contacts/search-cameo-id.html',
-            controller: function($scope, $element, $attrs){
+            controller: function($scope){
                 $scope.results = [];
 
                 /**

@@ -1,6 +1,6 @@
 define([
     'angularAMD',
-    'comps/contacts/search-cameo-id-drtv',
+    'ngload!comps/contacts/search-cameo-id-drtv',
     'comps/contacts/search-cameo-id.html'
 ], function (angularAMD, app, tpl) {
     'use strict';

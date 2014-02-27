@@ -1,10 +1,12 @@
 define([
     'app',
     'util-base64',    
-    'pckConversations'
+    'comps/navs/nav-tabs-drtv',
+    'ngload!pckConversations'
 ], function (app) {
     'use strict';
-    
+  
+  
     app.register.controller('ConversationsCtrl',[
 
         '$scope',

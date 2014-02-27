@@ -71,6 +71,7 @@ requirejs.config({
     ],
 
     shim: {
+        'angular-mocks': ['angular'],
         'angularAMD': ['angular'],
 
         'angular-route': ['angular'],
@@ -80,9 +81,7 @@ requirejs.config({
         'angular-translate-storage-cookie': ['angular'],
         'angular-translate-storage-local': ['angular'],
         'angular-growl': ['angular'],
-        'cmLanguage': ['angular-translate'],
-
-        'angular-mocks': ['angular']
+        'cmLanguage': ['angular-translate']
     },
 
     // ask Require.js to load these files (all our tests)

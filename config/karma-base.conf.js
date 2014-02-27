@@ -11,15 +11,15 @@ module.exports = function(config) {
             // all frontend files
             {pattern: 'app/**/*.js', included: false},
             // tests
+//            {pattern: 'test/unit/**/auth.spec.js', included: false},
             {pattern: 'test/unit/**/*.spec.js', included: false},
-//            {pattern: 'test/unit/**/*.AMDspec.js', included: false},
             // test lib
             {pattern: 'test/lib/**/*.js', included: false},
             // requirejs main file
             {pattern: 'test/unit/base/main.js', included: true},
             // load and json templates
-//            {pattern: 'app/**/*.html', included: false},
-            {pattern: 'app/**/*.json', included: false}
+            {pattern: 'app/**/*.html', included: false}
+//            {pattern: 'app/**/*.json', included: false}
         ],
 
         // generate js files from html templates to expose them during testing.
@@ -34,7 +34,8 @@ module.exports = function(config) {
 
         // list of files to exclude
         exclude: [
-            'app/**/main.js'
+            'app/**/main.js',
+//            'test/**/contacts-ctrl.AMDspec.js'
         ],
 
         // test results reporter to use

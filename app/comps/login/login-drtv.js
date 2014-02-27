@@ -54,6 +54,4 @@ define([
             }
         }
     ]);
-
-    return app;
 });
