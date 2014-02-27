@@ -137,7 +137,7 @@ define([
                     templateUrl: 'routes/disclaimer/disclaimer.html'
                 })).
                 when('/404', angularAMD.route({
-                    templateUrl: 'route/landingpages/404.html'
+                    templateUrl: 'routes/landingpages/404.html'
                 }));
         }
     ]);
