@@ -41,7 +41,7 @@ var config = {
         'cmCrypt': 'shared/crypt/crypt',
 
         'cmProfile': 'comps/cmProfile',
-        //'cmConversations': 'comps/conversation/cmConversations',
+        //'cmConversations': 'comps/conversation/conversations-module',
         'cmContacts': 'comps/contacts/cmContacts',
 
         // Models
@@ -53,7 +53,7 @@ var config = {
 
         'jquery': 'vendor/jquery/jquery-2.1.0',
 //        'bootstrap': 'vendor/bootstrap/bootstrap.min',
-        
+      
 
     },
 
@@ -83,31 +83,37 @@ var config = {
 
 function addPackage(package_name, package) {
     for(var alias in package.resources){
-        config.paths[alias] = package.resources[alias]
-        config.shim[alias]  = [package_name+'-root']
+        config.paths[alias] = package.resources[alias]        
     }
 
-    config.paths[package_name+'-root'] = package.root
-    config.paths[package_name] = 'comps/conversations/require'
-    config.shim[package_name] = Object.keys(package.resources) 
-
-
+    config.paths[package_name] = package.root
+    config.shim[package_name] = package.deps.concat(Object.keys(package.resources))
+    
+    
 }
 
 
-addPackage('pckConversations', {
-    root:  'comps/conversations/conversations-module',
+addPackage('pckConversations',{
+    root: 'comps/conversations/conversations-module',
+    deps: [
+        //'cmApi', 
+        //'cmLogger', 
+        //'cmCrypt', 
+        //'cmAuth',
+        //'cmContacts'
+    ],    
     resources : {
-        'serviceConversationsAdapter'   : 'comps/conversations/conversationsAdapter-srvc',
-        'serviceConversationsModel'     : 'comps/conversations/conversationsModel-srvc',
-        'directiveAttachments'          : 'comps/conversations/attachments-drtv',
-        'directiveAvatar'               : 'comps/conversations/avatar-drtv',
-        'directiveCaptcha'              : 'comps/conversations/captcha-drtv',
-        'directiveConversation'         : 'comps/conversations/conversation-drtv',
-        'directiveConversation-input'   : 'comps/conversations/conversation-input-drtv',
-        'directiveMessage'              : 'comps/conversations/message-drtv' 
+       // 'serviceConversationsAdapter'   : 'comps/conversations/conversationsAdapter-srvc',
+       'serviceConversationsModel'     : 'comps/conversations/conversationsModel-srvc',
+       // 'directiveAttachments'          : 'comps/conversations/attachments-drtv',
+       // 'directiveAvatar'               : 'comps/conversations/avatar-drtv',
+       // 'directiveCaptcha'              : 'comps/conversations/captcha-drtv',
+       // 'directiveConversation'         : 'comps/conversations/conversation-drtv',
+       // 'directiveConversation-input'   : 'comps/conversations/conversation-input-drtv',
+       // 'directiveMessage'              : 'comps/conversations/message-drtv' 
     }
 })
+
 
 console.dir(config)
 
