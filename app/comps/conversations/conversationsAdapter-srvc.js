@@ -17,6 +17,7 @@ define([
 //	var cmConversations = angular.module('cmConversations', ['cmApi', 'cmLogger', 'cmCrypt', 'cmContacts']);
 
 console.log('adapter')
+/*
 
 function cmConversationsAdapter($q, cmApi){
     return {

@@ -2,7 +2,7 @@ define([
     'app',
     'util-base64',    
     'comps/navs/nav-tabs-drtv',
-    'ngload!pckConversations'
+    'pckConversations-serviceConversationsAdapter'
 ], function (app) {
     'use strict';
 

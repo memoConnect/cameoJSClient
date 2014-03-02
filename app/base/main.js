@@ -83,12 +83,17 @@ var config = {
 
 function addPackage(package_name, package) {
     for(var alias in package.resources){
-        config.paths[alias] = package.resources[alias]        
+        config.paths[package_name+'-'+alias] = package.resources[alias]        
     }
 
     config.paths[package_name] = package.root
-    config.shim[package_name] = package.deps.concat(Object.keys(package.resources))
+
+    config.shim[package_name]  = config.shim[package_name] || []
     
+    for(alias in package.resources) {
+        config.shim[package_name +'-'+alias] = package.deps        
+        config.shim[package_name].push(package_name+'-'+alias)
+    }
     
 }
 
@@ -96,21 +101,21 @@ function addPackage(package_name, package) {
 addPackage('pckConversations',{
     root: 'comps/conversations/conversations-module',
     deps: [
-        //'cmApi', 
-        //'cmLogger', 
-        //'cmCrypt', 
-        //'cmAuth',
-        //'cmContacts'
+        'cmApi', 
+        'cmLogger', 
+        'cmCrypt', 
+        'cmAuth',
+        'cmContacts'
     ],    
     resources : {
-       // 'serviceConversationsAdapter'   : 'comps/conversations/conversationsAdapter-srvc',
-       'serviceConversationsModel'     : 'comps/conversations/conversationsModel-srvc',
-       // 'directiveAttachments'          : 'comps/conversations/attachments-drtv',
-       // 'directiveAvatar'               : 'comps/conversations/avatar-drtv',
-       // 'directiveCaptcha'              : 'comps/conversations/captcha-drtv',
-       // 'directiveConversation'         : 'comps/conversations/conversation-drtv',
-       // 'directiveConversation-input'   : 'comps/conversations/conversation-input-drtv',
-       // 'directiveMessage'              : 'comps/conversations/message-drtv' 
+       'serviceConversationsAdapter'   :   'comps/conversations/conversationsAdapter-srvc',
+       //'serviceConversationsModel'     : 'comps/conversations/conversationsModel-srvc',
+       //'directiveAttachments'          : 'comps/conversations/attachments-drtv',
+       //'directiveAvatar'               : 'comps/conversations/avatar-drtv',
+       //'directiveCaptcha'              : 'comps/conversations/captcha-drtv',
+       //'directiveConversation'         : 'comps/conversations/conversation-drtv',
+       //'directiveConversation-input'   : 'comps/conversations/conversation-input-drtv',
+       //'directiveMessage'              : 'comps/conversations/message-drtv' 
     }
 })
 
