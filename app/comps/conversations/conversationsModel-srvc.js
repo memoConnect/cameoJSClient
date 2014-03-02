@@ -126,6 +126,13 @@ function cmConversationsModel (cmConversationsAdapter, cmCrypt, $q, cmAuth) {
             return this
         }
 
+        this.updateSubject = function (subject) {
+            cmConversationsAdapter.updateSubject(this.id, subject)
+            .then(function(){
+                self.subject = subject                
+            })
+        }
+
         this.newMessage = function (message_data) {
             var message_data = (typeof message_data == 'string' ? {messageBody: message_data} : message_data )
             return new Message(message_data)
@@ -221,10 +228,10 @@ function cmConversationsModel (cmConversationsAdapter, cmCrypt, $q, cmAuth) {
         var self = this
 
         this.addTo = function (conversation) {
-            return    cmConversationsAdapter.addRecipient(conversation.id, this.id)
-                .then(function () {
-                    conversation.addRecipient(self)
-                })
+            return  cmConversationsAdapter.addRecipient(conversation.id, this.id)
+                    .then(function () {
+                        conversation.addRecipient(self)
+                    })
         }
 
         this.removeFrom = function (conversation) {

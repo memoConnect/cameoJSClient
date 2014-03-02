@@ -16,9 +16,6 @@ define([
 
 //	var cmConversations = angular.module('cmConversations', ['cmApi', 'cmLogger', 'cmCrypt', 'cmContacts']);
 
-console.log('adapter')
-/*
-
 function cmConversationsAdapter($q, cmApi){
     return {
 
@@ -38,7 +35,6 @@ function cmConversationsAdapter($q, cmApi){
                                     offset:	offset,
                                     limit:	limit
                                 }
-                        //exp_ok:	'messages'
                     })
         },
 
@@ -67,6 +63,15 @@ function cmConversationsAdapter($q, cmApi){
                     })
         },
 
+        updateSubject: function(id, subject){
+            return  cmApi.put({
+                        url:    '/conversation/%1'.replace(/%1/, id),
+                        data:   {
+                                    subject: subject
+                                }
+                    })
+        },
+
         sendMessage: function(id, messageBody){
             return	cmApi.post({
                         url:	"/conversation/%1/message".replace(/%1/, id),
@@ -78,6 +83,7 @@ function cmConversationsAdapter($q, cmApi){
 
     }
 }
+
 /*
     return app;
 

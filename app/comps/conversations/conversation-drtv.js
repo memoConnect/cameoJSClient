@@ -29,12 +29,12 @@ define([
 
 
                 conversation_id
-                    ? cmConversationsModel.getConversation(conversation_id, conversation_offset, conversation_limit)
+                ?   cmConversationsModel.getConversation(conversation_id, conversation_offset, conversation_limit)
                     .then(function (conversation) {
                         $scope.init(conversation)
                     })
 
-                    : cmConversationsModel.createConversation(conversation_subject)
+                :   cmConversationsModel.createConversation(conversation_subject)
                     .then(function (conversation) {
                         $scope.init(conversation)
                         $scope.new_conversation = true
@@ -52,6 +52,10 @@ define([
                         $scope.conversation.setPassphrase(new_passphrase)
                         $scope.passphrase_valid = $scope.conversation.passphraseValid()
                         if ($scope.passphrase_valid) $scope.conversation.decrypt()
+                    })
+
+                    $scope.$watch("conversation.subject", function (new_subject) {
+                        $scope.conversation.updateSubject(new_subject||"")
                     })
 
                     $scope.$on('identity-selected', function (event, identity_data) {

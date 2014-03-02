@@ -15,7 +15,7 @@ define([
     'use strict';
 
 
-    function cmMessageInput() {
+    function cmConversationInput() {
         return {
 
             restrict: 'A',

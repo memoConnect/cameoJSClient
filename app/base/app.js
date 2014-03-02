@@ -4,6 +4,7 @@ define([
     'angular-cookies',
 //
     'cmApi',
+    'pckUi',
 //    'cmAuth',
 //    'cmCrypt',
     'cmLanguage',
@@ -25,6 +26,7 @@ define([
 
         // Module
         'cmApi',
+        'cmUi',
 //        'cmAuth',
 //        'cmCrypt',
         'cmLanguage',

@@ -2,12 +2,13 @@ define([
     'app',
     'util-base64',    
     'comps/navs/nav-tabs-drtv',
-    'pckConversations-serviceConversationsAdapter'
+    'cmAuth',                       //das klappt nur mit Glück!
+    'ngload!pckConversations',
 ], function (app) {
     'use strict';
+    
 
-
-    console.log('check3')  
+    console.log('Ctrl')  
   
     app.register.controller('ConversationsCtrl',[
 

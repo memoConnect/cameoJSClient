@@ -1,5 +1,7 @@
 'use strict';
 
+console.log('load module...')
+
 var cmConversations = angular.module('cmConversations', [
     'cmApi', 
     'cmLogger', 
@@ -7,11 +9,12 @@ var cmConversations = angular.module('cmConversations', [
     'cmContacts'
 ])
 
-cmConversations.factory('cmConversationsAdapter', [
+cmConversations.service('cmConversationsAdapter', [
     '$q', 
     'cmApi', 
     cmConversationsAdapter
 ])
+
 
 cmConversations.service('cmConversationsModel', [
     'cmConversationsAdapter',
@@ -20,6 +23,7 @@ cmConversations.service('cmConversationsModel', [
     'cmAuth',
     cmConversationsModel
 ])
+
 
 cmConversations.directive('cmAttachments', [
     cmAttachments
@@ -35,11 +39,11 @@ cmConversations.directive('cmConversation', [
     'cmLogger',
     'cmNotify',
     '$location',
-
+    cmConversation
 ])
 
-cmConversations.directive('cmMessageInput', [
-    cmMessageInput
+cmConversations.directive('cmConversationInput', [
+    cmConversationInput
 ])
 
 
@@ -55,5 +59,3 @@ cmConversations.directive('cmMessage', [
     'cmAuth',
     cmMessage
 ])
-
-console.log('module loaded')

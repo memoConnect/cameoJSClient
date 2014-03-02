@@ -9,7 +9,6 @@ define([
     'cmContacts',
     'util-base64',
     'util-passchk-fast',
-    '_v/captcha/captchagen/captchagen'
 ], function(app){
 */   
     'use strict';
