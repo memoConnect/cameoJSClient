@@ -1,7 +1,8 @@
 define([
+    'app',
     'angularAMD',
     'ngload!routes/registration/registration-ctrl'
-], function (angularAMD) {
+], function (app, angularAMD) {
     'use strict';
 
     describe('RegistrationCtrl', function () {

@@ -1,8 +1,9 @@
 define([
+    'app',
     'angularAMD',
     'comps/navs/nav-tabs.html',
     'ngload!comps/navs/nav-tabs-drtv'
-], function (angularAMD, tpl) {
+], function (app, angularAMD, tpl) {
     'use strict';
 
     var inject = angularAMD.inject;
@@ -67,8 +68,6 @@ define([
             drtv.$scope.$apply();
             drtv.digest();
 
-            console.log('set tabs')
-
             describe('directive scope', function(){
                 it('should have rootScope tabs equal 4', function(){
                     expect(drtv.$scope.tabs.length).toEqual(4);
@@ -90,14 +89,15 @@ define([
             })
         })
 
+        /**
+         * TODO Rout
+         */
         xdescribe('route has tab variable', function(){
             var drtv = createDrtv(false);
             drtv.$rootScope.tabs = tabMock;
             drtv.$routeParams.tab = 'whoop';
             drtv.$scope.$apply();
             drtv.digest();
-
-            console.log('route tab')
 
             it('activeTab should be whoop.toUpperCase == WHOOP', function(){
                 expect(drtv.$scope.activeTab).toBe('WHOOP');

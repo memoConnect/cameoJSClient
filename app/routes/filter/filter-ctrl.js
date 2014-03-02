@@ -1,5 +1,6 @@
 define([
     'app',
+    'cmCrypt',
     'util-base64',
     'cmLogger'
 ], function (app) {
@@ -10,7 +11,10 @@ define([
         '$http',
         '$cookieStore',
         'cmLogger',
-        function ($scope, $http, $cookieStore, cmLogger) {
+        'cmCrypt',
+        function ($scope, $http, $cookieStore, cmLogger, cmCrypt) {
+
+            console.log(cmCrypt.hash('whoopwhoop'));
 
             $scope.messages = [];
             $scope.messageCount = 0;

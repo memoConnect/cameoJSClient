@@ -1,4 +1,3 @@
-
 var config = {
     baseUrl: "",
     // alias libraries paths
@@ -23,13 +22,6 @@ var config = {
         'angularAMD': 'vendor/requirejs/angularAMD',
         'ngload': 'vendor/requirejs/ngload',
 
-        // utils
-        'util-base64': 'vendor/util/base64',
-        'util-passchk-fast': 'vendor/util/passchk_fast',
-
-        // crypto
-        'crypto-sjcl': 'vendor/sjcl/main.min',
-
         // global provider without AMD
         'cmApi': 'shared/api/api',
         'cmUi': 'shared/ui/ui-module',
@@ -37,7 +29,7 @@ var config = {
         'cmLogger': 'shared/logger/cmLogger',
         'cmNotify': 'shared/notify/notify',
 
-        // ??? modules
+        // cameo modules
         'cmAuth': 'shared/auth/auth',
         'cmCrypt': 'shared/crypt/crypt',
 
@@ -51,15 +43,17 @@ var config = {
 
         // shared
         'util': 'shared/util',
+        'util-base64': 'vendor/util/base64',
+        'util-passchk-fast': 'vendor/util/passchk_fast',
+        // crypto
+        'crypto-sjcl': 'vendor/sjcl/sjcl.min',
 
-        'jquery': 'vendor/jquery/jquery-2.1.0',
+        'jquery': 'vendor/jquery/jquery-2.1.0'
 //        'bootstrap': 'vendor/bootstrap/bootstrap.min',
-      
-
     },
 
     packages: [
-        {name: '_v', location: 'vendor'},
+        {name: '_v', location: 'vendor'}
 //        {name: '_s', location: 'service'},
 //        {name: '_d', location: 'directives'}
     ],

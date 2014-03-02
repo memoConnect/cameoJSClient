@@ -1,5 +1,6 @@
 define([
     'app',
+    'util-base64',
     'crypto-sjcl',
     'cmLogger'
 ], function (app) {
@@ -8,16 +9,13 @@ define([
     /**
      * collection of client side crypt stuff
      */
-
-//    var cmCrypt = angular.module('cmCrypt', ['cmLogger']);
-
     app.register.factory('cmCrypt',
         function (cmLogger) {
 
             return {
                 /**
                  * this method calculates a secure hash
-                 * @param secureString String that should be hashed
+                 * @param secretString String that should be hashed
                  */
                 hash: function (secretString) {
                     if (null == secretString)
@@ -71,10 +69,10 @@ define([
                  */
                 decrypt: function (secretKey, secretString) {
                     if (null == secretString)
-                        return false
+                        return false;
 
                     var decodedSecretString = Base64.decode(secretString),
-                        decryptedString
+                        decryptedString;
 
                     try {
                         decryptedString = sjcl.decrypt(secretKey, decodedSecretString)
@@ -84,7 +82,6 @@ define([
 
                     return decryptedString || false
                 }
-
             }
         }
     );

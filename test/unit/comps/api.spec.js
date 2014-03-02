@@ -119,8 +119,6 @@
                 expect(my_alternative).not.toBeDefined()
             })
 
-
-
             it('should check the api conventions for case 2', function(){
                 var my_pony, my_alternative;
 
@@ -152,7 +150,6 @@
                 expect(my_pony).not.toBeDefined()
                 expect(my_alternative).not.toBeDefined()
             })
-
 
             it('should check the api conventions for case 3', function(){
                 var my_pony, my_alternative;
@@ -231,5 +228,4 @@
             $httpBackend.flush()
         }))
     })
-
-});
+})

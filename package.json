@@ -47,7 +47,7 @@
         "karma-html2js-requirejs-preprocessor": "~0.1.0",
         "karma-junit-reporter": "~0.1",
         "protractor": "~0.17.0",
-        "requirejs": "~2.1.10",
+        "requirejs": "~2.1.11",
         "selenium-standalone": "~2.39.0",
         "selenium-webdriver": "~2.39.0"
     },

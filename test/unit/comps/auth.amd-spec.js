@@ -1,8 +1,9 @@
 define([
+    'app',
     'angularAMD',
     'ngload!cmAuth',
     'angular-mocks'
-], function (angularAMD) {
+], function (app, angularAMD) {
     'use strict';
 
     describe('cmAuth', function(){
@@ -13,7 +14,7 @@ define([
             cmAuth = _cmAuth_;
 //            console.log(angular.mock)
             // method, url, post, callback, headers, timeout, withCredentials, responseType
-        });
+        })
 
 //        beforeEach(module('cmAuth'))
 
@@ -110,8 +111,6 @@ define([
 //                $httpBackend.flush()
             })
         })
-
         //TODO: test for directives are not yet done
-
     })
-});
+})

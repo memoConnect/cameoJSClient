@@ -1,7 +1,8 @@
 define([
+    'app',
     'angularAMD',
     'ngload!cmContacts'
-], function (angularAMD) {
+], function (app, angularAMD) {
     'use strict';
 
     describe('cmContacts', function(){

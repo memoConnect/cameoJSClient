@@ -1,8 +1,9 @@
 define([
+    'app',
     'angularAMD',
     'comps/type-chooser/type-chooser.html',
     'ngload!comps/type-chooser/type-chooser-drtv'
-], function (angularAMD, tpl) {
+], function (app, angularAMD, tpl) {
     'use strict';
 
     //<div cm-type-chooser choose-to-data="phoneProvider" choose-type="provider"></div>
