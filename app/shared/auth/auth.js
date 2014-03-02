@@ -14,9 +14,9 @@ define([
         'cmApi',
         'cmCrypt',
         'cmLogger',
-        '$cookieStore',
+        '$cookies',
         '$q',
-        function(cmApi, cmCrypt, cmLogger, $cookieStore){
+        function(cmApi, cmCrypt, cmLogger, $cookies){
             return {
 
                 //ask the api for a new authentication token:
@@ -32,17 +32,17 @@ define([
 
                 //delete Token
                 removeToken: function(){
-                    return $cookieStore.remove("token");
+                    return $cookies.token = undefined;
                 },
 
                 //store the token in a cookie:
                 storeToken: function(token){
-                    return $cookieStore.put("token", token);
+                    return $cookies.token =  token;
                 },
 
                 //retrieve thr token from a cookie
                 getToken: function(){
-                    return $cookieStore.get('token');
+                    return $cookies.token;
                 },
 
                 createUser: function(data){

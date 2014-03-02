@@ -1,5 +1,6 @@
 /.idea/
 /node_modules/
+/phonegap/
 /cameoJSClient.iml
 /target/
 /project/

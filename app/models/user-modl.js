@@ -29,7 +29,7 @@ define([
         function init(){
             if(self.isAuth() !== false){
                 loadIdentity();
-            }1
+            }
         }
 
         this.data = angular.extend({}, dataModel);
@@ -51,8 +51,8 @@ define([
                     loadIdentity();
                     deferred.resolve();
                 },
-                function(){
-                    deferred.reject();
+                function(state, response){
+                    deferred.reject(state, response);
                 }
             )
 

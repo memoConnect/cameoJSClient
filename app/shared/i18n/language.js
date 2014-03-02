@@ -41,9 +41,7 @@ define([
     cmLanguage.directive('cmTranslate', ['translateDirective', function(translateDirective){ return translateDirective[0] }]);
 
     cmLanguage.provider('cmLanguage', [
-
         '$translateProvider',
-
         function($translateProvider){
 
             var supported_languages = [],
@@ -86,15 +84,13 @@ define([
             };
 
             this.$get = [
-
                 'cmTranslate',
                 'cmNotify',
                 'cmLogger',
-
                 function(cmTranslate, cmNotify, cmLogger){
 
                     if(supported_languages.length == 0)
-                        cmLogger.error('No supported languages found. Try cmLanguageProvider.setSupportedLanguages().')
+                        cmLogger.error('No supported languages found. Try cmLanguageProvider.setSupportedLanguages().', {ttl:5000})
 
                     return {
                         getSupportedLanguages: function(){
@@ -116,10 +112,10 @@ define([
                             return cmTranslate.uses(lang_key)
                             .then(
                                 function(){
-                                    cmNotify.info(cmTranslate('LANG.SWITCH.SUCCESS', { lang : self.getLanguageName(lang_key) }))
+                                    cmNotify.info(cmTranslate('LANG.SWITCH.SUCCESS', { lang: self.getLanguageName(lang_key), ttl: 5000 }))
                                 },
                                 function(){
-                                    cmNotify.error(cmTranslate('LANG.SWITCH.ERROR', { lang : self.getLanguageName(lang_key) }))
+                                    cmNotify.error(cmTranslate('LANG.SWITCH.ERROR', { lang: self.getLanguageName(lang_key), ttl: 5000 }))
                                 }
                             )
                         },
@@ -134,9 +130,7 @@ define([
     ]);
 
     cmLanguage.directive('cmLanguageSelect', [
-
         'cmLanguage',
-
         function(cmLanguage){
             return {
 
