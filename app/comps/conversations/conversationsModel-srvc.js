@@ -17,8 +17,9 @@ define([
 
 function cmConversationsModel (cmConversationsAdapter, cmCrypt, $q, cmAuth) {
 
-    //self:
-    var conversations = [];
+    //self:    
+
+    var conversations  = []
 
     //Methods:
 
@@ -52,14 +53,16 @@ function cmConversationsModel (cmConversationsAdapter, cmCrypt, $q, cmAuth) {
             }
         )
 
-        return    deferred.promise
+        return  deferred.promise
     }
 
     conversations.init = function () {
         cmConversationsAdapter.getConversations()
             .then(function (data) {
                 data.forEach(function (conversation_data) {
-                    conversations.push(new Conversation(conversation_data))
+                    var conversation = new Conversation(conversation_data)                    
+                    conversations.push(conversation)
+                    if(conversation.count >0 ) conversation.update()
                 })
             })
     }
@@ -74,14 +77,15 @@ function cmConversationsModel (cmConversationsAdapter, cmCrypt, $q, cmAuth) {
         this.recipients = []
         this.passphrase = ''
         this.count = 0
+        this.lastMessage = undefined
 
         var self = this
 
 
         this.init = function (conversation_data) {
-            this.id = conversation_data.id
-            this.subject = conversation_data.subject
-            this.count = conversation_data.numberOfMessages
+            this.id             = conversation_data.id
+            this.subject        = conversation_data.subject
+            this.count          = conversation_data.numberOfMessages
 
             // register all messages as Message objects
             if (conversation_data.messages) {
@@ -89,6 +93,8 @@ function cmConversationsModel (cmConversationsAdapter, cmCrypt, $q, cmAuth) {
                     self.addMessage(new Message(message_data))
                 })
             }
+
+            this.lastMessage = this.messages[this.messages.length-1]
 
             // register all recipients as Recipient objects
             if (conversation_data.recipients) {
@@ -160,18 +166,17 @@ function cmConversationsModel (cmConversationsAdapter, cmCrypt, $q, cmAuth) {
             return !this.messages[0] || this.messages[0].decryptWith(this.passphrase)
         }
 
-        this.update = function () {
-            /*
-             cmConversationsAdapter.getConversation(this.id)
-             .then(
-             function(data){
-             console.dir(data)
-             }
-             )
-             */
+
+        this.update = function () {            
+            cmConversationsAdapter.getConversation(this.id)
+            .then(function(data){
+                self.init(data)       
+            })   
+
+            return this         
         }
 
-        this.init(data)
+        this.init(data)        
     }
 
 

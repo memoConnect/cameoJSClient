@@ -18,6 +18,8 @@
                         {{$last ? '' : ','}}
                 </span> <br/>
                 Messages:   {{conversation.count}}
+                <cm-message cm-data="conversation.lastMessage" ng-if="conversation.lastMessage">
+                </cm>
             </a>
             <br/>
             <br/>
