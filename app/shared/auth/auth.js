@@ -14,12 +14,13 @@ define([
         'cmApi',
         'cmCrypt',
         'cmLogger',
-        '$cookieStore',
+        'cmNotify',
+        '$cookies',
         '$q',
-        function(cmApi, cmCrypt, cmLogger, $cookieStore){
+        function(cmApi, cmCrypt, cmLogger, cmNotify, $cookies){
             return {
 
-                //ask the api for a new authentication token:
+                // ask the api for a new authentication token:
                 requestToken: function(login, pass){
                     var auth = Base64.encode(login + ":" + cmCrypt.hash(pass));
 
@@ -30,19 +31,22 @@ define([
                     })
                 },
 
-                //delete Token
+                // delete Token
                 removeToken: function(){
-                    return $cookieStore.remove("token");
+                    cmNotify.warn("removeToken")
+                    return $cookies.token = undefined;
                 },
 
-                //store the token in a cookie:
+                // store the token in a cookie:
                 storeToken: function(token){
-                    return $cookieStore.put("token", token);
+                    cmNotify.warn("storeToken: "+token)
+                    return $cookies.token =  token;
                 },
 
-                //retrieve thr token from a cookie
+                // retrieve thr token from a cookie
                 getToken: function(){
-                    return $cookieStore.get('token');
+                    cmNotify.warn("getToken: "+$cookies.token)
+                    return $cookies.token;
                 },
 
                 createUser: function(data){
@@ -80,5 +84,6 @@ define([
             }
         }
     ]);
+
     return app;
 });

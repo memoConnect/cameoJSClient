@@ -169,23 +169,21 @@ define([
         }
     ]);
     // app run handling
-    app.run(['$rootScope', '$location', '$cookieStore',
-        function ($rootScope, $location, $cookieStore) {
+    app.run(['$rootScope', '$location', '$cookies', 'cmNotify',
+        function ($rootScope, $location, $cookies, cmNotify) {
             $rootScope.$on("$routeChangeStart", function () {
                 // expections
                 var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/purl\/[a-zA-Z0-9]{1,})$/;
                 var path = $location.$$path;
+                cmNotify.warn(Object.keys($cookies))
                 // exists none token then otherwise to login
-                if (angular.isUndefined($cookieStore.get("token"))) {
+                if (angular.isUndefined($cookies.token)) {
+                    cmNotify.warn($cookies.token+' run without token '+path+' '+(!path_regex.test(path)?'to login':'stay'))
                     if (!path_regex.test(path)) {
                         $location.path("/login");
                     }
                 } else if ($location.$$path == "/login") {
                     $location.path("/start");
-                }
-                // store token if is defined
-                if (angular.isDefined($cookieStore.get("token"))) {
-                    app.cameo.token = $cookieStore.get("token");
                 }
             });
         }

@@ -9,6 +9,11 @@
         "PLACEHOLDER": {
             "USERNAME":     "username",
             "PASSWORD":     "password"
+        },
+        "INFO": {
+            "401": "Invalid password/loginName",
+            "404": "Login is impossible right now. 404",
+            "500": "Internal Server Error"
         }
     },
 

@@ -49,7 +49,8 @@
         "protractor": "~0.17.0",
         "requirejs": "~2.1.11",
         "selenium-standalone": "~2.39.0",
-        "selenium-webdriver": "~2.39.0"
+        "selenium-webdriver": "~2.39.0",
+        "grunt-phonegap": ""
     },
     "engines": {
         "node": ">=0.8.0"
