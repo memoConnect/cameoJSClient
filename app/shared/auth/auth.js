@@ -7,17 +7,15 @@ define([
 ], function (app) {
     'use strict';
 
-//    var cmAuth = angular.module('cmAuth', ['ngCookies', 'cmApi', 'cmCrypt', 'cmLogger'])
-
-    // Service to handle all authenticateion matters
+    // Service to handle all authentification matters
     app.register.factory('cmAuth', [
         'cmApi',
         'cmCrypt',
         'cmLogger',
         'cmNotify',
-        '$cookies',
+        '$cookieStore',
         '$q',
-        function(cmApi, cmCrypt, cmLogger, cmNotify, $cookies){
+        function(cmApi, cmCrypt, cmLogger, cmNotify, $cookieStore){
             return {
 
                 // ask the api for a new authentication token:
@@ -33,20 +31,20 @@ define([
 
                 // delete Token
                 removeToken: function(){
-                    cmNotify.warn("removeToken")
-                    return $cookies.token = undefined;
+//                    return $cookieStore.remove('token');
+                    return localStorage.removeItem('token');
                 },
 
                 // store the token in a cookie:
                 storeToken: function(token){
-                    cmNotify.warn("storeToken: "+token)
-                    return $cookies.token =  token;
+//                    return $cookieStore.put('token', token);
+                    return localStorage.setItem('token', token);
                 },
 
                 // retrieve thr token from a cookie
                 getToken: function(){
-                    cmNotify.warn("getToken: "+$cookies.token)
-                    return $cookies.token;
+//                    return $cookieStore.get('token');
+                    return localStorage.getItem('token');
                 },
 
                 createUser: function(data){
