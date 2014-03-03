@@ -36,7 +36,7 @@ var config = {
         'angularAMD': 'vendor/requirejs/angularAMD',
         'ngload': 'vendor/requirejs/ngload',
 
-        'jquery': 'vendor/jquery/jquery-2.1.0',
+        'jquery': '../test/lib/jquery/jquery-2.1.0',
         'jasmine-jquery': '../test/lib/jasmine-jquery/jasmine-jquery',
 
         // cmModules / services

@@ -1,10 +1,10 @@
 define([
-    'app'
-], function (app) {
+    'angular'
+], function () {
     'use strict';
 
-    app.register.service('cmUtil', function(){
-
+    angular.module('cmUtil', [])
+    .service('cmUtil', function(){
         /**
          * Checks if Key exists in an Object or Array
          * @param object
