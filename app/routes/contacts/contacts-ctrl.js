@@ -9,6 +9,8 @@ define([
 ], function(app){
     'use strict';
 
+    console.log('contacts - ctrl')
+
     app.register.controller('ContactsCtrl',[
     '$scope',
     '$rootScope',

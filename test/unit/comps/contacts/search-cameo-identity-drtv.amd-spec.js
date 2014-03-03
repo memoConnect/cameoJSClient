@@ -6,14 +6,14 @@ define([
 ], function (app, angularAMD, tpl) {
     'use strict';
 
-    describe('Directive cmSearchCameoId', function () {
+    describe('Directive cmSearchCameoIdentity', function () {
         var $scope, directive;
 
         angularAMD.inject(function ($rootScope, $compile, $templateCache) {
             $templateCache.put('comps/contacts/search-cameo-identity.html', tpl);
 
             directive = angular.element('<div cm-search-cameo-identity></div>')
-            directive = $compile(directive)($rootScope);
+            $compile(directive)($rootScope);
             $rootScope.$digest()
 
             $scope = directive.isolateScope();
