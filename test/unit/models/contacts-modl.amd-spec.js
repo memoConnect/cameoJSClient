@@ -17,8 +17,8 @@ define([
         })
 
         describe('public API', function(){
-           it('should defined searchCameoId',function(){
-               expect(model.searchCameoId).toBeDefined();
+           it('should defined searchCameoIdentity',function(){
+               expect(model.searchCameoIdentity).toBeDefined();
            })
 
            it('should defined getAll',function(){
