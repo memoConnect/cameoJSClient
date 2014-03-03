@@ -2,9 +2,9 @@ define([
     'app',
     'comps/navs/nav-tabs-drtv',
     'comps/contacts/search-cameo-identity-drtv',
-//    'comps/contacts/add-extern-contact-drtv',
-//    'comps/contacts/contacts-list-drtv',
-//    'comps/contacts/contact-request-list-drtv',
+    'comps/contacts/add-extern-contact-drtv',
+    'comps/contacts/contacts-list-drtv',
+    'comps/contacts/contact-request-list-drtv',
     'ngload!mContacts'
 ], function(app){
     'use strict';

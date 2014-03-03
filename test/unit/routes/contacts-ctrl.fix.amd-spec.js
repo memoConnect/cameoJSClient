@@ -2,10 +2,8 @@ define([
     'app',
     'angularAMD',
     'routes/contacts/contacts-ctrl'
-], function (angularAMD) {
+], function (app, angularAMD) {
     'use strict';
-
-    console.log('moep')
 
     describe('ContactsCtrl', function () {
         var $scope, ctrl;
