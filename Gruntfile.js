@@ -230,7 +230,7 @@ module.exports = function (grunt) {
                 xremote: {
                     username: 'your_username',
                     password: 'your_password',
-                    platforms: ['android', 'blackberry', 'ios', 'symbian', 'webos', 'wp7']
+                    platforms: ['android']
                 },
 
                 // Set an explicit Android permissions list to override the automatic plugin defaults.

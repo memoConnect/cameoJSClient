@@ -1,20 +1,19 @@
 define([
     'app',
-    'cmAuth',
     'cmLogger',
     'cmNotify',
-    'mUser'
+    'mUser',
+    'comps/point-spinner/point-spinner-drtv'
 ], function(app){
     'use strict';
 
     app.register.directive('cmLogin', [
-        'cmAuth',
         'cmLogger',
         'cmNotify',
         '$location',
         '$interval',
         'ModelUser',
-        function (cmAuth, cmLogger, cmNotify, $location, $interval, ModelUser) {
+        function ( cmLogger, cmNotify, $location, $interval, ModelUser) {
             return  {
                 restrict    :   'A',
                 templateUrl :   'comps/login/login.html',
@@ -49,40 +48,20 @@ define([
                         }
                     };
 
-                    $scope.isIdle = false;
-                    var pointSpinnerInterval;
-                    $scope.pointSpinner = "";
-
-                    function pointSpinner(){
-                        $scope.isIdle = true;
-                        pointSpinnerInterval = $interval(function(){
-                            $scope.pointSpinner += ".";
-
-                            if($scope.pointSpinner.length == 3){
-                                $scope.pointSpinner = "";
-                            }
-                        },250);
-                    }
-
-                    function cancelPointSpinner(){
-                        $scope.isIdle = false;
-                        $interval.cancel(pointSpinnerInterval)
-                    }
-
                     $scope.doLogin = function(){
                         if($scope.isIdle)
                             return false;
 
-                        pointSpinner();
+                        $scope.$broadcast('cmPointSpinner:start');
 
                         ModelUser.doLogin($scope.formData.user, $scope.formData.pass)
                         .then(
                             function(){
-                                cancelPointSpinner();
-                                $location.path("/start")
+                                $scope.$broadcast('cmPointSpinner:cancel');
+                                $location.path("/start");
                             },
                             function(state, error){
-                                cancelPointSpinner();
+                                $scope.$broadcast('cmPointSpinner:cancel');
                                 cmNotify.error('LOGIN.INFO.'+state, {ttl:5000});
                             }
                         );
