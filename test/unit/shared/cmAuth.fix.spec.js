@@ -1,5 +1,4 @@
 define([
-    'angular',
     'angular-mocks',
     'cmAuth'
 ], function () {

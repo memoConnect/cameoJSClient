@@ -6,8 +6,9 @@ define([
 ], function () {
     'use strict';
 
-    angular.module('cmCrypt', [])
-    .service('cmCrypt',
+    angular.module('cmCrypt', ['cmLogger'])
+    .service('cmCrypt',[
+        'cmLogger',
         function (cmLogger) {
 
             return {
@@ -81,6 +82,6 @@ define([
                     return decryptedString || false
                 }
             }
-        }
+        }]
     );
 });
