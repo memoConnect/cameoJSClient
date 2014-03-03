@@ -81,7 +81,8 @@ var config = {
         'angular-translate-storage-cookie': ['angular'],
         'angular-translate-storage-local': ['angular'],
         'angular-growl': ['angular'],
-        'cmLanguage': ['angular-translate']
+        'cmLanguage': ['angular-translate'],
+        'cmNotify': ['angular-growl']
     },
 
     // ask Require.js to load these files (all our tests)

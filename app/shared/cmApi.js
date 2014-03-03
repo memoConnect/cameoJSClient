@@ -182,7 +182,10 @@ define([
                     return(valid)
                 }
 
-                console.log(config)
+                /**
+                 * for Weily with Comment, moep!
+                 */
+//                console.log(config)
                 $http(config).then(
 
                     function(response){

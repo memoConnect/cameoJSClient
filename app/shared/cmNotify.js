@@ -58,6 +58,4 @@ define([
             template: '<div growl></div>'
         }
     });
-
-    return cmNotify;
 });
