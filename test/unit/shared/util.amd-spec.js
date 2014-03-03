@@ -1,7 +1,7 @@
 define([
     'app',
     'angularAMD',
-    'ngload!util'
+    'cmUtil'
 ], function (app, angularAMD) {
     'use strict';
 
@@ -9,8 +9,8 @@ define([
 
     describe('Util', function(){
 
-        angularAMD.inject(function(_Util_) {
-            util = _Util_;
+        angularAMD.inject(function(_cmUtil_) {
+            util = _cmUtil_;
         })
 
         it('should exists', function(){

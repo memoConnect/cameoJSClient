@@ -12,7 +12,7 @@ define([
     'cmApi',
     'cmLogger',
     'cmUtil',
-    function(cmApi, cmLogger, Util){
+    function(cmApi, cmLogger, cmUtil){
         return {
             /**
              * Search for cameoId Users
