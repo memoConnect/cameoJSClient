@@ -29,7 +29,7 @@ define([
                             pass: 'password'
                         },
                         'DumpuserLocal': {
-                            user: 'fbGBLqym',
+                            user: 'jfG00Ve6',
                             pass: 'password'
                         }
                     };
