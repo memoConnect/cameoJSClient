@@ -1,10 +1,15 @@
 define([
+    'mUser',
     'cmContacts',
     'cmLogger'
 ], function () {
     'use strict';
 
-    angular.module('cmContacts')
+    angular.module('mContacts',[
+        'cmContacts',
+        'cmLogger',
+        'mUser'
+    ])
     .service('ModelContacts',[
         'ModelUser',
         'cmContacts',

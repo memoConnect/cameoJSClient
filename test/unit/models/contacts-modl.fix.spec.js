@@ -1,6 +1,5 @@
 define([
     'angular-mocks',
-    'cmContacts',
     'mContacts'
 ], function () {
     'use strict';
@@ -8,7 +7,7 @@ define([
     describe('ModelContacts', function(){
         var model;
 
-        beforeEach(module('cmContacts'))
+        beforeEach(module('mContacts'))
 
         beforeEach(inject(function(_ModelContacts_) {
             model = _ModelContacts_;

@@ -1,7 +1,7 @@
 define([
     'app',
-    'mContacts',
-    'cmLogger'
+    'ngload!mContacts',
+    'ngload!cmLogger'
 ], function(app){
     'use strict';
 
@@ -58,6 +58,4 @@ define([
             }
         }
     });
-
-    return app;
 });

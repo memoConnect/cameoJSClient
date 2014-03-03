@@ -1,4 +1,4 @@
-var tests = [];
+var tests = ['/base/app/vendor/requirejs/angularAMD.js'];
 for (var file in window.__karma__.files) {
     if (window.__karma__.files.hasOwnProperty(file)) {
         if (/spec\.js$/.test(file)) {
@@ -52,13 +52,13 @@ var config = {
         'cmConversations': 'comps/conversation/cmConversations',
         'cmContacts': 'comps/contacts/cmContacts',
 
-        // utils
-        'util-base64': 'vendor/util/base64',
-        'util-passchk-fast': 'vendor/util/passchk_fast',
-
         // Model
         'mContacts': 'comps/contacts/contacts-modl',
         'mUser': 'models/user-modl',
+
+        // utils
+        'util-base64': 'vendor/util/base64',
+        'util-passchk-fast': 'vendor/util/passchk_fast',
 
         // crypto
         'crypto-sjcl': 'vendor/sjcl/sjcl.min'
@@ -70,9 +70,9 @@ var config = {
     ],
 
     shim: {
-//        'app': ['env'],
         'angular-mocks': ['angular'],
         'angularAMD': ['angular'],
+        'ngload': ['angularAMD'],
 
         'angular-route': ['angular'],
         'angular-cookies': ['angular'],

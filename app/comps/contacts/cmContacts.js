@@ -1,16 +1,14 @@
 define([
     'cmApi',
     'cmUtil',
-    'cmLogger',
-    'mUser'
+    'cmLogger'
 ], function () {
    'use strict';
 
     angular.module('cmContacts',[
         'cmApi',
         'cmLogger',
-        'cmUtil',
-        'mUser'
+        'cmUtil'
     ]).service('cmContacts',[
         'cmApi',
         'cmLogger',

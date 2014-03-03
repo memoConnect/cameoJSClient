@@ -39,8 +39,8 @@ var config = {
         'cmContacts': 'comps/contacts/cmContacts',
 
         // Models
-        'mUser': 'models/user-modl',
         'mContacts': 'comps/contacts/contacts-modl',
+        'mUser': 'models/user-modl',
 
         // shared
         'util-base64': 'vendor/util/base64',
@@ -60,6 +60,7 @@ var config = {
     // Add angular modules that does not support AMD out of the box, put it in a shim
     shim: {
         'angularAMD': ['angular'],
+        'ngload': ['angularAMD'],
         'angular-route': ['angular'],
         'angular-cookies': ['angular'],
         'angular-translate': ['angular'],

@@ -1,11 +1,10 @@
 define([
-    'app',
     'angularAMD',
-    'routes/contacts/contacts-ctrl'
-], function (app, angularAMD) {
+    'ngload!routes/contacts/contacts-ctrl'
+], function (angularAMD) {
     'use strict';
 
-    describe('ContactsCtrl', function () {
+    xdescribe('ContactsCtrl', function () {
         var $scope, ctrl;
 
         angularAMD.inject(function ($rootScope, $controller) {
