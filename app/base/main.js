@@ -30,7 +30,7 @@ var config = {
 
         // cameo modules
         'cmAuth': 'shared/auth/auth',
-        'cmCrypt': 'shared/crypt/crypt',
+        'cmCrypt': 'shared/crypt/cmCrypt',
 
         'cmProfile': 'comps/cmProfile',
         //'cmConversations': 'comps/conversation/cmConversations',
