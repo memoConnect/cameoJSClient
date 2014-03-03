@@ -12,8 +12,8 @@ define([
             cmContacts = _cmContacts_;
         });
 
-        it('should provide an searchCameoId function', function(){
-            expect(cmContacts.searchCameoId).toBeDefined()
+        it('should provide an searchCameoIdentity function', function(){
+            expect(cmContacts.searchCameoIdentity).toBeDefined();
         });
 
         it('should provide an getAll function', function(){

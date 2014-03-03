@@ -1,8 +1,8 @@
 define([
     'app',
     'angularAMD',
-    'comps/contacts/search-cameo-id.html',
-    'ngload!comps/contacts/search-cameo-id-drtv'
+    'comps/contacts/search-cameo-identity.html',
+    'ngload!comps/contacts/search-cameo-identity-drtv'
 ], function (app, angularAMD, tpl) {
     'use strict';
 
@@ -10,9 +10,9 @@ define([
         var $scope, directive;
 
         angularAMD.inject(function ($rootScope, $compile, $templateCache) {
-            $templateCache.put('comps/contacts/search-cameo-id.html', tpl);
+            $templateCache.put('comps/contacts/search-cameo-identity.html', tpl);
 
-            directive = angular.element('<div cm-search-cameo-id></div>')
+            directive = angular.element('<div cm-search-cameo-identity></div>')
             directive = $compile(directive)($rootScope);
             $rootScope.$digest()
 

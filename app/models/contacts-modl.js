@@ -32,8 +32,8 @@ define([
         /**
          * Model Logic
          */
-        this.searchCameoId = function(cameoId){
-            return cmContacts.searchCameoId(cameoId);
+        this.searchCameoIdentity = function(cameoId){
+            return cmContacts.searchCameoIdentity(cameoId);
         };
 
         this.getAll = function(limit, offset){
