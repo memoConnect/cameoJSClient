@@ -85,6 +85,8 @@ define([
 
                 it('activeTab should be MOEP', function(){
                     expect(drtv.$rootScope.activeTab).toBe('MOEP');
+
+                    drtv.$rootScope.activeTab = "";
                 })
             })
         })
@@ -103,6 +105,7 @@ define([
                 expect(drtv.$scope.activeTab).toBe('WHOOP');
             })
         })
+
 
     })
 })
