@@ -1,11 +1,12 @@
 define([
     'angular',
     'util-base64',
-    'cmCrypt'
+    'cmCrypt',
+    'cmApi'
 ], function () {
     'use strict';
 
-    angular.module('cmAuth', [])
+    angular.module('cmAuth', ['cmApi', 'cmCrypt'])
     .service('cmAuth', [
         'cmApi',
         'cmCrypt',
