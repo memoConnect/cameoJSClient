@@ -1,8 +1,7 @@
 define([
     'app',
     'angularAMD',
-    'mUser',
-    'cmAuth'
+    'mUser'
 ], function (app, angularAMD) {
     'use strict';
 

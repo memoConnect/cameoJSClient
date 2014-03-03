@@ -1,6 +1,6 @@
 define([
     'app',
-    'cmAuth',
+    'ngload!cmAuth',
     'cmLogger'
 ], function (app) {
     'use strict';
