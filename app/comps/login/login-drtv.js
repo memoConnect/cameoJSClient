@@ -1,19 +1,19 @@
 define([
     'app',
-    'cmLogger',
-    'cmNotify',
-    'mUser',
-    'comps/point-spinner/point-spinner-drtv'
+    'comps/point-spinner/point-spinner-drtv',
+    'ngload!cmLogger',
+    'ngload!cmNotify',
+    'ngload!mUser'
 ], function(app){
     'use strict';
 
     app.register.directive('cmLogin', [
-        'cmLogger',
-        'cmNotify',
         '$location',
         '$interval',
+        'cmLogger',
+        'cmNotify',
         'ModelUser',
-        function ( cmLogger, cmNotify, $location, $interval, ModelUser) {
+        function ($location, $interval, cmLogger, cmNotify, ModelUser) {
             return  {
                 restrict    :   'A',
                 templateUrl :   'comps/login/login.html',

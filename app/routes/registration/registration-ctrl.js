@@ -1,11 +1,11 @@
 define([
     'app',
-    'cmAuth',
-    'cmNotify',
-    'cmLogger',
     'comps/validate/password-drtv',
     'comps/validate/email-drtv',
-    'comps/navs/nav-tabs-drtv'
+    'comps/navs/nav-tabs-drtv',
+    'ngload!cmAuth',
+    'ngload!cmNotify',
+    'ngload!cmLogger'
 ], function (app) {
     'use strict';
 
