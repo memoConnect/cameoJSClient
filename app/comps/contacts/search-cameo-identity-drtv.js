@@ -5,12 +5,12 @@ define([
 ], function(app){
     'use strict';
 
-    app.register.directive('cmSearchCameoId',
+    app.register.directive('cmSearchCameoIdentity',
     function(ModelContacts, cmLogger){
         return {
             restrict: 'A',
             scope: {},
-            templateUrl: 'comps/contacts/search-cameo-id.html',
+            templateUrl: 'comps/contacts/search-cameo-identity.html',
             controller: function($scope){
                 $scope.results = [];
 
@@ -24,8 +24,7 @@ define([
                         return false;
                     }
 
-                    ModelContacts
-                    .searchCameoId($scope.string)
+                    ModelContacts.searchCameoIdentity($scope.string)
                     .then(
                         function(data){
                             $scope.results = data;
