@@ -3,9 +3,7 @@ define([
 ], function (app) {
     'use strict';
 
-//    angular.module('Util',[]);
-
-    app.register.service('Util', function(){
+    app.register.service('cmUtil', function(){
 
         /**
          * Checks if Key exists in an Object or Array
@@ -69,6 +67,4 @@ define([
             return reg.test(val);
         };
     });
-
-    return app;
 });

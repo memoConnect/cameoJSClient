@@ -1,7 +1,7 @@
 define([
     'app',
     'cmApi',
-    'util',
+    'cmUtil',
     'cmLogger'
 ], function (app) {
    'use strict';
@@ -11,7 +11,7 @@ define([
     app.register.service('cmContacts',[
     'cmApi',
     'cmLogger',
-    'Util',
+    'cmUtil',
     function(cmApi, cmLogger, Util){
         return {
             /**
@@ -36,7 +36,7 @@ define([
              */
             getAll: function(limit, offset){
                 return cmApi.get({
-                    url:'/contacts' + Util.handleLimitOffset(limit,offset)
+                    url:'/contacts' + cmUtil.handleLimitOffset(limit,offset)
                 });
             },
             /**
@@ -67,7 +67,7 @@ define([
              */
             getAllFromGroup: function(group,limit,offset){
                 return cmApi.get({
-                    url:'/contact-group/' + group + Util.handleLimitOffset(limit,offset)
+                    url:'/contact-group/' + group + cmUtil.handleLimitOffset(limit,offset)
                 })
             },
             getFriendRequests: function(){

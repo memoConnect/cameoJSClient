@@ -50,15 +50,15 @@ requirejs.config({
         'cmConversations': 'comps/conversation/cmConversations',
         'cmContacts': 'comps/contacts/cmContacts',
 
-        // Model
-        'mContacts': 'models/contacts-modl',
-        'mUser': 'models/user-modl',
-
 		// shared
-        'util': 'shared/cmUtil',
+        'cmUtil': 'shared/cmUtil',
         // utils
         'util-base64': 'vendor/util/base64',
         'util-passchk-fast': 'vendor/util/passchk_fast',
+
+        // Model
+        'mContacts': 'models/contacts-modl',
+        'mUser': 'models/user-modl',
 
         // crypto
         'crypto-sjcl': 'vendor/sjcl/sjcl.min'
