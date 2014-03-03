@@ -11,7 +11,7 @@ define([
         angularAMD.processQueue();
 
         angularAMD.inject(function ($rootScope, $controller) {
-            $scope = $rootScope.$new();
+            $scope = $rootScope;
             ctrl = $controller('RegistrationCtrl', { $scope: $scope });
         })
 

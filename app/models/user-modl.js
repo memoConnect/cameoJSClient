@@ -5,8 +5,8 @@ define([
 ], function (app) {
     'use strict';
 
-    app.register.service('ModelUser',['cmAuth', '$q', '$rootScope',
-    function(cmAuth, $q, $rootScope){
+    app.register.service('ModelUser',['cmAuth', '$q', '$rootScope', '$location',
+    function(cmAuth, $q, $rootScope, $location){
         var self = this;
 
         var dataModel = {
@@ -38,7 +38,6 @@ define([
             if(cmAuth.getToken() != undefined && cmAuth.getToken() != 'undefined'){
                 return true;
             }
-
             return false;
         };
 
@@ -54,7 +53,7 @@ define([
                 function(state, response){
                     deferred.reject(state, response);
                 }
-            )
+            );
 
             return deferred.promise;
         };
@@ -62,6 +61,7 @@ define([
         this.doLogout = function(){
             cmAuth.removeToken();
             $rootScope.$broadcast('logout');
+            $location.path("/login");
         };
 
         function resetUser(){
