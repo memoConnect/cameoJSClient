@@ -2,7 +2,7 @@ define([
     'app',
     'mContacts',
     'comps/navs/nav-tabs-drtv',
-    'comps/contacts/search-cameo-id-drtv',
+    'comps/contacts/search-cameo-identity-drtv',
     'comps/contacts/add-extern-contact-drtv',
     'comps/contacts/contacts-list-drtv',
     'comps/contacts/contact-request-list-drtv'

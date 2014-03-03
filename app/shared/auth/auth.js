@@ -7,19 +7,18 @@ define([
 ], function (app) {
     'use strict';
 
-//    var cmAuth = angular.module('cmAuth', ['ngCookies', 'cmApi', 'cmCrypt', 'cmLogger'])
-
-    // Service to handle all authenticateion matters
+    // Service to handle all authentification matters
     app.register.factory('cmAuth', [
         'cmApi',
         'cmCrypt',
         'cmLogger',
+        'cmNotify',
         '$cookieStore',
         '$q',
-        function(cmApi, cmCrypt, cmLogger, $cookieStore){
+        function(cmApi, cmCrypt, cmLogger, cmNotify, $cookieStore){
             return {
 
-                //ask the api for a new authentication token:
+                // ask the api for a new authentication token:
                 requestToken: function(login, pass){
                     var auth = Base64.encode(login + ":" + cmCrypt.hash(pass));
 
@@ -30,19 +29,22 @@ define([
                     })
                 },
 
-                //delete Token
+                // delete Token
                 removeToken: function(){
-                    return $cookieStore.remove("token");
+//                    return $cookieStore.remove('token');
+                    return localStorage.removeItem('token');
                 },
 
-                //store the token in a cookie:
+                // store the token in a cookie:
                 storeToken: function(token){
-                    return $cookieStore.put("token", token);
+//                    return $cookieStore.put('token', token);
+                    return localStorage.setItem('token', token);
                 },
 
-                //retrieve thr token from a cookie
+                // retrieve thr token from a cookie
                 getToken: function(){
-                    return $cookieStore.get('token');
+//                    return $cookieStore.get('token');
+                    return localStorage.getItem('token');
                 },
 
                 createUser: function(data){
@@ -80,5 +82,6 @@ define([
             }
         }
     ]);
+
     return app;
 });

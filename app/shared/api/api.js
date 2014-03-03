@@ -210,9 +210,9 @@ define([
                     },
 
                     function(response){
-                        cmLogger.error('Api call failed.', response)
+                        cmLogger.error('Api call failed.', response.data.error)
                         //error messages should come trough backend
-                        deferred.reject(undefined, response)
+                        deferred.reject(response.status, response.data.error)
                     }
                 )
 

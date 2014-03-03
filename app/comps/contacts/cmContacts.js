@@ -19,11 +19,12 @@ define([
              * @param string
              * @returns {*|HttpPromise}
              */
-            searchCameoId: function(string){
+            searchCameoIdentity: function(string){
                 return cmApi.post({
                     url:'/identity/search',
                     data: {
-                        cameoId: string
+                        search: string,
+                        fields: ['cameoId','displayName']
                     }
                 });
             },

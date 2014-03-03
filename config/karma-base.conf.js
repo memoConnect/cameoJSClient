@@ -14,6 +14,22 @@ module.exports = function(config) {
 //            {pattern: 'test/unit/**/crypt.spec.js', included: false},
             {pattern: 'test/unit/**/*.spec.js', included: false},
             {pattern: 'test/unit/**/*.amd-spec.js', included: false},
+
+//            {pattern: 'test/unit/**/app.amd-spec.js', included: false},
+//            {pattern: 'test/unit/**/auth.amd-spec.js', included: false},
+//            {pattern: 'test/unit/**/contacts.amd-spec.js', included: false},
+//            {pattern: 'test/unit/**/search-cameo-identity-drtv.amd-spec.js', included: false},
+//            {pattern: 'test/unit/**/crypt.amd-spec.js', included: false},
+//            {pattern: 'test/unit/**/nav-tabs-drtv.amd-spec.js', included: false},
+//            {pattern: 'test/unit/**/point-spinner-drtv.amd-spec.js', included: false},
+//            {pattern: 'test/unit/**/type-chooser-drtv.amd-spec.js', included: false},
+//            {pattern: 'test/unit/**/validate-email-drtv.amd-spec.js', included: false},
+//            {pattern: 'test/unit/**/validate-phone-drtv.amd-spec.js', included: false},
+//            {pattern: 'test/unit/**/contacts-modl.amd-spec.js', included: false},
+//            {pattern: 'test/unit/**/user-modl.amd-spec.js', included: false},
+//            {pattern: 'test/unit/**/registration-ctrl.amd-spec.js', included: false},
+//            {pattern: 'test/unit/**/util.amd-spec.js', included: false},
+
             // test lib
             {pattern: 'test/lib/**/*.js', included: false},
             // requirejs main file
