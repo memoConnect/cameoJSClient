@@ -157,7 +157,7 @@ define([
                                     :	undefined
 
                 //Api calls are restricted to the preconfigured api base path and should start with a '/'
-                if(!config.url.match(/^\//g)) cmLogger.error('Api calls are restricted to '+rest_api+' . You tried:', config)
+                if(!config.url.match(/^\//g)) cmLogger.error('Api calls are restricted to '+rest_api+' . You tried: "'+ config.url+'". Path has to start with a "/"')
 
                 //extend or overwrite config
                 config			=	config || {}	// make sure config is defined

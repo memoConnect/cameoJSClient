@@ -10,7 +10,7 @@ for (var file in window.__karma__.files) {
 //console.log("\nkarma loaded "+Object.keys(window.__karma__.files).length+" files:\n"+Object.keys(window.__karma__.files).join('\n')+"\n")
 //console.log(""+tests.length+" specs:\n"+tests.join('\n')+"\n");
 
-requirejs.config({
+var config = {
     // Karma serves files from '/base'
     baseUrl: '/base/app/',
 
@@ -88,4 +88,58 @@ requirejs.config({
 
     // start test run, once Require.js is done
     callback: window.__karma__.start
-});
+}
+
+
+
+function addPackage(package_name, package) {
+    config.paths[package_name] = package.root
+    config.shim[package_name]  = config.shim[package_name] || []
+
+    package.resources.forEach(function(value, index){
+        config.paths[package_name+'-'+index] = package.resources[index]
+        config.shim[package_name+'-'+index] = package.deps        
+        config.shim[package_name].push(package_name+'-'+index)        
+    })
+}
+
+
+
+addPackage('pckConversations',{
+    root: 'comps/conversations/conversations-module',
+    deps: [
+        'angular',
+        'cmApi', 
+        'cmLogger', 
+        'cmCrypt', 
+        //'cmAuth',
+        'cmContacts',
+        '_v/captcha/captchagen/captchagen'
+    ],    
+    resources : [
+       'comps/conversations/conversationsAdapter-srvc',
+       'comps/conversations/conversationsModel-srvc',
+       'comps/conversations/attachments-drtv',
+       'comps/conversations/avatar-drtv',
+       'comps/conversations/captcha-drtv',
+       'comps/conversations/conversation-drtv',
+       'comps/conversations/conversation-input-drtv',
+       'comps/conversations/passphrase-drtv',
+       'comps/conversations/message-drtv' 
+    ]
+})
+
+
+addPackage('pckUi',{
+    root: 'shared/ui/ui-module',
+    deps: [
+        'angular'        
+    ],    
+    resources : [
+        'shared/ui/adaptive-change-drtv'  
+    ]
+})
+
+
+
+require.config(config)

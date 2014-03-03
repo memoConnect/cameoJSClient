@@ -14,51 +14,32 @@ define([
 */    
     'use strict';
 
-    cmConversations.directive('cmPassphrase',[
 
-        function() {
-            return {
+    function cmPassphrase() {
+        return {
 
-                restrict: 		'A',
-                require:		'ngModel',
-                scope:			false,
+            restrict: 		'A',
+            scope:			false,
 
-                link:			function(scope, element, attrs, ngModelCtrl){
-                    //inputs with this directive will not update the scope on simple keydown-events
+            link:			function(scope, element, attrs, ngModelCtrl){
 
-                    var status = angular.element('<i></i>').addClass('fa'),
-                        timeout
+                var status = angular.element('<i></i>').addClass('fa'),
+                    timeout
 
-                    element.after(status)
+                element.after(status)
 
-                    element
-                        .unbind('input')
-                        .unbind('keydown')
-                        .on('keydown', function(){
-                            window.clearTimeout(timeout)
-
-                            timeout = window.setTimeout(function(){
-                                scope.$apply(function() {
-                                    scope.refresh()
-                                })
-                            },500)
-                        })
-
-                    scope.refresh = function(){
-                        element.val()
-                            ?	status.addClass('fa-lock').removeClass('fa-unlock')
-                            :	status.addClass('fa-unlock').removeClass('fa-lock')
-
-                        ngModelCtrl.$setViewValue(element.val())
-                    }
-
-                    scope.refresh()
-                    scope.$watch('passphrase', scope.refresh)
+                scope.refresh= function(){
+                    element.val()
+                        ?	status.addClass('fa-lock').removeClass('fa-unlock')
+                        :	status.addClass('fa-unlock').removeClass('fa-lock')                    
                 }
 
+                scope.refresh()
+                scope.$watch('passphrase', scope.refresh)
             }
+
         }
-    ]);
+    }
 /*
 });
 */

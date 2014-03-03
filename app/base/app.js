@@ -4,6 +4,7 @@ define([
     'angular-cookies',
     // cameo files
     'cmApi',
+    'pckUi',
     'cmLanguage',
     'cmLogger',
     'cmNotify',
@@ -17,6 +18,7 @@ define([
         'ngCookies',
         // insert cameo provider
         'cmApi',
+        'cmUi',
         'cmLanguage',
         'cmNotify',
         'cmLogger'

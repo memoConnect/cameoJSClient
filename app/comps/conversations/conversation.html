@@ -36,13 +36,13 @@
 	</div>
 	<div>
 		{{'CONVERSATION.TAG.SUBJECT' |cmTranslate}}:
-		<input type="text" ng-model = "conversation.subject" ng-if ="new_conversation ">
+		<input type="text" ng-model = "conversation.subject" ng-if ="new_conversation " cm-adaptive-change>
 		<span ng-if ="!new_conversation && conversation.subject "> {{conversation.subject}} </span>
 	</div>
 
 	<div>
 		{{"CONVERSATION.TAG.PASSPHRASE"|cmTranslate}}:
-		<input type ="{{revealPassword ? 'text' : 'password'}}" ng-model="passphrase" cm-passphrase>
+		<input type ="{{revealPassword ? 'text' : 'password'}}" ng-model="passphrase" cm-passphrase cm-adaptive-change>
 		 
 
         <i
