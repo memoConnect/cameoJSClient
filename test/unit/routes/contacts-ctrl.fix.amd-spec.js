@@ -1,6 +1,7 @@
 define([
-    'app',
+    'angular',
     'angularAMD',
+    'app',
     'routes/contacts/contacts-ctrl'
 ], function (app, angularAMD) {
     'use strict';
