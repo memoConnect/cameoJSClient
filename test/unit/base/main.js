@@ -8,8 +8,8 @@ for (var file in window.__karma__.files) {
 }
 
 //console.log("\nkarma loaded "+Object.keys(window.__karma__.files).length+" files:\n"+Object.keys(window.__karma__.files).join('\n')+"\n")
-console.log(""+tests.length+" specs:\n"+tests.join('\n')+"\n");
-//console.log(""+tests.length);
+//console.log(""+tests.length+" specs:\n"+tests.join('\n')+"\n");
+console.log(""+tests.length);
 
 var config = {
     // Karma serves files from '/base'
@@ -34,7 +34,7 @@ var config = {
 
         // requirejs stuff
         'angularAMD': 'vendor/requirejs/angularAMD',
-        'ngload': 'vendor/requirejs/ngload',
+        'ngload': '../test/lib/requirejs/ngload',
 
         'jquery': '../test/lib/jquery/jquery-2.1.0',
         'jasmine-jquery': '../test/lib/jasmine-jquery/jasmine-jquery',
