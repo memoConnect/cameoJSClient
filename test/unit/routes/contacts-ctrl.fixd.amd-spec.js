@@ -1,9 +1,11 @@
 define([
-    'app',
-    'angularAMD',
+    //'app',
+    //'angularAMD',
     'routes/contacts/contacts-ctrl'
 ], function (app, angularAMD) {
     'use strict';
+
+    angularAMD.processQueue()
 
     describe('ContactsCtrl', function () {
         var $scope, ctrl;

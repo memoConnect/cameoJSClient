@@ -1,14 +1,10 @@
 define([
-    'app',
-    'angularAMD',
-    'ngload!routes/registration/registration-ctrl'
-], function (app, angularAMD) {
+    'routes/registration/registration-ctrl'
+], function () {
     'use strict';
 
     describe('RegistrationCtrl', function () {
         var $scope, ctrl;
-
-        angularAMD.processQueue();
 
         angularAMD.inject(function ($rootScope, $controller) {
             $scope = $rootScope.$new();

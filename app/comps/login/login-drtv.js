@@ -1,8 +1,8 @@
 define([
     'app',
-    'cmLogger',
-    'cmNotify',
-    'mUser',
+    'ngload!cmLogger',
+    'ngload!cmNotify',
+    'ngload!mUser',
     'comps/point-spinner/point-spinner-drtv'
 ], function(app){
     'use strict';
