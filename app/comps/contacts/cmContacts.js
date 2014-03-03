@@ -1,7 +1,7 @@
 define([
-    'ngload!cmApi',
-    'ngload!cmUtil',
-    'ngload!cmLogger'
+    'cmApi',
+    'cmUtil',
+    'cmLogger'
 ], function () {
    'use strict';
 
