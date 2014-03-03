@@ -57,7 +57,7 @@ var config = {
         'util-passchk-fast': 'vendor/util/passchk_fast',
 
         // Model
-        'mContacts': 'models/contacts-modl',
+        'mContacts': 'comps/contacts/contacts-modl',
         'mUser': 'models/user-modl',
 
         // crypto

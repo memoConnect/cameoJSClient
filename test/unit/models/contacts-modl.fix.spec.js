@@ -1,22 +1,24 @@
 define([
-    'app',
-    'angularAMD',
+    'angular-mocks',
+    'cmContacts',
     'mContacts'
-], function (app, angularAMD) {
+], function () {
     'use strict';
 
     describe('ModelContacts', function(){
         var model;
 
-        angularAMD.inject(function(_ModelContacts_) {
+        beforeEach(module('cmContacts'))
+
+        beforeEach(inject(function(_ModelContacts_) {
             model = _ModelContacts_;
-        })
+        }))
 
         it('should exists', function(){
             expect(model).toBeDefined();
         })
 
-        describe('public API', function(){
+        xdescribe('public API', function(){
            it('should defined searchCameoIdentity',function(){
                expect(model.searchCameoIdentity).toBeDefined();
            })

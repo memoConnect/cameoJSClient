@@ -1,17 +1,20 @@
 define([
-    'app',
     'cmApi',
     'cmUtil',
-    'cmLogger'
-], function (app) {
+    'cmLogger',
+    'mUser'
+], function () {
    'use strict';
 
-//    var cmContacts = angular.module('cmContacts',['cmApi','cmLogger','Util']);
-
-    app.register.service('cmContacts',[
-    'cmApi',
-    'cmLogger',
-    'cmUtil',
+    angular.module('cmContacts',[
+        'cmApi',
+        'cmLogger',
+        'cmUtil',
+        'mUser'
+    ]).service('cmContacts',[
+        'cmApi',
+        'cmLogger',
+        'cmUtil',
     function(cmApi, cmLogger, cmUtil){
         return {
             /**
@@ -95,6 +98,4 @@ define([
             }
         }
     }]);
-
-    return app;
 });

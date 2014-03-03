@@ -40,7 +40,7 @@ var config = {
 
         // Models
         'mUser': 'models/user-modl',
-        'mContacts': 'models/contacts-modl',
+        'mContacts': 'comps/contacts/contacts-modl',
 
         // shared
         'util-base64': 'vendor/util/base64',

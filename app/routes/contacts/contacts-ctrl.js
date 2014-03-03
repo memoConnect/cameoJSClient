@@ -1,6 +1,6 @@
 define([
     'app',
-    'mContacts',
+    'ngload!mContacts',
     'comps/navs/nav-tabs-drtv',
     'comps/contacts/search-cameo-identity-drtv',
     'comps/contacts/add-extern-contact-drtv',
