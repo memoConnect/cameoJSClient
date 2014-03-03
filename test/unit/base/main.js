@@ -55,7 +55,7 @@ requirejs.config({
         'mUser': 'models/user-modl',
 
 		// shared
-        'util': 'shared/util',
+        'util': 'shared/cmUtil',
         // utils
         'util-base64': 'vendor/util/base64',
         'util-passchk-fast': 'vendor/util/passchk_fast',

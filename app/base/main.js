@@ -41,7 +41,7 @@ var config = {
         'mContacts': 'models/contacts-modl',
 
         // shared
-        'util': 'shared/util',
+        'util': 'shared/cmUtil',
         'util-base64': 'vendor/util/base64',
         'util-passchk-fast': 'vendor/util/passchk_fast',
         // crypto
