@@ -175,6 +175,7 @@ define([
                 // expections
                 var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/purl\/[a-zA-Z0-9]{1,})$/;
                 var path = $location.$$path;
+                cmNotify.warn(Object.keys($cookies))
                 // exists none token then otherwise to login
                 if (angular.isUndefined($cookies.token)) {
                     cmNotify.warn($cookies.token+' run without token '+path+' '+(!path_regex.test(path)?'to login':'stay'))
