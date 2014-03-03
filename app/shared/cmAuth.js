@@ -1,21 +1,15 @@
 define([
-    'app',
+    'angular',
     'util-base64',
-    'util-passchk-fast',
-    'cmCrypt',
-    'mUser'
-], function (app) {
+    'cmCrypt'
+], function () {
     'use strict';
 
-    // Service to handle all authentification matters
-    app.register.factory('cmAuth', [
+    angular.module('cmAuth', [])
+    .service('cmAuth', [
         'cmApi',
         'cmCrypt',
-        'cmLogger',
-        'cmNotify',
-        '$cookieStore',
-        '$q',
-        function(cmApi, cmCrypt, cmLogger, cmNotify, $cookieStore){
+        function(cmApi, cmCrypt){
             return {
 
                 // ask the api for a new authentication token:
@@ -82,6 +76,4 @@ define([
             }
         }
     ]);
-
-    return app;
 });

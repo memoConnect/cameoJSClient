@@ -23,15 +23,16 @@ var config = {
         'ngload': 'vendor/requirejs/ngload',
 
         // global provider without AMD
-        'cmApi': 'shared/api/api',
+        'cmApi': 'shared/cmApi',
         'cmUi': 'shared/ui/ui-module',
         'cmLanguage': 'shared/i18n/language',
-        'cmLogger': 'shared/logger/cmLogger',
-        'cmNotify': 'shared/notify/notify',
+        'cmLogger': 'shared/cmLogger',
+        'cmNotify': 'shared/cmNotify',
 
-        // cameo modules
-        'cmAuth': 'shared/auth/auth',
-        'cmCrypt': 'shared/crypt/cmCrypt',
+        // cameo modules/services
+        'cmAuth': 'shared/cmAuth',
+        'cmCrypt': 'shared/cmCrypt',
+        'cmUtil': 'shared/cmUtil',
 
         'cmProfile': 'comps/cmProfile',
         //'cmConversations': 'comps/conversation/conversations-module',
@@ -42,7 +43,6 @@ var config = {
         'mContacts': 'models/contacts-modl',
 
         // shared
-        'cmUtil': 'shared/cmUtil',
         'util-base64': 'vendor/util/base64',
         'util-passchk-fast': 'vendor/util/passchk_fast',
         // crypto
@@ -96,7 +96,7 @@ addPackage('pckConversations',{
         'cmApi', 
         'cmLogger', 
         'cmCrypt', 
-        //'cmAuth',
+        'cmAuth',
         'cmContacts',
         '_v/captcha/captchagen/captchagen'
     ],    

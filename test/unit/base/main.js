@@ -39,20 +39,19 @@ var config = {
         'jquery': 'vendor/jquery/jquery-2.1.0',
         'jasmine-jquery': '../test/lib/jasmine-jquery/jasmine-jquery',
 
-        // cmModules
-        'cmApi': 'shared/api/api',
-        'cmAuth': 'shared/auth/auth',
-        'cmCrypt': 'shared/crypt/cmCrypt',
+        // cmModules / services
+        'cmApi': 'shared/cmApi',
+        'cmAuth': 'shared/cmAuth',
+        'cmCrypt': 'shared/cmCrypt',
         'cmLanguage': 'shared/i18n/language',
-        'cmLogger': 'shared/logger/cmLogger',
-        'cmNotify': 'shared/notify/notify',
+        'cmLogger': 'shared/cmLogger',
+        'cmNotify': 'shared/cmNotify',
+        'cmUtil': 'shared/cmUtil',
 
         'cmProfile': 'comps/cmProfile',
         'cmConversations': 'comps/conversation/cmConversations',
         'cmContacts': 'comps/contacts/cmContacts',
 
-		// shared
-        'cmUtil': 'shared/cmUtil',
         // utils
         'util-base64': 'vendor/util/base64',
         'util-passchk-fast': 'vendor/util/passchk_fast',

@@ -1,15 +1,13 @@
 define([
-    'app',
+    'angular',
     'util-base64',
     'crypto-sjcl',
     'cmLogger'
-], function (app) {
+], function () {
     'use strict';
 
-    /**
-     * collection of client side crypt stuff
-     */
-    app.register.factory('cmCrypt',
+    angular.module('cmCrypt', [])
+    .service('cmCrypt',
         function (cmLogger) {
 
             return {
