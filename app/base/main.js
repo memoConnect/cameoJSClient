@@ -24,6 +24,7 @@ var config = {
 
         // global provider without AMD
         'cmApi': 'shared/api/api',
+        'cmUi': 'shared/ui/ui-module',
         'cmLanguage': 'shared/i18n/language',
         'cmLogger': 'shared/logger/cmLogger',
         'cmNotify': 'shared/notify/notify',
@@ -33,7 +34,7 @@ var config = {
         'cmCrypt': 'shared/crypt/cmCrypt',
 
         'cmProfile': 'comps/cmProfile',
-        //'cmConversations': 'comps/conversation/cmConversations',
+        //'cmConversations': 'comps/conversation/conversations-module',
         'cmContacts': 'comps/contacts/cmContacts',
 
         // Models
@@ -75,30 +76,58 @@ var config = {
 }
 
 
-function addPackage(package_name, package) {
-    for(var alias in package.resources){
-        config.paths[alias] = package.resources[alias]
-        config.shim[alias]  = [package_name+'-root']
-    }
 
-    config.paths[package_name+'-root'] = package.root
-    config.paths[package_name] = 'comps/conversations/require'
-    config.shim[package_name] = Object.keys(package.resources) 
+function addPackage(package_name, package) {
+    config.paths[package_name] = package.root
+    config.shim[package_name]  = config.shim[package_name] || []
+
+    package.resources.forEach(function(value, index){
+        config.paths[package_name+'-'+index] = package.resources[index]
+        config.shim[package_name+'-'+index] = package.deps        
+        config.shim[package_name].push(package_name+'-'+index)        
+    })
 }
 
-addPackage('pckConversations', {
-    root:  'comps/conversations/conversations-module',
-    resources : {
-        'serviceConversationsAdapter'   : 'comps/conversations/conversationsAdapter-srvc',
-        'serviceConversationsModel'     : 'comps/conversations/conversationsModel-srvc',
-        'directiveAttachments'          : 'comps/conversations/attachments-drtv',
-        'directiveAvatar'               : 'comps/conversations/avatar-drtv',
-        'directiveCaptcha'              : 'comps/conversations/captcha-drtv',
-        'directiveConversation'         : 'comps/conversations/conversation-drtv',
-        'directiveConversation-input'   : 'comps/conversations/conversation-input-drtv',
-        'directiveMessage'              : 'comps/conversations/message-drtv' 
-    }
+
+addPackage('pckConversations',{
+    root: 'comps/conversations/conversations-module',
+    deps: [
+        'angular',
+        'cmApi', 
+        'cmLogger', 
+        'cmCrypt', 
+        //'cmAuth',
+        'cmContacts',
+        '_v/captcha/captchagen/captchagen'
+    ],    
+    resources : [
+       'comps/conversations/conversationsAdapter-srvc',
+       'comps/conversations/conversationsModel-srvc',
+       'comps/conversations/attachments-drtv',
+       'comps/conversations/avatar-drtv',
+       'comps/conversations/captcha-drtv',
+       'comps/conversations/conversation-drtv',
+       'comps/conversations/conversation-input-drtv',
+       'comps/conversations/passphrase-drtv',
+       'comps/conversations/message-drtv' 
+    ]
 })
+
+addPackage('pckUi',{
+    root: 'shared/ui/ui-module',
+    deps: [
+        'angular'        
+    ],    
+    resources : [
+        'shared/ui/adaptive-change-drtv'  
+    ]
+})
+
+
+
+
+
+console.dir(config)
 
 require.config(config)
 
