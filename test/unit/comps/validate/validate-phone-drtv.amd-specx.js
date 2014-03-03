@@ -1,7 +1,7 @@
 define([
     'app',
     'angularAMD',
-    'ngload!comps/validate/phone-drtv'
+    'comps/validate/phone-drtv'
 ], function (app, angularAMD) {
     'use strict';
 

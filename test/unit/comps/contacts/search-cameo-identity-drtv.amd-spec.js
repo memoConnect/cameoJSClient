@@ -2,7 +2,7 @@ define([
     'app',
     'angularAMD',
     'comps/contacts/search-cameo-identity.html',
-    'ngload!comps/contacts/search-cameo-identity-drtv'
+    'comps/contacts/search-cameo-identity-drtv'
 ], function (app, angularAMD, tpl) {
     'use strict';
 

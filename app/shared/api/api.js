@@ -182,6 +182,7 @@ define([
                     return(valid)
                 }
 
+                console.log(config)
                 $http(config).then(
 
                     function(response){
