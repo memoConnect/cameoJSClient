@@ -1,7 +1,7 @@
 define([
-    'app',
-    'angularAMD',
-    'comps/navs/nav-tabs.html',
+    'ngload!app',
+    'ngload!angularAMD',
+    'ngload!comps/navs/nav-tabs.html',
     'ngload!comps/navs/nav-tabs-drtv'
 ], function (app, angularAMD, tpl) {
     'use strict';
