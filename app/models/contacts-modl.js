@@ -25,8 +25,8 @@ define([
          * Init Object
          */
         function init(){
-            self.getAll();
-            self.getGroups();
+//            self.getAll();
+//            self.getGroups();
         }
 
         /**

@@ -11,12 +11,16 @@ define([
         angularAMD.processQueue();
 
         angularAMD.inject(function ($rootScope, $controller) {
-            $scope = $rootScope;
+            $scope = $rootScope.$new();
             ctrl = $controller('RegistrationCtrl', { $scope: $scope });
         })
 
         it('should be defined', function () {
             expect(ctrl).toBeDefined();
+        })
+
+        it('navigation equal to 1', function () {
+            expect($scope.tabs.length).toEqual(1);
         })
     })
 })

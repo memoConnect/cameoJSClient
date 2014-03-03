@@ -28,7 +28,7 @@ define([
          */
         function init(){
             if(self.isAuth() !== false){
-                loadIdentity();
+//                loadIdentity();
             }
         }
 

@@ -1,7 +1,7 @@
 define([
     'app',
     'angularAMD',
-    'ngload!routes/contacts/contacts-ctrl'
+    'routes/contacts/contacts-ctrl'
 ], function (app, angularAMD) {
     'use strict';
 
@@ -9,7 +9,7 @@ define([
         var $scope, ctrl;
 
         angularAMD.inject(function ($rootScope, $controller) {
-            $scope = $rootScope;
+            $scope = $rootScope.$new();
             ctrl = $controller('ContactsCtrl', { $scope: $scope });
         })
 
