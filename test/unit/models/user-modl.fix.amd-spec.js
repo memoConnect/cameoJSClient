@@ -1,16 +1,16 @@
 define([
-    'app',
-    'angularAMD',
+    'angular-mocks',
     'mUser'
-], function (app, angularAMD) {
+], function () {
     'use strict';
 
     describe('ModelUser', function(){
         var model;
 
-        angularAMD.inject(function(_ModelUser_) {
+        beforeEach(module('mUser'))
+        beforeEach(inject(function(_ModelUser_) {
             model = _ModelUser_;
-        })
+        }))
 
         it('should exists', function(){
             expect(model).toBeDefined();

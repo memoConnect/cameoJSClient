@@ -1,11 +1,11 @@
 define([
-    'app',
-    'ngload!cmAuth',
+    'cmAuth',
     'cmLogger'
-], function (app) {
+], function () {
     'use strict';
 
-    app.register.service('ModelUser',['cmAuth', '$q', '$rootScope', '$location',
+    angular.module('mUser',['cmAuth', 'cmLogger'])
+    .service('ModelUser',['cmAuth', '$q', '$rootScope', '$location',
     function(cmAuth, $q, $rootScope, $location){
         var self = this;
 

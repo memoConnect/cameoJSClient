@@ -1,7 +1,7 @@
 define([
     'angular-mocks',
-    'app'
-], function (mocks, app) {
+    'cmLanguage'
+], function () {
     'use strict';
 
     describe("cmLanguage", function() {
@@ -9,7 +9,7 @@ define([
         xdescribe("setup", function(){
 
             var language_tables = {};
-
+//          TODO
             it('should find an array of correctly formatted keys for supported languages at cameo.supported_languages', function() {
                 expect(Object.prototype.toString.call( app.cameo.supported_languages )).toEqual('[object Array]')
                 app.cameo.supported_languages.forEach(function(lang_key){
