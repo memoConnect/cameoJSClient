@@ -59,6 +59,34 @@ function cmUserModel(cmAuth, cmLocalStorage, $q, $rootScope, $location){
         $location.path("/login");
     };
 
+    /**
+     * LocalStorage Functions
+     */
+    /**
+     * save to identity storage
+     * @param key
+     * @param value
+     */
+    this.storageSave = function(key, value){
+        self.data.storage.save(key, value);
+    }
+    /**
+     *  get from identity storage
+     * @param key
+     */
+    this.storageGet = function(key){
+        self.data.storage.get(key, value);
+    }
+    /**
+     * remove from identity storage
+     * @param key
+     */
+    this.storageRemove = function(key){
+        self.data.storage.remove(key, value);
+    }
+    /**
+     * clear identity storage
+     */
     function resetUser(){
         self.data = angular.extend({}, dataModel);
     }
@@ -76,8 +104,6 @@ function cmUserModel(cmAuth, cmLocalStorage, $q, $rootScope, $location){
 
     function loadStorage(){
         self.data.storage = cmLocalStorage.create(self.data.id,self.data.userKey);
-//        self.data.storage = cmLocalStorage.create();
-        console.log(self.data.storage);
     }
 
     $rootScope.$on('logout', function(){
