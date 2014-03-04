@@ -1,18 +1,21 @@
 define([
     'cmAuth',
+    'cmLocalStorage',
     'cmLogger'
 ], function () {
     'use strict';
 
     angular.module('mUser',[
         'cmAuth',
+        'cmLocalStorage',
         'cmLogger'
     ]).service('ModelUser',[
         'cmAuth',
+        'cmLocalStorage',
         '$q',
         '$rootScope',
         '$location',
-    function(cmAuth, $q, $rootScope, $location){
+    function(cmAuth, cmLocalStorage, $q, $rootScope, $location){
         var self = this;
 
         var dataModel = {
@@ -26,7 +29,8 @@ define([
             preferredMessageType: 'default',
             created: '',
             lastUpdated: '',
-            userType: 'external'
+            userType: 'external',
+            storage: {}
         }
 
         /**
@@ -79,8 +83,16 @@ define([
                 function(data){
                     angular.extend(self.data, data);
                     self.data.isActive = true;
+
+                    loadStorage();
                 }
             )
+        }
+
+        function loadStorage(){
+//            self.data.storage = cmLocalStorage.create(self.data.id);
+            self.data.storage = cmLocalStorage.create();
+            console.log(self.data.storage);
         }
 
         $rootScope.$on('logout', function(){
