@@ -23,6 +23,7 @@ module.exports = function(config) {
             'app/shared/cmAuth.js',
             'app/shared/cmUtil.js',
             'app/shared/cmCrypt.js',
+            'app/shared/cmLocalStorage.js',
 
             'app/shared/i18n/language.js',
 

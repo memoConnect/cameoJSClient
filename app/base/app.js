@@ -24,7 +24,8 @@ define([
         'cmLanguage',
         'cmNotify',
         'cmLogger',
-        'cmLocalStorage'
+        'cmLocalStorage',
+        'cmAuth'
     ]);
 
     // cameo settings

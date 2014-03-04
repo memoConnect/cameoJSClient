@@ -65,6 +65,7 @@ var config = {
         'angular-translate-storage-cookie': ['angular'],
         'angular-translate-storage-local': ['angular'],
         'angular-growl': ['angular'],
+        'cmLocalStorage' : ['angular', 'cmLogger'],
         'cmNotify': ['angular-growl'],
         'cmAuth': ['angular', 'util-base64', 'cmCrypt', 'cmApi'],
         'cmCrypt': ['angular', 'util-base64', 'crypto-sjcl', 'cmLogger'],
