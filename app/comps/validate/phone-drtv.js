@@ -1,10 +1,8 @@
-define([
-    'app',
-    'ngload!cmAuth'
-], function(app){
+define(function(require){
     'use strict';
 
-    app.register.directive('cmValidatePhone',[
+    require('ngload!cmAuth')
+    require('app').register.directive('cmValidatePhone',[
         //'cmAuth',
         function(cmAuth){
             return {
@@ -37,6 +35,4 @@ define([
             }
         }
     ]);
-
-    return app;
 });
