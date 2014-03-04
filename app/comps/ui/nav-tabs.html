@@ -1,0 +1,14 @@
+<ul class="nav nav-tabs">
+    <li ng-repeat="tab in tabs"
+        ng-class="{active:activeTab == tab.i18n}"
+        ng-click="setActiveTab(tab.i18n)"
+        title="{{'CONTACTS.NAVIGATION.'+tab.i18n|cmTranslate}}" >
+        <a ng-show="tab.icon != undefined && tab.href == undefined">
+            <i class="fa {{tab.icon}}"></i>
+            <span class="badge" ng-show="tab.badge != undefined">{{badges[tab.badge]}}</span>
+        </a>
+        <a ng-show="tab.icon != undefined && tab.href != undefined" href="{{tab.href}}">
+            <i class="fa {{tab.icon}}"></i>
+        </a>
+    </li>
+</ul>
