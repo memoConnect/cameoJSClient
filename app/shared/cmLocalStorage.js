@@ -86,6 +86,7 @@ define([
         factory('LocalStorageService',['LocalStorageAdapter', function(LocalStorageAdapter){
             var LocalStorageService = function(){
                 this.instanceId = "";
+                this.instanceKey = "";
 
                 var self = this,
                     useable = false,
@@ -117,10 +118,9 @@ define([
                  * set instance Id
                  * @param id
                  */
-                this.setInstanceId = function(id){
-                    this.instanceId = id;
-
-                    this.check();
+                this.setInstanceVars = function(data){
+                    this.instanceId = data.id;
+                    this.instanceKey = data.key;
                 };
                 /**
                  * adapter function for check local storage
@@ -219,6 +219,12 @@ define([
 
                     return false;
                 }
+
+                function init(){
+                    self.check();
+                }
+
+                init();
             }
 
             return LocalStorageService;
@@ -233,25 +239,29 @@ define([
                  * @param id
                  * @returns {*}
                  */
-                create: function(id){
-                    if(typeof id !== 'undefined'){
+                create: function(id, key){
+                    if(typeof id !== 'undefined' && id != '' && typeof key !== 'undefined' && key != ''){
                         for(var i = 0; i < instances.length; i++){
                             if(typeof instances[i] === 'object' &&
                                 instances[i].id == id){
 
-                                return instance[i].instance;
+                                return instances[i].instance;
                             }
                         }
 
                         var localStorage = new LocalStorageService();
-                        localStorage.setInstanceId(id);
+                        localStorage.setInstanceVars({id:id,key:key});
 
-                        instances.push[{id:id,instance:localStorage}];
+
+                        instances.push({id:id,instance:localStorage});
 
                         return localStorage;
                     }
 
                     return null;
+                },
+                getQty: function(){
+                  return instances.length;
                 }
             }
 

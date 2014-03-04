@@ -90,7 +90,8 @@ define([
         }
 
         function loadStorage(){
-            self.data.storage = cmLocalStorage.create(self.data.id);
+//            self.data.storage = cmLocalStorage.create(self.data.id);
+            self.data.storage = cmLocalStorage.create();
             console.log(self.data.storage);
         }
 

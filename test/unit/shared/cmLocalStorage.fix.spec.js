@@ -61,7 +61,7 @@ define([
 
         it('should have setInstanceId function', function(){
             var srvc = createService();
-            expect(srvc.setInstanceId).toBeDefined()
+            expect(srvc.setInstanceVars).toBeDefined()
         })
 
         it('should have check function', function(){
@@ -113,12 +113,40 @@ define([
             expect(cmLocalStorage.create).toBeDefined()
         })
 
-        describe('Instance of LocalStorageService', function(){
-            it('should be one instance after create/get one', function(){
-                var tmpInstanceId = 'moep';
-                var instance = cmLocalStorage.create(tmpInstanceId);
-                expect(typeof instance).toBe('object');
-                expect(instance.instanceId).toBe(tmpInstanceId);
+        describe('create Instance(s) of LocalStorageService', function(){
+            var tmpInstanceId_1 = 'moep';
+            var tmpInstanceKey_1 = 'moep123';
+            var tmpInstanceId_2 = 'blub';
+            var tmpInstanceKey_2 = 'moep456';
+
+            it('should be null, if create an instance without id and key', function(){
+                var instance = cmLocalStorage.create();
+                expect(instance).toBe(null);
+            })
+
+            it('should be null, if create an instance with id and without key', function(){
+                var instance = cmLocalStorage.create('moep');
+                expect(instance).toBe(null);
+            })
+
+            it('there should be one instance after create one', function(){
+                var instance = cmLocalStorage.create(tmpInstanceId_1,tmpInstanceKey_1);
+                expect(cmLocalStorage.getQty()).toBe(1);
+            })
+
+            it('there should be two instances after create two', function(){
+                var instance1 = cmLocalStorage.create(tmpInstanceId_1,tmpInstanceKey_1);
+                var instance2 = cmLocalStorage.create(tmpInstanceId_2,tmpInstanceKey_2);
+                expect(cmLocalStorage.getQty()).toBe(2);
+            })
+
+            it('there should be two instances after create two and create one of them twice', function(){
+                var instance1 = cmLocalStorage.create(tmpInstanceId_1,tmpInstanceKey_1);
+                var instance2 = cmLocalStorage.create(tmpInstanceId_2,tmpInstanceKey_2);
+                expect(cmLocalStorage.getQty()).toBe(2);
+
+                var instance3 = cmLocalStorage.create(tmpInstanceId_1,tmpInstanceKey_1);
+                expect(cmLocalStorage.getQty()).toBe(2);
             })
         })
     });
