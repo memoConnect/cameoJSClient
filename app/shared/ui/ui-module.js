@@ -1,4 +1,6 @@
- var cmUi = angular.module('cmUi', [])
+var cmUi = angular.module('cmUi', [
+    'cmLanguage'
+])
 
 cmUi.directive('cmAdaptiveChange', [
     cmAdaptiveChange
@@ -10,5 +12,6 @@ cmUi.directive('cmPointSpinner',[
 
 
 cmUi.directive('cmNavTabs',[
+    '$routeParams',
     cmNavTabs
 ])

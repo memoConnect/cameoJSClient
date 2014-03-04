@@ -9,6 +9,7 @@ function cmNavTabs(){
     return {
         scope: true,
         templateUrl: 'shared/ui/nav-tabs.html',
+        
         controller: function($rootScope, $routeParams, $scope){
             /**
              * search in tabs array for default

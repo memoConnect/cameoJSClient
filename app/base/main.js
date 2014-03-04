@@ -165,6 +165,17 @@ addPackage('pckUser',{
 })
 
 
+addPackage('pckValidate',{
+    root: 'comps/validate/validate-module',
+    deps: [   
+    ],    
+    resources : [
+        'comps/validate/email-drtv',
+        'comps/validate/password-drtv',
+        'comps/validate/phone-drtv',
+    ]
+})
+
 addPackage('pckUi',{
     root: 'shared/ui/ui-module',
     deps: [

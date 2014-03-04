@@ -12,7 +12,8 @@ var cmContacts = angular.module('cmContacts',[
     'cmApi',
     'cmLogger',
     'cmUser',
-    'cmUtil'
+    'cmUtil',
+    'cmLanguage'
 ])
 
 

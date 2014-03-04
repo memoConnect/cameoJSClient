@@ -9,6 +9,8 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
 
+            'test/lib/jquery/*.js',
+
             'app/vendor/angular/angular.js',
 
             'app/vendor/angular-translate/angular-translate.js',
@@ -22,9 +24,11 @@ module.exports = function(config) {
             'app/shared/cmUtil.js',
             'app/shared/cmCrypt.js',
 
+            'app/shared/i18n/language.js',
 
-            'app/comps/ui/!(*module).js',
-            'app/comps/ui/*module.js',
+
+            'app/shared/ui/!(*module).js',
+            'app/shared/ui/*module.js',
 
             'app/comps/user/!(*module).js',
             'app/comps/user/*module.js',
@@ -36,14 +40,20 @@ module.exports = function(config) {
             'app/comps/conversations/!(*module).js',
             'app/comps/conversations/*module.js',
 
+            'app/comps/validate/!(*module).js',
+            'app/comps/validate/*module.js',
+
             'test/lib/angular/angular-mocks.js',
 
-            'test/unit/shared/*.spec.js',
 
-            'test/unit/comps/ui/*.spec.js',
-            'test/unit/comps/user/*.spec.js',
-            'test/unit/comps/contacts/*.spec.js',
-            'test/unit/comps/conversations/*.spec.js',
+            'test/unit/shared/*spec.js',
+            'test/unit/shared/ui/*spec.js',
+            'test/unit/shared/i18n/*spec.js',
+
+            'test/unit/comps/user/*spec.js',
+            'test/unit/comps/contacts/*spec.js',
+            'test/unit/comps/conversations/*spec.js',
+            'test/unit/comps/validate/*spec.js',
 
             // all frontend files
             //{pattern: 'app/**/*.js', included: false},
@@ -71,14 +81,14 @@ module.exports = function(config) {
             // requirejs main file
             //{pattern: 'test/unit/base/main.js', included: true},
             // load and json templates
-            //{pattern: 'app/**/*.html', included: false}
+            'app/**/*.html',
 //            {pattern: 'app/**/*.json', included: false}
         ],
 
         // generate js files from html templates to expose them during testing.
         preprocessors: {
-            'app/**/*.html': ['html2js-requirejs'],
-            'app/**/*.json': ['html2js-requirejs']
+            'app/**/*.html': ['html2js'],
+            //'app/**/*.json': ['html2js']
         },
 
         html2JsRequireJsPreprocessor: {
