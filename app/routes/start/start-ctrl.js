@@ -1,18 +1,18 @@
 define([
     'app',
-    'ngload!mUser'
+    'ngload!pckUser'
 ], function (app) {
     'use strict';
 
     app.register.controller('StartCtrl', [
     '$scope',
     '$cookieStore',
-    'ModelUser',
-    function($scope, $cookieStore, ModelUser) {
-        $scope.identity = ModelUser.data;
+    'cmUserModel',
+    function($scope, $cookieStore, cmUserModel) {
+        $scope.identity = cmUserModel.data;
 
         $scope.logout = function(){
-            ModelUser.doLogout();
+            cmUserModel.doLogout();
         };
     }]);
 });

@@ -1,59 +1,64 @@
+/*
 define([
     'app',
     'ngload!cmLogger',
     'ngload!mContacts'
 ], function(app){
-    'use strict';
+*/
 
-    app.register.directive('cmContactsList',
-        function(ModelContacts, cmLogger){
-            return {
+'use strict';
 
-                restrict: 'AE',
-                scope: {},
-                templateUrl: 'comps/contacts/contacts-list.html',
+    
+function cmContactsList(cmContactsModel, cmLogger){
+    return {
 
-                controller: function($scope, $element, $attrs){
+        restrict: 'AE',
+        scope: {},
+        templateUrl: 'comps/contacts/contacts-list.html',
 
-                    $scope.contacts = null;
-                    $scope.contactsQty = 0;
+        controller: function($scope, $element, $attrs){
 
-                    /**
-                     * Get contacts via model
-                     */
-                    $scope.getContacts = function(){
-                        ModelContacts.getAll(10,0).then(
-                            function(data){
-                                $scope.contacts = data;
-                            },
-                            function(){
-                                $scope.contacts = null;
-                            }
-                        );
-                    };
+            $scope.contacts = null;
+            $scope.contactsQty = 0;
 
-                    /**
-                     * handle every single contact via model
-                     */
-                    $scope.editContact = function(cameoId){
-                        cmLogger.debug('editContact '+cameoId);
-                        // TODO: cmApi stuff
-                    };
-
-                    /**
-                     * delete contact via model
-                     * @param cameoId
-                     */
-                    $scope.deleteContact = function(cameoId){
-                        cmLogger.debug('deleteContact '+cameoId);
-                        // TODO: cmApi stuff
-                    };
-
-                    $scope.selectIdentity = function(identityId){
-                        $scope.$emit('identity-selected', identityId)
+            /**
+             * Get contacts via model
+             */
+            $scope.getContacts = function(){
+                cmContactsModel.getAll(10,0).then(
+                    function(data){
+                        $scope.contacts = data;
+                    },
+                    function(){
+                        $scope.contacts = null;
                     }
-                }
+                );
+            };
+
+            /**
+             * handle every single contact via model
+             */
+            $scope.editContact = function(cameoId){
+                cmLogger.debug('editContact '+cameoId);
+                // TODO: cmApi stuff
+            };
+
+            /**
+             * delete contact via model
+             * @param cameoId
+             */
+            $scope.deleteContact = function(cameoId){
+                cmLogger.debug('deleteContact '+cameoId);
+                // TODO: cmApi stuff
+            };
+
+            $scope.selectIdentity = function(identityId){
+                $scope.$emit('identity-selected', identityId)
             }
         }
-    );
+    }
+}
+
+/*
 });
+*/

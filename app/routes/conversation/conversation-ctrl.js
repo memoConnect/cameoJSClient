@@ -2,9 +2,8 @@ define([
     'app',
     'cmAuth',
     'util-base64',
-    'mContacts',
-    'comps/navs/nav-tabs-drtv',
-    'comps/contacts/contacts-list-drtv'
+    'ngload!pckContacts',
+    'ngload!pckContacts'
 ], function (app) {
     'use strict';
 

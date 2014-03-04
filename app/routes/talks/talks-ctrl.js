@@ -1,7 +1,7 @@
 define([
     'app',
     'util-base64',    
-    'comps/navs/nav-tabs-drtv',
+    'ngload!pckUser',
 //    'cmAuth',                       //das klappt nur mit Glück!
     'ngload!pckConversations'
 ], function (app) {
