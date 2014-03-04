@@ -8,6 +8,7 @@ define([
     'cmLanguage',
     'cmLogger',
     'cmNotify',
+    'cmLocalStorage',
     // vendor
     'jquery'
 ], function (angularAMD) {
@@ -21,7 +22,8 @@ define([
         'cmUi',
         'cmLanguage',
         'cmNotify',
-        'cmLogger'
+        'cmLogger',
+        'cmLocalStorage'
     ]);
 
     // cameo settings
