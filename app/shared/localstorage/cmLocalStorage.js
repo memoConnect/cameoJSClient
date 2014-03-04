@@ -69,6 +69,7 @@ define([
                 ultimateKey = "MULTIKEY"+instanceId,
                 ultimateValue = {};
 
+
             function getUltimateValue(){
                 var value = LocalStorageAdapter.get(ultimateKey);
                 if(value == null){
