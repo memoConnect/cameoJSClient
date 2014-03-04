@@ -154,7 +154,7 @@ addPackage('pckUser',{
     ],    
     resources : [
         'comps/user/userModel-srvc',
-        'comps/user/login-drtv',
+        'comps/user/login-drtv'
     ]
 })
 
@@ -165,7 +165,7 @@ addPackage('pckValidate',{
     resources : [
         'comps/validate/email-drtv',
         'comps/validate/password-drtv',
-        'comps/validate/phone-drtv',
+        'comps/validate/phone-drtv'
     ]
 })
 
