@@ -63,36 +63,37 @@ define([
             }
         }).
         factory('LocalStorageService',['LocalStorageAdapter', function(LocalStorageAdapter){
-            var instanceId = "",
-                useable = false,
-                useableCheck = false,
-                ultimateKey = "MULTIKEY"+instanceId,
-                ultimateValue = {};
-
-
-            function getUltimateValue(){
-                var value = LocalStorageAdapter.get(ultimateKey);
-                if(value == null){
-                    return {}
-                } else {
-                    return JSON.parse(value);
-                }
-            }
-
-            function saveUltimateValue(value){
-                try {
-                    LocalStorageAdapter.save(ultimateKey, JSON.stringify(value));
-                    return true;
-                } catch(e){
-                    //
-                }
-
-                return false;
-            }
-
             var LocalStorageService = function(){
+                this.instanceId = "";
+
+                var self = this,
+                    useable = false,
+                    useableCheck = false,
+                    ultimateKey = "MULTIKEY"+this.instanceId,
+                    ultimateValue = {};
+
+                function getUltimateValue(){
+                    var value = LocalStorageAdapter.get(ultimateKey);
+                    if(value == null){
+                        return {}
+                    } else {
+                        return JSON.parse(value);
+                    }
+                }
+
+                function saveUltimateValue(value){
+                    try {
+                        LocalStorageAdapter.save(ultimateKey, JSON.stringify(value));
+                        return true;
+                    } catch(e){
+                        //
+                    }
+
+                    return false;
+                }
+
                 this.setInstanceId = function(id){
-                    instanceId = id;
+                    this.instanceId = id;
 
                     this.check();
                 };
@@ -106,7 +107,7 @@ define([
                     return useable;
                 };
 
-                this.get =  function (key) {
+                this.get = function (key) {
                     if(this.check() !== false){
                         ultimateValue = getUltimateValue();
                         if(ultimateValue[key] != undefined){
@@ -117,63 +118,63 @@ define([
                     return "undefined";
                 };
 
-//                getAllKeys: function(){
-//                    if(this.check() !== false){
-//                        var keys = [];
-//                        ultimateValue = getUltimateValue();
-//                        console.log(ultimateValue)
-//
-//                        for(var k in ultimateValue){
-//                            keys.push(k);
-//                        }
-//
-//                        return keys;
-//                    }
-//
-//                    return [];
-//                },
-//
-//                save: function (key, data) {
-//                    if(this.check() !== false){
-//                        ultimateValue = getUltimateValue();
-//                        if(ultimateValue == null){
-//                            ultimateValue = {};
-//                        }
-//                        ultimateValue[key] = data;
-//
-//                        saveUltimateValue(ultimateValue);
-//                        return true;
-//                    }
-//
-//                    return false;
-//                },
-//
-//                remove: function (key) {
-//                    if(this.check() !== false){
-//                        ultimateValue = getUltimateValue();
-//                        if(ultimateValue[key] != undefined){
-//                            try {
-//                                delete(ultimateValue[key]);
-//                                saveUltimateValue(ultimateValue);
-//                                return true;
-//                            } catch (e){
-//                                //
-//                            }
-//                        }
-//                    }
-//
-//                    return false;
-//                },
-//
-//                clearAll : function () {
-//                    if(this.check() !== false){
-//                        ultimateValue = {};
-//                        LocalStorageAdapter.remove(ultimateKey);
-//                        return true;
-//                    }
-//
-//                    return false;
-//                }
+                this.getAllKeys = function(){
+                    if(this.check() !== false){
+                        var keys = [];
+                        ultimateValue = getUltimateValue();
+                        console.log(ultimateValue)
+
+                        for(var k in ultimateValue){
+                            keys.push(k);
+                        }
+
+                        return keys;
+                    }
+
+                    return [];
+                },
+
+               this.save = function (key, data) {
+                    if(this.check() !== false){
+                        ultimateValue = getUltimateValue();
+                        if(ultimateValue == null){
+                            ultimateValue = {};
+                        }
+                        ultimateValue[key] = data;
+
+                        saveUltimateValue(ultimateValue);
+                        return true;
+                    }
+
+                    return false;
+                };
+
+                this.remove = function (key) {
+                    if(this.check() !== false){
+                        ultimateValue = getUltimateValue();
+                        if(ultimateValue[key] != undefined){
+                            try {
+                                delete(ultimateValue[key]);
+                                saveUltimateValue(ultimateValue);
+                                return true;
+                            } catch (e){
+                                //
+                            }
+                        }
+                    }
+
+                    return false;
+                };
+
+                this.clearAll = function () {
+                    if(this.check() !== false){
+                        ultimateValue = {};
+                        LocalStorageAdapter.remove(ultimateKey);
+                        return true;
+                    }
+
+                    return false;
+                }
             }
 
             return LocalStorageService;
