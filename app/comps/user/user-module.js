@@ -1,16 +1,17 @@
 var cmUser = angular.module('cmUser',[
         'cmAuth', 
-        'cmLogger'
+        'cmLogger',
+        'cmLocalStorage'
     ])
 
-cmUser.service('cmUserModel',[    
+cmUser.service('cmUserModel',[   
+    'cmAuth', 
+    'cmLocalStorage',
     '$q', 
     '$rootScope', 
     '$location',
-    'cmAuth', 
     cmUserModel
 ])
-
 
 cmUser.directive('cmLogin', [
     '$location',

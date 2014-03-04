@@ -83,7 +83,6 @@ var config = {
                         'cmLogger'
                     ]
 
-    
 //        'bootstrap': ['jquery']
     },
     // kick start application
@@ -158,7 +157,8 @@ addPackage('pckUser',{
     root: 'comps/user/user-module',
     deps: [
         'angular',
-        'cmAuth'        
+        'cmAuth',
+        'cmLocalStorage'
     ],    
     resources : [
         'comps/user/userModel-srvc',

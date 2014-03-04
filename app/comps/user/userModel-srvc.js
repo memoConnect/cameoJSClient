@@ -1,13 +1,6 @@
-/*
-define([
-    'cmAuth',
-    'cmLogger'
-], function () {
-*/
-
 'use strict';
-    
-function cmUserModel($q, $rootScope, $location, cmAuth){
+
+function cmUserModel(cmAuth, cmLocalStorage, $q, $rootScope, $location){
     var self = this;
 
     var dataModel = {
@@ -21,7 +14,8 @@ function cmUserModel($q, $rootScope, $location, cmAuth){
         preferredMessageType: 'default',
         created: '',
         lastUpdated: '',
-        userType: 'external'
+        userType: 'external',
+        storage: {}
     }
 
     /**
@@ -74,8 +68,16 @@ function cmUserModel($q, $rootScope, $location, cmAuth){
             function(data){
                 angular.extend(self.data, data);
                 self.data.isActive = true;
+
+                loadStorage();
             }
         )
+    }
+
+    function loadStorage(){
+//            self.data.storage = cmLocalStorage.create(self.data.id);
+        self.data.storage = cmLocalStorage.create();
+        console.log(self.data.storage);
     }
 
     $rootScope.$on('logout', function(){
@@ -84,7 +86,3 @@ function cmUserModel($q, $rootScope, $location, cmAuth){
 
     init();
 }
-
-/*
-});
-*/
