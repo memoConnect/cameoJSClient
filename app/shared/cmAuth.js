@@ -1,21 +1,15 @@
-/*
 define([
     'angular',
     'util-base64',
     'cmCrypt',
     'cmApi'
 ], function () {
-*/    
+    'use strict';
 
-'use strict';
-
-
-var cmAuth = angular.module('cmAuth', ['cmApi', 'cmCrypt'])
+    angular.module('cmAuth', ['cmApi', 'cmCrypt'])
     .service('cmAuth', [
-
         'cmApi',
         'cmCrypt',
-        
         function(cmApi, cmCrypt){
             return {
 
@@ -32,19 +26,19 @@ var cmAuth = angular.module('cmAuth', ['cmApi', 'cmCrypt'])
 
                 // delete Token
                 removeToken: function(){
-    //                    return $cookieStore.remove('token');
+//                    return $cookieStore.remove('token');
                     return localStorage.removeItem('token');
                 },
 
                 // store the token in a cookie:
                 storeToken: function(token){
-    //                    return $cookieStore.put('token', token);
+//                    return $cookieStore.put('token', token);
                     return localStorage.setItem('token', token);
                 },
 
                 // retrieve thr token from a cookie
                 getToken: function(){
-    //                    return $cookieStore.get('token');
+//                    return $cookieStore.get('token');
                     return localStorage.getItem('token');
                 },
 
@@ -82,8 +76,5 @@ var cmAuth = angular.module('cmAuth', ['cmApi', 'cmCrypt'])
                 }
             }
         }
-    ]);    
-
-/*
+    ]);
 });
-*/

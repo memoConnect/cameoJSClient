@@ -37,7 +37,11 @@ var config = {
 
         'cmProfile': 'comps/cmProfile',
         //'cmConversations': 'comps/conversation/conversations-module',
-        //'cmContacts': 'comps/contacts/cmContacts',
+        'cmContacts': 'comps/contacts/cmContacts',
+
+        // Models
+        'mContacts': 'comps/contacts/contacts-modl',
+        'mUser': 'comps/user/userModel-srvc',
 
         // shared
         'util-base64': 'vendor/util/base64',
@@ -65,24 +69,8 @@ var config = {
         'angular-translate-storage-cookie': ['angular'],
         'angular-translate-storage-local': ['angular'],
         'angular-growl': ['angular'],
-        'cmLocalStorage' : ['angular', 'cmLogger'],
-        'cmNotify': ['angular-growl'],
-        'cmAuth': ['angular', 'util-base64', 'cmCrypt', 'cmApi'],
-        'cmCrypt': ['angular', 'util-base64', 'crypto-sjcl', 'cmLogger'],
-        'cmApi': ['angular', 'cmLogger'],
-        'cmProfile' : ['jquery', 'angular', 'cmApi', 'cmAuth'],
-        'cmLogger' : ['angular'],
-        'cmLanguage' : [
-                        'angular', 
-                        'angular-translate', 
-                        'angular-translate-loader-static-files', 
-                        'angular-translate-storage-cookie', 
-                        'angular-translate-storage-local', 
-                        'angular-growl',
-                        'cmNotify',
-                        'cmLogger'
-                    ]
-
+        'cmLanguage': ['angular-translate'],
+        'cmNotify': ['angular-growl']
 //        'bootstrap': ['jquery']
     },
     // kick start application
@@ -104,8 +92,6 @@ function addPackage(package_name, package) {
 }
 
 
-
-
 addPackage('pckConversations',{
     root: 'comps/conversations/conversations-module',
     deps: [
@@ -114,7 +100,7 @@ addPackage('pckConversations',{
         'cmLogger', 
         'cmCrypt', 
         'cmAuth',
-        'pckContacts',
+        'cmContacts',
         '_v/captcha/captchagen/captchagen'
     ],    
     resources : [
@@ -130,65 +116,13 @@ addPackage('pckConversations',{
     ]
 })
 
-
-
-addPackage('pckContacts',{
-    root: 'comps/contacts/contacts-module',
-    deps: [
-        'angular',
-        'cmApi', 
-        'cmLogger', 
-        'cmUtil',
-        'pckUser' 
-    ],    
-    resources : [
-        'comps/contacts/add-external-contact-drtv',
-        'comps/contacts/contact-request-list-drtv',
-        'comps/contacts/contacts-list-drtv',
-        'comps/contacts/contactsModel-srvc',
-        'comps/contacts/contactsAdapter-srvc',
-        'comps/contacts/search-cameo-identity-drtv',    
-        'comps/contacts/type-chooser-drtv'
-    ]
-})
-
-
-addPackage('pckUser',{
-    root: 'comps/user/user-module',
-    deps: [
-        'angular',
-        'cmAuth',
-        'cmLocalStorage'
-    ],    
-    resources : [
-        'comps/user/userModel-srvc',
-        'comps/user/login-drtv',
-    ]
-})
-
-
-addPackage('pckValidate',{
-    root: 'comps/validate/validate-module',
-    deps: [   
-    ],    
-    resources : [
-        'comps/validate/email-drtv',
-        'comps/validate/password-drtv',
-        'comps/validate/phone-drtv',
-    ]
-})
-
 addPackage('pckUi',{
     root: 'shared/ui/ui-module',
     deps: [
-        'angular',    
-        'cmAuth',
-        'cmLogger'    
+        'angular'        
     ],    
     resources : [
-        'shared/ui/adaptive-change-drtv',  
-        'shared/ui/nav-tabs-drtv',
-        'shared/ui/point-spinner-drtv'
+        'shared/ui/adaptive-change-drtv'  
     ]
 })
 

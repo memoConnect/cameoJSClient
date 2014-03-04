@@ -4,7 +4,6 @@ define([
     'angular-cookies',
     // cameo files
     'cmApi',
-    'cmAuth',
     'pckUi',
     'cmLanguage',
     'cmLogger',
@@ -24,8 +23,7 @@ define([
         'cmLanguage',
         'cmNotify',
         'cmLogger',
-        'cmLocalStorage',
-        'cmAuth'
+        'cmLocalStorage'
     ]);
 
     // cameo settings

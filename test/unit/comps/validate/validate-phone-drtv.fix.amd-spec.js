@@ -1,34 +1,37 @@
-'use strict';
+define([
+    'app',
+    'angularAMD',
+    'comps/validate/phone-drtv'
+], function (app, angularAMD) {
+    'use strict';
 
-// thx to http://stackoverflow.com/questions/15219717/to-test-a-custom-validation-angular-directive
-describe("Directive cmValidatePhone", function(){
-    var element,
-        form,
-        input,
-        scope,
-        httpBackend;
+    // thx to http://stackoverflow.com/questions/15219717/to-test-a-custom-validation-angular-directive
+    describe("Directive cmValidatePhone", function(){
+        var element,
+            form,
+            scope,
+            httpBackend;
 
-    beforeEach(module('cmValidate'))
-    beforeEach(inject(function($compile, $rootScope, $httpBackend){
-        httpBackend = $httpBackend;
+        angularAMD.inject(function($compile, $rootScope, $httpBackend){
+            httpBackend = $httpBackend;
 
-        scope = $rootScope.$new();
-        element = angular.element('<form name="form"><input name="phone" cm-validate-phone ng-model="phone" /></form>');
+            scope = $rootScope;
+            element = angular.element('<form name="form"><input name="phone" cm-validate-phone ng-model="phone" /></form>');
 
-        $compile(element)(scope);
-        scope.$digest();
-        form = scope.form;
-        input = angular.element('input', element)
-    }))
+            $compile(element)($rootScope);
+            scope.$digest();
+            form = scope.form;
+        })
 
-    it('should be valid, if element is empty', function(){
-        input.val('');
-        input.blur();
-        expect(form.phone.$valid).toBe(true);
-        expect(form.phone.$invalid).toBe(false);
+        it('should be valid, if element is empty', function(){
+            element.find('input').val('');
+            element.find('input').blur();
+            expect(form.phone.$valid).toBe(true);
+            expect(form.phone.$invalid).toBe(false);
+        })
+
+        /**
+         * TODO add MockUp Tests for httpBackend with Promises
+         */
     })
-
-    /**
-     * TODO add MockUp Tests for httpBackend with Promises
-     */
 })

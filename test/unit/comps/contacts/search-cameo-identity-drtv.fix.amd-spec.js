@@ -1,14 +1,16 @@
-'use strict';
+define([
+    'app',
+    'angularAMD',
+    'comps/contacts/search-cameo-identity.html',
+    'comps/contacts/search-cameo-identity-drtv',
+    'angular-mocks'
+], function (app, angularAMD, tpl) {
+    'use strict';
 
-describe('Directive cmSearchCameoIdentity', function () {
-    var $scope, directive, promise, $ModelContacts;
-    
+    describe('Directive cmSearchCameoIdentity', function () {
+        var $scope, directive, promise, $ModelContacts;
 
-    beforeEach(module('cmContacts'))
-
-/*
-    beforeEach(function(){
-        module('cmContacts').service('cmContactsModel',function(){
+        app.register.service('ModelContacts',function(){
             return {
                 searchCameoIdentity: function(){
                     promise = $q.defer();
@@ -16,46 +18,42 @@ describe('Directive cmSearchCameoIdentity', function () {
                 }
             }
         });
-    })
-*/    
 
-    beforeEach(inject(function ($rootScope, $compile, $templateCache, $q) {
+        angularAMD.inject(function ($rootScope, $compile, $templateCache, $q) {
+            $templateCache.put('comps/contacts/search-cameo-identity.html', tpl);
 
-        $templateCache.put('comps/contacts/search-cameo-identity.html', window.__html__['app/comps/contacts/search-cameo-identity.html']);
+            directive = angular.element('<div cm-search-cameo-identity></div>')
+            $compile(directive)($rootScope.$new());
+            $rootScope.$digest()
 
-        directive = angular.element('<div cm-search-cameo-identity></div>')
-        $compile(directive)($rootScope.$new());
-        $rootScope.$digest()
-
-        $scope = directive.isolateScope();
-
-        
-    }))
-
-    describe('should',function(){
-        it('load template',function(){
-            expect(directive.html()).not.toBe('')
+            $scope = directive.isolateScope();
         })
 
-        it('have empty array on results',function(){
-            expect($scope.results.length).toEqual(0);
-        })
+        describe('should',function(){
+            it('load template',function(){
+                expect(directive.html()).not.toBe('')
+            })
 
-        it('mock 3 results',function(){
-            $scope.$apply(function() {
-                $scope.results = ['huhu','huhu2','huhu3'];
-            });
-            expect($scope.results.length).toEqual(3);
+            it('have empty array on results',function(){
+                expect($scope.results.length).toEqual(0);
+            })
 
-            expect($('ul.nav-pills li',directive).length).toEqual(3);
-        })
+            it('mock 3 results',function(){
+                $scope.$apply(function() {
+                    $scope.results = ['huhu','huhu2','huhu3'];
+                });
+                expect($scope.results.length).toEqual(3);
 
-        it('have search as function',function(){
-            expect(typeof $scope.search).toBe('function')
-        })
+                expect($('ul.nav-pills li',directive).length).toEqual(3);
+            })
 
-        it('have sendFriendRequest as function',function(){
-            expect(typeof $scope.sendFriendRequest).toBe('function')
+            it('have search as function',function(){
+                expect(typeof $scope.search).toBe('function')
+            })
+
+            it('have sendFriendRequest as function',function(){
+                expect(typeof $scope.sendFriendRequest).toBe('function')
+            })
         })
     })
 })

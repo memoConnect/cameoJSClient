@@ -1,4 +1,7 @@
-
+define([
+    'angular',
+    'cmLogger'
+],function () {
     'use strict';
 
     angular.module('cmLocalStorage', ['cmLogger']).
@@ -263,3 +266,4 @@
             }
 
         }]);
+});

@@ -1,4 +1,9 @@
-
+define([
+    'jquery',
+    'angular',
+    'cmApi',
+    'cmAuth'
+], function ($) {
     'use strict';
     // E-mail, Phone etc. verification
     var cmProfile = angular.module('cmProfile', ['cmApi', 'cmAuth']); //cmAuth should not be needed here
@@ -115,3 +120,4 @@
             }
         }
     ]);
+});

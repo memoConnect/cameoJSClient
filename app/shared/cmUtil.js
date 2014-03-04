@@ -1,3 +1,6 @@
+define([
+    'angular'
+], function () {
     'use strict';
 
     angular.module('cmUtil', [])
@@ -64,3 +67,4 @@
             return reg.test(val);
         };
     });
+});
