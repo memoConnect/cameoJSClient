@@ -1,87 +1,92 @@
+/*
 define([
     'angular',
     'util-base64',
     'crypto-sjcl',
     'cmLogger'
 ], function () {
-    'use strict';
+*/    
 
-    angular.module('cmCrypt', ['cmLogger'])
-    .service('cmCrypt',[
-        'cmLogger',
-        function (cmLogger) {
+'use strict';
 
-            return {
-                /**
-                 * this method calculates a secure hash
-                 * @param secretString String that should be hashed
-                 */
-                hash: function (secretString) {
-                    if (null == secretString)
-                        return "";
+var cmCrypt = angular.module('cmCrypt', ['cmLogger'])
+.service('cmCrypt',[
+    'cmLogger',
+    function (cmLogger) {
 
-                    return sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(secretString))
-                },
+        return {
+            /**
+             * this method calculates a secure hash
+             * @param secretString String that should be hashed
+             */
+            hash: function (secretString) {
+                if (null == secretString)
+                    return "";
 
-                /**
-                 * this method encrypts strings
-                 * @param secretKey a secret key with max len of 10 chars
-                 * @param secretString a string that should be enrypted
-                 * @returns base64 encoded encrypted string
-                 */
-                encryptWithShortKey: function (secretKey, secretString) {
-                    var parameters = { cipher: "aes", ks: 256, iter: 4096 };
+                return sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(secretString))
+            },
 
-                    if (null == secretString)
-                        return "";
-                    if (secretKey.length > 10)
-                        return "";
+            /**
+             * this method encrypts strings
+             * @param secretKey a secret key with max len of 10 chars
+             * @param secretString a string that should be enrypted
+             * @returns base64 encoded encrypted string
+             */
+            encryptWithShortKey: function (secretKey, secretString) {
+                var parameters = { cipher: "aes", ks: 256, iter: 4096 };
 
-                    var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
+                if (null == secretString)
+                    return "";
+                if (secretKey.length > 10)
+                    return "";
 
-                    return Base64.encode(encryptedSecretString);
-                },
-                /**
-                 * this method encrypts strings
-                 * @param secretKey a secret key with min len of 60 chars
-                 * @param secretString a string that should be encrypted
-                 * @returns base64 encoded encrypted string
-                 */
-                encrypt: function (secretKey, secretString) {
-                    var parameters = {cipher: "aes", ks: 256, iter: 500 };
+                var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                    if (null == secretString)
-                        return "";
+                return Base64.encode(encryptedSecretString);
+            },
+            /**
+             * this method encrypts strings
+             * @param secretKey a secret key with min len of 60 chars
+             * @param secretString a string that should be encrypted
+             * @returns base64 encoded encrypted string
+             */
+            encrypt: function (secretKey, secretString) {
+                var parameters = {cipher: "aes", ks: 256, iter: 500 };
 
-                    if (secretKey.length < 60)
-                        return "";
+                if (null == secretString)
+                    return "";
 
-                    var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
+                if (secretKey.length < 60)
+                    return "";
 
-                    return Base64.encode(encryptedSecretString);
-                },
-                /**
-                 * this method decrypts uuencoded strings
-                 * @param secretKey a secret key
-                 * @param secretString a base64 encoded string that should be decrypted
-                 * @returns decrypted string
-                 */
-                decrypt: function (secretKey, secretString) {
-                    if (null == secretString)
-                        return false;
+                var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                    var decodedSecretString = Base64.decode(secretString),
-                        decryptedString;
+                return Base64.encode(encryptedSecretString);
+            },
+            /**
+             * this method decrypts uuencoded strings
+             * @param secretKey a secret key
+             * @param secretString a base64 encoded string that should be decrypted
+             * @returns decrypted string
+             */
+            decrypt: function (secretKey, secretString) {
+                if (null == secretString)
+                    return false;
 
-                    try {
-                        decryptedString = sjcl.decrypt(secretKey, decodedSecretString)
-                    } catch (e) {
-                        cmLogger.warn('Unable to decrypt.', e)
-                    }
+                var decodedSecretString = Base64.decode(secretString),
+                    decryptedString;
 
-                    return decryptedString || false
+                try {
+                    decryptedString = sjcl.decrypt(secretKey, decodedSecretString)
+                } catch (e) {
+                    cmLogger.warn('Unable to decrypt.', e)
                 }
+
+                return decryptedString || false
             }
-        }]
-    );
+        }
+    }]
+);
+/*
 });
+*/
