@@ -49,7 +49,6 @@ var config = {
         'crypto-sjcl': 'vendor/sjcl/sjcl.min',
 
         'jquery': 'vendor/jquery/jquery-2.1.0'
-//        'bootstrap': 'vendor/bootstrap/bootstrap.min',
     },
 
     packages: [
