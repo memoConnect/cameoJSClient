@@ -28,6 +28,7 @@ var config = {
         'cmLanguage': 'shared/i18n/language',
         'cmLogger': 'shared/cmLogger',
         'cmNotify': 'shared/cmNotify',
+        'cmLocalStorage': 'shared/cmLocalStorage',
 
         // cameo modules/services
         'cmAuth': 'shared/cmAuth',
