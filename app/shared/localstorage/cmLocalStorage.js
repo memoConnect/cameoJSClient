@@ -62,10 +62,11 @@ define([
                 }
             }
         }).
-        service('LocalStorageService',['LocalStorageAdapter', function(LocalStorageAdapter){
-            var useable = false,
+        factory('LocalStorageService',['LocalStorageAdapter', function(LocalStorageAdapter){
+            var instanceId = "",
+                useable = false,
                 useableCheck = false,
-                ultimateKey = "MULTIKEY",
+                ultimateKey = "MULTIKEY"+instanceId,
                 ultimateValue = {};
 
             function getUltimateValue(){
@@ -89,6 +90,12 @@ define([
             }
 
             return {
+                setInstanceId: function(id){
+                    instanceId = id;
+
+                    this.check();
+                },
+
                 check: function(){
                     if(useableCheck !== true){
                         useable = LocalStorageAdapter.check();
@@ -160,7 +167,7 @@ define([
                 clearAll : function () {
                     if(this.check() !== false){
                         ultimateValue = {};
-                        LocalStorage.remove(ultimateKey);
+                        LocalStorageAdapter.remove(ultimateKey);
                         return true;
                     }
 
@@ -169,6 +176,31 @@ define([
             }
         }]).
         factory('cmLocalStorage',['LocalStorageService', function(LocalStorageService){
+            var instanceMock = [{id:'',instance:{}}];
+            var instances = [];
+
+            return {
+                get: function(id){
+                    if(typeof id !== 'undefined'){
+                        for(var i = 0; i < instances.length; i++){
+                            if(typeof instances[i] === 'object' &&
+                                instances[i].id == id){
+
+                                return instance[i].instance;
+                            }
+                        }
+
+                        var localStorage = new LocalStorageService();
+                        cmLocalStorage.setInstanceId(id);
+
+                        instances.push[{id:id,instance:localStorage}];
+
+                        return localStorage;
+                    }
+
+                    return null;
+                }
+            }
 
         }]);
 });
