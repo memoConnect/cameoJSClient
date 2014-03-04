@@ -25,6 +25,18 @@ describe('cmUser', function(){
         it('should defined doLogout',function(){
             expect($model.doLogout).toBeDefined();
         })
+
+        it('should defined storageSave',function(){
+            expect($model.storageSave).toBeDefined();
+        })
+
+        it('should defined storageGet',function(){
+            expect($model.storageGet).toBeDefined();
+        })
+
+        it('should defined storageRemove',function(){
+            expect($model.storageRemove).toBeDefined();
+        })
     })
 
     /**

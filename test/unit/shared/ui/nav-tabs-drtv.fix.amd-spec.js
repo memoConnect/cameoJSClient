@@ -2,14 +2,11 @@
 
 // <div cm-nav-tabs></div>
 describe('Directive cmNavTabs', function () {
-
     var el,
         scope,
         $compile, 
-        $routeParams
+        $routeParams;
 
-
-    beforeEach(module('cmUi'))
     beforeEach(inject(function(_$rootScope_, _$compile_, $templateCache, _$routeParams_){
         $templateCache.put('shared/ui/nav-tabs.html', window.__html__['app/shared/ui/nav-tabs.html']);
 
@@ -23,35 +20,6 @@ describe('Directive cmNavTabs', function () {
         console.log(el.html())
     }))
 
-    /*
-    function createDrtv(selfDigest){
-        var element, $rootScope, $routeParams;
-
-        inject(function (_$rootScope_, $compile, $templateCache, _$routeParams_) {
-            $templateCache.put('comps/navs/nav-tabs.html', tpl);
-
-            $rootScope = _$rootScope_.$new();
-            $routeParams = _$routeParams_;
-            $routeParams.tab = '';
-
-            element = angular.element('<div cm-nav-tabs></div>');
-            element = $compile(element)($rootScope);
-            if(selfDigest == undefined)
-                $rootScope.$digest();
-        })
-
-        return {
-            $scope: element.scope(),
-            $rootScope: $rootScope,
-            $routeParams: $routeParams,
-            element: element,
-            digest: function(){
-                $rootScope.$digest();
-            }
-        }
-    }
-    */
-
     var tabMock = [
         {i18n:'1'},
         {i18n:'MOEP','default':true},
@@ -60,7 +28,7 @@ describe('Directive cmNavTabs', function () {
     ];
 
 
-    xdescribe('default', function(){
+   xdescribe('default', function(){
         it('should load template', function(){
             expect(el.html()).not.toBe('');
         })
