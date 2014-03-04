@@ -41,7 +41,7 @@ var config = {
 
         // Models
         'mContacts': 'comps/contacts/contacts-modl',
-        'mUser': 'models/user-modl',
+        'mUser': 'comps/user/userModel-srvc',
 
         // shared
         'util-base64': 'vendor/util/base64',
