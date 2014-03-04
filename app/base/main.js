@@ -61,9 +61,6 @@ var config = {
         'angular-route': ['angular'],
         'angular-cookies': ['angular'],
         'angular-translate': ['angular'],
-        'angular-translate-loader-static-files': ['angular'],
-        'angular-translate-storage-cookie': ['angular'],
-        'angular-translate-storage-local': ['angular'],
         'angular-growl': ['angular'],
         'cmNotify': ['angular-growl'],
         'cmAuth': ['angular', 'util-base64', 'cmCrypt', 'cmApi'],
@@ -72,17 +69,18 @@ var config = {
         'cmApi': ['angular', 'cmLogger'],
         'cmProfile' : ['jquery', 'angular', 'cmApi', 'cmAuth'],
         'cmLogger' : ['angular'],
+        'angular-translate-loader-static-files': ['angular','angular-translate'],
+        'angular-translate-storage-cookie': ['angular','angular-translate'],
+        'angular-translate-storage-local': ['angular','angular-translate'],
         'cmLanguage' : [
                         'angular', 
-                        'angular-translate', 
-                        'angular-translate-loader-static-files', 
+                        'angular-translate-loader-static-files',
                         'angular-translate-storage-cookie', 
                         'angular-translate-storage-local', 
                         'angular-growl',
                         'cmNotify',
                         'cmLogger'
                     ]
-
 //        'bootstrap': ['jquery']
     },
     // kick start application
