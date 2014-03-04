@@ -46,7 +46,6 @@ var config = {
         'crypto-sjcl': 'vendor/sjcl/sjcl.min',
 
         'jquery': 'vendor/jquery/jquery-2.1.0'
-//        'bootstrap': 'vendor/bootstrap/bootstrap.min',
     },
 
     packages: [
@@ -71,7 +70,7 @@ var config = {
         'cmLogger' : ['angular'],
         'angular-translate-loader-static-files': ['angular','angular-translate'],
         'angular-translate-storage-cookie': ['angular','angular-translate'],
-        'angular-translate-storage-local': ['angular','angular-translate'],
+        'angular-translate-storage-local': ['angular','angular-translate', 'angular-translate-storage-cookie'],
         'cmLanguage' : [
                         'angular', 
                         'angular-translate-loader-static-files',
