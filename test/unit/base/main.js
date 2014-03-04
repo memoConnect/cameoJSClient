@@ -46,6 +46,7 @@ var config = {
         'cmLanguage': 'shared/i18n/language',
         'cmLogger': 'shared/cmLogger',
         'cmNotify': 'shared/cmNotify',
+        'cmLocalStorage': 'shared/localstorage/cmLocalStorage',
         'cmUtil': 'shared/cmUtil',
 
         'cmProfile': 'comps/cmProfile',

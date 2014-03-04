@@ -1,7 +1,7 @@
 define([
     'app',
     'cmAuth',
-    'ngload!cmLocalStorage',
+    'cmLocalStorage',
     'cmLogger'
 ], function () {
     'use strict';
@@ -12,6 +12,7 @@ define([
         'cmLogger'
     ]).service('ModelUser',[
         'cmAuth',
+        'cmLocalStorage',
         '$q',
         '$rootScope',
         '$location',

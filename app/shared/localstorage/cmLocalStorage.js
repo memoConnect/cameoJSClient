@@ -4,7 +4,7 @@ define([
 ],function () {
     'use strict';
 
-    var cmLocalStorage = angular.module('cmLocalStorage', ['cmLogger']).
+    angular.module('cmLocalStorage', ['cmLogger']).
         service('LocalStorageAdapter',function(){
             return {
                 check: function(){
