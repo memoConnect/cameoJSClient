@@ -1,56 +1,54 @@
 define([
     'app',
-    'ngload!mContacts',
-    'comps/navs/nav-tabs-drtv',
-    'comps/contacts/search-cameo-identity-drtv',
-    'comps/contacts/add-extern-contact-drtv',
-    'comps/contacts/contacts-list-drtv',
-    'comps/contacts/contact-request-list-drtv'
+    'ngload!pckContacts',
+    'ngload!pckUi',
+    'ngload!pckValidate'
 ], function(app){
     'use strict';
 
     app.register.controller('ContactsCtrl',[
         '$scope',
-        'ModelContacts',
-    function($scope, ModelContacts){
-        /**
-         * get quantitiy for tab badges
-         * @private
-         */
-        function getBadges(){
-            ModelContacts.getQuantity().then(
-                function(qty){
-                    $scope.badges.contacts = qty;
-                },
-                function(){
-                    $scope.badges.contacts = 0;
-                }
-            );
+        'cmContactsModel',
+        function($scope, cmContactsModel){
+            /**
+             * get quantitiy for tab badges
+             * @private
+             */
+            function getBadges(){
+                cmContactsModel.getQuantity().then(
+                    function(qty){
+                        $scope.badges.contacts = qty;
+                    },
+                    function(){
+                        $scope.badges.contacts = 0;
+                    }
+                );
 
-            ModelContacts.getFriendRequests().then(
-                function(data){
-                    $scope.badges.friendsRequest = data.length;
-                },
-                function(){
-                    $scope.badges.friendsRequest = 0;
-                }
-            );
+                cmContactsModel.getFriendRequests().then(
+                    function(data){
+                        $scope.badges.friendsRequest = data.length;
+                    },
+                    function(){
+                        $scope.badges.friendsRequest = 0;
+                    }
+                );
+            }
+
+            // define for tabs directive
+            $scope.badges = {
+                contacts: 0,
+                friendRequests: 0
+            };
+
+            // get badges
+            getBadges();
+
+            $scope.tabs = [
+                {i18n:'BACK',icon:'fa-chevron-left',href:'#/start'},
+                {i18n:'ADD',icon:'fa-plus','default':true},
+                {i18n:'ALL',icon:'fa-group',badge:'contacts'},
+                {i18n:'REQUESTS',icon:'fa-link',badge:'friendRequests'}
+            ];
         }
-
-        // define for tabs directive
-        $scope.badges = {
-            contacts: 0,
-            friendRequests: 0
-        };
-
-        // get badges
-        getBadges();
-
-        $scope.tabs = [
-            {i18n:'BACK',icon:'fa-chevron-left',href:'#/start'},
-            {i18n:'ADD',icon:'fa-plus','default':true},
-            {i18n:'ALL',icon:'fa-group',badge:'contacts'},
-            {i18n:'REQUESTS',icon:'fa-link',badge:'friendRequests'}
-        ];
-    }]);
+    ]);
 });

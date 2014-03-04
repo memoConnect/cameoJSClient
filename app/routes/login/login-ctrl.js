@@ -1,7 +1,6 @@
 define([
-    'app',
-    'comps/login/login-drtv'
-], function(app){
-    'use strict';
-
+    'angularAMD',
+    'ngload!pckUser'
+], function(angularAMD){
+    angularAMD.processQueue();    
 });

@@ -4,12 +4,15 @@ define([
     'angular-cookies',
     // cameo files
     'cmApi',
+    'cmAuth',
     'pckUi',
     'cmLanguage',
     'cmLogger',
     'cmNotify',
+    'cmLocalStorage',
     // vendor
-    'jquery'
+    'jquery',
+    'base/config.js'
 ], function (angularAMD) {
     'use strict';
 
@@ -21,65 +24,19 @@ define([
         'cmUi',
         'cmLanguage',
         'cmNotify',
-        'cmLogger'
+        'cmLogger',
+        'cmLocalStorage',
+        'cmAuth'
     ]);
 
-    // cameo settings
-    app.cameo = {
-        restApi: "https://dev.cameo.io/api/v1",
-//        restApi: "http://localhost:9000/api/v1",
-        token: null,
-        supported_languages: ['de_DE', 'en_US'],
-        path_to_languages: 'i18n',
-        cache_lang_files: false,
-        routes: {
-            'login': {
-                hasCtrl: true,
-                isOtherwise: true
-            },
-            'start': {
-                hasCtrl: true
-            },
-            'talks': {
-                hasCtrl: true
-            },
-            'mediawall': {
-                hasCtrl: true
-            },
-            'conversation': {
-                routes:['/conversation/:conversationId?'],
-                hasCtrl: true
-            },
-            'registration': {
-                hasCtrl: true
-            },
-            'purl': {
-                routes:['/purl/:idPurl?'],
-                hasCtrl: true
-            },
-            'profile': {},
-            'filter': {
-                hasCtrl: true
-            },
-            'contacts': {
-                routes:['/contacts/:tab?'],
-                hasCtrl: true
-            },
-            'verification': {
-                routes:['/verification/:secret']
-            },
-            'terms': {},
-            'disclaimer': {},
-            '404': {}
-        }
-    };
+    cameo_config = cameo_config
 
     /**
      * Check for local Env restApi URL
      */
     if(typeof env !== 'undefined'){
         if(env.restApi != undefined && env.restApi != ""){
-            app.cameo.restApi = env.restApi;
+            cameo_config.restApi = env.restApi;
         }
     }
 
@@ -94,12 +51,12 @@ define([
                 .debugEnabled(true)
 
             cmApiProvider
-                .restApiUrl( app.cameo.restApi );
+                .restApiUrl( cameo_config.restApi );
 
             cmLanguageProvider
-                .cacheLangFiles(app.cameo.cache_lang_files)
-                .supportedLanguages( app.cameo.supported_languages)
-                .pathToLanguages( app.cameo.path_to_languages)
+                .cacheLangFiles(cameo_config.cache_lang_files)
+                .supportedLanguages( cameo_config.supported_languages)
+                .pathToLanguages( cameo_config.path_to_languages)
                 .preferredLanguage('en_US')   //for now
                 .useLocalStorage()
         }
@@ -168,7 +125,7 @@ define([
             }
 
             // start creation of routes
-            createRoutes(app.cameo.routes);
+            createRoutes(cameo_config.routes);
         }
     ]);
     // app run handling
