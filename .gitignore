@@ -1,6 +1,6 @@
 /.idea/
 /node_modules/
-/phonegap/
+/phonegap-build/
 /target/
 /project/
 *.iml
