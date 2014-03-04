@@ -1,18 +1,19 @@
 define([
-    'app',
     'cmApi',
-    'util',
+    'cmUtil',
     'cmLogger'
-], function (app) {
+], function () {
    'use strict';
 
-//    var cmContacts = angular.module('cmContacts',['cmApi','cmLogger','Util']);
-
-    app.register.service('cmContacts',[
-    'cmApi',
-    'cmLogger',
-    'Util',
-    function(cmApi, cmLogger, Util){
+    angular.module('cmContacts',[
+        'cmApi',
+        'cmLogger',
+        'cmUtil'
+    ]).service('cmContacts',[
+        'cmApi',
+        'cmLogger',
+        'cmUtil',
+    function(cmApi, cmLogger, cmUtil){
         return {
             /**
              * Search for cameoId Users
@@ -36,7 +37,7 @@ define([
              */
             getAll: function(limit, offset){
                 return cmApi.get({
-                    url:'/contacts' + Util.handleLimitOffset(limit,offset)
+                    url:'/contacts' + cmUtil.handleLimitOffset(limit,offset)
                 });
             },
             /**
@@ -67,7 +68,7 @@ define([
              */
             getAllFromGroup: function(group,limit,offset){
                 return cmApi.get({
-                    url:'/contact-group/' + group + Util.handleLimitOffset(limit,offset)
+                    url:'/contact-group/' + group + cmUtil.handleLimitOffset(limit,offset)
                 })
             },
             getFriendRequests: function(){
@@ -95,6 +96,4 @@ define([
             }
         }
     }]);
-
-    return app;
 });

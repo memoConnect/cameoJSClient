@@ -1,16 +1,17 @@
 define([
-    'app',
-    'angularAMD',
-    'ngload!cmCrypt'
-], function (app, angularAMD) {
+    'angular-mocks',
+    'cmCrypt'
+], function () {
     'use strict';
 
     describe('cmCrypt', function () {
         var crypt;
 
-        angularAMD.inject(function(_cmCrypt_) {
+        beforeEach(module('cmCrypt'))
+
+        beforeEach(inject(function(_cmCrypt_) {
             crypt = _cmCrypt_;
-        });
+        }));
 
         describe('calling hash with a string', function () {
             it('returns a hash', function () {

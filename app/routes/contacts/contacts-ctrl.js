@@ -1,6 +1,6 @@
 define([
     'app',
-    'mContacts',
+    'ngload!mContacts',
     'comps/navs/nav-tabs-drtv',
     'comps/contacts/search-cameo-identity-drtv',
     'comps/contacts/add-extern-contact-drtv',
@@ -10,11 +10,9 @@ define([
     'use strict';
 
     app.register.controller('ContactsCtrl',[
-    '$scope',
-    '$rootScope',
-    '$routeParams',
-    'ModelContacts',
-    function($scope, $rootScope, $routeParams, ModelContacts){
+        '$scope',
+        'ModelContacts',
+    function($scope, ModelContacts){
         /**
          * get quantitiy for tab badges
          * @private
@@ -54,6 +52,5 @@ define([
             {i18n:'ALL',icon:'fa-group',badge:'contacts'},
             {i18n:'REQUESTS',icon:'fa-link',badge:'friendRequests'}
         ];
-
     }]);
 });

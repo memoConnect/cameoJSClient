@@ -1,12 +1,10 @@
 define([
     'app',
-
-    'cmNotify',
-    'cmLogger',
-    'mContacts',
-
     'comps/type-chooser/type-chooser-drtv',
-    'comps/validate/email-drtv'
+    'comps/validate/email-drtv',
+    'ngload!cmNotify',
+    'ngload!cmLogger',
+    'ngload!mContacts'
 ], function(app){
 
     'use strict';

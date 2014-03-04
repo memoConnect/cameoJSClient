@@ -1,16 +1,17 @@
 define([
-    'app',
-    'angularAMD',
-    'ngload!mContacts'
-], function (app, angularAMD) {
+    'angular-mocks',
+    'mContacts'
+], function () {
     'use strict';
 
     describe('ModelContacts', function(){
         var model;
 
-        angularAMD.inject(function(_ModelContacts_) {
+        beforeEach(module('mContacts'))
+
+        beforeEach(inject(function(_ModelContacts_) {
             model = _ModelContacts_;
-        })
+        }))
 
         it('should exists', function(){
             expect(model).toBeDefined();

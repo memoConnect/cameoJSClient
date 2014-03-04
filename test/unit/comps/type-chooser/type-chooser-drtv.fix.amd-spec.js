@@ -2,7 +2,7 @@ define([
     'app',
     'angularAMD',
     'comps/type-chooser/type-chooser.html',
-    'ngload!comps/type-chooser/type-chooser-drtv'
+    'comps/type-chooser/type-chooser-drtv'
 ], function (app, angularAMD, tpl) {
     'use strict';
 

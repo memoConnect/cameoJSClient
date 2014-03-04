@@ -11,9 +11,8 @@ module.exports = function(config) {
             // all frontend files
             {pattern: 'app/**/*.js', included: false},
             // tests
-//            {pattern: 'test/unit/**/crypt.spec.js', included: false},
-            {pattern: 'test/unit/**/*.spec.js', included: false},
-            {pattern: 'test/unit/**/*.amd-spec.js', included: false},
+            {pattern: 'test/unit/**/*.fix.spec.js', included: false},
+            {pattern: 'test/unit/**/*.fix.amd-spec.js', included: false},
 
 //            {pattern: 'test/unit/**/app.amd-spec.js', included: false},
 //            {pattern: 'test/unit/**/auth.amd-spec.js', included: false},
@@ -51,7 +50,7 @@ module.exports = function(config) {
 
         // list of files to exclude
         exclude: [
-            'app/**/main.js',
+            'app/**/main.js'
 //            'test/**/contacts-ctrl.AMDspec.js'
         ],
 

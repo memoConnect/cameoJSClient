@@ -4,7 +4,7 @@ define([
     'use strict';
 
     app.register.directive('cmPointSpinner',
-    function(cmLogger){
+    function(){
         return {
             scope: true,
             template: '<span ng-show="isIdle" style="width:20px;display:inline-block;text-align:left">{{points}}</span>',

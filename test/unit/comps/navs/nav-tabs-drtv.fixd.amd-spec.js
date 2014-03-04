@@ -1,9 +1,8 @@
 define([
-    'app',
     'angularAMD',
     'comps/navs/nav-tabs.html',
-    'ngload!comps/navs/nav-tabs-drtv'
-], function (app, angularAMD, tpl) {
+    'comps/navs/nav-tabs-drtv'
+], function (angularAMD, tpl) {
     'use strict';
 
     var inject = angularAMD.inject;
@@ -45,6 +44,12 @@ define([
             {i18n:'WHOOP'}
         ];
 
+        afterEach(function(){
+            inject(function(_$routeParams_){
+                _$routeParams_.tab = undefined;
+            })
+        });
+
         describe('default', function(){
             var drtv = createDrtv();
 
@@ -61,11 +66,25 @@ define([
             })
         })
 
-        describe('set tabs',function(){
+        describe('route has tab variable', function(){
             var drtv = createDrtv(false);
             drtv.$rootScope.tabs = tabMock;
-            drtv.$routeParams.tab = '';
+            drtv.$routeParams.tab = 'whoop';
+            drtv.$rootScope.$apply();
+            drtv.digest();
+
+            it('activeTab should be whoop.toUpperCase == WHOOP', function(){
+                expect(drtv.$scope.activeTab).toBe('WHOOP');
+            })
+        })
+
+        describe('set tabs without tab variable',function(){
+            var drtv = createDrtv(false);
+            drtv.$scope.tabs = tabMock;
+            drtv.$rootScope.tabs = tabMock;
+            drtv.$routeParams = {};
             drtv.$scope.$apply();
+            drtv.$rootScope.$apply();
             drtv.digest();
 
             describe('directive scope', function(){
@@ -88,21 +107,5 @@ define([
                 })
             })
         })
-
-        /**
-         * TODO Rout
-         */
-        xdescribe('route has tab variable', function(){
-            var drtv = createDrtv(false);
-            drtv.$rootScope.tabs = tabMock;
-            drtv.$routeParams.tab = 'whoop';
-            drtv.$scope.$apply();
-            drtv.digest();
-
-            it('activeTab should be whoop.toUpperCase == WHOOP', function(){
-                expect(drtv.$scope.activeTab).toBe('WHOOP');
-            })
-        })
-
     })
 })
