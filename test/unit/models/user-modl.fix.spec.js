@@ -35,9 +35,9 @@ define([
          * Mock cmAuth.getToken for testing
          * TODO cmAuth Mock?!?
          */
-        describe('Authentication',function(){
+        xdescribe('Authentication',function(){
             // TODO: couldn't work while cmAuth handling with token = mocken?
-            xit('should be true, when user is active and has id',function(){
+            it('should be true, when user is active and has id',function(){
                 $model.data.isActive = true;
                 $model.data.id = 'moep';
                 expect($model.isAuth()).toBeTruthy();
