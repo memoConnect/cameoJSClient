@@ -1,10 +1,8 @@
-define([
-    'app',
-    'cmCrypt'
-], function(app){
+define(function(require){
     'use strict';
 
-    app.register.directive('cmPassword', [
+    require('cmCrypt')
+    require('app').register.directive('cmPassword', [
         'cmCrypt',
         function (cmCrypt) {
             return  {
@@ -91,6 +89,4 @@ define([
             }
         }
     ]);
-
-    return app;
 });

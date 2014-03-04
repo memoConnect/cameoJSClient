@@ -1,9 +1,7 @@
-define([
-    'app'
-], function(app){
+define(function(require){
     'use strict';
 
-    app.register.directive('cmValidateEmail',function(){
+    require('app').register.directive('cmValidateEmail',function(){
         //http://stackoverflow.com/questions/16863389/angular-js-email-validation-with-unicode-characters
         return {
             require: 'ngModel',
