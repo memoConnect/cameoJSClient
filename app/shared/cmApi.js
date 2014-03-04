@@ -1,9 +1,3 @@
-/*
-define([
-    'angular',
-    'cmLogger'
-],function () {
-*/    
 'use strict';
 
 //This Module handels api calls
@@ -236,7 +230,3 @@ function($injector){
         }]
     }
 ]);
-
-/*
-});
-*/

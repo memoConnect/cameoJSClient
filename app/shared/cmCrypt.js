@@ -1,12 +1,3 @@
-/*
-define([
-    'angular',
-    'util-base64',
-    'crypto-sjcl',
-    'cmLogger'
-], function () {
-*/    
-
 'use strict';
 
 var cmCrypt = angular.module('cmCrypt', ['cmLogger'])
@@ -87,6 +78,3 @@ var cmCrypt = angular.module('cmCrypt', ['cmLogger'])
         }
     }]
 );
-/*
-});
-*/

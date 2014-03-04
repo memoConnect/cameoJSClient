@@ -65,10 +65,10 @@ var config = {
         'angular-translate-storage-cookie': ['angular'],
         'angular-translate-storage-local': ['angular'],
         'angular-growl': ['angular'],
-        'cmLocalStorage' : ['angular', 'cmLogger'],
         'cmNotify': ['angular-growl'],
         'cmAuth': ['angular', 'util-base64', 'cmCrypt', 'cmApi'],
         'cmCrypt': ['angular', 'util-base64', 'crypto-sjcl', 'cmLogger'],
+        'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
         'cmApi': ['angular', 'cmLogger'],
         'cmProfile' : ['jquery', 'angular', 'cmApi', 'cmAuth'],
         'cmLogger' : ['angular'],
@@ -90,8 +90,6 @@ var config = {
     deps: ['env','app']
 }
 
-
-
 function addPackage(package_name, package) {
     config.paths[package_name] = package.root
     config.shim[package_name]  = config.shim[package_name] || []
@@ -102,9 +100,6 @@ function addPackage(package_name, package) {
         config.shim[package_name].push(package_name+'-'+index)        
     })
 }
-
-
-
 
 addPackage('pckConversations',{
     root: 'comps/conversations/conversations-module',
@@ -130,8 +125,6 @@ addPackage('pckConversations',{
     ]
 })
 
-
-
 addPackage('pckContacts',{
     root: 'comps/contacts/contacts-module',
     deps: [
@@ -152,7 +145,6 @@ addPackage('pckContacts',{
     ]
 })
 
-
 addPackage('pckUser',{
     root: 'comps/user/user-module',
     deps: [
@@ -165,7 +157,6 @@ addPackage('pckUser',{
         'comps/user/login-drtv',
     ]
 })
-
 
 addPackage('pckValidate',{
     root: 'comps/validate/validate-module',
@@ -192,11 +183,4 @@ addPackage('pckUi',{
     ]
 })
 
-
-
-
-
-console.dir(config)
-
 require.config(config)
-
