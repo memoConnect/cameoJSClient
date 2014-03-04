@@ -4,15 +4,63 @@ module.exports = function(config) {
         basePath: '../',
 
         // frameworks to use
-        frameworks: ['jasmine', 'requirejs'],
+        frameworks: ['jasmine'], //, 'requirejs'],
 
         // list of files / patterns to load in the browser
         files: [
+
+            'test/lib/jquery/*.js',
+
+            'app/vendor/angular/angular.js',
+
+            'app/vendor/angular-translate/angular-translate.js',
+
+            'app/vendor/!(require*)/*.js',
+
+            'app/shared/cmLogger.js',
+            'app/shared/cmNotify.js',
+            'app/shared/cmApi.js',
+            'app/shared/cmAuth.js',
+            'app/shared/cmUtil.js',
+            'app/shared/cmCrypt.js',
+            'app/shared/cmLocalStorage.js',
+
+            'app/shared/i18n/language.js',
+
+
+            'app/shared/ui/!(*module).js',
+            'app/shared/ui/*module.js',
+
+            'app/comps/user/!(*module).js',
+            'app/comps/user/*module.js',
+
+            'app/comps/contacts/!(*module).js',
+            'app/comps/contacts/*module.js',
+
+
+            'app/comps/conversations/!(*module).js',
+            'app/comps/conversations/*module.js',
+
+            'app/comps/validate/!(*module).js',
+            'app/comps/validate/*module.js',
+
+            'test/lib/angular/angular-mocks.js',
+
+
+            'test/unit/shared/*spec.js',
+            'test/unit/shared/ui/*spec.js',
+            'test/unit/shared/i18n/*spec.js',
+
+            'test/unit/comps/user/*spec.js',
+            'test/unit/comps/contacts/*spec.js',
+            'test/unit/comps/conversations/*spec.js',
+            'test/unit/comps/validate/*spec.js',
+
             // all frontend files
-            {pattern: 'app/**/*.js', included: false},
+            //{pattern: 'app/**/*.js', included: false},
             // tests
-            {pattern: 'test/unit/**/*.fix.spec.js', included: false},
-            {pattern: 'test/unit/**/*.fix.amd-spec.js', included: false},
+            //{pattern: 'test/unit/**/*.fix.spec.js', included: false},
+            //{pattern: 'test/unit/**/*.fix.amd-spec.js', included: false},
 
 //            {pattern: 'test/unit/**/app.amd-spec.js', included: false},
 //            {pattern: 'test/unit/**/auth.amd-spec.js', included: false},
@@ -30,18 +78,18 @@ module.exports = function(config) {
 //            {pattern: 'test/unit/**/util.amd-spec.js', included: false},
 
             // test lib
-            {pattern: 'test/lib/**/*.js', included: false},
+            //{pattern: 'test/lib/**/*.js', included: false},
             // requirejs main file
-            {pattern: 'test/unit/base/main.js', included: true},
+            //{pattern: 'test/unit/base/main.js', included: true},
             // load and json templates
-            {pattern: 'app/**/*.html', included: false}
+            'app/**/*.html',
 //            {pattern: 'app/**/*.json', included: false}
         ],
 
         // generate js files from html templates to expose them during testing.
         preprocessors: {
-            'app/**/*.html': ['html2js-requirejs'],
-            'app/**/*.json': ['html2js-requirejs']
+            'app/**/*.html': ['html2js'],
+            //'app/**/*.json': ['html2js']
         },
 
         html2JsRequireJsPreprocessor: {
