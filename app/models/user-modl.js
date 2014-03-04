@@ -4,8 +4,14 @@ define([
 ], function () {
     'use strict';
 
-    angular.module('mUser',['cmAuth', 'cmLogger'])
-    .service('ModelUser',['cmAuth', '$q', '$rootScope', '$location',
+    angular.module('mUser',[
+        'cmAuth',
+        'cmLogger'
+    ]).service('ModelUser',[
+        'cmAuth',
+        '$q',
+        '$rootScope',
+        '$location',
     function(cmAuth, $q, $rootScope, $location){
         var self = this;
 

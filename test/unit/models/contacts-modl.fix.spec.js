@@ -17,7 +17,7 @@ define([
             expect(model).toBeDefined();
         })
 
-        xdescribe('public API', function(){
+        describe('public API', function(){
            it('should defined searchCameoIdentity',function(){
                expect(model.searchCameoIdentity).toBeDefined();
            })

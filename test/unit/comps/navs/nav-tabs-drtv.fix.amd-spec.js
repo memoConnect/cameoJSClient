@@ -45,6 +45,12 @@ define([
             {i18n:'WHOOP'}
         ];
 
+        afterEach(function(){
+            inject(function(_$routeParams_){
+                _$routeParams_.tab = undefined;
+            })
+        });
+
         describe('default', function(){
             var drtv = createDrtv();
 
@@ -61,11 +67,25 @@ define([
             })
         })
 
-        describe('set tabs',function(){
+        describe('route has tab variable', function(){
             var drtv = createDrtv(false);
             drtv.$rootScope.tabs = tabMock;
-            drtv.$routeParams.tab = '';
+            drtv.$routeParams.tab = 'whoop';
+            drtv.$rootScope.$apply();
+            drtv.digest();
+
+            it('activeTab should be whoop.toUpperCase == WHOOP', function(){
+                expect(drtv.$scope.activeTab).toBe('WHOOP');
+            })
+        })
+
+        describe('set tabs without tab variable',function(){
+            var drtv = createDrtv(false);
+            drtv.$scope.tabs = tabMock;
+            drtv.$rootScope.tabs = tabMock;
+            drtv.$routeParams = {};
             drtv.$scope.$apply();
+            drtv.$rootScope.$apply();
             drtv.digest();
 
             describe('directive scope', function(){
@@ -85,27 +105,8 @@ define([
 
                 it('activeTab should be MOEP', function(){
                     expect(drtv.$rootScope.activeTab).toBe('MOEP');
-
-                    drtv.$rootScope.activeTab = "";
                 })
             })
         })
-
-        /**
-         * TODO Rout
-         */
-        xdescribe('route has tab variable', function(){
-            var drtv = createDrtv(false);
-            drtv.$rootScope.tabs = tabMock;
-            drtv.$routeParams.tab = 'whoop';
-            drtv.$scope.$apply();
-            drtv.digest();
-
-            it('activeTab should be whoop.toUpperCase == WHOOP', function(){
-                expect(drtv.$scope.activeTab).toBe('WHOOP');
-            })
-        })
-
-
     })
 })
