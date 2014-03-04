@@ -1,9 +1,3 @@
-/*
-define([
-    'angular-mocks',
-    'mUser'
-], function () {
-*/    
 'use strict';
 
 describe('cmUser', function(){
@@ -56,6 +50,3 @@ describe('cmUser', function(){
         })
     })
 })
-/*
-})
-*/

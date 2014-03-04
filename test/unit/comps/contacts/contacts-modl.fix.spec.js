@@ -1,9 +1,3 @@
-/*
-define([
-    'angular-mocks',
-    'mContacts'
-], function () {
-*/  
 'use strict';
 
 describe('cmContactsModel', function(){
@@ -57,6 +51,3 @@ describe('cmContactsModel', function(){
        })
     })
 })
-/*
-})
-*/
