@@ -1,7 +1,7 @@
 define([
     'app',
     'angularAMD',
-    'ngload!comps/validate/email-drtv'
+    'comps/validate/email-drtv'
 ], function (app, angularAMD) {
     'use strict';
 

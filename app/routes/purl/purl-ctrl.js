@@ -3,7 +3,7 @@ define([
     'mUser',
     'cmApi',
     'cmLogger',
-    'util'
+    'cmUtil'
 ], function(app){
     'use strict';
 
@@ -14,11 +14,11 @@ define([
         'ModelUser',
         'cmApi',
         'cmLogger',
-        'Util',
-        function($scope, $routeParams, $location, ModelUser, cmApi, cmLogger, Util){
+        'cmUtil',
+        function($scope, $routeParams, $location, ModelUser, cmApi, cmLogger, cmUtil){
             $scope.data = null;
 
-            if(Util.checkKeyExists($routeParams,'idPurl') && Util.validateString($routeParams.idPurl)){
+            if(cmUtil.checkKeyExists($routeParams,'idPurl') && cmUtil.validateString($routeParams.idPurl)){
                 cmApi.get({url:'/purl/'+$routeParams.idPurl}).then(
                     function(data){
                         $scope.data = data;

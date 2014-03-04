@@ -1,5 +1,6 @@
 define([
-    'angular-mocks'
+    'angular-mocks',
+    'cmLogger'
 ], function (){
     'use strict';
 

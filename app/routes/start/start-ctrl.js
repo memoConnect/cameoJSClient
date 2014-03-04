@@ -1,6 +1,6 @@
 define([
     'app',
-    'mUser'
+    'ngload!mUser'
 ], function (app) {
     'use strict';
 

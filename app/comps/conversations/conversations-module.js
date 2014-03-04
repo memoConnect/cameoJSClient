@@ -1,7 +1,5 @@
 'use strict';
 
-console.log('load module...')
-
 var cmConversations = angular.module('cmConversations', [
     'cmApi', 
     'cmLogger', 

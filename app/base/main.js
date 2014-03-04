@@ -23,27 +23,27 @@ var config = {
         'ngload': 'vendor/requirejs/ngload',
 
         // global provider without AMD
-        'cmApi': 'shared/api/api',
+        'cmApi': 'shared/cmApi',
         'cmUi': 'shared/ui/ui-module',
         'cmLanguage': 'shared/i18n/language',
-        'cmLogger': 'shared/logger/cmLogger',
-        'cmNotify': 'shared/notify/notify',
+        'cmLogger': 'shared/cmLogger',
+        'cmNotify': 'shared/cmNotify',
         'cmLocalStorage': 'shared/localstorage/cmLocalStorage',
 
-        // cameo modules
-        'cmAuth': 'shared/auth/auth',
-        'cmCrypt': 'shared/crypt/crypt',
+        // cameo modules/services
+        'cmAuth': 'shared/cmAuth',
+        'cmCrypt': 'shared/cmCrypt',
+        'cmUtil': 'shared/cmUtil',
 
         'cmProfile': 'comps/cmProfile',
         //'cmConversations': 'comps/conversation/conversations-module',
         'cmContacts': 'comps/contacts/cmContacts',
 
         // Models
+        'mContacts': 'comps/contacts/contacts-modl',
         'mUser': 'models/user-modl',
-        'mContacts': 'models/contacts-modl',
 
         // shared
-        'util': 'shared/util',
         'util-base64': 'vendor/util/base64',
         'util-passchk-fast': 'vendor/util/passchk_fast',
         // crypto
@@ -61,6 +61,7 @@ var config = {
     // Add angular modules that does not support AMD out of the box, put it in a shim
     shim: {
         'angularAMD': ['angular'],
+        'ngload': ['angularAMD'],
         'angular-route': ['angular'],
         'angular-cookies': ['angular'],
         'angular-translate': ['angular'],
@@ -68,7 +69,8 @@ var config = {
         'angular-translate-storage-cookie': ['angular'],
         'angular-translate-storage-local': ['angular'],
         'angular-growl': ['angular'],
-        'cmLanguage': ['angular-translate']
+        'cmLanguage': ['angular-translate'],
+        'cmNotify': ['angular-growl']
 //        'bootstrap': ['jquery']
     },
     // kick start application
@@ -97,7 +99,7 @@ addPackage('pckConversations',{
         'cmApi', 
         'cmLogger', 
         'cmCrypt', 
-        //'cmAuth',
+        'cmAuth',
         'cmContacts',
         '_v/captcha/captchagen/captchagen'
     ],    

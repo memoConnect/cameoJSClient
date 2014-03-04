@@ -1,11 +1,11 @@
 define([
     'app',
-    'cmAuth'
+    'ngload!cmAuth'
 ], function(app){
     'use strict';
 
     app.register.directive('cmValidatePhone',[
-        'cmAuth',
+        //'cmAuth',
         function(cmAuth){
             return {
                 require: 'ngModel',

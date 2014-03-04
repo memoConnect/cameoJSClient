@@ -3,10 +3,18 @@ define([
     'cmAuth',
     'ngload!cmLocalStorage',
     'cmLogger'
-], function (app) {
+], function () {
     'use strict';
 
-    app.register.service('ModelUser',['cmAuth', 'cmLocalStorage','$q', '$rootScope', '$location',
+    angular.module('mUser',[
+        'cmAuth',
+        'cmLocalStorage',
+        'cmLogger'
+    ]).service('ModelUser',[
+        'cmAuth',
+        '$q',
+        '$rootScope',
+        '$location',
     function(cmAuth, cmLocalStorage, $q, $rootScope, $location){
         var self = this;
 

@@ -9,6 +9,7 @@ for (var file in window.__karma__.files) {
 
 //console.log("\nkarma loaded "+Object.keys(window.__karma__.files).length+" files:\n"+Object.keys(window.__karma__.files).join('\n')+"\n")
 //console.log(""+tests.length+" specs:\n"+tests.join('\n')+"\n");
+//console.log(""+tests.length);
 
 var config = {
     // Karma serves files from '/base'
@@ -33,29 +34,29 @@ var config = {
 
         // requirejs stuff
         'angularAMD': 'vendor/requirejs/angularAMD',
-        'ngload': 'vendor/requirejs/ngload',
+        'ngload': '../test/lib/requirejs/ngload',
 
-        'jquery': 'vendor/jquery/jquery-2.1.0',
+        'jquery': '../test/lib/jquery/jquery-2.1.0',
         'jasmine-jquery': '../test/lib/jasmine-jquery/jasmine-jquery',
 
-        // cmModules
-        'cmApi': 'shared/api/api',
-        'cmAuth': 'shared/auth/auth',
-        'cmCrypt': 'shared/crypt/crypt',
+        // cmModules / services
+        'cmApi': 'shared/cmApi',
+        'cmAuth': 'shared/cmAuth',
+        'cmCrypt': 'shared/cmCrypt',
         'cmLanguage': 'shared/i18n/language',
-        'cmLogger': 'shared/logger/cmLogger',
-        'cmNotify': 'shared/notify/notify',
+        'cmLogger': 'shared/cmLogger',
+        'cmNotify': 'shared/cmNotify',
+        'cmUtil': 'shared/cmUtil',
 
         'cmProfile': 'comps/cmProfile',
         'cmConversations': 'comps/conversation/cmConversations',
         'cmContacts': 'comps/contacts/cmContacts',
+        'cmContactsCtrl': 'routes/contacts/contacts-ctrl',
 
         // Model
-        'mContacts': 'models/contacts-modl',
+        'mContacts': 'comps/contacts/contacts-modl',
         'mUser': 'models/user-modl',
 
-		// shared
-        'util': 'shared/util',
         // utils
         'util-base64': 'vendor/util/base64',
         'util-passchk-fast': 'vendor/util/passchk_fast',
@@ -72,6 +73,7 @@ var config = {
     shim: {
         'angular-mocks': ['angular'],
         'angularAMD': ['angular'],
+        'ngload': ['angularAMD'],
 
         'angular-route': ['angular'],
         'angular-cookies': ['angular'],
@@ -80,7 +82,8 @@ var config = {
         'angular-translate-storage-cookie': ['angular'],
         'angular-translate-storage-local': ['angular'],
         'angular-growl': ['angular'],
-        'cmLanguage': ['angular-translate']
+        'cmLanguage': ['angular-translate'],
+        'cmNotify': ['angular-growl']
     },
 
     // ask Require.js to load these files (all our tests)

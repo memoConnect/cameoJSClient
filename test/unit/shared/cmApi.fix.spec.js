@@ -1,5 +1,6 @@
  define([
-     'angular-mocks'
+     'angular-mocks',
+     'cmApi'
  ], function () {
     'use strict';
 

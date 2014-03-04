@@ -1,17 +1,21 @@
 define([
-    'app',
-    'cmContacts',
     'mUser',
+    'cmContacts',
     'cmLogger'
-], function (app) {
+], function () {
     'use strict';
 
-    app.register.service('ModelContacts',[
-    'ModelUser',
-    'cmContacts',
-    'cmLogger',
-    '$q',
-    '$rootScope',
+    angular.module('mContacts',[
+        'cmContacts',
+        'cmLogger',
+        'mUser'
+    ])
+    .service('ModelContacts',[
+        'ModelUser',
+        'cmContacts',
+        'cmLogger',
+        '$q',
+        '$rootScope',
     function(ModelUser, cmContacts, cmLogger, $q, $rootScope){
         var self = this;
         var mockContacts = ['derMicha','dasEmpu'];
