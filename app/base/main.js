@@ -71,7 +71,7 @@ var config = {
         'cmLogger' : ['angular'],
         'angular-translate-loader-static-files': ['angular','angular-translate'],
         'angular-translate-storage-cookie': ['angular','angular-translate'],
-        'angular-translate-storage-local': ['angular','angular-translate'],
+        'angular-translate-storage-local': ['angular','angular-translate', 'angular-translate-storage-cookie'],
         'cmLanguage' : [
                         'angular', 
                         'angular-translate-loader-static-files',
