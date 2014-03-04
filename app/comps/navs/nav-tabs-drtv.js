@@ -1,9 +1,7 @@
-define([
-    'app'
-], function(app){
+define(function(require){
     'use strict';
 
-    app.register.directive('cmNavTabs',
+    require('app').register.directive('cmNavTabs',
         function(){
             return {
                 scope: true,
@@ -28,7 +26,10 @@ define([
                         $rootScope.activeTab = tab;
                     };
 
-                    $scope.setActiveTab($routeParams.tab && $routeParams.tab != '' ? $routeParams.tab.toUpperCase() : findDefault().toUpperCase())
+                    $scope.setActiveTab($routeParams.tab && $routeParams.tab != ''
+                        ? $routeParams.tab.toUpperCase()
+                        : findDefault().toUpperCase()
+                    )
                 }
             }
         }
