@@ -2,41 +2,31 @@
 
 describe("cmLanguage", function() {
 
-    xdescribe("setup", function(){
+    describe("setup", function(){
 
         var language_tables = {};
-//          TODO
+
         it('should find an array of correctly formatted keys for supported languages at cameo.supported_languages', function() {
-            expect(Object.prototype.toString.call( app.cameo.supported_languages )).toEqual('[object Array]')
-            app.cameo.supported_languages.forEach(function(lang_key){
-                expect(lang_key.match(/^[a-z]{2}_[A-Z]{2}$/)).not.toEqual(null) // de_DE
+            expect(Object.prototype.toString.call( cameo_config.supported_languages )).toEqual('[object Array]')
+            cameo_config.supported_languages.forEach(function(lang_key){
+                expect(lang_key.match(/^[a-z]{2}_[A-Z]{2}$/)).not.toEqual(null) // e.g. de_DE
             })
         })
 
         it('should find string with path to languages files at cameo.path_to_language files.', function(){
-            expect(typeof app.cameo.path_to_languages).toEqual('string')
+            expect(typeof cameo_config.path_to_languages).toEqual('string')
         })
 
         it('should find and load correctly named and json formatted files for all supported languages within 5 second.', function() {
-            var count = app.cameo.supported_languages.length
+            var count = cameo_config.supported_languages.length
 
-            runs(function(){
-                app.cameo.supported_languages.forEach(function(lang_key){
-                    var file = app.cameo.path_to_languages+'/'+lang_key+'.json';
-//                        $.getJSON(file)
-//                        .done(  function(data)  { language_tables[lang_key] = data })
-//                        .fail(  function(xhr, status, error) { console.log('Error getting JSON from '+file+': '+status) })
-//                        .always(function()      { count-- })
-                })
+            
+            cameo_config.supported_languages.forEach(function(lang_key){
+                var file = 'app/'+cameo_config.path_to_languages+'/'+lang_key+'.json';
+                language_tables[lang_key] = window.__html__[file]
             })
-
-            waitsFor(function() {
-                return(count==0)
-            }, "languages files.", 5000)
-
-            runs(function(){
-                expect(Object.keys(language_tables).length).toEqual(app.cameo.supported_languages.length)
-            })
+            
+            expect(Object.keys(language_tables).length).toEqual(cameo_config.supported_languages.length)            
         })
 
         it('should find a translation for each message_id for all supported langauges.', function(){

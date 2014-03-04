@@ -11,6 +11,8 @@ module.exports = function(config) {
 
             'test/lib/jquery/*.js',
 
+            'app/base/config.js',
+
             'app/vendor/angular/angular.js',
 
             'app/vendor/angular-translate/angular-translate.js',
@@ -83,13 +85,14 @@ module.exports = function(config) {
             //{pattern: 'test/unit/base/main.js', included: true},
             // load and json templates
             'app/**/*.html',
+            'app/**/*.json',
 //            {pattern: 'app/**/*.json', included: false}
         ],
 
         // generate js files from html templates to expose them during testing.
         preprocessors: {
             'app/**/*.html': ['html2js'],
-            //'app/**/*.json': ['html2js']
+            'app/**/*.json': ['html2js']
         },
 
         html2JsRequireJsPreprocessor: {
