@@ -1,9 +1,7 @@
 /.idea/
 /node_modules/
-/phonegap/
-/cameoJSClient.iml
+/phonegap-build/
 /target/
 /project/
 *.iml
-tree.txt
 *.log
