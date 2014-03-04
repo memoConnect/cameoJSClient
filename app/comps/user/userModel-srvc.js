@@ -75,8 +75,8 @@ function cmUserModel(cmAuth, cmLocalStorage, $q, $rootScope, $location){
     }
 
     function loadStorage(){
-//            self.data.storage = cmLocalStorage.create(self.data.id);
-        self.data.storage = cmLocalStorage.create();
+        self.data.storage = cmLocalStorage.create(self.data.id,self.data.userKey);
+//        self.data.storage = cmLocalStorage.create();
         console.log(self.data.storage);
     }
 
