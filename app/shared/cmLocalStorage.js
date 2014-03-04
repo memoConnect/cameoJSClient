@@ -79,7 +79,7 @@ service('LocalStorageAdapter',function(){
         }
     }
 }).
-factory('LocalStorageService',['LocalStorageAdapter', function(LocalStorageAdapter){
+factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt', function(LocalStorageAdapter, cmCrypt){
     var LocalStorageService = function(){
         this.instanceId = "";
         this.instanceKey = "";
@@ -87,21 +87,22 @@ factory('LocalStorageService',['LocalStorageAdapter', function(LocalStorageAdapt
         var self = this,
             useable = false,
             useableCheck = false,
-            ultimateKey = "MULTIKEY"+this.instanceId,
-            ultimateValue = {};
+            cryptKey = "",
+            storageKey = "CAMEO_LOCAL_STORAGE_IDENTITY",
+            storageValue = {};
 
-        function getUltimateValue(){
-            var value = LocalStorageAdapter.get(ultimateKey);
+        function getStorageValue(){
+            var value = LocalStorageAdapter.get(storageKey);
             if(value == null){
                 return {}
             } else {
-                return JSON.parse(value);
+                return JSON.parse(cmCrypt.decrypt(cryptKey,value));
             }
         }
 
-        function saveUltimateValue(value){
+        function saveStorageValue(value){
             try {
-                LocalStorageAdapter.save(ultimateKey, JSON.stringify(value));
+                LocalStorageAdapter.save(storageKey, cmCrypt.encrypt(cryptKey,JSON.stringify(value)));
                 return true;
             } catch(e){
                 //
@@ -110,6 +111,15 @@ factory('LocalStorageService',['LocalStorageAdapter', function(LocalStorageAdapt
             return false;
         }
 
+        /**
+         * init
+         */
+        this.init = function(){
+            if(this.check()){
+                cryptKey = cmCrypt.hash(this.instanceId + this.instanceKey);
+                storageKey = cmCrypt.hash(cryptKey);
+            }
+        }
         /**
          * set instance Id
          * @param id
@@ -137,9 +147,9 @@ factory('LocalStorageService',['LocalStorageAdapter', function(LocalStorageAdapt
          */
         this.get = function (key) {
             if(this.check() !== false){
-                ultimateValue = getUltimateValue();
-                if(ultimateValue[key] != undefined){
-                    return ultimateValue[key];
+                storageValue = getStorageValue();
+                if(storageValue[key] != undefined){
+                    return storageValue[key];
                 }
             }
 
@@ -152,9 +162,9 @@ factory('LocalStorageService',['LocalStorageAdapter', function(LocalStorageAdapt
         this.getAllKeys = function(){
             if(this.check() !== false){
                 var keys = [];
-                ultimateValue = getUltimateValue();
+                storageValue = getStorageValue();
 
-                for(var k in ultimateValue){
+                for(var k in storageValue){
                     keys.push(k);
                 }
 
@@ -168,14 +178,15 @@ factory('LocalStorageService',['LocalStorageAdapter', function(LocalStorageAdapt
          *  @returns {boolean}
          */
         this.save = function (key, data) {
+            console.log(key + data);
             if(this.check() !== false){
-                ultimateValue = getUltimateValue();
-                if(ultimateValue == null){
-                    ultimateValue = {};
+                storageValue = getStorageValue();
+                if(storageValue == null){
+                    storageValue = {};
                 }
-                ultimateValue[key] = data;
+                storageValue[key] = data;
 
-                saveUltimateValue(ultimateValue);
+                saveStorageValue(storageValue);
                 return true;
             }
 
@@ -188,11 +199,11 @@ factory('LocalStorageService',['LocalStorageAdapter', function(LocalStorageAdapt
          */
         this.remove = function (key) {
             if(this.check() !== false){
-                ultimateValue = getUltimateValue();
-                if(ultimateValue[key] != undefined){
+                storageValue = getStorageValue();
+                if(storageValue[key] != undefined){
                     try {
-                        delete(ultimateValue[key]);
-                        saveUltimateValue(ultimateValue);
+                        delete(storageValue[key]);
+                        saveStorageValue(storageValue);
                         return true;
                     } catch (e){
                         //
@@ -208,19 +219,14 @@ factory('LocalStorageService',['LocalStorageAdapter', function(LocalStorageAdapt
          */
         this.clearAll = function () {
             if(this.check() !== false){
-                ultimateValue = {};
-                LocalStorageAdapter.remove(ultimateKey);
+                storageValue = {};
+                LocalStorageAdapter.remove(storageKey);
                 return true;
             }
 
             return false;
         }
 
-        function init(){
-            self.check();
-        }
-
-        init();
     }
 
     return LocalStorageService;
@@ -247,7 +253,7 @@ factory('cmLocalStorage',['LocalStorageService', function(LocalStorageService){
 
                 var localStorage = new LocalStorageService();
                 localStorage.setInstanceVars({id:id,key:key});
-
+                localStorage.init();
 
                 instances.push({id:id,instance:localStorage});
 
