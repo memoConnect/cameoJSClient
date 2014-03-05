@@ -36,6 +36,11 @@ cmConversations.service('cmConversationsModel', [
     cmConversationsModel
 ])
 
+cmConversations.service('cmTalksModel', [
+    'cmConversationsAdapter',
+    'cmMessageFactory',
+    cmTalksModel
+])
 
 cmConversations.directive('cmAttachments', [
     cmAttachments

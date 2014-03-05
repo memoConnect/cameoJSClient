@@ -2,22 +2,19 @@ define([
     'app',
     'util-base64',    
     'ngload!pckUser',
-//    'cmAuth',                       //das klappt nur mit Glück!
     'ngload!pckConversations'
 ], function (app) {
     'use strict';
-    
 
-    console.log('Ctrl')  
-  
     app.register.controller('ConversationsCtrl',[
-
         '$scope',
         '$rootScope',
-        'cmConversationsModel',
-        
-        function($scope, $rootScope, cmConversationsModel) {
-            $scope.conversations = cmConversationsModel;
+//        'cmConversationsModel',
+        'cmTalksModel',
+//        function($scope, $rootScope, cmConversationsModel, cmTalksModel) {
+        function($scope, $rootScope, cmTalksModel) {
+//            $scope.conversations = cmConversationsModel;
+            $scope.conversations = cmTalksModel;
 
             $rootScope.tabs = [
                 {i18n:'BACK',icon:'fa-chevron-left',href:'#/start'},
@@ -25,5 +22,4 @@ define([
             ];
         }
     ]);
-
 });

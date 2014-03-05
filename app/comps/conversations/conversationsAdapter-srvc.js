@@ -20,7 +20,7 @@ function cmConversationsAdapter(cmApi, cmUtil){
 
         getConversation: function(id, limit, offset) {
             return 	cmApi.get({
-                url: 	'/conversation/'+ id + cmUtil.handleLimitOffset(limit,offset),
+                url: 	'/conversation/'+ id + cmUtil.handleLimitOffset(limit,offset)
             })
         },
 

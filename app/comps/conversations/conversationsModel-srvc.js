@@ -39,7 +39,7 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
     }
 
     conversations.init = function () {
-        cmConversationsAdapter.getConversations(10, 0)
+        cmConversationsAdapter.getConversations(5, 13)
             .then(function (data) {
                 data.forEach(function (conversation_data) {
                     var conversation = new cmConversationFactory(conversation_data);
