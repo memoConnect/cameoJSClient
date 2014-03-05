@@ -1,7 +1,8 @@
 define([
     'app',
     'vendor/crypto/ats-oka/ats-oka',
-    'ngload!pckUser'
+    'ngload!pckUser',
+    'ngload!cmUtil'
 ], function (app) {
     'use strict';
 
@@ -9,7 +10,9 @@ define([
         '$scope',
         '$rootScope',
         'cmUserModel',
-        function($scope, $rootScope, cmUserModel) {
+        'cmLogger',
+        'cmUtil',
+        function($scope, $rootScope, cmUserModel, cmLogger, cmUtil) {
             $scope.identity = cmUserModel.data;
 
             /**
@@ -36,9 +39,10 @@ define([
             /**
              * ats oka async rsa
              */
-            $scope.keyLengths = ['1024','2048','4096'];
+            $scope.keyLengths = ['128','1024','2048','4096'];
             $scope.exp = 65537;
-            $scope.keylen = 1024;
+            $scope.keylen = 128;
+            $scope.state = '';
             var timerID = null;
             var BigInteger = titaniumcore.crypto.BigInteger;
             var RSA = titaniumcore.crypto.RSA;
@@ -51,21 +55,34 @@ define([
                     return;
                 }
 
-                function progress(count){
-
+                function progress(counts){
+                    $scope.$apply(function(){
+                        $scope.state = 'counts: '+counts;
+                    })
                 }
 
                 function result(rsa){
 
                 }
 
-                function done(){
+                function done( succeeded, count, time ,startTime, finishTime ){
                     timerID = null;
+                    cmLogger.debug('ats-oka done')
 
+                    $scope.$apply(function(){
+                        $scope.state =
+                            'Elapsed Time '+ cmUtil.millisecondsToStr(time)+'\n'+
+                            'Step Count '+count+'\n'+
+                            'Start Time '+startTime.toString()+'\n'+
+                            'Finished Time '+finishTime.toString()
+
+                        $scope.privKey = base64x_encode( rsaKey.privateKeyBytes() );
+                        $scope.pubKey = base64x_encode( rsaKey.publicKeyBytes() );
+                    });
                 }
 
                 var rsaKey = new RSA();
-
+                cmLogger.debug('ats-oka generateAsync')
                 timerID = rsaKey.generateAsync( $scope.keylen, $scope.exp, progress, result, done );
             };
 

@@ -12,15 +12,20 @@
     </div>
 
     <div ng-show="activeTab == 'KEY'">
-        Expression: {{exp}}<br />
-        Length: <select class="form-control" ng-model="keylen">
+        exponent: {{exp}}<br />
+        keylength: {{keylen}}bit
+        <select class="form-control" ng-model="keylen">
             <option ng-repeat="len in keyLengths" value="{{len}}">{{len}}bit</option>
         </select>
 
         <button ng-click="generate()" class="btn btn-primary">generate</button>
         <button ng-click="cancel()" class="btn btn-default">cancel</button>
 
+        <h3>state</h3>
+        <textarea class="form-control" ng-model="state" rows="4"></textarea>
+        <h3>private key</h3>
         <textarea class="form-control" ng-model="privKey"></textarea>
+        <h3>public key</h3>
         <textarea class="form-control" ng-model="pubKey"></textarea>
     </div>
 </div>

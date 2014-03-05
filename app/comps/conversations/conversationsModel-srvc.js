@@ -92,8 +92,7 @@ function cmConversationsModel (cmConversationsAdapter, cmCrypt, $q, cmAuth) {
                     self.addMessage(new Message(message_data))
                 })
             }
-
-            this.lastMessage = this.messages[this.messages.length-1]
+            
 
             // register all recipients as Recipient objects
             if (conversation_data.recipients) {
@@ -112,6 +111,7 @@ function cmConversationsModel (cmConversationsAdapter, cmCrypt, $q, cmAuth) {
 
         this.addMessage = function (message) {
             this.messages.push(message)
+            this.lastMessage = message
             if (this.passphrase) message.decryptWith(this.passphrase)
             return this
         }
