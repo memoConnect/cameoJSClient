@@ -40,6 +40,7 @@ var config = {
         //'cmContacts': 'comps/contacts/cmContacts',
 
         // shared
+        'util-spin': 'vendor/util/spin',
         'util-base64': 'vendor/util/base64',
         'util-passchk-fast': 'vendor/util/passchk_fast',
         // crypto
@@ -171,12 +172,14 @@ addPackage('pckUi',{
     deps: [
         'angular',    
         'cmAuth',
-        'cmLogger'    
+        'cmLogger',
+        'util-spin'
     ],    
     resources : [
         'shared/ui/adaptive-change-drtv',  
         'shared/ui/nav-tabs-drtv',
-        'shared/ui/point-spinner-drtv'
+        'shared/ui/point-spinner-drtv',
+        'shared/ui/spinner-drtv'
     ]
 })
 
