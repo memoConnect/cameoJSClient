@@ -7,11 +7,20 @@
 
     <div ng-show="activeTab == 'SPINNER'">
         <h3>Spinner</h3>
-        <button ng-click="showSpinner()">show</button>
-        <button ng-click="hideSpinner()">hide</button>
+        <button ng-click="showSpinner()" class="btn btn-default">show</button>
+        <button ng-click="hideSpinner()" class="btn btn-default">hide</button>
     </div>
 
     <div ng-show="activeTab == 'KEY'">
-        Key-Pair
+        Expression: {{exp}}<br />
+        Length: <select class="form-control" ng-model="keylen">
+            <option ng-repeat="len in keyLengths" value="{{len}}">{{len}}bit</option>
+        </select>
+
+        <button ng-click="generate()" class="btn btn-primary">generate</button>
+        <button ng-click="cancel()" class="btn btn-default">cancel</button>
+
+        <textarea class="form-control" ng-model="privKey"></textarea>
+        <textarea class="form-control" ng-model="pubKey"></textarea>
     </div>
 </div>
