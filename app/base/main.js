@@ -43,7 +43,8 @@ var config = {
         'util-base64': 'vendor/util/base64',
         'util-passchk-fast': 'vendor/util/passchk_fast',
         // crypto
-        'crypto-sjcl': 'vendor/sjcl/sjcl.min',
+        'crypto-sjcl': 'vendor/crypto/sjcl/sjcl.min',
+        'crypto-ats-oka': 'vendor/crypto/ats-oka/',
 
         'jquery': 'vendor/jquery/jquery-2.1.0'
     },
