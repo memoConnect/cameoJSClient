@@ -289,6 +289,13 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         flatten: false,
+                        cwd: 'phonegap-res/res/',
+                        src: '**',
+                        dest: 'phonegap-build/platforms/android/assets/www/res/'
+                    },
+                    {
+                        expand: true,
+                        flatten: false,
                         cwd: 'phonegap-res/',
                         src: '*',
                         dest: 'phonegap-build/www/',
@@ -322,7 +329,7 @@ module.exports = function (grunt) {
      * $ cd phonegap-build // change in dir
      * $ phonegap run android
      */
-    grunt.registerTask('phonegap', ['phonegap:build', 'template:phonegap-index', 'copy:phonegap-resources']);
+    grunt.registerTask('phonegap', [ 'phonegap:build', 'template:phonegap-index', 'copy:phonegap-resources']);
 
     grunt.registerTask('www', ['template:www-index']);
 };
