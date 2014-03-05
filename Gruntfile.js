@@ -134,14 +134,14 @@ module.exports = function (grunt) {
                 maxBuffer: 200, // You may need to raise this for iOS.
                 verbose: false,
                 releases: 'releases',
-                releaseName: function(){
+                releaseName: function () {
                     var pkg = grunt.file.readJSON('package.json');
                     return(pkg.name + '-' + pkg.version);
                 },
 
                 // Must be set for ios to work.
                 // Should return the app name.
-                name: function(){
+                name: function () {
                     var pkg = grunt.file.readJSON('package.json');
                     return pkg.name;
                 },
@@ -151,11 +151,11 @@ module.exports = function (grunt) {
                 Xkey: {
                     store: 'release.keystore',
                     alias: 'release',
-                    aliasPassword: function(){
+                    aliasPassword: function () {
                         // Prompt, read an environment variable, or just embed as a string literal
                         return('');
                     },
-                    storePassword: function(){
+                    storePassword: function () {
                         // Prompt, read an environment variable, or just embed as a string literal
                         return('');
                     }
@@ -221,13 +221,19 @@ module.exports = function (grunt) {
 
                 // Android-only integer version to increase with each release.
                 // See http://developer.android.com/tools/publishing/versioning.html
-                versionCode: function(){ return(1) },
+                versionCode: function () {
+                    return(1)
+                },
 
                 // Android-only options that will override the defaults set by Phonegap in the
                 // generated AndroidManifest.xml
                 // See https://developer.android.com/guide/topics/manifest/uses-sdk-element.html
-                minSdkVersion: function(){ return(10) },
-                targetSdkVersion: function(){ return(19) },
+                minSdkVersion: function () {
+                    return(10)
+                },
+                targetSdkVersion: function () {
+                    return(19)
+                },
 
                 // If you want to use the Phonegap Build service to build one or more
                 // of the platforms specified above, include these options.
@@ -248,8 +254,7 @@ module.exports = function (grunt) {
             'phonegap-index': {
                 'options': {
                     'data': {
-                        'phonegapFiles':
-                            '<script src="phonegap.js"></script>' +
+                        'phonegapFiles': '<script src="phonegap.js"></script>' +
                             '<script src="phonegap-adapter.js"></script>'
 
                     }
@@ -272,11 +277,25 @@ module.exports = function (grunt) {
         },
 
         copy: {
-            'phonegap-adapter': {
-                expand: true,
-                flatten: true,
-                src: 'phonegap-res/phonegap-adapter.js',
-                dest: 'phonegap-build/www/'
+            'phonegap-resources': {
+                files: [
+                    {
+                        expand: true,
+                        flatten: false,
+                        cwd: 'phonegap-res/res/',
+                        src: '**',
+                        dest: 'phonegap-build/www/res/'
+                    },
+                    {
+                        expand: true,
+                        flatten: false,
+                        cwd: 'phonegap-res/',
+                        src: '*',
+                        dest: 'phonegap-build/www/',
+                        filter: 'isFile'
+
+                    }
+                ]
             }
         }
     });
@@ -303,7 +322,7 @@ module.exports = function (grunt) {
      * $ cd phonegap-build // change in dir
      * $ phonegap run android
      */
-    grunt.registerTask('phonegap', ['phonegap:build', 'template:phonegap-index', 'copy:phonegap-adapter']);
+    grunt.registerTask('phonegap', ['phonegap:build', 'template:phonegap-index', 'copy:phonegap-resources']);
 
     grunt.registerTask('www', ['template:www-index']);
 };
