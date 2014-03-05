@@ -2,7 +2,6 @@ define([
     'app',
     'util-base64',    
     'ngload!pckUser',
-//    'cmAuth',                       //das klappt nur mit Glück!
     'ngload!pckConversations'
 ], function (app) {
     'use strict';

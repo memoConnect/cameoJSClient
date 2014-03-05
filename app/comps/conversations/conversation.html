@@ -99,8 +99,37 @@
 		<textarea cm-message-input ng-model="my_message_text"></textarea>
 	</div>	
 	<div>
-		<cm-upload></cm-upload>
 		<button ng-click="sendMessage()">{{"CONVERSATION.LABEL.SEND" | cmTranslate}}</button>
 		<cm-emoticons></cm-emoticons>
+		<cm-upload></cm-upload>
+
+
+		<h2>Chunked Uploader</h2>
+		<section ng-controller="SendFileCtrl">
+		    <h3>SendFileCtrl</h3>
+		    <span class="label">chunkSize</span>
+		    <input type="text" ng-model="chunkSize" ng-keyup="checkEmpty(1)" value="" /> * 1024 = {{bytesToSize(chunkSize*1024)}}
+		    <br/>
+
+		    <input type="file" name="file" cm-file-read="file" onchange="angular.element(this).scope().calcChunkSize(event)" placeholder="placeholder.file" /><br />
+		    fileSize: {{bytesToSize(fileSize)}} / chunksTotal: {{ chunksTotal }} / inQueue: {{chunksQueue}}<br />
+		    <hr>
+		    <section>
+		        <button ng-click="sendFile()">send chunks</button>
+		        <progress value="{{progress}}" max="{{chunksTotal}}"></progress> {{percent}}%<br />
+		        <pre ng-show="Util.objLen(file) > 0">{{Util.prettify(file)}}</pre>
+		        <pre ng-show="Util.objLen(apiError) > 0">Api Error:{{apiError}}</pre>
+		    </section>
+		</section>
+		<hr>
+		<section ng-controller="GetFileCtrl">
+		    <h3>GetFileCtrl</h3>
+		    <section>
+		        <input type="text" ng-model="assetId" value="" />
+		        <button ng-click="getFile()">get chunks</button>
+		    </section>
+		    <pre ng-show="Util.objLen(file) > 0">{{Util.prettify(file)}}</pre>
+		</section>
+
 	</div>
 </section>

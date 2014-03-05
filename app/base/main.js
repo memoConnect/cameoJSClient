@@ -50,8 +50,9 @@ var config = {
     },
 
     packages: [
-        {name: '_v', location: 'vendor'}
-//        {name: '_s', location: 'service'},
+        {name: '_v', location: 'vendor' },
+        {name: '_c', location: 'comps'  },
+        {name: '_s', location: 'shared' },
 //        {name: '_d', location: 'directives'}
     ],
     // Add angular modules that does not support AMD out of the box, put it in a shim
@@ -73,14 +74,15 @@ var config = {
         'angular-translate-storage-cookie': ['angular','angular-translate'],
         'angular-translate-storage-local': ['angular','angular-translate', 'angular-translate-storage-cookie'],
         'cmLanguage' : [
-                        'angular', 
-                        'angular-translate-loader-static-files',
-                        'angular-translate-storage-cookie', 
-                        'angular-translate-storage-local', 
-                        'angular-growl',
-                        'cmNotify',
-                        'cmLogger'
-                    ]
+            'angular', 
+            'angular-translate-loader-static-files',
+            'angular-translate-storage-cookie', 
+            'angular-translate-storage-local', 
+            'angular-growl',
+            'cmNotify',
+            'cmLogger'
+        ]
+
 //        'bootstrap': ['jquery']
     },
     // kick start application
@@ -99,6 +101,24 @@ function addPackage(package_name, package) {
     })
 }
 
+
+addPackage('pckFiles',{
+    root: 'comps/files/files-module',
+    deps: [
+        'cmApi',
+        'vendor/filesaver/filesaver',
+        'angular-resource'
+        //'vendor/base64_decode'
+    ],
+    resources : [
+        'comps/files/filesAdapter-srvc',
+        'comps/files/send-ctrl',
+        'comps/files/get-ctrl',
+        'comps/files/file-read-drtv',
+        'comps/files/upload-drtv'
+    ]
+})
+
 addPackage('pckConversations',{
     root: 'comps/conversations/conversations-module',
     deps: [
@@ -108,7 +128,7 @@ addPackage('pckConversations',{
         'cmCrypt', 
         'cmAuth',
         'pckContacts',
-        '_v/captcha/captchagen/captchagen'
+        'vendor/captcha/captchagen/captchagen'
     ],    
     resources : [
        'comps/conversations/conversationsAdapter-srvc',

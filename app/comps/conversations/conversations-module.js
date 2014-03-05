@@ -4,7 +4,8 @@ var cmConversations = angular.module('cmConversations', [
     'cmApi', 
     'cmLogger', 
     'cmCrypt', 
-    'cmContacts'
+    'cmContacts',
+    'cmAuth'
 ])
 
 cmConversations.service('cmConversationsAdapter', [

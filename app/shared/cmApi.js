@@ -152,7 +152,7 @@ function($injector){
                                 ?	$injector.get('cmAuth').getToken()
                                 :	undefined
 
-            //Api calls are restricted to the preconfigured api base path and should start with a '/'
+            //Api calls are restricted to the preconfigured api base path and have to start with a '/'
             if(!config.url.match(/^\//g)) cmLogger.error('Api calls are restricted to '+rest_api+' . You tried: "'+ config.url+'". Path has to start with a "/"')
 
             //extend or overwrite config
@@ -210,9 +210,9 @@ function($injector){
                 },
 
                 function(response){
-                    cmLogger.error('Api call failed.', response.data.error)
+                    cmLogger.error('Api call failed: \n '+config.method+' '+config.url, response)
                     //error messages should come trough backend
-                    deferred.reject(response.status, response.data.error)
+                    deferred.reject(response.status, response)
                 }
             )
 
