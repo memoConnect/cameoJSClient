@@ -3,12 +3,12 @@
 function cmSpinner(){
     return {
         restrict: 'A',
-        template: '<div ng-show="loading"><div class="modal-spinnner"></div></div>',
+        template: '<div ng-show="loading"><div class="modal-spinner"></div></div>',
         controller: function($scope, $element){
             $scope.loading = false;
 
             var spinner = null;
-            var loadingContainer = $element.find('.modal-spinner')[0];
+            var loadingContainer = angular.element.find('.modal-spinner')[0];
 
             $scope.$on('SHOW-SPINNER', function(){
                 spinner = new Spinner().spin();
@@ -17,6 +17,7 @@ function cmSpinner(){
             });
             $scope.$on('HIDE-SPINNER', function(){
                 spinner.stop();
+                loadingContainer.innerHTML = '';
                 $scope.loading = false
             });
         }
