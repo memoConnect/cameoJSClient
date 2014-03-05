@@ -1,9 +1,14 @@
 'use strict';
 
-var cmCrypt = angular.module('cmCrypt', ['cmLogger'])
+angular.module('cmCrypt', ['cmLogger'])
 .service('cmCrypt',[
     'cmLogger',
     function (cmLogger) {
+        /**
+         * interval for keypair generation
+         * @type {null}
+         */
+        var genInterval = null;
 
         return {
             /**
@@ -74,6 +79,74 @@ var cmCrypt = angular.module('cmCrypt', ['cmLogger'])
                 }
 
                 return decryptedString || false
+            },
+
+
+            getKeyLengths: function(){
+                return ['128','1024','2048','4096'];
+            },
+
+            getExpotential: function(){
+                return 65537;
+            },
+
+            initGeneration: function(){
+//                var BigInteger = titaniumcore.crypto.BigInteger;
+//                var RSA = titaniumcore.crypto.RSA;
+//                var RSAKeyFormat = titaniumcore.crypto.RSAKeyFormat;
+//
+//                RSA.installKeyFormat( RSAKeyFormat );
+
+//                var BigInteger = titaniumcore.crypto.BigInteger;
+//                var RSA = titaniumcore.crypto.RSA;
+//                var RSAKeyFormat = titaniumcore.crypto.RSAKeyFormat;
+
+                atsOka.RSA.installKeyFormat( atsOka.RSAKeyFormat );
+            },
+
+            generateKeypair: function(){
+                if ( genInterval != null ) {
+                    return;
+                }
+
+                function progress(counts){
+                    $scope.$apply(function(){
+                        $scope.state = 'counts: '+counts;
+                    })
+                }
+
+                function result(rsa){
+
+                }
+
+                function done( succeeded, count, time ,startTime, finishTime ){
+                    genInterval = null;
+                    cmLogger.debug('ats-oka done')
+
+                    $scope.$apply(function(){
+                        $scope.state =
+                            'Elapsed Time '+ cmUtil.millisecondsToStr(time)+'\n'+
+                                'Step Count '+count+'\n'+
+                                'Start Time '+startTime.toString()+'\n'+
+                                'Finished Time '+finishTime.toString()
+
+                        $scope.privKey = base64x_encode( rsaKey.privateKeyBytes() );
+                        $scope.pubKey = base64x_encode( rsaKey.publicKeyBytes() );
+                    });
+                }
+
+                var rsaKey = new atsOka.RSA();
+                cmLogger.debug('ats-oka generateAsync')
+                genInterval = rsaKey.generateAsync( $scope.keylen, $scope.exp, progress, result, done );
+            },
+
+            cancelGeneration: function(){
+                if ( genInterval != null ) {
+                    cmLogger.debug('ats-oka cancelGeneration')
+                    var id = genInterval;
+                    genInterval = null;
+                    clearInterval( id );
+                }
             }
         }
     }]
