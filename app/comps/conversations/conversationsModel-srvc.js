@@ -61,8 +61,7 @@ function cmConversationsModel (cmConversationsAdapter, cmCrypt, $q, cmAuth) {
             .then(function (data) {
                 data.forEach(function (conversation_data) {
                     var conversation = new Conversation(conversation_data)                    
-                    conversations.push(conversation)
-                    if(conversation.count >0 ) conversation.update()
+                    conversations.push(conversation)                    
                 })
             })
     }

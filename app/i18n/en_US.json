@@ -120,12 +120,6 @@
         "PLACEHOLDER": {
             "ADD_NEW_CONTACT": "please insert a cameoId"
         },
-        "NAVIGATION":{
-            "BACK": "back",
-            "ADD": "add",
-            "ALL": "Contacts",
-            "REQUESTS": "Requests"
-        },
         "HEADER": {
             "SEARCH_CAMEO_ID": "Add contact",
             "CONTACTS_LIST": "Contacts",
@@ -151,12 +145,18 @@
 	},
 	
 	"SETTINGS": {
-		"WELCOME": "Settings",
-		"NAVIGATION":{
-            "BACK": "back",
-            "SPINNER": "Spinner",
-            "KEY": "Key-Pair"
-        }
+		"WELCOME": "Settings"
+	},
+	
+	"NAVIGATION": {
+		"TABS": {
+			"BACK": "back",
+			"ADD": "add",
+			"ALL": "Contacts",
+			"REQUESTS": "Requests",
+			"SPINNER": "Spinner",
+			"KEY": "Key-Pair"
+		}
 	},
 
     "DIRV": {

@@ -6,18 +6,31 @@ define([
 
     app.register.controller('SettingsCtrl', [
         '$scope',
+        '$rootScope',
         'cmUserModel',
-        function($scope, cmUserModel) {
+        function($scope, $rootScope, cmUserModel) {
             $scope.identity = cmUserModel.data;
 
-            $scope.logout = function(){
-                cmUserModel.doLogout();
-            };
-
+            /**
+             * Ctrl Tabs
+             * @type {*[]}
+             */
             $scope.tabs = [
                 {i18n:'BACK',icon:'fa-chevron-left',href:'#/start'},
                 {i18n:'SPINNER',icon:'fa-spinner','default':true},
                 {i18n:'KEY',icon:'fa-key'}
             ];
+
+
+            /**
+             * Spinner Tests
+             */
+            $scope.showSpinner = function(){
+                $rootScope.$broadcast('SHOW-SPINNER');
+            }
+
+            $scope.hideSpinner = function(){
+                $rootScope.$broadcast('HIDE-SPINNER');
+            }
         }]);
 });
