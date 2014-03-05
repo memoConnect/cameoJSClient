@@ -53,7 +53,7 @@
         "YOUR_ID": "Your cameoId",
         "LOGOUT": "logout"
     },
-
+	
 	"VERIFICATION": {
 		"REQUEST": {
 			"LABEL": "Request verification"
@@ -148,7 +148,15 @@
         "TAG" : {
             "FILTER": "Filter"
         }
-
+	},
+	
+	"SETTINGS": {
+		"WELCOME": "Settings",
+		"NAVIGATION":{
+            "BACK": "back",
+            "SPINNER": "Spinner",
+            "KEY": "Key-Pair"
+        }
 	},
 
     "DIRV": {

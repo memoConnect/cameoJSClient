@@ -6,9 +6,8 @@ define([
 
     app.register.controller('StartCtrl', [
     '$scope',
-    '$cookieStore',
     'cmUserModel',
-    function($scope, $cookieStore, cmUserModel) {
+    function($scope, cmUserModel) {
         $scope.identity = cmUserModel.data;
 
         $scope.logout = function(){

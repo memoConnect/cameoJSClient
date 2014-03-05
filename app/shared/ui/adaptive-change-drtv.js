@@ -1,14 +1,12 @@
 function cmAdaptiveChange() {
     return {
-
         restrict:       'A',
         require:        'ngModel',
         scope:          false,
 
         link:           function(scope, element, attrs, ngModelCtrl){
             //inputs with this directive will not update the scope on simple keydown-events
-
-            var timeout
+            var timeout;
 
             element
                 .unbind('input')
