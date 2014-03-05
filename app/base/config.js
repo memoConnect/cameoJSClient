@@ -13,6 +13,9 @@ cameo_config = {
         'start': {
             hasCtrl: true
         },
+        'settings': {
+            hasCtrl: true
+        },
         'talks': {
             hasCtrl: true
         },

@@ -1,8 +1,3 @@
-/*
-define([
-    'app'
-], function(app){
-*/    
 'use strict';
 
 function cmNavTabs(){

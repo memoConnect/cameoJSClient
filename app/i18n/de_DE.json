@@ -50,7 +50,7 @@
 
 	"START": {
 		"WELCOME": "Willkommen",
-        "YOUR_ID": "Deine cameoId",
+		"YOUR_ID": "Deine cameoId",
 		"LOGOUT": "ausloggen"
 	},
 
@@ -147,6 +147,15 @@
         },
         "TAG":{
             "FILTER" : "Filter"
+        }
+	},
+	
+	"SETTINGS": {
+		"WELCOME": "Einstellungen",
+		"NAVIGATION":{
+            "BACK": "zurück",
+            "SPINNER": "Spinner",
+            "KEY": "Key-Pair"
         }
 	},
 
