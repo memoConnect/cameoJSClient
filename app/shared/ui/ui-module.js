@@ -6,10 +6,13 @@ cmUi.directive('cmAdaptiveChange', [
     cmAdaptiveChange
 ])
 
+cmUi.directive('cmSpinner',[
+    cmSpinner
+])
+
 cmUi.directive('cmPointSpinner',[
     cmPointSpinner
 ])
-
 
 cmUi.directive('cmNavTabs',[
     '$routeParams',
