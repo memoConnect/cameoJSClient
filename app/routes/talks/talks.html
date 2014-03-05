@@ -10,16 +10,16 @@
     <ul class="list-group">
         <li class="list-group-item" ng-repeat = "conversation in conversations">
             <a href = "#/conversation/{{conversation.id}}">
+                LastUpdate: {{conversation.lastUpdated}} <br />
                 Subject :   {{conversation.subject}} <br/>
                 Id:         {{conversation.id}} <br/>
-                Recipients:                
-                <span ng-repeat ="recipient in conversation.recipient">
-                        {{recipient}}
-                        {{$last ? '' : ','}}
-                </span> <br/>
-                Messages:   {{conversation.count}}
-                <cm-message cm-data="conversation.lastMessage" ng-if="conversation.lastMessage">
-                </cm>
+                <!--Recipients:                -->
+                <!--<span ng-repeat ="recipient in conversation.recipient">-->
+                        <!--{{recipient}}-->
+                        <!--{{$last ? '' : ','}}-->
+                <!--</span> <br/>-->
+                Messages:   {{conversation.numberOfMessages}}
+                <cm-message cm-data="conversation.messages[0]" ng-if="conversation.messages[0]"></cm-message>
             </a>
             <br/>
             <br/>
