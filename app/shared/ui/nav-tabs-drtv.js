@@ -5,7 +5,7 @@ function cmNavTabs(){
         scope: true,
         templateUrl: 'shared/ui/nav-tabs.html',
         
-        controller: function($rootScope, $routeParams, $scope){
+        controller: function($rootScope, $scope, $routeParams){
             /**
              * search in tabs array for default
              * @returns {string}
@@ -25,7 +25,9 @@ function cmNavTabs(){
                 $rootScope.activeTab = tab;
             };
 
-            $scope.setActiveTab($routeParams.tab && $routeParams.tab != '' ? $routeParams.tab.toUpperCase() : findDefault().toUpperCase())
+            $scope.setActiveTab($routeParams.tab && $routeParams.tab != ''
+                ? $routeParams.tab.toUpperCase()
+                : findDefault().toUpperCase())
         }
     }
 }
