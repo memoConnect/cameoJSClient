@@ -79,3 +79,4 @@ textarea[cm-message-input] {
 
 .alert-mini-padding{padding:5px}
 
+.modal-spinner {position:fixed;top:50%;left:50%;z-index:999}
