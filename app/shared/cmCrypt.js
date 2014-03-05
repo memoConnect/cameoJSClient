@@ -101,7 +101,7 @@ angular.module('cmCrypt', ['cmLogger'])
 //                var RSA = titaniumcore.crypto.RSA;
 //                var RSAKeyFormat = titaniumcore.crypto.RSAKeyFormat;
 
-                atsOka.RSA.installKeyFormat( atsOka.RSAKeyFormat );
+//                atsOka.RSA.installKeyFormat( atsOka.RSAKeyFormat );
             },
 
             generateKeypair: function(){
@@ -135,9 +135,9 @@ angular.module('cmCrypt', ['cmLogger'])
                     });
                 }
 
-                var rsaKey = new atsOka.RSA();
-                cmLogger.debug('ats-oka generateAsync')
-                genInterval = rsaKey.generateAsync( $scope.keylen, $scope.exp, progress, result, done );
+//                var rsaKey = new atsOka.RSA();
+//                cmLogger.debug('ats-oka generateAsync')
+//                genInterval = rsaKey.generateAsync( $scope.keylen, $scope.exp, progress, result, done );
             },
 
             cancelGeneration: function(){

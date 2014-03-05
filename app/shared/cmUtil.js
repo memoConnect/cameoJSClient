@@ -79,6 +79,8 @@ angular.module('cmUtil', [])
      * @returns {Number}
      */
     this.objLen = function(obj){
+        if(obj == undefined)
+            obj = {};
         return Object.keys(obj).length;
     };
 
@@ -88,6 +90,9 @@ angular.module('cmUtil', [])
      * @returns {string}
      */
     this.ucFirst = function(string){
+        if(string == undefined || typeof string != 'string')
+            string = '';
+
         string += '';
         var f = string.charAt(0).toUpperCase();
         return f + string.substr(1);
@@ -100,7 +105,7 @@ angular.module('cmUtil', [])
      */
     this.bytesToStr = function(bytes) {
         var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-        if (bytes == 0) return 'n/a';
+        if (bytes == 0 || typeof bytes != 'number') return 'n/a';
         var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
         return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
     };
@@ -112,6 +117,8 @@ angular.module('cmUtil', [])
      * @returns {int}
      */
     this.getRandomInt = function (min, max) {
+        if(min == undefined || typeof min != 'number')
+            return 0;
         return Math.floor(Math.random() * (max - min + 1)) + min;
     };
 
@@ -129,6 +136,9 @@ angular.module('cmUtil', [])
         function numberEnding (number) {
             return ""//(number > 1) ? '\'s' : '';
         }
+
+        if(typeof milliseconds != 'number')
+            return 'n/a';
 
         var temp = milliseconds / 1000;
         var years = Math.floor(temp / 31536000);

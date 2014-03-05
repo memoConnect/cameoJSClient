@@ -1,7 +1,8 @@
 define([
     'app',
     'ngload!pckUser',
-    'ngload!cmUtil'
+    'ngload!cmUtil',
+    'ngload!cmCrypt'
 ], function (app) {
     'use strict';
 
@@ -11,8 +12,8 @@ define([
         'cmUserModel',
         'cmLogger',
         'cmUtil',
-//        'cmCrypt',
-    function($scope, $rootScope, cmUserModel, cmLogger, cmUtil) {
+        'cmCrypt',
+    function($scope, $rootScope, cmUserModel, cmLogger, cmUtil, cmCrypt) {
         $scope.identity = cmUserModel.data;
 
         /**
@@ -39,19 +40,19 @@ define([
         /**
          * ats oka async rsa
          */
-//        $scope.keyLengths = cmCrypt.getKeyLengths();
-//        $scope.exp = cmCrypt.getExpotential();
-//        $scope.keylen = 128;
-//        $scope.state = '';
-//
-//        cmCrypt.initGeneration();
-//
-//        $scope.generate = function(){
-//            cmCrypt.generateKeypair();
-//        };
-//
-//        $scope.cancel = function(){
-//            cmCrypt.cancelGeneration();
-//        };
+        $scope.keyLengths = cmCrypt.getKeyLengths();
+        $scope.exp = cmCrypt.getExpotential();
+        $scope.keylen = 128;
+        $scope.state = '';
+
+        cmCrypt.initGeneration();
+
+        $scope.generate = function(){
+            cmCrypt.generateKeypair();
+        };
+
+        $scope.cancel = function(){
+            cmCrypt.cancelGeneration();
+        };
     }]);
 });
