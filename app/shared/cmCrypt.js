@@ -70,7 +70,7 @@ var cmCrypt = angular.module('cmCrypt', ['cmLogger'])
                 try {
                     decryptedString = sjcl.decrypt(secretKey, decodedSecretString)
                 } catch (e) {
-                    cmLogger.warn('Unable to decrypt.', e)
+                    //cmLogger.warn('Unable to decrypt.', e)
                 }
 
                 return decryptedString || false

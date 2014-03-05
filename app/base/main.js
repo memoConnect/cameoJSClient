@@ -107,19 +107,23 @@ addPackage('pckConversations',{
         'cmLogger', 
         'cmCrypt', 
         'cmAuth',
+        'cmUtil',
         'pckContacts',
         '_v/captcha/captchagen/captchagen'
     ],    
     resources : [
-       'comps/conversations/conversationsAdapter-srvc',
-       'comps/conversations/conversationsModel-srvc',
-       'comps/conversations/attachments-drtv',
-       'comps/conversations/avatar-drtv',
-       'comps/conversations/captcha-drtv',
-       'comps/conversations/conversation-drtv',
-       'comps/conversations/conversation-input-drtv',
-       'comps/conversations/passphrase-drtv',
-       'comps/conversations/message-drtv' 
+        'comps/conversations/conversationsAdapter-srvc',
+        'comps/conversations/conversationsModel-srvc',
+        'comps/conversations/conversationFactory-srvc',
+        'comps/conversations/messageFactory-srvc',
+        'comps/conversations/recipientFactory-srvc',
+        'comps/conversations/attachments-drtv',
+        'comps/conversations/avatar-drtv',
+        'comps/conversations/captcha-drtv',
+        'comps/conversations/conversation-drtv',
+        'comps/conversations/conversation-input-drtv',
+        'comps/conversations/passphrase-drtv',
+        'comps/conversations/message-drtv'
     ]
 })
 

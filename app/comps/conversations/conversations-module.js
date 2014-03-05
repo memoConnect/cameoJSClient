@@ -8,17 +8,31 @@ var cmConversations = angular.module('cmConversations', [
 ])
 
 cmConversations.service('cmConversationsAdapter', [
-    '$q', 
-    'cmApi', 
+    'cmApi',
+    'cmUtil',
     cmConversationsAdapter
 ])
 
+cmConversations.factory('cmConversationFactory',[
+    'cmConversationsAdapter',
+    'cmMessageFactory',
+    'cmRecipientFactory',
+    cmConversationFactory
+])
+
+cmConversations.factory('cmMessageFactory',[
+    'cmCrypt',
+    cmMessageFactory
+])
+
+cmConversations.factory('cmRecipientFactory',[
+    cmRecipientFactory
+])
 
 cmConversations.service('cmConversationsModel', [
     'cmConversationsAdapter',
-    'cmCrypt',
+    'cmConversationFactory',
     '$q',
-    'cmAuth',
     cmConversationsModel
 ])
 
