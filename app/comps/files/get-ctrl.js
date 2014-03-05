@@ -43,9 +43,9 @@ function getFileCtrl($scope, cmFilesAdapter){
     }
 
     function getChunk(index){
-        cmFilesAdapter.getFile($scope.assetId, index)
-        .then(function(json){
-            file += atob(json.chunk.replace('data:;base64,',''));
+        cmFilesAdapter.getChunk($scope.assetId, index)
+        .then(function(chunk){
+            file += atob(chunk.replace('data:application/octet-stream;base64,',''));
             if(index+1 < $scope.file.maxChunks){
                 getChunk(index+1);
             } else {

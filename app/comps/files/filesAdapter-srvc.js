@@ -14,10 +14,18 @@ function cmFilesAdapter(cmApi){
                     "X-Max-Chunks": data.chunksTotal,
                 }
             })
-        },
-        getFile: function(assetId, chunkId){
+        }, 
+
+        getFile: function(assetId){
             return cmApi.get({
-                url: "/file/"+assetId+(chunkId ? "/"+chunkId : "")
+                url: "/file/"+assetId
+            })
+        },
+
+        getChunk: function(assetId, chunkId){
+            return cmApi.get({
+                url: "/file/"+assetId+"/"+chunkId,
+                exp_ok: 'chunk'
             })
         }
     }

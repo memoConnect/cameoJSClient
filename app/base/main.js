@@ -42,6 +42,7 @@ var config = {
         // shared
         'util-spin': 'vendor/util/spin',
         'util-base64': 'vendor/util/base64',
+        'util-base64_decode': 'vendor/util/base64_decode',
         'util-passchk-fast': 'vendor/util/passchk_fast',
         // crypto
         'crypto-sjcl': 'vendor/sjcl/sjcl.min',
@@ -107,7 +108,8 @@ addPackage('pckFiles',{
     deps: [
         'cmApi',
         'vendor/filesaver/filesaver',
-        'angular-resource'
+        'angular-resource',
+        'util-base64_decode'
         //'vendor/base64_decode'
     ],
     resources : [
