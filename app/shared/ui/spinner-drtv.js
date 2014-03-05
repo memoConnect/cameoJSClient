@@ -3,15 +3,15 @@
 function cmSpinner(){
     return {
         restrict: 'A',
-        template: '<div ng-show="loading"><div class="modal-spinner"></div></div>',
+        template: '<div class="modal-spinner-wrapper" ng-show="loading"><div class="modal-spinner"></div></div>',
         controller: function($scope, $element){
             $scope.loading = false;
 
-            var spinner = null;
+            var spinner = new Spinner();
             var loadingContainer = angular.element.find('.modal-spinner')[0];
 
             $scope.$on('SHOW-SPINNER', function(){
-                spinner = new Spinner().spin();
+                spinner = spinner.spin();
                 loadingContainer.appendChild(spinner.el);
                 $scope.loading = true
             });
