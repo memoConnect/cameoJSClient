@@ -47,6 +47,7 @@ var config = {
         // crypto
         'crypto-sjcl': 'vendor/crypto/sjcl/sjcl.min',
         'crypto-ats-oka': 'vendor/crypto/ats-oka/ats-oka.min',
+        'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt.min',
 
         'jquery': 'vendor/jquery/jquery-2.1.0'
     },
@@ -71,7 +72,13 @@ var config = {
 
         'cmNotify': ['angular-growl'],
         'cmAuth': ['angular', 'util-base64', 'cmCrypt', 'cmApi'],
-        'cmCrypt': ['angular', 'util-base64', 'cmLogger', 'crypto-sjcl', 'crypto-ats-oka'],
+        'cmCrypt': [
+            'angular',
+            'util-base64',
+            'cmLogger',
+            'crypto-sjcl',
+            'crypto-jsencrypt'
+        ],
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
         'cmApi': ['angular', 'cmLogger'],
         'cmProfile' : ['jquery', 'angular', 'cmApi', 'cmAuth'],
@@ -103,6 +110,19 @@ function addPackage(package_name, package) {
     })
 }
 
+addPackage('pckUser',{
+    root: 'comps/user/user-module',
+    deps: [
+        'angular',
+        'cmAuth',
+        'cmLocalStorage'
+    ],
+    resources : [
+        'comps/user/userModel-srvc',
+        'comps/user/login-drtv'
+    ]
+})
+
 addPackage('pckConversations',{
     root: 'comps/conversations/conversations-module',
     deps: [
@@ -113,6 +133,7 @@ addPackage('pckConversations',{
         'cmAuth',
         'cmUtil',
         'pckContacts',
+        'pckUser',
         '_v/captcha/captchagen/captchagen'
     ],    
     resources : [
@@ -148,7 +169,7 @@ addPackage('pckContacts',{
         'cmApi', 
         'cmLogger', 
         'cmUtil',
-        'pckUser' 
+        'pckUser'
     ],    
     resources : [
         'comps/contacts/add-external-contact-drtv',
@@ -158,19 +179,6 @@ addPackage('pckContacts',{
         'comps/contacts/contactsAdapter-srvc',
         'comps/contacts/search-cameo-identity-drtv',    
         'comps/contacts/type-chooser-drtv'
-    ]
-})
-
-addPackage('pckUser',{
-    root: 'comps/user/user-module',
-    deps: [
-        'angular',
-        'cmAuth',
-        'cmLocalStorage'
-    ],    
-    resources : [
-        'comps/user/userModel-srvc',
-        'comps/user/login-drtv'
     ]
 })
 
