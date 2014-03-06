@@ -243,21 +243,26 @@ factory('cmLocalStorage',['LocalStorageService', function(LocalStorageService){
          */
         create: function(id, key){
             if(typeof id !== 'undefined' && id != '' && typeof key !== 'undefined' && key != ''){
+                var storage = null;
+
                 for(var i = 0; i < instances.length; i++){
                     if(typeof instances[i] === 'object' &&
                         instances[i].id == id){
 
-                        return instances[i].instance;
+                        storage = instances[i].instance;
+                        break;
                     }
                 }
 
-                var localStorage = new LocalStorageService();
-                localStorage.setInstanceVars({id:id,key:key});
-                localStorage.init();
+                if(storage === null){
+                    storage = new LocalStorageService();
+                    storage.setInstanceVars({id:id,key:key});
+                    storage.init();
 
-                instances.push({id:id,instance:localStorage});
+                    instances.push({id:id,instance:localStorage});
+                }
 
-                return localStorage;
+                return storage;
             }
 
             return null;
