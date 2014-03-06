@@ -125,7 +125,7 @@ module.exports = function (grunt) {
 
         phonegap: {
             config: {
-                root: 'phonegap-src',
+                root: 'app',
                 config: 'phonegap-res/config.xml',
                 cordova: '.cordova',
                 path: 'phonegap-build',
@@ -164,27 +164,27 @@ module.exports = function (grunt) {
                 // Set an app icon at various sizes (optional)
                 icons: {
                     android: {
-                        ldpi: 'phonegap-res/res/icon/android/icon-36-ldpi.png',
-                        mdpi: 'phonegap-res/res/icon/android/icon-48-mdpi.png',
-                        hdpi: 'phonegap-res/res/icon/android/icon-72-hdpi.png',
-                        xhdpi: 'phonegap-res/res/icon/android/icon-96-xhdpi.png'
+                        ldpi: 'phonegap-res/res/icons/android/icon-36-ldpi.png',
+                        mdpi: 'phonegap-res/res/icons/android/icon-48-mdpi.png',
+                        hdpi: 'phonegap-res/res/icons/android/icon-72-hdpi.png',
+                        xhdpi: 'phonegap-res/res/icons/android/icon-96-xhdpi.png'
                     },
                     wp8: {
-                        app: 'phonegap-res/res/icon/windows-phone/icon-62-tile.png',
-                        tile: 'phonegap-res/res/icon/windows-phone/icon-173-tile.png'
+                        app: 'phonegap-res/res/icons/windows-phone/icon-62-tile.png',
+                        tile: 'phonegap-res/res/icons/windows-phone/icon-173-tile.png'
                     },
                     ios: {
-//                        icon29: 'phonegap-res/res/icon/ios/icon29.png',
-//                        icon29x2: 'phonegap-res/res/icon/ios/icon29x2.png',
-//                        icon40: 'phonegap-res/res/icon/ios/icon40.png',
-//                        icon40x2: 'phonegap-res/res/icon/ios/icon40x2.png',
-                        icon57: 'phonegap-res/res/icon/ios/icon57.png',
-                        icon57x2: 'phonegap-res/res/icon/ios/icon57x2.png',
-                        //icon60x2: 'phonegap-res/res/icon/ios/icon60x2.png',
-                        icon72: 'phonegap-res/res/icon/ios/icon72.png',
-                        icon72x2: 'phonegap-res/res/icon/ios/icon72x2.png'
-                        //icon76: 'phonegap-res/res/icon/ios/icon76.png',
-                        //icon76x2: 'phonegap-res/res/icon/ios/icon76x2.png'
+//                        icon29: 'phonegap-res/res/icons/ios/icon29.png',
+//                        icon29x2: 'phonegap-res/res/icons/ios/icon29x2.png',
+//                        icon40: 'phonegap-res/res/icons/ios/icon40.png',
+//                        icon40x2: 'phonegap-res/res/icons/ios/icon40x2.png',
+                        icon57: 'phonegap-res/res/icons/ios/icon57.png',
+                        icon57x2: 'phonegap-res/res/icons/ios/icon57x2.png',
+                        //icon60x2: 'phonegap-res/res/icons/ios/icon60x2.png',
+                        icon72: 'phonegap-res/res/icons/ios/icon72.png',
+                        icon72x2: 'phonegap-res/res/icons/ios/icon72x2.png'
+                        //icon76: 'phonegap-res/res/icons/ios/icon76.png',
+                        //icon76x2: 'phonegap-res/res/icons/ios/icon76x2.png'
                     }
                 },
 
@@ -192,30 +192,30 @@ module.exports = function (grunt) {
                 // Only works for Android and IOS
                 screens: {
                     android: {
-                        ldpi: 'phonegap-res/res/screen/android/screen-ldpi-portrait.png',
+                        ldpi: 'phonegap-res/res/screens/android/screen-ldpi-portrait.png',
                         // landscape version
-                        ldpiLand: 'phonegap-res/res/screen/android/screen-ldpi-landscape.png',
-                        mdpi: 'phonegap-res/res/screen/android/screen-mdpi-portrait.png',
+                        ldpiLand: 'phonegap-res/res/screens/android/screen-ldpi-landscape.png',
+                        mdpi: 'phonegap-res/res/screens/android/screen-mdpi-portrait.png',
                         // landscape version
-                        mdpiLand: 'phonegap-res/res/screen/android/screen-mdpi-landscape.png',
-                        hdpi: 'phonegap-res/res/screen/android/screen-hdpi-portrait.png',
+                        mdpiLand: 'phonegap-res/res/screens/android/screen-mdpi-landscape.png',
+                        hdpi: 'phonegap-res/res/screens/android/screen-hdpi-portrait.png',
                         // landscape version
-                        hdpiLand: 'phonegap-res/res/screen/android/screen-hdpi-landscape.png',
-                        xhdpi: 'phonegap-res/res/screen/android/screen-xhdpi-portrait.png',
+                        hdpiLand: 'phonegap-res/res/screens/android/screen-hdpi-landscape.png',
+                        xhdpi: 'phonegap-res/res/screens/android/screen-xhdpi-portrait.png',
                         // landscape version
-                        xhdpiLand: 'phonegap-res/res/screen/android/screen-xhdpi-landscape.png'
+                        xhdpiLand: 'phonegap-res/res/screens/android/screen-xhdpi-landscape.png'
                     },
                     ios: {
                         // ipad landscape
-                        ipadLand: 'phonegap-res/res/screen/ios/screen-ipad-landscape.png',
-                        ipadLandx2: 'phonegap-res/res/screen/ios/screen-ipad-landscape-2x.png',
+                        ipadLand: 'phonegap-res/res/screens/ios/screen-ipad-landscape.png',
+                        ipadLandx2: 'phonegap-res/res/screens/ios/screen-ipad-landscape-2x.png',
                         // ipad portrait
-                        ipadPortrait: 'phonegap-res/res/screen/ios/screen-ipad-portrait.png',
-                        ipadPortraitx2: 'phonegap-res/res/screen/ios/screen-ipad-portrait-2x.png',
+                        ipadPortrait: 'phonegap-res/res/screens/ios/screen-ipad-portrait.png',
+                        ipadPortraitx2: 'phonegap-res/res/screens/ios/screen-ipad-portrait-2x.png',
                         // iphone portrait
-                        iphonePortrait: 'phonegap-res/res/screen/ios/screen-iphone-portrait.png',
-                        iphonePortraitx2: 'phonegap-res/res/screen/ios/screen-iphone-portrait-2x.png',
-                        iphone568hx2: 'phonegap-res/res/screen/ios/screen-iphone-568h-2x.png'
+                        iphonePortrait: 'phonegap-res/res/screens/ios/screen-iphone-portrait.png',
+                        iphonePortraitx2: 'phonegap-res/res/screens/ios/screen-iphone-portrait-2x.png',
+                        iphone568hx2: 'phonegap-res/res/screens/ios/screen-iphone-568h-2x.png'
                     }
                 },
 
@@ -279,19 +279,19 @@ module.exports = function (grunt) {
         copy: {
             'phonegap-resources': {
                 files: [
-//                    {
-//                        expand: true,
-//                        flatten: false,
-//                        cwd: 'phonegap-res/res/',
-//                        src: '**',
-//                        dest: 'phonegap-src/res/'
-//                    },
+                    // copy all icons and splashs to /www/res
                     {
                         expand: true,
-                        flatten: false,
-                        cwd: 'app/',
-                        src: '**',
-                        dest: 'phonegap-src/'
+                        cwd: 'phonegap-res/res/',
+                        src: ['**'],
+                        dest: 'phonegap-build/www/res/'
+                    },
+                    // add adapter javascript to /www
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: 'phonegap-res/*.js',
+                        dest: 'phonegap-build/www/'
                     }
                 ]
             }
@@ -320,7 +320,11 @@ module.exports = function (grunt) {
      * $ cd phonegap-build // change in dir
      * $ phonegap run android
      */
-    grunt.registerTask('phonegap', ['phonegap:build', 'copy:phonegap-resources', 'template:phonegap-index']);
+    grunt.registerTask('phonegap', [
+        'phonegap:build',
+        'copy:phonegap-resources',
+        'template:phonegap-index'
+    ]);
 
     grunt.registerTask('www', ['template:www-index']);
 };
