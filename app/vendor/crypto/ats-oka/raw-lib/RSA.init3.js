@@ -138,6 +138,7 @@ function initRSA3( packages ) {
 		function() {
 		    RSA.log("RSAEngine:0.0");
 		    et1.start("Step1");
+            console.log(this)
 		    return BREAK;
 		},
 		// // Step1.ver1

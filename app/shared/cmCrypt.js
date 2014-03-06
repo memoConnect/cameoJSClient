@@ -3,12 +3,11 @@
 angular.module('cmCrypt', ['cmLogger'])
 .service('cmCrypt',[
     'cmLogger',
-    function (cmLogger) {
-        /**
-         * interval for keypair generation
-         * @type {null}
-         */
-        var genInterval = null;
+    '$q',
+    function (cmLogger, $q) {
+        // private vars
+        var _genInterval = null,
+            _atsOka;
 
         return {
             /**
@@ -90,61 +89,77 @@ angular.module('cmCrypt', ['cmLogger'])
                 return 65537;
             },
 
-            initGeneration: function(){
-//                var BigInteger = titaniumcore.crypto.BigInteger;
-//                var RSA = titaniumcore.crypto.RSA;
-//                var RSAKeyFormat = titaniumcore.crypto.RSAKeyFormat;
-//
-//                RSA.installKeyFormat( RSAKeyFormat );
-
-//                var BigInteger = titaniumcore.crypto.BigInteger;
-//                var RSA = titaniumcore.crypto.RSA;
-//                var RSAKeyFormat = titaniumcore.crypto.RSAKeyFormat;
-
-//                atsOka.RSA.installKeyFormat( atsOka.RSAKeyFormat );
-            },
-
-            generateKeypair: function(){
-                if ( genInterval != null ) {
+            generateKeypair: function(keylen, $scopeState){
+                if ( _genInterval != null ) {
                     return;
                 }
 
+                var promise = $q.defer();
+
+                // init atsOka is wrapped in window
+                if(_atsOka == undefined){
+                    _atsOka = window.atsOka();
+                    _atsOka.titaniumcore.crypto.RSA.installKeyFormat( _atsOka.titaniumcore.crypto.RSAKeyFormat );
+                }
+
+                /**
+                 * create empty class of RSA
+                 * @type {_atsOka.titaniumcore.crypto.RSA}
+                 */
+                var rsaKey = new _atsOka.titaniumcore.crypto.RSA();
+
+                /**
+                 * called in the whole progress of keygeneration to show spinner
+                 * @param counts
+                 */
                 function progress(counts){
-                    $scope.$apply(function(){
-                        $scope.state = 'counts: '+counts;
-                    })
+//                    cmLogger.debug('ats-oka progress')
+                    if($scopeState != undefined){
+                        $scopeState.$apply(function(){
+                            $scopeState.state = 'counts: '+counts;
+                        })
+                    }
                 }
 
                 function result(rsa){
 
                 }
 
+                /**
+                 * called after key generation is succeed and hide spinner
+                 * @param succeeded
+                 * @param count
+                 * @param time
+                 * @param startTime
+                 * @param finishTime
+                 */
                 function done( succeeded, count, time ,startTime, finishTime ){
-                    genInterval = null;
+                    _genInterval = null;
                     cmLogger.debug('ats-oka done')
 
-                    $scope.$apply(function(){
-                        $scope.state =
-                            'Elapsed Time '+ cmUtil.millisecondsToStr(time)+'\n'+
-                                'Step Count '+count+'\n'+
-                                'Start Time '+startTime.toString()+'\n'+
-                                'Finished Time '+finishTime.toString()
-
-                        $scope.privKey = base64x_encode( rsaKey.privateKeyBytes() );
-                        $scope.pubKey = base64x_encode( rsaKey.publicKeyBytes() );
-                    });
+                    promise.resolve({
+                        time: time,
+                        count: count,
+                        startTime: startTime,
+                        finishTime: finishTime,
+                        privKey: _atsOka.base64x_encode( rsaKey.privateKeyBytes() ),
+                        pubKey: _atsOka.base64x_encode( rsaKey.publicKeyBytes() )
+                    })
                 }
 
-//                var rsaKey = new atsOka.RSA();
-//                cmLogger.debug('ats-oka generateAsync')
-//                genInterval = rsaKey.generateAsync( $scope.keylen, $scope.exp, progress, result, done );
-            },
+                cmLogger.debug('ats-oka generateAsync '+keylen+' '+this.getExpotential());
+                _genInterval = rsaKey.generateAsync( keylen, this.getExpotential(), progress, result, done );
 
+                return promise.promise;
+            },
+            /**
+             * cancel key generation process / simple clearInterval
+             */
             cancelGeneration: function(){
-                if ( genInterval != null ) {
+                if ( _genInterval != null ) {
                     cmLogger.debug('ats-oka cancelGeneration')
-                    var id = genInterval;
-                    genInterval = null;
+                    var id = _genInterval;
+                    _genInterval = null;
                     clearInterval( id );
                 }
             }

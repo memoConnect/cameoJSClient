@@ -8,7 +8,7 @@
 //                                                     //
 /////////////////////////////////////////////////////////
 
-// Please check nonstructured.examples.js. 
+// Please check nonstructured.examples.js.
 // There are many examples with description to learn how to use nonstructured.js.
 
 function init( packageRoot ) {
@@ -43,7 +43,7 @@ function init( packageRoot ) {
      * Once it starts, the closure will be repeatedly called until it returns
      * false.  When the closure returns another closure, it will be queued
      * on an internal stack as a statement and the closure will be processed
-     * recursively. 
+     * recursively.
      */
     function Nonstructured(/*...args */) {
 	this._stack = [];
@@ -93,8 +93,8 @@ function init( packageRoot ) {
 	return closure( scope, param, subparam );
     };
     var callClosureTrace = function( id, closure, scope, param, subparam ) {
-	var name = ( closure.__NAME == null ) 
-	    ? 'CLOSURE=' + (id==null?"unknown":id) 
+	var name = ( closure.__NAME == null )
+	    ? 'CLOSURE=' + (id==null?"unknown":id)
 	    : 'CLOSURE=' + closure.__NAME + "/"+ (id==null?"unknown":id);
 	var et = ElapsedTime.create();
 	et.start( name );
@@ -120,7 +120,7 @@ function init( packageRoot ) {
      * point of view, A closure is a statement. I prefer use this term.  A
      * statement is supposed to be called repeatedly until it returns false.
      * And I call this each calling "step".This process() method processes a
-     * step. 
+     * step.
      *
      * You can fully execute the procedure in this way :
      *
@@ -128,7 +128,7 @@ function init( packageRoot ) {
      *     var f=function() {
      *         return i++<10;
      *     };
-     *     
+     *
      *     var nonstructured = f.ready();
      *     while ( nonstructured.process() ) {
      *         trace("processing!");
@@ -137,14 +137,14 @@ function init( packageRoot ) {
      */
 
     Nonstructured.prototype.process = function() {
-	if ( this._stack.length == 0 ) 
+	if ( this._stack.length == 0 )
 	    return false;
 
 	var result;
 	var current = this._stack[0];
 	var closure = current.closure;
 	var scope = this._scope;
- 
+
 	closure = closuring( closure );
 
 	// try {
@@ -183,7 +183,7 @@ function init( packageRoot ) {
 	return 0<this._stack.length;
     };
 
-    Nonstructured.prototype.step = Nonstructured.prototype.process; 
+    Nonstructured.prototype.step = Nonstructured.prototype.process;
 
     /**
      * Methods below are setter/getter methods. Get a current value without
@@ -191,7 +191,7 @@ function init( packageRoot ) {
      */
 
     /**
-     * limit() 
+     * limit()
      *
      * limit property specifies the maximum steps for the execution.
      * If the count of steps exceeds this limit property, it will
@@ -241,7 +241,7 @@ function init( packageRoot ) {
     };
 
     /**
-     * done() 
+     * done()
      *
      * done property specifies a procedure to be done when this object
      * finished to process all statements.
@@ -256,7 +256,7 @@ function init( packageRoot ) {
     };
 
     /**
-     * progress() 
+     * progress()
      *
      * progress property specifies a procedure to be call back when a
      * statement is processed.
@@ -279,14 +279,14 @@ function init( packageRoot ) {
      * statement returns false.
      *
      * If frequency property is larger than zero, Nonstructured try to
-     * execute it asynchronously. 
+     * execute it asynchronously.
      */
     Nonstructured.prototype.go = function() {
 	log( "go()" );
 	if ( this._frequency <=0 ) {
 	    return executeSync( this, this._limit, this._done, this._progress );
 	} else {
-	    return executeAsync( this, this._frequency, this._timeout, this._limit, this._done, this._progress ); 
+	    return executeAsync( this, this._frequency, this._timeout, this._limit, this._done, this._progress );
 	}
     }
 
@@ -436,7 +436,7 @@ function init( packageRoot ) {
      * list()
      *
      * Creates a multiple-statement.  This method returns a newly generated
-     * closure which executes multiple closures. 
+     * closure which executes multiple closures.
      */
 
     function list( closures ) {
@@ -444,7 +444,7 @@ function init( packageRoot ) {
 	// for ( var i=0; i<closures.length; i++ ) {
 	// 	log( "list["+i+"]="+closures[i] );
 	// }
-	
+
 	var et = ElapsedTime.create();
 	var first=true;
 
@@ -479,7 +479,7 @@ function init( packageRoot ) {
 
 	    var closure = closuring( closures[ i ] );
 	    // var result = closure( scope, param, subparam );
-	    
+
 	    var name = closure.__NAME == null ? closureName + "("+ zerof(i,2) +")" : closure.__NAME;
 	    var result = callClosure( name , closure, scope, param, subparam );
 
@@ -491,7 +491,7 @@ function init( packageRoot ) {
 
 	    if ( result ) {
 	    } else {
-		result = CONTINUE; 
+		result = CONTINUE;
 	    }
 
 	    // NOTE1: If the result value is a Label object and their
@@ -533,10 +533,10 @@ function init( packageRoot ) {
 		}
 
 	    } else {
-		// Wrap the result value by ResultWrapper object. 
-		// The result value is not always fresh new instance druing it loops. 
+		// Wrap the result value by ResultWrapper object.
+		// The result value is not always fresh new instance druing it loops.
 		// modification for result causes skipping necessary procedure.
-		// to avoid this issue, wrapping it before any modification is required. 
+		// to avoid this issue, wrapping it before any modification is required.
 
 		if ( ( ! result.IS_LABEL() ) || ( result.LABELED() == closures.IDENTIFIED() ) ) {
 		    if ( result.IS_CONTINUE() ) {
@@ -660,6 +660,7 @@ function init( packageRoot ) {
 
     function createFlowControlFunction( fieldName ) {
 	return function() {
+        console.log(this)
 	    this[ fieldName ] = true;
 	    return this;
 	};
@@ -730,7 +731,7 @@ function init( packageRoot ) {
 	// trace("_SET_LABEL_NAME:__LABEL_NAME:"+this.__LABEL_NAME);
 	return this;
     }
-    
+
     var _GET_LABEL_NAME = function() {
 	// trace("_GET_LABEL_NAME:__LABEL_NAME:"+this.__LABEL_NAME);
 	return this.__LABEL_NAME;
@@ -797,8 +798,8 @@ function init( packageRoot ) {
     BREAK.IS_FLOW_CONTROLLER = RETURN_TRUE;
     AGAIN.IS_FLOW_CONTROLLER = RETURN_TRUE;
     EXIT.IS_FLOW_CONTROLLER = RETURN_TRUE;
-    LABEL.IS_FLOW_CONTROLLER = RETURN_TRUE; 
-    
+    LABEL.IS_FLOW_CONTROLLER = RETURN_TRUE;
+
     // NOTE : Using LABEL function itself as a constant flow controller is
     // available but not recommended.  It will work as EXIT with default
     // label name.

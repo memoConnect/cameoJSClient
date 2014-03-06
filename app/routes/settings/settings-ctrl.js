@@ -45,10 +45,25 @@ define([
         $scope.keylen = 128;
         $scope.state = '';
 
-        cmCrypt.initGeneration();
-
         $scope.generate = function(){
-            cmCrypt.generateKeypair();
+            $scope.state = '';
+            $scope.privKey = '';
+            $scope.pubKey = '';
+            /**
+             * call cmCrypt to generate KeyPair
+             */
+            cmCrypt.generateKeypair($scope.keylen, $scope).then(
+                function(crypto){
+                    $scope.state =
+                        'Elapsed Time '+ cmUtil.millisecondsToStr(crypto.time)+'\n'+
+                        'Step Count '+crypto.count+'\n'+
+                        'Start Time '+crypto.startTime.toString()+'\n'+
+                        'Finished Time '+crypto.finishTime.toString()
+
+                    $scope.privKey = crypto.privKey
+                    $scope.pubKey = crypto.pubKey
+                }
+            );
         };
 
         $scope.cancel = function(){

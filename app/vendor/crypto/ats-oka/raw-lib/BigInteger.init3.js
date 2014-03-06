@@ -716,7 +716,7 @@ function initBigInteger3( packages ) {
 		    // BigInteger.log( "modPow.Montgomery" );
 		    z = new BigInteger.Montgomery(m);
 		}
-	    
+
 		// precomputation
 		/*var*/ g = new Array(), n = 3, k1 = k-1, km = (1<<k)-1;
 		g[1] = z.convert(self);
