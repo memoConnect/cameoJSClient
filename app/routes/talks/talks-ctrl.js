@@ -13,8 +13,8 @@ define([
         'cmTalksModel',
 //        function($scope, $rootScope, cmConversationsModel, cmTalksModel) {
         function($scope, $rootScope, cmTalksModel) {
-            $scope.conversations = cmConversationsModel;
-//            $scope.conversations = cmTalksModel;
+//            $scope.conversations = cmConversationsModel;
+            $scope.conversations = cmTalksModel;
 
             $rootScope.tabs = [
                 {i18n:'BACK',icon:'fa-chevron-left',href:'#/start'},

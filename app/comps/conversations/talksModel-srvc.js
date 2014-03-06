@@ -1,6 +1,6 @@
 'use strict';
 
-function cmTalksModel (cmConversationsAdapter, cmMessageFactory) {
+function cmTalksModel (cmConversationsAdapter, cmConversationFactory) {
     var talks = [],
         limit = 5,
         offset = 13;
@@ -9,18 +9,15 @@ function cmTalksModel (cmConversationsAdapter, cmMessageFactory) {
         cmConversationsAdapter.getConversations(5, 13).then(
             function (data) {
                 data.forEach(function (data) {
-                    talks.add(data);
-//                    var conversation = new cmConversationFactory(conversation_data);
-//                    conversations.push(conversation);
+                    var conversation = cmConversationFactory.create(data);
+                    talks.add(conversation);
                 });
-
-                console.log(talks)
             }
         )
     };
 
-    talks.add = function(data){
-        talks.push(data);
+    talks.add = function(conversation){
+        talks.push(conversation);
     }
 
     talks.init();

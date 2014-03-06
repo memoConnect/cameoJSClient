@@ -55,7 +55,7 @@ cmConversations.service('cmConversationsModel', [
 
 cmConversations.service('cmTalksModel', [
     'cmConversationsAdapter',
-    'cmMessageFactory',
+    'cmConversationFactory',
     cmTalksModel
 ])
 

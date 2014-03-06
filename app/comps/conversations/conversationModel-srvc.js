@@ -21,7 +21,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
             // register all messages as Message objects
             if (conversation_data.messages) {
                 conversation_data.messages.forEach(function (message_data) {
-                    self.addMessage(new cmMessageFactory(message_data));
+                    self.addMessage(cmMessageFactory.create(message_data));
                 })
             }
 
@@ -32,7 +32,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
                     if (typeof recipient_data == 'string') {
                         cmAuth.getIdentity(recipient_data)
                             .then(function (identity) {
-                                self.addRecipient(new cmRecipientFactory(identity))
+                                self.addRecipient(cmRecipientFactory.create(identity))
                             });
                     } else {
                         self.addRecipient(new cmRecipientFactory(recipient_data));
