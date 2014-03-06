@@ -25,8 +25,13 @@ cmConversations.factory('cmConversationFactory',[
     cmConversationFactory
 ])
 
-cmConversations.factory('cmMessageFactory',[
+cmConversations.factory('cmMessageModel',[
     'cmCrypt',
+    cmMessageModel
+])
+
+cmConversations.factory('cmMessageFactory',[
+    'cmMessageModel',
     cmMessageFactory
 ])
 

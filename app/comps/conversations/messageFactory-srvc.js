@@ -1,50 +1,36 @@
 'use strict';
 
-function cmMessageFactory (cmCrypt){
-    var Message = function(data){
-        //Attributes:
-        this.id = '';
-        this.body = '';
-        this.decryptedBody = '';
-        this.from = '';
-        this.status = '';
-        this.lastUpdated = '';
-        this.created = '';
-        this.lastMessage = '';
+function cmMessageFactory (cmMessageModel){
+    var instanceMock = [{id:'',instance:{}}];
+    var instances = [];
 
-        var self = this;
+    return {
+        create: function(data){
+            if(typeof data !== 'undefined'){
+                var message = null;
+                for(var i = 0; i < instances.length; i++){
+                    if(typeof instances[i] === 'object' &&
+                        instances[i].id == data.id){
 
-        this.encryptWith = function (passphrase) {
-            this.body = cmCrypt.encryptWithShortKey(passphrase, this.body)
-            return this;
+                        message = instances[i].instance;
+                        break;
+                    }
+                }
+
+                if(message === null){
+                    var message = new cmMessageModel(data);
+
+                    instances.push({id:data.id,instance:message});
+                }
+
+                return message;
+            }
+
+            return null;
+        },
+
+        getQty: function(){
+            return instances.length;
         }
-
-        this.decryptWith = function (passphrase) {
-            var decrypted_text = cmCrypt.decrypt(passphrase, this.body)
-            this.decryptedBody = decrypted_text || this.body
-            return !!decrypted_text;
-        }
-
-        this.sendTo = function (conversation) {
-            return    cmConversationsAdapter.sendMessage(conversation.id, this.body)
-                .then(function (message_data) {
-                    conversation.addMessage(new Message(message_data))
-                })
-        }
-
-        this.init = function (message_data) {
-            this.id = message_data.id;
-            this.body = message_data.messageBody;
-            this.decryptedBody = message_data.messageBody;
-            this.from = message_data.fromIdentity;
-            this.status = message_data.messageStatus;
-            this.lastUpdated = message_data.lastUpdated;
-            this.created = message_data.created;
-            this.lastMessage = message_data.lastMessage;
-        }
-
-        this.init(data);
-    };
-
-    return Message;
+    }
 }

@@ -119,6 +119,7 @@ addPackage('pckConversations',{
         'comps/conversations/conversationModel-srvc',
 
         'comps/conversations/messageFactory-srvc',
+        'comps/conversations/messageModel-srvc',
 
         'comps/conversations/recipientFactory-srvc',
 
