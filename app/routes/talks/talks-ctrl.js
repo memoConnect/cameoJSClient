@@ -9,12 +9,13 @@ define([
     app.register.controller('ConversationsCtrl',[
         '$scope',
         '$rootScope',
-//        'cmConversationsModel',
-        'cmTalksModel',
+        'cmConversationsModel',
+//        'cmTalksModel',
 //        function($scope, $rootScope, cmConversationsModel, cmTalksModel) {
-        function($scope, $rootScope, cmTalksModel) {
-//            $scope.conversations = cmConversationsModel;
-            $scope.conversations = cmTalksModel;
+        function($scope, $rootScope, cmConversationsModel) {
+//        function($scope, $rootScope, cmTalksModel) {
+            $scope.conversations = cmConversationsModel;
+//            $scope.conversations = cmTalksModel;
 
             $rootScope.tabs = [
                 {i18n:'BACK',icon:'fa-chevron-left',href:'#/start'},

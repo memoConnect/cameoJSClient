@@ -18,11 +18,15 @@
                         <!--{{recipient}}-->
                         <!--{{$last ? '' : ','}}-->
                 <!--</span> <br/>-->
-                Messages:   {{conversation.numberOfMessages}}
-               <!-- <cm-message cm-data="conversation.messages[0]" ng-if="conversation.messages[0]"></cm-message>-->
+                Messages:   {{conversation.count}}
+                <cm-message cm-data="conversation.newestMessage()" ng-if="conversation.newestMessage()"></cm-message>
             </a>
             <br/>
             <br/>
         </li>
     </ul>
+
+    <pre>
+    {{conversations}}
+    </pre>
 </div>

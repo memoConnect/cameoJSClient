@@ -25,7 +25,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
                 })
             }
 
-
             // register all recipients as Recipient objects
             if (conversation_data.recipients) {
                 conversation_data.recipients.forEach(function (recipient_data) {
@@ -42,7 +41,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
         };
 
         this.addMessage = function (message) {
-            console.log(message);
             this.messages.push(message);
             this.lastMessage = message;
             if (this.passphrase) message.decryptWith(this.passphrase);
@@ -106,6 +104,13 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
 
             return this;
         };
+
+        this.newestMessage = function(){
+            if(this.lastMessage !== undefined){
+                return this.lastMessage;
+            }
+            return false;
+        }
 
         this.init(data);
     }
