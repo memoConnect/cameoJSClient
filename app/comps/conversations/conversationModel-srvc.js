@@ -43,6 +43,16 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
             }
         };
 
+
+        /**
+         * Message Handling
+         */
+
+        /**
+         * add Message to Conversation
+         * @param message
+         * @returns {cmConversationModel.ConversationModel}
+         */
         this.addMessage = function (message) {
             if(this.messages.length == 0){
                 this.messages.push(message);
@@ -66,6 +76,24 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
             if (this.passphrase) message.decryptWith(this.passphrase);
             return this
         };
+
+        this.newMessage = function (message_data, passphrase) {
+            var message_data = (typeof message_data == 'string' ? {messageBody: message_data} : message_data )
+
+            var message = cmMessageFactory.create(message_data);
+
+            if(typeof passphrase !== 'undefined' && passphrase != ''){
+                message.encryptWith(passphrase);
+            }
+            message.sendTo(this);
+
+
+            return message;
+        };
+
+        /**
+         * Recipient Handling
+         */
 
         this.addRecipient = function (recipient) {
             if(this.recipients.length == 0){
@@ -103,11 +131,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
                 .then(function(){
                     self.subject = subject
                 })
-        };
-
-        this.newMessage = function (message_data) {
-            var message_data = (typeof message_data == 'string' ? {messageBody: message_data} : message_data )
-            return new Message(message_data)
         };
 
         this.newRecipient = function (identity_data) {
