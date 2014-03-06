@@ -2,11 +2,11 @@
 
 function cmTalksModel (cmConversationsAdapter, cmConversationFactory) {
     var talks = [],
-        limit = 5,
-        offset = 13;
+        limit = 10,// 5
+        offset = 0; // 13
 
     talks.init = function(){
-        cmConversationsAdapter.getConversations(5, 13).then(
+        cmConversationsAdapter.getConversations(limit, offset).then(
             function (data) {
                 data.forEach(function (data) {
                     var conversation = cmConversationFactory.create(data);

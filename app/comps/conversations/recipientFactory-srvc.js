@@ -1,8 +1,12 @@
 'use strict';
 
-function cmRecipientFactory (cmRecipientModel){
+function cmRecipientFactory ($rootScope, cmRecipientModel){
     var instanceMock = [{id:'',instance:{}}];
     var instances = [];
+
+    $rootScope.$on('logout', function(){
+        instances = [];
+    });
 
     return {
         create: function(data){
@@ -11,7 +15,7 @@ function cmRecipientFactory (cmRecipientModel){
 
                 for(var i = 0; i < instances.length; i++){
                     if(typeof instances[i] === 'object' &&
-                        instances[i].id == data.id){
+                        instances[i].id == data.identityId){
 
                         recipient = instances[i].instance;
                         break;
@@ -19,8 +23,8 @@ function cmRecipientFactory (cmRecipientModel){
                 }
 
                 if(recipient === null){
-                    recipient = new cmRecipientModel(data);
-                    instances.push({id:data.id,instance:recipient});
+                    recipient = new cmRecipientModel(data.identity);
+                    instances.push({id:data.identityId,instance:recipient});
                 }
 
                 return recipient;

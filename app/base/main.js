@@ -131,7 +131,9 @@ addPackage('pckConversations',{
         'comps/conversations/conversation-drtv',
         'comps/conversations/conversation-input-drtv',
         'comps/conversations/passphrase-drtv',
-        'comps/conversations/message-drtv'
+
+        'comps/conversations/message-drtv',
+        'comps/conversations/message-small-drtv'
     ]
 })
 

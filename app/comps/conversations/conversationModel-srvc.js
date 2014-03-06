@@ -8,6 +8,8 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
         this.messages = [];
         this.recipients = [];
         this.passphrase = '';
+        this.created = '';
+        this.lastUpdated = '';
         this.count = 0;
         this.lastMessage = undefined;
 
@@ -17,6 +19,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
             this.id             = conversation_data.id;
             this.subject        = conversation_data.subject;
             this.count          = conversation_data.numberOfMessages;
+            this.lastUpdated    = conversation_data.lastUpdated;
 
             // register all messages as Message objects
             if (conversation_data.messages) {
@@ -34,21 +37,54 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
                                 self.addRecipient(cmRecipientFactory.create(identity))
                             });
                     } else {
-                        self.addRecipient(new cmRecipientFactory(recipient_data));
+                        self.addRecipient(cmRecipientFactory.create(recipient_data));
                     }
                 })
             }
         };
 
         this.addMessage = function (message) {
-            this.messages.push(message);
+            if(this.messages.length == 0){
+                this.messages.push(message);
+            } else {
+                var i = 0;
+                var check = false;
+                    while(i < this.messages.length){
+                    if(message.id == this.messages[i].id){
+                        check = true;
+                        break;
+                    }
+                    i++;
+                }
+
+                if(check !== true){
+                    this.messages.push(message);
+                }
+            }
+
             this.lastMessage = message;
             if (this.passphrase) message.decryptWith(this.passphrase);
             return this
         };
 
         this.addRecipient = function (recipient) {
-            this.recipients.push(recipient);
+            if(this.recipients.length == 0){
+                this.recipients.push(recipient);
+            } else {
+                var i = 0;
+                var check = false;
+                while(i < this.recipients.length){
+                    if(recipient.id == this.recipients[i].id){
+                        check = true;
+                        break;
+                    }
+                    i++;
+                }
+
+                if(check !== true){
+                    this.recipients.push(recipient);
+                }
+            }
             return this;
         };
 
@@ -113,6 +149,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
         }
 
         this.init(data);
+
     }
 
     return ConversationModel;

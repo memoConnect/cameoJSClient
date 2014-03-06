@@ -1,8 +1,12 @@
 'use strict';
 
-function cmMessageFactory (cmMessageModel){
+function cmMessageFactory ($rootScope, cmMessageModel){
     var instanceMock = [{id:'',instance:{}}];
     var instances = [];
+
+    $rootScope.$on('logout', function(){
+        instances = [];
+    });
 
     return {
         create: function(data){

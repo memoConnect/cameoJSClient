@@ -1,8 +1,12 @@
 'use strict';
 
-function cmConversationFactory (cmConversationModel){
+function cmConversationFactory ($rootScope, cmConversationModel){
     var instanceMock = [{id:'',instance:{}}];
     var instances = [];
+
+    $rootScope.$on('logout', function(){
+        instances = [];
+    });
 
     return {
         create: function(data){

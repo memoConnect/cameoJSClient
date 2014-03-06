@@ -3,7 +3,7 @@
         <h1>{{"TALKS.HEADING"|cmTranslate}}</h1>
     </div>
 
-    <div cm-nav-tabs></div>
+    <div cm-nav-tabs ng-model="badges"></div>
 
     <br/>
 
@@ -19,14 +19,14 @@
                         <!--{{$last ? '' : ','}}-->
                 <!--</span> <br/>-->
                 Messages:   {{conversation.count}}
-                <cm-message cm-data="conversation.newestMessage()" ng-if="conversation.newestMessage()"></cm-message>
+                <cm-message-small cm-data="conversation.newestMessage()" ng-if="conversation.newestMessage()"></cm-message-small>
             </a>
             <br/>
             <br/>
         </li>
     </ul>
 
-    <pre>
-    {{conversations}}
-    </pre>
+    <div ng-if="showMore()">
+        <button class="btn btn-primary" ng-click="loadMore()">more</button>
+    </div>
 </div>

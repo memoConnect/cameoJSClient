@@ -1,18 +1,49 @@
 'use strict';
 
-function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q) {
-    //self:
-    var conversations = [];
+function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q, $rootScope) {
+    var self = this;
+
+    this.conversations = [];
+    this.quantity = 0;
+    this.limit = 10; // 5
+    this.offset = 0; //13
+
+    $rootScope.$on('logout', function(){
+        self.conversations = [];
+    });
+
 
     //Methods:
-    conversations.createConversation = function (subject) {
+    this.addConversation = function(conversation){
+        if(this.conversations.length == 0){
+            this.conversations.push((conversation));
+        } else {
+            var i = 0;
+            var check = false;
+            while(i < this.conversations.length){
+                if(conversation.id == this.conversations[i].id){
+                    check = true;
+                    break;
+                }
+                i++;
+            }
+
+            if(check !== true){
+                this.conversations.push(conversation);
+            } else {
+                conversation.update();
+            }
+        }
+    };
+
+    this.createConversation = function (subject) {
         var deferred = $q.defer()
 
         cmConversationsAdapter.newConversation(subject)
             .then(function (conversation_data) {
                 var conversation = cmConversationFactory.create(conversation_data)
 
-                conversations.push(conversation);
+                self.conversations.push(conversation);
                 deferred.resolve(conversation);
             })
 
@@ -20,7 +51,7 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
     }
 
     //nicht schön:
-    conversations.getConversation = function (id) {
+    this.getConversation = function (id) {
         var deferred = $q.defer()
 
         cmConversationsAdapter.getConversation(id)
@@ -38,17 +69,22 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
         return  deferred.promise;
     }
 
-    conversations.init = function () {
-        cmConversationsAdapter.getConversations(5, 13)
+    this.getConversations = function (limit, offset) {
+        if(typeof limit === 'undefined'){
+            limit = this.limit;
+        }
+
+        if(typeof offset === 'undefined'){
+            offset = this.offset;
+        }
+
+        cmConversationsAdapter.getConversations(limit, offset)
             .then(function (data) {
-                data.forEach(function (conversation_data) {
-                    var conversation = cmConversationFactory.create(conversation_data);
-                    conversations.push(conversation);
+                self.quantity = data.numberOfConversations;
+
+                data.conversations.forEach(function (conversation_data) {
+                    self.addConversation(cmConversationFactory.create(conversation_data))
                 })
             })
     }
-
-    conversations.init();
-
-    return conversations;
 }

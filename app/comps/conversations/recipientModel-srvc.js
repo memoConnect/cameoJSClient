@@ -23,7 +23,7 @@ function cmRecipientModel (cmConversationsAdapter){
 
         this.init = function (identity_data) {
             this.id = identity_data.id
-            this.displayName = identity_data.displayName || identity_data.cameoId || identity_data.id
+            this.displayName = identity_data.cameoId || identity_data.displayName || identity_data.id
         };
 
         this.init(data);
