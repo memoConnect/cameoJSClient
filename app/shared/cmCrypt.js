@@ -80,15 +80,26 @@ angular.module('cmCrypt', ['cmLogger'])
                 return decryptedString || false
             },
 
-
+            /**
+             * return the bit size of possible keygeneration
+             * @returns {string[]}
+             */
             getKeyLengths: function(){
-                return ['128','1024','2048','4096'];
+                return ['1024','2048','4096'];
             },
-
+            /**
+             * return the expotenial for keygeneration
+             * @returns {number}
+             */
             getExpotential: function(){
                 return 65537;
             },
-
+            /**
+             * start async process
+             * @param keylen
+             * @param $scopeState
+             * @returns {Promise.promise|*|webdriver.promise.Deferred.promise}
+             */
             generateKeypair: function(keylen, $scopeState){
                 if ( _genInterval != null ) {
                     return;
@@ -154,6 +165,7 @@ angular.module('cmCrypt', ['cmLogger'])
             },
             /**
              * cancel key generation process / simple clearInterval
+             * @returns {boolean}
              */
             cancelGeneration: function(){
                 if ( _genInterval != null ) {
@@ -161,7 +173,9 @@ angular.module('cmCrypt', ['cmLogger'])
                     var id = _genInterval;
                     _genInterval = null;
                     clearInterval( id );
+                    return true;
                 }
+            return false;
             }
         }
     }]

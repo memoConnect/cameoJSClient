@@ -42,7 +42,7 @@ define([
          */
         $scope.keyLengths = cmCrypt.getKeyLengths();
         $scope.exp = cmCrypt.getExpotential();
-        $scope.keylen = 128;
+        $scope.keylen = 1024;
         $scope.state = '';
 
         $scope.generate = function(){
