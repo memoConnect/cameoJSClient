@@ -85,11 +85,16 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
             if(typeof passphrase !== 'undefined' && passphrase != ''){
                 message.encryptWith(passphrase);
             }
-            message.sendTo(this);
 
-
-            return message;
+            return message.sendTo(this);
         };
+
+        this.newestMessage = function(){
+            if(this.lastMessage !== undefined){
+                return this.lastMessage;
+            }
+            return false;
+        }
 
         /**
          * Recipient Handling
@@ -116,6 +121,11 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
             return this;
         };
 
+        this.newRecipient = function (identity_data) {
+            var identity_data = (typeof identity_data == 'string' ? {id: identity_data} : identity_data )
+            return new Recipient(identity_data);
+        };
+
         this.removeRecipient = function (recipient) {
             var i = this.recipients.length;
 
@@ -126,16 +136,13 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
             return this;
         };
 
+
+
         this.updateSubject = function (subject) {
             cmConversationsAdapter.updateSubject(this.id, subject)
                 .then(function(){
                     self.subject = subject
                 })
-        };
-
-        this.newRecipient = function (identity_data) {
-            var identity_data = (typeof identity_data == 'string' ? {id: identity_data} : identity_data )
-            return new Recipient(identity_data);
         };
 
         this.setPassphrase = function (passphrase) {
@@ -163,13 +170,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
 
             return this;
         };
-
-        this.newestMessage = function(){
-            if(this.lastMessage !== undefined){
-                return this.lastMessage;
-            }
-            return false;
-        }
 
         this.init(data);
 

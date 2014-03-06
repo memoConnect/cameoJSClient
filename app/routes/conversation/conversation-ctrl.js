@@ -2,6 +2,7 @@ define([
     'app',
     'cmAuth',
     'util-base64',
+    'ngload!pckUser',
     'ngload!pckContacts',
     'ngload!pckConversations'
 ], function (app) {
