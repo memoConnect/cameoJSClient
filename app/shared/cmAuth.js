@@ -2,14 +2,14 @@
 
 var cmAuth = angular.module('cmAuth', ['cmApi', 'cmCrypt'])
 .service('cmAuth', [
-'cmApi',
-'cmCrypt',
+    'cmApi',
+    'cmCrypt',
 function(cmApi, cmCrypt){
     return {
 
         // ask the api for a new authentication token:
         requestToken: function(login, pass){
-            var auth = Base64.encode(login + ":" + cmCrypt.hash(pass));
+            var auth = _Base64.encode(login + ":" + cmCrypt.hash(pass));
 
             return cmApi.get({
                 url: '/token',

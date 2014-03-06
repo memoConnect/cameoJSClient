@@ -47,6 +47,7 @@ var config = {
         // crypto
         'crypto-sjcl': 'vendor/crypto/sjcl/sjcl.min',
         'crypto-ats-oka': 'vendor/crypto/ats-oka/ats-oka.min',
+        'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt.min',
 
         'jquery': 'vendor/jquery/jquery-2.1.0'
     },
@@ -71,7 +72,13 @@ var config = {
 
         'cmNotify': ['angular-growl'],
         'cmAuth': ['angular', 'util-base64', 'cmCrypt', 'cmApi'],
-        'cmCrypt': ['angular', 'util-base64', 'cmLogger', 'crypto-sjcl', 'crypto-ats-oka'],
+        'cmCrypt': [
+            'angular',
+            'util-base64',
+            'cmLogger',
+            'crypto-sjcl',
+            'crypto-jsencrypt'
+        ],
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
         'cmApi': ['angular', 'cmLogger'],
         'cmProfile' : ['jquery', 'angular', 'cmApi', 'cmAuth'],

@@ -73,16 +73,12 @@ describe('cmCrypt', function () {
     })
 
     describe('should have the function', function(){
-        it('getKeyLengths', function(){
-            expect(typeof crypt.getKeyLengths).toBe('function')
+        it('getKeySizes', function(){
+            expect(typeof crypt.getKeySizes).toBe('function')
         })
 
-        it('getExpotential', function(){
-            expect(typeof crypt.getExpotential).toBe('function')
-        })
-
-        it('generateKeypair', function(){
-            expect(typeof crypt.generateKeypair).toBe('function')
+        it('generateAsyncKeypair', function(){
+            expect(typeof crypt.generateAsyncKeypair).toBe('function')
         })
 
         it('cancelGeneration', function(){
@@ -91,16 +87,30 @@ describe('cmCrypt', function () {
     })
 
     describe('should return', function(){
-        it('array with keylength 3', function(){
-            expect(crypt.getKeyLengths().length).toEqual(3)
+        it('array with keySizes to equal 4', function(){
+            expect(crypt.getKeySizes().length).toEqual(4)
         })
 
-        it('expotential 65537', function(){
-            expect(crypt.getExpotential()).toEqual(65537)
+        it('false without keySize', function(){
+            expect(crypt.generateAsyncKeypair()).toBeFalsy()
+        })
+
+        it('false with other as number at keySize param', function(){
+            expect(crypt.generateAsyncKeypair('huhu')).toBeFalsy()
+            expect(crypt.generateAsyncKeypair({test:1})).toBeFalsy()
+            expect(crypt.generateAsyncKeypair(['pups'])).toBeFalsy()
         })
 
         it('false when called cancel generation', function(){
             expect(crypt.cancelGeneration()).toBeFalsy()
+        })
+    })
+
+    // TODO: test keypair generation
+    describe('tests keypair generation', function(){
+        it('should return a promise', function(){
+            var promise = crypt.generateAsyncKeypair(512)
+            expect(promise.then).toBeDefined()
         })
     })
 })
