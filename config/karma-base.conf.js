@@ -8,7 +8,6 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-
             'test/lib/jquery/*.js',
 
             'app/base/config.js',
@@ -18,6 +17,9 @@ module.exports = function(config) {
             'app/vendor/angular-translate/angular-translate.js',
 
             'app/vendor/!(require*)/*.js',
+
+            'app/vendor/crypto/sjcl/sjcl.min.js',
+//            'app/vendor/crypto/ats-oka/ats-oka.js',
 
             'app/shared/cmLogger.js',
             'app/shared/cmNotify.js',
@@ -29,7 +31,6 @@ module.exports = function(config) {
 
             'app/shared/i18n/language.js',
 
-
             'app/shared/ui/!(*module).js',
             'app/shared/ui/*module.js',
 
@@ -39,7 +40,6 @@ module.exports = function(config) {
             'app/comps/contacts/!(*module).js',
             'app/comps/contacts/*module.js',
 
-
             'app/comps/conversations/!(*module).js',
             'app/comps/conversations/*module.js',
 
@@ -47,7 +47,6 @@ module.exports = function(config) {
             'app/comps/validate/*module.js',
 
             'test/lib/angular/angular-mocks.js',
-
 
             'test/unit/shared/*spec.js',
             'test/unit/shared/ui/*spec.js',
@@ -85,7 +84,7 @@ module.exports = function(config) {
             //{pattern: 'test/unit/base/main.js', included: true},
             // load and json templates
             'app/**/*.html',
-            'app/**/*.json',
+            'app/**/*.json'
 //            {pattern: 'app/**/*.json', included: false}
         ],
 

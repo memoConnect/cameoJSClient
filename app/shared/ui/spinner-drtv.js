@@ -8,7 +8,7 @@ function cmSpinner(){
             $scope.loading = false;
 
             var spinner = new Spinner();
-            var loadingContainer = angular.element.find('.modal-spinner')[0];
+            var loadingContainer = angular.element($element[0].querySelector('.modal-spinner'))[0];
 
             $scope.$on('SHOW-SPINNER', function(){
                 spinner = spinner.spin();

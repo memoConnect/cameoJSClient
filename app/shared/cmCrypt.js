@@ -1,9 +1,13 @@
 'use strict';
 
-var cmCrypt = angular.module('cmCrypt', ['cmLogger'])
+angular.module('cmCrypt', ['cmLogger'])
 .service('cmCrypt',[
     'cmLogger',
-    function (cmLogger) {
+    '$q',
+    function (cmLogger, $q) {
+        // private vars
+        var _genInterval = null,
+            _atsOka;
 
         return {
             /**
@@ -74,6 +78,104 @@ var cmCrypt = angular.module('cmCrypt', ['cmLogger'])
                 }
 
                 return decryptedString || false
+            },
+
+            /**
+             * return the bit size of possible keygeneration
+             * @returns {string[]}
+             */
+            getKeyLengths: function(){
+                return ['1024','2048','4096'];
+            },
+            /**
+             * return the expotenial for keygeneration
+             * @returns {number}
+             */
+            getExpotential: function(){
+                return 65537;
+            },
+            /**
+             * start async process
+             * @param keylen
+             * @param $scopeState
+             * @returns {Promise.promise|*|webdriver.promise.Deferred.promise}
+             */
+            generateKeypair: function(keylen, $scopeState){
+                if ( _genInterval != null ) {
+                    return;
+                }
+
+                var promise = $q.defer();
+
+                // init atsOka is wrapped in window
+                if(_atsOka == undefined){
+                    _atsOka = window.atsOka();
+                    _atsOka.titaniumcore.crypto.RSA.installKeyFormat( _atsOka.titaniumcore.crypto.RSAKeyFormat );
+                }
+
+                /**
+                 * create empty class of RSA
+                 * @type {_atsOka.titaniumcore.crypto.RSA}
+                 */
+                var rsaKey = new _atsOka.titaniumcore.crypto.RSA();
+
+                /**
+                 * called in the whole progress of keygeneration to show spinner
+                 * @param counts
+                 */
+                function progress(counts){
+//                    cmLogger.debug('ats-oka progress')
+                    if($scopeState != undefined){
+                        $scopeState.$apply(function(){
+                            $scopeState.state = 'counts: '+counts;
+                        })
+                    }
+                }
+
+                function result(rsa){
+
+                }
+
+                /**
+                 * called after key generation is succeed and hide spinner
+                 * @param succeeded
+                 * @param count
+                 * @param time
+                 * @param startTime
+                 * @param finishTime
+                 */
+                function done( succeeded, count, time ,startTime, finishTime ){
+                    _genInterval = null;
+                    cmLogger.debug('ats-oka done')
+
+                    promise.resolve({
+                        time: time,
+                        count: count,
+                        startTime: startTime,
+                        finishTime: finishTime,
+                        privKey: _atsOka.base64x_encode( rsaKey.privateKeyBytes() ),
+                        pubKey: _atsOka.base64x_encode( rsaKey.publicKeyBytes() )
+                    })
+                }
+
+                cmLogger.debug('ats-oka generateAsync '+keylen+' '+this.getExpotential());
+                _genInterval = rsaKey.generateAsync( keylen, this.getExpotential(), progress, result, done );
+
+                return promise.promise;
+            },
+            /**
+             * cancel key generation process / simple clearInterval
+             * @returns {boolean}
+             */
+            cancelGeneration: function(){
+                if ( _genInterval != null ) {
+                    cmLogger.debug('ats-oka cancelGeneration')
+                    var id = _genInterval;
+                    _genInterval = null;
+                    clearInterval( id );
+                    return true;
+                }
+            return false;
             }
         }
     }]

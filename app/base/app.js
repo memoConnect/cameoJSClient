@@ -12,7 +12,7 @@ define([
     'cmLocalStorage',
     // vendor
     'jquery',
-    'base/config.js'
+    'base/config'
 ], function (angularAMD) {
     'use strict';
 
@@ -29,7 +29,7 @@ define([
         'cmAuth'
     ]);
 
-    cameo_config = cameo_config
+    //cameo_config = cameo_config
 
     /**
      * Check for local Env restApi URL
@@ -39,7 +39,6 @@ define([
             cameo_config.restApi = env.restApi;
         }
     }
-
 
     // cameo configuration for our providers
     app.config([

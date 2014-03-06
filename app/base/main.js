@@ -43,8 +43,10 @@ var config = {
         'util-spin': 'vendor/util/spin',
         'util-base64': 'vendor/util/base64',
         'util-passchk-fast': 'vendor/util/passchk_fast',
+
         // crypto
-        'crypto-sjcl': 'vendor/sjcl/sjcl.min',
+        'crypto-sjcl': 'vendor/crypto/sjcl/sjcl.min',
+        'crypto-ats-oka': 'vendor/crypto/ats-oka/ats-oka.min',
 
         'jquery': 'vendor/jquery/jquery-2.1.0'
     },
@@ -62,16 +64,18 @@ var config = {
         'angular-cookies': ['angular'],
         'angular-translate': ['angular'],
         'angular-growl': ['angular'],
+
+        'angular-translate-loader-static-files': ['angular','angular-translate'],
+        'angular-translate-storage-cookie': ['angular','angular-translate'],
+        'angular-translate-storage-local': ['angular','angular-translate', 'angular-translate-storage-cookie'],
+
         'cmNotify': ['angular-growl'],
         'cmAuth': ['angular', 'util-base64', 'cmCrypt', 'cmApi'],
-        'cmCrypt': ['angular', 'util-base64', 'crypto-sjcl', 'cmLogger'],
+        'cmCrypt': ['angular', 'util-base64', 'cmLogger', 'crypto-sjcl', 'crypto-ats-oka'],
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
         'cmApi': ['angular', 'cmLogger'],
         'cmProfile' : ['jquery', 'angular', 'cmApi', 'cmAuth'],
         'cmLogger' : ['angular'],
-        'angular-translate-loader-static-files': ['angular','angular-translate'],
-        'angular-translate-storage-cookie': ['angular','angular-translate'],
-        'angular-translate-storage-local': ['angular','angular-translate', 'angular-translate-storage-cookie'],
         'cmLanguage' : [
                         'angular', 
                         'angular-translate-loader-static-files',
@@ -172,8 +176,7 @@ addPackage('pckUser',{
 
 addPackage('pckValidate',{
     root: 'comps/validate/validate-module',
-    deps: [   
-    ],    
+    deps: [],
     resources : [
         'comps/validate/email-drtv',
         'comps/validate/password-drtv',
