@@ -19,6 +19,7 @@ module.exports = function(config) {
             'app/vendor/!(require*)/*.js',
 
             'app/vendor/crypto/sjcl/sjcl.min.js',
+            'app/vendor/crypto/jsencrypt/jsencrypt.min.js',
 //            'app/vendor/crypto/ats-oka/ats-oka.js',
 
             'app/shared/cmLogger.js',

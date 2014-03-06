@@ -37,35 +37,52 @@ define([
             $rootScope.$broadcast('HIDE-SPINNER');
         };
 
-        /**
-         * ats oka async rsa
-         */
-        $scope.keyLengths = cmCrypt.getKeyLengths();
-        $scope.exp = cmCrypt.getExpotential();
-        $scope.keylen = 1024;
-        $scope.state = '';
 
+        /**
+         * scope vars for keypair generation
+         * @type {string[]}
+         */
+        $scope.keySizes = cmCrypt.getKeySizes();
+        $scope.keySize = '1024';
+        $scope.state = '';
+        /**
+         * generate keypair
+         */
         $scope.generate = function(){
             $scope.state = '';
             $scope.privKey = '';
             $scope.pubKey = '';
             /**
              * call cmCrypt to generate KeyPair
+             * with keySize and callback for onGeneration
+             * returns a promise
              */
-            cmCrypt.generateKeypair($scope.keylen, $scope).then(
-                function(crypto){
+            cmCrypt.generateAsyncKeypair($scope.keySize,
+                function(counts, timeElapsed){
                     $scope.state =
-                        'Elapsed Time '+ cmUtil.millisecondsToStr(crypto.time)+'\n'+
-                        'Step Count '+crypto.count+'\n'+
-                        'Start Time '+crypto.startTime.toString()+'\n'+
-                        'Finished Time '+crypto.finishTime.toString()
+                        'counts: '+counts+'\n'+
+                        'time elapsed: '+cmUtil.millisecondsToStr(timeElapsed);
+                    $scope.$apply();
+                }
+            ).then(
+                function(result){
+                    $scope.state =
+                        'Elapsed Time '+ cmUtil.millisecondsToStr(result.timeElapsed)+'\n'+
+                        'Step Count '+result.counts+'\n';
 
-                    $scope.privKey = crypto.privKey
-                    $scope.pubKey = crypto.pubKey
+                    $scope.privKey = result.privKey;
+                    $scope.pubKey = result.pubKey;
+                },
+                function(){
+                    $scope.state = 'generation canceled';
+                    $scope.privKey = '';
+                    $scope.pubKey = '';
                 }
             );
         };
-
+        /**
+         * cancel keypair generation
+         */
         $scope.cancel = function(){
             cmCrypt.cancelGeneration();
         };

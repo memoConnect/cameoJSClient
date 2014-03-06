@@ -6,8 +6,11 @@ angular.module('cmCrypt', ['cmLogger'])
     '$q',
     function (cmLogger, $q) {
         // private vars
-        var _genInterval = null,
-            _atsOka;
+        var async = {
+            interval: null,
+            promise: null,
+            crypt: null
+        };
 
         return {
             /**
@@ -37,7 +40,7 @@ angular.module('cmCrypt', ['cmLogger'])
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                return Base64.encode(encryptedSecretString);
+                return _Base64.encode(encryptedSecretString);
             },
             /**
              * this method encrypts strings
@@ -56,7 +59,7 @@ angular.module('cmCrypt', ['cmLogger'])
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                return Base64.encode(encryptedSecretString);
+                return _Base64.encode(encryptedSecretString);
             },
             /**
              * this method decrypts uuencoded strings
@@ -68,7 +71,7 @@ angular.module('cmCrypt', ['cmLogger'])
                 if (null == secretString)
                     return false;
 
-                var decodedSecretString = Base64.decode(secretString),
+                var decodedSecretString = _Base64.decode(secretString),
                     decryptedString;
 
                 try {
@@ -84,15 +87,8 @@ angular.module('cmCrypt', ['cmLogger'])
              * return the bit size of possible keygeneration
              * @returns {string[]}
              */
-            getKeyLengths: function(){
-                return ['1024','2048','4096'];
-            },
-            /**
-             * return the expotenial for keygeneration
-             * @returns {number}
-             */
-            getExpotential: function(){
-                return 65537;
+            getKeySizes: function(){
+                return ['512','1024','2048','4096'];
             },
             /**
              * start async process
@@ -100,79 +96,58 @@ angular.module('cmCrypt', ['cmLogger'])
              * @param $scopeState
              * @returns {Promise.promise|*|webdriver.promise.Deferred.promise}
              */
-            generateKeypair: function(keylen, $scopeState){
-                if ( _genInterval != null ) {
+            generateAsyncKeypair: function(keySize, onGeneration){
+                if ( keySize == undefined || typeof keySize != 'number' || async.interval != null ) {
                     return;
                 }
 
-                var promise = $q.defer();
+                cmLogger.debug('jsencrypt generateAsync '+keySize);
 
-                // init atsOka is wrapped in window
-                if(_atsOka == undefined){
-                    _atsOka = window.atsOka();
-                    _atsOka.titaniumcore.crypto.RSA.installKeyFormat( _atsOka.titaniumcore.crypto.RSAKeyFormat );
-                }
-
-                /**
-                 * create empty class of RSA
-                 * @type {_atsOka.titaniumcore.crypto.RSA}
-                 */
-                var rsaKey = new _atsOka.titaniumcore.crypto.RSA();
-
-                /**
-                 * called in the whole progress of keygeneration to show spinner
-                 * @param counts
-                 */
-                function progress(counts){
-//                    cmLogger.debug('ats-oka progress')
-                    if($scopeState != undefined){
-                        $scopeState.$apply(function(){
-                            $scopeState.state = 'counts: '+counts;
-                        })
+                // Create the encryption object.
+                var self = this,
+                    time = -((new Date()).getTime()),
+                    counts = 0;
+                // init vars
+                async.crypt = new JSEncrypt({default_key_size: keySize}),
+                async.promise = $q.defer();
+                async.interval = setInterval(function () {
+                    counts++;
+                    if(typeof onGeneration == "function"){
+                        onGeneration(counts, (time + ((new Date()).getTime())))
                     }
-                }
+                }, 500);
+                // start keypair generation
+                async.crypt.getKey(function () {
+                    self.cancelGeneration(true);
 
-                function result(rsa){
-
-                }
-
-                /**
-                 * called after key generation is succeed and hide spinner
-                 * @param succeeded
-                 * @param count
-                 * @param time
-                 * @param startTime
-                 * @param finishTime
-                 */
-                function done( succeeded, count, time ,startTime, finishTime ){
-                    _genInterval = null;
-                    cmLogger.debug('ats-oka done')
-
-                    promise.resolve({
-                        time: time,
-                        count: count,
-                        startTime: startTime,
-                        finishTime: finishTime,
-                        privKey: _atsOka.base64x_encode( rsaKey.privateKeyBytes() ),
-                        pubKey: _atsOka.base64x_encode( rsaKey.publicKeyBytes() )
+                    async.promise.resolve({
+                        timeElapsed: (time + ((new Date()).getTime())),
+                        counts: counts,
+                        privKey: async.crypt.getPrivateKey(),
+                        pubKey: async.crypt.getPublicKey()
                     })
-                }
+                });
 
-                cmLogger.debug('ats-oka generateAsync '+keylen+' '+this.getExpotential());
-                _genInterval = rsaKey.generateAsync( keylen, this.getExpotential(), progress, result, done );
-
-                return promise.promise;
+                return async.promise.promise;
             },
             /**
              * cancel key generation process / simple clearInterval
+             * if interval is pending
              * @returns {boolean}
              */
-            cancelGeneration: function(){
-                if ( _genInterval != null ) {
-                    cmLogger.debug('ats-oka cancelGeneration')
-                    var id = _genInterval;
-                    _genInterval = null;
+            cancelGeneration: function(withReject){
+                if ( async.interval != null ) {
+                    cmLogger.debug('jsencrypt cancelGeneration');
+                    // clear interval
+                    var id = async.interval;
+                    async.interval = null;
                     clearInterval( id );
+                    // clear promise and library vars if param withReject is true
+                    if(withReject == undefined && async.promise != undefined){
+                        async.promise.reject();
+                        async.promise = null;
+                        async.crypt = null;
+                    }
                     return true;
                 }
             return false;
