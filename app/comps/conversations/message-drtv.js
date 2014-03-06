@@ -1,6 +1,6 @@
 'use strict';
 
-function cmMessage(cmAuth) {
+function cmMessage(cmUserModel) {
     return {
         restrict: 'AE',
         require: '^cmConversation',
@@ -18,11 +18,7 @@ function cmMessage(cmAuth) {
                 $scope.captchaRequest = true;
             }
 
-            cmAuth.getIdentity().then(
-                function (identity) {
-                    $scope.is_my_own_message = ($scope.message.from == identity.id)
-                }
-            );
+            $scope.is_my_own_message = ($scope.message.from == cmUserModel.data.id);
         }
     }
 }

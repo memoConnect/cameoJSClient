@@ -99,6 +99,19 @@ function addPackage(package_name, package) {
     })
 }
 
+addPackage('pckUser',{
+    root: 'comps/user/user-module',
+    deps: [
+        'angular',
+        'cmAuth',
+        'cmLocalStorage'
+    ],
+    resources : [
+        'comps/user/userModel-srvc',
+        'comps/user/login-drtv'
+    ]
+})
+
 addPackage('pckConversations',{
     root: 'comps/conversations/conversations-module',
     deps: [
@@ -109,6 +122,7 @@ addPackage('pckConversations',{
         'cmAuth',
         'cmUtil',
         'pckContacts',
+        'pckUser',
         '_v/captcha/captchagen/captchagen'
     ],    
     resources : [
@@ -144,7 +158,7 @@ addPackage('pckContacts',{
         'cmApi', 
         'cmLogger', 
         'cmUtil',
-        'pckUser' 
+        'pckUser'
     ],    
     resources : [
         'comps/contacts/add-external-contact-drtv',
@@ -154,19 +168,6 @@ addPackage('pckContacts',{
         'comps/contacts/contactsAdapter-srvc',
         'comps/contacts/search-cameo-identity-drtv',    
         'comps/contacts/type-chooser-drtv'
-    ]
-})
-
-addPackage('pckUser',{
-    root: 'comps/user/user-module',
-    deps: [
-        'angular',
-        'cmAuth',
-        'cmLocalStorage'
-    ],    
-    resources : [
-        'comps/user/userModel-srvc',
-        'comps/user/login-drtv'
     ]
 })
 

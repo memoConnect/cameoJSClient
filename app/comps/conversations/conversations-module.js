@@ -4,7 +4,7 @@ var cmConversations = angular.module('cmConversations', [
     'cmApi', 
     'cmLogger', 
     'cmCrypt', 
-    'cmContacts'
+    'cmContacts',
 ])
 
 cmConversations.service('cmConversationsAdapter', [
@@ -40,6 +40,7 @@ cmConversations.factory('cmMessageFactory',[
 
 cmConversations.factory('cmRecipientModel',[
     'cmConversationsAdapter',
+    'cmAuth',
     cmRecipientModel
 ])
 
@@ -94,7 +95,7 @@ cmConversations.directive('cmAvatar', [
 ])
 
 cmConversations.directive('cmMessage', [
-    'cmAuth',
+    'cmUserModel',
     cmMessage
 ])
 
