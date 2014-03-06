@@ -125,7 +125,7 @@ module.exports = function (grunt) {
 
         phonegap: {
             config: {
-                root: 'app',
+                root: 'phonegap-src',
                 config: 'phonegap-res/config.xml',
                 cordova: '.cordova',
                 path: 'phonegap-build',
@@ -260,7 +260,7 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'phonegap-build/www/index.html': ['templates/index.html.tpl']
+                    'phonegap-src/index.html': ['templates/index.html.tpl']
                 }
             },
             'www-index': {
@@ -284,23 +284,14 @@ module.exports = function (grunt) {
                         flatten: false,
                         cwd: 'phonegap-res/res/',
                         src: '**',
-                        dest: 'phonegap-build/www/res/'
+                        dest: 'phonegap-src/res/'
                     },
                     {
                         expand: true,
                         flatten: false,
-                        cwd: 'phonegap-res/res/',
+                        cwd: 'app/',
                         src: '**',
-                        dest: 'phonegap-build/platforms/android/assets/www/res/'
-                    },
-                    {
-                        expand: true,
-                        flatten: false,
-                        cwd: 'phonegap-res/',
-                        src: '*',
-                        dest: 'phonegap-build/www/',
-                        filter: 'isFile'
-
+                        dest: 'phonegap-src/'
                     }
                 ]
             }
@@ -329,7 +320,7 @@ module.exports = function (grunt) {
      * $ cd phonegap-build // change in dir
      * $ phonegap run android
      */
-    grunt.registerTask('phonegap', [ 'phonegap:build', 'template:phonegap-index', 'copy:phonegap-resources']);
+    grunt.registerTask('phonegap', ['copy:phonegap-resources', 'template:phonegap-index', 'phonegap:build']);
 
     grunt.registerTask('www', ['template:www-index']);
 };
