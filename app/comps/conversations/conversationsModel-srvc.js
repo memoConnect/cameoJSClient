@@ -10,7 +10,7 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
 
         cmConversationsAdapter.newConversation(subject)
             .then(function (conversation_data) {
-                var conversation = new cmConversationFactory(conversation_data)
+                var conversation = cmConversationFactory.create(conversation_data)
 
                 conversations.push(conversation);
                 deferred.resolve(conversation);
@@ -27,7 +27,7 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
             .then(
 
             function (conversation_data) {
-                deferred.resolve(new cmConversationFactory(conversation_data));
+                deferred.resolve(cmConversationFactory.create(conversation_data));
             },
 
             function () {
@@ -42,7 +42,7 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
         cmConversationsAdapter.getConversations(5, 13)
             .then(function (data) {
                 data.forEach(function (conversation_data) {
-                    var conversation = new cmConversationFactory(conversation_data);
+                    var conversation = cmConversationFactory.create(conversation_data);
                     conversations.push(conversation);
                 })
             })

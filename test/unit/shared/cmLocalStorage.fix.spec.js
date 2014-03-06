@@ -1,4 +1,3 @@
-
 'use strict';
 
 describe('LocalStorageAdapter', function(){
@@ -106,9 +105,14 @@ describe('cmLocalStorage', function(){
         expect(cmLocalStorage).toBeDefined()
     })
 
-    it('should have get function', function(){
+    it('should have create function', function(){
         expect(cmLocalStorage.create).toBeDefined()
     })
+
+    it('should have getQty function', function(){
+        expect(cmLocalStorage.getQty).toBeDefined()
+    })
+
 
     describe('create Instance(s) of LocalStorageService', function(){
         var tmpInstanceId_1 = 'moep';

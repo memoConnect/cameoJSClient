@@ -13,10 +13,15 @@ cmConversations.service('cmConversationsAdapter', [
     cmConversationsAdapter
 ])
 
-cmConversations.factory('cmConversationFactory',[
+cmConversations.factory('cmConversationModel',[
     'cmConversationsAdapter',
     'cmMessageFactory',
     'cmRecipientFactory',
+    cmConversationModel
+]);
+
+cmConversations.factory('cmConversationFactory',[
+    'cmConversationModel',
     cmConversationFactory
 ])
 

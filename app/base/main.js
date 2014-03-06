@@ -114,9 +114,15 @@ addPackage('pckConversations',{
     resources : [
         'comps/conversations/conversationsAdapter-srvc',
         'comps/conversations/conversationsModel-srvc',
+
         'comps/conversations/conversationFactory-srvc',
+        'comps/conversations/conversationModel-srvc',
+
         'comps/conversations/messageFactory-srvc',
+
         'comps/conversations/recipientFactory-srvc',
+
+
         'comps/conversations/talksModel-srvc',
         'comps/conversations/attachments-drtv',
         'comps/conversations/avatar-drtv',
