@@ -101,7 +101,17 @@
 	<div>
 		<button ng-click="sendMessage()">{{"CONVERSATION.LABEL.SEND" | cmTranslate}}</button>
 		<cm-emoticons></cm-emoticons>
-		<cm-upload></cm-upload>
+
+
+		<cm-upload cm-chunk-size = "256">						
+			<progress value="{{progress}}" max="{{chunksTotal}}"></progress> {{percent}}% 
+			<details>
+				Filesize: {{fileSize}} <br/>
+				ChunkSize: {{chunkSize}}  <br/>
+				Number of Chunks: {{chunksTotal}} <br/>
+				AssetID: {{assetId}}
+			</detail>
+		</cm-upload>
 
 
 		<h2>Chunked Uploader</h2>
@@ -115,8 +125,8 @@
 		    fileSize: {{bytesToSize(fileSize)}} / chunksTotal: {{ chunksTotal }} / inQueue: {{chunksQueue}}<br />
 		    <hr>
 		    <section>
-		        <button ng-click="sendFile()">send chunks</button>
-		        <progress value="{{progress}}" max="{{chunksTotal}}"></progress> {{percent}}%<br />
+		        
+		        <br />
 		        <pre ng-show="Util.objLen(file) > 0">{{Util.prettify(file)}}</pre>
 		        <pre ng-show="Util.objLen(apiError) > 0">Api Error:{{apiError}}</pre>
 		    </section>

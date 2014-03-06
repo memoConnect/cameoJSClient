@@ -117,7 +117,8 @@ addPackage('pckFiles',{
         'comps/files/send-ctrl',
         'comps/files/get-ctrl',
         'comps/files/file-read-drtv',
-        'comps/files/upload-drtv'
+        'comps/files/upload-drtv',
+        'comps/files/download-drtv'
     ]
 })
 

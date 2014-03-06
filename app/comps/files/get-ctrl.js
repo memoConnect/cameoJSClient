@@ -18,7 +18,28 @@ function getFileCtrl($scope, cmFilesAdapter){
             // pull first chunk
             getChunk(0);
         });
-    };
+    }
+
+    function getChunk(index){
+        cmFilesAdapter.getChunk($scope.assetId, index)
+        .then(function(chunk){
+            file += atob(chunk.replace('data:application/octet-stream;base64,',''));
+            if(index+1 < $scope.file.maxChunks){
+                getChunk(index+1);
+            } else {
+                saveFile();
+            }
+        });
+    }
+
+    function saveFile(){
+        saveAs(
+            b64toBlob(file, $scope.file.fileType)
+           ,$scope.file.fileName
+        );
+    }
+
+    
 
     function b64toBlob(byteCharacters, contentType, sliceSize) {
         contentType = contentType || '';
@@ -40,25 +61,6 @@ function getFileCtrl($scope, cmFilesAdapter){
         }
 
     return new Blob(byteArrays, {type: contentType});
-    }
-
-    function getChunk(index){
-        cmFilesAdapter.getChunk($scope.assetId, index)
-        .then(function(chunk){
-            file += atob(chunk.replace('data:application/octet-stream;base64,',''));
-            if(index+1 < $scope.file.maxChunks){
-                getChunk(index+1);
-            } else {
-                saveFile();
-            }
-        });
-    }
-
-    function saveFile(){
-        saveAs(
-            b64toBlob(file, $scope.file.fileType)
-           ,$scope.file.fileName
-        );
     }
 
 }

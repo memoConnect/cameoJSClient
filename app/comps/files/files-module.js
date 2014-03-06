@@ -33,4 +33,9 @@ cmFiles.directive('cmUpload',[
     cmUpload
 ])
 
+cmFiles.directive('cmDownload',[
+    'cmFilesAdapter',
+    cmDownload
+])
+
 
