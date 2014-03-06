@@ -8,6 +8,7 @@ function cmMessageFactory (cmMessageModel){
         create: function(data){
             if(typeof data !== 'undefined'){
                 var message = null;
+
                 for(var i = 0; i < instances.length; i++){
                     if(typeof instances[i] === 'object' &&
                         instances[i].id == data.id){
@@ -18,8 +19,7 @@ function cmMessageFactory (cmMessageModel){
                 }
 
                 if(message === null){
-                    var message = new cmMessageModel(data);
-
+                    message = new cmMessageModel(data);
                     instances.push({id:data.id,instance:message});
                 }
 

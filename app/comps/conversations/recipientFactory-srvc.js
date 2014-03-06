@@ -8,6 +8,7 @@ function cmRecipientFactory (cmRecipientModel){
         create: function(data){
             if(typeof data !== 'undefined'){
                 var recipient = null;
+
                 for(var i = 0; i < instances.length; i++){
                     if(typeof instances[i] === 'object' &&
                         instances[i].id == data.id){
@@ -18,8 +19,7 @@ function cmRecipientFactory (cmRecipientModel){
                 }
 
                 if(recipient === null){
-                    var recipient = new cmRecipientModel(data);
-
+                    recipient = new cmRecipientModel(data);
                     instances.push({id:data.id,instance:recipient});
                 }
 
