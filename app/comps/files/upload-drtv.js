@@ -10,7 +10,7 @@ function cmUpload(cmFilesAdapter){
         controller : function sendCtrl($rootScope, $scope, cmFilesAdapter){       
                         $scope.file = {};
                         $scope.fileSize = 0;
-                        $scope.percent = 0;
+                        $scope.percentage = 0;
                         $scope.progress = 0;
                         $scope.chunkSize = 256;
                         $scope.chunksTotal = 0;
@@ -32,14 +32,14 @@ function cmUpload(cmFilesAdapter){
                         $scope.calcChunkSize = function(event){
                             $scope.fileSize = event.target.files[0].size;
                             $scope.chunksTotal = Math.ceil($scope.fileSize / ($scope.chunkSize*1024));
-                            $scope.percent = 0;
+                            $scope.percentage = 0;
                             $scope.progress = 0;
                         }
 
-                        $scope.sendFile = function(){
+                        $scope.upload = function(){
+                            console.log('sdf')
                             // calculate the number of slices
                             $scope.assetId = 0;
-                            $scope.apiError = {};
                             $scope.chunksTotal = Math.ceil($scope.fileSize / ($scope.chunkSize*1024));
                             $scope.chunksQueue = $scope.chunksTotal;
                             // start sending
@@ -109,15 +109,11 @@ function cmUpload(cmFilesAdapter){
                                    ,assetId: $scope.assetId
                                 }).
                                 then(
-                                    function(json){
-                                        if(angular.isDefined(json) && json != "" && "assetId" in json){
-                                            $scope.assetId = json.assetId;
-                                            $rootScope.$broadcast("SendFileCtrl.assetIdChanged",json.assetId);
-                                        }
+                                    function(asstedId){
+                                        $scope.assetId = assetId;
+                                        $rootScope.$broadcast("SendFileCtrl.assetIdChanged", assetId);
+                                        
                                         chunkUploaded(index+1);
-                                    },
-                                    function(res, state){
-                                        $scope.apiError = state;
                                     }
                                 );
 
@@ -129,7 +125,7 @@ function cmUpload(cmFilesAdapter){
                         function chunkUploaded(index){
                             $scope.chunksQueue--;
                             $scope.progress = index;
-                            $scope.percent = Math.round(index/$scope.chunksTotal * 100);
+                            $scope.percentage = Math.round(index/$scope.chunksTotal * 100);
                             sendChunks(index);
                         }
                     }
