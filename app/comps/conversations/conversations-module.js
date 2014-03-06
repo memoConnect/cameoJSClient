@@ -26,6 +26,7 @@ cmConversations.factory('cmConversationFactory',[
 ])
 
 cmConversations.factory('cmMessageModel',[
+    'cmConversationsAdapter',
     'cmCrypt',
     cmMessageModel
 ])
@@ -35,7 +36,13 @@ cmConversations.factory('cmMessageFactory',[
     cmMessageFactory
 ])
 
+cmConversations.factory('cmRecipientModel',[
+    'cmConversationsAdapter',
+    cmRecipientModel
+])
+
 cmConversations.factory('cmRecipientFactory',[
+    'cmRecipientModel',
     cmRecipientFactory
 ])
 

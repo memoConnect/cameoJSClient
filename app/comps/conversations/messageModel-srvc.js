@@ -1,6 +1,6 @@
 'use strict';
 
-function cmMessageModel (cmCrypt){
+function cmMessageModel (cmConversationsAdapter,cmCrypt){
     var Message = function(data){
         //Attributes:
         this.id = '';

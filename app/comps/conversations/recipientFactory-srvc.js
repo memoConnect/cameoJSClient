@@ -1,33 +1,36 @@
 'use strict';
 
-function cmRecipientFactory (){
-    var Recipient = function(data){
-        this.id = '';
-        this.displayName = '';
+function cmRecipientFactory (cmRecipientModel){
+    var instanceMock = [{id:'',instance:{}}];
+    var instances = [];
 
-        var self = this;
+    return {
+        create: function(data){
+            if(typeof data !== 'undefined'){
+                var recipient = null;
+                for(var i = 0; i < instances.length; i++){
+                    if(typeof instances[i] === 'object' &&
+                        instances[i].id == data.id){
 
-        this.addTo = function (conversation) {
-            return  cmConversationsAdapter.addRecipient(conversation.id, this.id)
-                .then(function () {
-                    conversation.addRecipient(self)
-                });
-        };
+                        recipient = instances[i].instance;
+                        break;
+                    }
+                }
 
-        this.removeFrom = function (conversation) {
-            return    cmConversationsAdapter.removeRecipient(conversation.id, this.id)
-                .then(function () {
-                    conversation.removeRecipient(self)
-                });
-        };
+                if(recipient === null){
+                    var recipient = new cmRecipientModel(data);
 
-        this.init = function (identity_data) {
-            this.id = identity_data.id
-            this.displayName = identity_data.displayName || identity_data.cameoId || identity_data.id
-        };
+                    instances.push({id:data.id,instance:recipient});
+                }
 
-        this.init(data);
-    };
+                return recipient;
+            }
 
-    return Recipient;
+            return null;
+        },
+
+        getQty: function(){
+            return instances.length;
+        }
+    }
 }

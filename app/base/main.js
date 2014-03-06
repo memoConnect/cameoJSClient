@@ -122,7 +122,7 @@ addPackage('pckConversations',{
         'comps/conversations/messageModel-srvc',
 
         'comps/conversations/recipientFactory-srvc',
-
+        'comps/conversations/recipientModel-srvc',
 
         'comps/conversations/talksModel-srvc',
         'comps/conversations/attachments-drtv',
