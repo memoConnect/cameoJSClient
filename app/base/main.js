@@ -81,8 +81,8 @@ var config = {
             'crypto-jsencrypt'
         ],
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
-        'cmUserModel': ['angular', 'cmLocalStorage', 'cmApi'],
-        'cmApi': ['angular', 'cmLogger','cmUserModel'],
+        'cmUserModel': ['angular', 'cmLocalStorage', 'cmAuth'],
+        'cmApi': ['angular', 'cmLogger'],
         'cmProfile' : ['jquery', 'angular', 'cmApi', 'cmAuth'],
         'cmLogger' : ['angular'],
         'cmLanguage' : [

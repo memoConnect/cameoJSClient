@@ -114,20 +114,15 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt', function(LocalS
         /**
          * init
          */
-        this.init = function(){
+        this.init = function(data){
             if(this.check()){
                 cryptKey = cmCrypt.hash(this.instanceId + this.instanceKey);
                 storageKey = cmCrypt.hash(cryptKey);
+
+                this.instanceId = data.id;
+                this.instanceKey = data.key;
             }
         }
-        /**
-         * set instance Id
-         * @param id
-         */
-        this.setInstanceVars = function(data){
-            this.instanceId = data.id;
-            this.instanceKey = data.key;
-        };
         /**
          * adapter function for check local storage
          * @returns {boolean}
@@ -232,7 +227,7 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt', function(LocalS
     return LocalStorageService;
 }]).
 factory('cmLocalStorage',['LocalStorageService', function(LocalStorageService){
-    var instanceMock = [{id:'',instance:{}}];
+    var instanceMock = [{id:'',instance:{}, active:true}];
     var instances = [];
 
     return {
@@ -256,10 +251,17 @@ factory('cmLocalStorage',['LocalStorageService', function(LocalStorageService){
 
                 if(storage === null){
                     storage = new LocalStorageService();
-                    storage.setInstanceVars({id:id,key:key});
-                    storage.init();
+                    storage.init({id:id,key:key});
 
-                    instances.push({id:id,instance:localStorage});
+                    instances.push({id:id,instance:storage});
+
+                    while(i < this.instances.length){
+                        if(this.instances[i].id == id){
+                            this.instances[i].active = true;
+                        } else {
+                            this.instances[i].active = false;
+                        }
+                    }
                 }
 
                 return storage;
@@ -269,6 +271,31 @@ factory('cmLocalStorage',['LocalStorageService', function(LocalStorageService){
         },
         getQty: function(){
           return instances.length;
+        },
+        /**
+         * Return Token from current active Storage Instance
+         * @TODO Evil Function?!?!?
+         * @returns {*}
+         */
+        getToken: function(){
+            var i = 0;
+            var storageInstance = null;
+            while(i < this.instances.length){
+                if(this.instances[i].active !== false){
+                    storageInstance = this.instances[i].instance;
+                    break;
+                }
+            }
+
+            if(typeof storageInstance === 'object'){
+                var token = storageInstance.get('token');
+                if(token != undefined || token != 'undefined'){
+                    return token;
+                }
+            }
+
+
+            return undefined;
         }
     }
 

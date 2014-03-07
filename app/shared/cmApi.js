@@ -2,14 +2,13 @@
 
 //This Module handels api calls
 
-var cmApi = angular.module('cmApi', ['cmLogger','cmUserModel']);
+var cmApi = angular.module('cmApi', ['cmLogger']);
 
 //TODO config cameo
 
 //Service to handle all api calls
 
-cmApi.provider('cmApi',[
-'cmUserModel',
+cmApi.provider('cmApi',[,
 function($injector){
     var rest_api = "";
 
@@ -25,7 +24,7 @@ function($injector){
     '$injector',
     '$q',
 
-    function(cmUserModel, cmLogger, $http, $injector, $q){
+    function(cmLogger, $http, $injector, $q){
         /***
         All api calls require a config object:
 
