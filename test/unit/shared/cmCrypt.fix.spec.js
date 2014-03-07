@@ -110,7 +110,7 @@ describe('cmCrypt', function () {
     describe('tests keypair generation', function(){
         it('should return a promise', function(){
             var promise = crypt.generateAsyncKeypair(512)
-            expect(promise.then).toBeDefined()
+            expect(typeof promise.then).toBe('function')
         })
     })
 })

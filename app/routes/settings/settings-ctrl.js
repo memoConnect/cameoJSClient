@@ -57,7 +57,7 @@ define([
              * with keySize and callback for onGeneration
              * returns a promise
              */
-            cmCrypt.generateAsyncKeypair($scope.keySize,
+            cmCrypt.generateAsyncKeypair(parseInt($scope.keySize),
                 function(counts, timeElapsed){
                     $scope.state =
                         'counts: '+counts+'\n'+
