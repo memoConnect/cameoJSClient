@@ -149,7 +149,6 @@ addPackage('pckConversations',{
         'comps/conversations/recipientFactory-srvc',
         'comps/conversations/recipientModel-srvc',
 
-        'comps/conversations/talksModel-srvc',
         'comps/conversations/attachments-drtv',
         'comps/conversations/avatar-drtv',
         'comps/conversations/captcha-drtv',
