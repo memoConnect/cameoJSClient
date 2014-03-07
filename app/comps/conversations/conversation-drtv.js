@@ -32,11 +32,16 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                 $scope.show_contacts = false
                 $scope.passphrase_valid = $scope.conversation.passphraseValid()
 
-                $scope.$watch("passphrase", function (new_passphrase) {
-                    $scope.conversation.setPassphrase(new_passphrase)
-                    $scope.passphrase_valid = $scope.conversation.passphraseValid()
-                    if ($scope.passphrase_valid) $scope.conversation.decrypt()
-                })
+                if($scope.conversation.passphrase != '' && $scope.passphrase_valid !== false){
+                    $scope.passphrase = $scope.conversation.passphrase;
+                    $scope.conversation.decrypt();
+                } else {
+                    $scope.$watch("passphrase", function (new_passphrase) {
+                        $scope.conversation.setPassphrase(new_passphrase)
+                        $scope.passphrase_valid = $scope.conversation.passphraseValid()
+                        if ($scope.passphrase_valid) $scope.conversation.decrypt()
+                    })
+                }
 
                 $scope.$watch("conversation.subject", function (new_subject) {
                     $scope.conversation.updateSubject(new_subject||"")
