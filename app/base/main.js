@@ -140,6 +140,8 @@ addPackage('pckConversations',{
         'comps/conversations/conversationsAdapter-srvc',
         'comps/conversations/conversationsModel-srvc',
 
+        'comps/conversations/purlModel-srvc',
+
         'comps/conversations/conversationFactory-srvc',
         'comps/conversations/conversationModel-srvc',
 
