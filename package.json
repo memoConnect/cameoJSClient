@@ -52,6 +52,8 @@
         "selenium-webdriver": "~2.39.0",
         "phonegap": "~3.4.0-0.19.7",
         "grunt-phonegap": "~0.13.2",
+        "grunt-phonegap-build": "~0.0.8",
+        "grunt-zipstream": "~0.2.2",
         "plugman": "~0.20.2"
 
     },

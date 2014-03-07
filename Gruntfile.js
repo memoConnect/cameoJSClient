@@ -11,6 +11,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-shell-spawn');
 
+    grunt.loadNpmTasks('grunt-zipstream');
+    grunt.loadNpmTasks('grunt-phonegap-build');
     grunt.loadNpmTasks('grunt-phonegap');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-template');
@@ -162,10 +164,10 @@ module.exports = function (grunt) {
                 // relative to /phonegap-res
                 icons: {
                     android: {
-                        ldpi: 'res/icon/android/icon-36-ldpi.png',
-                        mdpi: 'res/icon/android/icon-48-mdpi.png',
-                        hdpi: 'res/icon/android/icon-72-hdpi.png',
-                        xhdpi: 'res/icon/android/icon-96-xhdpi.png'
+                        ldpi: 'phonegap-res/res/icon/android/icon-36-ldpi.png',
+                        mdpi: 'phonegap-res/res/icon/android/icon-48-mdpi.png',
+                        hdpi: 'phonegap-res/res/icon/android/icon-72-hdpi.png',
+                        xhdpi: 'phonegap-res/res/icon/android/icon-96-xhdpi.png'
                     }
                 },
 
@@ -173,14 +175,14 @@ module.exports = function (grunt) {
                 // Only works for Android and IOS
                 screens: {
                     android: {
-                        ldpi: 'res/screen/android/screen-ldpi-portrait.png',
-                        ldpiLand: 'res/icon/android/screen-ldpi-landscape.png',
-                        mdpi: 'res/icon/android/screen-mdpi-portrait.png',
-                        mdpiLand: 'res/icon/android/screen-mdpi-landscape.png',
-                        hdpi: 'res/icon/android/screen-hdpi-portrait.png',
-                        hdpiLand: 'res/icon/android/screen-hdpi-landscape.png',
-                        xhdpi: 'res/icon/android/screen-xhdpi-portrait.png',
-                        xhdpiLand: 'res/icon/android/screen-xhdpi-landscape.png'
+                        ldpi: 'phonegap-res/res/screen/android/screen-ldpi-portrait.png',
+                        ldpiLand: 'phonegap-res/res/screen/android/screen-ldpi-landscape.png',
+                        mdpi: 'phonegap-res/res/screen/android/screen-mdpi-portrait.png',
+                        mdpiLand: 'phonegap-res/res/screen/android/screen-mdpi-landscape.png',
+                        hdpi: 'phonegap-res/res/screen/android/screen-hdpi-portrait.png',
+                        hdpiLand: 'phonegap-res/res/screen/android/screen-hdpi-landscape.png',
+                        xhdpi: 'phonegap-res/res/screen/android/screen-xhdpi-portrait.png',
+                        xhdpiLand: 'phonegap-res/res/screen/android/screen-xhdpi-landscape.png'
                     }
                 }
             }
