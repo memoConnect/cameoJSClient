@@ -1,7 +1,9 @@
 'use strict';
 
 function cmUserModel(cmAuth, cmLocalStorage, $q, $rootScope, $location){
-    var self = this;
+    var self = this,
+        isInit = false,
+        token = '';
 
     var dataModel = {
         isActive: false,
@@ -24,16 +26,14 @@ function cmUserModel(cmAuth, cmLocalStorage, $q, $rootScope, $location){
     function init(){
         if(self.isAuth() !== false){
             loadIdentity();
+            isInit = true;
         }
     }
 
     this.data = angular.extend({}, dataModel);
 
     this.isAuth = function(){
-        if(cmAuth.getToken() != undefined && cmAuth.getToken() != 'undefined'){
-            return true;
-        }
-        return false;
+        return this.getToken();
     };
 
     this.doLogin = function(user, pass){
@@ -41,7 +41,7 @@ function cmUserModel(cmAuth, cmLocalStorage, $q, $rootScope, $location){
 
         cmAuth.requestToken(user, pass).then(
             function(token){
-                cmAuth.storeToken(token);
+                self.storeToken(token);
                 loadIdentity();
                 deferred.resolve();
             },
@@ -54,35 +54,73 @@ function cmUserModel(cmAuth, cmLocalStorage, $q, $rootScope, $location){
     };
 
     this.doLogout = function(){
-        cmAuth.removeToken();
+        isInit = false;
+        this.removeToken();
         $rootScope.$broadcast('logout');
         $location.path("/login");
     };
 
     /**
+     * Token Functions
+     * @TODO handle Token with identity
+     */
+    this.getToken = function(){
+        if(token != ''){
+            return token;
+        } else {
+            var tmp = this.storageGet('token');
+
+            if(tmp != undefined && tmp != 'undefined'){
+                token = tmp;
+                return token;
+            }
+        }
+
+        return false;
+    }
+
+    this.storeToken = function(t){
+        if(typeof t !== 'undefined'){
+            token = t;
+            this.storageSave('token', t);
+        }
+    }
+
+    this.removeToken = function(){
+        this.storageRemove('token');
+    }
+
+    /**
      * LocalStorage Functions
      */
+
     /**
      * save to identity storage
      * @param key
      * @param value
      */
     this.storageSave = function(key, value){
-        self.data.storage.save(key, value);
+        if(isInit !== false){
+            self.data.storage.save(key, value);
+        }
     }
     /**
      *  get from identity storage
      * @param key
      */
     this.storageGet = function(key){
-        self.data.storage.get(key, value);
+        if(isInit !== false){
+            self.data.storage.get(key);
+        }
     }
     /**
      * remove from identity storage
      * @param key
      */
     this.storageRemove = function(key){
-        self.data.storage.remove(key, value);
+        if(isInit !== false){
+            self.data.storage.remove(key);
+        }
     }
     /**
      * clear identity storage

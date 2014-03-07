@@ -19,22 +19,22 @@ function(cmApi, cmCrypt){
         },
 
         // delete Token
-        removeToken: function(){
-//                    return $cookieStore.remove('token');
-            return localStorage.removeItem('token');
-        },
+//        removeToken: function(){
+////                    return $cookieStore.remove('token');
+//            return localStorage.removeItem('token');
+//        },
 
         // store the token in a cookie:
-        storeToken: function(token){
-//                    return $cookieStore.put('token', token);
-            return localStorage.setItem('token', token);
-        },
+//        storeToken: function(token){
+////                    return $cookieStore.put('token', token);
+//            return localStorage.setItem('token', token);
+//        },
 
         // retrieve thr token from a cookie
-        getToken: function(){
-//                    return $cookieStore.get('token');
-            return localStorage.getItem('token');
-        },
+//        getToken: function(){
+////                    return $cookieStore.get('token');
+//            return localStorage.getItem('token');
+//        },
 
         createUser: function(data){
             return cmApi.post({

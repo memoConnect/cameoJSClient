@@ -3,13 +3,17 @@ define([
     'angular-route',
     'angular-cookies',
     // cameo files
+    'cmLocalStorage',
     'cmApi',
     'cmAuth',
-    'pckUi',
+
+    'cmUserModel',
     'cmLanguage',
     'cmLogger',
     'cmNotify',
-    'cmLocalStorage',
+
+//    'pckUi',
+
     // vendor
     'jquery',
     'base/config'
@@ -26,7 +30,8 @@ define([
         'cmNotify',
         'cmLogger',
         'cmLocalStorage',
-        'cmAuth'
+        'cmAuth',
+        'cmUserModel'
     ]);
 
     //cameo_config = cameo_config
@@ -132,14 +137,14 @@ define([
         }
     ]);
     // app run handling
-    app.run(['$rootScope', '$location', '$cookieStore', 'cmNotify',
-        function ($rootScope, $location, $cookieStore, cmNotify) {
+    app.run(['$rootScope', '$location', 'cmUserModel', 'cmNotify',
+        function ($rootScope, $location, cmUserModel, cmNotify) {
             $rootScope.$on("$routeChangeStart", function () {
                 // expections
                 var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/purl\/[a-zA-Z0-9]{1,})$/;
                 var path = $location.$$path;
                 // exists none token then otherwise to login
-                if (localStorage.getItem('token') == null){
+                if (cmUserModel.getToken() === false){
 //                    cmNotify.warn($cookies.token+' run without token '+path+' '+(!path_regex.test(path)?'to login':'stay'))
                     if (!path_regex.test(path)) {
                         $location.path("/login");

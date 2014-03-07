@@ -2,13 +2,14 @@
 
 //This Module handels api calls
 
-var cmApi = angular.module('cmApi', ['cmLogger']);
+var cmApi = angular.module('cmApi', ['cmLogger','cmUserModel']);
 
 //TODO config cameo
 
 //Service to handle all api calls
 
 cmApi.provider('cmApi',[
+'cmUserModel',
 function($injector){
     var rest_api = "";
 
@@ -24,7 +25,7 @@ function($injector){
     '$injector',
     '$q',
 
-    function(cmLogger, $http, $injector, $q){
+    function(cmUserModel, cmLogger, $http, $injector, $q){
         /***
         All api calls require a config object:
 
@@ -148,8 +149,8 @@ function($injector){
             var deferred	=	$q.defer(),
 
                 //get authentification token from cmAuth if present
-                token 		= 	$injector.has('cmAuth')
-                                ?	$injector.get('cmAuth').getToken()
+                token 		= 	$injector.has('cmUserModel')
+                                ?	$injector.get('cmUserModel').getToken()
                                 :	undefined
 
             //Api calls are restricted to the preconfigured api base path and should start with a '/'
