@@ -1,6 +1,6 @@
 'use strict';
 
-describe('cmConversationFactory', function(){
+describe('cmMessageFactory', function(){
     var cmMessageFactory,
         tmpInstance_1 = {id:'moep_1',data:{}},
         tmpInstance_2 = {id:'moep_2',data:{}};
