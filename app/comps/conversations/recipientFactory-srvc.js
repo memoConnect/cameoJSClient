@@ -23,7 +23,7 @@ function cmRecipientFactory ($rootScope, cmRecipientModel){
                 }
 
                 if(recipient === null){
-                    recipient = new cmRecipientModel(data.identity);
+                    recipient = new cmRecipientModel(data.identityId, data.identity);
                     instances.push({id:data.identityId,instance:recipient});
                 }
 

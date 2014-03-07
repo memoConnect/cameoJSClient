@@ -46,7 +46,6 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                     identity_data
                         ? $scope.conversation
                         .newRecipient(identity_data)
-                        .addTo($scope.conversation)
                         : null
                 })
 

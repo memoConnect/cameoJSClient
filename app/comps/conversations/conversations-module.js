@@ -40,6 +40,7 @@ cmConversations.factory('cmMessageFactory',[
 
 cmConversations.factory('cmRecipientModel',[
     'cmConversationsAdapter',
+    'cmUserModel',
     'cmAuth',
     cmRecipientModel
 ])
