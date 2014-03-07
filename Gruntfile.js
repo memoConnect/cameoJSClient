@@ -192,9 +192,16 @@ module.exports = function (grunt) {
             'phonegap-index': {
                 'options': {
                     'data': {
-                        'phonegapFiles': '<script src="phonegap.js"></script>' +
-                            '<script src="phonegap-adapter.js"></script>'
-
+                        'phonegapFiles':
+//                            '<script src="cordova.js"></script>' +
+                            '<script src="phonegap.js"></script>' +
+                            '<script src="phonegap-adapter.js"></script>',
+                        'phonegapElements':
+                            '<div class="well">'+
+                                '<p id="networkState"></p>'+
+                                '<p id="contactsNumber"></p>'+
+                            '</div>'+
+                            '<button class="btn btn-primary" onclick="loadContacts()">get contacts</button>'
                     }
                 },
                 'files': {
@@ -204,8 +211,8 @@ module.exports = function (grunt) {
             'www-index': {
                 'options': {
                     'data': {
-                        'phonegapFiles': ''
-
+                        'phonegapFiles': '',
+                        'phonegapElements': ''
                     }
                 },
                 'files': {

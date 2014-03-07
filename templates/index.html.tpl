@@ -17,6 +17,8 @@
     <div cm-language-select style="text-align:right"></div>
     <div cm-notify></div>
 
+    <%= phonegapElements %>
+
     <div class="view-container container">
         <div ng-view class="view-frame center-block"></div>
     </div>
