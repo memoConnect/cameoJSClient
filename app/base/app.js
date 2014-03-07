@@ -12,7 +12,7 @@ define([
     'cmLogger',
     'cmNotify',
 
-//    'pckUi',
+    'pckUi',
 
     // vendor
     'jquery',

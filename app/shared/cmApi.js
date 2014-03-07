@@ -8,7 +8,7 @@ var cmApi = angular.module('cmApi', ['cmLogger']);
 
 //Service to handle all api calls
 
-cmApi.provider('cmApi',[,
+cmApi.provider('cmApi',[
 function($injector){
     var rest_api = "";
 
