@@ -11,252 +11,197 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-shell-spawn');
 
+    grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-phonegap-build');
     grunt.loadNpmTasks('grunt-phonegap');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-template');
 
     grunt.initConfig({
-        connect: {
-            server: {
-                options: {
-                    port: 9000,
-                    base: './'
-                }
-            }
-        },
-        pkg: grunt.file.readJSON('package.json'), concat: {
-            options: {
-                separator: '\n'
-            },
-            js: {
-                src: ['app/js/controller/login.js', 'app/js/controller/start.js', 'app/js/controller/talks.js'],
-                dest: 'app/js/controller/built.raw.js'
-            }
-        }, uglify: {
-            jsController: {
-                files: {
-                    'app/js/controller/build.min.js': '<%= concat.js.dest %>'
-                }
-            }
-        }, coffee: {
-            compile: {
-                files: [
-                    {
-                        expand: true, cwd: 'app/coffee/', src: ['**/*.coffee'], dest: 'app/coffee/', ext: '.js'
+            connect: {
+                server: {
+                    options: {
+                        port: 9000,
+                        base: './'
                     }
-                ]
-            }
-        }, watch: {
-            coffee: {
-                files: ['app/coffee/**/*.coffee'], tasks: ['coffee'], options: {
-                    event: 'all'
                 }
-            }
-        }, jshint: {
-            all: ['Gruntfile.js'
-                , 'app/js/bootstrap/*.js'
-                , 'app/js/service/*.js'
-                , 'app/js/bootstrap/*.js'
-                , 'app/js/directives/*.js'
-                , 'app/js/controller/*.js'
-                , 'test/jasmine/**/*.js']
-        },
-        karma: {
-            options: {
-                configFile: 'config/karma-base.conf.js'
             },
-            jenkins: {
-                reporters: ['progress', 'junit'],
-                browsers: ['PhantomJS']
-            },
-            unit: {
-                singleRun: false,
-                autoWatch: true,
-                runnerPort: 9999,
-                browsers: ['Chrome']
-            }
-
-        },
-
-        protractor: {
-            options: {
-                // The address of a running selenium server.
-                // seleniumAddress: 'http://localhost:4444' ,
-
-                // Capabilities to be passed to the webdriver instance.
-                capabilities: {
-                    'browserName': 'firefox'
-                },
-
-                baseUrl: 'http://localhost:1337',
-
-                // Spec patterns are relative to the current working directly when
-                // protractor is called.
-                specs: ['test/e2e/*.spec.js'],
-
-                // Override the timeout for webdriver to 20 seconds.
-                allScriptsTimeout: 20000,
-
-                webdriverLoglevel: 'DEBUG',
-
-                // Options to be passed to Jasmine-node.
-                jasmineNodeOpts: {
-                    showColors: true, defaultTimeoutInterval: 30000, isVerbose: false, includeStackTrace: true
-                }
-
-            }
-
-        },
-
-        shell: {
-            runProtractor: {
-                command: './node_modules/protractor/bin/protractor config/ptor.e2e.conf.js',
+            pkg: grunt.file.readJSON('package.json'), concat: {
                 options: {
-                    async: false
+                    separator: '\n'
+                },
+                js: {
+                    src: ['app/js/controller/login.js', 'app/js/controller/start.js', 'app/js/controller/talks.js'],
+                    dest: 'app/js/controller/built.raw.js'
                 }
+            }, uglify: {
+                jsController: {
+                    files: {
+                        'app/js/controller/build.min.js': '<%= concat.js.dest %>'
+                    }
+                }
+            }, coffee: {
+                compile: {
+                    files: [
+                        {
+                            expand: true, cwd: 'app/coffee/', src: ['**/*.coffee'], dest: 'app/coffee/', ext: '.js'
+                        }
+                    ]
+                }
+            }, watch: {
+                coffee: {
+                    files: ['app/coffee/**/*.coffee'], tasks: ['coffee'], options: {
+                        event: 'all'
+                    }
+                }
+            }, jshint: {
+                all: ['Gruntfile.js'
+                    , 'app/js/bootstrap/*.js'
+                    , 'app/js/service/*.js'
+                    , 'app/js/bootstrap/*.js'
+                    , 'app/js/directives/*.js'
+                    , 'app/js/controller/*.js'
+                    , 'test/jasmine/**/*.js']
             },
-            runSelenium: {
-                command: './node_modules/protractor/bin/webdriver-manager start',
+            karma: {
                 options: {
-                    async: true
+                    configFile: 'config/karma-base.conf.js'
+                },
+                jenkins: {
+                    reporters: ['progress', 'junit'],
+                    browsers: ['PhantomJS']
+                },
+                unit: {
+                    singleRun: false,
+                    autoWatch: true,
+                    runnerPort: 9999,
+                    browsers: ['Chrome']
                 }
-            }
-        },
 
-        phonegap: {
-            config: {
-                root: 'app',
-                config: 'phonegap-res/config.xml',
-                cordova: '.cordova',
-                path: 'phonegap-build',
-                plugins: [],
-                platforms: ['android'],
-                maxBuffer: 200, // You may need to raise this for iOS.
-                verbose: false,
-                releases: 'releases',
-                releaseName: function () {
-                    var pkg = grunt.file.readJSON('package.json');
-                    return(pkg.name + '-' + pkg.version);
-                },
+            },
 
-                // Must be set for ios to work.
-                // Should return the app name.
-                name: function () {
-                    var pkg = grunt.file.readJSON('package.json');
-                    return pkg.name;
-                },
+            protractor: {
+                options: {
+                    // The address of a running selenium server.
+                    // seleniumAddress: 'http://localhost:4444' ,
 
-                // Add a key if you plan to use the `release:android` task
-                // See http://developer.android.com/tools/publishing/app-signing.html
-                Xkey: {
-                    store: 'release.keystore',
-                    alias: 'release',
-                    aliasPassword: function () {
-                        // Prompt, read an environment variable, or just embed as a string literal
-                        return('');
+                    // Capabilities to be passed to the webdriver instance.
+                    capabilities: {
+                        'browserName': 'firefox'
                     },
-                    storePassword: function () {
-                        // Prompt, read an environment variable, or just embed as a string literal
-                        return('');
+
+                    baseUrl: 'http://localhost:1337',
+
+                    // Spec patterns are relative to the current working directly when
+                    // protractor is called.
+                    specs: ['test/e2e/*.spec.js'],
+
+                    // Override the timeout for webdriver to 20 seconds.
+                    allScriptsTimeout: 20000,
+
+                    webdriverLoglevel: 'DEBUG',
+
+                    // Options to be passed to Jasmine-node.
+                    jasmineNodeOpts: {
+                        showColors: true, defaultTimeoutInterval: 30000, isVerbose: false, includeStackTrace: true
+                    }
+
+                }
+
+            },
+
+            shell: {
+                runProtractor: {
+                    command: './node_modules/protractor/bin/protractor config/ptor.e2e.conf.js',
+                    options: {
+                        async: false
                     }
                 },
+                runSelenium: {
+                    command: './node_modules/protractor/bin/webdriver-manager start',
+                    options: {
+                        async: true
+                    }
+                }
+            },
 
-                // Set an app icon at various sizes (optional)
-                icons: {
-                    android: {
-                        ldpi: 'phonegap-res/res/icon/android/icon-36-ldpi.png',
-                        mdpi: 'phonegap-res/res/icon/android/icon-48-mdpi.png',
-                        hdpi: 'phonegap-res/res/icon/android/icon-72-hdpi.png',
-                        xhdpi: 'phonegap-res/res/icon/android/icon-96-xhdpi.png'
+            phonegap: {
+                // https://www.npmjs.org/package/grunt-phonegap
+                config: {
+                    root: 'app',
+                    config: 'phonegap-res/config.xml',
+                    path: 'phonegap-build',
+                    plugins: [
+                        './phonegap-res/plugins/org.apache.cordova.console',
+                        './phonegap-res/plugins/org.apache.cordova.device',
+                        './phonegap-res/plugins/org.apache.cordova.network-information',
+                        './phonegap-res/plugins/org.apache.cordova.splashscreen',
+                        './phonegap-res/plugins/org.apache.cordova.contacts'
+                    ],
+                    platforms: ['android'],
+                    maxBuffer: 200, // You may need to raise this for iOS.
+                    verbose: true,
+                    releases: 'releases',
+
+                    releaseName: function () {
+                        var pkg = grunt.file.readJSON('package.json');
+                        return(pkg.name + '-' + pkg.version);
                     },
-//                    wp8: {
-//                        app: 'phonegap-res/res/icon/windows-phone/icon-62-tile.png',
-//                        tile: 'phonegap-res/res/icon/windows-phone/icon-173-tile.png'
-//                    },
-//                    ios: {
-////                        icon29: 'phonegap-res/res/icon/ios/icon29.png',
-////                        icon29x2: 'phonegap-res/res/icon/ios/icon29x2.png',
-////                        icon40: 'phonegap-res/res/icon/ios/icon40.png',
-////                        icon40x2: 'phonegap-res/res/icon/ios/icon40x2.png',
-//                        icon57: 'phonegap-res/res/icon/ios/icon57.png',
-//                        icon57x2: 'phonegap-res/res/icon/ios/icon57x2.png',
-//                        //icon60x2: 'phonegap-res/res/icon/ios/icon60x2.png',
-//                        icon72: 'phonegap-res/res/icon/ios/icon72.png',
-//                        icon72x2: 'phonegap-res/res/icon/ios/icon72x2.png'
-//                        //icon76: 'phonegap-res/res/icon/ios/icon76.png',
-//                        //icon76x2: 'phonegap-res/res/icon/ios/icon76x2.png'
-//                    }
-                },
-
-                // Set a splash screen at various sizes (optional)
-                // Only works for Android and IOS
-                screens: {
-                    android: {
-                        ldpi: 'phonegap-res/res/screen/android/screen-ldpi-portrait.png',
-                        // landscape version
-                        ldpiLand: 'phonegap-res/res/screen/android/screen-ldpi-landscape.png',
-                        mdpi: 'phonegap-res/res/screen/android/screen-mdpi-portrait.png',
-                        // landscape version
-                        mdpiLand: 'phonegap-res/res/screen/android/screen-mdpi-landscape.png',
-                        hdpi: 'phonegap-res/res/screen/android/screen-hdpi-portrait.png',
-                        // landscape version
-                        hdpiLand: 'phonegap-res/res/screen/android/screen-hdpi-landscape.png',
-                        xhdpi: 'phonegap-res/res/screen/android/screen-xhdpi-portrait.png',
-                        // landscape version
-                        xhdpiLand: 'phonegap-res/res/screen/android/screen-xhdpi-landscape.png'
+                    name: function () {
+                        var pkg = grunt.file.readJSON('package.json');
+                        return pkg.name;
                     },
-//                    ios: {
-//                        // ipad landscape
-//                        ipadLand: 'phonegap-res/res/screen/ios/screen-ipad-landscape.png',
-//                        ipadLandx2: 'phonegap-res/res/screen/ios/screen-ipad-landscape-2x.png',
-//                        // ipad portrait
-//                        ipadPortrait: 'phonegap-res/res/screen/ios/screen-ipad-portrait.png',
-//                        ipadPortraitx2: 'phonegap-res/res/screen/ios/screen-ipad-portrait-2x.png',
-//                        // iphone portrait
-//                        iphonePortrait: 'phonegap-res/res/screen/ios/screen-iphone-portrait.png',
-//                        iphonePortraitx2: 'phonegap-res/res/screen/ios/screen-iphone-portrait-2x.png',
-//                        iphone568hx2: 'phonegap-res/res/screen/ios/screen-iphone-568h-2x.png'
-//                    }
-                },
+                    versionCode: function () {
+                        return(1)
+                    },
+                    minSdkVersion: function () {
+                        return(10)
+                    },
+                    targetSdkVersion: function () {
+                        return(19)
+                    },
 
-                // Android-only integer version to increase with each release.
-                // See http://developer.android.com/tools/publishing/versioning.html
-                versionCode: function () {
-                    return(1)
-                },
+                    // relative to /phonegap-res
+                    icons: {
+                        android: {
+                            ldpi: 'phonegap-res/res/icon/android/icon-36-ldpi.png',
+                            mdpi: 'phonegap-res/res/icon/android/icon-48-mdpi.png',
+                            hdpi: 'phonegap-res/res/icon/android/icon-72-hdpi.png',
+                            xhdpi: 'phonegap-res/res/icon/android/icon-96-xhdpi.png'
+                        }
+                    },
 
-                // Android-only options that will override the defaults set by Phonegap in the
-                // generated AndroidManifest.xml
-                // See https://developer.android.com/guide/topics/manifest/uses-sdk-element.html
-                minSdkVersion: function () {
-                    return(10)
-                },
-                targetSdkVersion: function () {
-                    return(19)
-                },
-
-                // If you want to use the Phonegap Build service to build one or more
-                // of the platforms specified above, include these options.
-                // See https://build.phonegap.com/
-                Xremote: {
-                    username: 'your_username',
-                    password: 'your_password',
-                    platforms: ['android']
-                },
-
-                // Set an explicit Android permissions list to override the automatic plugin defaults.
-                // In most cases, you should omit this setting. See 'Android Permissions' in README.md for details.
-                permissions: ['INTERNET', 'CONTACTS', '...']
-            }
-        },
+                    // Set a splash screen at various sizes (optional)
+                    // Only works for Android and IOS
+                    screens: {
+                        android: {
+                            ldpi: 'phonegap-res/res/screen/android/screen-ldpi-portrait.png',
+                            ldpiLand: 'phonegap-res/res/screen/android/screen-ldpi-landscape.png',
+                            mdpi: 'phonegap-res/res/screen/android/screen-mdpi-portrait.png',
+                            mdpiLand: 'phonegap-res/res/screen/android/screen-mdpi-landscape.png',
+                            hdpi: 'phonegap-res/res/screen/android/screen-hdpi-portrait.png',
+                            hdpiLand: 'phonegap-res/res/screen/android/screen-hdpi-landscape.png',
+                            xhdpi: 'phonegap-res/res/screen/android/screen-xhdpi-portrait.png',
+                            xhdpiLand: 'phonegap-res/res/screen/android/screen-xhdpi-landscape.png'
+                        }
+                    }
+                }
+            },
 
         template: {
             'phonegap-index': {
                 'options': {
                     'data': {
-                        'phonegapFiles': '<script src="phonegap.js"></script>' +
-                            '<script src="phonegap-adapter.js"></script>'
-
+                        'phonegapFiles':
+//                            '<script src="cordova.js"></script>' +
+                            '<script src="phonegap.js"></script>' +
+                            '<script src="phonegap-adapter.js"></script>',
+                        'phonegapElements':
+                            '<div class="well">'+
+                                '<p id="networkState"></p>'+
+                                '<p id="contactsNumber"></p>'+
+                            '</div>'+
+                            '<button class="btn btn-primary" onclick="loadContacts()">get contacts</button>'
                     }
                 },
                 'files': {
@@ -266,37 +211,67 @@ module.exports = function (grunt) {
             'www-index': {
                 'options': {
                     'data': {
-                        'phonegapFiles': ''
-
+                        'phonegapFiles': '',
+                        'phonegapElements': ''
+                        }
+                    },
+                    'files': {
+                        'app/index.html': ['templates/index.html.tpl']
                     }
-                },
-                'files': {
-                    'app/index.html': ['templates/index.html.tpl']
+                }
+            },
+
+            copy: {
+                'phonegap-resources': {
+                    files: [
+                        // copy all icon and splashs to /www/res
+                        {
+                            expand: true,
+                            cwd: 'phonegap-res/res/',
+                            src: ['**'],
+                            dest: 'phonegap-build/www/res/'
+                        },
+                        // add adapter javascript to /www
+                        {
+                            expand: true,
+                            flatten: true,
+                            src: 'phonegap-res/*.js',
+                            dest: 'phonegap-build/www/'
+                        }
+                    ]
+                }
+            },
+            "phonegap-build": {
+                debug: {
+                    options: {
+                        archive: "phonegap-target/cameoNetApp.zip",
+                        "appId": "810861",
+                        "user": {
+                            "email": "adobe@cameo.io",
+                            "password": "sagCOC6106facsU"
+                        },
+                        download: {
+                            ios: 'phonegap-target/cameoNet.ipa',
+                            android: 'phonegap-target/cameoNet.apk',
+                            winphone: 'phonegap-target/cameoNet.xap'
+                        }
+                    }
+                }
+            },
+            compress: {
+                main: {
+                    options: {
+                        archive: 'phonegap-target/cameoNetApp.zip',
+                        mode: 'zip'
+                    },
+                    expand: true,
+                    cwd: 'phonegap-build/www/',
+                    src: ['**/*']
                 }
             }
-        },
-
-        copy: {
-            'phonegap-resources': {
-                files: [
-                    // copy all icon and splashs to /www/res
-                    {
-                        expand: true,
-                        cwd: 'phonegap-res/res/',
-                        src: ['**'],
-                        dest: 'phonegap-build/www/res/'
-                    },
-                    // add adapter javascript to /www
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: 'phonegap-res/*.js',
-                        dest: 'phonegap-build/www/'
-                    }
-                ]
-            }
         }
-    });
+    )
+    ;
 
 
 //    grunt.registerTask('default', ['concat','uglify']);
@@ -323,8 +298,17 @@ module.exports = function (grunt) {
     grunt.registerTask('phonegap', [
         'phonegap:build',
         'copy:phonegap-resources',
-        'template:phonegap-index'
+        'template:phonegap-index',
+    ]);
+
+    grunt.registerTask('phonegap-bs', [
+        'phonegap:build',
+        'copy:phonegap-resources',
+        'template:phonegap-index',
+        'compress',
+        'phonegap-build:debug'
     ]);
 
     grunt.registerTask('www', ['template:www-index']);
-};
+}
+;
