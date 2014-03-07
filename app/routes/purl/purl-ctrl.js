@@ -1,9 +1,10 @@
 define([
     'app',
-    'mUser',
     'cmApi',
     'cmLogger',
-    'cmUtil'
+    'cmUtil',
+    'ngload!pckUser',
+    'ngload!pckConversations'
 ], function(app){
     'use strict';
 
@@ -11,7 +12,7 @@ define([
         '$scope',
         '$routeParams',
         '$location',
-        'ModelUser',
+        'cmUserModel',
         'cmApi',
         'cmLogger',
         'cmUtil',

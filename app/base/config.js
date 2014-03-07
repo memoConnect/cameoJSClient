@@ -46,6 +46,8 @@ cameo_config = {
         },
         'terms': {},
         'disclaimer': {},
-        '404': {}
+        '404': {
+            templateUrl:'routes/landingpages/404.html'
+        }
     }
 };

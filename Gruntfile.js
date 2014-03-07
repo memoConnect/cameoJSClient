@@ -188,24 +188,31 @@ module.exports = function (grunt) {
                 }
             },
 
-            template: {
-                'phonegap-index': {
-                    'options': {
-                        'data': {
-                            'phonegapFiles': '<script src="phonegap.js"></script>' +
-                                '<script src="phonegap-adapter.js"></script>'
-
-                        }
-                    },
-                    'files': {
-                        'phonegap-build/www/index.html': ['templates/index.html.tpl']
+        template: {
+            'phonegap-index': {
+                'options': {
+                    'data': {
+                        'phonegapFiles':
+//                            '<script src="cordova.js"></script>' +
+                            '<script src="phonegap.js"></script>' +
+                            '<script src="phonegap-adapter.js"></script>',
+                        'phonegapElements':
+                            '<div class="well">'+
+                                '<p id="networkState"></p>'+
+                                '<p id="contactsNumber"></p>'+
+                            '</div>'+
+                            '<button class="btn btn-primary" onclick="loadContacts()">get contacts</button>'
                     }
                 },
-                'www-index': {
-                    'options': {
-                        'data': {
-                            'phonegapFiles': ''
-
+                'files': {
+                    'phonegap-build/www/index.html': ['templates/index.html.tpl']
+                }
+            },
+            'www-index': {
+                'options': {
+                    'data': {
+                        'phonegapFiles': '',
+                        'phonegapElements': ''
                         }
                     },
                     'files': {

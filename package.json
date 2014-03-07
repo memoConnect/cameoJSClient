@@ -50,7 +50,6 @@
         "requirejs": "~2.1.11",
         "selenium-standalone": "~2.39.0",
         "selenium-webdriver": "~2.39.0",
-        "phonegap": "~3.4.0-0.19.7",
         "grunt-phonegap": "~0.13.2",
         "grunt-phonegap-build": "~0.0.8",
         "grunt-contrib-compress": "~0.7.0",
