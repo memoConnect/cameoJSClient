@@ -98,7 +98,11 @@ define([
                     var routes = [],
                         routeParams = {};
                     // create params for route
+                    if(angular.isDefined(_settings_['templateUrl'])){
+                        routeParams.templateUrl = _settings_['templateUrl'];
+                    } else {
                         routeParams.templateUrl = 'routes/'+routeKey+'/'+routeKey+'.html';
+                    }
                     // check if route has/need controller
                     if(angular.isDefined(_settings_['hasCtrl']) && _settings_.hasCtrl === true)
                         routeParams.controllerUrl = 'routes/'+routeKey+'/'+routeKey+'-ctrl';
