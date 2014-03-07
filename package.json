@@ -53,7 +53,7 @@
         "phonegap": "~3.4.0-0.19.7",
         "grunt-phonegap": "~0.13.2",
         "grunt-phonegap-build": "~0.0.8",
-        "grunt-zipstream": "~0.2.2",
+        "grunt-contrib-compress": "~0.7.0",
         "plugman": "~0.20.2"
 
     },
