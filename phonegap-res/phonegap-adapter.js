@@ -3,6 +3,8 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 // device APIs are available
 function onDeviceReady() {
+    alert('device ready "is angular ready? '+typeof angular+'"');
+
     var options = new ContactFindOptions();
     options.filter="";        // empty search string returns all contacts
     options.multiple=true;    // return multiple results
@@ -14,6 +16,7 @@ function onDeviceReady() {
 
 // onSuccess: Get a snapshot of the current contacts
 function onSuccess(contacts) {
+    alert('contacts success '+contacts.length)
     for (var i = 0; i < contacts.length; i++) {
         console.log("Display Name = " + contacts[i].displayName);
     }

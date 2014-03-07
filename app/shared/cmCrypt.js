@@ -97,8 +97,8 @@ angular.module('cmCrypt', ['cmLogger'])
              * @returns {Promise.promise|*|webdriver.promise.Deferred.promise}
              */
             generateAsyncKeypair: function(keySize, onGeneration){
-                if ( keySize == undefined || typeof keySize != 'number' || async.interval != null ) {
-                    return;
+                if ( keySize == undefined || typeof keySize != 'number' && parseInt(keySize) == '' && parseInt(keySize) != NaN  || async.interval != null ) {
+                    return false;
                 }
 
                 cmLogger.debug('jsencrypt generateAsync '+keySize);
