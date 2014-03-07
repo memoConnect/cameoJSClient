@@ -61,8 +61,10 @@ cmConversations.service('cmConversationsModel', [
 
 cmConversations.service('cmPurlModel',[
     'cmConversationsAdapter',
+    'cmConversationsModel',
     'cmConversationFactory',
     'cmUserModel',
+    'cmAuth',
     '$q',
     '$rootScope',
     cmPurlModel
