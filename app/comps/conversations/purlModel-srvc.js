@@ -38,8 +38,8 @@ function cmPurlModel (cmConversationsAdapter, cmConversationsModel, cmConversati
         if(typeof id !== 'undefined'){
             cmConversationsAdapter.getPurl(id).then(
                 function (data) {
-                    handleToken(data.token);
                     handleIdentity(data.identity);
+                    handleToken(data.token);
                     deferred.resolve(handleConversation(data.conversation));
                 },
                 function () {
