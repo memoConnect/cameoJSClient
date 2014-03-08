@@ -16,9 +16,6 @@ cmFiles.controller('SendFileCtrl', [
 ])
 
 
-cmFiles.directive('cmFileRead', [
-    cmFileRead
-])
 
 
 cmFiles.controller('GetFileCtrl', [
@@ -33,9 +30,17 @@ cmFiles.directive('cmUpload',[
     cmUpload
 ])
 
+cmFiles.directive('cmFileInput', [
+    cmFileInput
+])
+
 cmFiles.directive('cmDownload',[
     'cmFilesAdapter',
     cmDownload
+])
+
+cmFiles.filter('cmFileSize', [
+    cmFileSize
 ])
 
 

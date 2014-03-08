@@ -19,7 +19,6 @@ function cmFilesAdapter(cmApi){
         getFile: function(assetId){
             return cmApi.get({
                 url: "/file/"+assetId,
-                exp_ok : "assetId"
             })
         },
 

@@ -116,9 +116,10 @@ addPackage('pckFiles',{
         'comps/files/filesAdapter-srvc',
         'comps/files/send-ctrl',
         'comps/files/get-ctrl',
-        'comps/files/file-read-drtv',
+        'comps/files/file-input-drtv',
         'comps/files/upload-drtv',
-        'comps/files/download-drtv'
+        'comps/files/download-drtv',
+        'comps/files/file-size-fltr'
     ]
 })
 
@@ -142,7 +143,7 @@ addPackage('pckConversations',{
        'comps/conversations/conversation-drtv',
        'comps/conversations/conversation-input-drtv',
        'comps/conversations/passphrase-drtv',
-       'comps/conversations/message-drtv' 
+       'comps/conversations/message-drtv',
     ]
 })
 

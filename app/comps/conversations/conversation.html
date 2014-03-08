@@ -98,18 +98,24 @@
 	<div>
 		<textarea cm-message-input ng-model="my_message_text"></textarea>
 	</div>	
+
 	<div>
 		<button ng-click="sendMessage()">{{"CONVERSATION.LABEL.SEND" | cmTranslate}}</button>
 		<cm-emoticons></cm-emoticons>
 
-
-		<cm-upload cm-chunk-size = "256">						
-			<progress value="{{progress}}" max="{{chunksTotal}}"></progress> {{percent}}% 
+		<input type = "text" ng-model ="conversation.assetId">
+		<cm-upload cm-chunk-size = "10" ng-model = "conversation.assetId">
+			<cm-file-input></cm-file-input>
+			{{percentage}}%
+			<progress value="{{progress}}" max="{{chunksTotal}}"></progress>  
+			<button ng-click="upload()"><i class="fa fa-upload"></i></button>	
 			<details>
-				Filesize: {{fileSize}} <br/>
-				ChunkSize: {{chunkSize}}  <br/>
+				<summar>Details</summary>
+				<br/>
+				File size: {{fileSize | cmFileSize}} <br/>
+				Chunk size: {{chunkSize}} <br/>
 				Number of Chunks: {{chunksTotal}} <br/>
-				AssetID: {{assetId}}
+				AssetID: {{assetId || 'unkown'}}
 			</detail>
 		</cm-upload>
 
@@ -122,7 +128,7 @@
 		    <br/>
 
 		    <input type="file" name="file" cm-file-read="file" onchange="angular.element(this).scope().calcChunkSize(event)" placeholder="placeholder.file" /><br />
-		    fileSize: {{bytesToSize(fileSize)}} / chunksTotal: {{ chunksTotal }} / inQueue: {{chunksQueue}}<br />
+		    fileSize: {{fileSize|cmFileSize : kb}} / chunksTotal: {{ chunksTotal }} / inQueue: {{chunksQueue}}<br />
 		    <hr>
 		    <section>
 		        
