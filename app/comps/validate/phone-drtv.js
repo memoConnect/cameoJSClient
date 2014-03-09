@@ -1,3 +1,5 @@
+'use strict';
+
 function cmValidatePhone(cmAuth){
     return {
         require: 'ngModel',

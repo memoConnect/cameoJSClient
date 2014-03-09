@@ -8,14 +8,12 @@ var cmContacts = angular.module('cmContacts',[
     'cmLanguage'
 ])
 
-
 cmContacts.service('cmContactsAdapter',[
     'cmApi',
     'cmLogger',
     'cmUtil',
     cmContactsAdapter
 ])
-
 
 cmContacts.service('cmContactsModel',[
     'cmUserModel',

@@ -1,18 +1,6 @@
-/*
-define([
-    'app',
-    'comps/point-spinner/point-spinner-drtv',
-    'ngload!cmLogger',
-    'ngload!cmNotify',
-    'ngload!pckUser'
-], function(app){
-*/    
-
 'use strict';
 
-
 function cmLogin($location, $interval, cmLogger, cmNotify, cmUserModel) {    
-
     return  {
 
         restrict    :   'A',
@@ -72,7 +60,3 @@ function cmLogin($location, $interval, cmLogger, cmNotify, cmUserModel) {
         }
     }
 }
-
-/*        
-});
-*/
