@@ -2,7 +2,6 @@
 
 function cmPassphrase() {
     return {
-
         restrict: 		'A',
         scope:			false,
 

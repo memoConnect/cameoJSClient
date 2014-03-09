@@ -1,14 +1,5 @@
-/*
-define([
-    'app',
-    'ngload!mContacts',
-    'ngload!cmLogger'
-], function(app){
-*/    
-
 'use strict';
 
-    
 function cmSearchCameoIdentity(ModelContacts, cmLogger){
     return {
         restrict: 'A',
@@ -61,6 +52,3 @@ function cmSearchCameoIdentity(ModelContacts, cmLogger){
         }
     }
 }
-/*
-});
-*/
