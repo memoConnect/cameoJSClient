@@ -89,8 +89,9 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
             var self     = this,
                 deferred = $q.defer(),
                 promises = []
+                assetId  = this.assetId
 
-            if(!self.assetId){
+            if(!assetId){
                 deferred.reject()
                 cmLogger.error("this.assetId not found.")
                 return deferred.promise
@@ -102,10 +103,10 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
                 promises.push(deferredChunk.promise)
 
                 self._prepareChunk(chunk)
-                .then(function(prepped_chunk){ cmFilesAdapter.addChunk(self.assetId, index, prepped_chunk) })
+                .then(function(prepped_chunk){ cmFilesAdapter.addChunk(assetId, index, prepped_chunk) })
                 .then(
-                    function(data){                       
-                        deferredChunk.resolve(data)
+                    function(){                       
+                        deferredChunk.resolve()
                         deferred.notify(1/self.chunks.length*100)
                     },
 
@@ -118,7 +119,7 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
 
             $q.all(promises)
             .then(
-                function(data)      { deferred.resolve(data) },
+                function(data)      { deferred.resolve(assetId) },
                 function(response)  { deferred.reject(response) }
             )
 

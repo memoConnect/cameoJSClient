@@ -103,8 +103,8 @@
 		<button ng-click="sendMessage()">{{"CONVERSATION.LABEL.SEND" | cmTranslate}}</button>
 		<cm-emoticons></cm-emoticons>
 
-		<input type = "text" ng-model ="conversation.assetId">
-		<cm-upload cm-chunk-size = "10" ng-model = "conversation.assetId">
+		<input type = "text" ng-model ="assetId">
+		<cm-upload cm-chunk-size = "10" ng-model = "assetId">
 			<cm-file-input></cm-file-input>
 			{{percentage}}%
 			<progress value="{{percentage}}" max="{{chunksTotal}}"></progress>  
