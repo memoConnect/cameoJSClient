@@ -1,6 +1,6 @@
 'use strict';
 
-function cmSearchCameoIdentity(ModelContacts, cmLogger){
+function cmSearchCameoIdentity(cmContactsModel, cmLogger){
     return {
         restrict: 'A',
         scope: {},
@@ -18,7 +18,7 @@ function cmSearchCameoIdentity(ModelContacts, cmLogger){
                     return false;
                 }
 
-                ModelContacts.searchCameoIdentity($scope.string)
+                cmContactsModel.searchCameoIdentity($scope.string)
                 .then(
                     function(data){
                         $scope.results = data;
@@ -37,7 +37,7 @@ function cmSearchCameoIdentity(ModelContacts, cmLogger){
             $scope.sendFriendRequest = function(id){
                 // TODO: Notification
                 if(angular.isDefined(id)){
-                    ModelContacts
+                    cmContactsModel
                     .sendFriendRequest(id)
                     .then(
                         function(){

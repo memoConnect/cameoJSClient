@@ -8,13 +8,6 @@ var cmContacts = angular.module('cmContacts',[
     'cmLanguage'
 ])
 
-cmContacts.service('cmContactsAdapter',[
-    'cmApi',
-    'cmLogger',
-    'cmUtil',
-    cmContactsAdapter
-])
-
 cmContacts.service('cmContactsModel',[
     'cmUserModel',
     'cmContactsAdapter',
@@ -22,7 +15,14 @@ cmContacts.service('cmContactsModel',[
     '$q',
     '$rootScope',
     cmContactsModel
-])    
+])
+
+cmContacts.service('cmContactsAdapter',[
+    'cmApi',
+    'cmLogger',
+    'cmUtil',
+    cmContactsAdapter
+])
 
 cmContacts.directive('cmAddExternalContact',[
     'cmContactsModel',
@@ -45,6 +45,8 @@ cmContacts.directive('cmContactsList',[
 ])
 
 cmContacts.directive('cmSearchCameoIdentity',[
+    'cmContactsModel',
+    'cmLogger',
     cmSearchCameoIdentity
 ])
 
