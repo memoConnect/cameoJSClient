@@ -1,41 +1,43 @@
 'use strict';
 
-describe('cmUser', function(){
-    var $model, $httpBackend ;
+var cmUserModel;
 
-    beforeEach(module('cmUser'))
-    beforeEach(inject(function(_cmUserModel_, _$httpBackend_) {
-        $model = _cmUserModel_;
-        $httpBackend = _$httpBackend_;
+describe('cmUserModel', function(){
+    var model;
+
+    beforeEach(module("cmUserModel"))
+
+    beforeEach(inject(function(_cmUserModel_) {
+        model = _cmUserModel_
     }))
 
     it('should exists', function(){
-        expect($model).toBeDefined();
+        expect(model).toBeDefined();
     })
 
     describe('public API', function(){
         it('should defined isAuth',function(){
-            expect($model.isAuth).toBeDefined();
+            expect(model.isAuth).toBeDefined();
         })
 
         it('should defined doLogin',function(){
-            expect($model.doLogin).toBeDefined();
+            expect(model.doLogin).toBeDefined();
         })
 
         it('should defined doLogout',function(){
-            expect($model.doLogout).toBeDefined();
+            expect(model.doLogout).toBeDefined();
         })
 
         it('should defined storageSave',function(){
-            expect($model.storageSave).toBeDefined();
+            expect(model.storageSave).toBeDefined();
         })
 
         it('should defined storageGet',function(){
-            expect($model.storageGet).toBeDefined();
+            expect(model.storageGet).toBeDefined();
         })
 
         it('should defined storageRemove',function(){
-            expect($model.storageRemove).toBeDefined();
+            expect(model.storageRemove).toBeDefined();
         })
     })
 
@@ -46,19 +48,20 @@ describe('cmUser', function(){
     xdescribe('Authentication',function(){
         // TODO: couldn't work while cmAuth handling with token = mocken?
         it('should be true, when user is active and has id',function(){
-            $model.data.isActive = true;
-            $model.data.id = 'moep';
-            expect($model.isAuth()).toBeTruthy();
+            model.data.isActive = true;
+            model.data.id = 'moep';
+            expect(model.isAuth()).toBeTruthy();
         })
 
         it('should be false, when user is active and has no id',function(){
-            $model.data.isActive = true;
-            expect($model.isAuth()).toBeFalsy();
+            model.data.isActive = true;
+            expect(model.isAuth()).toBeFalsy();
         })
 
         it('should be false, when user is inactive and has id',function(){
-            $model.data.id = 'moep';
-            expect($model.isAuth()).toBeFalsy();
+            model.data.id = 'moep';
+            expect(model.isAuth()).toBeFalsy();
         })
     })
-})
+
+});
