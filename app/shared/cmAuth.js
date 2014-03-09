@@ -26,7 +26,6 @@ function(cmApi, cmCrypt){
 
         // store the token in a cookie:
         storeToken: function(token){
-            console.log(token)
 //                    return $cookieStore.put('token', token);
             return localStorage.setItem('token', token);
         },

@@ -39,6 +39,18 @@ describe('cmUserModel', function(){
         it('should defined storageRemove',function(){
             expect(model.storageRemove).toBeDefined();
         })
+
+        it('should defined getToken',function(){
+            expect(model.getToken).toBeDefined();
+        })
+
+        it('should defined storeToken',function(){
+            expect(model.storeToken).toBeDefined();
+        })
+
+        it('should defined removeToken',function(){
+            expect(model.removeToken).toBeDefined();
+        })
     })
 
     /**
