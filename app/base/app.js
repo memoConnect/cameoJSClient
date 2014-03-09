@@ -6,8 +6,8 @@ define([
     'cmLocalStorage',
     'cmApi',
     'cmAuth',
-
     'cmUserModel',
+
     'cmLanguage',
     'cmLogger',
     'cmNotify',
