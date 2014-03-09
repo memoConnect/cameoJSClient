@@ -11,17 +11,14 @@ function cmDownload(cmFile){
 
             $scope.assetId = $scope.$parent.$eval($attrs.cmDownload) || $scope.$parent.$eval($attrs.cmData);
             $scope.file = {};
-            $scope.fileSize = 10
+            $scope.fileSize = 1
+            $scope.progress = 0
 
             
-            $scope.$parent.$watch($attrs.cmDownload, function(){
-                $scope.assetId = $scope.$parent.$eval($attrs.cmDownload)
-            })
+            $scope.$parent.$watch($attrs.cmDownload, function(assetId) { self.setAssetId(assetId) })
+            $scope.$parent.$watch($attrs.cmData, function(assetId) { self.setAssetId(assetId) })
 
-            $scope.$parent.$watch($attrs.cmData, function(){
-                $scope.assetId = $scope.$parent.$eval($attrs.cmData)
-            })
-
+            
             var file = "";
 
             $scope.getFile = function(){
@@ -36,16 +33,24 @@ function cmDownload(cmFile){
             }
 
             $scope.download = function(){
-                console.dir(self.getFileDetails())
+                cmFile.download()                
             }
 
-            this.getFileDetails = function(){
-                cmFile.getDetails($scope.assetId)
-                .then(function(details){
-                    $scope.fileSize = details.fileSize
-                    $scope.fileName = details.fileName
-                    $scope.fileType = details.fileType
-                })
+            this.setAssetId = function(assetId){
+                $scope.assetId = assetId
+                self._updateFileDetails()
+            }
+
+            this._updateFileDetails = function(){
+                $scope.assetId
+                ?   cmFile.getDetails($scope.assetId)
+                    .then(function(details){
+                        console.log(details)
+                        $scope.fileSize = details.fileSize
+                        $scope.fileName = details.fileName
+                        $scope.fileType = details.fileType                        
+                    })
+                :   null
             }
 
             function getChunk(index){
@@ -66,10 +71,8 @@ function cmDownload(cmFile){
                    ,$scope.file.fileName
                 );
             }
-
             
-
-            
+            this._updateFileDetails()            
 
         }
     }

@@ -134,6 +134,8 @@ addPackage('pckFiles',{
         'comps/files/upload-drtv',
         'comps/files/download-drtv',
         'comps/files/file-size-fltr'
+    ]
+})
 
 addPackage('pckUser',{
     root: 'comps/user/user-module',

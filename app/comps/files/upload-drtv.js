@@ -12,8 +12,9 @@ function cmUpload(cmFile){
             var self = this
 
             $scope.file = {};            
-            $scope.percentage = 0;                        
-            $scope.chunksTotal = 0;            
+            $scope.chunksTotal = 0; 
+            $scope.fileSize = 1
+            $scope.progress = 0           
                         
 
             $scope.$watch($attrs.cmChunkSize, function(new_chunk_size){
@@ -26,12 +27,11 @@ function cmUpload(cmFile){
                 cmFile.upload().then(
                     function(assetId){ //success
                         self.setAssetId(assetId)
-                        $scope.percentage = 100
                     }, 
                     null, //error
-                    function(percentage){ //notify
-                        $scope.percentage += percentage
-                        $scope.percentage = Math.min($scope.percentage, 100)
+                    function(progress){ //notify
+                        console.log(progress)
+                        $scope.progress += progress                        
                     }
                 )
             }

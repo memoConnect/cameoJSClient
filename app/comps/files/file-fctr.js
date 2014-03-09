@@ -51,6 +51,11 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
             return chunkSize ? this._chopIntoChunks(chunkSize) : null            
         },
 
+        setAssetId : function(assetId){
+            this.assetId = assetId
+        },
+
+
         _chopIntoChunks : function(chunkSize){
             var startByte   = 0,
                 endByte     = 0,
@@ -106,7 +111,7 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
                                     chunksTotal: self.chunks.length
                                 } , prepped_chunk) //TODO: remove chunk, preparing the file should be possible without sending a chunk                                
                     })
-                    .then(function(assetId){ self.assetId = assetId })
+                    .then(function(assetId){ self.setAssetId(assetId) })
         },
 
         _uploadChunks : function() {
@@ -131,7 +136,8 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
                 .then(
                     function(){                       
                         deferredChunk.resolve()
-                        deferred.notify(1/self.chunks.length*100)
+                        console.log('_uploadChunks: '+chunk.length)
+                        deferred.notify(chunk.length)
                     },
 
                     function(response){
@@ -161,9 +167,42 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
             return deferred.promise
         },
 
-        getDetails : function(assetId){
-            return cmFilesAdapter.getFileInfo(assetId)            
-        }
+        getDetails : function(){
+            return  cmFilesAdapter.getFileInfo(this.assetId)
+                    .then(function(data){
+                        self.maxChunks = data.maxChunks
+                    })
+        },
 
+        download : function(){
+            var promises = []
+
+            for(var index; i< self.maxChunks; index++){
+                var deferredChunk = $q.defer()
+
+                promises.push(deferredChunk.promise)
+
+                cmFilesAdapter.getChunk(self.assetId, index)
+                .then(function(chunk){
+                    deferredChunk.resolve(chunk)                    
+                });
+            }
+
+            $q.all(promises)
+            .then(function(chunks){
+                chunks.forEach(function(chunk){
+                    console.dir(chunk)
+                })
+            })
+        },
+
+        /*
+        file += atob(chunk.replace('data:application/octet-stream;base64,',''));
+                    if(index+1 < $scope.file.maxChunks){
+                        getChunk(index+1);
+                    } else {
+                        saveFile();
+                    }
+*/
     }
 }

@@ -107,16 +107,19 @@
 
 		<cm-upload cm-chunk-size = "10" ng-model = "assetId">
 			<cm-file-input></cm-file-input>
-			{{percentage}}%
-			<progress value="{{percentage}}" max="{{chunksTotal}}"></progress>  
+			{{progress/fileSize}}%
+			<progress value="{{progress}}" max="{{fileSize}}"></progress>  
 			<button ng-click="upload()"><i class="fa fa-upload"></i></button>			
 		</cm-upload>
 
 		<br/>
 		
 		<cm-download cm-data="assetId">
-			{{fileName}}({{fileSize | cmFileSize}})
+			{{fileName}} ({{fileSize | cmFileSize}})
 			<button ng-click="download()"><i class="fa fa-download"></i></button>
+			<br/>
+			{{progress/fileSize}}%
+			<progress value="{{progress}}" max="{{fileSize}}"></progress>  
 		</cm-download>
 
 		<section ng-controller="GetFileCtrl">
