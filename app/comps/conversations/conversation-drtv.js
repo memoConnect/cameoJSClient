@@ -13,7 +13,8 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                 conversation_limit = $attrs.limit
 
             conversation_id
-            ?   cmConversationsModel.getConversation(conversation_id, conversation_offset, conversation_limit)
+//            ?   cmConversationsModel.getConversation(conversation_id, conversation_offset, conversation_limit)
+            ?   cmConversationsModel.getConversation(conversation_id)
                 .then(function (conversation) {
                     $scope.init(conversation)
                 })
@@ -54,7 +55,7 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                         : null
                 })
 
-                $scope.conversation.update()
+//                $scope.conversation.update()
             }
 
             $scope.sendMessage = function () {

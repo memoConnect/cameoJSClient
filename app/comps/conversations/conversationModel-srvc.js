@@ -149,7 +149,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
         };
 
 
-
         this.updateSubject = function (subject) {
             cmConversationsAdapter.updateSubject(this.id, subject)
                 .then(function(){

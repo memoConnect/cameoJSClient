@@ -1,6 +1,5 @@
 define([
     'app',
-    'cmApi',
     'cmLogger',
     'cmUtil',
     'ngload!pckUser',
@@ -12,23 +11,27 @@ define([
         '$scope',
         '$routeParams',
         '$location',
+        'cmPurlModel',
         'cmUserModel',
-        'cmApi',
-        'cmLogger',
         'cmUtil',
-        function($scope, $routeParams, $location, ModelUser, cmApi, cmLogger, cmUtil){
+        'cmLogger',
+        function($scope, $routeParams, $location, cmPurlModel, cmUserModel, cmUtil, cmLogger){
             $scope.data = null;
+            $scope.showConversation = false;
 
             if(cmUtil.checkKeyExists($routeParams,'idPurl') && cmUtil.validateString($routeParams.idPurl)){
-                cmApi.get({url:'/purl/'+$routeParams.idPurl}).then(
+
+                cmPurlModel.getPurl($routeParams.idPurl).then(
                     function(data){
-                        $scope.data = data;
-                    },
-                    function(){
-                        cmLogger.error('cant get PURL Message');
-                        $location.path('/404');
+                        $scope.conversationId  = data.id;
+                        $scope.showConversation = true;
                     }
+//                    function(){
+//                        cmLogger.error('cant get PURL Message');
+//                        $location.path('/404');
+//                    }
                 );
+
             }
         }
     ]);

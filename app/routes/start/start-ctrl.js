@@ -1,6 +1,6 @@
 define([
     'app',
-    'ngload!pckUser'
+    'cmUserModel'
 ], function (app) {
     'use strict';
 

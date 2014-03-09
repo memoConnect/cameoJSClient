@@ -1,8 +1,7 @@
 'use strict';
 
-function cmLogin($location, $interval, cmLogger, cmNotify, cmUserModel) {    
+function cmLogin($location, $interval, cmLogger, cmNotify, cmUserModel) {
     return  {
-
         restrict    :   'A',
         templateUrl :   'comps/user/login.html',
         scope       :   {},

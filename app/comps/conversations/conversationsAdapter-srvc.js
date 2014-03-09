@@ -24,6 +24,12 @@ function cmConversationsAdapter(cmApi, cmUtil){
             })
         },
 
+        getPurl: function(id){
+            return cmApi.get({
+                url:'/purl/' + id
+            })
+        },
+
         addRecipient: function(id, recipient_id){
             return	cmApi.post({
                         url:	'/conversation/%1/recipient'.replace(/%1/, id),
