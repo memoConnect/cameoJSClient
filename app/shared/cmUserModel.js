@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
-.service('cmUserModel',['cmAuth', 'cmLocalStorage', '$rootScope', function(cmAuth, cmLocalStorage,$rootScope){
+.service('cmUserModel',['cmAuth', 'cmLocalStorage', '$rootScope', '$q', function(cmAuth, cmLocalStorage, $rootScope, $q){
     var self = this,
         isInit = false,
         token = '';
