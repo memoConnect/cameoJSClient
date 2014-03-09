@@ -3,8 +3,7 @@ function cmFilesAdapter(cmApi){
 
 
     return {
-        prepareFile: function(data, chunk){    
-            console.log(chunk)        
+        prepareFile: function(data, chunk){        
             return cmApi.post({
                 url :    "/file",
                 data : {
@@ -23,11 +22,10 @@ function cmFilesAdapter(cmApi){
 
         addChunk: function(assetId, index, chunk) {         
             return cmApi.post({
-                url:    "/file/"+data.assetId,
+                url:    "/file/"+assetId,
                 data:   {
                     chunk: chunk
-                },
-                exp_ok: 'id',                
+                },          
                 headers:{
                     "X-Index":      index
                 }

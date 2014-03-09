@@ -1,4 +1,4 @@
-function cmFile(cmFilesAdapter, $q){
+function cmFile(cmFilesAdapter, cmLogger, $q){
 
     //private methods:
 
@@ -24,7 +24,7 @@ function cmFile(cmFilesAdapter, $q){
     return {
         init : function(file, chunkSize){
             this.file    = file
-            this.assetId = 0
+            this.assetId = undefined
 
             this._chopIntoChunks(chunkSize)
         },
@@ -57,28 +57,31 @@ function cmFile(cmFilesAdapter, $q){
                 str2ab_blobreader(chunk, function(buf) { // we cannot send a blob, because body payload will be empty
                     chunk = buf
                 });
-            } 
-
-            var reader = new FileReader();
-            
-            reader.onload = function(event){ chunk = event.target.result }
-            reader.readAsDataURL(chunk);
+            }       
 
             return chunk
         },
 
-        upload : function() { 
-            return  this._prepare()     
-                    .then(this._uploadChunks)
+
+        upload : function() {   
+            var self = this          
+            return  self._prepareFile()     
+                    .then(function(){ return self._uploadChunks() })
         },
 
-        _prepare : function() {
+
+        _prepareFile : function() {
             var self = this
 
-            return  cmFilesAdapter.prepareFile({
-                        file:        self.file,
-                        chunksTotal: self.chunks.length
-                    } ,this.chunks[0]) //TODO: remove chunk
+
+
+            return  this._prepareChunk(this.chunks[0])
+                    .then(function(prepped_chunk){
+                        return  cmFilesAdapter.prepareFile({
+                                    file:        self.file,
+                                    chunksTotal: self.chunks.length
+                                } , prepped_chunk) //TODO: remove chunk, preparing the file should be possible without sending a chunk                                
+                    })
                     .then(function(assetId){ self.assetId = assetId })
         },
 
@@ -87,16 +90,21 @@ function cmFile(cmFilesAdapter, $q){
                 deferred = $q.defer(),
                 promises = []
 
-            this.chunks.forEach(function(chunk, index){
+            if(!self.assetId){
+                deferred.reject()
+                cmLogger.error("this.assetId not found.")
+                return deferred.promise
+            }
+
+            self.chunks.forEach(function(chunk, index){
                 var deferredChunk = $q.defer()
 
                 promises.push(deferredChunk.promise)
 
-                cmFilesAdapter.addChunk(self.assetId, index, chunk)
+                self._prepareChunk(chunk)
+                .then(function(prepped_chunk){ cmFilesAdapter.addChunk(self.assetId, index, prepped_chunk) })
                 .then(
-
-                    function(data){
-                        self.assetId = data.assetId;
+                    function(data){                       
                         deferredChunk.resolve(data)
                         deferred.notify(1/self.chunks.length*100)
                     },
@@ -105,6 +113,7 @@ function cmFile(cmFilesAdapter, $q){
                         deferredChunk.reject(response)
                     }
                 )
+                
             })
 
             $q.all(promises)
@@ -116,6 +125,16 @@ function cmFile(cmFilesAdapter, $q){
             return deferred.promise
 
         },
+
+        _prepareChunk : function(chunk){
+            var reader   = new FileReader(),
+                deferred = $q.defer()
+         
+            reader.onload = function(event){ deferred.resolve(event.target.result) }
+            reader.readAsDataURL(chunk);
+
+            return deferred.promise
+        }
 
     }
 }

@@ -5,9 +5,6 @@ define([
     'ngload!pckConversations'
 ], function (app) {
     'use strict';
-    
-
-    console.log('Ctrl')  
   
     app.register.controller('ConversationsCtrl',[
 

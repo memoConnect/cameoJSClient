@@ -110,26 +110,7 @@
 			<progress value="{{percentage}}" max="{{chunksTotal}}"></progress>  
 			<button ng-click="upload()"><i class="fa fa-upload"></i></button>			
 		</cm-upload>
-
-
-		<h2>Chunked Uploader</h2>
-		<section ng-controller="SendFileCtrl">
-		    <h3>SendFileCtrl</h3>
-		    <span class="label">chunkSize</span>
-		    <input type="text" ng-model="chunkSize" ng-keyup="checkEmpty(1)" value="" /> * 1024 = {{bytesToSize(chunkSize*1024)}}
-		    <br/>
-
-		    <input type="file" name="file" cm-file-read="file" onchange="angular.element(this).scope().calcChunkSize(event)" placeholder="placeholder.file" /><br />
-		    fileSize: {{fileSize|cmFileSize : kb}} / chunksTotal: {{ chunksTotal }} / inQueue: {{chunksQueue}}<br />
-		    <hr>
-		    <section>
-		        
-		        <br />
-		        <pre ng-show="Util.objLen(file) > 0">{{Util.prettify(file)}}</pre>
-		        <pre ng-show="Util.objLen(apiError) > 0">Api Error:{{apiError}}</pre>
-		    </section>
-		</section>
-		<hr>
+		
 		<section ng-controller="GetFileCtrl">
 		    <h3>GetFileCtrl</h3>
 		    <section>

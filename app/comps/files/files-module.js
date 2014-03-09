@@ -9,7 +9,8 @@ cmFiles.service('cmFilesAdapter', [
 
 cmFiles.factory('cmFile', [
     'cmFilesAdapter',
-    '$q',
+    'cmLogger',
+    '$q',    
     cmFile
 ])
 

@@ -13,8 +13,6 @@ function cmFileSize() {
 
         i = (i == -1) ? parseInt(Math.floor(Math.log(bytes) / Math.log(base))) : i        
 
-        console.log(i)
-
         return Math.round(bytes / Math.pow(base, i)*100)/100 + ' ' + units[base][i]
     }
 }

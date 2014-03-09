@@ -107,6 +107,7 @@ addPackage('pckFiles',{
     root: 'comps/files/files-module',
     deps: [
         'cmApi',
+        'cmLogger',
         'vendor/filesaver/filesaver',
         'angular-resource',
         'util-base64_decode'

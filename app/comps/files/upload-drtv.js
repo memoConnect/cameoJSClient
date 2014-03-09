@@ -28,11 +28,12 @@ function cmUpload(cmFile){
             $scope.upload = function(){
                 cmFile.upload().then(
                     function(data){ //success
-                        console.dir(data)
+                        $scope.percentage = 100
                     }, 
                     null, //error
                     function(percentage){ //notify
                         $scope.percentage += percentage
+                        $scope.percentage = Math.min($scope.percentage, 100)
                     }
                 )
             }
