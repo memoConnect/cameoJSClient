@@ -1,3 +1,5 @@
+'use strict';
+
 var cmUser = angular.module('cmUser',[
     'cmAuth',
     'cmUserModel',
