@@ -1,10 +1,9 @@
 'use strict';
 
 angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
-.service('cmUserModel',['cmAuth', 'cmLocalStorage', '$rootScope', '$q', function(cmAuth, cmLocalStorage, $rootScope, $q){
+.service('cmUserModel',['cmAuth', 'cmLocalStorage', '$cookieStore', '$rootScope', '$q', '$location', function(cmAuth, cmLocalStorage, $cookieStore, $rootScope, $q, $location){
     var self = this,
-        isInit = false,
-        token = '';
+        isInit = false;
 
     var dataModel = {
         isActive: false,
@@ -26,8 +25,13 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
      */
     function init(){
         if(self.isAuth() !== false){
-            loadIdentity();
-            isInit = true;
+            loadIdentity().then(
+                function(){
+                    isInit = true;
+
+                    initStorage();
+                }
+            );
         }
     }
 
@@ -42,8 +46,10 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
 
         cmAuth.requestToken(user, pass).then(
             function(token){
-                self.storeToken(token);
-                loadIdentity();
+                cmAuth.storeToken(token);
+
+                init();
+
                 deferred.resolve();
             },
             function(state, response){
@@ -66,34 +72,50 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
      * @TODO handle Token with identity
      */
     this.getToken = function(){
-        if(token != ''){
-            return token;
-        } else {
-            var tmp = this.storageGet('token');
+//        var r = false;
+//
+//        if(this.data.storage !== null){
+//            var tmp = this.storageGet('token');
+//
+//            if(tmp != undefined && tmp != 'undefined'){
+//                this.data.token = tmp;
+//                r = this.data.token;
+//            }
+//        }
+//
+//        if(r === false) {
+//            this.data.token = $cookieStore.get('token');
+//            r = this.data.token;
+//        }
 
-            if(tmp != undefined && tmp != 'undefined'){
-                token = tmp;
-                return token;
-            }
+        var token = cmAuth.getToken();
+        if(token !== undefined && token !== 'undefined' && token !== null){
+            return token;
         }
 
         return false;
     }
 
     this.storeToken = function(t){
-        if(typeof t !== 'undefined'){
-            token = t;
-            this.storageSave('token', t);
-        }
+//        if(typeof t !== 'undefined'){
+//            $cookieStore.put('token',t);
+//            this.storageSave('token', t);
+//        }
+        cmAuth.storeToken(t);
     }
 
     this.removeToken = function(){
-        this.storageRemove('token');
+//        $cookieStore.remove('token');
+//        this.storageRemove('token');
+        cmAuth.removeToken();
     }
 
     /**
      * LocalStorage Functions
      */
+    function initStorage(){
+        self.data.storage = cmLocalStorage.create(self.data.id,self.data.userKey);
+    }
 
     /**
      * save to identity storage
@@ -101,7 +123,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
      * @param value
      */
     this.storageSave = function(key, value){
-        if(isInit !== false){
+        if(isInit !== false && self.data.storage !== null){
             self.data.storage.save(key, value);
         }
     }
@@ -110,7 +132,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
      * @param key
      */
     this.storageGet = function(key){
-        if(isInit !== false){
+        if(isInit !== false && self.data.storage !== null){
             self.data.storage.get(key);
         }
     }
@@ -119,7 +141,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
      * @param key
      */
     this.storageRemove = function(key){
-        if(isInit !== false){
+        if(isInit !== false && self.data.storage !== null){
             self.data.storage.remove(key);
         }
     }
@@ -131,18 +153,21 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
     }
 
     function loadIdentity(){
+        var deferred = $q.defer();
+
         cmAuth.getIdentity().then(
             function(data){
                 angular.extend(self.data, data);
                 self.data.isActive = true;
 
-                loadStorage();
+                deferred.resolve();
+            },
+            function(){
+                deferred.reject();
             }
         )
-    }
 
-    function loadStorage(){
-        self.data.storage = cmLocalStorage.create(self.data.id,self.data.userKey);
+        return deferred.promise;
     }
 
     $rootScope.$on('logout', function(){

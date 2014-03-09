@@ -148,8 +148,8 @@ function($injector){
             var deferred	=	$q.defer(),
 
                 //get authentification token from cmAuth if present
-                token 		= 	$injector.has('cmUserModel')
-                                ?	$injector.get('cmUserModel').getToken()
+                token 		= 	$injector.has('cmAuth')
+                                ?	$injector.get('cmAuth').getToken()
                                 :	undefined
 
             //Api calls are restricted to the preconfigured api base path and should start with a '/'

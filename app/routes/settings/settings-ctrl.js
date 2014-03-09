@@ -1,6 +1,7 @@
 define([
     'app',
-    'ngload!pckUser',
+    'cmUserModel',
+//    'ngload!pckUser',
     'ngload!cmUtil',
     'ngload!cmCrypt'
 ], function (app) {

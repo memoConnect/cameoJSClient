@@ -173,7 +173,6 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt', function(LocalS
          *  @returns {boolean}
          */
         this.save = function (key, data) {
-            console.log(key + data);
             if(this.check() !== false){
                 storageValue = getStorageValue();
                 if(storageValue == null){
