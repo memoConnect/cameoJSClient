@@ -1,6 +1,6 @@
 'use strict';
 
-function cmUpload(cmFilesAdapter){
+function cmUpload(cmFile){
     return {
 
         restrict : 'AE',
@@ -8,6 +8,8 @@ function cmUpload(cmFilesAdapter){
         scope: true,
 
         controller : function($scope, $element, $attrs){  
+
+            var self = this
 
             $scope.file = {};
             $scope.fileSize = 0;
@@ -18,27 +20,33 @@ function cmUpload(cmFilesAdapter){
             $scope.chunksQueue = 0;
             $scope.assetId = 0;
 
-
-            $scope.$watch($attrs.cmChunkSize, function(new_chunk_size){ console.log(new_chunk_size); $scope.chunkSize = new_chunk_size })
-
-
-                   
+            $scope.$watch($attrs.cmChunkSize, function(new_chunk_size){
+                self.setChunkSize(new_chunk_size)                 
+            })          
         
 
             $scope.upload = function(){
-                // calculate the number of slices
-                $scope.assetId = 0;
-                $scope.chunksTotal = Math.ceil($scope.fileSize / ($scope.chunkSize*1024));
-                $scope.chunksQueue = $scope.chunksTotal;
-                // start sending
-                sendChunk(0);
+                cmFile.upload().then(
+                    function(data){ //success
+                        console.dir(data)
+                    }, 
+                    null, //error
+                    function(percentage){ //notify
+                        $scope.percentage += percentage
+                    }
+                )
             }
 
 
+
+            this.setChunkSize = function(chunkSize) {
+                $scope.chunkSize = chunkSize    
+                cmFile.init($scope.file, $scope.chunkSize)
+            }
+
             this.setFile = function(file){
-                $scope.file = file
-                updateNumbers()  
-                $scope.$apply()
+                $scope.file = file      
+                cmFile.init($scope.file, $scope.chunkSize)
             }
 
 
@@ -51,6 +59,7 @@ function cmUpload(cmFilesAdapter){
             }
             */
 
+            /*
             function updateNumbers(){
                 $scope.fileSize = $scope.file.size
                 $scope.chunksTotal = Math.ceil($scope.fileSize / ($scope.chunkSize*1024));
@@ -68,8 +77,6 @@ function cmUpload(cmFilesAdapter){
 
                 if(startByte < $scope.fileSize)
                     sliceChunk(index, startByte, endByte);
-
-                console.log('sendChunks')
             }
 
             // step 2 slice chunk from blob
@@ -127,8 +134,8 @@ function cmUpload(cmFilesAdapter){
                        ,assetId: $scope.assetId
                     }).
                     then(
-                        function(assetId){
-                            $scope.assetId = assetId;
+                        function(data){
+                            $scope.assetId = data.assetId;
                             
                             chunkUploaded(index+1);
                         }
@@ -143,8 +150,9 @@ function cmUpload(cmFilesAdapter){
                 $scope.chunksQueue--;
                 $scope.progress = index;
                 $scope.percentage = Math.round(index/$scope.chunksTotal * 100);
-                sendChunks(index);
+                sendChunk(index);
             }
+            */
 
         }
     }

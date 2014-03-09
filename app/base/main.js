@@ -114,6 +114,7 @@ addPackage('pckFiles',{
     ],
     resources : [
         'comps/files/filesAdapter-srvc',
+        'comps/files/file-fctr',
         'comps/files/send-ctrl',
         'comps/files/get-ctrl',
         'comps/files/file-input-drtv',

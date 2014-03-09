@@ -7,6 +7,11 @@ cmFiles.service('cmFilesAdapter', [
     cmFilesAdapter
 ])
 
+cmFiles.factory('cmFile', [
+    'cmFilesAdapter',
+    '$q',
+    cmFile
+])
 
 cmFiles.controller('SendFileCtrl', [
     '$rootScope', 
@@ -26,7 +31,7 @@ cmFiles.controller('GetFileCtrl', [
 
 
 cmFiles.directive('cmUpload',[
-    'cmFilesAdapter',
+    'cmFile',
     cmUpload
 ])
 
@@ -35,11 +40,12 @@ cmFiles.directive('cmFileInput', [
 ])
 
 cmFiles.directive('cmDownload',[
-    'cmFilesAdapter',
+    'cmFile',
     cmDownload
 ])
 
 cmFiles.filter('cmFileSize', [
+    'cmFilesAdapter',
     cmFileSize
 ])
 

@@ -107,16 +107,8 @@
 		<cm-upload cm-chunk-size = "10" ng-model = "conversation.assetId">
 			<cm-file-input></cm-file-input>
 			{{percentage}}%
-			<progress value="{{progress}}" max="{{chunksTotal}}"></progress>  
-			<button ng-click="upload()"><i class="fa fa-upload"></i></button>	
-			<details>
-				<summar>Details</summary>
-				<br/>
-				File size: {{fileSize | cmFileSize}} <br/>
-				Chunk size: {{chunkSize}} <br/>
-				Number of Chunks: {{chunksTotal}} <br/>
-				AssetID: {{assetId || 'unkown'}}
-			</detail>
+			<progress value="{{percentage}}" max="{{chunksTotal}}"></progress>  
+			<button ng-click="upload()"><i class="fa fa-upload"></i></button>			
 		</cm-upload>
 
 
