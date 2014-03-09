@@ -18,6 +18,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-template');
 
     grunt.initConfig({
+            cameoSecrets: grunt.file.readJSON('../cameoSecrets/cameoJSClientSecrets.json'),
             connect: {
                 server: {
                     options: {
@@ -247,8 +248,8 @@ module.exports = function (grunt) {
                         archive: "phonegap-target/cameoNetApp.zip",
                         "appId": "810861",
                         "user": {
-                            "email": "adobe@cameo.io",
-                            "password": "sagCOC6106facsU"
+                            "email": '<%- cameoSecrets.phonegap.email %>' ,
+                            "password": '<%- cameoSecrets.phonegap.password %>'
                         },
                         download: {
                             ios: 'phonegap-target/cameoNet.ipa',
