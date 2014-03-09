@@ -23,7 +23,6 @@ function cmUpload(cmFile){
         
 
             $scope.upload = function(){
-                var self = this
                 cmFile.upload().then(
                     function(assetId){ //success
                         self.setAssetId(assetId)

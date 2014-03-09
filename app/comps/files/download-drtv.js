@@ -1,14 +1,23 @@
-function cmDownload(cmFilesAdapter){
+function cmDownload(cmFile){
     return {
+
+        restrict : 'AE',
 
         controller : function($scope, $element, $attrs) {
 
-            $scope.assetId = 0;
-            $scope.file = {};
+            var self = this
 
-            $scope.$on("SendFileCtrl.assetIdChanged",function(event, assetId){
-                $scope.assetId = assetId;
-            });
+            $scope.assetId = $scope.$parent.$eval($attrs.cmDownload) || $scope.$parent.$eval($attrs.cmData);
+            $scope.file = {};
+            $scope.fileSize = 10
+            
+            $scope.$watch($attrs.cmDownload, function(){
+                $scope.assetId = $scope.$parent.$eval($attrs.cmDownload)
+            })
+
+            $scope.$watch($attrs.cmData, function(){
+                $scope.assetId = $scope.$parent.$eval($attrs.cmData)
+            })
 
             var file = "";
 
@@ -21,6 +30,14 @@ function cmDownload(cmFilesAdapter){
                     // pull first chunk
                     getChunk(0);
                 });
+            }
+
+            $scope.download = function(){
+                console.dir(self.getFileDetails())
+            }
+
+            this.getFileDetails = function(){
+                cmFile.getDetails($scope.assetId)
             }
 
             function getChunk(index){
@@ -44,27 +61,7 @@ function cmDownload(cmFilesAdapter){
 
             
 
-            function b64toBlob(byteCharacters, contentType, sliceSize) {
-                contentType = contentType || '';
-                sliceSize = sliceSize || 512;
-
-                var byteArrays = [];
-
-                for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-                    var slice = byteCharacters.slice(offset, offset + sliceSize);
-
-                    var byteNumbers = new Array(slice.length);
-                    for (var i = 0; i < slice.length; i++) {
-                        byteNumbers[i] = slice.charCodeAt(i);
-                    }
-
-                    var byteArray = new Uint8Array(byteNumbers);
-
-                    byteArrays.push(byteArray);
-                }
-
-            return new Blob(byteArrays, {type: contentType});
-            }
+            
 
         }
     }

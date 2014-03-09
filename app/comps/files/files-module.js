@@ -31,13 +31,11 @@ cmFiles.controller('GetFileCtrl', [
 ])
 
 
+
+
 cmFiles.directive('cmUpload',[
     'cmFile',
     cmUpload
-])
-
-cmFiles.directive('cmFileInput', [
-    cmFileInput
 ])
 
 cmFiles.directive('cmDownload',[

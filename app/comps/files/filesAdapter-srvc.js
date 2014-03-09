@@ -33,6 +33,12 @@ function cmFilesAdapter(cmApi){
 
         },
 
+        getFileInfo: function(assetId){
+            return cmApi.get({
+                url: "/file/"+assetId,
+            })
+        },
+
         getFile: function(assetId){
             return cmApi.get({
                 url: "/file/"+assetId,

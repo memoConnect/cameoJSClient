@@ -104,13 +104,22 @@
 		<cm-emoticons></cm-emoticons>
 
 		<input type = "text" ng-model ="assetId">
+
 		<cm-upload cm-chunk-size = "10" ng-model = "assetId">
 			<cm-file-input></cm-file-input>
 			{{percentage}}%
 			<progress value="{{percentage}}" max="{{chunksTotal}}"></progress>  
 			<button ng-click="upload()"><i class="fa fa-upload"></i></button>			
 		</cm-upload>
+
+		<br/>
 		
+		<cm-download cm-data="assetId">
+			{{fileName}}
+			{{fileSize | cmFileSize}}
+			<button ng-click="download()"><i class="fa fa-download"></i></button>
+		</cm-download>
+
 		<section ng-controller="GetFileCtrl">
 		    <h3>GetFileCtrl</h3>
 		    <section>

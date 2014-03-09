@@ -19,6 +19,28 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
         f.readAsArrayBuffer(blob);
     }
 
+    function b64toBlob(byteCharacters, contentType, sliceSize) {
+        contentType = contentType || '';
+        sliceSize = sliceSize || 512;
+
+        var byteArrays = [];
+
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            var byteArray = new Uint8Array(byteNumbers);
+
+            byteArrays.push(byteArray);
+        }
+
+    return new Blob(byteArrays, {type: contentType});
+    }
+
     //public methods:
 
     return {
@@ -26,13 +48,15 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
             this.file    = file
             this.assetId = undefined
 
-            this._chopIntoChunks(chunkSize)
+            return chunkSize ? this._chopIntoChunks(chunkSize) : null            
         },
 
         _chopIntoChunks : function(chunkSize){
             var startByte   = 0,
                 endByte     = 0,
                 index       = 0
+
+            if(!chunkSize) return null
             
             this.chunks   = []
 
@@ -65,12 +89,12 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
 
         upload : function() {   
             var self = this          
-            return  self._prepareFile()     
+            return  self._prepare()     
                     .then(function(){ return self._uploadChunks() })
         },
 
 
-        _prepareFile : function() {
+        _prepare : function() {
             var self = this
 
 
@@ -135,6 +159,10 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
             reader.readAsDataURL(chunk);
 
             return deferred.promise
+        },
+
+        getDetails : function(assetId){
+            return cmFilesAdapter.getFileInfo(assetId)            
         }
 
     }
