@@ -3,26 +3,30 @@
         <h1>{{"TALKS.HEADING"|cmTranslate}}</h1>
     </div>
 
-    <div cm-nav-tabs></div>
+    <div cm-nav-tabs ng-model="badges"></div>
 
     <br/>
 
     <ul class="list-group">
         <li class="list-group-item" ng-repeat = "conversation in conversations">
             <a href = "#/conversation/{{conversation.id}}">
+                LastUpdate: {{conversation.lastUpdated}} <br />
                 Subject :   {{conversation.subject}} <br/>
                 Id:         {{conversation.id}} <br/>
-                Recipients:                
-                <span ng-repeat ="recipient in conversation.recipient">
-                        {{recipient}}
-                        {{$last ? '' : ','}}
-                </span> <br/>
+                <!--Recipients:                -->
+                <!--<span ng-repeat ="recipient in conversation.recipient">-->
+                        <!--{{recipient}}-->
+                        <!--{{$last ? '' : ','}}-->
+                <!--</span> <br/>-->
                 Messages:   {{conversation.count}}
-                <cm-message cm-data="conversation.lastMessage" ng-if="conversation.lastMessage">
-                </cm>
+                <cm-message-small cm-data="conversation.newestMessage()" ng-if="conversation.newestMessage()"></cm-message-small>
             </a>
             <br/>
             <br/>
         </li>
     </ul>
+
+    <div ng-if="showMore()">
+        <button class="btn btn-primary" ng-click="loadMore()">more</button>
+    </div>
 </div>

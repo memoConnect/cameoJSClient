@@ -1,51 +1,27 @@
-/*
-define([
-    'app',
+'use strict';
 
-    'cmApi',
-    'cmAuth',
-    'cmCrypt',
-    'cmLogger',
-    'cmContacts',
-    'util-base64',
-    'util-passchk-fast',    
-   	'_v/captcha/captchagen/captchagen'
-], function (app) {
-*/    
-    'use strict';
-
-//	var cmConversations = angular.module('cmConversations', ['cmApi', 'cmLogger', 'cmCrypt', 'cmContacts']);
-
-function cmConversationsAdapter($q, cmApi){
+function cmConversationsAdapter(cmApi, cmUtil){
     return {
 
         newConversation: function(subject) {
             return	cmApi.post({
-                        url: 	'/conversation',
-                        data:	{
-                                    subject: subject
-                                }
-                    })
+                url: 	'/conversation',
+                data:	{
+                            subject: subject
+                        }
+            })
         },
 
-        getConversations: function(offset, limit) {
+        getConversations: function(limit, offset) {
             return	cmApi.get({
-                        url: 	'/conversations',
-                        data:	{
-                                    offset:	offset,
-                                    limit:	limit
-                                }
-                    })
+                url: '/conversations' + cmUtil.handleLimitOffset(limit,offset)
+            })
         },
 
-        getConversation: function(id, offset, limit) {
+        getConversation: function(id, limit, offset) {
             return 	cmApi.get({
-                        url: 	'/conversation/'+id,
-                        data:	{
-                                    offset:	offset,
-                                    limit:	limit
-                                }
-                    })
+                url: 	'/conversation/'+ id + cmUtil.handleLimitOffset(limit,offset)
+            })
         },
 
         addRecipient: function(id, recipient_id){
@@ -80,12 +56,5 @@ function cmConversationsAdapter($q, cmApi){
                                 }
                     })
         }
-
     }
 }
-
-/*
-    return app;
-
-});
-*/

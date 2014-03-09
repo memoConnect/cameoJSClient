@@ -44,8 +44,11 @@ var config = {
         'util-base64': 'vendor/util/base64',
         'util-base64_decode': 'vendor/util/base64_decode',
         'util-passchk-fast': 'vendor/util/passchk_fast',
+
         // crypto
-        'crypto-sjcl': 'vendor/sjcl/sjcl.min',
+        'crypto-sjcl': 'vendor/crypto/sjcl/sjcl.min',
+        'crypto-ats-oka': 'vendor/crypto/ats-oka/ats-oka.min',
+        'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt.min',
 
         'jquery': 'vendor/jquery/jquery-2.1.0'
     },
@@ -64,16 +67,24 @@ var config = {
         'angular-cookies': ['angular'],
         'angular-translate': ['angular'],
         'angular-growl': ['angular'],
+
+        'angular-translate-loader-static-files': ['angular','angular-translate'],
+        'angular-translate-storage-cookie': ['angular','angular-translate'],
+        'angular-translate-storage-local': ['angular','angular-translate', 'angular-translate-storage-cookie'],
+
         'cmNotify': ['angular-growl'],
         'cmAuth': ['angular', 'util-base64', 'cmCrypt', 'cmApi'],
-        'cmCrypt': ['angular', 'util-base64', 'crypto-sjcl', 'cmLogger'],
+        'cmCrypt': [
+            'angular',
+            'util-base64',
+            'cmLogger',
+            'crypto-sjcl',
+            'crypto-jsencrypt'
+        ],
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
         'cmApi': ['angular', 'cmLogger'],
         'cmProfile' : ['jquery', 'angular', 'cmApi', 'cmAuth'],
         'cmLogger' : ['angular'],
-        'angular-translate-loader-static-files': ['angular','angular-translate'],
-        'angular-translate-storage-cookie': ['angular','angular-translate'],
-        'angular-translate-storage-local': ['angular','angular-translate', 'angular-translate-storage-cookie'],
         'cmLanguage' : [
             'angular', 
             'angular-translate-loader-static-files',
@@ -103,6 +114,7 @@ function addPackage(package_name, package) {
 }
 
 
+
 addPackage('pckFiles',{
     root: 'comps/files/files-module',
     deps: [
@@ -122,6 +134,18 @@ addPackage('pckFiles',{
         'comps/files/upload-drtv',
         'comps/files/download-drtv',
         'comps/files/file-size-fltr'
+
+addPackage('pckUser',{
+    root: 'comps/user/user-module',
+    deps: [
+        'angular',
+        'cmAuth',
+        'cmLocalStorage'
+    ],
+    resources : [
+        'comps/user/userModel-srvc',
+        'comps/user/login-drtv'
+
     ]
 })
 
@@ -133,19 +157,33 @@ addPackage('pckConversations',{
         'cmLogger', 
         'cmCrypt', 
         'cmAuth',
+        'cmUtil',
         'pckContacts',
-        'vendor/captcha/captchagen/captchagen'
+        'pckUser',
+        '_v/captcha/captchagen/captchagen'
     ],    
     resources : [
-       'comps/conversations/conversationsAdapter-srvc',
-       'comps/conversations/conversationsModel-srvc',
-       'comps/conversations/attachments-drtv',
-       'comps/conversations/avatar-drtv',
-       'comps/conversations/captcha-drtv',
-       'comps/conversations/conversation-drtv',
-       'comps/conversations/conversation-input-drtv',
-       'comps/conversations/passphrase-drtv',
-       'comps/conversations/message-drtv',
+        'comps/conversations/conversationsAdapter-srvc',
+        'comps/conversations/conversationsModel-srvc',
+
+        'comps/conversations/conversationFactory-srvc',
+        'comps/conversations/conversationModel-srvc',
+
+        'comps/conversations/messageFactory-srvc',
+        'comps/conversations/messageModel-srvc',
+
+        'comps/conversations/recipientFactory-srvc',
+        'comps/conversations/recipientModel-srvc',
+
+        'comps/conversations/attachments-drtv',
+        'comps/conversations/avatar-drtv',
+        'comps/conversations/captcha-drtv',
+        'comps/conversations/conversation-drtv',
+        'comps/conversations/conversation-input-drtv',
+        'comps/conversations/passphrase-drtv',
+
+        'comps/conversations/message-drtv',
+        'comps/conversations/message-small-drtv'
     ]
 })
 
@@ -156,7 +194,7 @@ addPackage('pckContacts',{
         'cmApi', 
         'cmLogger', 
         'cmUtil',
-        'pckUser' 
+        'pckUser'
     ],    
     resources : [
         'comps/contacts/add-external-contact-drtv',
@@ -169,23 +207,9 @@ addPackage('pckContacts',{
     ]
 })
 
-addPackage('pckUser',{
-    root: 'comps/user/user-module',
-    deps: [
-        'angular',
-        'cmAuth',
-        'cmLocalStorage'
-    ],    
-    resources : [
-        'comps/user/userModel-srvc',
-        'comps/user/login-drtv'
-    ]
-})
-
 addPackage('pckValidate',{
     root: 'comps/validate/validate-module',
-    deps: [   
-    ],    
+    deps: [],
     resources : [
         'comps/validate/email-drtv',
         'comps/validate/password-drtv',

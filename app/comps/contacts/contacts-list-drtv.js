@@ -1,14 +1,5 @@
-/*
-define([
-    'app',
-    'ngload!cmLogger',
-    'ngload!mContacts'
-], function(app){
-*/
-
 'use strict';
 
-    
 function cmContactsList(cmContactsModel, cmLogger){
     return {
 
@@ -58,7 +49,3 @@ function cmContactsList(cmContactsModel, cmLogger){
         }
     }
 }
-
-/*
-});
-*/

@@ -1,45 +1,27 @@
-/*
-define([
-    'app',
+'use strict';
 
-    'cmApi',
-    'cmAuth',
-    'cmCrypt',
-    'cmLogger',
-    'cmContacts',
-    'util-base64',
-    'util-passchk-fast',
-    '_v/captcha/captchagen/captchagen'
-], function(app){
-*/    
-    'use strict';
+function cmPassphrase() {
+    return {
 
+        restrict: 		'A',
+        scope:			false,
 
-    function cmPassphrase() {
-        return {
+        link:			function(scope, element, attrs, ngModelCtrl){
 
-            restrict: 		'A',
-            scope:			false,
+            var status = angular.element('<i></i>').addClass('fa'),
+                timeout
 
-            link:			function(scope, element, attrs, ngModelCtrl){
+            element.after(status)
 
-                var status = angular.element('<i></i>').addClass('fa'),
-                    timeout
-
-                element.after(status)
-
-                scope.refresh= function(){
-                    element.val()
-                        ?	status.addClass('fa-lock').removeClass('fa-unlock')
-                        :	status.addClass('fa-unlock').removeClass('fa-lock')                    
-                }
-
-                scope.refresh()
-                scope.$watch('passphrase', scope.refresh)
+            scope.refresh= function(){
+                element.val()
+                    ?	status.addClass('fa-lock').removeClass('fa-unlock')
+                    :	status.addClass('fa-unlock').removeClass('fa-lock')
             }
 
+            scope.refresh()
+            scope.$watch('passphrase', scope.refresh)
         }
+
     }
-/*
-});
-*/
+}

@@ -1,9 +1,16 @@
 'use strict';
 
-var cmCrypt = angular.module('cmCrypt', ['cmLogger'])
+angular.module('cmCrypt', ['cmLogger'])
 .service('cmCrypt',[
     'cmLogger',
-    function (cmLogger) {
+    '$q',
+    function (cmLogger, $q) {
+        // private vars
+        var async = {
+            interval: null,
+            promise: null,
+            crypt: null
+        };
 
         return {
             /**
@@ -33,7 +40,7 @@ var cmCrypt = angular.module('cmCrypt', ['cmLogger'])
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                return Base64.encode(encryptedSecretString);
+                return _Base64.encode(encryptedSecretString);
             },
             /**
              * this method encrypts strings
@@ -52,7 +59,7 @@ var cmCrypt = angular.module('cmCrypt', ['cmLogger'])
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                return Base64.encode(encryptedSecretString);
+                return _Base64.encode(encryptedSecretString);
             },
             /**
              * this method decrypts uuencoded strings
@@ -64,16 +71,88 @@ var cmCrypt = angular.module('cmCrypt', ['cmLogger'])
                 if (null == secretString)
                     return false;
 
-                var decodedSecretString = Base64.decode(secretString),
+                var decodedSecretString = _Base64.decode(secretString),
                     decryptedString;
 
                 try {
                     decryptedString = sjcl.decrypt(secretKey, decodedSecretString)
                 } catch (e) {
-                    // sehr nervig: cmLogger.warn('Unable to decrypt.', e)
+                    //cmLogger.warn('Unable to decrypt.', e)
                 }
 
                 return decryptedString || false
+            },
+
+            /**
+             * return the bit size of possible keygeneration
+             * @returns {string[]}
+             */
+            getKeySizes: function(){
+                return ['512','1024','2048','4096'];
+            },
+            /**
+             * start async process
+             * @param keylen
+             * @param $scopeState
+             * @returns {Promise.promise|*|webdriver.promise.Deferred.promise}
+             */
+            generateAsyncKeypair: function(keySize, onGeneration){
+                if ( keySize == undefined ||
+                    typeof keySize != 'number' ||
+                    async.interval != null ) {
+                    return false;
+                }
+
+                cmLogger.debug('jsencrypt generateAsync '+keySize);
+
+                // Create the encryption object.
+                var self = this,
+                    time = -((new Date()).getTime()),
+                    counts = 0;
+                // init vars
+                async.crypt = new JSEncrypt({default_key_size: keySize}),
+                async.promise = $q.defer();
+                async.interval = setInterval(function () {
+                    counts++;
+                    if(typeof onGeneration == "function"){
+                        onGeneration(counts, (time + ((new Date()).getTime())))
+                    }
+                }, 500);
+                // start keypair generation
+                async.crypt.getKey(function () {
+                    self.cancelGeneration(true);
+
+                    async.promise.resolve({
+                        timeElapsed: (time + ((new Date()).getTime())),
+                        counts: counts,
+                        privKey: async.crypt.getPrivateKey(),
+                        pubKey: async.crypt.getPublicKey()
+                    })
+                });
+
+                return async.promise.promise;
+            },
+            /**
+             * cancel key generation process / simple clearInterval
+             * if interval is pending
+             * @returns {boolean}
+             */
+            cancelGeneration: function(withReject){
+                if ( async.interval != null ) {
+                    cmLogger.debug('jsencrypt cancelGeneration');
+                    // clear interval
+                    var id = async.interval;
+                    async.interval = null;
+                    clearInterval( id );
+                    // clear promise and library vars if param withReject is true
+                    if(withReject == undefined && async.promise != undefined){
+                        async.promise.reject();
+                        async.promise = null;
+                        async.crypt = null;
+                    }
+                    return true;
+                }
+            return false;
             }
         }
     }]

@@ -1,8 +1,11 @@
 define([
     'app',
+    'cmAuth',
+    'util-base64',
     'ngload!pckFiles',
-    'ngload!pckConversations',
-    
+    'ngload!pckUser',
+    'ngload!pckContacts',
+    'ngload!pckConversations'
 ], function (app) {
     'use strict';
 

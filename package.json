@@ -50,7 +50,8 @@
         "requirejs": "~2.1.11",
         "selenium-standalone": "~2.39.0",
         "selenium-webdriver": "~2.39.0",
-        "grunt-phonegap": ""
+        "grunt-phonegap": "0.13.2"
+
     },
     "engines": {
         "node": ">=0.8.0"

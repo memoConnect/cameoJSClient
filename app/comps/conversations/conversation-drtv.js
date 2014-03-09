@@ -7,7 +7,7 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
         scope: true,
 
         controller: function ($scope, $element, $attrs) {
-            var conversation_id = $scope.$eval($attrs.cmConversation) || $scope.$eval($attrs.conversationId),
+            var conversation_id = $scope.$eval($attrs.cmConversations) || $scope.$eval($attrs.conversationId),
                 conversation_subject = $scope.$eval($attrs.cmSubject),
                 conversation_offset = $attrs.offset,
                 conversation_limit = $attrs.limit
@@ -32,11 +32,16 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                 $scope.show_contacts = false
                 $scope.passphrase_valid = $scope.conversation.passphraseValid()
 
-                $scope.$watch("passphrase", function (new_passphrase) {
-                    $scope.conversation.setPassphrase(new_passphrase)
-                    $scope.passphrase_valid = $scope.conversation.passphraseValid()
-                    if ($scope.passphrase_valid) $scope.conversation.decrypt()
-                })
+                if($scope.conversation.passphrase != '' && $scope.passphrase_valid !== false){
+                    $scope.passphrase = $scope.conversation.passphrase;
+                    $scope.conversation.decrypt();
+                } else {
+                    $scope.$watch("passphrase", function (new_passphrase) {
+                        $scope.conversation.setPassphrase(new_passphrase)
+                        $scope.passphrase_valid = $scope.conversation.passphraseValid()
+                        if ($scope.passphrase_valid) $scope.conversation.decrypt()
+                    })
+                }
 
                 $scope.$watch("conversation.subject", function (new_subject) {
                     $scope.conversation.updateSubject(new_subject||"")
@@ -46,7 +51,6 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                     identity_data
                         ? $scope.conversation
                         .newRecipient(identity_data)
-                        .addTo($scope.conversation)
                         : null
                 })
 
@@ -60,9 +64,7 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
 
                 !message_empty && passphrase_valid && !recipients_missing
                     ? $scope.conversation
-                    .newMessage($scope.my_message_text)
-                    .encryptWith($scope.passphrase)
-                    .sendTo($scope.conversation)
+                    .newMessage($scope.my_message_text,$scope.passphrase)
                     .then(function () {
                         if ($scope.new_conversation) $location.url('/conversation/' + $scope.conversation.id)
                         $scope.my_message_text = ""

@@ -5,24 +5,59 @@ var cmConversations = angular.module('cmConversations', [
     'cmLogger', 
     'cmCrypt', 
     'cmContacts',
-    'cmAuth'
 ])
 
 cmConversations.service('cmConversationsAdapter', [
-    '$q', 
-    'cmApi', 
+    'cmApi',
+    'cmUtil',
     cmConversationsAdapter
 ])
 
+cmConversations.factory('cmConversationModel',[
+    'cmConversationsAdapter',
+    'cmMessageFactory',
+    'cmRecipientFactory',
+    cmConversationModel
+]);
+
+cmConversations.factory('cmConversationFactory',[
+    '$rootScope',
+    'cmConversationModel',
+    cmConversationFactory
+])
+
+cmConversations.factory('cmMessageModel',[
+    'cmConversationsAdapter',
+    'cmCrypt',
+    cmMessageModel
+])
+
+cmConversations.factory('cmMessageFactory',[
+    '$rootScope',
+    'cmMessageModel',
+    cmMessageFactory
+])
+
+cmConversations.factory('cmRecipientModel',[
+    'cmConversationsAdapter',
+    'cmUserModel',
+    'cmAuth',
+    cmRecipientModel
+])
+
+cmConversations.factory('cmRecipientFactory',[
+    '$rootScope',
+    'cmRecipientModel',
+    cmRecipientFactory
+])
 
 cmConversations.service('cmConversationsModel', [
     'cmConversationsAdapter',
-    'cmCrypt',
+    'cmConversationFactory',
     '$q',
-    'cmAuth',
+    '$rootScope',
     cmConversationsModel
 ])
-
 
 cmConversations.directive('cmAttachments', [
     cmAttachments
@@ -55,6 +90,10 @@ cmConversations.directive('cmAvatar', [
 ])
 
 cmConversations.directive('cmMessage', [
-    'cmAuth',
+    'cmUserModel',
     cmMessage
+])
+
+cmConversations.directive('cmMessageSmall', [
+    cmMessageSmall
 ])
