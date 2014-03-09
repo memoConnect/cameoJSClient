@@ -115,8 +115,7 @@
 		<br/>
 		
 		<cm-download cm-data="assetId">
-			{{fileName}}
-			{{fileSize | cmFileSize}}
+			{{fileName}}({{fileSize | cmFileSize}})
 			<button ng-click="download()"><i class="fa fa-download"></i></button>
 		</cm-download>
 

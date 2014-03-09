@@ -3,6 +3,8 @@ function cmDownload(cmFile){
 
         restrict : 'AE',
 
+        scope: true,
+
         controller : function($scope, $element, $attrs) {
 
             var self = this
@@ -10,12 +12,13 @@ function cmDownload(cmFile){
             $scope.assetId = $scope.$parent.$eval($attrs.cmDownload) || $scope.$parent.$eval($attrs.cmData);
             $scope.file = {};
             $scope.fileSize = 10
+
             
-            $scope.$watch($attrs.cmDownload, function(){
+            $scope.$parent.$watch($attrs.cmDownload, function(){
                 $scope.assetId = $scope.$parent.$eval($attrs.cmDownload)
             })
 
-            $scope.$watch($attrs.cmData, function(){
+            $scope.$parent.$watch($attrs.cmData, function(){
                 $scope.assetId = $scope.$parent.$eval($attrs.cmData)
             })
 
@@ -38,6 +41,11 @@ function cmDownload(cmFile){
 
             this.getFileDetails = function(){
                 cmFile.getDetails($scope.assetId)
+                .then(function(details){
+                    $scope.fileSize = details.fileSize
+                    $scope.fileName = details.fileName
+                    $scope.fileType = details.fileType
+                })
             }
 
             function getChunk(index){

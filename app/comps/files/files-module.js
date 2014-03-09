@@ -38,6 +38,10 @@ cmFiles.directive('cmUpload',[
     cmUpload
 ])
 
+cmFiles.directive('cmFileInput', [
+    cmFileInput
+])
+
 cmFiles.directive('cmDownload',[
     'cmFile',
     cmDownload
