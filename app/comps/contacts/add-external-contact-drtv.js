@@ -1,16 +1,5 @@
-/*
-define([
-    'app',
-    'comps/type-chooser/type-chooser-drtv',
-    'comps/validate/email-drtv',
-    'ngload!cmNotify',
-    'ngload!cmLogger',
-    'ngload!mContacts'
-], function(app){
-*/
 'use strict';
 
-    
 function cmAddExternalContact(cmContactsModel, cmLogger, cmNotify, $location){
 
     function fulltrim(string){
@@ -174,9 +163,3 @@ function cmAddExternalContact(cmContactsModel, cmLogger, cmNotify, $location){
         }
     }
 }
-
-/*
-]);
-*/
-
-

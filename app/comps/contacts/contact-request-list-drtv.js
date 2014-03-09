@@ -1,11 +1,3 @@
-/*
-define([
-    'app',
-    'ngload!cmLogger',
-    'ngload!mContacts'
-], function(app){
-*/
-
 'use strict';
 
 function cmContactRequestList(cmContactsModel, cmLogger){
@@ -72,7 +64,3 @@ function cmContactRequestList(cmContactsModel, cmLogger){
         }
     }
 }
-
-/*
-});
-*/

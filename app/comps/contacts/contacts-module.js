@@ -1,11 +1,3 @@
-/*
-define([
-    'cmApi',
-    'cmUtil',
-    'cmLogger'
-], function () {
-*/
-
 'use strict';
 
 var cmContacts = angular.module('cmContacts',[
@@ -62,7 +54,3 @@ cmContacts.directive('cmTypeChooser',[
     'cmLogger',
     cmTypeChooser
 ])
-
-/*
-});
-*/
