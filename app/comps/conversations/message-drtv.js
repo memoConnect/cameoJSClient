@@ -18,6 +18,21 @@ function cmMessage(cmUserModel) {
                 $scope.captchaRequest = true;
             }
 
+            $scope.checkAsset = function(){
+                if ($scope.message.decryptedBody.match(/^:asset,/)) {                             
+
+                    $scope.assetId = $scope.message.decryptedBody.replace(/^:asset,/,'')                                
+                    
+                    $scope.hasAsset = true;
+                }else{
+                    $scope.hasAsset = false
+                }
+            }
+
+            $scope.$watchCollection('message', function(message){                
+                $scope.checkAsset()
+            })
+
             $scope.is_my_own_message = ($scope.message.from == cmUserModel.data.id);
         }
     }

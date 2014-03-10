@@ -43,6 +43,7 @@ var config = {
         // shared
         'util-spin': 'vendor/util/spin',
         'util-base64': 'vendor/util/base64',
+        'util-base64_decode': 'vendor/util/base64_decode',
         'util-passchk-fast': 'vendor/util/passchk_fast',
 
         // crypto
@@ -54,8 +55,9 @@ var config = {
     },
 
     packages: [
-        {name: '_v', location: 'vendor'}
-//        {name: '_s', location: 'service'},
+        {name: '_v', location: 'vendor' },
+        {name: '_c', location: 'comps'  },
+        {name: '_s', location: 'shared' },
 //        {name: '_d', location: 'directives'}
     ],
     // Add angular modules that does not support AMD out of the box, put it in a shim
@@ -86,14 +88,15 @@ var config = {
         'cmProfile' : ['jquery', 'angular', 'cmApi', 'cmAuth'],
         'cmLogger' : ['angular'],
         'cmLanguage' : [
-                        'angular', 
-                        'angular-translate-loader-static-files',
-                        'angular-translate-storage-cookie', 
-                        'angular-translate-storage-local', 
-                        'angular-growl',
-                        'cmNotify',
-                        'cmLogger'
-                    ]
+            'angular', 
+            'angular-translate-loader-static-files',
+            'angular-translate-storage-cookie', 
+            'angular-translate-storage-local', 
+            'angular-growl',
+            'cmNotify',
+            'cmLogger'
+        ]
+
 //        'bootstrap': ['jquery']
     },
     // kick start application
@@ -112,6 +115,28 @@ function addPackage(package_name, package) {
     })
 }
 
+
+
+addPackage('pckFiles',{
+    root: 'comps/files/files-module',
+    deps: [
+        'cmApi',
+        'cmLogger',
+        'vendor/filesaver/filesaver',
+        'angular-resource',
+        'util-base64_decode'
+        //'vendor/base64_decode'
+    ],
+    resources : [
+        'comps/files/filesAdapter-srvc',
+        'comps/files/file-fctr',
+        'comps/files/file-input-drtv',
+        'comps/files/upload-drtv',
+        'comps/files/download-drtv',
+        'comps/files/file-size-fltr'
+    ]
+})
+
 addPackage('pckUser',{
     root: 'comps/user/user-module',
     deps: [
@@ -121,6 +146,7 @@ addPackage('pckUser',{
     ],
     resources : [
         'comps/user/login-drtv'
+
     ]
 })
 
@@ -135,13 +161,14 @@ addPackage('pckConversations',{
         'cmUtil',
         'cmUserModel',
         'pckContacts',
-        '_v/captcha/captchagen/captchagen'
+        '_v/captcha/captchagen/captchagen',
+        'util-base64'
     ],    
     resources : [
         'comps/conversations/conversationsAdapter-srvc',
         'comps/conversations/conversationsModel-srvc',
 
-        'comps/conversations/purlModel-srvc',
+,        'comps/conversations/purlModel-srvc',
 
         'comps/conversations/conversationFactory-srvc',
         'comps/conversations/conversationModel-srvc',
@@ -157,7 +184,7 @@ addPackage('pckConversations',{
         'comps/conversations/captcha-drtv',
         'comps/conversations/conversation-drtv',
         'comps/conversations/conversation-input-drtv',
-        'comps/conversations/passphrase-drtv',
+        'comps/conversations/password-input-drtv',
 
         'comps/conversations/message-drtv',
         'comps/conversations/message-small-drtv'

@@ -42,7 +42,7 @@
 
 	<div>
 		{{"CONVERSATION.TAG.PASSPHRASE"|cmTranslate}}:
-		<input type ="{{revealPassword ? 'text' : 'password'}}" ng-model="passphrase" cm-passphrase cm-adaptive-change>
+		<input type ="{{revealPassword ? 'text' : 'password'}}" ng-model="passphrase" cm-password-input cm-adaptive-change>
 		 
 
         <i
@@ -87,6 +87,8 @@
 
 	<br/>
 
+
+
 	<div class="cm-messages">
 		<!-- performance ?? -->
 		<h4>{{'CONVERSATION.TAG.MESSAGES' |cmTranslate}}:</h4>
@@ -95,12 +97,46 @@
 			cm-data 		= "message" 
 		></cm-message>
 	</div>
-	<div>
+
+
+
+	<button 
+		ng-disabled = "mode && mode =='asset'"
+		ng-click= "mode = 'asset'"
+	>	
+		<i class="fa fa-paperclip"></i>
+	</button>
+
+	<button 
+		ng-disabled = "!mode || mode == 'message'" 
+		ng-click= "mode = 'message'"
+	>	
+		<i class="fa fa-keyboard-o"></i>
+	</button>
+
+
+
+	<div ng-show = "!mode || mode =='message'">
 		<textarea cm-message-input ng-model="my_message_text"></textarea>
-	</div>	
-	<div>
-		<cm-upload></cm-upload>
-		<button ng-click="sendMessage()">{{"CONVERSATION.LABEL.SEND" | cmTranslate}}</button>
-		<cm-emoticons></cm-emoticons>
+	
+		<button ng-click="sendMessage()">{{"CONVERSATION.LABEL.SEND" | cmTranslate}}</button> <br/>
 	</div>
+
+	<cm-emoticons></cm-emoticons>
+
+	<div ng-show = "mode && mode == 'asset'">
+		<input type = "text" ng-model ="assetId"> <button ng-click="sendAsset()">{{"CONVERSATION.LABEL.SEND" | cmTranslate}}</button>
+
+		<cm-upload cm-chunk-size = "10" ng-model = "assetId" cm-passphrase="passphrase">
+			<cm-file-input></cm-file-input>
+			{{progress/file.size*100 | cmDigits : 2 }}%
+			<progress value="{{progress}}" max="{{file.size}}"></progress>  
+			<button ng-click="upload()"><i class="fa fa-upload"></i></button>			
+		</cm-upload>
+	</div>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
 </section>

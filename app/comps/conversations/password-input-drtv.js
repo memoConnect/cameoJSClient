@@ -1,6 +1,6 @@
 'use strict';
 
-function cmPassphrase() {
+function cmPasswordInput() {
     return {
         restrict: 		'A',
         scope:			false,
