@@ -20,6 +20,14 @@ describe('cmUserModel', function(){
             expect(model.isAuth).toBeDefined();
         })
 
+        it('should defined setIdentiy',function(){
+            expect(model.setIdentiy).toBeDefined();
+        })
+
+        it('should defined isGuest',function(){
+            expect(model.isGuest).toBeDefined();
+        })
+
         it('should defined doLogin',function(){
             expect(model.doLogin).toBeDefined();
         })

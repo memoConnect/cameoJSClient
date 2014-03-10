@@ -173,10 +173,10 @@ addPackage('pckContacts',{
         'cmUtil'
     ],
     resources : [
+        'comps/contacts/contactsModel-srvc',
         'comps/contacts/add-external-contact-drtv',
         'comps/contacts/contact-request-list-drtv',
         'comps/contacts/contacts-list-drtv',
-        'comps/contacts/contactsModel-srvc',
         'comps/contacts/contactsAdapter-srvc',
         'comps/contacts/search-cameo-identity-drtv',    
         'comps/contacts/type-chooser-drtv'

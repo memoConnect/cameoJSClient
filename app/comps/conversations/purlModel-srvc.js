@@ -20,8 +20,8 @@ function cmPurlModel (cmConversationsAdapter, cmConversationsModel, cmConversati
      * @TODO add Function to cmUserModel to handle Guests and add Identities
      * @param identity
      */
-    function handleIdentity(identity){
-
+    function handleIdentity(identity_data){
+        cmUserModel.setIdentiy(identity_data);
     }
 
     /**
@@ -38,8 +38,9 @@ function cmPurlModel (cmConversationsAdapter, cmConversationsModel, cmConversati
         if(typeof id !== 'undefined'){
             cmConversationsAdapter.getPurl(id).then(
                 function (data) {
-                    handleIdentity(data.identity);
                     handleToken(data.token);
+                    handleIdentity(data.identity);
+
                     deferred.resolve(handleConversation(data.conversation));
                 },
                 function () {
