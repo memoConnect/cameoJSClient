@@ -128,8 +128,6 @@ addPackage('pckFiles',{
     resources : [
         'comps/files/filesAdapter-srvc',
         'comps/files/file-fctr',
-        'comps/files/send-ctrl',
-        'comps/files/get-ctrl',
         'comps/files/file-input-drtv',
         'comps/files/upload-drtv',
         'comps/files/download-drtv',
@@ -162,7 +160,8 @@ addPackage('pckConversations',{
         'cmUtil',
         'pckContacts',
         'pckUser',
-        '_v/captcha/captchagen/captchagen'
+        '_v/captcha/captchagen/captchagen',
+        'util-base64'
     ],    
     resources : [
         'comps/conversations/conversationsAdapter-srvc',
@@ -182,7 +181,7 @@ addPackage('pckConversations',{
         'comps/conversations/captcha-drtv',
         'comps/conversations/conversation-drtv',
         'comps/conversations/conversation-input-drtv',
-        'comps/conversations/passphrase-drtv',
+        'comps/conversations/password-input-drtv',
 
         'comps/conversations/message-drtv',
         'comps/conversations/message-small-drtv'

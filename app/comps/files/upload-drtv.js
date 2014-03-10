@@ -11,9 +11,8 @@ function cmUpload(cmFile){
 
             var self = this
 
-            $scope.file = {};            
-            $scope.chunksTotal = 0; 
-            $scope.fileSize = 1
+            $scope.file = {}           
+            $scope.chunksTotal = 0 
             $scope.progress = 0           
                         
 
@@ -21,16 +20,16 @@ function cmUpload(cmFile){
                 self.setChunkSize(new_chunk_size)                 
             })          
 
-        
+            $scope.$watch($attrs.cmPassphrase, function(passphrase){ cmFile.setPassphrase(passphrase) })        
 
             $scope.upload = function(){
+                $scope.progress = 0
                 cmFile.upload().then(
                     function(assetId){ //success
                         self.setAssetId(assetId)
                     }, 
                     null, //error
                     function(progress){ //notify
-                        console.log(progress)
                         $scope.progress += progress                        
                     }
                 )
@@ -44,17 +43,17 @@ function cmUpload(cmFile){
             }
 
             this.setFile = function(file){
-                $scope.file = file      
+                $scope.file = file                
                 cmFile.init($scope.file, $scope.chunkSize)
             }
 
             this.setAssetId = function(assetId) {
                 $scope.assetId = assetId
                 $scope.$parent[$attrs.ngModel] = assetId
-            }
+            }         
 
             this.setAssetId($scope.$parent.$eval($attrs.ngModel))
-
+            cmFile.setPassphrase($scope.$parent.$eval($attrs.cmPassphrase))
         }
     }
 }

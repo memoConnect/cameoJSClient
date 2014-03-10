@@ -26,10 +26,10 @@ function cmMessageModel (cmConversationsAdapter,cmCrypt){
         }
 
         this.sendTo = function (conversation) {
-            return    cmConversationsAdapter.sendMessage(conversation.id, this.body)
-                .then(function (message_data) {
-                    conversation.addMessage(new Message(message_data))
-                })
+            return  cmConversationsAdapter.sendMessage(conversation.id, this.body)
+                    .then(function (message_data) {
+                        conversation.addMessage(new Message(message_data))
+                    })
         }
 
         this.init = function (message_data) {

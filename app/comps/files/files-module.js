@@ -10,27 +10,10 @@ cmFiles.service('cmFilesAdapter', [
 cmFiles.factory('cmFile', [
     'cmFilesAdapter',
     'cmLogger',
+    'cmCrypt',
     '$q',    
     cmFile
 ])
-
-cmFiles.controller('SendFileCtrl', [
-    '$rootScope', 
-    '$scope', 
-    'cmFilesAdapter',
-    sendCtrl
-])
-
-
-
-
-cmFiles.controller('GetFileCtrl', [
-    '$scope', 
-    'cmFilesAdapter',     
-    getFileCtrl
-])
-
-
 
 
 cmFiles.directive('cmUpload',[
@@ -42,7 +25,7 @@ cmFiles.directive('cmFileInput', [
     cmFileInput
 ])
 
-cmFiles.directive('cmDownload',[
+cmFiles.directive('cmDownload',[    
     'cmFile',
     cmDownload
 ])

@@ -80,13 +80,18 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
         this.newMessage = function (message_data, passphrase) {
             var message_data = (typeof message_data == 'string' ? {messageBody: message_data} : message_data )
 
+            console.dir(message_data)
+            console.log(passphrase)
+
             var message = cmMessageFactory.create(message_data);
+
+            console.dir(message)
 
             if(typeof passphrase !== 'undefined' && passphrase != ''){
                 message.encryptWith(passphrase);
             }
 
-            return message.sendTo(this);
+            return message//.sendTo(this);
         };
 
         this.newestMessage = function(){

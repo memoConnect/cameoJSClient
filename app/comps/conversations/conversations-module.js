@@ -81,8 +81,8 @@ cmConversations.directive('cmConversationInput', [
 ])
 
 
-cmConversations.directive('cmPassphrase',[
-    cmPassphrase
+cmConversations.directive('cmPasswordInput',[
+    cmPasswordInput
 ])
 
 cmConversations.directive('cmAvatar', [

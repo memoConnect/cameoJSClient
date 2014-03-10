@@ -1,4 +1,4 @@
-function cmFile(cmFilesAdapter, cmLogger, $q){
+function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
 
     //private methods:
 
@@ -44,10 +44,13 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
     //public methods:
 
     return {
-        init : function(file, chunkSize){
-            this.file    = file
-            this.assetId = undefined
 
+        passphrase : "",
+
+        init : function(file, chunkSize){
+            this.file    = file           
+
+            this.assetId = undefined
             return chunkSize ? this._chopIntoChunks(chunkSize) : null            
         },
 
@@ -55,6 +58,9 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
             this.assetId = assetId
         },
 
+        setPassphrase : function(passphrase) {        
+            this.passphrase = passphrase
+        },
 
         _chopIntoChunks : function(chunkSize){
             var startByte   = 0,
@@ -100,18 +106,34 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
 
 
         _prepare : function() {
-            var self = this
+            var self = this                
+                file = {}
 
+            console.log(typeof cmCrypt.encryptWithShortKey(self.passphrase, self.file.name))            
 
+            file.name = cmCrypt.encryptWithShortKey(self.passphrase, self.file.name)
+            file.type = self.file.type
+            file.size = self.file.size
 
-            return  this._prepareChunk(this.chunks[0])
-                    .then(function(prepped_chunk){
+            return  this._prepareChunk(this.chunks[0]) //TODO: sollte früher oder später nicht mehr nötig sein!
+                    .then(function(prepped_chunk){ return cmCrypt.encryptWithShortKey(self.passphrase, prepped_chunk) }) //TODO: weg
+                    .then(function(encrypted_chunk){
                         return  cmFilesAdapter.prepareFile({
-                                    file:        self.file,
+                                    file:        file,
                                     chunksTotal: self.chunks.length
-                                } , prepped_chunk) //TODO: remove chunk, preparing the file should be possible without sending a chunk                                
+                                } , encrypted_chunk) //TODO: remove chunk, preparing the file should be possible without sending a chunk                                
                     })
                     .then(function(assetId){ self.setAssetId(assetId) })
+        },
+
+        _prepareChunk : function(chunk){
+            var reader   = new FileReader(),
+                deferred = $q.defer()
+         
+            reader.onload = function(event){ deferred.resolve(event.target.result) }
+            reader.readAsDataURL(chunk);
+
+            return deferred.promise
         },
 
         _uploadChunks : function() {
@@ -132,19 +154,18 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
                 promises.push(deferredChunk.promise)
 
                 self._prepareChunk(chunk)
-                .then(function(prepped_chunk){ cmFilesAdapter.addChunk(assetId, index, prepped_chunk) })
+                .then(function(prepped_chunk){ return cmCrypt.encryptWithShortKey(self.passphrase, prepped_chunk) })
+                .then(function(encrypted_chunk){ return cmFilesAdapter.addChunk(assetId, index, encrypted_chunk) }) 
                 .then(
                     function(){                       
                         deferredChunk.resolve()
-                        console.log('_uploadChunks: '+chunk.length)
-                        deferred.notify(chunk.length)
+                        deferred.notify(chunk.size)
                     },
 
                     function(response){
                         deferredChunk.reject(response)
                     }
-                )
-                
+                )                
             })
 
             $q.all(promises)
@@ -157,52 +178,85 @@ function cmFile(cmFilesAdapter, cmLogger, $q){
 
         },
 
-        _prepareChunk : function(chunk){
-            var reader   = new FileReader(),
-                deferred = $q.defer()
-         
-            reader.onload = function(event){ deferred.resolve(event.target.result) }
-            reader.readAsDataURL(chunk);
-
-            return deferred.promise
-        },
-
         getDetails : function(){
-            return  cmFilesAdapter.getFileInfo(this.assetId)
-                    .then(function(data){
-                        self.maxChunks = data.maxChunks
-                    })
+            var self     = this,
+                deferred = $q.defer()
+
+            deferred.reject('assetId missing.')
+
+            return (
+                this.assetId 
+                ?    cmFilesAdapter.getFileInfo(this.assetId)
+                    .then(function(details){                        
+                        self.file = {}
+                        self.file.numberOfChunks = details.maxChunks
+                        self.file.name = cmCrypt.decrypt(self.passphrase, details.fileName)
+                        self.file.type = details.fileType
+                        self.file.size = details.fileSize
+                        return self.file
+                    })                    
+                :   deferred.promise
+            )
         },
 
         download : function(){
-            var promises = []
+            var self     = this,
+                promises = [],
+                deferred = $q.defer()
 
-            for(var index; i< self.maxChunks; index++){
-                var deferredChunk = $q.defer()
-
-                promises.push(deferredChunk.promise)
-
-                cmFilesAdapter.getChunk(self.assetId, index)
-                .then(function(chunk){
-                    deferredChunk.resolve(chunk)                    
-                });
+            
+            if(!self.file){
+                return self.getDetails()
+                        .then(function(){
+                            return self.download()
+                        })
             }
 
+
+            for(var index = 0; index < self.file.numberOfChunks; index++){
+
+                function x(){   //haesslich; aber noch nötig, da sonst deferredChunk überschrieben wird.
+                    var deferredChunk = $q.defer()
+
+                    promises.push(deferredChunk.promise)
+
+                    cmFilesAdapter.getChunk(self.assetId, index)
+                    .then(function(encrypted_chunk){ return cmCrypt.decrypt(self.passphrase, encrypted_chunk.replace('data:application/octet-stream;base64,','')) })
+                    .then(function(decrypted_chunk){    
+                        var chunk = atob(decrypted_chunk.replace('data:application/octet-stream;base64,',''))
+                        deferredChunk.resolve(chunk)
+                        deferred.notify(chunk.length)                    
+                    })
+                } x()
+            }
+
+
             $q.all(promises)
-            .then(function(chunks){
-                chunks.forEach(function(chunk){
-                    console.dir(chunk)
-                })
-            })
+            .then(
+                function(chunks)    { deferred.resolve(chunks) },
+                function(response)  { deferred.reject(response) }
+            )
+
+            return  deferred.promise
+                    .then(function(chunks){
+                        self.file.content = ""
+                        chunks.forEach(function(chunk){
+                            self.file.content += chunk
+                        })
+                    })              
+                    
         },
 
-        /*
-        file += atob(chunk.replace('data:application/octet-stream;base64,',''));
-                    if(index+1 < $scope.file.maxChunks){
-                        getChunk(index+1);
-                    } else {
-                        saveFile();
-                    }
-*/
+        save : function(){       
+            var self = this           
+
+            this.file && this.file.name && this.file.type
+            ?   saveAs(
+                    b64toBlob(this.file.content, this.file.type),
+                    this.file.name
+                )            
+            :   this.getDetails()
+                .then(function() { self.save() })
+        }
     }
 }
