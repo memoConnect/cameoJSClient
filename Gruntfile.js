@@ -21,14 +21,15 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
             taskHelper: {
-                options: {
-                    handlerByFileSrc: function (src, dest, options) {
-                        var cameoSecretsExist = grunt.file.exists(src);
-                        if (cameoSecretsExist) {
-                            return grunt.file.readJSON(src)
+                check: {
+                    options: {
+                        handlerByFileSrc: function (src, dest, options) {
+                            if (grunt.file.exists(src)) {
+                                return grunt.file.readJSON(src)
+                            }
+                            else
+                                return {"phonegap": {"email": "a", "password": "b"}}
                         }
-                        else
-                            return {"phonegap": {"email": "a","password": "b"}}
                     },
                     cameoSecrets: {}
                 },
