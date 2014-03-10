@@ -23,12 +23,16 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
     /**
      * Init Object
      */
-    function init(){
-        if(self.isAuth() !== false){
+    function init(identity_data){
+        if(typeof identity_data !== 'undefined'){
+            angular.extend(self.data, identity_data);
+            isInit = true;
+            initStorage();
+
+        } else if(self.isAuth() !== false){
             loadIdentity().then(
                 function(){
                     isInit = true;
-
                     initStorage();
                 }
             );
@@ -40,6 +44,18 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
     this.isAuth = function(){
         return this.getToken();
     };
+
+    this.setIdentiy = function(identity_data){
+        init(identity_data);
+    };
+
+    this.isGuest = function(){
+        if(this.data.userType == 'external'){
+            return true;
+        }
+
+        return false;
+    }
 
     this.doLogin = function(user, pass){
         var deferred = $q.defer();
