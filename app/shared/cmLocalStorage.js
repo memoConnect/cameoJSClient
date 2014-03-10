@@ -114,20 +114,15 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt', function(LocalS
         /**
          * init
          */
-        this.init = function(){
+        this.init = function(data){
             if(this.check()){
                 cryptKey = cmCrypt.hash(this.instanceId + this.instanceKey);
                 storageKey = cmCrypt.hash(cryptKey);
+
+                this.instanceId = data.id;
+                this.instanceKey = data.key;
             }
         }
-        /**
-         * set instance Id
-         * @param id
-         */
-        this.setInstanceVars = function(data){
-            this.instanceId = data.id;
-            this.instanceKey = data.key;
-        };
         /**
          * adapter function for check local storage
          * @returns {boolean}
@@ -178,7 +173,6 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt', function(LocalS
          *  @returns {boolean}
          */
         this.save = function (key, data) {
-            console.log(key + data);
             if(this.check() !== false){
                 storageValue = getStorageValue();
                 if(storageValue == null){
@@ -256,10 +250,9 @@ factory('cmLocalStorage',['LocalStorageService', function(LocalStorageService){
 
                 if(storage === null){
                     storage = new LocalStorageService();
-                    storage.setInstanceVars({id:id,key:key});
-                    storage.init();
+                    storage.init({id:id,key:key});
 
-                    instances.push({id:id,instance:localStorage});
+                    instances.push({id:id,instance:storage});
                 }
 
                 return storage;

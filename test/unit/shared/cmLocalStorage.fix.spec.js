@@ -55,11 +55,6 @@ describe('LocalStorageService', function(){
         expect(LocalStorageService).toBeDefined()
     })
 
-    it('should have setInstanceId function', function(){
-        var srvc = createService();
-        expect(srvc.setInstanceVars).toBeDefined()
-    })
-
     it('should have check function', function(){
         var srvc = createService();
         expect(srvc.check).toBeDefined()

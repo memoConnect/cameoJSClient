@@ -1,3 +1,5 @@
+'use strict';
+
 var cmValidate = angular.module('cmValidate', [
     'cmAuth'
 ])

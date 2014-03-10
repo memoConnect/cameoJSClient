@@ -59,6 +59,17 @@ cmConversations.service('cmConversationsModel', [
     cmConversationsModel
 ])
 
+cmConversations.service('cmPurlModel',[
+    'cmConversationsAdapter',
+    'cmConversationsModel',
+    'cmConversationFactory',
+    'cmUserModel',
+    'cmAuth',
+    '$q',
+    '$rootScope',
+    cmPurlModel
+])
+
 cmConversations.directive('cmAttachments', [
     cmAttachments
 ])
@@ -81,8 +92,8 @@ cmConversations.directive('cmConversationInput', [
 ])
 
 
-cmConversations.directive('cmPassphrase',[
-    cmPassphrase
+cmConversations.directive('cmPasswordInput',[
+    cmPasswordInput
 ])
 
 cmConversations.directive('cmAvatar', [

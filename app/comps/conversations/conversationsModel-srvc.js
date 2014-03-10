@@ -50,23 +50,43 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
         return  deferred.promise;
     }
 
-    //nicht schön:
     this.getConversation = function (id) {
-        var deferred = $q.defer()
+        var i = 0,
+            check = false,
+            conversation = null,
+            deferred = $q.defer();
 
-        cmConversationsAdapter.getConversation(id)
-            .then(
-
-            function (conversation_data) {
-                deferred.resolve(cmConversationFactory.create(conversation_data));
-            },
-
-            function () {
-                deferred.reject();
+        if(typeof id !== 'undefined'){
+            while(i < this.conversations.length){
+                if(id == this.conversations[i].id){
+                    check = true;
+                    conversation = this.conversations[i];
+                    break;
+                }
+                i++;
             }
-        )
 
-        return  deferred.promise;
+            if(check !== true){
+                cmConversationsAdapter.getConversation(id).then(
+                    function (conversation_data) {
+                        conversation = cmConversationFactory.create(conversation_data);
+                        self.addConversation(conversation);
+
+                        deferred.resolve(conversation);
+                    },
+
+                    function () {
+                        deferred.reject();
+                    }
+                )
+            } else {
+                deferred.resolve(conversation);
+            }
+        } else {
+            deferred.reject();
+        }
+
+        return deferred.promise;
     }
 
     this.getConversations = function (limit, offset) {

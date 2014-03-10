@@ -13,7 +13,8 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                 conversation_limit = $attrs.limit
 
             conversation_id
-            ?   cmConversationsModel.getConversation(conversation_id, conversation_offset, conversation_limit)
+//            ?   cmConversationsModel.getConversation(conversation_id, conversation_offset, conversation_limit)
+            ?   cmConversationsModel.getConversation(conversation_id)
                 .then(function (conversation) {
                     $scope.init(conversation)
                 })
@@ -36,7 +37,7 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                     $scope.passphrase = $scope.conversation.passphrase;
                     $scope.conversation.decrypt();
                 } else {
-                    $scope.$watch("passphrase", function (new_passphrase) {
+                    $scope.$watch("passphrase", function (new_passphrase) {                        
                         $scope.conversation.setPassphrase(new_passphrase)
                         $scope.passphrase_valid = $scope.conversation.passphraseValid()
                         if ($scope.passphrase_valid) $scope.conversation.decrypt()
@@ -54,7 +55,7 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                         : null
                 })
 
-                $scope.conversation.update()
+//                $scope.conversation.update()
             }
 
             $scope.sendMessage = function () {
@@ -62,9 +63,12 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                     message_empty = !$scope.my_message_text,
                     recipients_missing = $scope.conversation.recipients.length <= 1
 
+                    console.log($scope.my_message_text)
+
                 !message_empty && passphrase_valid && !recipients_missing
                     ? $scope.conversation
                     .newMessage($scope.my_message_text,$scope.passphrase)
+                    .sendTo($scope.conversation)
                     .then(function () {
                         if ($scope.new_conversation) $location.url('/conversation/' + $scope.conversation.id)
                         $scope.my_message_text = ""
@@ -73,8 +77,29 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
 
                 if (!passphrase_valid)    cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID')
                 if (message_empty)        cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY')
-                if (recipients_missing)    cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING')
+                if (recipients_missing)   cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING')
             }
+
+            $scope.sendAsset = function () {
+                var passphrase_valid = !!$scope.conversation.passphraseValid(),
+                    recipients_missing = $scope.conversation.recipients.length <= 1,
+                    assetId_missing = !$scope.assetId
+
+                passphrase_valid && !assetId_missing && !recipients_missing
+                    ?   $scope.conversation
+                        .newMessage(':asset,'+$scope.assetId, $scope.passphrase)
+                        .sendTo($scope.conversation)
+                        .then(function () {
+                            if ($scope.new_conversation) $location.url('/conversation/' + $scope.conversation.id)
+                            $scope.assetId = undefined
+                        })
+                    :   null
+
+                if (!passphrase_valid)    cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID')                
+                if (assetId_missing)      cmNotify.warn('CONVERSATION.WARN.ASSET_ID_MISSING')
+                if (recipients_missing)   cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING')
+            }
+
 
             $scope.sendCaptcha = function () {
                 var passphrase_valid = !!$scope.conversation.passphraseValid(),
@@ -97,7 +122,7 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
 
             $scope.generatePassphrase = function () {
                 var date = new Date()
-                $scope.passphrase = Base64.encode(cmCrypt.hash(Math.random() * date.getTime())).substr(5, 10)
+                $scope.passphrase = _Base64.encode(cmCrypt.hash(Math.random() * date.getTime())).substr(5, 10)
             }
         }
     }

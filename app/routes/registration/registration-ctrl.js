@@ -4,7 +4,7 @@ define([
     'util-passchk-fast',
     'comps/validate/password-drtv',
     'comps/validate/email-drtv',
-    'comps/navs/nav-tabs-drtv',
+
     'ngload!cmAuth',
     'ngload!cmNotify',
     'ngload!cmLogger'

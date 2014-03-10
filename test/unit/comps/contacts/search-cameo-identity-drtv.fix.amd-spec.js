@@ -1,10 +1,9 @@
 'use strict';
 
-describe('Directive cmSearchCameoIdentity', function () {
+xdescribe('Directive cmSearchCameoIdentity', function () {
     var $scope, directive, promise, $ModelContacts;
 
     beforeEach(module('cmContacts'))
-
 
     beforeEach(inject(function ($rootScope, $compile, $templateCache, $q) {
         $templateCache.put('comps/contacts/search-cameo-identity.html', window.__html__['app/comps/contacts/search-cameo-identity.html']);

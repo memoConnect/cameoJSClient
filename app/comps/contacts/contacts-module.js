@@ -1,11 +1,3 @@
-/*
-define([
-    'cmApi',
-    'cmUtil',
-    'cmLogger'
-], function () {
-*/
-
 'use strict';
 
 var cmContacts = angular.module('cmContacts',[
@@ -16,15 +8,6 @@ var cmContacts = angular.module('cmContacts',[
     'cmLanguage'
 ])
 
-
-cmContacts.service('cmContactsAdapter',[
-    'cmApi',
-    'cmLogger',
-    'cmUtil',
-    cmContactsAdapter
-])
-
-
 cmContacts.service('cmContactsModel',[
     'cmUserModel',
     'cmContactsAdapter',
@@ -32,7 +15,14 @@ cmContacts.service('cmContactsModel',[
     '$q',
     '$rootScope',
     cmContactsModel
-])    
+])
+
+cmContacts.service('cmContactsAdapter',[
+    'cmApi',
+    'cmLogger',
+    'cmUtil',
+    cmContactsAdapter
+])
 
 cmContacts.directive('cmAddExternalContact',[
     'cmContactsModel',
@@ -55,6 +45,8 @@ cmContacts.directive('cmContactsList',[
 ])
 
 cmContacts.directive('cmSearchCameoIdentity',[
+    'cmContactsModel',
+    'cmLogger',
     cmSearchCameoIdentity
 ])
 
@@ -62,7 +54,3 @@ cmContacts.directive('cmTypeChooser',[
     'cmLogger',
     cmTypeChooser
 ])
-
-/*
-});
-*/

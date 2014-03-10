@@ -10,8 +10,20 @@
         </cm-avatar>         
         <img ng-if = "hasCaptcha" src ="{{hasCaptcha ? message.body :''}}" class="img-responsive img-rounded"/>                
         <pre ng-if = "captchaRequest">{{'CONVERSATION.TEXT.REQUEST_CAPTCHA' | cmTranslate}}
-        </pre>
-        <pre ng-if ="!(hasCaptcha || captchaRequest)" style ="text-align:left">{{ message.decryptedBody }}
+        </pre>        
+        <cm-download 
+            ng-if          = "hasAsset" 
+            cm-data        = "assetId"
+            cm-passphrase  = "passphrase"
+        >
+            <button ng-click="download()">
+                {{file.name}} ({{file.size | cmFileSize}}) <br/>
+                <progress value="{{progress}}" max ="{{file.size}}"></progress>
+                <br/>
+                {{progress/file.size*100 | cmDigits : 2}}%
+            </button>
+        </cm-download>
+        <pre ng-if ="!(hasCaptcha || captchaRequest || hasAsset)" style ="text-align:left">{{ message.decryptedBody }}
         </pre>
     </div>    
     <footer>
