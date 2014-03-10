@@ -6,3 +6,4 @@
 *.iml
 *.log
 /phonegap-src/
+/phonegap-target/

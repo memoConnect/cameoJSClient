@@ -29,6 +29,7 @@ var config = {
         'cmLogger': 'shared/cmLogger',
         'cmNotify': 'shared/cmNotify',
         'cmLocalStorage': 'shared/cmLocalStorage',
+        'cmUserModel': 'shared/cmUserModel',
 
         // cameo modules/services
         'cmAuth': 'shared/cmAuth',
@@ -73,7 +74,7 @@ var config = {
         'angular-translate-storage-local': ['angular','angular-translate', 'angular-translate-storage-cookie'],
 
         'cmNotify': ['angular-growl'],
-        'cmAuth': ['angular', 'util-base64', 'cmCrypt', 'cmApi'],
+        'cmAuth': ['angular', 'util-base64', 'cmCrypt','cmApi'],
         'cmCrypt': [
             'angular',
             'util-base64',
@@ -82,6 +83,7 @@ var config = {
             'crypto-jsencrypt'
         ],
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
+        'cmUserModel': ['angular', 'cmLocalStorage'],
         'cmApi': ['angular', 'cmLogger'],
         'cmProfile' : ['jquery', 'angular', 'cmApi', 'cmAuth'],
         'cmLogger' : ['angular'],
@@ -140,10 +142,9 @@ addPackage('pckUser',{
     deps: [
         'angular',
         'cmAuth',
-        'cmLocalStorage'
+        'cmUserModel'
     ],
     resources : [
-        'comps/user/userModel-srvc',
         'comps/user/login-drtv'
 
     ]
@@ -158,14 +159,16 @@ addPackage('pckConversations',{
         'cmCrypt', 
         'cmAuth',
         'cmUtil',
+        'cmUserModel',
         'pckContacts',
-        'pckUser',
         '_v/captcha/captchagen/captchagen',
         'util-base64'
     ],    
     resources : [
         'comps/conversations/conversationsAdapter-srvc',
         'comps/conversations/conversationsModel-srvc',
+
+,        'comps/conversations/purlModel-srvc',
 
         'comps/conversations/conversationFactory-srvc',
         'comps/conversations/conversationModel-srvc',
@@ -194,14 +197,13 @@ addPackage('pckContacts',{
         'angular',
         'cmApi', 
         'cmLogger', 
-        'cmUtil',
-        'pckUser'
-    ],    
+        'cmUtil'
+    ],
     resources : [
+        'comps/contacts/contactsModel-srvc',
         'comps/contacts/add-external-contact-drtv',
         'comps/contacts/contact-request-list-drtv',
         'comps/contacts/contacts-list-drtv',
-        'comps/contacts/contactsModel-srvc',
         'comps/contacts/contactsAdapter-srvc',
         'comps/contacts/search-cameo-identity-drtv',    
         'comps/contacts/type-chooser-drtv'

@@ -59,6 +59,17 @@ cmConversations.service('cmConversationsModel', [
     cmConversationsModel
 ])
 
+cmConversations.service('cmPurlModel',[
+    'cmConversationsAdapter',
+    'cmConversationsModel',
+    'cmConversationFactory',
+    'cmUserModel',
+    'cmAuth',
+    '$q',
+    '$rootScope',
+    cmPurlModel
+])
+
 cmConversations.directive('cmAttachments', [
     cmAttachments
 ])

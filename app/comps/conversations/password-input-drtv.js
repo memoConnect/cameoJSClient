@@ -2,7 +2,6 @@
 
 function cmPasswordInput() {
     return {
-
         restrict: 		'A',
         scope:			false,
 

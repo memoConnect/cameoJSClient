@@ -1,3 +1,5 @@
+'use strict';
+
 function cmValidateEmail(){
     //http://stackoverflow.com/questions/16863389/angular-js-email-validation-with-unicode-characters
     return {

@@ -1,19 +1,3 @@
-/*
-define([
-    'mUser',
-    'cmContactsAdapter',
-    'cmLogger'
-], function () {
-    'use strict';
-
-    
-    angular.module('mContacts',[
-        'cmContactsAdapter',
-        'cmLogger',
-        'mUser'
-    ])
-*/
-    
 function cmContactsModel(cmUserModel, cmContactsAdapter, cmLogger, $q, $rootScope){
     var self = this;
     var mockContacts = ['derMicha','dasEmpu'];
@@ -158,7 +142,3 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmLogger, $q, $rootScop
 
     init();
 }
-
-/*
-});
-*/
