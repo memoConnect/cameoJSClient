@@ -53,6 +53,7 @@
         "grunt-phonegap": "~0.13.2",
         "grunt-phonegap-build": "~0.0.8",
         "grunt-contrib-compress": "~0.7.0",
+        "grunt-task-helper": "~0.3.5",
         "plugman": "~0.20.2"
 
     },
