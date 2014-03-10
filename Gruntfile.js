@@ -93,19 +93,22 @@ module.exports = function (grunt) {
 
             protractor: {
                 options: {
+                    configFile: 'config/ptor.e2e.conf.js',
+
                     // The address of a running selenium server.
-                    // seleniumAddress: 'http://localhost:4444' ,
+                    seleniumPort: process.env.SELENIUM_LAUNCHER_PORT,
+                    seleniumAddress: 'http://localhost' ,
 
                     // Capabilities to be passed to the webdriver instance.
                     capabilities: {
                         'browserName': 'firefox'
                     },
 
-                    baseUrl: 'http://localhost:1337',
+                    baseUrl: 'http://localhost:9000',
 
                     // Spec patterns are relative to the current working directly when
                     // protractor is called.
-                    specs: ['test/e2e/*.spec.js'],
+                    specs: ['../test/e2e/*.spec.js'],
 
                     // Override the timeout for webdriver to 20 seconds.
                     allScriptsTimeout: 20000,
@@ -118,6 +121,7 @@ module.exports = function (grunt) {
                     }
 
                 }
+
 
             },
 
@@ -287,13 +291,12 @@ module.exports = function (grunt) {
 //    grunt.registerTask('coffeeTest', 'coffee');
     grunt.registerTask('coffeeTest', 'watch');
 
-    /*var driver = new require("selenium-webdriver").Builder()
-     .usingServer(process.env.SELENIUM_HUB)
-     .withCapabilities(webdriver.Capabilities.firefox())
-     .build()*/
+    //var driver = new require("selenium-webdriver").Builder()
+    //    .usingServer(process.env.SELENIUM_HUB)
+    //    .withCapabilities(webdriver.Capabilities.firefox())
+    //    .build()
 
-    grunt.registerTask('teste2e', ['connect', 'shell:runSelenium', 'shell:runProtractor']);
-
+    grunt.registerTask('teste2e', ['connect', 'selenium-launch', 'protractor']);
     /**
      * copy /app to /phonegap-build
      *
