@@ -18,7 +18,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-template');
 
     grunt.initConfig({
-            cameoSecrets: grunt.file.readJSON('../cameoSecrets/cameoJSClientSecrets.json'),
+            cameoSecrets: {"phonegap": {"email": "a","password": "b"}},
             connect: {
                 server: {
                     options: {
