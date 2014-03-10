@@ -16,26 +16,19 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-phonegap');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-template');
-    grunt.loadNpmTasks('grunt-task-helper');
 
+    var globalCameoSecrets = (function() {
+        src = '../cameoSecrets/cameoJSClientSecrets.json';
+        if (grunt.file.exists(src)) {
+            jsonObj = grunt.file.readJSON(src);
+            return jsonObj;
+        }
+        else {
+            return {"phonegap": {"email": "a", "password": "b"}};
+        }
+    })();
 
     grunt.initConfig({
-            taskHelper: {
-                check: {
-                    options: {
-                        handlerByFileSrc: function (src, dest, options) {
-                            if (grunt.file.exists(src)) {
-                                return grunt.file.readJSON(src)
-                            }
-                            else
-                                return {"phonegap": {"email": "a", "password": "b"}}
-                        }
-                    },
-                    cameoSecrets: {}
-                },
-                src: '../cameoSecrets/cameoJSClientSecrets.json',
-                dest: ''
-            },
             connect: {
                 server: {
                     options: {
@@ -263,8 +256,8 @@ module.exports = function (grunt) {
                         archive: "phonegap-target/cameoNetApp.zip",
                         "appId": "810861",
                         "user": {
-                            "email": '<%- taskHelper.options.cameoSecrets.phonegap.email %>',
-                            "password": '<%- taskHelper.options.cameoSecrets.phonegap.password %>'
+                            "email": globalCameoSecrets.phonegap.email,
+                            "password": globalCameoSecrets.phonegap.password
                         },
                         download: {
                             ios: 'phonegap-target/cameoNet.ipa',
