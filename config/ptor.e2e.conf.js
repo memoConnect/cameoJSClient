@@ -20,27 +20,35 @@ exports.config = {
     seleniumAddress: 'http://localhost:4444/wd/hub',
 
     // Capabilities to be passed to the webdriver instance.
+//    capabilities: null,
     capabilities: {
-        'browserName': 'chrome'
+        'browserName': 'phantomjs',
+        'phantomjs.binary.path':'./node_modules/phantomjs/bin/phantomjs',
+        'phantomjs.cli.args':['--webdriver=9515']
     },
 
-    baseUrl: 'http://localhost:9000/app',
-//    baseUrl: 'http://localhost/cameoJSClient/app/', // empu
+    browser: 'phantomjs',
+
+    baseUrl: 'http://localhost:9000/app/index.html',
 
     // Spec patterns are relative to the current working directly when
     // protractor is called.
-    specs: ['../test/e2e/*.spec.js'],
+    specs: [
+        '../test/e2e/*.spec.js'
+    ],
 
     // Override the timeout for webdriver to 20 seconds.
     allScriptsTimeout: 20000,
 
     webdriverLoglevel: 'DEBUG',
 
+    keepAlive: false,
+
     // Options to be passed to Jasmine-node.
     jasmineNodeOpts: {
-        showColors: true
-       ,defaultTimeoutInterval: 30000
-       ,isVerbose: false
-       ,includeStackTrace: true
+        showColors: true,
+        defaultTimeoutInterval: 30000,
+        isVerbose: false,
+        includeStackTrace: true
     }
 };
