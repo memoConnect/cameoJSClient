@@ -3,18 +3,16 @@ function cmFilesAdapter(cmApi){
 
 
     return {
-        prepareFile: function(data, chunk){        
+        prepareFile: function(file, numberOfChunks){        
             return cmApi.post({
                 url :    "/file",
-                data : {
-                    chunk: chunk
-                },
+                data: {},
                 exp_ok : 'id',
                 headers : {
-                    "X-File-Name":  data.file.name,
-                    "X-File-Size":  data.file.size,
-                    "X-File-Type":  data.file.type,
-                    "X-Max-Chunks": data.chunksTotal,
+                    "X-File-Name":  file.name,
+                    "X-File-Size":  file.size,
+                    "X-File-Type":  file.type,
+                    "X-Max-Chunks": numberOfChunks,
                     "X-Index": 0
                 }
             })

@@ -39,12 +39,12 @@ function cmUpload(cmFile){
 
             this.setChunkSize = function(chunkSize) {
                 $scope.chunkSize = chunkSize    
-                cmFile.init($scope.file, $scope.chunkSize)
+                cmFile.importFile($scope.file, $scope.chunkSize)
             }
 
             this.setFile = function(file){
                 $scope.file = file                
-                cmFile.init($scope.file, $scope.chunkSize)
+                cmFile.importFile($scope.file, $scope.chunkSize)
             }
 
             this.setAssetId = function(assetId) {

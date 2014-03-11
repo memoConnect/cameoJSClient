@@ -1,5 +1,8 @@
 var cmFiles = angular.module('cmFiles',[
-        'cmApi'
+        'cmApi',
+        'cmUtil',
+        'cmLogger',
+        'cmCrypt'
     ])
 
 cmFiles.service('cmFilesAdapter', [
@@ -11,6 +14,7 @@ cmFiles.factory('cmFile', [
     'cmFilesAdapter',
     'cmLogger',
     'cmCrypt',
+    'cmUtil',
     '$q',    
     cmFile
 ])

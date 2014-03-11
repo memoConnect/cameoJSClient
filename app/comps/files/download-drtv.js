@@ -13,8 +13,8 @@ function cmDownload(cmFile){
             $scope.progress = 0            
 
             
-            $scope.$parent.$watch($attrs.cmDownload,    function(assetId)   { self.setAssetId(assetId) })
-            $scope.$parent.$watch($attrs.cmData,        function(assetId)   { self.setAssetId(assetId) })
+            $scope.$parent.$watch($attrs.cmDownload,    function(fileId)   { self.setFileId(fileId) })
+            $scope.$parent.$watch($attrs.cmData,        function(fileId)   { self.setFileId(fileId) })
             $scope.$parent.$watch($attrs.cmPassphrase,  function(passphrase){ cmFile.setPassphrase(passphrase) })  
 
     
@@ -30,8 +30,8 @@ function cmDownload(cmFile){
                 )                
             }
 
-            this.setAssetId = function(assetId){                
-                cmFile.setAssetId(assetId)
+            this.setFileId = function(fileId){                
+                cmFile.setFileId(fileId)
                 self._updateFileDetails()
             }
 
@@ -42,7 +42,7 @@ function cmDownload(cmFile){
                 })
             }
             
-            this.setAssetId( $scope.$parent.$eval($attrs.cmDownload) || $scope.$parent.$eval($attrs.cmData) )                 
+            this.setFileId( $scope.$parent.$eval($attrs.cmDownload) || $scope.$parent.$eval($attrs.cmData) )                 
             cmFile.setPassphrase($scope.$parent.$eval($attrs.cmPassphrase))      
 
         }

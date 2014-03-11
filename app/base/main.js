@@ -122,6 +122,8 @@ addPackage('pckFiles',{
     deps: [
         'cmApi',
         'cmLogger',
+        'cmCrypt',
+        'cmUtil',
         'vendor/filesaver/filesaver',
         'angular-resource',
         'util-base64_decode'
