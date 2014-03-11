@@ -117,7 +117,7 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt', function(LocalS
         this.init = function(data){
             if(this.check()){
                 cryptKey = cmCrypt.hash(this.instanceId + this.instanceKey);
-                storageKey = cmCrypt.hash(cryptKey);
+                storageKey = cmCrypt.hash(this.instanceId);
 
                 this.instanceId = data.id;
                 this.instanceKey = data.key;

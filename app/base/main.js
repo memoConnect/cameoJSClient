@@ -142,11 +142,13 @@ addPackage('pckUser',{
     deps: [
         'angular',
         'cmAuth',
-        'cmUserModel'
+        'cmUserModel',
+        'cmCrypt',
+        'cmUtil'
     ],
     resources : [
-        'comps/user/login-drtv'
-
+        'comps/user/login-drtv',
+        'comps/user/key-pair-drtv'
     ]
 })
 
@@ -168,7 +170,7 @@ addPackage('pckConversations',{
         'comps/conversations/conversationsAdapter-srvc',
         'comps/conversations/conversationsModel-srvc',
 
-,        'comps/conversations/purlModel-srvc',
+        'comps/conversations/purlModel-srvc',
 
         'comps/conversations/conversationFactory-srvc',
         'comps/conversations/conversationModel-srvc',
