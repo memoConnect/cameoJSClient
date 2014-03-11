@@ -1,0 +1,14 @@
+KeySize:
+<select class="form-control" ng-model="keySize">
+    <option ng-repeat="size in keySizes">{{size}}</option>
+</select>
+
+<button ng-click="generate()" class="btn btn-primary">generate</button>
+<button ng-click="cancel()" class="btn btn-default">cancel</button>
+
+<h3>state</h3>
+<textarea class="form-control" ng-model="state" rows="2"></textarea>
+<h3>private key</h3>
+<textarea class="form-control" ng-model="privKey"></textarea>
+<h3>public key</h3>
+<textarea class="form-control" ng-model="pubKey"></textarea>
