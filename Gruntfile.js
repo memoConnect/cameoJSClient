@@ -17,8 +17,18 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-template');
 
+    var globalCameoSecrets = (function() {
+        src = '../cameoSecrets/cameoJSClientSecrets.json';
+        if (grunt.file.exists(src)) {
+            jsonObj = grunt.file.readJSON(src);
+            return jsonObj;
+        }
+        else {
+            return {"phonegap": {"email": "a", "password": "b"}};
+        }
+    })();
+
     grunt.initConfig({
-            cameoSecrets: {"phonegap": {"email": "a","password": "b"}},
             connect: {
                 server: {
                     options: {
@@ -189,31 +199,29 @@ module.exports = function (grunt) {
                 }
             },
 
-        template: {
-            'phonegap-index': {
-                'options': {
-                    'data': {
-                        'phonegapFiles':
-//                            '<script src="cordova.js"></script>' +
-                            '<script src="phonegap.js"></script>' +
-                            '<script src="phonegap-adapter.js"></script>',
-                        'phonegapElements':
-                            '<div class="well">'+
-                                '<p id="networkState"></p>'+
-                                '<p id="contactsNumber"></p>'+
-                            '</div>'+
-                            '<button class="btn btn-primary" onclick="loadContacts()">get contacts</button>'
+            template: {
+                'phonegap-index': {
+                    'options': {
+                        'data': {
+                            'phonegapFiles': //                            '<script src="cordova.js"></script>' +
+                                '<script src="phonegap.js"></script>' +
+                                    '<script src="phonegap-adapter.js"></script>',
+                            'phonegapElements': '<div class="well">' +
+                                '<p id="networkState"></p>' +
+                                '<p id="contactsNumber"></p>' +
+                                '</div>' +
+                                '<button class="btn btn-primary" onclick="loadContacts()">get contacts</button>'
+                        }
+                    },
+                    'files': {
+                        'phonegap-build/www/index.html': ['templates/index.html.tpl']
                     }
                 },
-                'files': {
-                    'phonegap-build/www/index.html': ['templates/index.html.tpl']
-                }
-            },
-            'www-index': {
-                'options': {
-                    'data': {
-                        'phonegapFiles': '',
-                        'phonegapElements': ''
+                'www-index': {
+                    'options': {
+                        'data': {
+                            'phonegapFiles': '',
+                            'phonegapElements': ''
                         }
                     },
                     'files': {
@@ -248,8 +256,8 @@ module.exports = function (grunt) {
                         archive: "phonegap-target/cameoNetApp.zip",
                         "appId": "810861",
                         "user": {
-                            "email": '<%- cameoSecrets.phonegap.email %>' ,
-                            "password": '<%- cameoSecrets.phonegap.password %>'
+                            "email": globalCameoSecrets.phonegap.email,
+                            "password": globalCameoSecrets.phonegap.password
                         },
                         download: {
                             ios: 'phonegap-target/cameoNet.ipa',
