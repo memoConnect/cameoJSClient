@@ -1,6 +1,6 @@
 'use strict';
 
-function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify){
+function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
     return {
         restrict: 'A',
         templateUrl: 'comps/user/key-pair.html',
@@ -8,17 +8,38 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify){
 
         controller: function($scope, $element, $attrs){
             $scope.ownKeys = [];
+            $scope.active = 'finishCreateKey';
 
-            $scope.active = 'showOwnKeys';
+            $scope.state = '';
+            $scope.privKey = '';
+            $scope.pubKey = '';
+            $scope.keyName = '';
 
+            $scope.keyName = navigator.appCodeName;
 
+            /**
+             * Navigation
+             */
             $scope.showOwnKeys = function(){
                 $scope.active = 'showOwnKeys';
+                $scope.ownKeys = $scope.loadUserKeys();
             }
 
             $scope.showCreateKey = function(){
                 $scope.active = 'createNewKey';
             }
+
+            $scope.showImportKeys = function(){
+                $scope.active = 'finishCreateKey';
+            };
+
+            $scope.showExportKey = function(key){
+                $scope.active = 'exportKeyPair';
+                $scope.exportPrivKey = key.privKey;
+                $scope.exportPubKey = key.pubKey;
+                $scope.exportKeyName = key.name;
+                $scope.exportKeySize = key.keySize;
+            };
 
             /**
              * scope vars for keypair generation
@@ -26,16 +47,17 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify){
              */
             $scope.keySizes = cmCrypt.getKeySizes();
             $scope.keySize = '2048';
-            $scope.state = '';
             /**
              * generate keypair
              */
             $scope.generate = function(){
+                $scope.active = 'modalCreateKey';
                 $scope.$emit('SHOW-SPINNER');
 
                 $scope.state = '';
                 $scope.privKey = '';
                 $scope.pubKey = '';
+
                 /**
                  * call cmCrypt to generate KeyPair
                  * with keySize and callback for onGeneration
@@ -58,6 +80,7 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify){
                         $scope.pubKey = result.pubKey;
 
                         $scope.$emit('HIDE-SPINNER');
+                        $scope.active = 'finishCreateKey';
                     },
                     function(){
                         $scope.state = 'generation canceled';
@@ -65,6 +88,7 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify){
                         $scope.pubKey = '';
 
                         $scope.$emit('HIDE-SPINNER');
+                        $scope.active = 'showOwnKeys';
                     }
                 );
             };
@@ -74,7 +98,58 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify){
             $scope.cancel = function(){
                 cmCrypt.cancelGeneration();
                 $scope.$emit('HIDE-SPINNER');
+                $scope.active = 'showOwnKeys';
             };
+            /**
+             * store key pair
+             */
+            $scope.store = function(){
+                var error = false;
+
+                if($scope.privKey == ''){
+                    error = true;
+                    cmNotify.warn('check private Key',{ttl:2000});
+                }
+
+                if($scope.pubKey == ''){
+                    error = true;
+                    cmNotify.warn('check public Key',{ttl:2000});
+                }
+
+                if($scope.keyName == ''){
+                    error = true;
+                    cmNotify.warn('check keyName',{ttl:2000});
+                }
+
+                if(error !== true){
+                    var tmp = {
+                        name: $scope.keyName,
+                        pubKey: $scope.pubKey,
+                        privKey: $scope.privKey,
+                        keySize: $scope.keySize
+                    }
+
+                    var tmpKeys = $scope.loadUserKeys();
+                    if(typeof tmpKeys !== undefined && typeof tmpKeys !== 'undefined' && typeof tmpKeys !== 'string'){
+                        if(tmpKeys.length > 0){
+                            tmpKeys.push(tmp);
+                            cmUserModel.storageSave('pgp',tmpKeys);
+                        } else {
+                            cmUserModel.storageSave('pgp',[tmp]);
+                        }
+                    } else {
+                        cmUserModel.storageSave('pgp',[tmp]);
+                    }
+
+                    cmNotify.info('Löft!',{ttl:2000})
+                }
+            }
+            /**
+             * load key par
+             */
+            $scope.loadUserKeys = function(){
+                return cmUserModel.storageGet('pgp');
+            }
         }
     }
 }

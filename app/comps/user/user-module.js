@@ -22,6 +22,7 @@ cmUser.directive('cmKeyPair', [
     'cmUtil',
     'cmLogger',
     'cmNotify',
+    '$location',
     cmKeyPair
 ])
 
