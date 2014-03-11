@@ -18,6 +18,8 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify){
              * generate keypair
              */
             $scope.generate = function(){
+                $scope.$emit('SHOW-SPINNER');
+
                 $scope.state = '';
                 $scope.privKey = '';
                 $scope.pubKey = '';
@@ -41,11 +43,15 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify){
 
                         $scope.privKey = result.privKey;
                         $scope.pubKey = result.pubKey;
+
+                        $scope.$emit('HIDE-SPINNER');
                     },
                     function(){
                         $scope.state = 'generation canceled';
                         $scope.privKey = '';
                         $scope.pubKey = '';
+
+                        $scope.$emit('HIDE-SPINNER');
                     }
                 );
             };
@@ -54,6 +60,7 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify){
              */
             $scope.cancel = function(){
                 cmCrypt.cancelGeneration();
+                $scope.$emit('HIDE-SPINNER');
             };
         }
     }
