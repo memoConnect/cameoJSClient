@@ -1,14 +1,31 @@
-KeySize:
-<select class="form-control" ng-model="keySize">
-    <option ng-repeat="size in keySizes">{{size}}</option>
-</select>
+<div>
+    <button ng-click="showOwnKeys()">Show Keys</button>
+    <button ng-click="showCreateKey()">new Key</button>
+</div>
 
-<button ng-click="generate()" class="btn btn-primary">generate</button>
-<button ng-click="cancel()" class="btn btn-default">cancel</button>
+<div ng-if="{{active == 'showOwnKeys'}}">
+    Liste eigener PubKeys, zum verwalten
+</div>
 
-<h3>state</h3>
-<textarea class="form-control" ng-model="state" rows="2"></textarea>
-<h3>private key</h3>
-<textarea class="form-control" ng-model="privKey"></textarea>
-<h3>public key</h3>
-<textarea class="form-control" ng-model="pubKey"></textarea>
+
+<div ng-if="{{active == 'createNewKey'}}">
+    KeySize:
+    <select class="form-control" ng-model="keySize">
+        <option ng-repeat="size in keySizes">{{size}}</option>
+    </select>
+
+    <button ng-click="generate()" class="btn btn-primary">generate</button>
+    <h3>state</h3>
+    <textarea class="form-control" ng-model="state" rows="2"></textarea>
+</div>
+
+<div ng-if="ng-if="{{active == 'modalCreateKey'}}"">
+    <button ng-click="cancel()" class="btn btn-default">cancel</button>
+</div>
+
+<div ng-if="{{active == 'finishCreateKey'}}">
+    <h3>private key</h3>
+    <textarea class="form-control" ng-model="privKey"></textarea>
+    <h3>public key</h3>
+    <textarea class="form-control" ng-model="pubKey"></textarea>
+</div>

@@ -7,6 +7,19 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify){
         scope: true,
 
         controller: function($scope, $element, $attrs){
+            $scope.ownKeys = [];
+
+            $scope.active = 'showOwnKeys';
+
+
+            $scope.showOwnKeys = function(){
+                $scope.active = 'showOwnKeys';
+            }
+
+            $scope.showCreateKey = function(){
+                $scope.active = 'createNewKey';
+            }
+
             /**
              * scope vars for keypair generation
              * @type {string[]}
