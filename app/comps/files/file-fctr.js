@@ -101,16 +101,18 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, cmUtil, $q){
 
 
         this.blobToRaw = function(){
-            var reader   = new FileReader(),
+            var self     = this,
+                reader   = new FileReader(),
                 deferred = $q.defer()
+
          
             reader.onload = function(event){
-                this.raw = event.target.result
-                deferred.resolve(this.raw)
+                self.raw = event.target.result
+                deferred.resolve(self.raw)
             }
             reader.readAsDataURL(this.blob);
 
-            return this
+            return deferred.promise
 
         }
 
@@ -120,7 +122,10 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, cmUtil, $q){
         }
 
         this.encryptRaw = function(passphrase) {
+            if(!this.raw) cmLogger.error('Chunk: raw Data empty.')
+            console.log(this.raw)
             this.raw = cmCrypt.encryptWithShortKey(passphrase, this.raw)     //Todo: long Key!
+            console.log(this.raw)
             return cmUtil.resolvedPromise()
         }
 
@@ -213,8 +218,10 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, cmUtil, $q){
 
                             chunk
                             .blobToRaw()
-                            .encryptRaw( self.passphrase )
-                            .then(function(){ console.log(chunk.raw); return chunk.upload(fileId, index) }) 
+                            .then(function(){
+                                chunk.encryptRaw( self.passphrase )
+                            })
+                            .then(function(){ return chunk.upload(fileId, index) }) 
                             .then(
                                 function(){                       
                                     deferredChunk.resolve()
@@ -362,7 +369,6 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, cmUtil, $q){
                     chunk
                     .downloadRaw(self.fileId, index)
                     .then(function(){
-                        console.dir(chunk)
                         chunk.decryptRaw(self.passphrase)
                     })
                     .then(function(){
