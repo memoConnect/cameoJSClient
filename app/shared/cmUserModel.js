@@ -17,6 +17,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
         created: '',
         lastUpdated: '',
         userType: 'external',
+        publicKeys: [],
         storage: {}
     }
 
