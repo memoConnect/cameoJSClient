@@ -150,8 +150,10 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
      */
     this.storageGet = function(key){
         if(isInit !== false && self.data.storage !== null){
-            self.data.storage.get(key);
+            return self.data.storage.get(key);
         }
+
+        return null;
     }
     /**
      * remove from identity storage
