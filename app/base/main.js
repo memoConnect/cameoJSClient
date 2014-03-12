@@ -163,6 +163,7 @@ addPackage('pckConversations',{
         'cmUtil',
         'cmUserModel',
         'pckContacts',
+        'pckFiles',
         '_v/captcha/captchagen/captchagen',
         'util-base64'
     ],    
