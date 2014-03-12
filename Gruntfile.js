@@ -57,6 +57,42 @@ module.exports = function (grunt) {
                 'test/jasmine/**/*.js'
             ]
         },
+
+        // contrib
+        copy: {
+            'phonegap-resources': {
+                files: [
+                    // copy all icon and splashs to /www/res
+                    {
+                        expand: true,
+                        cwd: 'phonegap-res/res/',
+                        src: ['**'],
+                        dest: 'phonegap-build/www/res/'
+                    },
+                    // add adapter javascript to /www
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: 'phonegap-res/*.js',
+                        dest: 'phonegap-build/www/'
+                    }
+                ]
+            },
+            'dalek-report': {
+                files: [
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: 'report/*.xml',
+                        dest: 'target/test-reports/'
+                    }
+                ]
+            }
+        },
+        clean: {
+            'dalek-report': ['report']
+        },
+
         // unit tests
         karma: {
             options: {
@@ -189,26 +225,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-        copy: {
-            'phonegap-resources': {
-                files: [
-                    // copy all icon and splashs to /www/res
-                    {
-                        expand: true,
-                        cwd: 'phonegap-res/res/',
-                        src: ['**'],
-                        dest: 'phonegap-build/www/res/'
-                    },
-                    // add adapter javascript to /www
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: 'phonegap-res/*.js',
-                        dest: 'phonegap-build/www/'
-                    }
-                ]
-            }
-        },
         // create zip and upload to build server
         "phonegap-build": {
             debug: {
@@ -240,15 +256,9 @@ module.exports = function (grunt) {
         }
     });
 
-//    grunt.registerTask('default', ['concat','uglify']);
-//    grunt.registerTask('coffeeTest', 'coffee');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
-    grunt.loadNpmTasks('grunt-contrib-coffee');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.registerTask('coffeeTest', [
-        'watch'
-    ]);
+    // contrib
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     // tests unit
     grunt.loadNpmTasks('grunt-karma');
     grunt.registerTask('tests-unit', [
@@ -259,11 +269,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-dalek');
     grunt.registerTask('tests-e2e', [
         'connect',
-        'dalek:jenkins'
+        'dalek:jenkins',
+        'copy:dalek-report',
+        'clean:dalek-report'
     ]);
     // phonegap to device
     grunt.loadNpmTasks('grunt-phonegap');
-    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-template');
     grunt.registerTask('phonegap', [
         'phonegap:build',
@@ -283,5 +294,15 @@ module.exports = function (grunt) {
     // deploy www without phonegap
     grunt.registerTask('www', [
         'template:www-index'
+    ]);
+    // tests
+//    grunt.registerTask('default', ['concat','uglify']);
+//    grunt.registerTask('coffeeTest', 'coffee');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-contrib-coffee');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.registerTask('coffeeTest', [
+        'watch'
     ]);
 };
