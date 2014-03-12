@@ -13,6 +13,7 @@ module.exports = {
                     .is(3, '3 form-controls are present')
             .click("a[href='#/registration']")
             // registration
+            .wait(2000)
             .assert
                 .url(path+'#/registration', 'on route registration')
             .assert
