@@ -8,10 +8,10 @@ app.config(["cmApiProvider",
 ])
 
 app.config(function ($routeProvider) {
-    $routeProvider.when('/list/:elementName', {
+    $routeProvider.when('/:elementName', {
         templateUrl: 'cockpit.html',
         controller: 'cockpitCtrl'
-    }).otherwise({redirectTo: "/list"})
+    }).otherwise({redirectTo: "/"})
 });
 
 app.controller("cockpitCtrl", [
@@ -45,11 +45,10 @@ app.controller("cockpitCtrl", [
             )
         }
 
-        function loadMore() {
+        $scope.loadMore = function () {
             filterSettings.offset += filterSettings.limit
             updateList()
         }
 
-        $scope.loadMore = loadMore
     }
 ])
