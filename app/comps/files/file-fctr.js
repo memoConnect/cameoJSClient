@@ -41,11 +41,21 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, cmUtil, $q){
         return new Blob(byteArrays, {type: contentType});
     }
 
+    function str2ab(str) {
+        var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char        
+        var bufView = new Uint16Array(buf);
+
+
+        for (var i=0, strLen=str.length; i<strLen; i++) {
+         bufView[i] = str.charCodeAt(i);
+        }
+        return buf;
+     }
 
 
     function Chunk(file, start, end){
 
-        this.raw = ""
+        this.bytes = ""
 
         this.initChain = function(callback) {
             if(this.deferred) return this.deferred
@@ -66,7 +76,6 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, cmUtil, $q){
                     }
                 }                
             })
-
         }
        
 
@@ -74,64 +83,90 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, cmUtil, $q){
             var slicer  = file.webkitSlice || file.mozSlice || file.slice,
                 chunk   = slicer.call(file, start, end)
 
+            this.bytes = undefined
+            this.blob  = undefined
+
             if (file.webkitSlice) { // android default browser in version 4.0.4 has webkitSlice instead of slice()
                 str2ab_blobreader(chunk, function(buf) { // we cannot send a blob, because body payload will be empty
                     chunk = buf
                 });
             }  
 
-            this.blob = chunk     
+            this.blob = chunk
+            
 
             return cmUtil.resolvedPromise()
         }
 
-
-        this.downloadRaw = function(fileId, index){
-            var self = this
-            return  cmFilesAdapter.getChunk(fileId, index)        
-                    .then(function(data){
-                        self.raw = data
-                    })
-        }
-
-        this.decryptRaw = function(passphrase){
-            this.raw = cmCrypt.decrypt(passphrase, this.raw)
-            return cmUtil.resolvedPromise()
-        }
-
-
-        this.blobToRaw = function(){
+        this.blobToBytes = function(){
             var self     = this,
                 reader   = new FileReader(),
                 deferred = $q.defer()
 
          
             reader.onload = function(event){
-                self.raw = event.target.result
-                deferred.resolve(self.raw)
+                self.bytes = event.target.result
+                deferred.resolve(self.bytes)
             }
-            reader.readAsDataURL(this.blob);
+
+            this.blob
+            ?   reader.readAsBinaryString(this.blob)
+            :   cmLogger.error('Unable ro convert to bytes; chunk.blob is empty.')      
 
             return deferred.promise
 
         }
 
-        this.rawToBlob = function(){
-            this.blob = atob(this.raw.replace('data:application/octet-stream;base64,',''))
-            return this 
+        this.encryptBytes = function(passphrase) {   
+        console.log(this.bytes)         
+            return(
+                this.bytes
+                ? this.encryptedBytes = cmCrypt.encryptWithShortKey(passphrase, this.bytes)     //Todo: long Key!            
+                : cmLogger.error('Unable ro encrypt; chunk.bytes is empty.')            
+            )
+                
         }
 
-        this.encryptRaw = function(passphrase) {
-            if(!this.raw) cmLogger.error('Chunk: raw Data empty.')
-            console.log(this.raw)
-            this.raw = cmCrypt.encryptWithShortKey(passphrase, this.raw)     //Todo: long Key!
-            console.log(this.raw)
-            return cmUtil.resolvedPromise()
+        this.uploadBytes = function(fileId, index){
+            return (
+                this.encryptedBytes
+                ? cmFilesAdapter.addChunk(fileId, index, this.encryptedBytes)
+                : cmLogger.error('Unable to upload; chunk.encryptedBytes is empty.')
+            )
         }
 
-        this.upload = function(fileId, index) {
-            return cmFilesAdapter.addChunk(fileId, index, this.raw)
+        this.downloadBytes = function(fileId, index){
+            var self = this
+
+            this.bytes = undefined
+            this.blob  = undefined
+
+            return  cmFilesAdapter.getChunk(fileId, index)        
+                    .then(function(data){                        
+                        return self.encryptedBytes = data
+                    })
         }
+
+        this.decryptBytes = function(passphrase){            
+            this.encryptedBytes
+            ?   this.bytes = cmCrypt.decrypt(passphrase, this.encryptedBytes)            
+            :   cmLogger.error('Unable to decrypt; chunk.encryptedBytes is empty.')                
+            
+            return this
+        }
+
+        this.bytesToBlob = function(){    
+            this.bytes
+            ?   this.blob = new Blob([this.bytes], {type : 'application/octet-binary'})
+            :   cmLogger.error('Unable to convert to Blob; chunk.bytes is empty.')         
+            
+            return this
+        }        
+
+        this.getSize = function() {
+            return this.bytes.length
+        }
+
 
         //this.initChain()
     }
@@ -217,15 +252,16 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, cmUtil, $q){
 
 
                             chunk
-                            .blobToRaw()
+                            .blobToBytes()
                             .then(function(){
-                                chunk.encryptRaw( self.passphrase )
+                                chunk.encryptBytes( self.passphrase )
                             })
-                            .then(function(){ return chunk.upload(fileId, index) }) 
+                            .then(function(){ return chunk.uploadBytes(fileId, index) }) 
                             .then(
                                 function(){                       
                                     deferredChunk.resolve()
-                                    deferred.notify(chunk.raw.length)
+                                    deferred.notify(chunk.getSize())
+                                    console.log(chunk.getSize())
                                 },
 
                                 function(response){
@@ -241,7 +277,6 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, cmUtil, $q){
                         )
 
                         return deferred.promise
-
                     })
         },
 
@@ -303,7 +338,7 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, cmUtil, $q){
                 .then(
                     function(){                       
                         deferredChunk.resolve()
-                        deferred.notify(chunk.size)
+                        deferred.notify(chunk.getSize())
                     },
 
                     function(response){
@@ -333,10 +368,11 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, cmUtil, $q){
                 ?    cmFilesAdapter.getFileInfo(this.fileId)
                     .then(function(details){                        
                         self.file = {}
-                        self.file.numberOfChunks = details.maxChunks
-                        self.file.name = cmCrypt.decrypt(self.passphrase, details.fileName)
-                        self.file.type = details.fileType
-                        self.file.size = details.fileSize
+                        self.file.name          = cmCrypt.decrypt(self.passphrase, details.fileName)
+                        self.file.type          = details.fileType
+                        self.file.size          = details.fileSize
+                        self.file.chunkIndices  = details.chunks
+
                         return self.file
                     })                    
                 :   deferred.promise
@@ -347,61 +383,67 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, cmUtil, $q){
             var self     = this,
                 promises = [],
                 deferred = $q.defer()
+                self.chunks = []
 
             
-            if(!self.file){
-                return self.getDetails()
-                        .then(function(){
-                            return self.download()
-                        })
+            if(!self.file || !self.file.chunkIndices){
+                cmLogger('Unable to download chunks; cmFile.file missing or incomplete.')
+                return null
             }
 
 
-            for(var index = 0; index < self.file.numberOfChunks; index++){
+            self.file.chunkIndices.forEach(function(index){
+                var deferredChunk = $q.defer()
 
-                function x(){   //haesslich; aber noch nötig, da sonst deferredChunk überschrieben wird.
-                    var deferredChunk = $q.defer()
+                promises.push(deferredChunk.promise)
 
-                    promises.push(deferredChunk.promise)
+                var chunk = new Chunk()
 
-                    var chunk = new Chunk()
+                self.chunks[index] = chunk
 
+                chunk
+                .downloadBytes(self.fileId, index)
+                .then(function(){
                     chunk
-                    .downloadRaw(self.fileId, index)
-                    .then(function(){
-                        chunk.decryptRaw(self.passphrase)
-                    })
-                    .then(function(){
-                        chunk.rawToBlob()
-                        deferredChunk.resolve(chunk.raw)
-                        deferred.notify(chunk.raw.length)    
-                    })
-                } x()
-            }
+                    .decryptBytes(self.passphrase)
+                    .bytesToBlob()
+
+                    deferredChunk.resolve(chunk)
+                    deferred.notify(chunk.getSize())  
+                })                
+            })
 
 
             $q.all(promises)
             .then(
-                function(chunks)    { deferred.resolve(chunks) },
+                function(chunks)    { deferred.resolve(chunks); },
                 function(response)  { deferred.reject(response) }
             )
 
             return  deferred.promise
-                    .then(function(chunks){
-                        self.file.content = ""
-                        chunks.forEach(function(chunk){
-                            self.file.content += chunk
+                    .then(function(){
+                        var data = []
+
+                        self.chunks.forEach(function(chunk){                                    
+                            data.push(chunk.blob)                            
                         })
+
+                        console.dir(data)
+
+                        self.blob = new Blob(data, {type: self.file.type})
+                        
                     })              
                     
         },
 
         save : function(){       
-            var self = this           
+            var self = this   
+
+            console.dir(self.blob)        
 
             this.file && this.file.name && this.file.type
             ?   saveAs(
-                    b64toBlob(this.file.content, this.file.type),
+                    this.blob,
                     this.file.name
                 )            
             :   this.getDetails()
