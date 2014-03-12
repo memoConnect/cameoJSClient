@@ -1,13 +1,9 @@
 define([
     'app',
-
-    'util-passchk-fast',
-    'comps/validate/password-drtv',
-    'comps/validate/email-drtv',
-
     'ngload!cmAuth',
     'ngload!cmNotify',
-    'ngload!cmLogger'
+    'ngload!cmLogger',
+    'ngload!pckValidate'
 ], function (app) {
     'use strict';
 
@@ -22,7 +18,7 @@ define([
          * tab directive defines
          */
         $scope.tabs = [
-            {i18n:'BACK',icon:'fa-chevron-left',href:'#/login','default':true},
+            {i18n:'BACK',icon:'fa-chevron-left',href:'#/login','default':true}
         ];
 
         var reservation_secrets = {};

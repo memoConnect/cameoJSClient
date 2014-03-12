@@ -17,6 +17,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
         created: '',
         lastUpdated: '',
         userType: 'external',
+        publicKeys: [],
         storage: {}
     }
 
@@ -82,6 +83,39 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
         $rootScope.$broadcast('logout');
         $location.path("/login");
     };
+
+    this.saveKey = function(key_data){
+        var tmpKeys = this.loadKeys();
+        if(typeof tmpKeys !== undefined && typeof tmpKeys !== 'undefined' && typeof tmpKeys !== 'string'){
+            if(tmpKeys.length > 0){
+                tmpKeys.push(key_data);
+                this.storageSave('pgp',tmpKeys);
+            } else {
+                this.storageSave('pgp',[key_data]);
+            }
+        } else {
+            this.storageSave('pgp',[key_data]);
+        }
+
+        cmAuth.savePublicKey({
+            name: key_data.name,
+            key: key_data.pubKey,
+            size: key_data.keySize
+        }).then(
+            function(data){
+                this.data.publicKeys.push(data);
+            },
+            function(){
+                //kA
+            }
+        )
+
+        return true;
+    }
+
+    this.loadKeys = function(){
+        return this.storageGet('pgp');
+    }
 
     /**
      * Token Functions
@@ -149,8 +183,10 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
      */
     this.storageGet = function(key){
         if(isInit !== false && self.data.storage !== null){
-            self.data.storage.get(key);
+            return self.data.storage.get(key);
         }
+
+        return null;
     }
     /**
      * remove from identity storage

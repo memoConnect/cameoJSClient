@@ -41,7 +41,7 @@ define([
                 }
 
                 return true;
-            }
+            };
 
             /**
              * TODO

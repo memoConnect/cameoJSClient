@@ -20,19 +20,16 @@ function(cmApi, cmCrypt){
 
         // delete Token
         removeToken: function(){
-//                    return $cookieStore.remove('token');
             return localStorage.removeItem('token');
         },
 
         // store the token in a cookie:
         storeToken: function(token){
-//                    return $cookieStore.put('token', token);
             return localStorage.setItem('token', token);
         },
 
         // retrieve thr token from a cookie
         getToken: function(){
-//                    return $cookieStore.get('token');
             return localStorage.getItem('token');
         },
 
@@ -66,6 +63,16 @@ function(cmApi, cmCrypt){
         getIdentity: function(id){
             return cmApi.get({
                 url: '/identity'+ (id ? '/'+id : '')
+            })
+        },
+
+        savePublicKey: function(data){
+            return cmApi.post({
+                url: '/identity/publicKey',
+                data: {
+                    name: data.name,
+                    key: data.key
+                }
             })
         }
     }

@@ -1,25 +1,26 @@
-var cmUi = angular.module('cmUi', [
-    'cmLanguage'
+angular.module('cmUi', [
+    'cmLanguage',
+    'ui.bootstrap'
 ])
 
-cmUi.directive('cmAdaptiveChange', [
+.directive('cmAdaptiveChange', [
     cmAdaptiveChange
 ])
 
-cmUi.directive('cmSpinner',[
+.directive('cmSpinner',[
     cmSpinner
 ])
 
-cmUi.directive('cmPointSpinner',[
+.directive('cmPointSpinner',[
     cmPointSpinner
 ])
 
-cmUi.directive('cmNavTabs',[
+.directive('cmNavTabs',[
     '$routeParams',
     cmNavTabs
 ])
 
-cmUi.filter('cmDigits', [
+.filter('cmDigits', [
     function(){
         return function(number, digits){
             var x   = parseFloat(number)                

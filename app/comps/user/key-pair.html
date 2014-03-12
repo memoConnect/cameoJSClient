@@ -1,0 +1,50 @@
+<div>
+    <button ng-click="showOwnKeys()">Show Keys</button>
+    <button ng-click="showCreateKey()">new Key</button>
+    <button ng-click="showImportKeys()">import Key</button>
+</div>
+
+<div ng-if="active == 'showOwnKeys'">
+    Liste eigener PubKeys, zum verwalten
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="key in $parent.ownKeys" ng-click="showExportKey(key)">
+            {{key.name}} - {{key.keySize}}
+            <i class="fa fa-cloud-download"></i>
+        </li>
+    </ul>
+</div>
+
+<div ng-if="active == 'createNewKey'">
+    KeySize:
+    <select class="form-control" ng-model="$parent.keySize">
+        <option ng-repeat="size in $parent.keySizes">{{size}}</option>
+    </select>
+
+    <button ng-click="generate()" class="btn btn-primary">generate</button>
+</div>
+
+<div ng-if="active == 'modalCreateKey'">
+    <h3>Key-Pair generating in Progress</h3>
+    <button ng-click="cancel()" class="btn btn-default">cancel</button>
+    <h3>state</h3>
+    <textarea class="form-control" ng-model="state" rows="2"></textarea>
+</div>
+
+<div ng-if="active == 'finishCreateKey'">
+    <h3>private key</h3>
+    <textarea class="form-control" ng-model="$parent.privKey"></textarea>
+    <h3>public key</h3>
+    <textarea class="form-control" ng-model="$parent.pubKey"></textarea>
+    <h3>name</h3>
+    <input class="form-control" ng-model="$parent.keyName" type="text" />
+    <br />
+    <button ng-click="store()" class="btn btn-primary">store</button>
+</div>
+
+<div ng-if="active == 'exportKeyPair'">
+    <h3>{{exportKeyName}} - {{exportKeySize}}</h3>
+    <h3>private key</h3>
+    <textarea class="form-control" ng-model="exportPrivKey"></textarea>
+    <h3>public key</h3>
+    <textarea class="form-control" ng-model="exportPubKey"></textarea>
+</div>
