@@ -1,18 +1,26 @@
-<h1>Listing of {{name}}</h1>
+<div class="page-header">
+    <h1>Cockpit <small>Listing of {{name}}</small></h1>
+</div>
+
 <table class="table table-striped">
 
     <thead>
     <tr >
         <th>ID</th>
         <th ng-repeat="title in titles">{{title}}</th>
+        <th>Modify</th>
     </tr>
     </thead>
 
     <tbody >
     <tr ng-repeat="row in list">
         <td>{{row.id}}</td>
-        <td ng-repeat="index in titles">
+        <td ng-repeat="n in titles">
             {{row.attributes[$index]}}
+        </td>
+        <td>
+            <button ng-click="editElement(row.id)" type="button" class="btn">Edit</button>
+            <button ng-click="deleteElement(row.id)" type="button" class="btn">Delete</button>
         </td>
     </tr>
     </tbody>
