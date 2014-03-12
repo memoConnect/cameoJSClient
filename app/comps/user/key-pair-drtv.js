@@ -22,7 +22,7 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
              */
             $scope.showOwnKeys = function(){
                 $scope.active = 'showOwnKeys';
-                $scope.ownKeys = $scope.loadUserKeys();
+                $scope.ownKeys = cmUserModel.loadKeys();
             }
 
             $scope.showCreateKey = function(){
@@ -122,33 +122,17 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
                 }
 
                 if(error !== true){
-                    var tmp = {
+                    if(cmUserModel.saveKey({
                         name: $scope.keyName,
                         pubKey: $scope.pubKey,
                         privKey: $scope.privKey,
                         keySize: $scope.keySize
-                    }
-
-                    var tmpKeys = $scope.loadUserKeys();
-                    if(typeof tmpKeys !== undefined && typeof tmpKeys !== 'undefined' && typeof tmpKeys !== 'string'){
-                        if(tmpKeys.length > 0){
-                            tmpKeys.push(tmp);
-                            cmUserModel.storageSave('pgp',tmpKeys);
-                        } else {
-                            cmUserModel.storageSave('pgp',[tmp]);
-                        }
+                    }) !== false){
+                        cmNotify.info('Löft!',{ttl:2000})
                     } else {
-                        cmUserModel.storageSave('pgp',[tmp]);
+                        cmNotify.warn('Problem!',{ttl:2000})
                     }
-
-                    cmNotify.info('Löft!',{ttl:2000})
                 }
-            }
-            /**
-             * load key par
-             */
-            $scope.loadUserKeys = function(){
-                return cmUserModel.storageGet('pgp');
             }
         }
     }
