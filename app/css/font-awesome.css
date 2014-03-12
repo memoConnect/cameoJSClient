@@ -6,8 +6,8 @@
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('fonts/fontawesome-webfont.eot?v=4.0.3');
-  src: url('fonts/fontawesome-webfont.eot?#iefix&v=4.0.3') format('embedded-opentype'), url('fonts/fontawesome-webfont.woff?v=4.0.3') format('woff'), url('fonts/fontawesome-webfont.ttf?v=4.0.3') format('truetype'), url('fonts/fontawesome-webfont.svg?v=4.0.3#fontawesomeregular') format('svg');
+  src: url('fonts/cameoawesome-webfont.eot?v=4.0.3');
+  src: url('fonts/cameoawesome-webfont.eot?#iefix&v=4.0.3') format('embedded-opentype'), url('fonts/cameoawesome-webfont.woff?v=4.0.3') format('woff'), url('fonts/cameoawesome-webfont.ttf?v=4.0.3') format('truetype'), url('fonts/cameoawesome-webfont.svg?v=4.0.3#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -1335,4 +1335,7 @@
 }
 .fa-plus-square-o:before {
   content: "\f196";
+}
+.cm-rhino:before {
+  content: "\f197";
 }
