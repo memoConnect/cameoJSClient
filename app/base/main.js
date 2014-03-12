@@ -214,7 +214,9 @@ addPackage('pckContacts',{
 
 addPackage('pckValidate',{
     root: 'comps/validate/validate-module',
-    deps: [],
+    deps: [
+        'util-passchk-fast'
+    ],
     resources : [
         'comps/validate/email-drtv',
         'comps/validate/password-drtv',
