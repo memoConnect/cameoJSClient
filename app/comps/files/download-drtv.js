@@ -30,7 +30,7 @@ function cmDownload(cmFile){
                         .then(
                             function(){
                                 cmFile
-                                .decryptChunks($scope.passphrase)
+                                .decryptChunks($scope.passphrase)                                
                                 .reassembleChunks()
                                 .promptSaveAs()
                             },

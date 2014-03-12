@@ -321,7 +321,7 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
                 .download(self.file.id, index)
                 .then(function(){
                     deferredChunk.resolve(chunk)
-                    //deferred.notify(chunk.getSize())  
+                    deferred.notify(chunk.getSize())  
                 })                
             })
 
