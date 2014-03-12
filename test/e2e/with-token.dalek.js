@@ -8,7 +8,8 @@ module.exports = {
                 .url(path+'#/login', 'on route login')
             .type("input[name='user']", 'Max')
             .type("input[name='pw']", 'max.mustermann')
-            .click("button[type='submit']")
+//            .click("button[type='submit']")
+            .click("[data-qa='login-submit-btn']")
             // logged in as max and routed to start
             .wait(2000)
             .assert
