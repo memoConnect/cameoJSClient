@@ -1,4 +1,4 @@
-var path = 'http://localhost:9000/app/index.html'
+var path = 'http://localhost:6108/app/'
 
 module.exports = {
     'without-token.js': function(test){
