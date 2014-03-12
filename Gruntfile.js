@@ -1,27 +1,5 @@
 module.exports = function (grunt) {
-    // Do grunt-related things in here
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
-    grunt.loadNpmTasks('grunt-contrib-coffee');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-protractor-runner');
-    grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-selenium-launcher');
-
-    grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-shell-spawn');
-
-    grunt.loadNpmTasks('grunt-contrib-compress');
-    grunt.loadNpmTasks('grunt-phonegap-build');
-    grunt.loadNpmTasks('grunt-phonegap');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-template');
-
-    grunt.loadNpmTasks('grunt-webdriver');
-
-    grunt.loadNpmTasks('grunt-dalek');
-
+    // cameo secrets
     var globalCameoSecrets = (function() {
         src = '../cameoSecrets/cameoJSClientSecrets.json';
         if (grunt.file.exists(src)) {
@@ -32,7 +10,7 @@ module.exports = function (grunt) {
             return {"phonegap": {"email": "a", "password": "b"}};
         }
     })();
-
+    // write config
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         // misc
@@ -105,22 +83,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-        protractor: {
-            options: {
-                configFile: 'config/ptor.e2e.conf.js'
-            }
-        },
-        shell: {
-            nodeServer: {
-                command: 'node scripts/web-server.js',
-                async: true
-            },
-            options: {
-                async: true,
-                execOptions: { detached: true }
-            }
-        },
-
         dalek: {
             options: {
                 reporter: ['console', 'junit']
@@ -280,23 +242,35 @@ module.exports = function (grunt) {
 
 //    grunt.registerTask('default', ['concat','uglify']);
 //    grunt.registerTask('coffeeTest', 'coffee');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-contrib-coffee');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.registerTask('coffeeTest', [
         'watch'
     ]);
     // test end 2 end
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-dalek');
     grunt.registerTask('teste2e', [
-//        'connect',
-        'shell:nodeServer',
+        'connect',
+//        'shell:nodeServer',
         'dalek:jenkins',
-        'shell:nodeServer:kill'
+//        'shell:nodeServer:kill'
     ]);
     // phonegap to device
+    grunt.loadNpmTasks('grunt-phonegap');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-template');
     grunt.registerTask('phonegap', [
         'phonegap:build',
         'copy:phonegap-resources',
         'template:phonegap-index'
     ]);
     // phonegap to build server
+    grunt.loadNpmTasks('grunt-phonegap-build');
+    grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.registerTask('phonegap-bs', [
         'phonegap:build',
         'copy:phonegap-resources',
