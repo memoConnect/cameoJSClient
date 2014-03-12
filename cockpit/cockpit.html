@@ -1,0 +1,22 @@
+<h1>Listing of {{name}}</h1>
+<table class="table table-striped">
+
+    <thead>
+    <tr >
+        <th>ID</th>
+        <th ng-repeat="title in titles">{{title}}</th>
+    </tr>
+    </thead>
+
+    <tbody >
+    <tr ng-repeat="row in list">
+        <td>{{row.id}}</td>
+        <td ng-repeat="index in titles">
+            {{row.attributes[$index]}}
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+
+<button ng-click="loadMore()" type="button" style="width: 100%" class="btn btn-primary">Load More</button>
