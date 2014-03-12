@@ -1,27 +1,19 @@
-var app = angular.module("cockpit", ["ngRoute", "cmAuth", "cmApi", "cmCrypt", "cmLogger"])
+var cockpitList = angular.module("cockpitList", ["ngRoute", "cmApi", "cmLogger"])
 
-app.config(["cmApiProvider",
-    function (cmApiProvider) {
-        cmApiProvider.restApiUrl("http://localhost:9000/api/cockpit/v1/")
-    }
-])
 
-app.config(function ($routeProvider) {
-    $routeProvider.when('/:elementName', {
-        templateUrl: 'cockpit.html',
-        controller: 'cockpitCtrl'
-    }).otherwise({redirectTo: "/"})
-});
-
-app.controller("cockpitCtrl", [
+cockpitList.controller("cockpitListCtrl", [
     '$scope',
     'cmApi',
+    'cmLogger',
     '$routeParams',
-    function ($scope, cmApi, $routeParams) {
+    '$location',
+    function ($scope, cmApi, cmLogger, $routeParams, $location) {
 
         $scope.name = $routeParams.elementName
         $scope.list = []
         $scope.titles = []
+
+        console.log($routeParams)
 
         var filterSettings = {
             offset: 0,
@@ -32,7 +24,7 @@ app.controller("cockpitCtrl", [
 
         function updateList() {
             cmApi.post({
-                url: $routeParams.elementName,
+                url: '/' + $routeParams.elementName,
                 data: filterSettings
             }).then(
                 function (data) {
@@ -50,26 +42,38 @@ app.controller("cockpitCtrl", [
         }
 
         $scope.editElement = function (id) {
-           console.log("EDIT: " + id)
+            $location.url('/' + $scope.name + '/' + id)
+        }
+
+        $scope.createNew = function() {
+            cmApi.post({
+                url: '/' + $routeParams.elementName + '/new'
+            }).then(
+                function (data) {
+                    $scope.list = $scope.list.concat(data)
+                    $scope.editElement(data.id)
+                }
+            )
         }
 
         $scope.deleteElement = function (id) {
 
             cmApi.delete({
-                url: $routeParams.elementName + "/" + id
+                url: '/' + $routeParams.elementName + "/" + id
             }).then(
                 function () {
-                    for(var i = $scope.list.length; i--;) {
-                        if($scope.list[i].id === id) {
+                    for (var i = $scope.list.length; i--;) {
+                        if ($scope.list[i].id === id) {
                             $scope.list.splice(i, 1);
                         }
                     }
                 },
-                function() {
+                function () {
                     cmLogger.error("could not delete")
                 }
             )
         }
+
 
     }
 ])

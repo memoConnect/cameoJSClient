@@ -1,18 +1,22 @@
 <div class="page-header">
-    <h1>Cockpit <small>Listing of {{name}}</small></h1>
+    <h1>Cockpit
+        <small>Listing of {{name}}</small>
+    </h1>
 </div>
+
+<button ng-click="createNew()" type="button" class="btn btn-primary">Create new</button>
 
 <table class="table table-striped">
 
     <thead>
-    <tr >
+    <tr>
         <th>ID</th>
         <th ng-repeat="title in titles">{{title}}</th>
         <th>Modify</th>
     </tr>
     </thead>
 
-    <tbody >
+    <tbody>
     <tr ng-repeat="row in list">
         <td>{{row.id}}</td>
         <td ng-repeat="n in titles">
