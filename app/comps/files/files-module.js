@@ -14,7 +14,6 @@ cmFiles.factory('cmFile', [
     'cmFilesAdapter',
     'cmLogger',
     'cmCrypt',
-    'cmUtil',
     '$q',    
     cmFile
 ])

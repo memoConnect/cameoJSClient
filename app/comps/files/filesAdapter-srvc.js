@@ -18,9 +18,9 @@ function cmFilesAdapter(cmApi){
             })
         }, 
 
-        addChunk: function(assetId, index, chunk) {         
+        addChunk: function(fileId, index, chunk) {         
             return cmApi.post({
-                url:    "/file/"+assetId,
+                url:    "/file/"+fileId,
                 data:   {
                     chunk: chunk
                 },          
@@ -31,9 +31,9 @@ function cmFilesAdapter(cmApi){
 
         },
 
-        getFileInfo: function(assetId){
+        getFileInfo: function(fileId){
             return cmApi.get({
-                url: "/file/"+assetId,
+                url: "/file/"+fileId,
             })
         },
 

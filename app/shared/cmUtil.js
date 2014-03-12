@@ -166,18 +166,6 @@ angular.module('cmUtil', [])
             return '< s'; //'just now' //or other string you like;
         }
 
-        this.rejectedPromise = function(obj) {
-            var deferred = $q.defer()
-            deferred.reject(obj)
-            return(deferred.promise)
-        }
-
-        this.resolvedPromise = function(obj) {
-            var deferred = $q.defer()
-            deferred.resolve(obj)
-            return(deferred.promise)
-        }
-
         this.getType = function(x){
             if(typeof x == "string") return("String")
 
