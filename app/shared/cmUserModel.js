@@ -97,6 +97,19 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
             this.storageSave('pgp',[key_data]);
         }
 
+        cmAuth.savePublicKey({
+            name: key_data.name,
+            key: key_data.pubKey,
+            size: key_data.keySize
+        }).then(
+            function(data){
+                this.data.publicKeys.push(data);
+            },
+            function(){
+                //kA
+            }
+        )
+
         return true;
     }
 
