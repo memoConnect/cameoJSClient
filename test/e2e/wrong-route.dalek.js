@@ -1,4 +1,4 @@
-var path = 'http://localhost:9000/app/index.html'
+var path = 'http://localhost:6108/app/index.html'
 
 module.exports = {
     'wrong-route.js': function(test){
