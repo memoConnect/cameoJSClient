@@ -51,6 +51,10 @@ var config = {
         'crypto-ats-oka': 'vendor/crypto/ats-oka/ats-oka.min',
         'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt.min',
 
+        // ui
+        'ui-bootstrap': 'vendor/ui-bootstrap/ui-bootstrap.0.10.0',
+        'ui-bootstrap-tpls': 'vendor/ui-bootstrap/ui-bootstrap-tpls.0.10.0',
+
         'jquery': 'vendor/jquery/jquery-2.1.0'
     },
 
@@ -72,6 +76,9 @@ var config = {
         'angular-translate-loader-static-files': ['angular','angular-translate'],
         'angular-translate-storage-cookie': ['angular','angular-translate'],
         'angular-translate-storage-local': ['angular','angular-translate', 'angular-translate-storage-cookie'],
+
+        'ui-bootstrap': ['angular'],
+        'ui-bootstrap-tpls': ['angular'],
 
         'cmNotify': ['angular-growl'],
         'cmAuth': ['angular', 'util-base64', 'cmCrypt','cmApi'],
@@ -231,8 +238,10 @@ addPackage('pckUi',{
         'angular',    
         'cmAuth',
         'cmLogger',
-        'util-spin'
-    ],    
+        'util-spin',
+        'ui-bootstrap',
+        'ui-bootstrap-tpls'
+    ],
     resources : [
         'shared/ui/adaptive-change-drtv',  
         'shared/ui/nav-tabs-drtv',

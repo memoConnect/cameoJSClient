@@ -1,6 +1,9 @@
 <div ng-controller="RegistrationCtrl">
+    <div class="page-header">
+        <h2>{{'REGISTER.HEADING' | cmTranslate}}</h2>
+    </div>
 
-    <div class="page-header"><h2>{{'REGISTER.HEADING' | cmTranslate}}</h2></div>
+    <div cm-nav-tabs ng-model="badges"></div>
 
     <form name="registrationForm" class="form-horizontal" role="form" ng-submit="createUser()" autocomplete="off" novalidate>
 

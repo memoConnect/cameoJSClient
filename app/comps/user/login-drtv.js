@@ -1,12 +1,12 @@
 'use strict';
 
-function cmLogin($location, $interval, cmLogger, cmNotify, cmUserModel) {
+function cmLogin($location, cmNotify, cmUserModel) {
     return  {
         restrict    :   'A',
         templateUrl :   'comps/user/login.html',
         scope       :   {},
 
-        controller  :   function ($scope, $element, $attrs) {
+        controller  :   function ($scope, $rootScope) {
             $scope.loginData = {
                 'Max': {
                     user: 'Max',
@@ -36,19 +36,26 @@ function cmLogin($location, $interval, cmLogger, cmNotify, cmUserModel) {
                 }
             };
 
+            var isIdle = false;
+
             $scope.doLogin = function(){
-                if($scope.isIdle)
+                if(isIdle)
                     return false;
 
+                isIdle = true;
                 $scope.$broadcast('cmPointSpinner:start');
 
                 cmUserModel.doLogin($scope.formData.user, $scope.formData.pass)
                 .then(
                     function(){
+                        isIdle = false;
                         $scope.$broadcast('cmPointSpinner:cancel');
+                        $rootScope.$broadcast('cmLogin:success');
                         $location.path("/start");
                     },
                     function(state, error){
+                        isIdle = false;
+                        $rootScope.$broadcast('cmLogin:error');
                         $scope.$broadcast('cmPointSpinner:cancel');
                         cmNotify.error('LOGIN.INFO.'+state, {ttl:5000});
                     }
