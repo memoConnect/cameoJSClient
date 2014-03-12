@@ -5,7 +5,7 @@ module.exports = {
         test
             .open(path)
             // login
-            .wait(1500)// wait for otherwise
+            .wait(2000)// wait for otherwise
             .assert.
                 url(path+'#/login', 'on route login')
             .assert
@@ -17,7 +17,7 @@ module.exports = {
                 .url(path+'#/registration', 'on route registration')
             .assert
                 .numberOfElements('.form-control')
-                    .is(5, '5 form-controls are present')
+                    .is(7, '7 form-controls are present')
             .click("a[href='#/terms']")
             // terms
             .assert

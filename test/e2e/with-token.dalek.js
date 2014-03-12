@@ -10,7 +10,7 @@ module.exports = {
             .type("input[name='pw']", 'max.mustermann')
             .click("button[type='submit']")
             // logged in as max and routed to start
-            .wait(1000)
+            .wait(2000)
             .assert
                 .url(path+'#/start', 'on route start')
             .assert
