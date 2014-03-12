@@ -69,7 +69,7 @@ module.exports = function (grunt) {
             unit: {
                 singleRun: false,
                 autoWatch: true,
-                runnerPort: 9999,
+                runnerPort: 6108,
                 browsers: ['Chrome']
             }
 
@@ -249,15 +249,17 @@ module.exports = function (grunt) {
     grunt.registerTask('coffeeTest', [
         'watch'
     ]);
-    // test end 2 end
+    // tests unit
     grunt.loadNpmTasks('grunt-karma');
+    grunt.registerTask('tests-unit', [
+        'karma:jenkins'
+    ]);
+    // tests e2e
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-dalek');
-    grunt.registerTask('teste2e', [
+    grunt.registerTask('tests-e2e', [
         'connect',
-//        'shell:nodeServer',
-        'dalek:jenkins',
-//        'shell:nodeServer:kill'
+        'dalek:jenkins'
     ]);
     // phonegap to device
     grunt.loadNpmTasks('grunt-phonegap');

@@ -48,6 +48,7 @@
         "karma-html2js-preprocessor": "~0.1.0",
         "karma-junit-reporter": "~0.1",
 
+        "grunt-webdriver": "~0.2.0",
         "grunt-contrib-connect": "~0.5.0",
         "grunt-dalek": "~0.2.0",
         "dalek-cli": "~0.0.4",
