@@ -9,8 +9,6 @@ var cmUser = angular.module('cmUser',[
 
 cmUser.directive('cmLogin', [
     '$location',
-    '$interval',
-    'cmLogger',
     'cmNotify',
     'cmUserModel',
     cmLogin

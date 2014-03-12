@@ -18,7 +18,7 @@ define([
          * tab directive defines
          */
         $scope.tabs = [
-            {i18n:'BACK',icon:'fa-chevron-left',href:'#/login','default':true},
+            {i18n:'BACK',icon:'fa-chevron-left',href:'#/login','default':true}
         ];
 
         var reservation_secrets = {};
