@@ -9,8 +9,8 @@ module.exports = {
             .assert.
                 url(path+'#/login', 'on route login')
             .assert
-                .numberOfElements('.form-control')
-                    .is(3, '3 form-controls are present')
+                .numberOfElements('.btn-default')
+                    .is(2, '2 btn-default are present')
             .click("a[href='#/registration']")
             // registration
             .wait(2000)
