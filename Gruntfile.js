@@ -39,13 +39,13 @@ module.exports = function (grunt) {
                 ]
             }
         },
-        watch: {
-            coffee: {
-                files: ['app/coffee/**/*.coffee'], tasks: ['coffee'], options: {
-                    event: 'all'
-                }
-            }
-        },
+//        watch: {
+//            coffee: {
+//                files: ['app/coffee/**/*.coffee'], tasks: ['coffee'], options: {
+//                    event: 'all'
+//                }
+//            }
+//        },
         jshint: {
             all: [
                 'Gruntfile.js',
@@ -253,6 +253,23 @@ module.exports = function (grunt) {
                 cwd: 'phonegap-build/www/',
                 src: ['**/*']
             }
+        },
+
+        // watch
+        watch: {
+            files: "app/less/*.less",
+            tasks: ["less"]
+        },
+        less: {
+            development: {
+                options: {
+                    paths: ["app/less"],
+                    yuicompress: true
+                },
+                files: {
+                    "app/css/app.css": "app/less/app.less"
+                }
+            }
         }
     });
 
@@ -305,4 +322,8 @@ module.exports = function (grunt) {
     grunt.registerTask('coffeeTest', [
         'watch'
     ]);
+    // watch
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.registerTask('watcher','watch');
 };
