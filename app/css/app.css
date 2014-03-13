@@ -6,7 +6,6 @@ body {
 }
 body {
   width: 100%;
-  overflow: hidden;
   background-color: #000000;
 }
 pre {
@@ -138,4 +137,5 @@ textarea[cm-message-input] {
   color: #fff;
   position: absolute;
   bottom: 0;
+  left: 0;
 }
