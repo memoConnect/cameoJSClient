@@ -191,7 +191,7 @@
    Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
    readers do not read off random characters that represent icons
 */
-.cm-rhino-bubble:before{content:'\f000'}
+.cm-rhino-bubble:before{content:'\f001'}
 .cm-rhino-positive:before{content:'\f002'}
 .cm-client-add:before{content:'\f003'}
 .cm-add:before{content:'\f004'}
