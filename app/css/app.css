@@ -186,6 +186,13 @@ textarea[cm-message-input] {
 .alert-mini-padding {
   padding: 5px;
 }
+/* modal */
+.modal-outer-title {
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  color: #02bed2;
+}
 .modal-spinner {
   position: fixed;
   top: 50%;
