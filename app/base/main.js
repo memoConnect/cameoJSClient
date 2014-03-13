@@ -61,7 +61,7 @@ var config = {
     packages: [
         {name: '_v', location: 'vendor' },
         {name: '_c', location: 'comps'  },
-        {name: '_s', location: 'shared' },
+        {name: '_s', location: 'shared' }
 //        {name: '_d', location: 'directives'}
     ],
     // Add angular modules that does not support AMD out of the box, put it in a shim
@@ -77,7 +77,7 @@ var config = {
         'angular-translate-storage-cookie': ['angular','angular-translate'],
         'angular-translate-storage-local': ['angular','angular-translate', 'angular-translate-storage-cookie'],
 
-        'ui-bootstrap': ['angular'],
+        'ui-bootstrap': ['angular','ui-bootstrap-tpls'],
         'ui-bootstrap-tpls': ['angular'],
 
         'cmNotify': ['angular-growl'],
@@ -239,8 +239,8 @@ addPackage('pckUi',{
         'cmAuth',
         'cmLogger',
         'util-spin',
-        'ui-bootstrap',
-        'ui-bootstrap-tpls'
+        'ui-bootstrap-tpls',
+        'ui-bootstrap'
     ],
     resources : [
         'shared/ui/adaptive-change-drtv',  
