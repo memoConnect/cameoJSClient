@@ -4,7 +4,6 @@ function cmUpload(cmFile){
     return {
 
         restrict : 'AE',
-
         scope: true,
 
         controller : function($scope, $element, $attrs){  
@@ -12,7 +11,8 @@ function cmUpload(cmFile){
             var self = this
 
             $scope.file = {}
-            $scope.progress = 0           
+            $scope.progress = 0
+            $scope.readyForUpload = undefined                      
                         
             $scope.chunkSize = $scope.$eval($attrs.cmChunkSize)
             $scope.$parent.$watch($attrs.cmChunkSize, function(new_chunk_size){ $scope.chunkSize = new_chunk_size })          
@@ -25,24 +25,30 @@ function cmUpload(cmFile){
 
             $scope.upload = function(){
                 $scope.progress = 0
+                if(!$scope.readyForUpload) return null                
 
-                cmFile
-                .uploadChunks()
-                .then(null, null, function(progress){ $scope.progress += progress })
+                $scope.readyForUpload.then(function(){             
+                    cmFile
+                    .uploadChunks()
+                    .then(null, null, function(progress){ $scope.progress += progress })
+                })
             }
 
             this.setFile = function(file){
                 $scope.file = file 
 
-                cmFile
-                .importFile($scope.file)
-                .chopIntoChunks($scope.chunkSize)
-                .encryptFilename($scope.passphrase)
-                .encryptChunks($scope.passphrase)
-                .setupForUpload()
-                .then(function(){
-                    self.setFileId(cmFile.file.id)                    
-                })
+                $scope.readyForUpload =    cmFile
+                                            .importFile($scope.file)
+                                            .chopIntoChunks($scope.chunkSize)
+                                            .then(function(){                                                
+                                                return cmFile
+                                                       .encryptFilename($scope.passphrase)
+                                                       .encryptChunks($scope.passphrase)
+                                                       .setupForUpload()                                                       
+                                            })    
+                                            .then(function(){
+                                                self.setFileId(cmFile.fileId)
+                                            })
 
             }
 

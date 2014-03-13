@@ -13,7 +13,7 @@ function cmDownload(cmFile){
             $scope.progress = 0     
             $scope.passphrase = undefined
             $scope.fileId = undefined
-            $scope.readyForUpload = undefined
+            $scope.readyForDownload = undefined
 
             
             $scope.$parent.$watch($attrs.cmDownload,    function(fileId)     { $scope.fileId = $scope.fileId || fileId })
@@ -22,31 +22,34 @@ function cmDownload(cmFile){
             $scope.$watch('fileId', function(fileId){ self.setup(fileId) }) 
 
 
-            $scope.download = function(fileId){
-                $scope.progress = 0
-                if(!$scope.readyForUpload) return self.setup(fileId).then(function(){ return $scope.download(fileId) })
+            $scope.download = function(fileId){                
+                if(!$scope.readyForDownload) return null                    
+                $scope.progress = 0    
 
-                return  cmFile.downloadChunks()
-                        .then(
-                            function(){
-                                cmFile
-                                .decryptChunks($scope.passphrase)                                
-                                .reassembleChunks()
-                                .promptSaveAs()
-                            },
-                            null,
-                            function(progress){ $scope.progress += progress }
-                        )           
+                $scope.readyForDownload.then(function(){
+                    cmFile
+                    .downloadChunks()
+                    .then(
+                        function(){ return  cmFile.decryptChunks($scope.passphrase) }, 
+                        null, 
+                        function(progress){ $scope.progress += progress }
+                    )
+                    .then(function(){
+                        cmFile
+                        .reassembleChunks()
+                        .promptSaveAs()
+                    })        
+                })
             }
 
             this.setup = function(fileId){
-                return  cmFile
-                        .importByFileId(fileId)
-                        .then(function(){
-                            cmFile.decryptFilename($scope.passphrase)
-                            $scope.file = cmFile.file
-                            $scope.readyForUpload = true
-                        })
+                $scope.readyForDownload =   cmFile
+                                            .importByFileId(fileId)
+                                            .then(function(){
+                                                cmFile.decryptFilename($scope.passphrase)
+                                                $scope.fileName = cmFile.fileName
+                                                $scope.fileSize = cmFile.fileSize
+                                            })
             }
             
         }
