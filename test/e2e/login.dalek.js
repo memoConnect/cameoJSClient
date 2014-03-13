@@ -9,9 +9,9 @@ module.exports = {
             .assert.
                 url(path+'#/login', 'on route login')
             .assert
-                .numberOfElements('.btn-default')
-                    .is(2, '2 btn-default are present')
-            .click("a[href='#/registration']")
+                .numberOfElements("[data-qa='login-screen-btn']")
+                    .is(2, '2 login-screen-btn are present')
+            .click("button[ng-click='goToReg()']")
             // registration
             .wait(2000)
             .assert

@@ -1,19 +1,28 @@
 <form class="form-signin" role="form" ng-submit="doLogin()" autocomplete="off">
-    <h2 class="form-signin-heading"><i class="fa cm-rhino"></i> {{'LOGIN.HEADING' | cmTranslate}}</h2>
+    <div class="modal-outer-title"><i class="fa cm-logo fa-5x"></i></div>
 
-    <input ng-model="formData.user" class="form-control" id="user" name="user" placeholder="{{'LOGIN.PLACEHOLDER.USERNAME' | cmTranslate}}" type="text" value="" required />
-    <input ng-model="formData.pass" class="form-control" id="pw" name="pw" placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD' | cmTranslate}}" type="password" value="" required />
+    <h2 class="form-signin-heading ">{{'LOGIN.HEADING'|cmTranslate}}</h2>
 
-    <label class="checkbox">
-        <input type="checkbox" value="remember-me"> {{'LOGIN.LABEL.REMEMBER_ME' | cmTranslate}}
-    </label>
+    <div class="cm-form-group">
+        <div class="cm-form-control">
+            <input ng-model="formData.user" class="form-control" id="user" name="user" placeholder="{{'LOGIN.PLACEHOLDER.USERNAME'|cmTranslate}}" type="text" value="" required />
+            <div class="cm-form-control-inputter"></div>
+        </div>
+    </div>
+    <div class="cm-form-group">
+        <div class="cm-form-control">
+            <input ng-model="formData.pass" class="form-control" id="pw" name="pw" placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD'|cmTranslate}}" type="password" value="" required />
+            <div class="cm-form-control-inputter"></div>
+        </div>
+    </div>
+    <div class="cm-form-group">
+        <select ng-model="formData.autologin" class="form-control btn-block autologin" ng-change="changeAutologin()">
+            <option value="none">{{'LOGIN.LABEL.AUTO'|cmTranslate}}</option>
+            <option ng-repeat="(user,prop) in loginData">{{user}}</option>
+        </select>
+    </div>
 
-    <select ng-model="formData.autologin" class="form-control btn-block autologin" ng-change="changeAutologin()">
-        <option value="none">{{'LOGIN.LABEL.AUTO' | cmTranslate}}</option>
-        <option ng-repeat="(user,prop) in loginData">{{user}}</option>
-    </select>
-
-    <button class="btn btn-lg btn-primary btn-block" type="submit" data-qa="login-submit-btn">
-        {{'LOGIN.LABEL.SUBMIT' | cmTranslate}}<span cm-point-spinner></span>
+    <button class="btn cm-btn cm-btn-lg cm-btn-block cm-btn-primary" type="submit" data-qa="login-submit-btn">
+        {{'LOGIN.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-in"></i>
     </button>
 </form>
