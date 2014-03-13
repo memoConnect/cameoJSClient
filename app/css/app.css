@@ -1,4 +1,4 @@
-body {padding:20px}
+body {padding:20px;color:#000}
 pre {text-align:left}
 
 .mt5{margin-top:5px}
@@ -18,65 +18,21 @@ pre {text-align:left}
 .form-signin input[type="text"]{margin-bottom:-1px;border-bottom-left-radius:0;border-bottom-right-radius:0}
 .form-signin input[type="password"]{margin-bottom:10px;border-top-left-radius:0;border-top-right-radius:0}
 
-input[type="checkbox"] {border:none !important;box-shadow: none !important}
+input[type="checkbox"] {border:none!important;box-shadow:none!important}
 
-.form-registry-head {border-bottom: 1px solid #EEEEEE;margin-bottom: 40px}
+.form-registry-head {border-bottom: 1px solid #EEEEEE;margin-bottom:40px}
 
-li.message-list {
-    width : 800px;
-    min-height : 50px;
-    overflow: hidden;
-    border: 1px solid black;
-    margin-bottom: 10px;
-    padding: 5px;
-    word-wrap: break-word;
-    background-color: #d3d3d3
+li.message-list {width:800px;min-height:50px;overflow:hidden;border:1px solid black;margin-bottom:10px;padding:5px;word-wrap:break-word;background-color:#d3d3d3}
 
-}
-
-
-/*.ng-dirty .ng-invalid {*/
-    /*border:1px solid Red;*/
-/*}*/
-/*.ng-valid {*/
-    /*border:1px solid green;*/
-/*}*/
-
-
-cm-message,
-cm-conversation,
-cm-message-input {
-    display:        block;
-}
-
-cm-avatar,
-cm-attachments {
-    display:        inline-block;
-}
-
-
-cm-message {
-    margin:         2em 0;
-    word-wrap:      break-word;
-}
-
-cm-message article.left{
-    text-align:     left;
-}
-
-cm-message article.right{
-    text-align:     right;
-}
-
-cm-message footer{
-    clear:          both;
-}
-
-textarea[cm-message-input] {
-    width:          100%;
-    min-height:     3em;
-}
+cm-message,cm-conversation,cm-message-input{display:block}
+cm-avatar,cm-attachments{display:inline-block}
+cm-message{margin:2em 0;word-wrap:break-word}
+cm-message article.left{text-align:left}
+cm-message article.right{text-align:right}
+cm-message footer{clear:both}
+textarea[cm-message-input]{width:100%;min-height:3em}
 
 .alert-mini-padding{padding:5px}
+.modal-spinner{position:fixed;top:50%;left:50%;z-index:999}
 
-.modal-spinner {position:fixed;top:50%;left:50%;z-index:999}
+.autologin{height:44px}

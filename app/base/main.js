@@ -61,7 +61,7 @@ var config = {
     packages: [
         {name: '_v', location: 'vendor' },
         {name: '_c', location: 'comps'  },
-        {name: '_s', location: 'shared' },
+        {name: '_s', location: 'shared' }
 //        {name: '_d', location: 'directives'}
     ],
     // Add angular modules that does not support AMD out of the box, put it in a shim

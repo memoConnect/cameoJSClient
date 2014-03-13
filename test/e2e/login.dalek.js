@@ -1,7 +1,7 @@
 var path = 'http://localhost:6108/app/'
 
 module.exports = {
-    'without-token.js': function(test){
+    'login.js': function(test){
         test
             .open(path)
             // login
