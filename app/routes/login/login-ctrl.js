@@ -4,8 +4,8 @@ define([
     'ngload!pckUi'
 ], function(app){
 
-    app.register.controller('LoginCtrl',['$scope', '$modal', 'cmLogger',
-        function($scope, $modal, cmLogger){
+    app.register.controller('LoginCtrl',['$scope', '$modal', '$location', 'cmLogger',
+        function($scope, $modal, $location, cmLogger){
 
         $scope.open = function () {
 
@@ -27,6 +27,10 @@ define([
                     cmLogger.info('Modal dismissed at: ' + new Date());
                 }
             );
+        };
+
+        $scope.goToReg = function(){
+            $location.path('/registration');
         };
     }]);
 });

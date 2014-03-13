@@ -1,7 +1,3 @@
-.cm-btn-black {
-  background-color: #000;
-  color: #fff;
-}
 html,
 body {
   height: 100%;
@@ -21,12 +17,27 @@ pre {
   min-height: 100%;
   margin: 0;
   padding: 0;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url('../gfx/backgroundStart.jpg');
 }
 .cm-ci-color {
   color: #02bed2;
+}
+.cm-btn-black,
+.cm-btn-white {
+  width: 172px;
+  height: 42px;
+}
+.cm-btn-black {
+  background-color: #000;
+  color: #fff;
+  box-shadow: 0px 0px 5px 5px rgba(255, 255, 255, 0.15);
+}
+.cm-btn-white {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
 }
 .mt5 {
   margin-top: 5px;
@@ -36,6 +47,15 @@ pre {
 }
 .mb10 {
   margin-bottom: 10px !important;
+}
+.mb30 {
+  margin-bottom: 30px;
+}
+.mr30 {
+  margin-right: 30px;
+}
+.mt30 {
+  margin-top: 30px;
 }
 .center-block {
   max-width: 768px;
@@ -142,4 +162,18 @@ textarea[cm-message-input] {
   position: absolute;
   bottom: 0;
   left: 0;
+}
+.cm-login-container {
+  width: 460px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 15px;
+}
+.cm-login-rhino {
+  font-size: 25em;
+  color: rgba(0, 0, 0, 0.7);
+}
+.cm-login-text {
+  margin-top: 30px;
+  color: rgba(255, 255, 255, 0.25);
 }
