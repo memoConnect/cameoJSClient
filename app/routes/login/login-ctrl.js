@@ -14,6 +14,7 @@ define([
                 $scope.showLoginRhino = false;
 
                 var modalInstance = $modal.open({
+                    windowClass: 'cm-modal-with-title',
                     template: '<div cm-notify></div><div cm-login></div>',
                     controller: function ($rootScope, $scope, $modalInstance) {
                         $rootScope.$on('cmLogin:success', function(){

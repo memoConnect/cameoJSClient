@@ -187,10 +187,14 @@ textarea[cm-message-input] {
   padding: 5px;
 }
 /* modal */
-.modal-outer-title {
+.cm-modal-with-title .modal-dialog {
+  margin-top: 150px;
+}
+.cm-modal-with-title .modal-dialog .modal-outer-title {
   text-align: center;
   width: 100%;
   position: absolute;
+  top: -80px;
   color: #02bed2;
 }
 .modal-spinner {

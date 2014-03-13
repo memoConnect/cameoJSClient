@@ -70,7 +70,12 @@ textarea[cm-message-input]{width:100%;min-height:3em}
 .alert-mini-padding{padding:5px}
 
 /* modal */
-.modal-outer-title{text-align:center;width:100%;position:absolute;.cm-ci-color}
+.cm-modal-with-title{
+  .modal-dialog{
+    margin-top:150px;
+    .modal-outer-title{text-align:center;width:100%;position:absolute;top:-80px;.cm-ci-color}
+  }
+}
 .modal-spinner{position:fixed;top:50%;left:50%;z-index:999}
 
 /* Login Screen */
