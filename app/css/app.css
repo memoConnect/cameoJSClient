@@ -10,6 +10,7 @@ body {
 }
 body {
   width: 100%;
+  overflow: hidden;
   background-color: #000000;
 }
 pre {
@@ -23,7 +24,6 @@ pre {
   background-position: center;
   background-repeat: no-repeat;
   background-image: url('../gfx/backgroundStart.jpg');
-  background-size: cover;
 }
 .cm-ci-color {
   color: #02bed2;
