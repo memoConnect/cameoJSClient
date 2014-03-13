@@ -2,14 +2,13 @@ function cmDownload(cmFile){
     return {
 
         restrict : 'AE',
-
         scope: true,
 
-        controller : function($scope, $element, $attrs) {
+        controller: function($scope, $element, $attrs, cmFile) {
 
-            var self = this
-           
-            $scope.file = {};
+            var self = this,
+                file = new cmFile()
+        
             $scope.progress = 0     
             $scope.passphrase = undefined
             $scope.fileId = undefined
@@ -19,36 +18,41 @@ function cmDownload(cmFile){
             $scope.$parent.$watch($attrs.cmDownload,    function(fileId)     { $scope.fileId = $scope.fileId || fileId })
             $scope.$parent.$watch($attrs.cmData,        function(fileId)     { $scope.fileId = $scope.fileId || fileId })
             $scope.$parent.$watch($attrs.cmPassphrase,  function(passphrase) { $scope.passphrase = passphrase }) 
+
             $scope.$watch('fileId', function(fileId){ self.setup(fileId) }) 
 
 
-            $scope.download = function(fileId){                
+            
+            file.count = file.count+1 || 0
+            console.dir(file)
+
+            $scope.download = function(){                
                 if(!$scope.readyForDownload) return null                    
                 $scope.progress = 0    
 
                 $scope.readyForDownload.then(function(){
-                    cmFile
+                    file
                     .downloadChunks()
                     .then(
-                        function(){ return  cmFile.decryptChunks($scope.passphrase) }, 
+                        function(){ return  file.decryptChunks($scope.passphrase) }, 
                         null, 
                         function(progress){ $scope.progress += progress }
                     )
                     .then(function(){
-                        cmFile
+                        file
                         .reassembleChunks()
                         .promptSaveAs()
                     })        
                 })
             }
 
-            this.setup = function(fileId){
-                $scope.readyForDownload =   cmFile
+            this.setup = function(fileId){                
+                $scope.readyForDownload =   file
                                             .importByFileId(fileId)
                                             .then(function(){
-                                                cmFile.decryptFilename($scope.passphrase)
-                                                $scope.fileName = cmFile.fileName
-                                                $scope.fileSize = cmFile.fileSize
+                                                file.decryptFilename($scope.passphrase)
+                                                $scope.fileName = file.fileName
+                                                $scope.fileSize = file.fileSize                                                
                                             })
             }
             

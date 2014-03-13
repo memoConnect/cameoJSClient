@@ -17,6 +17,7 @@
             cm-passphrase  = "passphrase"
         >
             <button ng-click="download()">
+                {{fileId}}<br/>
                 {{fileName}} ({{fileSize | cmFileSize}}) <br/>
                 <progress value="{{progress/fileSize}}" max =""></progress>
                 <br/>
