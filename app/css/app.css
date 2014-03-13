@@ -20,6 +20,7 @@ pre {
   background-position: center;
   background-repeat: no-repeat;
   background-image: url('../gfx/backgroundStart.jpg');
+  background-size: cover;
 }
 .cm-ci-color {
   color: #02bed2;
@@ -35,6 +36,9 @@ pre {
 }
 .center-block {
   max-width: 768px;
+}
+.container-padding {
+  padding: 15px;
 }
 .input-group-addon {
   background-color: transparent;

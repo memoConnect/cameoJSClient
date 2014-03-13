@@ -6,7 +6,7 @@ html, body {height:100%;margin:0;padding:0}
 body {width:100%;overflow:hidden;background-color: @cm-bg-color}
 pre {text-align:left}
 
-#cm-app-background{width:100%;min-height:100%;margin:0;padding:0;background-position:center;background-repeat:no-repeat;background-image: url('../gfx/backgroundStart.jpg')}
+#cm-app-background{width:100%;min-height:100%;margin:0;padding:0;background-position:center;background-repeat:no-repeat;background-image: url('../gfx/backgroundStart.jpg');background-size:cover}
 
 .cm-ci-color {color: @cm-ci-color}
 
@@ -15,6 +15,7 @@ pre {text-align:left}
 .mb10{margin-bottom:10px !important}
 
 .center-block{max-width:768px}
+.container-padding{padding:15px}
 
 .input-group-addon{background-color: transparent}
 .input-group-addon.self-size i{width:14px}
@@ -27,50 +28,29 @@ pre {text-align:left}
 .form-signin input[type="text"]{margin-bottom:-1px;border-bottom-left-radius:0;border-bottom-right-radius:0}
 .form-signin input[type="password"]{margin-bottom:10px;border-top-left-radius:0;border-top-right-radius:0}
 
-input[type="checkbox"] {border:none !important;box-shadow: none !important}
+input[type="checkbox"]{border:none !important;box-shadow: none !important}
 
-.form-registry-head {border-bottom: 1px solid #EEEEEE;margin-bottom: 40px}
+.form-registry-head{border-bottom: 1px solid #EEEEEE;margin-bottom: 40px}
 
 li.message-list {
-  width : 800px;
-  min-height : 50px;
-  overflow: hidden;
-  border: 1px solid black;
-  margin-bottom: 10px;
-  padding: 5px;
-  word-wrap: break-word;
-  background-color: #d3d3d3
+  width:800px;
+  min-height:50px;
+  overflow:hidden;
+  border:1px solid black;
+  margin-bottom:10px;
+  padding:5px;
+  word-wrap:break-word;
+  background-color:#d3d3d3
 }
 
-cm-message,
-cm-conversation,
-cm-message-input {
-  display:        block;
-}
-
+cm-message,cm-conversation,cm-message-input{display:block}
 cm-avatar, cm-attachments{display:inline-block}
+cm-message{margin:2em 0;word-wrap:break-word}
+cm-message article.left{text-align:left}
+cm-message article.right{text-align:right}
+cm-message footer{clear:both}
 
-cm-message {
-  margin:         2em 0;
-  word-wrap:      break-word;
-}
-
-cm-message article.left{
-  text-align:     left;
-}
-
-cm-message article.right{
-  text-align:     right;
-}
-
-cm-message footer{
-  clear:          both;
-}
-
-textarea[cm-message-input] {
-  width:          100%;
-  min-height:     3em;
-}
+textarea[cm-message-input]{width:100%;min-height:3em}
 
 .alert-mini-padding{padding:5px}
 
