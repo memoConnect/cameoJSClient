@@ -127,7 +127,6 @@ describe('cmAuth', function () {
                 var promise = cmAuth.requestTwoFactorToken(twoFactorKey)
                 promise.then(
                     function (data) {
-                        console.log(data)
                         expect(data).toBe(twoFactorToken)
                     }
                 );
