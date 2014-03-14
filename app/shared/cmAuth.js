@@ -74,6 +74,39 @@ function(cmApi, cmCrypt){
                     key: data.key
                 }
             })
+        },
+
+        // two factor authentication
+        requestTwoFactorKey: function() {
+            cmApi.get({
+                url: '/twoFactorAuth',
+                exp_ok: 'token'
+            })
+        },
+
+        // ask the api for a new authentication token:
+        requestTwoFactorToken: function(key){
+            return cmApi.post({
+                url: '/token',
+                data: { key: key },
+                exp_ok: 'token'
+            })
+        },
+
+        // delete Token
+        removeTwoFactorToken: function(){
+            return localStorage.removeItem('twoFactorToken');
+        },
+
+        // store the token in a cookie:
+        storeTwoFactorToken: function(twoFactorToken){
+            return localStorage.setItem('twoFactorToken', twoFactorToken);
+        },
+
+        // retrieve thr token from a cookie
+        getTwoFactorToken: function(){
+            return localStorage.getItem('twoFactorToken');
         }
+
     }
 }]);
