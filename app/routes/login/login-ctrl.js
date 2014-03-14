@@ -6,12 +6,10 @@ define([
 
     app.register.controller('LoginCtrl',['$scope', '$modal', '$location', 'cmLogger',
         function($scope, $modal, $location, cmLogger){
-            $scope.showLoginRhino = true;
-            $scope.showLoginScreenStart = true;
+            $scope.isModalVisible = false;
 
             $scope.open = function () {
-                $scope.showLoginScreenStart = false;
-                $scope.showLoginRhino = false;
+                $scope.isModalVisible = true;
 
                 var modalInstance = $modal.open({
                     windowClass: 'cm-modal-with-title',
@@ -29,8 +27,7 @@ define([
 
                     },
                     function () {
-                        $scope.showLoginScreenStart = true;
-                        $scope.showLoginRhino = true;
+                        $scope.isModalVisible = false;
 //                        cmLogger.info('Modal dismissed at: ' + new Date());
                     }
                 );

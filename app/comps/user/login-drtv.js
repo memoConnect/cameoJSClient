@@ -28,11 +28,11 @@ function cmLogin($location, cmNotify, cmUserModel) {
 
             $scope.changeAutologin = function(){
                 if($scope.formData.autologin != 'none'){
-                    $scope.formData.user = $scope.loginData[$scope.formData.autologin].user
-                    $scope.formData.pass = $scope.loginData[$scope.formData.autologin].pass
+                    $scope.formData.user = $scope.loginData[$scope.formData.autologin].user;
+                    $scope.formData.pass = $scope.loginData[$scope.formData.autologin].pass;
                 } else {
-                    $scope.formData.user = ""
-                    $scope.formData.pass = ""
+                    $scope.formData.user = "";
+                    $scope.formData.pass = "";
                 }
             };
 
@@ -57,7 +57,8 @@ function cmLogin($location, cmNotify, cmUserModel) {
                         isIdle = false;
                         $rootScope.$broadcast('cmLogin:error');
                         $scope.$broadcast('cmPointSpinner:cancel');
-                        cmNotify.error('LOGIN.INFO.'+state, {ttl:5000});
+
+                        cmNotify.error('LOGIN.INFO.'+state, {ttl:5000, hideGlobal:true});
                     }
                 );
 
