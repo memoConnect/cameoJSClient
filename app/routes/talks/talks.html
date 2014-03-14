@@ -1,11 +1,10 @@
+<div cm-header></div>
+<div cm-footer active="talks"></div>
+
 <div ng-controller="ConversationsCtrl">
     <div class="page-header">
         <h1>{{"TALKS.HEADING"|cmTranslate}}</h1>
     </div>
-
-    <div cm-nav-tabs ng-model="badges"></div>
-
-    <br/>
 
     <ul class="list-group">
         <li class="list-group-item" ng-repeat = "conversation in conversations">
