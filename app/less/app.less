@@ -1,8 +1,9 @@
 @cm-ci-color: #02BED2;
 @cm-grey: #666666;
 @cm-light-grey: #EDEDED;
-@cm-bg-color: #000;
+@cm-bg-color: #000000;
 @cm-danger-color: #FF6600;
+@cm-white: #FFFFFF;
 
 html, body {height:100%;margin:0;padding:0}
 body {width:100%;background-color:@cm-bg-color/*overflow:hidden;<-zerstört das scrollen in talks im ff*/}
@@ -17,13 +18,18 @@ pre {text-align:left}
 .mr30{margin-right:30px}
 .mt30{margin-top:30px}
 
+.pos-tr{position:absolute;right:0;top:0}
+.pos-tl{position:absolute;right:0;left:0}
+.pos-br{position:absolute;bottom:0;right:0}
+.pos-bl{position:absolute;bottom:0;left:0}
+
 #cm-app-background{width:100%;min-height:100%;margin:0;padding:0;background-size:cover;background-position:center;background-repeat:no-repeat;background-image: url('../gfx/backgroundStart.jpg')}
 
 .cm-ci-color{color: @cm-ci-color}
 
 .cm-btn-black, .cm-btn-white {width:172px;height:42px}
-.cm-btn-black{background-color:#000;color:#fff;box-shadow: 0px 0px 5px 5px rgba(255, 255, 255, 0.15)}
-.cm-btn-white{background-color: rgba(255, 255, 255, 0.15);color:#fff}
+.cm-btn-black{background-color:#000;color:@cm-white;box-shadow: 0px 0px 5px 5px rgba(255, 255, 255, 0.15)}
+.cm-btn-white{background-color: rgba(255, 255, 255, 0.15);color:@cm-white}
 
 .cm-ci-color {color:@cm-ci-color}
 .cm-btn,.cm-form-control{.without-box-radius}
@@ -49,7 +55,15 @@ pre {text-align:left}
 .input-group-addon{background-color: transparent}
 .input-group-addon.self-size i{width:14px}
 
-.page-header h1{text-wrap:none}
+.cm-page-header{
+  background:rgba(255,255,255,0.50);position:relative;height:100px;
+  h1{text-wrap:none;text-align:center;color:@cm-grey;font-size:2em;margin:0;padding:5px 15px}
+  .cm-add-edge-btn{
+    .pos-tr;padding:0;
+    i.cm-add-edge{font-size:5em;z-index:0;.cm-ci-color;.pos-tr}
+    i.cm-add{font-size:2.3em;z-index:1;color:@cm-white;.pos-tr;top:2px}
+  }
+}
 
 .form-signin {
   .form-signin-heading{color:@cm-grey;text-align:center}
@@ -92,16 +106,16 @@ textarea[cm-message-input]{width:100%;min-height:3em}
 .modal-spinner{position:fixed;top:50%;left:50%;z-index:999}
 
 /* Login Screen */
-.login-screen-start{width:100%;height:45%;text-align:center;background-color:rgba(0,0,0,0.7);color:#fff;position:absolute;bottom:0;left:0}
+.login-screen-start{width:100%;height:45%;text-align:center;background-color:rgba(0,0,0,0.7);color:@cm-white;position:absolute;bottom:0;left:0}
 .cm-login-container{width:460px;text-align:center;margin:0 auto; .container-padding}
 .cm-login-rhino{font-size:25em;color:rgba(0,0,0,0.7)}
 .cm-login-text{margin-top:30px;color:rgba(255, 255, 255, 0.25)}
 
-.login-screen-start{width:100%;height:45%;text-align:center;background-color:rgba(0,0,0,0.7);color:#fff;position:absolute;bottom:0;left:0}
+.login-screen-start{width:100%;height:45%;text-align:center;background-color:rgba(0,0,0,0.7);color:@cm-white;position:absolute;bottom:0;left:0}
 
 /* header */
 header.cm-header{
-  position:fixed;left:0;right:0;top:0;z-index:1;background:@cm-bg-color;font-size:1.2em;
+  position:fixed;left:0;right:0;top:0;z-index:100;background:@cm-bg-color;font-size:1.2em;
   [cm-header-logo]{
     text-align:center;padding-bottom:10px;
     i{
@@ -112,7 +126,7 @@ header.cm-header{
     position:absolute;right:-13px;top:18px;cursor:pointer
   }
 }
-.with-footer{padding-top:70px}
+.with-header{padding-top:64px}
 
 /* footer */
 footer[cm-footer]{
@@ -121,3 +135,14 @@ footer[cm-footer]{
   a.active,a:hover{.cm-ci-color;border-top-color:@cm-ci-color}
 }
 .with-footer{padding-bottom:70px}
+
+/* cm-language-select */
+[cm-language-select]{
+  position:absolute;right:10px;top:10px
+}
+
+/* list */
+.cm-list-group-item {
+  position:relative;display:block;margin-bottom:-1px;border:1px solid @cm-light-grey;background:rgba(255,255,255,0.75);color:@cm-grey;
+  a{color:@cm-grey}
+}
