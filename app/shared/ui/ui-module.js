@@ -20,6 +20,14 @@ angular.module('cmUi', [
     cmNavTabs
 ])
 
+.directive('cmHeaderLogo',[
+    cmHeaderLogo
+])
+
+.directive('cmHeaderMenu',[
+    cmHeaderMenu
+])
+
 .directive('cmFooter',[
     '$location',
     cmFooter
