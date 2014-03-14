@@ -19,7 +19,7 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
         f.readAsArrayBuffer(blob);
     }
 
-    function b64toBlob(byteCharacters, contentType, sliceSize) {
+    function binaryStringtoBlob(byteCharacters, contentType, sliceSize) {
         contentType = contentType || '';
         sliceSize = sliceSize || 512;
 
@@ -41,43 +41,7 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
         return new Blob(byteArrays, {type: contentType});
     }
 
-    function str2ab(str) {
-        var buf = new ArrayBuffer(str.length*2); // 2 raw for each char        
-        var bufView = new Uint16Array(buf);
-
-
-        for (var i=0, strLen=str.length; i<strLen; i++) {
-         bufView[i] = str.charCodeAt(i);
-        }
-        return buf;
-     }
-
-
-    function Chunk(file, start, end){
-
-        this.raw = ""
-
-        this.initChain = function(callback) {
-            if(this.deferred) return this.deferred
-            this.deferred = $q.defer().promise
-
-
-            var self = this,
-                keys  = Object.keys(this)
-
-            keys.forEach(function(key){
-                if(key != 'initChain' && typeof self[key] == 'function'){
-                    self['_'+key] = self[key]
-                    self[key] = function(args){
-                        //var args = arguments
-                        //deferred.then(function(){
-                            return self['_'+key].call(self, args)
-                        //})
-                    }
-                }                
-            })
-        }
-       
+    function Chunk(file, start, end){        
 
         this.importFileSlice = function (file, start, end){
             var slicer  = file.webkitSlice || file.mozSlice || file.slice,
@@ -111,7 +75,7 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
 
             this.blob
             ?   reader.readAsBinaryString(this.blob)
-            :   cmLogger.error('Unable ro convert to raw; chunk.blob is empty.')      
+            :   cmLogger.error('Unable ro convert to raw; chunk.blob is empty.  Try calling chunk.importFileSlice() first.')      
 
             return deferred.promise
 
@@ -121,26 +85,26 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
             
             this.raw
             ? this.encryptedRaw = cmCrypt.encryptWithShortKey(passphrase, this.raw)     //Todo: long Key!            
-            : cmLogger.error('Unable ro encrypt; chunk.raw is empty.')            
+            : cmLogger.error('Unable ro encrypt; chunk.raw is empty.  Try calling chunk.blobToBinaryString() first.')            
 
             return this                
         }
 
-        this.upload = function(fileId, index){            
+        this.upload = function(id, index){                    
             return(
                 this.encryptedRaw
-                ? cmFilesAdapter.addChunk(fileId, index, this.encryptedRaw)
-                : cmLogger.error('Unable to upload; chunk.encryptedRaw is empty.')
+                ? cmFilesAdapter.addChunk(id, index, this.encryptedRaw)
+                : cmLogger.error('Unable to upload; chunk.encryptedRaw is empty. Try calling chunk.encrypt() first.')
             )            
         }
 
-        this.download = function(fileId, index){
+        this.download = function(id, index){
             var self = this
 
             this.raw = undefined
             this.blob  = undefined
 
-            return  cmFilesAdapter.getChunk(fileId, index)        
+            return  cmFilesAdapter.getChunk(id, index)        
                     .then(function(data){                        
                         return self.encryptedRaw = data
                     })
@@ -149,15 +113,15 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
         this.decrypt = function(passphrase){            
             this.encryptedRaw
             ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw)            
-            :   cmLogger.error('Unable to decrypt; chunk.encryptedRaw is empty.')                
+            :   cmLogger.error('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.')                
             
             return this
         }
 
         this.binaryStringToBlob = function(){            
             this.raw
-            ?   this.raw = this.raw
-            :   cmLogger.error('Unable to decode; chunk.raw is empty.')                     
+            ?   this.blob = binaryStringtoBlob(this.raw)
+            :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.')                     
             return this
         }    
 
@@ -180,10 +144,10 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
 
         this.importFile = function(file){
             this.file     = file  
-            this.fileId   = undefined
-            this.fileName = file.name
-            this.fileType = file.type
-            this.fileSize = file.size
+            this.id   = undefined
+            this.name = file.name
+            this.type = file.type
+            this.size = file.size
             return this    
         }
 
@@ -193,6 +157,11 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
                 endByte     = 0,
                 index       = 0,
                 promises    = []
+
+            if(!this.file) {
+                cmLogger.error('Unable to chop file into Chunks; cmFile.file missing. Try calling cmFile.importFile() first.')
+                return null
+            }
             
             self.chunks   = []
 
@@ -219,15 +188,20 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
             return  $q.all(promises) 
         }
 
-        this.encryptFilename = function(passphrase){            
-            this.encryptedFileName = cmCrypt.encryptWithShortKey(passphrase, this.fileName)
+        this.encryptName = function(passphrase){  
+            this.name
+            ?   this.encryptedName = cmCrypt.encryptWithShortKey(passphrase, this.name)
+            :   cmLogger.error('Unable to encrypt filename; cmFile.name missing. Try calling cmFile.importFile() first.')
+
             return this
         }
 
         this.encryptChunks = function(passphrase) {
-            this.chunks.forEach(function(chunk){
-                chunk.encrypt(passphrase)
-            })            
+            this.chunks
+            ?   this.chunks.forEach(function(chunk){
+                    chunk.encrypt(passphrase)
+                })            
+            :   cmLogger.error('Unable to encrypt chunks; cmFile.chunks missing. Try calling cmFile.chopIntoChunks() first.')
             return this
         }
 
@@ -235,19 +209,26 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
         this.setupForUpload = function() {
             var self = this                       
 
-            return  cmFilesAdapter.prepareFile({
-                        name    : self.encryptedFileName,
-                        size    : self.fileSize,
-                        type    : self.fileType,
+            return (
+                self.encryptedName && self.chunks
+                ?   cmFilesAdapter.prepareFile({
+                        name    : self.encryptedName,
+                        size    : self.size,
+                        type    : self.type,
                         chunks  : self.chunks.length
                     })
-                    .then(function(fileId){ return self.fileId = fileId })                                
+                    .then(function(id){ return self.id = id })                                
+                :   cmLogger.error('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
+            )
         }
 
         this.uploadChunks = function() {   
             var self = this
 
-            if(!this.fileId){ return self.setupForUpload().then(function(){ return self.uploadChunks() })}
+            if(!this.id){                 
+                cmLogger.error('Unable to upload chunks; cmFile.id missing. Try calling cmFile.setupForDownload() first.')
+                return null
+            }
 
             var deferred = $q.defer(),
                 promises = []
@@ -258,7 +239,7 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
                 promises.push(deferredChunk.promise)
 
                 chunk
-                .upload(self.fileId, index)
+                .upload(self.id, index)
                 .then(
                     function(){                       
                         deferredChunk.resolve()
@@ -273,32 +254,34 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
 
             $q.all(promises)
             .then(
-                function(data)      { deferred.resolve(self.fileId) },
+                function(data)      { deferred.resolve(self.id) },
                 function(response)  { deferred.reject(response) }
             )
 
             return deferred.promise
         }
 
-        this.importByFileId = function(fileId){            
+        this.importByFileId = function(id){            
             var self     = this
             
-            this.fileId = fileId
+            this.id = id
 
             return ( 
-                cmFilesAdapter.getFileInfo(this.fileId)
+                cmFilesAdapter.getFileInfo(this.id)
                 .then(function(details){                                            
-                    self.encryptedFileName = details.fileName
-                    self.fileType          = details.fileType
-                    self.fileSize          = details.fileSize
-                    self.fileChunkIndices  = details.chunks
-                    self.fileId            = fileId                    
+                    self.encryptedName = details.fileName
+                    self.type          = details.fileType
+                    self.size          = details.fileSize
+                    self.chunkIndices  = details.chunks
+                    self.id            = id                    
                 })                   
             )
         }
 
-        this.decryptFilename = function(passphrase) {
-            this.fileName = cmCrypt.decrypt(passphrase, this.encryptedFileName)
+        this.decryptName = function(passphrase) {
+            this.encryptedName
+            ?   this.name = cmCrypt.decrypt(passphrase, this.encryptedName)
+            :   cmLogger.error('Unable to decrypt filename; cmFile.encryptedFileName missing. Try calling cmFile.imporByFileId() first.')
             return this
         }
 
@@ -308,12 +291,12 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
                 deferred    = $q.defer()
                 self.chunks = []
 
-            if(!self.fileChunkIndices || !self.fileId){
-                cmLogger.error('cmFile.downloadChunks(); File not ready, please call cmFile.importFileId() first.')
+            if(!self.chunkIndices || !self.id){
+                cmLogger.error('cmFile.downloadChunks(); cmFile.chunks or cmFile.id missing. Try calling cmFile.importByFileId() first.')
                 return null
             }
 
-            self.fileChunkIndices.forEach(function(index){
+            self.chunkIndices.forEach(function(index){
                 var deferredChunk = $q.defer()
 
                 promises.push(deferredChunk.promise)
@@ -323,10 +306,11 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
                 self.chunks[index] = chunk
 
                 chunk
-                .download(self.fileId, index)
+                .download(self.id, index)
                 .then(function(){                    
                     deferredChunk.resolve(chunk)
-                    deferred.notify(chunk.size)  
+                    deferred.notify(chunk.size) 
+                    console.log(chunk.size) 
                 })                
             })
 
@@ -343,6 +327,11 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
         this.decryptChunks = function(passphrase){
             var promises =  []
 
+            if(!this.chunks){
+                cmLogger.error('Unable to decrypt chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.')
+                return null
+            }
+
             this.chunks.forEach(function(chunk){
                 promises.push(
                     chunk
@@ -356,13 +345,15 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
 
         this.reassembleChunks = function(){
             var self = this,
-                data = ""
+                data = []
 
-            self.chunks.forEach(function(chunk){                                    
-                data+=chunk.raw                    
+            if(!this.chunks) cmLogger.error('Unable reassemlbe chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.')
+
+            this.chunks.forEach(function(chunk){                                    
+                data.push(chunk.blob)
             })
 
-            self.blob = b64toBlob(data, {type: self.fileType})
+            self.blob = Blob(data, {type: self.type})
 
             return this
         }
@@ -370,12 +361,12 @@ function cmFile(cmFilesAdapter, cmLogger, cmCrypt, $q){
         this.promptSaveAs = function(){       
             var self = this   
 
-            this.fileName && this.blob
+            this.name && this.blob
             ?   saveAs(
                     this.blob,
-                    this.fileName
+                    this.name
                 )            
-            :   cmLogger.error('Unable to prompt saveAs; file not ready, try cmFile.importByFileId().')
+            :   cmLogger.error('Unable to prompt saveAs; cmFile.blob is missing, try cmFile.importByFileId().')
 
             return this
         }

@@ -50,9 +50,9 @@ function cmDownload(cmFile){
                 $scope.readyForDownload =   file
                                             .importByFileId(fileId)
                                             .then(function(){
-                                                file.decryptFilename($scope.passphrase)
-                                                $scope.fileName = file.fileName
-                                                $scope.fileSize = file.fileSize                                                
+                                                file.decryptName($scope.passphrase)
+                                                $scope.fileName = file.name
+                                                $scope.fileSize = file.size                                                
                                             })
             }
             
