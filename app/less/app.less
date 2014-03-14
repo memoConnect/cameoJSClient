@@ -3,7 +3,6 @@
 @cm-light-grey: #EDEDED;
 @cm-bg-color: #000;
 @cm-danger-color: #FF6600;
-.clear-form-border{border:none !important;border-radius:0 !important;box-shadow:none!important}
 
 html {font-size: 1em}
 
@@ -12,6 +11,7 @@ body {width:100%;background-color:@cm-bg-color/*overflow:hidden;<-zerstört das 
 pre {text-align:left}
 .without-box-radius{-webkit-border-radius:0!important;-moz-border-radius:0!important;border-radius:0!important}
 .without-box-shadow{-webkit-box-shadow:none!important;-moz-box-shadow:none!important;box-shadow:none!important}
+.clear-form-border{.without-box-radius .without-box-shadow}
 
 .mt5{margin-top:5px}
 .mb5{margin-bottom:5px}
@@ -123,7 +123,7 @@ header.cm-header{
     position:absolute;right:-13px;top:18px;cursor:pointer
   }
 }
-.with-footer{padding-top:70px}
+.with-header{padding-top:64px !important}
 
 /* footer */
 footer[cm-footer]{

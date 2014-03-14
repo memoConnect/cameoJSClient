@@ -1,7 +1,12 @@
-<div style="width:100%;height:45px;background-color:#000;margin:0;padding:0">
+<header class="cm-header">
+    <div cm-header-back></div>
 
-</div>
-<div ng-controller="RegistrationCtrl" class="cm-registration-ctn">
+    <{{'REGISTER.HEADING' | cmTranslate}}
+
+    <div cm-header-logo></div>
+</header>
+
+<div ng-controller="RegistrationCtrl" class="cm-registration-ctn with-header">
     <form name="registrationForm" class="form-horizontal" role="form" ng-submit="createUser()" autocomplete="off" novalidate>
 
         <h4>{{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}</h4>
