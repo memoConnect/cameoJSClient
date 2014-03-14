@@ -24,15 +24,6 @@ pre {
   -moz-box-shadow: none!important;
   box-shadow: none !important;
 }
-.clear-form-border {
-  border: none !important;
-  -webkit-border-radius: 0!important;
-  -moz-border-radius: 0!important;
-  border-radius: 0 !important;
-  -webkit-box-shadow: none!important;
-  -moz-box-shadow: none!important;
-  box-shadow: none !important;
-}
 .mt5 {
   margin-top: 5px;
 }
@@ -50,6 +41,26 @@ pre {
 }
 .mt30 {
   margin-top: 30px;
+}
+.pos-tr {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.pos-tl {
+  position: absolute;
+  right: 0;
+  left: 0;
+}
+.pos-br {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.pos-bl {
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 #cm-app-background {
   width: 100%;
@@ -71,7 +82,7 @@ pre {
 }
 .cm-btn-black {
   background-color: #000;
-  color: #fff;
+  color: #ffffff;
   box-shadow: 0px 0px 5px 5px rgba(255, 255, 255, 0.15);
 }
 .cm-btn-white {
@@ -143,8 +154,41 @@ pre {
 .input-group-addon.self-size i {
   width: 14px;
 }
-.page-header h1 {
+.cm-page-header {
+  background: rgba(255, 255, 255, 0.5);
+  position: relative;
+  height: 100px;
+}
+.cm-page-header h1 {
   text-wrap: none;
+  text-align: center;
+  color: #666666;
+  font-size: 2em;
+  margin: 0;
+  padding: 5px 15px;
+}
+.cm-page-header .cm-add-edge-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0;
+}
+.cm-page-header .cm-add-edge-btn i.cm-add-edge {
+  font-size: 5em;
+  z-index: 0;
+  color: #02bed2;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.cm-page-header .cm-add-edge-btn i.cm-add {
+  font-size: 2.3em;
+  z-index: 1;
+  color: #ffffff;
+  position: absolute;
+  right: 0;
+  top: 0;
+  top: 2px;
 }
 .form-signin .form-signin-heading {
   color: #666666;
@@ -241,7 +285,7 @@ textarea[cm-message-input] {
   height: 45%;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
+  color: #ffffff;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -266,8 +310,12 @@ textarea[cm-message-input] {
   height: 100%;
   text-align: left;
   background-color: rgba(0, 0, 0, 0.7);
+<<<<<<< HEAD
   color: #fff;
   padding: 64px 40px 0 40px;
+=======
+  color: #ffffff;
+>>>>>>> refs/remotes/origin/feature-gui
   position: absolute;
   left: 0;
 }
@@ -300,7 +348,7 @@ header.cm-header {
   left: 0;
   right: 0;
   top: 0;
-  z-index: 1;
+  z-index: 100;
   background: #000000;
   font-size: 1.2em;
 }
@@ -319,7 +367,11 @@ header.cm-header [cm-header-menu] {
   cursor: pointer;
 }
 .with-header {
+<<<<<<< HEAD
   padding-top: 64px !important;
+=======
+  padding-top: 64px;
+>>>>>>> refs/remotes/origin/feature-gui
 }
 /* footer */
 .footer-define {
@@ -361,6 +413,26 @@ footer.without-drtv {
 .with-footer {
   padding-bottom: 70px;
 }
+<<<<<<< HEAD
 .cm-btn-footer-fixed {
   padding-top: 20px;
+=======
+/* cm-language-select */
+[cm-language-select] {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+/* list */
+.cm-list-group-item {
+  position: relative;
+  display: block;
+  margin-bottom: -1px;
+  border: 1px solid #ededed;
+  background: rgba(255, 255, 255, 0.75);
+  color: #666666;
+}
+.cm-list-group-item a {
+  color: #666666;
+>>>>>>> refs/remotes/origin/feature-gui
 }
