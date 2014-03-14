@@ -259,7 +259,7 @@ textarea[cm-message-input] {
   left: 0;
 }
 /* header */
-header[cm-header] {
+header.cm-header {
   position: fixed;
   left: 0;
   right: 0;
@@ -268,15 +268,15 @@ header[cm-header] {
   background: #000000;
   font-size: 1.2em;
 }
-header[cm-header] [cm-header-logo] {
+header.cm-header [cm-header-logo] {
   text-align: center;
   padding-bottom: 10px;
 }
-header[cm-header] [cm-header-logo] i {
+header.cm-header [cm-header-logo] i {
   margin-top: 20px;
   cursor: pointer;
 }
-header[cm-header] [cm-header-menu] {
+header.cm-header [cm-header-menu] {
   position: absolute;
   right: -13px;
   top: 18px;
