@@ -2,6 +2,7 @@
 @cm-grey: #666666;
 @cm-light-grey: #EDEDED;
 @cm-bg-color: #000;
+@cm-danger-color: #FF6600;
 
 html, body {height:100%;margin:0;padding:0}
 body {width:100%;overflow:hidden;background-color:@cm-bg-color}
@@ -22,7 +23,7 @@ pre {text-align:left}
 .cm-btn-lg{padding:15px 16px;font-size:25px;line-height:1.55}
 
 .cm-form-group{
-  border-top:@cm-light-grey 1px solid;padding:5px 15px;
+  padding:5px 15px;
   .cm-form-control{
     background:@cm-light-grey;padding:0 20px 5px 20px;
     input,select{-webkit-border-radius:0!important;-moz-border-radius:0!important;border-radius:0!important;background:none!important;border:none!important;-webkit-box-shadow:none!important;-moz-box-shadow:none!important;box-shadow:none!important}
@@ -30,6 +31,8 @@ pre {text-align:left}
     .cm-form-control-inputter{border:@cm-grey solid 2px;border-top:0;height:5px}
   }
 }
+
+.cm-alert{padding:15px}
 
 .mt5{margin-top:5px}
 .mb5{margin-bottom:5px}
@@ -74,6 +77,14 @@ textarea[cm-message-input]{width:100%;min-height:3em}
   .modal-dialog{
     margin-top:150px;
     .modal-outer-title{text-align:center;width:100%;position:absolute;top:-80px;.cm-ci-color}
+  }
+}
+.modal-dialog{
+  .cm-alert{
+    font-size:1.2em;margin-bottom:0;
+    .fa.cm-info{
+      color:@cm-danger-color;font-size:2em;vertical-align:middle;
+    }
   }
 }
 .modal-spinner{position:fixed;top:50%;left:50%;z-index:999}

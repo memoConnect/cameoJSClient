@@ -7,6 +7,7 @@ function cmLogin($location, cmNotify, cmUserModel) {
         scope       :   {},
 
         controller  :   function ($scope, $rootScope) {
+            $scope.alertState = '';
             $scope.loginData = {
                 'Max': {
                     user: 'Max',
@@ -43,6 +44,7 @@ function cmLogin($location, cmNotify, cmUserModel) {
                     return false;
 
                 isIdle = true;
+                $scope.alertState = '';
                 $scope.$broadcast('cmPointSpinner:start');
 
                 cmUserModel.doLogin($scope.formData.user, $scope.formData.pass)
@@ -58,7 +60,7 @@ function cmLogin($location, cmNotify, cmUserModel) {
                         $rootScope.$broadcast('cmLogin:error');
                         $scope.$broadcast('cmPointSpinner:cancel');
 
-                        cmNotify.error('LOGIN.INFO.'+state, {ttl:5000, hideGlobal:true});
+                        $scope.alertState = state;
                     }
                 );
 

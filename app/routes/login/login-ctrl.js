@@ -4,8 +4,8 @@ define([
     'ngload!pckUi'
 ], function(app){
 
-    app.register.controller('LoginCtrl',['$scope', '$modal', '$location', 'cmLogger',
-        function($scope, $modal, $location, cmLogger){
+    app.register.controller('LoginCtrl',['$scope', '$modal', '$location',
+        function($scope, $modal, $location){
             $scope.isModalVisible = false;
 
             $scope.open = function () {
@@ -13,7 +13,7 @@ define([
 
                 var modalInstance = $modal.open({
                     windowClass: 'cm-modal-with-title',
-                    template: '<div cm-notify></div><div cm-login></div>',
+                    template: '<div cm-login></div>',
                     controller: function ($rootScope, $scope, $modalInstance) {
                         $rootScope.$on('cmLogin:success', function(){
                             $modalInstance.close();
@@ -28,7 +28,6 @@ define([
                     },
                     function () {
                         $scope.isModalVisible = false;
-//                        cmLogger.info('Modal dismissed at: ' + new Date());
                     }
                 );
             };

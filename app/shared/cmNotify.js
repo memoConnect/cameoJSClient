@@ -37,7 +37,10 @@ angular.module('cmNotify', ['angular-growl'])
     'growl',
     '$document',
     function (growl, $document) {
-
+        /**
+         * hide/show all cm-notify arround a modal
+         * @param options
+         */
         function handleGlobalVisiblity(options){
             if(options && 'hideGlobal' in options){
                 angular
