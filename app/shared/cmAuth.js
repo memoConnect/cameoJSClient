@@ -78,16 +78,15 @@ function(cmApi, cmCrypt){
 
         // two factor authentication
         requestTwoFactorKey: function() {
-            cmApi.get({
-                url: '/twoFactorAuth',
-                exp_ok: 'token'
+            return cmApi.get({
+                url: '/twoFactorAuth'
             })
         },
 
         // ask the api for a new authentication token:
         requestTwoFactorToken: function(key){
             return cmApi.post({
-                url: '/token',
+                url: '/twoFactorAuth/confirm',
                 data: { key: key },
                 exp_ok: 'token'
             })
