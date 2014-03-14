@@ -6,11 +6,20 @@ body {
 }
 body {
   width: 100%;
-  overflow: hidden;
-  background-color: #000000;
+  background-color: #000000 /*overflow:hidden;<-zerstört das scrollen in talks im ff*/;
 }
 pre {
   text-align: left;
+}
+.without-box-radius {
+  -webkit-border-radius: 0!important;
+  -moz-border-radius: 0!important;
+  border-radius: 0 !important;
+}
+.without-box-shadow {
+  -webkit-box-shadow: none!important;
+  -moz-box-shadow: none!important;
+  box-shadow: none !important;
 }
 #cm-app-background {
   width: 100%;
@@ -74,12 +83,12 @@ pre {
 .cm-form-group .cm-form-control select {
   -webkit-border-radius: 0!important;
   -moz-border-radius: 0!important;
-  border-radius: 0!important;
-  background: none!important;
-  border: none!important;
+  border-radius: 0 !important;
   -webkit-box-shadow: none!important;
   -moz-box-shadow: none!important;
   box-shadow: none !important;
+  background: none!important;
+  border: none !important;
 }
 .cm-form-group .cm-form-control input {
   padding-bottom: 0;
@@ -261,6 +270,9 @@ footer[cm-footer] {
   font-size: 1.2em;
 }
 footer[cm-footer] a {
+  -webkit-border-radius: 0!important;
+  -moz-border-radius: 0!important;
+  border-radius: 0 !important;
   color: #fff;
   padding: 12px;
   border-top: 10px solid #000000;
@@ -269,4 +281,7 @@ footer[cm-footer] a.active,
 footer[cm-footer] a:hover {
   color: #02bed2;
   border-top-color: #02bed2;
+}
+.with-footer {
+  padding-bottom: 70px;
 }

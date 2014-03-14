@@ -5,8 +5,10 @@
 @cm-danger-color: #FF6600;
 
 html, body {height:100%;margin:0;padding:0}
-body {width:100%;overflow:hidden;background-color:@cm-bg-color}
+body {width:100%;background-color:@cm-bg-color/*overflow:hidden;<-zerstört das scrollen in talks im ff*/}
 pre {text-align:left}
+.without-box-radius{-webkit-border-radius:0!important;-moz-border-radius:0!important;border-radius:0!important}
+.without-box-shadow{-webkit-box-shadow:none!important;-moz-box-shadow:none!important;box-shadow:none!important}
 
 #cm-app-background{width:100%;min-height:100%;margin:0;padding:0;background-size:cover;background-position:center;background-repeat:no-repeat;background-image: url('../gfx/backgroundStart.jpg')}
 
@@ -17,7 +19,7 @@ pre {text-align:left}
 .cm-btn-white{background-color: rgba(255, 255, 255, 0.15);color:#fff}
 
 .cm-ci-color {color:@cm-ci-color}
-.cm-btn,.cm-form-control{-webkit-border-radius:0!important;-moz-border-radius:0!important;border-radius:0!important}
+.cm-btn,.cm-form-control{.without-box-radius}
 .cm-btn-block{display:block;width:100%;padding-right:0;padding-left:0}
 .cm-btn-primary{background:@cm-bg-color;color:@cm-ci-color}
 .cm-btn-lg{padding:15px 16px;font-size:25px;line-height:1.55}
@@ -26,7 +28,7 @@ pre {text-align:left}
   padding:5px 15px;
   .cm-form-control{
     background:@cm-light-grey;padding:0 20px 5px 20px;
-    input,select{-webkit-border-radius:0!important;-moz-border-radius:0!important;border-radius:0!important;background:none!important;border:none!important;-webkit-box-shadow:none!important;-moz-box-shadow:none!important;box-shadow:none!important}
+    input,select{.without-box-radius;.without-box-shadow;background:none!important;border:none!important}
     input{padding-bottom:0}
     .cm-form-control-inputter{border:@cm-grey solid 2px;border-top:0;height:5px}
   }
@@ -101,6 +103,7 @@ textarea[cm-message-input]{width:100%;min-height:3em}
 /* footer */
 footer[cm-footer]{
   position:fixed;left:0;right:0;bottom:0;z-index:1;background:@cm-bg-color;padding:1px;font-size:1.2em;
-  a{color:#fff;padding:12px;border-top:10px solid @cm-bg-color}
+  a{.without-box-radius;color:#fff;padding:12px;border-top:10px solid @cm-bg-color}
   a.active,a:hover{.cm-ci-color;border-top-color:@cm-ci-color}
 }
+.with-footer{padding-bottom:70px}
