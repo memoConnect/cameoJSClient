@@ -150,6 +150,11 @@ function($injector){
                 //get authentification token from cmAuth if present
                 token 		= 	$injector.has('cmAuth')
                                 ?	$injector.get('cmAuth').getToken()
+                                :	undefined,
+
+                //get twoFactorAuth token from cmAuth if present
+                twoFactorToken	= 	$injector.has('cmAuth')
+                                ?	$injector.get('cmAuth').getTwoFactorToken()
                                 :	undefined
 
             //Api calls are restricted to the preconfigured api base path and have to start with a '/'
@@ -161,7 +166,7 @@ function($injector){
             config.url		= 	rest_api +		// base url API
                                 config.url 		// path to specific method
             config.headers	=	angular.extend(token ? {'Authorization': token} : {}, config.headers || {})	//add authorization token to the header
-
+            config.headers	=	angular.extend(twoFactorToken ? {'X-TwoFactorToken': twoFactorToken} : {}, config.headers || {})	//add two factor authorization token to the header
 
             //check if the response matches the api conventions
             function responseValid(response, exp_ok, exp_ko){
