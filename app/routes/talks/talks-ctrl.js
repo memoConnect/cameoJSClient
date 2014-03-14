@@ -2,7 +2,8 @@ define([
     'app',
     'util-base64',    
     'ngload!pckUser',
-    'ngload!pckConversations'
+    'ngload!pckConversations',
+    'ngload!pckUi'
 ], function (app) {
     'use strict';
 

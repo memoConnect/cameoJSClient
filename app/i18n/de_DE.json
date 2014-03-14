@@ -204,6 +204,11 @@
             "LANDLINE": "Festnetz",
             "IP": "IP",
             "FAX": "Fax"
+        },
+        "FOOTER": {
+            "TALKS": "Talks",
+            "CONTACTS": "Kontakte",
+            "MEDIA": "Media"
         }
     }
 }

@@ -106,7 +106,8 @@ module.exports = function (grunt) {
         },
         clean: {
             'dalek-report': ['report'],
-            'dev-deploy': ['dist/app/less']
+            'dev-deploy': ['dist/app/less'],
+            'dist-app' :['dist/app']
         },
 
         // unit tests
@@ -345,5 +346,5 @@ module.exports = function (grunt) {
     grunt.registerTask('watcher','watch');
 
     // deploy moeps
-    grunt.registerTask('dev-deploy',['copy:dev-deploy','uglify:dev-deploy','clean:dev-deploy'])
+    grunt.registerTask('dev-deploy',['clean:dist-app','copy:dev-deploy','uglify:dev-deploy','clean:dev-deploy'])
 };

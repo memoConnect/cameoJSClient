@@ -1,11 +1,14 @@
-<div ng-controller="ConversationsCtrl">
+<header class="cm-header">
+    <div cm-header-back></div>
+    <div cm-identity></div>
+    <div cm-header-logo></div>
+    <div cm-header-menu></div>
+</header>
+
+<div ng-controller="ConversationsCtrl" class="with-header with-footer">
     <div class="page-header">
         <h1>{{"TALKS.HEADING"|cmTranslate}}</h1>
     </div>
-
-    <div cm-nav-tabs ng-model="badges"></div>
-
-    <br/>
 
     <ul class="list-group">
         <li class="list-group-item" ng-repeat = "conversation in conversations">
@@ -30,3 +33,5 @@
         <button class="btn btn-primary" ng-click="loadMore()">more</button>
     </div>
 </div>
+
+<footer cm-footer></footer>
