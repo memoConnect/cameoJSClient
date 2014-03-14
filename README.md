@@ -56,3 +56,8 @@ Shell Scripts
     ----
     $ grunt phonegap
     $ grunt phonegap:run
+
+#### compile.sh
+    calling compile.sh
+    ----
+    $ grunt dev-deploy
