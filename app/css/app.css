@@ -24,6 +24,15 @@ pre {
   -moz-box-shadow: none!important;
   box-shadow: none !important;
 }
+.clear-form-border {
+  border: none !important;
+  -webkit-border-radius: 0!important;
+  -moz-border-radius: 0!important;
+  border-radius: 0 !important;
+  -webkit-box-shadow: none!important;
+  -moz-box-shadow: none!important;
+  box-shadow: none !important;
+}
 .mt5 {
   margin-top: 5px;
 }
@@ -310,12 +319,8 @@ textarea[cm-message-input] {
   height: 100%;
   text-align: left;
   background-color: rgba(0, 0, 0, 0.7);
-<<<<<<< HEAD
   color: #fff;
   padding: 64px 40px 0 40px;
-=======
-  color: #ffffff;
->>>>>>> refs/remotes/origin/feature-gui
   position: absolute;
   left: 0;
 }
@@ -367,11 +372,7 @@ header.cm-header [cm-header-menu] {
   cursor: pointer;
 }
 .with-header {
-<<<<<<< HEAD
   padding-top: 64px !important;
-=======
-  padding-top: 64px;
->>>>>>> refs/remotes/origin/feature-gui
 }
 /* footer */
 .footer-define {
@@ -380,11 +381,21 @@ header.cm-header [cm-header-menu] {
   right: 0;
   bottom: 0;
   z-index: 1;
-  background: #000000;
+  background-color: #000000;
   padding: 1px;
   font-size: 1.2em;
 }
-footer[cm-footer] .footer-define a {
+footer[cm-footer] {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background-color: #000000;
+  padding: 1px;
+  font-size: 1.2em;
+}
+footer[cm-footer] a {
   -webkit-border-radius: 0!important;
   -moz-border-radius: 0!important;
   border-radius: 0 !important;
@@ -403,7 +414,7 @@ footer.without-drtv {
   right: 0;
   bottom: 0;
   z-index: 1;
-  background: #000000;
+  background-color: #000000;
   padding: 1px;
   font-size: 1.2em;
   height: 70px;
@@ -413,10 +424,9 @@ footer.without-drtv {
 .with-footer {
   padding-bottom: 70px;
 }
-<<<<<<< HEAD
 .cm-btn-footer-fixed {
   padding-top: 20px;
-=======
+}
 /* cm-language-select */
 [cm-language-select] {
   position: absolute;
@@ -434,5 +444,4 @@ footer.without-drtv {
 }
 .cm-list-group-item a {
   color: #666666;
->>>>>>> refs/remotes/origin/feature-gui
 }
