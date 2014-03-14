@@ -64,7 +64,6 @@ pre {
   line-height: 1.55;
 }
 .cm-form-group {
-  border-top: #ededed 1px solid;
   padding: 5px 15px;
 }
 .cm-form-group .cm-form-control {
@@ -89,6 +88,9 @@ pre {
   border: #666666 solid 2px;
   border-top: 0;
   height: 5px;
+}
+.cm-alert {
+  padding: 15px;
 }
 .mt5 {
   margin-top: 5px;
@@ -196,6 +198,15 @@ textarea[cm-message-input] {
   position: absolute;
   top: -80px;
   color: #02bed2;
+}
+.modal-dialog .cm-alert {
+  font-size: 1.2em;
+  margin-bottom: 0;
+}
+.modal-dialog .cm-alert .fa.cm-info {
+  color: #ff6600;
+  font-size: 2em;
+  vertical-align: middle;
 }
 .modal-spinner {
   position: fixed;

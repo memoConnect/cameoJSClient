@@ -7,6 +7,7 @@ function cmLogin($location, cmNotify, cmUserModel) {
         scope       :   {},
 
         controller  :   function ($scope, $rootScope) {
+            $scope.alertState = '';
             $scope.loginData = {
                 'Max': {
                     user: 'Max',
@@ -28,11 +29,11 @@ function cmLogin($location, cmNotify, cmUserModel) {
 
             $scope.changeAutologin = function(){
                 if($scope.formData.autologin != 'none'){
-                    $scope.formData.user = $scope.loginData[$scope.formData.autologin].user
-                    $scope.formData.pass = $scope.loginData[$scope.formData.autologin].pass
+                    $scope.formData.user = $scope.loginData[$scope.formData.autologin].user;
+                    $scope.formData.pass = $scope.loginData[$scope.formData.autologin].pass;
                 } else {
-                    $scope.formData.user = ""
-                    $scope.formData.pass = ""
+                    $scope.formData.user = "";
+                    $scope.formData.pass = "";
                 }
             };
 
@@ -43,6 +44,7 @@ function cmLogin($location, cmNotify, cmUserModel) {
                     return false;
 
                 isIdle = true;
+                $scope.alertState = '';
                 $scope.$broadcast('cmPointSpinner:start');
 
                 cmUserModel.doLogin($scope.formData.user, $scope.formData.pass)
@@ -57,7 +59,8 @@ function cmLogin($location, cmNotify, cmUserModel) {
                         isIdle = false;
                         $rootScope.$broadcast('cmLogin:error');
                         $scope.$broadcast('cmPointSpinner:cancel');
-                        cmNotify.error('LOGIN.INFO.'+state, {ttl:5000});
+
+                        $scope.alertState = state;
                     }
                 );
 
