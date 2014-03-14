@@ -54,12 +54,10 @@ function cmConversationsAdapter(cmApi, cmUtil){
                     })
         },
 
-        sendMessage: function(id, messageBody){
+        sendMessage: function(id, message){
             return	cmApi.post({
                         url:	"/conversation/%1/message".replace(/%1/, id),
-                        data: 	{
-                                    messageBody: messageBody
-                                }
+                        data: 	message
                     })
         }
     }

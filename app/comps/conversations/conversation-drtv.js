@@ -59,15 +59,13 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
             }
 
             $scope.sendMessage = function () {
-                var passphrase_valid = !!$scope.conversation.passphraseValid(),
-                    message_empty = !$scope.my_message_text,
-                    recipients_missing = $scope.conversation.recipients.length <= 1
-
-                    console.log($scope.my_message_text)
+                var passphrase_valid    = !!$scope.conversation.passphraseValid(),
+                    message_empty       = !$scope.my_message_text,
+                    recipients_missing  = $scope.conversation.recipients.length <= 1
 
                 !message_empty && passphrase_valid && !recipients_missing
                     ? $scope.conversation
-                    .newMessage($scope.my_message_text,$scope.passphrase)
+                    .newMessage($scope.my_message_text, $scope.passphrase)
                     .sendTo($scope.conversation)
                     .then(function () {
                         if ($scope.new_conversation) $location.url('/conversation/' + $scope.conversation.id)

@@ -26,7 +26,9 @@ function cmMessageModel (cmConversationsAdapter,cmCrypt){
         }
 
         this.sendTo = function (conversation) {
-            return  cmConversationsAdapter.sendMessage(conversation.id, this.body)
+            return  cmConversationsAdapter.sendMessage(conversation.id, {
+                        body: self.body
+                    })
                     .then(function (message_data) {
                         conversation.addMessage(new Message(message_data))
                     })
@@ -34,7 +36,7 @@ function cmMessageModel (cmConversationsAdapter,cmCrypt){
 
         this.init = function (message_data) {
             this.id = message_data.id;
-            this.body = message_data.messageBody;
+            this.body = message_data.body;
             this.decryptedBody = message_data.messageBody;
             this.from = message_data.fromIdentity;
             this.status = message_data.messageStatus;

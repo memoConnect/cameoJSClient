@@ -4,56 +4,59 @@ function cmUpload(cmFile){
     return {
 
         restrict : 'AE',
-
         scope: true,
 
         controller : function($scope, $element, $attrs){  
 
-            var self = this
-
-            $scope.file = {}           
-            $scope.chunksTotal = 0 
-            $scope.progress = 0           
+            var self = this,
+                file = new cmFile()
+            
+            $scope.progress = 0
+            $scope.readyForUpload = undefined                      
                         
+            $scope.chunkSize = $scope.$eval($attrs.cmChunkSize)
+            $scope.$parent.$watch($attrs.cmChunkSize, function(new_chunk_size){ $scope.chunkSize = new_chunk_size })          
 
-            $scope.$watch($attrs.cmChunkSize, function(new_chunk_size){
-                self.setChunkSize(new_chunk_size)                 
-            })          
+            $scope.passphrase = $scope.$parent.$eval($attrs.cmPassphrase)
+            $scope.$parent.$watch($attrs.cmPassphrase, function(passphrase){ $scope.passphrase = passphrase })  
 
-            $scope.$watch($attrs.cmPassphrase, function(passphrase){ cmFile.setPassphrase(passphrase) })        
+            $scope.fileId = $scope.$parent.$eval($attrs.ngModel)
+            $scope.$parent.$watch($attrs.ngModel, function(ngModel){ $scope.fileId = ngModel })       
 
             $scope.upload = function(){
                 $scope.progress = 0
-                cmFile.upload().then(
-                    function(assetId){ //success
-                        self.setAssetId(assetId)
-                    }, 
-                    null, //error
-                    function(progress){ //notify
-                        $scope.progress += progress                        
-                    }
-                )
+                if(!$scope.readyForUpload) return null                
+
+                $scope.readyForUpload.then(function(){             
+                    file
+                    .uploadChunks()
+                    .then(null, null, function(progress){ $scope.progress += progress })
+                })
             }
 
+            this.setFile = function(file_handle){                
 
+                $scope.readyForUpload = file
+                                        .importFile(file_handle)
+                                        .chopIntoChunks($scope.chunkSize)
+                                        .then(function(){                                                
+                                            return file
+                                                   .encryptFilename($scope.passphrase)
+                                                   .encryptChunks($scope.passphrase)
+                                                   .setupForUpload()                                                       
+                                        })    
+                                        .then(function(){
+                                            self.setFileId(file.fileId)
+                                        })
 
-            this.setChunkSize = function(chunkSize) {
-                $scope.chunkSize = chunkSize    
-                cmFile.init($scope.file, $scope.chunkSize)
             }
 
-            this.setFile = function(file){
-                $scope.file = file                
-                cmFile.init($scope.file, $scope.chunkSize)
+            this.setFileId = function(fileId){
+                $scope.$parent[$attrs.ngModel] = fileId
+                $scope.fileId = fileId
             }
 
-            this.setAssetId = function(assetId) {
-                $scope.assetId = assetId
-                $scope.$parent[$attrs.ngModel] = assetId
-            }         
-
-            this.setAssetId($scope.$parent.$eval($attrs.ngModel))
-            cmFile.setPassphrase($scope.$parent.$eval($attrs.cmPassphrase))
-        }
+            
+        }       
     }
 }
