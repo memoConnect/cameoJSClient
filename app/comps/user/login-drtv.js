@@ -53,7 +53,7 @@ function cmLogin($location, cmNotify, cmUserModel) {
                         isIdle = false;
                         $scope.$broadcast('cmPointSpinner:cancel');
                         $rootScope.$broadcast('cmLogin:success');
-                        $location.path("/start");
+                        $location.path("/talks");
                     },
                     function(state, error){
                         isIdle = false;

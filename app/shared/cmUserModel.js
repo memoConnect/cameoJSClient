@@ -122,22 +122,6 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
      * @TODO handle Token with identity
      */
     this.getToken = function(){
-//        var r = false;
-//
-//        if(this.data.storage !== null){
-//            var tmp = this.storageGet('token');
-//
-//            if(tmp != undefined && tmp != 'undefined'){
-//                this.data.token = tmp;
-//                r = this.data.token;
-//            }
-//        }
-//
-//        if(r === false) {
-//            this.data.token = $cookieStore.get('token');
-//            r = this.data.token;
-//        }
-
         var token = cmAuth.getToken();
         if(token !== undefined && token !== 'undefined' && token !== null){
             return token;
@@ -147,16 +131,10 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
     };
 
     this.storeToken = function(t){
-//        if(typeof t !== 'undefined'){
-//            $cookieStore.put('token',t);
-//            this.storageSave('token', t);
-//        }
         cmAuth.storeToken(t);
     };
 
     this.removeToken = function(){
-//        $cookieStore.remove('token');
-//        this.storageRemove('token');
         cmAuth.removeToken();
     };
 
