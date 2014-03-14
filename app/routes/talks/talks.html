@@ -17,15 +17,13 @@
     <ul class="list-group">
         <li class="cm-list-group-item" ng-repeat="conversation in conversations">
             <a href="#/conversation/{{conversation.id}}">
-                LastUpdate: {{conversation.lastUpdated}} <br />
-                Subject :   {{conversation.subject}} <br/>
-                Id:         {{conversation.id}} <br/>
-                <!--Recipients:                -->
-                <!--<span ng-repeat ="recipient in conversation.recipient">-->
-                        <!--{{recipient}}-->
-                        <!--{{$last ? '' : ','}}-->
-                <!--</span> <br/>-->
-                Messages:   {{conversation.count}}
+                <div class="cm-avatar"></div>
+                <div class="cm-message-info">
+                    {{conversation.lastUpdated}}<br />
+                    ({{conversation.numberOfMessages+0}})
+
+                </div>
+                Subject: {{conversation.subject}}<br/>
                 <cm-message-small cm-data="conversation.newestMessage()" ng-if="conversation.newestMessage()"></cm-message-small>
             </a>
         </li>

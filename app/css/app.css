@@ -144,7 +144,7 @@ pre {
   padding-bottom: 0;
 }
 .cm-form-group .cm-form-control .cm-form-control-inputter {
-  border: #666666 solid 2px;
+  border: #cccccc solid 2px;
   border-top: 0;
   height: 5px;
 }
@@ -239,6 +239,7 @@ cm-message-input {
   display: block;
 }
 cm-avatar,
+cm-message-small,
 cm-attachments {
   display: inline-block;
 }
@@ -438,10 +439,34 @@ footer.without-drtv {
   position: relative;
   display: block;
   margin-bottom: -1px;
-  border: 1px solid #ededed;
+  border: 1px solid #cccccc;
   background: rgba(255, 255, 255, 0.75);
   color: #666666;
+  padding: 5px 0px;
 }
 .cm-list-group-item a {
   color: #666666;
+  display: block;
+}
+.cm-list-group-item a .cm-avatar {
+  width: 50px;
+  height: 50px;
+  background: #666666;
+  float: left;
+  margin-right: 10px;
+}
+.cm-list-group-item a .cm-message-info {
+  float: right;
+  padding: 0 5px;
+  font-size: 1em;
+  text-align: right;
+}
+.cm-list-group-item a cm-message-small div {
+  float: none;
+}
+.cm-list-group-item a:after {
+  clear: left;
+}
+.cm-list-group-item:after {
+  clear: both;
 }

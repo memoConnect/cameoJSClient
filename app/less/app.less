@@ -1,6 +1,7 @@
 @cm-ci-color: #02BED2;
 @cm-grey: #666666;
 @cm-light-grey: #EDEDED;
+@cm-border-grey: #CCCCCC;
 @cm-bg-color: #000000;
 @cm-danger-color: #FF6600;
 @header-height: 64px;
@@ -47,7 +48,7 @@ pre {text-align:left}
     background:@cm-light-grey;padding:0 20px 5px 20px;
     input,select{-webkit-border-radius:0!important;-moz-border-radius:0!important;border-radius:0!important;background:none!important;border:none!important;-webkit-box-shadow:none!important;-moz-box-shadow:none!important;box-shadow:none!important}
     input{padding-bottom:0}
-    .cm-form-control-inputter{border:@cm-grey solid 2px;border-top:0;height:5px}
+    .cm-form-control-inputter{border:@cm-border-grey solid 2px;border-top:0;height:5px}
   }
 }
 
@@ -82,7 +83,7 @@ input[type="checkbox"]{border:none !important;box-shadow: none !important}
 li.message-list {width:800px;min-height:50px;overflow:hidden;border:1px solid black;margin-bottom:10px;padding:5px;word-wrap:break-word;background-color:#d3d3d3}
 
 cm-message,cm-conversation,cm-message-input{display:block}
-cm-avatar,cm-attachments{display:inline-block}
+cm-avatar,cm-message-small,cm-attachments{display:inline-block}
 cm-message{margin:2em 0;word-wrap:break-word}
 cm-message article.left{text-align:left}
 cm-message article.right{text-align:right}
@@ -160,6 +161,15 @@ footer.without-drtv{.footer-define; height:@footer-height;text-align:center;marg
 
 /* list */
 .cm-list-group-item {
-  position:relative;display:block;margin-bottom:-1px;border:1px solid @cm-light-grey;background:rgba(255,255,255,0.75);color:@cm-grey;
-  a{color:@cm-grey}
+  position:relative;display:block;margin-bottom:-1px;border:1px solid @cm-border-grey;background:rgba(255,255,255,0.75);color:@cm-grey;padding:5px 0px;
+  a{
+    color:@cm-grey;display:block;
+    .cm-avatar{
+      width:50px;height:50px;background:@cm-grey;float:left;margin-right:10px;
+    }
+    .cm-message-info{float:right;padding:0 5px;font-size:1em;text-align:right}
+    cm-message-small div{float:none}
+    &:after{clear:left}
+  }
+  &:after{clear:both}
 }
