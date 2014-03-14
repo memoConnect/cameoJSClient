@@ -1,60 +1,62 @@
-<div ng-controller="RegistrationCtrl">
-    <div class="page-header">
-        <h2>{{'REGISTER.HEADING' | cmTranslate}}</h2>
-    </div>
+<div style="width:100%;height:45px;background-color:#000;margin:0;padding:0">
 
-    <div cm-nav-tabs ng-model="badges"></div>
-
+</div>
+<div ng-controller="RegistrationCtrl" class="cm-registration-ctn">
     <form name="registrationForm" class="form-horizontal" role="form" ng-submit="createUser()" autocomplete="off" novalidate>
 
-        <div class="form-registry-head">
+        <h4>{{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}</h4>
 
-            <h4>{{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}</h4>
-
-            <div class="form-group">
-                <label for="loginName" class="col-sm-2 control-label">{{'REGISTER.LABEL.USERNAME' |cmTranslate}}<sup>*</sup></label>
-                <div class="col-sm-6">
-                    <input id="loginName" name="loginName" type="text" class="form-control" ng-model="formData.loginName" ng-blur="checkLoginName();" ng-minlength="6" ng-maxlength="20" maxlength="20" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}}" required />
-                    <div class="custom-error" ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid">
-                        <div ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid && registrationForm.loginName.$error.minlength">{{'REGISTER.INFO.MIN_LETTER_COUNT' | cmTranslate : {count: 6} }}</div>
+        <div class="form-group">
+            <div class="col-sm-6">
+                <div class="input-ctn">
+                    <div class="input-group">
+                        <input id="loginName" name="loginName" type="text" class="form-control" ng-model="formData.loginName" ng-blur="checkLoginName();" ng-minlength="6" ng-maxlength="60" maxlength="60" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}}" required />
+                        <span class="input-group-addon"><i class="fa cm-check-circle"></i></span>
                     </div>
                 </div>
+                <div class="cm-alert" ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid">
+                    <div ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid && registrationForm.loginName.$error.minlength"><i class="fa cm-info"></i>{{'REGISTER.INFO.MIN_LETTER_COUNT' | cmTranslate : {count: 6} }}</div>
+                </div>
             </div>
-
-            <div cm-password data-parent-item="formData.password"></div>
-
         </div>
+        <div cm-password data-parent-item="formData.password"></div>
+
+        <div style="width:100%;height:1px;background-color:#fff"></div>
 
         <h4>{{'REGISTER.TITLE.HEAD_IDENTITY' | cmTranslate}}</h4>
 
+        <!--<div class="form-group">-->
+            <!--<div class="col-sm-6">-->
+                <!--<div class="input-ctn">-->
+                    <!--<div class="input-group">-->
+                        <!--<input id="cameoId" name="cameoId" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.CAMEOID'|cmTranslate}}" ng-model="formData.cameoId" ng-blur="checkCameoId();" />-->
+                        <!--<small class="input-group-addon">@cameo</small>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
         <div class="form-group">
-            <label for="cameoId" class="col-sm-2 control-label">{{'REGISTER.LABEL.CAMEOID' |cmTranslate}}</label>
             <div class="col-sm-6">
-                <div class="input-group">
-                    <input id="cameoId" name="cameoId" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.CAMEOID'|cmTranslate}}" ng-model="formData.cameoId" ng-blur="checkCameoId();" />
-                    <small class="input-group-addon">@cameo</small>
+                <div class="input-ctn">
+                    <input id="name" name="name" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.NAME'|cmTranslate}}" ng-model="formData.name" />
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">{{'REGISTER.LABEL.NAME' |cmTranslate}}</label>
             <div class="col-sm-6">
-                <input id="name" name="name" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.NAME'|cmTranslate}}" ng-model="formData.name" />
+                <div class="input-ctn">
+                    <input id="email" name="email" type="text" class="form-control" placeholder="{{'DIRV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}" ng-model="formData.email" cm-validate-email />
+                </div>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="email" class="col-sm-2 control-label">{{'DIRV.VALIDATE_EMAIL.LABEL'|cmTranslate}}</label>
             <div class="col-sm-6">
-                <input id="email" name="email" type="text" class="form-control" placeholder="{{'DIRV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}" ng-model="formData.email" cm-validate-email />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="phone" class="col-sm-2 control-label">{{'DIRV.VALIDATE_PHONE.LABEL'|cmTranslate}}</label>
-            <div class="col-sm-6">
-                <input id="phone" name="phone" type="text" class="form-control" placeholder="{{'DIRV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}" ng-model="formData.phone" ng-minlength="6" cm-validate-phone />
+                <div class="input-ctn">
+                    <input id="phone" name="phone" type="text" class="form-control" placeholder="{{'DIRV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}" ng-model="formData.phone" ng-minlength="6" cm-validate-phone />
+                </div>
                 <div class="custom-error" ng-show="registrationForm.phone.$dirty && registrationForm.phone.$invalid">
                     <div ng-show="registrationForm.phone.$error.required">{{'DIRV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}</div>
                 </div>
@@ -73,5 +75,4 @@
             </div>
         </div>
     </form>
-
 </div>
