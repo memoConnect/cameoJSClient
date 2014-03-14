@@ -20,6 +20,11 @@ angular.module('cmUi', [
     cmNavTabs
 ])
 
+.directive('cmFooter',[
+    '$location',
+    cmFooter
+])
+
 .filter('cmDigits', [
     function(){
         return function(number, digits){

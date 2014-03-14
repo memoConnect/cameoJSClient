@@ -249,3 +249,24 @@ textarea[cm-message-input] {
   bottom: 0;
   left: 0;
 }
+/* footer */
+footer[cm-footer] {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background: #000000;
+  padding: 1px;
+  font-size: 1.2em;
+}
+footer[cm-footer] a {
+  color: #fff;
+  padding: 12px;
+  border-top: 10px solid #000000;
+}
+footer[cm-footer] a.active,
+footer[cm-footer] a:hover {
+  color: #02bed2;
+  border-top-color: #02bed2;
+}
