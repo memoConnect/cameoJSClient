@@ -216,11 +216,19 @@ describe('cmApi with cmAuth present', function(){
     beforeEach(module('cmApi'))
 
     beforeEach(module(function ($provide) {
-        $provide.value('cmAuth', { getToken: function(){ return "my_token" } } );
+        $provide.value('cmAuth', {
+            getToken: function(){ return "my_token"},
+            getTwoFactorToken: function(){ return "my_twofactor_token" } } );
     }))
 
     it('should extend api calls with an authorization token', inject(function(cmApi, $httpBackend){
         $httpBackend.expect('GET', '/test', null, function(headers){ return 'Authorization' in headers }).respond(200, {res:'OK'} )
+        cmApi.get( {url:'/test'} )
+        $httpBackend.flush()
+    }))
+
+    it('should extend api calls with an two factor authorization token, if present', inject(function(cmApi, $httpBackend){
+        $httpBackend.expect('GET', '/test', null, function(headers){ return 'X-TwoFactorToken' in headers }).respond(200, {res:'OK'} )
         cmApi.get( {url:'/test'} )
         $httpBackend.flush()
     }))
