@@ -59,6 +59,14 @@ describe('cmUserModel', function(){
         it('should defined removeToken',function(){
             expect(model.removeToken).toBeDefined();
         })
+
+        it('should defined saveKey',function(){
+            expect(model.saveKey).toBeDefined();
+        })
+
+        it('should defined loadKeys',function(){
+            expect(model.loadKeys).toBeDefined();
+        })
     })
 
     /**

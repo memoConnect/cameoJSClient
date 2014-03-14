@@ -1,9 +1,12 @@
 /.idea/
 /node_modules/
 /phonegap-build/
-/target/
-/project/
-*.iml
-*.log
 /phonegap-src/
 /phonegap-target/
+/report/
+/target/
+/project/
+/dist/
+*.iml
+*.log
+*.fcp

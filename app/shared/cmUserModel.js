@@ -56,7 +56,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
         }
 
         return false;
-    }
+    };
 
     this.doLogin = function(user, pass){
         var deferred = $q.defer();
@@ -82,6 +82,39 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
         this.removeToken();
         $rootScope.$broadcast('logout');
         $location.path("/login");
+    };
+
+    this.saveKey = function(key_data){
+        var tmpKeys = this.loadKeys();
+        if(typeof tmpKeys !== undefined && typeof tmpKeys !== 'undefined' && typeof tmpKeys !== 'string'){
+            if(tmpKeys.length > 0){
+                tmpKeys.push(key_data);
+                this.storageSave('pgp',tmpKeys);
+            } else {
+                this.storageSave('pgp',[key_data]);
+            }
+        } else {
+            this.storageSave('pgp',[key_data]);
+        }
+
+        cmAuth.savePublicKey({
+            name: key_data.name,
+            key: key_data.pubKey,
+            size: key_data.keySize
+        }).then(
+            function(data){
+                self.data.publicKeys.push(data);
+            },
+            function(){
+                //kA
+            }
+        )
+
+        return true;
+    };
+
+    this.loadKeys = function(){
+        return this.storageGet('pgp');
     };
 
     /**
@@ -111,7 +144,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
         }
 
         return false;
-    }
+    };
 
     this.storeToken = function(t){
 //        if(typeof t !== 'undefined'){
@@ -119,13 +152,13 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
 //            this.storageSave('token', t);
 //        }
         cmAuth.storeToken(t);
-    }
+    };
 
     this.removeToken = function(){
 //        $cookieStore.remove('token');
 //        this.storageRemove('token');
         cmAuth.removeToken();
-    }
+    };
 
     /**
      * LocalStorage Functions
@@ -143,16 +176,18 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
         if(isInit !== false && self.data.storage !== null){
             self.data.storage.save(key, value);
         }
-    }
+    };
     /**
      *  get from identity storage
      * @param key
      */
     this.storageGet = function(key){
         if(isInit !== false && self.data.storage !== null){
-            self.data.storage.get(key);
+            return self.data.storage.get(key);
         }
-    }
+
+        return null;
+    };
     /**
      * remove from identity storage
      * @param key
@@ -161,7 +196,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
         if(isInit !== false && self.data.storage !== null){
             self.data.storage.remove(key);
         }
-    }
+    };
     /**
      * clear identity storage
      */
@@ -182,7 +217,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
             function(){
                 deferred.reject();
             }
-        )
+        );
 
         return deferred.promise;
     }

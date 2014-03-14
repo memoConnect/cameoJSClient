@@ -25,11 +25,11 @@ define([
                     function(data){
                         $scope.conversationId  = data.id;
                         $scope.showConversation = true;
+                    },
+                    function(){
+                        cmLogger.error('cant get PURL Message');
+                        $location.path('/404');
                     }
-//                    function(){
-//                        cmLogger.error('cant get PURL Message');
-//                        $location.path('/404');
-//                    }
                 );
 
             }

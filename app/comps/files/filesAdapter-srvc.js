@@ -3,26 +3,23 @@ function cmFilesAdapter(cmApi){
 
 
     return {
-        prepareFile: function(data, chunk){        
+        prepareFile: function(config){        
             return cmApi.post({
                 url :    "/file",
-                data : {
-                    chunk: chunk
-                },
+                data: {},
                 exp_ok : 'id',
                 headers : {
-                    "X-File-Name":  data.file.name,
-                    "X-File-Size":  data.file.size,
-                    "X-File-Type":  data.file.type,
-                    "X-Max-Chunks": data.chunksTotal,
-                    "X-Index": 0
+                    "X-File-Name":  config.name,
+                    "X-File-Size":  config.size,
+                    "X-File-Type":  config.type,
+                    "X-Max-Chunks": config.chunks
                 }
             })
         }, 
 
-        addChunk: function(assetId, index, chunk) {         
+        addChunk: function(fileId, index, chunk) {         
             return cmApi.post({
-                url:    "/file/"+assetId,
+                url:    "/file/"+fileId,
                 data:   {
                     chunk: chunk
                 },          
@@ -33,9 +30,9 @@ function cmFilesAdapter(cmApi){
 
         },
 
-        getFileInfo: function(assetId){
+        getFileInfo: function(fileId){
             return cmApi.get({
-                url: "/file/"+assetId,
+                url: "/file/"+fileId,
             })
         },
 

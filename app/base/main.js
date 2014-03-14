@@ -51,13 +51,17 @@ var config = {
         'crypto-ats-oka': 'vendor/crypto/ats-oka/ats-oka.min',
         'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt.min',
 
+        // ui
+        'ui-bootstrap': 'vendor/ui-bootstrap/ui-bootstrap.0.10.0',
+        'ui-bootstrap-tpls': 'vendor/ui-bootstrap/ui-bootstrap-tpls.0.10.0',
+
         'jquery': 'vendor/jquery/jquery-2.1.0'
     },
 
     packages: [
         {name: '_v', location: 'vendor' },
         {name: '_c', location: 'comps'  },
-        {name: '_s', location: 'shared' },
+        {name: '_s', location: 'shared' }
 //        {name: '_d', location: 'directives'}
     ],
     // Add angular modules that does not support AMD out of the box, put it in a shim
@@ -73,6 +77,9 @@ var config = {
         'angular-translate-storage-cookie': ['angular','angular-translate'],
         'angular-translate-storage-local': ['angular','angular-translate', 'angular-translate-storage-cookie'],
 
+        'ui-bootstrap': ['angular'],
+        'ui-bootstrap-tpls': ['angular'],
+
         'cmNotify': ['angular-growl'],
         'cmAuth': ['angular', 'util-base64', 'cmCrypt','cmApi'],
         'cmCrypt': [
@@ -85,7 +92,7 @@ var config = {
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
         'cmUserModel': ['angular', 'cmLocalStorage'],
         'cmApi': ['angular', 'cmLogger'],
-        'cmProfile' : ['jquery', 'angular', 'cmApi', 'cmAuth'],
+        'cmProfile' : ['angular', 'cmApi', 'cmAuth'],
         'cmLogger' : ['angular'],
         'cmLanguage' : [
             'angular', 
@@ -122,6 +129,8 @@ addPackage('pckFiles',{
     deps: [
         'cmApi',
         'cmLogger',
+        'cmCrypt',
+        'cmUtil',
         'vendor/filesaver/filesaver',
         'angular-resource',
         'util-base64_decode'
@@ -142,11 +151,13 @@ addPackage('pckUser',{
     deps: [
         'angular',
         'cmAuth',
-        'cmUserModel'
+        'cmUserModel',
+        'cmCrypt',
+        'cmUtil'
     ],
     resources : [
-        'comps/user/login-drtv'
-
+        'comps/user/login-drtv',
+        'comps/user/key-pair-drtv'
     ]
 })
 
@@ -161,6 +172,7 @@ addPackage('pckConversations',{
         'cmUtil',
         'cmUserModel',
         'pckContacts',
+        'pckFiles',
         '_v/captcha/captchagen/captchagen',
         'util-base64'
     ],    
@@ -168,7 +180,7 @@ addPackage('pckConversations',{
         'comps/conversations/conversationsAdapter-srvc',
         'comps/conversations/conversationsModel-srvc',
 
-,        'comps/conversations/purlModel-srvc',
+        'comps/conversations/purlModel-srvc',
 
         'comps/conversations/conversationFactory-srvc',
         'comps/conversations/conversationModel-srvc',
@@ -212,7 +224,9 @@ addPackage('pckContacts',{
 
 addPackage('pckValidate',{
     root: 'comps/validate/validate-module',
-    deps: [],
+    deps: [
+        'util-passchk-fast'
+    ],
     resources : [
         'comps/validate/email-drtv',
         'comps/validate/password-drtv',
@@ -226,8 +240,10 @@ addPackage('pckUi',{
         'angular',    
         'cmAuth',
         'cmLogger',
-        'util-spin'
-    ],    
+        'util-spin',
+        'ui-bootstrap',
+        'ui-bootstrap-tpls'
+    ],
     resources : [
         'shared/ui/adaptive-change-drtv',  
         'shared/ui/nav-tabs-drtv',

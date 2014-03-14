@@ -6,8 +6,8 @@
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('fonts/fontawesome-webfont.eot?v=4.0.3');
-  src: url('fonts/fontawesome-webfont.eot?#iefix&v=4.0.3') format('embedded-opentype'), url('fonts/fontawesome-webfont.woff?v=4.0.3') format('woff'), url('fonts/fontawesome-webfont.ttf?v=4.0.3') format('truetype'), url('fonts/fontawesome-webfont.svg?v=4.0.3#fontawesomeregular') format('svg');
+  src: url('fonts/cameoawesome-webfont.eot?v=4.0.3');
+  src: url('fonts/cameoawesome-webfont.eot?#iefix&v=4.0.3') format('embedded-opentype'), url('fonts/cameoawesome-webfont.woff?v=4.0.3') format('woff'), url('fonts/cameoawesome-webfont.ttf?v=4.0.3') format('truetype'), url('fonts/cameoawesome-webfont.svg?v=4.0.3#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -37,6 +37,12 @@
 }
 .fa-5x {
   font-size: 5em;
+}
+.cm-weilyx {
+  font-size: 15em;
+}
+.cm-empux {
+  font-size: 25em;
 }
 .fa-fw {
   width: 1.2857142857142858em;
@@ -187,6 +193,7 @@
 .fa-inverse {
   color: #ffffff;
 }
+
 /* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
    readers do not read off random characters that represent icons */
 .fa-glass:before {
@@ -1336,3 +1343,44 @@
 .fa-plus-square-o:before {
   content: "\f196";
 }
+
+/*
+   Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+   readers do not read off random characters that represent icons
+*/
+.cm-rhino-bubble:before{content:'\f001'}
+.cm-rhino-positive:before{content:'\f002'}
+.cm-client-add:before{content:'\f003'}
+.cm-add:before{content:'\f004'}
+.cm-add-edge:before{content:'\f005'}
+.cm-addressbook:before{content:'\f006'}
+.cm-left:before{content:'\f007'}
+.cm-right:before{content:'\f008'}
+.cm-down:before{content:'\f009'}
+.cm-up:before{content:'\f00a'}
+.cm-change:before{content:'\f00b'}
+.cm-envelope-closed:before{content:'\f00c'}
+.cm-envelope-open:before{content:'\f00d'}
+.cm-send:before{content:'\f00e'}
+.cm-check-circle:before{content:'\f010'}
+.cm-lock:before{content:'\f011'}
+.cm-unlock:before{content:'\f012'}
+.cm-fix:before{content:'\f013'}
+.cm-group:before{content:'\f014'}
+.cm-person:before{content:'\f015'}
+.cm-mobile:before{content:'\f016'}
+.cm-out:before{content:'\f017'}
+.cm-in:before{content:'\f018'}
+.cm-info:before{content:'\f019'}
+.cm-key:before{content:'\f01a'}
+.cm-location:before{content:'\f01b'}
+.cm-logo:before{content:'\f01c'}
+.cm-logout:before{content:'\f01d'}
+.cm-menu:before{content:'\f01e'}
+.cm-post:before{content:'\f020'}
+.cm-search:before{content:'\f021'}
+.cm-settings:before{content:'\f022'}
+.cm-smile-negative:before{content:'\f023'}
+.cm-smile-positive:before{content:'\f024'}
+.cm-write:before{content:'\f025'}
+>>>>>>> refs/heads/dev
