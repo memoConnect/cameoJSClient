@@ -23,13 +23,6 @@ module.exports = function (grunt) {
                 dest: 'app/js/controller/built.raw.js'
             }
         },
-        uglify: {
-            jsController: {
-                files: {
-                    'app/js/controller/build.min.js': '<%= concat.js.dest %>'
-                }
-            }
-        },
         coffee: {
             compile: {
                 files: [
@@ -59,6 +52,19 @@ module.exports = function (grunt) {
         },
 
         // contrib
+        uglify: {
+            options: {
+                mangle: false
+            },
+            'dev-deploy': {
+                files: [{
+                    expand: true,
+                    cwd: 'dist/',
+                    src: '**/*.js',
+                    dest: 'dist/'
+                }]
+            }
+        },
         copy: {
             'phonegap-resources': {
                 files: [
@@ -87,10 +93,21 @@ module.exports = function (grunt) {
                         dest: 'target/test-reports/'
                     }
                 ]
+            },
+            'dev-deploy': {
+                files: [
+                    {
+                        expand: true,
+                        src: 'app/**',
+                        dest: 'dist/'
+                    }
+                ]
             }
         },
         clean: {
-            'dalek-report': ['report']
+            'dalek-report': ['report'],
+            'dev-deploy': ['dist/app/less'],
+            'dist-app' :['dist/app']
         },
 
         // unit tests
@@ -276,6 +293,7 @@ module.exports = function (grunt) {
     // contrib
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     // tests unit
     grunt.loadNpmTasks('grunt-karma');
     grunt.registerTask('tests-unit', [
@@ -326,4 +344,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.registerTask('watcher','watch');
+
+    // deploy moeps
+    grunt.registerTask('dev-deploy',['clean:dist-app','copy:dev-deploy','uglify:dev-deploy','clean:dev-deploy'])
 };

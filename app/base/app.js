@@ -15,7 +15,7 @@ define([
     'pckUi',
 
     // vendor
-    'jquery',
+//    'jquery',
     'base/config'
 ], function (angularAMD) {
     'use strict';

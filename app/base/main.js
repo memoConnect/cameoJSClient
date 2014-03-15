@@ -92,7 +92,7 @@ var config = {
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
         'cmUserModel': ['angular', 'cmLocalStorage'],
         'cmApi': ['angular', 'cmLogger'],
-        'cmProfile' : ['jquery', 'angular', 'cmApi', 'cmAuth'],
+        'cmProfile' : ['angular', 'cmApi', 'cmAuth'],
         'cmLogger' : ['angular'],
         'cmLanguage' : [
             'angular', 

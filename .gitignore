@@ -6,6 +6,7 @@
 /report/
 /target/
 /project/
+/dist/
 *.iml
 *.log
 *.fcp
