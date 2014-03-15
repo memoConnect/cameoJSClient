@@ -138,6 +138,7 @@ addPackage('pckFiles',{
     ],
     resources : [
         'comps/files/filesAdapter-srvc',
+        'comps/files/chunk-fctr',
         'comps/files/file-fctr',
         'comps/files/file-input-drtv',
         'comps/files/upload-drtv',
@@ -173,6 +174,7 @@ addPackage('pckConversations',{
         'cmUserModel',
         'pckContacts',
         'pckFiles',
+        'pckUi',
         '_v/captcha/captchagen/captchagen',
         'util-base64'
     ],    

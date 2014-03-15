@@ -41,12 +41,12 @@ function cmUpload(cmFile){
                                         .chopIntoChunks($scope.chunkSize)
                                         .then(function(){                                                
                                             return file
-                                                   .encryptFilename($scope.passphrase)
+                                                   .encryptName($scope.passphrase)
                                                    .encryptChunks($scope.passphrase)
-                                                   .setupForUpload()                                                       
+                                                   .prepareForUpload()                                                       
                                         })    
                                         .then(function(){
-                                            self.setFileId(file.fileId)
+                                            self.setFileId(file.id)
                                         })
 
             }
