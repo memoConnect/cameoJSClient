@@ -43,7 +43,7 @@ function cmUpload(cmFile){
                                             return file
                                                    .encryptName($scope.passphrase)
                                                    .encryptChunks($scope.passphrase)
-                                                   .setupForUpload()                                                       
+                                                   .prepareForUpload()                                                       
                                         })    
                                         .then(function(){
                                             self.setFileId(file.id)

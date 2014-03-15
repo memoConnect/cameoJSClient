@@ -23,6 +23,7 @@ define([
     var app = angular.module('cameoClient', [
         'ngRoute',
         'ngCookies',
+        'ui.bootstrap',
         // insert cameo provider
         'cmApi',
         'cmUi',
@@ -31,7 +32,7 @@ define([
         'cmLogger',
         'cmLocalStorage',
         'cmAuth',
-        'cmUserModel'
+        'cmUserModel'        
     ]);
 
     //cameo_config = cameo_config
