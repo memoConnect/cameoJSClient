@@ -20,12 +20,7 @@ function cmDownload(cmFile){
             $scope.$parent.$watch($attrs.cmPassphrase,  function(passphrase) { $scope.passphrase = passphrase }) 
 
             $scope.$watch('fileId', function(fileId){ self.setup(fileId) }) 
-
-
-            
-            file.count = file.count+1 || 0
-            console.dir(file)
-
+           
             $scope.download = function(){                
                 if(!$scope.readyForDownload) return null                    
                 $scope.progress = 0    
@@ -34,7 +29,7 @@ function cmDownload(cmFile){
                     file
                     .downloadChunks()
                     .then(
-                        function(){ return  file.decryptChunks($scope.passphrase) }, 
+                        function(){ file.decryptChunks($scope.passphrase) }, 
                         null, 
                         function(progress){ $scope.progress += progress }
                     )
@@ -50,9 +45,9 @@ function cmDownload(cmFile){
                 $scope.readyForDownload =   file
                                             .importByFileId(fileId)
                                             .then(function(){
-                                                file.decryptFilename($scope.passphrase)
-                                                $scope.fileName = file.fileName
-                                                $scope.fileSize = file.fileSize                                                
+                                                file.decryptName($scope.passphrase)
+                                                $scope.fileName = file.name
+                                                $scope.fileSize = file.size                                                
                                             })
             }
             
