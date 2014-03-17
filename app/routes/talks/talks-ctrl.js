@@ -43,21 +43,6 @@ define([
 
                 return true;
             };
-
-            /**
-             * TODO
-             */
-//            $scope.badges.overview = cmConversationsModel.quantity;
-
-            /**
-             * Ctrl Tabs
-             * @type {*[]}
-             */
-            $rootScope.tabs = [
-                {i18n:'BACK',icon:'fa-chevron-left',href:'#/start'},
-                {i18n:'TALKS',icon:'fa-plus',badge:'overview','default':true},
-                {i18n:'ADD',icon:'fa-plus',href:'#/conversation'}
-            ];
         }
     ]);
 });

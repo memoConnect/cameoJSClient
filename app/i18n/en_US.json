@@ -94,7 +94,8 @@
     },
 
     "TALKS": {
-        "HEADING": "Talks"
+        "HEADING": "Talks",
+        "MORE": "load more"
     },
 
     "CONVERSATION" : {
@@ -210,5 +211,10 @@
             "CONTACTS": "Kontakte",
             "MEDIA": "Media"
         }
+    },
+
+    "MENU": {
+        "HEADER": "Menue",
+        "LOGOUT": "Logout"
     }
 }

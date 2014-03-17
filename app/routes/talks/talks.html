@@ -1,4 +1,4 @@
-<header cm-header>
+<header class="cm-header">
     <div cm-header-back></div>
     <div cm-identity></div>
     <div cm-header-logo></div>
@@ -6,31 +6,32 @@
 </header>
 
 <div ng-controller="ConversationsCtrl" class="with-header with-footer">
-    <div class="page-header">
+    <div class="cm-page-header">
         <h1>{{"TALKS.HEADING"|cmTranslate}}</h1>
+        <a href="#/conversation" class="cm-add-edge-btn">
+            <i class="fa cm-add-edge"></i>
+            <i class="fa cm-add"></i>
+        </a>
     </div>
 
     <ul class="list-group">
-        <li class="list-group-item" ng-repeat = "conversation in conversations">
-            <a href = "#/conversation/{{conversation.id}}">
-                LastUpdate: {{conversation.lastUpdated}} <br />
-                Subject :   {{conversation.subject}} <br/>
-                Id:         {{conversation.id}} <br/>
-                <!--Recipients:                -->
-                <!--<span ng-repeat ="recipient in conversation.recipient">-->
-                        <!--{{recipient}}-->
-                        <!--{{$last ? '' : ','}}-->
-                <!--</span> <br/>-->
-                Messages:   {{conversation.count}}
-                <cm-message-small cm-data="conversation.newestMessage()" ng-if="conversation.newestMessage()"></cm-message-small>
+        <li class="cm-list-group-item" ng-repeat="conversation in conversations">
+            <a href="#/conversation/{{conversation.id}}" class="clearfix">
+                <div class="cm-avatar"></div>
+                <div class="cm-message-info">
+                    {{conversation.lastUpdated}}<br />
+                    ({{conversation.numberOfMessages+0}})
+                </div>
+                <div class="cm-message-body">
+                    <div>Subject: {{conversation.subject}}</div>
+                    <div cm-message-small cm-data="conversation.newestMessage()" ng-if="conversation.newestMessage()"></div>
+                </div>
             </a>
-            <br/>
-            <br/>
         </li>
     </ul>
 
     <div ng-if="showMore()">
-        <button class="btn btn-primary" ng-click="loadMore()">more</button>
+        <button class="btn cm-btn-block cm-btn-black" ng-click="loadMore()">{{"TALKS.MORE"|cmTranslate}}</button>
     </div>
 </div>
 

@@ -12,23 +12,10 @@ module.exports = {
                 .numberOfElements("[data-qa='login-screen-btn']")
                     .is(2, '2 login-screen-btn are present')
             .click("button[ng-click='goToReg()']")
-            // registration
+            // registration link
             .wait(2000)
             .assert
                 .url(path+'#/registration', 'on route registration')
-            .assert
-                .numberOfElements('.form-control')
-                    .is(7, '7 form-controls are present')
-            .click("a[href='#/terms']")
-            // terms
-            .assert
-            .url(path+'#/terms', 'on route terms')
-            .assert
-                .text('h2')
-                    .is.not('', 'terms header is shown')
-            .assert
-                .text('.well')
-                    .is.not('', 'terms are full of paragraphs')
         .done()
     }
 }
