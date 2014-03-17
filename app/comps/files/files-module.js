@@ -10,9 +10,18 @@ cmFiles.service('cmFilesAdapter', [
     cmFilesAdapter
 ])
 
+cmFiles.factory('cmChunk', [
+    'cmFilesAdapter',
+    'cmLogger',
+    'cmCrypt',
+    '$q',    
+    cmChunk
+])
+
 cmFiles.factory('cmFile', [
     'cmFilesAdapter',
     'cmLogger',
+    'cmChunk',
     'cmCrypt',
     '$q',    
     cmFile

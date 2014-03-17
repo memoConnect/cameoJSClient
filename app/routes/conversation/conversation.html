@@ -1,11 +1,10 @@
-<div ng-controller="ConversationCtrl">
-    <div class="page-header">
-        <h1>{{"CONVERSATION.HEADING"|cmTranslate}}</h1>
-    </div>
+<header class="cm-header">
+    <div cm-header-back></div>
+    <div cm-identity></div>
+    <div cm-header-logo></div>
+    <div cm-header-menu></div>
+</header>
 
-    <div cm-nav-tabs></div>
-
-    <br/>
-
+<div ng-controller="ConversationCtrl" class="with-header">
     <cm-conversation conversation-id="conversationId"></cm-conversation>
 </div>

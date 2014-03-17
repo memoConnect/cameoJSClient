@@ -11,7 +11,7 @@ cockpitList.controller("cockpitListCtrl", [
 
         $scope.name = $routeParams.elementName
         $scope.filters = []
-        $scope.showAlert = false
+        $scope.invalidName = true
         $scope.list = []
         $scope.titles = []
         $scope.selectedFilter = "choose filter"
@@ -31,7 +31,7 @@ cockpitList.controller("cockpitListCtrl", [
                 data: filterSettings
             }).then(
                 function (data) {
-                    $scope.showAlert = false
+                    $scope.invalidName = false
                     if (data.elements.length > 0) {
                         $scope.titles = data.titles
                         $scope.filters = data.availableFilters
@@ -39,7 +39,7 @@ cockpitList.controller("cockpitListCtrl", [
                     }
                 },
                 function() {
-                    $scope.showAlert = true
+                    $scope.invalidName = true
                 }
             )
         }
@@ -51,7 +51,7 @@ cockpitList.controller("cockpitListCtrl", [
                 data: filterSettings
             }).then(
                 function (data) {
-                    $scope.showAlert = false
+                    $scope.invalidName = false
                     if (data.elements.length > 0) {
                         $scope.titles = data.titles
                         $scope.filters = data.availableFilters
@@ -59,7 +59,7 @@ cockpitList.controller("cockpitListCtrl", [
                     }
                 },
                 function() {
-                   $scope.showAlert = true
+                   $scope.invalidName = true
                 }
             )
         }

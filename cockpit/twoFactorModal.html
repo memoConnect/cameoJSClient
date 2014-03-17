@@ -1,0 +1,9 @@
+Two Factor Authentication Required <br>
+
+<button ng-click="requestTwoFactorKey()" type="button" class="btn btn-primary">Request Key</button>
+
+<input type="text" class="form-control" ng-model="twoFactorKey" placeholder="Enter key">
+
+<button ng-click="requestTwoFactorToken(twoFactorKey)" type="button" class="btn btn-primary">Send Key</button>
+
+<div ng-show="invalidKey" class="alert alert-danger">invalid key</div>
