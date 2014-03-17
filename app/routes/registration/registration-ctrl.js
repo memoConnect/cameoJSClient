@@ -104,6 +104,7 @@ define([
          * Form Validation and Apicall to create user
          */
         $scope.createUser = function () {
+            console.log('moep')
             var data = {
                 loginName: null,
                 password: null,

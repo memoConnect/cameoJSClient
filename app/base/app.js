@@ -151,7 +151,7 @@ define([
                         $location.path("/login");
                     }
                 } else if ($location.$$path == "/login") {
-                    $location.path("/start");
+                    $location.path("/talks");
                 }
             });
         }

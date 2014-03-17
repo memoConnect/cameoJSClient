@@ -4,9 +4,9 @@
 //wrapper
 //todo: growl directive wrappen?
 
-var cmNotify = angular.module('cmNotify', ['angular-growl']);
+angular.module('cmNotify', ['angular-growl'])
 
-cmNotify.config(['growlProvider', '$httpProvider', function (growlProvider, $httpProvider) {
+.config(['growlProvider', '$httpProvider', function (growlProvider, $httpProvider) {
     //intercept messages from Backend:
     /*
      {
@@ -27,29 +27,52 @@ cmNotify.config(['growlProvider', '$httpProvider', function (growlProvider, $htt
 
     //notifications should disappear after 5 seconds
     //growlProvider.globalTimeToLive(5000);
-}]);
-
-cmNotify.service('cmNotify', [
+}])
+/**
+ * service for cmNotify injection (wrapper for growl)
+ *
+ * cmNotify.error('LOGIN.INFO.404', {ttl:5000, hideGlobal:true});
+ */
+.service('cmNotify', [
     'growl',
-    function (growl) {
+    '$document',
+    function (growl, $document) {
+        /**
+         * hide/show all cm-notify arround a modal
+         * @param options
+         */
+        function handleGlobalVisiblity(options){
+            if(options && 'hideGlobal' in options){
+                angular
+                .element($document[0].querySelector('[cm-notify]'))
+                .css('display',options.hideGlobal ? 'none' : null)
+            }
+        }
+
         return {
             warn: function (msg, options) {
+                handleGlobalVisiblity(options);
                 growl.addWarnMessage(msg, options);
             },
             info: function (msg, options) {
+                handleGlobalVisiblity(options);
                 growl.addInfoMessage(msg, options);
             },
             success: function (msg, options) {
+                handleGlobalVisiblity(options);
                 growl.addSuccessMessage(msg, options);
             },
             error: function (msg, options) {
+                handleGlobalVisiblity(options);
                 growl.addErrorMessage(msg, options);
             }
         }
     }
-]);
-
-cmNotify.directive('cmNotify', function () {
+])
+/**
+ * directive for <div cm-notify>
+ */
+.directive('cmNotify', function () {
     return {
         priority: 10000,
         template: '<div growl></div>'

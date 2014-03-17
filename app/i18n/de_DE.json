@@ -1,4 +1,9 @@
 {
+    "CAMEO": {
+        "SLOGAN": "Safer Communication",
+        "DESCRIBE": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+        "MOEP": "moep"
+    },
 	"LOGIN": {
         "HEADING": "Login",
         "LABEL": {
@@ -6,6 +11,7 @@
             "REMEMBER_ME": "merken.",
             "AUTO": "Automatisches Login auswählen"
         },
+        "LINK": "login",
         "PLACEHOLDER": {
             "USERNAME": "Benutzername",
             "PASSWORD": "Passwort"
@@ -89,7 +95,8 @@
     },
 
     "TALKS": {
-        "HEADING": "Talks"
+        "HEADING": "Talks",
+        "MORE": "mehr laden"
     },
 
     "CONVERSATION" : {
@@ -198,6 +205,16 @@
             "LANDLINE": "Festnetz",
             "IP": "IP",
             "FAX": "Fax"
+        },
+        "FOOTER": {
+            "TALKS": "Talks",
+            "CONTACTS": "Kontakte",
+            "MEDIA": "Media"
         }
+    },
+
+    "MENU": {
+        "HEADER": "Menü",
+        "LOGOUT": "Logout"
     }
 }

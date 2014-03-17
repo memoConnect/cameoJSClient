@@ -1,6 +1,6 @@
 'use strict';
 
-var cmAuth = angular.module('cmAuth', ['cmApi', 'cmCrypt'])
+angular.module('cmAuth', ['cmApi', 'cmCrypt'])
 .service('cmAuth', [
     'cmApi',
     'cmCrypt',
