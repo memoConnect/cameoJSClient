@@ -1,0 +1,21 @@
+<div class="page-header">
+    <h1>Cockpit
+        <small>Welcome on board captain</small>
+    </h1>
+</div>
+
+
+<div ng-show="getTwoFactor">
+    Get some two factor dude.
+
+    <button ng-click="requestTwoFactorKey()" type="button" class="btn btn-primary btn-block">Send Key</button>
+
+
+</div>
+
+<div ng-hide="getTwoFactor">
+    nope
+    <div class="list-group">
+        <a ng-repeat="list in lists" href="#/{{list}}" class="list-group-item">{{list}}</a>
+    </div>
+</div>
