@@ -138,8 +138,8 @@ define([
         }
     ]);
     // app run handling
-    app.run(['$rootScope', '$location', 'cmUserModel', 'cmNotify',
-        function ($rootScope, $location, cmUserModel, cmNotify) {
+    app.run(['$rootScope', '$location', 'cmUserModel',
+        function ($rootScope, $location, cmUserModel) {
             $rootScope.$on("$routeChangeStart", function () {
                 // expections
                 var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/purl\/[a-zA-Z0-9]{1,})$/;
@@ -152,6 +152,17 @@ define([
                     }
                 } else if ($location.$$path == "/login") {
                     $location.path("/talks");
+                }
+            });
+
+            $rootScope.urlHistory = [];
+
+            $rootScope.$on('$routeChangeSuccess', function () {
+                var currentRoute = $location.$$absUrl.split('#')[1];
+                if(currentRoute.indexOf("/login") != -1)
+                    $rootScope.urlHistory = [];
+                else if(currentRoute !== $rootScope.urlHistory[$rootScope.urlHistory.length - 1]) {
+                    $rootScope.urlHistory.push(currentRoute);
                 }
             });
         }
