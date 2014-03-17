@@ -225,9 +225,13 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt', function(LocalS
 
     return LocalStorageService;
 }]).
-factory('cmLocalStorage',['LocalStorageService', function(LocalStorageService){
+factory('cmLocalStorage',['$rootScope','LocalStorageService', function($rootScope, LocalStorageService){
     var instanceMock = [{id:'',instance:{}}];
     var instances = [];
+
+    $rootScope.$on('logout', function(){
+        instances = [];
+    });
 
     return {
         /**

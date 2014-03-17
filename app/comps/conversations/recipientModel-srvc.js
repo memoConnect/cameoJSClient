@@ -1,7 +1,7 @@
 'use strict';
 
 function cmRecipientModel (cmConversationsAdapter, cmUserModel, cmAuth){
-    var Recipient = function(data){
+    var Recipient = function(id, data){
         this.id = '';
         this.displayName = '';
         this.cameoId = '';
@@ -43,7 +43,7 @@ function cmRecipientModel (cmConversationsAdapter, cmUserModel, cmAuth){
             }
         };
 
-        this.init(data);
+        this.init(id, data);
     };
 
     return Recipient;

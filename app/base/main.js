@@ -30,6 +30,7 @@ var config = {
         'cmNotify': 'shared/cmNotify',
         'cmLocalStorage': 'shared/cmLocalStorage',
         'cmUserModel': 'shared/cmUserModel',
+        'cmIdentity': 'shared/cmIdentity',
 
         // cameo modules/services
         'cmAuth': 'shared/cmAuth',
