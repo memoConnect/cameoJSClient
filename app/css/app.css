@@ -6,9 +6,9 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-size: 1em;
 }
 body {
+  font-size: 1em;
   width: 100%;
   background-color: #000000;
   cursor: default;
@@ -69,6 +69,9 @@ html[xmlns] .clearfix {
 }
 .mt30 {
   margin-top: 2rem;
+}
+.tac {
+  text-align: center;
 }
 .pos-tr {
   position: absolute;
@@ -165,9 +168,9 @@ html[xmlns] .clearfix {
   color: #02bed2;
 }
 .cm-btn-lg {
-  padding: 1rem 1rem;
-  font-size: 2em;
-  line-height: 1.55;
+  padding: 0.5rem 0.5rem;
+  font-size: 1em;
+  line-height: 1;
 }
 .cm-form-group {
   padding: 0.3em 1em;
@@ -229,7 +232,7 @@ html[xmlns] .clearfix {
   width: 1em;
 }
 .cm-lg-icon {
-  font-size: 2em;
+  font-size: 1.5em;
   vertical-align: middle;
 }
 .cm-page-header {
@@ -476,9 +479,6 @@ header.cm-header [cm-header-menu] .modal-backdrop {
 .cm-registration-ctn h4 {
   font-size: 0.875em;
 }
-.cm-registration-ctn a {
-  color: #ffffff !important;
-}
 .cm-registration-ctn .input-ctn,
 .cm-registration-ctn input {
   background-color: #f1f1f1;
@@ -607,7 +607,12 @@ textarea[cm-message-input] {
 .alert-mini-padding {
   padding: 0.3em;
 }
-/* modal */
+/* cm-language-select */
+[cm-language-select] {
+  position: absolute;
+  right: 0.7em;
+  top: 0.7em;
+}
 .cm-modal-with-title .modal-dialog {
   margin-top: 10em;
 }
@@ -632,10 +637,4 @@ textarea[cm-message-input] {
   top: 50%;
   left: 50%;
   z-index: 999;
-}
-/* cm-language-select */
-[cm-language-select] {
-  position: absolute;
-  right: 0.7em;
-  top: 0.7em;
 }

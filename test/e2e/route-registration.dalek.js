@@ -10,7 +10,7 @@ module.exports = {
                 .url(path+'#/registration', 'on route registration')
             .assert
                 .numberOfElements('.form-control')
-                    .is(6, '6 form-controls are present')
+                    .is(7, '7 form-controls are present')
             .click("a[href='#/terms']")
             // check terms link
             .assert
