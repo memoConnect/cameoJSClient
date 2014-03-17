@@ -230,22 +230,6 @@ html[xmlns] .clearfix {
   top: 0;
   top: 2px;
 }
-.form-signin .form-signin-heading {
-  color: #666666;
-  text-align: center;
-}
-.form-signin .form-control {
-  position: relative;
-  font-size: 16px;
-  height: auto;
-  padding: 10px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
 input[type="checkbox"] {
   border: none !important;
   box-shadow: none !important;
@@ -295,6 +279,16 @@ textarea[cm-message-input] {
 .alert-mini-padding {
   padding: 5px;
 }
+/* validate */
+.cm-alert {
+  font-size: 1.2em;
+  margin-bottom: 0;
+}
+.cm-alert .fa.cm-info {
+  color: #ff6600;
+  font-size: 2em;
+  vertical-align: middle;
+}
 /* modal */
 .cm-modal-with-title .modal-dialog {
   margin-top: 150px;
@@ -305,15 +299,6 @@ textarea[cm-message-input] {
   position: absolute;
   top: -80px;
   color: #02bed2;
-}
-.modal-dialog .cm-alert {
-  font-size: 1.2em;
-  margin-bottom: 0;
-}
-.modal-dialog .cm-alert .fa.cm-info {
-  color: #ff6600;
-  font-size: 2em;
-  vertical-align: middle;
 }
 .modal-spinner {
   position: fixed;
@@ -347,6 +332,22 @@ textarea[cm-message-input] {
 .cm-login-text {
   margin-top: 30px;
   color: rgba(255, 255, 255, 0.25);
+}
+.form-signin .form-signin-heading {
+  color: #666666;
+  text-align: center;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
 }
 /* Registration Screen */
 .cm-registration-ctn {

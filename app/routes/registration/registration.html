@@ -14,11 +14,13 @@
                     <div class="input-ctn">
                         <div class="input-group">
                             <input id="loginName" name="loginName" type="text" class="form-control" ng-model="formData.loginName" ng-blur="checkLoginName();" ng-minlength="6" ng-maxlength="60" maxlength="60" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}}" required />
-                            <span class="input-group-addon"><i class="fa cm-checkbox-right"></i></span>
+                            <span class="input-group-addon"><i class="fa" ng-class="{'cm-checkbox-wrong':registrationForm.loginName.$invalid,'cm-checkbox-right':!registrationForm.loginName.$invalid}"></i></span>
                         </div>
                     </div>
                     <div class="cm-alert" ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid">
-                        <div ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid && registrationForm.loginName.$error.minlength"><i class="fa cm-info"></i>{{'REGISTER.INFO.MIN_LETTER_COUNT' | cmTranslate : {count: 6} }}</div>
+                        <div ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid && registrationForm.loginName.$error.minlength">
+                            <i class="fa cm-info"></i> {{'REGISTER.INFO.MIN_LETTER_COUNT' | cmTranslate : {count: 6} }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -73,9 +75,9 @@
             </div>
 
             <!--<div class="form-group">-->
-                <!--<div class="col-sm-offset-2 col-sm-4">-->
-                    <!--<button type="submit" class="btn btn-primary btn-sm" ng-disabled="stateBusy">{{'REGISTER.LABEL.SUBMIT' |cmTranslate}}</button>-->
-                <!--</div>-->
+            <!--<div class="col-sm-offset-2 col-sm-4">-->
+            <!--<button type="submit" class="btn btn-primary btn-sm" ng-disabled="stateBusy">{{'REGISTER.LABEL.SUBMIT' |cmTranslate}}</button>-->
+            <!--</div>-->
             <!--</div>-->
         </form>
     </div>
