@@ -1,4 +1,18 @@
 <div class="page-header">
-    <h1>Cockpit <small>Edit of {{name}}</small></h1>
+    <h1>Cockpit
+        <small>Edit of {{elementName}}</small>
+    </h1>
 </div>
+{{formData}}
+
+<div class="well well-lg">
+    <div class="input-group">
+        <div ng-repeat="(key, value) in formData">
+            <span class="label label-default">{{key}}</span>
+            <input name="{{key}} type=" text" class="form-control" ng-model="formData[key]" value="{{value}}">
+        </div>
+    </div>
+    <button ng-click="sendElement()" class="btn btn-default">save changes</button>
+</div>
+
 
