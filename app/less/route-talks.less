@@ -1,13 +1,43 @@
 .cm-list-group-item{
   a{
-    .cm-avatar{width:50px;height:50px;background:@cm-grey;float:left;margin-right:10px}
-    .cm-message-info{float:right;padding:0 5px;font-size:1em;text-align:right;color:@cm-black}
-    .cm-message-body{margin-left:60px;margin-right:160px}
-    .cm-recipients{
-      .cm-ci-color;position:relative;display:inline-block;
-      i.fa.cm-group{font-size:3.5em}
-      .cm-recipient-qty{font-size:0.9em;color:@cm-white;position:absolute;left:13px;bottom:9px;width:1.4em;text-align:center}
+    .cm-avatar{
+      width:3em;
+      height:3em;
+      background:@cm-grey;
+      float:left;
+      margin-right:0.2em
     }
-    [cm-message-small] div{word-wrap:break-word}
+    .cm-message-info{
+      float:right;
+      padding:0 0.1em;
+      font-size:0.5em;
+      text-align:right;
+      color:@cm-black
+    }
+    .cm-message-body{
+      font-size:0.8em;
+      margin-left:4em;
+      margin-right:10em
+    }
+    .cm-recipients{
+      .cm-ci-color;
+      position:relative;
+      display:inline-block;
+      i.fa.cm-group{
+        font-size:3.5em
+      }
+      .cm-recipient-qty{
+        font-size:0.9em;
+        color:#ffffff;
+        position:absolute;
+        left:0.9em;
+        bottom:0.8em;
+        width:1.4em;
+        text-align:center;
+      }
+    }
+    [cm-message-small] div{
+      word-wrap:break-word
+    }
   }
 }

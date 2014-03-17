@@ -238,15 +238,15 @@ html[xmlns] .clearfix {
 .cm-page-header {
   background: rgba(255, 255, 255, 0.5);
   position: relative;
-  height: 100px;
+  height: 5em;
 }
 .cm-page-header h1 {
   text-wrap: none;
   text-align: center;
   color: #666666;
-  font-size: 2em;
+  font-size: 1.5em;
   margin: 0;
-  padding: 5px 15px;
+  padding: 0.2em;
 }
 .cm-page-header .cm-add-edge-btn {
   font-size: 5em;
@@ -354,7 +354,7 @@ header.cm-header {
   z-index: 100;
   background: #000000;
   font-size: 1.4em;
-  line-height: 2em;
+  line-height: 2.1em;
 }
 header.cm-header i {
   cursor: pointer;
@@ -366,7 +366,7 @@ header.cm-header [cm-header-back] {
   color: #ffffff;
 }
 header.cm-header [cm-header-back] i {
-  padding: 1em 0.6em 0.6em 0.3em;
+  padding: 0 0.6em 0 0.3em;
 }
 header.cm-header [cm-header-logo] {
   color: #02bed2;
@@ -379,13 +379,13 @@ header.cm-header [cm-header-menu] {
   top: 0;
 }
 header.cm-header [cm-header-menu] i.fa.cm-menu.cm-handler {
-  padding: 1em 0 0.6em 0.6em;
+  padding: 0 0 0 0.6em;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer {
   position: absolute;
   right: 0;
   top: 0;
-  width: 20em;
+  width: 10em;
   font-size: 0.7em;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer .cm-nose-wrapper {
@@ -395,8 +395,7 @@ header.cm-header [cm-header-menu] .cm-menu-layer .cm-nose-wrapper {
 }
 header.cm-header [cm-header-menu] .cm-menu-layer .cm-nose-wrapper i {
   position: relative;
-  top: 0.4em;
-  font-size: 2em;
+  font-size: 3em;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer .cm-list-group-item {
   background: #ffffff;
@@ -405,7 +404,7 @@ header.cm-header [cm-header-menu] .cm-menu-layer .cm-list-group-item {
   cursor: pointer;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer .cm-list-group-item i {
-  width: 3.5em;
+  width: 1.5em;
   text-align: center;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer .cm-list-group-item a,
@@ -500,22 +499,23 @@ header.cm-header [cm-header-menu] .modal-backdrop {
   height: 0.3em !important;
 }
 .cm-list-group-item a .cm-avatar {
-  width: 50px;
-  height: 50px;
+  width: 3em;
+  height: 3em;
   background: #666666;
   float: left;
-  margin-right: 10px;
+  margin-right: 0.2em;
 }
 .cm-list-group-item a .cm-message-info {
   float: right;
-  padding: 0 5px;
-  font-size: 1em;
+  padding: 0 0.1em;
+  font-size: 0.5em;
   text-align: right;
   color: #000000;
 }
 .cm-list-group-item a .cm-message-body {
-  margin-left: 60px;
-  margin-right: 160px;
+  font-size: 0.8em;
+  margin-left: 4em;
+  margin-right: 10em;
 }
 .cm-list-group-item a .cm-recipients {
   color: #02bed2;
@@ -529,8 +529,8 @@ header.cm-header [cm-header-menu] .modal-backdrop {
   font-size: 0.9em;
   color: #ffffff;
   position: absolute;
-  left: 13px;
-  bottom: 9px;
+  left: 0.9em;
+  bottom: 0.8em;
   width: 1.4em;
   text-align: center;
 }

@@ -7,26 +7,26 @@ header.cm-header{
   z-index:100;
   background:@cm-bg-color;
   font-size:1.4em;
-  line-height:2em;
+  line-height:2.1em;
   
   i{cursor:pointer}
   [cm-header-back]{
     position:absolute;left:0;top:0;color:@cm-white;
-    i{padding:1em 0.6em 0.6em 0.3em}
+    i{padding:0 0.6em 0 0.3em}
   }
   [cm-header-logo]{.cm-ci-color;text-align:center;}
   [cm-header-menu]{
     .cm-ci-color;position:absolute;right:0;top:0;
-    i.fa.cm-menu.cm-handler{padding:1em 0 0.6em 0.6em}
+    i.fa.cm-menu.cm-handler{padding:0 0 0 0.6em}
     .cm-menu-layer{
-      .pos-tr;width:20em;font-size:0.7em;
+      .pos-tr;width:10em;font-size:0.7em;
       .cm-nose-wrapper{
         height:@header-height;.cm-ci-color;text-align:right;
-        i{position:relative;top:0.4em;font-size:2em}
+        i{position:relative;font-size:3em}
       }
       .cm-list-group-item{
         background:@cm-white;padding:0;white-space:nowrap;cursor:pointer;
-        i{width:3.5em;text-align:center}
+        i{width:1.5em;text-align:center}
         a,span{display:inline-block;width:100%}
         a:hover{.cm-ci-color;text-decoration:none}
         &:hover{.cm-ci-color}
