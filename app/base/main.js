@@ -5,6 +5,7 @@ var config = {
     paths: {
         'app': 'base/app',
         'env': 'base/env',
+        'screen': 'base/screen',
         // angular library
         'angular': 'vendor/angular/angular',
         'angular-route': 'vendor/angular/angular-route',
@@ -108,7 +109,7 @@ var config = {
     },
     // kick start application
 
-    deps: ['env','app']
+    deps: ['screen', 'env','app']
 }
 
 function addPackage(package_name, package) {

@@ -219,6 +219,7 @@
 
     "MENU": {
         "HEADER": "Menü",
+        "SETTINGS": "Einstellungen",
         "LOGOUT": "Logout"
     }
 }

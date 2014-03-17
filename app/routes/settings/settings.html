@@ -1,8 +1,10 @@
-<div ng-controller="SettingsCtrl">
-    <div class="page-header">
-        <h1>{{'SETTINGS.WELCOME'|cmTranslate}}</h1>
-    </div>
+<header class="cm-header">
+    <div cm-header-back page-title="'SETTINGS.WELCOME'|cmTranslate"></div>
+    <div cm-header-logo></div>
+    <div cm-header-menu></div>
+</header>
 
+<div ng-controller="SettingsCtrl" class="with-header">
     <div cm-nav-tabs></div>
 
     <div ng-if="activeTab == 'SPINNER'">
