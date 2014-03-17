@@ -1,19 +1,13 @@
-<div class="page-header">
-    <h1>Cockpit
-        <small>Welcome on board captain</small>
-    </h1>
-</div>
+<div class="content">
 
-<div ng-hide="authorized">
+    <div ng-hide="authorized">
+        <div class="alert alert-danger">Not Authorized!</div>
+    </div>
 
-    <div class="alert alert-danger">Not Authorized!</div>
-
-</div>
-
-
-<div ng-show="authorized">
-    List of Lists
-    <div class="list-group">
-        <a ng-repeat="list in lists" href="#/{{list}}" class="list-group-item">{{list}}</a>
+    <div ng-show="authorized">
+        <h2>List of Lists</h2>
+        <div class="list-group">
+            <a ng-repeat="list in lists" href="#/{{list}}" class="list-group-item">{{list}}</a>
+        </div>
     </div>
 </div>

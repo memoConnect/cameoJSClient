@@ -21,14 +21,19 @@ cockpitEdit.controller("cockpitMainCtrl", [
                 url: '/lists',
                 exp_ok: 'lists'
             }).then(
-                function (lists)  {
+                function (lists) {
+                    $scope.authorized = true
                     $scope.lists = lists
                 },
-                function(data, data1) {
+                function (data, data1) {
                     console.log(data1)
 //                    if (data.twoFactorRequired) {
-                        twoFactorModal.show()
-//                    }
+                    twoFactorModal.show().then(
+                        function () {
+                            $scope.authorized = true
+                            getListing()
+                        }
+                    )
                 }
             )
         }

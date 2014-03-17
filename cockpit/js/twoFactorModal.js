@@ -19,24 +19,19 @@ angular.module("twoFactorModal", ["cmLogger", "ui.bootstrap", "cmAuth"])
                             cmAuth.requestTwoFactorToken(key)
                                 .then(
                                     function(data) {
-                                        console.log("TOKEN: " + data)
                                         cmAuth.storeTwoFactorToken(data)
+                                        $modalInstance.close()
+                                    },
+                                    function() {
+                                        $scope.invalidKey = true
                                     }
                                 )
                         }
                     }
                 });
+                console.dir(modalInstance.result)
 
-                modalInstance.result
-                    .then(
-                    function () {
-
-                    },
-                    function () {
-                        $scope.isModalVisible = false;
-                    }
-                );
-
+                return modalInstance.result
             }
 
             return {show: showTwoFactorModal}

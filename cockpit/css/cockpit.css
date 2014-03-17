@@ -2,6 +2,7 @@
     background: rgba(255,255,255,0.7);
     padding-top: 30px;
     margin-top: 0;
+    margin-bottom: 0;
 }
 
 .page-header h1 {
@@ -10,6 +11,18 @@
     padding-left: 10px;
 }
 
+a {
+    color: inherit !important;
+    text-decoration: none !important;
+
+}
+
 .twoFactor {
     background: rgba(255,255,255,0.7);
+}
+
+
+.content {
+    background: rgba(255,255,255,1);
+    padding: 2em;
 }
