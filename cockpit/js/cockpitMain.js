@@ -33,12 +33,5 @@ cockpitEdit.controller("cockpitMainCtrl", [
             )
         }
 
-        function requestTwoFactorKey() {
-            cmAuth.requestTwoFactorKey()
-        }
-
-        function confirmTwoFactorKey(key) {
-            cmAuth.requestTwoFactorToken(key)
-        }
     }
 ])

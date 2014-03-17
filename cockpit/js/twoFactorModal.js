@@ -1,17 +1,29 @@
-angular.module("twoFactorModal", ["cmLogger", "ui.bootstrap"])
+angular.module("twoFactorModal", ["cmLogger", "ui.bootstrap", "cmAuth"])
 
-    .service("twoFactorModal", ["$modal",
+    .service("twoFactorModal", ["$modal", "cmAuth",
 
-        function ($modal) {
+        function ($modal, cmAuth) {
 
             function showTwoFactorModal() {
 
                 var modalInstance = $modal.open({
                     templateUrl: "/cockpit/twoFactorModal.html",
                     controller: function ($rootScope, $scope, $modalInstance) {
-                        $rootScope.$on('cmLogin:success', function(){
-                            $modalInstance.close();
-                        })
+
+
+                        $scope.requestTwoFactorKey = function() {
+                           cmAuth.requestTwoFactorKey()
+                        }
+
+                        $scope.requestTwoFactorToken = function(key) {
+                            cmAuth.requestTwoFactorToken(key)
+                                .then(
+                                    function(data) {
+                                        console.log("TOKEN: " + data)
+                                        cmAuth.storeTwoFactorToken(data)
+                                    }
+                                )
+                        }
                     }
                 });
 
