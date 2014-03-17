@@ -26,6 +26,10 @@ angular.module('cmUi', [
     cmHeaderBack
 ])
 
+.directive('cmHeaderIdentity',[
+    cmHeaderIdentity
+])
+
 .directive('cmHeaderLogo',[
     cmHeaderLogo
 ])

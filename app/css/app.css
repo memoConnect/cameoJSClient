@@ -10,12 +10,12 @@ body {
 }
 body {
   width: 100%;
-  background-color: #000000 /*overflow:hidden;<-zerstört das scrollen in talks im ff*/;
+  background-color: #000000;
 }
 pre {
   text-align: left;
 }
-.without-box-radius {
+.without-border-radius {
   -webkit-border-radius: 0!important;
   -moz-border-radius: 0!important;
   border-radius: 0 !important;
@@ -109,6 +109,9 @@ html[xmlns] .clearfix {
 .cm-ci-color-bg {
   background-color: #02bed2;
 }
+.cm-btn:hover {
+  color: #ffffff;
+}
 .cm-btn-black,
 .cm-btn-white {
   width: 172px;
@@ -116,14 +119,17 @@ html[xmlns] .clearfix {
 }
 .cm-btn-black {
   background-color: #000;
-  color: #ffffff;
+  color: #02bed2;
   box-shadow: 0px 0px 5px 5px rgba(255, 255, 255, 0.15);
+}
+.cm-btn-black:hover {
+  color: #ffffff;
 }
 .cm-btn-white {
   background-color: rgba(255, 255, 255, 0.15);
   color: #ffffff;
 }
-.cm-ci-color {
+.cm-btn-white:hover {
   color: #02bed2;
 }
 .cm-btn,
@@ -152,26 +158,18 @@ html[xmlns] .clearfix {
 }
 .cm-form-group .cm-form-control {
   background: #ededed;
-  padding: 0 20px 5px 20px;
+  padding: 5px 20px;
 }
 .cm-form-group .cm-form-control input,
 .cm-form-group .cm-form-control select {
+  background: none!important;
+  border: none !important;
   -webkit-border-radius: 0!important;
   -moz-border-radius: 0!important;
-  border-radius: 0!important;
-  background: none!important;
-  border: none!important;
+  border-radius: 0 !important;
   -webkit-box-shadow: none!important;
   -moz-box-shadow: none!important;
   box-shadow: none !important;
-}
-.cm-form-group .cm-form-control input {
-  padding-bottom: 0;
-}
-.cm-form-group .cm-form-control .cm-form-control-inputter {
-  border: #cccccc solid 2px;
-  border-top: 0;
-  height: 5px;
 }
 .cm-alert {
   padding: 15px;
@@ -232,6 +230,11 @@ html[xmlns] .clearfix {
 }
 input[type="checkbox"] {
   border: none !important;
+  -webkit-border-radius: 0!important;
+  -moz-border-radius: 0!important;
+  border-radius: 0 !important;
+  -webkit-box-shadow: none!important;
+  -moz-box-shadow: none!important;
   box-shadow: none !important;
 }
 .form-registry-head {

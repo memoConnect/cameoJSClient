@@ -245,8 +245,7 @@ addPackage('pckUi',{
         'cmLanguage',
         'cmUserModel',
         'util-spin',
-        'ui-bootstrap',
-        'ui-bootstrap-tpls'
+        'ui-bootstrap'
     ],
     resources : [
         'shared/ui/adaptive-change-drtv',  
@@ -254,6 +253,7 @@ addPackage('pckUi',{
         'shared/ui/point-spinner-drtv',
         'shared/ui/spinner-drtv',
         'shared/ui/header-back-drtv',
+        'shared/ui/header-identity-drtv',
         'shared/ui/header-logo-drtv',
         'shared/ui/header-menu-drtv',
         'shared/ui/footer-drtv'
