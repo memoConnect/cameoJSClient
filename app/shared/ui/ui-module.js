@@ -1,5 +1,6 @@
 angular.module('cmUi', [
     'cmLanguage',
+    'cmUserModel',
     'ui.bootstrap'
 ])
 
@@ -20,11 +21,17 @@ angular.module('cmUi', [
     cmNavTabs
 ])
 
+.directive('cmHeaderBack',[
+    '$window',
+    cmHeaderBack
+])
+
 .directive('cmHeaderLogo',[
     cmHeaderLogo
 ])
 
 .directive('cmHeaderMenu',[
+    'cmUserModel',
     cmHeaderMenu
 ])
 

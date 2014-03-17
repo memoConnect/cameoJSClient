@@ -1,3 +1,4 @@
+/* common styles */
 html {
   font-size: 1em;
 }
@@ -32,6 +33,23 @@ pre {
   -webkit-box-shadow: none!important;
   -moz-box-shadow: none!important;
   box-shadow: none !important;
+}
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+.clearfix {
+  display: inline-block;
+}
+html[xmlns] .clearfix {
+  display: block;
+}
+* html .clearfix {
+  height: 1%;
 }
 .mt5 {
   margin-top: 5px;
@@ -71,6 +89,10 @@ pre {
   bottom: 0;
   left: 0;
 }
+.cm-fl {
+  float: left;
+}
+/* bootstrap overwrites */
 #cm-app-background {
   width: 100%;
   min-height: 100%;
@@ -83,6 +105,9 @@ pre {
 }
 .cm-ci-color {
   color: #02bed2;
+}
+.cm-ci-color-bg {
+  background-color: #02bed2;
 }
 .cm-btn-black,
 .cm-btn-white {
@@ -154,6 +179,9 @@ pre {
 .center-block {
   max-width: 768px;
 }
+.cm-center {
+  text-align: center;
+}
 .container-padding {
   padding: 15px;
 }
@@ -162,6 +190,10 @@ pre {
 }
 .input-group-addon.self-size i {
   width: 14px;
+}
+.cm-lg-icon {
+  font-size: 2em;
+  vertical-align: middle;
 }
 .cm-page-header {
   background: rgba(255, 255, 255, 0.5);
@@ -177,13 +209,13 @@ pre {
   padding: 5px 15px;
 }
 .cm-page-header .cm-add-edge-btn {
+  font-size: 5em;
   position: absolute;
   right: 0;
   top: 0;
   padding: 0;
 }
 .cm-page-header .cm-add-edge-btn i.cm-add-edge {
-  font-size: 5em;
   z-index: 0;
   color: #02bed2;
   position: absolute;
@@ -191,7 +223,6 @@ pre {
   top: 0;
 }
 .cm-page-header .cm-add-edge-btn i.cm-add {
-  font-size: 2.3em;
   z-index: 1;
   color: #ffffff;
   position: absolute;
@@ -233,6 +264,7 @@ li.message-list {
   word-wrap: break-word;
   background-color: #d3d3d3;
 }
+/* cameo directives */
 cm-message,
 cm-conversation,
 cm-message-input {
@@ -304,11 +336,13 @@ textarea[cm-message-input] {
   width: 460px;
   text-align: center;
   margin: 0 auto;
-  padding: 15px;
+  padding: 0px 15px;
 }
 .cm-login-rhino {
+  margin-top: 10%;
   font-size: 25em;
   color: rgba(0, 0, 0, 0.7);
+  position: relative;
 }
 .cm-login-text {
   margin-top: 30px;
@@ -350,27 +384,67 @@ textarea[cm-message-input] {
 }
 /* header */
 header.cm-header {
+  height: 64px;
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
   z-index: 100;
   background: #000000;
-  font-size: 1.2em;
+  font-size: 2.4em;
+  line-height: 2em;
+}
+header.cm-header i {
+  cursor: pointer;
+}
+header.cm-header [cm-header-back] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #ffffff;
+}
+header.cm-header [cm-header-back] i {
+  padding: 15px 10px 10px 5px;
 }
 header.cm-header [cm-header-logo] {
+  color: #02bed2;
   text-align: center;
-  padding-bottom: 10px;
-}
-header.cm-header [cm-header-logo] i {
-  margin-top: 20px;
-  cursor: pointer;
 }
 header.cm-header [cm-header-menu] {
+  color: #02bed2;
   position: absolute;
-  right: -13px;
-  top: 18px;
-  cursor: pointer;
+  right: 0;
+  top: 0;
+}
+header.cm-header [cm-header-menu] i.fa.cm-menu {
+  padding: 15px 0 10px 10px;
+}
+header.cm-header [cm-header-menu] .cm-menu-layer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 250px;
+}
+header.cm-header [cm-header-menu] .cm-menu-layer .cm-nose-wrapper {
+  height: 64px;
+  color: #02bed2;
+  text-align: right;
+  font-size: 1.5em;
+}
+header.cm-header [cm-header-menu] .cm-menu-layer .cm-nose-wrapper i {
+  position: relative;
+  top: 2px;
+}
+header.cm-header [cm-header-menu] .cm-menu-layer .cm-list-group-item {
+  background: #ffffff;
+  padding: 0;
+  border: 0;
+}
+header.cm-header [cm-header-menu] .cm-menu-layer .cm-menu-header {
+  background-color: #02bed2;
+}
+header.cm-header [cm-header-menu] .cm-menu-layer .cm-menu-header a {
+  color: #ffffff;
 }
 .with-header {
   padding-top: 64px !important;
@@ -460,13 +534,15 @@ footer.without-drtv {
   padding: 0 5px;
   font-size: 1em;
   text-align: right;
+  color: #000000;
 }
-.cm-list-group-item a cm-message-small div {
-  float: none;
+.cm-list-group-item a .cm-message-body {
+  margin-left: 60px;
+  margin-right: 160px;
+}
+.cm-list-group-item a [cm-message-small] div {
+  word-wrap: break-word;
 }
 .cm-list-group-item a:after {
-  clear: left;
-}
-.cm-list-group-item:after {
   clear: both;
 }

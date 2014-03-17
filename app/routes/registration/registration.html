@@ -1,10 +1,5 @@
 <header class="cm-header">
-    <div cm-header-back></div>
-
-    <!--<div>-->
-        <!--{{'REGISTER.HEADING' | cmTranslate}}-->
-    <!--</div>-->
-
+    <div cm-header-back page-title="'REGISTER.HEADING'|cmTranslate"></div>
     <div cm-header-logo></div>
 </header>
 
@@ -19,7 +14,7 @@
                     <div class="input-ctn">
                         <div class="input-group">
                             <input id="loginName" name="loginName" type="text" class="form-control" ng-model="formData.loginName" ng-blur="checkLoginName();" ng-minlength="6" ng-maxlength="60" maxlength="60" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}}" required />
-                            <span class="input-group-addon"><i class="fa cm-check-circle"></i></span>
+                            <span class="input-group-addon"><i class="fa cm-checkbox-right"></i></span>
                         </div>
                     </div>
                     <div class="cm-alert" ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid">
@@ -86,7 +81,7 @@
     </div>
 
 <footer class="without-drtv">
-    <button class="btn cm-btn-primary cm-btn-footer-fixed" ng-click="createUser()">{{'REGISTER.LABEL.SUBMIT' |cmTranslate}} <i class="fa cm-check-circle"></i></button>
+    <button class="btn cm-btn-primary cm-btn-footer-fixed" ng-click="createUser()">{{'REGISTER.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i></button>
 </footer>
 
 </div>
