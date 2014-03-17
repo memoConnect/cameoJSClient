@@ -12,6 +12,7 @@ cockpitEdit.controller("cockpitEditCtrl", [
         $scope.elementNameAttributes = {}
         $scope.elementAttributeUpdates = {}
         $scope.formData = {}
+        $scope.formDataEditState = {}
 
         cmApi.get({
             url: '/' + $scope.elementName + '/' + $scope.elementNameId
@@ -20,9 +21,8 @@ cockpitEdit.controller("cockpitEditCtrl", [
                 if (data.attributes.length > 0) {
                     $scope.elementNameAttributes = data.attributes
                     angular.forEach($scope.elementNameAttributes, function (elementAttributes) {
-                        angular.forEach(elementAttributes, function (elementAttributeValue, elementAttributeKey) {
-                            $scope.formData[elementAttributeKey] = elementAttributeValue
-                        })
+                        $scope.formData[elementAttributes.attributeName] = elementAttributes.attributeData
+                        $scope.formDataEditState[elementAttributes.attributeName] = elementAttributes.attributeIsEditable
                     })
                 }
             },
@@ -32,16 +32,18 @@ cockpitEdit.controller("cockpitEditCtrl", [
         )
 
         /*
-        this function is used to store changes back to backend
+         this function is used to store changes back to backend
          */
         $scope.sendElement = function () {
 
             //get changes from formData
             angular.forEach($scope.elementNameAttributes, function (elementAttributes) {
-                angular.forEach(elementAttributes, function (elementAttributeValue, elementAttributeKey) {
-                    if (elementAttributes[elementAttributeKey] != $scope.formData[elementAttributeKey])
-                        $scope.elementAttributeUpdates[elementAttributeKey] = $scope.formData[elementAttributeKey]
-                })
+                if (elementAttributes.attributeData != $scope.formData[elementAttributes.attributeName]) {
+                    $scope.elementAttributeUpdates[elementAttributes.attributeName] = $scope.formData[elementAttributes.attributeName]
+                    cmLogger.debug(elementAttributes.attributeName)
+                    cmLogger.debug($scope.elementAttributeUpdates[elementAttributes.attributeName])
+                }
+
             })
 
 
