@@ -6,6 +6,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-size: 1em;
 }
 body {
   width: 100%;
@@ -52,22 +53,22 @@ html[xmlns] .clearfix {
   height: 1%;
 }
 .mt5 {
-  margin-top: 5px;
+  margin-top: 0.3rem;
 }
 .mb5 {
-  margin-bottom: 5px;
+  margin-bottom: 0.3rem;
 }
 .mb10 {
-  margin-bottom: 10px !important;
+  margin-bottom: 0.6rem !important;
 }
 .mb30 {
-  margin-bottom: 30px;
+  margin-bottom: 2rem;
 }
 .mr30 {
-  margin-right: 30px;
+  margin-right: 2rem;
 }
 .mt30 {
-  margin-top: 30px;
+  margin-top: 2rem;
 }
 .pos-tr {
   position: absolute;
@@ -113,13 +114,29 @@ html[xmlns] .clearfix {
 }
 .cm-btn-black,
 .cm-btn-white {
-  width: 172px;
-  height: 42px;
+  width: 8em;
+  height: 3em;
+}
+.btn {
+  -moz-user-select: none;
+  background-image: none;
+  border: 0.05em solid rgba(0, 0, 0, 0);
+  border-radius: 0.25em;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1em;
+  font-weight: normal;
+  line-height: 1.42857;
+  margin-bottom: 0;
+  padding: 0.4em 0.8em;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 .cm-btn-black {
   background-color: #000;
   color: #02bed2;
-  box-shadow: 0px 0px 5px 5px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0.3em 0.3em rgba(255, 255, 255, 0.15);
 }
 .cm-btn-black:hover {
   color: #ffffff;
@@ -148,16 +165,16 @@ html[xmlns] .clearfix {
   color: #02bed2;
 }
 .cm-btn-lg {
-  padding: 15px 16px;
-  font-size: 25px;
+  padding: 1rem 1rem;
+  font-size: 2em;
   line-height: 1.55;
 }
 .cm-form-group {
-  padding: 5px 15px;
+  padding: 0.3em 1em;
 }
 .cm-form-group .cm-form-control {
   background: #ededed;
-  padding: 5px 20px;
+  padding: 0.3em 1.4em;
 }
 .cm-form-group .cm-form-control input,
 .cm-form-group .cm-form-control select {
@@ -171,22 +188,22 @@ html[xmlns] .clearfix {
   box-shadow: none !important;
 }
 .cm-alert {
-  padding: 15px;
+  padding: 1em;
 }
 .center-block {
-  max-width: 768px;
+  /*max-width:768px*/
 }
 .cm-center {
   text-align: center;
 }
 .container-padding {
-  padding: 15px;
+  padding: 1em;
 }
 .input-group-addon {
   background-color: transparent;
 }
 .input-group-addon.self-size i {
-  width: 14px;
+  width: 1em;
 }
 .cm-lg-icon {
   font-size: 2em;
@@ -313,18 +330,18 @@ footer.without-drtv {
   background-color: #000000;
   padding: 1px;
   font-size: 1.2em;
-  height: 70px;
+  height: 5.5em;
   text-align: center;
   margin: 0 auto;
 }
 .with-footer {
-  padding-bottom: 70px;
+  padding-bottom: 5.5em;
 }
 .cm-btn-footer-fixed {
   padding-top: 20px;
 }
 header.cm-header {
-  height: 64px;
+  height: 5em;
   position: fixed;
   left: 0;
   right: 0;
@@ -367,7 +384,7 @@ header.cm-header [cm-header-menu] .cm-menu-layer {
   font-size: 0.7em;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer .cm-nose-wrapper {
-  height: 64px;
+  height: 5em;
   color: #02bed2;
   text-align: right;
 }
@@ -413,23 +430,23 @@ header.cm-header [cm-header-menu] .cm-menu-layer i {
   vertical-align: middle;
 }
 .with-header {
-  padding-top: 64px !important;
+  padding-top: 5em !important;
 }
 .login-screen-start {
-  width: 100%;
-  height: 45%;
+  display: block;
+  min-height: 14em;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.7);
   color: #ffffff;
-  position: absolute;
   bottom: 0;
   left: 0;
 }
 .cm-login-container {
-  width: 460px;
+  display: block;
   text-align: center;
   margin: 0 auto;
-  padding: 0px 15px;
+  padding: 0px 1em;
+  padding-bottom: 5em;
 }
 .cm-login-rhino {
   margin-top: 10%;
@@ -438,7 +455,7 @@ header.cm-header [cm-header-menu] .cm-menu-layer i {
   position: relative;
 }
 .cm-login-text {
-  margin-top: 30px;
+  margin-top: 2em;
   color: rgba(255, 255, 255, 0.25);
 }
 .cm-registration-ctn {
@@ -447,7 +464,7 @@ header.cm-header [cm-header-menu] .cm-menu-layer i {
   text-align: left;
   background-color: rgba(0, 0, 0, 0.7);
   color: #fff;
-  padding: 64px 40px 0 40px;
+  padding: 5em 40px 0 40px;
   position: absolute;
   left: 0;
 }
