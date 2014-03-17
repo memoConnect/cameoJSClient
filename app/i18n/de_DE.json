@@ -174,7 +174,7 @@
         },
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",
-            "PLACEHOLDER": "example@example.com",
+            "PLACEHOLDER": "E-Mail",
             "INFO": {
                 "INVALID": "Bitte geben Sie eine richtige E-Mail Adresse an!",
                 "EMPTY": "Die E-Mail Adresse ist leer"
@@ -182,7 +182,7 @@
         },
         "VALIDATE_PHONE": {
             "LABEL": "Telefon",
-            "PLACEHOLDER": "+49...",
+            "PLACEHOLDER": "Telefon",
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
                 "EMPTY": "Das Telefonfeld ist leer"
