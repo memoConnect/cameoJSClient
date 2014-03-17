@@ -20,6 +20,19 @@ angular.module('cmUi', [
     cmNavTabs
 ])
 
+.directive('cmHeaderLogo',[
+    cmHeaderLogo
+])
+
+.directive('cmHeaderMenu',[
+    cmHeaderMenu
+])
+
+.directive('cmFooter',[
+    '$location',
+    cmFooter
+])
+
 .filter('cmDigits', [
     function(){
         return function(number, digits){

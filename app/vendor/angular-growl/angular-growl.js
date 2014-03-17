@@ -4,7 +4,7 @@
  * Copyright (c) 2013 Marco Rinck; Licensed MIT
  */
 angular
-.module('angular-growl',[]),
+.module('angular-growl',[]);
 
 angular
 .module('angular-growl')
