@@ -19,9 +19,9 @@
             <button ng-click="download()">
                 {{fileId}}<br/>
                 {{fileName}} ({{fileSize | cmFileSize}}) <br/>
-                <progress value="{{progress/fileSize}}" max =""></progress>
+                <progress value="{{progress}}" max =""></progress>
                 <br/>
-                {{progress/file.size*100 | cmDigits : 2}}%
+                {{progress*100 | cmDigits : 2}}%
             </button>
         </cm-download>
         <pre ng-if ="!(hasCaptcha || captchaRequest || hasAsset)" style ="text-align:left">{{ message.decryptedBody }}
