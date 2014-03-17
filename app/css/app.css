@@ -98,8 +98,8 @@ html[xmlns] .clearfix {
   min-height: 100%;
   margin: 0;
   padding: 0;
-  background-size: cover;
-  background-position: center;
+  background-size: 100% auto;
+  background-position: 0 0;
   background-repeat: no-repeat;
   background-image: url('../gfx/backgroundStart.jpg');
 }
@@ -171,6 +171,29 @@ html[xmlns] .clearfix {
 }
 .cm-form-group {
   padding: 0.3em 1em;
+}
+.cm-form-group .cm-form-control {
+  background: #ededed;
+  padding: 0 1.5em 0.3em 1.5em;
+}
+.cm-form-group .cm-form-control input,
+.cm-form-group .cm-form-control select {
+  -webkit-border-radius: 0!important;
+  -moz-border-radius: 0!important;
+  border-radius: 0!important;
+  background: none!important;
+  border: none!important;
+  -webkit-box-shadow: none!important;
+  -moz-box-shadow: none!important;
+  box-shadow: none !important;
+}
+.cm-form-group .cm-form-control input {
+  padding-bottom: 0;
+}
+.cm-form-group .cm-form-control .cm-form-control-inputter {
+  border: #cccccc solid 0.15em;
+  border-top: 0;
+  height: 0.3em;
 }
 .cm-form-group .cm-form-control {
   background: #ededed;
@@ -309,25 +332,25 @@ footer.without-drtv {
   background-color: #000000;
   padding: 1px;
   font-size: 1.2em;
-  height: 5.5em;
+  height: 5.5rem;
   text-align: center;
   margin: 0 auto;
 }
 .with-footer {
-  padding-bottom: 5.5em;
+  padding-bottom: 5.5rem;
 }
 .cm-btn-footer-fixed {
   padding-top: 20px;
 }
 header.cm-header {
-  height: 5em;
+  height: 3rem;
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
   z-index: 100;
   background: #000000;
-  font-size: 2.4em;
+  font-size: 1.4em;
   line-height: 2em;
 }
 header.cm-header i {
@@ -340,7 +363,7 @@ header.cm-header [cm-header-back] {
   color: #ffffff;
 }
 header.cm-header [cm-header-back] i {
-  padding: 15px 10px 10px 5px;
+  padding: 1em 0.6em 0.6em 0.3em;
 }
 header.cm-header [cm-header-logo] {
   color: #02bed2;
@@ -353,23 +376,23 @@ header.cm-header [cm-header-menu] {
   top: 0;
 }
 header.cm-header [cm-header-menu] i.fa.cm-menu.cm-handler {
-  padding: 15px 0 10px 10px;
+  padding: 1em 0 0.6em 0.6em;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer {
   position: absolute;
   right: 0;
   top: 0;
-  width: 300px;
+  width: 20em;
   font-size: 0.7em;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer .cm-nose-wrapper {
-  height: 5em;
+  height: 3rem;
   color: #02bed2;
   text-align: right;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer .cm-nose-wrapper i {
   position: relative;
-  top: 6px;
+  top: 0.4em;
   font-size: 2em;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer .cm-list-group-item {
@@ -379,7 +402,7 @@ header.cm-header [cm-header-menu] .cm-menu-layer .cm-list-group-item {
   cursor: pointer;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer .cm-list-group-item i {
-  width: 50px;
+  width: 3.5em;
   text-align: center;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer .cm-list-group-item a,
@@ -412,7 +435,7 @@ header.cm-header [cm-header-menu] .modal-backdrop {
   z-index: -1 !important;
 }
 .with-header {
-  padding-top: 5em !important;
+  padding-top: 3rem !important;
 }
 .login-screen-start {
   display: block;
@@ -446,7 +469,7 @@ header.cm-header [cm-header-menu] .modal-backdrop {
   text-align: left;
   background-color: rgba(0, 0, 0, 0.7);
   color: #fff;
-  padding: 5em 40px 0 40px;
+  padding: 3rem 3em 0 3.5em;
   position: absolute;
   left: 0;
 }
@@ -474,7 +497,7 @@ header.cm-header [cm-header-menu] .modal-backdrop {
   box-shadow: none !important;
 }
 .cm-registration-ctn .progress {
-  height: 5px !important;
+  height: 0.3em !important;
 }
 .cm-list-group-item a .cm-avatar {
   width: 50px;
@@ -520,9 +543,9 @@ header.cm-header [cm-header-menu] .modal-backdrop {
 }
 .form-signin .form-control {
   position: relative;
-  font-size: 16px;
+  font-size: 1em;
   height: auto;
-  padding: 10px;
+  padding: 0.8em;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -540,16 +563,16 @@ input[type="checkbox"] {
   box-shadow: none !important;
 }
 .form-registry-head {
-  border-bottom: 1px solid #EEEEEE;
-  margin-bottom: 40px;
+  border-bottom: 0.05em solid #EEEEEE;
+  margin-bottom: 3em;
 }
 li.message-list {
-  width: 800px;
-  min-height: 50px;
+  displaY: block;
+  min-height: 4em;
   overflow: hidden;
-  border: 1px solid black;
-  margin-bottom: 10px;
-  padding: 5px;
+  border: 0.05em solid black;
+  margin-bottom: 0.8em;
+  padding: 0.3em;
   word-wrap: break-word;
   background-color: #d3d3d3;
 }
@@ -582,17 +605,17 @@ textarea[cm-message-input] {
   min-height: 3em;
 }
 .alert-mini-padding {
-  padding: 5px;
+  padding: 0.3em;
 }
 /* modal */
 .cm-modal-with-title .modal-dialog {
-  margin-top: 150px;
+  margin-top: 10em;
 }
 .cm-modal-with-title .modal-dialog .modal-outer-title {
   text-align: center;
   width: 100%;
   position: absolute;
-  top: -80px;
+  top: -6em;
   color: #02bed2;
 }
 .modal-dialog .cm-alert {
@@ -613,6 +636,6 @@ textarea[cm-message-input] {
 /* cm-language-select */
 [cm-language-select] {
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 0.7em;
+  top: 0.7em;
 }
