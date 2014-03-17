@@ -7,18 +7,17 @@
     <div class="cm-registration-ctn with-header with-footer">
         <form name="registrationForm" class="form-horizontal" role="form" autocomplete="off" novalidate>
 
-            <h4>{{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}</h4>
+        <h4>{{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}</h4>
 
 
-        <div class="cm-input-ctn">
+        <div class="cm-input-ctn" data-qa="form-input">
             <input id="loginName" name="loginName" type="text"  ng-model="formData.loginName" ng-blur="checkLoginName();" ng-minlength="6" ng-maxlength="60" maxlength="60" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}}" required />
         </div>
+        <div class="cm-alert" ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid">
+            <div ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid && registrationForm.loginName.$error.minlength"><i class="fa cm-info"></i>{{'REGISTER.INFO.MIN_LETTER_COUNT' | cmTranslate : {count: 6} }}</div>
+        </div>
 
-            <div class="cm-alert" ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid">
-                <div ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid && registrationForm.loginName.$error.minlength"><i class="fa cm-info"></i>{{'REGISTER.INFO.MIN_LETTER_COUNT' | cmTranslate : {count: 6} }}</div>
-            </div>
-
-             <div cm-password data-parent-item="formData.password"></div>
+        <div cm-password data-parent-item="formData.password"></div>
 
 
             <!--
@@ -56,15 +55,15 @@
                 <!--</div>-->
             <!--</div>-->
 
-            <div class="cm-input-ctn">
+            <div class="cm-input-ctn" data-qa="form-input">
                 <input id="name" name="name" type="text" placeholder="{{'REGISTER.PLACEHOLDER.NAME'|cmTranslate}}" ng-model="formData.name" />
             </div>
 
-            <div class="cm-input-ctn">
+            <div class="cm-input-ctn" data-qa="form-input">
                 <input id="email" name="email" type="text" placeholder="{{'DIRV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}" ng-model="formData.email" cm-validate-email />
             </div>
 
-            <div class="cm-input-ctn">
+            <div class="cm-input-ctn" data-qa="form-input">
                 <input id="phone" name="phone" type="text" placeholder="{{'DIRV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}" ng-model="formData.phone" ng-minlength="6" cm-validate-phone />
             </div>
             <div class="custom-error" ng-show="registrationForm.phone.$dirty && registrationForm.phone.$invalid">
@@ -72,7 +71,7 @@
             </div>
 
 
-            <div class="form-group tac" data-qa="form-control">
+            <div class="form-group tac" data-qa="form-input">
                 <div class="col-sm-6" >
                     {{'REGISTER.LABEL.TERMS_ACCEPT' |cmTranslate}} <a href="#/terms"><strong><em>{{'REGISTER.LABEL.TERMS' |cmTranslate}}</em></strong></a>
                     <input id="agb" name="agb" type="checkbox" ng-model="formData.agb" required style="display:none" />
