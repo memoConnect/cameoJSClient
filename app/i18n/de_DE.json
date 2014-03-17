@@ -31,8 +31,8 @@
             "USERNAME": "Benutzername",
             "CAMEOID": "CameoID",
             "NAME": "Anzeigename",
-            "TERMS": "AGB",
-            "TERMS_ACCEPT": "akzeptieren"
+            "TERMS": " die AGB",
+            "TERMS_ACCEPT": "Ich akzeptiere"
         },
         "PLACEHOLDER": {
             "USERNAME": "Benutzername",

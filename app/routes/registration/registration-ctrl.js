@@ -27,6 +27,14 @@ define([
         $scope.userNameAlternatives = [];
         $scope.showUserNameAlternatives = false;
 
+        $scope.acceptTerms = function(){
+            if(!$scope.formData.agb){
+                $scope.formData.agb = true;
+            } else {
+                $scope.formData.agb = false;
+            }
+        }
+
         /**
          * checks if LoginName exists, because Login Name have to be unique
          */

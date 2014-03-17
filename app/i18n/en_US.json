@@ -31,8 +31,8 @@
             "USERNAME": "Username",
             "CAMEOID": "CameoID",
             "NAME": "Name",
-            "TERMS": "Terms",
-            "TERMS_ACCEPT": "accpect"
+            "TERMS": "terms of use",
+            "TERMS_ACCEPT": "I accpect"
         },
         "PLACEHOLDER": {
             "USERNAME": "username",
