@@ -1,4 +1,4 @@
-var cockpitEdit = angular.module("cockpitMain", ["ngRoute", "cmApi", "cmLogger", "cmAuth"])
+var cockpitEdit = angular.module("cockpitMain", ["ngRoute", "cmApi", "cmLogger", "cmAuth", "twoFactorModal"])
 
 
 cockpitEdit.controller("cockpitMainCtrl", [
@@ -7,10 +7,11 @@ cockpitEdit.controller("cockpitMainCtrl", [
     'cmAuth',
     'cmLogger',
     '$routeParams',
-    function ($scope, cmApi, cmAuth, cmLogger, $routeParams) {
+    'twoFactorModal',
+    function ($scope, cmApi, cmAuth, cmLogger, $routeParams, twoFactorModal) {
 
         $scope.lists = []
-        $scope.getTwoFactor = false
+        $scope.authorized = false
 
         getListing()
 
@@ -26,7 +27,7 @@ cockpitEdit.controller("cockpitMainCtrl", [
                 function(data, data1) {
                     console.log(data1)
 //                    if (data.twoFactorRequired) {
-                        $scope.getTwoFactor = true
+                        twoFactorModal.show()
 //                    }
                 }
             )

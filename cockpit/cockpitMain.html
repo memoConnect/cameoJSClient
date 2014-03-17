@@ -4,17 +4,15 @@
     </h1>
 </div>
 
+<div ng-hide="authorized">
 
-<div ng-show="getTwoFactor" class="twoFactor">
-    Two Factor Authentication required.
-
-    <button ng-click="requestTwoFactorKey()" type="button" class="btn btn-primary">Request Key</button>
-
+    <div class="alert alert-danger">Not Authorized!</div>
 
 </div>
 
-<div ng-hide="getTwoFactor">
-    nope
+
+<div ng-show="authorized">
+    List of Lists
     <div class="list-group">
         <a ng-repeat="list in lists" href="#/{{list}}" class="list-group-item">{{list}}</a>
     </div>
