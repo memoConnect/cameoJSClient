@@ -168,6 +168,10 @@
 	},
 
     "DIRV": {
+        "PASSWORD": {
+            "PASSWORD": "Passwort",
+            "PASSWORD_CONFIRM": "Passwort wiederholen"
+        },
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",
             "PLACEHOLDER": "example@example.com",
