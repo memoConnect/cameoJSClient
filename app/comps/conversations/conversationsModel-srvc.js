@@ -80,6 +80,7 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
                     }
                 )
             } else {
+
                 deferred.resolve(conversation);
             }
         } else {
