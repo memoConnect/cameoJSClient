@@ -56,3 +56,17 @@
   }
 }
 
+.cm-list-group-item {
+  position:relative;display:block;margin-bottom:-1px;border:1px solid @cm-border-grey;border-width:1px 0;background:rgba(255,255,255,0.75);color:@cm-grey;padding:5px 0px;
+  a{
+    color:@cm-grey;display:block;
+    .cm-avatar{width:50px;height:50px;background:@cm-grey;float:left;margin-right:10px}
+    .cm-message-info{float:right;padding:0 5px;font-size:1em;text-align:right;color:@cm-black}
+    .cm-message-body{margin-left:60px;margin-right:160px}
+    [cm-message-small] div{word-wrap:break-word}
+    &:after{clear:both}
+  }
+  &:first-child{border-top:0}
+  &:last-child{border-bottom:0}
+}
+

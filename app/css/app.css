@@ -227,6 +227,50 @@ html[xmlns] .clearfix {
   top: 0;
   top: 2px;
 }
+.cm-list-group-item {
+  position: relative;
+  display: block;
+  margin-bottom: -1px;
+  border: 1px solid #cccccc;
+  border-width: 1px 0;
+  background: rgba(255, 255, 255, 0.75);
+  color: #666666;
+  padding: 5px 0px;
+}
+.cm-list-group-item a {
+  color: #666666;
+  display: block;
+}
+.cm-list-group-item a .cm-avatar {
+  width: 50px;
+  height: 50px;
+  background: #666666;
+  float: left;
+  margin-right: 10px;
+}
+.cm-list-group-item a .cm-message-info {
+  float: right;
+  padding: 0 5px;
+  font-size: 1em;
+  text-align: right;
+  color: #000000;
+}
+.cm-list-group-item a .cm-message-body {
+  margin-left: 60px;
+  margin-right: 160px;
+}
+.cm-list-group-item a [cm-message-small] div {
+  word-wrap: break-word;
+}
+.cm-list-group-item a:after {
+  clear: both;
+}
+.cm-list-group-item:first-child {
+  border-top: 0;
+}
+.cm-list-group-item:last-child {
+  border-bottom: 0;
+}
 .footer-define {
   position: fixed;
   left: 0;
@@ -312,35 +356,61 @@ header.cm-header [cm-header-menu] {
   right: 0;
   top: 0;
 }
-header.cm-header [cm-header-menu] i.fa.cm-menu {
+header.cm-header [cm-header-menu] i.fa.cm-menu.cm-handler {
   padding: 15px 0 10px 10px;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer {
   position: absolute;
   right: 0;
   top: 0;
-  width: 250px;
+  width: 300px;
+  font-size: 0.7em;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer .cm-nose-wrapper {
   height: 64px;
   color: #02bed2;
   text-align: right;
-  font-size: 1.5em;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer .cm-nose-wrapper i {
   position: relative;
-  top: 2px;
+  top: 6px;
+  font-size: 2em;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer .cm-list-group-item {
   background: #ffffff;
   padding: 0;
-  border: 0;
+  white-space: nowrap;
+  cursor: pointer;
+}
+header.cm-header [cm-header-menu] .cm-menu-layer .cm-list-group-item i {
+  width: 50px;
+  text-align: center;
+}
+header.cm-header [cm-header-menu] .cm-menu-layer .cm-list-group-item a,
+header.cm-header [cm-header-menu] .cm-menu-layer .cm-list-group-item span {
+  display: inline-block;
+  width: 100%;
+}
+header.cm-header [cm-header-menu] .cm-menu-layer .cm-list-group-item a:hover {
+  color: #02bed2;
+  text-decoration: none;
+}
+header.cm-header [cm-header-menu] .cm-menu-layer .cm-list-group-item:hover {
+  color: #02bed2;
 }
 header.cm-header [cm-header-menu] .cm-menu-layer .cm-menu-header {
   background-color: #02bed2;
-}
-header.cm-header [cm-header-menu] .cm-menu-layer .cm-menu-header a {
   color: #ffffff;
+}
+header.cm-header [cm-header-menu] .cm-menu-layer .cm-menu-header i {
+  text-align: left;
+}
+header.cm-header [cm-header-menu] .cm-menu-layer .cm-menu-header:hover {
+  color: #ffffff;
+}
+header.cm-header [cm-header-menu] .cm-menu-layer i {
+  font-size: 1.7em;
+  vertical-align: middle;
 }
 .with-header {
   padding-top: 64px !important;
@@ -505,42 +575,4 @@ textarea[cm-message-input] {
   position: absolute;
   right: 10px;
   top: 10px;
-}
-/* list */
-.cm-list-group-item {
-  position: relative;
-  display: block;
-  margin-bottom: -1px;
-  border: 1px solid #cccccc;
-  background: rgba(255, 255, 255, 0.75);
-  color: #666666;
-  padding: 5px 0px;
-}
-.cm-list-group-item a {
-  color: #666666;
-  display: block;
-}
-.cm-list-group-item a .cm-avatar {
-  width: 50px;
-  height: 50px;
-  background: #666666;
-  float: left;
-  margin-right: 10px;
-}
-.cm-list-group-item a .cm-message-info {
-  float: right;
-  padding: 0 5px;
-  font-size: 1em;
-  text-align: right;
-  color: #000000;
-}
-.cm-list-group-item a .cm-message-body {
-  margin-left: 60px;
-  margin-right: 160px;
-}
-.cm-list-group-item a [cm-message-small] div {
-  word-wrap: break-word;
-}
-.cm-list-group-item a:after {
-  clear: both;
 }
