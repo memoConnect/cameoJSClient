@@ -1,14 +1,22 @@
 .form-signin {
   .form-signin-heading{color:@cm-grey;text-align:center}
-  .form-control{position:relative;font-size:16px;height:auto;padding:10px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+  .form-control{position:relative;font-size:1em;height:auto;padding:0.8em;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
   .form-control:focus{z-index:2}
 }
 
 input[type="checkbox"]{.clear-form-border}
 
-.form-registry-head{border-bottom: 1px solid #EEEEEE;margin-bottom: 40px}
+.form-registry-head{border-bottom: 0.05em solid #EEEEEE;margin-bottom: 3em}
 
-li.message-list {width:800px;min-height:50px;overflow:hidden;border:1px solid black;margin-bottom:10px;padding:5px;word-wrap:break-word;background-color:#d3d3d3}
+li.message-list {
+  displaY:block;
+  min-height:4em;
+  overflow:hidden;
+  border:0.05em solid black;
+  margin-bottom:0.8em;
+  padding:0.3em;
+  word-wrap:break-word;background-color:#d3d3d3
+}
 
 /* cameo directives */
 cm-message,cm-conversation,cm-message-input{display:block}
@@ -20,13 +28,13 @@ cm-message footer{clear:both}
 
 textarea[cm-message-input]{width:100%;min-height:3em}
 
-.alert-mini-padding{padding:5px}
+.alert-mini-padding{padding:0.3em}
 
 /* modal */
 .cm-modal-with-title{
   .modal-dialog{
-    margin-top:150px;
-    .modal-outer-title{text-align:center;width:100%;position:absolute;top:-80px;.cm-ci-color}
+    margin-top:10em;
+    .modal-outer-title{text-align:center;width:100%;position:absolute;top:-6em;.cm-ci-color}
   }
 }
 .modal-dialog{
@@ -40,5 +48,5 @@ textarea[cm-message-input]{width:100%;min-height:3em}
 
 /* cm-language-select */
 [cm-language-select]{
-  position:absolute;right:10px;top:10px
+  position:absolute;right:0.7em;top:0.7em
 }
