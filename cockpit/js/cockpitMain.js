@@ -25,9 +25,9 @@ cockpitEdit.controller("cockpitMainCtrl", [
                 },
                 function(data, data1) {
                     console.log(data1)
-                    if (data.twoFactorRequired) {
+//                    if (data.twoFactorRequired) {
                         $scope.getTwoFactor = true
-                    }
+//                    }
                 }
             )
         }
