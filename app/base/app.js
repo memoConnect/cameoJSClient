@@ -140,7 +140,8 @@ define([
     // app run handling
     app.run(['$rootScope', '$location', 'cmUserModel',
         function ($rootScope, $location, cmUserModel) {
-            $rootScope.$on("$routeChangeStart", function () {
+            // passing wrong route calls
+            $rootScope.$on("$routeChangeStart", function(){
                 // expections
                 var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/purl\/[a-zA-Z0-9]{1,})$/;
                 var path = $location.$$path;
@@ -155,11 +156,16 @@ define([
                 }
             });
 
+            // url hashing for backbutton
             $rootScope.urlHistory = [];
+            $rootScope.$on('$routeChangeSuccess', function(schmu, _currentRoute_, _prevRoute_){
 
-            $rootScope.$on('$routeChangeSuccess', function () {
-                var currentRoute = $location.$$absUrl.split('#')[1];
-                if(currentRoute.indexOf("/login") != -1)
+                var currentRoute = _currentRoute_.$$route.originalPath,
+                    prevRoute = _prevRoute_ ? _prevRoute_.$$route.originalPath: '';
+
+                console.log(currentRoute + " '" + prevRoute + "'")
+
+                if(currentRoute.indexOf("/login") != -1 || currentRoute == prevRoute)
                     $rootScope.urlHistory = [];
                 else if(currentRoute !== $rootScope.urlHistory[$rootScope.urlHistory.length - 1]) {
                     $rootScope.urlHistory.push(currentRoute);
