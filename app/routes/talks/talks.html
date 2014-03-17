@@ -16,11 +16,15 @@
 
     <ul class="list-group">
         <li class="cm-list-group-item" ng-repeat="conversation in conversations">
+            <pre ng-if="false">{{cmUtil.prettify(conversation)}}</pre>
             <a href="#/conversation/{{conversation.id}}" class="clearfix">
                 <div class="cm-avatar"></div>
                 <div class="cm-message-info">
-                    {{conversation.lastUpdated}}<br />
-                    ({{conversation.numberOfMessages+0}})
+                    <div>{{conversation.lastUpdated}}</div>
+                    <div class="cm-recipients" ng-if="conversation.recipients.length>1">
+                        <span class="cm-recipient-qty">{{conversation.recipients.length}}</span>
+                        <i class="fa cm-group"></i>
+                    </div>
                 </div>
                 <div class="cm-message-body">
                     <div>Subject: {{conversation.subject}}</div>

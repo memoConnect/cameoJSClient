@@ -258,27 +258,6 @@ html[xmlns] .clearfix {
   color: #666666;
   display: block;
 }
-.cm-list-group-item a .cm-avatar {
-  width: 50px;
-  height: 50px;
-  background: #666666;
-  float: left;
-  margin-right: 10px;
-}
-.cm-list-group-item a .cm-message-info {
-  float: right;
-  padding: 0 5px;
-  font-size: 1em;
-  text-align: right;
-  color: #000000;
-}
-.cm-list-group-item a .cm-message-body {
-  margin-left: 60px;
-  margin-right: 160px;
-}
-.cm-list-group-item a [cm-message-small] div {
-  word-wrap: break-word;
-}
 .cm-list-group-item a:after {
   clear: both;
 }
@@ -429,6 +408,9 @@ header.cm-header [cm-header-menu] .cm-menu-layer i {
   font-size: 1.7em;
   vertical-align: middle;
 }
+header.cm-header [cm-header-menu] .modal-backdrop {
+  z-index: -1 !important;
+}
 .with-header {
   padding-top: 5em !important;
 }
@@ -493,6 +475,44 @@ header.cm-header [cm-header-menu] .cm-menu-layer i {
 }
 .cm-registration-ctn .progress {
   height: 5px !important;
+}
+.cm-list-group-item a .cm-avatar {
+  width: 50px;
+  height: 50px;
+  background: #666666;
+  float: left;
+  margin-right: 10px;
+}
+.cm-list-group-item a .cm-message-info {
+  float: right;
+  padding: 0 5px;
+  font-size: 1em;
+  text-align: right;
+  color: #000000;
+}
+.cm-list-group-item a .cm-message-body {
+  margin-left: 60px;
+  margin-right: 160px;
+}
+.cm-list-group-item a .cm-recipients {
+  color: #02bed2;
+  position: relative;
+  display: inline-block;
+}
+.cm-list-group-item a .cm-recipients i.fa.cm-group {
+  font-size: 3.5em;
+}
+.cm-list-group-item a .cm-recipients .cm-recipient-qty {
+  font-size: 0.9em;
+  color: #ffffff;
+  position: absolute;
+  left: 13px;
+  bottom: 9px;
+  width: 1.4em;
+  text-align: center;
+}
+.cm-list-group-item a [cm-message-small] div {
+  word-wrap: break-word;
 }
 .form-signin .form-signin-heading {
   color: #666666;
