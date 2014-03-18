@@ -16,14 +16,14 @@ function cmContactsList(cmContactsModel, cmLogger){
              * Get contacts via model
              */
             $scope.getContacts = function(){
-                cmContactsModel.getAll(10,0).then(
-                    function(data){
-                        $scope.contacts = data;
-                    },
-                    function(){
-                        $scope.contacts = null;
-                    }
-                );
+//                cmContactsModel.getAll(10,0).then(
+//                    function(data){
+//                        $scope.contacts = data;
+//                    },
+//                    function(){
+//                        $scope.contacts = null;
+//                    }
+//                );
             };
 
             /**

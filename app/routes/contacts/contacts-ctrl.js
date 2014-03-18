@@ -41,7 +41,7 @@ define([
             };
 
             // get badges
-            getBadges();
+//            getBadges();
 
             $scope.tabs = [
                 {i18n:'BACK',icon:'fa-chevron-left',href:'#/start'},

@@ -6,6 +6,8 @@
 angular.module('cmIdentity', ['cmAuth'])
 .factory('cmIdentityModel',['cmAuth',function(cmAuth){
     var Identity = function(id){
+        this.data = {}
+
         this.id = '';
         this.displayName = '';
         this.cameoId = '';
@@ -50,6 +52,7 @@ angular.module('cmIdentity', ['cmAuth'])
                             identity = instances[i];
                             break;
                         }
+                        i++;
                     }
                 }
 

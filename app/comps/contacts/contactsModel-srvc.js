@@ -1,4 +1,4 @@
-function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, $q, $rootScope){
+function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, cmUtil, $q, $rootScope){
     var self = this;
     var mockContacts = ['derMicha','dasEmpu'];
     var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];
@@ -11,8 +11,36 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, $q, $rootSc
      * Init Object
      */
     function init(){
-        self.getAll();
+        self.getAll().then(
+            function(){
+                console.info(contacts.length);
+            }
+        );
         self.getGroups();
+    }
+
+    function _add(contact){
+        var check = false,
+            i = 0;
+
+        if(typeof contact === 'object' && cmUtil.objLen(contact) > 0){
+            while(i < contacts.length){
+                if(contacts[i].id == contact.id){
+                    check = true;
+                    break;
+                }
+                i++;
+            }
+
+            if(check !== true){
+                contacts.push({
+                    id: contact.id,
+                    contactType: contact.contactType,
+                    groups: contact.groups,
+                    identity: cmIdentity.create(contact.identityId)
+                });
+            }
+        }
     }
 
     /**
@@ -23,12 +51,16 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, $q, $rootSc
     };
 
     this.getAll = function(limit, offset){
-        var deferred = $q.defer();
+        var deferred = $q.defer(),
+            i = 0;
 
         if(contacts.length < 1 && cmUserModel.isAuth() !== false){
             cmContactsAdapter.getAll().then(
                 function(data){
-                    contacts = data;
+                    while(i < data.length){
+                        _add(data[i]);
+                        i++;
+                    }
                     deferred.resolve(contacts);
                 },
                 function(){
@@ -120,7 +152,7 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, $q, $rootSc
         .addContact(data.identity)
         .then(
             function(data){
-                contacts.push(data);
+                _add(data);
                 defer.resolve();
             },
             function(){

@@ -12,6 +12,7 @@ cmContacts.service('cmContactsModel',[
     'cmUserModel',
     'cmContactsAdapter',
     'cmIdentity',
+    'cmUtil',
     '$q',
     '$rootScope',
     cmContactsModel
