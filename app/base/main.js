@@ -30,6 +30,7 @@ var config = {
         'cmNotify': 'shared/cmNotify',
         'cmLocalStorage': 'shared/cmLocalStorage',
         'cmUserModel': 'shared/cmUserModel',
+        'cmIdentity': 'shared/cmIdentity',
 
         // cameo modules/services
         'cmAuth': 'shared/cmAuth',
@@ -91,6 +92,7 @@ var config = {
         ],
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
         'cmUserModel': ['angular', 'cmLocalStorage'],
+        'cmIdentity': ['angular', 'cmAuth'],
         'cmApi': ['angular', 'cmLogger'],
         'cmProfile' : ['angular', 'cmApi', 'cmAuth'],
         'cmLogger' : ['angular'],
@@ -211,7 +213,8 @@ addPackage('pckContacts',{
         'angular',
         'cmApi', 
         'cmLogger', 
-        'cmUtil'
+        'cmUtil',
+        'cmIdentity'
     ],
     resources : [
         'comps/contacts/contactsModel-srvc',

@@ -1,17 +1,19 @@
-'use strict';
+ 'use strict';
 
 var cmContacts = angular.module('cmContacts',[
     'cmApi',
     'cmLogger',
     'cmUser',
     'cmUtil',
-    'cmLanguage'
+    'cmLanguage',
+    'cmIdentity'
 ])
 
 cmContacts.service('cmContactsModel',[
     'cmUserModel',
     'cmContactsAdapter',
-    'cmLogger',
+    'cmIdentity',
+    'cmUtil',
     '$q',
     '$rootScope',
     cmContactsModel

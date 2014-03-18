@@ -27,6 +27,7 @@ module.exports = function(config) {
             'app/shared/cmApi.js',
             'app/shared/cmAuth.js',
             'app/shared/cmUserModel.js',
+            'app/shared/cmIdentity.js',
             'app/shared/cmUtil.js',
             'app/shared/cmCrypt.js',
             'app/shared/cmLocalStorage.js',
