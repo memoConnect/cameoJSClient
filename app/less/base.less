@@ -7,8 +7,10 @@
 @cm-bg-color: @cm-black;
 @cm-danger-color: #FF6600;
 
+
 @header-height: 3rem;
 @footer-height: 3rem;
+@app-width: 32rem;
 
 html, body {
     height:100%;
@@ -26,6 +28,31 @@ body {
 pre {
     text-align:left
 }
+
+#cm-app{
+    display:block;
+    min-height:100%;
+    margin:0;
+    padding:0;
+    background-size:100% auto;
+    background-position:0 0;
+    background-repeat:no-repeat;
+    background-image: url('../gfx/backgroundStart.jpg');
+    //max-width is set via javascript in screen.js
+    margin:auto;
+}
+
+.cm-content {
+    padding-top: @header-height;
+    padding-bottom: @footer-height;
+}
+
+
+
+
+
+
+
 
 .without-border-radius{
     -webkit-border-radius:0!important;

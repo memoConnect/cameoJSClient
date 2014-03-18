@@ -21,6 +21,11 @@ angular.module('cmUi', [
     cmNavTabs
 ])
 
+
+.directive('cmHeader',[
+    cmHeader
+])
+
 .directive('cmHeaderBack',[
     '$window',
     '$location',
@@ -42,6 +47,7 @@ angular.module('cmUi', [
 
 .directive('cmFooter',[
     '$location',
+    'cmTranslate',
     cmFooter
 ])
 
