@@ -48,60 +48,30 @@
 
 
 
-        <angular-table model="[
-    { id: 1, name: 'Bob', street: '1 street ave' },
-    { id: 2, name: 'Kristen', street: '10 road place' },
-    { id: 3, name: 'Sarah', street: '30 gravel road' }
-    ]" filter-query-model="filterQuery" default-sort-column="id">
-            <header-row>
-                <header-column sortable="true" sort-field-name="id">
-                    <div style="display: inline-block;">Id</div>
-                    <sort-arrow-ascending></sort-arrow-ascending>
-                    <sort-arrow-descending></sort-arrow-descending>
-                </header-column>
-                <header-column sortable="false" sort-field-name="name">
-                    Name
-                </header-column>
-                <header-column sortable="true" sort-field-name="street">
-                    <div style="display: inline-block;">Street</div>
-                    <sort-arrow-ascending></sort-arrow-ascending>
-                    <sort-arrow-descending></sort-arrow-descending>
-                </header-column>
-            </header-row>
+    <table class="table">
 
-            <row on-selected="handleRowSelection(row)" selected-color="#87cefa" even-color="#ffffff" odd-color="#eeeeee">
-                <column>{{ row.id }}</column>
-                <column>{{ row.name }}</column>
-                <column>{{ row.street }}</column>
-            </row>
-        </angular-table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th ng-repeat="title in titles">{{title}}</th>
+            <th>Modify</th>
+        </tr>
+        </thead>
 
+        <tbody>
+        <tr ng-repeat="row in list">
+            <td>{{row.id}}</td>
+            <td ng-repeat="n in titles">
+                {{row.attributes[$index]}}
+            </td>
+            <td>
+                <button ng-click="editElement(row.id)" type="button" class="btn">Edit</button>
+                <button ng-click="deleteElement(row.id)" type="button" class="btn">Delete</button>
+            </td>
+        </tr>
+        </tbody>
 
-
-        <!--<table class="table">-->
-
-        <!--<thead>-->
-        <!--<tr>-->
-            <!--<th>ID</th>-->
-            <!--<th ng-repeat="title in titles">{{title}}</th>-->
-            <!--<th>Modify</th>-->
-        <!--</tr>-->
-        <!--</thead>-->
-
-        <!--<tbody>-->
-        <!--<tr ng-repeat="row in list">-->
-            <!--<td>{{row.id}}</td>-->
-            <!--<td ng-repeat="n in titles">-->
-                <!--{{row.attributes[$index]}}-->
-            <!--</td>-->
-            <!--<td>-->
-                <!--<button ng-click="editElement(row.id)" type="button" class="btn">Edit</button>-->
-                <!--<button ng-click="deleteElement(row.id)" type="button" class="btn">Delete</button>-->
-            <!--</td>-->
-        <!--</tr>-->
-        <!--</tbody>-->
-
-    <!--</table>-->
+    </table>
 
     <button ng-click="loadMore()" type="button" class="btn btn-block">Load More</button>
 </div>

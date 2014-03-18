@@ -29,7 +29,6 @@ cockpitList.controller("cockpitListCtrl", [
         function handleError(response, reTryFunction) {
             $scope.showContent = false
             if(response.data && response.data.twoFactorRequired === true) {
-                console.log("open modal")
                 twoFactorModal.show().then(
                     function () {
                         $scope.showContent = true
@@ -54,7 +53,7 @@ cockpitList.controller("cockpitListCtrl", [
                     }
                 },
                 function(response) {
-                    console.dir(response)
+                    console.log("asdf")
                     handleError(response, updateList)
                 }
             )
