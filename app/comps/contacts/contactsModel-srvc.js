@@ -11,11 +11,7 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, cmUtil, $q,
      * Init Object
      */
     function init(){
-        self.getAll().then(
-            function(){
-                console.info(self.contacts.length);
-            }
-        );
+        self.getAll();
         self.getGroups();
     }
 

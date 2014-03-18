@@ -4,21 +4,36 @@
 'use strict';
 
 angular.module('cmIdentity', ['cmAuth'])
-.factory('cmIdentityModel',['cmAuth',function(cmAuth){
+.factory('cmIdentityModel',['cmAuth', '$q',function(cmAuth, $q){
     var Identity = function(identity_data){
         var self = this;
+
+        this.hasPubKey = function(){
+            //
+        }
 
         /**
          * TODO future einbauen und promise returnen
          * @param identity_data
          */
         this.init = function(identity_data){
+            var deferred = $q.defer();
+
             if(typeof identity_data === 'object'){
                 angular.extend(this, identity_data);
+                deferred.resolve();
             } else if(typeof identity_data === 'string'){
-                this.id = identity_data
+                cmAuth.getIdentity(identity_data).then(
+                    function(data){
+                        angular.extend(self, data);
+                        deferred.resolve();
+                    }
+                )
+            } else {
+                deferred.reject();
             }
 
+            return deferred.promise;
         }
 
         this.init(identity_data);
