@@ -5,7 +5,8 @@ var cmContacts = angular.module('cmContacts',[
     'cmLogger',
     'cmUser',
     'cmUtil',
-    'cmLanguage'
+    'cmLanguage',
+    'cmIdentity'
 ])
 
 cmContacts.service('cmContactsModel',[

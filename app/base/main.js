@@ -213,7 +213,8 @@ addPackage('pckContacts',{
         'angular',
         'cmApi', 
         'cmLogger', 
-        'cmUtil'
+        'cmUtil',
+        'cmIdentity'
     ],
     resources : [
         'comps/contacts/contactsModel-srvc',

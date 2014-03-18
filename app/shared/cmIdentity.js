@@ -8,10 +8,17 @@ angular.module('cmIdentity', ['cmAuth'])
     var Identity = function(identity_data){
         var self = this;
 
+        /**
+         * TODO future einbauen und promise returnen
+         * @param identity_data
+         */
         this.init = function(identity_data){
             if(typeof identity_data === 'object'){
                 angular.extend(this, identity_data);
+            } else if(typeof identity_data === 'string'){
+
             }
+
         }
 
         this.init(identity_data);
