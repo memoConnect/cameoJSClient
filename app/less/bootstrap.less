@@ -7,7 +7,8 @@
   background-position:0 0;
   background-attachment:fixed;
   background-repeat:no-repeat;
-  background-image: url('../gfx/backgroundStart.jpg')
+  background-image: url('../gfx/backgroundStart.jpg');
+  max-width:800px;
 }
 
 .cm-ci-color{color:@cm-ci-color}
@@ -61,24 +62,49 @@
 
 .cm-form-group{
   padding:0.3em 1em;
-    .cm-form-control{
-      background:@cm-light-grey;padding:0 1.5em 0.3em 1.5em;
-      input,select{-webkit-border-radius:0!important;-moz-border-radius:0!important;border-radius:0!important;background:none!important;border:none!important;-webkit-box-shadow:none!important;-moz-box-shadow:none!important;box-shadow:none!important}
-      input{padding-bottom:0}
-      .cm-form-control-inputter{border:@cm-border-grey solid 0.15em;border-top:0;height:0.3em}
+  position:relative;
+  div.cm-form-control{
+    background:@cm-light-grey;
+    padding:0 1.5em;
+    position:relative;
+    input,select{.clear-form-border}
+    &.with-inputter{
+      padding:0.3em 1.5em
     }
-  .cm-form-control{
-    background:@cm-light-grey;padding:0.3em 1.4em;
-    input,select{background:none!important;.clear-form-border}
+    input.cm-form-control-inputter{padding-bottom:0}
+    div.cm-form-control-inputter{border:@cm-black solid 0.05em;border-top:0;height:0.3em}
+    &.white-control{
+      background:@cm-white;
+    }
+  }
+  input.cm-form-control{
+    display:block;
+    width:100%;
+    height:0.51em;
+    padding:0.1em 0.2em;
+    font-size:3em;
+    line-height:1.428571429;
+    color:#555;
+    vertical-align:middle;
+    background-color:none;
+  }
+  &.with-search-icon{
+    padding:0.3em 3em;
+  }
+  &.with-search-icon div.cm-form-control{
+    padding-right:0;
+    margin-right:2em;
+  }
+  &.with-search-icon i.fa.cm-search{
+    position:absolute;
+    right:-0.79em;
+    top:-0.12em;
+    color:@cm-white;
+    font-size:3.7em;
   }
 }
 
 .cm-alert{padding:1em}
-
-.center-block{
-  /*max-width:768px*/
-}
-
 .cm-center{text-align:center}
 .container-padding{padding:1em}
 
@@ -91,7 +117,7 @@
 
 .cm-page-header{
   background:rgba(255,255,255,0.50);position:relative;height:5em;
-  h1{text-wrap:none;text-align:center;color:@cm-grey;font-size:1.5em;margin:0;padding:0.2em}
+  h1{white-space:nowrap;text-align:center;color:@cm-black;font-size:1em;margin:0;padding:0.4em}
   .cm-add-edge-btn{
     font-size:5em;
     .pos-tr;padding:0;
@@ -109,11 +135,6 @@
   &:first-child{border-top:0}
   &:last-child{border-bottom:0}
 }
-
-
-
-
-
 
 .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
     min-height: 0.01em;

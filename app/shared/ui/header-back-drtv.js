@@ -23,7 +23,6 @@ function cmHeaderBack($window, $location){
             $element.bind('click', function(){
                 // if history has more then one index
                 if($rootScope.urlHistory.length > 0){
-                    $scope.urlHistory.pop();
                     $window.history.back();
                 // if is set an default path in route
                 } else if($scope.backTo != ''){
