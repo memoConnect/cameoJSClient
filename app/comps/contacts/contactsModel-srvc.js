@@ -1,4 +1,4 @@
-function cmContactsModel(cmUserModel, cmContactsAdapter, cmLogger, $q, $rootScope){
+function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, $q, $rootScope){
     var self = this;
     var mockContacts = ['derMicha','dasEmpu'];
     var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];
