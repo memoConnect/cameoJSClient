@@ -2,7 +2,7 @@
 
 function cmHeaderLogo(){
     return {
-        scope: true,
+        restrict: 'AE',
         template: '<i class="fa cm-logo"></i>'
     }
 }

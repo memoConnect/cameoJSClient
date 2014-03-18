@@ -249,6 +249,7 @@ addPackage('pckUi',{
     ],
     resources : [
         'shared/ui/adaptive-change-drtv',  
+        'shared/ui/rubber-space-drtv',          
         'shared/ui/nav-tabs-drtv',
         'shared/ui/point-spinner-drtv',
         'shared/ui/spinner-drtv',

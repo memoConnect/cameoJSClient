@@ -1,7 +1,9 @@
 'use strict';
 
 function cmHeaderBack($window, $location){
+
     return {
+        restrict: 'AE',
         scope: true,
         template: '<i class="fa cm-left" ng-show="isVisible"></i>'+
                   '<span ng-if="pageTitle">{{pageTitle}}</span>',

@@ -8,6 +8,10 @@ angular.module('cmUi', [
     cmAdaptiveChange
 ])
 
+.directive('cmRubberSpace',[
+    cmRubberSpace
+])
+
 .directive('cmSpinner',[
     cmSpinner
 ])

@@ -1,56 +1,59 @@
-<header class="cm-header">
+<cm-header cm-rubber-space>
     <div cm-header-back></div>
     <div cm-identity></div>
-    <div cm-header-logo></div>
+    <cm-header-logo></cm-header-logo>
     <div cm-header-menu></div>
-</header>
+</cm-header>
 
-<div ng-controller="ConversationsCtrl" class="with-header with-footer">
-    <div class="cm-page-header">
-        <h1>{{"TALKS.HEADING"|cmTranslate}}</h1>
+<div class="cm-content">
 
-        <div class="cm-form-group with-search-icon">
-            <div class="cm-form-control white-control with-inputter">
-                <input class="cm-form-control cm-form-control-inputter" type="text" value="" ng-model="search" />
-                <div class="cm-form-control-inputter"></div>
-                <i class="fa cm-search"></i>
+    <div ng-controller="ConversationsCtrl" class="with-header with-footer">
+        <div class="cm-page-header">
+            <h1>{{"TALKS.HEADING"|cmTranslate}}</h1>
+
+            <div class="cm-form-group with-search-icon">
+                <div class="cm-form-control white-control with-inputter">
+                    <input class="cm-form-control cm-form-control-inputter" type="text" value="" ng-model="search" />
+                    <div class="cm-form-control-inputter"></div>
+                    <i class="fa cm-search"></i>
+                </div>
             </div>
+
+            <a href="#/conversation" class="cm-add-edge-btn">
+                <i class="fa cm-add-edge"></i>
+                <i class="fa cm-add"></i>
+            </a>
         </div>
 
-        <a href="#/conversation" class="cm-add-edge-btn">
-            <i class="fa cm-add-edge"></i>
-            <i class="fa cm-add"></i>
-        </a>
-    </div>
-
-    <ul class="list-group">
-        <li class="cm-list-group-item" ng-repeat="conversation in conversations | filter:search ">
-            <pre ng-if="false">{{cmUtil.prettify(conversation)}}</pre>
-            <a href="#/conversation/{{conversation.id}}" class="clearfix">
-                <div class="cm-avatar">
-                    <i class="fa cm-person"></i>
-                </div>
-                <div class="cm-message-info">
-                    <div>{{conversation.lastUpdated}}</div>
-                    <div class="cm-recipients" ng-if="conversation.recipients.length>1">
-                        <span class="cm-recipient-qty">{{conversation.recipients.length}}</span>
-                        <i class="fa cm-group"></i>
+        <ul class="list-group">
+            <li class="cm-list-group-item" ng-repeat="conversation in conversations | filter:search ">
+                <pre ng-if="false">{{cmUtil.prettify(conversation)}}</pre>
+                <a href="#/conversation/{{conversation.id}}" class="clearfix">
+                    <div class="cm-avatar">
+                        <i class="fa cm-person"></i>
                     </div>
-                    <div class="cm-messages-qty" ng-class="{'cm-unreaded':conversation.count>0}">
-                        ({{conversation.count}})
+                    <div class="cm-message-info">
+                        <div>{{conversation.lastUpdated}}</div>
+                        <div class="cm-recipients" ng-if="conversation.recipients.length>1">
+                            <span class="cm-recipient-qty">{{conversation.recipients.length}}</span>
+                            <i class="fa cm-group"></i>
+                        </div>
+                        <div class="cm-messages-qty" ng-class="{'cm-unreaded':conversation.count>0}">
+                            ({{conversation.count}})
+                        </div>
                     </div>
-                </div>
-                <div class="cm-message-body">
-                    <div>Subject: {{conversation.subject}}</div>
-                    <div cm-message-small cm-data="conversation.newestMessage()" ng-if="conversation.newestMessage()"></div>
-                </div>
-            </a>
-        </li>
-    </ul>
+                    <div class="cm-message-body">
+                        <div>Subject: {{conversation.subject}}</div>
+                        <div cm-message-small cm-data="conversation.newestMessage()" ng-if="conversation.newestMessage()"></div>
+                    </div>
+                </a>
+            </li>
+        </ul>
 
-    <div ng-if="showMore()">
-        <button class="btn cm-btn-block cm-btn-black" ng-click="loadMore()">{{"TALKS.MORE"|cmTranslate}}</button>
+        <div ng-if="showMore()">
+            <button class="btn cm-btn-block cm-btn-black" ng-click="loadMore()">{{"TALKS.MORE"|cmTranslate}}</button>
+        </div>
     </div>
 </div>
 
-<footer cm-footer></footer>
+<cm-footer cm-rubber-space></cm-footer>

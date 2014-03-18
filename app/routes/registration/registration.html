@@ -1,6 +1,8 @@
-<cm-header class="cm-header">
-    <div cm-header-back page-title="'REGISTER.HEADING'|cmTranslate" back-to="/login"></div>
-    <div cm-header-logo></div>
+<cm-header cm-rubber-space>
+    <cm-header-back cm-weight="4"  page-title="'REGISTER.HEADING'|cmTranslate" back-to="/login"></cm-header-back>
+    <cm-header-logo cm-weight="3"></cm-header-logo>
+    <div            cm-weight="4"></div>
+
 </cm-header>
 
 <div class="cm-content">
@@ -86,7 +88,7 @@
     </div>
 </div>
 
-<cm-footer>
+<cm-footer cm-rubber-sapce>
     <button
         class    ="full-width" 
         ng-click ="createUser()"
