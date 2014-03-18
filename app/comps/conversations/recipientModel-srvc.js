@@ -1,6 +1,6 @@
 'use strict';
 
-function cmRecipientModel (cmConversationsAdapter, cmUserModel, cmAuth){
+function cmRecipientModel (cmConversationsAdapter, cmUserModel, cmIdentity, cmAuth){
     var Recipient = function(id, data){
         this.id = '';
         this.displayName = '';

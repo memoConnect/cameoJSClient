@@ -174,6 +174,7 @@ addPackage('pckConversations',{
         'cmAuth',
         'cmUtil',
         'cmUserModel',
+        'cmIdentity',
         'pckContacts',
         'pckFiles',
         'pckUi',
