@@ -5,25 +5,16 @@
 
 angular.module('cmIdentity', ['cmAuth'])
 .factory('cmIdentityModel',['cmAuth',function(cmAuth){
-    var Identity = function(id){
-        this.data = {}
+    var Identity = function(identity_data){
+        var self = this;
 
-        this.id = '';
-        this.displayName = '';
-        this.cameoId = '';
-        this.userKey = '';
-        this.email = [];
-        this.phoneNumber = [];
-        this.publicKeys = [];
-        this.userType = 'external';
-        this.created = '';
-        this.lastUpdated = '';
-
-        this.init = function(id){
-            console.log(id);
+        this.init = function(identity_data){
+            if(typeof identity_data === 'object'){
+                angular.extend(this, identity_data);
+            }
         }
 
-        this.init(id);
+        this.init(identity_data);
     }
 
     return Identity;
@@ -38,17 +29,29 @@ angular.module('cmIdentity', ['cmAuth'])
     return {
         /**
          * returns instances of cmIdentityModel
-         * @param id
+         * @param data id or object
          * @returns {*}
          */
-        create: function(id){
-            var identity = null;
-            if(typeof id !== 'undefined' && id != ''){
+        create: function(data){
+            var identity = null,
+                i = 0;
 
-                if(instances.length > 0){
-                    var i = 0;
+            if(typeof data !== 'undefined'){
+
+                if(typeof data === 'String'){
+                    if(instances.length > 0){
+                        while(i < instances.length){
+                            if(typeof instances[i] === 'object' && instances[i].id == id){
+                                identity = instances[i];
+                                break;
+                            }
+                            i++;
+                        }
+                    }
+
+                } else if(typeof data === 'object'){
                     while(i < instances.length){
-                        if(typeof instances[i] === 'object' && instances[i].id == id){
+                        if(typeof instances[i] === 'object' && instances[i].id == data.id){
                             identity = instances[i];
                             break;
                         }
@@ -57,9 +60,10 @@ angular.module('cmIdentity', ['cmAuth'])
                 }
 
                 if(identity === null){
-                    identity = new cmIdentityModel(id);
+                    identity = new cmIdentityModel(data);
                     instances.push(identity);
                 }
+
             }
 
             return identity;

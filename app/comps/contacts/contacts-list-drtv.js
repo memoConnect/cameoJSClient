@@ -2,49 +2,31 @@
 
 function cmContactsList(cmContactsModel, cmLogger){
     return {
-
         restrict: 'AE',
         scope: {},
         templateUrl: 'comps/contacts/contacts-list.html',
 
         controller: function($scope, $element, $attrs){
-
-            $scope.contacts = null;
-            $scope.contactsQty = 0;
-
-            /**
-             * Get contacts via model
-             */
-            $scope.getContacts = function(){
-//                cmContactsModel.getAll(10,0).then(
-//                    function(data){
-//                        $scope.contacts = data;
-//                    },
-//                    function(){
-//                        $scope.contacts = null;
-//                    }
-//                );
-            };
+            $scope.contacts = cmContactsModel.contacts;
+            $scope.contactsQty = cmContactsModel.contacts.length;
 
             /**
              * handle every single contact via model
              */
-            $scope.editContact = function(cameoId){
-                cmLogger.debug('editContact '+cameoId);
-                // TODO: cmApi stuff
+            $scope.editContact = function(id){
+                cmLogger.debug('editContact '+id);
             };
 
             /**
              * delete contact via model
-             * @param cameoId
+             * @param id
              */
-            $scope.deleteContact = function(cameoId){
-                cmLogger.debug('deleteContact '+cameoId);
-                // TODO: cmApi stuff
+            $scope.deleteContact = function(id){
+                cmLogger.debug('deleteContact '+id);
             };
-
-            $scope.selectIdentity = function(identityId){
-                $scope.$emit('identity-selected', identityId)
+a
+            $scope.selectContact = function(id){
+//                $scope.$emit('identity-selected', id)
             }
         }
     }

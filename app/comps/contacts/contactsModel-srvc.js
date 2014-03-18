@@ -4,8 +4,8 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, cmUtil, $q,
     var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];
     var mockRequestResults = [{cameoId:'derMicha',requestId:'qwertz1'},{cameoId:'dasEmpu',requestId:'qwerrtz2'},{cameoId:'dutscher',requestId:'qwerrtz3'},{cameoId:'reimerei',requestId:'qwerrtz4'},{cameoId:'rhotp',requestId:'qwerrtz5'}];
 
-    var contacts = [];
-    var groups = [];
+    this.contacts = [];
+    this.groups = [];
 
     /**
      * Init Object
@@ -13,19 +13,24 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, cmUtil, $q,
     function init(){
         self.getAll().then(
             function(){
-                console.info(contacts.length);
+                console.info(self.contacts.length);
             }
         );
         self.getGroups();
     }
 
+    /**
+     * add to contacts and creates identities
+     * @param contact
+     * @private
+     */
     function _add(contact){
         var check = false,
             i = 0;
 
         if(typeof contact === 'object' && cmUtil.objLen(contact) > 0){
-            while(i < contacts.length){
-                if(contacts[i].id == contact.id){
+            while(i < self.contacts.length){
+                if(self.contacts[i].id == contact.id){
                     check = true;
                     break;
                 }
@@ -33,11 +38,11 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, cmUtil, $q,
             }
 
             if(check !== true){
-                contacts.push({
+                self.contacts.push({
                     id: contact.id,
                     contactType: contact.contactType,
                     groups: contact.groups,
-                    identity: cmIdentity.create(contact.identityId)
+                    identity: cmIdentity.create(contact.identity)
                 });
             }
         }
@@ -54,21 +59,21 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, cmUtil, $q,
         var deferred = $q.defer(),
             i = 0;
 
-        if(contacts.length < 1 && cmUserModel.isAuth() !== false){
+        if(this.contacts.length < 1 && cmUserModel.isAuth() !== false){
             cmContactsAdapter.getAll().then(
                 function(data){
                     while(i < data.length){
                         _add(data[i]);
                         i++;
                     }
-                    deferred.resolve(contacts);
+                    deferred.resolve(self.contacts);
                 },
                 function(){
                     deferred.reject();
                 }
             )
         } else {
-            deferred.resolve(contacts);
+            deferred.resolve(self.contacts);
         }
 
         return deferred.promise;
@@ -77,7 +82,7 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, cmUtil, $q,
     this.getQuantity = function(){
         var deferred = $q.defer();
 
-        if(contacts.length < 1 && cmUserModel.isAuth() !== false){
+        if(this.contacts.length < 1 && cmUserModel.isAuth() !== false){
             this.getAll().then(
                 function(data){
                     deferred.resolve(data.length);
@@ -87,7 +92,7 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, cmUtil, $q,
                 }
             )
         } else {
-            deferred.resolve(contacts.length);
+            deferred.resolve(self.contacts.length);
         }
 
         return deferred.promise;
@@ -100,18 +105,18 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, cmUtil, $q,
     this.getGroups = function(){
         var deferred = $q.defer();
 
-        if(groups.length < 1 && cmUserModel.isAuth() !== false){
+        if(this.groups.length < 1 && cmUserModel.isAuth() !== false){
             cmContactsAdapter.getGroups().then(
                 function(data){
-                    groups = data;
-                    deferred.resolve(groups);
+                    self.groups = data;
+                    deferred.resolve(self.groups);
                 },
                 function(){
                     deferred.reject();
                 }
             );
         } else {
-            deferred.resolve(groups);
+            deferred.resolve(self.groups);
         }
 
         return deferred.promise;
@@ -164,8 +169,8 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, cmUtil, $q,
     };
 
     function resetContacts(){
-        contacts = [];
-        groups = [];
+        self.contacts = [];
+        self.groups = [];
     }
 
     $rootScope.$on('logout', function(){
