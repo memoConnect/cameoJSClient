@@ -1,10 +1,51 @@
-.footer-define{position:fixed;left:0;right:0;bottom:0;z-index:1;background-color:@cm-bg-color;padding:1px;font-size:1.2em}
-footer[cm-footer]{
-  .footer-define;
-  a{.without-border-radius;color:#fff;padding:12px;border-top:10px solid @cm-bg-color}
-  a.active,a:hover{.cm-ci-color;border-top-color:@cm-ci-color}
+.footer-define{
+    position:relative;
+    left:0;right:0;
+    bottom:0;
+    z-index:1;
+    background-color:@cm-bg-color;
+    padding:0;
+    font-size:1.2em
 }
 
-footer.without-drtv{.footer-define; height:@footer-height;text-align:center;margin:0 auto}
-.with-footer{padding-bottom:@footer-height}
-.cm-btn-footer-fixed{padding-top:20px}
+footer[cm-footer],
+cm-footer{
+    .footer-define;
+    a{
+        .without-border-radius;
+        color:#fff;
+        padding:12px;
+        border-top:10px solid @cm-bg-color
+    }
+
+    a.active,a:hover{
+        .cm-ci-color;
+        border-top-color:@cm-ci-color
+    }
+}
+
+footer.without-drtv{
+    .footer-define; 
+    height:@footer-height;
+    text-align:center;
+    margin:0 auto
+}
+
+.with-footer{
+    padding-bottom:@footer-height
+}
+
+footer button,
+footer a {
+    height:100%;
+    text-align:center;
+    border-radius: 0;
+    background: transparent;
+    border:none;
+    color:@cm-ci-color;
+}
+
+footer .full-width {
+    display:block;
+    width : 100%;
+}
