@@ -15,7 +15,7 @@ function cmRecipientFactory ($rootScope, cmRecipientModel){
             if(typeof data !== 'undefined'){
 
                 while(i < instances.length){
-                    if(typeof instances[i] === 'object' && instances[i].identity.id == data.identityId){
+                    if(typeof instances[i] === 'object' && instances[i].identity.id == data.identity.id){
                         recipient = instances[i];
                         break;
                     }
