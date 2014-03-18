@@ -1,4 +1,4 @@
-var cockpitList = angular.module("cockpitList", ["ngRoute", "cmApi", "cmLogger"])
+var cockpitList = angular.module("cockpitList", ["ngRoute", "cmApi", "cmLogger", "twoFactorModal"])
 
 
 cockpitList.controller("cockpitListCtrl", [
@@ -7,14 +7,16 @@ cockpitList.controller("cockpitListCtrl", [
     'cmLogger',
     '$routeParams',
     '$location',
-    function ($scope, cmApi, cmLogger, $routeParams, $location) {
+    'twoFactorModal',
+    function ($scope, cmApi, cmLogger, $routeParams, $location, twoFactorModal) {
 
         $scope.name = $routeParams.elementName
         $scope.filters = []
-        $scope.invalidName = true
         $scope.list = []
         $scope.titles = []
         $scope.selectedFilter = "choose filter"
+
+        $scope.showContent = false
 
         var filterSettings = {
             offset: 0,
@@ -24,6 +26,19 @@ cockpitList.controller("cockpitListCtrl", [
 
         updateList()
 
+        function handleError(response, reTryFunction) {
+            $scope.showContent = false
+            if(response.data && response.data.twoFactorRequired === true) {
+                console.log("open modal")
+                twoFactorModal.show().then(
+                    function () {
+                        $scope.showContent = true
+                        reTryFunction()
+                    }
+                )
+            }
+        }
+
         function updateList() {
             filterSettings.offset = 0
             cmApi.post({
@@ -31,15 +46,16 @@ cockpitList.controller("cockpitListCtrl", [
                 data: filterSettings
             }).then(
                 function (data) {
-                    $scope.invalidName = false
+                    $scope.showContent = true
                     if (data.elements.length > 0) {
                         $scope.titles = data.titles
                         $scope.filters = data.availableFilters
                         $scope.list = data.elements
                     }
                 },
-                function() {
-                    $scope.invalidName = true
+                function(response) {
+                    console.dir(response)
+                    handleError(response, updateList)
                 }
             )
         }
@@ -51,15 +67,15 @@ cockpitList.controller("cockpitListCtrl", [
                 data: filterSettings
             }).then(
                 function (data) {
-                    $scope.invalidName = false
+                    $scope.showContent = true
                     if (data.elements.length > 0) {
                         $scope.titles = data.titles
                         $scope.filters = data.availableFilters
                         $scope.list = $scope.list.concat(data.elements)
                     }
                 },
-                function() {
-                   $scope.invalidName = true
+                function(response) {
+                    handleError(response, updateList)
                 }
             )
         }
@@ -75,6 +91,9 @@ cockpitList.controller("cockpitListCtrl", [
                 function (data) {
                     $scope.list = $scope.list.concat(data)
                     $scope.editElement(data.id)
+                },
+                function(response) {
+                    handleError(response, updateList)
                 }
             )
         }
@@ -90,8 +109,8 @@ cockpitList.controller("cockpitListCtrl", [
                         }
                     }
                 },
-                function () {
-                    cmLogger.error("could not delete")
+                function(response) {
+                    handleError(response, updateList)
                 }
             )
         }
@@ -113,7 +132,6 @@ cockpitList.controller("cockpitListCtrl", [
             if(event.keyCode == 13) {
                 $scope.sendFilter()
             }
-            console.log(event.keyCode)
         }
 
     }

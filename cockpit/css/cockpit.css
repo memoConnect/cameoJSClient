@@ -1,6 +1,6 @@
 .page-header {
     background: rgba(255,255,255,0.7);
-    padding-top: 30px;
+    padding-top: 2em;
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -8,7 +8,7 @@
 .page-header h1 {
     margin-top: 0;
     padding-top: 0;
-    padding-left: 10px;
+    padding-left: 1em;
 }
 
 a {
@@ -25,4 +25,13 @@ a {
 .content {
     background: rgba(255,255,255,1);
     padding: 2em;
+}
+
+.twoFactorModal h2 {
+    text-align: center;
+    margin-top: 1em;
+}
+
+.twoFactorModal input{
+    margin-bottom: 1em;
 }

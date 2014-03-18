@@ -29,8 +29,6 @@ angular.module("twoFactorModal", ["cmLogger", "ui.bootstrap", "cmAuth"])
                         }
                     }
                 });
-                console.dir(modalInstance.result)
-
                 return modalInstance.result
             }
 

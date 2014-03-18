@@ -24,16 +24,6 @@ cockpitEdit.controller("cockpitMainCtrl", [
                 function (lists) {
                     $scope.authorized = true
                     $scope.lists = lists
-                },
-                function (data, data1) {
-                    console.log(data1)
-//                    if (data.twoFactorRequired) {
-                    twoFactorModal.show().then(
-                        function () {
-                            $scope.authorized = true
-                            getListing()
-                        }
-                    )
                 }
             )
         }
