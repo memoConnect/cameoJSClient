@@ -158,12 +158,14 @@ define([
 
             // url hashing for backbutton
             $rootScope.urlHistory = [];
-            $rootScope.$on('$routeChangeSuccess', function(schmu, _currentRoute_, _prevRoute_){
 
+            window.onpopstate = function(){
+                $rootScope.urlHistory.pop();
+            };
+
+            $rootScope.$on('$routeChangeSuccess', function(schmu, _currentRoute_, _prevRoute_){
                 var currentRoute = _currentRoute_.$$route.originalPath,
                     prevRoute = _prevRoute_ ? _prevRoute_.$$route.originalPath: '';
-
-                console.log(currentRoute + " '" + prevRoute + "'")
 
                 if(currentRoute.indexOf("/login") != -1 || currentRoute == prevRoute)
                     $rootScope.urlHistory = [];

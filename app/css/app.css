@@ -1,6 +1,3 @@
-html {
-  font-size: 1em;
-}
 html,
 body {
   height: 100%;
@@ -181,7 +178,7 @@ html[xmlns] .clearfix {
 }
 .cm-form-group .cm-form-control {
   background: #ededed;
-  padding: 0 1.5em 0.3em 1.5em;
+  padding: 0 1.5em;
 }
 .cm-form-group .cm-form-control input,
 .cm-form-group .cm-form-control select {
@@ -194,34 +191,8 @@ html[xmlns] .clearfix {
   -moz-box-shadow: none!important;
   box-shadow: none !important;
 }
-.cm-form-group .cm-form-control input {
-  padding-bottom: 0;
-}
-.cm-form-group .cm-form-control .cm-form-control-inputter {
-  border: #cccccc solid 0.15em;
-  border-top: 0;
-  height: 0.3em;
-}
-.cm-form-group .cm-form-control {
-  background: #ededed;
-  padding: 0.3em 1.4em;
-}
-.cm-form-group .cm-form-control input,
-.cm-form-group .cm-form-control select {
-  background: none!important;
-  border: none !important;
-  -webkit-border-radius: 0!important;
-  -moz-border-radius: 0!important;
-  border-radius: 0 !important;
-  -webkit-box-shadow: none!important;
-  -moz-box-shadow: none!important;
-  box-shadow: none !important;
-}
 .cm-alert {
   padding: 1em;
-}
-.center-block {
-  /*max-width:768px*/
 }
 .cm-center {
   text-align: center;
@@ -392,12 +363,12 @@ footer.without-drtv {
   background-color: #000000;
   padding: 1px;
   font-size: 1.2em;
-  height: 5.5rem;
+  height: 3rem;
   text-align: center;
   margin: 0 auto;
 }
 .with-footer {
-  padding-bottom: 5.5rem;
+  padding-bottom: 3rem;
 }
 .cm-btn-footer-fixed {
   padding-top: 20px;
@@ -694,6 +665,7 @@ textarea[cm-message-input] {
   position: absolute;
   top: -1.5em;
   color: #02bed2;
+  font-size: 2em;
 }
 .modal-dialog .cm-alert {
   font-size: 1.2em;
