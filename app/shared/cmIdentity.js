@@ -16,7 +16,7 @@ angular.module('cmIdentity', ['cmAuth'])
             if(typeof identity_data === 'object'){
                 angular.extend(this, identity_data);
             } else if(typeof identity_data === 'string'){
-
+                this.id = identity_data
             }
 
         }
@@ -35,7 +35,7 @@ angular.module('cmIdentity', ['cmAuth'])
 
     return {
         /**
-         * returns instances of cmIdentityModel
+         * returns instance of cmIdentityModel
          * @param data id or object
          * @returns {*}
          */
@@ -44,25 +44,23 @@ angular.module('cmIdentity', ['cmAuth'])
                 i = 0;
 
             if(typeof data !== 'undefined'){
-
-                if(typeof data === 'String'){
-                    if(instances.length > 0){
+                if(this.getQty() > 0){
+                    if(typeof data === 'string'){
                         while(i < instances.length){
-                            if(typeof instances[i] === 'object' && instances[i].id == id){
+                            if(typeof instances[i] === 'object' && instances[i].id == data){
                                 identity = instances[i];
                                 break;
                             }
                             i++;
                         }
-                    }
-
-                } else if(typeof data === 'object'){
-                    while(i < instances.length){
-                        if(typeof instances[i] === 'object' && instances[i].id == data.id){
-                            identity = instances[i];
-                            break;
+                    } else if(typeof data === 'object'){
+                        while(i < instances.length){
+                            if(typeof instances[i] === 'object' && instances[i].id == data.id){
+                                identity = instances[i];
+                                break;
+                            }
+                            i++;
                         }
-                        i++;
                     }
                 }
 
@@ -70,13 +68,12 @@ angular.module('cmIdentity', ['cmAuth'])
                     identity = new cmIdentityModel(data);
                     instances.push(identity);
                 }
-
             }
 
             return identity;
         },
         getQty: function(){
-            return instances.length();
+            return instances.length;
         }
     }
 }]);
