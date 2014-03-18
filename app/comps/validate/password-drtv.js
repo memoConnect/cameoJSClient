@@ -26,24 +26,31 @@ function cmPassword(cmCrypt) {
             $scope.checkPWStrength = function(){
                 var pw = $scope.pw;
 
-                if(pw != undefined && pw.length > 3){
+//                if(pw != undefined && pw.length > 3){w
+                if(pw != undefined){
                     $scope.showStrengthMeter= true;
                     var bits = passchk_fast.passEntropy(pw);
 
+                    console.log(bits);
+
                     if(bits < 28){
                         $scope.percent = 10;
+//                        $scope.percent = (10 / 100) * Math.floor(bits);
                         $scope.color = '#d9534f';
                         //very weak
                     } else if(bits < 36){
                         $scope.percent = 25;
+//                        $scope.percent = 25 + (25 / 100) * Math.floor(bits);
                         $scope.color = '#f0ad4e';
                         //weak
                     } else if(bits < 60){
                         $scope.percent = 50;
+//                        $scope.percent = 50 + (50 / 100) * Math.floor(bits);
                         $scope.color = '#f0df43';
                         //reasonable || normal
                     } else if(bits < 128){
                         $scope.percent = 75;
+//                        $scope.percent = 75 + (75 / 100) * Math.floor(bits);
                         $scope.color = '#c4f04e';
                         //strong
                     } else {

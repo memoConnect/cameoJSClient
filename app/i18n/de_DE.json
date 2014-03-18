@@ -4,6 +4,7 @@
         "DESCRIBE": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
         "MOEP": "moep"
     },
+
 	"LOGIN": {
         "HEADING": "Login",
         "LABEL": {
@@ -25,14 +26,14 @@
 
     "REGISTER": {
         "HEADING": "Registrierung",
-        "LINK" : "registrieren.",
+        "LINK" : "registrieren",
         "LABEL": {
             "SUBMIT": "Benutzerkonto anlegen",
             "USERNAME": "Benutzername",
             "CAMEOID": "CameoID",
             "NAME": "Anzeigename",
-            "TERMS": "AGB",
-            "TERMS_ACCEPT": "akzeptieren"
+            "TERMS": " die AGB",
+            "TERMS_ACCEPT": "Ich akzeptiere"
         },
         "PLACEHOLDER": {
             "USERNAME": "Benutzername",
@@ -168,9 +169,13 @@
 	},
 
     "DIRV": {
+        "PASSWORD": {
+            "PASSWORD": "Passwort",
+            "PASSWORD_CONFIRM": "Passwort wiederholen"
+        },
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",
-            "PLACEHOLDER": "example@example.com",
+            "PLACEHOLDER": "E-Mail",
             "INFO": {
                 "INVALID": "Bitte geben Sie eine richtige E-Mail Adresse an!",
                 "EMPTY": "Die E-Mail Adresse ist leer"
@@ -178,7 +183,7 @@
         },
         "VALIDATE_PHONE": {
             "LABEL": "Telefon",
-            "PLACEHOLDER": "+49...",
+            "PLACEHOLDER": "Telefon",
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
                 "EMPTY": "Das Telefonfeld ist leer"
@@ -215,6 +220,7 @@
 
     "MENU": {
         "HEADER": "Menü",
+        "SETTINGS": "Einstellungen",
         "LOGOUT": "Logout"
     }
 }

@@ -25,14 +25,14 @@
 
     "REGISTER": {
         "HEADING": "Registration",
-        "LINK": "or sign in.",
+        "LINK": "or sign in",
         "LABEL": {
-            "SUBMIT": "create user",
+            "SUBMIT": "create User",
             "USERNAME": "Username",
             "CAMEOID": "CameoID",
             "NAME": "Name",
-            "TERMS": "Terms",
-            "TERMS_ACCEPT": "accpect"
+            "TERMS": "terms of use",
+            "TERMS_ACCEPT": "I accpect"
         },
         "PLACEHOLDER": {
             "USERNAME": "username",
@@ -168,9 +168,13 @@
 	},
 
     "DIRV": {
+        "PASSWORD": {
+            "PASSWORD": "Password",
+            "PASSWORD_CONFIRM": "Confirm Password"
+        },
         "VALIDATE_EMAIL": {
-            "LABEL": "Email",
-            "PLACEHOLDER": "example@example.com",
+            "LABEL": "E-Mail",
+            "PLACEHOLDER": "E-Mail",
             "INFO": {
                 "INVALID": "The email isn't right. Please check!",
                 "EMPTY": "The email field is empty"
@@ -178,7 +182,7 @@
         },
         "VALIDATE_PHONE": {
             "LABEL": "Phone",
-            "PLACEHOLDER": "+49...",
+            "PLACEHOLDER": "Phone",
             "INFO": {
                 "INVALID_PHONE_NUMBER": "The string supplied did not seem to be a phone number.",
                 "EMPTY": "The phone field is empty"
@@ -215,6 +219,7 @@
 
     "MENU": {
         "HEADER": "Menue",
+        "SETTINGS": "Settings",
         "LOGOUT": "Logout"
     }
 }

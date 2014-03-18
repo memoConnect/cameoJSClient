@@ -21,6 +21,10 @@ module.exports = function (grunt) {
             js: {
                 src: ['app/js/controller/login.js', 'app/js/controller/start.js', 'app/js/controller/talks.js'],
                 dest: 'app/js/controller/built.raw.js'
+            },
+            less: {
+                src: ['app/less/base.less', 'app/less/bootstrap.less', 'app/less/!(basebootstrap).less'],
+                dest: 'app/css/app.less'
             }
         },
         coffee: {
@@ -274,17 +278,16 @@ module.exports = function (grunt) {
 
         // watch
         watch: {
-            files: "app/less/*.less",
-            tasks: ["less"]
+            files: 'app/less/*.less',
+            tasks: ['concat:less','less']
         },
         less: {
             development: {
                 options: {
-                    paths: ["app/less"],
                     yuicompress: true
                 },
                 files: {
-                    "app/css/app.css": "app/less/app.less"
+                    'app/css/app.css': 'app/css/app.less'
                 }
             }
         }
@@ -343,6 +346,7 @@ module.exports = function (grunt) {
     // watch
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.registerTask('watcher','watch');
 
     // deploy moeps

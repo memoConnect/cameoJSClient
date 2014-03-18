@@ -23,6 +23,7 @@ angular.module('cmUi', [
 
 .directive('cmHeaderBack',[
     '$window',
+    '$location',
     cmHeaderBack
 ])
 
@@ -56,4 +57,4 @@ angular.module('cmUi', [
             return str.match(/^[0-9\.]*$/) ? str : '0'
         }
     }
-])
+]);

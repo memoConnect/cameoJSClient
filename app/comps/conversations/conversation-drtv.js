@@ -16,6 +16,7 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
 //            ?   cmConversationsModel.getConversation(conversation_id, conversation_offset, conversation_limit)
             ?   cmConversationsModel.getConversation(conversation_id)
                 .then(function (conversation) {
+                    conversation.update();
                     $scope.init(conversation)
                 })
 
