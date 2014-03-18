@@ -50,16 +50,16 @@ describe('cmIdentity', function(){
         var tmpInstanceId_2 = {id:'blub'};
 
 
-//        it('there should be one instance after create one', function(){
-//            var instance = cmIdentity.create(tmpInstanceId_1);
-//            expect(cmIdentity.getQty()).toBe(1);
-//        })
-//
-//        it('there should be two instances after create two', function(){
-//            var instance1 = cmIdentity.create(tmpInstanceId_1);
-//            var instance2 = cmIdentity.create(tmpInstanceId_2);
-//            expect(cmIdentity.getQty()).toBe(2);
-//        })
+        it('there should be one instance after create one', function(){
+            var instance = cmIdentity.create(tmpInstanceId_1);
+            expect(cmIdentity.getQty()).toBe(1);
+        })
+
+        it('there should be two instances after create two', function(){
+            var instance1 = cmIdentity.create(tmpInstanceId_1);
+            var instance2 = cmIdentity.create(tmpInstanceId_2);
+            expect(cmIdentity.getQty()).toBe(2);
+        })
 
         it('there should be two instances after create two and create one of them twice', function(){
             var instance1 = cmIdentity.create(tmpInstanceId_1);
