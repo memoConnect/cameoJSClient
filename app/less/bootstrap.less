@@ -62,10 +62,13 @@
 .cm-form-group{
   padding:0.3em 1em;
   .cm-form-control{
-    background:@cm-light-grey;padding:0 1.5em;
+    background:@cm-light-grey;padding:0 1.5em;position:relative;
     input,select{-webkit-border-radius:0!important;-moz-border-radius:0!important;border-radius:0!important;background:none!important;border:none!important;-webkit-box-shadow:none!important;-moz-box-shadow:none!important;box-shadow:none!important}
-//    input{padding-bottom:0}
-//    .cm-form-control-inputter{border:@cm-border-grey solid 0.15em;border-top:0;height:0.3em}
+    &.with-inputter{
+      padding:0.3em 1.5em
+    }
+    input.cm-form-control-inputter{padding-bottom:0}
+    div.cm-form-control-inputter{border:@cm-black solid 0.05em;border-top:0;height:0.3em}
   }
 }
 

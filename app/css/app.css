@@ -179,6 +179,7 @@ html[xmlns] .clearfix {
 .cm-form-group .cm-form-control {
   background: #ededed;
   padding: 0 1.5em;
+  position: relative;
 }
 .cm-form-group .cm-form-control input,
 .cm-form-group .cm-form-control select {
@@ -190,6 +191,17 @@ html[xmlns] .clearfix {
   -webkit-box-shadow: none!important;
   -moz-box-shadow: none!important;
   box-shadow: none !important;
+}
+.cm-form-group .cm-form-control.with-inputter {
+  padding: 0.3em 1.5em;
+}
+.cm-form-group .cm-form-control input.cm-form-control-inputter {
+  padding-bottom: 0;
+}
+.cm-form-group .cm-form-control div.cm-form-control-inputter {
+  border: #000000 solid 0.05em;
+  border-top: 0;
+  height: 0.3em;
 }
 .cm-alert {
   padding: 1em;
