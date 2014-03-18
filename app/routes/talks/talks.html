@@ -11,7 +11,7 @@
 
         <div class="cm-form-group with-search-icon">
             <div class="cm-form-control white-control with-inputter">
-                <input class="cm-form-control cm-form-control-inputter" type="text" value="" />
+                <input class="cm-form-control cm-form-control-inputter" type="text" value="" ng-model="search" />
                 <div class="cm-form-control-inputter"></div>
                 <i class="fa cm-search"></i>
             </div>
@@ -24,7 +24,7 @@
     </div>
 
     <ul class="list-group">
-        <li class="cm-list-group-item" ng-repeat="conversation in conversations">
+        <li class="cm-list-group-item" ng-repeat="conversation in conversations | filter:search ">
             <pre ng-if="false">{{cmUtil.prettify(conversation)}}</pre>
             <a href="#/conversation/{{conversation.id}}" class="clearfix">
                 <div class="cm-avatar">
