@@ -101,21 +101,23 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
          */
 
         this.addRecipient = function (recipient) {
-            if(this.recipients.length == 0){
-                this.recipients.push(recipient);
-            } else {
-                var i = 0;
-                var check = false;
-                while(i < this.recipients.length){
-                    if(recipient.id == this.recipients[i].id){
-                        check = true;
-                        break;
-                    }
-                    i++;
-                }
-
-                if(check !== true){
+            if(typeof recipient !== 'undefined' && recipient != null){
+                if(this.recipients.length == 0){
                     this.recipients.push(recipient);
+                } else {
+                    var i = 0;
+                    var check = false;
+                    while(i < this.recipients.length){
+                        if(recipient.id == this.recipients[i].id){
+                            check = true;
+                            break;
+                        }
+                        i++;
+                    }
+
+                    if(check !== true){
+                        this.recipients.push(recipient);
+                    }
                 }
             }
             return this;

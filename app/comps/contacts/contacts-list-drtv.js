@@ -24,7 +24,7 @@ function cmContactsList(cmContactsModel, cmLogger){
             $scope.deleteContact = function(id){
                 cmLogger.debug('deleteContact '+id);
             };
-a
+
             $scope.selectContact = function(id){
 //                $scope.$emit('identity-selected', id)
             }

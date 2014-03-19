@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
-.service('cmUserModel',['cmAuth', 'cmLocalStorage', '$rootScope', '$q', '$location', function(cmAuth, cmLocalStorage, $rootScope, $q, $location){
+angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
+.service('cmUserModel',['cmAuth', 'cmLocalStorage', 'cmIdentity', '$rootScope', '$q', '$location', function(cmAuth, cmLocalStorage, cmIdentity, $rootScope, $q, $location){
     var self = this,
         isInit = false;
 
@@ -26,7 +26,10 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
      */
     function init(identity_data){
         if(typeof identity_data !== 'undefined'){
-            angular.extend(self.data, identity_data);
+            var identity = cmIdentity.create(identity_data);
+
+            angular.extend(self.data, identity);
+
             isInit = true;
             initStorage();
 
@@ -183,11 +186,15 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage'])
     }
 
     function loadIdentity(){
-        var deferred = $q.defer();
+        var deferred = $q.defer(),
+            identity;
 
         cmAuth.getIdentity().then(
             function(data){
-                angular.extend(self.data, data);
+                identity = cmIdentity.create(data);
+
+                angular.extend(self.data, identity);
+
                 self.data.isActive = true;
 
                 deferred.resolve();

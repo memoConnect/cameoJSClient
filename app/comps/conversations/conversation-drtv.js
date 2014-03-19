@@ -55,7 +55,7 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                         : null
                 })
 
-//                $scope.conversation.update()
+                $scope.conversation.update();
             }
 
             $scope.sendMessage = function () {

@@ -5,6 +5,7 @@ var cmConversations = angular.module('cmConversations', [
     'cmLogger', 
     'cmCrypt', 
     'cmContacts',
+    'cmUtil'
 ])
 
 cmConversations.service('cmConversationsAdapter', [
@@ -42,13 +43,13 @@ cmConversations.factory('cmRecipientModel',[
     'cmConversationsAdapter',
     'cmUserModel',
     'cmIdentity',
-    'cmAuth',
     cmRecipientModel
 ])
 
 cmConversations.factory('cmRecipientFactory',[
     '$rootScope',
     'cmRecipientModel',
+    'cmUtil',
     cmRecipientFactory
 ])
 
