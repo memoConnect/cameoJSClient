@@ -4,7 +4,6 @@
     <div            cm-weight="4"></div>
 </cm-header>
 
-<div class="cm-content">
 <div class="cm-registration-ctn with-header with-footer" ng-controller="RegistrationCtrl">
     <form name="registrationForm" class="form-horizontal" role="form" autocomplete="off" novalidate>
 
@@ -54,37 +53,36 @@
             <!--</div>-->
         <!--</div>-->
 
-            <div class="cm-input-ctn" data-qa="form-input">
-                <input id="name" name="name" type="text" placeholder="{{'REGISTER.PLACEHOLDER.NAME'|cmTranslate}}" ng-model="formData.name" />
-            </div>
+        <div class="cm-input-ctn" data-qa="form-input">
+            <input id="name" name="name" type="text" placeholder="{{'REGISTER.PLACEHOLDER.NAME'|cmTranslate}}" ng-model="formData.name" />
+        </div>
 
-            <div class="cm-input-ctn" data-qa="form-input">
-                <input id="email" name="email" type="text" placeholder="{{'DIRV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}" ng-model="formData.email" cm-validate-email />
-            </div>
+        <div class="cm-input-ctn" data-qa="form-input">
+            <input id="email" name="email" type="text" placeholder="{{'DIRV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}" ng-model="formData.email" cm-validate-email />
+        </div>
 
-            <div class="cm-input-ctn" data-qa="form-input">
-                <input id="phone" name="phone" type="text" placeholder="{{'DIRV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}" ng-model="formData.phone" ng-minlength="6" cm-validate-phone />
-            </div>
-            <div class="custom-error" ng-show="registrationForm.phone.$dirty && registrationForm.phone.$invalid">
-                <div ng-show="registrationForm.phone.$error.required">{{'DIRV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}</div>
-            </div>
+        <div class="cm-input-ctn" data-qa="form-input">
+            <input id="phone" name="phone" type="text" placeholder="{{'DIRV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}" ng-model="formData.phone" ng-minlength="6" cm-validate-phone />
+        </div>
+        <div class="custom-error" ng-show="registrationForm.phone.$dirty && registrationForm.phone.$invalid">
+            <div ng-show="registrationForm.phone.$error.required">{{'DIRV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}</div>
+        </div>
 
 
-            <div class="form-group tac" data-qa="form-input">
-                <div class="col-sm-6" >
-                    {{'REGISTER.LABEL.TERMS_ACCEPT' |cmTranslate}} <a href="#/terms"><strong><em>{{'REGISTER.LABEL.TERMS' |cmTranslate}}</em></strong></a>
-                    <input id="agb" name="agb" type="checkbox" ng-model="formData.agb" required style="display:none" />
-                    <i class="fa cm-lg-icon cm-ci-color" ng-class="{'cm-checkbox':registrationForm.agb.$invalid, 'cm-checkbox-right':!registrationForm.agb.$invalid}" ng-click="acceptTerms()"></i>
-                </div>
+        <div class="form-group tac" data-qa="form-input">
+            <div class="col-sm-6" >
+                {{'REGISTER.LABEL.TERMS_ACCEPT' |cmTranslate}} <a href="#/terms"><strong><em>{{'REGISTER.LABEL.TERMS' |cmTranslate}}</em></strong></a>
+                <input id="agb" name="agb" type="checkbox" ng-model="formData.agb" required style="display:none" />
+                <i class="fa cm-lg-icon cm-ci-color" ng-class="{'cm-checkbox':registrationForm.agb.$invalid, 'cm-checkbox-right':!registrationForm.agb.$invalid}" ng-click="acceptTerms()"></i>
             </div>
+        </div>
 
-            <!--<div class="form-group">-->
-                <!--<div class="col-sm-offset-2 col-sm-4">-->
-                    <!--<button type="submit" class="btn btn-primary btn-sm" ng-disabled="stateBusy">{{'REGISTER.LABEL.SUBMIT' |cmTranslate}}</button>-->
-                <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<div class="col-sm-offset-2 col-sm-4">-->
+                <!--<button type="submit" class="btn btn-primary btn-sm" ng-disabled="stateBusy">{{'REGISTER.LABEL.SUBMIT' |cmTranslate}}</button>-->
             <!--</div>-->
-        </form>
-    </div>
+        <!--</div>-->
+    </form>
 </div>
 
 <cm-footer cm-rubber-space>
