@@ -34,30 +34,34 @@ function cmPassword(cmCrypt) {
                     console.log(bits);
 
                     if(bits < 28){
-                        $scope.percent = 10;
+                        //$scope.percent = 10;
 //                        $scope.percent = (10 / 100) * Math.floor(bits);
                         $scope.color = '#d9534f';
                         //very weak
                     } else if(bits < 36){
-                        $scope.percent = 25;
+                        //$scope.percent = 25;
 //                        $scope.percent = 25 + (25 / 100) * Math.floor(bits);
                         $scope.color = '#f0ad4e';
                         //weak
                     } else if(bits < 60){
-                        $scope.percent = 50;
+                        //$scope.percent = 50;
 //                        $scope.percent = 50 + (50 / 100) * Math.floor(bits);
                         $scope.color = '#f0df43';
                         //reasonable || normal
                     } else if(bits < 128){
-                        $scope.percent = 75;
+                        //$scope.percent = 75;
 //                        $scope.percent = 75 + (75 / 100) * Math.floor(bits);
                         $scope.color = '#c4f04e';
                         //strong
                     } else {
-                        $scope.percent = 100;
+                        //$scope.percent = 100;
                         $scope.color = '#5cb85c';
                         //very strong
                     }
+
+                    $scope.percent = 1+(bits>10 ? 100*Math.pow((Math.log(bits-10)/Math.log(bits-3)), 10) : 0) 
+                    //100*Math.max(0,(1-Math.pow(1.4,((bits-10)*-0.08)))) 
+                    //100*bits / Math.max(128, bits)
 
                     $scope.pwStrength = pw;
                 } else {
