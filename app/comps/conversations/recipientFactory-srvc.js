@@ -1,6 +1,6 @@
 'use strict';
 
-function cmRecipientFactory ($rootScope, cmRecipientModel){
+function cmRecipientFactory ($rootScope, cmRecipientModel, cmUtil){
     var instances = [];
 
     $rootScope.$on('logout', function(){
@@ -12,7 +12,7 @@ function cmRecipientFactory ($rootScope, cmRecipientModel){
             var recipient = null,
                 i = 0;
 
-            if(typeof data !== 'undefined'){
+            if(typeof data !== 'undefined' && cmUtil.objLen(data) > 0){
 
                 while(i < instances.length){
                     if(typeof instances[i] === 'object' && instances[i].identity.id == data.identity.id){

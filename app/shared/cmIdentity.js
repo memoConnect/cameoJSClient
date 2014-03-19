@@ -12,8 +12,11 @@ angular.module('cmIdentity', ['cmAuth'])
             //
         }
 
+        this.getDisplayName = function(){
+            return this.cameoId || this.displayName || this.id;
+        }
+
         /**
-         * TODO future einbauen und promise returnen
          * @param identity_data
          */
         this.init = function(identity_data){
