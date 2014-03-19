@@ -33,7 +33,7 @@ function cmMessage(cmUserModel) {
                 $scope.checkAsset()
             })
 
-            $scope.is_my_own_message = ($scope.message.from == cmUserModel.data.id);
+            $scope.is_my_own_message = ($scope.message.fromIdentity == cmUserModel.data.id);
         }
     }
 }

@@ -27,6 +27,7 @@ module.exports = function(config) {
             'app/shared/cmApi.js',
             'app/shared/cmAuth.js',
             'app/shared/cmUserModel.js',
+            'app/shared/cmIdentity.js',
             'app/shared/cmUtil.js',
             'app/shared/cmCrypt.js',
             'app/shared/cmLocalStorage.js',
@@ -36,8 +37,8 @@ module.exports = function(config) {
             'app/shared/ui/!(*module).js',
             'app/shared/ui/*module.js',
 
-            'app/comps/user/!(*module).js',
-            'app/comps/user/*module.js',
+            'app/comps/files/!(*module).js',
+            'app/comps/files/*module.js',
 
             'app/comps/contacts/!(*module).js',
             'app/comps/contacts/*module.js',
@@ -45,6 +46,10 @@ module.exports = function(config) {
             'app/comps/conversations/!(*module).js',
             'app/comps/conversations/*module.js',
 
+            'app/comps/user/!(*module).js',
+            'app/comps/user/*module.js',
+
+            
             'app/comps/validate/!(*module).js',
             'app/comps/validate/*module.js',
 
@@ -54,9 +59,11 @@ module.exports = function(config) {
             'test/unit/shared/ui/*spec.js',
             'test/unit/shared/i18n/*spec.js',
 
-            'test/unit/comps/user/*spec.js',
+            
+            'test/unit/comps/files/*spec.js',
             'test/unit/comps/contacts/*spec.js',
             'test/unit/comps/conversations/*spec.js',
+            'test/unit/comps/user/*spec.js',
             'test/unit/comps/validate/*spec.js',
 
             // all frontend files

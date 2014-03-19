@@ -7,6 +7,7 @@ define([
     'cmApi',
     'cmAuth',
     'cmUserModel',
+    'cmIdentity',
 
     'cmLanguage',
     'cmLogger',
@@ -29,7 +30,8 @@ define([
         'cmLogger',
         'cmLocalStorage',
         'cmAuth',
-        'cmUserModel'        
+        'cmUserModel',
+        'cmIdentity'
     ]);
 
     //cameo_config = cameo_config

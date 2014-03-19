@@ -38,7 +38,7 @@ function cmMessageModel (cmConversationsAdapter,cmCrypt){
             this.id = message_data.id;
             this.body = message_data.body;
             this.decryptedBody = message_data.messageBody;
-            this.from = message_data.fromIdentity;
+            this.fromIdentity = message_data.fromIdentity;
             this.status = message_data.messageStatus;
             this.lastUpdated = message_data.lastUpdated;
             this.created = message_data.created;
