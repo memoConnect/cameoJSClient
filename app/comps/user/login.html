@@ -4,13 +4,13 @@
     <h2 class="form-signin-heading ">{{'LOGIN.HEADING'|cmTranslate}}</h2>
 
     <div class="cm-form-group">
-        <div class="cm-form-control">
-            <input ng-model="formData.user" class="cm-form-control" id="user" name="user" placeholder="{{'LOGIN.PLACEHOLDER.USERNAME'|cmTranslate}}" type="text" value="" required />
+        <div class="cm-form-control" ng-class="{'cm-input-error':alertState!=''}">
+            <input ng-model="formData.user" class="cm-form-control" ng-class="{'cm-input-error':alertState!=''}" id="user" name="user" placeholder="{{'LOGIN.PLACEHOLDER.USERNAME'|cmTranslate}}" type="text" value="" required />
         </div>
     </div>
     <div class="cm-form-group">
-        <div class="cm-form-control">
-            <input ng-model="formData.pass" class="cm-form-control" id="pw" name="pw" placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD'|cmTranslate}}" type="password" value="" required />
+        <div class="cm-form-control" ng-class="{'cm-input-error':alertState!=''}">
+            <input ng-model="formData.pass" class="cm-form-control" ng-class="{'cm-input-error':alertState!=''}" id="pw" name="pw" placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD'|cmTranslate}}" type="password" value="" required />
         </div>
     </div>
     <div class="cm-form-group">
