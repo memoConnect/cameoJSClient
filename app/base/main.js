@@ -5,6 +5,7 @@ var config = {
     paths: {
         'app': 'base/app',
         'env': 'base/env',
+        'screen': 'base/screen',
         // angular library
         'angular': 'vendor/angular/angular',
         'angular-route': 'vendor/angular/angular-route',
@@ -109,8 +110,7 @@ var config = {
 //        'bootstrap': ['jquery']
     },
     // kick start application
-
-    deps: ['env','app']
+    deps: ['screen', 'env', 'app']
 }
 
 function addPackage(package_name, package) {
@@ -253,9 +253,11 @@ addPackage('pckUi',{
     ],
     resources : [
         'shared/ui/adaptive-change-drtv',  
+        'shared/ui/rubber-space-drtv',          
         'shared/ui/nav-tabs-drtv',
         'shared/ui/point-spinner-drtv',
         'shared/ui/spinner-drtv',
+        'shared/ui/header-drtv',
         'shared/ui/header-back-drtv',
         'shared/ui/header-identity-drtv',
         'shared/ui/header-logo-drtv',

@@ -9,9 +9,6 @@ module.exports = {
             .assert
                 .url(path+'#/terms', 'on route terms')
             .assert
-                .text('h2')
-                    .is.not('', 'terms header is shown')
-            .assert
                 .text('.well')
                     .is.not('', 'terms are full of paragraphs')
         .done()

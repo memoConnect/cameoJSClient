@@ -14,9 +14,6 @@ define([
     'cmNotify',
 
     'pckUi',
-
-    // vendor
-//    'jquery',
     'base/config'
 ], function (angularAMD) {
     'use strict';
@@ -139,10 +136,15 @@ define([
             createRoutes(cameo_config.routes);
         }
     ]);
+
     // app run handling
-    app.run(['$rootScope', '$location', 'cmUserModel', 'cmNotify',
-        function ($rootScope, $location, cmUserModel, cmNotify) {
-            $rootScope.$on("$routeChangeStart", function () {
+    app.run(['$rootScope', '$location', '$window', 'cmUserModel',
+        function ($rootScope, $location, $window, cmUserModel) {
+            // hide app spinner
+            angular.element($window.document.getElementsByClassName('app-spinner')[0]).css('display','none');
+
+            // passing wrong route calls
+            $rootScope.$on("$routeChangeStart", function(){
                 // expections
                 var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/purl\/[a-zA-Z0-9]{1,})$/;
                 var path = $location.$$path;
@@ -154,6 +156,24 @@ define([
                     }
                 } else if ($location.$$path == "/login") {
                     $location.path("/talks");
+                }
+            });
+
+            // url hashing for backbutton
+            $rootScope.urlHistory = [];
+
+            window.onpopstate = function(){
+                $rootScope.urlHistory.pop();
+            };
+
+            $rootScope.$on('$routeChangeSuccess', function(schmu, _currentRoute_, _prevRoute_){
+                var currentRoute = _currentRoute_.$$route.originalPath,
+                    prevRoute = _prevRoute_ ? _prevRoute_.$$route.originalPath: '';
+
+                if(currentRoute.indexOf("/login") != -1 || currentRoute == prevRoute)
+                    $rootScope.urlHistory = [];
+                else if(currentRoute !== $rootScope.urlHistory[$rootScope.urlHistory.length - 1]) {
+                    $rootScope.urlHistory.push(currentRoute);
                 }
             });
         }

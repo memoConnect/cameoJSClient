@@ -1,20 +1,20 @@
 <form class="form-signin" role="form" ng-submit="doLogin()" autocomplete="off">
-    <div class="modal-outer-title"><i class="fa cm-logo fa-5x"></i></div>
+    <div class="modal-outer-title"><i class="fa cm-logo"></i></div>
 
     <h2 class="form-signin-heading ">{{'LOGIN.HEADING'|cmTranslate}}</h2>
 
     <div class="cm-form-group">
         <div class="cm-form-control">
-            <input ng-model="formData.user" class="form-control" id="user" name="user" placeholder="{{'LOGIN.PLACEHOLDER.USERNAME'|cmTranslate}}" type="text" value="" required />
+            <input ng-model="formData.user" class="cm-form-control" id="user" name="user" placeholder="{{'LOGIN.PLACEHOLDER.USERNAME'|cmTranslate}}" type="text" value="" required />
         </div>
     </div>
     <div class="cm-form-group">
         <div class="cm-form-control">
-            <input ng-model="formData.pass" class="form-control" id="pw" name="pw" placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD'|cmTranslate}}" type="password" value="" required />
+            <input ng-model="formData.pass" class="cm-form-control" id="pw" name="pw" placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD'|cmTranslate}}" type="password" value="" required />
         </div>
     </div>
     <div class="cm-form-group">
-        <select ng-model="formData.autologin" class="form-control btn-block autologin" ng-change="changeAutologin()">
+        <select ng-model="formData.autologin" class="cm-form-control btn-block autologin" ng-change="changeAutologin()">
             <option value="none">{{'LOGIN.LABEL.AUTO'|cmTranslate}}</option>
             <option ng-repeat="(user,prop) in loginData">{{user}}</option>
         </select>

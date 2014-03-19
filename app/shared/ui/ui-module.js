@@ -8,6 +8,10 @@ angular.module('cmUi', [
     cmAdaptiveChange
 ])
 
+.directive('cmRubberSpace',[
+    cmRubberSpace
+])
+
 .directive('cmSpinner',[
     cmSpinner
 ])
@@ -21,8 +25,14 @@ angular.module('cmUi', [
     cmNavTabs
 ])
 
+
+.directive('cmHeader',[
+    cmHeader
+])
+
 .directive('cmHeaderBack',[
     '$window',
+    '$location',
     cmHeaderBack
 ])
 
@@ -41,6 +51,7 @@ angular.module('cmUi', [
 
 .directive('cmFooter',[
     '$location',
+    'cmTranslate',
     cmFooter
 ])
 
@@ -56,4 +67,4 @@ angular.module('cmUi', [
             return str.match(/^[0-9\.]*$/) ? str : '0'
         }
     }
-])
+]);

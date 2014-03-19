@@ -3,32 +3,38 @@
  */
 'use strict';
 
-function cmFooter($location){
+function cmFooter($location, cmTranslate){
     return {
-        restrict: 'A',
-        template: '<div class="btn-group btn-group-justified">' +
-                    '<a class="btn" href="#{{btn.href}}" ng-repeat="btn in btns" ng-class="{active:btn.isActive}">' +
-                        '{{btn.i18n|cmTranslate}}' +
-                    '</a>' +
-                  '</div>',
-        controller: function($scope){
-            /**
-             * default buttons
-             * @type {*[]}
-             */
+        restrict: 'AE',        
+        
+        link : function(scope, element, attrs, controller){
+
+          console.dir(element.children())
+            
+            //if element has no chrildren add default elements:
+            if(element.children().length == 0 ) {
+                scope.btns.forEach(function(btn){
+                    element.append(
+                        angular.element('<a>'+cmTranslate(btn.i18n)+'</a>')
+                        .attr('href', '#'+btn.href)
+                        .toggleClass('active', btn.isActive ? true : false)
+                    )
+                })
+            }
+            
+        },
+        
+
+        controller: function($scope, $element, $attrs, $transclude){
             $scope.btns = [
-                {i18n:'DIRV.FOOTER.TALKS',href:'/talks'},
-                {i18n:'DIRV.FOOTER.CONTACTS',href:'/contacts'},
-                {i18n:'DIRV.FOOTER.MEDIA',href:'/mediawall'}
+                {i18n:'DIRV.FOOTER.TALKS',    href:'/talks'},
+                {i18n:'DIRV.FOOTER.CONTACTS', href:'/contacts'},
+                {i18n:'DIRV.FOOTER.MEDIA',    href:'/mediawall'}
             ];
-            /**
-             * set via location the active button
-             */
+
             angular.forEach($scope.btns,function(btn){
-                if($location.$$path.search(btn.href) != -1){
-                    btn.isActive = true;
-                }
-            });
+                btn.isActive = $location.$$path.search(btn.href) != -1
+            })
         }
     }
 }

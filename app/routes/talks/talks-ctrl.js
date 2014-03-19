@@ -3,7 +3,8 @@ define([
     'util-base64',    
     'ngload!pckUser',
     'ngload!pckConversations',
-    'ngload!pckUi'
+    'ngload!pckUi',
+    'ngload!cmUtil'
 ], function (app) {
     'use strict';
 
@@ -11,13 +12,11 @@ define([
         '$scope',
         '$rootScope',
         'cmConversationsModel',
-        function($scope, $rootScope, cmConversationsModel) {
-            // define for tabs directive
-            $scope.badges = {
-                overview: 0
-            };
-
+        'cmUtil',
+        function($scope, $rootScope, cmConversationsModel, cmUtil) {
             cmConversationsModel.getConversations();
+
+            $scope.cmUtil = cmUtil;
 
             $scope.conversations = cmConversationsModel.conversations;
 
