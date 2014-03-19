@@ -350,5 +350,5 @@ module.exports = function (grunt) {
     grunt.registerTask('watcher','watch');
 
     // deploy moeps
-    grunt.registerTask('dev-deploy',['clean:dist-app','copy:dev-deploy','uglify:dev-deploy','clean:dev-deploy'])
+    grunt.registerTask('dev-deploy',['clean:dist-app','concat:less','less','copy:dev-deploy','uglify:dev-deploy','clean:dev-deploy'])
 };
