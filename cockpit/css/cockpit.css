@@ -27,6 +27,15 @@ a {
     padding: 2em;
 }
 
+.content button{
+    margin-top: 2em;
+}
+
+ .content div.input-group > div {
+      margin-top: 1em;
+  }
+
+
 .twoFactorModal h2 {
     text-align: center;
     margin-top: 1em;

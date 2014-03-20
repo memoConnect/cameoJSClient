@@ -7,29 +7,36 @@ cockpitEdit.controller("cockpitEditCtrl", [
     'cmLogger',
     '$routeParams',
     function ($scope, cmApi, cmLogger, $routeParams) {
-        $scope.elementName = $routeParams.elementName
-        $scope.elementNameId = $routeParams.id
-        $scope.elementNameAttributes = {}
-        $scope.elementAttributeUpdates = {}
-        $scope.formData = {}
-        $scope.formDataEditState = {}
+
+        $scope.elementName = $routeParams.elementName;
+        $scope.elementNameId = $routeParams.id;
+        $scope.attributes = [];
+
+        var updatedAttributes = {};
+        var initialAttributeData = [];
+
+        $scope.saveSuccess = false;
+        $scope.saveFail = false;
+        $scope.saveFailText = "request failed";
 
         cmApi.get({
             url: '/' + $scope.elementName + '/' + $scope.elementNameId
         }).then(
             function (data) {
                 if (data.attributes.length > 0) {
-                    $scope.elementNameAttributes = data.attributes
-                    angular.forEach($scope.elementNameAttributes, function (elementAttributes) {
-                        $scope.formData[elementAttributes.attributeName] = elementAttributes.attributeData
-                        $scope.formDataEditState[elementAttributes.attributeName] = elementAttributes.attributeIsEditable
+
+                    data.attributes.forEach(function(attribute) {
+                       initialAttributeData.push(attribute.data)
                     })
+
+                    $scope.attributes = data.attributes;
+                    console.dir($scope.attributes)
                 }
             },
             function () {
                 cmLogger.error("verdammter Dreckwurschtkram :(")
             }
-        )
+        );
 
         /*
          this function is used to store changes back to backend
@@ -37,22 +44,30 @@ cockpitEdit.controller("cockpitEditCtrl", [
         $scope.sendElement = function () {
 
             //get changes from formData
-            angular.forEach($scope.elementNameAttributes, function (elementAttributes) {
-                if (elementAttributes.attributeData != $scope.formData[elementAttributes.attributeName]) {
-                    $scope.elementAttributeUpdates[elementAttributes.attributeName] = $scope.formData[elementAttributes.attributeName]
-                    cmLogger.debug(elementAttributes.attributeName)
-                    cmLogger.debug($scope.elementAttributeUpdates[elementAttributes.attributeName])
+            $scope.attributes.forEach(function(attribute, index) {
+                var initial = initialAttributeData[index];
+                if (attribute.data !== initial) {
+                   updatedAttributes[attribute.name] = attribute.data
                 }
+            });
 
-            })
+            cmApi.put({
+                url: '/asdf' + $scope.elementName + '/' + $scope.elementNameId,
+                data: updatedAttributes
+            }).then(
+                function (data) {
+                   $scope.saveFail = false
+                   $scope.saveSuccess = true
+                },
+                function (response) {
+                    $scope.saveFail = true;
+                    $scope.saveSuccess = false;
+                    $scope.saveFailText = response.data.error;
+                    cmLogger.error("cockpit submit failed: " + response.data.error);
+                }
+            );
 
-
-//            angular.forEach($scope.elementAttributeUpdates, function (elementAttributeValue, elementAttributeKey) {
-//                cmLogger.debug(elementAttributeKey)
-//                cmLogger.debug(elementAttributeValue)
-//            })
-
-
+            console.dir(updatedAttributes)
         }
     }
-])
+]);

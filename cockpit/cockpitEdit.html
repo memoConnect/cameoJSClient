@@ -3,14 +3,15 @@
     <h2>Edit of {{elementName}}</h2>
 
     <div class="well well-lg">
-        <div class="input-group">
-            <div ng-repeat="(key, value) in formData">
-                <span class="label label-default">{{key}}</span>
-                <input name="{{key}}"
+        <div class="input-group" style="width: 100%">
+            <div ng-repeat="attribute in attributes">
+
+                <span class="label label-default">{{attribute['displayName']}}</span>
+                <input name="{{attribute['name']}}"
                        type="text"
                        class="form-control"
-                       ng-model="formData[key]"
-                       ng-disabled="{{!formDataEditState[key]}}"
+                       ng-model="attribute['data']"
+                       ng-disabled="{{!attribute['isEditable']}}"
                         />
             </div>
         </div>
