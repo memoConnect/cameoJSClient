@@ -27,14 +27,14 @@ a {
     padding: 2em;
 }
 
-.content button{
+.paddedButton{
     margin-top: 2em;
     margin-bottom: 2em;
 }
 
- .content div.input-group > div {
-      margin-top: 1em;
-  }
+.content div.input-group > div {
+    margin-top: 1em;
+}
 
 
 .twoFactorModal h2 {

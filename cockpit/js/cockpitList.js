@@ -24,10 +24,6 @@ cockpitList.controller("cockpitListCtrl", [
             filter: []
         }
 
-//        if(typeof $routeParams.filterTerm != 'undefined' && typeof $routeParams.filterName != 'undefined')
-
-        updateList()
-
         function handleError(response, reTryFunction) {
             $scope.showContent = false
             if(response.data && response.data.twoFactorRequired === true) {
@@ -133,6 +129,15 @@ cockpitList.controller("cockpitListCtrl", [
             if(event.keyCode == 13) {
                 $scope.sendFilter()
             }
+        }
+
+        if(typeof $routeParams.filterTerm != 'undefined' && typeof $routeParams.filterName != 'undefined')  {
+            $scope.selectedFilter = $routeParams.filterName
+            $scope.filterTerm = $routeParams.filterTerm
+            filterSettings.limit = 200
+            $scope.sendFilter()
+        } else {
+            updateList()
         }
 
     }

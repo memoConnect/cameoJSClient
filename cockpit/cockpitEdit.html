@@ -40,7 +40,7 @@
 
                     </div>
                     <div ng-switch-when="filter">
-                        <a href="#/{{attribute.data.listName}}/filter/{{attribute.data.filterName}}/{{attribute.data.filterTerm}}">Show list</a>
+                        <a class="btn btn-default" style="width: 100%; text-align: left" href="#/{{attribute.data.listName}}/filter/{{attribute.data.filterName}}/{{attribute.data.filterTerm}}">Go to list</a>
                     </div>
 
                     <div ng-switch-default>
@@ -52,7 +52,7 @@
             </div>
         </div>
 
-        <button ng-click="sendElement()" class="btn btn-default">save changes</button>
+        <button ng-click="sendElement()" class="btn btn-default paddedButton">save changes</button>
 
         <div ng-show="saveSuccess">
             <div class="alert alert-success">Saved</div>
