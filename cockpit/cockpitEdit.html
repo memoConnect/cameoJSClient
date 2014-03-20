@@ -5,16 +5,58 @@
     <div class="well well-lg">
         <div class="input-group" style="width: 100%">
             <div ng-repeat="attribute in attributes">
-
                 <span class="label label-default">{{attribute['displayName']}}</span>
-                <input name="{{attribute['name']}}"
-                       type="text"
-                       class="form-control"
-                       ng-model="attribute['data']"
-                       ng-disabled="{{!attribute['isEditable']}}"
-                        />
+
+                <div ng-switch on="attribute.type">
+                    <div ng-switch-when="string">
+                        <input name="{{attribute['name']}}"
+                               type="text"
+                               class="form-control"
+                               ng-model="attribute['data']"
+                               ng-disabled="{{!attribute['isEditable']}}"
+                                /></div>
+                    <div ng-switch-when="optionList">
+                        option list
+                        <!--<button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown">-->
+                        <!--<span data-bind="label">Select One</span> <span class="caret"></span>-->
+                        <!--</button>-->
+                        <!--<ul class="dropdown-menu" role="menu">-->
+                        <!--<li><a href="#">Item 1</a></li>-->
+                        <!--<li><a href="#">Another item</a></li>-->
+                        <!--<li><a href="#">This is a longer item that will not fit properly</a></li>-->
+                        <!--</ul>-->
+                    </div>
+                    <div ng-switch-when="simpleList">
+                        <accordion>
+                            <accordion-group heading="Show List">
+                                foo
+                                <!--<div class="well well-sm" ng-repeat="item in attribute.data">-->
+                                    <!--{{item}}-->
+                                <!--</div>-->
+                            </accordion-group>
+                        </accordion>
+
+                    </div>
+                    <div ng-switch-when="listFilter">
+                        listFilter
+                    </div>
+
+                    <div ng-switch-default>
+                        unsupported edit type
+                    </div>
+                </div>
+
+
             </div>
         </div>
+
         <button ng-click="sendElement()" class="btn btn-default">save changes</button>
+
+        <div ng-show="saveSuccess">
+            <div class="alert alert-success">Saved</div>
+        </div>
+        <div ng-show="saveFail">
+            <div class="alert alert-danger">{{saveFailText}}</div>
+        </div>
     </div>
 </div>

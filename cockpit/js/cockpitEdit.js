@@ -1,11 +1,11 @@
-var cockpitEdit = angular.module("cockpitEdit", ["ngRoute", "cmApi", "cmLogger"])
-
+var cockpitEdit = angular.module("cockpitEdit", ["ngRoute", "cmApi", "cmLogger","ui.bootstrap"]);
 
 cockpitEdit.controller("cockpitEditCtrl", [
     '$scope',
     'cmApi',
     'cmLogger',
     '$routeParams',
+
     function ($scope, cmApi, cmLogger, $routeParams) {
 
         $scope.elementName = $routeParams.elementName;
@@ -24,13 +24,10 @@ cockpitEdit.controller("cockpitEditCtrl", [
         }).then(
             function (data) {
                 if (data.attributes.length > 0) {
-
                     data.attributes.forEach(function(attribute) {
                        initialAttributeData.push(attribute.data)
                     })
-
                     $scope.attributes = data.attributes;
-                    console.dir($scope.attributes)
                 }
             },
             function () {
@@ -52,11 +49,11 @@ cockpitEdit.controller("cockpitEditCtrl", [
             });
 
             cmApi.put({
-                url: '/asdf' + $scope.elementName + '/' + $scope.elementNameId,
+                url: '/' + $scope.elementName + '/' + $scope.elementNameId,
                 data: updatedAttributes
             }).then(
                 function (data) {
-                   $scope.saveFail = false
+                   $scope.saveFail = false;
                    $scope.saveSuccess = true
                 },
                 function (response) {
@@ -66,7 +63,6 @@ cockpitEdit.controller("cockpitEditCtrl", [
                     cmLogger.error("cockpit submit failed: " + response.data.error);
                 }
             );
-
             console.dir(updatedAttributes)
         }
     }
