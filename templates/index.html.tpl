@@ -11,16 +11,20 @@
     <link rel="stylesheet" href="css/font-awesome.css">
 
     <script data-main="base/main.js" src="vendor/requirejs/require.js"></script>
-    <%= phonegapFiles %>
+	<%= phonegapFiles %>
 </head>
 <body>
-    <div cm-language-select style="text-align:right"></div>
-    <div cm-notify></div>
+    <div id="cm-app">
 
-    <%= phonegapElements %>
+        <div class="app-spinner">
+            <i class="fa cm-rhino-positive shake-hard"></i>
+        </div>
 
-    <div class="view-container container">
-        <div ng-view class="view-frame center-block"></div>
+        <div cm-language-select></div>
+        <div cm-notify></div>
+        <div cm-spinner></div>
+
+        <div ng-view class="view-frame cm-content"></div>
     </div>
 </body>
 </html>
