@@ -49,7 +49,7 @@ define([
                         $scope.registrationForm.loginName.$valid = true;
                         reservation_secrets[last_checked] = reservationSecret;
 
-                        $scope.setCameoID(last_checked);
+//                        $scope.setCameoID(last_checked);
                     },
                     function(alternative){
                         cmNotify.info("Error, check Username again!", {ttl: 5000});
