@@ -1,3 +1,6 @@
+<cm-header>
+</cm-header>
+
 <div ng-controller="ContactsCtrl">
     <div class="page-header">
         <h1><i class="fa fa-users"></i> {{'CONTACTS.WELCOME' | cmTranslate }}</h1>
@@ -5,13 +8,16 @@
 
     <div cm-nav-tabs ng-model="badges"></div>
 
-    <div ng-show="activeTab == 'ADD'">
+    <div ng-if="activeTab == 'ADD'">
         <div cm-search-cameo-identity></div>
 
         <div cm-add-external-contact></div>
     </div>
 
-    <div cm-contacts-list ng-show="activeTab == 'ALL'"></div>
+    <div cm-contacts-list ng-if="activeTab == 'ALL'"></div>
 
-    <div cm-contact-request-list ng-show="activeTab == 'REQUESTS'"></div>
+    <div cm-contact-request-list ng-if="activeTab == 'REQUESTS'"></div>
 </div>
+
+<cm-footer>
+</cm-footer>

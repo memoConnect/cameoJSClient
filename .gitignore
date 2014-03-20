@@ -8,6 +8,7 @@
 /project/
 /dist/
 /app/css/app.less
+/app/css/app.css
 *.iml
 *.log
 *.fcp

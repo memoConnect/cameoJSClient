@@ -1,10 +1,10 @@
 <article class="{{ is_my_own_message ? 'right' : 'left'}}">
     <header>
-        {{ message.from }} 
+        {{ message.fromIdentity }}
     </header>
     <div>
         <cm-avatar 
-            cm-identity = "message.from"
+            cm-identity = "message.fromIdentity"
             class       = "{{ is_my_own_message ? 'pull-right' : 'pull-left'}}"
         >
         </cm-avatar>         

@@ -20,7 +20,7 @@
 		{{'CONVERSATION.TAG.RECIPIENTS' |cmTranslate}}:
 
 		<span ng-repeat = "recipient in conversation.recipients">
-			{{recipient.displayName}}
+			{{recipient.identity.getDisplayName()}}
 			<i
 				class		= "fa fa-times-circle"
 				style		= "cursor:pointer"

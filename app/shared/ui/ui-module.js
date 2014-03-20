@@ -8,6 +8,10 @@ angular.module('cmUi', [
     cmAdaptiveChange
 ])
 
+.directive('cmRubberSpace',[
+    cmRubberSpace
+])
+
 .directive('cmSpinner',[
     cmSpinner
 ])
@@ -19,6 +23,11 @@ angular.module('cmUi', [
 .directive('cmNavTabs',[
     '$routeParams',
     cmNavTabs
+])
+
+
+.directive('cmHeader',[
+    cmHeader
 ])
 
 .directive('cmHeaderBack',[
@@ -42,6 +51,7 @@ angular.module('cmUi', [
 
 .directive('cmFooter',[
     '$location',
+    'cmTranslate',
     cmFooter
 ])
 

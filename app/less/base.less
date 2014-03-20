@@ -6,9 +6,13 @@
 @cm-black: #000000;
 @cm-bg-color: @cm-black;
 @cm-danger-color: #FF6600;
+@cm-input-bg-color: #EDEDED;
+@cm-overlay-light:rgba(0,0,0,0.7);
+
 
 @header-height: 3rem;
 @footer-height: 3rem;
+@app-width: 32rem;
 
 html, body {
     height:100%;
@@ -19,13 +23,39 @@ html, body {
 body {
     font-size: 1em;
     width:100%;
-    background-color:@cm-bg-color;
+    background-color:#fff;
     cursor:default;
   //overflow:hidden;<-zerstört das scrollen in talks im ff
 }
 pre {
     text-align:left
 }
+
+#cm-app{
+    display:block;
+    height:100%;
+    margin:0;
+    padding:0;
+    background-size:cover;
+    background-attachment:fixed;
+    background-repeat:no-repeat;
+    background-image: url('../gfx/backgroundStart.jpg');
+    //max-width is set via javascript in screen.js
+    margin:auto
+}
+
+.cm-content {
+    padding-top: @header-height;
+    padding-bottom: @footer-height;
+    height: 100%;
+}
+
+
+
+
+
+
+
 
 .without-border-radius{
     -webkit-border-radius:0!important;
@@ -75,3 +105,13 @@ html[xmlns] .clearfix{display:block}
 .pos-bl{position:absolute;bottom:0;left:0}
 
 .cm-fl{float:left}
+
+.app-spinner{
+  text-align:center;
+  font-size:20em;
+  position:absolute;
+  width:100%;
+  left:0;
+  right:0;
+  z-index:1000;
+}

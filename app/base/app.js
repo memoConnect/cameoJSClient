@@ -7,15 +7,13 @@ define([
     'cmApi',
     'cmAuth',
     'cmUserModel',
+    'cmIdentity',
 
     'cmLanguage',
     'cmLogger',
     'cmNotify',
 
     'pckUi',
-
-    // vendor
-//    'jquery',
     'base/config'
 ], function (angularAMD) {
     'use strict';
@@ -32,7 +30,8 @@ define([
         'cmLogger',
         'cmLocalStorage',
         'cmAuth',
-        'cmUserModel'        
+        'cmUserModel',
+        'cmIdentity'
     ]);
 
     //cameo_config = cameo_config
@@ -137,9 +136,13 @@ define([
             createRoutes(cameo_config.routes);
         }
     ]);
+
     // app run handling
-    app.run(['$rootScope', '$location', 'cmUserModel',
-        function ($rootScope, $location, cmUserModel) {
+    app.run(['$rootScope', '$location', '$window', 'cmUserModel',
+        function ($rootScope, $location, $window, cmUserModel) {
+            // hide app spinner
+            angular.element($window.document.getElementsByClassName('app-spinner')[0]).css('display','none');
+
             // passing wrong route calls
             $rootScope.$on("$routeChangeStart", function(){
                 // expections

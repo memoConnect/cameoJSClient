@@ -31,6 +31,7 @@ var config = {
         'cmNotify': 'shared/cmNotify',
         'cmLocalStorage': 'shared/cmLocalStorage',
         'cmUserModel': 'shared/cmUserModel',
+        'cmIdentity': 'shared/cmIdentity',
 
         // cameo modules/services
         'cmAuth': 'shared/cmAuth',
@@ -91,7 +92,8 @@ var config = {
             'crypto-jsencrypt'
         ],
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
-        'cmUserModel': ['angular', 'cmLocalStorage'],
+        'cmIdentity': ['angular', 'cmAuth'],
+        'cmUserModel': ['angular', 'cmLocalStorage','cmIdentity'],
         'cmApi': ['angular', 'cmLogger'],
         'cmProfile' : ['angular', 'cmApi', 'cmAuth'],
         'cmLogger' : ['angular'],
@@ -108,8 +110,7 @@ var config = {
 //        'bootstrap': ['jquery']
     },
     // kick start application
-
-    deps: ['screen', 'env','app']
+    deps: ['screen', 'env', 'app']
 }
 
 function addPackage(package_name, package) {
@@ -173,6 +174,7 @@ addPackage('pckConversations',{
         'cmAuth',
         'cmUtil',
         'cmUserModel',
+        'cmIdentity',
         'pckContacts',
         'pckFiles',
         'pckUi',
@@ -212,7 +214,8 @@ addPackage('pckContacts',{
         'angular',
         'cmApi', 
         'cmLogger', 
-        'cmUtil'
+        'cmUtil',
+        'cmIdentity'
     ],
     resources : [
         'comps/contacts/contactsModel-srvc',
@@ -250,9 +253,11 @@ addPackage('pckUi',{
     ],
     resources : [
         'shared/ui/adaptive-change-drtv',  
+        'shared/ui/rubber-space-drtv',          
         'shared/ui/nav-tabs-drtv',
         'shared/ui/point-spinner-drtv',
         'shared/ui/spinner-drtv',
+        'shared/ui/header-drtv',
         'shared/ui/header-back-drtv',
         'shared/ui/header-identity-drtv',
         'shared/ui/header-logo-drtv',
