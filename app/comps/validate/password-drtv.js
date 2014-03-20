@@ -9,17 +9,21 @@ function cmPassword(cmCrypt) {
         },
         controller: function($scope, $element, $attrs){
             $scope.showConfirmPWStatus = false;
-            $scope.showStrengthMeter = false;
             $scope.passwordType = 'password';
             $scope.showPassword = false;
             $scope.showPasswordLengthError = false;
+            $scope.showPasswordEmptyError = false;
+
+            $scope.$on('cm-empty-password', function(){
+                $scope.showPasswordEmptyError = true;
+            });
 
             $scope.checkPasswordLength = function(pw){
                 if(pw.length > 0 && pw.length < 6){
                     $scope.showPasswordLengthError = true;
+                } else {
+                    $scope.showPasswordLengthError = false;
                 }
-
-                $scope.showPasswordLengthError = false;
             }
 
             $scope.togglePassword = function(){
@@ -34,6 +38,8 @@ function cmPassword(cmCrypt) {
 
             $scope.checkPWStrength = function(){
                 var pw = $scope.pw;
+
+                $scope.showPasswordEmptyError = false;
 
                 if(pw != undefined){
                     $scope.checkPasswordLength(pw);

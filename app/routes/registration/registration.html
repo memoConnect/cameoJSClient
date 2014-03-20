@@ -4,79 +4,82 @@
     <div            cm-weight="4"></div>
 </cm-header>
 
-<div class="cm-registration-ctn with-header with-footer" ng-controller="RegistrationCtrl">
-    <form name="registrationForm" class="form-horizontal" role="form" autocomplete="off" novalidate>
+<div class="wrap-bg" ng-controller="RegistrationCtrl">
+    <div class="cm-registration-ctn with-header with-footer">
+        <form name="registrationForm" class="form-horizontal" role="form" autocomplete="off" novalidate>
 
-        <h4>{{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}</h4>
+            <h4>{{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}</h4>
 
-        <div class="cm-input-ctn" data-qa="form-input">
-            <input id="loginName" name="loginName" type="text"  ng-model="formData.loginName" ng-blur="checkLoginName();" ng-minlength="6" ng-maxlength="60" maxlength="60" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}} *" required />
-        </div>
-        <div class="cm-alert" ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid">
-            <div ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid && registrationForm.loginName.$error.minlength">
-                <i class="fa cm-info"></i>{{'REGISTER.INFO.MIN_LETTER_COUNT' | cmTranslate : {count: 6} }}
+            <div class="cm-input-ctn" ng-class="{'cm-input-error':showLoginNameCheckError, 'cm-input-error':showLoginNameEmptyError}" data-qa="form-input">
+                <input id="loginName" name="loginName" ng-class="{'cm-input-error':showLoginNameCheckError, 'cm-input-error':showLoginNameEmptyError}" type="text"  ng-model="formData.loginName" ng-blur="checkLoginName();" ng-minlength="6" ng-maxlength="60" maxlength="60" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}} *" required />
             </div>
-        </div>
-
-        <div cm-password data-parent-item="formData.password"></div>
-
-        <div style="width:100%;height:1px;background-color:#fff"></div>
-
-        <h4>{{'REGISTER.TITLE.HEAD_IDENTITY' | cmTranslate}}</h4>
-
-        <div class="cm-input-ctn" data-qa="form-input">
-            <input id="cameoId" name="cameoId" type="text" ng-model="formData.cameoId" ng-blur="checkCameoId();" placeholder="{{'REGISTER.PLACEHOLDER.CAMEOID'|cmTranslate}}" />
-        </div>
-
-        <!--<div class="form-group">-->
-            <!--<div class="col-sm-6">-->
-                <!--<div class="input-ctn">-->
-                    <!--<div class="input-group">-->
-                        <!--<input id="cameoId" name="cameoId" type="text" class="form-control" placeholder="{{'REGISTER.PLACEHOLDER.CAMEOID'|cmTranslate}}" ng-model="formData.cameoId" ng-blur="checkCameoId();" />-->
-                        <!--<small class="input-group-addon">@cameo</small>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-
-        <div class="cm-input-ctn" data-qa="form-input">
-            <input id="name" name="name" type="text" placeholder="{{'REGISTER.PLACEHOLDER.NAME'|cmTranslate}}" ng-model="formData.name" />
-        </div>
-
-        <div class="cm-input-ctn" data-qa="form-input">
-            <input id="email" name="email" type="text" placeholder="{{'DIRV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}" ng-model="formData.email" cm-validate-email />
-        </div>
-        <div class="cm-alert" ng-show="registrationForm.email.$dirty && registrationForm.email.$invalid">
-            <div ng-show="registrationForm.email.$invalid">
-                <i class="fa cm-info"></i>{{'DIRV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}
+            <div class="cm-alert" ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid">
+                <div ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid && registrationForm.loginName.$error.minlength">
+                    <i class="fa cm-info"></i>{{'REGISTER.INFO.MIN_LETTER_COUNT' | cmTranslate : {count: 6} }}
+                </div>
             </div>
-        </div>
-
-        <div class="cm-input-ctn" data-qa="form-input">
-            <input id="phone" name="phone" type="text" placeholder="{{'DIRV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}" ng-model="formData.phone" ng-minlength="6" cm-validate-phone />
-        </div>
-        <div class="cm-alert" ng-show="registrationForm.phone.$dirty && registrationForm.phone.$invalid">
-            <div ng-show="registrationForm.phone.$invalid">
-                <i class="fa cm-info"></i>{{'DIRV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}
+            <div class="cm-alert" ng-show="showLoginNameCheckError">
+                <i class="fa cm-info"></i>{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}} exists, pls choose an other one
             </div>
-        </div>
+            <div class="cm-alert" ng-show="showLoginNameEmptyError">
+                <i class="fa cm-info"></i>{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}} empty
+            </div>
 
+            <div cm-password data-parent-item="formData.password"></div>
 
-        <div class="form-group tac" data-qa="form-input">
-            <div class="col-sm-6" >
+            <div style="width:100%;height:1px;background-color:#fff"></div>
+
+            <h4>{{'REGISTER.TITLE.HEAD_IDENTITY' | cmTranslate}}</h4>
+
+            <div class="cm-input-ctn" data-qa="form-input">
+                <input id="cameoId" name="cameoId" type="text" ng-model="formData.cameoId" ng-blur="checkCameoId();" placeholder="{{'REGISTER.PLACEHOLDER.CAMEOID'|cmTranslate}}" />
+            </div>
+
+            <div class="cm-input-ctn" data-qa="form-input">
+                <input id="name" name="name" type="text" placeholder="{{'REGISTER.PLACEHOLDER.NAME'|cmTranslate}}" ng-model="formData.name" />
+            </div>
+
+            <div class="cm-input-ctn" ng-class="{'cm-input-error':registrationForm.email.$invalid}" data-qa="form-input">
+                <input id="email" name="email" type="text" placeholder="{{'DIRV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}" ng-model="formData.email" ng-class="{'cm-input-error':registrationForm.email.$invalid}" cm-validate-email />
+            </div>
+            <div class="cm-alert" ng-show="registrationForm.email.$dirty && registrationForm.email.$invalid">
+                <div ng-show="registrationForm.email.$invalid">
+                    <i class="fa cm-info"></i>{{'DIRV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}
+                </div>
+            </div>
+
+            <div class="cm-input-ctn" ng-class="{'cm-input-error':registrationForm.phone.$invalid}" data-qa="form-input">
+                <input id="phone" name="phone" type="text" placeholder="{{'DIRV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}" ng-model="formData.phone" ng-minlength="6" ng-class="{'cm-input-error':registrationForm.phone.$invalid}" cm-validate-phone />
+            </div>
+            <div class="cm-alert" ng-show="registrationForm.phone.$dirty && registrationForm.phone.$invalid">
+                <div ng-show="registrationForm.phone.$invalid">
+                    <i class="fa cm-info"></i>{{'DIRV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}
+                </div>
+            </div>
+
+            <div class="cm-input-ctn cm-clear-bg" data-qa="form-input">
                 {{'REGISTER.LABEL.TERMS_ACCEPT' |cmTranslate}} <a href="#/terms"><strong><em>{{'REGISTER.LABEL.TERMS' |cmTranslate}}</em></strong></a>
                 <input id="agb" name="agb" type="checkbox" ng-model="formData.agb" required style="display:none" />
-                <i class="fa cm-lg-icon cm-ci-color" ng-class="{'cm-checkbox':registrationForm.agb.$invalid, 'cm-checkbox-right':!registrationForm.agb.$invalid}" ng-click="acceptTerms()"></i>
+                <i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':registrationForm.agb.$invalid, 'cm-checkbox-right':!registrationForm.agb.$invalid}" ng-click="acceptTerms()"></i>
             </div>
-        </div>
+            <div class="cm-alert" ng-show="registrationForm.phone.dirty && registrationForm.agb.$invalid">
+                <div ng-show="registrationForm.agb.$invalid">
+                    <i class="fa cm-info"></i>{{'REGISTER.INFO.TERMS'|cmTranslate}}
+                </div>
+            </div>
 
-    </form>
+        </form>
+    </div>
+
+    <footer class="without-drtv tac">
+        <button class="btn cm-btn-primary cm-btn-footer-fixed" ng-click="createUser()">{{'REGISTER.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i></button>
+    </footer>
+
 </div>
 
-<cm-footer cm-rubber-space>
-    <button class="full-width" ng-click ="createUser()">
-        {{'REGISTER.LABEL.SUBMIT'|cmTranslate}} 
-        <i class="fa cm-checkbox-right cm-lg-icon"></i>
-    </button>
-</cm-footer>
-
+<!--<cm-footer cm-rubber-space>-->
+    <!--<button class="full-width" ng-click ="RegistrationCtrl.createUser()">-->
+        <!--{{'REGISTER.LABEL.SUBMIT'|cmTranslate}}-->
+        <!--<i class="fa cm-checker cm-lg-icon"></i>-->
+    <!--</button>-->
+<!--</cm-footer>-->

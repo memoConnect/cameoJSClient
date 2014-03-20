@@ -89,8 +89,11 @@
     },
 
     "PASSWORD": {
-        "LABEL_PW": "Password",
-        "LABEL_CONFIRM": "Confirm Password"
+        "LABEL_PW": "Passwort",
+        "LABEL_CONFIRM": "Passwort bestätigen",
+        "ERROR": {
+            "EMPTY": ""
+        }
     },
 
     "TALKS": {
