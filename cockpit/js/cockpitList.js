@@ -24,6 +24,8 @@ cockpitList.controller("cockpitListCtrl", [
             filter: []
         }
 
+//        if(typeof $routeParams.filterTerm != 'undefined' && typeof $routeParams.filterName != 'undefined')
+
         updateList()
 
         function handleError(response, reTryFunction) {

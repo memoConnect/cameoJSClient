@@ -1,4 +1,4 @@
-var app = angular.module("cockpit", ["ngRoute",'ui.bootstrap', "cmAuth", "cmApi", "cmCrypt", "cmLogger", "cockpitList", "cockpitEdit", "cockpitMain"])
+var app = angular.module("cockpit", ["ngRoute", "cmAuth", "cmApi", "cmCrypt", "cmLogger", "cockpitList", "cockpitEdit", "cockpitMain"])
 
 app.config(["cmApiProvider",
     function (cmApiProvider) {
@@ -12,6 +12,10 @@ app.config(function ($routeProvider) {
         controller: 'cockpitMainCtrl'
     })
     $routeProvider.when('/:elementName', {
+        templateUrl: 'cockpitList.html',
+        controller: 'cockpitListCtrl'
+    })
+    $routeProvider.when('/:elementName/filter/:filterName/:filterTerm', {
         templateUrl: 'cockpitList.html',
         controller: 'cockpitListCtrl'
     })
