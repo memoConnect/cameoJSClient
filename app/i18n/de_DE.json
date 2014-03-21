@@ -18,8 +18,8 @@
             "PASSWORD": "Passwort"
         },
         "INFO": {
-            "401": "Der Loginname oder das Passwort ist falsch.",
-            "404": "Der Login ist zurzeit nicht möglich. 404",
+            "401": "Der Loginname oder das Passwort sind falsch.",
+            "404": "Der Login ist zur Zeit nicht möglich. 404",
             "500": "Server Error. 500"
         }
     },
@@ -44,7 +44,7 @@
             "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden.",
             "TERMS": "Bitte AGB akzeptieren.",
             "EMPTY": {
-                "USERNAME": "Bitte suchen Sie sich einen Benutzernamen aus.",
+                "USERNAME": "Bitte geben Sie einen Benutzernamen an.",
                 "PASSWORD": "Bitte geben Sie ein Passwort ein."
             }
         },
@@ -91,7 +91,10 @@
 
     "PASSWORD": {
         "LABEL_PW": "Passwort",
-        "LABEL_CONFIRM": "Passwort bestätigen"
+        "LABEL_CONFIRM": "Passwort bestätigen",
+        "ERROR": {
+            "EMPTY": "Bitte ein Passwort eingeben und bestätigen"
+        }
 
     },
 
@@ -171,7 +174,10 @@
     "DIRV": {
         "PASSWORD": {
             "PASSWORD": "Passwort",
-            "PASSWORD_CONFIRM": "Passwort wiederholen"
+            "PASSWORD_CONFIRM": "Passwort wiederholen",
+            "ERROR": {
+                "EMPTY": "Bitte ein Passwort eingeben und bestätigen"
+            }
         },
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",

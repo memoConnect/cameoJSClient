@@ -9,6 +9,8 @@
 @cm-input-bg-color: #EDEDED;
 @cm-overlay-light:rgba(0,0,0,0.7);
 
+@cm-form-alert-red: #F4DFDF;
+
 
 @header-height: 3rem;
 @footer-height: 3rem;
@@ -33,28 +35,26 @@ pre {
 
 #cm-app{
     display:block;
-    height:100%;
-    margin:0;
+    min-height: 100%; /* Mindesthöhe für moderne Browser */
+    height: auto !important; /* Für moderne Browser */
+    height: 100%; /* "Mindesthöhe" für IE <7 */
     padding:0;
     background-size:cover;
     background-attachment:fixed;
     background-repeat:no-repeat;
     background-image: url('../gfx/backgroundStart.jpg');
     //max-width is set via javascript in screen.js
-    margin:auto
+    margin:0 auto;
 }
 
 .cm-content {
     padding-top: @header-height;
     padding-bottom: @footer-height;
-    height: 100%;
+    min-height: 100%; /* Mindesthöhe für moderne Browser */
+    height: auto !important; /* Für moderne Browser */
+    height: 100%; /* "Mindesthöhe" für IE <7 */
+    box-sizing:border-box
 }
-
-
-
-
-
-
 
 
 .without-border-radius{
@@ -93,6 +93,7 @@ html[xmlns] .clearfix{display:block}
 
 .mt5{margin-top:0.3rem}
 .mb5{margin-bottom:0.3rem}
+.ml15{margin-left:1rem}
 .mb10{margin-bottom:0.6rem !important}
 .mb30{margin-bottom:2rem}
 .mr30{margin-right:2rem}

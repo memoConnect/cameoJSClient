@@ -1,15 +1,18 @@
-cm-footer{
+.cm-footer {
+  display:block;
+  position:fixed;
+  bottom:0;
+  z-index:1;
+  background-color:@cm-bg-color;
+  padding:0;
+  font-size:1.2em;
+  height:@footer-height;
+  width: @app-width;
+}
 
-    display:block;
-    position:fixed;
-    bottom:0;
-    z-index:1;
-    background-color:@cm-bg-color;
-    padding:0;
-    font-size:1.2em;
-    height:@footer-height;
-    width: @app-width;
+cm-footer, footer{
 
+    .cm-footer
 
     button, a {
         display:inline-block;
@@ -36,8 +39,8 @@ cm-footer{
             color:@cm-ci-color;
         }
     }
-
-
 }
 
-
+footer {
+  .cm-footer
+}
