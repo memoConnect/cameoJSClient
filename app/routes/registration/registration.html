@@ -64,7 +64,7 @@
             </div>
             <div class="cm-alert" ng-show="registrationForm.phone.dirty && registrationForm.agb.$invalid">
                 <div ng-show="registrationForm.agb.$invalid">
-                    <i class="fa cm-info"></i>{{'REGISTER.INFO.TERMS'|cmTranslate}}
+                    <i id="termsOfUseCheckButton" class="fa cm-info"></i>{{'REGISTER.INFO.TERMS'|cmTranslate}}
                 </div>
             </div>
 
@@ -72,7 +72,7 @@
     </div>
 
     <footer class="without-drtv tac">
-        <button class="btn cm-btn-primary cm-btn-footer-fixed" ng-click="createUser()">{{'REGISTER.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i></button>
+        <button id="registerUserButton" class="btn cm-btn-primary cm-btn-footer-fixed" ng-click="createUser()">{{'REGISTER.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i></button>
     </footer>
 
 </div>
