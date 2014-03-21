@@ -138,7 +138,6 @@ define([
 
             // check cameoName == loginName
             if ($scope.registrationForm.loginName.$valid == false) {
-//                cmNotify.warn('REGISTER.INFO.EMPTY.USERNAME', {ttl: 5000});
                 $scope.showLoginNameEmptyError = true;
             } else {
                 data.loginName = $scope.registrationForm.loginName.$viewValue;
@@ -159,7 +158,6 @@ define([
 
             // check email
             if ($scope.registrationForm.email.$valid == false) {
-//                cmNotify.warn('DIRV.VALIDATE_EMAIL.INFO.INVALID', {ttl: 5000});
             } else {
                 if ($scope.registrationForm.email.$viewValue != '') {
                     data.email = $scope.registrationForm.email.$viewValue;
@@ -168,7 +166,6 @@ define([
 
             // check phone
             if ($scope.registrationForm.phone.$valid == false) {
-//                cmNotify.warn('DIRV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER', {ttl: 5000});
             } else {
                 if ($scope.registrationForm.phone.$viewValue != '') {
                     data.phoneNumber = $scope.registrationForm.phone.$viewValue;

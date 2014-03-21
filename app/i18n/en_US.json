@@ -43,8 +43,8 @@
             "MIN_LETTER_COUNT": "Please use at least {{count}} letters.",
             "TERMS": "Confirm terms!",
             "EMPTY": {
-                "USERNAME": "Please insert a username.",
-                "PASSWORD": "Please insert a password."
+                "USERNAME": "Please insert a Username.",
+                "PASSWORD": "Please insert a Password."
             }
         },
         "TITLE": {
@@ -173,7 +173,10 @@
     "DIRV": {
         "PASSWORD": {
             "PASSWORD": "Password",
-            "PASSWORD_CONFIRM": "Confirm Password"
+            "PASSWORD_CONFIRM": "Confirm Password",
+            "ERROR": {
+                "EMPTY": "Please add a Password and confirm it"
+            }
         },
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",
