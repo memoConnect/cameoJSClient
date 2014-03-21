@@ -226,6 +226,11 @@
 
     "MENU": {
         "HEADER": "Menü",
+        "NOTIFICATIONS": "Notifikationen",
+        "FRIENDREQUESTS": "Freundschaftsanfragen",
+        "MESSAGES": "Nachrichten",
+        "HINTS": "Sonstige Hinweise",
+        "ACTIVITY": "Aktivity",
         "SETTINGS": "Einstellungen",
         "LOGOUT": "Logout"
     }
