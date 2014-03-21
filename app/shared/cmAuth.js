@@ -88,7 +88,7 @@ function(cmApi, cmCrypt){
             return cmApi.post({
                 url: '/twoFactorAuth/confirm',
                 data: { key: key },
-                exp_ok: 'token'
+                exp_ok: "token"
             })
         },
 
