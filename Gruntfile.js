@@ -348,7 +348,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.registerTask('watcher','watch');
+    grunt.registerTask('watcher', ['concat:less', 'less', 'watch']);
 
     // deploy moeps
     grunt.registerTask('dev-deploy',['clean:dist-app','concat:less','less','copy:dev-deploy','uglify:dev-deploy','clean:dev-deploy'])
