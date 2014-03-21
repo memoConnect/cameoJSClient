@@ -64,9 +64,19 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'dist/',
+                        cwd: 'dist/app',
                         src: '**/*.js',
-                        dest: 'dist/'
+                        dest: 'dist/app'
+                    }
+                ]
+            },
+            'cockpit': {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'dist/cockpit',
+                        src: '**/*.js',
+                        dest: 'dist/cockpit'
                     }
                 ]
             }
@@ -105,6 +115,15 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         src: 'app/**',
+                        dest: 'dist/'
+                    }
+                ]
+            } ,
+            'cockpit': {
+                files: [
+                    {
+                        expand: true,
+                        src: 'cockpit/**',
                         dest: 'dist/'
                     }
                 ]
@@ -368,4 +387,5 @@ module.exports = function (grunt) {
 
     // deploy moeps
     grunt.registerTask('dev-deploy', ['clean:dist-app', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'clean:dev-deploy'])
+    grunt.registerTask('cockpit-deploy', ['copy:cockpit','uglify:cockpit'])
 };
