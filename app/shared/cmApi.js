@@ -216,8 +216,9 @@ function($injector){
 
                 function(response){
                     cmLogger.error('Api call failed: \n '+config.method+' '+config.url, response)
+                    console.dir(response)
                     //error messages should come trough backend
-                    deferred.reject(response.status, response)
+                    deferred.reject(response)
                 }
             )
 

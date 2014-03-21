@@ -7,7 +7,7 @@
 
 .cm-input-ctn input{
     background-color: @cm-white !important;
-    width: 23rem;
+    width: 21rem;
     padding:0;
     margin:0;
     border:none;
@@ -15,6 +15,19 @@
 
 .cm-input-ctn ~ .progress {
     margin-top: -0.8em;
-    margin-bittom: 0.5em;
+    margin-bottom: 0.5em;
     background:transparent; 
+}
+
+form .cm-input-error{background-color:#F4DFDF !important}
+
+form .cm-alert .cm-info {
+  color: @cm-danger-color;
+  margin-right: 0.5rem;
+}
+
+.cm-input-addon {
+  vertical-align:middle;
+  color: @cm-grey;
+  font-size: 1.4em;
 }

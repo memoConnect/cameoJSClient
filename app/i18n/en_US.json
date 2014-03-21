@@ -13,11 +13,11 @@
         },
         "LINK": "login",
         "PLACEHOLDER": {
-            "USERNAME": "username",
-            "PASSWORD": "password"
+            "USERNAME": "Username",
+            "PASSWORD": "Password"
         },
         "INFO": {
-            "401": "Invalid username or password",
+            "401": "Invalid Credentials!",
             "404": "Login is impossible right now. 404",
             "500": "Internal Server Error"
         }
@@ -43,8 +43,8 @@
             "MIN_LETTER_COUNT": "Please use at least {{count}} letters.",
             "TERMS": "Confirm terms!",
             "EMPTY": {
-                "USERNAME": "Please insert a username.",
-                "PASSWORD": "Please insert a password."
+                "USERNAME": "Please insert a Username.",
+                "PASSWORD": "Please insert a Password."
             }
         },
         "TITLE": {
@@ -89,8 +89,11 @@
     },
 
     "PASSWORD": {
-        "LABEL_PW": "Password",
-        "LABEL_CONFIRM": "Confirm Password"
+        "LABEL_PW": "Passwort",
+        "LABEL_CONFIRM": "Passwort bestätigen",
+        "ERROR": {
+            "EMPTY": ""
+        }
     },
 
     "TALKS": {
@@ -170,7 +173,10 @@
     "DIRV": {
         "PASSWORD": {
             "PASSWORD": "Password",
-            "PASSWORD_CONFIRM": "Confirm Password"
+            "PASSWORD_CONFIRM": "Confirm Password",
+            "ERROR": {
+                "EMPTY": "Please add a Password and confirm it"
+            }
         },
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",
