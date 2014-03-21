@@ -1,6 +1,6 @@
 {
     "name": "cameoJSClient",
-    "version": "0.0.1",
+    "version": "0.1.2",
     "dependencies": {},
     "devDependencies": {
         "requirejs": "~2.1.11",
