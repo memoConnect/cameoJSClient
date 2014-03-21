@@ -1,6 +1,6 @@
 module.exports = function (grunt) {
     // cameo secrets
-    var globalCameoSecrets = (function() {
+    var globalCameoSecrets = (function () {
         src = '../cameoSecrets/cameoJSClientSecrets.json';
         if (grunt.file.exists(src)) {
             jsonObj = grunt.file.readJSON(src);
@@ -61,12 +61,14 @@ module.exports = function (grunt) {
                 mangle: false
             },
             'dev-deploy': {
-                files: [{
-                    expand: true,
-                    cwd: 'dist/',
-                    src: '**/*.js',
-                    dest: 'dist/'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'dist/',
+                        src: '**/*.js',
+                        dest: 'dist/'
+                    }
+                ]
             }
         },
         copy: {
@@ -111,7 +113,7 @@ module.exports = function (grunt) {
         clean: {
             'dalek-report': ['report'],
             'dev-deploy': ['dist/app/less'],
-            'dist-app' :['dist/app']
+            'dist-app': ['dist/app']
         },
 
         // unit tests
@@ -143,12 +145,22 @@ module.exports = function (grunt) {
         dalek: {
             options: {
                 reporter: ['console', 'junit']
-//                "junit-reporter": {
-//                    dest: 'your/folder/your_file3.xml'
-//                }
             },
+            browsers: [
+                {
+                    "chrome": {
+                        "port": 5555
+                    }
+                }
+            ],
             jenkins: {
                 browser: ['phantomjs'],
+                src: ['test/e2e/*.dalek.js']
+            },
+            local: {
+                options: {
+                    browser: ['chrome']
+                },
                 src: ['test/e2e/*.dalek.js']
             }
         },
@@ -222,7 +234,7 @@ module.exports = function (grunt) {
                     'data': {
                         'phonegapFiles': //                            '<script src="cordova.js"></script>' +
                             '<script src="phonegap.js"></script>' +
-                                '<script src="phonegap-adapter.js"></script>',
+                            '<script src="phonegap-adapter.js"></script>',
                         'phonegapElements': '<div class="well">' +
                             '<p id="networkState"></p>' +
                             '<p id="contactsNumber"></p>' +
@@ -279,7 +291,7 @@ module.exports = function (grunt) {
         // watch
         watch: {
             files: 'app/less/*.less',
-            tasks: ['concat:less','less']
+            tasks: ['concat:less', 'less']
         },
         less: {
             development: {
@@ -311,6 +323,10 @@ module.exports = function (grunt) {
         'copy:dalek-report',
         'clean:dalek-report'
     ]);
+    grunt.registerTask('tests-e2e-local', [
+        'connect',
+        'dalek:local',
+    ]);
     // phonegap to device
     grunt.loadNpmTasks('grunt-phonegap');
     grunt.loadNpmTasks('grunt-template');
@@ -324,7 +340,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.registerTask('phonegap-bs', [
         'dev-deploy',
-		'phonegap:build',
+        'phonegap:build',
         'copy:phonegap-resources',
         'template:phonegap-index',
         'compress',
@@ -351,5 +367,5 @@ module.exports = function (grunt) {
     grunt.registerTask('watcher', ['concat:less', 'less', 'watch']);
 
     // deploy moeps
-    grunt.registerTask('dev-deploy',['clean:dist-app','concat:less','less','copy:dev-deploy','uglify:dev-deploy','clean:dev-deploy'])
+    grunt.registerTask('dev-deploy', ['clean:dist-app', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'clean:dev-deploy'])
 };
