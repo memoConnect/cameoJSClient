@@ -224,7 +224,12 @@
     },
 
     "MENU": {
-        "HEADER": "Menue",
+        "HEADER": "Menu",
+        "NOTIFICATIONS": "Notifcations",
+        "FRIENDREQUESTS": "Friend Requests",
+        "MESSAGES": "Messages",
+        "HINTS": "Hints",
+        "ACTIVITY": "Activity",
         "SETTINGS": "Settings",
         "LOGOUT": "Logout"
     }
