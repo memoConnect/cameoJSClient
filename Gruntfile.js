@@ -157,7 +157,7 @@ module.exports = function (grunt) {
         phonegap: {
             // https://www.npmjs.org/package/grunt-phonegap
             config: {
-                root: 'app',
+                root: 'dist/app',
                 config: 'phonegap-res/config.xml',
                 path: 'phonegap-build',
                 plugins: [
@@ -323,7 +323,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-phonegap-build');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.registerTask('phonegap-bs', [
-        'phonegap:build',
+        'dev-deploy',
+		'phonegap:build',
         'copy:phonegap-resources',
         'template:phonegap-index',
         'compress',
@@ -347,7 +348,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.registerTask('watcher','watch');
+    grunt.registerTask('watcher', ['concat:less', 'less', 'watch']);
 
     // deploy moeps
     grunt.registerTask('dev-deploy',['clean:dist-app','concat:less','less','copy:dev-deploy','uglify:dev-deploy','clean:dev-deploy'])

@@ -15,6 +15,9 @@ Set your own local environment (exp.: for own local mongoDB)
 
 Grunt Task (before single run do '$ npm install')
 --------
+### create css files initially, or just use watcher task that includes initial css creation
+    $ grunt concat:less less
+
 #### run only all unit tests
     $ grunt tests-unit
 
@@ -22,19 +25,16 @@ Grunt Task (before single run do '$ npm install')
     $ grunt tests-e2e
 
 #### deploy the app to one android device with phonegap-adapter.js
-    $ grunt phonegap
-    $ grunt phonegap:run
+    $ grunt phonegap phonegap:run
 
-#### zip the /app, send to build.phonegap.com and get all app files (.apk, .ipa & .xpa)
+#### zip the /app, send to build.phonegap.com and get all app files (.apk, .ipa & .xpa), you need your own Phonegap Build credentials
     $ grunt phonegap-bs
 
-#### deploy /app without phonegap-adapter
-    $ grunt www
-    $ grunt dev-deploy // copy /app to /dist/app and minify all *.js
+#### deploy /app without phonegap-adapter (copy /app to /dist/app and minify all *.js)
+    $ grunt www dev-deploy
 
-#### start a watcher for .less to .css files
+#### start a watcher to compile .less to .css files continous
     $ grunt watcher
-
 
 Shell Scripts
 --------
