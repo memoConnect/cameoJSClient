@@ -18,8 +18,8 @@
             "PASSWORD": "Passwort"
         },
         "INFO": {
-            "401": "Der Loginname oder das Passwort ist falsch.",
-            "404": "Der Login ist zurzeit nicht möglich. 404",
+            "401": "Der Loginname oder das Passwort sind falsch.",
+            "404": "Der Login ist zur Zeit nicht möglich. 404",
             "500": "Server Error. 500"
         }
     },
@@ -91,7 +91,10 @@
 
     "PASSWORD": {
         "LABEL_PW": "Passwort",
-        "LABEL_CONFIRM": "Passwort bestätigen"
+        "LABEL_CONFIRM": "Passwort bestätigen",
+        "ERROR": {
+            "EMPTY": ""
+        }
 
     },
 

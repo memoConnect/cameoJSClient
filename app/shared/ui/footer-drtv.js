@@ -9,8 +9,8 @@ function cmFooter($location, cmTranslate){
         
         link : function(scope, element, attrs, controller){
 
-          console.dir(element.children())
-            
+//          console.dir(element.children())
+
             //if element has no chrildren add default elements:
             if(element.children().length == 0 ) {
                 scope.btns.forEach(function(btn){

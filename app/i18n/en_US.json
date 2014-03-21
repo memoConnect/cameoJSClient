@@ -13,11 +13,11 @@
         },
         "LINK": "login",
         "PLACEHOLDER": {
-            "USERNAME": "username",
-            "PASSWORD": "password"
+            "USERNAME": "Username",
+            "PASSWORD": "Password"
         },
         "INFO": {
-            "401": "Invalid username or password",
+            "401": "Invalid Credentials!",
             "404": "Login is impossible right now. 404",
             "500": "Internal Server Error"
         }
@@ -89,8 +89,11 @@
     },
 
     "PASSWORD": {
-        "LABEL_PW": "Password",
-        "LABEL_CONFIRM": "Confirm Password"
+        "LABEL_PW": "Passwort",
+        "LABEL_CONFIRM": "Passwort bestätigen",
+        "ERROR": {
+            "EMPTY": ""
+        }
     },
 
     "TALKS": {
