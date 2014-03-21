@@ -2,7 +2,7 @@ var app = angular.module("cockpit", ["ngRoute", "cmAuth", "cmApi", "cmCrypt", "c
 
 app.config(["cmApiProvider",
     function (cmApiProvider) {
-        cmApiProvider.restApiUrl("http://localhost:9000/api/cockpit/v1")
+        cmApiProvider.restApiUrl("http://dev.cameo.io/api/cockpit/v1")
     }
 ])
 
