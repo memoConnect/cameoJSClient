@@ -1,8 +1,8 @@
 //var path = 'http://localhost:6108/app/'
 var path = 'http://localhost:9000/app/'
-    , userNameValue = "brummWummZ" + Date.now()
-    , passwordValue = "brummWummPWD_Z" + Date.now()
-    , cameoIdValue = "cameo" + Date.now()
+    , userNameValue = "Z" + Date.now()
+    , passwordValue = "PWD_Z" + Date.now()
+    , cameoIdValue = "c" + Date.now()
     ;
 
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
                 .val('#password_confirm', passwordValue, 'password-confirm has been set')
                 .val('#cameoId', cameoIdValue, 'password-confirm has been set')
             .end()
-            .click('#agbCheckboxInput')
+            .click('#agbCheckbox')
             .click('#registerUserButton')
             .wait(5000)
             .done();
