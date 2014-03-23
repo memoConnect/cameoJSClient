@@ -80,6 +80,10 @@ cmConversations.directive('cmCaptcha',[
     cmCaptcha
 ])
 
+cmConversations.directive('cmConversationSummary',[
+    cmConversationSummary
+])
+
 cmConversations.directive('cmConversation', [
     'cmConversationsModel',
     'cmCrypt',
@@ -96,10 +100,6 @@ cmConversations.directive('cmConversationInput', [
 
 cmConversations.directive('cmPasswordInput',[
     cmPasswordInput
-])
-
-cmConversations.directive('cmAvatar', [
-    cmAvatar
 ])
 
 cmConversations.directive('cmMessage', [

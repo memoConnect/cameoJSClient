@@ -5,16 +5,19 @@
 @cm-white: #FFFFFF;
 @cm-black: #000000;
 @cm-bg-color: @cm-black;
-@cm-danger-color: #FF6600;
+@cm-warning-color: #FF6600;
 @cm-input-bg-color: #EDEDED;
 @cm-overlay-light:rgba(0,0,0,0.7);
 
 @cm-form-alert-red: #F4DFDF;
 
 
-@header-height: 3rem;
-@footer-height: 3rem;
-@app-width: 32rem;
+@cm-header-height: 4rem;
+@cm-footer-height: 4rem;
+@cm-app-width: 32rem;
+
+
+// General page layout
 
 html, body {
     height:100%;
@@ -33,6 +36,26 @@ pre {
     text-align:left
 }
 
+a {
+    text-decoration: none;
+
+    &:hover {
+        color:inherit;
+    }
+}
+
+ul {
+    padding:0;
+    margin:0;
+    list-style: none;
+}
+
+li {
+    padding:0;
+    margin:0;
+    list-style: none;
+}
+
 #cm-app{
     display:block;
     min-height: 100%; /* Mindesthöhe für moderne Browser */
@@ -48,13 +71,72 @@ pre {
 }
 
 .cm-content {
-    padding-top: @header-height;
-    padding-bottom: @footer-height;
+    padding-top: @cm-header-height;
+    padding-bottom: @cm-footer-height;
     min-height: 100%; /* Mindesthöhe für moderne Browser */
     height: auto !important; /* Für moderne Browser */
     height: 100%; /* "Mindesthöhe" für IE <7 */
-    box-sizing:border-box
+    box-sizing:border-box;
+
+    section{
+        font-size: 1.2em;
+
+        header {
+            position:relative;
+            padding-top:1rem;
+            padding-bottom: 1.5rem;
+
+            h1 {
+                display:block;            
+                margin:0;
+                margin-bottom: 1rem;
+                line-height:1.2em;
+                font-size: 1.2em;
+                text-align:center;
+                font-weight:bold;            
+            }
+
+
+        }
+    }
+
 }
+
+
+
+
+
+// Miscellaneous
+ 
+
+cm-edge, [cm-edge] {
+    position:absolute;
+    display:block;
+    top:0;
+    right:0;
+    cursor:pointer;
+    font-size:4em;
+    width:1em;
+    height:1em;
+    line-height:1em;
+
+    .background{
+        color: @cm-ci-color;
+    }
+
+    .foreground{
+        color:@cm-light-grey;
+    }
+}
+
+
+cm-avatar {
+    display:inline-block;    
+}
+
+
+
+
 
 
 .without-border-radius{

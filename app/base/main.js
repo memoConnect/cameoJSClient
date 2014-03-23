@@ -196,8 +196,9 @@ addPackage('pckConversations',{
         'comps/conversations/recipientFactory-srvc',
         'comps/conversations/recipientModel-srvc',
 
+        'comps/conversations/conversation-summary-drtv',
+
         'comps/conversations/attachments-drtv',
-        'comps/conversations/avatar-drtv',
         'comps/conversations/captcha-drtv',
         'comps/conversations/conversation-drtv',
         'comps/conversations/conversation-input-drtv',
@@ -258,10 +259,12 @@ addPackage('pckUi',{
         'shared/ui/point-spinner-drtv',
         'shared/ui/spinner-drtv',
         'shared/ui/header-drtv',
-        'shared/ui/header-back-drtv',
-        'shared/ui/header-identity-drtv',
-        'shared/ui/header-logo-drtv',
-        'shared/ui/header-menu-drtv',
+        'shared/ui/back-drtv',
+        'shared/ui/identity-drtv',
+        'shared/ui/avatar-drtv',
+        'shared/ui/logo-drtv',
+        'shared/ui/menu-drtv',
+        'shared/ui/edge-drtv',
         'shared/ui/footer-drtv'
     ]
 })

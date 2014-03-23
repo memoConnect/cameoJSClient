@@ -89,7 +89,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
             return message//.sendTo(this);
         };
 
-        this.newestMessage = function(){
+        this.getLastMessage = function(){
             if(this.lastMessage !== undefined){
                 return this.lastMessage;
             }

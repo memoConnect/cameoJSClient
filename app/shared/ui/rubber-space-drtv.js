@@ -24,12 +24,15 @@ function cmRubberSpace(){
                     child.css({
                         'width'     : (100*parseInt(child.attr('cm-weight') || 1)/total_weight)+'%',
                         'display'   : 'inline-block',
-                        'min-height' : '1px'
+                        'min-height' : '1px'                        
                     })
                 })
             }
 
-            element.css('display', 'block')
+            element.css({
+                'display'    : 'block',
+                'text-align' : 'center'
+            })
             tighten()
 
         },
