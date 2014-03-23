@@ -7,6 +7,8 @@ var path = 'http://localhost:9000/app/'
 
 module.exports = {
     'registration: create account': function (test) {
+        console.log("userNameValue: "+userNameValue);
+        console.log("cameoIdValue: "+cameoIdValue);
 
         test
             .open(path + '#/registration')
@@ -23,10 +25,9 @@ module.exports = {
                 .val('#password_confirm', passwordValue, 'password-confirm has been set')
                 .val('#cameoId', cameoIdValue, 'password-confirm has been set')
             .end()
-            .click('termsOfUseCheckButton')
-            .wait(500)
+            .click('#agbCheckboxInput')
             .click('#registerUserButton')
-            .wait(2000)
+            .wait(5000)
             .done();
     }
 };
