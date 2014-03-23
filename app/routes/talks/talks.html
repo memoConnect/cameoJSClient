@@ -26,9 +26,11 @@
 
     <ul>
         <li ng-repeat="conversation in conversations | filter:search ">
-            <pre ng-if="true">{{cmUtil.prettify(conversation)}}</pre>
+            <pre ng-if="false">{{cmUtil.prettify(conversation)}}</pre>
             
-            <cm-conversation-summary cm-data="conversation"></cm-conversation-summary>
+            <a href="#/conversation/{{conversation.id}}">
+                <cm-conversation-summary cm-data="conversation">gfhg</cm-conversation-summary>
+            </a>
 
             <!--
             <a href="#/conversation/{{conversation.id}}" class="clearfix">

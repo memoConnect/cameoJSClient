@@ -1,0 +1,136 @@
+.cm-unread{ color:@cm-warning-color }
+
+cm-conversation-summary{
+    display: block;  
+    background: @cm-overlay-light;
+    color: @cm-dark-grey;
+    border-bottom: solid @cm-grey 0.1em;    
+    line-height: 3em;
+    padding: 0.3em 0.3em 0.3em 0em;    
+
+    cm-avatar{
+      width:3em;
+      height:3em;
+
+      background:@cm-grey;
+
+      /*      
+      float:left;
+      margin-right:0.2em;
+      text-align:center;
+      i{
+        .cm-ci-color;
+        .white-text-shadow;
+        font-size:2em;
+        line-height:1.6em;
+      }
+      */
+    }
+
+    & > * {
+        vertical-align: top;
+        display:inline-block;
+        text-overflow:ellipsis;
+        height: 3em;
+    }
+
+    .center{
+        .subject {            
+            white-space: nowrap;
+            line-height:1.2em;
+        }
+    }
+
+    .right{
+        float:right;
+
+
+        .top {
+            font-size: 0.8em;
+            line-height:1.2em;
+            white-space: nowrap;            
+
+            .safety-level{
+                word-spacing:0;
+                letter-spacing:-0.3em;
+            }
+
+            .last-updated{
+                margin-left: 1em;
+            }
+        }
+
+        .bottom {
+            font-size: 1.0em;
+            line-height: 2.04em;
+            white-space: nowrap;
+            text-align:right;
+
+            .message-count {
+                font-weight:bold;
+            }
+
+            .recipients {
+                color:@cm-ci-color;
+                position:relative;
+                font-size:2.04em;
+                vertical-align:bottom;
+
+                .count {
+                    display: block;
+                    position: absolute;
+                    top: 54%;                
+                    left: 0;
+                    bottom: 0;
+                    right: 30%;
+                    color: @cm-white;                
+                    font-size: 0.3em;
+                    font-style: normal;
+                    font-weight: bold;                                
+                    line-height: 1em;                                
+                    text-align: center;                
+                    z-index: 10;
+                }
+            }
+        }
+    }
+
+    
+
+
+    .cm-message-info{
+      float:right;
+      padding:0 0.1em;
+      font-size:0.7em;
+      text-align:right;
+      color:@cm-black;
+      .cm-messages-qty{
+        font-weight:bold;
+      }
+    }
+    .cm-message-body{
+      font-size:0.8em;
+      margin-left:4em;
+      margin-right:10em
+    }
+    .cm-recipients{
+      .cm-ci-color;
+      position:relative;
+      display:inline-block;
+      i.fa.cm-group{
+        font-size:3.5em
+      }
+      .cm-recipient-qty{
+        font-size:0.9em;
+        color:#ffffff;
+        position:absolute;
+        left:0.9em;
+        bottom:0.8em;
+        width:1.4em;
+        text-align:center;
+      }
+    }
+    cm-message-small div{
+      word-wrap:break-word
+    }
+  }

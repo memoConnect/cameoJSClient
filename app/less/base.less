@@ -1,13 +1,15 @@
 @cm-ci-color: #02BED2;
 @cm-grey: #666666;
 @cm-light-grey: #EDEDED;
+@cm-dark-grey: #444444;
 @cm-border-grey: #CCCCCC;
 @cm-white: #FFFFFF;
 @cm-black: #000000;
 @cm-bg-color: @cm-black;
 @cm-warning-color: #FF6600;
 @cm-input-bg-color: #EDEDED;
-@cm-overlay-light:rgba(0,0,0,0.7);
+@cm-overlay-dark:rgba(0,0,0,0.7);
+@cm-overlay-light:rgba(255,255,255,0.7);
 
 @cm-form-alert-red: #F4DFDF;
 
@@ -37,9 +39,10 @@ pre {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none !important;
 
-    &:hover {
+    &:hover,
+    &:focus, {
         color:inherit;
     }
 }

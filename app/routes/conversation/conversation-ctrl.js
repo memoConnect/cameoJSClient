@@ -18,10 +18,5 @@ define([
     '$routeParams',
     function($scope, $rootScope, $element, $routeParams){
         $scope.conversationId = $routeParams.conversationId;
-
-        $rootScope.tabs = [
-            {i18n:'BACK',icon:'fa-chevron-left',href:'#/talks'}
-        ];
-
     }]);
 });
