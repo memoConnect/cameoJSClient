@@ -178,7 +178,8 @@ module.exports = function (grunt) {
             },
             local: {
                 options: {
-                    browser: ['chrome']
+                    browser: ['chrome'],
+                    reporter: ['console', 'html', 'junit']
                 },
                 src: ['test/e2e/*.dalek.js']
             }
