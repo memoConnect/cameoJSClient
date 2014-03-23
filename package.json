@@ -56,7 +56,8 @@
         "dalek-reporter-junit": "~0.0.1",
 
         "grunt-contrib-less": "~0.10.0",
-        "grunt-contrib-watch": "~0.6.0"
+        "grunt-contrib-watch": "~0.6.0",
+        "grunt-file-creator": "~0.1.1"
     },
     "engines": {
         "node": ">=0.8.0"

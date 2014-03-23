@@ -64,9 +64,19 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'dist/',
+                        cwd: 'dist/app',
                         src: '**/*.js',
-                        dest: 'dist/'
+                        dest: 'dist/app'
+                    }
+                ]
+            },
+            'cockpit': {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'dist/cockpit',
+                        src: '**/*.js',
+                        dest: 'dist/cockpit'
                     }
                 ]
             }
@@ -105,6 +115,15 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         src: 'app/**',
+                        dest: 'dist/'
+                    }
+                ]
+            } ,
+            'cockpit': {
+                files: [
+                    {
+                        expand: true,
+                        src: 'cockpit/**',
                         dest: 'dist/'
                     }
                 ]
@@ -303,6 +322,14 @@ module.exports = function (grunt) {
                     'app/css/app.css': 'app/css/app.less'
                 }
             }
+        },
+        "file-creator": {
+            "dist-env-js": {
+                "dist/app/base/env.js": function(fs, fd, done) {
+                    fs.writeSync(fd, '');
+                    done();
+                }
+            }
         }
     });
 
@@ -368,5 +395,8 @@ module.exports = function (grunt) {
     grunt.registerTask('watcher', ['concat:less', 'less', 'watch']);
 
     // deploy moeps
-    grunt.registerTask('dev-deploy', ['clean:dist-app', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'clean:dev-deploy'])
+    grunt.registerTask('dev-deploy', ['clean:dist-app', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'clean:dev-deploy','copy:cockpit','uglify:cockpit']);
+
+    grunt.loadNpmTasks('grunt-file-creator');
+    grunt.registerTask('clear-dist',['file-creator:dist-env-js']);
 };
