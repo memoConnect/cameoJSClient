@@ -21,7 +21,7 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                 })
 
             :   cmConversationsModel.createConversation(conversation_subject)
-                .then(function (conversation) {
+                .then(function (conversation) {                    
                     $scope.init(conversation)
                     $scope.new_conversation = true
                 })

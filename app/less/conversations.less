@@ -48,12 +48,7 @@ cm-conversation-summary{
         .top {
             font-size: 0.8em;
             line-height:1.2em;
-            white-space: nowrap;            
-
-            .safety-level{
-                word-spacing:0;
-                letter-spacing:-0.3em;
-            }
+            white-space: nowrap;
 
             .last-updated{
                 margin-left: 1em;
@@ -70,67 +65,87 @@ cm-conversation-summary{
                 font-weight:bold;
             }
 
-            .recipients {
-                color:@cm-ci-color;
-                position:relative;
+            cm-recipient-counter{
                 font-size:2.04em;
-                vertical-align:bottom;
 
-                .count {
-                    display: block;
-                    position: absolute;
-                    top: 54%;                
-                    left: 0;
-                    bottom: 0;
-                    right: 30%;
-                    color: @cm-white;                
-                    font-size: 0.3em;
-                    font-style: normal;
-                    font-weight: bold;                                
-                    line-height: 1em;                                
-                    text-align: center;                
-                    z-index: 10;
+                .background {
+                    color:@cm-ci-color;
+                }
+
+                .foreground {
+                    color:@cm-white;
                 }
             }
         }
     }
+}
+
+
+cm-safety-level {
+    word-spacing:0;
+    letter-spacing:-0.3em;
+}
+
+cm-recipient-counter{
+
+    display: inline-block;
+    position:relative;
+    line-height:1em;
+
+    .background {
+        color: #000;        
+        position:relative;        
+        vertical-align:bottom;
+    }
+
+    .foreground {
+        color:#fff;
+        display: block;
+        position: absolute;
+        top: 55%;                
+        left: 0;
+        bottom: 0;
+        right: 15%;              
+        font-size: 0.3em;
+        font-style: normal;
+        font-weight: bold;                                
+        line-height: 1em;                                
+        text-align: center;                
+        z-index: 10;
+    }
+}
+
+cm-conversation-controls {
+  display:block;
+  background:@cm-dark-grey;
+  color:@cm-white;
+  line-height: 2em;
+  height: 2em;
+  white-space: nowrap;  
+
+  *{
+    vertical-align:middle;
+    display:inline-block;
+  }
+
+  .right {
+    text-align:right;
+  }
+
+  cm-recipient-counter {
+    font-size:2em;
+
+    .background {
+        color:@cm-white;
+    }
+
+    .foreground {
+        color:@cm-dark-grey;
+    }
+
+  }
+}
+
 
     
 
-
-    .cm-message-info{
-      float:right;
-      padding:0 0.1em;
-      font-size:0.7em;
-      text-align:right;
-      color:@cm-black;
-      .cm-messages-qty{
-        font-weight:bold;
-      }
-    }
-    .cm-message-body{
-      font-size:0.8em;
-      margin-left:4em;
-      margin-right:10em
-    }
-    .cm-recipients{
-      .cm-ci-color;
-      position:relative;
-      display:inline-block;
-      i.fa.cm-group{
-        font-size:3.5em
-      }
-      .cm-recipient-qty{
-        font-size:0.9em;
-        color:#ffffff;
-        position:absolute;
-        left:0.9em;
-        bottom:0.8em;
-        width:1.4em;
-        text-align:center;
-      }
-    }
-    cm-message-small div{
-      word-wrap:break-word
-    }
-  }

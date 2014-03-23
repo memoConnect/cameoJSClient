@@ -72,6 +72,10 @@ cmConversations.service('cmPurlModel',[
     cmPurlModel
 ])
 
+cmConversations.directive('cmConversationControls', [
+    cmConversationControls
+])
+
 cmConversations.directive('cmAttachments', [
     cmAttachments
 ])
@@ -109,4 +113,14 @@ cmConversations.directive('cmMessage', [
 
 cmConversations.directive('cmMessageSmall', [
     cmMessageSmall
+])
+
+
+.directive('cmRecipientCounter',[
+    cmRecipientCounter
+])
+
+
+.directive('cmSafetyLevel',[
+    cmSafetyLevel
 ])
