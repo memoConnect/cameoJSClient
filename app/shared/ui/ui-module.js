@@ -32,7 +32,7 @@ angular.module('cmUi', [
 .directive('cmBack',[
     '$window',
     '$location',
-    cmHeaderBack
+    cmBack
 ])
 
 .directive('cmIdentity',[
