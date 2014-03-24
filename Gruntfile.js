@@ -1,4 +1,5 @@
 module.exports = function (grunt) {
+
     // cameo secrets
     var globalCameoSecrets = (function () {
         src = '../cameoSecrets/cameoJSClientSecrets.json';
@@ -10,6 +11,24 @@ module.exports = function (grunt) {
             return {"phonegap": {"email": "a", "password": "b"}};
         }
     })();
+
+    // cameo global config
+    var globalCameoConfig = (function () {
+        src = './cameoLocalConfig.json';
+        if (grunt.file.exists(src)) {
+            jsonObj = grunt.file.readJSON(src);
+            return jsonObj;
+        }
+        else {
+            return {
+                "configConst": {
+                    "apiUrl": "https://dev.cameo.io/api/v1",
+                    "wwwUrl": "http://localhost:6108/app/"
+                }
+            };
+        }
+    })();
+
     // write config
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -118,7 +137,7 @@ module.exports = function (grunt) {
                         dest: 'dist/'
                     }
                 ]
-            } ,
+            },
             'cockpit': {
                 files: [
                     {
@@ -179,7 +198,7 @@ module.exports = function (grunt) {
             local: {
                 options: {
                     browser: ['chrome'],
-                    reporter: ['console', 'html', 'junit']
+                    reporter: ['console']
                 },
                 src: ['test/e2e/*.dalek.js']
             }
@@ -263,10 +282,9 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'phonegap-build/www/index.html': ['templates/index.html.tpl']
+                    'phonegap-build/www/index.html': ['templates/index.tpl.html']
                 }
-            },
-            'www-index': {
+            }, 'www-index': {
                 'options': {
                     'data': {
                         'phonegapFiles': '',
@@ -274,7 +292,25 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'app/index.html': ['templates/index.html.tpl']
+                    'app/index.html': ['templates/index.tpl.html']
+                }
+            }, 'config-webApp': {
+                'options': {
+                    'data': {
+                        'currentApiUrl': globalCameoConfig.configConst.apiUrl
+                    }
+                },
+                'files': {
+                    'app/base/config.js': ['templates/config-webApp.tpl.js']
+                }
+            }, 'config-tests': {
+                'options': {
+                    'data': {
+                        'currentWwwUrl': globalCameoConfig.configConst.wwwUrl
+                    }
+                },
+                'files': {
+                    'test/e2e/config-tests.js': ['templates/config-tests.tpl.js']
                 }
             }
         },
@@ -310,8 +346,8 @@ module.exports = function (grunt) {
 
         // watch
         watch: {
-            files: 'app/less/*.less',
-            tasks: ['concat:less', 'less']
+            files: ['app/less/*.less', 'templates/*.tpl.*' ],
+            tasks: 'genAllTemplates'
         },
         less: {
             development: {
@@ -325,7 +361,7 @@ module.exports = function (grunt) {
         },
         "file-creator": {
             "dist-env-js": {
-                "dist/app/base/env.js": function(fs, fd, done) {
+                "dist/app/base/env.js": function (fs, fd, done) {
                     fs.writeSync(fd, '');
                     done();
                 }
@@ -346,12 +382,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-dalek');
     grunt.registerTask('tests-e2e', [
+        'genAllTemplates',
         'connect',
         'dalek:jenkins',
         'copy:dalek-report',
         'clean:dalek-report'
     ]);
     grunt.registerTask('tests-e2e-local', [
+        'genAllTemplates',
         'connect',
         'dalek:local',
     ]);
@@ -374,6 +412,7 @@ module.exports = function (grunt) {
         'compress',
         'phonegap-build:debug'
     ]);
+
     // deploy www without phonegap
     grunt.registerTask('www', [
         'template:www-index'
@@ -392,11 +431,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.registerTask('watcher', ['concat:less', 'less', 'watch']);
+    grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'concat:less', 'less']);
+    grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
 
     // deploy moeps
-    grunt.registerTask('dev-deploy', ['clean:dist-app', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'clean:dev-deploy','copy:cockpit','uglify:cockpit']);
+    grunt.registerTask('dev-deploy', ['clean:dist-app', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'clean:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
 
     grunt.loadNpmTasks('grunt-file-creator');
-    grunt.registerTask('clear-dist',['file-creator:dist-env-js']);
+    grunt.registerTask('clear-dist', ['file-creator:dist-env-js']);
 };

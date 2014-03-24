@@ -1,4 +1,4 @@
-var config = require("./config.js");
+var config = require("./config-tests.js");
 
 var userNameValue = "Z" + Date.now()
     , passwordValue = "PWD_Z" + Date.now()
@@ -11,10 +11,10 @@ module.exports = {
         console.log("userNameValue: "+userNameValue);
         console.log("passwordValue: "+passwordValue);
         console.log("cameoIdValue: "+cameoIdValue);
-        console.log("Path: " + config.path);
+        console.log("Path: " + config.wwwUrl);
 
         test
-            .open(config.path)
+            .open(config.wwwUrl)
             .waitForElement('button[ng-click="goToReg()"]')
             .click('button[ng-click="goToReg()"]')
             //wating unti reg page is loaded
@@ -34,8 +34,8 @@ module.exports = {
             .click('#agbCheckbox')
             .click('#registerUserButton')
             // waiting until first page ist loaded
-            .wait(500)
-            .assert.url(config.path + '#/login', 'redirect to login not successfull')
+            .wait(2000)
+            .assert.url(config.wwwUrl + '#/login', 'redirect to login not successfull')
             .done();
     }
 };

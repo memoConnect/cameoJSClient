@@ -1,12 +1,12 @@
-var config = require("./config.js");
+var config = require("./config-tests.js");
 
 module.exports = {
     'wrong-route.js': function(test){
         test
-            .open(config.path+"#/moep")
+            .open(config.wwwUrl+"#/moep")
             .wait(1000)
             .assert
-                .url(config.path+'#/login', 'on route login')
+                .url(config.wwwUrl+'#/login', 'on route login')
         .done()
     }
 }

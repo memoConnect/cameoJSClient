@@ -1,20 +1,19 @@
-var config = require("./config.js");
+var config = require('./config-tests.js');
 
 var userNameValue = "Z1395672127689"
     , passwordValue = "PWD_Z1395672127689"
     ;
 
 module.exports = {
-
     'registration: create account': function (test) {
         console.log("userNameValue: " + userNameValue);
         console.log("passwordValue: " + passwordValue);
 
         test
-            .open(config.path)
+            .open(config.wwwUrl)
             .waitForElement('button[ng-click="goToReg()"]')
             .click('button[ng-click="open()"]')
-            //wating unti login page is loaded
+            //wating until login page is loaded
             .waitForElement('[ng-controller="LoginCtrl"]')
             // registration
             .type('input[name="user"]', userNameValue)
@@ -27,9 +26,9 @@ module.exports = {
             .click('button[data-qa="login-submit-btn"]')
 
             // waiting until first page ist loaded
-            .wait(500)
+            .wait(2000)
             .waitForElement('ng-controller="ConversationsCtrl"')
-            .assert.url(config.path + '#/talks', 'login not successfull')
+            .assert.url(config.wwwUrl + '#/talks', 'login not successfull')
             .done();
     }
 };

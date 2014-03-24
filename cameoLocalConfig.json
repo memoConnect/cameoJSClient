@@ -1,0 +1,6 @@
+{
+    "configConst": {
+        "apiUrl": "http://localhost:9000/api/v1",
+        "wwwUrl": "http://localhost:9000/app/"
+    }
+}
