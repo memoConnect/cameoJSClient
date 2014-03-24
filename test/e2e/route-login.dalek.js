@@ -1,3 +1,5 @@
+require("./config.js");
+
 module.exports = {
     'login.js': function(test){
         test

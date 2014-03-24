@@ -1,3 +1,5 @@
+require("./config.js");
+
 module.exports = {
     'wrong-route.js': function(test){
         test

@@ -1,3 +1,5 @@
+require("./config.js");
+
 module.exports = {
     'with-token.js': function(test){
         test

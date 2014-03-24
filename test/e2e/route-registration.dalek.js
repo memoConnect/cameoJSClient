@@ -1,7 +1,5 @@
 require("./config.js");
 
-//var path = 'http://localhost:9000/app/';
-
 module.exports = {
     'registration: page elements': function (test) {
         test

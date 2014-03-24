@@ -1,3 +1,5 @@
+require("./config.js");
+
 var userNameValue = "Z" + Date.now()
     , passwordValue = "PWD_Z" + Date.now()
     , cameoIdValue = "c" + Date.now()
@@ -8,9 +10,12 @@ module.exports = {
     'registration: create account': function (test) {
         console.log("userNameValue: "+userNameValue);
         console.log("cameoIdValue: "+cameoIdValue);
+        console.log("Path: ");
+        console.log("Path: " + path);
 
         test
             .open(path + '#/registration')
+//            .waitForElement('body')
             // registration
             .wait(2000)
             .type('#loginName', userNameValue)
