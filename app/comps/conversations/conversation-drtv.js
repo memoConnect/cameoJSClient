@@ -49,7 +49,8 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                     $scope.conversation.updateSubject(new_subject||"")
                 })
 
-                $scope.$on('identity-selected', function (event, identity_data) {
+                $scope.$on('cmContacts:selected', function (event, identity_data) {
+                    console.log(identity_data)
                     identity_data
                         ? $scope.conversation
                         .newRecipient(identity_data)

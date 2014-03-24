@@ -43,6 +43,7 @@ cmContacts.directive('cmContactRequestList',[
 cmContacts.directive('cmContactsList',[
     'cmContactsModel',
     'cmLogger',
+    '$rootScope',
     cmContactsList
 ])
 

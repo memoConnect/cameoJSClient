@@ -1,6 +1,6 @@
 'use strict';
 
-function cmContactsList(cmContactsModel, cmLogger){
+function cmContactsList(cmContactsModel, cmLogger, $rootScope){
     return {
         restrict: 'AE',
         scope: {},
@@ -26,7 +26,7 @@ function cmContactsList(cmContactsModel, cmLogger){
             };
 
             $scope.selectContact = function(id){
-//                $scope.$emit('identity-selected', id)
+                $rootScope.$broadcast('cmContacts:selected', id)
             }
         }
     }

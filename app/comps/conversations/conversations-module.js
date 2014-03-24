@@ -5,7 +5,8 @@ var cmConversations = angular.module('cmConversations', [
     'cmLogger', 
     'cmCrypt', 
     'cmContacts',
-    'cmUtil'
+    'cmUtil',
+    'ui.bootstrap'
 ])
 
 cmConversations.service('cmConversationsAdapter', [
@@ -73,6 +74,7 @@ cmConversations.service('cmPurlModel',[
 ])
 
 cmConversations.directive('cmConversationControls', [
+    '$modal',
     cmConversationControls
 ])
 

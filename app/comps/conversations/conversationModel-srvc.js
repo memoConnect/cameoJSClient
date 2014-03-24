@@ -106,6 +106,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
          */
 
         this.addRecipient = function (recipient) {
+                        
             if(typeof recipient !== 'undefined' && recipient != null){
                 if(this.recipients.length == 0){
                     this.recipients.push(recipient);
