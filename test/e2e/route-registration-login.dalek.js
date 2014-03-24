@@ -1,40 +1,35 @@
 var config = require("./config.js");
 
-var userNameValue = "Z" + Date.now()
-    , passwordValue = "PWD_Z" + Date.now()
-    , cameoIdValue = "c" + Date.now()
+var userNameValue = "Z1395672127689"
+    , passwordValue = "PWD_Z1395672127689"
     ;
 
 module.exports = {
 
     'registration: create account': function (test) {
-        console.log("userNameValue: "+userNameValue);
-        console.log("cameoIdValue: "+cameoIdValue);
-        console.log("Path: " + config.path);
+        console.log("userNameValue: " + userNameValue);
+        console.log("passwordValue: " + passwordValue);
 
         test
             .open(config.path)
             .waitForElement('button[ng-click="goToReg()"]')
-            .click('button[ng-click="goToReg()"]')
-            //wating unti reg page is loaded
-            .waitForElement('#registerUserButton')
+            .click('button[ng-click="open()"]')
+            //wating unti login page is loaded
+            .waitForElement('[ng-controller="LoginCtrl"]')
             // registration
-            .type('input[name="loginName"]', userNameValue)
-            .type('#password', passwordValue)
-            .type('#password_confirm', passwordValue)
-            .type('#cameoId', cameoIdValue)
+            .type('input[name="user"]', userNameValue)
+            .type('input[name="pw"]', passwordValue)
 
             .assert.chain()
-                .val('#loginName', userNameValue, 'username has been set')
-                .val('#password', passwordValue, 'password has been set')
-                .val('#password_confirm', passwordValue, 'password-confirm has been set')
-                .val('#cameoId', cameoIdValue, 'password-confirm has been set')
+                .val('input[name="user"]', userNameValue, 'username has been set')
+                .val('input[name="pw"]', passwordValue, 'password has been set')
             .end()
-            .click('#agbCheckbox')
-            .click('#registerUserButton')
+            .click('button[data-qa="login-submit-btn"]')
+
             // waiting until first page ist loaded
             .wait(500)
-            .assert.url(config.path + '#/login', 'redirect to login not successfull')
+            .waitForElement('ng-controller="ConversationsCtrl"')
+            .assert.url(config.path + '#/talks', 'login not successfull')
             .done();
     }
 };
