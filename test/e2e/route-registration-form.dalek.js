@@ -1,4 +1,4 @@
-require("./config.js");
+var config = require("./config.js");
 
 var userNameValue = "Z" + Date.now()
     , passwordValue = "PWD_Z" + Date.now()
@@ -10,11 +10,10 @@ module.exports = {
     'registration: create account': function (test) {
         console.log("userNameValue: "+userNameValue);
         console.log("cameoIdValue: "+cameoIdValue);
-        console.log("Path: ");
-        console.log("Path: " + path);
+        console.log("Path: " + config.path);
 
         test
-            .open(path + '#/registration')
+            .open(config.path + '#/registration')
 //            .waitForElement('body')
             // registration
             .wait(2000)
@@ -32,7 +31,7 @@ module.exports = {
             .click('#agbCheckbox')
             .click('#registerUserButton')
             .wait(2000)
-            .assert.url(path + '#/login', 'redirect to login successfull')
+            .assert.url(config.path + '#/login', 'redirect to login successfull')
             .done();
     }
 };

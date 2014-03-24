@@ -1,4 +1,4 @@
-require("./config.js");
+var config = require("./config.js");
 
 module.exports = {
     'login.js': function(test){
@@ -7,7 +7,7 @@ module.exports = {
             // login
             .wait(2000)// wait for otherwise
             .assert.
-                url(path+'#/login', 'on route login')
+                url(config.path+'#/login', 'on route login')
             .assert
                 .numberOfElements("[data-qa='login-screen-btn']")
                     .is(2, '2 login-screen-btn are present')
@@ -15,7 +15,7 @@ module.exports = {
             // registration link
             .wait(2000)
             .assert
-                .url(path+'#/registration', 'on route registration')
+                .url(config.path+'#/registration', 'on route registration')
         .done()
     }
 }

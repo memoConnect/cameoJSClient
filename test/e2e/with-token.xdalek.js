@@ -1,11 +1,11 @@
-require("./config.js");
+var config = require("./config.js");
 
 module.exports = {
     'with-token.js': function(test){
         test
-            .open(path+"#/login")
+            .open(config.path+"#/login")
             .assert
-                .url(path+'#/login', 'on route login')
+                .url(config.path+'#/login', 'on route login')
             .type("input[name='user']", 'Max')
             .type("input[name='pw']", 'max.mustermann')
 //            .click("button[type='submit']")
@@ -13,7 +13,7 @@ module.exports = {
             // logged in as max and routed to start
             .wait(10000)
             .assert
-                .url(path+'#/start', 'on route start')
+                .url(config.path+'#/start', 'on route start')
             .assert
                 .text('h1')
                     .is('Welcome', 'welcome to the cameo world')
@@ -24,7 +24,7 @@ module.exports = {
             .click("a[ng-click='logout()']")
             .wait(1000)
             .assert
-                .url(path+'#/login', 'successful logged out')
+                .url(config.path+'#/login', 'successful logged out')
         .done()
     }
 }
