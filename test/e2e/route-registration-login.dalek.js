@@ -13,11 +13,12 @@ module.exports = {
         console.log("Path: " + config.path);
 
         test
-            .open(config.path + '#/registration')
-//            .waitForElement('body')
+            .open(config.path)
+            .waitForElement('button[ng-click="goToReg()"]')
+            .click('button[ng-click="goToReg()"]')
+            //wating unti reg page is loaded
+            .waitForElement('#registerUserButton')
             // registration
-            //TODO: wait until page loaded
-            .wait(2000)
             .type('input[name="loginName"]', userNameValue)
             .type('#password', passwordValue)
             .type('#password_confirm', passwordValue)
@@ -31,9 +32,9 @@ module.exports = {
             .end()
             .click('#agbCheckbox')
             .click('#registerUserButton')
-            //TODO: wait until page loaded
-            .wait(2000)
-            .assert.url(config.path + '#/login', 'redirect to login successfull')
+            // waiting until first page ist loaded
+            .wait(500)
+            .assert.url(config.path + '#/login', 'redirect to login not successfull')
             .done();
     }
 };
