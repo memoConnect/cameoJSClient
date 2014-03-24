@@ -1,10 +1,18 @@
 <div class="left">
-    <i class="fa">
-    </i> {{conversation.subject || '(no subject)'}}
+    <i class="fa"></i> {{conversation.subject || '(no subject)'}}
 </div>
+
 <div class="right">
     <cm-safety-level level ="3"></cm-safety-level>
-    <cm-recipient-counter>{{conversation.recipients.length}}</cm-recipient-counter>
+    <cm-recipient-counter
+        ng-click = "show_contacts = !show_contacts"
+    >
+        {{conversation.recipients.length}}
+    </cm-recipient-counter>    
     <i class="fa cm-add"></i>
     <i class="fa cm-down fa-2x"></i>
 </div>
+
+<!-- dummy -->
+<cm-contacts-list ng-show ="show_contacts"></cm-contacts-list>
+<!-- dummy -->

@@ -1,6 +1,20 @@
 <cm-conversation-controls cm-data="conversation"></cm-conversation-controls>
 
 
+<cm-message 
+	ng-repeat		= "message in conversation.messages"
+	cm-data 		= "message" 
+></cm-message>
+
+
+<div>
+	<textarea cm-message-input ng-model="my_message_text"></textarea>
+
+	<button ng-click="sendMessage()">{{"CONVERSATION.LABEL.SEND" | cmTranslate}}</button> <br/>
+</div>
+
+
+
 <!--
 <section>
 	<div class="cm-tools">

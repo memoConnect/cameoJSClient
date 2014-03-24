@@ -7,7 +7,7 @@ function cmContactsList(cmContactsModel, cmLogger){
         templateUrl: 'comps/contacts/contacts-list.html',
 
         controller: function($scope, $element, $attrs){
-            $scope.contacts = cmContactsModel.contacts;
+            $scope.contacts    = cmContactsModel.contacts;
             $scope.contactsQty = cmContactsModel.contacts.length;
 
             /**
