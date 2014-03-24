@@ -22,14 +22,24 @@ function cmRecipientModel (cmConversationsAdapter, cmUserModel, cmIdentity){
         //@ TODO cmUserModel umbauen
         this.init = function (data) {
             if(typeof data !== 'undefined'){
-                angular.extend(this, data);
-
-                if(data.identity.id == cmUserModel.data.id){
-                    this.identity = cmUserModel.data;
-
+                if(typeof data === 'string'){
+                    if(data == cmUserModel.data.id){
+                        this.identity = cmUserModel.data;
+                    } else {
+                        this.identity = cmIdentity.create(data);
+                    }
                 } else {
                     this.identity = cmIdentity.create(data.identity.id);
                 }
+
+//                angular.extend(this, data);
+//
+//                if(data.identity.id == cmUserModel.data.id){
+//                    this.identity = cmUserModel.data;
+//
+//                } else {
+//                    this.identity = cmIdentity.create(data.identity.id);
+//                }
             }
         };
 

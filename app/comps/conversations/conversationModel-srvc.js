@@ -131,14 +131,14 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
 
         this.newRecipient = function (identity_data) {
             if(typeof identity_data !== 'undefined'){
-                var identity_data = (typeof identity_data == 'string' ? {identityId: identity_data} : identity_data );
-
-                /**
-                 * Workaround because Contact und Recipient Model are not equal
-                 */
-                if(typeof identity_data.identityId == 'undefined' && typeof identity_data.id !== 'undefined'){
-                    identity_data.identityId = identity_data.id;
-                }
+//                var identity_data = (typeof identity_data == 'string' ? {identityId: identity_data} : identity_data );
+//
+//                /**
+//                 * Workaround because Contact und Recipient Model are not equal
+//                 */
+//                if(typeof identity_data.identityId == 'undefined' && typeof identity_data.id !== 'undefined'){
+//                    identity_data.identityId = identity_data.id;
+//                }
 
                 return cmRecipientFactory.create(identity_data).addTo(this);
             } else {
