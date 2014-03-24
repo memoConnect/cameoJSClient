@@ -9,7 +9,7 @@ function cmConversationFactory ($rootScope, cmConversationModel){
     });
 
     return {
-        create: function(data){
+        create: function(data){            
             var i = 0;
             if(typeof data !== 'undefined'){
                 var conversation = null;

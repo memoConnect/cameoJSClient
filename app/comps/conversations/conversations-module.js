@@ -72,12 +72,20 @@ cmConversations.service('cmPurlModel',[
     cmPurlModel
 ])
 
+cmConversations.directive('cmConversationControls', [
+    cmConversationControls
+])
+
 cmConversations.directive('cmAttachments', [
     cmAttachments
 ])
 
 cmConversations.directive('cmCaptcha',[
     cmCaptcha
+])
+
+cmConversations.directive('cmConversationSummary',[
+    cmConversationSummary
 ])
 
 cmConversations.directive('cmConversation', [
@@ -98,10 +106,6 @@ cmConversations.directive('cmPasswordInput',[
     cmPasswordInput
 ])
 
-cmConversations.directive('cmAvatar', [
-    cmAvatar
-])
-
 cmConversations.directive('cmMessage', [
     'cmUserModel',
     cmMessage
@@ -109,4 +113,14 @@ cmConversations.directive('cmMessage', [
 
 cmConversations.directive('cmMessageSmall', [
     cmMessageSmall
+])
+
+
+.directive('cmRecipientCounter',[
+    cmRecipientCounter
+])
+
+
+.directive('cmSafetyLevel',[
+    cmSafetyLevel
 ])

@@ -1,0 +1,30 @@
+<cm-avatar></cm-avatar>
+
+<div class="center">
+    <div class="subject">
+        {{conversation.subject || (conversation.lastSender && conversation.lastSender.displayName) || conversation.recipients.toString() || 'Dummy subject line'}}
+    </div>
+    <cm-message-small 
+        ng-if   = "conversation.getLastMessage()"
+        cm-data = "conversation.getLastMessage()"
+    ></cm-message-small>
+</div>    
+
+<div class="right">
+    <div class="top">
+
+        <cm-safety-level level="2"></cm-safety-level>
+
+        <span class="last-updated">  
+            {{ (conversation.getLastMessage() && conversation.getLastMessage().lastUpdated) || '01.01.2020' }}
+        </span> 
+    </div>
+    
+    <div class="bottom">
+        <span class="message-count" ng-class="{'cm-unread' : conversation.count > 0}">  
+            ({{conversation.count || 0}})
+        </span>    
+        <cm-recipient-counter>{{conversation.recipients.length}}</cm-recipient-counter>
+    </div>
+</div>
+

@@ -25,34 +25,42 @@ angular.module('cmUi', [
     cmNavTabs
 ])
 
-
 .directive('cmHeader',[
     cmHeader
 ])
 
-.directive('cmHeaderBack',[
+.directive('cmBack',[
     '$window',
     '$location',
-    cmHeaderBack
+    cmBack
 ])
 
-.directive('cmHeaderIdentity',[
-    cmHeaderIdentity
+.directive('cmIdentity',[
+    cmIdentity
 ])
 
-.directive('cmHeaderLogo',[
-    cmHeaderLogo
+.directive('cmAvatar',[
+    cmAvatar
 ])
 
-.directive('cmHeaderMenu',[
+.directive('cmLogo',[
+    cmLogo
+])
+
+.directive('cmMenu',[
     'cmUserModel',
-    cmHeaderMenu
+    cmMenu
 ])
 
 .directive('cmFooter',[
     '$location',
     'cmTranslate',
     cmFooter
+])
+
+.directive('cmEdge',[
+    '$location',
+    cmEdge
 ])
 
 .filter('cmDigits', [
