@@ -1,6 +1,6 @@
 'use strict';
 
-function cmHeaderBack($window, $location){
+function cmBack($window, $location){
 
     return {
         restrict: 'AE',
