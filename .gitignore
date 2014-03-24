@@ -13,3 +13,4 @@
 *.log
 *.fcp
 /grunt
+/cameoLocalConfig.json
