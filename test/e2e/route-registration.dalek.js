@@ -1,4 +1,5 @@
-var path = 'http://localhost:6108/app/'
+require("./config.js");
+
 //var path = 'http://localhost:9000/app/';
 
 module.exports = {

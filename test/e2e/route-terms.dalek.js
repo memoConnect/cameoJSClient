@@ -1,5 +1,3 @@
-var path = 'http://localhost:6108/app/'
-
 module.exports = {
     'login.js': function(test){
         test

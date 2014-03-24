@@ -1,5 +1,3 @@
-var path = 'http://localhost:6108/app/'
-
 module.exports = {
     'with-token.js': function(test){
         test
