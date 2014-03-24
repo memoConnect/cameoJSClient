@@ -1,7 +1,7 @@
 function initScreenWidth(){
     var html    = document.getElementsByTagName('html')[0],
         app     = document.getElementById('cm-app')
-        height  = window.innerWidth,
+        height  = html.offsetWidth,
         width   = window.innerHeight,
         effectiveWidth = Math.min(height, width)
 
