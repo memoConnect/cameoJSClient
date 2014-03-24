@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="cm-alert" ng-show="showLoginNameCheckError">
-                <i class="fa cm-info"></i>{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}} exists, pls choose an other one
+                <i class="fa cm-info"></i>{{'REGISTER.INFO.USERNAME.EXISTS' | cmTranslate}}
             </div>
             <div class="cm-alert" ng-show="showLoginNameEmptyError">
                 <i class="fa cm-info"></i>{{'REGISTER.INFO.EMPTY.USERNAME' | cmTranslate}}
@@ -59,8 +59,8 @@
 
             <div class="cm-input-ctn cm-clear-bg" data-qa="form-input">
                 {{'REGISTER.LABEL.TERMS_ACCEPT' |cmTranslate}} <a href="#/terms"><strong><em>{{'REGISTER.LABEL.TERMS' |cmTranslate}}</em></strong></a>
-                <input id="agb" name="agb" type="checkbox" ng-model="formData.agb" required style="display:none" />
-                <i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':registrationForm.agb.$invalid, 'cm-checkbox-right':!registrationForm.agb.$invalid}" ng-click="acceptTerms()"></i>
+                <input id="agbCheckboxInput" name="agb" type="checkbox" ng-model="formData.agb" required style="display:none" />
+                <i id="agbCheckbox" class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':registrationForm.agb.$invalid, 'cm-checkbox-right':!registrationForm.agb.$invalid}" ng-click="acceptTerms()"></i>
             </div>
             <div class="cm-alert" ng-show="registrationForm.phone.dirty && registrationForm.agb.$invalid">
                 <div ng-show="registrationForm.agb.$invalid">
@@ -71,8 +71,8 @@
         </form>
     </div>
 
-    <cm-footer class="without-drtv tac" cm-rubber-space>
-        <button ng-click="createUser()">{{'REGISTER.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i></button>
-    </cm-footer>
+    <footer class="without-drtv tac">
+        <button id="registerUserButton" class="btn cm-btn-primary cm-btn-footer-fixed" ng-click="createUser()">{{'REGISTER.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i></button>
+    </footer>
 
 </div>

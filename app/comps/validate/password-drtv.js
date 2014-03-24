@@ -83,6 +83,7 @@ function cmPassword(cmCrypt) {
             $scope.confirmPW = function(){
                 if($scope.pw == $scope.pwConfirm){
                     $scope.showConfirmPWStatus = true;
+                    $scope.showPasswordEmptyError = false;
                     setPassword(cmCrypt.hash($scope.pw));
                 } else {
                     $scope.showConfirmPWStatus = false;

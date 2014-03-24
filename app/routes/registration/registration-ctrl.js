@@ -125,11 +125,10 @@ define([
          * Form Validation and Apicall to create user
          */
         $scope.createUser = function () {
-            console.log($scope.registrationForm)
             var data = {
                 loginName: null,
                 password: null,
-                canmeoId: null,
+                cameoId: null,
                 email: null,
                 phoneNumber: null,
                 name: null,
@@ -183,11 +182,15 @@ define([
                 $scope.registrationForm.agb.$invalid = true;
             }
 
-            if (!data.name in reservation_secrets) {
-                $scope.checkUserName();
+            if (!data.loginName in reservation_secrets) {
+                $scope.registrationForm.loginName.focus();
+                $scope.checkLoginName();
             } else {
-                data.reservationSecret = reservation_secrets[data.name];
+                data.reservationSecret = reservation_secrets[data.loginName];
             }
+
+//            console.log(data)
+//            return false;
 
             // everything is fine an let's create the user
             if($scope.registrationForm.$valid !== false){
