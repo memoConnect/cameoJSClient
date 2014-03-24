@@ -11,7 +11,7 @@ module.exports = {
             .assert.chain()
 
             .url(path + '#/registration', 'on route registration')
-            .numberOfElements("[data-qa='form-input']").is(8, '8 form-controls are present')
+            .numberOfElements("[data-qa='form-input']").is(7, '7 form-controls are present')
             .end()
 
             .click("a[href='#/terms']").

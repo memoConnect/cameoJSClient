@@ -20,7 +20,7 @@ define([
         $scope.showLoginNameCheckError = false;
         $scope.showLoginNameEmptyError = false;
 
-        $scope.formData = {loginName: '', password: '', email: '', phoneNumber: '', name: '',cameoId: ''};
+        $scope.formData = {loginName: '', password: '', email: '', phoneNumber: '', name: ''};
         $scope.userNameAlternatives = [];
         $scope.showUserNameAlternatives = false;
 
@@ -50,8 +50,6 @@ define([
                         $scope.showLoginNameEmptyError = false;
 
                         reservation_secrets[last_checked] = reservationSecret;
-
-//                        $scope.setCameoID(last_checked);
                     },
                     function(){
 //                        cmNotify.info("Error, check Username again!", {ttl: 5000});
@@ -103,32 +101,12 @@ define([
         };
 
         /**
-        * checks if LoginName exists, because Login Name have to be unique
-         * @TODO add API CALL
-        */
-        $scope.checkCameoId = function(){
-            cmLogger.debug("cameoID", $scope.registrationForm.cameoId.$viewValue.toString());
-        };
-
-        /**
-         * Update cameoId in Form
-         **/
-        $scope.setCameoID = function(id){
-            if(angular.isDefined(id) && $scope.registrationForm.cameoId.$viewValue.toString() == ''){
-                $scope.registrationForm.cameoId.$setViewValue(id);
-                $scope.registrationForm.cameoId.$render();
-                $scope.checkCameoId();
-            }
-        };
-
-        /**
          * Form Validation and Apicall to create user
          */
         $scope.createUser = function () {
             var data = {
                 loginName: null,
                 password: null,
-                cameoId: null,
                 email: null,
                 phoneNumber: null,
                 name: null,
@@ -148,12 +126,6 @@ define([
             } else {
                 data.password = $scope.formData.password;
             }
-
-            // check cameoId
-            if($scope.registrationForm.cameoId.$viewValue != ''){
-                data.cameoId = $scope.registrationForm.cameoId.$viewValue;
-            }
-
 
             // check email
             if ($scope.registrationForm.email.$valid == false) {
@@ -189,8 +161,8 @@ define([
                 data.reservationSecret = reservation_secrets[data.loginName];
             }
 
-//            console.log(data)
-//            return false;
+            console.log(data)
+            return false;
 
             // everything is fine an let's create the user
             if($scope.registrationForm.$valid !== false){
