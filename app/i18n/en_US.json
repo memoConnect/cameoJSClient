@@ -45,6 +45,9 @@
             "EMPTY": {
                 "USERNAME": "Please insert a Username.",
                 "PASSWORD": "Please insert a Password."
+            },
+            "USERNAME": {
+                "EXISTS": "Username exists! Please choose an other."
             }
         },
         "TITLE": {

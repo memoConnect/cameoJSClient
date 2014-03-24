@@ -46,6 +46,9 @@
             "EMPTY": {
                 "USERNAME": "Bitte geben Sie einen Benutzernamen an.",
                 "PASSWORD": "Bitte geben Sie ein Passwort ein."
+            },
+            "USERNAME": {
+                "EXISTS": "Username ist bereits vergeben. Bitte wählen Sie einen anderen."
             }
         },
         "TITLE": {
