@@ -31,6 +31,7 @@ cmConversations.factory('cmConversationFactory',[
 cmConversations.factory('cmMessageModel',[
     'cmConversationsAdapter',
     'cmCrypt',
+    'cmIdentity',
     cmMessageModel
 ])
 

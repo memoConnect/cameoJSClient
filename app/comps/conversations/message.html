@@ -1,6 +1,6 @@
 <article class="{{ is_my_own_message ? 'right' : 'left'}}">
     <header>
-        {{ message.fromIdentity }}
+        {{ message.fromIdentity.getDisplayName() }}
     </header>
     <div>
         <cm-avatar 
