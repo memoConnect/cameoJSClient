@@ -4,29 +4,21 @@ module.exports = function (grunt) {
     var globalCameoSecrets = (function () {
         src = '../cameoSecrets/cameoJSClientSecrets.json';
         if (grunt.file.exists(src)) {
-            jsonObj = grunt.file.readJSON(src);
-            return jsonObj;
+            return grunt.file.readJSON(src);
         }
         else {
             return {"phonegap": {"email": "a", "password": "b"}};
         }
     })();
 
-    // cameo global config
+    // cameo build config
     var globalCameoConfig = (function () {
-        src = './cameoLocalConfig.json';
+        src = './config/cameoBuildConfig-local.json';
         if (grunt.file.exists(src)) {
-            jsonObj = grunt.file.readJSON(src);
-            return jsonObj;
+            return grunt.file.readJSON(src);
         }
-        else {
-            return {
-                "configConst": {
-                    "apiUrl": "https://dev.cameo.io/api/v1",
-                    "wwwUrl": "http://localhost:6108/app/"
-                }
-            };
-        }
+        else
+            return grunt.file.readJSON('./config/cameoBuildConfig.json');
     })();
 
     // write config
@@ -306,7 +298,9 @@ module.exports = function (grunt) {
             }, 'config-tests': {
                 'options': {
                     'data': {
-                        'currentWwwUrl': globalCameoConfig.configConst.wwwUrl
+                        'currentWwwUrl': globalCameoConfig.configConst.wwwUrl,
+                        'accountName' : globalCameoConfig.testData.accountName,
+                        'accountPassword' : globalCameoConfig.testData.accountPassword
                     }
                 },
                 'files': {

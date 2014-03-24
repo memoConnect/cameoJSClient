@@ -1,7 +1,8 @@
 var config = require('./config-tests.js');
 
-var userNameValue = "Z1395672127689"
-    , passwordValue = "PWD_Z1395672127689"
+var wwwUrl = config.wwwUrl
+    , userNameValue = config.accountName
+    , passwordValue = config.accountPassword
     ;
 
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
         console.log("passwordValue: " + passwordValue);
 
         test
-            .open(config.wwwUrl)
+            .open(wwwUrl)
             .waitForElement('button[ng-click="goToReg()"]')
             .click('button[ng-click="open()"]')
             //wating until login page is loaded
@@ -28,7 +29,7 @@ module.exports = {
             // waiting until first page ist loaded
             .wait(2000)
             .waitForElement('ng-controller="ConversationsCtrl"')
-            .assert.url(config.wwwUrl + '#/talks', 'login not successfull')
+            .assert.url(wwwUrl + '#/talks', 'login not successfull')
             .done();
     }
 };
