@@ -1,5 +1,5 @@
-//var path = 'http://localhost:6108/app/'
-var path = 'http://localhost:9000/app/';
+var path = 'http://localhost:6108/app/'
+//var path = 'http://localhost:9000/app/';
 
 module.exports = {
     'registration: page elements': function (test) {
