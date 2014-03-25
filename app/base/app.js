@@ -167,7 +167,7 @@ define([
             };
 
             $rootScope.$on('$routeChangeSuccess', function(schmu, _currentRoute_, _prevRoute_){
-                if(!_currentRoute_.$$route) return null;
+                if(!_currentRoute_.$$route || !_currentRoute_.$$route.originalPath) return null;
 
                 var currentRoute = _currentRoute_.$$route.originalPath,
                     prevRoute = _prevRoute_ ? _prevRoute_.$$route.originalPath: '';
