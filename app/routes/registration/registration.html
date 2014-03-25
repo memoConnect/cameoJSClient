@@ -1,7 +1,7 @@
 <cm-header cm-rubber-space>
-    <cm-header-back cm-weight="4"  page-title="'REGISTER.HEADING'|cmTranslate" back-to="/login"></cm-header-back>
-    <cm-header-logo cm-weight="3"></cm-header-logo>
-    <div            cm-weight="4"></div>
+    <cm-back cm-weight="4"  page-title="'REGISTER.HEADING'|cmTranslate" back-to="/login"></cm-back>
+    <cm-logo cm-weight="3"></cm-logo>
+    <div     cm-weight="4"></div>
 </cm-header>
 
 <div class="wrap-bg" ng-controller="RegistrationCtrl">
@@ -30,10 +30,6 @@
             <div style="width:100%;height:1px;background-color:#fff"></div>
 
             <h4>{{'REGISTER.TITLE.HEAD_IDENTITY' | cmTranslate}}</h4>
-
-            <div class="cm-input-ctn" data-qa="form-input">
-                <input id="cameoId" name="cameoId" type="text" ng-model="formData.cameoId" ng-blur="checkCameoId();" placeholder="{{'REGISTER.PLACEHOLDER.CAMEOID'|cmTranslate}}" />
-            </div>
 
             <div class="cm-input-ctn" data-qa="form-input">
                 <input id="name" name="name" type="text" placeholder="{{'REGISTER.PLACEHOLDER.NAME'|cmTranslate}}" ng-model="formData.name" />
@@ -71,8 +67,8 @@
         </form>
     </div>
 
-    <footer class="without-drtv tac">
-        <button id="registerUserButton" class="btn cm-btn-primary cm-btn-footer-fixed" ng-click="createUser()">{{'REGISTER.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i></button>
-    </footer>
+    <cm-footer cm-rubber-space>
+        <button id="registerUserButton" ng-click="createUser()">{{'REGISTER.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i></button>
+    </cm-footer>
 
 </div>

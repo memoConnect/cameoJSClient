@@ -1,10 +1,13 @@
-<header class="cm-header">
-    <div cm-header-back back-to="/talks"></div>
-    <div cm-identity></div>
-    <div cm-header-logo></div>
-    <div cm-header-menu></div>
-</header>
+<cm-header cm-rubber-space>
+    <cm-back     cm-weight = "1" back-to="/talks"></cm-back>
+    <cm-identity cm-weight = "10" ></cm-identity>
+    <cm-logo     cm-weight = "8" ></cm-logo>
+    <div         cm-weight = "8" ></div>
+    <cm-menu     cm-weight = "2" ></cm-menu>
+</cm-header>
 
-<div ng-controller="ConversationCtrl" class="with-header">
+<div cm-notify></div cm-notify>
+
+<section ng-controller="ConversationCtrl" class="with-header">
     <cm-conversation conversation-id="conversationId"></cm-conversation>
-</div>
+</section>

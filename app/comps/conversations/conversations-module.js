@@ -5,7 +5,8 @@ var cmConversations = angular.module('cmConversations', [
     'cmLogger', 
     'cmCrypt', 
     'cmContacts',
-    'cmUtil'
+    'cmUtil',
+    'ui.bootstrap'
 ])
 
 cmConversations.service('cmConversationsAdapter', [
@@ -30,6 +31,7 @@ cmConversations.factory('cmConversationFactory',[
 cmConversations.factory('cmMessageModel',[
     'cmConversationsAdapter',
     'cmCrypt',
+    'cmIdentity',
     cmMessageModel
 ])
 
@@ -72,12 +74,21 @@ cmConversations.service('cmPurlModel',[
     cmPurlModel
 ])
 
+cmConversations.directive('cmConversationControls', [
+    '$modal',
+    cmConversationControls
+])
+
 cmConversations.directive('cmAttachments', [
     cmAttachments
 ])
 
 cmConversations.directive('cmCaptcha',[
     cmCaptcha
+])
+
+cmConversations.directive('cmConversationSummary',[
+    cmConversationSummary
 ])
 
 cmConversations.directive('cmConversation', [
@@ -98,10 +109,6 @@ cmConversations.directive('cmPasswordInput',[
     cmPasswordInput
 ])
 
-cmConversations.directive('cmAvatar', [
-    cmAvatar
-])
-
 cmConversations.directive('cmMessage', [
     'cmUserModel',
     cmMessage
@@ -109,4 +116,14 @@ cmConversations.directive('cmMessage', [
 
 cmConversations.directive('cmMessageSmall', [
     cmMessageSmall
+])
+
+
+.directive('cmRecipientCounter',[
+    cmRecipientCounter
+])
+
+
+.directive('cmSafetyLevel',[
+    cmSafetyLevel
 ])

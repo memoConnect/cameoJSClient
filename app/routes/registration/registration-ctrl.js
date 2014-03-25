@@ -50,8 +50,6 @@ define([
                         $scope.showLoginNameEmptyError = false;
 
                         reservation_secrets[last_checked] = reservationSecret;
-
-//                        $scope.setCameoID(last_checked);
                     },
                     function(){
 //                        cmNotify.info("Error, check Username again!", {ttl: 5000});
@@ -99,25 +97,6 @@ define([
                 } else {
                     $scope.registrationForm.loginName.$dirty = true;
                 }
-            }
-        };
-
-        /**
-        * checks if LoginName exists, because Login Name have to be unique
-         * @TODO add API CALL
-        */
-        $scope.checkCameoId = function(){
-            cmLogger.debug("cameoID", $scope.registrationForm.cameoId.$viewValue.toString());
-        };
-
-        /**
-         * Update cameoId in Form
-         **/
-        $scope.setCameoID = function(id){
-            if(angular.isDefined(id) && $scope.registrationForm.cameoId.$viewValue.toString() == ''){
-                $scope.registrationForm.cameoId.$setViewValue(id);
-                $scope.registrationForm.cameoId.$render();
-                $scope.checkCameoId();
             }
         };
 

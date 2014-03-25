@@ -1,0 +1,153 @@
+.cm-unread{ color:@cm-warning-color }
+
+cm-conversation-summary{
+    display: block;  
+    background: @cm-overlay-light;
+    color: @cm-dark-grey;
+    border-bottom: solid @cm-grey 0.1em;    
+    line-height: 3em;
+    padding: 0.3em 0.3em 0.3em 0em;    
+
+    cm-avatar{
+      width:3em;
+      height:3em;
+
+      background:@cm-grey;
+
+      /*      
+      float:left;
+      margin-right:0.2em;
+      text-align:center;
+      i{
+        .cm-ci-color;
+        .white-text-shadow;
+        font-size:2em;
+        line-height:1.6em;
+      }
+      */
+    }
+
+    
+    & > * {
+        vertical-align: top;
+        display:inline-block;
+        text-overflow:ellipsis;
+        height: 3em;
+    }
+
+
+    .center{
+        .subject {            
+            white-space: nowrap;
+            line-height:1.2em;
+        }
+    }
+
+    .right{
+        float:right;
+
+
+        .top {
+            font-size: 0.8em;
+            line-height:1.2em;
+            white-space: nowrap;
+
+            .last-updated{
+                margin-left: 1em;
+            }
+        }
+
+        .bottom {
+            font-size: 1.0em;
+            line-height: 2.04em;
+            white-space: nowrap;
+            text-align:right;
+
+            .message-count {
+                font-weight:bold;
+            }
+
+            cm-recipient-counter{
+                font-size:2.04em;
+
+                .background {
+                    color:@cm-ci-color;
+                }
+
+                .foreground {
+                    color:@cm-white;
+                }
+            }
+        }
+    }
+}
+
+
+cm-safety-level {
+    word-spacing:0;
+    letter-spacing:-0.3em;
+}
+
+cm-recipient-counter{
+
+    display: inline-block;
+    position:relative;
+    line-height:1em;
+
+    .background {
+        color: #000;        
+        position:relative;        
+        vertical-align:bottom;
+    }
+
+    .foreground {
+        color:#fff;
+        display: block;
+        position: absolute;
+        top: 55%;                
+        left: 0;
+        bottom: 0;
+        right: 15%;              
+        font-size: 0.3em;
+        font-style: normal;
+        font-weight: bold;                                
+        line-height: 1em;                                
+        text-align: center;                
+        z-index: 2;
+    }
+}
+
+cm-conversation-controls {
+  display:block;
+  background:@cm-dark-grey;
+  color:@cm-white;
+  line-height: 2em;
+  height: 2em;
+  white-space: nowrap;  
+
+  *{
+    vertical-align:middle;
+    display:inline-block;
+  }
+
+  .right {
+    text-align:right;
+  }
+
+  cm-recipient-counter {
+    font-size:2em;
+
+    .background {
+        color:@cm-white;
+    }
+
+    .foreground {
+        color:@cm-dark-grey;
+    }
+
+  }
+}
+
+
+    
+
