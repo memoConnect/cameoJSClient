@@ -166,9 +166,16 @@ define([
                 $rootScope.urlHistory.pop();
             };
 
-            $rootScope.$on('$routeChangeSuccess', function(schmu, _currentRoute_, _prevRoute_){                
-                if(!_currentRoute_.$$route) return null;
-
+            $rootScope.$on('$routeChangeSuccess', function(schmu, _currentRoute_, _prevRoute_){
+                $rootScope.urlHistory = $rootScope.urlHistory || [];
+                if(
+                       !_currentRoute_
+                    || !_currentRoute_.$$route 
+                    || !_currentRoute_.$$route.originalPath
+                    || !_prevRoute_
+                    || !_prevRoute_.$$route
+                ) return null
+                    
                 var currentRoute = _currentRoute_.$$route.originalPath,
                     prevRoute = _prevRoute_ ? _prevRoute_.$$route.originalPath: '';
 
@@ -177,8 +184,8 @@ define([
                 else if(currentRoute !== $rootScope.urlHistory[$rootScope.urlHistory.length - 1]) {
                     $rootScope.urlHistory.push(currentRoute);
                 }
+                
             });
-
             
             window._route = {}
 

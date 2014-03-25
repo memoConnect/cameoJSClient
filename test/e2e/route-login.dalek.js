@@ -1,13 +1,13 @@
-var path = 'http://localhost:6108/app/'
+var config = require("./config-e2e-tests.js");
 
 module.exports = {
     'login.js': function(test){
         test
-            .open(path)
+            .open(config.wwwUrl)
             // login
             .wait(2000)// wait for otherwise
             .assert.
-                url(path+'#/login', 'on route login')
+                url(config.wwwUrl+'#/login', 'on route login')
             .assert
                 .numberOfElements("[data-qa='login-screen-btn']")
                     .is(2, '2 login-screen-btn are present')
@@ -15,7 +15,7 @@ module.exports = {
             // registration link
             .wait(2000)
             .assert
-                .url(path+'#/registration', 'on route registration')
+                .url(config.wwwUrl+'#/registration', 'on route registration')
         .done()
     }
 }
