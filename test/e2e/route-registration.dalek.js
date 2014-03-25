@@ -3,6 +3,8 @@ var config = require("./config-e2e-tests.js");
 module.exports = {
     'registration: page elements': function (test) {
         test
+            .open(config.wwwUrl+"#/logout")
+            .wait(500)
             .open(config.wwwUrl + '#/registration')
 
             .waitFor(function () {
@@ -12,7 +14,7 @@ module.exports = {
             .assert.chain()
 
             .url(config.wwwUrl + '#/registration', 'on route registration')
-            .numberOfElements("[data-qa='form-input']").is(8, '8 form-controls are present')
+            .numberOfElements("[data-qa='form-input']").is(7, '7 form-controls are present')
             .end()
 
             .click("a[href='#/terms']").

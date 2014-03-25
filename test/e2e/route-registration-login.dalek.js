@@ -11,6 +11,8 @@ module.exports = {
         console.log("passwordValue: " + passwordValue);
 
         test
+            .open(config.wwwUrl+"#/logout")
+            .wait(500)
             .open(wwwUrl)
             //.waitForElement('button[ng-click="goToReg()"]')
             .resize({width: 750, height: 1200})
@@ -33,6 +35,8 @@ module.exports = {
             .wait(1000)
             .waitForElement('ng-controller="ConversationsCtrl"')
             .assert.url(wwwUrl + '#/talks', 'login not successfull')
+            .open(wwwUrl+"#/logout")
+            .waitForElement('[ng-controller="LoginCtrl"]')
             .done();
     }
 };
