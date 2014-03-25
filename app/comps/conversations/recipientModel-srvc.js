@@ -29,6 +29,7 @@ function cmRecipientModel (cmConversationsAdapter, cmUserModel, cmIdentity){
                         this.identity = cmIdentity.create(data);
                     }
                 } else {
+
                     this.identity = cmIdentity.create(data.identity.id);
                 }
 

@@ -31,11 +31,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
             // register all recipients as Recipient objects
             if (conversation_data.recipients) {
                 conversation_data.recipients.forEach(function (recipient_data) {
-
-                    if(recipient_data.identityId){
-                        recipient_data.identity = {id: recipient_data.identityId}
-                    }
-
                     self.addRecipient(cmRecipientFactory.create(recipient_data));
                 })
             }
