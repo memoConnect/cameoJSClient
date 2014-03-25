@@ -115,6 +115,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
         };
 
         this.newRecipient = function (identity_data) {
+            console.log(identity_data)
             return (
                 identity_data
                 ?   cmRecipientFactory.create(identity_data).addTo(this)

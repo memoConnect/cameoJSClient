@@ -50,10 +50,9 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                 })
 
                 $scope.$on('cmContacts:selected', function (event, identity_data) {
-                    console.log(identity_data)
                     identity_data
                     ?   $scope.conversation
-                        .newRecipient(identity_data)
+                        .newRecipient(identity_data).addTo(conversation)
                     :   null
                 })
 
