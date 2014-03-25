@@ -32,18 +32,11 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
             if (conversation_data.recipients) {
                 conversation_data.recipients.forEach(function (recipient_data) {
 
-                    //@Todo doof:
-                    if(recipient_data.identityId) recipient_data.identity = {id: recipient_data.identityId}
+                    if(recipient_data.identityId){
+                        recipient_data.identity = {id: recipient_data.identityId}
+                    }
 
-
-//                    if (typeof recipient_data == 'string') {
-//                        cmAuth.getIdentity(recipient_data)
-//                            .then(function (identity) {
-//                                self.addRecipient(cmRecipientFactory.create(identity))
-//                            });
-//                    } else {
-                        self.addRecipient(cmRecipientFactory.create(recipient_data));
-//                    }
+                    self.addRecipient(cmRecipientFactory.create(recipient_data));
                 })
             }
         };

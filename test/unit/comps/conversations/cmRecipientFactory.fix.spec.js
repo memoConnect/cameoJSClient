@@ -2,8 +2,8 @@
 
 describe('cmRecipientFactory', function(){
     var cmRecipientFactory,
-        tmpInstance_1 = {identity:{id:'moep_1'}},
-        tmpInstance_2 = {identity:{id:'moep_2'}};
+        tmpInstance_1 = 'moep_1',
+        tmpInstance_2 = {identityId:'moep_2',identity:{id:'identity_moep'}};
 
 
     beforeEach(module('cmConversations'));

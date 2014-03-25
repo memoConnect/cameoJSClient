@@ -11,7 +11,6 @@ function cmRecipientFactory ($rootScope, cmRecipientModel, cmUtil){
         create: function(data){
             var recipient = null,
                 i = 0;
-
             if(typeof data !== 'undefined'){
                 if(this.getQty() > 0){
                     if(typeof data === 'string'){
@@ -24,7 +23,7 @@ function cmRecipientFactory ($rootScope, cmRecipientModel, cmUtil){
                         }
                     } else if(typeof data === 'object'){
                         while(i < instances.length){
-                            if(typeof instances[i] === 'object' && instances[i].id == data.id){
+                            if(typeof instances[i] === 'object' && instances[i].id == data.identity.id){
                                 recipient = instances[i];
                                 break;
                             }
