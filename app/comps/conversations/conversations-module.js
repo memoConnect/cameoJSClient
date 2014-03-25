@@ -5,7 +5,7 @@ var cmConversations = angular.module('cmConversations', [
     'cmLogger', 
     'cmCrypt', 
     'cmContacts',
-    'cmUtil',
+    'cmUtil',    
     'cmIdentity',
     'ui.bootstrap'
 ])

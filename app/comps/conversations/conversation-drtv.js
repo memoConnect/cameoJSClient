@@ -12,19 +12,15 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                 conversation_offset  = $attrs.offset,
                 conversation_limit   = $attrs.limit
 
-            conversation_id
-//            ?   cmConversationsModel.getConversation(conversation_id, conversation_offset, conversation_limit)
-            ?   cmConversationsModel.getConversation(conversation_id)
-                .then(function (conversation) {
-                    conversation.update();
-                    $scope.init(conversation)
-                })
 
-            :   cmConversationsModel.createConversation(conversation_subject)
-                .then(function (conversation) {                    
-                    $scope.init(conversation)
-                    $scope.new_conversation = true
-                })
+
+            $scope.new_conversation = !!conversation_id
+
+
+            cmConversationsModel.getConversation(conversation_id)
+            .then(function (conversation) {                    
+                $scope.init(conversation)
+            })
 
 
             $scope.init = function (conversation) {
@@ -52,8 +48,6 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                 $scope.$on('cmContacts:selected', function (event, identity) {
                     $scope.conversation.addRecipient(identity)
                 })
-
-                $scope.conversation.update();
             }
 
             $scope.sendMessage = function () {

@@ -15,7 +15,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         var self = this;
 
-        this.init = function (conversation_data) {            
+        this.init = function (conversation_data) {
             this.id             = conversation_data.id;
             this.subject        = conversation_data.subject;
             this.count          = conversation_data.numberOfMessages;
@@ -30,7 +30,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
             // register all recipients as Recipient objects
             if (conversation_data.recipients) {
-                conversation_data.recipients.forEach(function (item) {
+                conversation_data.recipients.forEach(function (item) {                    
                     self.addRecipient(cmIdentityFactory.create(item.identityId));
                 })
             }
@@ -94,12 +94,9 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
          */
 
         this.hasRecipient = function(identity){
-            var check = false;
-
-            console.log('in: '+identity.id)
+            var check = false;          
 
             this.recipients.forEach(function(recipient){
-                console.log('test: '+recipient.id)
                 check = check || (identity.id == recipient.id)
             })
             
@@ -149,15 +146,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.passphraseValid = function () {
             return !this.messages[0] || this.messages[0].decrypt(this.passphrase)
-        };
-
-        this.update = function () {
-            cmConversationsAdapter.getConversation(this.id)
-                .then(function(data){
-                    self.init(data)
-                });
-
-            return this;
         };
 
         this.init(data);
