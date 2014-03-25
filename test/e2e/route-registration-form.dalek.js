@@ -1,5 +1,5 @@
-//var path = 'http://localhost:6108/app/';
-var path = 'http://localhost:9000/app/';
+var path = 'http://localhost:6108/app/';
+//var path = 'http://localhost:9000/app/';
 var userNameValue = "Z" + Date.now()
     , passwordValue = "PWD_Z" + Date.now()
     , cameoIdValue = "c" + Date.now()
