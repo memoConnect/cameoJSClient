@@ -2,16 +2,15 @@
   <!--  <header>
         {{ message.fromIdentity.getDisplayName() }}
     </header>-->
+    <!--<div class="avatar">-->
+        <!--<cm-avatar cm-data="message.fromIdentity" class="{{ is_my_own_message ? 'pull-right' : 'pull-left'}}"></cm-avatar>-->
+    <!--</div>-->
     <div>
-       <!-- <cm-avatar
-            cm-data = "message.fromIdentity"
-            class   = "{{ is_my_own_message ? 'pull-right' : 'pull-left'}}"
-        >
-        </cm-avatar>         -->
-        <img ng-if = "hasCaptcha" src ="{{hasCaptcha ? message.body :''}}" class="img-responsive img-rounded"/>                
-        <pre ng-if = "captchaRequest">{{'CONVERSATION.TEXT.REQUEST_CAPTCHA' | cmTranslate}}
-        </pre>        
-        <cm-download 
+        <span class="nose"><i class="fa cm-nose-left"></i></span>
+
+        <!--<img ng-if = "hasCaptcha" src ="{{hasCaptcha ? message.body :''}}" class="img-responsive img-rounded"/>-->
+        <!--<pre ng-if = "captchaRequest">{{'CONVERSATION.TEXT.REQUEST_CAPTCHA' | cmTranslate}}</pre>-->
+        <!--<cm-download
             ng-if          = "hasAsset" 
             cm-data        = "assetId"
             cm-passphrase  = "passphrase"
@@ -23,12 +22,12 @@
                 <br/>
                 {{progress*100 | cmDigits : 2}}%
             </button>
-        </cm-download>
-        <pre ng-if ="!(hasCaptcha || captchaRequest || hasAsset)" style ="text-align:left">{{ message.decryptedBody }}
-        </pre>
-        <span class="date">{{ message.created }}</span>
-    </div>    
-    <footer>
-        <cm-attachments></cm-attachments> <!--{{ message.created }}-->
-    </footer>
+        </cm-download>-->
+        <!--<pre ng-if ="!(hasCaptcha || captchaRequest || hasAsset)" style ="text-align:left">{{ message.decryptedBody }}</pre>-->
+        <span class="text">{{ message.decryptedBody }}</span>
+        <span class="date green">{{ message.created }}</span>
+    </div>
+    <!--<footer>-->
+        <!--<cm-attachments></cm-attachments> &lt;!&ndash;{{ message.created }}&ndash;&gt;-->
+    <!--</footer>-->
 </article>

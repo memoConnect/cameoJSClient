@@ -1,0 +1,33 @@
+/**
+cm-message{margin:2em 0;word-wrap:break-word}
+cm-message article.left{text-align:left}
+cm-message article.right{text-align:right}
+cm-message footer{clear:both}
+**/
+
+cm-message{
+  margin: 0.5em 0;
+  word-wrap: break-word;
+  padding:0 1em;
+  article {
+    div {
+      padding:0.5em;
+      background-color: #F3F3F3;
+      -webkit-border-radius: @cm-border-radius;
+      -moz-border-radius: @cm-border-radius;
+      border-radius: @cm-border-radius;
+    }
+    span{
+      display: block;
+    }
+    span.green{
+      color:@cm-green;
+    }
+    span.date{
+      text-align: right;
+    }
+    span.nose{
+
+    }
+  }
+}
