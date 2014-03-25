@@ -17,10 +17,17 @@ module.exports = {
         test
             .open(wwwUrl)
             //.waitForElement('button[ng-click="goToReg()"]')
-            .wait(2000)
+            .resize({width: 750, height: 1200})
+
+            .waitFor(function () {
+                console.log("***************");
+                return window._route.status === 'success';
+            }, 'check bla blubb', 500)
+            .wait(1000)
             .click('button[ng-click="goToReg()"]')
             //wating unti reg page is loaded
             .waitForElement('#registerUserButton')
+            .wait(1000)
             // registration
             .type('input[name="loginName"]', userNameValue)
             .type('#password', passwordValue)
@@ -37,9 +44,8 @@ module.exports = {
             .wait(500)
             .click('#registerUserButton')
             // waiting until first page ist loaded
-            .wait(2000)
+            .wait(10000)
             .assert.url(wwwUrl + '#/login', 'redirect to login not successfull')
-            .wait(5000)
             .done();
     }
 };

@@ -5,7 +5,9 @@ module.exports = {
         test
             .open(config.wwwUrl + '#/registration')
 
-            .wait(2000)
+            .waitFor(function () {
+                return window._route.status = 'success';
+            }, 'reg form could not be loaded', 5000)
 
             .assert.chain()
 
