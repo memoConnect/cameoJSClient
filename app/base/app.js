@@ -168,7 +168,7 @@ define([
 
             $rootScope.$on('$routeChangeSuccess', function(schmu, _currentRoute_, _prevRoute_){
                 if(!_currentRoute_.$$route) return null;
-                
+
                 var currentRoute = _currentRoute_.$$route.originalPath,
                     prevRoute = _prevRoute_ ? _prevRoute_.$$route.originalPath: '';
 
@@ -185,7 +185,6 @@ define([
             $rootScope.$on('$routeChangeStart', function(){
                 window._route.path   = $location.$$path
                 window._route.status = 'loading'
-            console.log('Sdf')
             })
 
             $rootScope.$on('$routeChangeSuccess', function(){
