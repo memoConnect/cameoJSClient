@@ -2,7 +2,7 @@ function initScreenWidth(){
     var html    = document.getElementsByTagName('html')[0],
         app     = document.getElementById('cm-app'),
         height  = window.innerHeight,
-        width   = html.innerWidth,
+        width   = html.offsetWidth,
         effectiveWidth = Math.min(height, width)
 
     html.style.fontSize = (effectiveWidth/32) +'px'
