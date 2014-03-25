@@ -177,10 +177,12 @@ define([
                 }
             });
 
+            
+            window._route = {}
 
             //Make it easy for e2e-tests to monitor route changes:
             $rootScope.$on('$routeChangeStart', function(){
-                window._route.path   = '$location.$$path'
+                window._route.path   = $location.$$path
                 window._route.status = 'loading'
             })
 
