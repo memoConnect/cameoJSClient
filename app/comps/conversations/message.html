@@ -1,13 +1,13 @@
 <article class="{{ is_my_own_message ? 'right' : 'left'}}">
-    <header>
+  <!--  <header>
         {{ message.fromIdentity.getDisplayName() }}
-    </header>
+    </header>-->
     <div>
-        <cm-avatar 
+       <!-- <cm-avatar
             cm-data = "message.fromIdentity"
             class   = "{{ is_my_own_message ? 'pull-right' : 'pull-left'}}"
         >
-        </cm-avatar>         
+        </cm-avatar>         -->
         <img ng-if = "hasCaptcha" src ="{{hasCaptcha ? message.body :''}}" class="img-responsive img-rounded"/>                
         <pre ng-if = "captchaRequest">{{'CONVERSATION.TEXT.REQUEST_CAPTCHA' | cmTranslate}}
         </pre>        
@@ -26,12 +26,9 @@
         </cm-download>
         <pre ng-if ="!(hasCaptcha || captchaRequest || hasAsset)" style ="text-align:left">{{ message.decryptedBody }}
         </pre>
+        <span class="date">{{ message.created }}</span>
     </div>    
     <footer>
-        <cm-attachments></cm-attachments> {{ message.created }}
+        <cm-attachments></cm-attachments> <!--{{ message.created }}-->
     </footer>
 </article>
-
-<br/>
-<br/>
-<br/>
