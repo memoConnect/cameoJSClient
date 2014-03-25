@@ -33,8 +33,6 @@ function cmMessageModel (cmConversationsAdapter,cmCrypt,cmIdentity){
 
             //expose data on message Object
             angular.extend(self, decrypted_data)
-            
-            return !!decrypted_text;
         }
 
         this.sendTo = function (conversation) {

@@ -105,25 +105,21 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
          * Recipient Handling
          */
 
+        this.hasRecipient = function(recipient){
+            var check = false;
+
+            this.recipients.forEach(function(r){
+                check = check || recipient.id == r.id
+            })
+            
+            return check
+        }
+
         this.addRecipient = function (recipient) {
                         
             if(typeof recipient !== 'undefined' && recipient != null){
-                if(this.recipients.length == 0){
+                if(!this.hasRecipient(recipient))                    
                     this.recipients.push(recipient);
-                } else {
-                    var i = 0;
-                    var check = false;
-                    while(i < this.recipients.length){
-                        if(recipient.id == this.recipients[i].id){
-                            check = true;
-                            break;
-                        }
-                        i++;
-                    }
-
-                    if(check !== true){
-                        this.recipients.push(recipient);
-                    }
                 }
             }
             return this;
@@ -170,15 +166,18 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
         };
 
         this.decrypt = function () {
+            var success = true
             if (this.passphrase) {
                 this.messages.forEach(function (message) {
-                    message.decryptWith(self.passphrase);
+                    //success = message.decrypt(self.passphrase); //@TODO
                 })
             }
+
+            return()
         };
 
         this.passphraseValid = function () {
-            return !this.messages[0] || this.messages[0].decryptWith(this.passphrase)
+            return !this.messages[0] || this.messages[0].decrypt(this.passphrase)
         };
 
         this.update = function () {
