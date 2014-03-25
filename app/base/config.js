@@ -1,5 +1,5 @@
 cameo_config = {
-    restApi: 'http://dev.cameo.io/api/v1',
+    restApi: 'http://localhost:9000/api/v1',
 
     token: null,
     supported_languages: ['de_DE', 'en_US'],
