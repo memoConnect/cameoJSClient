@@ -1,21 +1,27 @@
-var path = 'http://localhost:6108/app/';
-//var path = 'http://localhost:9000/app/';
-var userNameValue = "Z" + Date.now()
+var config = require("./config-e2e-tests.js");
+
+var wwwUrl = config.wwwUrl
+    , userNameValue = "Z" + Date.now()
     , passwordValue = "PWD_Z" + Date.now()
     , cameoIdValue = "c" + Date.now()
     ;
 
 module.exports = {
 
-    'registration: create account': function (test) {
+    'registration: create new account': function (test) {
         console.log("userNameValue: "+userNameValue);
+        console.log("passwordValue: "+passwordValue);
         console.log("cameoIdValue: "+cameoIdValue);
+        console.log("Path: " + wwwUrl);
 
         test
-            .open(path + '#/registration')
-            // registration
-            //TODO: wait until page loaded
+            .open(wwwUrl)
+            //.waitForElement('button[ng-click="goToReg()"]')
             .wait(2000)
+            .click('button[ng-click="goToReg()"]')
+            //wating unti reg page is loaded
+            .waitForElement('#registerUserButton')
+            // registration
             .type('input[name="loginName"]', userNameValue)
             .type('#password', passwordValue)
             .type('#password_confirm', passwordValue)
@@ -28,10 +34,12 @@ module.exports = {
                 .val('#cameoId', cameoIdValue, 'password-confirm has been set')
             .end()
             .click('#agbCheckbox')
+            .wait(500)
             .click('#registerUserButton')
-            //TODO: wait until page loaded
+            // waiting until first page ist loaded
             .wait(2000)
-            .assert.url(path + '#/login', 'redirect to login not successfull')
+            .assert.url(wwwUrl + '#/login', 'redirect to login not successfull')
+            .wait(5000)
             .done();
     }
 };
