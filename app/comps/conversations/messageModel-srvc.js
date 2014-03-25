@@ -1,6 +1,6 @@
 'use strict';
 
-function cmMessageModel (cmConversationsAdapter,cmCrypt,cmIdentity){
+function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory){
     var Message = function(data){
         //Attributes:
         var self = this;
@@ -49,7 +49,7 @@ function cmMessageModel (cmConversationsAdapter,cmCrypt,cmIdentity){
             this.secret.decryptedData = undefined
 
             this.id         = message_data.id;            
-            this.from       = cmIdentity.create(message_data.fromIdentity);
+            this.from       = cmIdentityFactory.create(message_data.fromIdentity);
             this.created    = message_data.created;
             this.text       = undefined
             this.fileIds    = message_data.fileIds;

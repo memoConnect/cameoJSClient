@@ -1,6 +1,6 @@
 'use strict';
 
-function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipientFactory){
+function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory){
     var ConversationModel = function(data){
         //Attributes:
         this.id = '';
@@ -30,8 +30,8 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
 
             // register all recipients as Recipient objects
             if (conversation_data.recipients) {
-                conversation_data.recipients.forEach(function (recipient_data) {
-                    self.addRecipient(cmRecipientFactory.create(recipient_data));
+                conversation_data.recipients.forEach(function (item) {
+                    self.addRecipient(cmIdentityFactory.create(item.identityId));
                 })
             }
         };
@@ -93,42 +93,33 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
          * Recipient Handling
          */
 
-        this.hasRecipient = function(recipient){
+        this.hasRecipient = function(identity){
             var check = false;
 
-            console.log('in: '+recipient.identity.id)
+            console.log('in: '+identity.id)
 
-            this.recipients.forEach(function(r){
-                console.log('test: '+r.identity.id)
-                check = check || (recipient.identity.id == r.identity.id)
+            this.recipients.forEach(function(recipient){
+                console.log('test: '+recipient.id)
+                check = check || (identity.id == recipient.id)
             })
             
             return check
         }
 
-        this.addRecipient = function (recipient) { 
-        console.log(recipient)                                   
-            recipient && !this.hasRecipient(recipient)
-            ?   this.recipients.push(recipient)
-            :   console.warn('Recipient already added.') //@ Todo
+        this.addRecipient = function (identity) { 
+        console.log(identity)                                   
+            identity && !this.hasRecipient(identity)
+            ?   this.recipients.push(identity)
+            :   console.warn('Recipient already present.') //@ Todo
             return this;
         };
 
-        this.newRecipient = function (identity_data) {
-            console.log(identity_data)
-            return (
-                identity_data
-                ?   cmRecipientFactory.create(identity_data).addTo(this)
-                :   null
-            )
-        };
-
-        this.removeRecipient = function (recipient) {
+        this.removeRecipient = function (identity) {
             var i = this.recipients.length;
 
             while (i) {
                 i--;
-                if (this.recipients[i] == recipient) this.recipients.splice(i, 1);
+                if (this.recipients[i] == identity) this.recipients.splice(i, 1);
             }
             return this;
         };

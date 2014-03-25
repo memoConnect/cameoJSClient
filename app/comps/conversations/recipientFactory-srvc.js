@@ -1,3 +1,4 @@
+/*
 'use strict';
 
 function cmRecipientFactory ($rootScope, cmRecipientModel, cmUtil){
@@ -46,3 +47,4 @@ function cmRecipientFactory ($rootScope, cmRecipientModel, cmUtil){
         }
     }
 }
+*/

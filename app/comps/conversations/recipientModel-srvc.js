@@ -1,3 +1,4 @@
+/*
 'use strict';
 
 function cmRecipientModel (cmConversationsAdapter, cmUserModel, cmIdentity){
@@ -49,3 +50,4 @@ function cmRecipientModel (cmConversationsAdapter, cmUserModel, cmIdentity){
 
     return Recipient;
 }
+*/

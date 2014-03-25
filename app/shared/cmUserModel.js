@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
-.service('cmUserModel',['cmAuth', 'cmLocalStorage', 'cmIdentity', '$rootScope', '$q', '$location', function(cmAuth, cmLocalStorage, cmIdentity, $rootScope, $q, $location){
+.service('cmUserModel',['cmAuth', 'cmLocalStorage', 'cmIdentityFactory', '$rootScope', '$q', '$location', function(cmAuth, cmLocalStorage, cmIdentityFactory, $rootScope, $q, $location){
     var self = this,
         isInit = false;
 
@@ -27,7 +27,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
      */
     function init(identity_data){
         if(typeof identity_data !== 'undefined'){
-            var identity = cmIdentity.create(identity_data);
+            var identity = cmIdentityFactory.create(identity_data);
 
             angular.extend(self.data, identity);
 
@@ -52,7 +52,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
 
         cmAuth.getIdentity().then(
             function(data){
-                identity = cmIdentity.create(data);
+                identity = cmIdentityFactory.create(data);
                 console.log(identity)
 
                 angular.extend(self.data, identity);

@@ -49,7 +49,7 @@ angular.module('cmIdentity', ['cmAuth'])
 
     return Identity;
 }])
-.factory('cmIdentity',['$rootScope','cmIdentityModel', function($rootScope, cmIdentityModel){
+.factory('cmIdentityFactory',['$rootScope','cmIdentityModel', function($rootScope, cmIdentityModel){
     var instances = [];
 
     $rootScope.$on('logout', function(){
