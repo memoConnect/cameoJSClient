@@ -1,4 +1,4 @@
-var config = require('./config-tests.js');
+var config = require('./config-e2e-tests.js');
 
 var wwwUrl = config.wwwUrl
     , userNameValue = config.accountName
