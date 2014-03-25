@@ -176,6 +176,21 @@ define([
                     $rootScope.urlHistory.push(currentRoute);
                 }
             });
+
+
+            //Make it easy for e2e-tests to monitor route changes:
+            $rootScope.$on('$routeChangeStart', function(){
+                window._route.path   = '$location.$$path'
+                window._route.status = 'loading'
+            })
+
+            $rootScope.$on('$routeChangeSuccess', function(){
+                window._route.status = 'success'
+            })
+
+            $rootScope.$on('$routeChangeError', function(){
+                window._route.status = 'error'
+            })
         }
     ]);
     // bootstrap app and all things after here use app.register.{ng-type}
