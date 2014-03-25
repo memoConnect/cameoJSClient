@@ -12,7 +12,10 @@ cm-message{
   word-wrap: break-word;
   padding:0 1em;
   article {
-    div {
+    div.avatar {
+      font-size: 2em
+    }
+    div.message {
       position: relative;
       padding:0.5em;
       -webkit-border-radius: @cm-border-radius;
@@ -20,10 +23,10 @@ cm-message{
       border-radius: @cm-border-radius;
       border: none;
     }
-    div.left {
+    div.message.left {
       background-color: @cm-msg-bg-color-other;
     }
-    div.right {
+    div.message.right {
       background-color: @cm-msg-bg-color-own;
     }
     span{
