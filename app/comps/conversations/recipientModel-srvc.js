@@ -6,14 +6,14 @@ function cmRecipientModel (cmConversationsAdapter, cmUserModel, cmIdentity){
         var self = this;
 
         this.addTo = function (conversation) {
-            return cmConversationsAdapter.addRecipient(conversation.id, this.id)
+            return cmConversationsAdapter.addRecipient(conversation.id, this.identity.id)
                 .then(function () {
                     conversation.addRecipient(self)
                 });
         };
 
         this.removeFrom = function (conversation) {
-            return cmConversationsAdapter.removeRecipient(conversation.id, this.id)
+            return cmConversationsAdapter.removeRecipient(conversation.id, this.identity.id)
                 .then(function () {
                     conversation.removeRecipient(self)
                 });
