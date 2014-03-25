@@ -1,4 +1,4 @@
-var path = 'http://localhost:6108/app/'
+var path = 'http://localhost:6108/app/';
 //var path = 'http://localhost:9000/app/';
 var userNameValue = "Z" + Date.now()
     , passwordValue = "PWD_Z" + Date.now()
@@ -14,8 +14,9 @@ module.exports = {
         test
             .open(path + '#/registration')
             // registration
+            //TODO: wait until page loaded
             .wait(2000)
-            .type('#loginName', userNameValue)
+            .type('input[name="loginName"]', userNameValue)
             .type('#password', passwordValue)
             .type('#password_confirm', passwordValue)
             .type('#cameoId', cameoIdValue)
@@ -28,7 +29,9 @@ module.exports = {
             .end()
             .click('#agbCheckbox')
             .click('#registerUserButton')
-            .wait(5000)
+            //TODO: wait until page loaded
+            .wait(2000)
+            .assert.url(path + '#/login', 'redirect to login not successfull')
             .done();
     }
 };
