@@ -1,4 +1,4 @@
-var config = require("./config-tests.js");
+var config = require("./config-e2e-tests.js");
 
 module.exports = {
     'login.js': function(test){

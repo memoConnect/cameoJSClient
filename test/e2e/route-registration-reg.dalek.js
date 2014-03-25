@@ -1,4 +1,4 @@
-var config = require("./config-tests.js");
+var config = require("./config-e2e-tests.js");
 
 var wwwUrl = config.wwwUrl
     , userNameValue = "Z" + Date.now()
@@ -8,7 +8,7 @@ var wwwUrl = config.wwwUrl
 
 module.exports = {
 
-    'registration: create account': function (test) {
+    'registration: create new account': function (test) {
         console.log("userNameValue: "+userNameValue);
         console.log("passwordValue: "+passwordValue);
         console.log("cameoIdValue: "+cameoIdValue);
@@ -16,7 +16,8 @@ module.exports = {
 
         test
             .open(wwwUrl)
-            .waitForElement('button[ng-click="goToReg()"]')
+            //.waitForElement('button[ng-click="goToReg()"]')
+            .wait(2000)
             .click('button[ng-click="goToReg()"]')
             //wating unti reg page is loaded
             .waitForElement('#registerUserButton')

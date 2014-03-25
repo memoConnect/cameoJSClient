@@ -304,7 +304,7 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'test/e2e/config-tests.js': ['templates/config-tests.tpl.js']
+                    'test/e2e/config-e2e-tests.js': ['templates/config-e2e-tests.tpl.js']
                 }
             }
         },
@@ -370,6 +370,7 @@ module.exports = function (grunt) {
     // tests unit
     grunt.loadNpmTasks('grunt-karma');
     grunt.registerTask('tests-unit', [
+        'genAllTemplates',
         'karma:jenkins'
     ]);
     // tests e2e
@@ -382,11 +383,20 @@ module.exports = function (grunt) {
         'copy:dalek-report',
         'clean:dalek-report'
     ]);
+    grunt.registerTask('tests-all', [
+        'genAllTemplates',
+        'karma:jenkins',
+        'connect',
+        'dalek:jenkins',
+        'copy:dalek-report',
+        'clean:dalek-report'
+    ]);
     grunt.registerTask('tests-e2e-local', [
         'genAllTemplates',
         'connect',
         'dalek:local',
     ]);
+
     // phonegap to device
     grunt.loadNpmTasks('grunt-phonegap');
     grunt.loadNpmTasks('grunt-template');

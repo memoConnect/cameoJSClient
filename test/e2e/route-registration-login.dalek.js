@@ -6,13 +6,14 @@ var wwwUrl = config.wwwUrl
     ;
 
 module.exports = {
-    'registration: create account': function (test) {
+    'login: login with correct credentials': function (test) {
         console.log("userNameValue: " + userNameValue);
         console.log("passwordValue: " + passwordValue);
 
         test
             .open(wwwUrl)
-            .waitForElement('button[ng-click="goToReg()"]')
+            //.waitForElement('button[ng-click="goToReg()"]')
+            .wait(2000)
             .click('button[ng-click="open()"]')
             //wating until login page is loaded
             .waitForElement('[ng-controller="LoginCtrl"]')
