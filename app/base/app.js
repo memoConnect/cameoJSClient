@@ -147,6 +147,8 @@ define([
                     }
                 } else if ($location.$$path == "/login") {
                     $location.path("/talks");
+                } else if ($location.$$path == "/logout"){
+                    cmUserModel.doLogout();
                 }
             });
 
