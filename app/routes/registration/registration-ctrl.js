@@ -42,7 +42,7 @@ define([
             if(typeof $scope.registrationForm.loginName.$viewValue !== 'undefined'){
                 var last_checked = $scope.registrationForm.loginName.$viewValue.toString();
 
-                if (last_checked != '' && last_checked.length > 5) {
+                if (last_checked != '') {
                     cmAuth.checkAccountName($scope.registrationForm.loginName.$viewValue)
                         .then(
                         function(reservationSecret){
@@ -94,17 +94,10 @@ define([
                         $scope.registrationForm.loginName.$dirty = false;
                         $scope.showLoginNameCheckError = false;
                         $scope.showLoginNameEmptyError = false;
-                        reservation_secrets[last_checked] = reservationSecret;
-                    },
-                    function(){
-//                        cmNotify.info("Error, check Username again!", {ttl: 5000});
-                        $scope.registrationForm.loginName.$valid = false;
-                        $scope.showLoginNameCheckError = true;
-                        $scope.showLoginNameEmptyError = false;
+                    } else {
+                        $scope.registrationForm.loginName.$dirty = true;
+                            $scope.showLoginNameEmptyError = false;
                     }
-                );
-
-
                 }
             }
         };
