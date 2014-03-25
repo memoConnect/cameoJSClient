@@ -3,46 +3,60 @@
 function cmMessageModel (cmConversationsAdapter,cmCrypt,cmIdentity){
     var Message = function(data){
         //Attributes:
-        this.id = '';
-        this.body = '';
-        this.decryptedBody = '';
-        this.from = '';
-        this.status = '';
-        this.lastUpdated = '';
-        this.created = '';
-        this.lastMessage = '';
-
         var self = this;
 
-        this.encryptWith = function (passphrase) {
-            this.body = cmCrypt.encryptWithShortKey(passphrase, this.body)
+        //secret data:
+        this.secret =   ['text', 'fileIds', 'from'],
+
+        //public data
+        this.public =   [] 
+   
+
+        this.encrypt = function (passphrase) {
+
+            //merge secret_data into json string:
+
+            var secret_data = {}
+
+            this.secret.forEach(function(key){
+                data[key] = self[key]
+            })
+
+            var secret_JSON = JSON.stringify(this.secret_data)
+
+            this.encryptedData = cmCrypt.encryptWithShortKey(passphrase, secret_JSON) //@ TODO!!!!
             return this;
         }
 
-        this.decryptWith = function (passphrase) {
-            var decrypted_text = cmCrypt.decrypt(passphrase, this.body)
-            this.decryptedBody = decrypted_text || this.body
+        this.decrypt = function (passphrase) {
+            var decrypted_data = cmCrypt.decrypt(passphrase, this.encryptedData)
+
+            //expose data on message Object
+            angular.extend(self, decrypted_data)
+            
             return !!decrypted_text;
         }
 
         this.sendTo = function (conversation) {
+
             return  cmConversationsAdapter.sendMessage(conversation.id, {
-                        body: self.body
+                        body: self.encryptedData
                     })
                     .then(function (message_data) {
                         conversation.addMessage(new Message(message_data))
                     })
         }
 
-        this.init = function (message_data) {
-            this.id = message_data.id;
-            this.body = message_data.body;
-            this.decryptedBody = message_data.messageBody;
-            this.fromIdentity = cmIdentity.create(message_data.fromIdentity);
-            this.status = message_data.messageStatus;
-            this.lastUpdated = message_data.lastUpdated;
-            this.created = message_data.created;
-            this.lastMessage = message_data.lastMessage;
+        this.init = function (message_data) {            
+            this.secret.decryptedData = undefined
+
+            this.id         = message_data.id;            
+            this.from       = cmIdentity.create(message_data.fromIdentity);
+            this.created    = message_data.created;
+            this.text       = undefined
+            this.fileIds    = message_data.fileIds;
+
+            this.encryptedData = message_data.body;            
         }
 
         this.init(data);
