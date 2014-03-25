@@ -52,9 +52,9 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                 $scope.$on('cmContacts:selected', function (event, identity_data) {
                     console.log(identity_data)
                     identity_data
-                        ? $scope.conversation
+                    ?   $scope.conversation
                         .newRecipient(identity_data)
-                        : null
+                    :   null
                 })
 
                 $scope.conversation.update();

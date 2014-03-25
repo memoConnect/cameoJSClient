@@ -108,38 +108,30 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
         this.hasRecipient = function(recipient){
             var check = false;
 
+            console.log('in: '+recipient.identity.id)
+
             this.recipients.forEach(function(r){
-                check = check || recipient.id == r.id
+                console.log('test: '+r.identity.id)
+                check = check || (recipient.identity.id == r.identity.id)
             })
             
             return check
         }
 
-        this.addRecipient = function (recipient) {
-                        
-            if(typeof recipient !== 'undefined' && recipient != null){
-                if(!this.hasRecipient(recipient))                    
-                    this.recipients.push(recipient);
-                }
-            }
+        this.addRecipient = function (recipient) { 
+        console.log(recipient)                                   
+            recipient && !this.hasRecipient(recipient)
+            ?   this.recipients.push(recipient)
+            :   console.warn('Recipient already added.') //@ Todo
             return this;
         };
 
         this.newRecipient = function (identity_data) {
-            if(typeof identity_data !== 'undefined'){
-//                var identity_data = (typeof identity_data == 'string' ? {identityId: identity_data} : identity_data );
-//
-//                /**
-//                 * Workaround because Contact und Recipient Model are not equal
-//                 */
-//                if(typeof identity_data.identityId == 'undefined' && typeof identity_data.id !== 'undefined'){
-//                    identity_data.identityId = identity_data.id;
-//                }
-
-                return cmRecipientFactory.create(identity_data).addTo(this);
-            } else {
-                return null;
-            }
+            return (
+                identity_data
+                ?   cmRecipientFactory.create(identity_data).addTo(this)
+                :   null
+            )
         };
 
         this.removeRecipient = function (recipient) {
@@ -169,11 +161,10 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
             var success = true
             if (this.passphrase) {
                 this.messages.forEach(function (message) {
-                    //success = message.decrypt(self.passphrase); //@TODO
+                    success = success && message.decrypt(self.passphrase); //@TODO
                 })
             }
-
-            return()
+            return success
         };
 
         this.passphraseValid = function () {

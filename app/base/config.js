@@ -1,5 +1,5 @@
 cameo_config = {
-    restApi: 'https://dev.cameo.io/api/v1',
+    restApi: 'http://dev.cameo.io/api/v1',
 
     token: null,
     supported_languages: ['de_DE', 'en_US'],
@@ -43,6 +43,9 @@ cameo_config = {
         },
         'verification': {
             routes:['/verification/:secret']
+        },
+        'server_down' : {
+            templateUrl: 'routes/landingpages/server_down.html'
         },
         'terms': {},
         'disclaimer': {},
