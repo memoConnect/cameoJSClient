@@ -1,6 +1,6 @@
 'use strict';
 
-function cmMessageModel (cmConversationsAdapter,cmCrypt){
+function cmMessageModel (cmConversationsAdapter,cmCrypt,cmIdentity){
     var Message = function(data){
         //Attributes:
         this.id = '';
@@ -38,7 +38,7 @@ function cmMessageModel (cmConversationsAdapter,cmCrypt){
             this.id = message_data.id;
             this.body = message_data.body;
             this.decryptedBody = message_data.messageBody;
-            this.fromIdentity = message_data.fromIdentity;
+            this.fromIdentity = cmIdentity.create(message_data.fromIdentity);
             this.status = message_data.messageStatus;
             this.lastUpdated = message_data.lastUpdated;
             this.created = message_data.created;

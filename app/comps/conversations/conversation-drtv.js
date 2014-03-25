@@ -7,10 +7,10 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
         scope: true,
 
         controller: function ($scope, $element, $attrs) {
-            var conversation_id = $scope.$eval($attrs.cmConversations) || $scope.$eval($attrs.conversationId),
+            var conversation_id      = $scope.$eval($attrs.cmConversations) || $scope.$eval($attrs.conversationId),
                 conversation_subject = $scope.$eval($attrs.cmSubject),
-                conversation_offset = $attrs.offset,
-                conversation_limit = $attrs.limit
+                conversation_offset  = $attrs.offset,
+                conversation_limit   = $attrs.limit
 
             conversation_id
 //            ?   cmConversationsModel.getConversation(conversation_id, conversation_offset, conversation_limit)
@@ -21,17 +21,17 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                 })
 
             :   cmConversationsModel.createConversation(conversation_subject)
-                .then(function (conversation) {
+                .then(function (conversation) {                    
                     $scope.init(conversation)
                     $scope.new_conversation = true
                 })
 
 
             $scope.init = function (conversation) {
-                $scope.conversation = conversation
-                $scope.my_message_text = ""
-                $scope.passphrase = ""
-                $scope.show_contacts = false
+                $scope.conversation     = conversation
+                $scope.my_message_text  = ""
+                $scope.passphrase       = ""
+                $scope.show_contacts    = false
                 $scope.passphrase_valid = $scope.conversation.passphraseValid()
 
                 if($scope.conversation.passphrase != '' && $scope.passphrase_valid !== false){
@@ -49,7 +49,8 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                     $scope.conversation.updateSubject(new_subject||"")
                 })
 
-                $scope.$on('identity-selected', function (event, identity_data) {
+                $scope.$on('cmContacts:selected', function (event, identity_data) {
+                    console.log(identity_data)
                     identity_data
                         ? $scope.conversation
                         .newRecipient(identity_data)

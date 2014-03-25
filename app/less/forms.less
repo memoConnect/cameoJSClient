@@ -1,33 +1,122 @@
-.cm-input-ctn{
+.cm-input-ctn {
     background-color: @cm-white;
     display: block;
     padding: 0.5rem 1.5rem;
     margin: 0.5em 0;
+
+    input{
+        background-color: @cm-white !important;
+        width: 21rem;
+        padding:0;
+        margin:0;
+        border:none;
+    }
+
+    &~ .progress {
+        margin-top: -0.8em;
+        margin-bottom: 0.5em;
+        background:transparent; 
+    }
 }
 
-.cm-input-ctn input{
-    background-color: @cm-white !important;
-    width: 21rem;
-    padding:0;
-    margin:0;
-    border:none;
-}
 
-.cm-input-ctn ~ .progress {
-    margin-top: -0.8em;
-    margin-bottom: 0.5em;
-    background:transparent; 
-}
+form {
+    .cm-input-error{
+        background-color:#F4DFDF !important
+    }
 
-form .cm-input-error{background-color:#F4DFDF !important}
-
-form .cm-alert .cm-info {
-  color: @cm-danger-color;
-  margin-right: 0.5rem;
+    .cm-alert .cm-info {
+        color: @cm-warning-color;
+        margin-right: 0.5rem;
+    }
 }
 
 .cm-input-addon {
-  vertical-align:middle;
-  color: @cm-grey;
-  font-size: 1.4em;
+    vertical-align:middle;
+    color: @cm-grey;
+    font-size: 1.4em;
+}
+
+
+.cm-form-group{
+    padding:0 2em;
+    position:relative;
+
+    div.cm-form-control{
+        background:@cm-light-grey;
+        padding:0.3em 1.5em;
+        position:relative;
+        display:inline-block;
+        width:100%;
+        vertical-align:baseline;
+    
+        input,select{ 
+            .clear-form-border;
+            width: 100%;
+            height:1.4em;
+        }
+
+        &.white-control{ background:@cm-white;
+            &~i {
+                color:@cm-white;
+                vertical-align:middle;
+                font-size:3.7em;
+            }
+        }                
+
+        &.with-inputter {
+            padding-bottom: 0.7em;
+
+            input {
+                position: relative;
+                padding: 0 0.3em;      
+                line-height: 1.2em;                                          
+            }
+
+            &:after{
+                content: '';     
+                position: absolute;           
+                display:block;
+                left:1.5em;
+                right:1.5em;
+                bottom:0.3em;
+                height:0.3em;
+                border:@cm-black solid 0.1em;
+                border-top:none;
+            }
+        }                   
+
+        &.with-icon { width:85%; }
+    }
+
+
+    /*
+    input.cm-form-control{
+        display:block;
+        width:100%;
+        height:1.53em;
+        padding:0.2em;
+        vertical-align:middle;
+        background:transparent;
+
+        &:focus{
+          outline: 0 none;
+        }
+    }
+
+    
+
+    &.with-search-icon div.cm-form-control{
+        padding-right:0.2em;
+        margin-right:2em;
+    }
+
+    &.with-search-icon i.fa.cm-search{
+        position:absolute;
+        right:-0.79em;
+        top:-0.12em;
+        color:@cm-white;
+        font-size:3.73em;
+    }
+    */
 }

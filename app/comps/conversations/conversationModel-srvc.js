@@ -15,7 +15,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
 
         var self = this;
 
-        this.init = function (conversation_data) {
+        this.init = function (conversation_data) {            
             this.id             = conversation_data.id;
             this.subject        = conversation_data.subject;
             this.count          = conversation_data.numberOfMessages;
@@ -31,6 +31,11 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
             // register all recipients as Recipient objects
             if (conversation_data.recipients) {
                 conversation_data.recipients.forEach(function (recipient_data) {
+
+                    //@Todo doof:
+                    if(recipient_data.identityId) recipient_data.identity = {id: recipient_data.identityId}
+
+
 //                    if (typeof recipient_data == 'string') {
 //                        cmAuth.getIdentity(recipient_data)
 //                            .then(function (identity) {
@@ -89,7 +94,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
             return message//.sendTo(this);
         };
 
-        this.newestMessage = function(){
+        this.getLastMessage = function(){
             if(this.lastMessage !== undefined){
                 return this.lastMessage;
             }
@@ -101,6 +106,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
          */
 
         this.addRecipient = function (recipient) {
+                        
             if(typeof recipient !== 'undefined' && recipient != null){
                 if(this.recipients.length == 0){
                     this.recipients.push(recipient);
@@ -125,14 +131,14 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
 
         this.newRecipient = function (identity_data) {
             if(typeof identity_data !== 'undefined'){
-                var identity_data = (typeof identity_data == 'string' ? {identityId: identity_data} : identity_data );
-
-                /**
-                 * Workaround because Contact und Recipient Model are not equal
-                 */
-                if(typeof identity_data.identityId == 'undefined' && typeof identity_data.id !== 'undefined'){
-                    identity_data.identityId = identity_data.id;
-                }
+//                var identity_data = (typeof identity_data == 'string' ? {identityId: identity_data} : identity_data );
+//
+//                /**
+//                 * Workaround because Contact und Recipient Model are not equal
+//                 */
+//                if(typeof identity_data.identityId == 'undefined' && typeof identity_data.id !== 'undefined'){
+//                    identity_data.identityId = identity_data.id;
+//                }
 
                 return cmRecipientFactory.create(identity_data).addTo(this);
             } else {

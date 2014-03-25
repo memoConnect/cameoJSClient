@@ -94,9 +94,17 @@ define([
                         $scope.registrationForm.loginName.$dirty = false;
                         $scope.showLoginNameCheckError = false;
                         $scope.showLoginNameEmptyError = false;
-                    } else {
-                        $scope.registrationForm.loginName.$dirty = true;
+                        reservation_secrets[last_checked] = reservationSecret;
+                    },
+                    function(){
+//                        cmNotify.info("Error, check Username again!", {ttl: 5000});
+                        $scope.registrationForm.loginName.$valid = false;
+                        $scope.showLoginNameCheckError = true;
+                        $scope.showLoginNameEmptyError = false;
                     }
+                );
+
+
                 }
             }
         };
