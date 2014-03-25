@@ -4,6 +4,8 @@ cm-message article.left{text-align:left}
 cm-message article.right{text-align:right}
 cm-message footer{clear:both}
 **/
+@cm-msg-bg-color-own:#F3F3F3;
+@cm-msg-bg-color-other:#FFFFFF;
 
 cm-message{
   margin: 0.5em 0;
@@ -11,11 +13,18 @@ cm-message{
   padding:0 1em;
   article {
     div {
+      position: relative;
       padding:0.5em;
-      background-color: #F3F3F3;
       -webkit-border-radius: @cm-border-radius;
       -moz-border-radius: @cm-border-radius;
       border-radius: @cm-border-radius;
+      border: none;
+    }
+    div.left {
+      background-color: @cm-msg-bg-color-other;
+    }
+    div.right {
+      background-color: @cm-msg-bg-color-own;
     }
     span{
       display: block;
@@ -27,7 +36,20 @@ cm-message{
       text-align: right;
     }
     span.nose{
-
+      position: absolute;
+    }
+    span.nose.left{
+      top: 0.2em;
+      left: -0.4em;
+      color: @cm-msg-bg-color-other;
+    }
+    span.nose.right{
+      top: 0.5em;
+      color: @cm-msg-bg-color-own;
+      right: -0.41em;
+    }
+    span.nose i{
+      font-size: 1.5em;
     }
   }
 }
