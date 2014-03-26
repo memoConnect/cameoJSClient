@@ -8,6 +8,5 @@ function cmAvatar(){
                 $element.css({'background-image': 'url(' + identity.getAvatar() +')','background-size':'cover'});
             }
         }
-
     }
 }

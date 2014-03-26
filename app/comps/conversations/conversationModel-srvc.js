@@ -103,7 +103,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             return check
         }
 
-        this.addRecipient = function (identity) {                             
+        this.addRecipient = function (identity) {
             identity && !this.hasRecipient(identity)
             ?   this.recipients.push(identity)
             :   console.warn('Recipient already present.') //@ Todo

@@ -54,7 +54,7 @@ function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory){
             this.id         = message_data.id;            
             this.from       = cmIdentityFactory.create(message_data.fromIdentity);
             this.created    = message_data.created;
-            this.text       = message_data.text;
+            this.text       = message_data.body;
             this.fileIds    = message_data.fileIds;
 
             this.encryptedData = message_data.body;            
