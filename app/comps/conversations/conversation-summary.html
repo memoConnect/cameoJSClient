@@ -21,10 +21,8 @@
     </div>
     
     <div class="bottom">
-        <span class="message-count" ng-class="{'cm-unread' : conversation.count > 0}">  
-            ({{conversation.count || 0}})
-        </span>    
         <cm-recipient-counter>{{conversation.recipients.length}}</cm-recipient-counter>
+        <span class="message-count" ng-class="{'cm-unread' : conversation.count > 0}"> ({{conversation.count || 0}}) </span>            
     </div>
 </div>
 
