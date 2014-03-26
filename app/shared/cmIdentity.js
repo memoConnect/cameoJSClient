@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('cmIdentity', ['cmAuth'])
-.factory('cmIdentityModel',['cmAuth', '$q',function(cmAuth, $q){
+.factory('cmIdentityModel',['cmAuth', '$q', function(cmAuth, $q){
     var Identity = function(identity_data){
         var self = this;
 
@@ -28,9 +28,13 @@ angular.module('cmIdentity', ['cmAuth'])
             var deferred = $q.defer();
 
             if(typeof identity_data === 'object'){
+                this.id = identity_data.id;
+
                 angular.extend(this, identity_data);
                 deferred.resolve();
             } else if(typeof identity_data === 'string'){
+                this.id = identity_data;
+
                 cmAuth.getIdentity(identity_data).then(
                     function(data){
                         angular.extend(self, data);
@@ -66,7 +70,6 @@ angular.module('cmIdentity', ['cmAuth'])
             var identity = null,
                 i = 0;
 
-            if(typeof data !== 'undefined'){
                 if(this.getQty() > 0){
                     if(typeof data === 'string'){
                         while(i < instances.length){
@@ -91,7 +94,6 @@ angular.module('cmIdentity', ['cmAuth'])
                     identity = new cmIdentityModel(data);
                     instances.push(identity);
                 }
-            }
 
             return identity;
         },
