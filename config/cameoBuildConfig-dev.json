@@ -1,7 +1,7 @@
 {
     "configConst": {
-        "apiUrl": "https://stage.cameo.io/api/v1",
-        "wwwUrl": "https://stage.cameo.io/app/"
+        "apiUrl": "https://dev.cameo.io/api/v1",
+        "wwwUrl": "https://dev.cameo.io/app/"
     },
     "testData": {
         "accountName": "Z1395672127689",
