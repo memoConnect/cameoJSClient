@@ -20,6 +20,7 @@ module.exports = function (grunt) {
         else
             return grunt.file.readJSON('./config/cameoBuildConfig.json');
     })();
+    var globalCameoConfigTest = grunt.file.readJSON('./config/cameoBuildConfig-test.json');
     var globalCameoConfigStage = grunt.file.readJSON('./config/cameoBuildConfig-stage.json');
     var globalCameoConfigDev = grunt.file.readJSON('./config/cameoBuildConfig-dev.json');
 
@@ -310,10 +311,10 @@ module.exports = function (grunt) {
                     'app/base/config.js': ['templates/config-webApp.tpl.js']
                 }
             }
-            , 'config-webApp-Dev': {
+            , 'config-webApp-Test': {
                 'options': {
                     'data': {
-                        'currentApiUrl': globalCameoConfigDev.configConst.apiUrl
+                        'currentApiUrl': globalCameoConfigTest.configConst.apiUrl
                     }
                 },
                 'files': {
@@ -324,6 +325,16 @@ module.exports = function (grunt) {
                 'options': {
                     'data': {
                         'currentApiUrl': globalCameoConfigStage.configConst.apiUrl
+                    }
+                },
+                'files': {
+                    'dist/base/config.js': ['templates/config-webApp.tpl.js']
+                }
+            }
+            , 'config-webApp-Dev': {
+                'options': {
+                    'data': {
+                        'currentApiUrl': globalCameoConfigDev.configConst.apiUrl
                     }
                 },
                 'files': {
@@ -475,8 +486,10 @@ module.exports = function (grunt) {
 
     // deploy moeps
     grunt.registerTask('base-deploy', ['clean:dist-app', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'clean:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
-    grunt.registerTask('dev-deploy', ['base-deploy', 'template:config-webApp-Dev']);
+    grunt.registerTask('test-deploy', ['base-deploy', 'template:config-webApp-Test']);
     grunt.registerTask('stage-deploy', ['base-deploy', 'template:config-webApp-Stage']);
+    grunt.registerTask('dev-deploy', ['base-deploy', 'template:config-webApp-Dev']);
+
 
     grunt.loadNpmTasks('grunt-file-creator');
     grunt.registerTask('clear-dist', ['file-creator:dist-env-js']);
