@@ -110,18 +110,8 @@ module.exports = function (grunt) {
                         dest: 'phonegap-build/www/'
                     }
                 ]
-            },
-            'dalek-report': {
-                files: [
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: 'report/*.xml',
-                        dest: 'target/test-reports/'
-                    }
-                ]
-            },
-            'dev-deploy': {
+            }
+            ,'dev-deploy': {
                 files: [
                     {
                         expand: true,
@@ -174,25 +164,45 @@ module.exports = function (grunt) {
         },
         dalek: {
             options: {
-                reporter: ['console', 'junit']
-            },
-            browsers: [
+                reporter: ['console', 'junit'],
+                "junit-reporter": {
+                    "dest": "target/test-reports/dalek.xml"
+                }
+
+            }
+            ,browsers: [
                 {
                     "chrome": {
-                        "port": 5555
+                        "portRange": [6100, 6120]
                     }
                 }
-            ],
-            jenkins: {
-                browser: ['phantomjs'],
+                ,{
+                    "firefox": {
+                        "portRange": [6500, 6620]
+                    }
+                }
+            ]
+            ,jenkins: {
+                options: {
+                    browser: ['phantomjs'],
+                    reporter: ['console', 'junit']
+
+                },
                 src: ['test/e2e/*.dalek.js']
-            },
-            local: {
+            }
+            ,local: {
                 options: {
                     browser: ['chrome'],
                     reporter: ['console']
-                },
-                src: ['test/e2e/*.dalek.js']
+                }
+                ,src: ['test/e2e/*.dalek.js']
+            }
+            ,localAll: {
+                options: {
+                    browser: ['chrome', 'firefox'],
+                    reporter: ['console']
+                }
+                ,src: ['test/e2e/*.dalek.js']
             }
         },
 
@@ -299,8 +309,8 @@ module.exports = function (grunt) {
                 'options': {
                     'data': {
                         'currentWwwUrl': globalCameoConfig.configConst.wwwUrl,
-                        'accountName' : globalCameoConfig.testData.accountName,
-                        'accountPassword' : globalCameoConfig.testData.accountPassword
+                        'accountName': globalCameoConfig.testData.accountName,
+                        'accountPassword': globalCameoConfig.testData.accountPassword
                     }
                 },
                 'files': {
@@ -379,24 +389,24 @@ module.exports = function (grunt) {
     grunt.registerTask('tests-e2e', [
         'genAllTemplates',
         'connect',
-        'dalek:jenkins',
-        'copy:dalek-report',
-        'clean:dalek-report'
+        'dalek:jenkins'
     ]);
     grunt.registerTask('tests-all', [
         'genAllTemplates',
         'karma:jenkins',
         'connect',
-        'dalek:jenkins',
-        'copy:dalek-report',
-        'clean:dalek-report'
+        'dalek:jenkins'
     ]);
     grunt.registerTask('tests-e2e-local', [
         'genAllTemplates',
         'connect',
-        'dalek:local',
+        'dalek:local'
     ]);
-
+    grunt.registerTask('tests-e2e-localAll', [
+        'genAllTemplates',
+        'connect',
+        'dalek:localAll'
+    ]);
     // phonegap to device
     grunt.loadNpmTasks('grunt-phonegap');
     grunt.loadNpmTasks('grunt-template');

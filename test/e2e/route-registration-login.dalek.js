@@ -7,8 +7,10 @@ var wwwUrl = config.wwwUrl
 
 module.exports = {
     'login: login with correct credentials': function (test) {
+        console.log("login: login with correct credentials");
         console.log("userNameValue: " + userNameValue);
         console.log("passwordValue: " + passwordValue);
+        console.log("Path: " + wwwUrl);
 
         test
             .open(config.wwwUrl+"#/logout")
