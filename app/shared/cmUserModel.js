@@ -53,7 +53,6 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
         cmAuth.getIdentity().then(
             function(data){
                 identity = cmIdentityFactory.create(data);
-                console.log(identity)
 
                 angular.extend(self.data, identity);
 

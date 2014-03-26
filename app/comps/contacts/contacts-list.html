@@ -5,7 +5,7 @@
         <ul class="nav nav-pills nav-stacked col-sm-6">
             <li ng-repeat="contact in contacts | filter:name_filter">
                 <pre>{{contact}}</pre>
-                <a ng-click="selectContact(contact.identity.id)">
+                <a ng-click="selectContact(contact.identity)">
                     {{contact.identity.getDisplayName()}}
                     <i class="fa fa-trash-o pull-right" ng-click="deleteContact(contact.identity.id)"></i>
                     <i class="fa fa-pencil pull-right" ng-click="editContact(contact.identity.id)"></i>

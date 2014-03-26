@@ -82,11 +82,21 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
                     }
                 )
             } else {
-
                 deferred.resolve(conversation);
             }
         } else {
-            deferred.reject();
+            cmConversationsAdapter.newConversation().then(
+                function (conversation_data) {
+                    conversation = cmConversationFactory.create(conversation_data);
+                    self.addConversation(conversation);
+
+                    deferred.resolve(conversation);
+                },
+
+                function () {
+                    deferred.reject();
+                }                
+            )
         }
 
         return deferred.promise;

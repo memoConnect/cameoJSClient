@@ -1,14 +1,19 @@
-<div class="left">
-    <i class="fa"></i> {{conversation.subject || '(no subject)'}}
-</div>
+<header>
+    <div class="left">
+        <i class="fa"></i> {{conversation.subject || '(no subject)'}}
+    </div>
 
-<div class="right">
-    <cm-safety-level level ="3"></cm-safety-level>
-    <cm-recipient-counter
-        ng-click = "addRecipients()"
-    >
-        {{conversation.recipients.length}}
-    </cm-recipient-counter>    
-    <i class="fa cm-add"></i>
-    <i class="fa cm-down fa-2x"></i>
+    <div class="right">
+        <cm-safety-level level ="3"></cm-safety-level>
+        <cm-recipient-counter
+            ng-click = "addRecipients()"
+        >
+            {{conversation.recipients.length}}
+        </cm-recipient-counter>    
+        <i class="fa cm-add"></i>
+        <i class="fa cm-down fa-2x" ng-click="show_recipients = !show_recipients"></i>
+    </div>
+</header>
+<div ng-show ="show_recipients">
+    <cm-avatar cm-data ="recipient" ng-repeat="recipient in conversation.recipients"></cm-avatar>
 </div>

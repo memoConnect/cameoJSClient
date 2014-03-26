@@ -16,7 +16,6 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
 
             $scope.new_conversation = !!conversation_id
 
-
             cmConversationsModel.getConversation(conversation_id)
             .then(function (conversation) {                    
                 $scope.init(conversation)
@@ -44,7 +43,7 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                 $scope.$watch("conversation.subject", function (new_subject) {
                     $scope.conversation.updateSubject(new_subject||"")
                 })
-
+                
                 $scope.$on('cmContacts:selected', function (event, identity) {
                     $scope.conversation.addRecipient(identity)
                 })
