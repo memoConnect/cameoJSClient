@@ -42,22 +42,6 @@ cmConversations.factory('cmMessageFactory',[
     cmMessageFactory
 ])
 
-/*
-cmConversations.factory('cmRecipientModel',[
-    'cmConversationsAdapter',
-    'cmUserModel',
-    'cmIdentity',
-    cmRecipientModel
-])
-
-cmConversations.factory('cmRecipientFactory',[
-    '$rootScope',
-    'cmRecipientModel',
-    'cmUtil',
-    cmRecipientFactory
-])
-*/
-
 cmConversations.service('cmConversationsModel', [
     'cmConversationsAdapter',
     'cmConversationFactory',

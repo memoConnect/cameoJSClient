@@ -192,10 +192,7 @@ addPackage('pckConversations',{
         'comps/conversations/messageFactory-srvc',
         'comps/conversations/messageModel-srvc',
 
-        'comps/conversations/recipientFactory-srvc',
-        'comps/conversations/recipientModel-srvc',
-
-        'comps/conversations/conversation-summary-drtv',        
+        'comps/conversations/conversation-summary-drtv',
         'comps/conversations/safety-level-drtv',
         'comps/conversations/recipient-counter-drtv',
 
