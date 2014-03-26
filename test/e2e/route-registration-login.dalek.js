@@ -11,7 +11,7 @@ module.exports = {
         console.log("login: login with correct credentials");
         console.log("userNameValue: " + userNameValue);
         console.log("passwordValue: " + passwordValue);
-        console.log("Path: " + wwwUrl);
+        console.log("wwwUrl: " + wwwUrl);
 
         test
             .open(config.wwwUrl+"#/logout")
