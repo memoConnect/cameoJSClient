@@ -1,0 +1,10 @@
+{
+    "configConst": {
+        "apiUrl": "https://dev.cameo.io/api/v1",
+        "wwwUrl": "https://dev.cameo.io/app/"
+    },
+    "testData": {
+        "accountName": "Z1395672127689",
+        "accountPassword": "PWD_Z1395672127689"
+    }
+}
