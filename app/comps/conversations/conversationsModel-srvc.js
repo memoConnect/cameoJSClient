@@ -30,9 +30,7 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
 
             if(check !== true){
                 this.conversations.push(conversation);
-            } else {
-                conversation.update();
-            }
+            } 
         }
     };
 

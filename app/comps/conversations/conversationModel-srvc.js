@@ -66,17 +66,17 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             }
 
             this.lastMessage = message;
-            if (this.passphrase) message.decryptWith(this.passphrase);
+            if (this.passphrase) message.decrypt(this.passphrase);
             return this
         };
 
         this.newMessage = function (message_data, passphrase) {
-            var message_data = (typeof message_data == 'string' ? {body: message_data} : message_data )
+            var message_data = (typeof message_data == 'string' ? {text: message_data} : message_data )
 
             var message = cmMessageFactory.create(message_data);
 
             if(typeof passphrase !== 'undefined' && passphrase != ''){
-                message.encryptWith(passphrase);
+                message.encrypt(passphrase);
             }
 
             return message//.sendTo(this);

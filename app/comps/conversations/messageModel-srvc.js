@@ -19,20 +19,23 @@ function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory){
             var secret_data = {}
 
             this.secret.forEach(function(key){
-                data[key] = self[key]
+                if(self[key]) secret_data[key] = self[key]
             })
 
-            var secret_JSON = JSON.stringify(this.secret_data)
+            var secret_JSON = JSON.stringify(secret_data)
 
             this.encryptedData = cmCrypt.encryptWithShortKey(passphrase, secret_JSON) //@ TODO!!!!
+            
             return this;
         }
 
         this.decrypt = function (passphrase) {
-            var decrypted_data = cmCrypt.decrypt(passphrase, this.encryptedData)
+            var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase, this.encryptedData))
 
             //expose data on message Object
             angular.extend(self, decrypted_data)
+
+            return !!decrypted_data
         }
 
         this.sendTo = function (conversation) {
@@ -51,7 +54,7 @@ function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory){
             this.id         = message_data.id;            
             this.from       = cmIdentityFactory.create(message_data.fromIdentity);
             this.created    = message_data.created;
-            this.text       = undefined
+            this.text       = message_data.text;
             this.fileIds    = message_data.fileIds;
 
             this.encryptedData = message_data.body;            
