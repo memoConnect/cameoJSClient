@@ -20,6 +20,8 @@ module.exports = function (grunt) {
         else
             return grunt.file.readJSON('./config/cameoBuildConfig.json');
     })();
+    var globalCameoConfigStage = grunt.file.readJSON('./config/cameoBuildConfig-stage.json');
+    var globalCameoConfigDev = grunt.file.readJSON('./config/cameoBuildConfig-dev.json');
 
     // write config
     grunt.initConfig({
@@ -286,7 +288,8 @@ module.exports = function (grunt) {
                 'files': {
                     'phonegap-build/www/index.html': ['templates/index.tpl.html']
                 }
-            }, 'www-index': {
+            }
+            , 'www-index': {
                 'options': {
                     'data': {
                         'phonegapFiles': '',
@@ -296,7 +299,8 @@ module.exports = function (grunt) {
                 'files': {
                     'app/index.html': ['templates/index.tpl.html']
                 }
-            }, 'config-webApp': {
+            }
+            , 'config-webApp': {
                 'options': {
                     'data': {
                         'currentApiUrl': globalCameoConfig.configConst.apiUrl
@@ -305,7 +309,28 @@ module.exports = function (grunt) {
                 'files': {
                     'app/base/config.js': ['templates/config-webApp.tpl.js']
                 }
-            }, 'config-tests': {
+            }
+            , 'config-webApp-Dev': {
+                'options': {
+                    'data': {
+                        'currentApiUrl': globalCameoConfigDev.configConst.apiUrl
+                    }
+                },
+                'files': {
+                    'dist/base/config.js': ['templates/config-webApp.tpl.js']
+                }
+            }
+            , 'config-webApp-Stage': {
+                'options': {
+                    'data': {
+                        'currentApiUrl': globalCameoConfigStage.configConst.apiUrl
+                    }
+                },
+                'files': {
+                    'dist/base/config.js': ['templates/config-webApp.tpl.js']
+                }
+            }
+            , 'config-tests': {
                 'options': {
                     'data': {
                         'currentWwwUrl': globalCameoConfig.configConst.wwwUrl,
@@ -449,7 +474,9 @@ module.exports = function (grunt) {
     grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
 
     // deploy moeps
-    grunt.registerTask('dev-deploy', ['clean:dist-app', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'clean:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
+    grunt.registerTask('base-deploy', ['clean:dist-app', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'clean:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
+    grunt.registerTask('dev-deploy', ['base-deploy', 'template:config-webApp-Dev']);
+    grunt.registerTask('stage-deploy', ['base-deploy', 'template:config-webApp-Stage']);
 
     grunt.loadNpmTasks('grunt-file-creator');
     grunt.registerTask('clear-dist', ['file-creator:dist-env-js']);

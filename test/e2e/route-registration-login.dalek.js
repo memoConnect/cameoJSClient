@@ -3,6 +3,7 @@ var config = require('./config-e2e-tests.js');
 var wwwUrl = config.wwwUrl
     , userNameValue = config.accountName
     , passwordValue = config.accountPassword
+    , invalidPasswordValue = "moep!!!!"
     ;
 
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
         console.log("login: login with correct credentials");
         console.log("userNameValue: " + userNameValue);
         console.log("passwordValue: " + passwordValue);
-        console.log("Path: " + wwwUrl);
+        console.log("wwwUrl: " + wwwUrl);
 
         test
             .open(config.wwwUrl+"#/logout")
@@ -23,7 +24,19 @@ module.exports = {
             //wating until login page is loaded
             .waitForElement('[ng-controller="LoginCtrl"]')
             .wait(1000)
-            // registration
+
+            // test incomplete login begin
+            /*.type('input[name="user"]', userNameValue)
+
+
+            .assert.chain()
+            .val('input[name="user"]', userNameValue, 'username has been set')
+            .val('input[name="pw"]', passwordValue, 'password has been set')
+            .end()
+            .click('button[data-qa="login-submit-btn"]')*/
+            // test incomplete login end
+
+            // test successfull login begin
             .type('input[name="user"]', userNameValue)
             .type('input[name="pw"]', passwordValue)
 
@@ -32,6 +45,7 @@ module.exports = {
                 .val('input[name="pw"]', passwordValue, 'password has been set')
             .end()
             .click('button[data-qa="login-submit-btn"]')
+            // test successfull login end
 
             // waiting until first page ist loaded
             .wait(1000)
