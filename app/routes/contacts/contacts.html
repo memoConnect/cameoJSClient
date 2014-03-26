@@ -1,23 +1,49 @@
-<cm-header>
+<cm-header cm-rubber-space>   
+    <cm-identity cm-weight="3"></cm-identity>
+    <cm-logo     cm-weight="3"></cm-logo>
+    <div         cm-weight="2"></div>
+    <cm-menu     cm-weight="1"></cm-menu>
 </cm-header>
 
-<div ng-controller="ContactsCtrl">
-    <div class="page-header">
-        <h1><i class="fa fa-users"></i> {{'CONTACTS.WELCOME' | cmTranslate }}</h1>
-    </div>
+<section ng-controller="ContactsCtrl">
 
-    <div cm-nav-tabs ng-model="badges"></div>
+    <header>
+        <h1>{{"CONTACTS.HEADING"|cmTranslate}}</h1>       
 
-    <div ng-if="activeTab == 'ADD'">
-        <div cm-search-cameo-identity></div>
+        <a href="#/contact" cm-edge>            
+            <i class="fa cm-add"></i>
+        </a>
 
-        <div cm-add-external-contact></div>
-    </div>
+        <div class="cm-form-group">
+            <div class="cm-form-control white-control with-inputter with-icon">
+                <input type="text" value="" ng-model="search" />                                
+            </div><i class="fa cm-search"></i>
+        </div>
+    </header>
 
-    <div cm-contacts-list ng-if="activeTab == 'ALL'"></div>
+    <cm-contact-filter-controls
+        sort-by     = ""
+        filter-by   = ""
+    >
+    </cm-contact-filer-controls>
 
-    <div cm-contact-request-list ng-if="activeTab == 'REQUESTS'"></div>
-</div>
+    <!--
+        <div class="page-header">
+            <h1><i class="fa fa-users"></i> {{'CONTACTS.WELCOME' | cmTranslate }}</h1>
+        </div>
 
-<cm-footer>
-</cm-footer>
+        <div cm-nav-tabs ng-model="badges"></div>
+
+        <div ng-if="activeTab == 'ADD'">
+            <div cm-search-cameo-identity></div>
+
+            <div cm-add-external-contact></div>
+        </div>
+
+        <div cm-contacts-list ng-if="activeTab == 'ALL'"></div>
+
+        <div cm-contact-request-list ng-if="activeTab == 'REQUESTS'"></div>
+    -->
+</section>
+
+<cm-footer cm-rubber-space></cm-footer>
