@@ -4,11 +4,16 @@
 <input type ="text" ng-model="passphrase" cm-password-input cm-adaptive-change>
 <!-- nur temporär:-->
 
-<cm-message 
-	ng-repeat		= "message in conversation.messages"
-	cm-data 		= "message"
-    class           = "{{ message.isOwn() ? 'right' : ''}}"
-></cm-message>
+<div ng-repeat = "message in conversation.messages">
+    <div class="date-seperator">
+        {{ conversation.messages[$index - 1].created }}
+    </div>
+    <cm-message
+        cm-data = "message"
+        class   = "{{ message.isOwn() ? 'right' : ''}}"
+    >
+    </cm-message>
+</div>
 
 
 <div>
