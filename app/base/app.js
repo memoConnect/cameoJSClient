@@ -195,6 +195,30 @@ define([
             $rootScope.$on('$routeChangeError', function(){
                 window._route.status = 'error'
             })
+
+
+            //Set view width e.g. 32rem
+            function initScreenWidth(rem){
+                var html    = document.getElementsByTagName('html')[0],
+                    app     = document.getElementById('cm-app')
+
+                //prevent screen size to change when content overflows
+                html.style.overflowY = 'scroll'                    
+
+                var height  = window.innerHeight,
+                    width   = html.offsetWidth,
+                    effectiveWidth = Math.min(height, width)            
+
+                html.style.fontSize  = (effectiveWidth/rem) +'px'
+                app.style.maxWidth   = rem+'rem'
+            }
+
+            //Actually set view width to 32 rem
+            initScreenWidth(32)
+
+            //For dev purposes only:
+            window.onresize = function() { initScreenWidth(32) }
+
         }
     ]);
     // bootstrap app and all things after here use app.register.{ng-type}

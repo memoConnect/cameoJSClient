@@ -1,6 +1,6 @@
 'use strict';
 
-function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipientFactory){
+function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory){
     var ConversationModel = function(data){
         //Attributes:
         this.id = '';
@@ -15,7 +15,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
 
         var self = this;
 
-        this.init = function (conversation_data) {            
+        this.init = function (conversation_data) {
             this.id             = conversation_data.id;
             this.subject        = conversation_data.subject;
             this.count          = conversation_data.numberOfMessages;
@@ -30,20 +30,8 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
 
             // register all recipients as Recipient objects
             if (conversation_data.recipients) {
-                conversation_data.recipients.forEach(function (recipient_data) {
-
-                    //@Todo doof:
-                    if(recipient_data.identityId) recipient_data.identity = {id: recipient_data.identityId}
-
-
-//                    if (typeof recipient_data == 'string') {
-//                        cmAuth.getIdentity(recipient_data)
-//                            .then(function (identity) {
-//                                self.addRecipient(cmRecipientFactory.create(identity))
-//                            });
-//                    } else {
-                        self.addRecipient(cmRecipientFactory.create(recipient_data));
-//                    }
+                conversation_data.recipients.forEach(function (item) {                    
+                    self.addRecipient(cmIdentityFactory.create(item.identityId));
                 })
             }
         };
@@ -78,17 +66,17 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
             }
 
             this.lastMessage = message;
-            if (this.passphrase) message.decryptWith(this.passphrase);
+            if (this.passphrase) message.decrypt(this.passphrase);
             return this
         };
 
         this.newMessage = function (message_data, passphrase) {
-            var message_data = (typeof message_data == 'string' ? {body: message_data} : message_data )
+            var message_data = (typeof message_data == 'string' ? {text: message_data} : message_data )
 
             var message = cmMessageFactory.create(message_data);
 
             if(typeof passphrase !== 'undefined' && passphrase != ''){
-                message.encryptWith(passphrase);
+                message.encrypt(passphrase);
             }
 
             return message//.sendTo(this);
@@ -105,53 +93,29 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
          * Recipient Handling
          */
 
-        this.addRecipient = function (recipient) {
-                        
-            if(typeof recipient !== 'undefined' && recipient != null){
-                if(this.recipients.length == 0){
-                    this.recipients.push(recipient);
-                } else {
-                    var i = 0;
-                    var check = false;
-                    while(i < this.recipients.length){
-                        if(recipient.id == this.recipients[i].id){
-                            check = true;
-                            break;
-                        }
-                        i++;
-                    }
+        this.hasRecipient = function(identity){
+            var check = false;          
 
-                    if(check !== true){
-                        this.recipients.push(recipient);
-                    }
-                }
-            }
+            this.recipients.forEach(function(recipient){
+                check = check || (identity.id == recipient.id)
+            })
+            
+            return check
+        }
+
+        this.addRecipient = function (identity) {                             
+            identity && !this.hasRecipient(identity)
+            ?   this.recipients.push(identity)
+            :   console.warn('Recipient already present.') //@ Todo
             return this;
         };
 
-        this.newRecipient = function (identity_data) {
-            if(typeof identity_data !== 'undefined'){
-//                var identity_data = (typeof identity_data == 'string' ? {identityId: identity_data} : identity_data );
-//
-//                /**
-//                 * Workaround because Contact und Recipient Model are not equal
-//                 */
-//                if(typeof identity_data.identityId == 'undefined' && typeof identity_data.id !== 'undefined'){
-//                    identity_data.identityId = identity_data.id;
-//                }
-
-                return cmRecipientFactory.create(identity_data).addTo(this);
-            } else {
-                return null;
-            }
-        };
-
-        this.removeRecipient = function (recipient) {
+        this.removeRecipient = function (identity) {
             var i = this.recipients.length;
 
             while (i) {
                 i--;
-                if (this.recipients[i] == recipient) this.recipients.splice(i, 1);
+                if (this.recipients[i] == identity) this.recipients.splice(i, 1);
             }
             return this;
         };
@@ -170,24 +134,17 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmRecipi
         };
 
         this.decrypt = function () {
+            var success = true
             if (this.passphrase) {
                 this.messages.forEach(function (message) {
-                    message.decryptWith(self.passphrase);
+                    success = success && message.decrypt(self.passphrase); //@TODO
                 })
             }
+            return success
         };
 
         this.passphraseValid = function () {
-            return !this.messages[0] || this.messages[0].decryptWith(this.passphrase)
-        };
-
-        this.update = function () {
-            cmConversationsAdapter.getConversation(this.id)
-                .then(function(data){
-                    self.init(data)
-                });
-
-            return this;
+            return !this.messages[0] || this.messages[0].decrypt(this.passphrase)
         };
 
         this.init(data);

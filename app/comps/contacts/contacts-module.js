@@ -12,7 +12,7 @@ var cmContacts = angular.module('cmContacts',[
 cmContacts.service('cmContactsModel',[
     'cmUserModel',
     'cmContactsAdapter',
-    'cmIdentity',
+    'cmIdentityFactory',
     'cmUtil',
     '$q',
     '$rootScope',

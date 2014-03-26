@@ -1,4 +1,4 @@
-function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, cmUtil, $q, $rootScope){
+function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUtil, $q, $rootScope){
     var self = this;
     var mockContacts = ['derMicha','dasEmpu'];
     var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];
@@ -38,7 +38,7 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentity, cmUtil, $q,
                     id: contact.id,
                     contactType: contact.contactType,
                     groups: contact.groups,
-                    identity: cmIdentity.create(contact.identity)
+                    identity: cmIdentityFactory.create(contact.identity)
                 });
             }
         }

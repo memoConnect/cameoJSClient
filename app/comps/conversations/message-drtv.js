@@ -9,19 +9,21 @@ function cmMessage(cmUserModel) {
         controller: function ($scope, $element, $attrs) {
             $scope.message = $scope.$eval($attrs.cmData) || $scope.$eval($attrs.cmMessage);
 
-            $scope.message.decryptWith($scope.passphrase);
+            $scope.message.decrypt($scope.passphrase);
 
-            if ($scope.message.body.match(/^data:image/)) {
+            /*
+            if ($scope.message.text.match(/^data:image/)) {
                 $scope.hasCaptcha = true;
             }
-            if ($scope.message.body.match(/:requestCaptcha/)) {
+            if ($scope.message.text.match(/:requestCaptcha/)) {
                 $scope.captchaRequest = true;
             }
 
-            $scope.checkAsset = function(){
-                if ($scope.message.decryptedBody.match(/^:asset,/)) {                             
 
-                    $scope.assetId = $scope.message.decryptedBody.replace(/^:asset,/,'')                                
+            $scope.checkAsset = function(){
+                if ($scope.message.text.match(/^:asset,/)) {                             
+
+                    $scope.assetId = $scope.message.text.replace(/^:asset,/,'')                                
                     
                     $scope.hasAsset = true;
                 }else{
@@ -32,8 +34,9 @@ function cmMessage(cmUserModel) {
             $scope.$watchCollection('message', function(message){                
                 $scope.checkAsset()
             })
+            */
 
-            $scope.is_my_own_message = ($scope.message.fromIdentity.id == cmUserModel.data.id);
+            $scope.is_my_own_message = ($scope.message.from.id == cmUserModel.data.id);
         }
     }
 }

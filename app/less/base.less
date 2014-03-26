@@ -20,7 +20,10 @@
 
 @cm-border-radius: 0.357em;
 
-@cm-message-max-width: 25rem;
+// Message
+@cm-msg-bg-color-own:#F3F3F3;
+@cm-msg-bg-color-other:#FFFFFF;
+@cm-message-max-width: 24rem;
 @cm-message-min-width: 12rem;
 
 // General page layout
@@ -28,14 +31,14 @@
 html, body {
     height:100%;
     margin:0;
-    padding:0;
+    padding:0;    
 }
 
 body {
     font-size: 1em;
     width:100%;
     background-color:#fff;
-    cursor:default;
+    cursor:default;    
   //overflow:hidden;<-zerstört das scrollen in talks im ff
 }
 pre {
@@ -88,7 +91,7 @@ li {
     section{
         font-size: 1.2em;
 
-        header {
+        > header {
             position:relative;
             padding-top:1rem;
             padding-bottom: 1.5rem;

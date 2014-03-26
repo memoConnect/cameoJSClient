@@ -9,14 +9,14 @@ function cmMessageSmall() {
         controller: function ($scope, $element, $attrs) {
             $scope.message = $scope.$eval($attrs.cmData) || $scope.$eval($attrs.cmMessage);
 
-            $scope.message.decryptWith($scope.passphrase);
+            $scope.message.decrypt($scope.passphrase);
 
-            if ($scope.message.body.match(/^data:image/)) {
-                $scope.hasCaptcha = true;
-            }
-            if ($scope.message.body.match(/:requestCaptcha/)) {
-                $scope.captchaRequest = true;
-            }
+//            if ($scope.message.body.match(/^data:image/)) {
+//                $scope.hasCaptcha = true;
+//            }
+//            if ($scope.message.body.match(/:requestCaptcha/)) {
+//                $scope.captchaRequest = true;
+//            }
         }
     }
 }

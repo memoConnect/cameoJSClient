@@ -5,7 +5,8 @@ var cmConversations = angular.module('cmConversations', [
     'cmLogger', 
     'cmCrypt', 
     'cmContacts',
-    'cmUtil',
+    'cmUtil',    
+    'cmIdentity',
     'ui.bootstrap'
 ])
 
@@ -18,7 +19,7 @@ cmConversations.service('cmConversationsAdapter', [
 cmConversations.factory('cmConversationModel',[
     'cmConversationsAdapter',
     'cmMessageFactory',
-    'cmRecipientFactory',
+    'cmIdentityFactory',
     cmConversationModel
 ]);
 
@@ -31,7 +32,7 @@ cmConversations.factory('cmConversationFactory',[
 cmConversations.factory('cmMessageModel',[
     'cmConversationsAdapter',
     'cmCrypt',
-    'cmIdentity',
+    'cmIdentityFactory',
     cmMessageModel
 ])
 
@@ -39,20 +40,6 @@ cmConversations.factory('cmMessageFactory',[
     '$rootScope',
     'cmMessageModel',
     cmMessageFactory
-])
-
-cmConversations.factory('cmRecipientModel',[
-    'cmConversationsAdapter',
-    'cmUserModel',
-    'cmIdentity',
-    cmRecipientModel
-])
-
-cmConversations.factory('cmRecipientFactory',[
-    '$rootScope',
-    'cmRecipientModel',
-    'cmUtil',
-    cmRecipientFactory
 ])
 
 cmConversations.service('cmConversationsModel', [

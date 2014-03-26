@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
-.service('cmUserModel',['cmAuth', 'cmLocalStorage', 'cmIdentity', '$rootScope', '$q', '$location', function(cmAuth, cmLocalStorage, cmIdentity, $rootScope, $q, $location){
+.service('cmUserModel',['cmAuth', 'cmLocalStorage', 'cmIdentityFactory', '$rootScope', '$q', '$location', function(cmAuth, cmLocalStorage, cmIdentityFactory, $rootScope, $q, $location){
     var self = this,
         isInit = false;
 
@@ -18,7 +18,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
         lastUpdated: '',
         userType: 'external',
         publicKeys: [],
-        storage: {}
+        storage: {},
+        identity: {}
     }
 
     /**
@@ -26,9 +27,11 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
      */
     function init(identity_data){
         if(typeof identity_data !== 'undefined'){
-            var identity = cmIdentity.create(identity_data);
+            var identity = cmIdentityFactory.create(identity_data);
 
             angular.extend(self.data, identity);
+
+            self.data.identity = identity;
 
             isInit = true;
             initStorage();
@@ -41,6 +44,30 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
                 }
             );
         }
+    }
+
+    function loadIdentity(){
+        var deferred = $q.defer(),
+            identity;
+
+        cmAuth.getIdentity().then(
+            function(data){
+                identity = cmIdentityFactory.create(data);
+
+                angular.extend(self.data, identity);
+
+                self.data.identity = identity;
+
+                self.data.isActive = true;
+
+                deferred.resolve();
+            },
+            function(){
+                deferred.reject();
+            }
+        );
+
+        return deferred.promise;
     }
 
     this.data = angular.extend({}, dataModel);
@@ -183,28 +210,6 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
      */
     function resetUser(){
         self.data = angular.extend({}, dataModel);
-    }
-
-    function loadIdentity(){
-        var deferred = $q.defer(),
-            identity;
-
-        cmAuth.getIdentity().then(
-            function(data){
-                identity = cmIdentity.create(data);
-
-                angular.extend(self.data, identity);
-
-                self.data.isActive = true;
-
-                deferred.resolve();
-            },
-            function(){
-                deferred.reject();
-            }
-        );
-
-        return deferred.promise;
     }
 
     $rootScope.$on('logout', function(){

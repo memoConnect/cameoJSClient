@@ -44,6 +44,9 @@ cameo_config = {
         'verification': {
             routes:['/verification/:secret']
         },
+        'server_down' : {
+            templateUrl: 'routes/landingpages/server_down.html'
+        },
         'terms': {},
         'disclaimer': {},
         '404': {

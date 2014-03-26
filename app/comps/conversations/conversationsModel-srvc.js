@@ -30,19 +30,17 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
 
             if(check !== true){
                 this.conversations.push(conversation);
-            } else {
-                conversation.update();
-            }
+            } 
         }
     };
 
     this.createConversation = function (subject) {
-        var deferred = $q.defer()
+        var deferred = $q.defer()      
 
         cmConversationsAdapter
         .newConversation(subject)
         .then(function (conversation_data) {                    
-            var conversation = cmConversationFactory.create(conversation_data)
+            var conversation = cmConversationFactory.create(conversation_data)         
 
             self.conversations.push(conversation);
             deferred.resolve(conversation);
@@ -82,11 +80,21 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
                     }
                 )
             } else {
-
                 deferred.resolve(conversation);
             }
         } else {
-            deferred.reject();
+            cmConversationsAdapter.newConversation().then(
+                function (conversation_data) {
+                    conversation = cmConversationFactory.create(conversation_data);
+                    self.addConversation(conversation);
+
+                    deferred.resolve(conversation);
+                },
+
+                function () {
+                    deferred.reject();
+                }                
+            )
         }
 
         return deferred.promise;
