@@ -13,13 +13,19 @@ module.exports = function (grunt) {
 
     // cameo build config
     var globalCameoConfig = (function () {
-        src = './config/cameoBuildConfig-local.json';
-        if (grunt.file.exists(src)) {
-            return grunt.file.readJSON(src);
+        srcUser = './config/cameoBuildConfig-local.json';
+        srcJenkins = './config/cameoBuildConfig-jenkins.json';
+
+        if (grunt.file.exists(srcJenkins)) {
+            return grunt.file.readJSON(srcJenkins);
+        }
+        else if (grunt.file.exists(srcUser)) {
+            return grunt.file.readJSON(srcUser);
         }
         else
             return grunt.file.readJSON('./config/cameoBuildConfig.json');
     })();
+
     var globalCameoConfigTest = grunt.file.readJSON('./config/cameoBuildConfig-test.json');
     var globalCameoConfigStage = grunt.file.readJSON('./config/cameoBuildConfig-stage.json');
     var globalCameoConfigDev = grunt.file.readJSON('./config/cameoBuildConfig-dev.json');
@@ -113,8 +119,7 @@ module.exports = function (grunt) {
                         dest: 'phonegap-build/www/'
                     }
                 ]
-            }
-            ,'dev-deploy': {
+            }, 'dev-deploy': {
                 files: [
                     {
                         expand: true,
@@ -122,8 +127,14 @@ module.exports = function (grunt) {
                         dest: 'dist/'
                     }
                 ]
-            },
-            'cockpit': {
+            }, 'test-config': {
+                files: [
+                    {
+                        src: 'config/cameoBuildConfig-test.json',
+                        dest: 'config/cameoBuildConfig-jenkins.json'
+                    }
+                ]
+            }, 'cockpit': {
                 files: [
                     {
                         expand: true,
@@ -172,40 +183,35 @@ module.exports = function (grunt) {
                     "dest": "target/test-reports/dalek.xml"
                 }
 
-            }
-            ,browsers: [
+            }, browsers: [
                 {
                     "chrome": {
                         "portRange": [6100, 6120]
                     }
                 }
-                ,{
+                ,
+                {
                     "firefox": {
                         "portRange": [6500, 6620]
                     }
                 }
-            ]
-            ,jenkins: {
+            ], jenkins: {
                 options: {
                     browser: ['phantomjs'],
                     reporter: ['console', 'junit']
 
                 },
                 src: ['test/e2e/*.dalek.js']
-            }
-            ,local: {
+            }, local: {
                 options: {
                     browser: ['chrome'],
                     reporter: ['console']
-                }
-                ,src: ['test/e2e/*.dalek.js']
-            }
-            ,localAll: {
+                }, src: ['test/e2e/*.dalek.js']
+            }, localAll: {
                 options: {
                     browser: ['chrome', 'firefox'],
                     reporter: ['console']
-                }
-                ,src: ['test/e2e/*.dalek.js']
+                }, src: ['test/e2e/*.dalek.js']
             }
         },
 
@@ -289,8 +295,7 @@ module.exports = function (grunt) {
                 'files': {
                     'phonegap-build/www/index.html': ['templates/index.tpl.html']
                 }
-            }
-            , 'www-index': {
+            }, 'www-index': {
                 'options': {
                     'data': {
                         'phonegapFiles': '',
@@ -300,8 +305,7 @@ module.exports = function (grunt) {
                 'files': {
                     'app/index.html': ['templates/index.tpl.html']
                 }
-            }
-            , 'config-webApp': {
+            }, 'config-webApp': {
                 'options': {
                     'data': {
                         'currentApiUrl': globalCameoConfig.configConst.apiUrl
@@ -310,8 +314,7 @@ module.exports = function (grunt) {
                 'files': {
                     'app/base/config.js': ['templates/config-webApp.tpl.js']
                 }
-            }
-            , 'config-webApp-Test': {
+            }, 'config-webApp-Test': {
                 'options': {
                     'data': {
                         'currentApiUrl': globalCameoConfigTest.configConst.apiUrl
@@ -320,8 +323,7 @@ module.exports = function (grunt) {
                 'files': {
                     'dist/base/config.js': ['templates/config-webApp.tpl.js']
                 }
-            }
-            , 'config-webApp-Stage': {
+            }, 'config-webApp-Stage': {
                 'options': {
                     'data': {
                         'currentApiUrl': globalCameoConfigStage.configConst.apiUrl
@@ -330,8 +332,7 @@ module.exports = function (grunt) {
                 'files': {
                     'dist/base/config.js': ['templates/config-webApp.tpl.js']
                 }
-            }
-            , 'config-webApp-Dev': {
+            }, 'config-webApp-Dev': {
                 'options': {
                     'data': {
                         'currentApiUrl': globalCameoConfigDev.configConst.apiUrl
@@ -340,8 +341,7 @@ module.exports = function (grunt) {
                 'files': {
                     'dist/base/config.js': ['templates/config-webApp.tpl.js']
                 }
-            }
-            , 'config-tests': {
+            }, 'config-tests': {
                 'options': {
                     'data': {
                         'currentWwwUrl': globalCameoConfig.configConst.wwwUrl,
@@ -493,4 +493,6 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-file-creator');
     grunt.registerTask('clear-dist', ['file-creator:dist-env-js']);
+
+    grunt.registerTask('prepareTests', ['copy:test-config']);
 };
