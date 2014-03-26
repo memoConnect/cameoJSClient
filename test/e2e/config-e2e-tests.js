@@ -1,3 +1,3 @@
-this.wwwUrl = 'http://localhost:9000/app/';
-this.accountName = 'Z0dUE6IQ';
+this.wwwUrl = 'http://localhost/cameoJSClient/app/';
+this.accountName = 'jfG00Ve6';
 this.accountPassword = 'password';
