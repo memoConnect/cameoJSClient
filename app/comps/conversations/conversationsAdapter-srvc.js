@@ -30,11 +30,11 @@ function cmConversationsAdapter(cmApi, cmUtil){
             })
         },
 
-        addRecipient: function(id, recipient_id){
+        addRecipient: function(id_converation, id_identity_recipient){
             return	cmApi.post({
-                        url:	'/conversation/%1/recipient'.replace(/%1/, id),
+                        url:	'/conversation/%1/recipient'.replace(/%1/, id_converation),
                         data:	{
-                                    recipients: [recipient_id]
+                                    recipients: [id_identity_recipient]
                                 }
                     })
         },

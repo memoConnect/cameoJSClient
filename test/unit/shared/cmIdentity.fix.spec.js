@@ -23,13 +23,13 @@ describe('cmIdentityModel', function(){
     })
 })
 
-describe('cmIdentity', function(){
-    var cmIdentity, cmIdentityModel;
+describe('cmIdentityFactory', function(){
+    var cmIdentityFactory, cmIdentityModel;
 
     beforeEach(module('cmIdentity'))
 
-    beforeEach(inject(function(_cmIdentity_){
-        cmIdentity = _cmIdentity_
+    beforeEach(inject(function(_cmIdentityFactory_){
+        cmIdentityFactory = _cmIdentityFactory_
     }))
 
     it('should exists', function(){
@@ -37,11 +37,11 @@ describe('cmIdentity', function(){
     })
 
     it('should have create function', function(){
-        expect(cmIdentity.create).toBeDefined()
+        expect(cmIdentityFactory.create).toBeDefined()
     })
 
     it('should have getQty function', function(){
-        expect(cmIdentity.getQty).toBeDefined()
+        expect(cmIdentityFactory.getQty).toBeDefined()
     })
 
 
@@ -51,14 +51,14 @@ describe('cmIdentity', function(){
         var cmIdentityModelMock;
 
         it('there should be one instance after create one', function(){
-            var instance = cmIdentity.create(tmpInstanceId_1);
-            expect(cmIdentity.getQty()).toBe(1);
+            var instance = cmIdentityFactory.create(tmpInstanceId_1);
+            expect(cmIdentityFactory.getQty()).toBe(1);
         })
 
         it('there should be two instances after create two', function(){
-            var instance1 = cmIdentity.create(tmpInstanceId_1);
-            var instance2 = cmIdentity.create(tmpInstanceId_2);
-            expect(cmIdentity.getQty()).toBe(2);
+            var instance1 = cmIdentityFactory.create(tmpInstanceId_1);
+            var instance2 = cmIdentityFactory.create(tmpInstanceId_2);
+            expect(cmIdentityFactory.getQty()).toBe(2);
         })
 
         /**

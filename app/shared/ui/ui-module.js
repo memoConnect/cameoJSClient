@@ -36,6 +36,7 @@ angular.module('cmUi', [
 ])
 
 .directive('cmIdentity',[
+    'cmUserModel',
     cmIdentity
 ])
 

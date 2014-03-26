@@ -4,7 +4,6 @@ var config = {
     urlArgs: "bust=" + (new Date()).getTime(),
     paths: {
         'app': 'base/app',
-        'env': 'base/env',
         'screen': 'base/screen',
         // angular library
         'angular': 'vendor/angular/angular',
@@ -110,7 +109,7 @@ var config = {
 //        'bootstrap': ['jquery']
     },
     // kick start application
-    deps: ['screen', 'env', 'app']
+    deps: ['screen', 'app']
 }
 
 function addPackage(package_name, package) {
@@ -193,10 +192,7 @@ addPackage('pckConversations',{
         'comps/conversations/messageFactory-srvc',
         'comps/conversations/messageModel-srvc',
 
-        'comps/conversations/recipientFactory-srvc',
-        'comps/conversations/recipientModel-srvc',
-
-        'comps/conversations/conversation-summary-drtv',        
+        'comps/conversations/conversation-summary-drtv',
         'comps/conversations/safety-level-drtv',
         'comps/conversations/recipient-counter-drtv',
 

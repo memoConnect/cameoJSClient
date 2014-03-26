@@ -11,6 +11,9 @@ cm-header{
     font-size:1.4em;
     white-space: nowrap;
 
+    > *{
+        vertical-align: middle;
+    }
 
     cm-back{
 
@@ -30,6 +33,9 @@ cm-header{
     cm-identity{
         color:@cm-white;
         cursor:pointer;
+        text-overflow: ellipsis;
+        overflow:hidden;
+        white-space: nowrap;
     }
 
 

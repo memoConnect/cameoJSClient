@@ -25,7 +25,7 @@ function cmConversationFactory ($rootScope, cmConversationModel){
                 }
 
                 if(conversation === null){
-                    conversation = new cmConversationModel(data);
+                    conversation = new cmConversationModel(data);                    
                     instances.push({id:data.id,instance:conversation});
                 }
 

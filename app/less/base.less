@@ -5,6 +5,7 @@
 @cm-border-grey: #CCCCCC;
 @cm-white: #FFFFFF;
 @cm-black: #000000;
+@cm-green: #66CC00;
 @cm-bg-color: @cm-black;
 @cm-warning-color: #FF6600;
 @cm-input-bg-color: #EDEDED;
@@ -13,26 +14,32 @@
 
 @cm-form-alert-red: #F4DFDF;
 
-
 @cm-header-height: 4rem;
 @cm-footer-height: 4rem;
 @cm-app-width: 32rem;
 
+@cm-border-radius: 0.357em;
+
+// Message
+@cm-msg-bg-color-own:#F3F3F3;
+@cm-msg-bg-color-other:#FFFFFF;
+@cm-message-max-width: 24rem;
+@cm-message-min-width: 12rem;
 
 // General page layout
 
 html, body {
     height:100%;
     margin:0;
-    padding:0;
+    padding:0;    
 }
 
 body {
     font-size: 1em;
     width:100%;
     background-color:#fff;
-    cursor:default;
-  //overflow:hidden;//<-zerstört das scrollen in talks im ff
+    cursor:default;    
+  //overflow:hidden;<-zerstört das scrollen in talks im ff
 }
 pre {
     text-align:left
@@ -84,7 +91,7 @@ li {
     section{
         font-size: 1.2em;
 
-        header {
+        > header {
             position:relative;
             padding-top:1rem;
             padding-bottom: 1.5rem;

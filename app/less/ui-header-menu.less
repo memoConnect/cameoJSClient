@@ -23,17 +23,23 @@ cm-menu {
     }
     .cm-nose-wrapper i {
       position: absolute;
-      bottom: 0;
+      bottom: -0.01em;
       right: 0;
       font-size: 1.5em;
     }
     ul {
-      background-color: #fff;
+      background-color: transparent;
       text-align: left;
+    }
+    cm-list-group-item{
+      background-color: #FFF;
     }
     .cm-list-group-item:first-child {
       background-color: @cm-ci-color;
       color:#fff;
+      -webkit-border-top-left-radius: @cm-border-radius;
+      -moz-border-radius-topleft: @cm-border-radius;
+      border-top-left-radius: @cm-border-radius;
       i {
         color:#fff !important;
       }

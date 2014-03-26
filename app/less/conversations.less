@@ -27,12 +27,14 @@ cm-conversation-summary{
       */
     }
 
+    
     & > * {
         vertical-align: top;
         display:inline-block;
         text-overflow:ellipsis;
         height: 3em;
     }
+
 
     .center{
         .subject {            
@@ -116,34 +118,42 @@ cm-recipient-counter{
 }
 
 cm-conversation-controls {
-  display:block;
-  background:@cm-dark-grey;
-  color:@cm-white;
-  line-height: 2em;
-  height: 2em;
-  white-space: nowrap;  
+    display:block;
 
-  *{
-    vertical-align:middle;
-    display:inline-block;
-  }
-
-  .right {
-    text-align:right;
-  }
-
-  cm-recipient-counter {
-    font-size:2em;
-
-    .background {
+    header {
+        display:block;
+        background:@cm-dark-grey;
         color:@cm-white;
+        line-height: 2em;
+        height: 2em;
+        white-space: nowrap;  
+
+        *{
+            vertical-align:middle;
+            display:inline-block;
+        }
+
+         .right {
+            text-align:right;
+        }
+
+        cm-recipient-counter {
+            font-size:2em;
+
+            .background {
+                color:@cm-white;
+            }
+
+            .foreground {
+                color:@cm-dark-grey;
+            }
+
+        }
     }
 
-    .foreground {
-        color:@cm-dark-grey;
+    > div {
+        background: #fff; //mock
     }
-
-  }
 }
 
 

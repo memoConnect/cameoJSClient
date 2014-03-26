@@ -1,13 +1,13 @@
 'use strict';
 
-function cmContactsList(cmContactsModel, cmLogger){
+function cmContactsList(cmContactsModel, cmLogger, $rootScope){
     return {
         restrict: 'AE',
         scope: {},
         templateUrl: 'comps/contacts/contacts-list.html',
 
         controller: function($scope, $element, $attrs){
-            $scope.contacts = cmContactsModel.contacts;
+            $scope.contacts    = cmContactsModel.contacts;
             $scope.contactsQty = cmContactsModel.contacts.length;
 
             /**
@@ -25,8 +25,8 @@ function cmContactsList(cmContactsModel, cmLogger){
                 cmLogger.debug('deleteContact '+id);
             };
 
-            $scope.selectContact = function(id){
-//                $scope.$emit('identity-selected', id)
+            $scope.selectContact = function(identity){
+                $rootScope.$broadcast('cmContacts:selected', identity)
             }
         }
     }

@@ -1,12 +1,14 @@
-var path = 'http://localhost:6108/app/'
+var config = require("./config-e2e-tests.js");
 
 module.exports = {
     'wrong-route.js': function(test){
         test
-            .open(path+"#/moep")
+            .open(config.wwwUrl+"#/logout")
+            .wait(500)
+            .open(config.wwwUrl+"#/moep")
             .wait(1000)
             .assert
-                .url(path+'#/login', 'on route login')
+                .url(config.wwwUrl+'#/login', 'on route login')
         .done()
     }
 }

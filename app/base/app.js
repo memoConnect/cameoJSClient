@@ -36,15 +36,6 @@ define([
 
     //cameo_config = cameo_config
 
-    /**
-     * Check for local Env restApi URL
-     */
-    if(typeof env !== 'undefined'){
-        if(env.restApi != undefined && env.restApi != ""){
-            cameo_config.restApi = env.restApi;
-        }
-    }
-
     // cameo configuration for our providers
     app.config([
         'cmLanguageProvider',
@@ -156,6 +147,8 @@ define([
                     }
                 } else if ($location.$$path == "/login") {
                     $location.path("/talks");
+                } else if ($location.$$path == "/logout"){
+                    cmUserModel.doLogout();
                 }
             });
 
@@ -167,6 +160,15 @@ define([
             };
 
             $rootScope.$on('$routeChangeSuccess', function(schmu, _currentRoute_, _prevRoute_){
+                $rootScope.urlHistory = $rootScope.urlHistory || [];
+                if(
+                       !_currentRoute_
+                    || !_currentRoute_.$$route 
+                    || !_currentRoute_.$$route.originalPath
+                    || !_prevRoute_
+                    || !_prevRoute_.$$route
+                ) return null
+                    
                 var currentRoute = _currentRoute_.$$route.originalPath,
                     prevRoute = _prevRoute_ ? _prevRoute_.$$route.originalPath: '';
 
@@ -175,7 +177,48 @@ define([
                 else if(currentRoute !== $rootScope.urlHistory[$rootScope.urlHistory.length - 1]) {
                     $rootScope.urlHistory.push(currentRoute);
                 }
+                
             });
+            
+            window._route = {}
+
+            //Make it easy for e2e-tests to monitor route changes:
+            $rootScope.$on('$routeChangeStart', function(){
+                window._route.path   = $location.$$path
+                window._route.status = 'loading'
+            })
+
+            $rootScope.$on('$routeChangeSuccess', function(){
+                window._route.status = 'success'
+            })
+
+            $rootScope.$on('$routeChangeError', function(){
+                window._route.status = 'error'
+            })
+
+
+            //Set view width e.g. 32rem
+            function initScreenWidth(rem){
+                var html    = document.getElementsByTagName('html')[0],
+                    app     = document.getElementById('cm-app')
+
+                //prevent screen size to change when content overflows
+                html.style.overflowY = 'scroll'                    
+
+                var height  = window.innerHeight,
+                    width   = html.offsetWidth,
+                    effectiveWidth = Math.min(height, width)            
+
+                html.style.fontSize  = (effectiveWidth/rem) +'px'
+                app.style.maxWidth   = rem+'rem'
+            }
+
+            //Actually set view width to 32 rem
+            initScreenWidth(32)
+
+            //For dev purposes only:
+            window.onresize = function() { initScreenWidth(32) }
+
         }
     ]);
     // bootstrap app and all things after here use app.register.{ng-type}

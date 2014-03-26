@@ -6,11 +6,6 @@ cameo Web / MobileWeb / Hybrid client
 
 Set your own local environment (exp.: for own local mongoDB)
 --------
-#### app/base/env.js
-    'use strict';
-    var env = {
-        restApi: 'http://localhost:9000/api/v1'
-    }
 
 
 Grunt Task (before single run do '$ npm install')

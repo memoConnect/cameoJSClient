@@ -1,0 +1,61 @@
+/**
+cm-message{margin:2em 0;word-wrap:break-word}
+cm-message article.left{text-align:left}
+cm-message article.right{text-align:right}
+cm-message footer{clear:both}
+**/
+
+cm-message{
+  margin: 0.5em 0;
+  word-wrap: break-word;
+  padding:0 1em;
+  article {
+    div.avatar {
+      font-size: 2em;
+      line-height: 2em;
+      width: 2em;
+      height: 2em;
+    }
+    div.message {
+      position: relative;
+      padding: 0.5em;
+      min-width: @cm-message-min-width;
+      max-width: @cm-message-max-width;
+      -webkit-border-radius: @cm-border-radius;
+      -moz-border-radius: @cm-border-radius;
+      border-radius: @cm-border-radius;
+      border: none;
+    }
+    div.message.left {
+      background-color: @cm-msg-bg-color-other;
+    }
+    div.message.right {
+      background-color: @cm-msg-bg-color-own;
+    }
+    span{
+      display: block;
+    }
+    span.green{
+      color:@cm-green;
+    }
+    span.date{
+      text-align: right;
+    }
+    span.nose{
+      position: absolute;
+    }
+    span.nose.left{
+      top: 0.2em;
+      left: -0.4em;
+      color: @cm-msg-bg-color-other;
+    }
+    span.nose.right{
+      top: 0.5em;
+      color: @cm-msg-bg-color-own;
+      right: -0.41em;
+    }
+    span.nose i{
+      font-size: 1.5em;
+    }
+  }
+}

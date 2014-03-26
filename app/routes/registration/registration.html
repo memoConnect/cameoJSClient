@@ -11,7 +11,7 @@
             <h4>{{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}</h4>
 
             <div class="cm-input-ctn" ng-class="{'cm-input-error':showLoginNameCheckError, 'cm-input-error':showLoginNameEmptyError}" data-qa="form-input">
-                <input id="loginName" name="loginName" ng-class="{'cm-input-error':showLoginNameCheckError, 'cm-input-error':showLoginNameEmptyError}" type="text"  ng-model="formData.loginName" ng-blur="checkLoginName();" ng-minlength="6" ng-maxlength="60" maxlength="60" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}} *" required />
+                <input id="loginName" name="loginName" ng-class="{'cm-input-error':showLoginNameCheckError, 'cm-input-error':showLoginNameEmptyError}" type="text"  ng-model="formData.loginName" ng-blur="checkLoginName();" ng-minlength="6" ng-maxlength="20" maxlength="20" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}} *" required />
             </div>
             <div class="cm-alert" ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid">
                 <div ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid && registrationForm.loginName.$error.minlength">
@@ -30,10 +30,6 @@
             <div style="width:100%;height:1px;background-color:#fff"></div>
 
             <h4>{{'REGISTER.TITLE.HEAD_IDENTITY' | cmTranslate}}</h4>
-
-            <div class="cm-input-ctn" data-qa="form-input">
-                <input id="cameoId" name="cameoId" type="text" ng-model="formData.cameoId" ng-blur="checkCameoId();" placeholder="{{'REGISTER.PLACEHOLDER.CAMEOID'|cmTranslate}}" />
-            </div>
 
             <div class="cm-input-ctn" data-qa="form-input">
                 <input id="name" name="name" type="text" placeholder="{{'REGISTER.PLACEHOLDER.NAME'|cmTranslate}}" ng-model="formData.name" />
