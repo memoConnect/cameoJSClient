@@ -7,6 +7,7 @@ var cmConversations = angular.module('cmConversations', [
     'cmContacts',
     'cmUtil',    
     'cmIdentity',
+    'cmUserModel',
     'ui.bootstrap'
 ])
 
@@ -33,6 +34,7 @@ cmConversations.factory('cmMessageModel',[
     'cmConversationsAdapter',
     'cmCrypt',
     'cmIdentityFactory',
+    'cmUserModel',
     cmMessageModel
 ])
 

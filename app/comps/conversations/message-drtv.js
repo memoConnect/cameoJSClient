@@ -36,7 +36,7 @@ function cmMessage(cmUserModel) {
             })
             */
 
-            $scope.is_my_own_message = ($scope.message.from.id == cmUserModel.data.id);
+            $scope.is_my_own_message = $scope.message.isOwn();
         }
     }
 }

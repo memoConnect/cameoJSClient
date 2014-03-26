@@ -6,7 +6,8 @@
 
 <cm-message 
 	ng-repeat		= "message in conversation.messages"
-	cm-data 		= "message" 
+	cm-data 		= "message"
+    class           = "{{ message.isOwn() ? 'right' : ''}}"
 ></cm-message>
 
 

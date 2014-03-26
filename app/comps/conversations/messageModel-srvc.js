@@ -1,6 +1,6 @@
 'use strict';
 
-function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory){
+function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory,cmUserModel){
     var Message = function(data){
         //Attributes:
         var self = this;
@@ -46,6 +46,10 @@ function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory){
                     .then(function (message_data) {
                         conversation.addMessage(new Message(message_data))
                     })
+        }
+
+        this.isOwn = function(){
+            return (cmUserModel.data.id == this.from.id)
         }
 
         this.init = function (message_data) {            
