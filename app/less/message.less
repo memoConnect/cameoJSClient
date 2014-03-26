@@ -8,19 +8,26 @@ cm-message footer{clear:both}
 cm-message{
   margin: 0.5em 0;
   word-wrap: break-word;
-  padding:0 1em;
+  padding:0 0.1em;
+  &.right {
+    text-align: right;
+  }
   article {
     div.avatar {
       font-size: 2em;
       line-height: 2em;
       width: 2em;
       height: 2em;
+      margin-right: 0.7rem;
+      cm-avatar {
+        width: inherit !important;
+        height: inherit !important;
+      }
     }
     div.message {
       position: relative;
       padding: 0.5em;
       min-width: @cm-message-min-width;
-      max-width: @cm-message-max-width;
       -webkit-border-radius: @cm-border-radius;
       -moz-border-radius: @cm-border-radius;
       border-radius: @cm-border-radius;
@@ -28,9 +35,12 @@ cm-message{
     }
     div.message.left {
       background-color: @cm-msg-bg-color-other;
+      max-width: @cm-message-max-left-width;
     }
     div.message.right {
       background-color: @cm-msg-bg-color-own;
+      margin-right: 0.4rem;
+      max-width: @cm-message-max-right-width;
     }
     span{
       display: block;
