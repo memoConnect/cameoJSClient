@@ -3,15 +3,14 @@ var config = require("./config-e2e-tests.js");
 var wwwUrl = config.wwwUrl
     , userNameValue = "Z" + Date.now()
     , passwordValue = "PWD_Z" + Date.now()
-    , cameoIdValue = "c" + Date.now()
     ;
 
 module.exports = {
 
     'registration: create new account': function (test) {
+        console.log("registration: create new account");
         console.log("userNameValue: "+userNameValue);
         console.log("passwordValue: "+passwordValue);
-        console.log("cameoIdValue: "+cameoIdValue);
         console.log("Path: " + wwwUrl);
 
         test
@@ -21,9 +20,9 @@ module.exports = {
             //.waitForElement('button[ng-click="goToReg()"]')
             .resize({width: 750, height: 1200})
 
-            .waitFor(function () {
-                return window._route.status === 'success';
-            }, 'check bla blubb', 500)
+//            .waitFor(function () {
+//                return window._route.status === 'success';
+//            }, 'check bla blubb', 500)
             .wait(1000)
             .click('button[ng-click="goToReg()"]')
             //wating unti reg page is loaded
