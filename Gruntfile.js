@@ -179,7 +179,7 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        src: 'app/**',
+                        src: ['app/**', '!**/*.less'],
                         dest: 'dist/'
                     }
                 ]
