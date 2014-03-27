@@ -53,7 +53,7 @@ fi
 case "${buildMode}" in 
 	"test"|"dev")
 		
-		if [ "${buildMode}" == "test" ];then
+		if [ "${buildMode}" == "dev" ];then
 			secretFile="secret_dev.conf"
 		else
 			secretFile="secret_local.conf"
