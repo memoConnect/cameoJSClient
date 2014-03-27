@@ -219,12 +219,17 @@ addPackage('pckContacts',{
     ],
     resources : [
         'comps/contacts/contactsModel-srvc',
-        'comps/contacts/add-external-contact-drtv',
-        'comps/contacts/contact-request-list-drtv',
-        'comps/contacts/contacts-list-drtv',
         'comps/contacts/contactsAdapter-srvc',
+
+        'comps/contacts/contacts-filter-controls-drtv',
+        'comps/contacts/contacts-list-drtv',
         'comps/contacts/search-cameo-identity-drtv',    
-        'comps/contacts/type-chooser-drtv'
+        'comps/contacts/type-chooser-drtv',
+
+        'comps/contacts/add-external-contact-drtv',
+        'comps/contacts/contact-request-list-drtv',      
+        
+        
     ]
 })
 

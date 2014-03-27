@@ -1,6 +1,6 @@
 @cm-ci-color: #02BED2;
-@cm-grey: #666666;
 @cm-light-grey: #EDEDED;
+@cm-grey: #666666;
 @cm-dark-grey: #444444;
 @cm-border-grey: #CCCCCC;
 @cm-white: #FFFFFF;
@@ -52,6 +52,14 @@ a {
     &:focus, {
         color:inherit;
     }
+}
+
+a,button{
+    text-overflow: ellipsis;
+    text-align:center;
+    border:none;
+    white-space:nowrap;
+    overflow:hidden;
 }
 
 ul {

@@ -53,6 +53,10 @@ cmContacts.directive('cmSearchCameoIdentity',[
     cmSearchCameoIdentity
 ])
 
+cmContacts.directive('cmContactsFilterControls',[
+    cmContactsFilterControls   
+])
+
 cmContacts.directive('cmTypeChooser',[
     'cmLogger',
     cmTypeChooser
