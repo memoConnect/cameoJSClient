@@ -20,6 +20,6 @@ esac
 
 ./setup.sh
 
-echo -e "\e[33m[cameo - dev-deploy]\033[0m"
+echo -e "\e[33m[ CameoClient - running ${gruntTask} ]\033[0m"
 
 ./node_modules/grunt-cli/bin/grunt ${gruntTask}
