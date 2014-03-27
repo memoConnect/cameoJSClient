@@ -48,9 +48,6 @@ fi
 if [ ! -d "${secretDir}" ]; then
 	echo No cameoSecrets found in dir: ${secretDir}
 	exit 1
-else
-	cd ${secretDir}
-	git pull
 fi
 
 case "${buildMode}" in 
