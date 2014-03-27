@@ -157,10 +157,30 @@ cm-conversation-controls {
 }
 
 div.date-seperator {
-  color: #fff;
-  background-color: @cm-overlay-dark;
-  text-align: center;
-  font-size: 0.7em;
+  position: relative;
+  .date{
+    color: #fff;
+    background-color: @cm-overlay-dark;
+    text-align: center;
+    font-size: 0.7em;
+    width: 12rem;
+    -webkit-border-radius: @cm-border-radius;
+    -moz-border-radius: @cm-border-radius;
+    border-radius: @cm-border-radius;
+    border: none;
+    margin: 0 auto;
+    position: relative;
+    z-index: 99;
+  }
+  .line{
+    top:0;
+    background-color: @cm-overlay-dark;
+    height: 0.5px;
+    z-index: 98;
+    width:10rem;
+    margin-top: 0.6rem;
+  }
+
 }
 
     
