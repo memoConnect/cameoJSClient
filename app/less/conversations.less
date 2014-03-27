@@ -5,53 +5,51 @@ cm-conversation-summary{
     background: @cm-overlay-light;
     color: @cm-dark-grey;
     border-bottom: solid @cm-grey 0.1em;    
-    line-height: 3em;
-    padding: 0.3em 0.3em 0.3em 0em;
-    text-align:left;    
+    height: 3.6em;
+    position:relative;
 
     cm-avatar{
-      width:3em;
-      height:3em;
-
-      background:@cm-grey;
-
-      /*      
-      float:left;
-      margin-right:0.2em;
-      text-align:center;
-      i{
-        .cm-ci-color;
-        .white-text-shadow;
-        font-size:2em;
-        line-height:1.6em;
-      }
-      */
+        position:absolute;
+        left:0;
+        top:0.3em;
+        height:3em;
+        width:3em;
     }
 
-    
-    & > * {
-        vertical-align: top;
-        display:inline-block;
-        text-overflow:ellipsis;
-        height: 3em;
-    }
+    .details{
+        margin-left: 3em;
+        margin-right: 30%;
+        text-align:left;
+        padding:0.3em;
 
-
-    .center{
         .subject {            
             white-space: nowrap;
             line-height:1.2em;
         }
+
+        cm-message{
+            fonts-size:1em;
+            line-height:1.8em;
+            text-overflow: ellipsis;
+            overflow:hidden;
+            white-space:nowrap;
+            margin:0;
+            padding:0;
+        }
     }
 
-    .right{
-        /*float:right;*/
-
+    .meta{
+        position:absolute;
+        width: 30%;
+        right: 0;
+        top:0.3em;
+        height:3em;
 
         .top {
             font-size: 0.8em;
             line-height:1.2em;
             white-space: nowrap;
+            text-align:right;
 
             .last-updated{
                 margin-left: 1em;

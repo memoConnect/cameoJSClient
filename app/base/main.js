@@ -204,7 +204,6 @@ addPackage('pckConversations',{
         'comps/conversations/password-input-drtv',
 
         'comps/conversations/message-drtv',
-        'comps/conversations/message-small-drtv'
     ]
 })
 

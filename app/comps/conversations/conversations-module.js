@@ -103,11 +103,6 @@ cmConversations.directive('cmMessage', [
     cmMessage
 ])
 
-cmConversations.directive('cmMessageSmall', [
-    cmMessageSmall
-])
-
-
 .directive('cmRecipientCounter',[
     cmRecipientCounter
 ])
