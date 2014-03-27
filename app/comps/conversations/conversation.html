@@ -6,9 +6,9 @@
 
 <div ng-repeat="message in conversation.messages">
     <div class="date-seperator clearfix" ng-if="!$first">
-        <div class="line cm-fl"></div>
+        <div class="line cm-fl"></div> <!-- @todo inkonsistent :/ -->
         <div class="date cm-fl">{{ conversation.messages[$index - 1].created }}</div>
-        <div class="line cm-fl"></div>
+        <div class="line cm-fl"></div> <!-- @todo inkonsistent :/ -->
     </div>
     <cm-message
         cm-data = "message"
