@@ -32,6 +32,7 @@ cm-message{
       -moz-border-radius: @cm-border-radius;
       border-radius: @cm-border-radius;
       border: none;
+      text-align: left;
     }
     div.message.left {
       background-color: @cm-msg-bg-color-other;
@@ -44,31 +45,6 @@ cm-message{
     }
     span{
       display: block;
-    }
-    span.green{
-      color:@cm-green;
-    }
-    span.grey{
-      color: @cm-grey;
-    }
-    div.assets{
-      width:100%;
-      bottom: 0.2em;
-      span{
-        display: inline;
-        font-size: 0.8em;
-      }
-
-      span.date{
-        text-align: right;
-        overflow: hidden; //@todo temporär
-      }
-      span.security{
-        text-align: right;
-      }
-      span.envelope{
-        text-align: right;
-      }
     }
     span.nose{
       position: absolute;
@@ -85,6 +61,45 @@ cm-message{
     }
     span.nose i{
       font-size: 1.5em;
+    }
+    span.text{
+      margin: 0.5rem 0;
+    }
+    span.green{
+      color: @cm-green;
+    }
+    span.grey{
+      color: @cm-grey;
+    }
+    div.author {
+      position: absolute;
+      top: -0.3rem;
+      left: 0;
+      margin-left: 0.6rem;
+      span{
+        display: inline;
+        font-size: 0.6em;
+      }
+    }
+    div.assets{
+      position: absolute;
+      bottom: 0.2em;
+      right: 0;
+      margin-right: 0.4rem;
+      span{
+        display: inline;
+        font-size: 0.6em;
+      }
+      span.date{
+        text-align: right;
+        overflow: hidden; //@todo temporär
+      }
+      span.security{
+        text-align: right;
+      }
+      span.envelope{
+        text-align: right;
+      }
     }
   }
 }

@@ -18,7 +18,7 @@ function cmLogin($location, cmNotify, cmUserModel) {
                     pass: 'password'
                 },
                 'DumpuserLocal': {
-                    user: 'fbGBLqym',
+                    user: '2VqTftqh',
                     pass: 'password'
                 }
             };
