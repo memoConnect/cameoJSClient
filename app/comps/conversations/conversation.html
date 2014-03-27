@@ -18,11 +18,14 @@
 </div>
 
 
-<div>
-
-	<textarea cm-message-input ng-model="my_message_text"></textarea>
-
-	<button ng-click="sendMessage()">{{"CONVERSATION.LABEL.SEND" | cmTranslate}}</button> <br/>	
+<div class="answer clearfix">
+    <i class="fa cm-rhino-bubble attachments"></i>
+    <div class="message">
+        <textarea cm-message-input ng-model="my_message_text"></textarea>
+        <i class="fa cm-smile-negative"></i>
+        <div class="inputter"></div>
+    </div>
+    <i class="fa cm-post arrow" cm-weight="1"></i>
 </div>
 
 
