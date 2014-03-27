@@ -1,0 +1,9 @@
+{
+    "config": {
+        "wwwUrl": "http://localhost:9000/app/"
+    },
+    "testData": {
+        "accountName": "BMeSfHXQ",
+        "accountPassword": "password"
+    }
+}
