@@ -57,6 +57,10 @@ cmContacts.directive('cmContactsFilterControls',[
     cmContactsFilterControls   
 ])
 
+cmContacts.directive('cmContactTag',[
+    cmContactTag
+])
+
 cmContacts.directive('cmTypeChooser',[
     'cmLogger',
     cmTypeChooser

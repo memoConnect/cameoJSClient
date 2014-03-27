@@ -192,7 +192,7 @@ addPackage('pckConversations',{
         'comps/conversations/messageFactory-srvc',
         'comps/conversations/messageModel-srvc',
 
-        'comps/conversations/conversation-summary-drtv',
+        'comps/conversations/conversation-tag-drtv',
         'comps/conversations/safety-level-drtv',
         'comps/conversations/recipient-counter-drtv',
 
@@ -222,6 +222,7 @@ addPackage('pckContacts',{
 
         'comps/contacts/contacts-filter-controls-drtv',
         'comps/contacts/contacts-list-drtv',
+        'comps/contacts/contact-tag-drtv',
         'comps/contacts/search-cameo-identity-drtv',    
         'comps/contacts/type-chooser-drtv',
 
