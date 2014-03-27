@@ -51,19 +51,13 @@ if [ ! -d "${secretDir}" ]; then
 fi
 
 case "${buildMode}" in 
-	"test")
-		secretFile="secret_local.conf"
-		serverVersion="test"
-		cd ${serverDir}
-		git checkout dev
-		#git pull
-		cd ${clientDir}
-		git checkout dev
-		git pull
-		;;
-
-	"dev")	
-		secretFile="secret_dev.conf"
+	"test"|"dev")
+		
+		if [ "${buildMode}" == "test" ];then
+			secretFile="secret_dev.conf"
+		else
+			secretFile="secret_local.conf"
+		fi		
 		
 		cd ${serverDir}
 		if [ "${latestServer}" = true ]; then
