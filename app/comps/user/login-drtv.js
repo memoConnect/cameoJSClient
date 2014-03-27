@@ -55,12 +55,12 @@ function cmLogin($location, cmNotify, cmUserModel) {
                         $rootScope.$broadcast('cmLogin:success');
                         $location.path("/talks");
                     },
-                    function(state, error){
+                    function(error){
                         isIdle = false;
                         $rootScope.$broadcast('cmLogin:error');
                         $scope.$broadcast('cmPointSpinner:cancel');
 
-                        $scope.alertState = state;
+                        $scope.alertState = error.status;
                     }
                 );
 

@@ -9,6 +9,9 @@ case "$1" in
    "dev")
         gruntTask="dev-deploy"
       ;;
+   "test")
+        gruntTask="test-deploy"
+      ;;
    *)
       echo -e "\e[33m[cameo - Invalid mode: ${mode}]\033[0m"
       exit 1

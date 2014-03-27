@@ -1,0 +1,10 @@
+{
+    "configConst": {
+        "apiUrl": "http://localhost:9000/api/v1",
+        "wwwUrl": "http://localhost:9000/app/"
+    },
+    "testData": {
+        "accountName": "Z0dUE6IQ",
+        "accountPassword": "password"
+    }
+}
