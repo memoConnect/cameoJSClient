@@ -1,0 +1,9 @@
+{
+    "config": {
+        "wwwUrl": "https://stage.cameo.io/app/"
+    },
+    "testData": {
+        "accountName": "BMeSfHXQ",
+        "accountPassword": "password"
+    }
+}
