@@ -1,3 +1,63 @@
+cm-contact-tag {display: block;  
+    background: @cm-overlay-light;
+    color: @cm-dark-grey;
+    border-bottom: solid @cm-grey 0.1em;    
+    height: 3.6em;
+    position:relative;
+
+    cm-avatar{
+        position:absolute;
+        left:0;
+        top:0.3em;
+        height:3em;
+        width:3em;
+    }
+
+    .details{
+        margin-left: 3em;
+        margin-right: 50%;
+        text-align:left;
+        padding:0.3em;
+
+        .name {            
+            .single-line;
+            white-space: nowrap;
+            font-size:1.2em;
+            line-height:1.5em; //=1.8 parent-em
+            .single-line;
+        }
+
+        .about{
+            .single-line;
+            fonts-size:1em;
+            line-height:1.2em;
+            margin:0;
+            padding:0;
+        }
+    }
+
+    .actions {      
+        .single-line;  
+        position:absolute;
+        width: 50%;
+        right: 0;
+        top:0.3em;
+        line-height:3em;
+        height:3em;
+        text-align:right;
+
+        *:last-child:before{
+             content:'';
+             display:inline-block;
+             height:3em;
+             width:0.2em;
+             border-left:0.05em solid @cm-grey;           
+             border-right:0.05em solid @cm-grey;
+             margin-right:0.3em;
+        }
+    }
+}
+
 
 cm-contacts-filter-controls{
     display: block;
@@ -43,6 +103,7 @@ cm-contacts-filter-controls{
         background: @cm-dark-grey;   
         color: @cm-border-grey;
         width: 50%;
+        z-index:99;
 
         li{
             border-top: 0.1em solid @cm-border-grey;

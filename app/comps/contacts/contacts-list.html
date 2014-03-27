@@ -1,7 +1,9 @@
 <ul>
     <li ng-repeat="contact in contacts | filter:name_filter">        
         <a ng-click="selectContact(contact.identity)">
-            <cm-contact-tag></cm-contact-tag>
+            <cm-contact-tag cm-data="contact">
+                <i class="fa cm-write fa-3x" ng-click="editContact(contact.identity.id)"></i>
+            </cm-contact-tag>
         </a>
     </li>
     <li ng-hide="contacts.length == null || contacts.length > 0">
