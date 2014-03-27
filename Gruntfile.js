@@ -321,7 +321,7 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'dist/base/config.js': ['templates/config-webApp.tpl.js']
+                    'dist/app/base/config.js': ['templates/config-webApp.tpl.js']
                 }
             }, 'config-webApp-Stage': {
                 'options': {
@@ -330,7 +330,7 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'dist/base/config.js': ['templates/config-webApp.tpl.js']
+                    'dist/app/base/config.js': ['templates/config-webApp.tpl.js']
                 }
             }, 'config-webApp-Dev': {
                 'options': {
@@ -339,7 +339,7 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'dist/base/config.js': ['templates/config-webApp.tpl.js']
+                    'dist/app/base/config.js': ['templates/config-webApp.tpl.js']
                 }
             }, 'config-tests': {
                 'options': {
@@ -492,7 +492,6 @@ module.exports = function (grunt) {
 
 
     grunt.loadNpmTasks('grunt-file-creator');
-    grunt.registerTask('clear-dist', ['file-creator:dist-env-js']);
 
     grunt.registerTask('prepareTests', ['copy:test-config']);
 };
