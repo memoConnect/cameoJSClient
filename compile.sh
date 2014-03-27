@@ -1,16 +1,16 @@
 #!/bin/bash
 case "$1" in
    "prod")
-        gruntTask="prod-deploy"
+        target="prod"
       ;;
    "stage")
-        gruntTask="stage-deploy"
+        target="stage"
       ;;
    "dev")
-        gruntTask="dev-deploy"
+        target="dev"
       ;;
    "test")
-        gruntTask="test-deploy"
+        target="test"
       ;;
    *)
       echo -e "\e[33m[cameo - Invalid mode: ${mode}]\033[0m"
@@ -18,8 +18,14 @@ case "$1" in
       ;;
 esac
 
+if [ ! -z $2 ]; then
+    apiUrlArg=--apiUrl=\"${2}\"
+fi
+echo -e "\e[33m[ CameoClient - setting API Url to ${apiUrlArg} ]\033[0m"
+
+
 ./setup.sh
 
-echo -e "\e[33m[ CameoClient - running ${gruntTask} ]\033[0m"
+echo -e "\e[33m[ CameoClient - starting deploy ]\033[0m"
 
-./node_modules/grunt-cli/bin/grunt ${gruntTask}
+./node_modules/grunt-cli/bin/grunt deploy --target=${target} ${apiUrlArg}
