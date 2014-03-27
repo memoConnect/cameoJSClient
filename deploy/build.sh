@@ -23,6 +23,8 @@ for i in "$@" ; do
 	esac
 done
 
+echo -e "\e[33m[ CameoBuild - Build mode: ${buildMode} ]\033[0m"
+
 # define repositories
 serverGit=https://github.com/memoConnect/cameoServer.git
 clientGit=https://github.com/memoConnect/cameoJSClient.git
@@ -34,6 +36,8 @@ cd ${dir}
 serverDir=${dir}/$(echo ${serverGit} | rev | cut -d"/" -f1 | rev | cut -d"." -f1)
 clientDir=${dir}/$(echo ${clientGit} | rev | cut -d"/" -f1 | rev | cut -d"." -f1) 
 secretDir=${dir}/cameoSecrets
+
+echo -e "\e[33m[ CameoBuild - Updating repositories ]\033[0m"
 
 # clone repos if dirs dont exist already
 export GIT_SSL_NO_VERIFY=true
@@ -106,16 +110,19 @@ case "${buildMode}" in
 esac
 
 # build client
+echo -e "\e[33m[ CameoBuild - Building client ]\033[0m"
 cd ${clientDir}
 ./compile.sh ${buildMode}
 # copy to public dir of server
 cp -r ${clientDir}/dist ${serverDir}/public
 
 # build server
+echo -e "\e[33m[ CameoBuild - Building server ]\033[0m"
 cd ${serverDir}
 ./compile.sh ${serverVersion} -Dconfig.file=${secretDir}/${secretFile}
 
 # remove old target
+echo -e "\e[33m[ CameoBuild - Create target ]\033[0m"
 rm -fr ${dir}/target
 
 # copy new target
