@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# default buildmode ist test
+buildMode=test
+
 #handle arguments
 for i in "$@" ; do
 	case $i in
@@ -53,7 +56,7 @@ case "${buildMode}" in
 		serverVersion="test"
 		cd ${serverDir}
 		git checkout dev
-		git pull
+		#git pull
 		cd ${clientDir}
 		git checkout dev
 		git pull
@@ -116,7 +119,7 @@ cp -r ${clientDir}/dist ${serverDir}/public
 
 # build server
 cd ${serverDir}
-./compile.sh ${serverVersion}
+./compile.sh ${serverVersion} -Dconfig.file=${secretDir}/${secretFile}
 
 # remove old target
 rm -fr ${dir}/target
