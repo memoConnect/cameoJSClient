@@ -1,10 +1,9 @@
 'use strict';
 
 
-function cmConversationInput() {
+function cmResizeTextarea() {
     return {
         restrict: 'A',
-        require: '^cmConversation',
         scope: false,
 
         link: function (scope, element, attrs) {

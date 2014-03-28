@@ -200,7 +200,6 @@ addPackage('pckConversations',{
         'comps/conversations/attachments-drtv',
         'comps/conversations/captcha-drtv',
         'comps/conversations/conversation-drtv',
-        'comps/conversations/conversation-input-drtv',
         'comps/conversations/password-input-drtv',
 
         'comps/conversations/message-drtv',
@@ -264,7 +263,8 @@ addPackage('pckUi',{
         'shared/ui/logo-drtv',
         'shared/ui/menu-drtv',
         'shared/ui/edge-drtv',
-        'shared/ui/footer-drtv'
+        'shared/ui/footer-drtv',
+        'shared/ui/resize-textarea'
     ]
 })
 

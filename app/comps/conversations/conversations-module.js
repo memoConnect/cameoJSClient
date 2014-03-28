@@ -89,11 +89,6 @@ cmConversations.directive('cmConversation', [
     cmConversation
 ])
 
-cmConversations.directive('cmConversationInput', [
-    cmConversationInput
-])
-
-
 cmConversations.directive('cmPasswordInput',[
     cmPasswordInput
 ])

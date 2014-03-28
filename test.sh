@@ -11,8 +11,7 @@ case "$1" in
         target=--target="test"
       ;;
    *)
-      echo -e "\e[33m[cameo - Invalid mode: ${mode}]\033[0m"
-      exit 1
+
       ;;
 esac
 

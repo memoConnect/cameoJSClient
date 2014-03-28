@@ -157,11 +157,83 @@ cm-conversation-controls {
 }
 
 div.date-seperator {
-  color: #fff;
-  background-color: @cm-overlay-dark;
-  text-align: center;
-  font-size: 0.7em;
+  position: relative;
+  .date{
+    color: #fff;
+    background-color: @cm-overlay-dark;
+    text-align: center;
+    font-size: 0.7em;
+    width: 12rem;
+    -webkit-border-radius: @cm-border-radius;
+    -moz-border-radius: @cm-border-radius;
+    border-radius: @cm-border-radius;
+    border: none;
+    margin: 0 auto;
+    position: relative;
+  }
+  .line{
+    top:0;
+    background-color: @cm-overlay-dark;
+    height: 0.1em;
+    width:10rem;
+    margin-top: 0.6rem;
+  }
 }
 
-    
+div.answer{
+  width: @cm-app-width;
+  min-height:@cm-footer-height;
+  position:fixed;
+  bottom:0;
+  z-index:99;
+  background-color:@cm-overlay-light;
+  font-size:1.2em;
+  vertical-align: middle;
+  .arrow {
+    color: @cm-green;
+  }
+  i {
+    position: absolute;
+    font-size: 2em;
+    padding: 0;
+    top: 20%
+  }
+  i.attachments {
+    left: 0.1em;
+  }
+  i.cm-post {
+    right: 0.1em;
+  }
+  .message{
+    width: 16em;
+    position: relative;
+    height: 100%;
+    bottom: 0;
+    margin: 0 auto;
+    text-align: left;
+    textarea{
+      width: 85%;
+      background-color: transparent;
+      border: none;
+      min-height: 1.5em;
+      max-height: 4em;
+      font-size: 0.8em;
+      padding: 0.4em;
+      resize: none;
+    }
+    .inputter {
+      width: 100%;
+      position: absolute;
+      height: 0.3em;
+      bottom: 0.3em;
+
+      border-color: -moz-use-text-color #000000 #000000;
+      border-image: none;
+      border-right: 0.1em solid #000000;
+      border-left: 0.1em solid #000000;
+      border-style: none solid solid;
+      border-width: medium 0.1em 0.1em;
+    }
+  }
+}
 

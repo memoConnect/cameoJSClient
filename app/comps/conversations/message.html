@@ -25,7 +25,17 @@
         </cm-download>-->
         <!--<pre ng-if ="!(hasCaptcha || captchaRequest || hasAsset)" style ="text-align:left">{{ message.decryptedBody }}</pre>-->
         <span class="text">{{ message.text }}</span>
-        <span class="date green">{{ message.created }}</span>
+
+        <div class="author" ng-if="!is_my_own_message">
+            <span class="from grey">{{ message.from.getDisplayName() }}</span>
+        </div>
+
+        <div class="assets clearfix">
+            <span class="date green cm-fl">{{ message.created }}</span>
+            <span class="envelope green cm-fl"><i class="fa cm-envelope-open"></i></span>
+            <span class="security green cm-fl"><cm-safety-level level ="2"></cm-safety-level></span>
+        </div>
+
     </div>
     <!--<footer>-->
         <!--<cm-attachments></cm-attachments> &lt;!&ndash;{{ message.created }}&ndash;&gt;-->

@@ -64,6 +64,10 @@ angular.module('cmUi', [
     cmEdge
 ])
 
+.directive('cmResizeTextarea',[
+    cmResizeTextarea
+])
+
 .filter('cmDigits', [
     function(){
         return function(number, digits){
