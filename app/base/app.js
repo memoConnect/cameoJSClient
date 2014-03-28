@@ -145,7 +145,7 @@ define([
                     if (!path_regex.test(path)) {
                         $location.path("/login");
                     }
-                } else if ($location.$$path == "/login") {
+                } else if ($location.$$path == "/login" || $location.$$path == "/registration") {
                     $location.path("/talks");
                 } else if ($location.$$path == "/logout"){
                     cmUserModel.doLogout();

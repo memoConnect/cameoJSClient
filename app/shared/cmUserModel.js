@@ -22,6 +22,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
         identity: {}
     }
 
+    this.comesFromRegistration = false;
+
     /**
      * Init Object
      */
