@@ -11,17 +11,80 @@ module.exports = function (grunt) {
         }
     })();
 
+    // set current target
+    var currentTarget = grunt.option('target') || "default";
     // cameo build config
-    var globalCameoConfig = (function () {
-        src = './config/cameoBuildConfig-local.json';
-        if (grunt.file.exists(src)) {
-            return grunt.file.readJSON(src);
+    var globalCameoBuildConfig = (function () {
+        var buildConfig;
+
+        var buildConfigUser = './config/cameoBuildConfig-local.json';
+        if (grunt.file.exists(buildConfigUser)) {
+            buildConfig = grunt.file.readJSON(buildConfigUser);
         }
         else
-            return grunt.file.readJSON('./config/cameoBuildConfig.json');
+            buildConfig = grunt.file.readJSON('./config/cameoBuildConfig.json');
+
+        switch (currentTarget) {
+            case "test" :
+                buildConfig = grunt.file.readJSON('./config/cameoBuildConfig-test.json');
+                break;
+            case "stage" :
+                buildConfig = grunt.file.readJSON('./config/cameoBuildConfig-stage.json');
+                break;
+            case "dev" :
+                buildConfig = grunt.file.readJSON('./config/cameoBuildConfig-dev.json');
+                break;
+            case "prod" :
+                buildConfig = grunt.file.readJSON('./config/cameoBuildConfig-prod.json');
+                break;
+            default:
+                break;
+        }
+
+        //check whether apiUrl should be overwritten
+        var apiUrl = grunt.option('apiUrl');
+        if (apiUrl) {
+            console.log("apiUrl: " + apiUrl);
+            buildConfig.config.apiUrl = apiUrl;
+        }
+
+        return buildConfig;
     })();
-    var globalCameoConfigStage = grunt.file.readJSON('./config/cameoBuildConfig-stage.json');
-    var globalCameoConfigDev = grunt.file.readJSON('./config/cameoBuildConfig-dev.json');
+
+    // cameo test config
+    var globalCameoTestConfig = (function () {
+        var testConfig;
+
+        var buildConfigUser = './config/cameoTestConfig-local.json';
+        if (grunt.file.exists(buildConfigUser)) {
+            testConfig = grunt.file.readJSON(buildConfigUser);
+        }
+        else
+            testConfig = grunt.file.readJSON('./config/cameoTestConfig.json');
+
+        switch (currentTarget) {
+            case "test" :
+                testConfig = grunt.file.readJSON('./config/cameoTestConfig-test.json');
+                break;
+            case "stage" :
+                testConfig = grunt.file.readJSON('./config/cameoTestConfig-stage.json');
+                break;
+            case "dev" :
+                testConfig = grunt.file.readJSON('./config/cameoTestConfig-dev.json');
+                break;
+            default:
+                break;
+        }
+
+        //check whether apiUrl should be overwritten
+        var wwwUrl = grunt.option('wwwUrl');
+        if (wwwUrl) {
+            console.log("wwwUrl: " + wwwUrl);
+            testConfig.config.wwwUrl = wwwUrl;
+        }
+
+        return testConfig;
+    })();
 
     // write config
     grunt.initConfig({
@@ -112,17 +175,22 @@ module.exports = function (grunt) {
                         dest: 'phonegap-build/www/'
                     }
                 ]
-            }
-            ,'dev-deploy': {
+            }, 'dev-deploy': {
                 files: [
                     {
                         expand: true,
-                        src: 'app/**',
+                        src: ['app/**', '!**/*.less'],
                         dest: 'dist/'
                     }
                 ]
-            },
-            'cockpit': {
+            }, 'test-config': {
+                files: [
+                    {
+                        src: 'config/cameoBuildConfig-test.json',
+                        dest: 'config/cameoBuildConfig-jenkins.json'
+                    }
+                ]
+            }, 'cockpit': {
                 files: [
                     {
                         expand: true,
@@ -171,40 +239,35 @@ module.exports = function (grunt) {
                     "dest": "target/test-reports/dalek.xml"
                 }
 
-            }
-            ,browsers: [
+            }, browsers: [
                 {
                     "chrome": {
                         "portRange": [6100, 6120]
                     }
                 }
-                ,{
+                ,
+                {
                     "firefox": {
                         "portRange": [6500, 6620]
                     }
                 }
-            ]
-            ,jenkins: {
+            ], jenkins: {
                 options: {
                     browser: ['phantomjs'],
                     reporter: ['console', 'junit']
 
                 },
                 src: ['test/e2e/*.dalek.js']
-            }
-            ,local: {
+            }, local: {
                 options: {
                     browser: ['chrome'],
                     reporter: ['console']
-                }
-                ,src: ['test/e2e/*.dalek.js']
-            }
-            ,localAll: {
+                }, src: ['test/e2e/*.dalek.js']
+            }, localAll: {
                 options: {
                     browser: ['chrome', 'firefox'],
                     reporter: ['console']
-                }
-                ,src: ['test/e2e/*.dalek.js']
+                }, src: ['test/e2e/*.dalek.js']
             }
         },
 
@@ -288,8 +351,7 @@ module.exports = function (grunt) {
                 'files': {
                     'phonegap-build/www/index.html': ['templates/index.tpl.html']
                 }
-            }
-            , 'www-index': {
+            }, 'www-index': {
                 'options': {
                     'data': {
                         'phonegapFiles': '',
@@ -299,43 +361,21 @@ module.exports = function (grunt) {
                 'files': {
                     'app/index.html': ['templates/index.tpl.html']
                 }
-            }
-            , 'config-webApp': {
+            }, 'config-webApp': {
                 'options': {
                     'data': {
-                        'currentApiUrl': globalCameoConfig.configConst.apiUrl
+                        'currentApiUrl': globalCameoBuildConfig.config.apiUrl
                     }
                 },
                 'files': {
                     'app/base/config.js': ['templates/config-webApp.tpl.js']
                 }
-            }
-            , 'config-webApp-Dev': {
+            }, 'config-tests': {
                 'options': {
                     'data': {
-                        'currentApiUrl': globalCameoConfigDev.configConst.apiUrl
-                    }
-                },
-                'files': {
-                    'dist/base/config.js': ['templates/config-webApp.tpl.js']
-                }
-            }
-            , 'config-webApp-Stage': {
-                'options': {
-                    'data': {
-                        'currentApiUrl': globalCameoConfigStage.configConst.apiUrl
-                    }
-                },
-                'files': {
-                    'dist/base/config.js': ['templates/config-webApp.tpl.js']
-                }
-            }
-            , 'config-tests': {
-                'options': {
-                    'data': {
-                        'currentWwwUrl': globalCameoConfig.configConst.wwwUrl,
-                        'accountName': globalCameoConfig.testData.accountName,
-                        'accountPassword': globalCameoConfig.testData.accountPassword
+                        'currentWwwUrl': globalCameoTestConfig.config.wwwUrl,
+                        'accountName': globalCameoTestConfig.testData.accountName,
+                        'accountPassword': globalCameoTestConfig.testData.accountPassword
                     }
                 },
                 'files': {
@@ -473,11 +513,6 @@ module.exports = function (grunt) {
     grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'concat:less', 'less']);
     grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
 
-    // deploy moeps
-    grunt.registerTask('base-deploy', ['clean:dist-app', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'clean:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
-    grunt.registerTask('dev-deploy', ['base-deploy', 'template:config-webApp-Dev']);
-    grunt.registerTask('stage-deploy', ['base-deploy', 'template:config-webApp-Stage']);
-
-    grunt.loadNpmTasks('grunt-file-creator');
-    grunt.registerTask('clear-dist', ['file-creator:dist-env-js']);
+    // deploy it for me babe !!
+    grunt.registerTask('deploy', ['clean:dist-app', 'genAllTemplates', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
 };
