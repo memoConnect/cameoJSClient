@@ -1,19 +1,22 @@
 define([
     'app',
-    'util-base64',    
+    'util-base64',
     'ngload!pckUser',
     'ngload!pckConversations',
     'ngload!pckUi',
-    'ngload!cmUtil'
+    'ngload!cmUtil',
+    'ngload!cmUserModel'
 ], function (app) {
     'use strict';
 
     app.register.controller('ConversationsCtrl',[
         '$scope',
         '$rootScope',
+        'cmUserModel',
         'cmConversationsModel',
         'cmUtil',
-        function($scope, $rootScope, cmConversationsModel, cmUtil) {
+        '$modal',
+        function($scope, $rootScope, cmUserModel,cmConversationsModel, cmUtil, $modal) {
             cmConversationsModel.getConversations();
 
             $scope.cmUtil = cmUtil;
@@ -42,6 +45,25 @@ define([
 
                 return true;
             };
+
+            if(cmUserModel.comesFromRegistration !== false){
+                cmUserModel.comesFromRegistration = false;
+
+                var modalInstance = $modal.open({
+                    templateUrl: 'comps/user/welcome.html',
+                    controller: function ($rootScope, $scope, $modalInstance) {
+
+                    }
+                });
+
+                modalInstance.result
+                    .then(
+                    function () {
+                    },
+                    function () {
+                    }
+                );
+            }
         }
     ]);
 });
