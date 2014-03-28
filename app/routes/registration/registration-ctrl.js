@@ -181,9 +181,10 @@ define([
             $scope.validateForm().then(
                 function(data){
                     cmAuth.createUser(data).then(
-                        function () {
+                        function (userData) {
                             cmUserModel.doLogin($scope.formData.loginName, $scope.formData.password).then(
                                 function(){
+                                    cmUserModel.setIdentiy(userData.identities[0]);
                                     $location.path("/talks");
                                 }
                             )
