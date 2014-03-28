@@ -1,6 +1,6 @@
 'use strict';
 
-function cmLogin($location, cmNotify, cmUserModel) {
+function cmLogin($location, cmNotify, cmUserModel, cmCrypt) {
     return  {
         restrict    :   'A',
         templateUrl :   'comps/user/login.html',
@@ -47,7 +47,7 @@ function cmLogin($location, cmNotify, cmUserModel) {
                 $scope.alertState = '';
                 $scope.$broadcast('cmPointSpinner:start');
 
-                cmUserModel.doLogin($scope.formData.user, $scope.formData.pass)
+                cmUserModel.doLogin($scope.formData.user, cmCrypt.hash($scope.formData.pass))
                 .then(
                     function(){
                         isIdle = false;

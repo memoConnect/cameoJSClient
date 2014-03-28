@@ -11,6 +11,7 @@ cmUser.directive('cmLogin', [
     '$location',
     'cmNotify',
     'cmUserModel',
+    'cmCrypt',
     cmLogin
 ])
 

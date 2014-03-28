@@ -1,6 +1,7 @@
 define([
     'app',
     'ngload!cmAuth',
+    'ngload!cmUserModel',
     'ngload!cmNotify',
     'ngload!cmLogger',
     'ngload!pckValidate'
@@ -13,9 +14,10 @@ define([
     '$location',
     '$q',
     'cmAuth',
+    'cmUserModel',
     'cmNotify',
     'cmLogger',
-    function ($scope, $rootScope, $location, $q, cmAuth, cmNotify, cmLogger) {
+    function ($scope, $rootScope, $location, $q, cmAuth, cmUserModel, cmNotify, cmLogger) {
         var reservation_secrets = {};
 
         $scope.showLoginNameCheckError = false;
@@ -178,11 +180,13 @@ define([
 
             $scope.validateForm().then(
                 function(data){
-//                    console.log(data);
-//                    return false;
                     cmAuth.createUser(data).then(
                         function () {
-                            $location.path("/login");
+                            cmUserModel.doLogin($scope.formData.loginName, $scope.formData.password).then(
+                                function(){
+                                    $location.path("/talks");
+                                }
+                            )
                             return true;
                         }
                     );
