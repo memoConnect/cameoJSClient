@@ -46,7 +46,7 @@ module.exports = {
             .click('button[ng-click="createUser()"]')
             // waiting until first page ist loaded
             .wait(500)
-            .assert.url(wwwUrl + '#/login', 'redirect to login not successfull')
+            .assert.url(wwwUrl + '#/talks', 'redirect to login not successfull')
             .open(wwwUrl+"#/logout")
             .waitForElement('[ng-controller="LoginCtrl"]')
             .wait(500)
