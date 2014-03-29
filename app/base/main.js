@@ -261,6 +261,7 @@ addPackage('pckUi',{
         'shared/ui/nav-tabs-drtv',
         'shared/ui/point-spinner-drtv',
         'shared/ui/spinner-drtv',
+        'shared/ui/overlay-drtv',
         'shared/ui/header-drtv',
         'shared/ui/back-drtv',
         'shared/ui/identity-drtv',

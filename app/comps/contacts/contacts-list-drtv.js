@@ -3,8 +3,26 @@
 function cmContactsList(cmContactsModel, cmLogger, $rootScope){
     return {
         restrict: 'AE',
-        scope: {},
-        templateUrl: 'comps/contacts/contacts-list.html',
+        scope: true,
+        transclude: true,
+        //templateUrl: 'comps/contacts/contacts-list.html',
+
+        link: function(scope, element, attrs, controller, transclude){
+
+            function refresh() { 
+                scope.contacts.forEach(function(contact){
+                    var child_scope = scope.$new()
+
+                    child_scope[attrs.contactsAs] = contact
+
+                    transclude(child_scope, function(clone){
+                        element.append(clone)
+                    })
+                })
+            }
+
+            scope.$watchCollection('contacts', refresh)
+        },
 
         controller: function($scope, $element, $attrs){
             $scope.contacts    = cmContactsModel.contacts;
