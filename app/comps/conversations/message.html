@@ -1,4 +1,4 @@
-<article class="clearfix">
+<article class="clearfix" ng-if="!textOnly">
   <!--  <header>
         {{ message.fromIdentity.getDisplayName() }}
     </header>-->
@@ -41,3 +41,5 @@
         <!--<cm-attachments></cm-attachments> &lt;!&ndash;{{ message.created }}&ndash;&gt;-->
     <!--</footer>-->
 </article>
+
+{{textOnly ? message.text : ''}}

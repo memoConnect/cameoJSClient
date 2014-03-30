@@ -1,10 +1,10 @@
-function cmConversationSummary(){
+function cmConversationTag(){
     return {
 
         restrict : 'AE',
         scope: {
             conversation : "=cmData"
         },
-        templateUrl : 'comps/conversations/conversation-summary.html'
+        templateUrl : 'comps/conversations/conversation-tag.html'
     }
 }
