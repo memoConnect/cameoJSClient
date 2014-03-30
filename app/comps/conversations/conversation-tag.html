@@ -1,7 +1,7 @@
 <cm-avatar cm-data="conversation.getLastMessage().from"></cm-avatar>
 <div class="details">
     <div class="subject">
-        {{conversation.subject || (conversation.lastSender && conversation.lastSender.displayName) || conversation.recipients.toString() || 'Dummy subject line'}}
+        {{conversation.getSubjectLine()}}
     </div>
     <cm-message
         ng-if     = "conversation.getLastMessage()"
@@ -12,7 +12,7 @@
 <div class="meta">
     <div class="top">
 
-        <cm-safety-level level="2"></cm-safety-level>
+        <cm-safety-level level="conversation.getSafetyLevel()"></cm-safety-level>
 
         <span class="last-updated">  
             {{ (conversation.getLastMessage() && conversation.getLastMessage().lastUpdated) || '01.01.2020' }}

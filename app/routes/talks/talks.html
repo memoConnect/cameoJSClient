@@ -27,7 +27,7 @@
     <ul>
         <li ng-repeat="conversation in conversations | filter:search ">
             <a href="#/conversation/{{conversation.id}}">
-                <cm-conversation-tag cm-data="conversation">gfhg</cm-conversation-tag>
+                <cm-conversation-tag cm-data="conversation"></cm-conversation-tag>
             </a>
 
             <!--
@@ -56,7 +56,7 @@
     </ul>
 
     <div ng-if="showMore()">
-        <button class="btn cm-btn-block cm-btn-black" ng-click="loadMore()">{{"TALKS.MORE"|cmTranslate}}</button>
+        <button class="full" ng-click="loadMore()">{{"TALKS.MORE"|cmTranslate}}</button>
     </div>
 </section>
 
