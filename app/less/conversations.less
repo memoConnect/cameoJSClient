@@ -1,10 +1,16 @@
 .cm-unread{ color:@cm-warning-color }
 
+
+
+li:first-of-type cm-conversation-tag {
+    border-top: solid @cm-border-grey 0.05em;    
+}
+
 cm-conversation-tag{
     display: block;  
     background: @cm-overlay-light;
     color: @cm-dark-grey;
-    border-bottom: solid @cm-grey 0.1em;    
+    border-bottom: solid @cm-border-grey 0.05em;    
     height: 3.6em;
     position:relative;
 
@@ -191,6 +197,8 @@ div.answer{
   background-color:@cm-overlay-light;
   font-size:1.2em;
   vertical-align: middle;
+  left:0;
+
   .arrow {
     color: @cm-green;
   }

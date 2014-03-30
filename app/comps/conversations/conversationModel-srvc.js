@@ -147,6 +147,26 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             return !this.messages[0] || this.messages[0].decrypt(this.passphrase)
         };
 
+        this.getRecipientList = function(){
+            var list = []
+
+            this.recipients.forEach(function(recipient){
+                list.push(recipient.getDisplayName())
+            })
+
+            return list.join(', ')
+        }
+
+        this.getSubjectLine = function(){                
+            return     this.subject 
+                    || (this.lastMessage && this.lastMessage.from && this.lastMessage.from.getDisplayName()) 
+                    || this.getRecipientList()
+        }
+
+        this.getSavetyLevel = function(){
+            return this.passphraseValid() && !this.passphrase ? 0 : 1     
+        }
+
         this.init(data);
 
     }
