@@ -130,7 +130,18 @@ define([
 
     // app run handling
     app.run(['$rootScope', '$location', '$window', 'cmUserModel',
-        function ($rootScope, $location, $window, cmUserModel) {
+        function ($rootScope, $location, $window, cmUserModel, $routeParams) {
+
+            //prep $rootScope with useful tools
+            $rootScope.params  = $routeParams
+            $rootScope.console = console
+            $rootScope.alert   = alert
+
+
+            //add Overlay handles:
+            $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id); console.log('gfhdf')}
+            $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) }
+
             // hide app spinner
             angular.element($window.document.getElementsByClassName('app-spinner')[0]).css('display','none');
 
@@ -180,9 +191,11 @@ define([
                 
             });
             
-            window._route = {}
+            
 
             //Make it easy for e2e-tests to monitor route changes:
+            window._route = {}
+
             $rootScope.$on('$routeChangeStart', function(){
                 window._route.path   = $location.$$path
                 window._route.status = 'loading'

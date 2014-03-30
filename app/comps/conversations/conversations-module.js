@@ -76,8 +76,8 @@ cmConversations.directive('cmCaptcha',[
     cmCaptcha
 ])
 
-cmConversations.directive('cmConversationSummary',[
-    cmConversationSummary
+cmConversations.directive('cmConversationTag',[
+    cmConversationTag
 ])
 
 cmConversations.directive('cmConversation', [
@@ -97,11 +97,6 @@ cmConversations.directive('cmMessage', [
     'cmUserModel',
     cmMessage
 ])
-
-cmConversations.directive('cmMessageSmall', [
-    cmMessageSmall
-])
-
 
 .directive('cmRecipientCounter',[
     cmRecipientCounter

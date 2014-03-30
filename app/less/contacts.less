@@ -1,4 +1,119 @@
+cm-contact-tag {display: block;  
+    background: @cm-overlay-light;
+    color: @cm-dark-grey;
+    border-bottom: solid @cm-grey 0.1em;    
+    height: 3.6em;
+    position:relative;
+
+    cm-avatar{
+        position:absolute;
+        left:0;
+        top:0.3em;
+        height:3em;
+        width:3em;
+    }
+
+    .details{
+        margin-left: 3em;
+        margin-right: 50%;
+        text-align:left;
+        padding:0.3em;
+
+        .name {            
+            .single-line;
+            white-space: nowrap;
+            font-size:1.2em;
+            line-height:1.5em; //=1.8 parent-em
+            .single-line;
+        }
+
+        .about{
+            .single-line;
+            fonts-size:1em;
+            line-height:1.2em;
+            margin:0;
+            padding:0;
+        }
+    }
+
+    .actions {      
+        .single-line;  
+        position:absolute;
+        width: 50%;
+        right: 0;
+        top:0.3em;
+        line-height:3em;
+        height:3em;
+        text-align:right;
+
+        *{ vertical-align:middle; }
+
+        .separator{
+             display:inline-block;
+             width:0.2em;
+             height:100%;
+             border-left:0.05em solid @cm-grey;           
+             border-right:0.05em solid @cm-grey;
+        }
+    }
+}
+
+
+cm-contacts-filter-controls{
+    display: block;
+    height: @cm-header-height;
+    line-height: @cm-header-height;
+
+    .sort, .filter{
+        display:inline-block;
+        width: 50%;
+
+        button {
+            display:block;
+            color: @cm-ci-color;
+            background: @cm-bg-color;
+            height: @cm-header-height;
+            line-height: @cm-header-height;
+            width:100%;
+            padding: 0;
+            margin:0;            
+            border:none;            
+        }
+
+    }    
+
+    .sort{
+        padding-right:0.05em;        
+
+        .overlay {
+            left:0;
+        }
+    }
+
+    .filter{
+        padding-left:0.05em;           
+
+        .overlay {
+            right:0;
+        }
+    }
+
+    .overlay{
+        position: absolute;
+        background: @cm-dark-grey;   
+        color: @cm-border-grey;
+        width: 50%;
+        z-index:99;
+
+        li{
+            border-top: 0.1em solid @cm-border-grey;
+            text-align: center;
+        }        
+    }
+}
+
 cm-contacts-list{
     display:block !important;
-
 }
+
+

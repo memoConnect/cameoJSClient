@@ -1,0 +1,41 @@
+<div class="sort">
+    <button
+        ng-click="show_sort_overlay = !show_sort_overlay"
+    > 
+        {{"CONTACTS.LABEL.SORT"| cmTranslate}} 
+        <i class="fa cm-sort">
+        </i>
+    </button>
+
+    <ul 
+        class   = "overlay"
+        ng-show = "show_sort_overlay"
+    >
+        <li>item 1</li>
+        <li>item 2</li>
+        <li>item 3</li>
+        <li>item 4</li>
+        <li>item 5</li>
+        <li>item 6</li>
+    </ul>
+</div><!--
+--><div class="filter">
+    <button
+        ng-click = "show_filter_overlay = !show_filter_overlay"
+    > 
+        {{"CONTACTS.LABEL.FILTER"| cmTranslate}} 
+        <i class="fa cm-filter"></i>
+    </button>
+
+    <ul 
+        class   = "overlay"
+        ng-show = "show_filter_overlay"
+    >
+        <li>item 1</li>
+        <li>item 2</li>
+        <li>item 3</li>
+        <li>item 4</li>
+        <li>item 5</li>
+        <li>item 6</li>
+    </ul>
+</div>
