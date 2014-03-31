@@ -46,7 +46,8 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
          * @param message
          * @returns {cmConversationModel.ConversationModel}
          */
-        this.addMessage = function (message) {
+        this.addMessage = function (message) {                        
+
             if(this.messages.length == 0){
                 this.messages.push(message);
             } else {
@@ -65,21 +66,9 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                 }
             }
 
-            this.lastMessage = message;
+            this.lastMessage = message;            
             if (this.passphrase) message.decrypt(this.passphrase);
             return this
-        };
-
-        this.newMessage = function (message_data, passphrase) {
-            var message_data = (typeof message_data == 'string' ? {text: message_data} : message_data )
-
-            var message = cmMessageFactory.create(message_data);
-
-            if(typeof passphrase !== 'undefined' && passphrase != ''){
-                message.encrypt(passphrase);
-            }
-
-            return message//.sendTo(this);
         };
 
         this.getLastMessage = function(){

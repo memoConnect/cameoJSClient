@@ -3,7 +3,7 @@
         {{ message.fromIdentity.getDisplayName() }}
     </header>-->
     <div ng-if="!is_my_own_message" class="avatar cm-fl">
-        <cm-avatar cm-data="message.from"></cm-avatar>
+        <cm-avatar cm-data="message.fromIdentity"></cm-avatar>
     </div>
     <div class="message {{ is_my_own_message ? 'right' : 'left'}} cm-fl">
         <span class="nose {{ is_my_own_message ? 'right' : 'left'}}"><i class="fa {{ is_my_own_message ? 'cm-nose-right' : 'cm-nose-left'}}"></i></span>
