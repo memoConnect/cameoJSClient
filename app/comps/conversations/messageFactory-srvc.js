@@ -35,7 +35,7 @@ function cmMessageFactory ($rootScope, cmMessageModel){
         },
 
         createDummy: function(){
-            return cmMessageModel({dummy:true});
+            return new cmMessageModel({dummy:true});
         },
 
         getQty: function(){
