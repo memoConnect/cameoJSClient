@@ -1,3 +1,39 @@
+button.full {
+    display:block !important;
+    background: @cm-black;
+    color:@cm-ci-color;
+    height:@cm-footer-height;
+    font-size:@cm-large-font;
+    width:100%;
+    padding:0;
+}
+
+cm-overlay {
+    position:absolute;
+    display:none;
+    top:0;
+    left:0;
+    width:auto !important;
+    background: @cm-overlay-dark;
+    padding-top:@cm-header-height+2rem;    
+    padding-bottom:@cm-footer-height+2rem;
+    padding-left:2rem;
+    padding-right:2rem;
+    z-index:999;   
+
+    &.visible {
+        display:block;
+    }
+
+    .container{
+        display: block !important;
+        width: auto !important;
+        padding: 0 1em;
+        background: @cm-white;
+    }
+}
+
+
 cm-edge, [cm-edge] {
     position:absolute;
     display:block;

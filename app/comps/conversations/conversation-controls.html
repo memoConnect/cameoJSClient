@@ -5,9 +5,7 @@
 
     <div class="right">
         <cm-safety-level level ="3"></cm-safety-level>
-        <cm-recipient-counter
-            ng-click = "addRecipients()"
-        >
+        <cm-recipient-counter ng-click = "$emit('cmOverlay:show', 'add-recipients')">
             {{conversation.recipients.length}}
         </cm-recipient-counter>    
         <i class="fa cm-add"></i>
@@ -17,3 +15,13 @@
 <div ng-show ="show_recipients">
     <cm-avatar cm-data ="recipient" ng-repeat="recipient in conversation.recipients"></cm-avatar>   
 </div>
+
+<cm-overlay id ="add-recipients">
+    <div ng-click="$emit('cmOverlay:hide', 'add-recipients')">hide</div>
+    <cm-contacts-list contacts-as="contact">
+        <cm-contact-tag cm-data="contact" ng-click= "selectContact(contact.identity); selected = true">
+            <span class="separator"></span>
+            <i class="fa fa-3x" ng-class ="{'cm-checkbox': !selected, 'cm-checkbox-right': selected}" ng-click="editContact(contact.identity.id)"></i>
+        </cm-contact-tag>
+    </cm-contacts-list>
+</cm-overlay>
