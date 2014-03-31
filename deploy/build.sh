@@ -85,7 +85,7 @@ case "${buildMode}" in
 			# find latest successfull build tag	
 			git fetch 
 			git fetch --tags
-			tag=$(git describe --tag --match 'build*' --abbrev=0)
+			tag=$( git describe --tags $(git rev-list --tags --max-count=1))
 			git checkout tags/${tag}
 			serverVersion=$(echo ${tag} | cut -d'_' -f2)
 		fi
@@ -99,7 +99,7 @@ case "${buildMode}" in
 			# find latest successfull build tag	
 			git fetch 
 			git fetch --tags
-			tag=$(git describe --tag --match 'build*' --abbrev=0)
+			tag=$( git describe --tags $(git rev-list --tags --max-count=1))
 			git checkout tags/${tag}
 		fi	
 		;;
