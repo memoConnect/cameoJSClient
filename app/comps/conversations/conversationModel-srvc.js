@@ -50,7 +50,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
             if(this.messages.length == 0){
                 this.messages.push(message);
-            } else {
+            }else {
                 var i = 0;
                 var check = false;
                     while(i < this.messages.length){
