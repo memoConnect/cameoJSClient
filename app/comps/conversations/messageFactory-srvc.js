@@ -33,11 +33,7 @@ function cmMessageFactory ($rootScope, cmMessageModel){
 
             return null;
         },
-
-        createDummy: function(){
-            return new cmMessageModel({dummy:true});
-        },
-
+        
         getQty: function(){
             return instances.length;
         }
