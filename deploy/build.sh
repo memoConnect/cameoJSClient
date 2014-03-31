@@ -16,6 +16,9 @@ for i in "$@" ; do
 	    -latestClient*)
 	    	latestClient=true
 	    ;;
+	    -p=*|--port*)
+		    apiPort="${i#*=}"
+			;;
 	    *)
 	      echo Unkown option: ${i}
 	      exit 1
@@ -54,12 +57,20 @@ if [ ! -d "${secretDir}" ]; then
 	exit 1
 fi
 
+quickCompile=false
+
 case "${buildMode}" in 
 	"test"|"dev")
+
+		quickCompile=true
 		
 		if [ "${buildMode}" == "dev" ];then
 			secretFile="secret_dev.conf"
 		else
+			if [ ! -z apiPort ]; then
+				apiUrl="http://localhost:{apiPort}/api/v1"
+			fi
+			
 			secretFile="secret_local.conf"
 		fi		
 		
@@ -70,6 +81,7 @@ case "${buildMode}" in
 			serverVersion="latest"
 		else
 			# find latest successfull build tag	
+			git fetch
 			tag=$(git describe --tag --match 'build*' --abbrev=0)
 			git checkout tags/${tag}
 			serverVersion=$(echo ${tag} | cut -d'_' -f2)
@@ -81,6 +93,7 @@ case "${buildMode}" in
 			git pull
 		else
 			# find latest successfull build tag	
+			git fetch
 			tag=$(git describe --tag --match 'build*' --abbrev=0)
 			git checkout tags/${tag}
 		fi	
@@ -110,9 +123,9 @@ case "${buildMode}" in
 esac
 
 # build client
-echo -e "\e[33m[ CameoBuild - Building client ]\033[0m"
+echo -e "\e[33m[ CameoBuild - Building client, mode: ${buildMode} ]\033[0m"
 cd ${clientDir}
-./compile.sh ${buildMode}
+./compile.sh ${buildMode} ${apiUrl}
 # remove old client stuff
 rm -rf ${serverDir}/public
 # copy to public dir of server
@@ -120,9 +133,13 @@ mkdir -p ${serverDir}/public
 cp -r ${clientDir}/dist/* ${serverDir}/public/
 
 # build server
-echo -e "\e[33m[ CameoBuild - Building server ]\033[0m"
+echo -e "\e[33m[ CameoBuild - Building server, quickCompile: ${quickCompile}]\033[0m"
 cd ${serverDir}
-./compile.sh ${serverVersion} -Dconfig.file=${secretDir}/${secretFile}
+if [ "${quickCompile}" == true ]; then
+	./compile.sh ${serverVersion} quick
+else
+	./compile.sh ${serverVersion}
+fi	 
 
 # remove old target
 echo -e "\e[33m[ CameoBuild - Create target ]\033[0m"
