@@ -79,7 +79,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             if(this.messages.length > 0){
                 return this.messages[(this.messages.length - 1)];
             }
-            return null;
+            return cmMessageFactory.createDummy();
         }
 
         /**
