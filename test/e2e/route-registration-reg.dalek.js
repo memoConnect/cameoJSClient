@@ -47,6 +47,7 @@ module.exports = {
             // waiting until first page ist loaded
             .wait(500)
             .assert.url(wwwUrl + '#/talks', 'redirect to login not successfull')
+            .wait(500)
             .open(wwwUrl+"#/logout")
             .waitForElement('[ng-controller="LoginCtrl"]')
             .wait(500)
