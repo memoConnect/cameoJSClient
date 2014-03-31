@@ -226,14 +226,6 @@ module.exports = function (grunt) {
 
         },
         // e2e tests
-        connect: {
-            server: {
-                options: {
-                    port: 6108,
-                    base: './'
-                }
-            }
-        },
         dalek: {
             options: {
                 reporter: ['console', 'junit'],

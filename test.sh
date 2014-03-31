@@ -8,7 +8,9 @@ case "$1" in
         target=--target="dev"
       ;;
    "test")
-        target=--target="test"
+        target=--t
+        ~.
+        arget="test"
       ;;
    *)
 
@@ -16,7 +18,7 @@ case "$1" in
 esac
 
 if [ ! -z $2 ]; then
-    wwwUrlArg=--wwwUrl=\"${2}\"
+    wwwUrlArg=--wwwUrl=${2}
     echo -e "\e[33m[ CameoClient - setting WWW Url to ${wwwUrlArg} ]\033[0m"
 fi
 
