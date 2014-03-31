@@ -4,6 +4,11 @@ angular.module('cmUi', [
     'ui.bootstrap'
 ])
 
+.directive('cmView', [
+    '$route',
+    cmView
+])
+
 .directive('cmAdaptiveChange', [
     cmAdaptiveChange
 ])
@@ -49,6 +54,8 @@ angular.module('cmUi', [
 ])
 
 .directive('cmMenu',[
+    '$window',
+    '$document',
     'cmUserModel',
     cmMenu
 ])

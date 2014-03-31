@@ -24,7 +24,7 @@ function cmBack($window, $location){
             // bind click event
             $element.bind('click', function(){
                 // if history has more then one index
-                if($rootScope.urlHistory.length > 0){
+                if($rootScope.urlHistory.length > 0 && !'plainBack' in $attrs){
                     $window.history.back();
                 // if is set an default path in route
                 } else if($scope.backTo != ''){

@@ -92,7 +92,11 @@ define([
             function createRoutes(settings){
                 angular.forEach(settings,function(_settings_, routeKey){
                     var routes = [],
-                        routeParams = {};
+                        routeParams = {
+                            templateUrl: "",
+                            controllerUrl: "",
+                            css: ""
+                        };
                     // create params for route
                     if(angular.isDefined(_settings_['templateUrl'])){
                         routeParams.templateUrl = _settings_['templateUrl'];
@@ -102,6 +106,9 @@ define([
                     // check if route has/need controller
                     if(angular.isDefined(_settings_['hasCtrl']) && _settings_.hasCtrl === true)
                         routeParams.controllerUrl = 'routes/'+routeKey+'/'+routeKey+'-ctrl';
+
+                    if(angular.isDefined(_settings_['css']))
+                        routeParams.css = _settings_['css'];
 
                     // create route as defined or take simple route
                     if(angular.isDefined(_settings_['routes']))
@@ -129,17 +136,15 @@ define([
     ]);
 
     // app run handling
-    app.run(['$rootScope', '$location', '$window', 'cmUserModel',
-        function ($rootScope, $location, $window, cmUserModel, $routeParams) {
+    app.run(['$rootScope', '$location', '$window', '$route', 'cmUserModel',
+        function ($rootScope, $location, $window, $route, cmUserModel) {
 
             //prep $rootScope with useful tools
-            $rootScope.params  = $routeParams
             $rootScope.console = console
             $rootScope.alert   = alert
 
-
             //add Overlay handles:
-            $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id); }
+            $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) }
             $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) }
 
             // hide app spinner

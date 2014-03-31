@@ -2,9 +2,9 @@ cm-header{
     display:block;
     position:fixed;
     top:0;
-    z-index:99;
+    z-index:10;
     height:@cm-header-height;
-    width:@cm-app-width;  
+    width:@cm-app-width;
     color:@cm-white;
     background:@cm-bg-color;  
     line-height:@cm-header-height;
@@ -16,17 +16,16 @@ cm-header{
     }
 
     cm-back{
-
         text-align:left;
-
+        text-overflow:ellipsis;
+        overflow:hidden;
         i {
+            margin-left: 0.2rem;
             margin-right: 0.5rem;
             vertical-align: text-bottom;
         }
-
         span {
-            font-size: 1em;
-
+            position: relative;
         }
     }
 
@@ -37,7 +36,6 @@ cm-header{
         overflow:hidden;
         white-space: nowrap;
     }
-
 
     cm-logo{
         color:@cm-ci-color;

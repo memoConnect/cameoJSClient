@@ -1,8 +1,9 @@
-<header class="cm-header">
-    <div cm-header-back page-title="'SETTINGS.WELCOME'|cmTranslate" back-to="/talks"></div>
-    <div cm-header-logo></div>
-    <div cm-header-menu></div>
-</header>
+<cm-header cm-rubber-space>
+    <cm-back cm-weight="3"  page-title="'SETTINGS.WELCOME'|cmTranslate" back-to="/talks"></cm-back>
+    <cm-logo cm-weight="3"></cm-logo>
+    <div     cm-weight="2"></div>
+    <cm-menu cm-weight="1"></cm-menu>
+</cm-header>
 
 <div ng-controller="SettingsCtrl" class="with-header">
     <div cm-nav-tabs></div>
@@ -17,3 +18,5 @@
         <div cm-key-pair></div>
     </div>
 </div>
+
+<cm-footer cm-rubber-space></cm-footer>
