@@ -13,7 +13,7 @@ angular.module('cmIdentity', ['cmAuth'])
         }
 
         this.getDisplayName = function(){
-            return this.cameoId || this.displayName || this.id;
+            return  this.displayName || this.cameoId || this.id;
         }
 
         this.getAvatar = function(){

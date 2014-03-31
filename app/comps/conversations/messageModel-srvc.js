@@ -41,8 +41,10 @@ function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmU
         this.sendTo = function (conversation) {
             return  cmConversationsAdapter.sendMessage(conversation.id, { body: this.encryptedData })
                     .then(function (message_data) {
+                        self.init(message_data)
                         conversation.addMessage(self)   //maybe replace self with new cmMessageModel(message_data) for more metadata
                                                         //cant use cmMassageFactory here, because cmMessageFactory dependes on cmMessageModel
+
                     })
         }
 
@@ -54,7 +56,7 @@ function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmU
             this.secret.decryptedData = undefined
 
             this.id         = message_data.id;
-            this.from       = (!message_data.from) ? cmUserModel.data.identity : cmIdentityFactory.create(message_data.from);
+            this.from       = (!message_data.fromIdentity) ? cmUserModel.data.identity : cmIdentityFactory.create(message_data.fromIdentity);
             this.created    = message_data.created;
             this.text       = message_data.body;
             this.fileIds    = message_data.fileIds;

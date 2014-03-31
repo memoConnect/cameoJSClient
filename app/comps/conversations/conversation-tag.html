@@ -14,8 +14,8 @@
 
         <cm-safety-level level="conversation.getSafetyLevel()"></cm-safety-level>
 
-        <span class="last-updated">  
-            {{ (conversation.getLastMessage() && conversation.getLastMessage().lastUpdated) || '01.01.2020' }}
+        <span class="last-updated small">
+            {{ conversation.getLastUpdate() }}
         </span> 
     </div>
     
