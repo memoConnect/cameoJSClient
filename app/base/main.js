@@ -192,7 +192,7 @@ addPackage('pckConversations',{
         'comps/conversations/messageFactory-srvc',
         'comps/conversations/messageModel-srvc',
 
-        'comps/conversations/conversation-summary-drtv',
+        'comps/conversations/conversation-tag-drtv',
         'comps/conversations/safety-level-drtv',
         'comps/conversations/recipient-counter-drtv',
 
@@ -203,7 +203,6 @@ addPackage('pckConversations',{
         'comps/conversations/password-input-drtv',
 
         'comps/conversations/message-drtv',
-        'comps/conversations/message-small-drtv'
     ]
 })
 
@@ -218,12 +217,18 @@ addPackage('pckContacts',{
     ],
     resources : [
         'comps/contacts/contactsModel-srvc',
-        'comps/contacts/add-external-contact-drtv',
-        'comps/contacts/contact-request-list-drtv',
-        'comps/contacts/contacts-list-drtv',
         'comps/contacts/contactsAdapter-srvc',
+
+        'comps/contacts/contacts-filter-controls-drtv',
+        'comps/contacts/contacts-list-drtv',
+        'comps/contacts/contact-tag-drtv',
         'comps/contacts/search-cameo-identity-drtv',    
-        'comps/contacts/type-chooser-drtv'
+        'comps/contacts/type-chooser-drtv',
+
+        'comps/contacts/add-external-contact-drtv',
+        'comps/contacts/contact-request-list-drtv',      
+        
+        
     ]
 })
 
@@ -256,6 +261,7 @@ addPackage('pckUi',{
         'shared/ui/nav-tabs-drtv',
         'shared/ui/point-spinner-drtv',
         'shared/ui/spinner-drtv',
+        'shared/ui/overlay-drtv',
         'shared/ui/header-drtv',
         'shared/ui/back-drtv',
         'shared/ui/identity-drtv',

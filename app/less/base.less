@@ -1,6 +1,6 @@
 @cm-ci-color: #02BED2;
-@cm-grey: #666666;
 @cm-light-grey: #EDEDED;
+@cm-grey: #666666;
 @cm-dark-grey: #444444;
 @cm-border-grey: #CCCCCC;
 @cm-white: #FFFFFF;
@@ -19,6 +19,8 @@
 @cm-app-width: 32rem;
 
 @cm-border-radius: 0.357em;
+
+@cm-large-font: 1.4em;
 
 // Message
 @cm-msg-bg-color-own:#F3F3F3;
@@ -55,6 +57,14 @@ a {
     }
 }
 
+a,button{
+    text-overflow: ellipsis;
+    text-align:center;
+    border:none;
+    white-space:nowrap;
+    overflow:hidden;
+}
+
 ul {
     padding:0;
     margin:0;
@@ -69,6 +79,7 @@ li {
 
 #cm-app{
     display:block;
+    position:relative;
     min-height: 100%; /* Mindesthöhe für moderne Browser */
     height: auto !important; /* Für moderne Browser */
     height: 100%; /* "Mindesthöhe" für IE <7 */
@@ -112,6 +123,18 @@ li {
     }
 
 }
+
+
+
+.single-line{
+    text-overflow: ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+}
+
+
+
+
 
 
 

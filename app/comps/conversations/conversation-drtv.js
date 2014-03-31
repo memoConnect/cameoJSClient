@@ -1,6 +1,6 @@
 'use strict';
 
-function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $location) {
+function cmConversation(cmConversationsModel, cmMessageModel, cmCrypt, cmLogger, cmNotify, $location) {
     return {
         restrict: 'AE',
         templateUrl: 'comps/conversations/conversation.html',
@@ -55,14 +55,16 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                     recipients_missing  = $scope.conversation.recipients.length <= 1
 
                 !message_empty && passphrase_valid && !recipients_missing
-                    ? $scope.conversation
-                    .newMessage($scope.my_message_text, $scope.passphrase)
-                    .sendTo($scope.conversation)
-                    .then(function () {
-                        if ($scope.new_conversation) $location.url('/conversation/' + $scope.conversation.id)
-                        $scope.my_message_text = ""
-                    })
-                    : null
+                    ?   new cmMessageModel( {body: $scope.my_message_text} )
+                        .encrypt($scope.passphrase)                        
+                        .sendTo($scope.conversation)
+                        .then(function () {                 
+                            console.log('sdf')      
+                            console.log($scope.conversation.id)     
+                            if ($scope.new_conversation) $location.url('/conversation/' + $scope.conversation.id)
+                            $scope.my_message_text = ""
+                        })
+                    :   null
 
                 if (!passphrase_valid)    cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID')
                 if (message_empty)        cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY')
@@ -95,9 +97,9 @@ function cmConversation(cmConversationsModel, cmCrypt, cmLogger, cmNotify, $loca
                     captchaImageData = $element.find('canvas')[0].toDataURL("image/png")
 
                 captchaImageData && passphrase_valid
-                    ? $scope.conversation
-                    .newMessage(captchaImageData)
-                    .sendTo($scope.conversation)
+                    ?   $scope.conversation
+                        .newMessage(captchaImageData)
+                        .sendTo($scope.conversation)
                     : null
 
                 if (!passphrase_valid)    cmNotify.warn('CONVERSTAION.WARN.PASSPHRASE_INVALID')

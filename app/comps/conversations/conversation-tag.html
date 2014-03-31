@@ -1,0 +1,28 @@
+<cm-avatar cm-data="conversation.getLastMessage().fromIdentity"></cm-avatar>
+<div class="details">
+    <div class="subject">
+        {{conversation.getSubjectLine()}}
+    </div>
+    <cm-message
+        ng-if     = "conversation.getLastMessage()"
+        cm-data   = "conversation.getLastMessage()"
+        text-only = "true"
+    ></cm-message>
+</div>
+<div class="meta">
+    <div class="top">
+
+        <cm-safety-level level="conversation.getSafetyLevel()"></cm-safety-level>
+
+        <span class="last-updated">  
+            {{ (conversation.getLastMessage() && conversation.getLastMessage().lastUpdated) || '01.01.2020' }}
+        </span> 
+    </div>
+    
+    <div class="bottom">
+        <cm-recipient-counter>{{conversation.recipients.length}}</cm-recipient-counter>
+        <span class="message-count" ng-class="{'cm-unread' : conversation.count > 0}"> ({{conversation.count || 0}}) </span>            
+    </div>
+</div>
+
+

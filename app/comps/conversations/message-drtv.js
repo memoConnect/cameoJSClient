@@ -10,6 +10,7 @@ function cmMessage(cmUserModel) {
             $scope.message = $scope.$eval($attrs.cmData) || $scope.$eval($attrs.cmMessage);
 
             $scope.message.decrypt($scope.passphrase);
+            $scope.textOnly = !!$scope.$eval($attrs.textOnly)
 
             /*
             if ($scope.message.text.match(/^data:image/)) {

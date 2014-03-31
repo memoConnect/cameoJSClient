@@ -20,12 +20,12 @@ esac
 
 if [ ! -z $2 ]; then
     apiUrlArg=--apiUrl=\"${2}\"
+  echo -e "\e[33m[ CameoClient - setting API Url to ${apiUrlArg} ]\033[0m"
 fi
-echo -e "\e[33m[ CameoClient - setting API Url to ${apiUrlArg} ]\033[0m"
 
 
 ./setup.sh
 
-echo -e "\e[33m[ CameoClient - starting deploy ]\033[0m"
+echo -e "\e[33m[ CameoClient - starting deploy, target: ${target} ]\033[0m"
 
 ./node_modules/grunt-cli/bin/grunt deploy --target=${target} ${apiUrlArg}

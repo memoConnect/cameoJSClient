@@ -68,6 +68,11 @@ angular.module('cmUi', [
     cmResizeTextarea
 ])
 
+.directive('cmOverlay',[
+    '$rootScope',
+    cmOverlay
+])
+
 .filter('cmDigits', [
     function(){
         return function(number, digits){

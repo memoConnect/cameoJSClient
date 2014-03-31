@@ -46,7 +46,8 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
          * @param message
          * @returns {cmConversationModel.ConversationModel}
          */
-        this.addMessage = function (message) {
+        this.addMessage = function (message) {                        
+
             if(this.messages.length == 0){
                 this.messages.push(message);
             } else {
@@ -65,21 +66,9 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                 }
             }
 
-            this.lastMessage = message;
+            this.lastMessage = message;            
             if (this.passphrase) message.decrypt(this.passphrase);
             return this
-        };
-
-        this.newMessage = function (message_data, passphrase) {
-            var message_data = (typeof message_data == 'string' ? {text: message_data} : message_data )
-
-            var message = cmMessageFactory.create(message_data);
-
-            if(typeof passphrase !== 'undefined' && passphrase != ''){
-                message.encrypt(passphrase);
-            }
-
-            return message//.sendTo(this);
         };
 
         this.getLastMessage = function(){
@@ -146,6 +135,26 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.passphraseValid = function () {
             return !this.messages[0] || this.messages[0].decrypt(this.passphrase)
         };
+
+        this.getRecipientList = function(){
+            var list = []
+
+            this.recipients.forEach(function(recipient){
+                list.push(recipient.getDisplayName())
+            })
+
+            return list.join(', ')
+        }
+
+        this.getSubjectLine = function(){                
+            return     this.subject 
+                    || (this.lastMessage && this.lastMessage.from && this.lastMessage.from.getDisplayName()) 
+                    || this.getRecipientList()
+        }
+
+        this.getSavetyLevel = function(){
+            return this.passphraseValid() && !this.passphrase ? 0 : 1     
+        }
 
         this.init(data);
 
