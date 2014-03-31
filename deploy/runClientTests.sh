@@ -3,7 +3,7 @@ imageName="cameo-test"
 imagePort=9000
 
 if [ ! -z "$1" ]; then
-	imagePort = $1
+	imagePort=$1
 fi	
 
 echo -e "\e[33m[ CameoTest - Running on port: ${imagePort} ]\033[0m"
