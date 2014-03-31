@@ -1,3 +1,4 @@
+
 <cm-avatar cm-data="conversation.getLastMessage().from"></cm-avatar>
 <div class="details">
     <div class="subject">
@@ -21,7 +22,7 @@
     
     <div class="bottom">
         <cm-recipient-counter>{{conversation.recipients.length}}</cm-recipient-counter>
-        <span class="message-count" ng-class="{'cm-unread' : conversation.count > 0}"> ({{conversation.count || 0}}) </span>            
+        <span class="message-count" ng-class="{'cm-unread' : conversation.count > 0}"> ({{conversation.count || 0}}) </span>
     </div>
 </div>
 

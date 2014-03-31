@@ -1,6 +1,6 @@
 'use strict';
 
-function cmConversation(cmConversationsModel, cmMessageModel, cmCrypt, cmLogger, cmNotify, $location) {
+function cmConversation(cmConversationsModel, cmMessageFactory, cmMessageModel, cmCrypt, cmLogger, cmNotify, $location) {
     return {
         restrict: 'AE',
         templateUrl: 'comps/conversations/conversation.html',
@@ -55,8 +55,9 @@ function cmConversation(cmConversationsModel, cmMessageModel, cmCrypt, cmLogger,
                     recipients_missing  = $scope.conversation.recipients.length <= 1
 
                 !message_empty && passphrase_valid && !recipients_missing
-                    ?   new cmMessageModel( {body: $scope.my_message_text} )
-                        .encrypt($scope.passphrase)                        
+//                    ?   new cmMessageModel( {body: $scope.my_message_text} )
+                    ?   cmMessageFactory.create( {body: $scope.my_message_text} )
+                        .encrypt($scope.passphrase)
                         .sendTo($scope.conversation)
                         .then(function () {
                             if ($scope.new_conversation) $location.path('/conversation/' + $scope.conversation.id)

@@ -52,16 +52,22 @@ function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmU
             return (cmUserModel.data.id == this.from.id)
         }
 
-        this.init = function (message_data) {            
-            this.secret.decryptedData = undefined
+        this.init = function (message_data) {
+            this.secret.decryptedData = undefined;
 
-            this.id         = message_data.id;
-            this.from       = (!message_data.fromIdentity) ? cmUserModel.data.identity : cmIdentityFactory.create(message_data.fromIdentity);
-            this.created    = message_data.created;
-            this.text       = message_data.body;
-            this.fileIds    = message_data.fileIds;
 
-            this.encryptedData = message_data.body;   
+            if(message_data.dummy && message_data.dummy !== false){
+                this.from = cmIdentityFactory.createDummy();
+
+            } else {
+                this.id         = message_data.id;
+                this.from       = (!message_data.fromIdentity) ? cmUserModel.data.identity : cmIdentityFactory.create(message_data.fromIdentity);
+                this.created    = message_data.created;
+                this.text       = message_data.body;
+                this.fileIds    = message_data.fileIds;
+
+                this.encryptedData = message_data.body;
+            }
         }
 
         this.init(data);
