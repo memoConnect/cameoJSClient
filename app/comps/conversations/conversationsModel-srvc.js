@@ -15,22 +15,24 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
 
     //Methods:
     this.addConversation = function(conversation){
+        var i = 0,
+            checkConversation = null;
         if(this.conversations.length == 0){
             this.conversations.push((conversation));
         } else {
-            var i = 0;
-            var check = false;
             while(i < this.conversations.length){
                 if(conversation.id == this.conversations[i].id){
-                    check = true;
+                    checkConversation = this.conversations[i]
                     break;
                 }
                 i++;
             }
 
-            if(check !== true){
+            if(checkConversation !== null){
+//                checkConversation.update();
+            } else {
                 this.conversations.push(conversation);
-            } 
+            }
         }
     };
 

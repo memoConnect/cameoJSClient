@@ -1,7 +1,6 @@
 'use strict';
 
 function cmMessageFactory ($rootScope, cmMessageModel){
-    var instanceMock = [{id:'',instance:{}}];
     var instances = [];
 
     $rootScope.$on('logout', function(){
@@ -26,7 +25,7 @@ function cmMessageFactory ($rootScope, cmMessageModel){
                 
                 if(message === null){
                     message = new cmMessageModel(data);
-                    instances.push({id:data.id,instance:message});
+                    instances.push(message);
                 }
 
                 return message;
@@ -34,7 +33,7 @@ function cmMessageFactory ($rootScope, cmMessageModel){
 
             return null;
         },
-
+        
         getQty: function(){
             return instances.length;
         }

@@ -5,7 +5,7 @@ function cmConversationTag(){
         scope: {
             conversation : "=cmData"
         },
-        templateUrl : 'comps/conversations/conversation-tag.html',
+        templateUrl : 'comps/conversations/conversation-tag.html'
 
     }
 }
