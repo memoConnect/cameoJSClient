@@ -55,7 +55,6 @@ function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmU
         this.init = function (message_data) {
             this.secret.decryptedData = undefined;
 
-
             if(message_data.dummy && message_data.dummy !== false){
                 this.from = cmIdentityFactory.createDummy();
 
@@ -68,6 +67,8 @@ function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmU
 
                 this.encryptedData = message_data.body;
             }
+
+            this.decrypt('');
         }
 
         this.init(data);
