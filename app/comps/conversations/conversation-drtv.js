@@ -14,7 +14,7 @@ function cmConversation(cmConversationsModel, cmMessageModel, cmCrypt, cmLogger,
 
 
 
-            $scope.new_conversation = !!conversation_id
+            $scope.new_conversation = !conversation_id
 
             cmConversationsModel.getConversation(conversation_id)
             .then(function (conversation) {                    
@@ -58,8 +58,8 @@ function cmConversation(cmConversationsModel, cmMessageModel, cmCrypt, cmLogger,
                     ?   new cmMessageModel( {body: $scope.my_message_text} )
                         .encrypt($scope.passphrase)                        
                         .sendTo($scope.conversation)
-                        .then(function () {                  
-                            if ($scope.new_conversation) $location.url('/conversation/' + $scope.conversation.id)
+                        .then(function () {
+                            if ($scope.new_conversation) $location.path('/conversation/' + $scope.conversation.id)
                             $scope.my_message_text = ""
                         })
                     :   null
