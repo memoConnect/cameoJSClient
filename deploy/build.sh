@@ -81,7 +81,8 @@ case "${buildMode}" in
 			serverVersion="latest"
 		else
 			# find latest successfull build tag	
-			git pull --tags
+			git fetch 
+			git fetch --tags
 			tag=$(git describe --tag --match 'build*' --abbrev=0)
 			git checkout tags/${tag}
 			serverVersion=$(echo ${tag} | cut -d'_' -f2)
@@ -93,7 +94,8 @@ case "${buildMode}" in
 			git pull
 		else
 			# find latest successfull build tag	
-			git pull --tags
+			git fetch 
+			git fetch --tags
 			tag=$(git describe --tag --match 'build*' --abbrev=0)
 			git checkout tags/${tag}
 		fi	
@@ -104,10 +106,12 @@ case "${buildMode}" in
 		serverVersion="stage"
 		# checkout stage tag for both
 		cd ${serverDir}
-		git pull --tags
+		git fetch 
+		git fetch --tags
 		git checkout tags/stage
 		cd ${clientDir}
-		git pull --tags
+		git fetch 
+		git fetch --tags
 		git checkout tags/stage
 		;;
 
