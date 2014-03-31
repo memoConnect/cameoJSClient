@@ -45,8 +45,7 @@ function cmMenu($window, $document, cmUserModel){
         scope: true,
         templateUrl: 'shared/ui/menu.html',
 
-        controller: function($scope, $element){
-
+        controller: function($scope, $element, $rootScope){
             $scope.btns = [
                 {i18n:'MENU.HEADER',        icon:'cm-menu',             menuClass:'cm-menu-header'  },
                 {i18n:'MENU.NOTIFICATIONS', icon:'cm-bell',             menuClass:'cm-menu-notify', href:'#/notfications'},
@@ -68,18 +67,14 @@ function cmMenu($window, $document, cmUserModel){
             $element.find('ul').on('click',function(e){
                 e.stopPropagation();
             });
-            // kill scroll if visible
-            angular.element($window).on('DOMMouseScroll', function(event){
-                console.log($scope.menuVisible)
-                if($scope.menuVisible){
-                    console.log('stoppp scrolling')
-                    event.preventDefault();
-                }
+
+            $rootScope.$on('logout', function(){
+                enableScroll();
             });
 
             $scope.handleMenu = function(){
                 $scope.menuVisible = $scope.menuVisible ? false : true;
-
+                // kill scroll if visible
                 if($scope.menuVisible){
                     disableScroll();
                 } else {
