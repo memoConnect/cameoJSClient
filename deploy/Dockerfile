@@ -8,9 +8,11 @@ RUN apt-get upgrade -y
 RUN apt-get install -y --no-install-recommends openjdk-7-jdk
 
 ADD ./target /opt/app
+
 EXPOSE 9000
+
 WORKDIR /opt/app/
 
-RUN unset JAVA_OPTS
+ENTRYPOINT ["bin/cameoserver"]
 
-ENTRYPOINT ["bin/cameoserver","-Dconfig.file=conf/secret.conf"]
+CMD ["-Dconfig.file=conf/secret.conf"]
