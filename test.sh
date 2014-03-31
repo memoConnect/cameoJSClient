@@ -11,12 +11,13 @@ case "$1" in
         target=--target="test"
       ;;
    *)
-
+      echo -e "\e[33m[cameo - Invalid mode: ${mode}]\033[0m"
+      exit 1
       ;;
 esac
 
 if [ ! -z $2 ]; then
-    wwwUrlArg=--wwwUrl=\"${2}\"
+    wwwUrlArg=--wwwUrl=${2}
     echo -e "\e[33m[ CameoClient - setting WWW Url to ${wwwUrlArg} ]\033[0m"
 fi
 

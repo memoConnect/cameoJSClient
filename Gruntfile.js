@@ -226,14 +226,6 @@ module.exports = function (grunt) {
 
         },
         // e2e tests
-        connect: {
-            server: {
-                options: {
-                    port: 6108,
-                    base: './'
-                }
-            }
-        },
         dalek: {
             options: {
                 reporter: ['console', 'junit'],
@@ -455,23 +447,19 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-dalek');
     grunt.registerTask('tests-e2e', [
         'genAllTemplates',
-        'connect',
         'dalek:jenkins'
     ]);
     grunt.registerTask('tests-all', [
         'genAllTemplates',
         'karma:jenkins',
-        'connect',
         'dalek:jenkins'
     ]);
     grunt.registerTask('tests-e2e-local', [
         'genAllTemplates',
-        'connect',
         'dalek:local'
     ]);
     grunt.registerTask('tests-e2e-localAll', [
         'genAllTemplates',
-        'connect',
         'dalek:localAll'
     ]);
     // phonegap to device
