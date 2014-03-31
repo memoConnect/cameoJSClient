@@ -113,8 +113,11 @@ esac
 echo -e "\e[33m[ CameoBuild - Building client ]\033[0m"
 cd ${clientDir}
 ./compile.sh ${buildMode}
+# remove old client stuff
+rm -rf ${serverDir}/public
 # copy to public dir of server
-cp -r ${clientDir}/dist ${serverDir}/public
+mkdir -p ${serverDir}/public
+cp -r ${clientDir}/dist/* ${serverDir}/public/
 
 # build server
 echo -e "\e[33m[ CameoBuild - Building server ]\033[0m"
