@@ -139,7 +139,7 @@ define([
 
 
             //add Overlay handles:
-            $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id); console.log('gfhdf')}
+            $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id); }
             $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) }
 
             // hide app spinner

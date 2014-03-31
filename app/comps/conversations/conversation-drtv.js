@@ -58,9 +58,7 @@ function cmConversation(cmConversationsModel, cmMessageModel, cmCrypt, cmLogger,
                     ?   new cmMessageModel( {body: $scope.my_message_text} )
                         .encrypt($scope.passphrase)                        
                         .sendTo($scope.conversation)
-                        .then(function () {                 
-                            console.log('sdf')      
-                            console.log($scope.conversation.id)     
+                        .then(function () {                  
                             if ($scope.new_conversation) $location.url('/conversation/' + $scope.conversation.id)
                             $scope.my_message_text = ""
                         })
