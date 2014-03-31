@@ -6,7 +6,7 @@ function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmU
         var self = this;
 
         //secret data:
-        this.secret =   ['text', 'fileIds', 'from'],
+        this.secret =   ['text', 'fileIds'],
 
         //public data
         this.public =   [] 
@@ -33,7 +33,7 @@ function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmU
             var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase, this.encryptedData))
 
             //expose data on message Object
-            angular.extend(self, decrypted_data)
+            angular.extend(self, decrypted_data) // watch out: this only work for simply properties, "from" will break
 
             return !!decrypted_data
         }
