@@ -486,7 +486,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-phonegap-build');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.registerTask('phonegap-bs', [
-        'dev-deploy',
+        'deploy',
         'phonegap:build',
         'copy:phonegap-resources',
         'template:phonegap-index',
