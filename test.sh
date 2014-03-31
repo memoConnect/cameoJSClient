@@ -8,12 +8,11 @@ case "$1" in
         target=--target="dev"
       ;;
    "test")
-        target=--t
-        ~.
-        arget="test"
+        target=--target="test"
       ;;
    *)
-
+      echo -e "\e[33m[cameo - Invalid mode: ${mode}]\033[0m"
+      exit 1
       ;;
 esac
 
