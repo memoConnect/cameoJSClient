@@ -19,7 +19,7 @@ case "$1" in
 esac
 
 if [ ! -z $2 ]; then
-    apiUrlArg=--apiUrl=\"${2}\"
+    apiUrlArg=--apiUrl=${2}
   echo -e "\e[33m[ CameoClient - setting API Url to ${apiUrlArg} ]\033[0m"
 fi
 

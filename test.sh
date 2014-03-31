@@ -10,10 +10,6 @@ case "$1" in
    "test")
         target=--target="test"
       ;;
-   *)
-      echo -e "\e[33m[cameo - Invalid mode: ${mode}]\033[0m"
-      exit 1
-      ;;
 esac
 
 if [ ! -z $2 ]; then
