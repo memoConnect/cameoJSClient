@@ -36,20 +36,12 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
         }
     };
 
-    this.createConversation = function (subject) {
-        var deferred = $q.defer()      
+    this.createNewConversation = function (){
+        var deferred = $q.defer();
 
-        cmConversationsAdapter
-        .newConversation(subject)
-        .then(function (conversation_data) {                    
-            var conversation = cmConversationFactory.create(conversation_data)         
+        deferred.resolve(cmConversationFactory.create());
 
-            self.conversations.push(conversation);
-            deferred.resolve(conversation);
-
-        })
-
-        return  deferred.promise;
+        return deferred.promise;
     }
 
     this.getConversation = function (id) {

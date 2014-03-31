@@ -1,6 +1,6 @@
 'use strict';
 
-function cmConversation(cmConversationsModel, cmMessageFactory, cmMessageModel, cmCrypt, cmLogger, cmNotify, $location) {
+function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, $location) {
     return {
         restrict: 'AE',
         templateUrl: 'comps/conversations/conversation.html',
@@ -13,16 +13,27 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmMessageModel, 
                 conversation_limit   = $attrs.limit
 
 
+            $scope.new_conversation = !conversation_id;
 
-            $scope.new_conversation = !conversation_id
+            if($scope.new_conversation !== true){
+                cmConversationsModel.getConversation(conversation_id).then(
+                    function (conversation) {
+                        $scope.init(conversation)
+                    }
+                )
+            } else {
+                cmConversationsModel.createNewConversation().then(
+                    function(newConversation){
+                        newConversation.addRecipient(cmUserModel.data.identity);
+                        $scope.init(newConversation);
+                    }
+                );
+            }
 
-            cmConversationsModel.getConversation(conversation_id)
-            .then(function (conversation) {                    
-                $scope.init(conversation)
-            })
 
 
             $scope.init = function (conversation) {
+                console.log(conversation);
                 $scope.conversation     = conversation
                 $scope.my_message_text  = ""
                 $scope.passphrase       = ""
@@ -55,7 +66,6 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmMessageModel, 
                     recipients_missing  = $scope.conversation.recipients.length <= 1
 
                 !message_empty && passphrase_valid && !recipients_missing
-//                    ?   new cmMessageModel( {body: $scope.my_message_text} )
                     ?   cmMessageFactory.create( {body: $scope.my_message_text} )
                         .encrypt($scope.passphrase)
                         .sendTo($scope.conversation)

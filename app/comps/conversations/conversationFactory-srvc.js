@@ -10,10 +10,10 @@ function cmConversationFactory ($rootScope, cmConversationModel){
 
     return {
         create: function(data){            
-            var i = 0;
-            if(typeof data !== 'undefined'){
-                var conversation = null;
+            var i = 0,
+                conversation = null;
 
+            if(typeof data !== 'undefined'){
                 while(i < instances.length){
                     if(typeof instances[i] === 'object' &&
                         instances[i].id == data.id){
@@ -32,9 +32,16 @@ function cmConversationFactory ($rootScope, cmConversationModel){
                 return conversation;
             }
 
-            return null;
+            return new cmConversationModel();
         },
-
+        save: function(conversation){
+            var check = false;
+            if(conversation instanceof 'cmConversationModel' && conversation.id == ''){
+               // Start Save Procedure
+               // instances.push({id:conversation.id,instance:conversation});
+            }
+            return conversation;
+        },
         getQty: function(){
             return instances.length;
         }

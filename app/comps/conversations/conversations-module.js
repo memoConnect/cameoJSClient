@@ -83,7 +83,7 @@ cmConversations.directive('cmConversationTag',[
 cmConversations.directive('cmConversation', [
     'cmConversationsModel',
     'cmMessageFactory',
-    'cmMessageModel',
+    'cmUserModel',
     'cmCrypt',
     'cmLogger',
     'cmNotify',

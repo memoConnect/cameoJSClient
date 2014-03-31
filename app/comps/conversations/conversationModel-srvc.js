@@ -15,23 +15,27 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         var self = this;
 
         this.init = function (conversation_data) {
-            this.id             = conversation_data.id;
-            this.subject        = conversation_data.subject;
-            this.count          = conversation_data.numberOfMessages;
-            this.lastUpdated    = conversation_data.lastUpdated;
+            if(typeof conversation_data !== 'undefined'){
+                this.id             = conversation_data.id;
+                this.subject        = conversation_data.subject;
+                this.count          = conversation_data.numberOfMessages;
+                this.lastUpdated    = conversation_data.lastUpdated;
 
-            // register all messages as Message objects
-            if (conversation_data.messages) {
-                conversation_data.messages.forEach(function (message_data) {
-                    self.addMessage(cmMessageFactory.create(message_data));
-                })
-            }
+                // register all messages as Message objects
+                if (conversation_data.messages) {
+                    conversation_data.messages.forEach(function (message_data) {
+                        self.addMessage(cmMessageFactory.create(message_data));
+                    })
+                }
 
-            // register all recipients as Recipient objects
-            if (conversation_data.recipients) {
-                conversation_data.recipients.forEach(function (item) {                    
-                    self.addRecipient(cmIdentityFactory.create(item.identityId));
-                })
+                // register all recipients as Recipient objects
+                if (conversation_data.recipients) {
+                    conversation_data.recipients.forEach(function (item) {
+                        self.addRecipient(cmIdentityFactory.create(item.identityId));
+                    })
+                }
+            } else {
+                this.subject = '';
             }
         };
 
