@@ -99,12 +99,22 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.addRecipient = function (identity) {
             if(identity && !this.hasRecipient(identity)){
                 this.recipients.push(identity)
-                cmConversationsAdapter.addRecipient(this.id, identity.id)
+//                cmConversationsAdapter.addRecipient(this.id, identity.id)
             }else{
                 console.warn('Recipient already present.') //@ Todo
             }
             return this;
         };
+
+        this.addNewRecipient = function(identity){
+            if(identity && !this.hasRecipient(identity)){
+                this.recipients.push(identity)
+                cmConversationsAdapter.addRecipient(this.id, identity.id)
+            }else{
+                console.warn('Recipient already present.') //@ Todo
+            }
+            return this;
+        }
 
         this.removeRecipient = function (identity) {
             var i = this.recipients.length;
