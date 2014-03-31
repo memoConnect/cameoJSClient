@@ -99,7 +99,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.addRecipient = function (identity) {
             if(identity && !this.hasRecipient(identity)){
                 this.recipients.push(identity)
-//                cmConversationsAdapter.addRecipient(this.id, identity.id)
             }else{
                 console.warn('Recipient already present.') //@ Todo
             }
@@ -108,8 +107,11 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.addNewRecipient = function(identity){
             if(identity && !this.hasRecipient(identity)){
-                this.recipients.push(identity)
-                cmConversationsAdapter.addRecipient(this.id, identity.id)
+                cmConversationsAdapter.addRecipient(this.id, identity.id).then(
+                    function(){
+                        self.addRecipient(identity);
+                    }
+                )
             }else{
                 console.warn('Recipient already present.') //@ Todo
             }
