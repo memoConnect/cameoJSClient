@@ -68,7 +68,7 @@ case "${buildMode}" in
 			secretFile="secret_dev.conf"
 		else
 			if [ ! -z apiPort ]; then
-				apiUrl="http://localhost:{apiPort}/api/v1"
+				apiUrl="http://localhost:${apiPort}/api/v1"
 			fi
 			
 			secretFile="secret_local.conf"
