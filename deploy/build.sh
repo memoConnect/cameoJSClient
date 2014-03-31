@@ -74,8 +74,10 @@ case "${buildMode}" in
 			secretFile="secret_local.conf"
 		fi		
 		
+
+		echo -e "\e[33m[ CameoBuild - Updating server ]\033[0m"
 		cd ${serverDir}
-		if [ "${latestServer}" = true ]; then
+		if [ "${latestServer}" == true ]; then
 			git checkout dev
 			git pull
 			serverVersion="latest"
@@ -88,8 +90,9 @@ case "${buildMode}" in
 			serverVersion=$(echo ${tag} | cut -d'_' -f2)
 		fi
 
+		echo -e "\e[33m[ CameoBuild - Updating client ]\033[0m"
 		cd ${clientDir}
-		if [ "${latestClient}" = true ]; then
+		if [ "${latestClient}" == true ]; then
 			git checkout dev
 			git pull
 		else
