@@ -97,9 +97,6 @@ angular.module('cmIdentity', ['cmAuth'])
 
             return identity;
         },
-        createDummy: function(){
-            return new cmIdentityModel;
-        },
         getQty: function(){
             return instances.length;
         }
