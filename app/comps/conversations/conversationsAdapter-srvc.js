@@ -12,6 +12,13 @@ function cmConversationsAdapter(cmApi, cmUtil){
             })
         },
 
+        updateConversation: function(conversation){
+            return cmApi.put({
+                url: '/conversation/' + conversation.id,
+                data: conversation
+            });
+        },
+
         getConversations: function(limit, offset) {
             return	cmApi.get({
                 url: '/conversations' + cmUtil.handleLimitOffset(limit,offset)

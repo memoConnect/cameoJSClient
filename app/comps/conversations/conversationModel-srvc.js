@@ -34,8 +34,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                         self.addRecipient(cmIdentityFactory.create(item.identityId));
                     })
                 }
-            } else {
-                this.new = true;
             }
         };
 
@@ -114,7 +112,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.addNewRecipient = function(identity){
             if(identity && !this.hasRecipient(identity)){
-                if(this.new !== true){
+                if(this.id != ''){
                     cmConversationsAdapter.addRecipient(this.id, identity.id).then(
                         function(){
                             self.addRecipient(identity);
@@ -137,7 +135,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                 if (this.recipients[i] == identity){
                     this.recipients.splice(i, 1);
 
-                    if(this.new !== true){
+                    if(this.id != ''){
                         cmConversationsAdapter.removeRecipient()(this.id, identity.id)
                     }
                 }
@@ -146,7 +144,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         };
 
         this.updateSubject = function (subject) {
-            if(this.new !== true){
+            if(this.id != ''){
                 cmConversationsAdapter.updateSubject(this.id, subject)
                     .then(function(){
                         self.subject = subject
@@ -201,19 +199,25 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         }
 
         this.save = function(){
-            cmConversationsAdapter.newConversation().then(
-                function (conversation_data) {
-                    self.new = false;
+            if(this.id == ''){
+                cmConversationsAdapter.newConversation().then(
+                    function (conversation_data) {
+                        self.init(conversation_data);
+                    }
+                )
+            }
 
-                    self.init(conversation_data);
+            this.updateSubject(this.subject);
 
-
-
-                    self.messages[0].sendTo(self.id);
-
-                    console.log(self)
+            cmConversationsAdapter.updateConversation(this).then(
+                function(){
+                    //log
+                },
+                function(){
+                    //log fail
                 }
             )
+
         }
 
         this.init(data);
