@@ -90,6 +90,13 @@ cmNotify.config(['growlProvider', '$httpProvider', function (growlProvider, $htt
 /**
  * directive for <div cm-notify>
  */
+cmNotify.directive('cmNotify', function () {
+    return {
+        priority: 10000,
+        template: '<div growl></div>'
+    }
+});
+
 cmNotify.directive('cmNotifySignal', [
 
     '$rootScope',
