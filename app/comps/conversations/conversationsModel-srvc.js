@@ -38,9 +38,10 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
 
     this.createNewConversation = function (){
         var deferred = $q.defer();
+        var conversation = cmConversationFactory.create();
+        self.addConversation(conversation);
 
-        deferred.resolve(cmConversationFactory.create());
-
+        deferred.resolve(conversation);
         return deferred.promise;
     }
 
