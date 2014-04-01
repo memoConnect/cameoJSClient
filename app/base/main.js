@@ -109,7 +109,7 @@ var config = {
 //        'bootstrap': ['jquery']
     },
     // kick start application
-    deps: ['screen', 'app']
+    deps: ['app']
 }
 
 function addPackage(package_name, package) {

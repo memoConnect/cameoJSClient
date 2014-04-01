@@ -218,12 +218,14 @@ define([
                 //prevent screen size to change when content overflows
                 html.style.overflowY = 'scroll'                    
 
-                var height  = window.innerHeight,
-                    width   = html.offsetWidth,
-                    effectiveWidth = Math.min(height, width)            
+                var height          = window.innerHeight,
+                    width           = html.offsetWidth,                      
+                    landscape       = width > height,
+                    effective_width = landscape ? Math.min(height, 640) : width
 
-                html.style.fontSize  = (effectiveWidth/rem) +'px'
+                html.style.fontSize  = (effective_width/rem) +'px'
                 app.style.maxWidth   = rem+'rem'
+                angular.element(app).toggleClass('landscape', landscape)
             }
 
             //Actually set view width to 32 rem
