@@ -5,9 +5,10 @@ function cmConversationControls($modal){
         scope : {
             conversation :"=cmData"
         },
+        require: '^cmConversation',
 
-        controller : function($scope, $element, $attrs){
-            $scope.bodyVisible = false;
+        link: function($scope, $element, $attrs, cmConversation){
+            $scope.bodyVisible = cmConversation.isNew();
 
             $scope.handle = function(){
                 if($scope.bodyVisible)
@@ -15,7 +16,9 @@ function cmConversationControls($modal){
                 else
                     $scope.bodyVisible = true;
             };
+        },
 
+        controller : function($scope, $element, $attrs){
             $scope.addRecipients = function(){
                 $scope.isModalVisible = true;
 

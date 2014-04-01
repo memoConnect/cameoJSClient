@@ -39,56 +39,57 @@ form {
 
 
 .cm-form-group{
-    padding:0 2em;
+  padding:0 2em;
+  position:relative;
+
+  div.cm-form-control{
+    background:@cm-light-grey;
+    padding:0.3em 1.5em;
     position:relative;
+    display:inline-block;
+    width:100%;
+    vertical-align:baseline;
 
-    div.cm-form-control{
-        background:@cm-light-grey;
-        padding:0.3em 1.5em;
-        position:relative;
-        display:inline-block;
-        width:100%;
-        vertical-align:baseline;
-    
-        input,select{ 
-            .clear-form-border;
-            width: 100%;
-            height:1.4em;
-        }
-
-        &.white-control{ background:@cm-white;
-            &~i {
-                color:@cm-white;
-                font-size: 3.6em;
-                position: relative;
-                top: 0.29em;
-            }
-        }                
-
-        &.with-inputter {
-            padding-bottom: 0.7em;
-
-            input {
-                position: relative;
-                padding: 0 0.3em;      
-                line-height: 1.2em;                                          
-            }
-
-            &:after{
-                content: '';     
-                position: absolute;           
-                display:block;
-                left:1.5em;
-                right:1.5em;
-                bottom:0.3em;
-                height:0.3em;
-                border:@cm-black solid 0.1em;
-                border-top:none;
-            }
-        }                   
-
-        &.with-icon { width:85%; }
+    input,select{
+      .clear-form-border;
+      background:@cm-light-grey;
+      width: 100%;
+      height:1.4em;
     }
+
+    &.white-control{ background:@cm-white;
+      &~i {
+        color:@cm-white;
+        font-size: 3.6em;
+        position: relative;
+        top: 0.29em;
+      }
+    }
+
+    &.with-inputter {
+      padding-bottom: 0.7em;
+
+      input {
+        position: relative;
+        padding: 0 0.3em;
+        line-height: 1.2em;
+      }
+
+      &:after{
+        content: '';
+        position: absolute;
+        display:block;
+        left:1.5em;
+        right:1.5em;
+        bottom:0.3em;
+        height:0.3em;
+        border:@cm-black solid 0.1em;
+        border-top:none;
+      }
+    }
+
+    &.with-icon { width:85%; }
+  }
 
 
     /*

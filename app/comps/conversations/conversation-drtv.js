@@ -1,6 +1,6 @@
 'use strict';
 
-function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, $location) {
+function cmConversation(cmConversationsModel, cmMessageFactory, cmMessageModel, cmCrypt, cmLogger, cmNotify, $location) {
     return {
         restrict: 'AE',
         templateUrl: 'comps/conversations/conversation.html',
@@ -12,23 +12,12 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmC
                 conversation_offset  = $attrs.offset,
                 conversation_limit   = $attrs.limit
 
+            $scope.new_conversation = !conversation_id
 
-            $scope.new_conversation = !conversation_id;
-
-            if($scope.new_conversation !== true){
-                cmConversationsModel.getConversation(conversation_id).then(
-                    function (conversation) {
-                        $scope.init(conversation)
-                    }
-                )
-            } else {
-                cmConversationsModel.createNewConversation().then(
-                    function(newConversation){
-                        newConversation.addRecipient(cmUserModel.data.identity);
-                        $scope.init(newConversation);
-                    }
-                );
-            }
+            cmConversationsModel.getConversation(conversation_id)
+            .then(function (conversation) {                    
+                $scope.init(conversation)
+            })
 
 
             $scope.init = function (conversation) {
@@ -50,11 +39,11 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmC
                 }
 
                 $scope.$watch("conversation.subject", function (new_subject) {
-                    $scope.conversation.updateSubject(new_subject||"");
+                    $scope.conversation.updateSubject(new_subject||"")
                 })
                 
                 $scope.$on('cmContacts:selected', function (event, identity) {
-                    $scope.conversation.addNewRecipient(identity);
+                    $scope.conversation.addRecipient(identity)
                 })
             }
 
@@ -63,27 +52,17 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmC
                     message_empty       = !$scope.my_message_text,
                     recipients_missing  = $scope.conversation.recipients.length <= 1
 
-                if(!message_empty && passphrase_valid && !recipients_missing){
-                    if($scope.conversation.id == ''){
-                        $scope.conversation.save().then(
-                            function(){
-                                $scope.sendMessage();
-                            }
-                        );
-                    } else {
-                        cmMessageFactory.create( {body: $scope.my_message_text} )
-                            .encrypt($scope.passphrase)
+                !message_empty && passphrase_valid && !recipients_missing
+//                    ?   new cmMessageModel( {body: $scope.my_message_text} )
+                    ?   cmMessageFactory.create( {body: $scope.my_message_text} )
+                        .encrypt($scope.passphrase)
                             .addTo($scope.conversation)
-                            .sendTo($scope.conversation.id)
-                            .then(function(){
-                                $scope.my_message_text = "";
-                            })
-
-                        if($scope.new_conversation !== true){
-                            $location.path('/conversation/' + $scope.conversation.id);
-                        }
-                    }
-                 }
+                        .sendTo($scope.conversation)
+                        .then(function () {
+                            if ($scope.new_conversation) $location.path('/conversation/' + $scope.conversation.id)
+                            $scope.my_message_text = ""
+                        })
+                    :   null
 
                 if (!passphrase_valid)    cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID')
                 if (message_empty)        cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY')
@@ -133,6 +112,10 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmC
             $scope.generatePassphrase = function () {
                 var date = new Date()
                 $scope.passphrase = _Base64.encode(cmCrypt.hash(Math.random() * date.getTime())).substr(5, 10)
+            }
+
+            this.isNew = function(){
+                return $scope.new_conversation;
             }
         }
     }
