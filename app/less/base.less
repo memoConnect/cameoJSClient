@@ -124,44 +124,59 @@ li {
 }
 
 .cm-page-body{
-    color:@cm-white;
-    padding:3em;
+  color:@cm-white;
+  padding:3em;
 }
 
 .single-line{
-    text-overflow: ellipsis;
-    overflow:hidden;
-    white-space:nowrap;
+  text-overflow: ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
 }
 
 .without-border-radius{
-    -webkit-border-radius:0!important;
-    -moz-border-radius:0!important;
-    border-radius:0!important
+  -webkit-border-radius:0!important;
+  -moz-border-radius:0!important;
+  border-radius:0!important
 }
 
 .without-box-shadow{
-    -webkit-box-shadow:none!important;
-    -moz-box-shadow:none!important;
-    box-shadow:none!important
+  -webkit-box-shadow:none!important;
+  -moz-box-shadow:none!important;
+  box-shadow:none!important
 }
 
 .white-text-shadow{
   text-shadow:0 0.07em 0.07em rgba(255, 255, 255, 1);
 }
 
+.grey-box-shadow{
+  -webkit-box-shadow:0 0.2em 0.5em 0 rgba(50, 50, 50, 0.5);
+  -moz-box-shadow:0 0.2em 0.5em 0 rgba(50, 50, 50, 0.5);
+  box-shadow:0 0.2em 0.5em 0 rgba(50, 50, 50, 0.5);
+}
+
 .clear-form-border{
-    border:none !important; 
-    .without-border-radius; 
-    .without-box-shadow
+  border:none !important;
+  .without-border-radius;
+  .without-box-shadow
+}
+
+.border-radius-bottom{
+  -moz-border-radius-bottomright:0.5em;
+  -webkit-border-bottom-right-radius:0.5em;
+  border-bottom-right-radius:0.5em;
+  -moz-border-radius-bottomleft:0.5em;
+  -webkit-border-bottom-left-radius:0.5em;
+  border-bottom-left-radius:0.5em;
 }
 
 .clearfix:after{
-    content:".";
-    display:block;
-    clear:both;
-    visibility:hidden;
-    line-height:0;height:0
+  content:".";
+  display:block;
+  clear:both;
+  visibility:hidden;
+  line-height:0;height:0
 }
 
 .clearfix{display:inline-block}

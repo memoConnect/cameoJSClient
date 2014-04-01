@@ -5,10 +5,11 @@ function cmOverlay($rootScope){
         transclude : true,        
 
         link : function(scope, element, attrs, controller, transclude){           
+            var container = angular.element('<div class="container" ng-transclude></div>'),
+                bg = angular.element('<div cm-transparent-bg ng-click="hideOverlay()"></div>')
 
-            var container = angular.element('<div class="container" ng-transclude></div>')
-
-            element.append(container)
+            element.append(bg);
+            element.append(container);
 
             function show(){                
                 angular.element(document.getElementById('cm-app')).append(element)
@@ -30,7 +31,7 @@ function cmOverlay($rootScope){
             $rootScope.$on('cmOverlay:hide', function(event, id){ if(attrs.id == id) hide() })
         },
 
-        controller : function($scope, $element, $attrs){
+        controller: function($scope, $element, $attrs){
             $scope.hideOverlay = function(){
                 $scope.$emit('cmOverlay:hide', $attrs.id)
             }

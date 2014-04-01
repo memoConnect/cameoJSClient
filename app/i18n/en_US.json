@@ -30,14 +30,12 @@
         "LABEL": {
             "SUBMIT": "create User",
             "USERNAME": "Username",
-            "CAMEOID": "CameoID",
             "NAME": "Name",
             "TERMS": "terms of use",
             "TERMS_ACCEPT": "I accpect"
         },
         "PLACEHOLDER": {
-            "USERNAME": "username",
-            "CAMEOID": "CameoId",
+            "USERNAME": "Username",
             "NAME": "Display Name"
         },
         "INFO": {
@@ -128,6 +126,9 @@
             "MESSAGE_EMPTY" : "The input field is empty.",
             "RECIPIENTS_MISSING" : "Please add at least one recipient.",
             "PASSPHRASE_INVALID" : "Passphrase invalid."
+        },
+        "PLACEHOLDER": {
+            "NO_SUBJECT": "no subject"
         }
     },
 
