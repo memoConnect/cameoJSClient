@@ -226,7 +226,7 @@ define([
                 var height          = window.innerHeight,
                     width           = html.offsetWidth,                      
                     landscape       = width > height,
-                    effective_width = landscape ? Math.min(height, 480) : width
+                    effective_width = landscape ? Math.min(height, 720) : width
 
                 html.style.fontSize  = (effective_width/rem) +'px'
                 app.style.maxWidth   = rem+'rem'

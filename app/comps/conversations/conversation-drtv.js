@@ -1,6 +1,6 @@
 'use strict';
 
-function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, $location) {
+function cmConversation(cmConversationsModel, cmMessageFactory, cmMessageModel, cmCrypt, cmLogger, cmNotify, $location) {
     return {
         restrict: 'AE',
         templateUrl: 'comps/conversations/conversation.html',
@@ -11,7 +11,6 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmC
                 conversation_subject = $scope.$eval($attrs.cmSubject),
                 conversation_offset  = $attrs.offset,
                 conversation_limit   = $attrs.limit
-
 
             $scope.new_conversation = !conversation_id;
 
@@ -50,11 +49,11 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmC
                 }
 
                 $scope.$watch("conversation.subject", function (new_subject) {
-                    $scope.conversation.updateSubject(new_subject||"");
+                    $scope.conversation.updateSubject(new_subject||"")
                 })
                 
                 $scope.$on('cmContacts:selected', function (event, identity) {
-                    $scope.conversation.addNewRecipient(identity);
+                    $scope.conversation.addRecipient(identity)
                 })
             }
 
@@ -133,6 +132,10 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmC
             $scope.generatePassphrase = function () {
                 var date = new Date()
                 $scope.passphrase = _Base64.encode(cmCrypt.hash(Math.random() * date.getTime())).substr(5, 10)
+            }
+
+            this.isNew = function(){
+                return $scope.new_conversation;
             }
         }
     }

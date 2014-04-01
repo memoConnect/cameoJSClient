@@ -3,6 +3,12 @@
 
     <div ng-show="bodyVisible" class="body">
 
+        <div class="cm-form-group">
+            <div class="cm-form-control with-inputter">
+                <input type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" />
+            </div>
+        </div>
+
         <div class="body-group">
             <cm-avatar cm-data="recipient" ng-repeat="recipient in conversation.recipients"></cm-avatar>
             <cm-avatar ng-click="$emit('cmOverlay:show', 'add-recipients')">
