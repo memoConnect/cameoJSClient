@@ -94,9 +94,10 @@ describe("cmNotify", function() {
         }))
 
         it('should respond to notifications', function(){
-            expect(scope.unreadNotifications).toBe(false)
+            expect(el.scope().unreadNotifications).toBe(false)
             cmNotify.error('test_me')
-            expect(scope.unreadNotifications).toBe(true)
+            expect(el.scope().unreadNotifications).toBe(true)
+
         })
     })
 })
