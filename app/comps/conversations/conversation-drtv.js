@@ -51,9 +51,9 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmC
                     })
                 }
 
-                $scope.$watch("conversation.subject", function (new_subject) {
-                    $scope.conversation.updateSubject(new_subject||"");
-                })
+//                $scope.$watch("conversation.subject", function (new_subject) {
+//                    $scope.conversation.updateSubject(new_subject||"");
+//                })
                 
                 $scope.$on('cmContacts:selected', function (event, identity) {
                     $scope.conversation.addNewRecipient(identity);
