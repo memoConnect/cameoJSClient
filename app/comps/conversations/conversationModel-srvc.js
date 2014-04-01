@@ -143,7 +143,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             return this;
         };
 
-
         this.updateSubject = function (subject) {
             if(this.new !== true){
                 cmConversationsAdapter.updateSubject(this.id, subject)
