@@ -47,38 +47,28 @@ function cmMenu($window, $document, cmUserModel){
 
         controller: function($scope, $element, $rootScope){
             $scope.btns = [
-                {i18n:'MENU.HEADER',        icon:'cm-menu',             menuClass:'cm-menu-header'  },
-                {i18n:'MENU.NOTIFICATIONS', icon:'cm-bell',             menuClass:'cm-menu-notify', href:'#/notfications'},
-                {i18n:'MENU.FRIENDREQUESTS',icon:'cm-contacts',         menuClass:'cm-menu-notify', href:'#/contacts/request'},
-                {i18n:'MENU.MESSAGES',      icon:'cm-envelope-closed',  menuClass:'cm-menu-notify', href:'#/talks'},
-                {i18n:'MENU.HINTS',         icon:'cm-info',             menuClass:'cm-menu-notify', href:'#/notfications/hints'},
-                {i18n:'MENU.ACTIVITY',      icon:'cm-person',                                       href:'#/settings'},
-                {i18n:'MENU.SETTINGS',      icon:'cm-settings',                                     href:'#/settings'}
+                {i18n:'MENU.HEADER', icon:'cm-menu', css:'cm-menu-header'},
+                {i18n:'MENU.NOTIFICATIONS', icon:'cm-bell', css:'cm-menu-notify', href:'#/notfications'},
+                {i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify', href:'#/contacts/request'},
+                {i18n:'MENU.MESSAGES', icon:'cm-envelope-closed', css:'cm-menu-notify', href:'#/talks'},
+                {i18n:'MENU.HINTS', icon:'cm-info', css:'cm-menu-notify', href:'#/notfications/hints'},
+                {i18n:'MENU.ACTIVITY', icon:'cm-person', href:'#/settings'},
+                {i18n:'MENU.SETTINGS', icon:'cm-settings', href:'#/settings'}
             ];
 
             $scope.menuVisible = false;
 
-            // click outside or handler
-            $element.on('click', function() {
-                $scope.handleMenu();
-                $scope.$apply();
-            });
-            // click menu points
-            $element.find('ul').on('click',function(e){
-                e.stopPropagation();
-            });
-
             $rootScope.$on('logout', function(){
-                enableScroll();
+                //enableScroll();
             });
 
             $scope.handleMenu = function(){
                 $scope.menuVisible = $scope.menuVisible ? false : true;
                 // kill scroll if visible
                 if($scope.menuVisible){
-                    disableScroll();
+                    //disableScroll();
                 } else {
-                    enableScroll();
+                    //enableScroll();
                 }
             };
 

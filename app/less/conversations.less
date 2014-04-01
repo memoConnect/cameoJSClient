@@ -1,6 +1,8 @@
 .cm-unread{ color:@cm-warning-color }
 
-
+cm-conversation{
+  padding-top:@cm-conversation-control-height;
+}
 
 li:first-of-type cm-conversation-tag {
     border-top: solid @cm-border-grey 0.05em;    
@@ -10,7 +12,7 @@ cm-conversation-tag{
     display: block;  
     background: @cm-overlay-light;
     color: @cm-dark-grey;
-    border-bottom: solid @cm-border-grey 0.05em;    
+    border-bottom: solid @cm-border-grey 0.05em;
     height: 3.6em;
     position:relative;
 
@@ -105,40 +107,34 @@ cm-recipient-counter{
   }
   .foreground {
     color:#fff;
-    display: block;
-    position: absolute;
-    top: 45%;
-    left: 0;
-    bottom: 0;
-    right: 22%;
-    font-size: 0.3em;
-    font-style: normal;
-    font-weight: bold;
-    line-height: 1em;
-    text-align: center;
-    z-index: 2;
-  }
-}
-
-cm-conversation-controls{
-  display:block;
-  height:2em;
-  position:relative;
-  z-index:1;
-  .control{
-    display:block;
     position:absolute;
     left:0;
-    right:0;
-    top:0;
-    width:100%;
+    bottom:0;
+    right:22%;
+    font-size:0.3em;
+    font-style:normal;
+    font-weight:bold;
+    line-height:2.3em;
+    text-align:center;
+    z-index:2;
+  }
+}
+@cm-conversation-control-height:2em;
+cm-conversation-controls{
+  display:block;
+  position:fixed;
+  height:@cm-conversation-control-height;
+  width:@cm-app-width;
+  top:@cm-header-height;
+  z-index:1;
+  .control{
     line-height:2em;
     white-space:nowrap;
     font-size:0.6em;
-    cursor:pointer;
     overflow:hidden;
     padding-bottom:1em;
     .bar{
+      cursor:pointer;
       .border-radius-bottom;
       background:@cm-white;
       color:@cm-dark-grey;
@@ -149,9 +145,7 @@ cm-conversation-controls{
       .grip-left{
         text-align:left;
         i{
-          color:@cm-light-grey;
           margin-left:0.5em;
-          text-shadow:0 0 0.1em rgba(150, 150, 150, 1);
         }
       }
       cm-recipient-counter{
