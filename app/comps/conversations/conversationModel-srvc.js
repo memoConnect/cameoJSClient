@@ -35,7 +35,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                     })
                 }
             } else {
-                this.subject = '';
+                this.new = true;
             }
         };
 
@@ -112,11 +112,15 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.addNewRecipient = function(identity){
             if(identity && !this.hasRecipient(identity)){
-                cmConversationsAdapter.addRecipient(this.id, identity.id).then(
-                    function(){
-                        self.addRecipient(identity);
-                    }
-                )
+                if(this.new !== true){
+                    cmConversationsAdapter.addRecipient(this.id, identity.id).then(
+                        function(){
+                            self.addRecipient(identity);
+                        }
+                    )
+                } else {
+                    self.addRecipient(identity);
+                }
             }else{
                 console.warn('Recipient already present.') //@ Todo
             }
@@ -130,7 +134,10 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                 i--;
                 if (this.recipients[i] == identity){
                     this.recipients.splice(i, 1);
-                    cmConversationsAdapter.remoceRecipient(this.id, identity.id)
+
+                    if(this.new !== true){
+                        cmConversationsAdapter.removeRecipient()(this.id, identity.id)
+                    }
                 }
             }
             return this;
@@ -138,10 +145,14 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
 
         this.updateSubject = function (subject) {
-            cmConversationsAdapter.updateSubject(this.id, subject)
-                .then(function(){
-                    self.subject = subject
-                })
+            if(this.new !== true){
+                cmConversationsAdapter.updateSubject(this.id, subject)
+                    .then(function(){
+                        self.subject = subject
+                    })
+            } else {
+                this.subject = subject;
+            }
         };
 
         this.setPassphrase = function (passphrase) {
