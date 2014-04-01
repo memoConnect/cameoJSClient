@@ -77,11 +77,11 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmC
                             .sendTo($scope.conversation.id)
                             .then(function(){
                                 $scope.my_message_text = "";
-                            })
 
-                        if($scope.new_conversation !== false){
-                            $location.path('/conversation/' + $scope.conversation.id);
-                        }
+                                if($scope.new_conversation !== false){
+                                    $location.path('/conversation/' + $scope.conversation.id);
+                                }
+                            })
                     }
                  }
 
