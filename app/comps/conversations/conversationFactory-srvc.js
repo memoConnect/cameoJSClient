@@ -28,10 +28,12 @@ function cmConversationFactory ($rootScope, cmConversationModel){
                     instances.push(conversation);
                 }
 
-                return conversation;
+            } else {
+                conversation = new cmConversationModel();
+                instances.push(conversation);
             }
 
-            return new cmConversationModel();
+            return conversation;
         },
         getQty: function(){
             return instances.length;

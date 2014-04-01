@@ -17,21 +17,24 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
     this.addConversation = function(conversation){
         var i = 0,
             checkConversation = null;
-        if(this.conversations.length == 0){
-            this.conversations.push((conversation));
-        } else {
-            while(i < this.conversations.length){
-                if(conversation.id == this.conversations[i].id){
-                    checkConversation = this.conversations[i]
-                    break;
-                }
-                i++;
-            }
 
-            if(checkConversation !== null){
-//                checkConversation.update();
-            } else {
+        if(typeof conversation !== 'undefined'){
+            if(this.conversations.length == 0){
                 this.conversations.push(conversation);
+            } else {
+                while(i < this.conversations.length){
+                    if(conversation.id == this.conversations[i].id){
+                        checkConversation = this.conversations[i]
+                        break;
+                    }
+                    i++;
+                }
+
+                if(checkConversation !== null){
+                    //                checkConversation.update();
+                } else {
+                    this.conversations.push(conversation);
+                }
             }
         }
     };
