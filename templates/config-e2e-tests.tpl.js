@@ -1,3 +1,3 @@
-this.wwwUrl = '<%= currentWwwUrl %>';
-this.accountName = '<%= accountName %>';
-this.accountPassword = '<%= accountPassword %>';
+this.wwwUrl = '<%= currentWwwUrl %>' ;
+this.accountName = '<%= accountName %>' ;
+this.accountPassword = '<%= accountPassword %>' ;

@@ -10,13 +10,10 @@ case "$1" in
    "test")
         target=--target="test"
       ;;
-   *)
-
-      ;;
 esac
 
 if [ ! -z $2 ]; then
-    wwwUrlArg=--wwwUrl=\"${2}\"
+    wwwUrlArg=--wwwUrl=${2}
     echo -e "\e[33m[ CameoClient - setting WWW Url to ${wwwUrlArg} ]\033[0m"
 fi
 

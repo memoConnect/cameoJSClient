@@ -42,6 +42,7 @@ body {
     width:100%;
     background-color:#fff;
     cursor:default;
+  //overflow:hidden;<-zerstört das scrollen in talks im ff
 }
 pre {
     text-align:left
@@ -91,7 +92,11 @@ li {
     margin:0 auto;
 }
 
-.cm-content{
+#cm-app.landscape {
+    box-shadow: 0 0 1em @cm-black; 
+}
+
+.cm-content {
     position:relative;
     padding-top: @cm-header-height;
     padding-bottom: @cm-footer-height;
