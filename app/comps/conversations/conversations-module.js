@@ -22,6 +22,7 @@ cmConversations.factory('cmConversationModel',[
     'cmMessageFactory',
     'cmIdentityFactory',
     'cmRecipientModel',
+    '$q',
     cmConversationModel
 ]);
 

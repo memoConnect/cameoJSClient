@@ -64,7 +64,13 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmC
                     recipients_missing  = $scope.conversation.recipients.length <= 1
 
                 if(!message_empty && passphrase_valid && !recipients_missing){
-                    if($scope.new_conversation !== true){
+                    if($scope.conversation.id == ''){
+                        $scope.conversation.save().then(
+                            function(){
+                                $scope.sendMessage();
+                            }
+                        );
+                    } else {
                         cmMessageFactory.create( {body: $scope.my_message_text} )
                             .encrypt($scope.passphrase)
                             .addTo($scope.conversation)
@@ -72,27 +78,12 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmC
                             .then(function(){
                                 $scope.my_message_text = "";
                             })
-                    } else {
-                        $scope.conversation.sync()
-                        cmMessageFactory.create( {body: $scope.my_message_text} )
-                            .encrypt($scope.passphrase)
-                            .addTo($scope.conversation);
 
-                        if($scope.conversation.save()){
+                        if($scope.new_conversation !== true){
                             $location.path('/conversation/' + $scope.conversation.id);
                         }
                     }
                  }
-
-//                !message_empty && passphrase_valid && !recipients_missing
-//                    ?   cmMessageFactory.create( {body: $scope.my_message_text} )
-//                        .encrypt($scope.passphrase)
-//                        .sendTo($scope.conversation)
-//                        .then(function () {
-//                            if ($scope.new_conversation) $location.path('/conversation/' + $scope.conversation.id)
-//                            $scope.my_message_text = ""
-//                        })
-//                    :   null
 
                 if (!passphrase_valid)    cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID')
                 if (message_empty)        cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY')

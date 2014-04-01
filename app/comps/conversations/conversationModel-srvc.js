@@ -1,6 +1,6 @@
 'use strict';
 
-function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmRecipientModel){
+function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmRecipientModel, $q){
     var ConversationModel = function(data){
         //Attributes:
         this.id = '';
@@ -199,25 +199,41 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         }
 
         this.save = function(){
+            var deferred = $q.defer();
+
             if(this.id == ''){
                 cmConversationsAdapter.newConversation().then(
                     function (conversation_data) {
                         self.init(conversation_data);
+                        console.log(self);
+
+                        var i = 0;
+                        while(i < self.recipients.length){
+                            cmConversationsAdapter.addRecipient(self.id, self.recipients[i].id);
+                            i++;
+                        }
+
+                        deferred.resolve();
+                    },
+
+                    function(){
+                        deferred.reject();
                     }
                 )
+            } else {
+                deferred.resolve();
             }
 
-            this.updateSubject(this.subject);
+//            cmConversationsAdapter.updateConversation(this).then(
+//                function(){
+//                    //log
+//                },
+//                function(){
+//                    //log fail
+//                }
+//            )
 
-            cmConversationsAdapter.updateConversation(this).then(
-                function(){
-                    //log
-                },
-                function(){
-                    //log fail
-                }
-            )
-
+            return deferred.promise;
         }
 
         this.init(data);
