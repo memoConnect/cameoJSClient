@@ -105,11 +105,7 @@ cmNotify.directive('cmNotifySignal', [
             controller: function ($scope, $element, $attrs) {
                 $scope.unreadNotifications = cmNotify.getNotifications().length > 0
 
-                console.log(cmNotify.getNotifications().length)
-
-                console.log($scope.unreadNotifications)
-
-                $scope.$on('cmNotify', function(event){
+                $scope.$on('cmNotify:update', function(event){
                     $scope.unreadNotifications = cmNotify.getNotifications().length > 0
                 })
             }
