@@ -79,6 +79,9 @@ angular.module('cmUi', [
     '$rootScope',
     cmOverlay
 ])
+.directive('cmDateSeperator',[
+    cmDateSeperator
+])
 
 .filter('cmDigits', [
     function(){
