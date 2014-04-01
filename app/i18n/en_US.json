@@ -129,6 +129,9 @@
         },
         "PLACEHOLDER": {
             "NO_SUBJECT": "no subject"
+        },
+        "CONTROL": {
+            "CLOSE": "close"
         }
     },
 
@@ -141,7 +144,7 @@
         "HEADER": {
             "SEARCH_CAMEO_ID": "Add contact",
             "CONTACTS_LIST": "Contacts",
-            "REQUEST_LIST": "Friendship requests"
+            "REQUEST_LIST": "Contact requests"
         },
         "INFO": {
             "NO_RESULTS": "No cameo contacts found",
@@ -234,7 +237,7 @@
     "MENU": {
         "HEADER": "Menu",
         "NOTIFICATIONS": "Notifcations",
-        "FRIENDREQUESTS": "Friend Requests",
+        "REQUESTS": "Contact requests",
         "MESSAGES": "Messages",
         "HINTS": "Hints",
         "ACTIVITY": "Activity",
