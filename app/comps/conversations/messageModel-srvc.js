@@ -38,13 +38,26 @@ function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmU
             return !!decrypted_data
         }
 
-        this.sendTo = function (conversation) {
-            return  cmConversationsAdapter.sendMessage(conversation.id, { body: this.encryptedData })
+        /**
+         * add to local conversation object
+         * @param conversation
+         * @returns {cmMessageModel.Message}
+         */
+        this.addTo = function(conversation){
+            conversation.addMessage(self);
+
+            return this;
+        }
+
+        /**
+         * send message to backend object
+         * @param conversation
+         * @returns {*|Promise|!Promise.<RESULT>}
+         */
+        this.sendTo = function (conversationId) {
+            return  cmConversationsAdapter.sendMessage(conversationId, { body: this.encryptedData })
                     .then(function (message_data) {
                         self.init(message_data)
-                        conversation.addMessage(self)   //maybe replace self with new cmMessageModel(message_data) for more metadata
-                                                        //cant use cmMassageFactory here, because cmMessageFactory dependes on cmMessageModel
-
                     })
         }
 

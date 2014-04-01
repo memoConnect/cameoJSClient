@@ -1,6 +1,6 @@
 'use strict';
 
-function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory){
+function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmRecipientModel){
     var ConversationModel = function(data){
         //Attributes:
         this.id = '';
@@ -56,9 +56,9 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
          * @param message
          * @returns {cmConversationModel.ConversationModel}
          */
-        this.addMessage = function (message) {                        
+        this.addMessage = function (message) {
             if(this.messages.length == 0){
-                this.messages.push(message);
+                this.messages.push(message); // kunstgriff, eine neue conversation, hat erstmal nur eine message, da is der id abgleich egal
             }else {
                 var i = 0;
                 var check = false;
@@ -76,6 +76,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             }
 
             if (this.passphrase) message.decrypt(this.passphrase);
+
             return this
         };
 
@@ -102,7 +103,8 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.addRecipient = function (identity) {
             if(identity && !this.hasRecipient(identity)){
-                this.recipients.push(identity)                
+                this.recipients.push(new cmRecipientModel(identity));
+
             }else{
                 console.warn('Recipient already present.') //@ Todo
             }
@@ -196,6 +198,22 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.sync = function(){
             //cmConversationsAdapter.addRecipient(this.id, identity.id)
+        }
+
+        this.save = function(){
+            cmConversationsAdapter.newConversation().then(
+                function (conversation_data) {
+                    self.new = false;
+
+                    self.init(conversation_data);
+
+
+
+                    self.messages[0].sendTo(self.id);
+
+                    console.log(self)
+                }
+            )
         }
 
         this.init(data);

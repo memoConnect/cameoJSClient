@@ -21,6 +21,7 @@ cmConversations.factory('cmConversationModel',[
     'cmConversationsAdapter',
     'cmMessageFactory',
     'cmIdentityFactory',
+    'cmRecipientModel',
     cmConversationModel
 ]);
 
@@ -42,6 +43,12 @@ cmConversations.factory('cmMessageFactory',[
     '$rootScope',
     'cmMessageModel',
     cmMessageFactory
+])
+
+cmConversations.factory('cmRecipientModel',[
+    'cmConversationsAdapter',
+    'cmUserModel',
+    cmRecipientModel
 ])
 
 cmConversations.service('cmConversationsModel', [
