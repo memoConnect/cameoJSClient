@@ -205,7 +205,8 @@
 .cm-add-edge:before{content:'\f005'}
 .cm-addressbook-positive:before{content:'\f026'}
 .cm-addressbook:before{content:'\f006'}
-.cm-load-to:before{content:'\f027'}
+.cm-load-to-rhino:before{content:'\f027'}
+.cm-load-to:before{content:'\f039'}
 .cm-left:before{content:'\f007'}
 .cm-right:before{content:'\f008'}
 .cm-down:before{content:'\f009'}
@@ -251,3 +252,12 @@
 .cm-contacts:before{content:'\f035'}
 .cm-arrange:before{content:'\f036'}
 .cm-filter:before{content:'\f037'}
+.cm-anchor:before{content:'\f03a'}
+.cm-info:before{content:'\f03b'}
+.cm-video:before{content:'\f03c'}
+.cm-file:before{content:'\f03d'}
+.cm-grid:before{content:'\f03e'}
+.cm-grip:before{content:'\f040'}
+.cm-plus:before{content:'\f041'}
+.cm-sound:before{content:'\f042'}
+.cm-close:before{content:'\f043'}
