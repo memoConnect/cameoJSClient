@@ -7,7 +7,16 @@ function cmConversationControls($modal){
         },
 
         controller : function($scope, $element, $attrs){
-                $scope.addRecipients = function () {
+            $scope.bodyVisible = false;
+
+            $scope.handle = function(){
+                if($scope.bodyVisible)
+                    $scope.bodyVisible = false;
+                else
+                    $scope.bodyVisible = true;
+            };
+
+            $scope.addRecipients = function(){
                 $scope.isModalVisible = true;
 
                 var modalInstance = $modal.open({

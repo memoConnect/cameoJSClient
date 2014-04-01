@@ -31,14 +31,12 @@
         "LABEL": {
             "SUBMIT": "Benutzerkonto anlegen",
             "USERNAME": "Benutzername",
-            "CAMEOID": "CameoID",
             "NAME": "Anzeigename",
             "TERMS": " die AGB",
             "TERMS_ACCEPT": "Ich akzeptiere"
         },
         "PLACEHOLDER": {
-            "USERNAME": "Benutzername",
-            "CAMEOID": "CameoId",
+            "USERNAME": "Nutzername",
             "NAME": "Name"
         },
         "INFO": {
@@ -130,6 +128,9 @@
             "MESSAGE_EMPTY" : "Das Textfeld ist leer.",
             "RECIPIENTS_MISSING" : "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
             "PASSPHRASE_INVALID" : "Ungültiger Schlüssel."
+        },
+        "PLACEHOLDER": {
+            "NO_SUBJECT": "Kein Betreff"
         }
     },
 	
@@ -195,8 +196,8 @@
             }
         },
         "VALIDATE_PHONE": {
-            "LABEL": "Telefon",
-            "PLACEHOLDER": "Telefon",
+            "LABEL": "Mobil",
+            "PLACEHOLDER": "Mobil",
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
                 "EMPTY": "Das Telefonfeld ist leer"

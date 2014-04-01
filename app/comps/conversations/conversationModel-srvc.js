@@ -102,11 +102,12 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.addRecipient = function (identity) {
             if(identity && !this.hasRecipient(identity)){
-                this.recipients.push(identity)
+                this.recipients.push(identity)                
             }else{
                 console.warn('Recipient already present.') //@ Todo
             }
             return this;
+            //Update Backend width this.sync()
         };
 
         this.addNewRecipient = function(identity){
@@ -181,6 +182,10 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.getSavetyLevel = function(){
             return this.passphraseValid() && !this.passphrase ? 0 : 1     
+        }
+
+        this.sync = function(){
+            //cmConversationsAdapter.addRecipient(this.id, identity.id)
         }
 
         this.init(data);

@@ -109,7 +109,7 @@ var config = {
 //        'bootstrap': ['jquery']
     },
     // kick start application
-    deps: ['screen', 'app']
+    deps: ['app']
 }
 
 function addPackage(package_name, package) {
@@ -271,7 +271,8 @@ addPackage('pckUi',{
         'shared/ui/menu-drtv',
         'shared/ui/edge-drtv',
         'shared/ui/footer-drtv',
-        'shared/ui/resize-textarea'
+        'shared/ui/resize-textarea',
+        'shared/ui/date-seperator-drtv'
     ]
 })
 
