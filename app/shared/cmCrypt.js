@@ -154,6 +154,20 @@ angular.module('cmCrypt', ['cmLogger'])
                 }
             return false;
             }
+
+            encryptWithPublicKey: function(secret, pubKey){
+                var crypt = new JSEncrypt
+
+                crypt.setPublicKey(pubKey)
+                return crypt.encrypt(secret)
+            }
+
+            decryptWithPrivateKey: function(secret, privateKey){
+                var crypt = new JSEncrypt
+
+                crypt.setPrivateKey(pubKey)
+                return crypt.decrypt(secret)
+            }
         }
     }]
 );

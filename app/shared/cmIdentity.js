@@ -3,17 +3,61 @@
  */
 'use strict';
 
-angular.module('cmIdentity', ['cmAuth'])
-.factory('cmIdentityModel',['cmAuth', '$q', function(cmAuth, $q){
+angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
+.factory('cmIdentityModel',['cmAuth', 'cmCrypt', '$q', function(cmAuth, cmCrypt, $q){
     var Identity = function(identity_data){
+
+        this.id,        
+        this.displayName,
+        this.userKey,  
+        this.cameoId, 
+        this.email                   = {value: undefined, isVerified: undefined},
+        this.phoneNumber             = {value: undefined, isVerified: undefined},    
+        this.preferredMessageType,
+        this.publicKeys,
+        this.userType,
+        this.reated,
+        this.lastUpdated
+
         var self = this;
 
-        this.hasPubKey = function(){
-            //
+        this.getKeyId = function(){
+            return 123
+        }
+
+        this.encryptPassphrase = function(key){
+            var encryptedKeyList = []
+
+            this.publicKeys.forEach(function(pubKey){
+                encrypted_data.push({
+                    keyId:                  pubKey.id
+                    encrypted_passphrase:   cmCrypt.encryptWithPublicKey(key, pubkey)
+                })
+            }) 
+
+            return encryptedKeyList
+        }
+
+        this.decryptPassphrase = function(key, fallback_password){
+            var passphrase = false
+
+            this.privateKeys.forEach(function(pubKey){
+                if(!passphrase){
+                    encrypted_data.push({
+                        passphrase = cmCrypt.encryptWithPublicKey(key, pubkey)
+                    })
+                }
+            })
+
+            return passphrase
         }
 
         this.getDisplayName = function(){
             return  this.displayName || this.cameoId || this.id;
+        }
+
+        this.getPubKeys = function(){
+
         }
 
         this.getAvatar = function(){

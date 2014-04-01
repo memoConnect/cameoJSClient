@@ -11,6 +11,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.created = '';
         this.lastUpdated = '';
         this.numberOfMessages = 0;
+        this.encryptedKeyList = {}
 
         var self = this;
 
@@ -37,6 +38,28 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                 }
             }
         };
+
+        this.encryptPassphrase = function(){
+            var success = true
+                encryptedKeyList =  []
+
+            this.recipients.forEach(recipient){
+                var key_list = recipient.encryptPassphrase(self.passphrase)
+                success = success && encrypted_passphrase
+                if(success) key_list.concat(key_list)
+            }
+
+            return success ? key_list : null
+        }
+
+        this.decryptPassphrase = function(){
+            this.encryptedKeyList.forEach(item){
+                if(!this.passphrase){
+                    this.passphrase = cmUserModel.data.decryptPassphrase(item.encrypted_pass)
+                }
+            }
+            
+        }
 
         /**
          * @TODO with timestamp
@@ -102,30 +125,29 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.addRecipient = function (identity) {
             if(identity && !this.hasRecipient(identity)){
-                this.recipients.push(identity);
+                this.recipients.push(new cmRecipientModel(identity));
             }else{
                 console.warn('Recipient already present.') //@ Todo
             }
             return this;
-            //Update Backend width this.sync()
         };
 
-//        this.addNewRecipient = function(identity){
-//            if(identity && !this.hasRecipient(identity)){
-//                if(this.id != ''){
-//                    cmConversationsAdapter.addRecipient(this.id, identity.id).then(
-//                        function(){
-//                            self.addRecipient(identity);
-//                        }
-//                    )
-//                } else {
-//                    self.addRecipient(identity);
-//                }
-//            }else{
-//                console.warn('Recipient already present.') //@ Todo
-//            }
-//            return this;
-//        }
+        this.addNewRecipient = function(identity){
+            if(identity && !this.hasRecipient(identity)){
+                if(this.id != ''){
+                    cmConversationsAdapter.addRecipient(this.id, identity.id).then(
+                        function(){
+                            self.addRecipient(identity);
+                        }
+                    )
+                } else {
+                    self.addRecipient(identity);
+                }
+            }else{
+                console.warn('Recipient already present.') //@ Todo
+            }
+            return this;
+        }
 
         this.removeRecipient = function (identity) {
             var i = this.recipients.length;
