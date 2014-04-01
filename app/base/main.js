@@ -169,6 +169,7 @@ addPackage('pckConversations',{
         'angular',
         'cmApi', 
         'cmLogger', 
+        'cmNotify',
         'cmCrypt', 
         'cmAuth',
         'cmUtil',

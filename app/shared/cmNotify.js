@@ -4,9 +4,9 @@
 //wrapper
 //todo: growl directive wrappen?
 
-angular.module('cmNotify', ['angular-growl'])
+var cmNotify = angular.module('cmNotify', ['angular-growl'])
 
-.config(['growlProvider', '$httpProvider', function (growlProvider, $httpProvider) {
+cmNotify.config(['growlProvider', '$httpProvider', function (growlProvider, $httpProvider) {
     //intercept messages from Backend:
     /*
      {
@@ -34,13 +34,18 @@ angular.module('cmNotify', ['angular-growl'])
  * cmNotify.error('LOGIN.INFO.404', {ttl:5000, hideGlobal:true});
  */
 .service('cmNotify', [
+    '$rootScope',
     'growl',
     '$document',
-    function (growl, $document) {
+    function ($rootScope, growl, $document) {
+
+        var notifications = []
+
         /**
          * hide/show all cm-notify arround a modal
          * @param options
          */
+
         function handleGlobalVisiblity(options){
             if(options && 'hideGlobal' in options){
                 angular
@@ -48,6 +53,15 @@ angular.module('cmNotify', ['angular-growl'])
                 .css('display',options.hideGlobal ? 'none' : null)
             }
         }
+
+
+
+
+        $rootScope.$on('growlMessage', function(event, message){
+            notifications.push(message)
+            $rootScope.$broadcast('cmNotify:update')
+        })
+
 
         return {
             warn: function (msg, options) {
@@ -65,16 +79,44 @@ angular.module('cmNotify', ['angular-growl'])
             error: function (msg, options) {
                 handleGlobalVisiblity(options);
                 growl.addErrorMessage(msg, options);
+            },
+            getNotifications: function(){
+                return notifications
             }
         }
     }
 ])
+
 /**
  * directive for <div cm-notify>
  */
-.directive('cmNotify', function () {
+cmNotify.directive('cmNotify', function () {
     return {
         priority: 10000,
         template: '<div growl></div>'
     }
 });
+
+cmNotify.directive('cmNotifySignal', [
+
+    '$rootScope',
+    'cmNotify',
+
+    function ($rootScope, cmNotify) {
+        'use strict';
+        return {
+            restrict: 'AE',
+            template: '<i class="fa" ng-class="{\'cm-bell-ring\': unreadNotifications, \'cm-bell\' : !unreadNotifications}"></i>',
+            scope: true,
+
+            controller: function ($scope, $element, $attrs) {
+                $scope.unreadNotifications = cmNotify.getNotifications().length > 0
+
+                $scope.$on('cmNotify:update', function(event){
+                    $scope.unreadNotifications = cmNotify.getNotifications().length > 0
+                })
+            }
+            
+        }
+    }
+]);
