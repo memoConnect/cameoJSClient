@@ -79,7 +79,7 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmC
                                 $scope.my_message_text = "";
                             })
 
-                        if($scope.new_conversation !== true){
+                        if($scope.new_conversation !== false){
                             $location.path('/conversation/' + $scope.conversation.id);
                         }
                     }
