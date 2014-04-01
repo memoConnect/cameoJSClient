@@ -41,8 +41,7 @@ body {
     font-size: 1em;
     width:100%;
     background-color:#fff;
-    cursor:default;    
-  //overflow:hidden;<-zerstört das scrollen in talks im ff
+    cursor:default;
 }
 pre {
     text-align:left
@@ -92,7 +91,8 @@ li {
     margin:0 auto;
 }
 
-.cm-content {
+.cm-content{
+    position:relative;
     padding-top: @cm-header-height;
     padding-bottom: @cm-footer-height;
     min-height: 100%; /* Mindesthöhe für moderne Browser */
@@ -117,26 +117,22 @@ li {
                 text-align:center;
                 font-weight:bold;            
             }
-
-
         }
     }
-
+    &.no-header{padding-top:0px}
+    &.no-footer{padding-bottom:0px}
 }
 
-
+.cm-page-body{
+    color:@cm-white;
+    padding:3em;
+}
 
 .single-line{
     text-overflow: ellipsis;
     overflow:hidden;
     white-space:nowrap;
 }
-
-
-
-
-
-
 
 .without-border-radius{
     -webkit-border-radius:0!important;

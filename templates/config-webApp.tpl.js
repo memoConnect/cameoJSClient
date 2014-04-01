@@ -8,7 +8,8 @@ cameo_config = {
     routes: {
         'login': {
             hasCtrl: true,
-            isOtherwise: true
+            isOtherwise: true,
+            css: 'no-header no-footer'
         },
         'start': {
             hasCtrl: true
@@ -47,7 +48,9 @@ cameo_config = {
         'server_down' : {
             templateUrl: 'routes/landingpages/server_down.html'
         },
-        'terms': {},
+        'terms': {
+            css: 'no-footer'
+        },
         'disclaimer': {},
         '404': {
             templateUrl:'routes/landingpages/404.html'

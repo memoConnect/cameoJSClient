@@ -1,6 +1,7 @@
-<i class="fa cm-menu cm-handler" ng-click="handleMenu()"></i>
+<div cm-transparent-bg ng-show="menuVisible"></div>
+<i class="fa cm-menu cm-handler"></i>
 <div class="cm-menu-layer" ng-show="menuVisible">
-    <div class="cm-nose-wrapper" ng-click="handleMenu()"><i class="fa cm-nose-up"></i></div>
+    <div class="cm-nose-wrapper"><i class="fa cm-nose-up"></i></div>
     <ul class="list-group">
         <li class="cm-list-group-item" ng-repeat="btn in btns" ng-class="btn.menuClass">
             <i class="fa" ng-if="btn.icon != undefined" ng-class="btn.icon"></i>
@@ -14,4 +15,3 @@
         </li>
     </ul>
 </div>
-<div modal-backdrop ng-show="menuVisible" ng-click="handleMenu()"></div>

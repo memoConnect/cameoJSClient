@@ -13,11 +13,9 @@
 
     <script data-main="base/main.js" src="vendor/requirejs/require.js"></script>
     
-
 </head>
 <body>
     <div id="cm-app">
-
         <div class="app-spinner">
             <i class="fa cm-rhino-positive shake-hard"></i>
         </div>
@@ -26,7 +24,7 @@
         <div cm-notify></div>
         <div cm-spinner></div>
 
-        <article ng-view class="view-frame cm-content"></article>
+        <div ng-view cm-view class="view-frame cm-content" ng-class="css"></div>
     </div>
 </body>
 </html>
