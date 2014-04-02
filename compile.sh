@@ -11,7 +11,7 @@ for i in "$@" ; do
 	    -m=*|--mode=*)
 		    buildMode="${i#*=}"
 	    ;;
-	    -a=*|--apiUrl*)
+	    -a=*|--apiUrl=*)
 		    apiUrl="${i#*=}"
 		    echo -e "\e[33m[ CameoClient - setting API Url to ${apiUrl} ]\033[0m"
 		    apiUrlArg=--apiUrl=${apiUrl}

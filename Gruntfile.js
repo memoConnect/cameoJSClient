@@ -183,6 +183,12 @@ module.exports = function (grunt) {
         copy: {
             'phonegap-resources': {
                 files: [
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: 'dist/**',
+                        dest: 'phonegap-build/www/'                        
+                    },
                     // copy all icon and splashs to /www/res
                     {
                         expand: true,
@@ -197,6 +203,7 @@ module.exports = function (grunt) {
                         src: 'phonegap-res/*.js',
                         dest: 'phonegap-build/www/'
                     }
+                    
                 ]
             }, 'dev-deploy': {
                 files: [
@@ -221,12 +228,22 @@ module.exports = function (grunt) {
                         dest: 'dist/'
                     }
                 ]
+            }, 'phonegap-target': {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'phonegap-target',
+                        src: ['*','!*.zip'],
+                        dest: 'dist/dl/'
+                    }
+                ]
             }
         },
         clean: {
             'dalek-report': ['report'],
             'dev-deploy': ['dist/app/less'],
             'dist-app': ['dist/app'],
+            'dist': ['dist'],
             'phonegap-target': ['phonegap-target']
         },
 
@@ -507,13 +524,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-phonegap-build');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.registerTask('phonegap-bs', [
-        'clean:phonegap-app',
+        'clean:phonegap-target',
         'deploy',
-        'phonegap:build',
+     //   'phonegap:build',
         'copy:phonegap-resources',
         'template:phonegap-index',
         'compress',
-        'phonegap-build:debug'
+        'phonegap-build:debug',
+        'copy:phonegap-target',
     ]);
 
     // deploy www without phonegap
@@ -538,5 +556,5 @@ module.exports = function (grunt) {
     grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
 
     // deploy it for me babe !!
-    grunt.registerTask('deploy', ['clean:dist-app', 'genAllTemplates', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
+    grunt.registerTask('deploy', ['clean:dist', 'genAllTemplates', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
 };
