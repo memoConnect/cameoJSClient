@@ -17,6 +17,7 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
             if($scope.new_conversation !== true){
                 cmConversationsModel.getConversation(conversation_id).then(
                     function (conversation) {
+
                         $scope.init(conversation)
                     }
                 )
@@ -76,6 +77,7 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                             .addTo($scope.conversation)
                             .sendTo($scope.conversation.id)
                             .then(function(){
+                                $scope.conversation.numberOfMessages++;
                                 $scope.my_message_text = "";
 
                                 if($scope.new_conversation !== false){

@@ -10,7 +10,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.passphrase = '';
         this.created = '';
         this.lastUpdated = '';
-        this.count = 0;
+        this.numberOfMessages = 0;
 
         var self = this;
 
@@ -18,7 +18,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             if(typeof conversation_data !== 'undefined'){
                 this.id             = conversation_data.id;
                 this.subject        = conversation_data.subject;
-                this.count          = conversation_data.numberOfMessages;
+                this.numberOfMessages   = conversation_data.numberOfMessages;
                 this.lastUpdated    = conversation_data.lastUpdated;
 
                 // register all messages as Message objects
