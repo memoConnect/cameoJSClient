@@ -42,6 +42,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.update = function(){
             cmConversationsAdapter.getConversation(this.id).then(
                 function(data){
+                    self.messages = [];
                     self.init(data);
                 }
             )
