@@ -45,6 +45,8 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                     self.init(data);
                 }
             )
+
+            return this;
         }
 
         this.encryptPassphrase = function(){
