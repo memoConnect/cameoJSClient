@@ -183,6 +183,12 @@ module.exports = function (grunt) {
         copy: {
             'phonegap-resources': {
                 files: [
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: 'dist/**',
+                        dest: 'phonegap-build/www/'                        
+                    },
                     // copy all icon and splashs to /www/res
                     {
                         expand: true,
@@ -197,6 +203,7 @@ module.exports = function (grunt) {
                         src: 'phonegap-res/*.js',
                         dest: 'phonegap-build/www/'
                     }
+                    
                 ]
             }, 'dev-deploy': {
                 files: [
@@ -519,7 +526,7 @@ module.exports = function (grunt) {
     grunt.registerTask('phonegap-bs', [
         'clean:phonegap-target',
         'deploy',
-        'phonegap:build',
+     //   'phonegap:build',
         'copy:phonegap-resources',
         'template:phonegap-index',
         'compress',
