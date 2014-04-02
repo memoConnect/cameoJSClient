@@ -6,13 +6,13 @@
 
 input[type="checkbox"]{.clear-form-border}
 
-.form-registry-head{border-bottom: 0.05em solid #EEEEEE;margin-bottom: 3em}
+.form-registry-head{border-bottom:@cm-border-width solid #EEEEEE;margin-bottom: 3em}
 
 li.message-list {
   displaY:block;
   min-height:4em;
   overflow:hidden;
-  border:0.05em solid black;
+  border:@cm-border-width solid black;
   margin-bottom:0.8em;
   padding:0.3em;
   word-wrap:break-word;background-color:#d3d3d3
@@ -29,4 +29,7 @@ textarea[cm-message-input]{width:100%;min-height:3em}
 /* cm-language-select */
 [cm-language-select]{
   position:absolute;right:0.7em;top:0.7em;z-index:1
+}
+[cm-notify]{
+  position:absolute;right:0.7em;top:0.7em;z-index:10000;
 }

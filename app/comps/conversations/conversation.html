@@ -5,7 +5,7 @@
 <!-- nur temporär:-->
 
 <div ng-repeat="message in conversation.messages">
-    <cm-date-seperator ng-if="!$first">{{conversation.messages[$index - 1].created}}</cm-date-seperator>
+    <cm-date-seperator ng-if="(!$first && compareDate(message.created,conversation.messages[$index - 1].created))">{{conversation.messages[$index - 1].created | date:'d.M.Y'}}</cm-date-seperator>
     <cm-message
         cm-data = "message"
         class   = "{{ message.isOwn() ? 'right' : ''}}"

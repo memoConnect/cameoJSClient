@@ -1,7 +1,7 @@
 cm-contact-tag {display: block;  
     background: @cm-overlay-light;
     color: @cm-dark-grey;
-    border-bottom: solid @cm-grey 0.1em;    
+    border-bottom: solid @cm-grey @cm-border-width;
     height: 3.6em;
     position:relative;
 
@@ -52,8 +52,8 @@ cm-contact-tag {display: block;
              display:inline-block;
              width:0.2em;
              height:100%;
-             border-left:0.05em solid @cm-grey;           
-             border-right:0.05em solid @cm-grey;
+             border-left:@cm-border-width solid @cm-grey;
+             border-right:@cm-border-width solid @cm-grey;
         }
     }
 }
@@ -106,8 +106,8 @@ cm-contacts-filter-controls{
         z-index:99;
 
         li{
-            border-top: 0.1em solid @cm-border-grey;
-            text-align: center;
+            border-top:@cm-border-width solid @cm-border-grey;
+            text-align:center;
         }        
     }
 }
