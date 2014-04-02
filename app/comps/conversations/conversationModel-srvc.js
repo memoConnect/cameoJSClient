@@ -53,11 +53,11 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         }
 
         this.decryptPassphrase = function(){
-            this.encryptedKeyList.forEach(item){
+            this.encryptedKeyList.forEach(function(item){
                 if(!this.passphrase){
                     this.passphrase = cmUserModel.data.decryptPassphrase(item.encrypted_pass)
                 }
-            }
+            })
             
         }
 
