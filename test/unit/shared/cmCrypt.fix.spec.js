@@ -127,24 +127,23 @@ describe('cmCrypt', function () {
         describe('generateAsyncKeypair()', function(){
 
             it('should asynchronously generate a key pair', function(){
-                var data, publicKey, privateKey, p
+                var d, publicKey, privateKey, p
 
-                runs(function() {                                     
+                runs(function(){
                     cmCrypt
                     .generateAsyncKeypair(128, function(count){ console.log(count) })                    
-                    .finally(function(){ console.log('uhhuhl')})                    
+                    .finally(function(){ console.log('uhhuhl') })                    
                     .then(function(data){ 
-                        data = data
+                        d = data
                         publicKey  = data.pubKey
                         privateKey = data.privKey
                         console.log('sdf')
                     })                
                 })
 
-                waitsFor(function() {
-                    console.log(publicKey)
+                waitsFor(function() {                    
                     return publicKey && privateKey
-                }, "public and private key to be defined", 10000);
+                }, "public and private key to be defined", 50000);
                 
             })    
 
