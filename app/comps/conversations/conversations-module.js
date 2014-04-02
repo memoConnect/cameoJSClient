@@ -92,6 +92,7 @@ cmConversations.directive('cmConversation', [
     'cmConversationsModel',
     'cmMessageFactory',
     'cmUserModel',
+    'cmRecipientModel',
     'cmCrypt',
     'cmLogger',
     'cmNotify',
