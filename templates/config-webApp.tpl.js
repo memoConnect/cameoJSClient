@@ -56,6 +56,8 @@ cameo_config = {
         '404': {
             templateUrl:'routes/landingpages/404.html'
         },
-        'version': {}
+        'version': {
+            hasCtrl: true
+        }
     }
 };

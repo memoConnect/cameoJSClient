@@ -34,7 +34,7 @@ define([
         'cmAuth',
         'cmUserModel',
         'cmIdentity'
-    ]);
+    ]).constant('cmVersion',{version:cameo_config.version, last_build:'-'});
 
     //cameo_config = cameo_config
 
@@ -157,7 +157,6 @@ define([
                 // expections
                 var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
                 var path = $location.$$path;
-                console.log(path)
                 // exists none token then otherwise to login
                 if (cmUserModel.getToken() === false){
 //                    cmNotify.warn($cookies.token+' run without token '+path+' '+(!path_regex.test(path)?'to login':'stay'))
