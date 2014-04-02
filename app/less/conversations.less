@@ -5,14 +5,14 @@ cm-conversation{
 }
 
 li:first-of-type cm-conversation-tag {
-    border-top: solid @cm-border-grey 0.05em;    
+    border-top: solid @cm-border-grey @cm-border-width;
 }
 
 cm-conversation-tag{
     display: block;  
     background: @cm-overlay-light;
     color: @cm-dark-grey;
-    border-bottom: solid @cm-border-grey 0.05em;
+    border-bottom: solid @cm-border-grey @cm-border-width;
     height: 3.6em;
     position:relative;
 
@@ -176,11 +176,11 @@ cm-conversation-controls{
 }
 
 div.answer{
-  width: @cm-app-width;
+  width:@cm-app-width;
   min-height:@cm-footer-height;
   position:fixed;
   bottom:0;
-  z-index:99;
+  z-index:1;
   background-color:@cm-overlay-light;
   font-size:1.2em;
   vertical-align: middle;
@@ -228,10 +228,10 @@ div.answer{
 
       border-color: -moz-use-text-color #000000 #000000;
       border-image: none;
-      border-right: 0.1em solid #000000;
-      border-left: 0.1em solid #000000;
+      border-right: @cm-border-width solid #000000;
+      border-left: @cm-border-width solid #000000;
       border-style: none solid solid;
-      border-width: medium 0.1em 0.1em;
+      border-width: medium @cm-border-width @cm-border-width;
     }
   }
 }
