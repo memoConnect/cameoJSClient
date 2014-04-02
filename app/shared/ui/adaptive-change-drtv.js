@@ -1,4 +1,4 @@
-function cmAdaptiveChange() {
+function cmAdaptiveChange($timeout){
     return {
         restrict:       'A',
         require:        'ngModel',
@@ -12,15 +12,16 @@ function cmAdaptiveChange() {
                 .unbind('input')
                 .unbind('keydown')
                 .on('keydown', function(){
-                    window.clearTimeout(timeout)
-
-                    timeout = window.setTimeout(function(){                            
+                    // clear exists timeout
+                    if(timeout)
+                        $timeout.cancel(timeout)
+                    // create new timeout
+                    timeout = $timeout(function(){
                         scope.$apply(function() {
                             ngModelCtrl.$setViewValue(element.val())                                
                         })
                     },500)
                 })
         }
-
     }
 }

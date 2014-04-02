@@ -72,7 +72,6 @@ cmConversations.service('cmPurlModel',[
 ])
 
 cmConversations.directive('cmConversationControls', [
-    '$modal',
     cmConversationControls
 ])
 

@@ -5,7 +5,7 @@
 
         <div class="cm-form-group">
             <div class="cm-form-control with-inputter">
-                <input type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" />
+                <input type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" cm-adaptive-change />
             </div>
         </div>
 
@@ -16,7 +16,8 @@
             </cm-avatar>
         </div>
 
-        <button ng-click="handle(true)" class="cm-btn">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
+        <button ng-click="handle()" class="cm-btn" ng-if="!isNew">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
+        <button ng-click="handle()" class="cm-btn" ng-if="isNew">{{'CONVERSATION.CONTROL.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
     </div>
 
     <div class="bar" cm-rubber-space ng-click="handle()">

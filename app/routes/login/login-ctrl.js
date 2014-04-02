@@ -16,7 +16,8 @@ define([
                     template: '<div cm-login></div>',
                     controller: function ($rootScope, $scope, $modalInstance) {
                         $rootScope.$on('cmLogin:success', function(){
-                            $modalInstance.close();
+                            if($modalInstance != undefined)
+                                $modalInstance.close();
                         })
                     }
                 });
