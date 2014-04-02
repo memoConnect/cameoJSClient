@@ -7,17 +7,17 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
 .factory('cmIdentityModel',['cmAuth', 'cmCrypt', '$q', function(cmAuth, cmCrypt, $q){
     var Identity = function(identity_data){
 
-        this.id,        
-        this.displayName,
-        this.userKey,  
-        this.cameoId, 
-        this.email                   = {value: undefined, isVerified: undefined},
-        this.phoneNumber             = {value: undefined, isVerified: undefined},    
-        this.preferredMessageType,
-        this.publicKeys,
-        this.userType,
-        this.reated,
-        this.lastUpdated
+        this.id                     = undefined
+        this.displayName            = undefined
+        this.userKey                = undefined
+        this.cameoId                = undefined
+        this.email                  = {value: undefined, isVerified: undefined}
+        this.phoneNumber            = {value: undefined, isVerified: undefined}    
+        this.preferredMessageType   = undefined
+        this.publicKeys             = undefined
+        this.userType               = undefined
+        this.created                = undefined
+        this.lastUpdated            = undefined
 
         var self = this;
 
@@ -28,10 +28,10 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
         this.encryptPassphrase = function(key){
             var encryptedKeyList = []
 
-            this.publicKeys.forEach(function(pubKey){
+            this.publicKeys.forEach(function(publicKey){
                 encrypted_data.push({
-                    keyId:                  pubKey.id,
-                    encrypted_passphrase:   cmCrypt.encryptWithPublicKey(key, pubkey)
+                    keyId:                  publicKey.id,
+                    encrypted_passphrase:   cmCrypt.encryptWithPublicKey(key, publickey)
                 })
             }) 
 
@@ -41,9 +41,9 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
         this.decryptPassphrase = function(key, fallback_password){
             var passphrase = false
 
-            this.privateKeys.forEach(function(pubKey){
+            this.privateKeys.forEach(function(privateKey){
                 if(!passphrase){
-                    passphrase : cmCrypt.encryptWithPublicKey(key, pubkey)
+                    passphrase : cmCrypt.decryptWithPrivateKey(key, privateKey)
                 }
             })
 
@@ -70,17 +70,35 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
             var deferred = $q.defer();
 
             if(typeof identity_data === 'object'){
-                this.id = identity_data.id;
 
-                angular.extend(this, identity_data);
+                //init:
+
+                this.id = identity_data.id;
+                this.displayName            = identity_data.displayName
+                this.userKey                = identity_data.userKey
+                this.cameoId                = identity_data.cameoId
+                this.email                  = identity_data.email
+                this.phoneNumber            = identity_data.phoneNumber
+                this.preferredMessageType   = identity_data.preferredMessageType
+                this.publicKeys             = identity_data.publicKeys
+                this.userType               = identity_data.userType
+                this.created                = identity_data.created
+                this.lastUpdated            = identity_data.lastUpdated    
+
+
                 deferred.resolve();
+
             } else if(typeof identity_data === 'string'){
                 this.id = identity_data;
 
                 cmAuth.getIdentity(identity_data).then(
                     function(data){
-                        angular.extend(self, data);
-                        deferred.resolve();
+                        if(typeof data =='string'){
+                            cmLogger('cmAuth.getIdentity() should forward an object, got string instead. ')
+                            deferred.reject()
+                        }else{                     
+                            deferred.resolve(self.init(data));
+                        }
                     }
                 )
             } else {
