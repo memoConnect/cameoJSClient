@@ -15,47 +15,40 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
         this.phoneNumber            = {value: undefined, isVerified: undefined}    
         this.preferredMessageType   = undefined
         this.publicKeys             = undefined
+        this.privateKeys            = undefined
         this.userType               = undefined
         this.created                = undefined
         this.lastUpdated            = undefined
 
         var self = this;
 
-        this.getKeyId = function(){
-            return 123
-        }
-
-        this.encryptPassphrase = function(key){
-            var encryptedKeyList = []
+        this.getWeakestKeyLength = function(){
+            var length = 0
 
             this.publicKeys.forEach(function(publicKey){
-                encrypted_data.push({
+                length = Math.min(publicKey.size||0)        //Not yet implemented
+            })
+
+            return(length)
+        }
+
+        //Encrypt passphrase with all available public keys
+        //Identities cannot decrypt, Users can
+        this.encryptPassphrase = function(passphrase){
+            var encrypted_key_list = []
+
+            this.publicKeys.forEach(function(publicKey){
+                encrypted_key_list.push({
                     keyId:                  publicKey.id,
-                    encrypted_passphrase:   cmCrypt.encryptWithPublicKey(key, publickey)
+                    encrypted_passphrase:   cmCrypt.encryptWithPublicKey(passphrase, publicKey.key)
                 })
             }) 
 
-            return encryptedKeyList
-        }
-
-        this.decryptPassphrase = function(key, fallback_password){
-            var passphrase = false
-
-            this.privateKeys.forEach(function(privateKey){
-                if(!passphrase){
-                    passphrase : cmCrypt.decryptWithPrivateKey(key, privateKey)
-                }
-            })
-
-            return passphrase
+            return encrypted_key_list
         }
 
         this.getDisplayName = function(){
             return  this.displayName || this.cameoId || this.id;
-        }
-
-        this.getPubKeys = function(){
-
         }
 
         this.getAvatar = function(){

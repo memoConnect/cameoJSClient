@@ -140,12 +140,17 @@ describe('cmCrypt', function () {
                     .then(function(data){
                         publicKey  = data.pubKey
                         privateKey = data.privKey
+
+
+                console.log(publicKey)
+                console.log(privateKey) 
                     })             
                 })
 
                 waitsFor(function() {                    
                     return publicKey && privateKey
-                }, "public and private key to be defined", 10000);             
+                }, "public and private key to be defined", 10000);   
+
                 
             }))
 
@@ -165,6 +170,10 @@ describe('cmCrypt', function () {
                 expect(decrypted_secret).toBeDefined()
                 expect(decrypted_secret).toEqual('priv')
 
+            })
+
+            it('should provide a function "getKeySize" to detect the keysize of publick keys', function(){
+                cmCrypt.getKeySize('abc')
             })
 
         })

@@ -21,6 +21,41 @@ describe('cmIdentityModel', function(){
         var obj = createIdentity();
         expect(obj.init).toBeDefined()
     })
+
+    describe('Encryption and Key Management', function(){
+        var publicKey     = "-----BEGIN PUBLIC KEY-----\nMCwwDQYJKoZIhvcNAQEBBQADGwAwGAIRALRvUT+teouT0TBjIsbaT8kCAwEAAQ==\n-----END PUBLIC KEY-----",
+            privateKey    = "-----BEGIN RSA PRIVATE KEY-----\nMGICAQACEQC0b1E/rXqLk9EwYyLG2k/JAgMBAAECEG5Bo4VkzYBiECbf9molRj0C\nCQDuAiRcSRLd8wIJAMITCBrddr5TAgkAqF4ZjLMgxqMCCHIECFDwJuCtAgh1H1nq\nsuLGUA==\n-----END RSA PRIVATE KEY-----",
+            identity_data = {
+                                id:             'my_test_id',
+                                publicKeys :    [
+                                                    { id: 'my_first_key',   key : publicKey},
+                                                    { id: 'my_second_key',  key : publicKey},
+                                                    { id: 'my_third_key',   key : publicKey},
+                                                ]
+                            },
+            identity      = undefined
+            beforeEach(inject(function(cmIdentityModel){
+                identity  = new cmIdentityModel(identity_data)
+            }))
+
+            it('should provide a function "encryptPassphrase" to encrypt a passphrase with all availabe public keys', function(){       
+                var passphrase  = "my_passphrase",
+                    key_list    = identity.encryptPassphrase()
+
+                expect(key_list.length).toBe(3)
+                expect(key_list[0].encrypted_passphrase).toBeTruthy()
+                expect(key_list[1].encrypted_passphrase).toBeTruthy()
+                expect(key_list[2].encrypted_passphrase).toBeTruthy()
+                console.log(key_list)
+                //wether the encryption actually worked correctly is tested elsewhere; check cmCrypt
+            })
+
+            it('should provide a function "getWeakestKeyLength" to detect the weakest key', function(){
+
+            })
+
+
+    })
 })
 
 describe('cmIdentityFactory', function(){
