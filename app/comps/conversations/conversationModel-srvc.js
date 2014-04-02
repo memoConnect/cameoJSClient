@@ -40,14 +40,39 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         };
 
         this.update = function(){
-            cmConversationsAdapter.getConversation(this.id).then(
-                function(data){
-                    self.messages = [];
-                    self.init(data);
-                }
-            )
+            if(this.id != ''){
+                cmConversationsAdapter.getConversationSummary(this.id).then(
+                    function(data){
+                        if(self.messages.length < data.numberOfMessages){
+                            var offset = 0;
+                            var clearAllMessages = true;
+                            if(self.messages.length > 1){
+                                offset = self.messages.length;
+                                clearAllMessages = false;
+                            }
+                            var limit = data.numberOfMessages - offset;
+
+                            self.updateMessages(limit, offset, clearAllMessages);
+                        }
+                    }
+                )
+            }
 
             return this;
+        }
+
+        this.updateMessages = function(limit, offset, clearMessages){
+            cmConversationsAdapter.getConversation(this.id, limit, offset).then(
+                function(data){
+                    if(typeof clearMessages !== 'undefined' && clearMessages !== false){
+                        self.messages = [];
+                    }
+
+                    data.messages.forEach(function(message_data) {
+                        self.addMessage(cmMessageFactory.create(message_data));
+                    });
+                }
+            )
         }
 
         this.encryptPassphrase = function(){
@@ -95,7 +120,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             }else {
                 var i = 0;
                 var check = false;
-                    while(i < this.messages.length){
+                while(i < this.messages.length){
                     if(message.id == this.messages[i].id){
                         check = true;
                         break;

@@ -33,11 +33,7 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
 
             $scope.init = function (conversation) {
                 // reload detail of conversation
-//                if($scope.new_conversation){
-                    $scope.conversation = conversation
-//                } else {
-//                    $scope.conversation = conversation.update()
-//                }
+                $scope.conversation = conversation.update();
 
                 $scope.my_message_text  = ""
                 $scope.passphrase       = ""
