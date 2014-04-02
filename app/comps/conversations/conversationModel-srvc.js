@@ -39,6 +39,14 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             }
         };
 
+        this.update = function(){
+            cmConversationsAdapter.getConversation(this.id).then(
+                function(data){
+                    self.init(data);
+                }
+            )
+        }
+
         this.encryptPassphrase = function(){
             var success = true,
                 encryptedKeyList = [];

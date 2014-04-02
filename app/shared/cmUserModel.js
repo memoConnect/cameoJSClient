@@ -146,7 +146,11 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
     };
 
     this.loadKeys = function(){
-        return this.storageGet('pgp');
+        var keys = this.storageGet('pgp');
+        if(keys == 'undefined'){
+            return [];
+        }
+        return keys;
     };
 
     /**
