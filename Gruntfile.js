@@ -543,7 +543,7 @@ module.exports = function (grunt) {
         'template:phonegap-index',
 		'template:dl-index',
         'compress',
-        //'phonegap-build:debug',
+        'phonegap-build:debug',
         'copy:phonegap-target'
     ]);
 
