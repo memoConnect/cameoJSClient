@@ -40,8 +40,8 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         };
 
         this.encryptPassphrase = function(){
-            var success = true
-                encryptedKeyList =  []
+            var success = true,
+                encryptedKeyList = [];
 
             this.recipients.forEach(function(recipient){
                 var key_list = recipient.encryptPassphrase(self.passphrase)
@@ -125,29 +125,29 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.addRecipient = function (identity) {
             if(identity && !this.hasRecipient(identity)){
-                this.recipients.push(new cmRecipientModel(identity));
+                this.recipients.push(identity);
             }else{
                 console.warn('Recipient already present.') //@ Todo
             }
             return this;
         };
 
-        this.addNewRecipient = function(identity){
-            if(identity && !this.hasRecipient(identity)){
-                if(this.id != ''){
-                    cmConversationsAdapter.addRecipient(this.id, identity.id).then(
-                        function(){
-                            self.addRecipient(identity);
-                        }
-                    )
-                } else {
-                    self.addRecipient(identity);
-                }
-            }else{
-                console.warn('Recipient already present.') //@ Todo
-            }
-            return this;
-        }
+//        this.addNewRecipient = function(identity){
+//            if(identity && !this.hasRecipient(identity)){
+//                if(this.id != ''){
+//                    cmConversationsAdapter.addRecipient(this.id, identity.id).then(
+//                        function(){
+//                            self.addRecipient(identity);
+//                        }
+//                    )
+//                } else {
+//                    self.addRecipient(identity);
+//                }
+//            }else{
+//                console.warn('Recipient already present.') //@ Todo
+//            }
+//            return this;
+//        }
 
         this.removeRecipient = function (identity) {
             var i = this.recipients.length;
