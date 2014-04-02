@@ -155,17 +155,18 @@ define([
             // passing wrong route calls
             $rootScope.$on("$routeChangeStart", function(){
                 // expections
-                var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/purl\/[a-zA-Z0-9]{1,})$/;
+                var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
                 var path = $location.$$path;
+                console.log(path)
                 // exists none token then otherwise to login
                 if (cmUserModel.getToken() === false){
 //                    cmNotify.warn($cookies.token+' run without token '+path+' '+(!path_regex.test(path)?'to login':'stay'))
                     if (!path_regex.test(path)) {
                         $location.path("/login");
                     }
-                } else if ($location.$$path == "/login" || $location.$$path == "/registration") {
+                } else if (path == "/login" || path == "/registration") {
                     $location.path("/talks");
-                } else if ($location.$$path == "/logout"){
+                } else if (path == "/logout"){
                     cmUserModel.doLogout();
                 }
             });

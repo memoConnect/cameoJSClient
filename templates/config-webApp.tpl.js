@@ -55,6 +55,7 @@ cameo_config = {
         'disclaimer': {},
         '404': {
             templateUrl:'routes/landingpages/404.html'
-        }
+        },
+        'version': {}
     }
 };
