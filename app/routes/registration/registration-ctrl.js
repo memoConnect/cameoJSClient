@@ -184,7 +184,7 @@ define([
                         function (userData) {
                             cmUserModel.doLogin($scope.formData.loginName, $scope.formData.password).then(
                                 function(){
-                                    cmUserModel.setIdentiy(userData.identities[0]);
+                                    cmUserModel.setIdentity(userData.identities[0]);
                                     cmUserModel.comesFromRegistration = true;
                                     $location.path("/talks");
                                 }

@@ -7,7 +7,7 @@
 <div ng-if="active == 'showOwnKeys'">
     Liste eigener PubKeys, zum verwalten
     <ul class="list-group">
-        <li class="list-group-item" ng-repeat="key in $parent.ownKeys" ng-click="showExportKey(key)">
+        <li class="list-group-item" ng-repeat="key in ownKeys" ng-click="showExportKey(key)" style="color:#000">
             {{key.name}} - {{key.keySize}}
             <i class="fa fa-cloud-download"></i>
         </li>

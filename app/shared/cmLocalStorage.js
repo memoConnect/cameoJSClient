@@ -79,11 +79,8 @@ service('LocalStorageAdapter',function(){
         }
     }
 }).
-factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt', function(LocalStorageAdapter, cmCrypt){
+factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt','$rootScope', function(LocalStorageAdapter, cmCrypt, $rootScope){
     var LocalStorageService = function(){
-        this.instanceId = "";
-        this.instanceKey = "";
-
         var self = this,
             useable = false,
             useableCheck = false,
@@ -116,8 +113,8 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt', function(LocalS
          */
         this.init = function(data){
             if(this.check()){
-                cryptKey = cmCrypt.hash(this.instanceId + this.instanceKey);
-                storageKey = cmCrypt.hash(this.instanceId);
+                cryptKey = cmCrypt.hash(data.id + data.key);
+                storageKey = cmCrypt.hash(data.id);
 
                 this.instanceId = data.id;
                 this.instanceKey = data.key;
@@ -220,6 +217,11 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt', function(LocalS
 
             return false;
         }
+
+        $rootScope.$on('logout', function(){
+            self.instanceId = "";
+            self.instanceKey = "";
+        });
 
     }
 

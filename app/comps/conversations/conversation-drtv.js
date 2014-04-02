@@ -14,10 +14,10 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
 
             $scope.new_conversation = !conversation_id;
 
+
             if($scope.new_conversation !== true){
                 cmConversationsModel.getConversation(conversation_id).then(
                     function (conversation) {
-
                         $scope.init(conversation)
                     }
                 )
@@ -32,7 +32,9 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
 
 
             $scope.init = function (conversation) {
-                $scope.conversation     = conversation
+                // reload detail of conversation
+                $scope.conversation = conversation.update();
+
                 $scope.my_message_text  = ""
                 $scope.passphrase       = ""
                 $scope.show_contacts    = false
@@ -147,8 +149,9 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                     if( (new Date(current)).getDate() > (new Date(prev)).getDate() ){
                         return true;
                     }
+                } else if(typeof current !== 'undefined' && typeof prev === 'undefined') {
+                    return true;
                 }
-
                 return false;
             }
         }
