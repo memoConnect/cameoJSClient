@@ -3,12 +3,9 @@
  * https://github.com/marcorinck/angular-growl
  * Copyright (c) 2013 Marco Rinck; Licensed MIT
  */
-angular
-.module('angular-growl',[]);
+angular.module('angular-growl',[]);
 
-angular
-.module('angular-growl')
-.directive('growl', [
+angular.module('angular-growl').directive('growl', [
     '$rootScope',
     function ($rootScope) {
         'use strict';
