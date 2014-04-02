@@ -2,6 +2,7 @@ define([
     'angularAMD',
     'angular-route',
     'angular-cookies',
+    'angular-swipe',
     // cameo files
     'cmLocalStorage',
     'cmApi',
@@ -21,6 +22,7 @@ define([
     var app = angular.module('cameoClient', [
         'ngRoute',
         'ngCookies',
+        'swipe',
         'ui.bootstrap',
         // insert cameo provider
         'cmApi',

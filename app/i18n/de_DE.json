@@ -133,6 +133,7 @@
             "NO_SUBJECT": "Kein Betreff"
         },
         "CONTROL": {
+            "SAVE": "speichern",
             "CLOSE": "schließen"
         }
     },

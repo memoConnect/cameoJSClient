@@ -507,3 +507,62 @@ angular.module('pascalprecht.translate').filter('translate', [
         };
     }
 ]);
+
+angular.module('pascalprecht.translate').factory('$translateStaticFilesLoader', [
+    '$q',
+    '$http',
+    function ($q, $http) {
+        return function (options) {
+            if (!options || (!options.prefix || !options.suffix)) {
+                throw new Error('Couldn\'t load static files, no prefix or suffix specified!');
+            }
+            var deferred = $q.defer();
+            $http({
+                url: [
+                    options.prefix,
+                    options.key,
+                    options.suffix
+                ].join(''),
+                method: 'GET',
+                params: ''
+            }).success(function (data) {
+                deferred.resolve(data);
+            }).error(function (data) {
+                deferred.reject(options.key);
+            });
+            return deferred.promise;
+        };
+    }
+]);
+
+angular.module('pascalprecht.translate').factory('$translateCookieStorage', [
+    '$cookieStore',
+    function ($cookieStore) {
+        var $translateCookieStorage = {
+            get: function (name) {
+                return $cookieStore.get(name);
+            },
+            set: function (name, value) {
+                $cookieStore.put(name, value);
+            }
+        };
+        return $translateCookieStorage;
+    }
+]);
+
+angular.module('pascalprecht.translate').factory('$translateLocalStorage', [
+    '$window',
+    '$translateCookieStorage',
+    function ($window, $translateCookieStorage) {
+        var localStorageAdapter = {
+            get: function (name) {
+                return $window.localStorage.getItem(name);
+            },
+            set: function (name, value) {
+                $window.localStorage.setItem(name, value);
+            }
+        };
+        var $translateLocalStorage = 'localStorage' in $window && $window.localStorage !== null ? localStorageAdapter : $translateCookieStorage;
+        return $translateLocalStorage;
+    }
+]);

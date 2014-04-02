@@ -131,6 +131,7 @@
             "NO_SUBJECT": "no subject"
         },
         "CONTROL": {
+            "SAVE": "save",
             "CLOSE": "close"
         }
     },

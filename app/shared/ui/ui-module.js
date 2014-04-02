@@ -10,6 +10,7 @@ angular.module('cmUi', [
 ])
 
 .directive('cmAdaptiveChange', [
+    '$timeout',
     cmAdaptiveChange
 ])
 

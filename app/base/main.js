@@ -10,12 +10,9 @@ var config = {
         'angular-route': 'vendor/angular/angular-route',
         'angular-resource': 'vendor/angular/angular-resource',
         'angular-cookies': 'vendor/angular/angular-cookies',
+        'angular-swipe': 'vendor/angular/angular-swipe',
 
         'angular-translate': 'vendor/angular-translate/angular-translate',
-        'angular-translate-loader-static-files': 'vendor/angular-translate/angular-translate-loader-static-files',
-        'angular-translate-storage-cookie': 'vendor/angular-translate/angular-translate-storage-cookie',
-        'angular-translate-storage-local': 'vendor/angular-translate/angular-translate-storage-local',
-
         'angular-growl': 'vendor/angular-growl/angular-growl',
 
         // requirejs stuff
@@ -71,12 +68,9 @@ var config = {
         'ngload': ['angularAMD'],
         'angular-route': ['angular'],
         'angular-cookies': ['angular'],
+        'angular-swipe': ['angular'],
         'angular-translate': ['angular'],
         'angular-growl': ['angular'],
-
-        'angular-translate-loader-static-files': ['angular','angular-translate'],
-        'angular-translate-storage-cookie': ['angular','angular-translate'],
-        'angular-translate-storage-local': ['angular','angular-translate', 'angular-translate-storage-cookie'],
 
         'ui-bootstrap': ['angular'],
         'ui-bootstrap-tpls': ['angular'],
@@ -97,10 +91,8 @@ var config = {
         'cmProfile' : ['angular', 'cmApi', 'cmAuth'],
         'cmLogger' : ['angular'],
         'cmLanguage' : [
-            'angular', 
-            'angular-translate-loader-static-files',
-            'angular-translate-storage-cookie', 
-            'angular-translate-storage-local', 
+            'angular',
+            'angular-translate',
             'angular-growl',
             'cmNotify',
             'cmLogger'

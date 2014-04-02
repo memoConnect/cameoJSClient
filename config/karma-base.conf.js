@@ -20,7 +20,6 @@ module.exports = function(config) {
 
             'app/vendor/crypto/sjcl/sjcl.min.js',
             'app/vendor/crypto/jsencrypt/jsencrypt.min.js',
-//            'app/vendor/crypto/ats-oka/ats-oka.js',
 
             'app/shared/cmLogger.js',
             'app/shared/cmNotify.js',
@@ -49,7 +48,6 @@ module.exports = function(config) {
             'app/comps/user/!(*module).js',
             'app/comps/user/*module.js',
 
-            
             'app/comps/validate/!(*module).js',
             'app/comps/validate/*module.js',
 
@@ -63,7 +61,7 @@ module.exports = function(config) {
             'test/unit/comps/files/*spec.js',
             'test/unit/comps/contacts/*spec.js',
             'test/unit/comps/conversations/*spec.js',
-            'test/unit/comps/user/*spec.js',
+//            'test/unit/comps/user/*spec.js',
             'test/unit/comps/validate/*spec.js',
 
             // all frontend files
