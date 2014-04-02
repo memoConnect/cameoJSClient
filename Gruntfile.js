@@ -420,9 +420,9 @@ module.exports = function (grunt) {
                         "password": globalCameoSecrets.phonegap.password
                     },
                     download: {
-                        ios: 'phonegap-target/cameoNet.ipa',
-                        android: 'phonegap-target/cameoNet.apk',
-                        winphone: 'phonegap-target/cameoNet.xap'
+                        ios: 'phonegap-target/' + globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName + '.ipa',
+                        android: 'phonegap-target/' + globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName + '.apk',
+                        winphone: 'phonegap-target/' + globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName + '.xap'
                     }
                 }
             }
