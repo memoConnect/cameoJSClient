@@ -225,8 +225,9 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        src: ['phonegap-target/**','*.zip'],
-                        dest: 'dist/dl'
+                        cwd: 'phonegap-target',
+                        src: ['*','!*.zip'],
+                        dest: 'dist/dl/'
                     }
                 ]
             }
@@ -235,6 +236,7 @@ module.exports = function (grunt) {
             'dalek-report': ['report'],
             'dev-deploy': ['dist/app/less'],
             'dist-app': ['dist/app'],
+            'dist': ['dist'],
             'phonegap-target': ['phonegap-target']
         },
 
@@ -515,13 +517,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-phonegap-build');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.registerTask('phonegap-bs', [
-        'clean:phonegap-app',
+        'clean:phonegap-target',
         'deploy',
         'phonegap:build',
         'copy:phonegap-resources',
         'template:phonegap-index',
         'compress',
-        'phonegap-build:debug'
+        'phonegap-build:debug',
+        'copy:phonegap-target',
     ]);
 
     // deploy www without phonegap
@@ -546,5 +549,5 @@ module.exports = function (grunt) {
     grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
 
     // deploy it for me babe !!
-    grunt.registerTask('deploy', ['clean:dist-app', 'genAllTemplates', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
+    grunt.registerTask('deploy', ['clean:dist', 'genAllTemplates', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
 };
