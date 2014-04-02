@@ -34,7 +34,7 @@ define([
         'cmAuth',
         'cmUserModel',
         'cmIdentity'
-    ]);
+    ]).constant('cmVersion',{version:cameo_config.version, last_build:'-'});
 
     //cameo_config = cameo_config
 
@@ -155,7 +155,7 @@ define([
             // passing wrong route calls
             $rootScope.$on("$routeChangeStart", function(){
                 // expections
-                var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/purl\/[a-zA-Z0-9]{1,})$/;
+                var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
                 var path = $location.$$path;
                 // exists none token then otherwise to login
                 if (cmUserModel.getToken() === false){
@@ -163,9 +163,9 @@ define([
                     if (!path_regex.test(path)) {
                         $location.path("/login");
                     }
-                } else if ($location.$$path == "/login" || $location.$$path == "/registration") {
+                } else if (path == "/login" || path == "/registration") {
                     $location.path("/talks");
-                } else if ($location.$$path == "/logout"){
+                } else if (path == "/logout"){
                     cmUserModel.doLogout();
                 }
             });

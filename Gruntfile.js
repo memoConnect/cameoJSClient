@@ -21,8 +21,9 @@ module.exports = function (grunt) {
         if (grunt.file.exists(buildConfigUser)) {
             buildConfig = grunt.file.readJSON(buildConfigUser);
         }
-        else
+        else {
             buildConfig = grunt.file.readJSON('./config/cameoBuildConfig.json');
+        }
 
         switch (currentTarget) {
             case "test" :
@@ -50,6 +51,20 @@ module.exports = function (grunt) {
         var version = grunt.option('appVersion');
         if (version) {
             buildConfig.config.version = version;
+
+            // determine phonegapversion
+            var v = version.split('.');
+            if (v.length == 4) {
+                buildConfig.phonegap.version = v[1] + "." + v[2] + "." + v[3];
+                buildConfig.phonegap.extraName = "-" + v[0];
+            } else {
+                buildConfig.phonegap.version = version;
+                buildConfig.phonegap.extraName = "";
+            }
+
+            console.log("phonegap name: " +  buildConfig.phonegap.baseName + buildConfig.phonegap.extraName);
+            console.log("phonegap version: " + buildConfig.phonegap.version)
+
         } else {
             buildConfig.config.version = "no version";
         }
@@ -211,7 +226,8 @@ module.exports = function (grunt) {
         clean: {
             'dalek-report': ['report'],
             'dev-deploy': ['dist/app/less'],
-            'dist-app': ['dist/app']
+            'dist-app': ['dist/app'],
+            'phonegap-target': ['phonegap-target']
         },
 
         // unit tests
@@ -382,6 +398,16 @@ module.exports = function (grunt) {
                 'files': {
                     'test/e2e/config-e2e-tests.js': ['templates/config-e2e-tests.tpl.js']
                 }
+            } , 'config-phonegap': {
+                'options': {
+                    'data': {
+                        'currentName': globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName,
+                        'currentVersion': globalCameoBuildConfig.phonegap.version
+                    }
+                },
+                'files': {
+                    'phonegap-res/config.xml': ['templates/config-phonegap.tpl.xml']
+                }
             }
         },
         // create zip and upload to build server
@@ -395,9 +421,9 @@ module.exports = function (grunt) {
                         "password": globalCameoSecrets.phonegap.password
                     },
                     download: {
-                        ios: 'phonegap-target/cameoNet.ipa',
-                        android: 'phonegap-target/cameoNet.apk',
-                        winphone: 'phonegap-target/cameoNet.xap'
+                        ios: 'phonegap-target/' + globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName + '.ipa',
+                        android: 'phonegap-target/' + globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName + '.apk',
+                        winphone: 'phonegap-target/' + globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName + '.xap'
                     }
                 }
             }
@@ -481,6 +507,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-phonegap-build');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.registerTask('phonegap-bs', [
+        'clean:phonegap-app',
         'deploy',
         'phonegap:build',
         'copy:phonegap-resources',
@@ -507,7 +534,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'concat:less', 'less']);
+    grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'template:config-phonegap', 'concat:less', 'less']);
     grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
 
     // deploy it for me babe !!
