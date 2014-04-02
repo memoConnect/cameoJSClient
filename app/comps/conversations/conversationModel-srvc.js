@@ -43,11 +43,11 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             var success = true
                 encryptedKeyList =  []
 
-            this.recipients.forEach(recipient){
+            this.recipients.forEach(function(recipient){
                 var key_list = recipient.encryptPassphrase(self.passphrase)
                 success = success && encrypted_passphrase
                 if(success) key_list.concat(key_list)
-            }
+            })
 
             return success ? key_list : null
         }

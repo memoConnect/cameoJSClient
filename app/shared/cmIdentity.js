@@ -30,7 +30,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
 
             this.publicKeys.forEach(function(pubKey){
                 encrypted_data.push({
-                    keyId:                  pubKey.id
+                    keyId:                  pubKey.id,
                     encrypted_passphrase:   cmCrypt.encryptWithPublicKey(key, pubkey)
                 })
             }) 
@@ -43,9 +43,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
 
             this.privateKeys.forEach(function(pubKey){
                 if(!passphrase){
-                    encrypted_data.push({
-                        passphrase = cmCrypt.encryptWithPublicKey(key, pubkey)
-                    })
+                    passphrase : cmCrypt.encryptWithPublicKey(key, pubkey)
                 }
             })
 
