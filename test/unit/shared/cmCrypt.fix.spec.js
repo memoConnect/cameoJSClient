@@ -126,29 +126,51 @@ describe('cmCrypt', function () {
 
         describe('generateAsyncKeypair()', function(){
 
-            it('should asynchronously generate a key pair', function(){
-                var d, publicKey, privateKey, p
+            var publicKey        = undefined, 
+                privateKey       = undefined,
+                secret           = 'priv',      //test key is too short to encrypt anything much longer
+                encrypted_secret = undefined,
+                decrypted_secret = undefined
 
+            it('should asynchronously generate working a 128-bit key pair within a second.', inject(function(){
+                         
                 runs(function(){
                     cmCrypt
-                    .generateAsyncKeypair(128, function(count){ console.log(count) })                    
-                    .finally(function(){ console.log('uhhuhl') })                    
-                    .then(function(data){ 
-                        d = data
+                    .generateAsyncKeypair(128)
+                    .then(function(data){
                         publicKey  = data.pubKey
                         privateKey = data.privKey
-                        console.log('sdf')
-                    })                
+                    })             
                 })
 
                 waitsFor(function() {                    
                     return publicKey && privateKey
-                }, "public and private key to be defined", 50000);
+                }, "public and private key to be defined", 10000);             
                 
-            })    
+            }))
+
+            it('should encrypt a string with a public key', function(){
+                encrypted_secret = cmCrypt.encryptWithPublicKey(secret, publicKey)
+
+                expect(encrypted_secret).toBeDefined()
+                expect(encrypted_secret).not.toEqual('priv')
+
+            })
+
+
+
+            it('should decrypt a string with a matching private key', function(){
+                decrypted_secret = cmCrypt.decryptWithPrivateKey(encrypted_secret, privateKey)
+
+                expect(decrypted_secret).toBeDefined()
+                expect(decrypted_secret).toEqual('priv')
+
+            })
 
         })
-        
+
+
+
 
     })
 })
