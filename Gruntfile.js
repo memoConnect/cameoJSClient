@@ -221,6 +221,14 @@ module.exports = function (grunt) {
                         dest: 'dist/'
                     }
                 ]
+            }, 'phonegap-target': {
+                files: [
+                    {
+                        expand: true,
+                        src: ['phonegap-target/**','*.zip'],
+                        dest: 'dist/dl'
+                    }
+                ]
             }
         },
         clean: {
