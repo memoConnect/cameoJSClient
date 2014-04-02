@@ -226,7 +226,8 @@ module.exports = function (grunt) {
         clean: {
             'dalek-report': ['report'],
             'dev-deploy': ['dist/app/less'],
-            'dist-app': ['dist/app']
+            'dist-app': ['dist/app'],
+            'phonegap-target': ['phonegap-target']
         },
 
         // unit tests
@@ -506,6 +507,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-phonegap-build');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.registerTask('phonegap-bs', [
+        'clean:phonegap-app',
         'deploy',
         'phonegap:build',
         'copy:phonegap-resources',
