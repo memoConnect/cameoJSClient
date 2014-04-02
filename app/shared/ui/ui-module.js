@@ -80,8 +80,13 @@ angular.module('cmUi', [
     '$rootScope',
     cmOverlay
 ])
+
 .directive('cmDateSeperator',[
     cmDateSeperator
+])
+
+.directive('cmDateFormat',[
+    cmDateFormat
 ])
 
 .filter('cmDigits', [
