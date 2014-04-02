@@ -147,8 +147,9 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                     if( (new Date(current)).getDate() > (new Date(prev)).getDate() ){
                         return true;
                     }
+                } else if(typeof current !== 'undefined' && typeof prev === 'undefined') {
+                    return true;
                 }
-
                 return false;
             }
         }

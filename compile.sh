@@ -1,31 +1,36 @@
 #!/bin/bash
-case "$1" in
-   "prod")
-        target="prod"
-      ;;
-   "stage")
-        target="stage"
-      ;;
-   "dev")
-        target="dev"
-      ;;
-   "test")
-        target="test"
-      ;;
-   *)
-      echo -e "\e[33m[cameo - Invalid mode: ${mode}]\033[0m"
-      exit 1
-      ;;
-esac
 
-if [ ! -z $2 ]; then
-    apiUrlArg=--apiUrl=${2}
-  echo -e "\e[33m[ CameoClient - setting API Url to ${apiUrlArg} ]\033[0m"
-fi
+buildMode=test
+buildPhonegap=false
+command=deploy
+version="no version"
 
+#handle arguments
+for i in "$@" ; do
+	case $i in
+	    -m=*|--mode=*)
+		    buildMode="${i#*=}"
+	    ;;
+	    -a=*|--apiUrl*)
+		    apiUrl="${i#*=}"
+		    echo -e "\e[33m[ CameoClient - setting API Url to ${apiUrl} ]\033[0m"
+		    apiUrlArg=--apiUrl=${apiUrl}
+		;;
+	    -v=*|--version=*)
+		    version="${i#*=}"
+	    ;;
+		--phonegap)
+			command=phonegap-bs
+		;;
+	    *)
+	      echo Unkown option: ${i}
+	      exit 1
+	    ;;
+	esac
+done
 
 ./setup.sh
 
 echo -e "\e[33m[ CameoClient - starting deploy, target: ${target} ]\033[0m"
 
-./node_modules/grunt-cli/bin/grunt deploy --target=${target} ${apiUrlArg}
+grunt ${command} --target=${buildMode} --appVersion=${version} ${apiUrlArg}
