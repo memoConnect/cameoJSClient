@@ -13,6 +13,8 @@ function cmRecipientModel (cmConversationsAdapter, cmUserModel){
 
         this.removeFrom = function(conversationId){
             cmConversationsAdapter.removeRecipient()(conversationId, this.id);
+
+            return this;
         }
 
         this.init = function(identity){
