@@ -22,15 +22,14 @@ describe('cmIdentityModel', function(){
         expect(obj.init).toBeDefined()
     })
 
-    describe('Encryption and Key Management', function(){
-        var publicKey     = "-----BEGIN PUBLIC KEY-----\nMCwwDQYJKoZIhvcNAQEBBQADGwAwGAIRALRvUT+teouT0TBjIsbaT8kCAwEAAQ==\n-----END PUBLIC KEY-----",
-            privateKey    = "-----BEGIN RSA PRIVATE KEY-----\nMGICAQACEQC0b1E/rXqLk9EwYyLG2k/JAgMBAAECEG5Bo4VkzYBiECbf9molRj0C\nCQDuAiRcSRLd8wIJAMITCBrddr5TAgkAqF4ZjLMgxqMCCHIECFDwJuCtAgh1H1nq\nsuLGUA==\n-----END RSA PRIVATE KEY-----",
+    describe('Encryption and Key Management', function(){        
+        var publicKey_128 = '-----BEGIN PUBLIC KEY-----MCwwDQYJKoZIhvcNAQEBBQADGwAwGAIRALRvUT+teouT0TBjIsbaT8kCAwEAAQ==-----END PUBLIC KEY-----',            
+            publicKey_120 = '-----BEGIN PUBLIC KEY-----MCswDQYJKoZIhvcNAQEBBQADGgAwFwIQAKwGNK17gJWTZtwOsKRvmwIDAQAB-----END PUBLIC KEY-----',
             identity_data = {
                                 id:             'my_test_id',
                                 publicKeys :    [
-                                                    { id: 'my_first_key',   key : publicKey},
-                                                    { id: 'my_second_key',  key : publicKey},
-                                                    { id: 'my_third_key',   key : publicKey},
+                                                    { id: 'my_first_key',   key : publicKey_128},
+                                                    { id: 'my_second_key',  key : publicKey_120}
                                                 ]
                             },
             identity      = undefined
@@ -39,14 +38,12 @@ describe('cmIdentityModel', function(){
             }))
 
             it('should provide a function "encryptPassphrase" to encrypt a passphrase with all availabe public keys', function(){       
-                var passphrase  = "my_passphrase",
-                    key_list    = identity.encryptPassphrase()
+                var passphrase  = "x", //test key cannot handle longer passphrases
+                    key_list    = identity.encryptPassphrase(passphrase)
 
-                expect(key_list.length).toBe(3)
+                expect(key_list.length).toBe(2)
                 expect(key_list[0].encrypted_passphrase).toBeTruthy()
                 expect(key_list[1].encrypted_passphrase).toBeTruthy()
-                expect(key_list[2].encrypted_passphrase).toBeTruthy()
-                console.log(key_list)
                 //wether the encryption actually worked correctly is tested elsewhere; check cmCrypt
             })
 

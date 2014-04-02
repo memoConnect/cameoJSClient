@@ -158,15 +158,18 @@ angular.module('cmCrypt', ['cmLogger'])
             return false;
             },
 
-            getKeySize: function(key){
-                var jse = new JSEncrypt(key)
+            getKeySize: function(key){ //@todo
+                var jse = new JSEncrypt()
+                jse.setKey(key)
                 console.log(jse)
+                return jse.key.n.bitLength() //@Todo: check if this is the correct value
             },
 
             encryptWithPublicKey: function(secret, publicKey){
                 var crypt = new JSEncrypt
 
                 crypt.setPublicKey(publicKey)
+                
                 return crypt.encrypt(secret)
             },
 

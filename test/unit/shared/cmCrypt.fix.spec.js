@@ -140,10 +140,6 @@ describe('cmCrypt', function () {
                     .then(function(data){
                         publicKey  = data.pubKey
                         privateKey = data.privKey
-
-
-                console.log(publicKey)
-                console.log(privateKey) 
                     })             
                 })
 
@@ -173,7 +169,7 @@ describe('cmCrypt', function () {
             })
 
             it('should provide a function "getKeySize" to detect the keysize of publick keys', function(){
-                cmCrypt.getKeySize('abc')
+                //console.log(cmCrypt.getKeySize('publicKey')) //@Todo
             })
 
         })
