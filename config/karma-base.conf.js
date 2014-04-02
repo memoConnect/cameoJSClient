@@ -12,7 +12,7 @@ module.exports = function(config) {
 
             'app/base/config.js',
 
-            'app/vendor/angular/angular.js',
+            'app/vendor/angular.1.2.10/angular.js',
 
             'app/vendor/angular-translate/angular-translate.js',
 
