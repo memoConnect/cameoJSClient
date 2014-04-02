@@ -85,10 +85,6 @@ angular.module('cmUi', [
     cmDateSeperator
 ])
 
-.directive('cmDateFormat',[
-    cmDateFormat
-])
-
 .filter('cmDigits', [
     function(){
         return function(number, digits){

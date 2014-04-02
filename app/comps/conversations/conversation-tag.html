@@ -15,7 +15,7 @@
         <cm-safety-level level="conversation.getSafetyLevel()"></cm-safety-level>
 
         <span class="last-updated small">
-            <cm-date-format>{{conversation.getLastUpdate()}}</cm-date-format>
+           {{conversation.getLastUpdate() | date:'H:m'}}
         </span> 
     </div>
     
