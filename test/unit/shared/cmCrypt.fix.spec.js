@@ -131,10 +131,8 @@ describe('cmCrypt', function () {
 
                 runs(function() {                                     
                     cmCrypt
-                    .generateAsyncKeypair(128, function(count){ console.log(count) })
-                    .success(function(){ console.log('cccuhhuhl')})
-                    .finally(function(){ console.log('uhhuhl')})
-                    .fail(function(){ console.log('ffffl')})
+                    .generateAsyncKeypair(128, function(count){ console.log(count) })                    
+                    .finally(function(){ console.log('uhhuhl')})                    
                     .then(function(data){ 
                         data = data
                         publicKey  = data.pubKey
@@ -144,8 +142,9 @@ describe('cmCrypt', function () {
                 })
 
                 waitsFor(function() {
+                    console.log(publicKey)
                     return publicKey && privateKey
-                }, "public and private key to be defined", 14750);
+                }, "public and private key to be defined", 10000);
                 
             })    
 
