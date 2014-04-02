@@ -31,14 +31,12 @@
         "LABEL": {
             "SUBMIT": "Benutzerkonto anlegen",
             "USERNAME": "Benutzername",
-            "CAMEOID": "CameoID",
             "NAME": "Anzeigename",
             "TERMS": " die AGB",
             "TERMS_ACCEPT": "Ich akzeptiere"
         },
         "PLACEHOLDER": {
-            "USERNAME": "Benutzername",
-            "CAMEOID": "CameoId",
+            "USERNAME": "Nutzername",
             "NAME": "Name"
         },
         "INFO": {
@@ -89,8 +87,11 @@
 		}
 	},
 
-    "TERMS" : {
-        "LABEL": "AGB"
+    "TERMS": {
+        "HEADING": "Allgemeine Geschäftsbedingungen",
+        "HEADING_SHORT": "AGB",
+        "PARAGRAPH_1": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.",
+        "PARAGRAPH_2": "Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero."
     },
 
     "PASSWORD": {
@@ -127,6 +128,12 @@
             "MESSAGE_EMPTY" : "Das Textfeld ist leer.",
             "RECIPIENTS_MISSING" : "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
             "PASSPHRASE_INVALID" : "Ungültiger Schlüssel."
+        },
+        "PLACEHOLDER": {
+            "NO_SUBJECT": "Kein Betreff"
+        },
+        "CONTROL": {
+            "CLOSE": "schließen"
         }
     },
 	
@@ -138,7 +145,7 @@
         "HEADER": {
             "SEARCH_CAMEO_ID": "Kontakt hinzufügen",
             "CONTACTS_LIST": "Kontakte",
-            "REQUEST_LIST": "Freundschaftsanfragen"
+            "REQUEST_LIST": "Kontaktanfragen"
         },
         "INFO": {
             "NO_RESULTS": "Keine cameo Kontakte gefunden",
@@ -192,8 +199,8 @@
             }
         },
         "VALIDATE_PHONE": {
-            "LABEL": "Telefon",
-            "PLACEHOLDER": "Telefon",
+            "LABEL": "Mobil",
+            "PLACEHOLDER": "Mobil",
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
                 "EMPTY": "Das Telefonfeld ist leer"
@@ -231,7 +238,7 @@
     "MENU": {
         "HEADER": "Menü",
         "NOTIFICATIONS": "Notifikationen",
-        "FRIENDREQUESTS": "Freundschaftsanfragen",
+        "REQUESTS": "Kontaktanfragen",
         "MESSAGES": "Nachrichten",
         "HINTS": "Sonstige Hinweise",
         "ACTIVITY": "Aktivity",

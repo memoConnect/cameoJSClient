@@ -9,56 +9,69 @@ button.full {
 }
 
 cm-overlay {
-    position:absolute;
-    display:none;
-    top:0;
-    left:0;
-    width:auto !important;
-    background: @cm-overlay-dark;
-    padding-top:@cm-header-height+2rem;    
-    padding-bottom:@cm-footer-height+2rem;
-    padding-left:2rem;
-    padding-right:2rem;
-    z-index:999;   
-
-    &.visible {
-        display:block;
-    }
-
-    .container{
-        display: block !important;
-        width: auto !important;
-        padding: 0 1em;
-        background: @cm-white;
-    }
+  position:absolute;
+  display:none;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:999;
+  &.visible {
+    display:block;
+  }
+  .container{
+    display: block !important;
+    width: auto !important;
+    padding: 0 1em;
+    background: @cm-white;
+    margin:3em 2em;
+  }
 }
-
 
 cm-edge, [cm-edge] {
-    position:absolute;
-    display:block;
-    top:0;
-    right:0;
-    cursor:pointer;
-    font-size:4em;
-    width:1em;
-    height:1em;
-    line-height:1em;
-
-    .background{
-        color: @cm-ci-color;
-    }
-
-    .foreground{
-        color:@cm-light-grey;
-    }
+  position:absolute;
+  display:block;
+  top:0;
+  right:0;
+  cursor:pointer;
+  font-size:4em;
+  width:1em;
+  height:1em;
+  line-height:1em;
+  .background{
+    color: @cm-ci-color;
+  }
+  .foreground{
+    color:@cm-light-grey;
+  }
 }
-
 
 cm-avatar {
-    display:inline-block;
-    width: 3rem;
-    height: 3rem;
-    vertical-align:middle;
+  display:inline-block;
+  width:3rem;
+  height:3rem;
+  vertical-align:middle;
+  position:relative;
 }
 
+cm-date-seperator {
+  display:block;
+  div.date-seperator {
+    position: relative;
+    .date{
+      color: #fff;
+      background-color: @cm-overlay-dark;
+      text-align: center;
+      font-size: 0.7em;
+      -webkit-border-radius: @cm-border-radius;
+      -moz-border-radius: @cm-border-radius;
+      border-radius: @cm-border-radius;
+      border: none;
+      position: relative;
+    }
+    .line{
+      background-color: @cm-overlay-dark;
+      height:0.1em;
+      vertical-align: middle;
+    }
+  }
+}

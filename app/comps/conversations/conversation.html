@@ -1,15 +1,11 @@
 <cm-conversation-controls cm-data="conversation"></cm-conversation-controls>
 
 <!-- nur temporär:-->
-<input type ="text" ng-model="passphrase" cm-password-input cm-adaptive-change>
+<input type="text" ng-model="passphrase" cm-password-input cm-adaptive-change placeholder="passphrase">
 <!-- nur temporär:-->
 
 <div ng-repeat="message in conversation.messages">
-    <div class="date-seperator clearfix" ng-if="!$first">
-        <div class="line cm-fl"></div> <!-- @todo inkonsistent :/ -->
-        <div class="date cm-fl">{{ conversation.messages[$index - 1].created }}</div>
-        <div class="line cm-fl"></div> <!-- @todo inkonsistent :/ -->
-    </div>
+    <cm-date-seperator ng-if="!$first">{{conversation.messages[$index - 1].created}}</cm-date-seperator>
     <cm-message
         cm-data = "message"
         class   = "{{ message.isOwn() ? 'right' : ''}}"
@@ -17,9 +13,8 @@
     </cm-message>
 </div>
 
-
 <div class="answer clearfix">
-    <i class="fa cm-rhino-bubble attachments"></i>
+    <i class="fa cm-plus attachments"></i>
     <div class="message">
         <textarea cm-resize-textarea ng-model="my_message_text"></textarea>
         <i class="fa cm-smile-negative"></i>

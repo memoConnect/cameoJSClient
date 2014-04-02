@@ -193,6 +193,8 @@ addPackage('pckConversations',{
         'comps/conversations/messageFactory-srvc',
         'comps/conversations/messageModel-srvc',
 
+        'comps/conversations/recipientModel-srvc',
+
         'comps/conversations/conversation-tag-drtv',
         'comps/conversations/safety-level-drtv',
         'comps/conversations/recipient-counter-drtv',
@@ -257,8 +259,9 @@ addPackage('pckUi',{
         'ui-bootstrap'
     ],
     resources : [
-        'shared/ui/adaptive-change-drtv',  
-        'shared/ui/rubber-space-drtv',          
+        'shared/ui/view-drtv',
+        'shared/ui/adaptive-change-drtv',
+        'shared/ui/rubber-space-drtv',
         'shared/ui/nav-tabs-drtv',
         'shared/ui/point-spinner-drtv',
         'shared/ui/spinner-drtv',
@@ -271,7 +274,8 @@ addPackage('pckUi',{
         'shared/ui/menu-drtv',
         'shared/ui/edge-drtv',
         'shared/ui/footer-drtv',
-        'shared/ui/resize-textarea'
+        'shared/ui/resize-textarea',
+        'shared/ui/date-seperator-drtv'
     ]
 })
 

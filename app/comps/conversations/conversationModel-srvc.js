@@ -1,6 +1,6 @@
 'use strict';
 
-function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory){
+function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmRecipientModel, $q){
     var ConversationModel = function(data){
         //Attributes:
         this.id = '';
@@ -11,31 +11,40 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.created = '';
         this.lastUpdated = '';
         this.count = 0;
-        this.lastMessage = undefined;
 
         var self = this;
 
         this.init = function (conversation_data) {
-            this.id             = conversation_data.id;
-            this.subject        = conversation_data.subject;
-            this.count          = conversation_data.numberOfMessages;
-            this.lastUpdated    = conversation_data.lastUpdated;
+            if(typeof conversation_data !== 'undefined'){
+                this.id             = conversation_data.id;
+                this.subject        = conversation_data.subject;
+                this.count          = conversation_data.numberOfMessages;
+                this.lastUpdated    = conversation_data.lastUpdated;
 
-            // register all messages as Message objects
-            if (conversation_data.messages) {
-                conversation_data.messages.forEach(function (message_data) {
-                    self.addMessage(cmMessageFactory.create(message_data));
-                })
-            }
+                // register all messages as Message objects
+                if (conversation_data.messages) {
+                    conversation_data.messages.forEach(function (message_data) {
+                        self.addMessage(cmMessageFactory.create(message_data));
+                    })
+                }
 
-            // register all recipients as Recipient objects
-            if (conversation_data.recipients) {
-                conversation_data.recipients.forEach(function (item) {                    
-                    self.addRecipient(cmIdentityFactory.create(item.identityId));
-                })
+                // register all recipients as Recipient objects
+                if (conversation_data.recipients) {
+                    conversation_data.recipients.forEach(function (item) {
+//                        new cmRecipientModel(cmIdentityFactory.create(item.identityId)).addTo(self);
+                        self.addRecipient(new cmRecipientModel(cmIdentityFactory.create(item.identityId)));
+                    })
+                }
             }
         };
 
+        /**
+         * @TODO with timestamp
+         * @returns {string}
+         */
+        this.getLastUpdate = function(){
+            return this.lastUpdated;
+        }
 
         /**
          * Message Handling
@@ -46,10 +55,9 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
          * @param message
          * @returns {cmConversationModel.ConversationModel}
          */
-        this.addMessage = function (message) {                        
-
+        this.addMessage = function (message) {
             if(this.messages.length == 0){
-                this.messages.push(message);
+                this.messages.push(message); // kunstgriff, eine neue conversation, hat erstmal nur eine message, da is der id abgleich egal
             }else {
                 var i = 0;
                 var check = false;
@@ -66,16 +74,16 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                 }
             }
 
-            this.lastMessage = message;            
             if (this.passphrase) message.decrypt(this.passphrase);
+
             return this
         };
 
         this.getLastMessage = function(){
-            if(this.lastMessage !== undefined){
-                return this.lastMessage;
+            if(this.messages.length > 0){
+                return this.messages[(this.messages.length - 1)];
             }
-            return false;
+            return null
         }
 
         /**
@@ -93,28 +101,58 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         }
 
         this.addRecipient = function (identity) {
-            identity && !this.hasRecipient(identity)
-            ?   this.recipients.push(identity)
-            :   console.warn('Recipient already present.') //@ Todo
+            if(identity && !this.hasRecipient(identity)){
+                this.recipients.push(identity);
+            }else{
+                console.warn('Recipient already present.') //@ Todo
+            }
             return this;
+            //Update Backend width this.sync()
         };
+
+//        this.addNewRecipient = function(identity){
+//            if(identity && !this.hasRecipient(identity)){
+//                if(this.id != ''){
+//                    cmConversationsAdapter.addRecipient(this.id, identity.id).then(
+//                        function(){
+//                            self.addRecipient(identity);
+//                        }
+//                    )
+//                } else {
+//                    self.addRecipient(identity);
+//                }
+//            }else{
+//                console.warn('Recipient already present.') //@ Todo
+//            }
+//            return this;
+//        }
 
         this.removeRecipient = function (identity) {
             var i = this.recipients.length;
 
             while (i) {
                 i--;
-                if (this.recipients[i] == identity) this.recipients.splice(i, 1);
+                if (this.recipients[i] == identity){
+                    this.recipients.splice(i, 1);
+
+                    if(this.id != ''){
+                        identity.removeFrom(this.id);
+//                        cmConversationsAdapter.removeRecipient()(this.id, identity.id)
+                    }
+                }
             }
             return this;
         };
 
-
         this.updateSubject = function (subject) {
-            cmConversationsAdapter.updateSubject(this.id, subject)
-                .then(function(){
-                    self.subject = subject
-                })
+            if(this.id != ''){
+                cmConversationsAdapter.updateSubject(this.id, subject)
+                    .then(function(){
+                        self.subject = subject
+                    })
+            } else {
+                this.subject = subject;
+            }
         };
 
         this.setPassphrase = function (passphrase) {
@@ -146,14 +184,57 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             return list.join(', ')
         }
 
-        this.getSubjectLine = function(){                
-            return     this.subject 
-                    || (this.lastMessage && this.lastMessage.from && this.lastMessage.from.getDisplayName()) 
+        this.getSubjectLine = function(){
+            var lastMessage = this.getLastMessage();
+            return     this.subject
+                    || (lastMessage ? lastMessage.from.getDisplayName() : false)
                     || this.getRecipientList()
         }
 
         this.getSavetyLevel = function(){
             return this.passphraseValid() && !this.passphrase ? 0 : 1     
+        }
+
+        this.sync = function(){
+            //cmConversationsAdapter.addRecipient(this.id, identity.id)
+        }
+
+        this.save = function(){
+            var deferred = $q.defer();
+
+            if(this.id == ''){
+                cmConversationsAdapter.newConversation().then(
+                    function (conversation_data) {
+                        self.init(conversation_data);
+                        console.log(self);
+
+                        var i = 0;
+                        while(i < self.recipients.length){
+                            cmConversationsAdapter.addRecipient(self.id, self.recipients[i].id);
+                            i++;
+                        }
+
+                        deferred.resolve();
+                    },
+
+                    function(){
+                        deferred.reject();
+                    }
+                )
+            } else {
+                deferred.resolve();
+            }
+
+//            cmConversationsAdapter.updateConversation(this).then(
+//                function(){
+//                    //log
+//                },
+//                function(){
+//                    //log fail
+//                }
+//            )
+
+            return deferred.promise;
         }
 
         this.init(data);

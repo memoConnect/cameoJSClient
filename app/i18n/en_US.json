@@ -30,14 +30,12 @@
         "LABEL": {
             "SUBMIT": "create User",
             "USERNAME": "Username",
-            "CAMEOID": "CameoID",
             "NAME": "Name",
             "TERMS": "terms of use",
             "TERMS_ACCEPT": "I accpect"
         },
         "PLACEHOLDER": {
-            "USERNAME": "username",
-            "CAMEOID": "CameoId",
+            "USERNAME": "Username",
             "NAME": "Display Name"
         },
         "INFO": {
@@ -88,8 +86,11 @@
         }
     },
 
-    "TERMS" : {
-        "LABEL": "General Business Conditions"
+    "TERMS": {
+        "HEADING": "General Business Conditions",
+        "HEADING_SHORT": "GBC",
+        "PARAGRAPH_1": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.",
+        "PARAGRAPH_2": "Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero."
     },
 
     "PASSWORD": {
@@ -125,6 +126,12 @@
             "MESSAGE_EMPTY" : "The input field is empty.",
             "RECIPIENTS_MISSING" : "Please add at least one recipient.",
             "PASSPHRASE_INVALID" : "Passphrase invalid."
+        },
+        "PLACEHOLDER": {
+            "NO_SUBJECT": "no subject"
+        },
+        "CONTROL": {
+            "CLOSE": "close"
         }
     },
 
@@ -137,7 +144,7 @@
         "HEADER": {
             "SEARCH_CAMEO_ID": "Add contact",
             "CONTACTS_LIST": "Contacts",
-            "REQUEST_LIST": "Friendship requests"
+            "REQUEST_LIST": "Contact requests"
         },
         "INFO": {
             "NO_RESULTS": "No cameo contacts found",
@@ -230,7 +237,7 @@
     "MENU": {
         "HEADER": "Menu",
         "NOTIFICATIONS": "Notifcations",
-        "FRIENDREQUESTS": "Friend Requests",
+        "REQUESTS": "Contact requests",
         "MESSAGES": "Messages",
         "HINTS": "Hints",
         "ACTIVITY": "Activity",

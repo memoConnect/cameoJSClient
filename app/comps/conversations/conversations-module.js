@@ -21,6 +21,8 @@ cmConversations.factory('cmConversationModel',[
     'cmConversationsAdapter',
     'cmMessageFactory',
     'cmIdentityFactory',
+    'cmRecipientModel',
+    '$q',
     cmConversationModel
 ]);
 
@@ -42,6 +44,12 @@ cmConversations.factory('cmMessageFactory',[
     '$rootScope',
     'cmMessageModel',
     cmMessageFactory
+])
+
+cmConversations.factory('cmRecipientModel',[
+    'cmConversationsAdapter',
+    'cmUserModel',
+    cmRecipientModel
 ])
 
 cmConversations.service('cmConversationsModel', [
@@ -82,7 +90,9 @@ cmConversations.directive('cmConversationTag',[
 
 cmConversations.directive('cmConversation', [
     'cmConversationsModel',
-    'cmMessageModel',
+    'cmMessageFactory',
+    'cmUserModel',
+    'cmRecipientModel',
     'cmCrypt',
     'cmLogger',
     'cmNotify',

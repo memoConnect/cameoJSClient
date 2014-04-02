@@ -14,40 +14,41 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
 
 
     //Methods:
-    this.addConversation = function(conversation){
-        if(this.conversations.length == 0){
-            this.conversations.push((conversation));
-        } else {
-            var i = 0;
-            var check = false;
-            while(i < this.conversations.length){
-                if(conversation.id == this.conversations[i].id){
-                    check = true;
-                    break;
-                }
-                i++;
-            }
+    this.addConversation = function(conversation, firstItem){
+        var i = 0,
+            checkConversation = null;
 
-            if(check !== true){
+        if(typeof conversation !== 'undefined'){
+            if(this.conversations.length == 0){
                 this.conversations.push(conversation);
-            } 
+            } else {
+                while(i < this.conversations.length){
+                    if(conversation.id == this.conversations[i].id){
+                        checkConversation = this.conversations[i]
+                        break;
+                    }
+                    i++;
+                }
+
+                if(checkConversation !== null){
+                    //                checkConversation.update();
+                } else {
+                    if(typeof firstItem !== 'undefined' && firstItem !== false){
+                        this.conversations.unshift(conversation);
+                    } else {
+                        this.conversations.push(conversation);
+                    }
+                }
+            }
         }
     };
 
-    this.createConversation = function (subject) {
-        var deferred = $q.defer()      
+    this.createNewConversation = function (){
+        var deferred = $q.defer();
+        var conversation = cmConversationFactory.create();
 
-        cmConversationsAdapter
-        .newConversation(subject)
-        .then(function (conversation_data) {                    
-            var conversation = cmConversationFactory.create(conversation_data)         
-
-            self.conversations.push(conversation);
-            deferred.resolve(conversation);
-
-        })
-
-        return  deferred.promise;
+        deferred.resolve(conversation);
+        return deferred.promise;
     }
 
     this.getConversation = function (id) {

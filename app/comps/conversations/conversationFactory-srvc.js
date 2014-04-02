@@ -1,7 +1,6 @@
 'use strict';
 
 function cmConversationFactory ($rootScope, cmConversationModel){
-    var instanceMock = [{id:'',instance:{}}];
     var instances = [];
 
     $rootScope.$on('logout', function(){
@@ -10,10 +9,10 @@ function cmConversationFactory ($rootScope, cmConversationModel){
 
     return {
         create: function(data){            
-            var i = 0;
-            if(typeof data !== 'undefined'){
-                var conversation = null;
+            var i = 0,
+                conversation = null;
 
+            if(typeof data !== 'undefined'){
                 while(i < instances.length){
                     if(typeof instances[i] === 'object' &&
                         instances[i].id == data.id){
@@ -26,15 +25,16 @@ function cmConversationFactory ($rootScope, cmConversationModel){
 
                 if(conversation === null){
                     conversation = new cmConversationModel(data);                    
-                    instances.push({id:data.id,instance:conversation});
+                    instances.push(conversation);
                 }
 
-                return conversation;
+            } else {
+                conversation = new cmConversationModel();
+                instances.push(conversation);
             }
 
-            return null;
+            return conversation;
         },
-
         getQty: function(){
             return instances.length;
         }

@@ -1,27 +1,45 @@
-<header>
-    <div class="left">
-        <i class="fa"></i> {{conversation.subject || '(no subject)'}}
+<div class="control">
+    <div cm-transparent-bg ng-show="bodyVisible" ng-click="handle()"></div>
+
+    <div ng-show="bodyVisible" class="body">
+
+        <div class="cm-form-group">
+            <div class="cm-form-control with-inputter">
+                <input type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" />
+            </div>
+        </div>
+
+        <div class="body-group">
+            <cm-avatar cm-data="recipient" ng-repeat="recipient in conversation.recipients"></cm-avatar>
+            <cm-avatar ng-click="$emit('cmOverlay:show', 'add-recipients')">
+                <cm-edge><i class="fa cm-add"></i></cm-edge>
+            </cm-avatar>
+        </div>
+
+        <button ng-click="handle(true)" class="cm-btn">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
     </div>
 
-    <div class="right">
-        <cm-safety-level level ="3"></cm-safety-level>
-        <cm-recipient-counter ng-click = "$emit('cmOverlay:show', 'add-recipients')">
-            {{conversation.recipients.length}}
-        </cm-recipient-counter>    
-        <i class="fa cm-add"></i>
-        <i class="fa cm-down fa-2x" ng-click="show_recipients = !show_recipients"></i>
+    <div class="bar" cm-rubber-space ng-click="handle()">
+        <div cm-weight="1" class="grip-left">
+            <i class="fa cm-grip"></i>
+        </div>
+        <div cm-weight="8">
+            {{conversation.subject||'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}
+            <cm-safety-level level="2"></cm-safety-level>
+            <cm-recipient-counter>{{conversation.recipients.length||0}}</cm-recipient-counter>
+        </div>
+        <div cm-weight="1"></div>
     </div>
-</header>
-<div ng-show ="show_recipients">
-    <cm-avatar cm-data ="recipient" ng-repeat="recipient in conversation.recipients"></cm-avatar>   
 </div>
 
-<cm-overlay id ="add-recipients">
-    <div ng-click="$emit('cmOverlay:hide', 'add-recipients')">hide</div>
+<cm-overlay id="add-recipients">
+    <div ng-click="$emit('cmOverlay:hide', 'add-recipients')">
+        <i class="fa cm-close"></i>
+    </div>
     <cm-contacts-list contacts-as="contact">
-        <cm-contact-tag cm-data="contact" ng-click= "selectContact(contact.identity); selected = true">
+        <cm-contact-tag cm-data="contact" ng-click="selectContact(contact.identity); selected = true">
             <span class="separator"></span>
-            <i class="fa fa-3x" ng-class ="{'cm-checkbox': !selected, 'cm-checkbox-right': selected}" ng-click="editContact(contact.identity.id)"></i>
+            <i class="fa fa-3x" ng-class="{'cm-checkbox': !selected, 'cm-checkbox-right': selected}" ng-click="editContact(contact.identity.id)"></i>
         </cm-contact-tag>
     </cm-contacts-list>
 </cm-overlay>

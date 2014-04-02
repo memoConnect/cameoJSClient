@@ -18,5 +18,6 @@ define([
     '$routeParams',
     function($scope, $rootScope, $element, $routeParams){
         $scope.conversationId = $routeParams.conversationId;
+
     }]);
 });

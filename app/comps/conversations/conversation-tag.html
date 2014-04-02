@@ -14,14 +14,14 @@
 
         <cm-safety-level level="conversation.getSafetyLevel()"></cm-safety-level>
 
-        <span class="last-updated">  
-            {{ (conversation.getLastMessage() && conversation.getLastMessage().lastUpdated) || '01.01.2020' }}
+        <span class="last-updated small">
+            {{conversation.getLastUpdate()}}
         </span> 
     </div>
     
     <div class="bottom">
-        <cm-recipient-counter>{{conversation.recipients.length}}</cm-recipient-counter>
-        <span class="message-count" ng-class="{'cm-unread' : conversation.count > 0}"> ({{conversation.count || 0}}) </span>            
+        <cm-recipient-counter>{{conversation.recipients.length||0}}</cm-recipient-counter>
+        <span class="message-count" ng-class="{'cm-unread' : conversation.messages.length > 0}"> ({{conversation.messages.length||0}}) </span>
     </div>
 </div>
 
