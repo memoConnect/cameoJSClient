@@ -79,6 +79,7 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                                 $scope.my_message_text = "";
 
                                 if($scope.new_conversation !== false){
+                                    cmConversationsModel.addConversation($scope.conversation, true);
                                     $location.path('/conversation/' + $scope.conversation.id);
                                 }
                             })

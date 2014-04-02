@@ -14,7 +14,7 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
 
 
     //Methods:
-    this.addConversation = function(conversation){
+    this.addConversation = function(conversation, firstItem){
         var i = 0,
             checkConversation = null;
 
@@ -33,7 +33,11 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
                 if(checkConversation !== null){
                     //                checkConversation.update();
                 } else {
-                    this.conversations.push(conversation);
+                    if(typeof firstItem !== 'undefined' && firstItem !== false){
+                        this.conversations.unshift(conversation);
+                    } else {
+                        this.conversations.push(conversation);
+                    }
                 }
             }
         }
@@ -42,7 +46,6 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
     this.createNewConversation = function (){
         var deferred = $q.defer();
         var conversation = cmConversationFactory.create();
-        self.addConversation(conversation);
 
         deferred.resolve(conversation);
         return deferred.promise;
