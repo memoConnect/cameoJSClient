@@ -141,6 +141,14 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
             this.isNew = function(){
                 return $scope.new_conversation;
             }
+
+            $scope.compareDate = function(current, prev){
+                if(typeof current !== 'undefined' && typeof prev !== 'undefined'){
+
+                }
+
+                return false;
+            }
         }
     }
 }
