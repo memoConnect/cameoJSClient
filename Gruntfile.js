@@ -44,8 +44,14 @@ module.exports = function (grunt) {
         //check whether apiUrl should be overwritten
         var apiUrl = grunt.option('apiUrl');
         if (apiUrl) {
-            console.log("apiUrl: " + apiUrl);
             buildConfig.config.apiUrl = apiUrl;
+        }
+
+        var version = grunt.option('appVersion');
+        if (version) {
+            buildConfig.config.version = version;
+        } else {
+            buildConfig.config.version = "no version";
         }
 
         return buildConfig;
@@ -358,7 +364,8 @@ module.exports = function (grunt) {
             }, 'config-webApp': {
                 'options': {
                     'data': {
-                        'currentApiUrl': globalCameoBuildConfig.config.apiUrl
+                        'currentApiUrl': globalCameoBuildConfig.config.apiUrl ,
+                        'currentVersion': globalCameoBuildConfig.config.version
                     }
                 },
                 'files': {

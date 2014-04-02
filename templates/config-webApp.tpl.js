@@ -1,5 +1,6 @@
 cameo_config = {
     restApi: '<%= currentApiUrl %>',
+    version: '<%= currentVersion %>',
 
     token: null,
     supported_languages: ['de_DE', 'en_US'],
