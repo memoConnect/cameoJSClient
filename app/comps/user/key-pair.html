@@ -2,13 +2,14 @@
     <button ng-click="showOwnKeys()">Show Keys</button>
     <button ng-click="showCreateKey()">new Key</button>
     <button ng-click="showImportKeys()">import Key</button>
+    <button ng-click="syncKeys()">sync Key</button>
 </div>
 
 <div ng-if="active == 'showOwnKeys'">
     Liste eigener PubKeys, zum verwalten
     <ul class="list-group">
         <li class="list-group-item" ng-repeat="key in ownKeys" ng-click="showExportKey(key)" style="color:#000">
-            {{key.name}} - {{key.keySize}}
+            {{key.name}} - {{key.keySize}} - {{key.id}} <span ng-if="key.privKey">- local</span>
             <i class="fa fa-cloud-download"></i>
         </li>
     </ul>

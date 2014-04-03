@@ -1,28 +1,41 @@
-.login-screen-start{
-    display:block;
-    min-height:14em;
-    text-align:center;
-    background-color:@cm-overlay-dark;
+.app-spinner{
+  text-align:center;
+  font-size:20em;
+  position:absolute;
+  width:100%;
+  left:0;
+  right:0;
+  z-index:1000;
+  i{
     color:@cm-white;
-    bottom:0;
-    left:0
+  }
+}
+
+.login-screen-start{
+  display:block;
+  min-height:14em;
+  text-align:center;
+  background-color:@cm-overlay-dark;
+  color:@cm-white;
+  bottom:0;
+  left:0
 }
 
 .cm-login-container{
-    display:block;
-    text-align:center;
-    margin:0 auto;
-    padding:0px 1em;
-    padding-bottom: 5em;
+  display:block;
+  text-align:center;
+  margin:0 auto;
+  padding:0 1em;
+  padding-bottom: 5em;
 }
 .cm-login-rhino{
-    margin-top:10%;
-    font-size:25em;
-    color:rgba(0,0,0,0.7);
-    position:relative;
+  margin-top:10%;
+  font-size:25em;
+  color:@cm-white;
+  position:relative;
 }
 
 .cm-login-text{
-    margin-top:2em;
-    color:rgba(255, 255, 255, 0.25)
+  margin-top:2em;
+  color:rgba(255, 255, 255, 0.25)
 }

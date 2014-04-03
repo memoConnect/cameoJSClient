@@ -221,6 +221,8 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt','$rootScope', fu
         $rootScope.$on('logout', function(){
             self.instanceId = "";
             self.instanceKey = "";
+            self.storageValue = {};
+            self.cryptKey = "";
         });
 
     }
