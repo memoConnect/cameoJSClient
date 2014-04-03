@@ -3,6 +3,8 @@
         "apiUrl": "https://dev.cameo.io/api/v1"
     },
     "phonegap": {
-        "baseName" : "cameoNet-default"
+        "baseName" : "cameoNet-default",
+        "appId" : "io.cameo.cameonet.client.web.mobile.app.local"
+
     }
 }
