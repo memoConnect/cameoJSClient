@@ -21,8 +21,9 @@ module.exports = function (grunt) {
         if (grunt.file.exists(buildConfigUser)) {
             buildConfig = grunt.file.readJSON(buildConfigUser);
         }
-        else
+        else {
             buildConfig = grunt.file.readJSON('./config/cameoBuildConfig.json');
+        }
 
         switch (currentTarget) {
             case "test" :
@@ -44,9 +45,30 @@ module.exports = function (grunt) {
         //check whether apiUrl should be overwritten
         var apiUrl = grunt.option('apiUrl');
         if (apiUrl) {
-            console.log("apiUrl: " + apiUrl);
             buildConfig.config.apiUrl = apiUrl;
         }
+
+        var version = grunt.option('appVersion');
+        if (version) {
+            buildConfig.config.version = version;
+
+            // determine phonegapversion
+            var v = version.split('.');
+            if (v.length == 4) {
+                buildConfig.phonegap.version = v[1] + "." + v[2] + "." + v[3];
+                buildConfig.phonegap.extraName = "-" + v[0];
+            } else {
+                buildConfig.phonegap.version = version;
+                buildConfig.phonegap.extraName = "";
+            }
+
+            console.log("phonegap name: " +  buildConfig.phonegap.baseName + buildConfig.phonegap.extraName);
+            console.log("phonegap version: " + buildConfig.phonegap.version);
+        } else {
+            buildConfig.config.version = "no version";
+        }
+
+		buildConfig.phonegap.phonegapBaseFilename = buildConfig.phonegap.baseName + buildConfig.phonegap.extraName + '.' + buildConfig.phonegap.version;
 
         return buildConfig;
     })();
@@ -162,6 +184,12 @@ module.exports = function (grunt) {
         copy: {
             'phonegap-resources': {
                 files: [
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: 'dist/**',
+                        dest: 'phonegap-build/www/'                        
+                    },
                     // copy all icon and splashs to /www/res
                     {
                         expand: true,
@@ -176,6 +204,7 @@ module.exports = function (grunt) {
                         src: 'phonegap-res/*.js',
                         dest: 'phonegap-build/www/'
                     }
+                    
                 ]
             }, 'dev-deploy': {
                 files: [
@@ -200,12 +229,23 @@ module.exports = function (grunt) {
                         dest: 'dist/'
                     }
                 ]
+            }, 'phonegap-target': {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'phonegap-target',
+                        src: ['*','!*.zip'],
+                        dest: 'dist/dl/'
+                    }
+                ]
             }
         },
         clean: {
             'dalek-report': ['report'],
             'dev-deploy': ['dist/app/less'],
-            'dist-app': ['dist/app']
+            'dist-app': ['dist/app'],
+            'dist': ['dist'],
+            'phonegap-target': ['phonegap-target']
         },
 
         // unit tests
@@ -345,7 +385,8 @@ module.exports = function (grunt) {
                 'files': {
                     'phonegap-build/www/index.html': ['templates/index.tpl.html']
                 }
-            }, 'www-index': {
+            }
+            , 'www-index': {
                 'options': {
                     'data': {
                         'phonegapFiles': '',
@@ -355,10 +396,21 @@ module.exports = function (grunt) {
                 'files': {
                     'app/index.html': ['templates/index.tpl.html']
                 }
-            }, 'config-webApp': {
+            }
+			, 'dl-index': {
+			                'options': {
+			                    'data': {
+			                        'phonegapBaseFilename': globalCameoBuildConfig.phonegap.phonegapBaseFilename
+			                    }
+			                },
+			                'files': {
+			                    'dist/dl/index.html': ['templates/dl-index.tpl.html']
+			                }
+		   }, 'config-webApp': {
                 'options': {
                     'data': {
-                        'currentApiUrl': globalCameoBuildConfig.config.apiUrl
+                        'currentApiUrl': globalCameoBuildConfig.config.apiUrl ,
+                        'currentVersion': globalCameoBuildConfig.config.version
                     }
                 },
                 'files': {
@@ -375,6 +427,17 @@ module.exports = function (grunt) {
                 'files': {
                     'test/e2e/config-e2e-tests.js': ['templates/config-e2e-tests.tpl.js']
                 }
+            } , 'config-phonegap': {
+                'options': {
+                    'data': {
+                        'currentName': globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName,
+                        'currentVersion': globalCameoBuildConfig.phonegap.version,
+                        'currentAppId': globalCameoBuildConfig.phonegap.appId
+                    }
+                },
+                'files': {
+                    'phonegap-res/config.xml': ['templates/config-phonegap.tpl.xml']
+                }
             }
         },
         // create zip and upload to build server
@@ -388,9 +451,9 @@ module.exports = function (grunt) {
                         "password": globalCameoSecrets.phonegap.password
                     },
                     download: {
-                        ios: 'phonegap-target/cameoNet.ipa',
-                        android: 'phonegap-target/cameoNet.apk',
-                        winphone: 'phonegap-target/cameoNet.xap'
+                        ios: 'phonegap-target/' + globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.ipa',
+                        android: 'phonegap-target/' + globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk',
+                        winphone: 'phonegap-target/' + globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.xap'
                     }
                 }
             }
@@ -474,12 +537,15 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-phonegap-build');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.registerTask('phonegap-bs', [
+        'clean:phonegap-target',
         'deploy',
-        'phonegap:build',
+     //   'phonegap:build',
         'copy:phonegap-resources',
         'template:phonegap-index',
+		'template:dl-index',
         'compress',
-        'phonegap-build:debug'
+        'phonegap-build:debug',
+        'copy:phonegap-target'
     ]);
 
     // deploy www without phonegap
@@ -500,9 +566,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'concat:less', 'less']);
+    grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'template:config-phonegap', 'concat:less', 'less']);
     grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
 
     // deploy it for me babe !!
-    grunt.registerTask('deploy', ['clean:dist-app', 'genAllTemplates', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
+    grunt.registerTask('deploy', ['clean:dist', 'genAllTemplates', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
 };

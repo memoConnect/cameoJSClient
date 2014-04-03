@@ -1,5 +1,9 @@
 {
     "config": {
         "apiUrl": "https://dev.cameo.io/api/v1"
+    },
+    "phonegap": {
+        "baseName" : "cameoNet-dev",
+        "appId" : "io.cameo.cameonet.client.web.mobile.app.dev"
     }
 }

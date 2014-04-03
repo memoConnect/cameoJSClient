@@ -6,6 +6,8 @@
 @cm-white: #FFFFFF;
 @cm-black: #000000;
 @cm-green: #66CC00;
+@cm-yellow: #FFCC00;
+@cm-red: #CC0000;
 @cm-bg-color: @cm-black;
 @cm-warning-color: #FF6600;
 @cm-input-bg-color: #EDEDED;
@@ -19,8 +21,8 @@
 @cm-app-width: 32rem;
 
 @cm-border-radius: 0.357em;
-
 @cm-large-font: 1.4em;
+@cm-border-width: 0.1rem;
 
 // Message
 @cm-msg-bg-color-own:#F3F3F3;
@@ -58,24 +60,37 @@ a {
 }
 
 a,button{
-    text-overflow: ellipsis;
-    text-align:center;
-    border:none;
-    white-space:nowrap;
-    overflow:hidden;
+  text-overflow: ellipsis;
+  text-align:center;
+  border:none;
+  white-space:nowrap;
+  overflow:hidden;
+}
+
+h2, .h2 {
+  font-size:1.875em;
+}
+h1, h2, h3 {
+  margin-bottom:0.625em;
+  margin-top:1.250em;
 }
 
 ul {
-    padding:0;
-    margin:0;
-    list-style: none;
+  padding:0;
+  margin:0;
+  list-style: none;
 }
 
 li {
-    padding:0;
-    margin:0;
-    list-style: none;
+  padding:0;
+  margin:0;
+  list-style: none;
 }
+
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
+  border: 0;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.075) inset, 0 0 0 rgba(126, 239, 104, 0.6);
+  outline: 0 none;}
 
 #cm-app{
     display:block;
@@ -84,10 +99,11 @@ li {
     height: auto !important; /* Für moderne Browser */
     height: 100%; /* "Mindesthöhe" für IE <7 */
     padding:0;
-    background-size:cover;
     background-attachment:fixed;
-    background-repeat:no-repeat;
-    background-image: url('../gfx/backgroundStart.jpg');
+//    background-size:cover;
+//    background-repeat:no-repeat;
+//    background-image: url('../gfx/backgroundStart.jpg');
+    background-image:url('../gfx/bg-repeat-01.jpg');
     //max-width is set via javascript in screen.js
     margin:0 auto;
 }
@@ -111,12 +127,11 @@ li {
         > header {
             position:relative;
             padding-top:1rem;
-            padding-bottom: 1.5rem;
-
+            padding-bottom:1.5rem;
+            background:rgba(255,255,255,0.5);
             h1 {
                 display:block;            
                 margin:0;
-                margin-bottom: 1rem;
                 line-height:1.2em;
                 font-size: 1.2em;
                 text-align:center;
@@ -137,6 +152,10 @@ li {
   text-overflow: ellipsis;
   overflow:hidden;
   white-space:nowrap;
+}
+
+.with-cursor{
+  cursor:pointer;
 }
 
 .without-border-radius{
@@ -167,13 +186,19 @@ li {
   .without-box-shadow
 }
 
+.border-radius{
+  -moz-border-radius:0.5rem;
+  -webkit-border-radius:0.5rem;
+  border-radius:0.5rem;
+}
+
 .border-radius-bottom{
-  -moz-border-radius-bottomright:0.5em;
-  -webkit-border-bottom-right-radius:0.5em;
-  border-bottom-right-radius:0.5em;
-  -moz-border-radius-bottomleft:0.5em;
-  -webkit-border-bottom-left-radius:0.5em;
-  border-bottom-left-radius:0.5em;
+  -moz-border-radius-bottomright:0.5rem;
+  -webkit-border-bottom-right-radius:0.5rem;
+  border-bottom-right-radius:0.5rem;
+  -moz-border-radius-bottomleft:0.5rem;
+  -webkit-border-bottom-left-radius:0.5rem;
+  border-bottom-left-radius:0.5rem;
 }
 
 .clearfix:after{
@@ -204,13 +229,3 @@ html[xmlns] .clearfix{display:block}
 
 .cm-fl{float:left}
 .cm-fr{float:right}
-
-.app-spinner{
-  text-align:center;
-  font-size:20em;
-  position:absolute;
-  width:100%;
-  left:0;
-  right:0;
-  z-index:1000;
-}

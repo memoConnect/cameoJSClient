@@ -11,7 +11,7 @@
 .btn {
     -moz-user-select: none;
     background-image: none;
-    border: 0.05em solid rgba(0, 0, 0, 0);
+    border: @cm-border-width solid rgba(0, 0, 0, 0);
     border-radius: 0.25em;
     cursor: pointer;
     display: inline-block;
@@ -70,7 +70,14 @@
 }
 
 .cm-list-group-item {
-  position:relative;display:block;margin-bottom:-1px;border:1px solid @cm-border-grey;border-width:1px 0;background:rgba(255,255,255,0.75);color:@cm-grey;padding:0.1em 0.1em;
+  position:relative;
+  display:block;
+  margin-bottom:-1px;
+  border:@cm-border-width solid @cm-border-grey;
+  border-width:@cm-border-width 0;
+  background:rgba(255,255,255,0.75);
+  color:@cm-grey;
+  padding:0.1em 0.1em;
   a{
     color:@cm-grey;
     text-decoration: none;
@@ -104,7 +111,7 @@ div[cm-transparent-bg]{
     left:0;
     right:0;
     margin:0 auto;
-    background-color: rgba(0,0,0,.7);
+    background-color: rgba(0,0,0,0.5);
     &~div{
         position: relative;
         z-index: 1;

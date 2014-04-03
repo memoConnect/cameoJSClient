@@ -31,6 +31,12 @@ function cmConversationsAdapter(cmApi, cmUtil){
             })
         },
 
+        getConversationSummary: function(id){
+            return cmApi.get({
+                url: '/conversation/' + id + '/summary'
+            })
+        },
+
         getPurl: function(id){
             return cmApi.get({
                 url:'/purl/' + id

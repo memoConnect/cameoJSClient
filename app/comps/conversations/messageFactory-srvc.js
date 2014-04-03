@@ -17,7 +17,7 @@ function cmMessageFactory ($rootScope, cmMessageModel){
                         if(typeof instances[i] === 'object' &&
                             instances[i].id == data.id){
 
-                            message = instances[i].instance;
+                            message = instances[i];
                             break;
                         }
                     }
@@ -33,7 +33,6 @@ function cmMessageFactory ($rootScope, cmMessageModel){
 
             return null;
         },
-        
         getQty: function(){
             return instances.length;
         }

@@ -1,3 +1,5 @@
+'use strict';
+
 function cmAdaptiveChange($timeout){
     return {
         restrict:       'A',

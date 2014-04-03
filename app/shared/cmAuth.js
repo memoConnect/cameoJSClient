@@ -70,7 +70,8 @@ function(cmApi){
                 url: '/identity/publicKey',
                 data: {
                     name: data.name,
-                    key: data.key
+                    key: data.key,
+                    keySize: parseInt(data.keySize)
                 }
             })
         },

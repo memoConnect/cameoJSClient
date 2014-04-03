@@ -37,7 +37,7 @@ form {
     font-size: 1.4em;
 }
 
-
+@cm-form-control-height: 1.4em;
 .cm-form-group{
   padding:0 2em;
   position:relative;
@@ -54,16 +54,19 @@ form {
       .clear-form-border;
       background:@cm-light-grey;
       width: 100%;
-      height:1.4em;
+      height:@cm-form-control-height;
     }
 
     &.white-control{
       background:@cm-white;
       &~i {
-        color:@cm-white;
-        font-size: 3.6em;
+        color: @cm-white;
+        font-size: 3.7em;
+        left: -0.03em;
         position: relative;
-        top: 0.29em;
+        top: 0.08em;
+        vertical-align: middle;
+        z-index:0;
       }
       input{
         background:@cm-white;
@@ -75,8 +78,9 @@ form {
 
       input {
         position: relative;
-        padding: 0 0.3em;
+        padding:0 0.3em;
         line-height: 1.2em;
+        z-index: 2;
       }
 
       &:after{
@@ -87,12 +91,19 @@ form {
         right:1.5em;
         bottom:0.3em;
         height:0.3em;
-        border:@cm-black solid 0.1em;
+        border:@cm-black solid @cm-border-width;
         border-top:none;
+        z-index:1;
       }
     }
 
-    &.with-icon { width:85%; }
+    &.with-icon{
+      width:85%;
+      padding-right:0;
+      &:after{
+        right:0;
+      }
+    }
   }
 
 

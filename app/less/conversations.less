@@ -5,14 +5,14 @@ cm-conversation{
 }
 
 li:first-of-type cm-conversation-tag {
-    border-top: solid @cm-border-grey 0.05em;    
+    border-top: solid @cm-border-grey @cm-border-width;
 }
 
 cm-conversation-tag{
     display: block;  
     background: @cm-overlay-light;
     color: @cm-dark-grey;
-    border-bottom: solid @cm-border-grey 0.05em;
+    border-bottom: solid @cm-border-grey @cm-border-width;
     height: 3.6em;
     position:relative;
 
@@ -25,23 +25,24 @@ cm-conversation-tag{
     }
 
     .details{
-        margin-left: 3em;
-        margin-right: 30%;
-        text-align:left;
-        padding:0.3em;
+      margin-left: 3em;
+      margin-right: 30%;
+      text-align:left;
+      padding:0.3em;
 
-        .subject {            
-            .single-line;
-            line-height:1.2em;
-        }
+      .subject {
+        .single-line;
+        line-height:1.2em;
+        font-weight:bold;
+      }
 
-        cm-message{
-            .single-line;
-            fonts-size:1em;
-            line-height:1.8em;
-            margin:0;
-            padding:0;
-        }
+      cm-message{
+        .single-line;
+        fonts-size:1em;
+        line-height:1.8em;
+        margin:0;
+        padding:0;
+      }
     }
 
     .meta{
@@ -126,11 +127,11 @@ cm-conversation-controls{
   height:@cm-conversation-control-height;
   width:@cm-app-width;
   top:@cm-header-height;
-  z-index:1;
+  z-index:2;
   .control{
     line-height:2em;
     white-space:nowrap;
-    font-size:0.6em;
+    font-size:1em;
     overflow:hidden;
     padding-bottom:1em;
     .bar{
@@ -158,10 +159,15 @@ cm-conversation-controls{
         }
       }
     }
+
     .body{
       .body-group{
         background:@cm-white;
-        padding:1em;
+        padding:0.5em;
+        border-bottom:@cm-border-grey @cm-border-width solid;
+      }
+      &:last-child{
+        border-bottom:0;
       }
       .cm-btn{
         color:@cm-ci-color;
@@ -172,15 +178,69 @@ cm-conversation-controls{
         padding:0;
       }
     }
+
+    .recipients-list{
+      position:relative;
+      overflow:hidden;
+      .add-recipients{
+        display:inline-block;
+        position:relative;
+        padding-right:3em;
+      }
+      cm-avatar{
+        margin-right:0.5em;
+        &:last-child{
+          margin-right:0;
+        }
+      }
+      cm-edge{
+        font-size:3em;
+      }
+    }
+
+    .safety-levels{
+      [cm-weight]{
+        vertical-align: middle;
+      }
+      .cm-safety-level{
+        color:@cm-white;
+        width:4rem;
+        height:4rem;
+        font-size:2rem;
+        padding:0.4em;
+        .border-radius;
+        &.active{
+          font-size:3rem;
+          width:5rem;
+          height:5rem;
+          padding:0.3em;
+        }
+        &.level-safer{
+          i{
+            width: 0.65em;
+            position: relative;
+            left: -0.3em;
+          }
+        }
+      }
+    }
+
+    .cm-center{
+      .cm-info{
+        color:@cm-ci-color;
+      }
+    }
   }
 }
 
+
+
 div.answer{
-  width: @cm-app-width;
+  width:@cm-app-width;
   min-height:@cm-footer-height;
   position:fixed;
   bottom:0;
-  z-index:99;
+  z-index:1;
   background-color:@cm-overlay-light;
   font-size:1.2em;
   vertical-align: middle;
@@ -214,11 +274,8 @@ div.answer{
       width: 85%;
       background-color: transparent;
       border: none;
-      min-height: 1.5em;
-      max-height: 4em;
       font-size: 0.8em;
-      padding: 0.4em;
-      resize: none;
+      margin-bottom: 0.5em;
     }
     .inputter {
       width: 100%;
@@ -228,10 +285,10 @@ div.answer{
 
       border-color: -moz-use-text-color #000000 #000000;
       border-image: none;
-      border-right: 0.1em solid #000000;
-      border-left: 0.1em solid #000000;
+      border-right: @cm-border-width solid #000000;
+      border-left: @cm-border-width solid #000000;
       border-style: none solid solid;
-      border-width: medium 0.1em 0.1em;
+      border-width: medium @cm-border-width @cm-border-width;
     }
   }
 }

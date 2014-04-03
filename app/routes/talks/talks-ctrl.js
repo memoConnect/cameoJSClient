@@ -16,7 +16,7 @@ define([
         'cmConversationsModel',
         'cmUtil',
         '$modal',
-        function($scope, $rootScope, cmUserModel,cmConversationsModel, cmUtil, $modal) {
+        function($scope, $rootScope, cmUserModel, cmConversationsModel, cmUtil, $modal) {
             cmConversationsModel.getConversations();
 
             $scope.cmUtil = cmUtil;

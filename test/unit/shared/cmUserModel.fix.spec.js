@@ -20,8 +20,8 @@ describe('cmUserModel', function(){
             expect(model.isAuth).toBeDefined();
         })
 
-        it('should defined setIdentiy',function(){
-            expect(model.setIdentiy).toBeDefined();
+        it('should defined setIdentity',function(){
+            expect(model.setIdentity).toBeDefined();
         })
 
         it('should defined isGuest',function(){
@@ -64,8 +64,8 @@ describe('cmUserModel', function(){
             expect(model.saveKey).toBeDefined();
         })
 
-        it('should defined loadKeys',function(){
-            expect(model.loadKeys).toBeDefined();
+        it('should defined loadLocalKeys',function(){
+            expect(model.loadLocalKeys).toBeDefined();
         })
     })
 

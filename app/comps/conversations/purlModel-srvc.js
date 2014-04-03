@@ -21,7 +21,7 @@ function cmPurlModel (cmConversationsAdapter, cmConversationsModel, cmConversati
      * @param identity
      */
     function handleIdentity(identity_data){
-        cmUserModel.setIdentiy(identity_data);
+        cmUserModel.setIdentity(identity_data);
     }
 
     /**
