@@ -127,6 +127,10 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
      * Key Handling
      */
 
+    /**
+     * @todo in die identität
+     * @param key
+     */
     this.addKey = function(key){
         var i = 0,
             check = false;
