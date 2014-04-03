@@ -64,8 +64,8 @@ describe('cmUserModel', function(){
             expect(model.saveKey).toBeDefined();
         })
 
-        it('should defined loadKeys',function(){
-            expect(model.loadKeys).toBeDefined();
+        it('should defined loadLocalKeys',function(){
+            expect(model.loadLocalKeys).toBeDefined();
         })
     })
 
