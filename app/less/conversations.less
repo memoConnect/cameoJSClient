@@ -131,7 +131,7 @@ cm-conversation-controls{
   .control{
     line-height:2em;
     white-space:nowrap;
-    font-size:0.6em;
+    font-size:1em;
     overflow:hidden;
     padding-bottom:1em;
     .bar{
@@ -159,10 +159,15 @@ cm-conversation-controls{
         }
       }
     }
+
     .body{
       .body-group{
         background:@cm-white;
-        padding:1em;
+        padding:0.5em;
+        border-bottom:@cm-border-grey @cm-border-width solid;
+      }
+      &:last-child{
+        border-bottom:0;
       }
       .cm-btn{
         color:@cm-ci-color;
@@ -173,8 +178,62 @@ cm-conversation-controls{
         padding:0;
       }
     }
+
+    .recipients-list{
+      position:relative;
+      overflow:hidden;
+      .add-recipients{
+        display:inline-block;
+        position:relative;
+        padding-right:3em;
+      }
+      cm-avatar{
+        margin-right:0.5em;
+        &:last-child{
+          margin-right:0;
+        }
+      }
+      cm-edge{
+        font-size:3em;
+      }
+    }
+
+    .safety-levels{
+      [cm-weight]{
+        vertical-align: middle;
+      }
+      .cm-safety-level{
+        color:@cm-white;
+        width:4rem;
+        height:4rem;
+        font-size:2rem;
+        padding:0.4em;
+        .border-radius;
+        &.active{
+          font-size:3rem;
+          width:5rem;
+          height:5rem;
+          padding:0.3em;
+        }
+        &.level-safer{
+          i{
+            width: 0.65em;
+            position: relative;
+            left: -0.3em;
+          }
+        }
+      }
+    }
+
+    .cm-center{
+      .cm-info{
+        color:@cm-ci-color;
+      }
+    }
   }
 }
+
+
 
 div.answer{
   width:@cm-app-width;

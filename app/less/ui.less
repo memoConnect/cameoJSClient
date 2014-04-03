@@ -1,3 +1,7 @@
+.level-safer{background-color:@cm-green}
+.level-safe{background-color:@cm-yellow}
+.level-unsafe{background-color:@cm-red}
+
 button.full {
     display:block !important;
     background: @cm-black;
@@ -51,6 +55,19 @@ cm-avatar {
   height:3rem;
   vertical-align:middle;
   position:relative;
+  background-size:cover;
+  &.with-name{
+    margin-bottom:2em;
+  }
+  .name{
+    position:absolute;
+    top:3rem;
+    left:0;
+    right:0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+  }
 }
 
 cm-date-seperator {

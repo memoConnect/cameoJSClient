@@ -1,8 +1,8 @@
 function cmSafetyLevel(){
     return {
-        restrict : 'AE',
+        restrict: 'AE',
 
-        link : function(scope, element, attrs){
+        link: function(scope, element, attrs){
 
             function draw(x){
                 element.children().remove()

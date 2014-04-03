@@ -3,16 +3,15 @@
 function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmRecipientModel, $q){
     var ConversationModel = function(data){
         //Attributes:
-        this.id = '';
-        this.subject = '';
-        this.messages = [];
-        this.recipients = [];
-        this.passphrase = '';
-        this.created = '';
-        this.lastUpdated = '';
-        this.numberOfMessages = 0;
-        this.encryptedKeyList = {}
-
+        this.id = '',
+        this.subject = '',
+        this.messages = [],
+        this.recipients = [],
+        this.passphrase = '',
+        this.created = '',
+        this.lastUpdated = '',
+        this.numberOfMessages = 0,
+        this.encryptedKeyList = {};
         var self = this;
 
         /**

@@ -12,12 +12,12 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
 .factory('cmIdentityModel',['cmAuth', 'cmCrypt', 'avatarMocks', '$q', function(cmAuth, cmCrypt, avatarMocks, $q){
     var Identity = function(identity_data){
 
-        this.id,        
+        this.id,
         this.displayName,
-        this.userKey,  
-        this.cameoId, 
+        this.userKey,
+        this.cameoId,
         this.email                   = {value: undefined, isVerified: undefined},
-        this.phoneNumber             = {value: undefined, isVerified: undefined},    
+        this.phoneNumber             = {value: undefined, isVerified: undefined},
         this.preferredMessageType,
         this.publicKeys,
         this.userType,
@@ -64,7 +64,9 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
 
         }
 
-        this.getAvatar = function(){
+        this.getAvatar = function(mock){
+            if(mock != undefined)
+                return mock;
             return this.avatar;
         }
 
