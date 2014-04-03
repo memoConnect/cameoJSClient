@@ -141,6 +141,7 @@
 
 	"CONTACTS": {
 		"WELCOME": "Addressbook",
+        "HEADING": "Contacts",
         "PLACEHOLDER": {
             "ADD_NEW_CONTACT": "please insert a cameoId"
         },
@@ -157,7 +158,9 @@
         "LABEL": {
             "DISPLAYNAME": "Displayname",
             "NAME": "Name",
-            "SURNAME": "Surname"
+            "SURNAME": "Surname",
+            "SORT": "arrange",
+            "FILTER": "filter"
         },
         "BUTTON": {
             "RESET": "reset",
