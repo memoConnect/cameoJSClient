@@ -134,6 +134,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
         while(i < this.data.publicKeys.length){
             if(key.id == this.data.publicKeys[i].id){
                 check = true;
+                angular.extend(this.data.publicKeys[i], key);
                 break;
             }
             i++;
