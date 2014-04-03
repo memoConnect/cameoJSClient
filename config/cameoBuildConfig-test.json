@@ -3,6 +3,7 @@
         "apiUrl": "http://localhost:9000/api/v1"
     },
     "phonegap": {
-        "baseName" : "cameoNet-test"
+        "baseName" : "cameoNet-test" ,
+        "appId" : "io.cameo.cameonet.client.web.mobile.app.test"
     }
 }
