@@ -161,7 +161,9 @@ angular.module('cmCrypt', ['cmLogger'])
             getKeySize: function(key){ //@todo
                 var jse = new JSEncrypt()
                 jse.setKey(key)
-                console.log(jse)
+
+                //@Todo: doesnt do what it is supposed to do =/
+
                 return jse.key.n.bitLength() //@Todo: check if this is the correct value
             },
 

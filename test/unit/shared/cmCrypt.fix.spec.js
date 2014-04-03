@@ -140,6 +140,7 @@ describe('cmCrypt', function () {
                     .then(function(data){
                         publicKey  = data.pubKey
                         privateKey = data.privKey
+                        console.log(privateKey)
                     })             
                 })
 
@@ -152,6 +153,7 @@ describe('cmCrypt', function () {
 
             it('should encrypt a string with a public key', function(){
                 encrypted_secret = cmCrypt.encryptWithPublicKey(secret, publicKey)
+                console.log(encrypted_secret)
 
                 expect(encrypted_secret).toBeDefined()
                 expect(encrypted_secret).not.toEqual('priv')
@@ -169,7 +171,9 @@ describe('cmCrypt', function () {
             })
 
             it('should provide a function "getKeySize" to detect the keysize of publick keys', function(){
-                //console.log(cmCrypt.getKeySize('publicKey')) //@Todo
+                expect(cmCrypt.getKeySize).toBeDefined()
+                //Todo: doesnt allways work as expected =(
+                //expect(cmCrypt.getKeySize(publicKey)).toBe(128)
             })
 
         })

@@ -48,7 +48,8 @@ describe('cmIdentityModel', function(){
             })
 
             it('should provide a function "getWeakestKeyLength" to detect the weakest key', function(){
-
+                expect(identity.getWeakestKeySize).toBeDefined()
+                expect(identity.getWeakestKeySize()).toBe(120)
             })
 
 

@@ -3,69 +3,69 @@
 var cmUserModel;
 
 describe('cmUserModel', function(){
-    var model;
+    var cmUserModel;
 
     beforeEach(module("cmUserModel"))
 
     beforeEach(inject(function(_cmUserModel_) {
-        model = _cmUserModel_
+        cmUserModel = _cmUserModel_
     }))
 
     it('should exists', function(){
-        expect(model).toBeDefined();
+        expect(cmUserModel).toBeDefined();
     })
 
     describe('public API', function(){
         it('should defined isAuth',function(){
-            expect(model.isAuth).toBeDefined();
+            expect(cmUserModel.isAuth).toBeDefined();
         })
 
         it('should defined setIdentiy',function(){
-            expect(model.setIdentiy).toBeDefined();
+            expect(cmUserModel.setIdentiy).toBeDefined();
         })
 
         it('should defined isGuest',function(){
-            expect(model.isGuest).toBeDefined();
+            expect(cmUserModel.isGuest).toBeDefined();
         })
 
         it('should defined doLogin',function(){
-            expect(model.doLogin).toBeDefined();
+            expect(cmUserModel.doLogin).toBeDefined();
         })
 
         it('should defined doLogout',function(){
-            expect(model.doLogout).toBeDefined();
+            expect(cmUserModel.doLogout).toBeDefined();
         })
 
         it('should defined storageSave',function(){
-            expect(model.storageSave).toBeDefined();
+            expect(cmUserModel.storageSave).toBeDefined();
         })
 
         it('should defined storageGet',function(){
-            expect(model.storageGet).toBeDefined();
+            expect(cmUserModel.storageGet).toBeDefined();
         })
 
         it('should defined storageRemove',function(){
-            expect(model.storageRemove).toBeDefined();
+            expect(cmUserModel.storageRemove).toBeDefined();
         })
 
         it('should defined getToken',function(){
-            expect(model.getToken).toBeDefined();
+            expect(cmUserModel.getToken).toBeDefined();
         })
 
         it('should defined storeToken',function(){
-            expect(model.storeToken).toBeDefined();
+            expect(cmUserModel.storeToken).toBeDefined();
         })
 
         it('should defined removeToken',function(){
-            expect(model.removeToken).toBeDefined();
+            expect(cmUserModel.removeToken).toBeDefined();
         })
 
         it('should defined saveKey',function(){
-            expect(model.saveKey).toBeDefined();
+            expect(cmUserModel.saveKey).toBeDefined();
         })
 
         it('should defined loadKeys',function(){
-            expect(model.loadKeys).toBeDefined();
+            expect(cmUserModel.loadKeys).toBeDefined();
         })
     })
 
@@ -76,20 +76,47 @@ describe('cmUserModel', function(){
     xdescribe('Authentication',function(){
         // TODO: couldn't work while cmAuth handling with token = mocken?
         it('should be true, when user is active and has id',function(){
-            model.data.isActive = true;
-            model.data.id = 'moep';
-            expect(model.isAuth()).toBeTruthy();
+            cmUserModel.data.isActive = true;
+            cmUserModel.data.id = 'moep';
+            expect(cmUserModel.isAuth()).toBeTruthy();
         })
 
         it('should be false, when user is active and has no id',function(){
-            model.data.isActive = true;
-            expect(model.isAuth()).toBeFalsy();
+            cmUserModel.data.isActive = true;
+            expect(cmUserModel.isAuth()).toBeFalsy();
         })
 
         it('should be false, when user is inactive and has id',function(){
-            model.data.id = 'moep';
-            expect(model.isAuth()).toBeFalsy();
+            cmUserModel.data.id = 'moep';
+            expect(cmUserModel.isAuth()).toBeFalsy();
         })
+    })
+
+    describe('Encryption and key management', function(){
+
+        //Todo: alot of tests missing
+
+        var good_key = '-----BEGIN RSA PRIVATE KEY-----MGICAQACEHMGknWjWgWOrRHNGMHcekUCAwEAAQIQCxbBG9IppYtgkIxxTnAEwQIJAK6jxsKBxtMtAgkAqJz8dMQfknkCCQCPQ9WzDQmRhQIIGS1n3R+z/zECCQCRAOQtR76HaA==-----END RSA PRIVATE KEY-----',
+            bad_key  = '',
+            encrypted_secret = 'WjCxJqp8KovZ9UmPNGArNw==' //contains 'priv'
+
+        it('should provide functions "saveKey" and "loadKeys" to store and retrieve rsa keys', function(){
+            //@Todo
+        })
+
+        it('should provide a function "decryptPassphrase" to decrypt passphrase', function(){
+            cmUserModel.publicKeys = cmUserModel.publicKeys|| []
+            cmUserModel.publicKeys.push( {privKey : good_key} )
+            cmUserModel.publicKeys.push( {privKey : bad_key} )
+
+            expect(cmUserModel.decryptPassphrase).toBeDefined()
+
+            var decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
+
+            expect(decrypted_secret).toBe('priv')
+
+        })
+
     })
 
 });

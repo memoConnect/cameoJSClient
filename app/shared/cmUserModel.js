@@ -1,222 +1,251 @@
 'use strict';
 
-angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
-.service('cmUserModel',['cmAuth', 'cmLocalStorage', 'cmIdentityFactory', '$rootScope', '$q', '$location', function(cmAuth, cmLocalStorage, cmIdentityFactory, $rootScope, $q, $location){
-    var self = this,
-        isInit = false;
+angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'])
+.service('cmUserModel',[
 
-    var dataModel = {
-        isActive: false,
-        id: '',
-        userKey: '',
-        displayName: '',
-        cameoId: 'loading...',
-        email: {},
-        phoneNumber: {},
-        preferredMessageType: 'default',
-        created: '',
-        lastUpdated: '',
-        userType: 'external',
-        publicKeys: [],
-        storage: {},
-        identity: {}
-    }
+    'cmAuth', 
+    'cmLocalStorage', 
+    'cmIdentityFactory', 
+    'cmCrypt', 
+    '$rootScope', 
+    '$q', 
+    '$location', 
 
-    this.comesFromRegistration = false;
+    function(cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, $rootScope, $q, $location){
+        var self = this,
+            isInit = false;
 
-    /**
-     * Init Object
-     */
-    function init(identity_data){
-        if(typeof identity_data !== 'undefined'){
-            var identity = cmIdentityFactory.create(identity_data);
-
-            angular.extend(self.data, identity);
-
-            self.data.identity = identity;
-
-            isInit = true;
-            initStorage();
-
-        } else if(self.isAuth() !== false){
-            loadIdentity().then(
-                function(){
-                    isInit = true;
-                    initStorage();
-                }
-            );
+        var dataModel = {
+            isActive: false,
+            id: '',
+            userKey: '',
+            displayName: '',
+            cameoId: 'loading...',
+            email: {},
+            phoneNumber: {},
+            preferredMessageType: 'default',
+            created: '',
+            lastUpdated: '',
+            userType: 'external',
+            publicKeys: [],
+            storage: {},
+            identity: {}
         }
-    }
 
-    function loadIdentity(){
-        var deferred = $q.defer(),
-            identity;
+        this.comesFromRegistration = false;
 
-        cmAuth.getIdentity().then(
-            function(data){
-                identity = cmIdentityFactory.create(data);
+        /**
+         * Init Object
+         */
+        function init(identity_data){
+            if(typeof identity_data !== 'undefined'){
+                var identity = cmIdentityFactory.create(identity_data);
 
                 angular.extend(self.data, identity);
 
                 self.data.identity = identity;
 
-                self.data.isActive = true;
+                isInit = true;
+                initStorage();
 
-                deferred.resolve();
-            },
-            function(){
-                deferred.reject();
+            } else if(self.isAuth() !== false){
+                loadIdentity().then(
+                    function(){
+                        isInit = true;
+                        initStorage();
+                    }
+                );
             }
-        );
-
-        return deferred.promise;
-    }
-
-    this.data = angular.extend({}, dataModel);
-
-    this.isAuth = function(){
-        return this.getToken();
-    };
-
-    this.setIdentiy = function(identity_data){
-        init(identity_data);
-    };
-
-    this.isGuest = function(){
-        if(this.data.userType == 'external'){
-            return true;
         }
 
-        return false;
-    };
+        function loadIdentity(){
+            var deferred = $q.defer(),
+                identity;
 
-    this.doLogin = function(user, pass){
-        var deferred = $q.defer();
+            cmAuth.getIdentity().then(
+                function(data){
+                    identity = cmIdentityFactory.create(data);
 
-        cmAuth.requestToken(user, pass).then(
-            function(token){
-                cmAuth.storeToken(token);
+                    angular.extend(self.data, identity);
 
-                init();
+                    self.data.identity = identity;
 
-                deferred.resolve();
-            },
-            function(state, response){
-                deferred.reject(state, response);
+                    self.data.isActive = true;
+
+                    deferred.resolve();
+                },
+                function(){
+                    deferred.reject();
+                }
+            );
+
+            return deferred.promise;
+        }
+
+        this.data = angular.extend({}, dataModel);
+
+        this.isAuth = function(){
+            return this.getToken();
+        };
+
+        this.setIdentiy = function(identity_data){
+            init(identity_data);
+        };
+
+        this.isGuest = function(){
+            if(this.data.userType == 'external'){
+                return true;
             }
-        );
 
-        return deferred.promise;
-    };
+            return false;
+        };
 
-    this.doLogout = function(){
-        isInit = false;
-        this.removeToken();
-        $rootScope.$broadcast('logout');
-        $location.path("/login");
-    };
+        this.doLogin = function(user, pass){
+            var deferred = $q.defer();
 
-    this.saveKey = function(key_data){
-        var tmpKeys = this.loadKeys();
-        if(typeof tmpKeys !== undefined && typeof tmpKeys !== 'undefined' && typeof tmpKeys !== 'string'){
-            if(tmpKeys.length > 0){
-                tmpKeys.push(key_data);
-                this.storageSave('pgp',tmpKeys);
+            cmAuth.requestToken(user, pass).then(
+                function(token){
+                    cmAuth.storeToken(token);
+
+                    init();
+
+                    deferred.resolve();
+                },
+                function(state, response){
+                    deferred.reject(state, response);
+                }
+            );
+
+            return deferred.promise;
+        };
+
+        this.doLogout = function(){
+            isInit = false;
+            this.removeToken();
+            $rootScope.$broadcast('logout');
+            $location.path("/login");
+        };
+
+        this.saveKey = function(key_data){
+            var tmpKeys = this.loadKeys();
+            if(
+                   typeof tmpKeys !== undefined 
+                && typeof tmpKeys !== 'undefined' 
+                && typeof tmpKeys !== 'string'
+                && tmpKeys != null
+            ){
+                if(tmpKeys.length > 0){
+                    tmpKeys.push(key_data);
+                    this.storageSave('rsa',tmpKeys);
+                } else {
+                    this.storageSave('rsa',[key_data]);
+                }
             } else {
-                this.storageSave('pgp',[key_data]);
+                this.storageSave('rsa',[key_data]);
             }
-        } else {
-            this.storageSave('pgp',[key_data]);
+
+            cmAuth.savePublicKey({
+                name: key_data.name,
+                key:  key_data.pubKey,
+                size: key_data.keySize
+            }).then(
+                function(data){
+                    self.data.publicKeys.push(data);
+                },
+                function(){
+                    //kA
+                }
+            )
+
+            return true;
+        };
+
+        this.loadKeys = function(){
+            return this.storageGet('rsa');
+        };
+
+
+        this.decryptPassphrase = function(encrypted_passphrase){
+            var decrypted_passphrase = undefined
+
+            this.publicKeys.forEach(function(item){ //@Todo publicKey should be renamed, it also stores private keys
+                if(!decrypted_passphrase && item.privKey){
+                    decrypted_passphrase = cmCrypt.decryptWithPrivateKey(item.privKey)
+                }
+            })
+            return decrypted_passphrase
         }
 
-        cmAuth.savePublicKey({
-            name: key_data.name,
-            key: key_data.pubKey,
-            size: key_data.keySize
-        }).then(
-            function(data){
-                self.data.publicKeys.push(data);
-            },
-            function(){
-                //kA
+        /**
+         * Token Functions
+         * @TODO handle Token with identity
+         */
+        this.getToken = function(){
+            var token = cmAuth.getToken();
+            if(token !== undefined && token !== 'undefined' && token !== null){
+                return token;
             }
-        )
 
-        return true;
-    };
+            return false;
+        };
 
-    this.loadKeys = function(){
-        return this.storageGet('pgp');
-    };
+        this.storeToken = function(t){
+            cmAuth.storeToken(t);
+        };
 
-    /**
-     * Token Functions
-     * @TODO handle Token with identity
-     */
-    this.getToken = function(){
-        var token = cmAuth.getToken();
-        if(token !== undefined && token !== 'undefined' && token !== null){
-            return token;
+        this.removeToken = function(){
+            cmAuth.removeToken();
+        };
+
+        /**
+         * LocalStorage Functions
+         */
+        function initStorage(){
+            self.data.storage = cmLocalStorage.create(self.data.id,self.data.userKey);
         }
 
-        return false;
-    };
+        /**
+         * save to identity storage
+         * @param key
+         * @param value
+         */
+        this.storageSave = function(key, value){
+            if(isInit !== false && self.data.storage !== null){
+                console.log('dfdsfdsf')
+                self.data.storage.save(key, value);
+            }
+        };
+        /**
+         *  get from identity storage
+         * @param key
+         */
+        this.storageGet = function(key){
+            if(isInit !== false && self.data.storage !== null){
+                return self.data.storage.get(key);
+            }
 
-    this.storeToken = function(t){
-        cmAuth.storeToken(t);
-    };
+            return null;
+        };
+        /**
+         * remove from identity storage
+         * @param key
+         */
+        this.storageRemove = function(key){
+            if(isInit !== false && self.data.storage !== null){
+                self.data.storage.remove(key);
+            }
+        };
+        /**
+         * clear identity storage
+         */
+        function resetUser(){
+            self.data = angular.extend({}, dataModel);
+        }
 
-    this.removeToken = function(){
-        cmAuth.removeToken();
-    };
+        $rootScope.$on('logout', function(){
+            resetUser();
+        });
 
-    /**
-     * LocalStorage Functions
-     */
-    function initStorage(){
-        self.data.storage = cmLocalStorage.create(self.data.id,self.data.userKey);
+        init();
     }
-
-    /**
-     * save to identity storage
-     * @param key
-     * @param value
-     */
-    this.storageSave = function(key, value){
-        if(isInit !== false && self.data.storage !== null){
-            self.data.storage.save(key, value);
-        }
-    };
-    /**
-     *  get from identity storage
-     * @param key
-     */
-    this.storageGet = function(key){
-        if(isInit !== false && self.data.storage !== null){
-            return self.data.storage.get(key);
-        }
-
-        return null;
-    };
-    /**
-     * remove from identity storage
-     * @param key
-     */
-    this.storageRemove = function(key){
-        if(isInit !== false && self.data.storage !== null){
-            self.data.storage.remove(key);
-        }
-    };
-    /**
-     * clear identity storage
-     */
-    function resetUser(){
-        self.data = angular.extend({}, dataModel);
-    }
-
-    $rootScope.$on('logout', function(){
-        resetUser();
-    });
-
-    init();
-}]);
+]);
