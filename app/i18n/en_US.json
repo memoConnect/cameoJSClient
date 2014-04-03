@@ -5,6 +5,7 @@
         "MOEP": "moep",
         "WELCOME": "moep"
     },
+
     "LOGIN": {
         "HEADING": "Login",
         "LABEL": {
@@ -128,7 +129,9 @@
             "PASSPHRASE_INVALID" : "Passphrase invalid."
         },
         "PLACEHOLDER": {
-            "NO_SUBJECT": "no subject"
+            "NO_SUBJECT": "add subject",
+            "ADD_RECIPIENTS": "add recipients",
+            "INFO": "info"
         },
         "CONTROL": {
             "SAVE": "save",
@@ -136,7 +139,6 @@
         }
     },
 
-	
 	"CONTACTS": {
 		"WELCOME": "Addressbook",
         "PLACEHOLDER": {

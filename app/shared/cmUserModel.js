@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
-.service('cmUserModel',['cmAuth', 'cmLocalStorage', 'cmIdentityFactory', '$rootScope', '$q', '$location', 'avatarMocks', function(cmAuth, cmLocalStorage, cmIdentityFactory, $rootScope, $q, $location, avatarMocks){
+.service('cmUserModel',['cmAuth', 'cmLocalStorage', 'cmIdentityFactory', '$rootScope', '$q', '$location', function(cmAuth, cmLocalStorage, cmIdentityFactory, $rootScope, $q, $location){
     var self = this,
         isInit = false;
 
@@ -34,8 +34,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
             angular.extend(self.data, identity);
 
             self.data.identity = identity;
-            // avatar mock for own
-            self.data.identity.avatar = avatarMocks.own;
+            self.data.identity.isAppOwner = true;
 
             isInit = true;
             initStorage();
@@ -64,8 +63,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
                 angular.extend(self.data, identity);
 
                 self.data.identity = identity;
-                // avatar mock for own
-                self.data.identity.avatar = avatarMocks.own;
+                self.data.identity.isAppOwner = true;
 
                 self.data.isActive = true;
 

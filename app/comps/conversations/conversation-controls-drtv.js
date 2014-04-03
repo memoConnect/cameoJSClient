@@ -10,6 +10,11 @@ function cmConversationControls(){
         link: function($scope, $element, $attrs, cmConversation){
             $scope.isNew = cmConversation.isNew();
 
+            $scope.safetyLevel = 'safer';
+            $scope.setLevel = function(level){
+                $scope.safetyLevel = level;
+            }
+
             $scope.bodyVisible = $scope.isNew;
 
             $scope.handle = function(){

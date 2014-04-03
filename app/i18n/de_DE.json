@@ -100,7 +100,6 @@
         "ERROR": {
             "EMPTY": "Bitte ein Passwort eingeben und bestätigen"
         }
-
     },
 
     "TALKS": {
@@ -108,29 +107,31 @@
         "MORE": "mehr laden"
     },
 
-    "CONVERSATION" : {
+    "CONVERSATION": {
         "HEADING": "Conversation",
-        "LABEL" : {
-            "SEND" : "abschicken",
-            "REQUEST_CAPTCHA" : "Captcha anfordern",
-            "SEND_CAPTCHA" : "Captcha senden"
+        "LABEL": {
+            "SEND": "abschicken",
+            "REQUEST_CAPTCHA": "Captcha anfordern",
+            "SEND_CAPTCHA": "Captcha senden"
         },
-        "TAG" : {
-            "RECIPIENTS" : "Empfänger",
+        "TAG": {
+            "RECIPIENTS": "Empfänger",
             "SUBJECT": "Betreff",            
             "PASSPHRASE": "Schlüssel",
-            "MESSAGES" : "Nachrichten"
+            "MESSAGES": "Nachrichten"
         },
-        "TEXT" : {
-            "REQUEST_CAPTCHA" : "Bitte ein (neues) Captcha senden."
+        "TEXT": {
+            "REQUEST_CAPTCHA": "Bitte ein (neues) Captcha senden."
         },
-        "WARN" : {
-            "MESSAGE_EMPTY" : "Das Textfeld ist leer.",
-            "RECIPIENTS_MISSING" : "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
-            "PASSPHRASE_INVALID" : "Ungültiger Schlüssel."
+        "WARN": {
+            "MESSAGE_EMPTY": "Das Textfeld ist leer.",
+            "RECIPIENTS_MISSING": "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
+            "PASSPHRASE_INVALID": "Ungültiger Schlüssel."
         },
         "PLACEHOLDER": {
-            "NO_SUBJECT": "Kein Betreff"
+            "NO_SUBJECT": "Betreff eingeben",
+            "ADD_RECIPIENTS": "Empfänger hinzufügen",
+            "INFO": "Info"
         },
         "CONTROL": {
             "SAVE": "speichern",
