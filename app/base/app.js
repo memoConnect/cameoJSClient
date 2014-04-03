@@ -228,7 +228,7 @@ define([
                 var height          = window.innerHeight,
                     width           = html.offsetWidth,                      
                     landscape       = width > height,
-                    effective_width = landscape ? Math.min(height, 512) : width
+                    effective_width = landscape ? Math.min(height, 320) : width
 
                 html.style.fontSize  = (effective_width/rem) +'px'
                 app.style.maxWidth   = rem+'rem'
@@ -239,7 +239,7 @@ define([
             initScreenWidth(32)
 
             //For dev purposes only:
-            window.onresize = function() { initScreenWidth(32) }
+//            window.onresize = function() { initScreenWidth(32) }
 
         }
     ]);
