@@ -22,7 +22,8 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
              */
             $scope.showOwnKeys = function(){
                 $scope.active = 'showOwnKeys';
-                $scope.ownKeys = cmUserModel.loadKeys();
+                $scope.ownKeys = cmUserModel.data.publicKeys;
+                console.dir($scope.ownKeys)
             }
 
             $scope.showCreateKey = function(){
@@ -131,8 +132,7 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
                     }).then(
                         function(){
                             cmNotify.info('Done',{ttl:1000});
-
-                            cmUserModel.syncKeys();
+                            cmUserModel.syncLocalKeys();
                         },
                         function(){
                             cmNotify.warn('Error',{ttl:1000});
@@ -144,8 +144,8 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
             /**
              * sync Keys
              */
-            $scope.syncKeys = function(){
-                cmUserModel.syncKeys();
+            $scope.syncLocalKeys = function(){
+                cmUserModel.syncLocalKeys();
             }
         }
     }

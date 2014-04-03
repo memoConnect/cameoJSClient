@@ -39,12 +39,15 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
 
             isInit = true;
             initStorage();
+            self.syncLocalKeys();
+
 
         } else if(self.isAuth() !== false){
             loadIdentity().then(
                 function(){
                     isInit = true;
                     initStorage();
+                    self.syncLocalKeys();
                 }
             );
         }
@@ -81,6 +84,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
     this.isAuth = function(){
         return this.getToken();
     };
+
     this.setIdentity = function(identity_data){
         init(identity_data);
     };
@@ -119,12 +123,39 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
         $location.path("/login");
     };
 
+    /**
+     * Key Handling
+     */
+
+    this.addKey = function(key){
+        var i = 0,
+            check = false;
+
+        while(i < this.data.publicKeys.length){
+            if(key.id == this.data.publicKeys[i].id){
+                check = true;
+                break;
+            }
+            i++;
+        }
+
+        if(check !== true){
+            this.data.publicKeys.push({
+                id: key.id,
+                keySize: key.keySize,
+                name: key.name,
+                key: key.pubKey, // @todo pubKey
+                privKey: key.privKey
+            });
+        }
+    }
+
     this.saveKey = function(key_data){
         var deferred = $q.defer(),
             i = 0,
             check = false;
 
-        var tmpKeys = this.loadKeys();
+        var tmpKeys = this.loadLocalKeys();
         if(typeof tmpKeys !== undefined && typeof tmpKeys !== 'undefined' && typeof tmpKeys !== 'string'){
             if(tmpKeys.length > 0){
                 while(i < tmpKeys.length){
@@ -142,41 +173,22 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
 
                 this.storageSave('pgp',tmpKeys);
 
-                self.data.publicKeys.push(key_data);
-
                 deferred.resolve();
             } else {
                 this.storageSave('pgp',[key_data]);
-
-                self.data.publicKeys.push(key_data);
 
                 deferred.resolve();
             }
         } else {
             this.storageSave('pgp',[key_data]);
 
-            self.data.publicKeys.push(key_data);
-
             deferred.resolve();
         }
-
-//        cmAuth.savePublicKey({
-//            name: key_data.name,
-//            key: key_data.pubKey,
-//            size: key_data.keySize
-//        }).then(
-//            function(data){
-//                self.data.publicKeys.push(data);
-//            },
-//            function(){
-//                //kA
-//            }
-//        )
 
         return deferred.promise;
     };
 
-    this.loadKeys = function(){
+    this.loadLocalKeys = function(){
         var keys = this.storageGet('pgp');
         if(keys == 'undefined'){
             return [];
@@ -184,45 +196,31 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
         return keys;
     };
 
-    this.syncKeys = function(){
-        var deferred = $q.defer(),
-            i = 0,
-            k = 0;
+    this.syncLocalKeys = function(){
 
-        // get keys from identity
-        cmAuth.getIdentity().then(
-            function(data){
+        /**
+         * check local Keys from Storage
+         */
+        var localKeys = this.loadLocalKeys();
 
-                /**
-                 * check local Keys from Storage
-                 */
-                function checkLocalKeys(){
-                    var localKeys = self.loadKeys();
-
-                    localKeys.forEach(function(key){
-                        if(typeof key.id === 'undefined' || key.id == ''){
-                            cmAuth.savePublicKey({name:key.name, keySize: key.keySize, key: key.pubKey}).then(
-                                function(data){
-                                    key.id = data.id;
-
-                                    self.saveKey(key);
-                                }
-                            )
-                        }
-                    });
-                }
-
-                checkLocalKeys();
-
-                /**
-                 * compare with online pubKeys
-                 */
-                console.info('hier')
+        localKeys.forEach(function(key){
+            if(typeof key.id === 'undefined' || key.id == ''){
+                cmAuth.savePublicKey({name:key.name, keySize: key.keySize, key: key.pubKey}).then(
+                    function(data){
+                        key.id = data.id;
+                        self.saveKey(key).then(
+                            function(){
+                                self.addKey(key);
+                            }
+                        );
+                    }
+                )
+            } else {
+                self.addKey(key);
             }
-        );
+        });
 
-
-        return deferred.promise;
+        return this;
     };
 
     /**
