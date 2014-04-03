@@ -70,7 +70,9 @@
 
 <cm-overlay id="add-recipients">
     <div ng-click="$emit('cmOverlay:hide', 'add-recipients')">
-        <i class="fa cm-close"></i>
+        <i class="fa cm-close fa-2x pull-right"></i>
+        <br />
+        <div class="clearfix"></div>
     </div>
     <cm-contacts-list contacts-as="contact">
         <cm-contact-tag cm-data="contact" ng-click="selectContact(contact.identity); selected = true">
