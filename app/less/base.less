@@ -92,7 +92,7 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
   box-shadow: 0 0 0 rgba(0, 0, 0, 0.075) inset, 0 0 0 rgba(126, 239, 104, 0.6);
   outline: 0 none;}
 
-#cm-app{
+#cm-app, #cm-app-wrapper{
     display:block;
     position:relative;
     min-height: 100%; /* Mindesthöhe für moderne Browser */
@@ -106,6 +106,15 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     background-image:url('../gfx/bg-repeat-01.jpg');
     //max-width is set via javascript in screen.js
     margin:0 auto;
+}
+
+#cm-app {
+  z-index: 2;
+}
+
+#cm-app-wrapper {
+  position: fixed !important;
+  z-index: 1;
 }
 
 #cm-app.landscape {
