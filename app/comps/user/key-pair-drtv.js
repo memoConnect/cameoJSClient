@@ -132,7 +132,7 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
                         function(){
                             cmNotify.info('Done',{ttl:1000});
 
-//                            cmUserModel.syncKeys();
+                            cmUserModel.syncKeys();
                         },
                         function(){
                             cmNotify.warn('Error',{ttl:1000});

@@ -192,31 +192,32 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
         // get keys from identity
         cmAuth.getIdentity().then(
             function(data){
-                var localKeys = self.loadKeys();
-                console.info('Lokale Keys')
-                console.dir(localKeys)
-//                console.info('Globale Keys')
-//                console.dir(data.publicKeys)
 
                 /**
                  * check local Keys from Storage
                  */
-                localKeys.forEach(function(key){
-                    if(typeof key.id === 'undefined' || key.id == ''){
-                        cmAuth.savePublicKey({name:key.name, keySize: key.keySize, key: key.pubKey}).then(
-                            function(data){
-                                key.id = data.id;
+                function checkLocalKeys(){
+                    var localKeys = self.loadKeys();
 
-                                self.saveKey(key);
-                            }
-                        )
-                    }
-                });
+                    localKeys.forEach(function(key){
+                        if(typeof key.id === 'undefined' || key.id == ''){
+                            cmAuth.savePublicKey({name:key.name, keySize: key.keySize, key: key.pubKey}).then(
+                                function(data){
+                                    key.id = data.id;
 
+                                    self.saveKey(key);
+                                }
+                            )
+                        }
+                    });
+                }
 
-                console.info('merge');
-                console.dir(localKeys)
+                checkLocalKeys();
 
+                /**
+                 * compare with online pubKeys
+                 */
+                console.info('hier')
             }
         );
 
