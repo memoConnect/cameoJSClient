@@ -168,23 +168,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             return this;
         };
 
-//        this.addNewRecipient = function(identity){
-//            if(identity && !this.hasRecipient(identity)){
-//                if(this.id != ''){
-//                    cmConversationsAdapter.addRecipient(this.id, identity.id).then(
-//                        function(){
-//                            self.addRecipient(identity);
-//                        }
-//                    )
-//                } else {
-//                    self.addRecipient(identity);
-//                }
-//            }else{
-//                console.warn('Recipient already present.') //@ Todo
-//            }
-//            return this;
-//        }
-
         this.removeRecipient = function (identity) {
             var i = this.recipients.length;
 
@@ -282,15 +265,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             } else {
                 deferred.resolve();
             }
-
-//            cmConversationsAdapter.updateConversation(this).then(
-//                function(){
-//                    //log
-//                },
-//                function(){
-//                    //log fail
-//                }
-//            )
 
             return deferred.promise;
         }
