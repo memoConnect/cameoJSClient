@@ -15,6 +15,10 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         var self = this;
 
+        /**
+         * Conversation Handling
+         */
+
         this.init = function (conversation_data) {
             if(typeof conversation_data !== 'undefined'){
                 this.id             = conversation_data.id;
@@ -39,6 +43,39 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             }
         };
 
+        this.sync = function(){
+            //cmConversationsAdapter.addRecipient(this.id, identity.id)
+        }
+
+        this.save = function(){
+            var deferred = $q.defer();
+
+            if(this.id == ''){
+                cmConversationsAdapter.newConversation().then(
+                    function (conversation_data) {
+                        self.init(conversation_data);
+                        console.log(self);
+
+                        var i = 0;
+                        while(i < self.recipients.length){
+                            cmConversationsAdapter.addRecipient(self.id, self.recipients[i].id);
+                            i++;
+                        }
+
+                        deferred.resolve();
+                    },
+
+                    function(){
+                        deferred.reject();
+                    }
+                )
+            } else {
+                deferred.resolve();
+            }
+
+            return deferred.promise;
+        }
+
         this.update = function(){
             if(this.id != ''){
                 cmConversationsAdapter.getConversationSummary(this.id).then(
@@ -59,42 +96,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             }
 
             return this;
-        }
-
-        this.updateMessages = function(limit, offset, clearMessages){
-            cmConversationsAdapter.getConversation(this.id, limit, offset).then(
-                function(data){
-                    if(typeof clearMessages !== 'undefined' && clearMessages !== false){
-                        self.messages = [];
-                    }
-
-                    data.messages.forEach(function(message_data) {
-                        self.addMessage(cmMessageFactory.create(message_data));
-                    });
-                }
-            )
-        }
-
-        this.encryptPassphrase = function(){
-            var success = true,
-                encryptedKeyList = [];
-
-            this.recipients.forEach(function(recipient){
-                var key_list = recipient.encryptPassphrase(self.passphrase)
-                success = success && encrypted_passphrase
-                if(success) key_list.concat(key_list)
-            })
-
-            return success ? key_list : null
-        }
-
-        this.decryptPassphrase = function(){
-            this.encryptedKeyList.forEach(function(item){
-                if(!this.passphrase){
-                    this.passphrase = cmUserModel.data.decryptPassphrase(item.encrypted_pass)
-                }
-            })
-            
         }
 
         /**
@@ -145,9 +146,33 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             return null
         }
 
+        this.updateMessages = function(limit, offset, clearMessages){
+            cmConversationsAdapter.getConversation(this.id, limit, offset).then(
+                function(data){
+                    if(typeof clearMessages !== 'undefined' && clearMessages !== false){
+                        self.messages = [];
+                    }
+
+                    data.messages.forEach(function(message_data) {
+                        self.addMessage(cmMessageFactory.create(message_data));
+                    });
+                }
+            )
+        }
+
         /**
          * Recipient Handling
          */
+
+        this.getRecipientList = function(){
+            var list = []
+
+            this.recipients.forEach(function(recipient){
+                list.push(recipient.getDisplayName())
+            })
+
+            return list.join(', ')
+        }
 
         this.hasRecipient = function(identity){
             var check = false;          
@@ -178,12 +203,15 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
                     if(this.id != ''){
                         identity.removeFrom(this.id);
-//                        cmConversationsAdapter.removeRecipient()(this.id, identity.id)
                     }
                 }
             }
             return this;
         };
+
+        /**
+         * Subject Handling
+         */
 
         this.updateSubject = function (subject) {
             if(this.id != ''){
@@ -195,6 +223,39 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                 this.subject = subject;
             }
         };
+
+        this.getSubjectLine = function(){
+            var lastMessage = this.getLastMessage();
+            return     this.subject
+                || (lastMessage ? lastMessage.from.getDisplayName() : false)
+                || this.getRecipientList()
+        }
+
+        /**
+         * Crypt Handling
+         */
+
+        this.encryptPassphrase = function(){
+            var success = true,
+                encryptedKeyList = [];
+
+            this.recipients.forEach(function(recipient){
+                var key_list = recipient.encryptPassphrase(self.passphrase)
+                success = success && encrypted_passphrase
+                if(success) key_list.concat(key_list)
+            })
+
+            return success ? key_list : null
+        }
+
+        this.decryptPassphrase = function(){
+            this.encryptedKeyList.forEach(function(item){
+                if(!this.passphrase){
+                    this.passphrase = cmUserModel.data.decryptPassphrase(item.encrypted_pass)
+                }
+            })
+
+        }
 
         this.setPassphrase = function (passphrase) {
             this.passphrase = passphrase
@@ -215,59 +276,10 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             return !this.messages[0] || this.messages[0].decrypt(this.passphrase)
         };
 
-        this.getRecipientList = function(){
-            var list = []
-
-            this.recipients.forEach(function(recipient){
-                list.push(recipient.getDisplayName())
-            })
-
-            return list.join(', ')
-        }
-
-        this.getSubjectLine = function(){
-            var lastMessage = this.getLastMessage();
-            return     this.subject
-                    || (lastMessage ? lastMessage.from.getDisplayName() : false)
-                    || this.getRecipientList()
-        }
-
         this.getSavetyLevel = function(){
             return this.passphraseValid() && !this.passphrase ? 0 : 1     
         }
 
-        this.sync = function(){
-            //cmConversationsAdapter.addRecipient(this.id, identity.id)
-        }
-
-        this.save = function(){
-            var deferred = $q.defer();
-
-            if(this.id == ''){
-                cmConversationsAdapter.newConversation().then(
-                    function (conversation_data) {
-                        self.init(conversation_data);
-                        console.log(self);
-
-                        var i = 0;
-                        while(i < self.recipients.length){
-                            cmConversationsAdapter.addRecipient(self.id, self.recipients[i].id);
-                            i++;
-                        }
-
-                        deferred.resolve();
-                    },
-
-                    function(){
-                        deferred.reject();
-                    }
-                )
-            } else {
-                deferred.resolve();
-            }
-
-            return deferred.promise;
-        }
 
         this.init(data);
 
