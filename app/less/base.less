@@ -85,6 +85,11 @@ li {
     list-style: none;
 }
 
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
+  border: 0;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.075) inset, 0 0 0 rgba(126, 239, 104, 0.6);
+  outline: 0 none;}
+
 #cm-app{
     display:block;
     position:relative;
@@ -96,11 +101,7 @@ li {
 //    background-size:cover;
 //    background-repeat:no-repeat;
 //    background-image: url('../gfx/backgroundStart.jpg');
-    background-repeat:repeat-y;
     background-image:url('../gfx/bg-repeat-01.jpg');
-//    background-image:url('../gfx/bg-repeat-02.jpg'); //jeht so
-//    background-image:url('../gfx/bg-repeat-03.jpg');
-//    background-image:url('../gfx/bg-repeat-04.jpg');
     //max-width is set via javascript in screen.js
     margin:0 auto;
 }
@@ -124,12 +125,11 @@ li {
         > header {
             position:relative;
             padding-top:1rem;
-            padding-bottom: 1.5rem;
-
+            padding-bottom:1.5rem;
+            background:rgba(255,255,255,0.5);
             h1 {
                 display:block;            
                 margin:0;
-                margin-bottom: 1rem;
                 line-height:1.2em;
                 font-size: 1.2em;
                 text-align:center;
@@ -150,6 +150,10 @@ li {
   text-overflow: ellipsis;
   overflow:hidden;
   white-space:nowrap;
+}
+
+.with-cursor{
+  cursor:pointer;
 }
 
 .without-border-radius{
@@ -217,13 +221,3 @@ html[xmlns] .clearfix{display:block}
 
 .cm-fl{float:left}
 .cm-fr{float:right}
-
-.app-spinner{
-  text-align:center;
-  font-size:20em;
-  position:absolute;
-  width:100%;
-  left:0;
-  right:0;
-  z-index:1000;
-}
