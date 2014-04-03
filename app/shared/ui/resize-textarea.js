@@ -11,6 +11,8 @@ function cmResizeTextarea() {
                 paddingLeft = element.css('paddingLeft'),
                 paddingRight = element.css('paddingRight'),
                 threshold = 10,
+                maxRows = attrs.cmMaxRows || 2,
+                oneRowHeight = 0,
                 $shadow;
 
             /**
@@ -49,8 +51,15 @@ function cmResizeTextarea() {
                     .replace(/\n/g, '<br/>')
                     .replace(/\s{2,}/g, function(space) { return times('&nbsp;', space.length - 1) + ' ' });
                 $shadow.html(val);
-
-                element.css('height', Math.max($shadow[0].offsetHeight + threshold , minHeight) + 'px');
+                // calc new height for textarea
+                var newHeight = Math.max($shadow[0].offsetHeight + threshold , minHeight);
+                // default are two rows of a textarea that we are divide through 2
+                if(oneRowHeight == 0){
+                    oneRowHeight = newHeight/2
+                }
+                // if maxrows isn't reached set height
+                if(maxRows*oneRowHeight > newHeight)
+                    element.css('height', newHeight+'px');
             }
 
             /**
