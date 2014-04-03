@@ -120,32 +120,60 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
     };
 
     this.saveKey = function(key_data){
+        var deferred = $q.defer(),
+            i = 0,
+            check = false;
+
         var tmpKeys = this.loadKeys();
         if(typeof tmpKeys !== undefined && typeof tmpKeys !== 'undefined' && typeof tmpKeys !== 'string'){
             if(tmpKeys.length > 0){
-                tmpKeys.push(key_data);
+                while(i < tmpKeys.length){
+                    if(key_data.pubKey == tmpKeys[i].pubKey){
+                        check = true;
+                        angular.extend(tmpKeys[i],key_data);
+                        break;
+                    }
+                    i++;
+                }
+
+                if(check !== true){
+                    tmpKeys.push(key_data);
+                }
+
                 this.storageSave('pgp',tmpKeys);
+
+                self.data.publicKeys.push(key_data);
+
+                deferred.resolve();
             } else {
                 this.storageSave('pgp',[key_data]);
+
+                self.data.publicKeys.push(key_data);
+
+                deferred.resolve();
             }
         } else {
             this.storageSave('pgp',[key_data]);
+
+            self.data.publicKeys.push(key_data);
+
+            deferred.resolve();
         }
 
-        cmAuth.savePublicKey({
-            name: key_data.name,
-            key: key_data.pubKey,
-            size: key_data.keySize
-        }).then(
-            function(data){
-                self.data.publicKeys.push(data);
-            },
-            function(){
-                //kA
-            }
-        )
+//        cmAuth.savePublicKey({
+//            name: key_data.name,
+//            key: key_data.pubKey,
+//            size: key_data.keySize
+//        }).then(
+//            function(data){
+//                self.data.publicKeys.push(data);
+//            },
+//            function(){
+//                //kA
+//            }
+//        )
 
-        return true;
+        return deferred.promise;
     };
 
     this.loadKeys = function(){
@@ -154,6 +182,46 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity'])
             return [];
         }
         return keys;
+    };
+
+    this.syncKeys = function(){
+        var deferred = $q.defer(),
+            i = 0,
+            k = 0;
+
+        // get keys from identity
+        cmAuth.getIdentity().then(
+            function(data){
+                var localKeys = self.loadKeys();
+                console.info('Lokale Keys')
+                console.dir(localKeys)
+//                console.info('Globale Keys')
+//                console.dir(data.publicKeys)
+
+                /**
+                 * check local Keys from Storage
+                 */
+                localKeys.forEach(function(key){
+                    if(typeof key.id === 'undefined' || key.id == ''){
+                        cmAuth.savePublicKey({name:key.name, keySize: key.keySize, key: key.pubKey}).then(
+                            function(data){
+                                key.id = data.id;
+
+                                self.saveKey(key);
+                            }
+                        )
+                    }
+                });
+
+
+                console.info('merge');
+                console.dir(localKeys)
+
+            }
+        );
+
+
+        return deferred.promise;
     };
 
     /**

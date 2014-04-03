@@ -71,7 +71,7 @@ function(cmApi){
                 data: {
                     name: data.name,
                     key: data.key,
-                    keySize: parseInt(data.size)
+                    keySize: parseInt(data.keySize)
                 }
             })
         },

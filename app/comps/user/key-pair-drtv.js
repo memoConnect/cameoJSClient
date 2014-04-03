@@ -15,7 +15,7 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
             $scope.pubKey = '';
             $scope.keyName = '';
 
-            $scope.keyName = navigator.appCodeName;
+            $scope.keyName = navigator.appCodeName; //@TODO better Browser Detection
 
             /**
              * Navigation
@@ -108,31 +108,44 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
 
                 if($scope.privKey == ''){
                     error = true;
-                    cmNotify.warn('check private Key',{ttl:2000});
+                    cmNotify.warn('check private Key',{ttl:1000});
                 }
 
                 if($scope.pubKey == ''){
                     error = true;
-                    cmNotify.warn('check public Key',{ttl:2000});
+                    cmNotify.warn('check public Key',{ttl:1000});
                 }
 
                 if($scope.keyName == ''){
                     error = true;
-                    cmNotify.warn('check keyName',{ttl:2000});
+                    cmNotify.warn('check keyName',{ttl:1000});
                 }
 
                 if(error !== true){
-                    if(cmUserModel.saveKey({
+                    cmUserModel.saveKey({
+                        id: '',
                         name: $scope.keyName,
                         pubKey: $scope.pubKey,
                         privKey: $scope.privKey,
                         keySize: $scope.keySize
-                    }) !== false){
-                        cmNotify.info('Löft!',{ttl:2000})
-                    } else {
-                        cmNotify.warn('Problem!',{ttl:2000})
-                    }
+                    }).then(
+                        function(){
+                            cmNotify.info('Done',{ttl:1000});
+
+//                            cmUserModel.syncKeys();
+                        },
+                        function(){
+                            cmNotify.warn('Error',{ttl:1000});
+                        }
+                    );
                 }
+            }
+
+            /**
+             * sync Keys
+             */
+            $scope.syncKeys = function(){
+                cmUserModel.syncKeys();
             }
         }
     }
