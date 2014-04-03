@@ -63,11 +63,12 @@ module.exports = function (grunt) {
             }
 
             console.log("phonegap name: " +  buildConfig.phonegap.baseName + buildConfig.phonegap.extraName);
-            console.log("phonegap version: " + buildConfig.phonegap.version)
-
+            console.log("phonegap version: " + buildConfig.phonegap.version);
         } else {
             buildConfig.config.version = "no version";
         }
+
+		buildConfig.phonegap.phonegapBaseFilename = buildConfig.phonegap.baseName + buildConfig.phonegap.extraName + '.' + buildConfig.phonegap.version;
 
         return buildConfig;
     })();
@@ -384,7 +385,8 @@ module.exports = function (grunt) {
                 'files': {
                     'phonegap-build/www/index.html': ['templates/index.tpl.html']
                 }
-            }, 'www-index': {
+            }
+            , 'www-index': {
                 'options': {
                     'data': {
                         'phonegapFiles': '',
@@ -394,7 +396,17 @@ module.exports = function (grunt) {
                 'files': {
                     'app/index.html': ['templates/index.tpl.html']
                 }
-            }, 'config-webApp': {
+            }
+			, 'dl-index': {
+			                'options': {
+			                    'data': {
+			                        'phonegapBaseFilename': globalCameoBuildConfig.phonegap.phonegapBaseFilename
+			                    }
+			                },
+			                'files': {
+			                    'dist/dl/index.html': ['templates/dl-index.tpl.html']
+			                }
+		   }, 'config-webApp': {
                 'options': {
                     'data': {
                         'currentApiUrl': globalCameoBuildConfig.config.apiUrl ,
@@ -438,9 +450,9 @@ module.exports = function (grunt) {
                         "password": globalCameoSecrets.phonegap.password
                     },
                     download: {
-                        ios: 'phonegap-target/' + globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName + '.ipa',
-                        android: 'phonegap-target/' + globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName + '.apk',
-                        winphone: 'phonegap-target/' + globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName + '.xap'
+                        ios: 'phonegap-target/' + globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.ipa',
+                        android: 'phonegap-target/' + globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk',
+                        winphone: 'phonegap-target/' + globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.xap'
                     }
                 }
             }
@@ -529,9 +541,10 @@ module.exports = function (grunt) {
      //   'phonegap:build',
         'copy:phonegap-resources',
         'template:phonegap-index',
+		'template:dl-index',
         'compress',
         'phonegap-build:debug',
-        'copy:phonegap-target',
+        'copy:phonegap-target'
     ]);
 
     // deploy www without phonegap
