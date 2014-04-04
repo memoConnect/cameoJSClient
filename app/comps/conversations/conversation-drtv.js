@@ -59,6 +59,11 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
 //                    $scope.conversation.addRecipient(identity)
                     new cmRecipientModel(identity).addTo($scope.conversation);
                 })
+
+                if($scope.new_conversation !== true){
+                    // cron
+                    cmCron.add('Conversation-'+conversation.id,{instance: conversation,task:function(conversation){self.update()}});
+                }
             }
 
             $scope.sendMessage = function () {

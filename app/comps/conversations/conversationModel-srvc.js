@@ -89,6 +89,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         }
 
         this.update = function(){
+            console.warn('C id: '+this.id)
             if(this.id != ''){
                 cmConversationsAdapter.getConversationSummary(this.id).then(
                     function(data){
