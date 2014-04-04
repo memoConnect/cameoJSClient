@@ -1,10 +1,12 @@
 <cm-conversation-controls cm-data="conversation"></cm-conversation-controls>
 
 <!-- nur temporär:-->
-<input type="text" ng-model="password" cm-password-input cm-adaptive-change placeholder="password">
+<input type="text" ng-model="passphrase" cm-password-input cm-adaptive-change placeholder="passphrase">
 <!-- nur temporär:-->
 
-<div ng-repeat="message in conversation.messages">
+<div id="scrollerTop"></div>
+
+<div ng-repeat="message in conversation.messages" cm-scroll-to="#scrollerBottom">
     <cm-date-seperator ng-if="(compareDate(message.created,conversation.messages[$index - 1].created))">{{message.created | date:'dd.MM.yyyy'}}</cm-date-seperator>
     <cm-message
         cm-data = "message"
@@ -12,6 +14,8 @@
     >
     </cm-message>
 </div>
+
+<div id="scrollerBottom"></div>
 
 <div class="answer clearfix">
     <i class="fa cm-plus attachments with-cursor"></i>
@@ -22,8 +26,6 @@
     </div>
     <i class="fa cm-post arrow with-cursor" ng-click="sendMessage()"></i>
 </div>
-
-
 
 <!--
 <section>

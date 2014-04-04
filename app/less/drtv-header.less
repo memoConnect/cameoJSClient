@@ -12,7 +12,7 @@ cm-header{
     white-space: nowrap;
 
     > *{
-        vertical-align: middle;
+      vertical-align: middle;
     }
 
     cm-back{
@@ -30,14 +30,15 @@ cm-header{
     }
 
     cm-identity{
-        color:@cm-white;
-        cursor:pointer;
-        text-overflow: ellipsis;
-        overflow:hidden;
-        white-space: nowrap;
+      .with-cursor;
+      color:@cm-white;
+      text-overflow: ellipsis;
+      overflow:hidden;
+      white-space: nowrap;
+      text-align: left;
     }
 
     cm-logo{
-        color:@cm-ci-color;
+      color:@cm-ci-color;
     }
 }

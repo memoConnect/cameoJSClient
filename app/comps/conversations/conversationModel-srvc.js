@@ -66,6 +66,8 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                     function (conversation_data) {
                         self.init(conversation_data);
 
+                        self.updateSubject(self.subject);
+
                         var i = 0;
                         while(i < self.recipients.length){
                             cmConversationsAdapter.addRecipient(self.id, self.recipients[i].id);
