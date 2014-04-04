@@ -24,8 +24,8 @@ describe('cmUserModel', function(){
             expect(cmUserModel.isAuth).toBeDefined();
         })
 
-        it('should provide a function "setIdentiy"',function(){
-            expect(cmUserModel.setIdentiy).toBeDefined();
+        it('should provide a function "setIdentity"',function(){
+            expect(cmUserModel.setIdentity).toBeDefined();
         })
 
         it('should provide a function "isGuest"',function(){
