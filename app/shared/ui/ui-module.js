@@ -85,6 +85,11 @@ angular.module('cmUi', [
     cmDateSeperator
 ])
 
+.directive('cmScrollTo',[
+    '$timeout',
+    cmScrollTo
+])
+
 .filter('cmDigits', [
     function(){
         return function(number, digits){
