@@ -27,38 +27,35 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
 
         var self = this;
 
-        this.getKeyId = function(){
-            return 123
+        this.getWeakestKeySize = function(){
+            var length = 0
+
+            this.publicKeys.forEach(function(publicKey){
+                length = Math.min(cmCrypt.getKeySize(publicKey.key)||0)
+            })
+
+            return(length)
         }
 
-        this.encryptPassphrase = function(key){
-            var encryptedKeyList = []
+        //Encrypt passphrase with all available public keys
+        //Identities cannot decrypt, Users can
+        this.encryptPassphrase = function(passphrase){
+            var encrypted_key_list = []
 
-            this.publicKeys.forEach(function(pubKey){
-                encrypted_data.push({
-                    keyId:                  pubKey.id,
-                    encrypted_passphrase:   cmCrypt.encryptWithPublicKey(key, pubkey)
+            this.publicKeys.forEach(function(publicKey){
+                encrypted_key_list.push({
+                    keyId:                  publicKey.id,
+                    encryptedPassphrase:   cmCrypt.encryptWithPublicKey(passphrase, publicKey.key)
                 })
             }) 
 
-            return encryptedKeyList
-        }
-
-        this.decryptPassphrase = function(key, fallback_password){
-            var passphrase = false
-
-            this.privateKeys.forEach(function(pubKey){
-                if(!passphrase){
-                    passphrase : cmCrypt.encryptWithPublicKey(key, pubkey)
-                }
-            })
-
-            return passphrase
+            return encrypted_key_list
         }
 
         this.getDisplayName = function(){
             return this.displayName || this.cameoId || this.id;
         }
+
 
         this.getPubKeys = function(){
 
@@ -77,17 +74,35 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
             var deferred = $q.defer();
 
             if(typeof identity_data === 'object'){
-                this.id = identity_data.id;
 
-                angular.extend(this, identity_data);
+                //init:
+
+                this.id = identity_data.id;
+                this.displayName            = identity_data.displayName
+                this.userKey                = identity_data.userKey
+                this.cameoId                = identity_data.cameoId
+                this.email                  = identity_data.email
+                this.phoneNumber            = identity_data.phoneNumber
+                this.preferredMessageType   = identity_data.preferredMessageType
+                this.publicKeys             = identity_data.publicKeys
+                this.userType               = identity_data.userType
+                this.created                = identity_data.created
+                this.lastUpdated            = identity_data.lastUpdated    
+
+
                 deferred.resolve();
+
             } else if(typeof identity_data === 'string'){
                 this.id = identity_data;
 
                 cmAuth.getIdentity(identity_data).then(
                     function(data){
-                        angular.extend(self, data);
-                        deferred.resolve();
+                        if(typeof data =='string'){
+                            cmLogger('cmAuth.getIdentity() should forward an object, got string instead. ')
+                            deferred.reject()
+                        }else{                     
+                            deferred.resolve(self.init(data));
+                        }
                     }
                 )
             } else {

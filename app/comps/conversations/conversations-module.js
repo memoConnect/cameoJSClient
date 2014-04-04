@@ -21,6 +21,8 @@ cmConversations.factory('cmConversationModel',[
     'cmConversationsAdapter',
     'cmMessageFactory',
     'cmIdentityFactory',
+    'cmCrypt',
+    'cmUserModel',
     'cmRecipientModel',
     '$q',
     cmConversationModel
