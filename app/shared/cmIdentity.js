@@ -85,6 +85,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
                 this.phoneNumber            = identity_data.phoneNumber
                 this.preferredMessageType   = identity_data.preferredMessageType
                 this.publicKeys             = identity_data.publicKeys
+                this.keys                   = identity_data.publicKeys
                 this.userType               = identity_data.userType
                 this.created                = identity_data.created
                 this.lastUpdated            = identity_data.lastUpdated    
