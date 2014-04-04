@@ -57,7 +57,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.save = function(){
             var deferred = $q.defer();
                     
-            this.encryptPassphrase()
+            this.encryptPassphrase();
 
             //save encrypted key list
             //@Todo hier gehört nen API-call hin:
@@ -67,6 +67,8 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                 cmConversationsAdapter.newConversation().then(
                     function (conversation_data) {
                         self.init(conversation_data);
+
+                        self.updateSubject(self.subject);
 
                         var i = 0;
                         while(i < self.recipients.length){
@@ -89,7 +91,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         }
 
         this.update = function(){
-            console.warn('C id: '+this.id)
             if(this.id != ''){
                 cmConversationsAdapter.getConversationSummary(this.id).then(
                     function(data){
@@ -199,7 +200,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.addRecipient = function (identity) {
             if(identity && !this.hasRecipient(identity)){
-                this.recipients.push(identity);
+                this.recipients.push(new cmRecipientModel(identity));
             }else{
                 console.warn('Recipient already present.') //@ Todo
             }
@@ -253,7 +254,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
             this.recipients.forEach(function(recipient){
                 console.log('passphrase: '+self.passphrase)
-                var key_list = recipient.encryptPassphrase(self.passphrase)                
+                var key_list = recipient.encryptPassphrase(self.passphrase)
                 self.encryptedKeyList = self.encryptedKeyList.concat(key_list)            
             })
             return this

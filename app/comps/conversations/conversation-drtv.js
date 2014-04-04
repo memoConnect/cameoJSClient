@@ -57,7 +57,7 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                 
                 $scope.$on('cmContacts:selected', function (event, identity) {
 //                    $scope.conversation.addRecipient(identity)
-                    new cmRecipientModel(identity).addTo($scope.conversation);
+                    new cmRecipientModel(identity).addTo($scope.conversation).sendTo($scope.conversation.id);
                 })
 
                 //cron
