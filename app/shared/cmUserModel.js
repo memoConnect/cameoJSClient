@@ -75,7 +75,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
                     self.data.identity = identity;
                     self.data.identity.isAppOwner = true;
 
-                    self.data.keys = identity.publicKeys; // kunstgriff sprintende 5
+                    self.data.keys = identity.publicKeys; // @todo kunstgriff sprintende 5
 
                     self.data.isActive = true;
 
