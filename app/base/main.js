@@ -33,6 +33,7 @@ var config = {
         'cmAuth': 'shared/cmAuth',
         'cmCrypt': 'shared/cmCrypt',
         'cmUtil': 'shared/cmUtil',
+        'cmCron': 'shared/cmCron',
 
         'cmProfile': 'comps/cmProfile',
         //'cmConversations': 'comps/conversation/conversations-module',
@@ -85,6 +86,7 @@ var config = {
             'crypto-jsencrypt'
         ],
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
+        'cmCron' : ['angular'],
         'cmIdentity': ['angular', 'cmAuth'],
         'cmUserModel': ['angular', 'cmLocalStorage','cmIdentity'],
         'cmApi': ['angular', 'cmLogger'],
