@@ -42,13 +42,14 @@ describe('cmIdentityModel', function(){
                     key_list    = identity.encryptPassphrase(passphrase)
 
                 expect(key_list.length).toBe(2)
-                expect(key_list[0].encrypted_passphrase).toBeTruthy()
-                expect(key_list[1].encrypted_passphrase).toBeTruthy()
+                expect(key_list[0].encryptedPassphrase).toBeTruthy()
+                expect(key_list[1].encryptedPassphrase).toBeTruthy()
                 //wether the encryption actually worked correctly is tested elsewhere; check cmCrypt
             })
 
             it('should provide a function "getWeakestKeyLength" to detect the weakest key', function(){
-
+                expect(identity.getWeakestKeySize).toBeDefined()
+                expect(identity.getWeakestKeySize()).toBe(120)
             })
 
 

@@ -161,7 +161,9 @@ angular.module('cmCrypt', ['cmLogger'])
             getKeySize: function(key){ //@todo
                 var jse = new JSEncrypt()
                 jse.setKey(key)
-                console.log(jse)
+
+                //@Todo: doesnt do what it is supposed to do =/
+
                 return jse.key.n.bitLength() //@Todo: check if this is the correct value
             },
 
@@ -179,6 +181,11 @@ angular.module('cmCrypt', ['cmLogger'])
                 crypt.setPrivateKey(privateKey)
                 return crypt.decrypt(secret)
             },
+
+            generatePassphrase: function(){ //@Todo!!
+                var bad_random_passphrase = _Base64.encode((Math.random()*(new Date()).getTime()).toString())
+                return bad_random_passphrase.slice(bad_random_passphrase.length-10, bad_random_passphrase.length)
+            }
         }
     }]
 );

@@ -27,11 +27,11 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
 
         var self = this;
 
-        this.getWeakestKeyLength = function(){
+        this.getWeakestKeySize = function(){
             var length = 0
 
             this.publicKeys.forEach(function(publicKey){
-                length = Math.min(publicKey.size||0)        //Not yet implemented
+                length = Math.min(cmCrypt.getKeySize(publicKey.key)||0)
             })
 
             return(length)
@@ -45,7 +45,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
             this.publicKeys.forEach(function(publicKey){
                 encrypted_key_list.push({
                     keyId:                  publicKey.id,
-                    encrypted_passphrase:   cmCrypt.encryptWithPublicKey(passphrase, publicKey.key)
+                    encryptedPassphrase:   cmCrypt.encryptWithPublicKey(passphrase, publicKey.key)
                 })
             }) 
 
