@@ -167,6 +167,7 @@ addPackage('pckConversations',{
         'cmCrypt', 
         'cmAuth',
         'cmUtil',
+        'cmCron',
         'cmUserModel',
         'cmIdentity',
         'pckContacts',
@@ -210,7 +211,8 @@ addPackage('pckContacts',{
         'cmApi', 
         'cmLogger', 
         'cmUtil',
-        'cmIdentity'
+        'cmIdentity',
+        'cmCron',
     ],
     resources : [
         'comps/contacts/contactsModel-srvc',
