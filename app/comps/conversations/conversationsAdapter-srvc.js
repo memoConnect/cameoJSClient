@@ -77,7 +77,7 @@ function cmConversationsAdapter(cmApi, cmUtil){
         updateEncryptedPassphraseList: function(id, encryptedPassphraseList){
             return  cmApi.post({
                         url:    "/conversation/%1/encryptedPassphraseList".replace(/%1/, id),
-                        data:   encryptedPassphraseList
+                        data:   {encryptedPassphraseList : encryptedPassphraseList}
                     })
         },
 

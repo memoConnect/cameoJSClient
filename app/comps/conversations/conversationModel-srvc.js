@@ -45,7 +45,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                     })
                 }
             }
-        };
+        }
 
         this.sync = function(){
             //cmConversationsAdapter.addRecipient(this.id, identity.id)
@@ -55,7 +55,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             var deferred = $q.defer();
                     
             this.encryptPassphrase()
-            this.saveEncryptedPassphraseList()
 
             //save encrypted key list
             //@Todo hier gehört nen API-call hin:
@@ -67,6 +66,9 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                         self.init(conversation_data);
 
                         self.updateSubject(self.subject);
+
+                        self.encryptPassphrase()
+                        self.saveEncryptedPassphraseList()
 
                         var i = 0;
                         while(i < self.recipients.length){
@@ -82,14 +84,17 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                     }
                 )
             } else {
+                this.encryptPassphrase()
+                this.saveEncryptedPassphraseList()
                 deferred.resolve();
             }
 
             return deferred.promise;
         }
 
-        this.saveEncryptedKeyList = function(){
-            cmConversationsAdapter.updateEncryptedKeyList(this.id, this.encryptedPassphraseList)
+        this.saveEncryptedPassphraseList = function(){
+            //if(this.id) 
+                cmConversationsAdapter.updateEncryptedPassphraseList(this.id, this.encryptedPassphraseList)
         }
 
         this.update = function(){
