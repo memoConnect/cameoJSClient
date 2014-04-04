@@ -96,7 +96,7 @@ cmConversations.directive('cmConversation', [
     'cmUserModel',
     'cmRecipientModel',
     'cmCrypt',
-    'cmCron',
+//    'cmCron',
     'cmLogger',
     'cmNotify',
     '$location',

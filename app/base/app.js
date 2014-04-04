@@ -4,7 +4,7 @@ define([
     'angular-cookies',
     'angular-swipe',
     // cameo files
-    'cmCron',
+//    'cmCron',
     'cmLocalStorage',
     'cmApi',
     'cmAuth',
@@ -33,7 +33,7 @@ define([
         'cmNotify',
         'cmLogger',
         'cmLocalStorage',
-        'cmCron',
+//        'cmCron',
         'cmAuth',
         'cmUserModel',
         'cmIdentity'

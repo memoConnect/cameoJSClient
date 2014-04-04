@@ -212,7 +212,7 @@ addPackage('pckContacts',{
         'cmLogger', 
         'cmUtil',
         'cmIdentity',
-        'cmCron'
+//        'cmCron'
     ],
     resources : [
         'comps/contacts/contactsModel-srvc',
