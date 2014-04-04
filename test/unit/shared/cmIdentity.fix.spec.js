@@ -28,8 +28,8 @@ describe('cmIdentityModel', function(){
             identity_data = {
                                 id:             'my_test_id',
                                 publicKeys :    [
-                                                    { id: 'my_first_key',   key : publicKey_128},
-                                                    { id: 'my_second_key',  key : publicKey_120}
+                                                    { id: 'my_first_key',   pubKey : publicKey_128},
+                                                    { id: 'my_second_key',  pubKey : publicKey_120}
                                                 ]
                             },
             identity      = undefined

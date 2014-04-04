@@ -20,6 +20,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
         this.phoneNumber             = {value: undefined, isVerified: undefined},
         this.preferredMessageType,
         this.publicKeys,
+        this.keys,
         this.userType,
         this.created,
         this.lastUpdated,
@@ -30,8 +31,8 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
         this.getWeakestKeySize = function(){
             var length = 0
 
-            this.publicKeys.forEach(function(publicKey){
-                length = Math.min(cmCrypt.getKeySize(publicKey.key)||0)
+            this.keys.forEach(function(item){
+                length = Math.min(cmCrypt.getKeySize(item.pubKey)||0)
             })
 
             return(length)
@@ -42,10 +43,15 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
         this.encryptPassphrase = function(passphrase){
             var encrypted_key_list = []
 
-            this.publicKeys.forEach(function(publicKey){
+            console.log('keys:')
+            console.log(this.keys)
+
+            this.keys.forEach(function(key){
+                console.log('key')
+                console.dir(key)
                 encrypted_key_list.push({
-                    keyId:                  publicKey.id,
-                    encryptedPassphrase:   cmCrypt.encryptWithPublicKey(passphrase, publicKey.key)
+                    keyId:                 key.id,
+                    encryptedPassphrase:   cmCrypt.encryptWithPublicKey(passphrase, key.pubKey)
                 })
             }) 
 

@@ -27,9 +27,8 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                 this.numberOfMessages   = conversation_data.numberOfMessages;
                 this.lastUpdated        = conversation_data.lastUpdated;
                 
-                if(conversation_data.encryptedPassphraseList.length> 0){
-                    this.encryptedPassphraseList = conversation_data.encryptedPassphraseList
-                }
+                this.encryptedPassphraseList = this.encryptedPassphraseList.concat(conversation_data.encryptedPassphraseList)
+                
 
                 this.decryptPassphrase()
 
@@ -257,11 +256,10 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.encryptPassphrase = function(){                
             this.encryptedPassphraseList = [];
 
+            console.dir(this)
+
             this.recipients.forEach(function(recipient){
-                console.log('passphrase: '+self.passphrase)
-                var key_list = recipient.encryptPassphrase(self.passphrase)                
-                console.log('key-list')
-                console.log(key_list)
+                var key_list = recipient.encryptPassphrase(self.passphrase)
                 self.encryptedPassphraseList = self.encryptedPassphraseList.concat(key_list)            
             })
             console.log(this.encryptedPassphraseList)
