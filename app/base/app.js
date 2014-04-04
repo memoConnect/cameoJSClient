@@ -4,6 +4,7 @@ define([
     'angular-cookies',
     'angular-swipe',
     // cameo files
+    'cmCron',
     'cmLocalStorage',
     'cmApi',
     'cmAuth',
@@ -13,6 +14,7 @@ define([
     'cmLanguage',
     'cmLogger',
     'cmNotify',
+
 
     'pckUi',
     'base/config'
@@ -31,6 +33,7 @@ define([
         'cmNotify',
         'cmLogger',
         'cmLocalStorage',
+        'cmCron',
         'cmAuth',
         'cmUserModel',
         'cmIdentity'

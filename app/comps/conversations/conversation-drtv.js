@@ -1,6 +1,6 @@
 'use strict';
 
-function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location) {
+function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmCron, cmLogger, cmNotify, $location) {
     return {
         restrict: 'AE',
         templateUrl: 'comps/conversations/conversation.html',
@@ -57,8 +57,13 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                 
                 $scope.$on('cmContacts:selected', function (event, identity) {
 //                    $scope.conversation.addRecipient(identity)
-                    new cmRecipientModel(identity).addTo($scope.conversation);
+                    new cmRecipientModel(identity).addTo($scope.conversation).sendTo($scope.conversation.id);
                 })
+
+                //cron
+//                if($scope.new_conversation !== true){
+//                    cmCron.add('Conversation-'+conversation.id,{instance: conversation,task:function(conversation){self.update()}});
+//                }
             }
 
             $scope.sendMessage = function () {
