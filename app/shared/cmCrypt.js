@@ -4,7 +4,8 @@ angular.module('cmCrypt', ['cmLogger'])
 .service('cmCrypt',[
     'cmLogger',
     '$q',
-    function (cmLogger, $q) {
+    '$rootScope',
+    function (cmLogger, $q, $rootScope) {
         // private vars
         var async = {
             interval: null,
@@ -128,6 +129,8 @@ angular.module('cmCrypt', ['cmLogger'])
                         privKey: async.crypt.getPrivateKey(),
                         pubKey: async.crypt.getPublicKey()
                     })
+
+                    $rootScope.$apply() 
                 });
 
                 return async.promise.promise;
@@ -155,19 +158,34 @@ angular.module('cmCrypt', ['cmLogger'])
             return false;
             },
 
-            encryptWithPublicKey: function(secret, pubKey){
+            getKeySize: function(key){ //@todo
+                var jse = new JSEncrypt()
+                jse.setKey(key)
+
+                //@Todo: doesnt do what it is supposed to do =/
+
+                return jse.key.n.bitLength() //@Todo: check if this is the correct value
+            },
+
+            encryptWithPublicKey: function(secret, publicKey){
                 var crypt = new JSEncrypt
 
-                crypt.setPublicKey(pubKey)
+                crypt.setPublicKey(publicKey)
+                
                 return crypt.encrypt(secret)
             },
 
             decryptWithPrivateKey: function(secret, privateKey){
                 var crypt = new JSEncrypt
 
-                crypt.setPrivateKey(pubKey)
+                crypt.setPrivateKey(privateKey)
                 return crypt.decrypt(secret)
             },
+
+            generatePassphrase: function(){ //@Todo!!
+                var bad_random_passphrase = _Base64.encode((Math.random()*(new Date()).getTime()).toString())
+                return bad_random_passphrase.slice(bad_random_passphrase.length-10, bad_random_passphrase.length)
+            }
         }
     }]
 );

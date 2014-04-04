@@ -22,7 +22,7 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
              */
             $scope.showOwnKeys = function(){
                 $scope.active = 'showOwnKeys';
-                $scope.ownKeys = cmUserModel.data.publicKeys;
+                $scope.ownKeys = cmUserModel.data.keys;
                 console.dir($scope.ownKeys)
             }
 

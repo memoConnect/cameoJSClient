@@ -21,6 +21,39 @@ describe('cmIdentityModel', function(){
         var obj = createIdentity();
         expect(obj.init).toBeDefined()
     })
+
+    describe('Encryption and Key Management', function(){        
+        var publicKey_128 = '-----BEGIN PUBLIC KEY-----MCwwDQYJKoZIhvcNAQEBBQADGwAwGAIRALRvUT+teouT0TBjIsbaT8kCAwEAAQ==-----END PUBLIC KEY-----',            
+            publicKey_120 = '-----BEGIN PUBLIC KEY-----MCswDQYJKoZIhvcNAQEBBQADGgAwFwIQAKwGNK17gJWTZtwOsKRvmwIDAQAB-----END PUBLIC KEY-----',
+            identity_data = {
+                                id:             'my_test_id',
+                                publicKeys :    [
+                                                    { id: 'my_first_key',   key : publicKey_128},
+                                                    { id: 'my_second_key',  key : publicKey_120}
+                                                ]
+                            },
+            identity      = undefined
+            beforeEach(inject(function(cmIdentityModel){
+                identity  = new cmIdentityModel(identity_data)
+            }))
+
+            it('should provide a function "encryptPassphrase" to encrypt a passphrase with all availabe public keys', function(){       
+                var passphrase  = "x", //test key cannot handle longer passphrases
+                    key_list    = identity.encryptPassphrase(passphrase)
+
+                expect(key_list.length).toBe(2)
+                expect(key_list[0].encryptedPassphrase).toBeTruthy()
+                expect(key_list[1].encryptedPassphrase).toBeTruthy()
+                //wether the encryption actually worked correctly is tested elsewhere; check cmCrypt
+            })
+
+            it('should provide a function "getWeakestKeyLength" to detect the weakest key', function(){
+                expect(identity.getWeakestKeySize).toBeDefined()
+                expect(identity.getWeakestKeySize()).toBe(120)
+            })
+
+
+    })
 })
 
 describe('cmIdentityFactory', function(){
