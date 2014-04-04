@@ -92,8 +92,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             return this.getToken();
         };
 
-        this.setIdentiy = function(identity_data){
-            init(identity_data);
+        this.setIdentity = function(identity_data){
+            this.init(identity_data);
         };
 
         this.isGuest = function(){
