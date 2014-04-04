@@ -20,7 +20,7 @@ function cmAvatar(){
                     $element.css('display','none');
                 } else {
                     // get avatar image from model
-                    if(identity){
+                    if(identity && identity['getAvatar'] != undefined){
                         $element.css({'background-image': 'url(' + identity.getAvatar(identity.isAppOwner ? avatarMocks.own : avatarMocks.other) +')'});
                     }
                     // show name under avatar
