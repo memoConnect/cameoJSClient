@@ -99,22 +99,24 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     height: auto !important; /* Für moderne Browser */
     height: 100%; /* "Mindesthöhe" für IE <7 */
     padding:0;
-    background-attachment:fixed;
-//    background-size:cover;
-//    background-repeat:no-repeat;
-//    background-image: url('../gfx/backgroundStart.jpg');
-    background-image:url('../gfx/bg-repeat-01.jpg');
     //max-width is set via javascript in screen.js
     margin:0 auto;
 }
 
 #cm-app {
+  background: transparent;
   z-index: 2;
 }
 
 #cm-app-wrapper {
+  width: 100%;
   position: fixed !important;
   z-index: 1;
+//  background-attachment:fixed;
+  background-size:cover;
+  //    background-repeat:no-repeat;
+      background-image: url('../gfx/backgroundStart.jpg');
+//  background-image:url('../gfx/bg-repeat-01.jpg');
 }
 
 #cm-app.landscape {

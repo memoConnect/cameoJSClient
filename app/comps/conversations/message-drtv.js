@@ -7,10 +7,17 @@ function cmMessage(cmUserModel) {
         scope: true,
         templateUrl: 'comps/conversations/message.html',
         controller: function ($scope, $element, $attrs) {
+            if($attrs.truncate !== undefined){
+                $scope.truncate = $attrs.truncate;
+            }
+
             $scope.message = $scope.$eval($attrs.cmData) || $scope.$eval($attrs.cmMessage);
 
             $scope.message.decrypt($scope.passphrase);
             $scope.textOnly = !!$scope.$eval($attrs.textOnly)
+
+
+//            $scope.truncateLength = $scope.$eval($attrs.truncate);
 
             /*
             if ($scope.message.text.match(/^data:image/)) {

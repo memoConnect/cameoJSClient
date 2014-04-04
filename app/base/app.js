@@ -220,7 +220,7 @@ define([
             //Set view width e.g. 32rem
             function initScreenWidth(rem){
                 var html    = document.getElementsByTagName('html')[0],
-                    app     = document.getElementById('cm-app')
+                    app     = document.getElementById('cm-app');
 
                 //prevent screen size to change when content overflows
                 html.style.overflowY = 'scroll'                    
