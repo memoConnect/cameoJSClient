@@ -14,52 +14,7 @@ angular.module('cmCrypt', ['cmLogger'])
         };
 
 
-        function Key(data){
-            //Wrapper for RSA Keys
-            var crypt 
-
-            if(
-                   "getPublicKey"  in data
-                && "getPrivateKey" in data
-                && "encrypt"       in data
-                && "decrypt"       in data
-            ){
-                crypt = data
-            }else{
-                crypt = new JSEncrypt()
-                crypt.setKey(key)
-            }
-
-            this.setId = function(id){
-                this.id = id
-                return this
-            }
-
-            this.setName = function(name){
-                this.name = name
-                return this
-            }
-
-            this.getPublicKey = function(){
-                return crypt.getPublicKey()
-            }
-
-            this.getPrivateKey = function(){
-                return crypt.getPrivateKey()
-            }
-
-            this.encrypt = function(secret){
-                return crypt.encrypt(secret)
-            }
-
-            this.decrypt = function(encrypted_secret){
-                return crypt.decrypt(encrypted_secret)
-            }
-
-            this.getSize = function(){
-                return crypr.key.n.bitLength()
-            }
-        }
+        
 
 
         return {
@@ -134,7 +89,106 @@ angular.module('cmCrypt', ['cmLogger'])
             },
 
 
+            Key : function (data){
+                //Wrapper for RSA Keys
+                var self = this,
+                    crypt 
 
+                if(
+                       typeof data == "object"
+                    && "getPublicKey"  in data
+                    && "getPrivateKey" in data
+                    && "encrypt"       in data
+                    && "decrypt"       in data
+                ){
+                    crypt = data
+                }else{
+                    crypt = new JSEncrypt()
+                    crypt.setKey(data)
+                }
+
+                this.setId = function(id){
+                    this.id = id
+                    return this
+                }
+
+                this.setName = function(name){
+                    this.name = name
+                    return this
+                }
+
+                //set either public or private key
+                this.setKey = function(key){
+                    crypt.setKey(key)
+                    return this
+                }
+
+                this.getPublicKey = function(){
+                    return crypt.getPublicKey()
+                }
+
+                this.getPrivateKey = function(){
+                    return crypt.getPrivateKey()
+                }
+
+                this.encrypt = function(secret){
+                    return crypt.encrypt(secret)
+                }
+
+                this.decrypt = function(encrypted_secret){
+                    return crypt.decrypt(encrypted_secret)
+                }
+
+                this.getSize = function(){
+                    return crypr.key.n.bitLength()
+                }
+
+                this.exportData = function(){
+                    return {
+                        id:      this.id,
+                        name:    this.name,
+                        pubKey:  this.getPublicKey(),
+                        privKey: this.getPrivateKey(),
+                        size:    this.getSize()
+                    }
+                }
+
+                this.importData = function(data){
+                    if(data.name)   this.setName(data.name)
+                    if(data.id)     this.setId(data.id)
+                    if(data.pubkey) this.setKey(data.pubKey)
+                    if(data.privKey)this.setKey(data.privKey)
+
+                    return this
+                }
+
+                this.updateKeyList = function(key_list){
+                    var check = false
+
+                    key_list.forEach(function(key){                        
+                        if(key.id == self.id || key.getPublicKey() == self.getPublicKey()){                            
+                            angular.extend(key, self)
+                            check = true
+                        }
+                    })
+
+                    if(!check) key_list.push(self)
+                }
+
+                this.updateKeyDataList = function(key_data_list){
+                    var check = false
+
+                    key_data_list.forEach(function(key_data){
+                        if(key_data.id == self.id || key_data.pubKey == self.getPublicKey()){
+                            console.dir(key_data)
+                            angular.extend(key_data, this.exportData())
+                            check = true
+                        }
+                    })
+
+                    if(!check) key_data_list.push(this.exportData())
+                }
+            },
 
             /**
              * return the bit size of possible keygeneration
@@ -179,7 +233,7 @@ angular.module('cmCrypt', ['cmLogger'])
                     async.promise.resolve({
                         timeElapsed: (time + ((new Date()).getTime())),
                         counts: counts,
-                        key : new Key(async.crypt)
+                        key : new this.Key(async.crypt)
                         //privKey: async.crypt.getPrivateKey(),
                         //pubKey: async.crypt.getPublicKey()
                     })
