@@ -197,7 +197,7 @@
    Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
    readers do not read off random characters that represent icons
 */
-.cm-rhino-bubble:before{content:'\f001'}
+.cm-rhino-bubble:before{content:'\f044'}
 .cm-rhino-positive:before{content:'\f002'}
 .cm-client-add:before{content:'\f003'}
 .cm-add:before{content:'\f004'}
@@ -229,7 +229,7 @@
 .cm-info:before{content:'\f019'}
 .cm-key:before{content:'\f01a'}
 .cm-location:before{content:'\f01b'}
-.cm-logo:before{content:'\f01c'}
+.cm-logo:before{content:'\f045'}
 .cm-logout:before{content:'\f01d'}
 .cm-menu:before{content:'\f01e'}
 .cm-post:before{content:'\f020'}
