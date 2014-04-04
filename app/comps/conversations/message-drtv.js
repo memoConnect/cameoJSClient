@@ -7,11 +7,9 @@ function cmMessage(cmUserModel) {
         scope: true,
         templateUrl: 'comps/conversations/message.html',
         controller: function ($scope, $element, $attrs) {
-            $scope.useTruncate = false;
-//            if($attrs.truncate !== undefined){
-//                $scope.useTruncate = true;
-//                $scope.truncateLength = $attrs.truncate;
-//            }
+            if($attrs.truncate !== undefined){
+                $scope.truncate = $attrs.truncate;
+            }
 
             $scope.message = $scope.$eval($attrs.cmData) || $scope.$eval($attrs.cmMessage);
 

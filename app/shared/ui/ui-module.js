@@ -101,7 +101,6 @@ angular.module('cmUi', [
 
 .filter('truncate', function () {
     return function (text, length, end) {
-        console.log(text)
         if (isNaN(length))
             length = 10;
 
@@ -116,4 +115,4 @@ angular.module('cmUi', [
         }
 
     };
-})
+});
