@@ -6,7 +6,7 @@ var cmConversations = angular.module('cmConversations', [
     'cmCrypt', 
     'cmContacts',
     'cmUtil',
-    'cmCron',
+//    'cmCron',
     'cmIdentity',
     'cmUserModel',
     'ui.bootstrap'
@@ -96,7 +96,7 @@ cmConversations.directive('cmConversation', [
     'cmUserModel',
     'cmRecipientModel',
     'cmCrypt',
-    'cmCron',
+//    'cmCron',
     'cmLogger',
     'cmNotify',
     '$location',

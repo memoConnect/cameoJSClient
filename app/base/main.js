@@ -33,7 +33,7 @@ var config = {
         'cmAuth': 'shared/cmAuth',
         'cmCrypt': 'shared/cmCrypt',
         'cmUtil': 'shared/cmUtil',
-        'cmCron': 'shared/cmCron',
+//        'cmCron': 'shared/cmCron',
 
         'cmProfile': 'comps/cmProfile',
         //'cmConversations': 'comps/conversation/conversations-module',
@@ -86,7 +86,7 @@ var config = {
             'crypto-jsencrypt'
         ],
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
-        'cmCron' : ['angular'],
+//        'cmCron' : ['angular'],
         'cmIdentity': ['angular', 'cmAuth'],
         'cmUserModel': ['angular', 'cmLocalStorage','cmIdentity'],
         'cmApi': ['angular', 'cmLogger'],
@@ -167,7 +167,7 @@ addPackage('pckConversations',{
         'cmCrypt', 
         'cmAuth',
         'cmUtil',
-        'cmCron',
+//        'cmCron',
         'cmUserModel',
         'cmIdentity',
         'pckContacts',
@@ -212,7 +212,7 @@ addPackage('pckContacts',{
         'cmLogger', 
         'cmUtil',
         'cmIdentity',
-        'cmCron',
+//        'cmCron'
     ],
     resources : [
         'comps/contacts/contactsModel-srvc',
@@ -226,8 +226,6 @@ addPackage('pckContacts',{
 
         'comps/contacts/add-external-contact-drtv',
         'comps/contacts/contact-request-list-drtv',      
-        
-        
     ]
 })
 
