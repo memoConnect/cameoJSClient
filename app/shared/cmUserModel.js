@@ -44,6 +44,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
                 self.data.identity = identity;
                 self.data.identity.isAppOwner = true;
 
+                self.data.keys = identity.publicKeys; // kunstgriff sprintende 5
+
                 isInit = true;
                 self.initStorage();
                 self.syncLocalKeys();
@@ -53,7 +55,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
                     function(){
                         isInit = true;
                         self.initStorage();
-                    self.syncLocalKeys();
+                        self.syncLocalKeys();
                     }
                 );
             }
@@ -72,6 +74,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
 
                     self.data.identity = identity;
                     self.data.identity.isAppOwner = true;
+
+                    self.data.keys = identity.publicKeys; // kunstgriff sprintende 5
 
                     self.data.isActive = true;
 
