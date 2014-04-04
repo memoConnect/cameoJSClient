@@ -11,7 +11,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.created = '',
         this.lastUpdated = '',
         this.numberOfMessages = 0,
-        this.encryptedKeyList = [];
+        this.encryptedPassphraseList = [];
         var self = this;
 
         /**
@@ -26,8 +26,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                 this.subject            = conversation_data.subject;
                 this.numberOfMessages   = conversation_data.numberOfMessages;
                 this.lastUpdated        = conversation_data.lastUpdated;
-                //mock
-                //this.encryptedKeyList   = [{"keyId":"f9mLgdVtYovkwn2gTeX4","encryptedPassphrase":"l50Gqeh74K/HlsUUL4A/DIurC2BImyNPyJ56B+ZzL1qvZZyVjyytcjN45lngj2V/kjmXeutwwI8hOFy6vxNxQg=="},{"keyId":"mCHD6x5lKhpC5oTgpC7l","encryptedPassphrase":"CsLBl+nJjBUm9i73eAnBTP3LvX05tg0e9JsjBNEge6XlPNC1cbnPUl/3WBXn/GmPGF0yFVzeFvp44wZUu2pf8Q=="},{"keyId":"hZ164dAOwjNi1HDpcMP1","encryptedPassphrase":"P2SsbZSdkaB86rWWXyL8nxgtwUFNG7XyJ8j1fOe9Rs9BNes5YgFHvJed/08A6bVZ08TVCHpqd4AU8eJF4AFw8A=="},{"keyId":"OAn6iffi4dMvs03tiMAr","encryptedPassphrase":"WPVo30aoaTMj91nxvLR1LPVRkCcROT76GqQYODrYRUgOujV4vFwD4x2JHUkhWFgyToy8qF8dTpkjhtUwvIVAxg=="}]
+                this.encryptedPassphraseList   = conversation_data.encryptedPassphraseList||[]
 
                 this.decryptPassphrase()
 
@@ -37,9 +36,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 //                        new cmRecipientModel(cmIdentityFactory.create(item.identityId)).addTo(self);
                         self.addRecipient(new cmRecipientModel(cmIdentityFactory.create(item.identityId)));
                     })
-                }
-
-                
+                }        
 
                 // register all messages as Message objects
                 if (conversation_data.messages) {
@@ -58,10 +55,11 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             var deferred = $q.defer();
                     
             this.encryptPassphrase()
+            this.saveEncryptedPassphraseList()
 
             //save encrypted key list
             //@Todo hier gehört nen API-call hin:
-            console.log(JSON.stringify(this.encryptedKeyList))
+            console.log(JSON.stringify(this.encryptedPassphraseList))
 
             if(this.id == ''){
                 cmConversationsAdapter.newConversation().then(
@@ -86,6 +84,10 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             }
 
             return deferred.promise;
+        }
+
+        this.saveEncryptedKeyList = function(){
+            cmConversationsAdapter.updateEncryptedKeyList(this.id, this.encryptedPassphraseList)
         }
 
         this.update = function(){
@@ -198,7 +200,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.addRecipient = function (identity) {
             if(identity && !this.hasRecipient(identity)){
-                this.recipients.push(identity);
+                this.recipients.push(new cmRecipientModel(identity));
             }else{
                 console.warn('Recipient already present.') //@ Todo
             }
@@ -248,18 +250,18 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
          */
 
         this.encryptPassphrase = function(){                
-            this.encryptedKeyList = [];
+            this.encryptedPassphraseList = [];
 
             this.recipients.forEach(function(recipient){
                 console.log('passphrase: '+self.passphrase)
                 var key_list = recipient.encryptPassphrase(self.passphrase)                
-                self.encryptedKeyList = self.encryptedKeyList.concat(key_list)            
+                self.encryptedPassphraseList = self.encryptedPassphraseList.concat(key_list)            
             })
             return this
         }
 
         this.decryptPassphrase = function(){
-            this.encryptedKeyList.forEach(function(item){
+            this.encryptedPassphraseList.forEach(function(item){
                 self.passphrase = undefined
                 if(!self.passphrase){
                     console.log(item.encryptedPassphrase)

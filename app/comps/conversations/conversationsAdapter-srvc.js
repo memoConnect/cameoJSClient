@@ -72,6 +72,19 @@ function cmConversationsAdapter(cmApi, cmUtil){
                         url:	"/conversation/%1/message".replace(/%1/, id),
                         data: 	message
                     })
+        },
+
+        updateEncryptedPassphraseList: function(id, encryptedPassphraseList){
+            return  cmApi.post({
+                        url:    "/conversation/%1/encryptedPassphraseList".replace(/%1/, id),
+                        data:   encryptedPassphraseList
+                    })
+        },
+
+        getEncryptedPassphraseList: function(id){
+            return  cmApi.get({
+                        url:    "/conversation/%1/encryptedPassphraseList".replace(/%1/, id)
+                    })
         }
     }
 }
