@@ -26,7 +26,10 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                 this.subject            = conversation_data.subject;
                 this.numberOfMessages   = conversation_data.numberOfMessages;
                 this.lastUpdated        = conversation_data.lastUpdated;
-                this.encryptedPassphraseList   = conversation_data.encryptedPassphraseList||[]
+                
+                if(conversation_data.encryptedPassphraseList.length> 0){
+                    this.encryptedPassphraseList = conversation_data.encryptedPassphraseList
+                }
 
                 this.decryptPassphrase()
 
@@ -53,12 +56,9 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.save = function(){
             var deferred = $q.defer();
-                    
             this.encryptPassphrase()
-
-            //save encrypted key list
-            //@Todo hier gehört nen API-call hin:
-            console.log(JSON.stringify(this.encryptedPassphraseList))
+            console.log('at save')
+            console.log(this.encryptedPassphraseList)
 
             if(this.id == ''){
                 cmConversationsAdapter.newConversation().then(
@@ -67,7 +67,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
                         self.updateSubject(self.subject);
 
-                        self.encryptPassphrase()
                         self.saveEncryptedPassphraseList()
 
                         var i = 0;
@@ -83,9 +82,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                         deferred.reject();
                     }
                 )
-            } else {
-                this.encryptPassphrase()
-                this.saveEncryptedPassphraseList()
+            } else {                
                 deferred.resolve();
             }
 
@@ -94,6 +91,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.saveEncryptedPassphraseList = function(){
             //if(this.id) 
+                console.log(this.encryptedPassphraseList)
                 cmConversationsAdapter.updateEncryptedPassphraseList(this.id, this.encryptedPassphraseList)
         }
 
@@ -262,18 +260,25 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             this.recipients.forEach(function(recipient){
                 console.log('passphrase: '+self.passphrase)
                 var key_list = recipient.encryptPassphrase(self.passphrase)                
+                console.log('key-list')
+                console.log(key_list)
                 self.encryptedPassphraseList = self.encryptedPassphraseList.concat(key_list)            
             })
+            console.log(this.encryptedPassphraseList)
             return this
         }
 
         this.decryptPassphrase = function(){
+            console.log('decrypt!')
+            console.dir(this.encryptedPassphraseList)
             this.encryptedPassphraseList.forEach(function(item){
                 self.passphrase = undefined
                 if(!self.passphrase){
                     console.log(item.encryptedPassphrase)
                     self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase)
+                    console.log(self.passphrase)
                 }
+
             })
             return this
         }

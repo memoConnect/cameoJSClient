@@ -34,6 +34,7 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
             $scope.init = function (conversation) {
                 // reload detail of conversation
                 $scope.conversation = conversation.update();
+                console.dir($scope.conversation.recipients)
 
                 $scope.my_message_text  = ""
                 $scope.passphrase       = ""
@@ -69,7 +70,7 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
             $scope.sendMessage = function () {
                 var passphrase_valid    = !!$scope.conversation.passphraseValid(),
                     message_empty       = !$scope.my_message_text,
-                    recipients_missing  = $scope.conversation.recipients.length <= 1
+                    recipients_missing  = $scope.conversation.recipients.length <= 0 //@todo mocked
 
                 if(!message_empty && passphrase_valid && !recipients_missing){
                     if($scope.conversation.id == ''){
