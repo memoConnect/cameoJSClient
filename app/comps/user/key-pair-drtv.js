@@ -77,16 +77,18 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
                             'Elapsed Time '+ cmUtil.millisecondsToStr(result.timeElapsed)+'\n'+
                                 'Step Count '+result.counts+'\n';
 
-                        $scope.privKey = result.privKey;
-                        $scope.pubKey = result.pubKey;
+                        $scope.key      = result.key
+                        $scope.privKey  = result.key.getPrivateKey()
+                        $scope.pubKey   = result.key.getPublicKey()
 
                         $scope.$emit('HIDE-SPINNER');
                         $scope.active = 'finishCreateKey';
                     },
                     function(){
-                        $scope.state = 'generation canceled';
-                        $scope.privKey = '';
-                        $scope.pubKey = '';
+                        $scope.state    = 'generation canceled';
+                        $scope.key      = undefined
+                        $scope.privKey  = '';
+                        $scope.pubKey   = '';
 
                         $scope.$emit('HIDE-SPINNER');
                         $scope.active = 'showOwnKeys';

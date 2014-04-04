@@ -13,6 +13,55 @@ angular.module('cmCrypt', ['cmLogger'])
             crypt: null
         };
 
+
+        function Key(data){
+            //Wrapper for RSA Keys
+            var crypt 
+
+            if(
+                   "getPublicKey"  in data
+                && "getPrivateKey" in data
+                && "encrypt"       in data
+                && "decrypt"       in data
+            ){
+                crypt = data
+            }else{
+                crypt = new JSEncrypt()
+                crypt.setKey(key)
+            }
+
+            this.setId = function(id){
+                this.id = id
+                return this
+            }
+
+            this.setName = function(name){
+                this.name = name
+                return this
+            }
+
+            this.getPublicKey = function(){
+                return crypt.getPublicKey()
+            }
+
+            this.getPrivateKey = function(){
+                return crypt.getPrivateKey()
+            }
+
+            this.encrypt = function(secret){
+                return crypt.encrypt(secret)
+            }
+
+            this.decrypt = function(encrypted_secret){
+                return crypt.decrypt(encrypted_secret)
+            }
+
+            this.getSize = function(){
+                return crypr.key.n.bitLength()
+            }
+        }
+
+
         return {
             /**
              * this method calculates a secure hash
@@ -84,6 +133,9 @@ angular.module('cmCrypt', ['cmLogger'])
                 return decryptedString || false
             },
 
+
+
+
             /**
              * return the bit size of possible keygeneration
              * @returns {string[]}
@@ -91,6 +143,7 @@ angular.module('cmCrypt', ['cmLogger'])
             getKeySizes: function(){
                 return ['512','1024','2048','4096'];
             },
+
             /**
              * start async process
              * @param keylen
@@ -126,8 +179,9 @@ angular.module('cmCrypt', ['cmLogger'])
                     async.promise.resolve({
                         timeElapsed: (time + ((new Date()).getTime())),
                         counts: counts,
-                        privKey: async.crypt.getPrivateKey(),
-                        pubKey: async.crypt.getPublicKey()
+                        key : new Key(async.crypt)
+                        //privKey: async.crypt.getPrivateKey(),
+                        //pubKey: async.crypt.getPublicKey()
                     })
 
                     $rootScope.$apply() 
@@ -156,30 +210,6 @@ angular.module('cmCrypt', ['cmLogger'])
                     return true;
                 }
             return false;
-            },
-
-            getKeySize: function(key){ //@todo
-                var jse = new JSEncrypt()
-                jse.setKey(key)
-
-                //@Todo: doesnt do what it is supposed to do =/
-
-                return jse.key.n.bitLength() //@Todo: check if this is the correct value
-            },
-
-            encryptWithPublicKey: function(secret, publicKey){
-                var crypt = new JSEncrypt
-
-                crypt.setPublicKey(publicKey)
-                
-                return crypt.encrypt(secret)
-            },
-
-            decryptWithPrivateKey: function(secret, privateKey){
-                var crypt = new JSEncrypt
-
-                crypt.setPrivateKey(privateKey)
-                return crypt.decrypt(secret)
             },
 
             generatePassphrase: function(){ //@Todo!!
