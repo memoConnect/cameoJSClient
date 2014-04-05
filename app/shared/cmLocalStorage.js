@@ -145,7 +145,7 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt','$rootScope', fu
                 }
             }
 
-            return "undefined";
+            return undefined;
         };
         /**
          * get all keys from identity storage

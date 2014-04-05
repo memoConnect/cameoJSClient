@@ -34,8 +34,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         this.comesFromRegistration = false;
 
         
-        this.init = function(identity_data){
-            if(typeof identity_data !== 'undefined'){
+        this.init = function(identity_data){            
+            if(typeof identity_data !== 'undefined'){                
                 var identity = cmIdentityFactory.create(identity_data);
 
                 angular.extend(self.data, identity);
@@ -43,11 +43,11 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
                 self.data.identity = identity;
                 self.data.identity.isAppOwner = true;
 
-                self.data.identity.keys = identity.publicKeys; // kunstgriff sprintende 5
+                //self.data.identity.keys = identity.publicKeys; // kunstgriff sprintende 5
 
                 isInit = true;
-                self.initStorage();
-                self.syncLocalKeys();
+                self.initStorage();                
+                self.syncLocalKeys();                
 
             } else if(self.isAuth() !== false){
                 this.loadIdentity().then(
@@ -177,8 +177,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
                 check = false;
             */
             
-            var tmpKeys  =  this.loadLocalKeys()
-        
+            var tmpKeys  =  this.loadLocalKeys() || []
+
             key.updateKeyDataList(tmpKeys)
 
             this.storageSave('rsa',tmpKeys)
@@ -225,9 +225,10 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         };
 
         this.loadLocalKeys = function(){
-            var stored_keys = this.storageGet('rsa'),
-                keys        = []
+            var stored_keys = this.storageGet('rsa') || [],
+                keys        = []            
 
+            console.dir(stored_keys)
             stored_keys.forEach(function(stored_key){
                 keys.push( (new cmCrypt.Key()).importData(stored_key) )
             })
@@ -240,17 +241,17 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             /**
              * check local Keys from Storage
              */
-            var localKeys = this.loadLocalKeys()
+            var localKeys = this.loadLocalKeys() || []
 
             localKeys.forEach(function(local_key){
                 if(typeof local_key.id === 'undefined' || local_key.id == ''){
                     cmAuth.savePublicKey({
                         name:    local_key.name, 
-                        key:     key.getPublicKey(),
-                        size:    "fake size", //@Todo                        
+                        key:     local_key.getPublicKey(),
+                        keySize: 0, //@Todo                        
                     })
                     .then(function(data){
-                        var key = new cmCrypt.Key()
+                        var key = new cmCrypt.Key()                        
 
                         key.importData(data)
 
@@ -271,9 +272,9 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             var keys = this.loadLocalKeys() || [],
                 decrypted_passphrase
 
-            keys.forEach(function(item){ 
-                if(!decrypted_passphrase && item.privKey){
-                    decrypted_passphrase = cmCrypt.decryptWithPrivateKey(encrypted_passphrase, item.privKey)
+            keys.forEach(function(key){ 
+                if(!decrypted_passphrase){
+                    decrypted_passphrase = key.decrypt(encrypted_passphrase)
                 }
             })
             return decrypted_passphrase
@@ -323,8 +324,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          *  get from identity storage
          * @param key
          */
-        this.storageGet = function(key){
-            if(isInit !== false && self.data.storage !== null){
+        this.storageGet = function(key){            
+            if(isInit !== false && self.data.storage !== null){                
                 return self.data.storage.get(key);
             }
 

@@ -32,9 +32,12 @@ describe('cmIdentityModel', function(){
                                                     { id: 'my_second_key',  pubKey : publicKey_120}
                                                 ]
                             },
-            identity      = undefined
+            identity      = undefined,
+            dummy         = undefined
+
             beforeEach(inject(function(cmIdentityModel){
                 identity  = new cmIdentityModel(identity_data)
+                dummy = new cmIdentityModel()
             }))
 
             it('should provide a function "encryptPassphrase" to encrypt a passphrase with all availabe public keys', function(){       
@@ -50,6 +53,8 @@ describe('cmIdentityModel', function(){
             it('should provide a function "getWeakestKeyLength" to detect the weakest key', function(){
                 expect(identity.getWeakestKeySize).toBeDefined()
                 expect(identity.getWeakestKeySize()).toBe(120)
+
+                expect(dummy.getWeakestKeySize()).toBeFalsy()
             })
 
 

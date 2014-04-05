@@ -12,7 +12,7 @@ describe('cmConversationFactory', function(){
         cmConversationFactory = _cmConversationFactory_
     }))
 
-    it('should exists', function(){
+    it('should exist', function(){
         expect(cmConversationFactory).toBeDefined()
     })
 

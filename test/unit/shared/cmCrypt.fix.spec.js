@@ -72,110 +72,179 @@ describe('cmCrypt', function () {
         })
     })
 
-    describe('should have the function', function(){
-        it('getKeySizes', function(){
-            expect(typeof cmCrypt.getKeySizes).toBe('function')
-        })
 
-        it('generateAsyncKeypair', function(){
-            expect(typeof cmCrypt.generateAsyncKeypair).toBe('function')
-        })
+    describe('asymmetric encryption', function(){
+        var key              = undefined,
+            publicKey        = undefined, 
+            privateKey       = undefined,
+            secret           = 'priv',      //test key is too short to encrypt anything much longer
+            encrypted_secret = undefined,
+            decrypted_secret = undefined
 
-        it('cancelGeneration', function(){
-            expect(typeof cmCrypt.cancelGeneration).toBe('function')
-        })
-    })
 
-    describe('should return', function(){
-        it('array with keySizes to equal 4', function(){
+        it('should provide a function "getKeysizes" with 4 available key sizes', function(){
             expect(cmCrypt.getKeySizes().length).toEqual(4)
         })
 
-        it('false without keySize', function(){
-            expect(cmCrypt.generateAsyncKeypair()).toBeFalsy()
+        it('should provide a function "generateAsyncKeypair"', function(){
+            expect(typeof cmCrypt.generateAsyncKeypair).toBe('function')
         })
 
-        it('false with other as number at keySize param', function(){
+        it('should provide a function "cancelGeneration"', function(){
+            expect(typeof cmCrypt.cancelGeneration).toBe('function')
+        })
+
+        
+        it('should asynchronously generate a working 128-bit key pair within a second.', inject(function(){
+                     
+            runs(function(){
+                cmCrypt
+                .generateAsyncKeypair(128)
+                .then(function(result){
+                    key        = result.key
+                    publicKey  = key.getPublicKey()
+                    privateKey = key.getPrivateKey()                        
+                })             
+            })
+
+            waitsFor(function() {                    
+                return publicKey && privateKey
+            }, "public and private key to be defined", 10000);   
+
+            
+        }))
+
+        it('should not generate a key pair without a given proper key size', function(){
+            expect(cmCrypt.generateAsyncKeypair()).toBeFalsy()        
             expect(cmCrypt.generateAsyncKeypair('huhu')).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair({test:1})).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair(['pups'])).toBeFalsy()
         })
 
-        it('false when called cancel generation', function(){
+        it('should return false on cancel when no generating process is running', function(){
             expect(cmCrypt.cancelGeneration()).toBeFalsy()
         })
-    })
 
-    describe('asymmetric encryption', function(){
-
-        it('should provide a function "generateAsyncKeypair"', function(){
-            expect(cmCrypt.generateAsyncKeypair).toBeDefined()
+        it('should have a constructor for "Key"', function(){
+                expect(typeof cmCrypt.Key).toBe('function')
         })
 
-        it('should provide a function "cancelGeneration"', function(){
-            expect(cmCrypt.cancelGeneration).toBeDefined()
-        })
+        describe('Key', function(){
 
-        it('should provide a function "encryptWithPublicKey"', function(){
-            expect(cmCrypt.encryptWithPublicKey).toBeDefined()
-        })
+            beforeEach(function(){
+                key =  new cmCrypt.Key()
+            })
 
-        it('should provide a function "decryptWithPrivateKey"', function(){
-            expect(cmCrypt.decryptWithPrivateKey).toBeDefined()
-        })
+            it('should provide a functions "setKey", "getPublicKey" and "getPrivateKey" to import and retrieve a public or private key', function(){                                
 
-        describe('asymmetric encryption', function(){
+                expect(key.setKey).toBeDefined()                
+                expect(key.getPublicKey).toBeDefined()                
+                expect(key.getPrivateKey).toBeDefined()                
+            
+                key.setKey(publicKey)
 
-            var publicKey        = undefined, 
-                privateKey       = undefined,
-                secret           = 'priv',      //test key is too short to encrypt anything much longer
-                encrypted_secret = undefined,
-                decrypted_secret = undefined
+                expect(key.getPrivateKey()).toBeFalsy()                
+                expect(key.getPublicKey()).toBe(publicKey)
 
-            it('should asynchronously generate a working 128-bit key pair within a second.', inject(function(){
-                         
-                runs(function(){
-                    cmCrypt
-                    .generateAsyncKeypair(128)
-                    .then(function(data){
-                        publicKey  = data.pubKey
-                        privateKey = data.privKey                        
-                    })             
-                })
-
-                waitsFor(function() {                    
-                    return publicKey && privateKey
-                }, "public and private key to be defined", 10000);   
-
+                key.setKey(privateKey)
                 
-            }))
+                expect(key.getPrivateKey()).toBe(privateKey)
+                expect(key.getPublicKey()).toBe(publicKey)                 
+                
+            })      
 
-            it('should encrypt a string with a public key', function(){
-                encrypted_secret = cmCrypt.encryptWithPublicKey(secret, publicKey)                
+            it('should provide a functions "encrypt" and "decrypt" to encrypt strings with a public key and decrypt with the according private key', function(){                                
+
+                key.setKey(publicKey)
+
+                encrypted_secret = key.encrypt(secret)                
 
                 expect(encrypted_secret).toBeDefined()
                 expect(encrypted_secret).not.toEqual('priv')
 
-            })
-
-            it('should decrypt a string with a matching private key', function(){
-                decrypted_secret = cmCrypt.decryptWithPrivateKey(encrypted_secret, privateKey)
+                key.setKey(privateKey)
+            
+                decrypted_secret = key.decrypt(encrypted_secret)
 
                 expect(decrypted_secret).toBeDefined()
                 expect(decrypted_secret).toEqual('priv')
+            })
+
+            it('should provide a function "getSize" to detect keysizes', function(){
+                expect(typeof  key.getSize).toBe('function')  
+            })
+
+            it('should provide a function "setName" to give a name to the key', function(){
+                expect(typeof key.setName).toBe('function')  
+                key.setName('my_test_name')
+                expect(key.name).toBe('my_test_name')
+            })
+
+            it('should provide a function "setId" to set the key\'s id', function(){
+                expect(typeof key.setId).toBe('function')  
+                key.setId('my_test_id')
+                expect(key.id).toBe('my_test_id')
+            })
+
+            it('should provide a function "exportData" and "importData" to im- and export stringifiable data', function(){
+                expect(typeof key.exportData).toBe('function')
+                expect(typeof key.importData).toBe('function')
+
+                key
+                .setKey(privateKey)
+                .setName('test_name')
+                .setId('test_id')
+
+                var data_1 = key.exportData(key),
+                    key_1  = (new cmCrypt.Key()).importData(data_1)
+
+                expect(key_1.name).toBe('test_name')
+                expect(key_1.id).toBe('test_id')
+                expect(key_1.getPublicKey()).toBe(publicKey)
+                expect(key_1.getPrivateKey()).toBe(privateKey)
+            })
+
+            it('should provide a function "updateKeyList" to add iteself to a list of keys, preventing duplicates', function(){
+                var list    = [],
+                    new_key = new cmCrypt.Key()
+
+                expect(key.updateKeyList).toBeDefined()
+
+                key
+                .setId('my_id')
+                .setKey(publicKey)
+
+                key.updateKeyList(list)
+                expect(list.length).toBe(1)
+                key.updateKeyList(list)
+                expect(list.length).toBe(1)
+                new_key.updateKeyList(list)
+                expect(list.length).toBe(2)
+            })
+
+            it('should provide a function "updateKeyDataList" to add iteself to a list of key_data, preventing duplicates', function(){
+                var list    = [],
+                    new_key = new cmCrypt.Key()
+
+                expect(key.updateKeyList).toBeDefined()
+
+                key
+                .setId('my_id')
+                .setKey(publicKey)
+
+                key.updateKeyDataList(list)
+                expect(list.length).toBe(1)
+                key.updateKeyDataList(list)
+                expect(list.length).toBe(1)
+                new_key.updateKeyDataList(list)
+                expect(list.length).toBe(2)
 
             })
 
-            it('should provide a function "getKeySize" to detect the keysize of publick keys', function(){
-                expect(cmCrypt.getKeySize).toBeDefined()
-                //Todo: doesnt allways work as expected =(
-                //expect(cmCrypt.getKeySize(publicKey)).toBe(128)
-            })
 
         })
 
-
-
-
     })
+
+
 })

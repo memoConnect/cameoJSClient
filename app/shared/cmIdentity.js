@@ -19,7 +19,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
         this.email                   = { value: undefined, isVerified: undefined },
         this.phoneNumber             = { value: undefined, isVerified: undefined },
         this.preferredMessageType,
-        this.key,         
+        this.keys                    = [],         
         this.userType,
         this.created,
         this.lastUpdated,
@@ -27,30 +27,15 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
 
         var self = this;
 
-        this.getWeakestKeySize = function(){
-            var length = 0
-
-            this.keys.forEach(function(item){
-                length = Math.min(cmCrypt.getKeySize(item.pubKey) || 0)
-            })
-
-            return(length)
-        }
-
         //Encrypt passphrase with all available public keys
         //Identities cannot decrypt, Users can
         this.encryptPassphrase = function(passphrase){
             var encrypted_key_list = []
 
-            console.log('keys:')
-            console.log(this.keys)
-
             this.keys.forEach(function(key){
-                console.log('key')
-                console.dir(key)
                 encrypted_key_list.push({
                     keyId:                 key.id,
-                    encryptedPassphrase:   cmCrypt.encryptWithPublicKey(passphrase, key.pubKey)
+                    encryptedPassphrase:   key.encrypt(passphrase)
                 })
             }) 
 
@@ -79,6 +64,34 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
         }
         */
 
+        this.addKey = function(key_data){
+            //key_data maybe a string containing a public or Private key, or a key Object (cmCrypt.Key)
+
+            var key,
+                is_object  = (typeof key_data == 'object'),
+                is_string  = (typeof key_data == 'string'),
+                can_update = is_object && "updateKeyList" in key_data
+
+            if( can_update )                key = key_data  //already a Key object
+            if( is_object && !can_update)   key = (new cmCrypt.Key()).importData(key_data) //from backend or localstorgae
+            if( is_string)                  key = new cmCrypt.Key(key_data) //plain text public or private key
+
+            key 
+            ?   key.updateKeyList(self.keys) 
+            :   cmLogger.error('uanable to add key, unknown format: '+key_data)              
+
+            return this
+        }
+
+        this.getWeakestKeySize = function(){
+            var size = false
+            this.keys.forEach(function(key){
+                size = (size ===false) ? key.getSize() : Math.min(size, key.getSize())
+            })
+
+            return size
+        }
+
         /**
          * @param identity_data
          */
@@ -101,13 +114,10 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
                 this.lastUpdated            = identity_data.lastUpdated 
                 this.keys                   = []   
 
-                identity_data.publicKeys.forEach(function(publicKey_data){                    
-                    (new cmCrypt.Key())
-                    .importData(publicKey_data)
-                    .updateKeyList(self.keys)
+                identity_data.publicKeys = identity_data.publicKeys || []
+                identity_data.publicKeys.forEach(function(publicKey_data){                         
+                    self.addKey(publicKey_data)
                 })
-
-                console.dir(this)
 
                 deferred.resolve();
 

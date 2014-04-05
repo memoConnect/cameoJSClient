@@ -92,17 +92,19 @@ angular.module('cmCrypt', ['cmLogger'])
             Key : function (data){
                 //Wrapper for RSA Keys
                 var self = this,
-                    crypt 
+                    crypt
 
-                if(
-                       typeof data == "object"
-                    && "getPublicKey"  in data
-                    && "getPrivateKey" in data
-                    && "encrypt"       in data
-                    && "decrypt"       in data
-                ){
-                    crypt = data
-                }else{
+                if(typeof data == "object" && "updateKeyList" in data) return data //data is already a Key object
+                    
+                if(        
+                       typeof data == "object"               
+                    && "getPublicKey"   in data
+                    && "getPrivateKey"  in data
+                    && "encrypt"        in data
+                    && "decrypt"        in data
+                ){                    
+                    crypt = data    //data is already a JSEncrypt object
+                }else{                
                     crypt = new JSEncrypt()
                     crypt.setKey(data)
                 }
@@ -124,11 +126,21 @@ angular.module('cmCrypt', ['cmLogger'])
                 }
 
                 this.getPublicKey = function(){
-                    return crypt.getPublicKey()
+                    var public_key
+                    try{
+                        public_key = crypt.getPublicKey()
+                    }catch(e){}
+
+                    return public_key
                 }
 
                 this.getPrivateKey = function(){
-                    return crypt.getPrivateKey()
+                    var private_key
+                    try{
+                        private_key = crypt.getPrivateKey()
+                    }catch(e){}
+
+                    return private_key
                 }
 
                 this.encrypt = function(secret){
@@ -140,7 +152,13 @@ angular.module('cmCrypt', ['cmLogger'])
                 }
 
                 this.getSize = function(){
-                    return crypr.key.n.bitLength()
+                    var size
+
+                    try{
+                        size = crypt.key.n.bitLength()
+                    }catch(e){}
+
+                    return size
                 }
 
                 this.exportData = function(){
@@ -156,8 +174,7 @@ angular.module('cmCrypt', ['cmLogger'])
                 this.importData = function(data){
                     if(data.name)   this.setName(data.name)
                     if(data.id)     this.setId(data.id)
-                    if(data.pubkey) this.setKey(data.pubKey)
-                    if(data.privKey)this.setKey(data.privKey)
+                    if(data.privKey || data.pubKey || data.key) this.setKey(data.privKey || data.pubKey || data.key)
 
                     return this
                 }
@@ -165,8 +182,11 @@ angular.module('cmCrypt', ['cmLogger'])
                 this.updateKeyList = function(key_list){
                     var check = false
 
-                    key_list.forEach(function(key){                        
-                        if(key.id == self.id || key.getPublicKey() == self.getPublicKey()){                            
+                    key_list.forEach(function(key){
+                        if(
+                               (key.id && (key.id == self.id)) 
+                            || key.getPublicKey() == self.getPublicKey()
+                        ){ 
                             angular.extend(key, self)
                             check = true
                         }
@@ -179,9 +199,10 @@ angular.module('cmCrypt', ['cmLogger'])
                     var check = false
 
                     key_data_list.forEach(function(key_data){
-                        if(key_data.id == self.id || key_data.pubKey == self.getPublicKey()){
-                            console.dir(key_data)
-                            angular.extend(key_data, this.exportData())
+                        if(
+                               (key_data.id && (key_data.id == self.id)) 
+                            || key_data.pubKey == self.getPublicKey()){
+                            angular.extend(key_data, self.exportData())
                             check = true
                         }
                     })
@@ -233,7 +254,7 @@ angular.module('cmCrypt', ['cmLogger'])
                     async.promise.resolve({
                         timeElapsed: (time + ((new Date()).getTime())),
                         counts: counts,
-                        key : new this.Key(async.crypt)
+                        key : new self.Key(async.crypt)
                         //privKey: async.crypt.getPrivateKey(),
                         //pubKey: async.crypt.getPublicKey()
                     })
@@ -263,7 +284,7 @@ angular.module('cmCrypt', ['cmLogger'])
                     }
                     return true;
                 }
-            return false;
+                return false;
             },
 
             generatePassphrase: function(){ //@Todo!!

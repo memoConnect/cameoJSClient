@@ -1,18 +1,21 @@
 'use strict';
 
-var cmUserModel;
+var cmUserModel,
+    cmCrypt
 
 describe('cmUserModel', function(){
     var cmUserModel;
+        cmCrypt;
 
     beforeEach(module("cmUserModel"))
 
-    beforeEach(inject(function(_cmUserModel_) {
+    beforeEach(inject(function(_cmUserModel_, _cmCrypt_) {
         cmUserModel = _cmUserModel_        
         cmUserModel.init({
             id : 'my_id',
             userKey: 'my_user_key'
         })
+        cmCrypt = _cmCrypt_       
     }))
 
     it('should exist', function(){
@@ -103,15 +106,18 @@ describe('cmUserModel', function(){
         })
 
         it('should provide a function "decryptPassphrase" to decrypt passphrase', function(){            
-            var decrypted_secret
+            var badKey  = new cmCrypt.Key(bad_key),
+                goodKey = new cmCrypt.Key(good_key),
+                decrypted_secret
             
             expect(cmUserModel.decryptPassphrase).toBeDefined()
-            
-            cmUserModel.saveKey( {privKey : bad_key} )
+                        
+            cmUserModel.saveKey(badKey)
+
             decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
             expect(decrypted_secret).toBeFalsy()
 
-            cmUserModel.saveKey( {privKey : good_key} )
+            cmUserModel.saveKey(goodKey)
             decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
             expect(decrypted_secret).toBe('priv')
 

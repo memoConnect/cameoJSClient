@@ -22,7 +22,7 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
              */
             $scope.showOwnKeys = function(){
                 $scope.active = 'showOwnKeys';
-                $scope.ownKeys = cmUserModel.data.keys;
+                $scope.ownKeys = cmUserModel.data.identity.keys;
                 console.dir($scope.ownKeys)
             }
 
@@ -76,8 +76,7 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
                         $scope.state =
                             'Elapsed Time '+ cmUtil.millisecondsToStr(result.timeElapsed)+'\n'+
                                 'Step Count '+result.counts+'\n';
-
-                        $scope.key      = result.key
+                        
                         $scope.privKey  = result.key.getPrivateKey()
                         $scope.pubKey   = result.key.getPublicKey()
 
@@ -125,13 +124,15 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
                 }
 
                 if(error !== true){
-                    cmUserModel.saveKey({
-                        id: '',
-                        name: $scope.keyName,
-                        pubKey: $scope.pubKey,
-                        privKey: $scope.privKey,
-                        keySize: $scope.keySize
-                    }).then(
+                    var key = new cmCrypt.Key()
+                    key
+                    .setName($scope.keyName)                    
+                    .setKey($scope.privKey)
+
+                    cmUserModel.saveKey(key)
+                    cmUserModel.syncLocalKeys();
+                    /*
+                    .then(
                         function(){
                             cmNotify.info('Done',{ttl:1000});
                             cmUserModel.syncLocalKeys();
@@ -140,6 +141,7 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
                             cmNotify.warn('Error',{ttl:1000});
                         }
                     );
+                    */
                 }
             }
 
