@@ -190,10 +190,13 @@ describe('cmCrypt', function () {
                 expect(typeof key.exportData).toBe('function')
                 expect(typeof key.importData).toBe('function')
 
+                var secret = 'x'
+
                 key
                 .setKey(privateKey)
                 .setName('test_name')
                 .setId('test_id')
+
 
                 var data_1 = key.exportData(key),
                     key_1  = (new cmCrypt.Key()).importData(data_1)
@@ -202,6 +205,16 @@ describe('cmCrypt', function () {
                 expect(key_1.id).toBe('test_id')
                 expect(key_1.getPublicKey()).toBe(publicKey)
                 expect(key_1.getPrivateKey()).toBe(privateKey)
+
+                //weak import data must not overwrite existing data;
+                key.importData({})
+                expect(key.getPrivateKey()).toBe(privateKey)
+
+                key.importData({pubKey: key.getPublicKey()})
+                expect(key.getPrivateKey()).toBe(privateKey)
+
+                //key should still work:
+                expect(key_1.decrypt(key.encrypt('x'))).toBe('x')
             })
 
             it('should provide a function "updateKeyList" to add iteself to a list of keys, preventing duplicates', function(){

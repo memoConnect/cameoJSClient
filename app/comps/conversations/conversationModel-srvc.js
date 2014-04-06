@@ -18,8 +18,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
          * Conversation Handling
          */
 
-        this.init = function (conversation_data) {
-            this.passphrase = cmCrypt.generatePassphrase()
+        this.init = function (conversation_data) {       
 
             if(typeof conversation_data !== 'undefined'){
                 this.id                 = conversation_data.id;
@@ -29,10 +28,12 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
 
                 this.encryptedPassphraseList = this.encryptedPassphraseList.concat(conversation_data.encryptedPassphraseList || [])
-                
-                console.dir(this.encryptedPassphraseList)
 
                 this.decryptPassphrase()
+                this.decrypt()
+
+                console.dir(this.encryptedPassphraseList)
+                console.log(this.passphrase)
 
                 // register all recipients as Recipient objects
                 if (conversation_data.recipients) {
@@ -57,6 +58,8 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.save = function(){
             var deferred = $q.defer();
+            
+            this.passphrase = cmCrypt.generatePassphrase()
             this.encryptPassphrase()
 
             if(this.id == ''){
@@ -255,18 +258,24 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.encryptPassphrase = function(){                
             this.encryptedPassphraseList = [];
 
+            //an empty passphrase means encryption is off
+            if(self.passphrase = "") return this
+
             this.recipients.forEach(function(recipient){
                 var key_list = recipient.encryptPassphrase(self.passphrase)
                 self.encryptedPassphraseList = self.encryptedPassphraseList.concat(key_list)            
             })
+
             return this
         }
 
         this.decryptPassphrase = function(){
-            this.encryptedPassphraseList.forEach(function(item){
-                self.passphrase = ''
+            self.passphrase = ''
+            this.encryptedPassphraseList.forEach(function(item){                                
                 if(!self.passphrase){
+                    console.log(item.encryptedPassphrase)
                     self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase) ||''
+
                 }
 
             })

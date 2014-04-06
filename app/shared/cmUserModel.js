@@ -177,11 +177,17 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
                 check = false;
             */
             
-            var tmpKeys  =  this.loadLocalKeys() || []
+            var key_list      =  this.loadLocalKeys() || [],
+                key_data_list = []
 
-            key.updateKeyDataList(tmpKeys)
+            key_list.forEach(function(local_key){                
+                var data = local_key.exportData()
+                key_data_list.push(data)                
+            })
 
-            this.storageSave('rsa',tmpKeys)
+            key.updateKeyDataList(key_data_list)
+
+            this.storageSave('rsa', key_data_list)
 
             /*
             if(
@@ -228,12 +234,16 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             var stored_keys = this.storageGet('rsa') || [],
                 keys        = []            
 
-            console.dir(stored_keys)
-            stored_keys.forEach(function(stored_key){
-                keys.push( (new cmCrypt.Key()).importData(stored_key) )
+            stored_keys.forEach(function(stored_key){                
+                var data = (new cmCrypt.Key()).importData(stored_key)
+                keys.push( data )                
             })
-
+            
             return keys;
+        }
+
+        this.clearLocalKeys = function(){
+            this.storageSave('rsa', [])
         }
 
         this.syncLocalKeys = function(){
@@ -274,7 +284,9 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
 
             keys.forEach(function(key){ 
                 if(!decrypted_passphrase){
-                    decrypted_passphrase = key.decrypt(encrypted_passphrase)
+                    console.log(key.id)
+                    console.log('private key: '+key.getPrivateKey())
+                    decrypted_passphrase = key.decrypt(encrypted_passphrase)                    
                 }
             })
             return decrypted_passphrase

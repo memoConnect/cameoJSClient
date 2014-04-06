@@ -34,7 +34,6 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
             $scope.init = function (conversation) {
                 // reload detail of conversation
                 $scope.conversation = conversation.update();
-                console.dir($scope.conversation.recipients)
 
                 $scope.my_message_text  = ""
                 $scope.passphrase       = ""

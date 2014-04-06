@@ -162,19 +162,39 @@ angular.module('cmCrypt', ['cmLogger'])
                 }
 
                 this.exportData = function(){
-                    return {
-                        id:      this.id,
-                        name:    this.name,
-                        pubKey:  this.getPublicKey(),
-                        privKey: this.getPrivateKey(),
-                        size:    this.getSize()
-                    }
+                    var data        = {},
+                        private_key = this.getPrivateKey(),
+                        public_key  = this.getPublicKey(),
+                        size        = this.getSize()
+
+                    if(this.id)     data.id         = this.id
+                    if(this.name)   data.name       = this.name
+                    if(public_key)  data.pubKey     = public_key    
+                    if(private_key) data.privKey    = private_key
+                    if(size)        data.size       = size
+
+                    return data
                 }
 
                 this.importData = function(data){
+                    var public_key = this.getPublicKey()
+
+                    data.pubKey = data.pubKey   ? data.pubKey.replace(/\n/g,'') : undefined
+                    public_key  = public_key    ? public_key.replace(/\n/g,'')  : undefined
+                    
+
                     if(data.name)   this.setName(data.name)
                     if(data.id)     this.setId(data.id)
-                    if(data.privKey || data.pubKey || data.key) this.setKey(data.privKey || data.pubKey || data.key)
+
+                    if( data.pubKey && (data.pubKey != public_key) ){
+                        this.setKey(data.pubKey)
+                    }
+
+                    if( data.key && (data.key != public_key) ){                      
+                        this.setKey(data.key)
+                    }
+
+                    if(data.privKey) this.setKey(data.privKey)
 
                     return this
                 }
@@ -198,14 +218,17 @@ angular.module('cmCrypt', ['cmLogger'])
                 this.updateKeyDataList = function(key_data_list){
                     var check = false
 
-                    key_data_list.forEach(function(key_data){
+                    key_data_list.forEach(function(key_data){                        
                         if(
                                (key_data.id && (key_data.id == self.id)) 
-                            || key_data.pubKey == self.getPublicKey()){
+                            || key_data.pubKey == self.getPublicKey()
+                        ){
                             angular.extend(key_data, self.exportData())
                             check = true
-                        }
+                        }                        
                     })
+
+
 
                     if(!check) key_data_list.push(this.exportData())
                 }

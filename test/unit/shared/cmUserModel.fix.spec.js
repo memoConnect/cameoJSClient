@@ -75,18 +75,18 @@ describe('cmUserModel', function(){
      */
     xdescribe('Authentication',function(){
         // TODO: couldn't work while cmAuth handling with token = mocken?
-        it('should be true, when user is active and has id',function(){
+        it('should be true, when user is active and has id.',function(){
             cmUserModel.data.isActive = true;
             cmUserModel.data.id = 'moep';
             expect(cmUserModel.isAuth()).toBeTruthy();
         })
 
-        it('should be false, when user is active and has no id',function(){
+        it('should be false, when user is active and has no id.',function(){
             cmUserModel.data.isActive = true;
             expect(cmUserModel.isAuth()).toBeFalsy();
         })
 
-        it('should be false, when user is inactive and has id',function(){
+        it('should be false, when user is inactive and has id.',function(){
             cmUserModel.data.id = 'moep';
             expect(cmUserModel.isAuth()).toBeFalsy();
         })
@@ -94,30 +94,53 @@ describe('cmUserModel', function(){
 
     describe('Encryption and key management', function(){
 
-        //Todo: alot of tests missing
+        var good_key, bad_key, encrypted_secret
 
-        var good_key = '-----BEGIN RSA PRIVATE KEY-----MGACAQACEFhXgxfNAzZJ8Q3YpU4x9hsCAwEAAQIQDF99aej56TF5zFs6LBBveQIJAKDFUfKmtsZXAgkAjKtWvZtVC90CCBjUAEDSAD4HAghfDTfjjx58kQIIUHBhrwvxsKw=-----END RSA PRIVATE KEY-----',
-            bad_key  = '',
+        
+        beforeEach(function(){
+            good_key = new cmCrypt.Key('-----BEGIN RSA PRIVATE KEY-----MGACAQACEFhXgxfNAzZJ8Q3YpU4x9hsCAwEAAQIQDF99aej56TF5zFs6LBBveQIJAKDFUfKmtsZXAgkAjKtWvZtVC90CCBjUAEDSAD4HAghfDTfjjx58kQIIUHBhrwvxsKw=-----END RSA PRIVATE KEY-----'),
+            bad_key  = new cmCrypt.Key(''),
             encrypted_secret = 'GGddYb0ZAZizKuN3zCikcg==' //contains 'priv'
-
-        it('should provide functions "saveKey" and "loadLocalKeys" to store and retrieve rsa keys', function(){
-            expect(cmUserModel.saveKey).toBeDefined();
-            expect(cmUserModel.loadLocalKeys).toBeDefined();
         })
 
-        it('should provide a function "decryptPassphrase" to decrypt passphrase', function(){            
-            var badKey  = new cmCrypt.Key(bad_key),
-                goodKey = new cmCrypt.Key(good_key),
-                decrypted_secret
+        it('should provide functions "saveKey" and "loadLocalKeys" to store and retrieve rsa keys.', function(){
+            expect(cmUserModel.saveKey).toBeDefined();
+            expect(cmUserModel.loadLocalKeys).toBeDefined();
+
+            good_key.setId('my_good_key')
+
+            cmUserModel.saveKey(good_key)
+
+            var privateKey = ''
+
+            cmUserModel.loadLocalKeys().forEach(function(key){                
+                if(key.id == 'my_good_key') privateKey = key.getPrivateKey()
+            })
+
+            expect(privateKey).toBeTruthy()
+            expect(privateKey).toBe(good_key.getPrivateKey())
+        })
+
+        it('should provide a function "clearLocalKeys" to remove all Keys from local stroage.', function(){
+            cmUserModel.saveKey(good_key)
+            expect(cmUserModel.loadLocalKeys().length).toBeGreaterThan(0)
+            cmUserModel.clearLocalKeys()
+            expect(cmUserModel.loadLocalKeys().length).toBe(0)
+        })
+
+        it('should provide a function "decryptPassphrase" to decrypt passphrase.', function(){            
+            var decrypted_secret
             
             expect(cmUserModel.decryptPassphrase).toBeDefined()
+
+            cmUserModel.clearLocalKeys()
                         
-            cmUserModel.saveKey(badKey)
+            cmUserModel.saveKey(bad_key)
 
             decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
             expect(decrypted_secret).toBeFalsy()
 
-            cmUserModel.saveKey(goodKey)
+            cmUserModel.saveKey(good_key)
             decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
             expect(decrypted_secret).toBe('priv')
 

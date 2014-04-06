@@ -33,9 +33,21 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
             var encrypted_key_list = []
 
             this.keys.forEach(function(key){
+
+                var key_2 = new cmCrypt.Key()
+
+                key_2.setKey(key.getPrivateKey())
+               
+                var encrypted_passphrase = key.encrypt(passphrase)
+
+                console.log(key_2.decrypt(encrypted_passphrase) == passphrase)
+                console.log(key.getPrivateKey())
+                console.log(passphrase)
+                console.log(encrypted_passphrase)
+
                 encrypted_key_list.push({
                     keyId:                 key.id,
-                    encryptedPassphrase:   key.encrypt(passphrase)
+                    encryptedPassphrase:   encrypted_passphrase   
                 })
             }) 
 
@@ -65,7 +77,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
         */
 
         this.addKey = function(key_data){
-            //key_data maybe a string containing a public or Private key, or a key Object (cmCrypt.Key)
+            //key_data maybe a string containing a public or Private key, or a key Object (cmCrypt.Key)            
 
             var key,
                 is_object  = (typeof key_data == 'object'),
@@ -74,7 +86,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
 
             if( can_update )                key = key_data  //already a Key object
             if( is_object && !can_update)   key = (new cmCrypt.Key()).importData(key_data) //from backend or localstorgae
-            if( is_string)                  key = new cmCrypt.Key(key_data) //plain text public or private key
+            if( is_string)                  key = new cmCrypt.Key(key_data) //plain text public or private key          
 
             key 
             ?   key.updateKeyList(self.keys) 
@@ -115,7 +127,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
                 this.keys                   = []   
 
                 identity_data.publicKeys = identity_data.publicKeys || []
-                identity_data.publicKeys.forEach(function(publicKey_data){                         
+                identity_data.publicKeys.forEach(function(publicKey_data){                      
                     self.addKey(publicKey_data)
                 })
 
