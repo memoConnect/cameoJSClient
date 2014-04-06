@@ -58,8 +58,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.save = function(){
             var deferred = $q.defer();
             this.encryptPassphrase()
-            console.log('at save')
-            console.log(this.encryptedPassphraseList)
 
             if(this.id == ''){
                 cmConversationsAdapter.newConversation().then(
@@ -92,7 +90,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.saveEncryptedPassphraseList = function(){
             //if(this.id) 
-                console.log(this.encryptedPassphraseList)
                 cmConversationsAdapter.updateEncryptedPassphraseList(this.id, this.encryptedPassphraseList)
         }
 
@@ -258,21 +255,18 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.encryptPassphrase = function(){                
             this.encryptedPassphraseList = [];
 
-            console.dir(this)
-
             this.recipients.forEach(function(recipient){
                 var key_list = recipient.encryptPassphrase(self.passphrase)
                 self.encryptedPassphraseList = self.encryptedPassphraseList.concat(key_list)            
             })
-            console.log(this.encryptedPassphraseList)
             return this
         }
 
         this.decryptPassphrase = function(){
             this.encryptedPassphraseList.forEach(function(item){
-                self.passphrase = undefined
+                self.passphrase = ''
                 if(!self.passphrase){
-                    self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase)
+                    self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase) ||''
                 }
 
             })
@@ -286,9 +280,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         };
 
         this.decrypt = function () {
-            console.log(self.passphrase)
             this.decryptPassphrase()
-            console.log(self.passphrase)
             var success = true
             if (this.passphrase) {
                 this.messages.forEach(function (message) {
