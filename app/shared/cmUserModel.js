@@ -284,8 +284,6 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
 
             keys.forEach(function(key){ 
                 if(!decrypted_passphrase){
-                    console.log(key.id)
-                    console.log('private key: '+key.getPrivateKey())
                     decrypted_passphrase = key.decrypt(encrypted_passphrase)                    
                 }
             })

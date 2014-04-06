@@ -39,12 +39,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
                 key_2.setKey(key.getPrivateKey())
                
                 var encrypted_passphrase = key.encrypt(passphrase)
-
-                console.log(key_2.decrypt(encrypted_passphrase) == passphrase)
-                console.log(key.getPrivateKey())
-                console.log(passphrase)
-                console.log(encrypted_passphrase)
-
+                
                 encrypted_key_list.push({
                     keyId:                 key.id,
                     encryptedPassphrase:   encrypted_passphrase   
