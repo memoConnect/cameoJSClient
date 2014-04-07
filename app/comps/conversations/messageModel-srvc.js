@@ -1,6 +1,7 @@
 'use strict';
 
 function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmUserModel){
+
     var Message = function(data){
         //Attributes:
         var self = this;
@@ -33,7 +34,7 @@ function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmU
             var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase, this.encryptedData))
 
             //expose data on message Object
-            angular.extend(self, decrypted_data) // watch out: this only work for simply properties, "from" will break
+            angular.extend(self, decrypted_data) // watch out: this only work for simple properties, "from" will break
 
             return !!decrypted_data
         }
@@ -75,7 +76,7 @@ function cmMessageModel (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmU
                 this.id         = message_data.id;
                 this.from       = (!message_data.fromIdentity) ? cmUserModel.data.identity : cmIdentityFactory.create(message_data.fromIdentity);
                 this.created    = message_data.created;
-                this.text       = message_data.body;
+                this.text       = this.text || message_data.body;
                 this.fileIds    = message_data.fileIds;
 
                 this.encryptedData = message_data.body;

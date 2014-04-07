@@ -49,7 +49,19 @@
                 <i class="fa cm-info"></i>
                 {{'CONVERSATION.PLACEHOLDER.INFO'|cmTranslate}}
             </div>
+
+            <div ng-if="safetyLevel =='safe'">
+                <div class="cm-form-group" >
+                    <div class="cm-form-control with-inputter">
+                        <input type="text" ng-model="conversation.password" placeholder="{{ 'CONVERSATION.LABEL.PASSWORD' |cmTranslate}}" cm-adaptive-change/>
+                    </div>
+                </div>
+                <div style="text-align:center" ng-click="conversation.decryptPassphrase(); conversation.decrypt()">
+                    <i class="fa cm-key fa-2x"></i>
+                </div>
+            </div>
         </div>
+
 
         <button ng-click="handle()" class="cm-btn" ng-if="!isNew">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
         <button ng-click="handle()" class="cm-btn" ng-if="isNew">{{'CONVERSATION.CONTROL.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
