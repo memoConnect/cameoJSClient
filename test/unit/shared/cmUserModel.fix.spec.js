@@ -90,11 +90,9 @@ describe('cmUserModel', function(){
     })
 
     describe('Encryption and key management', function(){
-
-        //Todo: alot of tests missing
-
+        //TODO: alot of tests missing
         var good_key = '-----BEGIN RSA PRIVATE KEY-----MGACAQACEFhXgxfNAzZJ8Q3YpU4x9hsCAwEAAQIQDF99aej56TF5zFs6LBBveQIJAKDFUfKmtsZXAgkAjKtWvZtVC90CCBjUAEDSAD4HAghfDTfjjx58kQIIUHBhrwvxsKw=-----END RSA PRIVATE KEY-----',
-            bad_key  = '',
+            bad_key = '',
             encrypted_secret = 'GGddYb0ZAZizKuN3zCikcg==' //contains 'priv'
 
         it('should provide functions "saveKey" and "loadLocalKeys" to store and retrieve rsa keys', function(){
@@ -102,21 +100,22 @@ describe('cmUserModel', function(){
             expect(cmUserModel.loadLocalKeys).toBeDefined();
         })
 
-        it('should provide a function "decryptPassphrase" to decrypt passphrase', function(){            
-            var decrypted_secret
-            
+        it('should provide a function "decryptPassphrase" to decrypt passphrase', function(){
             expect(cmUserModel.decryptPassphrase).toBeDefined()
-            
-            cmUserModel.saveKey( {privKey : bad_key} )
-            decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
-            expect(decrypted_secret).toBeFalsy()
-
-            cmUserModel.saveKey( {privKey : good_key} )
-            decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
-            expect(decrypted_secret).toBe('priv')
-
         })
 
-    })
+        it('test bad key',function(){
+            cmUserModel.storageRemove('rsa'); // clear keys
+            cmUserModel.saveKey( {privKey : bad_key} )
+            var decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
+            expect(decrypted_secret).toBeFalsy()
+        })
 
-});
+        it('test good key',function(){
+            cmUserModel.storageRemove('rsa'); // clear keys
+            cmUserModel.saveKey( {privKey : good_key} )
+            var decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
+            expect(decrypted_secret).toBe('priv')
+        })
+    })
+})
