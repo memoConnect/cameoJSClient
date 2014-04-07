@@ -247,14 +247,14 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
 
         this.decryptPassphrase = function(encrypted_passphrase){
             var keys = this.loadLocalKeys() || [],
-                decrypted_passphrase
+                decrypted_passphrase = ''
 
             keys.forEach(function(item){ 
-                if(!decrypted_passphrase && item.privKey){
+                if(decrypted_passphrase == '' && item.privKey){
                     decrypted_passphrase = cmCrypt.decryptWithPrivateKey(encrypted_passphrase, item.privKey)
                 }
             })
-            return decrypted_passphrase
+            return decrypted_passphrase;
         }
 
 

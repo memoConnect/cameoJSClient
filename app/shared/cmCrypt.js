@@ -168,7 +168,7 @@ angular.module('cmCrypt', ['cmLogger'])
             },
 
             encryptWithPublicKey: function(secret, publicKey){
-                var crypt = new JSEncrypt
+                var crypt = new JSEncrypt()
 
                 crypt.setPublicKey(publicKey)
                 
@@ -176,7 +176,7 @@ angular.module('cmCrypt', ['cmLogger'])
             },
 
             decryptWithPrivateKey: function(secret, privateKey){
-                var crypt = new JSEncrypt
+                var crypt = new JSEncrypt()
 
                 crypt.setPrivateKey(privateKey)
                 return crypt.decrypt(secret)
