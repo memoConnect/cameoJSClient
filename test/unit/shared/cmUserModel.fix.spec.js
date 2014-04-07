@@ -139,13 +139,11 @@ describe('cmUserModel', function(){
 
             decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
             expect(decrypted_secret).toBeFalsy()
+        })
 
             cmUserModel.saveKey(good_key)
             decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
             expect(decrypted_secret).toBe('priv')
-
         })
-
     })
-
-});
+})

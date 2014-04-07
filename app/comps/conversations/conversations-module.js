@@ -75,6 +75,7 @@ cmConversations.service('cmPurlModel',[
 ])
 
 cmConversations.directive('cmConversationControls', [
+    'cmNotify',
     cmConversationControls
 ])
 

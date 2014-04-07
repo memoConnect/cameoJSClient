@@ -19,6 +19,8 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                 cmConversationsModel.getConversation(conversation_id).then(
                     function (conversation) {
                         $scope.init(conversation)
+                        $scope.conversation.decryptPassphrase()
+                        $scope.conversation.decrypt()
                     }
                 )
             } else {
@@ -38,8 +40,9 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                 $scope.my_message_text  = ""
                 $scope.password         = ""
                 $scope.show_contacts    = false
-                $scope.passphrase_valid = $scope.conversation.passphraseValid()
+                //$scope.passphrase_valid = $scope.conversation.passphraseValid()
 
+                /*
                 if($scope.conversation.passphrase != '' && $scope.passphrase_valid !== false){
                     $scope.passphrase = $scope.conversation.passphrase;
                     $scope.conversation.decrypt();
@@ -50,6 +53,7 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                         if ($scope.passphrase_valid) $scope.conversation.decrypt()
                     })
                 }
+                */
 
                 $scope.$watch("conversation.subject", function (new_subject) {
                     $scope.conversation.updateSubject(new_subject||'')
@@ -79,7 +83,7 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                             }
                         );
                     } else {
-                        cmMessageFactory.create( {body: $scope.my_message_text} )
+                        cmMessageFactory.create( {body: $scope.my_message_text} )                          
                             .encrypt($scope.conversation.passphrase)
                             .addTo($scope.conversation)
                             .sendTo($scope.conversation.id)
