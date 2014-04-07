@@ -1,18 +1,21 @@
 'use strict';
 
-var cmUserModel;
+var cmUserModel,
+    cmCrypt
 
 describe('cmUserModel', function(){
     var cmUserModel;
+        cmCrypt;
 
     beforeEach(module("cmUserModel"))
 
-    beforeEach(inject(function(_cmUserModel_) {
+    beforeEach(inject(function(_cmUserModel_, _cmCrypt_) {
         cmUserModel = _cmUserModel_        
         cmUserModel.init({
             id : 'my_id',
             userKey: 'my_user_key'
         })
+        cmCrypt = _cmCrypt_       
     }))
 
     it('should exist', function(){
@@ -72,49 +75,74 @@ describe('cmUserModel', function(){
      */
     xdescribe('Authentication',function(){
         // TODO: couldn't work while cmAuth handling with token = mocken?
-        it('should be true, when user is active and has id',function(){
+        it('should be true, when user is active and has id.',function(){
             cmUserModel.data.isActive = true;
             cmUserModel.data.id = 'moep';
             expect(cmUserModel.isAuth()).toBeTruthy();
         })
 
-        it('should be false, when user is active and has no id',function(){
+        it('should be false, when user is active and has no id.',function(){
             cmUserModel.data.isActive = true;
             expect(cmUserModel.isAuth()).toBeFalsy();
         })
 
-        it('should be false, when user is inactive and has id',function(){
+        it('should be false, when user is inactive and has id.',function(){
             cmUserModel.data.id = 'moep';
             expect(cmUserModel.isAuth()).toBeFalsy();
         })
     })
 
     describe('Encryption and key management', function(){
-        //TODO: alot of tests missing
-        var good_key = '-----BEGIN RSA PRIVATE KEY-----MGACAQACEFhXgxfNAzZJ8Q3YpU4x9hsCAwEAAQIQDF99aej56TF5zFs6LBBveQIJAKDFUfKmtsZXAgkAjKtWvZtVC90CCBjUAEDSAD4HAghfDTfjjx58kQIIUHBhrwvxsKw=-----END RSA PRIVATE KEY-----',
-            bad_key = '',
-            encrypted_secret = 'GGddYb0ZAZizKuN3zCikcg==' //contains 'priv'
 
-        it('should provide functions "saveKey" and "loadLocalKeys" to store and retrieve rsa keys', function(){
+        var good_key, bad_key, encrypted_secret
+
+        
+        beforeEach(function(){
+            good_key = new cmCrypt.Key('-----BEGIN RSA PRIVATE KEY-----MGACAQACEFhXgxfNAzZJ8Q3YpU4x9hsCAwEAAQIQDF99aej56TF5zFs6LBBveQIJAKDFUfKmtsZXAgkAjKtWvZtVC90CCBjUAEDSAD4HAghfDTfjjx58kQIIUHBhrwvxsKw=-----END RSA PRIVATE KEY-----'),
+            bad_key  = new cmCrypt.Key(''),
+            encrypted_secret = 'GGddYb0ZAZizKuN3zCikcg==' //contains 'priv'
+        })
+
+        it('should provide functions "saveKey" and "loadLocalKeys" to store and retrieve rsa keys.', function(){
             expect(cmUserModel.saveKey).toBeDefined();
             expect(cmUserModel.loadLocalKeys).toBeDefined();
+
+            good_key.setId('my_good_key')
+
+            cmUserModel.saveKey(good_key)
+
+            var privateKey = ''
+
+            cmUserModel.loadLocalKeys().forEach(function(key){                
+                if(key.id == 'my_good_key') privateKey = key.getPrivateKey()
+            })
+
+            expect(privateKey).toBeTruthy()
+            expect(privateKey).toBe(good_key.getPrivateKey())
         })
 
-        it('should provide a function "decryptPassphrase" to decrypt passphrase', function(){
+        it('should provide a function "clearLocalKeys" to remove all Keys from local stroage.', function(){
+            cmUserModel.saveKey(good_key)
+            expect(cmUserModel.loadLocalKeys().length).toBeGreaterThan(0)
+            cmUserModel.clearLocalKeys()
+            expect(cmUserModel.loadLocalKeys().length).toBe(0)
+        })
+
+        it('should provide a function "decryptPassphrase" to decrypt passphrase.', function(){            
+            var decrypted_secret
+            
             expect(cmUserModel.decryptPassphrase).toBeDefined()
-        })
 
-        it('test bad key',function(){
-            cmUserModel.storageRemove('rsa'); // clear keys
-            cmUserModel.saveKey( {privKey : bad_key} )
-            var decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
+            cmUserModel.clearLocalKeys()
+                        
+            cmUserModel.saveKey(bad_key)
+
+            decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
             expect(decrypted_secret).toBeFalsy()
-        })
+//        })
 
-        it('test good key',function(){
-            cmUserModel.storageRemove('rsa'); // clear keys
-            cmUserModel.saveKey( {privKey : good_key} )
-            var decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
+            cmUserModel.saveKey(good_key)
+            decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
             expect(decrypted_secret).toBe('priv')
         })
     })
