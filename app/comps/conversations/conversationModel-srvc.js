@@ -54,11 +54,9 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             var deferred = $q.defer();            
 
             if(this.id == ''){
-                cmConversationsAdapter.newConversation().then(
+                cmConversationsAdapter.newConversation((this.subject || '')).then(
                     function (conversation_data) {
                         self.init(conversation_data);
-
-                        self.updateSubject(self.subject);
 
                         var i = 0;
                         while(i < self.recipients.length){
