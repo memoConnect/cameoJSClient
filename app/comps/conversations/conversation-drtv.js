@@ -34,10 +34,9 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
             $scope.init = function (conversation) {
                 // reload detail of conversation
                 $scope.conversation = conversation.update();
-                console.dir($scope.conversation.recipients)
 
                 $scope.my_message_text  = ""
-                $scope.passphrase       = ""
+                $scope.password         = ""
                 $scope.show_contacts    = false
                 $scope.passphrase_valid = $scope.conversation.passphraseValid()
 
@@ -75,13 +74,13 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                 if(!message_empty && passphrase_valid && !recipients_missing){
                     if($scope.conversation.id == ''){
                         $scope.conversation.save().then(
-                            function(){
+                            function(){                                
                                 $scope.sendMessage();
                             }
                         );
                     } else {
                         cmMessageFactory.create( {body: $scope.my_message_text} )
-                            .encrypt($scope.passphrase)
+                            .encrypt($scope.conversation.passphrase)
                             .addTo($scope.conversation)
                             .sendTo($scope.conversation.id)
                             .then(function(){
@@ -108,7 +107,7 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
 
                 passphrase_valid && !assetId_missing && !recipients_missing
                     ?   $scope.conversation
-                        .newMessage(':asset,'+$scope.assetId, $scope.passphrase)
+                        .newMessage(':asset,'+$scope.assetId, $scope.conversation.passphrase)
                         .sendTo($scope.conversation)
                         .then(function () {
                             if ($scope.new_conversation) $location.url('/conversation/' + $scope.conversation.id)
@@ -139,11 +138,6 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                 $scope.conversation
                     .newMessage(":requestCaptcha")
                     .sendTo($scope.conversation)
-            }
-
-            $scope.generatePassphrase = function () {
-                var date = new Date();
-                $scope.passphrase = _Base64.encode(cmCrypt.hash(Math.random() * date.getTime())).substr(5, 10)
             }
 
             this.isNew = function(){

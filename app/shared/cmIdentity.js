@@ -16,10 +16,10 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
         this.displayName,
         this.userKey,
         this.cameoId,
-        this.email                   = {value: undefined, isVerified: undefined},
-        this.phoneNumber             = {value: undefined, isVerified: undefined},
+        this.email                   = { value: undefined, isVerified: undefined },
+        this.phoneNumber             = { value: undefined, isVerified: undefined },
         this.preferredMessageType,
-        this.publicKeys,
+        this.keys                    = [],         
         this.userType,
         this.created,
         this.lastUpdated,
@@ -27,25 +27,22 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
 
         var self = this;
 
-        this.getWeakestKeySize = function(){
-            var length = 0
-
-            this.publicKeys.forEach(function(publicKey){
-                length = Math.min(cmCrypt.getKeySize(publicKey.key)||0)
-            })
-
-            return(length)
-        }
-
         //Encrypt passphrase with all available public keys
         //Identities cannot decrypt, Users can
         this.encryptPassphrase = function(passphrase){
             var encrypted_key_list = []
 
-            this.publicKeys.forEach(function(publicKey){
+            this.keys.forEach(function(key){
+
+                var key_2 = new cmCrypt.Key()
+
+                key_2.setKey(key.getPrivateKey())
+               
+                var encrypted_passphrase = key.encrypt(passphrase)
+                
                 encrypted_key_list.push({
-                    keyId:                  publicKey.id,
-                    encryptedPassphrase:   cmCrypt.encryptWithPublicKey(passphrase, publicKey.key)
+                    keyId:                 key.id,
+                    encryptedPassphrase:   encrypted_passphrase   
                 })
             }) 
 
@@ -56,15 +53,50 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
             return this.displayName || this.cameoId || this.id;
         }
 
+        /* do we need this?
+        this.getKeyById = function(id){
+            var needle
 
-        this.getPubKeys = function(){
+            this.keys.forEach(function(key){
+                if(key.id == id) needle = key
+            })
 
+            return needle
         }
 
         this.getAvatar = function(mock){
             if(mock != undefined)
                 return mock;
             return this.avatar;
+        }
+        */
+
+        this.addKey = function(key_data){
+            //key_data maybe a string containing a public or Private key, or a key Object (cmCrypt.Key)            
+
+            var key,
+                is_object  = (typeof key_data == 'object'),
+                is_string  = (typeof key_data == 'string'),
+                can_update = is_object && "updateKeyList" in key_data
+
+            if( can_update )                key = key_data  //already a Key object
+            if( is_object && !can_update)   key = (new cmCrypt.Key()).importData(key_data) //from backend or localstorgae
+            if( is_string)                  key = new cmCrypt.Key(key_data) //plain text public or private key          
+
+            key 
+            ?   key.updateKeyList(self.keys) 
+            :   cmLogger.error('uanable to add key, unknown format: '+key_data)              
+
+            return this
+        }
+
+        this.getWeakestKeySize = function(){
+            var size = false
+            this.keys.forEach(function(key){
+                size = (size ===false) ? key.getSize() : Math.min(size, key.getSize())
+            })
+
+            return size
         }
 
         /**
@@ -83,13 +115,16 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
                 this.cameoId                = identity_data.cameoId
                 this.email                  = identity_data.email
                 this.phoneNumber            = identity_data.phoneNumber
-                this.preferredMessageType   = identity_data.preferredMessageType
-                this.publicKeys             = identity_data.publicKeys
-                this.keys                   = identity_data.publicKeys
+                this.preferredMessageType   = identity_data.preferredMessageType                                
                 this.userType               = identity_data.userType
                 this.created                = identity_data.created
-                this.lastUpdated            = identity_data.lastUpdated    
+                this.lastUpdated            = identity_data.lastUpdated 
+                this.keys                   = []   
 
+                identity_data.publicKeys = identity_data.publicKeys || []
+                identity_data.publicKeys.forEach(function(publicKey_data){                      
+                    self.addKey(publicKey_data)
+                })
 
                 deferred.resolve();
 
