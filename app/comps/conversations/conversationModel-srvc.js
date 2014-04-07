@@ -312,11 +312,13 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         };
 
         this.getWeakestKeySize = function(){
-            var size = 0
+            var size = undefined
             this.recipients.forEach(function(recipient){
 
-                size = size ? Math.min(recipient.getWeakestKeySize(), size) : recipient.getWeakestKeySize()
+                size = size != undefined ? Math.min(recipient.getWeakestKeySize(), size) : recipient.getWeakestKeySize()
             })
+
+            size = size || 0
             console.log('weakest key: '+size)
             return size
         }
