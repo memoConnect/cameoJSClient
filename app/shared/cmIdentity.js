@@ -91,11 +91,11 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
         }
 
         this.getWeakestKeySize = function(){
-            var size = 0
+            var size = undefined
             this.keys.forEach(function(key){
-                size = (size ===false) ? key.getSize() : Math.min(size, key.getSize())
+                size = size !=undefined ? Math.min(size, key.getSize()) : key.getSize()
             })
-
+            size = size || 0
             return size
         }
 
