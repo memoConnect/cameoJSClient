@@ -12,6 +12,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.lastUpdated = '',
         this.numberOfMessages = 0,
         this.encryptedPassphraseList = [];
+        this.keyTransmission = 'asymmetric' || 'symmetric'
         var self = this;
 
         /**
@@ -50,10 +51,17 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             //cmConversationsAdapter.addRecipient(this.id, identity.id)
         }
 
-        this.save = function(){
+        this.save = function(){           
+
             var deferred = $q.defer();            
 
             if(this.id == ''){
+
+                if(!this.checkKeyTransmission()){
+                    deferred.reject()
+                    return null
+                }
+
                 cmConversationsAdapter.newConversation((this.subject || '')).then(
                     function (conversation_data) {
                         self.init(conversation_data);
@@ -245,6 +253,28 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         /**
          * Crypt Handling
          */
+
+        this.checkKeyTransmission = function(){
+            var result = true
+
+            console.log(checkKeyTransmission)
+
+            if(this.getWeakestKeySize() == 0 && this.mode == 'asymmetric'){
+                cmNotify.warn('CONVERSATION.WARN.PUBLIC_KEY_MISSING')
+                result = false
+            }
+
+            if(this.mode == 'asymmetric' && !cmUserModel.hasPrivateKey()){
+                cmNotify.warn('CONVERSATION.WARN.PRIVATE_KEY_MISSING')
+                result = false               
+            }
+
+            return result
+        }
+
+        this.setKeyTransmission = function(mode){
+            this.keyTransmission = mode
+         }
 
         this.encryptPassphrase = function(){                
             this.encryptedPassphraseList = [];
