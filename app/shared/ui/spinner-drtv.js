@@ -12,6 +12,8 @@ function cmSpinner(){
                 opts.length = $attrs.cmLength;
             if($attrs.cmRadius)
                 opts.radius = $attrs.cmRadius;
+            if($attrs.cmColor)
+                opts.color = $attrs.cmColor;
 
 
             var spinner = new Spinner(opts);
