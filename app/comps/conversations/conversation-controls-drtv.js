@@ -1,4 +1,4 @@
-function cmConversationControls(){
+function cmConversationControls(cmNotify){
     return{
         restrict : 'AE',
         templateUrl : 'comps/conversations/conversation-controls.html',      
@@ -10,8 +10,12 @@ function cmConversationControls(){
         link: function($scope, $element, $attrs, cmConversation){
             $scope.isNew = cmConversation.isNew();
 
-            $scope.safetyLevel = 'safer';
+            $scope.safetyLevel = 'safe';
             $scope.setLevel = function(level){
+                if(level =="safer" && $scope.conversation.getWeakestKeySize() == 0){
+                    cmNotify.error('CONVERSATION.PUBLIC_KEY_MISSING')
+                    return null
+                }
                 $scope.safetyLevel = level;
             }
 
