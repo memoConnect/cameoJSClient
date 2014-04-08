@@ -11,35 +11,9 @@ function cmEdge(){
                 foreground.append(angular.element(clone))
             })
                              
-
             element
             .append(background)
             .append(foreground)
-            
-            background
-            .css({
-                'position'  : 'absolute',
-                'top'       : '0',
-                'left'      : '0',
-                'right'     : '0',
-                'bottom'    : '0'
-             })
-
-            foreground
-            .css({
-                'position'  : 'absolute',
-                'font-size' : '1em',
-                'top'       : '0',
-                'right'     : '0',
-                'left'      : '0',
-                'bottom'    : '0'
-            })
-
-            element
-            .css({
-                'text-align': 'right'
-            })
-            
         }
     }
 }

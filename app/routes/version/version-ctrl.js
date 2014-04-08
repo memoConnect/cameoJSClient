@@ -3,7 +3,9 @@ define([
 ], function (app) {
     'use strict';
 
-    app.register.controller('VersionCtrl',['$scope','cmVersion',function($scope, cmVersion){
+    app.register.controller('VersionCtrl',[
+        '$scope','cmVersion',
+        function($scope, cmVersion){
         $scope.cmVersion = cmVersion;
     }]);
 });
