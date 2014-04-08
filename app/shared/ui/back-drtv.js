@@ -5,8 +5,10 @@ function cmBack($window, $location){
     return {
         restrict: 'AE',
         scope: true,
-        template: '<i class="fa cm-left" ng-show="isVisible"></i>'+
-                  '<span ng-if="pageTitle">{{pageTitle}}</span>',
+        template: '<div class="back-wrap">'+
+                    '<i class="fa cm-left" ng-show="isVisible"></i>'+
+                    '<span ng-if="pageTitle">{{pageTitle}}</span>'+
+                  '</div>',
         controller: function($rootScope, $scope, $element, $attrs){
             // vars
             $scope.isVisible = $rootScope.urlHistory.length > 1 ? true : false;
@@ -22,7 +24,8 @@ function cmBack($window, $location){
                 $scope.isVisible = true;
             }
             // bind click event
-            $element.bind('click', function(){
+            console.log(angular.element($element[0].querySelector('.back-wrap')))
+            angular.element($element[0].querySelector('.back-wrap')).bind('click touchstart', function(){
                 // if history has more then one index
                 if($rootScope.urlHistory.length > 0 && !'plainBack' in $attrs){
                     $window.history.back();

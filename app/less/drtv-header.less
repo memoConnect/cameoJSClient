@@ -16,17 +16,28 @@ cm-header{
     }
 
     cm-back{
-        text-align:left;
+      .with-cursor;
+      text-align:left;
+      position:relative;
+      z-index:1;
+      .back-wrap{
         text-overflow:ellipsis;
         overflow:hidden;
-        i {
-            margin-left: 0.2rem;
-            margin-right: 0.5rem;
-            vertical-align: text-bottom;
+      }
+      i {
+        margin-left: 0.2rem;
+        margin-right: 0.5rem;
+        vertical-align: text-bottom;
+      }
+      span {
+        position: relative;
+      }
+      &.overblend-avatar{
+        .back-wrap{
+          position:relative;
+          width:3em;
         }
-        span {
-            position: relative;
-        }
+      }
     }
 
     cm-identity{
