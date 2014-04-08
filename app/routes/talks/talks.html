@@ -22,10 +22,8 @@
     </header>
 
     <ul>
-        <li ng-repeat="conversation in conversations | filter:search ">
-            <a href="#/conversation/{{conversation.id}}">
-                <cm-conversation-tag cm-data="conversation"></cm-conversation-tag>
-            </a>
+        <li ng-repeat="conversation in conversations | filter:search" ng-click="goToConversation(conversation.id)">
+            <cm-conversation-tag cm-data="conversation"></cm-conversation-tag>
 
             <!--
             <a href="#/conversation/{{conversation.id}}" class="clearfix">

@@ -16,7 +16,8 @@ define([
         'cmConversationsModel',
         'cmUtil',
         '$modal',
-        function($scope, $rootScope, cmUserModel, cmConversationsModel, cmUtil, $modal) {
+        '$location',
+        function($scope, $rootScope, cmUserModel, cmConversationsModel, cmUtil, $modal,$location) {
             cmConversationsModel.getConversations();
 
             $scope.cmUtil = cmUtil;
@@ -63,6 +64,14 @@ define([
                     function () {
                     }
                 );
+            }
+
+            $scope.goToConversation = function(id){
+                if(typeof id != 'undefined'){
+                    $location.path('/conversation/' + id)
+                }
+
+                return false;
             }
         }
     ]);
