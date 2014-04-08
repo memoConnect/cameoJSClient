@@ -1,6 +1,6 @@
 'use strict';
 
-function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmCrypt, cmUserModel, cmRecipientModel, $q){
+function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, $q){
     var ConversationModel = function(data){
         //Attributes:
         this.id = '',
@@ -19,7 +19,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
          * Conversation Handling
          */
 
-        this.init = function (conversation_data) {       
+        this.init = function (conversation_data) { 
 
             if(typeof conversation_data !== 'undefined'){
                 this.id                 = conversation_data.id;
@@ -53,13 +53,15 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.save = function(){           
 
-            var deferred = $q.defer();            
+            var deferred = $q.defer();    
+
+            console.log('save')        
 
             if(this.id == ''){
-
                 if(!this.checkKeyTransmission()){
+                    console.log('STOP')
                     deferred.reject()
-                    return null
+                    return deferred.promise
                 }
 
                 cmConversationsAdapter.newConversation((this.subject || '')).then(
@@ -73,9 +75,11 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                         }
 
                         console.log('pwd: '+self.password)
+                        console.log('passph: '+self.passphrase)
 
-                        if(self.getWeakestKeySize()!=0 || self.password){
-                            self.passphrase = cmCrypt.generatePassphrase()            
+                        if(self.passphrase && self.checkKeyTransmission()){  
+                            console.log('encrypting...')
+
                             self.encryptPassphrase()                        
                             self.saveEncryptedPassphraseList()
                             self.passphrase
@@ -257,37 +261,57 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.checkKeyTransmission = function(){
             var result = true
 
-            console.log('checkKeyTransm...')
-
-            if(this.getWeakestKeySize() == 0 && this.mode == 'asymmetric'){
+            if(this.keyTransmission == 'asymmetric' && this.getWeakestKeySize() == 0){
                 cmNotify.warn('CONVERSATION.WARN.PUBLIC_KEY_MISSING')
                 result = false
             }
 
-            if(this.mode == 'asymmetric' && !cmUserModel.hasPrivateKey()){
+
+            if(this.keyTransmission == 'asymmetric' && !cmUserModel.hasPrivateKey()){
                 cmNotify.warn('CONVERSATION.WARN.PRIVATE_KEY_MISSING')
                 result = false               
             }
 
+            if(this.keyTransmission == 'symmetric' && this.passphrase && !this.password){
+                cmNotify.warn('CONVERSATION.WARN.PASSWORD_MISSING')
+                result = false               
+            }
+
+            console.log('check, passphrase: "'+this.passphrase+'"')
+
             return result
         }
 
+
         this.setKeyTransmission = function(mode){
-            this.keyTransmission = mode
+            var old_mode = this.keyTransmission
+
+            this.keyTransmission = mode      
+
+            if(this.checkKeyTransmission()){
+                return true
+            } else {
+                //this.keyTransmission = old_mode
+                return false
+            }
+
+            //this.decryptPassphrase()
+            //this.decrypt()
          }
 
         this.encryptPassphrase = function(){                
             this.encryptedPassphraseList = [];
 
-            //an empty passphrase means encryption is off
-            if(self.passphrase == "") return this
+            if(!this.checkKeyTransmission()) return this
 
-            if(this.getWeakestKeySize() != 0){
+            if(this.keyTransmission == 'asymmetric'){
                 this.recipients.forEach(function(recipient){
                     var key_list = recipient.encryptPassphrase(self.passphrase)
                     self.encryptedPassphraseList = self.encryptedPassphraseList.concat(key_list)            
                 })
-            }else if(self.password){
+            }
+
+            if(this.keyTransmission == 'symmetric'){
                 self.encryptedPassphraseList = [{keyId: '_passwd', encryptedPassphrase: cmCrypt.encryptWithShortKey(self.password, self.passphrase)}]
                 console.log('gleich: '+ cmCrypt.decrypt(self.password, self.encryptedPassphraseList[0].encryptedPassphrase))
             }
@@ -310,7 +334,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                 if(!self.passphrase){
                     self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase) ||''
                     if(item.keyId=="_passwd"){
-                        self.passphrase = cmCrypt.decrypt(self.password, item.encryptedPassphrase)
+                        self.passphrase = cmCrypt.decrypt(self.password, item.encryptedPassphrase) || ''
                     }
                 }
             })
@@ -320,8 +344,10 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.setPassphrase = function (passphrase) {
             this.passphrase = passphrase
+            if(passphrase == undefined) self.passphrase = self.passphrase || cmCrypt.generatePassphrase()
+            console.log('setPP: '+self.passphrase)
             return this;
-        };
+        }
 
         this.decrypt = function () {
             this.decryptPassphrase()

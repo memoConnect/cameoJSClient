@@ -243,9 +243,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         }
 
         this.hasPrivateKey = function(){
-            var keys = this.getLocalKeys()
-
-            result = false
+            var keys = this.loadLocalKeys(),
+                result = false
 
             console.log('my private keys:')
             keys.forEach(function(key){                

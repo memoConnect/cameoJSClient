@@ -9,6 +9,7 @@ var cmConversations = angular.module('cmConversations', [
 //    'cmCron',
     'cmIdentity',
     'cmUserModel',
+    'cmNotify',
     'ui.bootstrap'
 ])
 
@@ -25,6 +26,7 @@ cmConversations.factory('cmConversationModel',[
     'cmCrypt',
     'cmUserModel',
     'cmRecipientModel',
+    'cmNotify',
     '$q',
     cmConversationModel
 ]);
