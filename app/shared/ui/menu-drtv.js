@@ -51,8 +51,8 @@ function cmMenu($window, $document, cmUserModel){
                 {i18n:'MENU.NOTIFICATIONS', icon:'cm-bell', css:'cm-menu-notify', href:'#/notfications'},
                 {i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify', href:'#/contacts/request'},
                 {i18n:'MENU.MESSAGES', icon:'cm-envelope-closed', css:'cm-menu-notify', href:'#/talks'},
-                {i18n:'MENU.HINTS', icon:'cm-info', css:'cm-menu-notify', href:'#/notfications/hints'},
-                {i18n:'MENU.ACTIVITY', icon:'cm-person', href:'#/settings'},
+//                {i18n:'MENU.HINTS', icon:'cm-info', css:'cm-menu-notify', href:'#/notfications/hints'},
+//                {i18n:'MENU.ACTIVITY', icon:'cm-person', href:'#/settings'},
                 {i18n:'MENU.SETTINGS', icon:'cm-settings', href:'#/settings'}
             ];
 
