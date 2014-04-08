@@ -41,6 +41,8 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
                 }
             }
         }
+
+        return conversation;
     };
 
     this.createNewConversation = function (){
@@ -115,7 +117,7 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
                 self.quantity = data.numberOfConversations;
 
                 data.conversations.forEach(function (conversation_data) {
-                    self.addConversation(cmConversationFactory.create(conversation_data))
+                    self.addConversation(cmConversationFactory.create(conversation_data).update())
                 })
             })
     }
