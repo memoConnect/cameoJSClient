@@ -22,6 +22,8 @@
         </select>
     </div>
 
+    <cm-spinner ng-show="showSpinner"></cm-spinner>
+
     <div class="cm-alert" ng-hide="alertState==''">
         <div><i class="fa cm-info"></i>{{'LOGIN.INFO.'+alertState|cmTranslate}}</div>
     </div>

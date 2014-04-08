@@ -2,20 +2,40 @@
 
 function cmSpinner(){
     return {
-        restrict: 'A',
-        template: '<div class="modal-spinner-wrapper" ng-show="loading"><div class="modal-spinner"></div></div>',
-        controller: function($scope, $element){
+        restrict: 'AE',
+        template: '<div class="spinner-wrapper" ng-show="loading"><div class="spinner"></div></div>',
+        controller: function($scope, $element, $attrs){
             $scope.loading = false;
 
-            var spinner = new Spinner();
-            var loadingContainer = angular.element($element[0].querySelector('.modal-spinner'))[0];
+            var opts = {};
+            if($attrs.cmLength)
+                opts.length = $attrs.cmLength;
+            if($attrs.cmRadius)
+                opts.radius = $attrs.cmRadius;
 
-            $scope.$on('SHOW-SPINNER', function(){
+
+            var spinner = new Spinner(opts);
+            var loadingContainer = angular.element($element[0].querySelector('.spinner'))[0];
+
+
+            $scope.$watch($attrs.ngShow, function(bool){
+                if(bool != false){
+                    spinner = spinner.spin();
+                    loadingContainer.appendChild(spinner.el);
+                    $scope.loading = true
+                } else {
+                    spinner.stop();
+                    loadingContainer.innerHTML = '';
+                    $scope.loading = false
+                }
+            });
+
+            $scope.$on('cmSpinner:start', function(){
                 spinner = spinner.spin();
                 loadingContainer.appendChild(spinner.el);
                 $scope.loading = true
             });
-            $scope.$on('HIDE-SPINNER', function(){
+            $scope.$on('cmSpinner:stop', function(){
                 spinner.stop();
                 loadingContainer.innerHTML = '';
                 $scope.loading = false
