@@ -9,12 +9,13 @@ function cmAvatar(){
     return {
         restrict : 'AE',
         link: function($scope, $element, $attrs){
-            // is none avatar
+            // is none avatar for add reciepients
             if($attrs.cmView == 'none'){
                 $element.css({'background-image': 'url(' + avatarMocks.none +')'});
             } else {
-
+                // normal avatar from identity
                 var identity = $scope.$eval($attrs.cmData);
+                console.log(identity)
                 // hide the complete avatar
                 if($attrs.cmView == 'hide-owner' && identity.isAppOwner){
                     $element.css('display','none');
