@@ -4,8 +4,12 @@ define([
     'ngload!pckUi'
 ], function(app){
 
-    app.register.controller('LoginCtrl',['$scope', '$modal', '$location',
-        function($scope, $modal, $location){
+    app.register.controller('LoginCtrl',[
+        '$scope', '$modal', '$location', 'cmVersion', '$window',
+        function($scope, $modal, $location, cmVersion, $window){
+            $scope.cmVersion = cmVersion;
+            $scope.size = $window.innerHeight+"x"+$window.innerWidth;
+
             $scope.isModalVisible = false;
 
             $scope.open = function () {

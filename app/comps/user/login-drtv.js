@@ -7,6 +7,7 @@ function cmLogin($location, cmNotify, cmUserModel, cmCrypt) {
         scope       :   {},
 
         controller  :   function ($scope, $rootScope) {
+            $scope.showSpinner = false;
             $scope.alertState = '';
             $scope.loginData = {
                 'Max': {
@@ -45,20 +46,21 @@ function cmLogin($location, cmNotify, cmUserModel, cmCrypt) {
 
                 isIdle = true;
                 $scope.alertState = '';
-                $scope.$broadcast('cmPointSpinner:start');
+                $scope.startSpinner();
 
                 cmUserModel.doLogin($scope.formData.user, cmCrypt.hash($scope.formData.pass))
                 .then(
                     function(){
                         isIdle = false;
-                        $scope.$broadcast('cmPointSpinner:cancel');
+                        $scope.stopSpinner();
+
                         $rootScope.$broadcast('cmLogin:success');
                         $location.path("/talks");
                     },
                     function(error){
                         isIdle = false;
                         $rootScope.$broadcast('cmLogin:error');
-                        $scope.$broadcast('cmPointSpinner:cancel');
+                        $scope.stopSpinner();
 
                         $scope.alertState = error.status;
                     }
@@ -66,6 +68,14 @@ function cmLogin($location, cmNotify, cmUserModel, cmCrypt) {
 
                 return true;
             };
+
+            $scope.startSpinner = function(){
+                $scope.showSpinner = true;
+            }
+
+            $scope.stopSpinner = function(){
+                $scope.showSpinner = false;
+            }
         }
     }
 }
