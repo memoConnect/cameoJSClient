@@ -186,8 +186,9 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        flatten: true,
-                        src: 'dist/**',
+                        flatten: false,
+                        cwd: 'dist',
+                        src: ['app/**'],
                         dest: 'phonegap-build/www/'                        
                     },
                     // copy all icon and splashs to /www/res
@@ -406,7 +407,8 @@ module.exports = function (grunt) {
 			                'files': {
 			                    'dist/dl/index.html': ['templates/dl-index.tpl.html']
 			                }
-		   }, 'config-webApp': {
+		   }
+		   , 'config-webApp': {
                 'options': {
                     'data': {
                         'currentApiUrl': globalCameoBuildConfig.config.apiUrl ,
@@ -416,7 +418,8 @@ module.exports = function (grunt) {
                 'files': {
                     'app/base/config.js': ['templates/config-webApp.tpl.js']
                 }
-            }, 'config-tests': {
+            }
+            , 'config-tests': {
                 'options': {
                     'data': {
                         'currentWwwUrl': globalCameoTestConfig.config.wwwUrl,
@@ -436,7 +439,7 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'phonegap-res/config.xml': ['templates/config-phonegap.tpl.xml']
+                    'phonegap-build/www/config.xml': ['templates/config-phonegap.tpl.xml']
                 }
             }
         },
@@ -542,7 +545,8 @@ module.exports = function (grunt) {
      //   'phonegap:build',
         'copy:phonegap-resources',
         'template:phonegap-index',
-		'template:dl-index',
+        'template:config-phonegap',
+        'template:dl-index',
         'compress',
         'phonegap-build:debug',
         'copy:phonegap-target'
