@@ -242,6 +242,19 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             return keys;
         }
 
+        this.hasPrivateKey = function(){
+            var keys = this.loadLocalKeys(),
+                result = false
+
+            console.log('my private keys:')
+            keys.forEach(function(key){                
+                console.log(key.getPrivateKey())
+                result = result || !!key.getPrivateKey()
+            })
+
+            return result
+        }
+
         this.clearLocalKeys = function(){
             this.storageSave('rsa', [])
         }

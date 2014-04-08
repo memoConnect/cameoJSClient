@@ -21,6 +21,11 @@ function cmLogin($location, cmNotify, cmUserModel, cmCrypt) {
                 'DumpuserLocal': {
                     user: '2VqTftqh',
                     pass: 'password'
+                },
+                
+                'TestUser': {
+                    user: 'trusting_brown',
+                    pass: 'password'
                 }
             };
 
