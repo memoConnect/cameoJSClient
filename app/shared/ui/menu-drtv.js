@@ -1,6 +1,6 @@
 'use strict';
 
-function cmMenu($window, $document, cmUserModel){
+function cmMenu($window, $document, $location, cmUserModel){
     // left: 37, up: 38, right: 39, down: 40,
     // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
     var keys = [37, 38, 39, 40];
@@ -48,12 +48,12 @@ function cmMenu($window, $document, cmUserModel){
         controller: function($scope, $element, $rootScope){
             $scope.btns = [
                 {i18n:'MENU.HEADER', icon:'cm-menu', css:'cm-menu-header'},
-                {i18n:'MENU.NOTIFICATIONS', icon:'cm-bell', css:'cm-menu-notify', href:'#/notfications'},
-                {i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify', href:'#/contacts/request'},
-                {i18n:'MENU.MESSAGES', icon:'cm-envelope-closed', css:'cm-menu-notify', href:'#/talks'},
-                {i18n:'MENU.HINTS', icon:'cm-info', css:'cm-menu-notify', href:'#/notfications/hints'},
-                {i18n:'MENU.ACTIVITY', icon:'cm-person', href:'#/settings'},
-                {i18n:'MENU.SETTINGS', icon:'cm-settings', href:'#/settings'}
+                {i18n:'MENU.NOTIFICATIONS', icon:'cm-bell', css:'cm-menu-notify', href:'/notfications'},
+                {i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify', href:'/contacts/request'},
+                {i18n:'MENU.MESSAGES', icon:'cm-envelope-closed', css:'cm-menu-notify', href:'/talks'},
+//                {i18n:'MENU.HINTS', icon:'cm-info', css:'cm-menu-notify', href:'#/notfications/hints'},
+//                {i18n:'MENU.ACTIVITY', icon:'cm-person', href:'#/settings'},
+                {i18n:'MENU.SETTINGS', icon:'cm-settings', href:'/settings'}
             ];
 
             $scope.menuVisible = false;
@@ -71,6 +71,15 @@ function cmMenu($window, $document, cmUserModel){
                     //enableScroll();
                 }
             };
+
+            $scope.goTo = function(url){
+                console.log(url)
+                if(typeof url !== 'undefined'){
+                    $location.path(url);
+                }
+
+                return false;
+            }
 
             $scope.logout = function(){
                 cmUserModel.doLogout();

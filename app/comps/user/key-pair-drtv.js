@@ -15,14 +15,15 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
             $scope.pubKey = '';
             $scope.keyName = '';
 
-            $scope.keyName = navigator.appCodeName;
+            $scope.keyName = navigator.appCodeName; //@TODO better Browser Detection
 
             /**
              * Navigation
              */
             $scope.showOwnKeys = function(){
                 $scope.active = 'showOwnKeys';
-                $scope.ownKeys = cmUserModel.loadKeys();
+                $scope.ownKeys = cmUserModel.data.identity.keys;
+                console.dir($scope.ownKeys)
             }
 
             $scope.showCreateKey = function(){
@@ -75,17 +76,18 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
                         $scope.state =
                             'Elapsed Time '+ cmUtil.millisecondsToStr(result.timeElapsed)+'\n'+
                                 'Step Count '+result.counts+'\n';
-
-                        $scope.privKey = result.privKey;
-                        $scope.pubKey = result.pubKey;
+                        
+                        $scope.privKey  = result.key.getPrivateKey()
+                        $scope.pubKey   = result.key.getPublicKey()
 
                         $scope.$emit('HIDE-SPINNER');
                         $scope.active = 'finishCreateKey';
                     },
                     function(){
-                        $scope.state = 'generation canceled';
-                        $scope.privKey = '';
-                        $scope.pubKey = '';
+                        $scope.state    = 'generation canceled';
+                        $scope.key      = undefined
+                        $scope.privKey  = '';
+                        $scope.pubKey   = '';
 
                         $scope.$emit('HIDE-SPINNER');
                         $scope.active = 'showOwnKeys';
@@ -108,31 +110,46 @@ function cmKeyPair(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
 
                 if($scope.privKey == ''){
                     error = true;
-                    cmNotify.warn('check private Key',{ttl:2000});
+                    cmNotify.warn('check private Key',{ttl:1000});
                 }
 
                 if($scope.pubKey == ''){
                     error = true;
-                    cmNotify.warn('check public Key',{ttl:2000});
+                    cmNotify.warn('check public Key',{ttl:1000});
                 }
 
                 if($scope.keyName == ''){
                     error = true;
-                    cmNotify.warn('check keyName',{ttl:2000});
+                    cmNotify.warn('check keyName',{ttl:1000});
                 }
 
                 if(error !== true){
-                    if(cmUserModel.saveKey({
-                        name: $scope.keyName,
-                        pubKey: $scope.pubKey,
-                        privKey: $scope.privKey,
-                        keySize: $scope.keySize
-                    }) !== false){
-                        cmNotify.info('Löft!',{ttl:2000})
-                    } else {
-                        cmNotify.warn('Problem!',{ttl:2000})
-                    }
+                    var key = new cmCrypt.Key()
+                    key
+                    .setName($scope.keyName)                    
+                    .setKey($scope.privKey)
+
+                    cmUserModel.saveKey(key)
+                    cmUserModel.syncLocalKeys();
+                    /*
+                    .then(
+                        function(){
+                            cmNotify.info('Done',{ttl:1000});
+                            cmUserModel.syncLocalKeys();
+                        },
+                        function(){
+                            cmNotify.warn('Error',{ttl:1000});
+                        }
+                    );
+                    */
                 }
+            }
+
+            /**
+             * sync Keys
+             */
+            $scope.syncLocalKeys = function(){
+                cmUserModel.syncLocalKeys();
             }
         }
     }

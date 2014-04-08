@@ -8,11 +8,17 @@ function cmRecipientModel (cmConversationsAdapter, cmUserModel){
         }
 
         this.sendTo = function(conversationId){
+            if(conversationId != ''){
+                cmConversationsAdapter.addRecipient(conversationId, this.id);
+            }
 
+            return this;
         }
 
         this.removeFrom = function(conversationId){
-            cmConversationsAdapter.removeRecipient()(conversationId, this.id);
+            if(conversationId != ''){
+                cmConversationsAdapter.removeRecipient()(conversationId, this.id);
+            }
 
             return this;
         }

@@ -17,14 +17,14 @@ function cmConversationFactory ($rootScope, cmConversationModel){
                     if(typeof instances[i] === 'object' &&
                         instances[i].id == data.id){
 
-                        conversation = instances[i].instance;
+                        conversation = instances[i];
                         break;
                     }
                     i++;
                 }
 
                 if(conversation === null){
-                    conversation = new cmConversationModel(data);                    
+                    conversation = new cmConversationModel(data);                                        
                     instances.push(conversation);
                 }
 

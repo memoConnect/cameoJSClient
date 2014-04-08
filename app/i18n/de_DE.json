@@ -3,7 +3,8 @@
         "SLOGAN": "Safer Communication",
         "DESCRIBE": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
         "MOEP": "moep",
-        "WELCOME": "moep"
+        "WELCOME": "moep",
+        "VERSION": "Version"
     },
 
 	"LOGIN": {
@@ -100,7 +101,6 @@
         "ERROR": {
             "EMPTY": "Bitte ein Passwort eingeben und bestätigen"
         }
-
     },
 
     "TALKS": {
@@ -108,29 +108,32 @@
         "MORE": "mehr laden"
     },
 
-    "CONVERSATION" : {
+    "CONVERSATION": {
         "HEADING": "Conversation",
-        "LABEL" : {
-            "SEND" : "abschicken",
-            "REQUEST_CAPTCHA" : "Captcha anfordern",
-            "SEND_CAPTCHA" : "Captcha senden"
+        "LABEL": {
+            "SEND": "abschicken",
+            "REQUEST_CAPTCHA": "Captcha anfordern",
+            "SEND_CAPTCHA": "Captcha senden"
         },
-        "TAG" : {
-            "RECIPIENTS" : "Empfänger",
+        "TAG": {
+            "RECIPIENTS": "Empfänger",
             "SUBJECT": "Betreff",            
             "PASSPHRASE": "Schlüssel",
-            "MESSAGES" : "Nachrichten"
+            "MESSAGES": "Nachrichten"
         },
-        "TEXT" : {
-            "REQUEST_CAPTCHA" : "Bitte ein (neues) Captcha senden."
+        "TEXT": {
+            "REQUEST_CAPTCHA": "Bitte ein (neues) Captcha senden."
         },
-        "WARN" : {
-            "MESSAGE_EMPTY" : "Das Textfeld ist leer.",
-            "RECIPIENTS_MISSING" : "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
-            "PASSPHRASE_INVALID" : "Ungültiger Schlüssel."
+        "WARN": {
+            "MESSAGE_EMPTY": "Das Textfeld ist leer.",
+            "RECIPIENTS_MISSING": "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
+            "PASSPHRASE_INVALID": "Ungültiger Schlüssel."
         },
         "PLACEHOLDER": {
-            "NO_SUBJECT": "Kein Betreff"
+            "NO_SUBJECT": "Betreff eingeben",
+            "ADD_RECIPIENTS": "Empfänger hinzufügen",
+            "INFO": "Info",
+            "PASSWORD": "Passwort"
         },
         "CONTROL": {
             "SAVE": "speichern",
@@ -140,6 +143,7 @@
 	
 	"CONTACTS": {
 		"WELCOME": "Adressbuch",
+		"HEADING": "Kontakte",
         "PLACEHOLDER": {
             "ADD_NEW_CONTACT": "geben Sie hier eine cameoId ein"
         },
@@ -156,7 +160,9 @@
         "LABEL": {
             "DISPLAYNAME": "Displayname",
             "NAME": "Vorname",
-            "SURNAME": "Nachname"
+            "SURNAME": "Nachname",
+            "SORT": "sortieren",
+            "FILTER": "filtern"
         },
         "BUTTON": {
             "RESET": "zurücksetzen",

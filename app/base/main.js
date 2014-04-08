@@ -33,6 +33,7 @@ var config = {
         'cmAuth': 'shared/cmAuth',
         'cmCrypt': 'shared/cmCrypt',
         'cmUtil': 'shared/cmUtil',
+//        'cmCron': 'shared/cmCron',
 
         'cmProfile': 'comps/cmProfile',
         //'cmConversations': 'comps/conversation/conversations-module',
@@ -85,6 +86,7 @@ var config = {
             'crypto-jsencrypt'
         ],
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
+//        'cmCron' : ['angular'],
         'cmIdentity': ['angular', 'cmAuth'],
         'cmUserModel': ['angular', 'cmLocalStorage','cmIdentity'],
         'cmApi': ['angular', 'cmLogger'],
@@ -165,6 +167,7 @@ addPackage('pckConversations',{
         'cmCrypt', 
         'cmAuth',
         'cmUtil',
+//        'cmCron',
         'cmUserModel',
         'cmIdentity',
         'pckContacts',
@@ -208,7 +211,8 @@ addPackage('pckContacts',{
         'cmApi', 
         'cmLogger', 
         'cmUtil',
-        'cmIdentity'
+        'cmIdentity',
+//        'cmCron'
     ],
     resources : [
         'comps/contacts/contactsModel-srvc',
@@ -222,8 +226,6 @@ addPackage('pckContacts',{
 
         'comps/contacts/add-external-contact-drtv',
         'comps/contacts/contact-request-list-drtv',      
-        
-        
     ]
 })
 
@@ -268,6 +270,7 @@ addPackage('pckUi',{
         'shared/ui/footer-drtv',
         'shared/ui/resize-textarea',
         'shared/ui/date-seperator-drtv',
+        'shared/ui/scroll-to-drtv'
     ]
 })
 

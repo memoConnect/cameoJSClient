@@ -57,6 +57,7 @@ angular.module('cmUi', [
 .directive('cmMenu',[
     '$window',
     '$document',
+    '$location',
     'cmUserModel',
     cmMenu
 ])
@@ -85,6 +86,11 @@ angular.module('cmUi', [
     cmDateSeperator
 ])
 
+.directive('cmScrollTo',[
+    '$timeout',
+    cmScrollTo
+])
+
 .filter('cmDigits', [
     function(){
         return function(number, digits){
@@ -97,4 +103,22 @@ angular.module('cmUi', [
             return str.match(/^[0-9\.]*$/) ? str : '0'
         }
     }
-]);
+])
+
+.filter('truncate', function () {
+    return function (text, length, end) {
+        if (isNaN(length))
+            length = 10;
+
+        if (end === undefined)
+            end = "...";
+
+        if (text.length <= length || text.length - end.length <= length) {
+            return text;
+        }
+        else {
+            return String(text).substring(0, length-end.length) + end;
+        }
+
+    };
+});

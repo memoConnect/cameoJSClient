@@ -145,7 +145,7 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt','$rootScope', fu
                 }
             }
 
-            return "undefined";
+            return undefined;
         };
         /**
          * get all keys from identity storage
@@ -221,6 +221,8 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt','$rootScope', fu
         $rootScope.$on('logout', function(){
             self.instanceId = "";
             self.instanceKey = "";
+            self.storageValue = {};
+            self.cryptKey = "";
         });
 
     }

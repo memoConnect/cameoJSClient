@@ -5,8 +5,7 @@
             <li ng-repeat="result in results">
                 <a>
                     {{result.displayName}} ({{result.cameoId}})
-                    <i class="fa fa-times pull-right" ng-click="rejectRequest(result.id);"></i>
-                    <i class="fa fa-check pull-right" ng-click="acceptRequest(result.id);"></i>
+                    <i class="fa cm-checker pull-right" ng-click="acceptRequest(result.id);"></i>
                 </a>
             </li>
         </ul>

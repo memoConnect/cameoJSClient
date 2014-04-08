@@ -3,8 +3,10 @@
         "SLOGAN": "Safer Communication",
         "DESCRIBE": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
         "MOEP": "moep",
-        "WELCOME": "moep"
+        "WELCOME": "moep",
+        "VERSION": "version"
     },
+
     "LOGIN": {
         "HEADING": "Login",
         "LABEL": {
@@ -128,7 +130,10 @@
             "PASSPHRASE_INVALID" : "Passphrase invalid."
         },
         "PLACEHOLDER": {
-            "NO_SUBJECT": "no subject"
+            "NO_SUBJECT": "add subject",
+            "ADD_RECIPIENTS": "add recipients",
+            "INFO": "info",
+            "PASSWORD": "password"
         },
         "CONTROL": {
             "SAVE": "save",
@@ -136,9 +141,9 @@
         }
     },
 
-	
 	"CONTACTS": {
 		"WELCOME": "Addressbook",
+        "HEADING": "Contacts",
         "PLACEHOLDER": {
             "ADD_NEW_CONTACT": "please insert a cameoId"
         },
@@ -155,7 +160,9 @@
         "LABEL": {
             "DISPLAYNAME": "Displayname",
             "NAME": "Name",
-            "SURNAME": "Surname"
+            "SURNAME": "Surname",
+            "SORT": "arrange",
+            "FILTER": "filter"
         },
         "BUTTON": {
             "RESET": "reset",

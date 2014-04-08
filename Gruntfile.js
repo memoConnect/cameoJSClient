@@ -431,7 +431,8 @@ module.exports = function (grunt) {
                 'options': {
                     'data': {
                         'currentName': globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName,
-                        'currentVersion': globalCameoBuildConfig.phonegap.version
+                        'currentVersion': globalCameoBuildConfig.phonegap.version,
+                        'currentAppId': globalCameoBuildConfig.phonegap.appId
                     }
                 },
                 'files': {

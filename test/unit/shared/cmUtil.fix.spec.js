@@ -10,11 +10,11 @@ describe('cmUtil', function(){
         cmUtil = _cmUtil_
     }))
 
-    it('should exists', function(){
+    it('should exist', function(){
         expect(cmUtil).toBeDefined()
     })
 
-    describe('checkKeyExists', function(){
+    describe('function "checkKeyExists"', function(){
         it('should be defined', function(){
             expect(cmUtil.checkKeyExists).toBeDefined()
         })

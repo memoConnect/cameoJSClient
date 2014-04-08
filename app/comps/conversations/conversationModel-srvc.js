@@ -1,33 +1,34 @@
 'use strict';
 
-function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmRecipientModel, $q){
+function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, $q){
     var ConversationModel = function(data){
         //Attributes:
-        this.id = '';
-        this.subject = '';
-        this.messages = [];
-        this.recipients = [];
-        this.passphrase = '';
-        this.created = '';
-        this.lastUpdated = '';
-        this.numberOfMessages = 0;
-        this.encryptedKeyList = {}
-
+        this.id = '',
+        this.subject = '',
+        this.messages = [],
+        this.recipients = [],
+        this.passphrase = '',
+        this.created = '',
+        this.lastUpdated = '',
+        this.numberOfMessages = 0,
+        this.encryptedPassphraseList = [];
+        this.keyTransmission = 'asymmetric' || 'symmetric'
         var self = this;
 
-        this.init = function (conversation_data) {
-            if(typeof conversation_data !== 'undefined'){
-                this.id             = conversation_data.id;
-                this.subject        = conversation_data.subject;
-                this.numberOfMessages   = conversation_data.numberOfMessages;
-                this.lastUpdated    = conversation_data.lastUpdated;
+        /**
+         * Conversation Handling
+         */
 
-                // register all messages as Message objects
-                if (conversation_data.messages) {
-                    conversation_data.messages.forEach(function (message_data) {
-                        self.addMessage(cmMessageFactory.create(message_data));
-                    })
-                }
+        this.init = function (conversation_data) { 
+
+            if(typeof conversation_data !== 'undefined'){
+                this.id                 = conversation_data.id;
+                this.subject            = conversation_data.subject;
+                this.numberOfMessages   = conversation_data.numberOfMessages;
+                this.lastUpdated        = conversation_data.lastUpdated;           
+
+
+                this.encryptedPassphraseList = this.encryptedPassphraseList.concat(conversation_data.encryptedPassphraseList || [])
 
                 // register all recipients as Recipient objects
                 if (conversation_data.recipients) {
@@ -35,9 +36,68 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 //                        new cmRecipientModel(cmIdentityFactory.create(item.identityId)).addTo(self);
                         self.addRecipient(new cmRecipientModel(cmIdentityFactory.create(item.identityId)));
                     })
+                }        
+
+                // register all messages as Message objects
+                if (conversation_data.messages) {
+                    conversation_data.messages.forEach(function (message_data) {
+                        self.addMessage(cmMessageFactory.create(message_data));
+                    })
                 }
             }
-        };
+        }
+
+        this.sync = function(){
+            //cmConversationsAdapter.addRecipient(this.id, identity.id)
+        }
+
+        this.save = function(){           
+
+            var deferred = $q.defer();    
+
+            console.log('save')        
+
+            if(this.id == ''){
+                if(!this.checkKeyTransmission()){
+                    console.log('STOP')
+                    deferred.reject()
+                    return deferred.promise
+                }
+
+                cmConversationsAdapter.newConversation((this.subject || '')).then(
+                    function (conversation_data) {
+                        self.init(conversation_data);
+
+                        var i = 0;
+                        while(i < self.recipients.length){
+                            cmConversationsAdapter.addRecipient(self.id, self.recipients[i].id);
+                            i++;
+                        }
+
+                        console.log('pwd: '+self.password)
+                        console.log('passph: '+self.passphrase)
+
+                        if(self.passphrase && self.checkKeyTransmission()){  
+                            console.log('encrypting...')
+
+                            self.encryptPassphrase()                        
+                            self.saveEncryptedPassphraseList()
+                            self.passphrase
+                        }
+
+                        deferred.resolve();
+                    },
+
+                    function(){
+                        deferred.reject();
+                    }
+                )
+            } else {                
+                deferred.resolve();
+            }
+
+            return deferred.promise;
+        }
 
         this.update = function(){
             if(this.id != ''){
@@ -59,42 +119,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             }
 
             return this;
-        }
-
-        this.updateMessages = function(limit, offset, clearMessages){
-            cmConversationsAdapter.getConversation(this.id, limit, offset).then(
-                function(data){
-                    if(typeof clearMessages !== 'undefined' && clearMessages !== false){
-                        self.messages = [];
-                    }
-
-                    data.messages.forEach(function(message_data) {
-                        self.addMessage(cmMessageFactory.create(message_data));
-                    });
-                }
-            )
-        }
-
-        this.encryptPassphrase = function(){
-            var success = true,
-                encryptedKeyList = [];
-
-            this.recipients.forEach(function(recipient){
-                var key_list = recipient.encryptPassphrase(self.passphrase)
-                success = success && encrypted_passphrase
-                if(success) key_list.concat(key_list)
-            })
-
-            return success ? key_list : null
-        }
-
-        this.decryptPassphrase = function(){
-            this.encryptedKeyList.forEach(function(item){
-                if(!this.passphrase){
-                    this.passphrase = cmUserModel.data.decryptPassphrase(item.encrypted_pass)
-                }
-            })
-            
         }
 
         /**
@@ -133,7 +157,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                 }
             }
 
-            if (this.passphrase) message.decrypt(this.passphrase);
+            message.decrypt(this.passphrase);
 
             return this
         };
@@ -145,9 +169,33 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             return null
         }
 
+        this.updateMessages = function(limit, offset, clearMessages){
+            cmConversationsAdapter.getConversation(this.id, limit, offset).then(
+                function(data){
+                    if(typeof clearMessages !== 'undefined' && clearMessages !== false){
+                        self.messages = [];
+                    }
+
+                    data.messages.forEach(function(message_data) {
+                        self.addMessage(cmMessageFactory.create(message_data));
+                    });
+                }
+            )
+        }
+
         /**
          * Recipient Handling
          */
+
+        this.getRecipientList = function(){
+            var list = []
+
+            this.recipients.forEach(function(recipient){
+                list.push(recipient.getDisplayName())
+            })
+
+            return list.join(', ')
+        }
 
         this.hasRecipient = function(identity){
             var check = false;          
@@ -161,29 +209,12 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
         this.addRecipient = function (identity) {
             if(identity && !this.hasRecipient(identity)){
-                this.recipients.push(identity);
+                this.recipients.push(new cmRecipientModel(identity));
             }else{
                 console.warn('Recipient already present.') //@ Todo
             }
             return this;
         };
-
-//        this.addNewRecipient = function(identity){
-//            if(identity && !this.hasRecipient(identity)){
-//                if(this.id != ''){
-//                    cmConversationsAdapter.addRecipient(this.id, identity.id).then(
-//                        function(){
-//                            self.addRecipient(identity);
-//                        }
-//                    )
-//                } else {
-//                    self.addRecipient(identity);
-//                }
-//            }else{
-//                console.warn('Recipient already present.') //@ Todo
-//            }
-//            return this;
-//        }
 
         this.removeRecipient = function (identity) {
             var i = this.recipients.length;
@@ -195,12 +226,15 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
 
                     if(this.id != ''){
                         identity.removeFrom(this.id);
-//                        cmConversationsAdapter.removeRecipient()(this.id, identity.id)
                     }
                 }
             }
             return this;
         };
+
+        /**
+         * Subject Handling
+         */
 
         this.updateSubject = function (subject) {
             if(this.id != ''){
@@ -213,12 +247,110 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             }
         };
 
+        this.getSubjectLine = function(){
+            var lastMessage = this.getLastMessage();
+            return     this.subject
+                    || (lastMessage ? lastMessage.from.getDisplayName() : false)
+                    || this.getRecipientList()
+        }
+
+        /**
+         * Crypt Handling
+         */
+
+        this.checkKeyTransmission = function(){
+            var result = true
+
+            if(this.keyTransmission == 'asymmetric' && this.getWeakestKeySize() == 0){
+                cmNotify.warn('CONVERSATION.WARN.PUBLIC_KEY_MISSING')
+                result = false
+            }
+
+
+            if(this.keyTransmission == 'asymmetric' && !cmUserModel.hasPrivateKey()){
+                cmNotify.warn('CONVERSATION.WARN.PRIVATE_KEY_MISSING')
+                result = false               
+            }
+
+            if(this.keyTransmission == 'symmetric' && this.passphrase && !this.password){
+                cmNotify.warn('CONVERSATION.WARN.PASSWORD_MISSING')
+                result = false               
+            }
+
+            console.log('check, passphrase: "'+this.passphrase+'"')
+
+            return result
+        }
+
+
+        this.setKeyTransmission = function(mode){
+            var old_mode = this.keyTransmission
+
+            this.keyTransmission = mode      
+
+            if(this.checkKeyTransmission()){
+                return true
+            } else {
+                //this.keyTransmission = old_mode
+                return false
+            }
+
+            //this.decryptPassphrase()
+            //this.decrypt()
+         }
+
+        this.encryptPassphrase = function(){                
+            this.encryptedPassphraseList = [];
+
+            if(!this.checkKeyTransmission()) return this
+
+            if(this.keyTransmission == 'asymmetric'){
+                this.recipients.forEach(function(recipient){
+                    var key_list = recipient.encryptPassphrase(self.passphrase)
+                    self.encryptedPassphraseList = self.encryptedPassphraseList.concat(key_list)            
+                })
+            }
+
+            if(this.keyTransmission == 'symmetric'){
+                self.encryptedPassphraseList = [{keyId: '_passwd', encryptedPassphrase: cmCrypt.encryptWithShortKey(self.password, self.passphrase)}]
+                console.log('gleich: '+ cmCrypt.decrypt(self.password, self.encryptedPassphraseList[0].encryptedPassphrase))
+            }
+
+            return this
+        }
+
+        this.saveEncryptedPassphraseList = function(){
+            if(
+                   this.encryptedPassphraseList
+                && this.encryptedPassphraseList.length !=0
+            ){
+                cmConversationsAdapter.updateEncryptedPassphraseList(this.id, this.encryptedPassphraseList)
+            }
+        }
+
+        this.decryptPassphrase = function(){
+            this.passphrase = ''
+            this.encryptedPassphraseList.forEach(function(item){                                
+                if(!self.passphrase){
+                    self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase) ||''
+                    if(item.keyId=="_passwd"){
+                        self.passphrase = cmCrypt.decrypt(self.password, item.encryptedPassphrase) || ''
+                    }
+                }
+            })
+         
+            return this
+        }
+
         this.setPassphrase = function (passphrase) {
             this.passphrase = passphrase
+            if(passphrase == undefined) self.passphrase = self.passphrase || cmCrypt.generatePassphrase()
+            console.log('setPP: '+self.passphrase)
             return this;
-        };
+        }
 
         this.decrypt = function () {
+            this.decryptPassphrase()
             var success = true
             if (this.passphrase) {
                 this.messages.forEach(function (message) {
@@ -229,71 +361,26 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         };
 
         this.passphraseValid = function () {
+            console.log('passphrase: '+this.passphrase)
             return !this.messages[0] || this.messages[0].decrypt(this.passphrase)
         };
 
-        this.getRecipientList = function(){
-            var list = []
-
+        this.getWeakestKeySize = function(){
+            var size = undefined
             this.recipients.forEach(function(recipient){
-                list.push(recipient.getDisplayName())
+
+                size = size != undefined ? Math.min(recipient.getWeakestKeySize(), size) : recipient.getWeakestKeySize()
             })
 
-            return list.join(', ')
-        }
-
-        this.getSubjectLine = function(){
-            var lastMessage = this.getLastMessage();
-            return     this.subject
-                    || (lastMessage ? lastMessage.from.getDisplayName() : false)
-                    || this.getRecipientList()
+            size = size || 0
+            console.log('weakest key: '+size)
+            return size
         }
 
         this.getSavetyLevel = function(){
             return this.passphraseValid() && !this.passphrase ? 0 : 1     
         }
 
-        this.sync = function(){
-            //cmConversationsAdapter.addRecipient(this.id, identity.id)
-        }
-
-        this.save = function(){
-            var deferred = $q.defer();
-
-            if(this.id == ''){
-                cmConversationsAdapter.newConversation().then(
-                    function (conversation_data) {
-                        self.init(conversation_data);
-                        console.log(self);
-
-                        var i = 0;
-                        while(i < self.recipients.length){
-                            cmConversationsAdapter.addRecipient(self.id, self.recipients[i].id);
-                            i++;
-                        }
-
-                        deferred.resolve();
-                    },
-
-                    function(){
-                        deferred.reject();
-                    }
-                )
-            } else {
-                deferred.resolve();
-            }
-
-//            cmConversationsAdapter.updateConversation(this).then(
-//                function(){
-//                    //log
-//                },
-//                function(){
-//                    //log fail
-//                }
-//            )
-
-            return deferred.promise;
-        }
 
         this.init(data);
 

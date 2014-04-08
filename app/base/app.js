@@ -4,6 +4,7 @@ define([
     'angular-cookies',
     'angular-swipe',
     // cameo files
+//    'cmCron',
     'cmLocalStorage',
     'cmApi',
     'cmAuth',
@@ -13,6 +14,7 @@ define([
     'cmLanguage',
     'cmLogger',
     'cmNotify',
+
 
     'pckUi',
     'base/config'
@@ -31,6 +33,7 @@ define([
         'cmNotify',
         'cmLogger',
         'cmLocalStorage',
+//        'cmCron',
         'cmAuth',
         'cmUserModel',
         'cmIdentity'
@@ -220,7 +223,7 @@ define([
             //Set view width e.g. 32rem
             function initScreenWidth(rem){
                 var html    = document.getElementsByTagName('html')[0],
-                    app     = document.getElementById('cm-app')
+                    app     = document.getElementById('cm-app');
 
                 //prevent screen size to change when content overflows
                 html.style.overflowY = 'scroll'                    
@@ -228,7 +231,7 @@ define([
                 var height          = window.innerHeight,
                     width           = html.offsetWidth,                      
                     landscape       = width > height,
-                    effective_width = landscape ? Math.min(height, 512) : width
+                    effective_width = landscape ? Math.min(height, 420) : width
 
                 html.style.fontSize  = (effective_width/rem) +'px'
                 app.style.maxWidth   = rem+'rem'
@@ -239,7 +242,7 @@ define([
             initScreenWidth(32)
 
             //For dev purposes only:
-            window.onresize = function() { initScreenWidth(32) }
+//            window.onresize = function() { initScreenWidth(32) }
 
         }
     ]);
