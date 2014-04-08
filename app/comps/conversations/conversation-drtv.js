@@ -28,6 +28,7 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                     function(newConversation){
                         newConversation.addRecipient(cmUserModel.data.identity);
                         $scope.init(newConversation);
+                        $scope.conversation.setPassphrase()
                     }
                 );
             }
@@ -71,6 +72,8 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
             }
 
             $scope.sendMessage = function () {
+                console.log('send message, passphrase: "'+$scope.conversation.passphrase+'"')
+
                 var passphrase_valid    = !!$scope.conversation.passphraseValid(),
                     message_empty       = !$scope.my_message_text,
                     recipients_missing  = $scope.conversation.recipients.length <= 0 //@todo mocked

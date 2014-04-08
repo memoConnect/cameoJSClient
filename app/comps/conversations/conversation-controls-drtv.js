@@ -10,16 +10,27 @@ function cmConversationControls(cmNotify){
         link: function($scope, $element, $attrs, cmConversation){
             $scope.isNew = cmConversation.isNew();
 
-            $scope.safetyLevel = 'safe';
             $scope.setLevel = function(level){
-                if(level =="safer" && $scope.conversation.getWeakestKeySize() == 0){
-                    cmNotify.error('CONVERSATION.PUBLIC_KEY_MISSING')
-                    return null
+                if(level == 'unsafe'){
+                    $scope.conversation.setPassphrase('')
+                    $scope.conversation.setKeyTransmission('symmetric')
                 }
+
+                if(level == 'safe'){
+                    $scope.conversation.setPassphrase()
+                    $scope.conversation.setKeyTransmission('symmetric')
+                }
+
+                if(level == 'safer'){
+                    $scope.conversation.setPassphrase()
+                    $scope.conversation.setKeyTransmission('asymmetric')
+                }
+                
                 $scope.safetyLevel = level;
             }
 
-            $scope.bodyVisible = $scope.isNew;
+            $scope.bodyVisible = $scope.isNew; 
+            $scope.safetyLevel = 'safer'
 
             $scope.handle = function(){
                 if($scope.bodyVisible)
