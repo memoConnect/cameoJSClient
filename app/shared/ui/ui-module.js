@@ -57,6 +57,7 @@ angular.module('cmUi', [
 .directive('cmMenu',[
     '$window',
     '$document',
+    '$location',
     'cmUserModel',
     cmMenu
 ])

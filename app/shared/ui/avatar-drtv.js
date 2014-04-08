@@ -15,7 +15,6 @@ function cmAvatar(){
             } else {
                 // normal avatar from identity
                 var identity = $scope.$eval($attrs.cmData);
-                console.log(identity)
                 // hide the complete avatar
                 if($attrs.cmView == 'hide-owner' && identity.isAppOwner){
                     $element.css('display','none');

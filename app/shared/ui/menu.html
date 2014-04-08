@@ -8,16 +8,14 @@
             <li class="cm-nose-wrapper" ng-click="handleMenu()">
                 <i class="fa cm-nose-up"></i>
             </li>
-            <li class="cm-list-group-item" ng-repeat="btn in btns" ng-class="btn.css">
+            <li class="cm-list-group-item" ng-repeat="btn in btns" ng-class="btn.css" ng-click="goTo(btn.href)">
                 <i class="fa" ng-if="btn.icon != undefined" ng-class="btn.icon"></i>
-                <a ng-if="btn.href != undefined" href="{{btn.href}}">{{btn.i18n|cmTranslate}}</a>
-                <a ng-if="btn.click != undefined" ng-click="btn.click">{{btn.i18n|cmTranslate}}</a>
-                <span ng-if="btn.click == undefined && btn.href == undefined">{{btn.i18n|cmTranslate}}</span>
+                <span>{{btn.i18n|cmTranslate}}</span>
                 <div class="clearfix"></div>
             </li>
-            <li class="cm-list-group-item">
+            <li class="cm-list-group-item" ng-click="logout()">
                 <i class="fa cm-logout"></i>
-                <a class="logout" ng-click="logout()">{{"MENU.LOGOUT"|cmTranslate}}</a>
+                <a class="logout">{{"MENU.LOGOUT"|cmTranslate}}</a>
                 <div class="clearfix"></div>
             </li>
         </ul>
