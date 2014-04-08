@@ -132,7 +132,8 @@
         "PLACEHOLDER": {
             "NO_SUBJECT": "add subject",
             "ADD_RECIPIENTS": "add recipients",
-            "INFO": "info"
+            "INFO": "info",
+            "PASSWORD": "password"
         },
         "CONTROL": {
             "SAVE": "save",

@@ -132,7 +132,8 @@
         "PLACEHOLDER": {
             "NO_SUBJECT": "Betreff eingeben",
             "ADD_RECIPIENTS": "Empfänger hinzufügen",
-            "INFO": "Info"
+            "INFO": "Info",
+            "PASSWORD": "Passwort"
         },
         "CONTROL": {
             "SAVE": "speichern",
