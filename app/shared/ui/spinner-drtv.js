@@ -14,7 +14,8 @@ function cmSpinner(){
                 opts.radius = $attrs.cmRadius;
             if($attrs.cmColor)
                 opts.color = $attrs.cmColor;
-
+            if($attrs.cmWidth)
+                opts.width = $attrs.cmWidth;
 
             var spinner = new Spinner(opts);
             var loadingContainer = angular.element($element[0].querySelector('.spinner'))[0];
