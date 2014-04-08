@@ -445,7 +445,7 @@ module.exports = function (grunt) {
             debug: {
                 options: {
                     archive: "phonegap-target/cameoNetApp.zip",
-                    "appId": "810861",
+                    "appId": "864855",
                     "user": {
                         "email": globalCameoSecrets.phonegap.email,
                         "password": globalCameoSecrets.phonegap.password
