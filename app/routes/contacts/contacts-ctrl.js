@@ -44,10 +44,8 @@ define([
             getBadges();
 
             $scope.tabs = [
-                {i18n:'BACK',icon:'fa-chevron-left',href:'#/start'},
-                {i18n:'ADD',icon:'fa-plus','default':true},
-                {i18n:'ALL',icon:'fa-group',badge:'contacts'},
-                {i18n:'REQUESTS',icon:'fa-link',badge:'friendRequests'}
+                {i18n:'ADD','default':true},
+                {i18n:'REQUESTS'}
             ];
         }
     ]);
