@@ -257,7 +257,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.checkKeyTransmission = function(){
             var result = true
 
-            console.log(checkKeyTransmission)
+            console.log('checkKeyTransm...')
 
             if(this.getWeakestKeySize() == 0 && this.mode == 'asymmetric'){
                 cmNotify.warn('CONVERSATION.WARN.PUBLIC_KEY_MISSING')
