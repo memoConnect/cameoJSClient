@@ -246,7 +246,8 @@ module.exports = function (grunt) {
             'dev-deploy': ['dist/app/less'],
             'dist-app': ['dist/app'],
             'dist': ['dist'],
-            'phonegap-target': ['phonegap-target']
+            'phonegap-target': ['phonegap-target'],
+            'phonegap-build': ['phonegap-build']
         },
 
         // unit tests
@@ -541,6 +542,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.registerTask('phonegap-bs', [
         'clean:phonegap-target',
+        'clean:phonegap-build',
         'deploy',
      //   'phonegap:build',
         'copy:phonegap-resources',
