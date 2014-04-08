@@ -11,7 +11,7 @@ function cmScrollTo($timeout){
 
                 $timeout(function(){
                     body[0].scrollTop = anchor[0].offsetTop;
-                },500);
+                },1000);
             }
 
             if($attrs.ngRepeat && $scope.$last && $attrs.cmScrollTo != ''){
