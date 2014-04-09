@@ -6,10 +6,10 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope){
         scope: true,
         transclude: true,
         //templateUrl: 'comps/contacts/contacts-list.html',
-        template: '<div ng-show="loading" class="empty-list">'+
-                    '<cm-spinner></cm-spinner>'+
-                  '</div>'+
-                  '<div ng-show="!contacts.length && !loading" class="empty-list">'+
+        template: //'<div ng-show="loadingContacts" class="empty-list">'+
+                    //'<cm-spinner></cm-spinner>'+
+                  //'</div>'+
+                  '<div ng-show="!contacts.length" class="empty-list">'+
                     '<i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}'+
                   '</div>',
 
@@ -32,10 +32,10 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope){
 
         controller: function($scope, $element, $attrs){
             cmContactsModel.on('finish:load-contacts',function(){
-                $scope.loading = false;
+                $scope.loadingContacts = false;
             });
             cmContactsModel.on('start:load-contacts',function(){
-                $scope.loading = true;
+                $scope.loadingContacts = true;
             });
 
 
