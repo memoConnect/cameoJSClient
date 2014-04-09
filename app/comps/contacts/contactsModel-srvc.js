@@ -54,6 +54,8 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
             i = 0;
 
         if(this.contacts.length < 1 && cmUserModel.isAuth() !== false){
+            this.trigger('start:load-contacts');
+
             cmContactsAdapter.getAll().then(
                 function(data){
                     while(i < data.length){

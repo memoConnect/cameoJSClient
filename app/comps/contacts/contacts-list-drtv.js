@@ -31,9 +31,11 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope){
         },
 
         controller: function($scope, $element, $attrs){
-            $scope.loading = true;
             cmContactsModel.on('finish:load-contacts',function(){
                 $scope.loading = false;
+            });
+            cmContactsModel.on('start:load-contacts',function(){
+                $scope.loading = true;
             });
 
 
