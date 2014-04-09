@@ -7,7 +7,8 @@ function cmReload($route){
         template: '<i class="fa cm-change"></i>',
         controller: function($scope, $element){
             $element.on('click',function(){
-                $route.reload();
+                //$route.reload();
+                location.reload();
             });
         }
     }
