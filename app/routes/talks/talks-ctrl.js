@@ -19,7 +19,7 @@ define([
         '$location',
         function($scope, $rootScope, cmUserModel, cmConversationsModel, cmUtil, $modal,$location) {
             $scope.loading = true;
-            cmConversationsModel.on('load',function(){
+            cmConversationsModel.on('finish:load',function(){
                 $scope.loading = false;
             });
 

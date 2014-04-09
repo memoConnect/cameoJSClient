@@ -1,8 +1,6 @@
 function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUtil, $q, $rootScope){
-    var self = this;
-    var mockContacts = ['derMicha','dasEmpu'];
-    var mockResults = ['derMicha','dasEmpu','dutscher','reimerei','rhotp'];
-    var mockRequestResults = [{cameoId:'derMicha',requestId:'qwertz1'},{cameoId:'dasEmpu',requestId:'qwerrtz2'},{cameoId:'dutscher',requestId:'qwerrtz3'},{cameoId:'reimerei',requestId:'qwerrtz4'},{cameoId:'rhotp',requestId:'qwerrtz5'}];
+    var self = this,
+        events = {};
 
     this.contacts = [];
     this.groups = [];
@@ -66,6 +64,10 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
                 },
                 function(){
                     deferred.reject();
+                }
+            ).finally(
+                function(){
+                    self.trigger('finish:load-contacts');
                 }
             )
         } else {
@@ -172,6 +174,18 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
     $rootScope.$on('logout', function(){
         resetContacts();
     });
+
+    this.on = function(event, callback){
+        events[event] = events[event] || [];
+        events[event].push(callback);
+    }
+
+    this.trigger = function(event, data){
+        events[event] = events[event] || [];
+        events[event].forEach(function(callback){
+            callback(data);
+        });
+    }
 
     init();
 }

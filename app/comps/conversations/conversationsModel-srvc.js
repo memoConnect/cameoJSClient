@@ -8,7 +8,6 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
     this.quantity = 0;
     this.limit = 10; // 5
     this.offset = 0; //13
-    this.loading;
 
     $rootScope.$on('logout', function(){
         self.conversations = [];
@@ -117,8 +116,6 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
     }
 
     this.getConversations = function (limit, offset) {
-        this.loading = true;
-
         if(typeof limit === 'undefined'){
             limit = this.limit;
         }
@@ -138,7 +135,7 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
             }
         ).finally (
             function(){
-                self.trigger('load');
+                self.trigger('finish:load');
             }
         )
     }
