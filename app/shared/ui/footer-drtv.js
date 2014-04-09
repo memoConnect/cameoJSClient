@@ -25,7 +25,7 @@ function cmFooter($location, cmTranslate){
             ];
 
             angular.forEach($scope.btns,function(btn){
-                btn.isActive = $location.$$path.search(btn.href) != -1;
+                btn.isActive = btn.href != '' && $location.$$path.search(btn.href) != -1;
             });
         }
     }
