@@ -6,7 +6,7 @@ function cmReload($route){
         scope: true,
         template: '<i class="fa cm-change"></i>',
         controller: function($scope, $element){
-            $element.on('click touchstart',function(){
+            $element.on('click',function(){
                 $route.reload();
             });
         }

@@ -24,7 +24,7 @@ function cmBack($window, $location){
                 $scope.isVisible = true;
             }
             // bind click event
-            angular.element($element[0].querySelector('.back-wrap')).bind('click touchstart', function(){
+            angular.element($element[0].querySelector('.back-wrap')).bind('click', function(){
                 // if history has more then one index
                 if($rootScope.urlHistory.length > 0 && !'plainBack' in $attrs){
                     $window.history.back();
