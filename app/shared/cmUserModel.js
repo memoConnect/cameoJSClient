@@ -170,6 +170,11 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             return this
         }
 
+        /**
+         * @todo check ob Key schon vorhanden ist?!?
+         * @param key
+         * @returns {*}
+         */
         this.saveKey = function(key){
             /*
             var deferred = $q.defer(),

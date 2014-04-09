@@ -112,7 +112,7 @@ define([
                 password: null,
                 email: null,
                 phoneNumber: null,
-                name: null,
+                displayName: null,
                 reservationSecret: null
             };
 
@@ -147,8 +147,8 @@ define([
             }
 
             // check name
-            if ($scope.registrationForm.name.$viewValue != '') {
-                data.name = $scope.registrationForm.name.$viewValue;
+            if ($scope.registrationForm.displayName.$viewValue != '') {
+                data.displayName = $scope.registrationForm.displayName.$viewValue;
             }
 
             // check agb
