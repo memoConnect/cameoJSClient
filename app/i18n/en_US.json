@@ -158,7 +158,13 @@
         "INFO": {
             "NO_RESULTS": "No cameo contacts found",
             "MORE_CHARS_NEEDED": "Please type more chars",
-            "NO_REQUESTS": "No requests exists"
+            "NO_REQUESTS": "No requests exists",
+            "REQUEST":{
+                "SENDED": "Request is sended",
+                "FAILED": "Request couldn't sended",
+                "ACCEPT": "You accept the request",
+                "REJECT": "Request is rejected"
+            }
         },
         "LABEL": {
             "DISPLAYNAME": "Displayname",

@@ -158,7 +158,13 @@
         "INFO": {
             "NO_RESULTS": "Keine cameo Kontakte gefunden",
             "MORE_CHARS_NEEDED": "Bitte geben Sie mehr Buchstaben ein",
-            "NO_REQUESTS": "Keine Anfragen vorhanden"
+            "NO_REQUESTS": "Keine Anfragen vorhanden",
+            "REQUEST":{
+                "SENDED": "Die Anfrage wurde verschickt.",
+                "FAILED": "Die Anfrage konnte nicht verschickt werden",
+                "ACCEPT": "Sie sind nun mit diesem Kontakt verbunden",
+                "REJECT": "Die Anfrage wurde ignoriert"
+            }
         },
         "LABEL": {
             "DISPLAYNAME": "Displayname",

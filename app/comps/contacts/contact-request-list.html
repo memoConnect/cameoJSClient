@@ -2,9 +2,9 @@
     <div class="row">
         <ul class="nav nav-pills nav-stacked col-sm-6">
             <li ng-repeat="result in results">
-                <a>
+                <a ng-click="acceptRequest(result)">
                     {{result.displayName}} ({{result.cameoId}})
-                    <i class="fa cm-checker pull-right" ng-click="acceptRequest(result.id);"></i>
+                    <i class="fa cm-checker pull-right"></i>
                 </a>
             </li>
             <li ng-show="!results.length" class="empty-list">

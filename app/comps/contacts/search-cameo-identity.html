@@ -17,7 +17,7 @@
     <div class="form-group" ng-show="results.length > 0">
         <ul class="nav nav-pills nav-stacked">
             <li ng-repeat="result in results">
-                <a ng-click="sendFriendRequest(result.id);">
+                <a ng-click="sendFriendRequest(result);">
                     {{result.displayName}} ({{result.cameoId}})
                     <i class="fa fa-plus pull-right"></i>
                 </a>
