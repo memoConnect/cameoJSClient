@@ -18,6 +18,11 @@ define([
         '$modal',
         '$location',
         function($scope, $rootScope, cmUserModel, cmConversationsModel, cmUtil, $modal,$location) {
+            $scope.loading = true;
+            cmConversationsModel.on('finish:load',function(){
+                $scope.loading = false;
+            });
+
             cmConversationsModel.getConversations();
 
             $scope.cmUtil = cmUtil;
