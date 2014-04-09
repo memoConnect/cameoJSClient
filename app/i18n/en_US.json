@@ -160,8 +160,8 @@
             "MORE_CHARS_NEEDED": "Please type more chars",
             "NO_REQUESTS": "No requests exists",
             "REQUEST":{
-                "SENDED": "Request is sended",
-                "FAILED": "Request couldn't sended",
+                "SENDED": "Request is send",
+                "FAILED": "Request couldn't send",
                 "ACCEPT": "You accept the request",
                 "REJECT": "Request is rejected"
             }
