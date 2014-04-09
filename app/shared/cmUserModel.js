@@ -128,7 +128,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         };
 
         this.doLogout = function(){
-            isInit = false;
+            isAuth = false;
             this.removeToken();
             $rootScope.$broadcast('logout');
             $location.path("/login");
@@ -345,7 +345,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          * @param value
          */
         this.storageSave = function(key, value){
-            if(isInit !== false && self.data.storage !== null){
+            if(isAuth !== false && self.data.storage !== null){
                 self.data.storage.save(key, value);
             }
         };
@@ -354,7 +354,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          * @param key
          */
         this.storageGet = function(key){            
-            if(isInit !== false && self.data.storage !== null){                
+            if(isAuth !== false && self.data.storage !== null){
                 return self.data.storage.get(key);
             }
 
@@ -365,7 +365,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          * @param key
          */
         this.storageRemove = function(key){
-            if(isInit !== false && self.data.storage !== null){
+            if(isAuth !== false && self.data.storage !== null){
                 self.data.storage.remove(key);
             }
         };
