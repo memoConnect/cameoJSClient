@@ -9,6 +9,7 @@ function cmLogin($location, cmNotify, cmUserModel, cmCrypt) {
         controller  :   function ($scope, $rootScope) {
             $scope.showSpinner = false;
             $scope.alertState = '';
+            $scope.passwordType = 'password';
             $scope.loginData = {
                 'Max': {
                     user: 'Max',
@@ -31,6 +32,12 @@ function cmLogin($location, cmNotify, cmUserModel, cmCrypt) {
 
             $scope.formData = {
                 autologin:'none'
+            };
+
+            $scope.handlePassword = function(){
+                $scope.passwordType = ($scope.passwordType != 'password')
+                                    ? 'password'
+                                    : 'text';
             };
 
             $scope.changeAutologin = function(){
