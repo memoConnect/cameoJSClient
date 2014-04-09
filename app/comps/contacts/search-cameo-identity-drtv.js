@@ -1,6 +1,6 @@
 'use strict';
 
-function cmSearchCameoIdentity(cmContactsModel, cmLogger){
+function cmSearchCameoIdentity(cmContactsModel, cmNotify){
     return {
         restrict: 'A',
         scope: {},
@@ -22,9 +22,6 @@ function cmSearchCameoIdentity(cmContactsModel, cmLogger){
                 .then(
                     function(data){
                         $scope.results = data;
-                    },
-                    function(){
-
                     }
                 );
                 return true;
@@ -34,17 +31,18 @@ function cmSearchCameoIdentity(cmContactsModel, cmLogger){
              * Send friendship via model to api
              * @param id
              */
-            $scope.sendFriendRequest = function(id){
-                // TODO: Notification
-                if(angular.isDefined(id)){
+            $scope.sendFriendRequest = function(item){
+                if(angular.isDefined(item.id)){
                     cmContactsModel
-                    .sendFriendRequest(id)
+                    .sendFriendRequest(item.id)
                     .then(
                         function(){
-                            cmLogger.debug("FriendRequest success");
+                            var index = $scope.results.indexOf(item);
+                            $scope.results.splice(index,1);
+                            cmNotify.success('CONTACTS.INFO.REQUEST.SENDED');
                         },
                         function(){
-                            cmLogger.debug("FriendRequest error");
+                            cmNotify.error('CONTACTS.INFO.REQUEST.FAILED');
                         }
                     )
                 }

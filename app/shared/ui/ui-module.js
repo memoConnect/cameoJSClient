@@ -91,6 +91,11 @@ angular.module('cmUi', [
     cmScrollTo
 ])
 
+.directive('cmReload',[
+    '$route',
+    cmReload
+])
+
 .filter('cmDigits', [
     function(){
         return function(number, digits){

@@ -1,55 +1,63 @@
 cm-header{
-    display:block;
-    position:fixed;
-    top:0;
-    z-index:10;
-    height:@cm-header-height;
-    width:@cm-app-width;
-    color:@cm-white;
-    background:@cm-bg-color;  
-    line-height:@cm-header-height;
-    font-size:@cm-large-font;
-    white-space: nowrap;
+  display:block;
+  position:fixed;
+  top:0;
+  z-index:10;
+  height:@cm-header-height;
+  width:@cm-app-width;
+  color:@cm-white;
+  background:@cm-bg-color;
+  line-height:@cm-header-height;
+  font-size:@cm-large-font;
+  white-space:nowrap;
 
-    > *{
-      vertical-align: middle;
-    }
+  > *{
+    vertical-align: middle;
+  }
 
-    cm-back{
-      .with-cursor;
-      text-align:left;
-      position:relative;
-      z-index:1;
-      .back-wrap{
-        text-overflow:ellipsis;
-        overflow:hidden;
-      }
-      i {
-        margin-left: 0.2rem;
-        margin-right: 0.5rem;
-        vertical-align: text-bottom;
-      }
-      span {
-        position: relative;
-      }
-      &.overblend-avatar{
-        .back-wrap{
-          position:relative;
-          width:3em;
-        }
-      }
-    }
-
-    cm-identity{
-      .with-cursor;
-      color:@cm-white;
-      text-overflow: ellipsis;
+  cm-back{
+    .with-cursor;
+    text-align:left;
+    position:relative;
+    z-index:1;
+    .back-wrap{
+      text-overflow:ellipsis;
       overflow:hidden;
-      white-space: nowrap;
-      text-align: left;
     }
+    i {
+      margin-left:0.2rem;
+      margin-right:0.5rem;
+      vertical-align:text-bottom;
+    }
+    span {
+      position: relative;
+      font-size:0.8em;
+    }
+    &.overblend-avatar{
+      .back-wrap{
+        position:relative;
+        width:3em;
+      }
+    }
+  }
 
-    cm-logo{
-      color:@cm-ci-color;
-    }
+  cm-identity{
+    .with-cursor;
+    color:@cm-white;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+    text-align:left;
+    position:relative;
+    top:-0.15em;
+    font-size:0.8em;
+  }
+
+  cm-logo{
+    color:@cm-ci-color;
+  }
+
+  cm-reload{
+    text-align:right;
+  }
 }

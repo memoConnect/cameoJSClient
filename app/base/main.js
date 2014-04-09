@@ -270,7 +270,8 @@ addPackage('pckUi',{
         'shared/ui/footer-drtv',
         'shared/ui/resize-textarea',
         'shared/ui/date-seperator-drtv',
-        'shared/ui/scroll-to-drtv'
+        'shared/ui/scroll-to-drtv',
+        'shared/ui/reload-drtv'
     ]
 })
 

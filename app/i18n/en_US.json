@@ -106,7 +106,8 @@
 
     "TALKS": {
         "HEADING": "Talks",
-        "MORE": "load more"
+        "MORE": "load more",
+        "LIST_EMPTY": "No talks exists"
     },
 
     "CONVERSATION" : {
@@ -145,6 +146,7 @@
 	"CONTACTS": {
 		"WELCOME": "Addressbook",
         "HEADING": "Contacts",
+        "LIST_EMPTY": "No contacts exists",
         "PLACEHOLDER": {
             "ADD_NEW_CONTACT": "please insert a cameoId"
         },
@@ -156,7 +158,13 @@
         "INFO": {
             "NO_RESULTS": "No cameo contacts found",
             "MORE_CHARS_NEEDED": "Please type more chars",
-            "NO_CONTACTS": "No contacts exists"
+            "NO_REQUESTS": "No requests exists",
+            "REQUEST":{
+                "SENDED": "Request is sended",
+                "FAILED": "Request couldn't sended",
+                "ACCEPT": "You accept the request",
+                "REJECT": "Request is rejected"
+            }
         },
         "LABEL": {
             "DISPLAYNAME": "Displayname",

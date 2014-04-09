@@ -1,9 +1,9 @@
 <cm-header cm-rubber-space>
-    <cm-back     cm-weight="1" back-to="/talks"></cm-back>
-    <cm-identity cm-weight="10" ></cm-identity>
-    <cm-logo     cm-weight="8" ></cm-logo>
-    <div         cm-weight="8" ></div>
-    <cm-menu     cm-weight="2" ></cm-menu>
+    <cm-back cm-weight="1" back-to="/talks"></cm-back>
+    <cm-identity cm-weight="10"></cm-identity>
+    <cm-logo cm-weight="8"></cm-logo>
+    <cm-reload cm-weight="8"></cm-reload>
+    <cm-menu cm-weight="2"></cm-menu>
 </cm-header>
 
 <section ng-controller="ContactsCtrl">
@@ -36,14 +36,19 @@
         </cm-contact-tag>
     </cm-contacts-list>
 
+    <div ng-show="!contacts.length" class="empty-list">
+        <i class="fa cm-info"></i> {{'CONTACTS.LIST_EMPTY'|cmTranslate}}
+    </div>
+
     <!--old friend request-->
-    <div style="background:white">
+    <div style="background:white;margin-top:1em;padding:1em">
         <div cm-nav-tabs></div>
+        <br >
 
         <div ng-if="activeTab == 'ADD'">
             <div cm-search-cameo-identity></div>
 
-            <div cm-add-external-contact></div>
+            <div cm-add-external-contact ng-hide="true"></div>
         </div>
 
         <div cm-contact-request-list ng-if="activeTab == 'REQUESTS'"></div>

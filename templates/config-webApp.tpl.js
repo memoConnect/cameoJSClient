@@ -16,7 +16,8 @@ cameo_config = {
             hasCtrl: true
         },
         'settings': {
-            hasCtrl: true
+            hasCtrl: true,
+            css: 'no-footer'
         },
         'talks': {
             hasCtrl: true
