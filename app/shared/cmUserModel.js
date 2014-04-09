@@ -13,7 +13,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
 
     function(cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, $rootScope, $q, $location){
         var self = this,
-            isInit = false;
+            isAuth = false,
+            initialize = ''; // empty, run, done ! important for isAuth check
 
         var dataModel = {
             isActive: false,
@@ -34,65 +35,65 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         this.comesFromRegistration = false;
 
         
-        this.init = function(identity_data){            
-            if(typeof identity_data !== 'undefined'){                
-                var identity = cmIdentityFactory.create(identity_data);
+        this.init = function(identity_data){
+            initialize = 'run';
 
-                angular.extend(self.data, identity);
-
-                self.data.identity = identity;
-                self.data.identity.isAppOwner = true;
-
-                //self.data.identity.keys = identity.publicKeys; // kunstgriff sprintende 5
-
-                isInit = true;
-                self.initStorage();                
-                self.syncLocalKeys();                
-
-            } else if(self.isAuth() !== false){
-                this.loadIdentity().then(
-                    function(){
-                        isInit = true;
-                        self.initStorage();
-                        self.syncLocalKeys();
-                    }
-                );
-            }
-        }
-
-        this.loadIdentity = function(){
-            var deferred = $q.defer(),
-                identity;
-
-            cmAuth.getIdentity().then(
-
-                function(data){
-                    identity = cmIdentityFactory.create(data);
-
+            this.loadIdentity(identity_data).then(
+                function(identity){
                     angular.extend(self.data, identity);
 
                     self.data.identity = identity;
                     self.data.identity.isAppOwner = true;
 
-                    //self.data.identity.keys = identity.publicKeys; // @todo kunstgriff sprintende 5
+                    isAuth = true;
+                    self.initStorage();
+                    self.syncLocalKeys();
 
-                    self.data.isActive = true;
-
-                    deferred.resolve();
+                    initialize = 'done';
                 },
-
                 function(){
-                    deferred.reject();
+                    // negative
+                    initialize = 'done';
                 }
-            );
+            )
+
+            return this;
+        };
+
+        this.loadIdentity = function(identity_data){
+            var deferred = $q.defer();
+
+            if(typeof identity_data !== 'undefined'){
+                deferred.resolve(cmIdentityFactory.create(identity_data));
+            } else {
+                cmAuth.getIdentity().then(
+                    function(data){
+                        deferred.resolve(cmIdentityFactory.create(data));
+                    },
+
+                    function(){
+                        deferred.reject();
+                    }
+                );
+            }
 
             return deferred.promise;
-        }
+        };
 
         this.data = angular.extend({}, dataModel);
 
         this.isAuth = function(){
-            return this.getToken();
+            if(this.getToken() !== false){
+                // do identity request for checking token
+                if(isAuth !== true){
+                    // check ob identity loading runs
+                    if(initialize == 'run'){
+
+                    }
+                }
+            }
+
+            return false;
         };
 
         this.setIdentity = function(identity_data){
