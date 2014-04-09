@@ -260,5 +260,11 @@
         "ACTIVITY": "Aktivity",
         "SETTINGS": "Einstellungen",
         "LOGOUT": "Logout"
+    },
+
+    "NOTIFY": {
+      "KEYS":{
+          "STORE_NEW": "Schlüssel erfolgreich gespeichert!"
+      }
     }
 }
