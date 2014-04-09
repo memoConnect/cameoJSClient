@@ -8,21 +8,22 @@ var config = require('./config-e2e-tests.js'),
 module.exports = {}
 module.exports[testName] =  function (test) {
     console.log('## '+testName)
-    console.log("userNameValue: " + userNameValue)
-    console.log("passwordValue: " + passwordValue)
-    console.log("wwwUrl: " + wwwUrl)
+    console.log("\tuserNameValue: " + userNameValue)
+    console.log("\tpasswordValue: " + passwordValue)
+    console.log("\twwwUrl: " + wwwUrl)
 
     test
+        // safe logout
         .open(config.wwwUrl+"#/logout")
-        .wait(500)
+        .wait(config.routeTimeout)
+
+        // start page
         .open(wwwUrl)
-        //.waitForElement('button[ng-click="goToReg()"]')
-        .resize({width: 750, height: 1200})
-        .wait(1000)
+        .wait(config.routeTimeout)
+        .resize(config.screenDimensions)
+
+        // open login modal
         .click('button[ng-click="open()"]')
-        //wating until login page is loaded
-        .waitForElement('[ng-controller="LoginCtrl"]')
-        .wait(1000)
 
         // test incomplete login begin
         /*.type('input[name="user"]', userNameValue)
@@ -46,13 +47,17 @@ module.exports[testName] =  function (test) {
         .click('button[data-qa="login-submit-btn"]')
         // test successfull login end
 
-        // waiting until first page ist loaded
-        .wait(1000)
-        .waitForElement('ng-controller="ConversationsCtrl"')
-        .assert.url(wwwUrl + '#/talks', 'login not successfull')
+        // talks
+        .wait(config.routeTimeout+500)
+        .assert
+            .url(wwwUrl + '#/talks', 'login not successfull')
+
+        // for human viewable route changeing
+        .wait(2000)
+
+        // do logout
         .open(wwwUrl+"#/logout")
-        .waitForElement('[ng-controller="LoginCtrl"]')
-    .done().fin(function(){
-        console.log('---done---')
-    })
+            .wait(config.test)
+
+    .done()
 }

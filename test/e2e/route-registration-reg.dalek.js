@@ -7,25 +7,23 @@ var config = require("./config-e2e-tests.js"),
 module.exports = {}
 module.exports[testName] = function (test) {
     console.log('## '+testName)
-    console.log("userNameValue: "+userNameValue)
-    console.log("passwordValue: "+passwordValue)
-    console.log("Path: " + wwwUrl)
+    console.log("\tuserNameValue: "+userNameValue)
+    console.log("\tpasswordValue: "+passwordValue)
+    console.log("\tPath: " + wwwUrl)
 
     test
+        // safe logout
         .open(config.wwwUrl+"#/logout")
-        .wait(500)
-        .open(wwwUrl)
-        //.waitForElement('button[ng-click="goToReg()"]')
-        .resize({width: 750, height: 1200})
+        .wait(config.routeTimeout)
 
-//            .waitFor(function () {
-//                return window._route.status === 'success';
-//            }, 'check bla blubb', 500)
-        .wait(1000)
+        // start page
+        .open(wwwUrl)
+        .wait(config.routeTimeout)
+        .resize(config.screenDimensions)
+
+        // to registration
         .click('button[ng-click="goToReg()"]')
-        //wating unti reg page is loaded
-        .waitForElement('button[ng-click="createUser()"]')
-        .wait(1000)
+        .wait(config.routeTimeout)
 
         // registration
         .type('input[name="loginName"]', userNameValue)
@@ -40,16 +38,19 @@ module.exports[testName] = function (test) {
 //                .val('input[name="cameoId"]', cameoIdValue, 'cameoId has no valid value')
         .end()
         .click('i[ng-click="acceptTerms()"]')
-        .wait(500)
-        .click('button[ng-click="createUser()"]')
-        // waiting until first page ist loaded
-        .wait(500)
-        .assert.url(wwwUrl + '#/talks', 'redirect to talks not successfull')
-        .wait(500)
+        .click('#registerUserButton')
+
+        // redirect to talks after registration successful
+        .wait(config.routeTimeout)
+        .assert
+            .url(wwwUrl + '#/talks', 'redirect to talks not successfull')
+
+        // for human viewable route changeing
+        .wait(2000)
+
+        // logout
         .open(wwwUrl+"#/logout")
-        .waitForElement('[ng-controller="LoginCtrl"]')
-        .wait(500)
-    .done().fin(function(){
-        console.log('---done---')
-    })
+        .wait(config.routeTimeout)
+
+    .done()
 }
