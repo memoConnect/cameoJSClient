@@ -31,7 +31,7 @@
         "LINK" : "registrieren",
         "LABEL": {
             "SUBMIT": "Benutzerkonto anlegen",
-            "USERNAME": "Benutzername",
+            "USERNAME": "Nutzername",
             "NAME": "Anzeigename",
             "TERMS": " die AGB",
             "TERMS_ACCEPT": "Ich akzeptiere"
@@ -44,11 +44,12 @@
             "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden.",
             "TERMS": "Bitte AGB akzeptieren.",
             "EMPTY": {
-                "USERNAME": "Bitte geben Sie einen Benutzernamen an.",
                 "PASSWORD": "Bitte geben Sie ein Passwort ein."
             },
             "USERNAME": {
-                "EXISTS": "Username ist bereits vergeben. Bitte wählen Sie einen anderen."
+                "EXISTS": "Der Nutzername ist bereits vergeben. Bitte wählen Sie einen anderen.",
+                "EMPTY": "Bitte geben Sie einen Nutzername an.",
+                "INVALID": "Der Nutzername ist nicht valide. Vermeiden Sie Leerzeichen."
             }
         },
         "TITLE": {

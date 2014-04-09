@@ -115,7 +115,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
                 this.userType               = identity_data.userType
                 this.created                = identity_data.created
                 this.lastUpdated            = identity_data.lastUpdated 
-                this.keys                   = []   
+                this.keys                   = []
 
                 identity_data.publicKeys = identity_data.publicKeys || []
                 identity_data.publicKeys.forEach(function(publicKey_data){                      

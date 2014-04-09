@@ -13,10 +13,6 @@ angular.module('cmCrypt', ['cmLogger'])
             crypt: null
         };
 
-
-        
-
-
         return {
             /**
              * this method calculates a secure hash

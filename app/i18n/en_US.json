@@ -44,11 +44,12 @@
             "MIN_LETTER_COUNT": "Please use at least {{count}} letters.",
             "TERMS": "Confirm terms!",
             "EMPTY": {
-                "USERNAME": "Please insert a Username.",
                 "PASSWORD": "Please insert a Password."
             },
             "USERNAME": {
-                "EXISTS": "Username exists! Please choose an other."
+                "EXISTS": "Username exists! Please choose an other.",
+                "EMPTY": "Please insert a username.",
+                "INVALID": "Username is'nt valid. Avoid Spaces."
             }
         },
         "TITLE": {

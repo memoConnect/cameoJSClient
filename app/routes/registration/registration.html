@@ -13,18 +13,21 @@
             <h4>{{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}</h4>
 
             <div class="cm-input-ctn" ng-class="{'cm-input-error':showLoginNameCheckError, 'cm-input-error':showLoginNameEmptyError}" data-qa="form-input">
-                <input id="loginName" name="loginName" ng-class="{'cm-input-error':showLoginNameCheckError, 'cm-input-error':showLoginNameEmptyError}" type="text"  ng-model="formData.loginName" ng-blur="checkLoginName();" ng-minlength="6" ng-maxlength="20" maxlength="20" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}} *" required />
+                <input id="loginName" name="loginName" ng-class="{'cm-input-error':showLoginNameCheckError, 'cm-input-error':showLoginNameEmptyError}" type="text"  ng-model="formData.loginName" ng-keyup="verifyLoginName();" ng-minlength="6" ng-maxlength="20" maxlength="20" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}} *" required />
             </div>
             <div class="cm-alert" ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid">
-                <div ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid && registrationForm.loginName.$error.minlength">
+                <div ng-show="invalidLoginName()">
                     <i class="fa cm-info"></i>{{'REGISTER.INFO.MIN_LETTER_COUNT' | cmTranslate : {count: 6} }}
                 </div>
             </div>
-            <div class="cm-alert" ng-show="showLoginNameCheckError">
-                <i class="fa cm-info"></i>{{'REGISTER.INFO.USERNAME.EXISTS' | cmTranslate}}
+            <div class="cm-alert" ng-show="showError.LoginNameExists">
+                <i class="fa cm-info"></i>{{'REGISTER.INFO.USERNAME.EXISTS'|cmTranslate}}
             </div>
-            <div class="cm-alert" ng-show="showLoginNameEmptyError">
-                <i class="fa cm-info"></i>{{'REGISTER.INFO.EMPTY.USERNAME' | cmTranslate}}
+            <div class="cm-alert" ng-show="showError.LoginNameEmpty">
+                <i class="fa cm-info"></i>{{'REGISTER.INFO.USERNAME.EMPTY'|cmTranslate}}
+            </div>
+            <div class="cm-alert" ng-show="showError.LoginNameInvalid">
+                <i class="fa cm-info"></i>{{'REGISTER.INFO.USERNAME.INVALID'|cmTranslate}}
             </div>
 
             <div cm-password data-parent-item="formData.password"></div>
@@ -34,7 +37,7 @@
             <h4>{{'REGISTER.TITLE.HEAD_IDENTITY' | cmTranslate}}</h4>
 
             <div class="cm-input-ctn" data-qa="form-input">
-                <input id="name" name="name" type="text" placeholder="{{'REGISTER.PLACEHOLDER.NAME'|cmTranslate}}" ng-model="formData.name" />
+                <input id="displayName" name="displayName" type="text" placeholder="{{'REGISTER.PLACEHOLDER.NAME'|cmTranslate}}" ng-model="formData.displayName" />
             </div>
 
             <div class="cm-input-ctn" ng-class="{'cm-input-error':registrationForm.email.$invalid}" data-qa="form-input">

@@ -217,7 +217,7 @@ function($injector){
                 },
 
                 function(response){                                            
-                    cmLogger.error('Api call failed: \n '+config.method+' '+config.url, response)
+//                    cmLogger.error('Api call failed: \n '+config.method+' '+config.url, response)
 //                    window.location.href='#/server_down' //@ Todo
                     //error messages should come trough backend
                     deferred.reject(response)                                        
