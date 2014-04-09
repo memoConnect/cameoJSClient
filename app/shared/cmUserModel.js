@@ -36,8 +36,6 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
 
         
         this.init = function(identity_data){
-            initialize = 'run';
-
             this.loadIdentity(identity_data).then(
                 function(identity){
                     angular.extend(self.data, identity);
@@ -48,12 +46,11 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
                     isAuth = true;
                     self.initStorage();
                     self.syncLocalKeys();
-
-                    initialize = 'done';
                 },
-                function(){
-                    // negative
-                    initialize = 'done';
+                function(response){
+                    if(response.status == 401){
+                        self.doLogout();
+                    }
                 }
             )
 
@@ -71,8 +68,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
                         deferred.resolve(cmIdentityFactory.create(data));
                     },
 
-                    function(){
-                        deferred.reject();
+                    function(response){
+                        deferred.reject(response);
                     }
                 );
             }
@@ -82,18 +79,22 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
 
         this.data = angular.extend({}, dataModel);
 
+        /**
+         * @todo more better logic pls^^
+         * @returns {*}
+         */
         this.isAuth = function(){
-            if(this.getToken() !== false){
-                // do identity request for checking token
-                if(isAuth !== true){
-                    // check ob identity loading runs
-                    if(initialize == 'run'){
+//            if(this.getToken() !== false){
+//                // do identity request for checking token
+//                if(isAuth !== true){
+//                    // check ob identity loading runs
+//                    if(initialize == 'done'){
+//
+//                    }
+//                }
+//            }
 
-                    }
-                }
-            }
-
-            return false;
+            return this.getToken();
         };
 
         this.setIdentity = function(identity_data){
