@@ -377,8 +377,21 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             return size
         }
 
-        this.getSavetyLevel = function(){
-            return this.passphraseValid() && !this.passphrase ? 0 : 1     
+        this.getSafetyLevel = function(){
+            var level = 0;
+
+            if(this.encryptedPassphraseList.length >= 1 && this.encryptedPassphraseList[0].keyId != "_passwd"){
+                level = 2
+            }else{
+                if(this.encryptedPassphraseList.length == 1 && this.encryptedPassphraseList[0].keyId == "_passwd"){                    
+                    level = 1
+                }else{
+                    level = 0
+                }
+            }
+
+
+            return level
         }
 
 
