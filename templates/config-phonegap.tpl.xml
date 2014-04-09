@@ -38,7 +38,7 @@
     <preference name="BackgroundColor" value="0x02BED2"/>
     <preference name="KeepRunning" value="true"/>
     <preference name="DisallowOverscroll" value="true"/>
-    <preference name="LoadingDialog" value=","/>
+    <preference name="LoadingDialog" value=""/>
     <preference name="LoadUrlTimeoutValue" value="20000" />
     <preference name="disable-cursor" value="true" />
 
