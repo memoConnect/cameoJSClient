@@ -28,6 +28,7 @@ cmConversations.factory('cmConversationModel',[
     'cmRecipientModel',
     'cmNotify',
     '$q',
+    '$rootScope',
     cmConversationModel
 ]);
 

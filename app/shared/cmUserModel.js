@@ -184,11 +184,10 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
                 i = 0,
                 check = false;
             */
-            
             var key_list      =  this.loadLocalKeys() || [],
                 key_data_list = []
 
-            key_list.forEach(function(local_key){                
+            key_list.forEach(function(local_key){
                 var data = local_key.exportData()
                 key_data_list.push(data)                
             })
@@ -299,7 +298,6 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             return this;
         };
 
-
         this.decryptPassphrase = function(encrypted_passphrase){
             var keys = this.loadLocalKeys() || [],
                 decrypted_passphrase
@@ -311,8 +309,6 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             })
             return decrypted_passphrase
         }
-
-
 
         /**
          * Token Functions

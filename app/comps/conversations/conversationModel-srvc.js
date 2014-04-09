@@ -1,6 +1,6 @@
 'use strict';
 
-function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, $q){
+function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, $q, $rootScope){
     var ConversationModel = function(data){
         //Attributes:
         this.id = '',
@@ -14,6 +14,11 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.encryptedPassphraseList = [];
         this.keyTransmission = 'asymmetric' || 'symmetric'
         var self = this;
+
+        $rootScope.$on('logout', function(){
+            self.messages = [];
+            self.recipients = [];
+        });
 
         /**
          * Conversation Handling

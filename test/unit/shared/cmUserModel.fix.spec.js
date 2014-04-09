@@ -113,7 +113,7 @@ describe('cmUserModel', function(){
 
             var privateKey = ''
 
-            cmUserModel.loadLocalKeys().forEach(function(key){                
+            cmUserModel.loadLocalKeys().forEach(function(key){
                 if(key.id == 'my_good_key') privateKey = key.getPrivateKey()
             })
 
