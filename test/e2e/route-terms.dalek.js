@@ -5,15 +5,19 @@ module.exports = {}
 module.exports[testName] = function(test){
     console.log('## '+testName)
     test
-        .open(config.wwwUrl+'#/terms')
+        .open(config.wwwUrl+'#/logout')
+        .wait(config.routeTimeout)
+
         // terms
-        .wait(2000)// wait for otherwise
+        .open(config.wwwUrl+'#/terms')
+        .wait(config.routeTimeout)// wait for otherwise
         .assert
             .url(config.wwwUrl+'#/terms', 'on route terms')
-        .assert
+
+        .assert.chain()
             .text('.cm-page-body')
                 .is.not('', 'terms are full of paragraphs')
-    .done().fin(function(){
-        console.log('---done---')
-    })
+        .end()
+
+    .done()
 }

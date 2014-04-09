@@ -6,12 +6,13 @@ module.exports[testName] = function(test){
     console.log('## '+testName)
     test
         .open(config.wwwUrl+"#/logout")
-        .wait(500)
+        .wait(config.routeTimeout)
+
         .open(config.wwwUrl+"#/moep")
-        .wait(1000)
+        .wait(config.routeTimeout)
+
         .assert
             .url(config.wwwUrl+'#/login', 'on route login')
-    .done().fin(function(){
-        console.log('---done---')
-    })
+
+    .done()
 }
