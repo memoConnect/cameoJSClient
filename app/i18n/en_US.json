@@ -252,5 +252,11 @@
         "ACTIVITY": "Activity",
         "SETTINGS": "Settings",
         "LOGOUT": "Logout"
+    },
+
+    "NOTIFY": {
+        "KEYS":{
+            "STORE_NEW": "Key saved!"
+        }
     }
 }

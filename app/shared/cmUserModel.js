@@ -197,7 +197,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
 
             this.storageSave('rsa', key_data_list)
 
-            cmNotify.info('Keys was saved',{ttl:1000}); //TODO
+            cmNotify.info('NOTIFY.KEYS.STORE_NEW',{ttl:1000}); //TODO
             /*
             if(
                    typeof tmpKeys !== undefined 
