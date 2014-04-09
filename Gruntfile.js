@@ -187,8 +187,8 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         flatten: false,
-                        cwd: 'dist',
-                        src: ['app/**'],
+                        cwd: 'dist/app',
+                        src: ['**'],
                         dest: 'phonegap-build/www/'                        
                     },
                     // copy all icon and splashs to /www/res
@@ -540,7 +540,7 @@ module.exports = function (grunt) {
     // phonegap to build server
     grunt.loadNpmTasks('grunt-phonegap-build');
     grunt.loadNpmTasks('grunt-contrib-compress');
-    grunt.registerTask('phonegap-bs', [
+    grunt.registerTask('phonegap-bs',[
         'clean:phonegap-target',
         'clean:phonegap-build',
         'deploy',
