@@ -6,6 +6,9 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope){
         scope: true,
         transclude: true,
         //templateUrl: 'comps/contacts/contacts-list.html',
+        template: '<div ng-show="!contacts.length" class="empty-list">'+
+                    '<i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}'+
+                  '</div>',
 
         link: function(scope, element, attrs, controller, transclude){
 

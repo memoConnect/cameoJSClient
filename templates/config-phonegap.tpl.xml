@@ -11,16 +11,16 @@
     <content src="index.html" />
 
     <preference name="phonegap-version" value="3.3.0" />
-    <preference name="orientation" value="default" />
-    <preference name="fullscreen" value="true" />
+    <preference name="orientation" value="portrait" />
+    <preference name="fullscreen" value="false" />
     <preference name="target-device" value="universal" />
-    <preference name="webviewbounce" value="true" />
+    <preference name="webviewbounce" value="false" />
     <preference name="prerendered-icon" value="true" />
     <preference name="stay-in-webview" value="true" />
     <preference name="ios-statusbarstyle" value="default" />
     <preference name="detect-data-types" value="true" />
     <preference name="exit-on-suspend" value="true" />
-    <preference name="show-splash-screen-spinner" value="true" />
+    <preference name="show-splash-screen-spinner" value="false" />
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="EnableViewportScale" value="true" />
     <preference name="MediaPlaybackRequiresUserAction" value="true" />
