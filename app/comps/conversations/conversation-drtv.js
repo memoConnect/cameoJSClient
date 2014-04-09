@@ -1,6 +1,6 @@
 'use strict';
 
-function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location) {
+function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location, $rootScope) {
     return {
         restrict: 'AE',
         templateUrl: 'comps/conversations/conversation.html',
@@ -160,6 +160,11 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                     return true;
                 }
                 return false;
+            }
+
+            $scope.manageRecipients = function(){
+                $rootScope.pendingConversation = $scope.conversation
+                $location.path('/recipients')
             }
         }
     }

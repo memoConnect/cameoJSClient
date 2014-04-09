@@ -103,6 +103,7 @@ cmConversations.directive('cmConversation', [
     'cmLogger',
     'cmNotify',
     '$location',
+    '$rootScope',
     cmConversation
 ])
 

@@ -13,13 +13,16 @@
             <div class="recipients-list">
                 <cm-avatar cm-data="recipient" cm-with-name="true" cm-view="hide-owner" ng-repeat="recipient in conversation.recipients"></cm-avatar>
 
-                <div ng-if="conversation.recipients.length == 1" ng-click="$emit('cmOverlay:show', 'add-recipients')" class="add-recipients">
-                    <cm-avatar cm-view="none"></cm-avatar>
-                    {{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS'|cmTranslate}}
-                    <cm-edge><i class="fa cm-add"></i></cm-edge>
-                </div>
-
-                <cm-edge ng-if="conversation.recipients.length > 1" ng-click="$emit('cmOverlay:show', 'add-recipients')"><i class="fa cm-add"></i></cm-edge>
+                <a href="#/recipients" ng-if="conversation.recipients.length == 1">
+                    <div class="add-recipients">
+                        <cm-avatar cm-view="none"></cm-avatar>
+                        {{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS'|cmTranslate}}
+                        <cm-edge><i class="fa cm-add"></i></cm-edge>
+                    </div>
+                </a>
+                <a href="#/recipients">
+                    <cm-edge ng-if="conversation.recipients.length > 1"><i class="fa cm-add"></i></cm-edge>
+                </a>
             </div>
         </div>
 
@@ -80,6 +83,7 @@
     </div>
 </div>
 
+<!--
 <cm-overlay id="add-recipients">
     <div ng-click="$emit('cmOverlay:hide', 'add-recipients')">
         <i class="fa cm-close fa-2x pull-right"></i>
@@ -93,3 +97,4 @@
         </cm-contact-tag>
     </cm-contacts-list>
 </cm-overlay>
+-->
