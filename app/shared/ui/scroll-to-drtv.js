@@ -7,11 +7,13 @@ function cmScrollTo($timeout){
 
             function initTimeout(){
                 var anchor = angular.element(document.querySelector($attrs.cmScrollTo)),
-                    body = angular.element(document.querySelector('body'));
+                    body = angular.element(document.querySelector('body')),
+                    html = angular.element(document.querySelector('html'));
 
                 $timeout(function(){
                     body[0].scrollTop = anchor[0].offsetTop;
-                },1000);
+                    html[0].scrollTop = anchor[0].offsetTop;
+                },1500);
             }
 
             if($attrs.ngRepeat && $scope.$last && $attrs.cmScrollTo != ''){

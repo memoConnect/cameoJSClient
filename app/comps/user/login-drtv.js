@@ -11,10 +11,6 @@ function cmLogin($location, cmNotify, cmUserModel, cmCrypt) {
             $scope.alertState = '';
             $scope.passwordType = 'password';
             $scope.loginData = {
-                'Max': {
-                    user: 'Max',
-                    pass: 'max.mustermann'
-                },
                 'Dumpuser': {
                     user: 'r1Zhpq8e',
                     pass: 'password'
@@ -23,7 +19,6 @@ function cmLogin($location, cmNotify, cmUserModel, cmCrypt) {
                     user: '2VqTftqh',
                     pass: 'password'
                 },
-                
                 'TestUser': {
                     user: 'trusting_brown',
                     pass: 'password'
