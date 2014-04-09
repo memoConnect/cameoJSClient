@@ -35,7 +35,6 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
 
         this.comesFromRegistration = false;
 
-        
         this.init = function(identity_data){
             this.loadIdentity(identity_data).then(
                 function(identity){
@@ -97,6 +96,10 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
 
             return this.getToken();
         };
+
+        this.setAuth = function(){
+            isAuth = true
+        }
 
         this.setIdentity = function(identity_data){
             this.init(identity_data);
@@ -344,6 +347,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          * @param value
          */
         this.storageSave = function(key, value){
+            console.log(isAuth)
             if(isAuth !== false && self.data.storage !== null){
                 self.data.storage.save(key, value);
             }
