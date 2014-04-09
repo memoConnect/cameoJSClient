@@ -22,7 +22,10 @@
     </header>
 
     <ul>
-        <li ng-show="!conversations.length" class="empty-list">
+        <li ng-show="loading" class="empty-list">
+            <cm-spinner></cm-spinner>
+        </li>
+        <li ng-show="!conversations.length && !loading" class="empty-list">
             <i class="fa cm-info"></i>  {{'TALKS.LIST_EMPTY'|cmTranslate}}
         </li>
         <li ng-repeat="conversation in conversations | filter:search" ng-click="goToConversation(conversation.id)">
