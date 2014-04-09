@@ -1,5 +1,4 @@
-<h3 ng-init="loadFriendRequests();">{{'CONTACTS.HEADER.REQUEST_LIST'|cmTranslate}}</h3>
-<div class="container-fluid">
+<div class="container-fluid" ng-init="loadFriendRequests();">
     <div class="row">
         <ul class="nav nav-pills nav-stacked col-sm-6">
             <li ng-repeat="result in results">
@@ -8,11 +7,9 @@
                     <i class="fa cm-checker pull-right" ng-click="acceptRequest(result.id);"></i>
                 </a>
             </li>
+            <li ng-show="!results.length" class="empty-list">
+                <i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_REQUESTS'|cmTranslate}}
+            </li>
         </ul>
-        <li ng-show="contacts.length == 0">
-            <a class="alert alert-warning">
-                {{'CONTACTS.INFO.NO_CONTACTS'|cmTranslate}}
-            </a>
-        </li>
     </div>
 </div>

@@ -8,7 +8,7 @@
 <section ng-controller="ConversationsCtrl">
 
     <header>
-        <h1>{{"TALKS.HEADING"|cmTranslate}}</h1>       
+        <h1>{{'TALKS.HEADING'|cmTranslate}}</h1>
 
         <a href="#/conversation" cm-edge>            
             <i class="fa cm-add"></i>
@@ -22,6 +22,9 @@
     </header>
 
     <ul>
+        <li ng-show="!conversations.length" class="empty-list">
+            <i class="fa cm-info"></i>  {{'TALKS.LIST_EMPTY'|cmTranslate}}
+        </li>
         <li ng-repeat="conversation in conversations | filter:search" ng-click="goToConversation(conversation.id)">
             <cm-conversation-tag cm-data="conversation"></cm-conversation-tag>
 
