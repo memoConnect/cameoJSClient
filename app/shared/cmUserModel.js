@@ -1,17 +1,18 @@
 'use strict';
 
-angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'])
+angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt', 'cmNotify'])
 .service('cmUserModel',[
 
     'cmAuth', 
     'cmLocalStorage', 
     'cmIdentityFactory', 
-    'cmCrypt', 
+    'cmCrypt',
+    'cmNotify',
     '$rootScope', 
     '$q', 
     '$location', 
 
-    function(cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, $rootScope, $q, $location){
+    function(cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmNotify,$rootScope, $q, $location){
         var self = this,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
@@ -196,6 +197,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
 
             this.storageSave('rsa', key_data_list)
 
+            cmNotify.info('Keys was saved',{ttl:1000}); //TODO
             /*
             if(
                    typeof tmpKeys !== undefined 
