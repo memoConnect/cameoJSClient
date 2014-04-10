@@ -171,7 +171,9 @@
             "NAME": "Name",
             "SURNAME": "Surname",
             "SORT": "arrange",
-            "FILTER": "filter"
+            "FILTER": "filter",
+            "SEARCH_IDENTITY": "search Cameo indentity",
+            "ADD_EXTERN": "create new extern contact"
         },
         "BUTTON": {
             "RESET": "reset",

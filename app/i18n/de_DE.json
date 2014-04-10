@@ -171,7 +171,9 @@
             "NAME": "Vorname",
             "SURNAME": "Nachname",
             "SORT": "sortieren",
-            "FILTER": "filtern"
+            "FILTER": "filtern",
+            "SEARCH_IDENTITY": "Cameo Indentität suchen",
+            "ADD_EXTERN": "neuen externen Kontakt anlegen"
         },
         "BUTTON": {
             "RESET": "zurücksetzen",
