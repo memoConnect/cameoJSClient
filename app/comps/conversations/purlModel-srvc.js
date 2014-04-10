@@ -21,15 +21,18 @@ function cmPurlModel (cmConversationsAdapter, cmConversationsModel, cmConversati
      * @param identity
      */
     function handleIdentity(identity_data){
-        cmUserModel.setIdentity(identity_data);
+        if(identity_data.id != cmUserModel.data.id){
+            cmUserModel.setIdentity(identity_data);
+        }
     }
 
     /**
-     * @TODO Token Handling over cmUserModel
      * @param token
      */
     function handleToken(token){
-        cmAuth.storeToken(token);
+        if(typeof token !== 'undefined'){
+            cmUserModel.storeToken(token);
+        }
     }
 
     this.getPurl = function(id){
@@ -38,8 +41,8 @@ function cmPurlModel (cmConversationsAdapter, cmConversationsModel, cmConversati
         if(typeof id !== 'undefined'){
             cmConversationsAdapter.getPurl(id).then(
                 function (data) {
-                    handleToken(data.token);
                     handleIdentity(data.identity);
+                    handleToken(data.token);
 
                     deferred.resolve(handleConversation(data.conversation));
                 },
