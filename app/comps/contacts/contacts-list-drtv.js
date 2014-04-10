@@ -9,7 +9,7 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope){
 
         link: function(scope, element, attrs, controller, transclude){
 
-            function refresh() { 
+            function refresh(){ 
                 scope.contacts.forEach(function(contact){
                     var child_scope = scope.$new()
 

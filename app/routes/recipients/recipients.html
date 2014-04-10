@@ -5,10 +5,19 @@
 </cm-header>
 
 <section>
-    <header>
+    <header>        
+        <h1>{{"RECIPIENTS.HEADING"|cmTranslate}}</h1>       
+
+        <div class="cm-form-group">
+            <div class="cm-form-control white-control with-inputter with-icon">
+                <input type="text" value="" ng-model="search" />                                
+            </div><i class="fa cm-search"></i>
+        </div>
     </header>
-    <cm-contacts-list contacts-as="contact">
+
+    <cm-contacts-list contacts-as="contact| filter : search">
         <cm-contact-tag cm-data="contact" ng-click="selectContact(contact.identity); selected = true">
+
             <span class="separator"></span>
             <i class="fa fa-3x" ng-class="{'cm-checkbox': !selected, 'cm-checkbox-right': selected}" ng-click="editContact(contact.identity.id)"></i>
         </cm-contact-tag>
