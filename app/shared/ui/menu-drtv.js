@@ -1,6 +1,6 @@
 'use strict';
 
-function cmMenu($window, $document, $location, cmUserModel){
+function cmMenu($window, $document, $location, cmUserModel, cmVersion){
     // left: 37, up: 38, right: 39, down: 40,
     // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
     var keys = [37, 38, 39, 40];
@@ -46,6 +46,7 @@ function cmMenu($window, $document, $location, cmUserModel){
         templateUrl: 'shared/ui/menu.html',
 
         controller: function($scope, $element, $rootScope){
+            $scope.cmVersion = cmVersion;
             $scope.btns = [
                 {i18n:'MENU.HEADER', icon:'cm-menu', css:'cm-menu-header'},
                 {i18n:'MENU.NOTIFICATIONS', icon:'cm-bell', css:'cm-menu-notify', href:'/notfications'},

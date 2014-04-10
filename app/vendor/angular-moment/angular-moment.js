@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    function angularMoment(angular, moment) {
+//    function angularMoment(angular, moment) {
 
         /**
          * @ngdoc overview
@@ -322,11 +322,13 @@
                     return moment.duration(value, format).humanize(suffix);
                 };
             }]);
-    }
+//    }
 
-    if (typeof define === 'function' && define.amd) {
-        define('angular-moment', ['angular', 'util-moment'], angularMoment);
-    } else {
-        angularMoment(angular, window.moment);
-    }
+//    if (typeof define === 'function' && define.amd) {
+//        console.log('require')
+//        define('angular-moment', ['angular', 'moment'], angularMoment);
+//    } else {
+//        console.log('without req')
+//        angularMoment(angular, window.moment);
+//    }
 })();

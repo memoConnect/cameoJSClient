@@ -59,6 +59,7 @@ angular.module('cmUi', [
     '$document',
     '$location',
     'cmUserModel',
+    'cmVersion',
     cmMenu
 ])
 
