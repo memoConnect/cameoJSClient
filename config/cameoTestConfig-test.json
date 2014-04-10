@@ -1,6 +1,6 @@
 {
     "config": {
-        "wwwUrl": "http://localhost/cameoJSClient/app/",
+        "wwwUrl": "http://localhost:9000",
         "autoLogin": false
     },
     "testData": {
