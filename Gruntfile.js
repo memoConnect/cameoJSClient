@@ -1,5 +1,24 @@
 module.exports = function (grunt) {
 
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-dalek');
+    grunt.loadNpmTasks('grunt-phonegap');
+    grunt.loadNpmTasks('grunt-template');
+    grunt.loadNpmTasks('grunt-phonegap-build');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-coffee');
+
+
     // cameo secrets
     var globalCameoSecrets = (function () {
         src = '../cameoSecrets/cameoJSClientSecrets.json';
@@ -62,13 +81,13 @@ module.exports = function (grunt) {
                 buildConfig.phonegap.extraName = "";
             }
 
-            console.log("phonegap name: " +  buildConfig.phonegap.baseName + buildConfig.phonegap.extraName);
+            console.log("phonegap name: " + buildConfig.phonegap.baseName + buildConfig.phonegap.extraName);
             console.log("phonegap version: " + buildConfig.phonegap.version);
         } else {
             buildConfig.config.version = "no version";
         }
 
-		buildConfig.phonegap.phonegapBaseFilename = buildConfig.phonegap.baseName + buildConfig.phonegap.extraName + '.' + buildConfig.phonegap.version;
+        buildConfig.phonegap.phonegapBaseFilename = buildConfig.phonegap.baseName + buildConfig.phonegap.extraName + '.' + buildConfig.phonegap.version;
 
         return buildConfig;
     })();
@@ -109,7 +128,6 @@ module.exports = function (grunt) {
     })();
 
 
-
     // write config
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -136,13 +154,7 @@ module.exports = function (grunt) {
                 ]
             }
         },
-//        watch: {
-//            coffee: {
-//                files: ['app/coffee/**/*.coffee'], tasks: ['coffee'], options: {
-//                    event: 'all'
-//                }
-//            }
-//        },
+
         jshint: {
             all: [
                 'Gruntfile.js',
@@ -189,7 +201,7 @@ module.exports = function (grunt) {
                         flatten: false,
                         cwd: 'dist/app',
                         src: ['**'],
-                        dest: 'phonegap-build/www/'                        
+                        dest: 'phonegap-build/www/'
                     },
                     // copy all icon and splashs to /www/res
                     {
@@ -205,7 +217,7 @@ module.exports = function (grunt) {
                         src: 'phonegap-res/*.js',
                         dest: 'phonegap-build/www/'
                     }
-                    
+
                 ]
             }, 'dev-deploy': {
                 files: [
@@ -235,7 +247,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: 'phonegap-target',
-                        src: ['*','!*.zip'],
+                        src: ['*', '!*.zip'],
                         dest: 'dist/dl/'
                     }
                 ]
@@ -376,7 +388,7 @@ module.exports = function (grunt) {
                     'data': {
                         'phonegapFiles': //                            '<script src="cordova.js"></script>' +
                             '<script src="phonegap.js"></script>' +
-                            '<script src="phonegap-adapter.js"></script>',
+                                '<script src="phonegap-adapter.js"></script>',
                         'phonegapElements': '<div class="well">' +
                             '<p id="networkState"></p>' +
                             '<p id="contactsNumber"></p>' +
@@ -387,8 +399,7 @@ module.exports = function (grunt) {
                 'files': {
                     'phonegap-build/www/index.html': ['templates/index.tpl.html']
                 }
-            }
-            , 'www-index': {
+            }, 'www-index': {
                 'options': {
                     'data': {
                         'phonegapFiles': '',
@@ -398,29 +409,26 @@ module.exports = function (grunt) {
                 'files': {
                     'app/index.html': ['templates/index.tpl.html']
                 }
-            }
-			, 'dl-index': {
-			                'options': {
-			                    'data': {
-			                        'phonegapBaseFilename': globalCameoBuildConfig.phonegap.phonegapBaseFilename
-			                    }
-			                },
-			                'files': {
-			                    'dist/dl/index.html': ['templates/dl-index.tpl.html']
-			                }
-		   }
-		   , 'config-webApp': {
+            }, 'dl-index': {
                 'options': {
                     'data': {
-                        'currentApiUrl': globalCameoBuildConfig.config.apiUrl ,
+                        'phonegapBaseFilename': globalCameoBuildConfig.phonegap.phonegapBaseFilename
+                    }
+                },
+                'files': {
+                    'dist/dl/index.html': ['templates/dl-index.tpl.html']
+                }
+            }, 'config-webApp': {
+                'options': {
+                    'data': {
+                        'currentApiUrl': globalCameoBuildConfig.config.apiUrl,
                         'currentVersion': globalCameoBuildConfig.config.version
                     }
                 },
                 'files': {
                     'app/base/config.js': ['templates/config-webApp.tpl.js']
                 }
-            }
-            , 'config-tests': {
+            }, 'config-tests': {
                 'options': {
                     'data': {
                         'currentWwwUrl': globalCameoTestConfig.config.wwwUrl,
@@ -431,7 +439,7 @@ module.exports = function (grunt) {
                 'files': {
                     'test/e2e/config-e2e-tests.js': ['templates/config-e2e-tests.tpl.js']
                 }
-            } , 'config-phonegap': {
+            }, 'config-phonegap': {
                 'options': {
                     'data': {
                         'currentName': globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName,
@@ -499,19 +507,12 @@ module.exports = function (grunt) {
         }
     });
 
-    // contrib
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
     // tests unit
-    grunt.loadNpmTasks('grunt-karma');
     grunt.registerTask('tests-unit', [
         'genAllTemplates',
         'karma:jenkins'
     ]);
     // tests e2e
-    grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-dalek');
     grunt.registerTask('tests-e2e', [
         'genAllTemplates',
         'dalek:jenkins'
@@ -530,21 +531,17 @@ module.exports = function (grunt) {
         'dalek:localAll'
     ]);
     // phonegap to device
-    grunt.loadNpmTasks('grunt-phonegap');
-    grunt.loadNpmTasks('grunt-template');
     grunt.registerTask('phonegap', [
         'phonegap:build',
         'copy:phonegap-resources',
         'template:phonegap-index'
     ]);
     // phonegap to build server
-    grunt.loadNpmTasks('grunt-phonegap-build');
-    grunt.loadNpmTasks('grunt-contrib-compress');
-    grunt.registerTask('phonegap-bs',[
+    grunt.registerTask('phonegap-bs', [
         'clean:phonegap-target',
         'clean:phonegap-build',
         'deploy',
-     //   'phonegap:build',
+        //   'phonegap:build',
         'copy:phonegap-resources',
         'template:phonegap-index',
         'template:config-phonegap',
@@ -558,20 +555,8 @@ module.exports = function (grunt) {
     grunt.registerTask('www', [
         'template:www-index'
     ]);
-    // tests
-//    grunt.registerTask('default', ['concat','uglify']);
-//    grunt.registerTask('coffeeTest', 'coffee');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
-    grunt.loadNpmTasks('grunt-contrib-coffee');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.registerTask('coffeeTest', [
-        'watch'
-    ]);
+
     // watch
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'template:config-phonegap', 'concat:less', 'less']);
     grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
 

@@ -1,6 +1,7 @@
 {
     "config": {
-        "wwwUrl": "https://dev.cameo.io/app/"
+        "wwwUrl": "https://dev.cameo.io/app/",
+        "autoLogin": false
     },
     "testData": {
         "accountName": "Z1395672127689",

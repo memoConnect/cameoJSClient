@@ -1,6 +1,7 @@
 {
     "config": {
-        "wwwUrl": "https://stage.cameo.io/app/"
+        "wwwUrl": "https://stage.cameo.io/app/",
+        "autoLogin": false
     },
     "testData": {
         "accountName": "BMeSfHXQ",
