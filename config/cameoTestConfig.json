@@ -1,7 +1,6 @@
 {
     "config": {
-        "wwwUrl": "http://localhost:6108/app/",
-        "autoLogin": false
+        "wwwUrl": "http://localhost:6108/app/"
     },
     "testData": {
         "accountName": "Z1395672127689",

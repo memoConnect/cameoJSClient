@@ -6,12 +6,12 @@ module.exports[testName] = function(test){
     console.log('## '+testName)
     test
         // safe logout
-        .open(config.wwwUrl+"#/logout")
-        .wait(config.routeTimeout)
+        //.open(config.wwwUrl + "#/logout")
+        //.wait(config.routeTimeout)
 
         // start page
         .open(config.wwwUrl)
-        .wait(config.routeTimeout)
+        .waitForElement("[data-qa='login-screen-btn']")
         .assert
             .url(config.wwwUrl+'#/login', 'on route login')
 
@@ -20,7 +20,7 @@ module.exports[testName] = function(test){
 
         // registration
         .click("button[ng-click='goToReg()']")
-        .wait(config.routeTimeout)
+        //.wait(config.routeTimeout)
         .assert
             .url(config.wwwUrl+'#/registration', 'on route registration')
 

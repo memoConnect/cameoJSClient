@@ -1,7 +1,6 @@
 {
     "config": {
-        "wwwUrl": "http://localhost/cameoJSClient/app/",
-        "autoLogin": false
+        "wwwUrl": "http://localhost/cameoJSClient/app/"
     },
     "testData": {
         "accountName": "fbGBLqym",
