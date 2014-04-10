@@ -45,3 +45,8 @@ a {
 .twoFactorModal input{
     margin-bottom: 1em;
 }
+
+.btn {
+    padding: 5px 12px
+
+}
