@@ -12,6 +12,7 @@ cmUser.directive('cmLogin', [
     'cmNotify',
     'cmUserModel',
     'cmCrypt',
+    'cmEnv',
     cmLogin
 ])
 

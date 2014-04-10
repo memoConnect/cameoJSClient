@@ -37,7 +37,10 @@ define([
         'cmAuth',
         'cmUserModel',
         'cmIdentity'
-    ]).constant('cmVersion',{version:cameo_config.version, last_build:'-'});
+    ]);
+
+    app.constant('cmEnv',cameo_config.env);
+    app.constant('cmVersion',{version:cameo_config.version, last_build:'-'});
 
     //cameo_config = cameo_config
 

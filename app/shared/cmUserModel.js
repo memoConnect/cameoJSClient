@@ -48,7 +48,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
                     self.syncLocalKeys();
                 },
                 function(response){
-                    if(response.status == 401){
+                    if(typeof response == 'object' && response.status == 401){
                         self.doLogout();
                     }
                 }
@@ -63,15 +63,21 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             if(typeof identity_data !== 'undefined'){
                 deferred.resolve(cmIdentityFactory.create(identity_data));
             } else {
-                cmAuth.getIdentity().then(
-                    function(data){
-                        deferred.resolve(cmIdentityFactory.create(data));
-                    },
+                if(this.getToken() !== false){
+                    cmAuth.getIdentity().then(
+                        function(data){
+                            deferred.resolve(cmIdentityFactory.create(data));
+                        },
 
-                    function(response){
-                        deferred.reject(response);
-                    }
-                );
+                        function(response){
+                            var response = response || {};
+
+                            deferred.reject(response);
+                        }
+                    );
+                } else {
+                    deferred.reject();
+                }
             }
 
             return deferred.promise;

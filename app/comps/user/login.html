@@ -17,7 +17,7 @@
         </div>
 
     </div>
-    <div class="cm-form-group">
+    <div class="cm-form-group" ng-if="cmEnv.autoLogin">
         <select ng-model="formData.autologin" class="cm-form-control btn-block autologin" ng-change="changeAutologin()">
             <option value="none">{{'LOGIN.LABEL.AUTO'|cmTranslate}}</option>
             <option ng-repeat="(user,prop) in loginData">{{user}}</option>

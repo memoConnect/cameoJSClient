@@ -1,12 +1,14 @@
 'use strict';
 
-function cmLogin($location, cmNotify, cmUserModel, cmCrypt) {
+function cmLogin($location, cmNotify, cmUserModel, cmCrypt, cmEnv) {
     return  {
         restrict    :   'A',
         templateUrl :   'comps/user/login.html',
         scope       :   {},
 
         controller  :   function ($scope, $rootScope) {
+            console.log(cmEnv)
+            $scope.cmEnv = cmEnv;
             $scope.showSpinner = false;
             $scope.alertState = '';
             $scope.passwordType = 'password';

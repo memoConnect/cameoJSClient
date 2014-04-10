@@ -422,7 +422,8 @@ module.exports = function (grunt) {
                 'options': {
                     'data': {
                         'currentApiUrl': globalCameoBuildConfig.config.apiUrl,
-                        'currentVersion': globalCameoBuildConfig.config.version
+                        'currentVersion': globalCameoBuildConfig.config.version,
+                        'autoLogin': globalCameoBuildConfig.config.autoLogin
                     }
                 },
                 'files': {
