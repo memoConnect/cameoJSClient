@@ -1,19 +1,18 @@
 'use strict';
 
-function cmLogin($location, cmNotify, cmUserModel, cmCrypt) {
+function cmLogin($location, cmNotify, cmUserModel, cmCrypt, cmEnv) {
     return  {
         restrict    :   'A',
         templateUrl :   'comps/user/login.html',
         scope       :   {},
 
         controller  :   function ($scope, $rootScope) {
+            console.log(cmEnv)
+            $scope.cmEnv = cmEnv;
             $scope.showSpinner = false;
             $scope.alertState = '';
+            $scope.passwordType = 'password';
             $scope.loginData = {
-                'Max': {
-                    user: 'Max',
-                    pass: 'max.mustermann'
-                },
                 'Dumpuser': {
                     user: 'r1Zhpq8e',
                     pass: 'password'
@@ -22,7 +21,6 @@ function cmLogin($location, cmNotify, cmUserModel, cmCrypt) {
                     user: '2VqTftqh',
                     pass: 'password'
                 },
-                
                 'TestUser': {
                     user: 'trusting_brown',
                     pass: 'password'
@@ -31,6 +29,12 @@ function cmLogin($location, cmNotify, cmUserModel, cmCrypt) {
 
             $scope.formData = {
                 autologin:'none'
+            };
+
+            $scope.handlePassword = function(){
+                $scope.passwordType = ($scope.passwordType != 'password')
+                                    ? 'password'
+                                    : 'text';
             };
 
             $scope.changeAutologin = function(){

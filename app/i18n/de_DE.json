@@ -31,7 +31,7 @@
         "LINK" : "registrieren",
         "LABEL": {
             "SUBMIT": "Benutzerkonto anlegen",
-            "USERNAME": "Benutzername",
+            "USERNAME": "Nutzername",
             "NAME": "Anzeigename",
             "TERMS": " die AGB",
             "TERMS_ACCEPT": "Ich akzeptiere"
@@ -44,11 +44,12 @@
             "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden.",
             "TERMS": "Bitte AGB akzeptieren.",
             "EMPTY": {
-                "USERNAME": "Bitte geben Sie einen Benutzernamen an.",
                 "PASSWORD": "Bitte geben Sie ein Passwort ein."
             },
             "USERNAME": {
-                "EXISTS": "Username ist bereits vergeben. Bitte wählen Sie einen anderen."
+                "EXISTS": "Der Nutzername ist bereits vergeben. Bitte wählen Sie einen anderen.",
+                "EMPTY": "Bitte geben Sie einen Nutzername an.",
+                "INVALID": "Der Nutzername ist nicht valide. Vermeiden Sie Leerzeichen."
             }
         },
         "TITLE": {
@@ -105,7 +106,8 @@
 
     "TALKS": {
         "HEADING": "Talks",
-        "MORE": "mehr laden"
+        "MORE": "mehr laden",
+        "LIST_EMPTY": "Bisher keine Talks vorhanden"
     },
 
     "CONVERSATION": {
@@ -144,6 +146,7 @@
 	"CONTACTS": {
 		"WELCOME": "Adressbuch",
 		"HEADING": "Kontakte",
+        "LIST_EMPTY": "Bisher keine Kontakte vorhanden",
         "PLACEHOLDER": {
             "ADD_NEW_CONTACT": "geben Sie hier eine cameoId ein"
         },
@@ -155,7 +158,13 @@
         "INFO": {
             "NO_RESULTS": "Keine cameo Kontakte gefunden",
             "MORE_CHARS_NEEDED": "Bitte geben Sie mehr Buchstaben ein",
-            "NO_CONTACTS": "Keine Kontakte vorhanden"
+            "NO_REQUESTS": "Keine Anfragen vorhanden",
+            "REQUEST":{
+                "SENDED": "Die Anfrage wurde verschickt.",
+                "FAILED": "Die Anfrage konnte nicht verschickt werden",
+                "ACCEPT": "Sie sind nun mit diesem Kontakt verbunden",
+                "REJECT": "Die Anfrage wurde ignoriert"
+            }
         },
         "LABEL": {
             "DISPLAYNAME": "Displayname",
@@ -251,5 +260,11 @@
         "ACTIVITY": "Aktivity",
         "SETTINGS": "Einstellungen",
         "LOGOUT": "Logout"
+    },
+
+    "NOTIFY": {
+      "KEYS":{
+          "STORE_NEW": "Schlüssel erfolgreich gespeichert!"
+      }
     }
 }

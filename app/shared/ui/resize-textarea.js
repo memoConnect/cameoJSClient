@@ -19,18 +19,24 @@ function cmResizeTextarea() {
              * create shadow of textarea for calcing the rows
              */
             function createShadow(){
-                $shadow = angular.element('<div></div>').css({
-                    position: 'fixed',
-                    top: -10000,
-                    left: -10000,
-                    width: element[0].offsetWidth - parseInt(paddingLeft || 0) - parseInt(paddingRight || 0),
-                    fontSize: element.css('fontSize'),
-                    fontFamily: element.css('fontFamily'),
-                    lineHeight: element.css('lineHeight'),
-                    resize: 'none'
-                });
+                var existingShadow = document.getElementById('shadow');
 
-                angular.element(document.body).append($shadow);
+                if(existingShadow == null){
+                    $shadow = angular.element('<div id="shadow"></div>').css({
+                        position: 'fixed',
+                        top: -10000,
+                        left: -10000,
+                        width: element[0].offsetWidth - parseInt(paddingLeft || 0) - parseInt(paddingRight || 0),
+                        fontSize: element.css('fontSize'),
+                        fontFamily: element.css('fontFamily'),
+                        lineHeight: element.css('lineHeight'),
+                        resize: 'none'
+                    });
+
+                    angular.element(document.body).append($shadow);
+                } else {
+                    $shadow = angular.element(existingShadow)
+                }
             }
 
             /**

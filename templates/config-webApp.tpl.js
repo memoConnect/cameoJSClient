@@ -16,7 +16,8 @@ cameo_config = {
             hasCtrl: true
         },
         'settings': {
-            hasCtrl: true
+            hasCtrl: true,
+            css: 'no-footer'
         },
         'talks': {
             hasCtrl: true
@@ -59,5 +60,9 @@ cameo_config = {
         'version': {
             hasCtrl: true
         }
+    },
+
+    env: {
+        autoLogin: ('<%= autoLogin %>' == 'true')
     }
 };

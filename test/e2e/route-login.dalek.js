@@ -5,21 +5,24 @@ module.exports = {}
 module.exports[testName] = function(test){
     console.log('## '+testName)
     test
+        // safe logout
         .open(config.wwwUrl+"#/logout")
-        .wait(500)
+        .wait(config.routeTimeout)
+
+        // start page
         .open(config.wwwUrl)
-        // login
-        .wait(500)// wait for otherwise
-        .assert.chain()
+        .wait(config.routeTimeout)
+        .assert
             .url(config.wwwUrl+'#/login', 'on route login')
+
+        .assert
             .numberOfElements("[data-qa='login-screen-btn']").is(2, '2 login-screen-btn are present')
-        .end()
+
+        // registration
         .click("button[ng-click='goToReg()']")
-        // registration link
-        .wait(500)
+        .wait(config.routeTimeout)
         .assert
             .url(config.wwwUrl+'#/registration', 'on route registration')
-    .done().fin(function(){
-        console.log('---done---')
-    })
+
+    .done()
 }

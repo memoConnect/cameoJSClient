@@ -1,7 +1,8 @@
 'use strict';
 
 function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q, $rootScope) {
-    var self = this;
+    var self = this,
+        events = {};
 
     this.conversations = [];
     this.quantity = 0;
@@ -12,6 +13,17 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
         self.conversations = [];
     });
 
+    this.on = function(event, callback){
+        events[event] = events[event] || [];
+        events[event].push(callback);
+    }
+
+    this.trigger = function(event, data){
+        events[event] = events[event] || [];
+        events[event].forEach(function(callback){
+            callback(data);
+        });
+    }
 
     //Methods:
     this.addConversation = function(conversation, firstItem){
@@ -112,13 +124,19 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
             offset = this.offset;
         }
 
-        cmConversationsAdapter.getConversations(limit, offset)
-            .then(function (data) {
+        cmConversationsAdapter.getConversations(limit, offset).then(
+            function (data) {
+
                 self.quantity = data.numberOfConversations;
 
                 data.conversations.forEach(function (conversation_data) {
                     self.addConversation(cmConversationFactory.create(conversation_data).update())
                 })
-            })
+            }
+        ).finally (
+            function(){
+                self.trigger('finish:load');
+            }
+        )
     }
 }

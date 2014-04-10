@@ -36,7 +36,7 @@ cmContacts.directive('cmAddExternalContact',[
 
 cmContacts.directive('cmContactRequestList',[
     'cmContactsModel',
-    'cmLogger',
+    'cmNotify',
     cmContactRequestList
 ])
 
@@ -49,7 +49,7 @@ cmContacts.directive('cmContactsList',[
 
 cmContacts.directive('cmSearchCameoIdentity',[
     'cmContactsModel',
-    'cmLogger',
+    'cmNotify',
     cmSearchCameoIdentity
 ])
 

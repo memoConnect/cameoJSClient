@@ -1,27 +1,33 @@
 <cm-header cm-rubber-space>    
     <cm-identity cm-weight="3"></cm-identity>
-    <cm-logo     cm-weight="3"></cm-logo>
-    <div         cm-weight="2"></div>
-    <cm-menu     cm-weight="1"></cm-menu>
+    <cm-logo cm-weight="3"></cm-logo>
+    <cm-reload cm-weight="2"></cm-reload>
+    <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
 
 <section ng-controller="ConversationsCtrl">
 
     <header>
-        <h1>{{"TALKS.HEADING"|cmTranslate}}</h1>       
+        <h1>{{'TALKS.HEADING'|cmTranslate}}</h1>
 
         <a href="#/conversation" cm-edge>            
             <i class="fa cm-add"></i>
         </a>
 
         <div class="cm-form-group">
-            <div class="cm-form-control white-control with-inputter with-icon">
+            <div class="cm-form-control white-control with-inputter with-outside-icon">
                 <input type="text" value="" ng-model="search" />                                
             </div><i class="fa cm-search"></i>
         </div>
     </header>
 
     <ul>
+        <li ng-show="loading" class="empty-list">
+            <cm-spinner></cm-spinner>
+        </li>
+        <li ng-show="!conversations.length && !loading" class="empty-list">
+            <i class="fa cm-info"></i>  {{'TALKS.LIST_EMPTY'|cmTranslate}}
+        </li>
         <li ng-repeat="conversation in conversations | filter:search" ng-click="goToConversation(conversation.id)">
             <cm-conversation-tag cm-data="conversation"></cm-conversation-tag>
 

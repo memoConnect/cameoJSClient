@@ -6,6 +6,12 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope){
         scope: true,
         transclude: true,
         //templateUrl: 'comps/contacts/contacts-list.html',
+        template: //'<div ng-show="loadingContacts" class="empty-list">'+
+                    //'<cm-spinner></cm-spinner>'+
+                  //'</div>'+
+                  '<div ng-show="!contacts.length" class="empty-list">'+
+                    '<i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}'+
+                  '</div>',
 
         link: function(scope, element, attrs, controller, transclude){
 
@@ -25,6 +31,14 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope){
         },
 
         controller: function($scope, $element, $attrs){
+            cmContactsModel.on('finish:load-contacts',function(){
+                $scope.loadingContacts = false;
+            });
+            cmContactsModel.on('start:load-contacts',function(){
+                $scope.loadingContacts = true;
+            });
+
+
             $scope.contacts    = cmContactsModel.contacts;
             $scope.contactsQty = cmContactsModel.contacts.length;
 

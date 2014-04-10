@@ -1,6 +1,6 @@
 'use strict';
 
-function cmContactRequestList(cmContactsModel, cmLogger){
+function cmContactRequestList(cmContactsModel, cmNotify){
     return {
         restrict: 'A',
         scope: {},
@@ -23,12 +23,11 @@ function cmContactRequestList(cmContactsModel, cmLogger){
              * fired by repeat and accept that
              * @param id
              */
-            $scope.acceptRequest = function(id){
-                cmLogger.debug('acceptRequest ' + id);
-                // TODO: notify, update ContactList
-                cmContactsModel.answerFriendRequest(id, 'accept').then(
+            $scope.acceptRequest = function(item){
+                cmContactsModel.answerFriendRequest(item.id, 'accept').then(
                     function(){
-                        rmFromModel(id);
+                        cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT');
+                        rmFromModel(item);
                     }
                 );
             };
@@ -37,12 +36,11 @@ function cmContactRequestList(cmContactsModel, cmLogger){
              * fired by repeat delete request
              * @param id
              */
-            $scope.rejectRequest = function(id){
-                cmLogger.debug('rejectRequest ' + id);
-                // TODO: notify, update ContactList
-                cmContactsModel.answerFriendRequest(id, 'reject').then(
+            $scope.rejectRequest = function(item){
+                cmContactsModel.answerFriendRequest(item.id, 'reject').then(
                     function(){
-                        rmFromModel(id);
+                        cmNotify.warn('CONTACTS.INFO.REQUEST.REJECT');
+                        rmFromModel(item);
                     }
                 );
             };
@@ -52,13 +50,10 @@ function cmContactRequestList(cmContactsModel, cmLogger){
              * remove request from results
              * @param id
              */
-            function rmFromModel(id){
-                if(angular.isDefined(id)){
-                    angular.forEach($scope.results,function(value, key){
-                        if(value.id == id){
-                            $scope.results.splice(key, 1);
-                        }
-                    });
+            function rmFromModel(item){
+                if(angular.isDefined(item)){
+                    var index = $scope.results.indexOf(item);
+                    $scope.results.splice(index,1);
                 }
             }
         }
