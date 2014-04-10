@@ -27,7 +27,6 @@ define([
                         $scope.showConversation = true;
                     },
                     function(){
-                        cmLogger.error('cant get PURL Message');
                         $location.path('/404');
                     }
                 );
