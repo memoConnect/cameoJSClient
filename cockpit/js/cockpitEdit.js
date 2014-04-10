@@ -1,4 +1,4 @@
-var cockpitEdit = angular.module("cockpitEdit", ["ui.bootstrap","ngRoute", "cmApi", "cmLogger"]);
+var cockpitEdit = angular.module("cockpitEdit", ["ui.bootstrap", "ngRoute", "cmApi", "cmLogger"]);
 
 cockpitEdit.controller("cockpitEditCtrl", [
     '$scope',
@@ -23,8 +23,8 @@ cockpitEdit.controller("cockpitEditCtrl", [
         }).then(
             function (data) {
                 if (data.attributes.length > 0) {
-                    data.attributes.forEach(function(attribute) {
-                       initialAttributeData.push(attribute.data)
+                    data.attributes.forEach(function (attribute) {
+                        initialAttributeData.push(attribute.data)
                     })
                     $scope.attributes = data.attributes;
                 }
@@ -34,16 +34,20 @@ cockpitEdit.controller("cockpitEditCtrl", [
             }
         );
 
+        $scope.setNull = function (attribute) {
+            attribute.data = null
+        };
+
         /*
          this function is used to store changes back to backend
          */
         $scope.sendElement = function () {
 
             //get changes from formData
-            $scope.attributes.forEach(function(attribute, index) {
+            $scope.attributes.forEach(function (attribute, index) {
                 var initial = initialAttributeData[index];
                 if (attribute.data !== initial) {
-                   updatedAttributes[attribute.name] = attribute.data
+                    updatedAttributes[attribute.name] = attribute.data
                 }
             });
 
@@ -52,8 +56,8 @@ cockpitEdit.controller("cockpitEditCtrl", [
                 data: updatedAttributes
             }).then(
                 function (data) {
-                   $scope.saveFail = false;
-                   $scope.saveSuccess = true
+                    $scope.saveFail = false;
+                    $scope.saveSuccess = true
                 },
                 function (response) {
                     $scope.saveFail = true;
