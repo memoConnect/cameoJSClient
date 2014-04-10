@@ -3,6 +3,7 @@ define([
     'angular-route',
     'angular-cookies',
     'angular-swipe',
+//    'moment',
     // cameo files
 //    'cmCron',
     'cmLocalStorage',
@@ -25,6 +26,7 @@ define([
         'ngRoute',
         'ngCookies',
         'swipe',
+//        'moment',
         'ui.bootstrap',
         // insert cameo provider
         'cmApi',

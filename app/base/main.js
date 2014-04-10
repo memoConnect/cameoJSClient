@@ -15,6 +15,8 @@ var config = {
         'angular-translate': 'vendor/angular-translate/angular-translate',
         'angular-growl': 'vendor/angular-growl/angular-growl',
 
+        'moment': 'vendor/angular-moment/angular-moment',
+
         // requirejs stuff
         'angularAMD': 'vendor/requirejs/angularAMD',
         'ngload': 'vendor/requirejs/ngload',
@@ -40,6 +42,7 @@ var config = {
         //'cmContacts': 'comps/contacts/cmContacts',
 
         // shared
+        'util-moment': 'vendor/util/moment-with-langs',
         'util-spin': 'vendor/util/spin',
         'util-base64': 'vendor/util/base64',
         'util-base64_decode': 'vendor/util/base64_decode',
