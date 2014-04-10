@@ -3,7 +3,7 @@
 var cmUserModel,
     cmCrypt
 
-xdescribe('cmUserModel', function(){
+describe('cmUserModel', function(){
     var cmUserModel;
         cmCrypt;
 
@@ -13,15 +13,15 @@ xdescribe('cmUserModel', function(){
 
         //@TODO: UserModel initiert sich beim inject und ruft die api auf, promises werden erst mit flush oder $apply aufgelöst, überlegen wir wir das anders organisieren
 
-        cmUserModel = _cmUserModel_('abc')
+        cmUserModel = _cmUserModel_
 //
-//        cmCrypt = _cmCrypt_
-//        cmUserModel.setAuth() //@todo
-//        cmUserModel.init({
-//            id : 'my_id_moep',
-//            userKey: 'my_user_key'
-//        })
-////        _$rootScope_.$apply()
+        cmCrypt = _cmCrypt_
+        cmUserModel.setAuth() //@todo
+        cmUserModel.init({
+            id : 'my_id_moep',
+            userKey: 'my_user_key'
+        })
+//        _$rootScope_.$apply()
 
     }))
 
@@ -29,7 +29,7 @@ xdescribe('cmUserModel', function(){
         expect(cmUserModel).toBeDefined();
     })
 
-    xdescribe('public API', function(){
+    describe('public API', function(){
         it('should provide a function "isAuth"',function(){
             expect(cmUserModel.isAuth).toBeDefined();
         })
