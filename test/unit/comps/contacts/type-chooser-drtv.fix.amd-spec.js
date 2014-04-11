@@ -50,13 +50,13 @@ describe('Directive cmTypeChooser', function () {
             expect(scope.data).toBeDefined();
         });
 
-        it('rootScope variable should be set to \'other\' is default',function(){
-            expect(scope.data.huhu).toBe('other');
+        it('rootScope variable should be set to \'private\' is default',function(){
+            expect(scope.data.huhu).toBe('private');
         });
 
-        it('rootScope variable should be set to \'private\' cause of click on first element',function(){
-            $('div.btn-group-justified button', el).get(0).click();
-            expect(scope.data.huhu).toBe('private');
+        it('rootScope variable should be set to \'other\' cause of click on first element',function(){
+            $('div.btn-group-justified button', el).get(2).click();
+            expect(scope.data.huhu).toBe('other');
         });
     });
 
