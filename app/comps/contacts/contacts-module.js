@@ -61,6 +61,10 @@ cmContacts.directive('cmContactTag',[
     cmContactTag
 ])
 
+cmContacts.directive('cmContactBrief', [
+    cmContactBrief
+])
+
 cmContacts.directive('cmTypeChooser',[
     'cmLogger',
     cmTypeChooser

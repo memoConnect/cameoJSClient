@@ -32,6 +32,7 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
             }
 
             if(check !== true){
+                console.log(contact.identity)
                 self.contacts.push({
                     id: contact.id,
                     contactType: contact.contactType,

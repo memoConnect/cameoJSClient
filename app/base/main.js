@@ -221,6 +221,7 @@ addPackage('pckContacts',{
         'comps/contacts/contacts-filter-controls-drtv',
         'comps/contacts/contacts-list-drtv',
         'comps/contacts/contact-tag-drtv',
+        'comps/contacts/contact-brief-drtv',
         'comps/contacts/search-cameo-identity-drtv',    
         'comps/contacts/type-chooser-drtv',
 
