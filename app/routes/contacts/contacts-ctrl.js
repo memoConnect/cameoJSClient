@@ -23,7 +23,7 @@ define([
                     template:
                         '<i class="fa cm-nose-right"></i>'+
                         '<a href="#/contacts/search" ng-click="close()" class="cm-btn cm-btn-lg cm-btn-block cm-btn-primary">{{"CONTACTS.LABEL.SEARCH_IDENTITY"|cmTranslate}}</a>'+
-                        '<a href="#/contacts/add" ng-click="close()" class="cm-btn cm-btn-lg cm-btn-block cm-btn-primary">{{"CONTACTS.LABEL.ADD_EXTERN"|cmTranslate}}</a>',
+                        '<a href="#/contact/new" ng-click="close()" class="cm-btn cm-btn-lg cm-btn-block cm-btn-primary">{{"CONTACTS.LABEL.ADD_EXTERN"|cmTranslate}}</a>',
                     controller: function ($rootScope, $scope, $modalInstance) {
 
                         $scope.close = function(){

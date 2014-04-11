@@ -47,6 +47,7 @@ angular.module('cmUi', [
 ])
 
 .directive('cmAvatar',[
+    'cmLogger',
     cmAvatar
 ])
 

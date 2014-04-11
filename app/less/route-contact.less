@@ -1,0 +1,47 @@
+.cm-contact-body{
+  text-align: left;
+  color: @cm-white;
+  padding: 1em 2em;
+  .cm-contact-details {
+    > div{
+      vertical-align:top;
+    }
+    cm-avatar {
+      width: 6em;
+      height: 6em;
+      -webkit-box-shadow: 0 0 0.625em 0.125em @cm-white;
+      box-shadow: 0 0 0.625em 0.125em @cm-white;
+    }
+    .cm-contact-widget{
+      background:@cm-black;
+      .border-radius;
+      color:@cm-ci-color;
+    }
+    .cm-contact-actions {
+      color:@cm-ci-color;
+      text-align: center;
+      height:4em;
+      line-height:6em;
+      i {
+        font-size: 3em;
+        height: 1.5em;
+        line-height: 1.5em;
+        &.with-white-bg{
+          background:rgba(255,255,255,0.2);
+          .border-radius;
+        }
+      }
+    }
+  }
+  .cm-input-ctn{
+    &.with-chooser{
+      margin-bottom:0;
+    }
+  }
+  [cm-type-chooser]{
+    font-size:0.5em;
+    .btn-primary{
+      background:@cm-black;
+    }
+  }
+}

@@ -13,6 +13,18 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
         self.getGroups();
     }
 
+    this.on = function(event, callback){
+        events[event] = events[event] || [];
+        events[event].push(callback);
+    };
+
+    this.trigger = function(event, data){
+        events[event] = events[event] || [];
+        events[event].forEach(function(){
+            callback(data);
+        });
+    };
+
     /**
      * add to contacts and creates identities
      * @param contact
@@ -67,13 +79,12 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
                 function(){
                     deferred.reject();
                 }
-            ).finally(
-                function(){
-                    self.trigger('finish:load-contacts');
-                }
-            )
+            ).finally(function(){
+                self.trigger('finish:load-contacts');
+            })
         } else {
             deferred.resolve(self.contacts);
+            self.trigger('finish:load-contacts');
         }
 
         return deferred.promise;
@@ -176,18 +187,6 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
     $rootScope.$on('logout', function(){
         resetContacts();
     });
-
-    this.on = function(event, callback){
-        events[event] = events[event] || [];
-        events[event].push(callback);
-    }
-
-    this.trigger = function(event, data){
-        events[event] = events[event] || [];
-        events[event].forEach(function(callback){
-            callback(data);
-        });
-    }
 
     init();
 }
