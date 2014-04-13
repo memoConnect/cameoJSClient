@@ -1,15 +1,15 @@
 function cmRubberSpace(){
     return {
         restrict : 'AE',
-        priority: 0,
+        priority: 1,
 
         link : function(scope, element, attrs, controller){
             var total_weight    = 0,
-                available_space = 100
-                height          = element[0].clientHeight
+                available_space = 100                
                 width           = element[0].clientWidth
-                unit            = 100*height/width
 
+            console.log(element[0].tagName)
+            console.log(element.children())
 
             //remove text nodes:
             angular.forEach(element[0].childNodes, function(el){
@@ -19,27 +19,23 @@ function cmRubberSpace(){
 
             //calculate total weight:
             angular.forEach(element.children(), function(child){
-                var weight = angular.element(child).attr('cm-weight') || ''
-                    units  = angular.element(child).attr('cm-units') || '' 
+                var weight = parseInt( angular.element(child).attr('cm-weight')) || false             
 
-                if(!units){
-                    child.weight     = parseInt( weight ) || 1
-                    total_weight    += child.weight
+                if(weight){
+                    child.weight     = weight
+                    total_weight    += child.weight                    
                 }else{
-                    child.units      = parseInt( units ) || 1
-                    available_space -= child.units*unit
+                    available_space -= 100 * child.offsetWidth/element[0].offsetWidth 
                 }
 
             })
 
             //stretch children according to their weight:
             function tighten(){
-                console.log(total_weight)
                 angular.forEach(element.children(), function(child){
                     child = angular.element(child)
 
-                    if(child[0].weight) child.css('width', (available_space*child[0].weight/total_weight)+'%')
-                    if(child[0].units)  child.css('width', parseFloat( child[0].units )*unit+'%')
+                    if(child[0].weight) child.css('width', (available_space*child[0].weight/total_weight)+'%')                    
 
                 })
             }

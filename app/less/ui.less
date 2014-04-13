@@ -62,8 +62,8 @@ cm-edge, [cm-edge] {
 
 cm-avatar {
   display:inline-block;
-  width:3rem;
-  height:3rem;
+  width:@cm-unit;
+  height:@cm-unit;
   vertical-align:middle;
   position:relative;
   background-size:cover;
@@ -128,18 +128,10 @@ cm-rubber-space,
   display: block;
   text-align: center;
   white-space: nowrap;
-  padding: 0.1em 0;
-
-  -webkit-box-sizing: border-box;
-   -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-     -o-box-sizing: border-box;
-        box-sizing: border-box;
 
   > *{
     display: inline-block;
     vertical-align: top;
     min-height: 1px;
-    height:100%;
   }
 }

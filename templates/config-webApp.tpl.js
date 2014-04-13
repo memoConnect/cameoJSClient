@@ -29,6 +29,9 @@ cameo_config = {
             routes:['/conversation/:conversationId?'],
             hasCtrl: true
         },
+        'recipients': {
+            hasCtrl:true
+        },
         'registration': {
             hasCtrl: true
         },

@@ -1,5 +1,6 @@
 <cm-avatar cm-data="conversation.getLastMessage().from"></cm-avatar>
-<div class="details">
+
+<div class="details" cm-weight="3">
     <div class="subject">
         {{conversation.getSubjectLine()}}
     </div>
@@ -9,7 +10,8 @@
         text-only = "true"
     ></cm-message>
 </div>
-<div class="meta">
+
+<div class="meta" cm-weight = "1">
     <div class="top">
 
         <cm-safety-level level="conversation.getSafetyLevel()"></cm-safety-level>

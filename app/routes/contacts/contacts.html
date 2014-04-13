@@ -31,10 +31,10 @@
 
     <cm-contacts-list contacts-as="contacts">
         <cm-contact-tag ng-repeat="contact in contacts" cm-rubber-space>   
-            <cm-avatar          cm-data = "contact.identity" cm-units ="1"></cm-avatar>    
-            <cm-contact-brief   cm-data = "contact"          cm-weight="1"></cm-contact-brief>     
-            <span class="separator"      cm-units = "1" ></span>
-            <i class="fa cm-write fa-3x" cm-units = "1" ng-click="editContact(contact.identity.id)"></i>
+            <cm-avatar cm-data = "contact.identity" ></cm-avatar>    
+            <cm-contact-brief cm-data = "contact" cm-weight="1"></cm-contact-brief>     
+            <span class="separator" ></span>
+            <i class="fa cm-write fa-3x" ng-click="editContact(contact.identity.id)"></i>
         </cm-contact-tag>
     </cm-contacts-list>
     

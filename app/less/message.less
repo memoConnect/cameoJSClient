@@ -1,104 +1,100 @@
-/**
-cm-message{margin:2em 0;word-wrap:break-word}
-cm-message article.left{text-align:left}
-cm-message article.right{text-align:right}
-cm-message footer{clear:both}
-**/
+cm-conversation{
 
-cm-message{
-  margin: 0.5em 0;
-  word-wrap: break-word;
-  padding:0 0.1em;
-  &.right {
-    text-align: right;
-  }
-  article {
-    div.avatar {
-      font-size: 1.5em;
-      width: 1.5em;
-      height: 1.5em;
-      margin-right: 0.7rem;
-      cm-avatar {
-        width: inherit !important;
-        height: inherit !important;
+    cm-message{
+        margin: 0.5em 0;
+        word-wrap: break-word;
+        padding:0 0.1em;
+        &.right {
+            text-align: right;
+        }
+        article {
+            div.avatar {
+              font-size: 1.5em;
+              width: 1.5em;
+              height: 1.5em;
+              margin-right: 0.7rem;
+              cm-avatar {
+                width: inherit !important;
+                height: inherit !important;
+              }
+            }
+            div.message {
+              position: relative;
+              padding: 0.5em;
+              min-width: @cm-message-min-width;
+              -webkit-border-radius: @cm-border-radius;
+              -moz-border-radius: @cm-border-radius;
+              border-radius: @cm-border-radius;
+              border: none;
+              text-align: left;
+            }
+            div.message.left {
+              background-color: @cm-msg-bg-color-other;
+              max-width: @cm-message-left-max-width;
+            }
+            div.message.right {
+              background-color: @cm-msg-bg-color-own;
+              margin-right: 0.4rem;
+              max-width: @cm-message-right-max-width;
+            }
+            span{
+              display: block;
+            }
+            span.nose{
+              position: absolute;
+            }
+            span.nose.left{
+              top: 0.2em;
+              left: -0.4em;
+              color: @cm-msg-bg-color-other;
+            }
+            span.nose.right{
+              top: 0.5em;
+              color: @cm-msg-bg-color-own;
+              right: -0.41em;
+            }
+            span.nose i{
+              font-size: 1.5em;
+            }
+            span.text{
+              margin: 0.5rem 0;
+            }
+            span.green{
+              color: @cm-green;
+            }
+            span.grey{
+              color: @cm-grey;
+            }
+            div.author {
+              position: absolute;
+              top: -0.3rem;
+              left: 0;
+              margin-left: 0.6rem;
+              span{
+                display: inline;
+                font-size: 0.6em;
+              }
+            }
+            div.assets{
+              position: absolute;
+              bottom: 0.2em;
+              right: 0;
+              margin-right: 0.4rem;
+              span{
+                display: inline;
+                font-size: 0.6em;
+              }
+              span.date{
+                text-align: right;
+                overflow: hidden; //@todo temporär
+              }
+              span.security{
+                text-align: right;
+              }
+              span.envelope{
+                text-align: right;
+              }
+            }
       }
     }
-    div.message {
-      position: relative;
-      padding: 0.5em;
-      min-width: @cm-message-min-width;
-      -webkit-border-radius: @cm-border-radius;
-      -moz-border-radius: @cm-border-radius;
-      border-radius: @cm-border-radius;
-      border: none;
-      text-align: left;
-    }
-    div.message.left {
-      background-color: @cm-msg-bg-color-other;
-      max-width: @cm-message-left-max-width;
-    }
-    div.message.right {
-      background-color: @cm-msg-bg-color-own;
-      margin-right: 0.4rem;
-      max-width: @cm-message-right-max-width;
-    }
-    span{
-      display: block;
-    }
-    span.nose{
-      position: absolute;
-    }
-    span.nose.left{
-      top: 0.2em;
-      left: -0.4em;
-      color: @cm-msg-bg-color-other;
-    }
-    span.nose.right{
-      top: 0.5em;
-      color: @cm-msg-bg-color-own;
-      right: -0.41em;
-    }
-    span.nose i{
-      font-size: 1.5em;
-    }
-    span.text{
-      margin: 0.5rem 0;
-    }
-    span.green{
-      color: @cm-green;
-    }
-    span.grey{
-      color: @cm-grey;
-    }
-    div.author {
-      position: absolute;
-      top: -0.3rem;
-      left: 0;
-      margin-left: 0.6rem;
-      span{
-        display: inline;
-        font-size: 0.6em;
-      }
-    }
-    div.assets{
-      position: absolute;
-      bottom: 0.2em;
-      right: 0;
-      margin-right: 0.4rem;
-      span{
-        display: inline;
-        font-size: 0.6em;
-      }
-      span.date{
-        text-align: right;
-        overflow: hidden; //@todo temporär
-      }
-      span.security{
-        text-align: right;
-      }
-      span.envelope{
-        text-align: right;
-      }
-    }
-  }
 }

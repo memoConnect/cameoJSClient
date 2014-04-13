@@ -1,7 +1,7 @@
 <cm-header cm-rubber-space>
-    <cm-back></cm-back>
-    <cm-logo></cm-logo>
-    <cm-menu></cm-menu>
+    <cm-back cm-weight="1"></cm-back>
+    <cm-logo cm-weight="1"></cm-logo>
+    <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
 
 <section>
@@ -15,12 +15,20 @@
         </div>
     </header>
 
-    <cm-contacts-list contacts-as="contact| filter : search">
-        <cm-contact-tag cm-data="contact" ng-click="selectContact(contact.identity); selected = true">
-
-            <span class="separator"></span>
-            <i class="fa fa-3x" ng-class="{'cm-checkbox': !selected, 'cm-checkbox-right': selected}" ng-click="editContact(contact.identity.id)"></i>
+    <cm-contacts-list contacts-as="contacts">
+        <cm-contact-tag ng-repeat="contact in contacts" cm-rubber-space>   
+            <cm-avatar cm-data = "contact.identity"></cm-avatar> 
+            <cm-safety-level level="3"></cm-safety-level>
+            <cm-contact-brief cm-data = "contact" cm-weight="1"></cm-contact-brief>     
+            <button ng-click="editContact(contact.identity.id)">
+                <i class="fa cm-fa cm-rhino-positive" ></i>
+            </button>
+            <span class="separator" ></span>
+            <button ng-click="editContact(contact.identity.id)">
+                <i class="fa" ng-class="{'cm-checkbox': !selected, 'cm-checkbox-right': selected}" ></i>
+            </button>
         </cm-contact-tag>
     </cm-contacts-list>
+
 </section>
-<cm-footer></cm-footer>
+<cm-footer cm-rubber-space></cm-footer>
