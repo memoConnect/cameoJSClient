@@ -98,6 +98,10 @@ angular.module('cmUi', [
     cmReload
 ])
 
+.directive('cmMultiInput',[
+    cmMultiInput
+])
+
 .filter('cmDigits', [
     function(){
         return function(number, digits){

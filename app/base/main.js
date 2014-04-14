@@ -275,7 +275,8 @@ addPackage('pckUi',{
         'shared/ui/resize-textarea',
         'shared/ui/date-seperator-drtv',
         'shared/ui/scroll-to-drtv',
-        'shared/ui/reload-drtv'
+        'shared/ui/reload-drtv',
+        'shared/ui/multi-input-drtv'
     ]
 })
 
