@@ -19,9 +19,9 @@ function cmFooter($location, cmTranslate){
         },
         controller: function($scope){
             $scope.btns = [
-                {i18n:'DIRV.FOOTER.TALKS',    href:'/talks'},
-                {i18n:'DIRV.FOOTER.CONTACTS', href:'/contacts'},
-                {i18n:'DIRV.FOOTER.MEDIA',    href:''}
+                {i18n:'DRTV.FOOTER.TALKS',    href:'/talks'},
+                {i18n:'DRTV.FOOTER.CONTACTS', href:'/contacts'},
+                {i18n:'DRTV.FOOTER.MEDIA',    href:''}
             ];
 
             angular.forEach($scope.btns,function(btn){

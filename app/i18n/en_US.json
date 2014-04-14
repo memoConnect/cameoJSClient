@@ -38,7 +38,9 @@
         },
         "PLACEHOLDER": {
             "USERNAME": "Username",
-            "NAME": "Display Name"
+            "DISPLAYNAME": "Display Name",
+            "EMAIL": "{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}",
+            "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}"
         },
         "INFO": {
             "MIN_LETTER_COUNT": "Please use at least {{count}} letters.",
@@ -50,7 +52,9 @@
                 "EXISTS": "Username exists! Please choose an other.",
                 "EMPTY": "Please insert a username.",
                 "INVALID": "Username is'nt valid. Avoid Spaces."
-            }
+            },
+            "INVALID_EMAIL": "{{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}",
+            "INVALID_PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}"
         },
         "TITLE": {
             "HEAD_LOGIN": "Login Information",
@@ -171,7 +175,9 @@
             "NAME": "Name",
             "SURNAME": "Surname",
             "SORT": "arrange",
-            "FILTER": "filter"
+            "FILTER": "filter",
+            "SEARCH_IDENTITY": "search Cameo indentity",
+            "ADD_EXTERN": "create new extern contact"
         },
         "BUTTON": {
             "RESET": "reset",
@@ -181,6 +187,18 @@
             "FILTER": "Filter"
         }
 	},
+
+    "CONTACT": {
+        "WIDGET": "Talks",
+        "PLACEHOLDER": {
+            "DISPLAYNAME": "{{'CONTACTS.LABEL.DISPLAYNAME'|cmTranslate}}",
+            "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}",
+            "EMAIL": "{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}"
+        },
+        "FOOTER":{
+            "SAVE": "save"
+        }
+    },
 	
 	"SETTINGS": {
 		"WELCOME": "Settings"
@@ -198,7 +216,7 @@
 		}
 	},
 
-    "DIRV": {
+    "DRTV": {
         "PASSWORD": {
             "PASSWORD": "Password",
             "PASSWORD_CONFIRM": "Confirm Password",

@@ -107,42 +107,42 @@ function cmAddExternalContact(cmContactsModel, cmLogger, cmNotify, $location){
                 };
 
                 if (form.displayName.$valid == false) {
-                    cmNotify.warn('DIRV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME', {ttl: 5000});
+                    cmNotify.warn('DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME', {ttl: 5000});
                     return false;
                 } else {
                     data.identity.displayName = form.displayName.$viewValue;
                 }
 
                 if (form.name.$valid == false) {
-                    cmNotify.warn('DIRV.EXTERN_CONTACT.INFO.EMPTY.NAME', {ttl: 5000});
+                    cmNotify.warn('DRTV.EXTERN_CONTACT.INFO.EMPTY.NAME', {ttl: 5000});
                     return false;
                 } else {
                     data.identity.name = form.name.$viewValue;
                 }
 
                 if (form.surName.$valid == false) {
-                    cmNotify.warn('DIRV.EXTERN_CONTACT.INFO.EMPTY.SURNAME', {ttl: 5000});
+                    cmNotify.warn('DRTV.EXTERN_CONTACT.INFO.EMPTY.SURNAME', {ttl: 5000});
                     return false;
                 } else {
                     data.identity.surName = form.surName.$viewValue;
                 }
 
                 if (form.phone.$valid == false && form.phone != '') {
-                    cmNotify.warn('DIRV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER', {ttl: 5000});
+                    cmNotify.warn('DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER', {ttl: 5000});
                     return false;
                 } else {
                     data.identity.phoneNumber = form.phone.$viewValue;
                 }
 
                 if (form.email.$valid == false) {
-                    cmNotify.warn('DIRV.VALIDATE_EMAIL.INFO.INVALID', {ttl: 5000});
+                    cmNotify.warn('DRTV.VALIDATE_EMAIL.INFO.INVALID', {ttl: 5000});
                     return false;
                 } else {
                     data.identity.email = form.email.$viewValue;
                 }
 
                 if(data.identity.phoneNumber == '' && data.identity.email == ''){
-                    cmNotify.warn('DIRV.EXTERN_CONTACT.INFO.EMPTY.PHONE_OR_EMAIL', {ttl: 5000});
+                    cmNotify.warn('DRTV.EXTERN_CONTACT.INFO.EMPTY.PHONE_OR_EMAIL', {ttl: 5000});
                     return false;
                 }
 
@@ -154,7 +154,7 @@ function cmAddExternalContact(cmContactsModel, cmLogger, cmNotify, $location){
                         $location.path('/contacts/all');
                     },
                     function(){
-                        cmNotify.error('DIRV.EXTERN_CONTACT.INFO.SAVE_FAIL', {ttl: 5000});
+                        cmNotify.error('DRTV.EXTERN_CONTACT.INFO.SAVE_FAIL', {ttl: 5000});
                     }
                 );
 

@@ -3,7 +3,7 @@ define([
     'angular-route',
     'angular-cookies',
     'angular-swipe',
-//    'moment',
+    'angular-moment-wrap',
     // cameo files
 //    'cmCron',
     'cmLocalStorage',
@@ -16,7 +16,6 @@ define([
     'cmLogger',
     'cmNotify',
 
-
     'pckUi',
     'base/config'
 ], function (angularAMD) {
@@ -26,7 +25,7 @@ define([
         'ngRoute',
         'ngCookies',
         'swipe',
-//        'moment',
+        'angularMoment',
         'ui.bootstrap',
         // insert cameo provider
         'cmApi',
@@ -146,8 +145,8 @@ define([
     ]);
 
     // app run handling
-    app.run(['$rootScope', '$location', '$window', '$route', 'cmUserModel',
-        function ($rootScope, $location, $window, $route, cmUserModel) {
+    app.run(['$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmLanguage',
+        function ($rootScope, $location, $window, $route, cmUserModel, cmLanguage) {
 
             //prep $rootScope with useful tools
             $rootScope.console = console
@@ -186,6 +185,10 @@ define([
             };
 
             $rootScope.$on('$routeChangeSuccess', function(schmu, _currentRoute_, _prevRoute_){
+
+                // momentjs
+                $window.moment.lang(cmLanguage.getCurrentLanguage());
+
                 $rootScope.urlHistory = $rootScope.urlHistory || [];
                 if(
                        !_currentRoute_

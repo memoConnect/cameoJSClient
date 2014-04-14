@@ -15,7 +15,12 @@
             </li>
             <li class="cm-list-group-item" ng-click="logout()">
                 <i class="fa cm-logout"></i>
-                <a class="logout">{{"MENU.LOGOUT"|cmTranslate}}</a>
+                <a class="logout">{{'MENU.LOGOUT'|cmTranslate}}</a>
+                <div class="clearfix"></div>
+            </li>
+            <li class="cm-list-group-item">
+                <i class="fa cm-rhino-positive"></i>
+                <span>{{'CAMEO.VERSION'|cmTranslate}}: {{cmVersion.version}}<br /></span>
                 <div class="clearfix"></div>
             </li>
         </ul>
