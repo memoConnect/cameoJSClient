@@ -20,7 +20,7 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
 
     this.trigger = function(event, data){
         events[event] = events[event] || [];
-        events[event].forEach(function(){
+        events[event].forEach(function(callback){
             callback(data);
         });
     };
@@ -67,6 +67,7 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
 
         if(this.contacts.length < 1 && cmUserModel.isAuth() !== false){
             this.trigger('start:load-contacts');
+            this.loading = true;
 
             cmContactsAdapter.getAll().then(
                 function(data){

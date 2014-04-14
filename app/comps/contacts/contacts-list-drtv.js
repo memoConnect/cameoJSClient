@@ -32,14 +32,20 @@ y
 
         controller: function($scope, $element, $attrs){
             $scope.isLoading = false;
-
-            cmContactsModel.on('finish:load-contacts',function(){
-                console.log('finsih')
-                $scope.isLoading = false;
-            });
-
             $scope.contacts = cmContactsModel.contacts;
             $scope.contactsQty = cmContactsModel.contacts.length;
+
+            cmContactsModel.on('start:load-contacts',function(){
+                console.log('load-contacts start')
+                $scope.isLoading = true;
+            })
+
+            cmContactsModel.on('finish:load-contacts',function(){
+                console.log('load-contacts finished')
+                $scope.isLoading = false;
+            })
+
+            cmContactsModel.getAll();
 
             /**
              * handle every single contact via model
