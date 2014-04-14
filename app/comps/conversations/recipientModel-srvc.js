@@ -1,33 +1,29 @@
 function cmRecipientModel (cmConversationsAdapter, cmUserModel){
     var RecipientModel = function(identity){
-        var self = this;
+        var self = identity;
 
-        this.addTo = function(conversation){
+        self.addTo = function(conversation){
             conversation.addRecipient(self);
-            return this;
+            return self;
         }
 
-        this.sendTo = function(conversationId){
+        self.sendTo = function(conversationId){
             if(conversationId != ''){
-                cmConversationsAdapter.addRecipient(conversationId, this.id);
+                cmConversationsAdapter.addRecipient(conversationId, self.id);
             }
 
-            return this;
+            return self;
         }
 
-        this.removeFrom = function(conversationId){
+        self.removeFrom = function(conversationId){
             if(conversationId != ''){
-                cmConversationsAdapter.removeRecipient()(conversationId, this.id);
+                cmConversationsAdapter.removeRecipient(conversationId, self.id);
             }
 
-            return this;
+            return self;
         }
 
-        this.init = function(identity){
-            angular.extend(this, identity);
-        }
-
-        this.init(identity);
+        return identity
     }
 
     return RecipientModel;

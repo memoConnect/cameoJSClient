@@ -29,7 +29,8 @@
             <i class="fa cm-info"></i>  {{'TALKS.LIST_EMPTY'|cmTranslate}}
         </li>
         <li ng-repeat="conversation in conversations | filter:search" ng-click="goToConversation(conversation.id)">
-            <cm-conversation-tag cm-data="conversation"></cm-conversation-tag>
+            <cm-conversation-tag cm-data="conversation" cm-rubber-space>
+            </cm-conversation-tag>
 
             <!--
             <a href="#/conversation/{{conversation.id}}" class="clearfix">

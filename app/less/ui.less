@@ -62,8 +62,8 @@ cm-edge, [cm-edge] {
 
 cm-avatar {
   display:inline-block;
-  width:3rem;
-  height:3rem;
+  width:@cm-unit;
+  height:@cm-unit;
   vertical-align:middle;
   position:relative;
   background-size:cover;
@@ -120,4 +120,18 @@ cm-spinner {
   left: 50%;
   width: 1px;
   height: 1px;
+}
+
+cm-rubber-space,
+[cm-rubber-space] {
+
+  display: block;
+  text-align: center;
+  white-space: nowrap;
+
+  > *{
+    display: inline-block;
+    vertical-align: top;
+    min-height: 1px;
+  }
 }
