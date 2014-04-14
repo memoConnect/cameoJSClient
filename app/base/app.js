@@ -10,6 +10,7 @@ define([
     'cmAuth',
     'cmUserModel',
     'cmIdentity',
+    'cmObject',
 
     'cmLanguage',
     'cmLogger',
@@ -26,6 +27,7 @@ define([
         'ngCookies',
         'swipe',
         'ui.bootstrap',
+        'cmObject',
         // insert cameo provider
         'cmApi',
         'cmUi',

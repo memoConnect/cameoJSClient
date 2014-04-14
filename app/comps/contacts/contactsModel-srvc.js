@@ -1,9 +1,11 @@
-function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUtil, $q, $rootScope){
+function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUtil, cmObject, $q, $rootScope){
     var self = this,
         events = {};
 
     this.contacts = [];
     this.groups = [];
+
+    cmObject.addEventHandlingTo(this)
 
     /**
      * Init Object

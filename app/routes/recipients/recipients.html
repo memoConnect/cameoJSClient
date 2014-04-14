@@ -18,7 +18,7 @@
     <cm-contacts-list contacts-as="contacts">
         <cm-contact-tag ng-repeat="contact in contacts" cm-rubber-space>   
             <cm-avatar cm-data = "contact.identity"></cm-avatar> 
-            <cm-safety-level level="3"></cm-safety-level>
+            <cm-key-level level="3"></cm-key-level>
             <cm-contact-brief cm-data = "contact" cm-weight="1"></cm-contact-brief>     
             <button ng-click="editContact(contact.identity.id)">
                 <i class="fa cm-fa cm-rhino-positive" ></i>

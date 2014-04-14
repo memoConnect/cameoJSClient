@@ -8,6 +8,7 @@ var cmConversations = angular.module('cmConversations', [
     'cmUtil',
 //    'cmCron',
     'cmIdentity',
+    'cmObject',
     'cmUserModel',
     'cmNotify',
     'ui.bootstrap'
