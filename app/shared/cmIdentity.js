@@ -3,8 +3,8 @@
  */
 'use strict';
 
-angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
-.factory('cmIdentityModel',['cmAuth', 'cmCrypt', '$q', function(cmAuth, cmCrypt, $q){
+angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject'])
+.factory('cmIdentityModel',['cmAuth', 'cmCrypt', 'cmObject', '$q', function(cmAuth, cmCrypt, cmObject, $q){
     var Identity = function(identity_data){
 
         this.id,
@@ -20,6 +20,8 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
         this.lastUpdated;
 
         var self = this;
+
+        cmObject.addEventHandlingTo(this)
 
         //Encrypt passphrase with all available public keys
         //Identities cannot decrypt, Users can
@@ -99,7 +101,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
          * @param identity_data
          */
         this.init = function(identity_data){
-            var deferred = $q.defer();
+            //var deferred = $q.defer();
 
             if(typeof identity_data === 'object'){
 
@@ -122,26 +124,30 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
                     self.addKey(publicKey_data)
                 })
 
-                deferred.resolve();
+                //deferred.resolve();
 
             } else if(typeof identity_data === 'string'){
                 this.id = identity_data;
 
+                this.trigger('before-load')
                 cmAuth.getIdentity(identity_data).then(
                     function(data){
+                        self.trigger('load', data)
                         if(typeof data =='string'){
                             cmLogger('cmAuth.getIdentity() should forward an object, got string instead. ')
-                            deferred.reject()
-                        }else{                     
-                            deferred.resolve(self.init(data));
+                           // deferred.reject()
+                        }else{                 
+                            self.init(data)    
+                           // deferred.resolve();
                         }
+                        self.trigger('after-load', data)
                     }
                 )
             } else {
-                deferred.reject();
+             //   deferred.reject();
             }
 
-            return deferred.promise;
+            return this
         }
 
         this.init(identity_data);
@@ -163,6 +169,8 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
          * @returns {*}
          */
         create: function(data){
+
+
             var identity = null,
                 i = 0;
 
@@ -188,6 +196,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt'])
 
                 if(identity === null){
                     identity = new cmIdentityModel(data);
+                    
                     instances.push(identity);
                 }
 

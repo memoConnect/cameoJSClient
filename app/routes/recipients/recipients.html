@@ -1,10 +1,10 @@
 <cm-header cm-rubber-space>
-    <cm-back cm-weight="1"></cm-back>
+    <cm-back cm-weight="1" back-to ="conversation" plain-back="true"></cm-back>
     <cm-logo cm-weight="1"></cm-logo>
     <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
 
-<section>
+<section ng-controller = "RecipientsCtrl">
     <header>        
         <h1>{{"RECIPIENTS.HEADING"|cmTranslate}}</h1>       
 
@@ -24,8 +24,8 @@
                 <i class="fa cm-fa cm-rhino-positive" ></i>
             </button>
             <span class="separator" ></span>
-            <button ng-click="editContact(contact.identity.id)">
-                <i class="fa" ng-class="{'cm-checkbox': !selected, 'cm-checkbox-right': selected}" ></i>
+            <button ng-click="toggleRecipient(contact.identity)" ng-disabled = "selected[contact.identity.id] && disabled_remove">                
+                <i class="fa" ng-class="{'cm-checkbox': !selected[contact.identity.id], 'cm-checkbox-right' : selected[contact.identity.id]}"></i>                
             </button>
         </cm-contact-tag>
     </cm-contacts-list>

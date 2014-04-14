@@ -60,6 +60,7 @@ cmContacts.directive('cmContactsFilterControls',[
 ])
 
 cmContacts.directive('cmContactTag',[
+    '$location',
     cmContactTag
 ])
 

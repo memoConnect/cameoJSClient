@@ -28,6 +28,7 @@ cmConversations.factory('cmConversationModel',[
     'cmUserModel',
     'cmRecipientModel',
     'cmNotify',
+    'cmObject',
     '$q',
     '$rootScope',
     cmConversationModel
@@ -80,6 +81,8 @@ cmConversations.service('cmPurlModel',[
 
 cmConversations.directive('cmConversationControls', [
     'cmNotify',
+    '$location',
+    '$rootScope',
     cmConversationControls
 ])
 

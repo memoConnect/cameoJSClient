@@ -9,15 +9,18 @@ angular.module('cmObject', [])
             obj._callbacks = {}
 
             obj.trigger = function(event_name, data){
-                var callback = obj.callbacks[event_name] || function(){}
+                obj._callbacks[event_name] = obj._callbacks[event_name] || []
 
-                callback.apply(obj, [data])
+                obj._callbacks[event_name].forEach(function(callback){
+                    callback.apply(obj, [data])
+                })
 
                 return obj
             }
 
             obj.on = function(event_name, callback){
-                obj._callbacks[event_name] = callback
+                obj._callbacks[event_name] = obj._callbacks[event_name] || []
+                obj._callbacks[event_name].push(callback)
                 return obj
             }
 

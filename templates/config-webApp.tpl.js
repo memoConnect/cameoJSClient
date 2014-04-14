@@ -47,6 +47,10 @@ cameo_config = {
             routes:['/contacts/:tab?'],
             hasCtrl: true
         },
+        'contact': {
+            routes:['/contact/:id'],
+            hasCtrl: true
+        },
         'verification': {
             routes:['/verification/:secret']
         },

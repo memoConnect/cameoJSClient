@@ -15,6 +15,9 @@ var config = {
         'angular-translate': 'vendor/angular-translate/angular-translate',
         'angular-growl': 'vendor/angular-growl/angular-growl',
 
+        'angular-moment-wrap': 'vendor/angular-moment/angular-moment',
+        'moment': 'vendor/angular-moment/moment-with-langs',
+
         // requirejs stuff
         'angularAMD': 'vendor/requirejs/angularAMD',
         'ngload': 'vendor/requirejs/ngload',
@@ -22,7 +25,7 @@ var config = {
         // global provider without AMD
         'cmApi': 'shared/cmApi',
         'cmUi': 'shared/ui/ui-module',
-        'cmLanguage': 'shared/i18n/language',
+        'cmLanguage': 'shared/cmLanguage',
         'cmLogger': 'shared/cmLogger',
         'cmNotify': 'shared/cmNotify',
         'cmLocalStorage': 'shared/cmLocalStorage',
@@ -73,6 +76,7 @@ var config = {
         'angular-swipe': ['angular'],
         'angular-translate': ['angular'],
         'angular-growl': ['angular'],
+        'angular-moment-wrap': ['angular','moment'],
 
         'ui-bootstrap': ['angular'],
         'ui-bootstrap-tpls': ['angular'],
@@ -275,7 +279,8 @@ addPackage('pckUi',{
         'shared/ui/resize-textarea',
         'shared/ui/date-seperator-drtv',
         'shared/ui/scroll-to-drtv',
-        'shared/ui/reload-drtv'
+        'shared/ui/reload-drtv',
+        'shared/ui/multi-input-drtv'
     ]
 })
 

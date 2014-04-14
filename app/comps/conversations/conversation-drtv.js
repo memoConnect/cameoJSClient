@@ -12,29 +12,12 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                 conversation_offset  = $attrs.offset,
                 conversation_limit   = $attrs.limit
 
-            $scope.new_conversation = !conversation_id;
-
-
-            if($scope.new_conversation !== true){
-                cmConversationsModel.getConversation(conversation_id).then(
-                    function (conversation) {
-                        $scope.init(conversation)
-                        $scope.conversation.decryptPassphrase()
-                        $scope.conversation.decrypt()
-                    }
-                )
-            } else {
-                cmConversationsModel.createNewConversation().then(
-                    function(newConversation){
-                        newConversation.addRecipient(cmUserModel.data.identity);
-                        $scope.init(newConversation);
-                        $scope.conversation.setPassphrase()
-                    }
-                );
-            }
-
+            
 
             $scope.init = function (conversation) {
+                
+                $rootScope.pendingConversation = conversation
+
                 // reload detail of conversation
                 $scope.conversation = conversation.update();
 
@@ -60,10 +43,6 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                     $scope.conversation.updateSubject(new_subject||'')
                 })
                 
-                $scope.$on('cmContacts:selected', function (event, identity) {
-//                    $scope.conversation.addRecipient(identity)
-                    new cmRecipientModel(identity).addTo($scope.conversation).sendTo($scope.conversation.id);
-                })
 
                 //cron
 //                if($scope.new_conversation !== true){
@@ -72,7 +51,6 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
             }
 
             $scope.sendMessage = function () {
-                console.log('send message, passphrase: "'+$scope.conversation.passphrase+'"')
 
                 var passphrase_valid    = !!$scope.conversation.passphraseValid(),
                     message_empty       = !$scope.my_message_text,
@@ -162,10 +140,33 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                 return false;
             }
 
-            $scope.manageRecipients = function(){
-                $rootScope.pendingConversation = $scope.conversation
-                $location.path('/recipients')
+
+
+
+            $scope.new_conversation = !conversation_id && !$rootScope.pendingConversation;
+
+
+            if(conversation_id){
+                cmConversationsModel.getConversation(conversation_id).then(
+                    function (conversation) {
+                        $scope.init(conversation)
+                        $scope.conversation.decryptPassphrase()
+                        $scope.conversation.decrypt()
+                    }
+                )
+            } else if($rootScope.pendingConversation){
+                $scope.init($rootScope.pendingConversation)
+            } else {
+                cmConversationsModel.createNewConversation().then(
+                    function(newConversation){
+                        newConversation.addRecipient(cmUserModel.data.identity);
+                        $scope.init(newConversation);
+                        $scope.conversation.setPassphrase()
+                    }
+                );
             }
+
+
         }
     }
 }
