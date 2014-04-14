@@ -15,7 +15,8 @@ var config = {
         'angular-translate': 'vendor/angular-translate/angular-translate',
         'angular-growl': 'vendor/angular-growl/angular-growl',
 
-        'moment': 'vendor/angular-moment/angular-moment',
+        'angular-moment-wrap': 'vendor/angular-moment/angular-moment',
+        'moment': 'vendor/angular-moment/moment-with-langs',
 
         // requirejs stuff
         'angularAMD': 'vendor/requirejs/angularAMD',
@@ -24,7 +25,7 @@ var config = {
         // global provider without AMD
         'cmApi': 'shared/cmApi',
         'cmUi': 'shared/ui/ui-module',
-        'cmLanguage': 'shared/i18n/language',
+        'cmLanguage': 'shared/cmLanguage',
         'cmLogger': 'shared/cmLogger',
         'cmNotify': 'shared/cmNotify',
         'cmLocalStorage': 'shared/cmLocalStorage',
@@ -42,7 +43,6 @@ var config = {
         //'cmContacts': 'comps/contacts/cmContacts',
 
         // shared
-        'util-moment': 'vendor/util/moment-with-langs',
         'util-spin': 'vendor/util/spin',
         'util-base64': 'vendor/util/base64',
         'util-base64_decode': 'vendor/util/base64_decode',
@@ -75,6 +75,7 @@ var config = {
         'angular-swipe': ['angular'],
         'angular-translate': ['angular'],
         'angular-growl': ['angular'],
+        'angular-moment-wrap': ['angular','moment'],
 
         'ui-bootstrap': ['angular'],
         'ui-bootstrap-tpls': ['angular'],

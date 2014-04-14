@@ -4,6 +4,7 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
     var self = this,
         events = {};
 
+    this.isLoading = false;
     this.conversations = [];
     this.quantity = 0;
     this.limit = 10; // 5
@@ -126,17 +127,14 @@ function cmConversationsModel (cmConversationsAdapter, cmConversationFactory, $q
 
         cmConversationsAdapter.getConversations(limit, offset).then(
             function (data) {
-
                 self.quantity = data.numberOfConversations;
 
                 data.conversations.forEach(function (conversation_data) {
                     self.addConversation(cmConversationFactory.create(conversation_data).update())
                 })
             }
-        ).finally (
-            function(){
-                self.trigger('finish:load');
-            }
-        )
+        ).finally (function(){
+            self.trigger('finish:load');
+        })
     }
 }

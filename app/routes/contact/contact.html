@@ -1,0 +1,55 @@
+<cm-header cm-rubber-space>
+    <cm-back cm-weight="1" back-to="/contacts"></cm-back>
+    <cm-identity cm-weight="10"></cm-identity>
+    <cm-logo cm-weight="8"></cm-logo>
+    <cm-reload cm-weight="8"></cm-reload>
+    <cm-menu cm-weight="2"></cm-menu>
+</cm-header>
+
+<section ng-controller="ContactCtrl">
+    <pre ng-hide="true">
+        {{cmUtil.prettify(contact)}}
+        {{cmUtil.prettify(identity)}}
+    </pre>
+
+    <div cm-transparent-bg></div>
+
+    <div class="cm-contact-body">
+        <div class="cm-contact-details" cm-rubber-space>
+            <div cm-weight="1">
+                <cm-avatar cm-data="identity" ng-if="identity" cm-view="{{chooseAvatar?'unknown':''}}"></cm-avatar>
+            </div>
+            <div cm-weight="1">
+                <div class="cm-contact-widget">
+                    {{'CONTACT.WIDGET'|cmTranslate}}:
+                    <cm-safety-level level="2"></cm-safety-level>
+                    12 (3)
+                    <i class="fa cm-right"></i>
+                </div>
+                <div class="cm-contact-actions" cm-rubber-space>
+                    <i cm-weight="1" class="fa cm-rhino-positive"></i>
+                    <i cm-weight="1" class="fa cm-write with-white-bg"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="cm-contact-inputs">
+            <div class="cm-input-ctn" ng-class="{'cm-input-disabled':!editable}">
+                <input name="displayName" ng-model="identity.displayName" placeholder="{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" ng-disabled="!editable" />
+            </div>
+            <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':!editable}">
+                <input name="phoneNumber" ng-model="identity.phoneNumber.value" placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" ng-disabled="!editable" />
+            </div>
+            <div cm-type-chooser choose-to-data="phoneType"></div>
+            <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':!editable}">
+                <input name="email" ng-model="identity.email.value" placeholder="{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}" ng-disabled="!editable" />
+            </div>
+            <div cm-type-chooser choose-to-data="email_type"></div>
+        </div>
+    </div>
+
+    <cm-footer ng-show="editable" cm-rubber-space>
+        <button id="registerUserButton" ng-click="saveUser()">{{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i></button>
+    </cm-footer>
+
+</section>

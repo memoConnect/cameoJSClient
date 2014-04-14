@@ -14,7 +14,7 @@
                 <cm-avatar cm-data="recipient" cm-with-name="true" cm-view="hide-owner" ng-repeat="recipient in conversation.recipients"></cm-avatar>
 
                 <div ng-if="conversation.recipients.length == 1" ng-click="$emit('cmOverlay:show', 'add-recipients')" class="add-recipients">
-                    <cm-avatar cm-view="none"></cm-avatar>
+                    <cm-avatar cm-view="unknown"></cm-avatar>
                     {{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS'|cmTranslate}}
                     <cm-edge><i class="fa cm-add"></i></cm-edge>
                 </div>

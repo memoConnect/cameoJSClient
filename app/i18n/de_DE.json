@@ -38,7 +38,9 @@
         },
         "PLACEHOLDER": {
             "USERNAME": "Nutzername",
-            "NAME": "Name"
+            "DISPLAYNAME": "Name",
+            "EMAIL": "{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}",
+            "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}"
         },
         "INFO": {
             "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden.",
@@ -50,7 +52,9 @@
                 "EXISTS": "Der Nutzername ist bereits vergeben. Bitte wählen Sie einen anderen.",
                 "EMPTY": "Bitte geben Sie einen Nutzername an.",
                 "INVALID": "Der Nutzername ist nicht valide. Vermeiden Sie Leerzeichen."
-            }
+            },
+            "INVALID_EMAIL": "{{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}",
+            "INVALID_PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}"
         },
         "TITLE": {
             "HEAD_LOGIN": "Login Information",
@@ -171,7 +175,9 @@
             "NAME": "Vorname",
             "SURNAME": "Nachname",
             "SORT": "sortieren",
-            "FILTER": "filtern"
+            "FILTER": "filtern",
+            "SEARCH_IDENTITY": "Cameo Indentität suchen",
+            "ADD_EXTERN": "neuen externen Kontakt anlegen"
         },
         "BUTTON": {
             "RESET": "zurücksetzen",
@@ -181,6 +187,18 @@
             "FILTER" : "Filter"
         }
 	},
+
+    "CONTACT": {
+        "WIDGET": "Talks",
+        "PLACEHOLDER": {
+            "DISPLAYNAME": "{{'CONTACTS.LABEL.DISPLAYNAME'|cmTranslate}}",
+            "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}",
+            "EMAIL": "{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}"
+        },
+        "FOOTER":{
+            "SAVE": "speichern"
+        }
+    },
 	
 	"SETTINGS": {
 		"WELCOME": "Einstellungen"
@@ -198,7 +216,7 @@
 		}
 	},
 
-    "DIRV": {
+    "DRTV": {
         "PASSWORD": {
             "PASSWORD": "Passwort",
             "PASSWORD_CONFIRM": "Passwort wiederholen",
@@ -238,7 +256,7 @@
         "TYPE_CHOOSER": {
             "PRIVATE": "privat",
             "BUSINESS": "geschäftlich",
-            "OTHER": "sonstiges",
+            "OTHER": "sonstige",
             "MOBILE": "Mobil",
             "LANDLINE": "Festnetz",
             "IP": "IP",
@@ -263,8 +281,8 @@
     },
 
     "NOTIFY": {
-      "KEYS":{
-          "STORE_NEW": "Schlüssel erfolgreich gespeichert!"
-      }
+        "KEYS":{
+            "STORE_NEW": "Schlüssel erfolgreich gespeichert!"
+        }
     }
 }

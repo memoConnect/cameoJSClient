@@ -11,7 +11,7 @@
     <header>
         <h1>{{"CONTACTS.HEADING"|cmTranslate}}</h1>       
 
-        <a href="#/contact" cm-edge>            
+        <a ng-click="openAddModal()" cm-edge>
             <i class="fa cm-add"></i>
         </a>
 
@@ -32,7 +32,7 @@
     <cm-contacts-list contacts-as="contact">
         <cm-contact-tag cm-data="contact">
             <span class="separator"></span>
-            <i class="fa cm-write fa-3x" ng-click="editContact(contact.identity.id)"></i>
+            <i class="fa cm-write fa-3x" ng-click="startConversation(contact.identity.id)"></i>
         </cm-contact-tag>
     </cm-contacts-list>
 

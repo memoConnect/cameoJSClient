@@ -4,15 +4,15 @@ function cmTypeChooser(cmLogger){
     // defined types
     var types = {
         types: [
-            {i18n:'DIRV.TYPE_CHOOSER.PRIVATE',value:'private'},
-            {i18n:'DIRV.TYPE_CHOOSER.BUSINESS',value:'business'},
-            {i18n:'DIRV.TYPE_CHOOSER.OTHER',value:'other','default':true}
+            {i18n:'DRTV.TYPE_CHOOSER.PRIVATE',value:'private','default':true},
+            {i18n:'DRTV.TYPE_CHOOSER.BUSINESS',value:'business'},
+            {i18n:'DRTV.TYPE_CHOOSER.OTHER',value:'other'}
         ],
         provider: [
-            {i18n:'DIRV.TYPE_CHOOSER.LANDLINE',value:'landline'},
-            {i18n:'DIRV.TYPE_CHOOSER.IP',value:'ip'},
-            {i18n:'DIRV.TYPE_CHOOSER.FAX',value:'fax'},
-            {i18n:'DIRV.TYPE_CHOOSER.MOBILE',value:'mobile','default':true}
+            {i18n:'DRTV.TYPE_CHOOSER.LANDLINE',value:'landline'},
+            {i18n:'DRTV.TYPE_CHOOSER.IP',value:'ip'},
+            {i18n:'DRTV.TYPE_CHOOSER.FAX',value:'fax'},
+            {i18n:'DRTV.TYPE_CHOOSER.MOBILE',value:'mobile','default':true}
         ]
     };
 
