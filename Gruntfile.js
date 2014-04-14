@@ -141,8 +141,34 @@ module.exports = function (grunt) {
                 dest: 'app/js/controller/built.raw.js'
             },
             less: {
-                src: ['app/less/base.less', 'app/less/bootstrap.less', 'app/less/!(basebootstrap).less'],
+                src: ['app/less/base.less', 'app/less/bootstrap.less', 'app/less/!(base|bootstrap).less'],
                 dest: 'app/css/app.less'
+            },
+            packages: {
+                options:{
+                    process: function(src, filepath) {
+                        if(filepath.search(/.*\.html/g) != -1){
+                            var nums = (src.match(/\n/g)||[]).length;
+                            var lines = src
+                                .replace(/(\r\n|\n|\r|\t)/gm,'')// clear system signs
+                                .replace(/\s{2,100}/gm,'')// clear whitespaces TODO: with html <
+                                .replace(/(')/gm,"\\'");// uncomment single quotes
+
+                            return  "// Source: " + nums+" "+filepath + "\n" +
+                                    "angular.module('"+filepath+"', []).run([\n" +
+                                        "'$templateCache', function($templateCache) {\n"+
+                                        "$templateCache.put('"+filepath+"'," +
+                                        "\n'"+lines+"'" +
+                                        ");\n"+
+                                    "}]);"
+                        } else {
+//                            return '// Source: ' + filepath + '\n' +
+//                                src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+                        }
+                    }
+                },
+                src: ['app/shared/ui/ui-module.js','app/shared/ui/!(ui-module|_package)*'],
+                dest: 'app/shared/ui/_package.js'
             }
         },
         coffee: {
@@ -560,6 +586,7 @@ module.exports = function (grunt) {
     // watch
     grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'template:config-phonegap', 'concat:less', 'less']);
     grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
+    grunt.registerTask('packages', ['concat:packages']);
 
     // deploy it for me babe !!
     grunt.registerTask('deploy', ['clean:dist', 'genAllTemplates', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
