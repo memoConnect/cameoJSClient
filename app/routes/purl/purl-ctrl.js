@@ -26,12 +26,11 @@ define([
                         $scope.conversationId  = data.id;
                         $scope.showConversation = true;
                     },
-                    function(reponse){
-                        if(typeof response !== 'undefined' && cmUtil.checkKeyExists(reponse, 'status')){
-                            if(reponse.status == 401){
-                                // do logout, register purl url, for redirect after login
-                            } else {
-
+                    function(response){
+                        if(typeof response !== 'undefined' && cmUtil.checkKeyExists(response, 'status')){
+                            if(response.status == 401){
+                                // goto talks and show modal
+                                console.log(response)
                             }
                         } else {
                             $location.path('/404');
