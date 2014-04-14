@@ -46,8 +46,8 @@ function cmPurlModel (cmConversationsAdapter, cmConversationsModel, cmConversati
 
                     deferred.resolve(handleConversation(data.conversation));
                 },
-                function () {
-                    deferred.reject();
+                function (response) {
+                    deferred.reject(response);
                 }
             )
         } else {

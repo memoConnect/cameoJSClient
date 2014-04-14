@@ -26,8 +26,16 @@ define([
                         $scope.conversationId  = data.id;
                         $scope.showConversation = true;
                     },
-                    function(){
-                        $location.path('/404');
+                    function(reponse){
+                        if(typeof response !== 'undefined' && cmUtil.checkKeyExists(reponse, 'status')){
+                            if(reponse.status == 401){
+                                // do logout, register purl url, for redirect after login
+                            } else {
+
+                            }
+                        } else {
+                            $location.path('/404');
+                        }
                     }
                 );
 
