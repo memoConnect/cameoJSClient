@@ -26,8 +26,15 @@ define([
                         $scope.conversationId  = data.id;
                         $scope.showConversation = true;
                     },
-                    function(){
-                        $location.path('/404');
+                    function(response){
+                        if(typeof response !== 'undefined' && cmUtil.checkKeyExists(response, 'status')){
+                            if(response.status == 401){
+                                // goto talks and show modal
+                                console.log(response)
+                            }
+                        } else {
+                            $location.path('/404');
+                        }
                     }
                 );
 
