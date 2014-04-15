@@ -17,7 +17,7 @@ describe('login screen', function () {
         ptor.get(config.wwwUrl);
         util.waitForPageLoad(ptor);
         ptor.getCurrentUrl().then(function(url){
-            expect(url).toMatch(/\/\#\/login$/)
+            expect(url).toMatch(/\#\/login$/)
         })
 
 
@@ -26,7 +26,21 @@ describe('login screen', function () {
         })
     });
 
+    it('should route to registration when clicked', function () {
+
+        $("[data-qa='register-btn']").click();
+
+        util.waitForPageLoad(ptor);
+        ptor.getCurrentUrl().then(function(url){
+            expect(url).toMatch(/\#\/registration/)
+        })
+
+    });
+
     it('should prompt for username and password after click on login and close it', function () {
+
+        ptor.get(config.wwwUrl);
+        util.waitForPageLoad(ptor);
 
         $("[data-qa='login-btn']").click();
 
@@ -86,7 +100,16 @@ describe('login screen', function () {
         util.waitForPageLoad(ptor)
 
         ptor.getCurrentUrl().then(function(url){
-            expect(url).toMatch(/\/\#\/talks$/)
+            expect(url).toMatch(/\#\/talks$/)
+        })
+    })
+
+    it('dont show login page when already logged in', function() {
+
+        ptor.get(config.wwwUrl);
+        util.waitForPageLoad(ptor);
+        ptor.getCurrentUrl().then(function(url){
+            expect(url).toMatch(/\#\/talks$/)
         })
     })
 })
