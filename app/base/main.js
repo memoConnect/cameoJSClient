@@ -159,7 +159,8 @@ addPackage('pckUser',{
     ],
     resources : [
         'comps/user/login-drtv',
-        'comps/user/key-pair-drtv'
+        'comps/user/key-pair-drtv',
+        'comps/user/user-rights-drtv'
     ]
 })
 

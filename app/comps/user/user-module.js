@@ -7,7 +7,7 @@ var cmUser = angular.module('cmUser',[
     'cmLogger'
 ])
 
-cmUser.directive('cmLogin', [
+.directive('cmLogin', [
     '$location',
     'cmNotify',
     'cmUserModel',
@@ -16,7 +16,7 @@ cmUser.directive('cmLogin', [
     cmLogin
 ])
 
-cmUser.directive('cmKeyPair', [
+.directive('cmKeyPair', [
     'cmUserModel',
     'cmCrypt',
     'cmUtil',
@@ -24,6 +24,12 @@ cmUser.directive('cmKeyPair', [
     'cmNotify',
     '$location',
     cmKeyPair
+])
+
+.directive('cmUserRights', [
+    'cmUserModel',
+    'cmEnv',
+    cmUserRights
 ])
 
 

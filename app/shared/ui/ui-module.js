@@ -6,6 +6,8 @@ angular.module('cmUi', [
 
 .directive('cmView', [
     '$route',
+    '$location',
+    'cmUserModel',
     cmView
 ])
 

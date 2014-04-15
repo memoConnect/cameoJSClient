@@ -1,4 +1,6 @@
-function cmConversationControls(cmNotify, $location, $rootScope){
+'use strict';
+
+function cmConversationControls(cmUserModel, cmNotify, $location, $rootScope){
     return{
         restrict : 'AE',
         templateUrl : 'comps/conversations/conversation-controls.html',      
@@ -11,22 +13,24 @@ function cmConversationControls(cmNotify, $location, $rootScope){
             $scope.isNew = cmConversation.isNew();
 
             $scope.setLevel = function(level){
-                if(level == 'unsafe'){
-                    $scope.conversation.setPassphrase('')
-                    $scope.conversation.setKeyTransmission('symmetric')
-                }
+                if(cmUserModel.isGuest() !== true){
+                    if(level == 'unsafe'){
+                        $scope.conversation.setPassphrase('')
+                        $scope.conversation.setKeyTransmission('symmetric')
+                    }
 
-                if(level == 'safe'){
-                    $scope.conversation.setPassphrase()
-                    $scope.conversation.setKeyTransmission('symmetric')
-                }
+                    if(level == 'safe'){
+                        $scope.conversation.setPassphrase()
+                        $scope.conversation.setKeyTransmission('symmetric')
+                    }
 
-                if(level == 'safer'){
-                    $scope.conversation.setPassphrase()
-                    $scope.conversation.setKeyTransmission('asymmetric')
+                    if(level == 'safer'){
+                        $scope.conversation.setPassphrase()
+                        $scope.conversation.setKeyTransmission('asymmetric')
+                    }
+
+                    $scope.safetyLevel = level;
                 }
-                
-                $scope.safetyLevel = level;
             }
 
             $scope.bodyVisible = $scope.isNew; 

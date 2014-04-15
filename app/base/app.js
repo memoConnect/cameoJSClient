@@ -106,7 +106,8 @@ define([
                         routeParams = {
                             templateUrl: "",
                             controllerUrl: "",
-                            css: ""
+                            css: "",
+                            guests: false
                         };
                     // create params for route
                     if(angular.isDefined(_settings_['templateUrl'])){
@@ -120,6 +121,9 @@ define([
 
                     if(angular.isDefined(_settings_['css']))
                         routeParams.css = _settings_['css'];
+
+                    if(angular.isDefined(_settings_['guests']))
+                        routeParams.guests = _settings_['guests'];
 
                     // create route as defined or take simple route
                     if(angular.isDefined(_settings_['routes']))
@@ -168,7 +172,6 @@ define([
                 var path = $location.$$path;
                 // exists none token then otherwise to login
                 if (cmUserModel.isAuth() === false){
-//                    cmNotify.warn($cookies.token+' run without token '+path+' '+(!path_regex.test(path)?'to login':'stay'))
                     if (!path_regex.test(path)) {
                         $location.path("/login");
                     }
@@ -191,6 +194,9 @@ define([
                 // momentjs
                 $window.moment.lang(cmLanguage.getCurrentLanguage());
 
+                // important for HTML Manipulation to switch classes etc.
+                $rootScope.cmIsGuest = cmUserModel.isGuest();
+
                 $rootScope.urlHistory = $rootScope.urlHistory || [];
                 if(
                        !_currentRoute_
@@ -211,8 +217,6 @@ define([
                 
             });
             
-            
-
             //Make it easy for e2e-tests to monitor route changes:
             window._route = {}
 
@@ -254,8 +258,10 @@ define([
             //For dev purposes only:
 //            window.onresize = function() { initScreenWidth(32) }
 
+
         }
     ]);
+
     // bootstrap app and all things after here use app.register.{ng-type}
     angularAMD.bootstrap(app);
 
