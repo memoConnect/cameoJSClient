@@ -1,54 +1,89 @@
-/**
- # start selenium server for browser control
- webdriver-manager start
-
- # start webserver for the app
- python -m http.server 1337
-
-    # run specs with head browser
-    protractor config/ptor.e2e.conf
-
-    # run specs with phantomjs / headless browser
-    phantomjs --webdriver=9515
-    protractor test/conf/ptor.e2e --browser phantomjs --seleniumAddress http://localhost:9515
-
-*/
-
-// An example configuration file.
 exports.config = {
-    // The address of a running selenium server.
-    seleniumAddress: 'http://localhost:4444/wd/hub',
 
-    // Capabilities to be passed to the webdriver instance.
-//    capabilities: null,
-    capabilities: {
-        'browserName': 'phantomjs',
-        'phantomjs.binary.path':'./node_modules/phantomjs/bin/phantomjs',
-        'phantomjs.cli.args':['--webdriver=9515']
-    },
+    // The location of the selenium standalone server .jar file.
+    seleniumServerJar: '../test/e2e/tools/selenium-server-standalone-2.41.0.jar',
+    // The port to start the selenium server on, or null if the server should
+    // find its own unused port.
+    seleniumPort: null,
+    // Chromedriver location is used to help the selenium standalone server
+    // find chromedriver. This will be passed to the selenium jar as
+    // the system property webdriver.chrome.driver. If null, selenium will
+    // attempt to find chromedriver using PATH.
+    chromeDriver: '../test/e2e/tools/chromedriver',
+//    chromeDriver: '/usr/lib/chromium-browser/chromedriver',
+    // Additional command line options to pass to selenium. For example,
+    // if you need to change the browser timeout, use
+    // seleniumArgs: ['-browserTimeout=60'],
+    seleniumArgs: [],
 
-    browser: 'phantomjs',
+    // The timeout for each script run on the browser. This should be longer
+    // than the maximum time your application needs to stabilize between tasks.
+    allScriptsTimeout: 30000,
 
-    baseUrl: 'http://localhost:9000/app/index.html',
-
-    // Spec patterns are relative to the current working directly when
-    // protractor is called.
+    // ----- What tests to run -----
+    //
+    // Spec patterns are relative to the location of this config.
     specs: [
-        '../test/e2e/*.spec.js'
+        '../test/e2e/**/*.spec.js'
     ],
 
-    // Override the timeout for webdriver to 20 seconds.
-    allScriptsTimeout: 20000,
+    // ----- Capabilities to be passed to the webdriver instance ----
+    //
+    // For a full list of available capabilities, see
+    // https://code.google.com/p/selenium/wiki/DesiredCapabilities
+    // and
+    // https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js
+    capabilities: {
+        'browserName': 'chrome'//,
+    },
 
-    webdriverLoglevel: 'DEBUG',
 
-    keepAlive: false,
+    // ----- More information for your tests ----
+    //
+    // A base URL for your application under test. Calls to protractor.get()
+    // with relative paths will be prepended with this.
+    //baseUrl: 'http://localhost:9000/app/',
 
-    // Options to be passed to Jasmine-node.
+    // Selector for the element housing the angular app - this defaults to
+    // body, but is necessary if ng-app is on a descendant of <body>
+    //rootElement: 'body',
+
+    // A callback function called once protractor is ready and available, and
+    // before the specs are executed
+    // You can specify a file containing code to run by setting onPrepare to
+    // the filename string.
+    onPrepare: function () {
+        // At this point, global 'protractor' object will be set up, and jasmine
+        // will be available. For example, you can add a Jasmine reporter with:
+        //     jasmine.getEnv().addReporter(new jasmine.JUnitXmlReporter(
+        //         'outputdir/', true, true));
+    },
+
+    // The params object will be passed directly to the protractor instance,
+    // and can be accessed from your test. It is an arbitrary object and can
+    // contain anything you my need in your test.
+    // This can be changed via the command line as:
+    //   --params.login.user 'Joe'
+    params: {
+        login: {
+            user: 'Jane',
+            password: '1234'
+        }
+    },
+
+    // ----- Options to be passed to minijasminenode -----
+    //
+    // See the full list at https://github.com/juliemr/minijasminenode
     jasmineNodeOpts: {
-        showColors: true,
-        defaultTimeoutInterval: 30000,
+        // onComplete will be called just before the driver quits.
+        onComplete: null,
+        // If true, display spec names.
         isVerbose: false,
-        includeStackTrace: true
+        // If true, print colors to the terminal.
+        showColors: true,
+        // If true, include stack traces in failures.
+        includeStackTrace: true,
+        // Default time to wait in ms before a test fails.
+        defaultTimeoutInterval: 30000
     }
 };

@@ -4,6 +4,8 @@ var config = require("./config-e2e-tests.js"),
 module.exports = {}
 module.exports[testName] = function(test){
     console.log('## '+testName)
+    console.log("foo")
+
     test
         // safe logout
         //.open(config.wwwUrl + "#/logout")
@@ -11,7 +13,14 @@ module.exports[testName] = function(test){
 
         // start page
         .open(config.wwwUrl)
-        .waitForElement("[data-qa='login-screen-btn']")
+        .waitFor(
+            function () {
+                console.log("--status--")
+//                return window._route.status == "loading";
+            })
+
+//        .wait(config.routeTimeout)
+
         .assert
             .url(config.wwwUrl+'#/login', 'on route login')
 
