@@ -11,9 +11,9 @@
     <header>
         <h1>{{"CONTACTS.HEADING"|cmTranslate}}</h1>       
 
-        <a ng-click="openAddModal()" cm-edge>
+        <button ng-click="openAddModal()" cm-edge>
             <i class="fa cm-edge-add"></i>
-        </a>
+        </button>
 
         <input 
             type            = "text" 
@@ -45,8 +45,13 @@
             <cm-avatar cm-data = "contact.identity" ></cm-avatar>    
             <cm-key-level key-size = "contact.identity.getWeakestKeySize()"></cm-key-level>
             <cm-contact-brief cm-data = "contact" cm-weight="1"></cm-contact-brief>     
+            <button>
+                <i class="fa cm-fa cm-rhino-positive" ng-if = ""></i>
+            </button>
             <span class="separator" ></span>
-            <i class="fa cm-write fa-3x" ng-click="startConversation(contact.identity.id)"></i>
+            <button>
+                <i class="fa cm-write" ng-click="startConversation(contact.identity.id)"></i>
+            <button>
         </cm-contact-tag>
 
     </cm-contacts-list>
