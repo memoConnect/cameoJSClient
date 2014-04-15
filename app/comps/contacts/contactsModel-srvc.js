@@ -162,9 +162,9 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
         .addContact(data)
         .then(
             function(data){
-                this.trigger('add-contact', data)
+                self.trigger('add-contact', data)
                 _add(data);
-                this.trigger('after-add-contact', data)
+                self.trigger('after-add-contact', data)
                 defer.resolve();
             },
             function(){
@@ -181,8 +181,6 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
         .editContact(id, data)
         .then(
             function(data){
-                console.log('contact edited')
-                console.log(data)
 //                _edit(data);
                 defer.resolve();
             },

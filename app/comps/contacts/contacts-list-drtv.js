@@ -1,6 +1,6 @@
 'use strict';
 
-function cmContactsList(cmContactsModel, cmLogger, $rootScope){
+function cmContactsList(cmContactsModel, cmLogger, $rootScope, $location){
     return {
         restrict: 'AE',
         scope: true,
@@ -39,7 +39,13 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope){
             $scope.startConversation = function(id){
                 cmLogger.debug('editContact '+id);
             };
-
+            /**
+             * edit contact
+             * @param id
+             */
+            $scope.editContact = function(id){
+                $location.path('/contact/'+id);
+            };
             /**
              * delete contact via model
              * @param id
@@ -47,7 +53,10 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope){
             $scope.deleteContact = function(id){
                 cmLogger.debug('deleteContact '+id);
             };
-
+            /**
+             * select contact
+             * @param identity
+             */
             $scope.selectContact = function(identity){
                 $rootScope.$broadcast('cmContacts:selected', identity)
             };
