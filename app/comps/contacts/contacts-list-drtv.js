@@ -1,6 +1,6 @@
 'use strict';
 
-function cmContactsList(cmContactsModel, cmLogger, $rootScope){
+function cmContactsList(cmContactsModel, cmLogger, $rootScope, $location){
     return {
         restrict: 'AE',
         scope: true,
@@ -16,12 +16,12 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope){
             cmContactsModel.on('start:load-contacts',function(){
                 console.log('load-contacts start')
                 $scope.isLoading = true;
-            })
+            });
 
             cmContactsModel.on('finish:load-contacts',function(){
                 console.log('load-contacts finished')
                 $scope.isLoading = false;
-            })
+            });
             console.log('BEFORE:')
             console.dir(cmContactsModel.contacts)
 
@@ -31,7 +31,7 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope){
                 console.log('done!')
                 console.log(cmContactsModel.contacts.length)
                 console.log($scope[$attrs.contactsAs].length)
-            })
+            });
 
             /**
              * handle every single contact via model
@@ -39,7 +39,13 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope){
             $scope.startConversation = function(id){
                 cmLogger.debug('editContact '+id);
             };
-
+            /**
+             * edit contact
+             * @param id
+             */
+            $scope.editContact = function(id){
+                $location.path('/contact/'+id);
+            };
             /**
              * delete contact via model
              * @param id
@@ -47,10 +53,13 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope){
             $scope.deleteContact = function(id){
                 cmLogger.debug('deleteContact '+id);
             };
-
+            /**
+             * select contact
+             * @param identity
+             */
             $scope.selectContact = function(identity){
                 $rootScope.$broadcast('cmContacts:selected', identity)
-            }
+            };
         }
     }
 }
