@@ -26,16 +26,16 @@ describe('login screen', function () {
         })
     });
 
-    it('should route to registration when clicked', function () {
-
-        $("[data-qa='register-btn']").click();
-
-        util.waitForPageLoad(ptor);
-        ptor.getCurrentUrl().then(function(url){
-            expect(url).toMatch(/\#\/registration/)
-        })
-
-    });
+//    it('should route to registration when clicked', function () {
+//
+//        $("[data-qa='register-btn']").click();
+//
+//        util.waitForPageLoad(ptor);
+//        ptor.getCurrentUrl().then(function(url){
+//            expect(url).toMatch(/\#\/registration/)
+//        })
+//
+//    });
 
     it('should prompt for username and password after click on login and close it', function () {
 
