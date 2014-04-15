@@ -168,7 +168,6 @@ define([
                 var path = $location.$$path;
                 // exists none token then otherwise to login
                 if (cmUserModel.isAuth() === false){
-//                    cmNotify.warn($cookies.token+' run without token '+path+' '+(!path_regex.test(path)?'to login':'stay'))
                     if (!path_regex.test(path)) {
                         $location.path("/login");
                     }
