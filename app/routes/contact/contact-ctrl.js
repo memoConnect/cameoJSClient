@@ -6,20 +6,27 @@ define([
 ], function(app){
     'use strict';
 
-    app.register.controller('ContactCtrl',[
-        '$scope',
-        '$routeParams',
-        'cmContactsModel',
-        'cmIdentityFactory',
-        'cmUtil',
-        function($scope, $routeParams, cmContactsModel, cmIdentityFactory, cmUtil){
-
+    app.register.controller('ContactCtrl',
+        function(
+         $scope,
+         $location,
+         $routeParams,
+         cmContactsModel,
+         cmIdentityFactory,
+         cmUtil,
+         cmNotify
+        ){
             $scope.cmUtil = cmUtil;
 
-            if($routeParams.id == 'new'){
+            var isNew = $routeParams.id == 'new' ? true : false;
+
+            if(isNew){
                 $scope.contact = {};
-                $scope.identity = {};
-                $scope.editable = true;
+                $scope.identity = {
+                    phoneNumbers: [{value:""}],
+                    emails: [{value:""}]
+                };
+                $scope.disabled = false;
                 $scope.chooseAvatar = true;
             } else {
                 $scope.chooseAvatar = false;
@@ -30,11 +37,85 @@ define([
                         // get identity model
                         $scope.identity = cmIdentityFactory.create(data.identity);
 
+                        //////////////////////
+                        // TODO: mock workarround json in array
+                        $scope.identity.phoneNumbers = [
+                            $scope.identity.phoneNumber || {value:''}
+                        ];
+                        $scope.identity.emails = [
+                            $scope.identity.email || {value:''}
+                        ];
+                        //////////////////////
+
                         // cameo user can't edit only extern end local
-                        $scope.editable = data.contactType == 'internal' ? false : true;
+                        $scope.disabled = data.contactType == 'internal' ? true : false;
                     }
                 );
             }
+
+            $scope.saveUser = function(){
+                // declaration
+                var emptyIdentity = {
+                    displayName: null,
+                    email: null,
+                    phoneNumber: null,
+                    preferredMessageType: 'default',
+                    // TODO: not implemented in BE
+                    name: null,
+                    surName: null,
+                    phoneProvider: null,
+                    phoneNumbers: [],
+                    emails: [],
+                    groups: []
+                },
+                // merge givven identity with default
+                identity = angular.extend({}, emptyIdentity, $scope.identity);
+
+                // validation
+                //////////////////////
+                // TODO: mock workarround for multiinput from array to single string
+                if(identity.phoneNumbers.length > 0 && identity.phoneNumbers[0].value != ''){
+                    identity.phoneNumber = identity.phoneNumbers[0].value;
+                    identity.preferredMessageType = 'sms';
+                }
+                if(identity.emails.length > 0 && identity.emails[0].value != ''){
+                    identity.email = identity.emails[0].value;
+                    identity.preferredMessageType = 'mail';
+                }
+                //////////////////////
+                if($scope.form.$invalid){
+                    return false;
+                }
+
+                // everything is fine let's add the contact
+                if(isNew) {
+                    cmContactsModel
+                    .addContact({
+                        identity: identity,
+                        groups: identity.groups
+                    })
+                    .then(
+                        function () {
+                            $location.path('/contacts');
+                        },
+                        function () {
+                            cmNotify.error('CONTACT.INFO.ERROR.CREATE',{ttl:5000});
+                        }
+                    );
+                // edit contact
+                } else {
+                    cmContactsModel
+                    .editContact($routeParams.id, identity)
+                    .then(
+                        function () {
+                            cmNotify.success('CONTACT.INFO.SUCCESS.EDIT',{ttl:5000});
+                        },
+                        function () {
+                            cmNotify.error('CONTACT.INFO.ERROR.EDIT',{ttl:5000});
+                        }
+                    );
+                }
+            };
         }
-    ]);
+    );
 });
