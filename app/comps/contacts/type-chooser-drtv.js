@@ -54,8 +54,14 @@ function cmTypeChooser(cmLogger){
              */
             $scope.setActive = function(value){
                 $scope.active = find(value);
-                if($scope.data != undefined)
+                // addtion to parent data collection
+                if($scope.data != undefined && $attrs['chooseToData'] != undefined)
                     $scope.data[$attrs.chooseToData] = $scope.active;
+
+                // direct addtion to item
+                if($attrs['cmChooseValueTo'] != undefined){
+                    $scope.$eval($attrs['cmChooseValueTo']).type = $scope.active;
+                }
             };
 
             // set default button

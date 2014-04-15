@@ -34,25 +34,27 @@
         </div>
 
         <div class="cm-contact-inputs">
-            <div class="cm-input-ctn" ng-class="{'cm-input-disabled':!editable}">
-                <input name="displayName" ng-model="identity.displayName" placeholder="{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" ng-disabled="!editable" />
+            <div class="cm-input-ctn" ng-class="{'cm-input-disabled':disabled}">
+                <input name="displayName" ng-model="identity.displayName" placeholder="{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" ng-disabled="disabled" />
             </div>
 
-            <cm-multi-input cm-data="">
-                <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':!editable}">
-                    <input name="phoneNumber" ng-model="identity.phoneNumber.value" placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" ng-disabled="!editable" />
+            <cm-multi-input cm-collection="identity.phoneNumbers" cm-disabled="disabled">
+                <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
+                    <input name="phoneNumber" ng-model="item.value" placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" ng-disabled="disabled" />
                 </div>
-                <div cm-type-chooser choose-to-data="phoneType"></div>
+                <div cm-type-chooser cm-choose-value-to="item" ng-class="{'cm-input-disabled':disabled}"></div>
             </cm-multi-input>
 
-            <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':!editable}">
-                <input name="email" ng-model="identity.email.value" placeholder="{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}" ng-disabled="!editable" />
-            </div>
-            <div cm-type-chooser choose-to-data="email_type"></div>
+            <cm-multi-input cm-collection="identity.emails" cm-disabled="disabled">
+                <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
+                    <input name="email" ng-model="item.value" placeholder="{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}" ng-disabled="disabled" />
+                </div>
+                <div cm-type-chooser cm-choose-value-to="item" ng-class="{'cm-input-disabled':disabled}"></div>
+            </cm-multi-input>
         </div>
     </div>
 
-    <cm-footer ng-show="editable" cm-rubber-space>
+    <cm-footer ng-hide="disabled" cm-rubber-space>
         <button id="registerUserButton" ng-click="saveUser()">{{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i></button>
     </cm-footer>
 

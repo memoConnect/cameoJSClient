@@ -14,7 +14,7 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope){
                   '</div>',
 
         link: function(scope, element, attrs, controller, transclude){
-y
+
             function refresh() { 
                 scope.contacts.forEach(function(contact){
                     var child_scope = scope.$new()
@@ -36,14 +36,12 @@ y
             $scope.contactsQty = cmContactsModel.contacts.length;
 
             cmContactsModel.on('start:load-contacts',function(){
-                console.log('load-contacts start')
                 $scope.isLoading = true;
-            })
+            });
 
             cmContactsModel.on('finish:load-contacts',function(){
-                console.log('load-contacts finished')
                 $scope.isLoading = false;
-            })
+            });
 
             cmContactsModel.getAll();
 
