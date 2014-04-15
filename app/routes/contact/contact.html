@@ -41,29 +41,31 @@
                 </div>
 
                 <cm-multi-input cm-collection="identity.phoneNumbers" cm-disabled="disabled">
-                    <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
-                        <input type="text" name="{{itemKey}}" ng-model="item.value" placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" ng-disabled="disabled" cm-validate-phone />
-                    </div>
-                    <div cm-type-chooser cm-choose-value-to="item" cm-disabled="disabled" ng-class="{'cm-input-disabled':disabled}"></div>
-                    {{form.itemKey.$dirty}}
-                    {{form.phoneNumber[itemKey].$invalid}}
-                    <div class="cm-alert" ng-show="form.phoneNumber[itemKey].$dirty && form.phoneNumber[itemKey].$invalid">
-                        <div ng-show="form.phoneNumber[itemKey].$invalid">
-                            <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
+                    <ng-form name="formPhone">
+                        <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
+                            <input type="text" name="phoneNumber" ng-model="item.value" placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" ng-disabled="disabled" cm-validate-phone />
                         </div>
-                    </div>
+                        <div cm-type-chooser cm-choose-value-to="item" cm-disabled="disabled" ng-class="{'cm-input-disabled':disabled}"></div>
+                        <div class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
+                            <div ng-show="formPhone.phoneNumber.$invalid">
+                                <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
+                            </div>
+                        </div>
+                    </ng-form>
                 </cm-multi-input>
 
                 <cm-multi-input cm-collection="identity.emails" cm-disabled="disabled">
-                    <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
-                        <input name="email[{{itemKey}}]" ng-model="item.value" placeholder="{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}" ng-disabled="disabled" cm-validate-email />
-                    </div>
-                    <div cm-type-chooser cm-choose-value-to="item" ng-class="{'cm-input-disabled':disabled}" cm-disabled="disabled"></div>
-                    <div class="cm-alert" ng-show="form.email[itemKey].$dirty && form.email[itemKey].$invalid">
-                        <div ng-show="form.email[itemKey].$invalid">
-                            <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
+                    <ng-form name="formEmail">
+                        <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
+                            <input name="email" ng-model="item.value" placeholder="{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}" ng-disabled="disabled" cm-validate-email />
                         </div>
-                    </div>
+                        <div cm-type-chooser cm-choose-value-to="item" ng-class="{'cm-input-disabled':disabled}" cm-disabled="disabled"></div>
+                        <div class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
+                            <div ng-show="formEmail.email.$invalid">
+                                <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
+                            </div>
+                        </div>
+                    </ng-form>
                 </cm-multi-input>
             </form>
         </div>

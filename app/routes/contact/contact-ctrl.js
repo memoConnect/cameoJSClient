@@ -55,7 +55,7 @@ define([
 
             $scope.saveUser = function(){
                 // declaration
-                var apiIdentity = {
+                var emptyIdentity = {
                     displayName: null,
                     email: null,
                     phoneNumber: null,
@@ -68,7 +68,8 @@ define([
                     emails: [],
                     groups: []
                 },
-                identity = angular.extend({},apiIdentity,$scope.identity);
+                // merge givven identity with default
+                identity = angular.extend({}, emptyIdentity, $scope.identity);
 
                 // validation
                 //////////////////////
@@ -82,7 +83,7 @@ define([
                     identity.preferredMessageType = 'mail';
                 }
                 //////////////////////
-                if($scope.form.displayName.$invalid){
+                if($scope.form.$invalid){
                     return false;
                 }
 

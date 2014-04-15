@@ -200,7 +200,7 @@
                 "DISPLAYNAME": "{{'DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}"
             },
             "INVALID": {
-                "EMAIL": "{{'DRTV.VALIDATE_EMAIL.INVALID'|cmTranslate}}",
+                "EMAIL": "{{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}",
                 "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}"
             },
             "SUCCESS": {
