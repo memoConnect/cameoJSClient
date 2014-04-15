@@ -52,20 +52,25 @@ function cmTypeChooser(cmLogger){
              * set button to active and set parent scope variable
              * @string value
              */
-            $scope.setActive = function(value){
+            $scope.setActive = function(value ,isFirst){
+
+                if(isFirst == undefined && 'cmDisabled' in $attrs && $scope.$eval($attrs.cmDisabled) == true){
+                    return false;
+                }
+
                 $scope.active = find(value);
                 // addtion to parent data collection
                 if($scope.data != undefined && $attrs['chooseToData'] != undefined)
                     $scope.data[$attrs.chooseToData] = $scope.active;
 
                 // direct addtion to item
-                if($attrs['cmChooseValueTo'] != undefined){
+                if('cmChooseValueTo' in $attrs && $scope.$eval($attrs['cmChooseValueTo']) != undefined){
                     $scope.$eval($attrs['cmChooseValueTo']).type = $scope.active;
                 }
             };
 
             // set default button
-            $scope.setActive(find(null, true))
+            $scope.setActive(find(null, true),true)
         }
     }
 }

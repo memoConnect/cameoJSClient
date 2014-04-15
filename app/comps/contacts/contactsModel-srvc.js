@@ -163,13 +163,48 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
     };
 
     this.addContact = function(data){
-        // TODO: add to contacts and send to api
         var defer = $q.defer();
         cmContactsAdapter
-        .addContact(data.identity)
+        .addContact(data)
         .then(
             function(data){
                 _add(data);
+                defer.resolve();
+            },
+            function(){
+                defer.reject();
+            }
+        );
+
+        return defer.promise;
+    };
+
+    this.editContact = function(id, data){
+        var defer = $q.defer();
+        cmContactsAdapter
+        .editContact(id, data)
+        .then(
+            function(data){
+                console.log('contact edited')
+                console.log(data)
+//                _edit(data);
+                defer.resolve();
+            },
+            function(){
+                defer.reject();
+            }
+        );
+
+        return defer.promise;
+    };
+
+    this.deleteContact = function(id, data){
+        var defer = $q.defer();
+        cmContactsAdapter
+            .deleteContact(data)
+            .then(
+            function(data){
+                //_delete(data);
                 defer.resolve();
             },
             function(){

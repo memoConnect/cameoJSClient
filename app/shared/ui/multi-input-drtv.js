@@ -18,10 +18,11 @@ function cmMultiInput(){
             $scope.collection = [];
             $scope.isMultiplyable = false;
 
-            $scope.$watchCollection($attrs.cmCollection,function(collection){
-                $scope.collection = collection;
-
-                $scope.showMultiplier();
+            $scope.$watchCollection($attrs.cmCollection,function(collection) {
+                if(collection != undefined) {
+                    $scope.collection = collection;
+                    $scope.showMultiplier();
+                }
             });
 
             $scope.showMultiplier = function(){

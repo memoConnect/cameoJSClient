@@ -13,11 +13,14 @@ define([
          $routeParams,
          cmContactsModel,
          cmIdentityFactory,
-         cmUtil
+         cmUtil,
+         cmNotify
         ){
             $scope.cmUtil = cmUtil;
 
-            if($routeParams.id == 'new'){
+            var isNew = $routeParams.id == 'new' ? true : false;
+
+            if(isNew){
                 $scope.contact = {};
                 $scope.identity = {
                     phoneNumbers: [{value:""}],
@@ -37,10 +40,10 @@ define([
                         //////////////////////
                         // TODO: mock workarround json in array
                         $scope.identity.phoneNumbers = [
-                            $scope.identity.phoneNumber
+                            $scope.identity.phoneNumber || {value:''}
                         ];
                         $scope.identity.emails = [
-                            $scope.identity.email
+                            $scope.identity.email || {value:''}
                         ];
                         //////////////////////
 
@@ -62,11 +65,13 @@ define([
                     surName: null,
                     phoneProvider: null,
                     phoneNumbers: [],
-                    emails: []
+                    emails: [],
+                    groups: []
                 },
                 identity = angular.extend({},apiIdentity,$scope.identity);
 
                 // validation
+                //////////////////////
                 // TODO: mock workarround for multiinput from array to single string
                 if(identity.phoneNumbers.length > 0 && identity.phoneNumbers[0].value != ''){
                     identity.phoneNumber = identity.phoneNumbers[0].value;
@@ -76,21 +81,39 @@ define([
                     identity.email = identity.emails[0].value;
                     identity.preferredMessageType = 'mail';
                 }
+                //////////////////////
+                if($scope.form.displayName.$invalid){
+                    return false;
+                }
 
                 // everything is fine let's add the contact
-                cmContactsModel
-                .addContact({
-                    identity: identity,
-                    groups: []
-                })
-                .then(
-                    function(){
-                        $location.path('/contacts');
-                    },
-                    function(){
-                        cmNotify.error('CONTACT.EXTERN_CONTACT.INFO.SAVE_FAIL', {ttl: 5000});
-                    }
-                );
+                if(isNew) {
+                    cmContactsModel
+                    .addContact({
+                        identity: identity,
+                        groups: identity.groups
+                    })
+                    .then(
+                        function () {
+                            $location.path('/contacts');
+                        },
+                        function () {
+                            cmNotify.error('CONTACT.INFO.ERROR.CREATE',{ttl:5000});
+                        }
+                    );
+                // edit contact
+                } else {
+                    cmContactsModel
+                    .editContact($routeParams.id, identity)
+                    .then(
+                        function () {
+                            cmNotify.success('CONTACT.INFO.SUCCESS.EDIT',{ttl:5000});
+                        },
+                        function () {
+                            cmNotify.error('CONTACT.INFO.ERROR.EDIT',{ttl:5000});
+                        }
+                    );
+                }
             };
         }
     );
