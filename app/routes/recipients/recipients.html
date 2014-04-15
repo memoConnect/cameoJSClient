@@ -1,0 +1,34 @@
+<cm-header cm-rubber-space>
+    <cm-back cm-weight="1" back-to ="conversation" plain-back="true"></cm-back>
+    <cm-logo cm-weight="1"></cm-logo>
+    <cm-menu cm-weight="1"></cm-menu>
+</cm-header>
+
+<section ng-controller = "RecipientsCtrl">
+    <header>        
+        <h1>{{"RECIPIENTS.HEADING"|cmTranslate}}</h1>       
+
+        <div class="cm-form-group">
+            <div class="cm-form-control white-control with-inputter with-icon">
+                <input type="text" value="" ng-model="search" />                                
+            </div><i class="fa cm-search"></i>
+        </div>
+    </header>
+
+    <cm-contacts-list contacts-as="contacts">
+        <cm-contact-tag ng-repeat="contact in contacts" cm-rubber-space>   
+            <cm-avatar cm-data = "contact.identity"></cm-avatar> 
+            <cm-key-level level="3"></cm-key-level>
+            <cm-contact-brief cm-data = "contact" cm-weight="1"></cm-contact-brief>     
+            <button ng-click="editContact(contact.identity.id)">
+                <i class="fa cm-fa cm-rhino-positive" ></i>
+            </button>
+            <span class="separator" ></span>
+            <button ng-click="toggleRecipient(contact.identity)" ng-disabled = "selected[contact.identity.id] && disabled_remove">                
+                <i class="fa" ng-class="{'cm-checkbox': !selected[contact.identity.id], 'cm-checkbox-right' : selected[contact.identity.id]}"></i>                
+            </button>
+        </cm-contact-tag>
+    </cm-contacts-list>
+
+</section>
+<cm-footer cm-rubber-space></cm-footer>

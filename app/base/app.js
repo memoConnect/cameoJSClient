@@ -11,6 +11,7 @@ define([
     'cmAuth',
     'cmUserModel',
     'cmIdentity',
+    'cmObject',
 
     'cmLanguage',
     'cmLogger',
@@ -27,6 +28,7 @@ define([
         'swipe',
         'angularMoment',
         'ui.bootstrap',
+        'cmObject',
         // insert cameo provider
         'cmApi',
         'cmUi',

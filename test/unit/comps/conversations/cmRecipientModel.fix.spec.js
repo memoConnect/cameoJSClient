@@ -23,9 +23,12 @@ describe('cmRecipientModel', function(){
             recipient = createRecipient();
         })
 
+        
+        /* init removed; cmRecipient returns extended identity object
         it('should have init function', function(){
             expect(recipient.init).toBeDefined()
         })
+        */
 
         it('should have addTo function', function(){
             expect(recipient.addTo).toBeDefined()

@@ -12,7 +12,7 @@
         <h1>{{"CONTACTS.HEADING"|cmTranslate}}</h1>       
 
         <a ng-click="openAddModal()" cm-edge>
-            <i class="fa cm-add"></i>
+            <i class="fa cm-edge-add"></i>
         </a>
 
         <div class="cm-form-group">
@@ -29,12 +29,23 @@
     </cm-contacts-filter-controls>
     
 
-    <cm-contacts-list contacts-as="contact">
-        <cm-contact-tag cm-data="contact">
-            <span class="separator"></span>
+    <cm-contacts-list contacts-as="contacts">
+        <div ng-show="isLoading" class="empty-list">
+            <cm-spinner ></cm-spinner>
+        </div>
+
+        <div ng-show="!contacts.length && !isLoading" class="empty-list">
+            <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
+        </div>
+
+        <cm-contact-tag cm-rubber-space ng-repeat="contact in contacts">
+            <cm-avatar cm-data = "contact.identity" ></cm-avatar>    
+            <cm-contact-brief cm-data = "contact" cm-weight="1"></cm-contact-brief>     
+            <span class="separator" ></span>
             <i class="fa cm-write fa-3x" ng-click="startConversation(contact.identity.id)"></i>
         </cm-contact-tag>
     </cm-contacts-list>
+    
 
     <!--old friend request-->
     <div style="background:white;margin-top:1em;padding:1em">

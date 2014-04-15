@@ -31,6 +31,7 @@ var config = {
         'cmLocalStorage': 'shared/cmLocalStorage',
         'cmUserModel': 'shared/cmUserModel',
         'cmIdentity': 'shared/cmIdentity',
+        'cmObject' : 'shared/cmObject',
 
         // cameo modules/services
         'cmAuth': 'shared/cmAuth',
@@ -92,6 +93,7 @@ var config = {
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
 //        'cmCron' : ['angular'],
         'cmIdentity': ['angular', 'cmAuth'],
+        'cmObject': ['angular'],
         'cmUserModel': ['angular', 'cmLocalStorage','cmIdentity'],
         'cmApi': ['angular', 'cmLogger'],
         'cmProfile' : ['angular', 'cmApi', 'cmAuth'],
@@ -225,6 +227,8 @@ addPackage('pckContacts',{
         'comps/contacts/contacts-filter-controls-drtv',
         'comps/contacts/contacts-list-drtv',
         'comps/contacts/contact-tag-drtv',
+        'comps/contacts/contact-brief-drtv',
+        'comps/contacts/key-level-drtv',
         'comps/contacts/search-cameo-identity-drtv',    
         'comps/contacts/type-chooser-drtv',
 
@@ -275,7 +279,8 @@ addPackage('pckUi',{
         'shared/ui/resize-textarea',
         'shared/ui/date-seperator-drtv',
         'shared/ui/scroll-to-drtv',
-        'shared/ui/reload-drtv'
+        'shared/ui/reload-drtv',
+        'shared/ui/multi-input-drtv'
     ]
 })
 

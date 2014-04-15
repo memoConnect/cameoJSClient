@@ -24,6 +24,8 @@ module.exports = function(config) {
             'app/vendor/crypto/sjcl/sjcl.min.js',
             'app/vendor/crypto/jsencrypt/jsencrypt.min.js',
 
+
+            'app/shared/cmObject.js',
             'app/shared/cmLogger.js',
             'app/shared/cmNotify.js',
             'app/shared/cmApi.js',

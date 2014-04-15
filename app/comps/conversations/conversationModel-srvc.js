@@ -1,6 +1,6 @@
 'use strict';
 
-function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, $q, $rootScope){
+function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, $q, $rootScope){
     var ConversationModel = function(data){
         //Attributes:
         this.id = '',
@@ -14,6 +14,9 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.encryptedPassphraseList = [];
         this.keyTransmission = 'asymmetric' || 'symmetric'
         var self = this;
+
+
+        cmObject.addEventHandlingTo(this)
 
         $rootScope.$on('logout', function(){
             self.messages = [];
@@ -59,12 +62,10 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.save = function(){           
 
             var deferred = $q.defer();    
-
-            console.log('save')        
+    
 
             if(this.id == ''){
                 if(!this.checkKeyTransmission()){
-                    console.log('STOP')
                     deferred.reject()
                     return deferred.promise
                 }
@@ -79,12 +80,7 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
                             i++;
                         }
 
-                        console.log('pwd: '+self.password)
-                        console.log('passph: '+self.passphrase)
-
                         if(self.passphrase && self.checkKeyTransmission()){  
-                            console.log('encrypting...')
-
                             self.encryptPassphrase()                        
                             self.saveEncryptedPassphraseList()
                             self.passphrase
@@ -213,27 +209,32 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         }
 
         this.addRecipient = function (identity) {
+            this.trigger('before-add-recipient', identity)
+
             if(identity && !this.hasRecipient(identity)){
-                this.recipients.push(new cmRecipientModel(identity));
+                this.recipients.push(cmRecipientModel(identity));
             }else{
                 console.warn('Recipient already present.') //@ Todo
             }
+
+            this.trigger('after-add-recipient', identity)
             return this;
         };
 
         this.removeRecipient = function (identity) {
+            this.trigger('before-remove-recipient', identity)
+            
             var i = this.recipients.length;
 
             while (i) {
                 i--;
                 if (this.recipients[i] == identity){
                     this.recipients.splice(i, 1);
-
-                    if(this.id != ''){
-                        identity.removeFrom(this.id);
-                    }
+                    //identity.removeFrom ... that's the api call
                 }
             }
+
+            this.trigger('after-remove-recipient', identity)
             return this;
         };
 
@@ -350,7 +351,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         this.setPassphrase = function (passphrase) {
             this.passphrase = passphrase
             if(passphrase == undefined) self.passphrase = self.passphrase || cmCrypt.generatePassphrase()
-            console.log('setPP: '+self.passphrase)
             return this;
         }
 
@@ -366,7 +366,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
         };
 
         this.passphraseValid = function () {
-            console.log('passphrase: '+this.passphrase)
             return !this.messages[0] || this.messages[0].decrypt(this.passphrase)
         };
 
@@ -378,7 +377,6 @@ function cmConversationModel (cmConversationsAdapter, cmMessageFactory, cmIdenti
             })
 
             size = size || 0
-            console.log('weakest key: '+size)
             return size
         }
 

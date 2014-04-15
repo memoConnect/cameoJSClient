@@ -4,36 +4,14 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope){
     return {
         restrict: 'AE',
         scope: true,
-        transclude: true,
         //templateUrl: 'comps/contacts/contacts-list.html',
-        template: '<div ng-show="isLoading" class="empty-list">'+
-                    '<cm-spinner></cm-spinner>'+
-                  '</div>{{loadingSchmu}}'+
-                  '<div ng-show="!contacts.length && !isLoading" class="empty-list">'+
-                    '<i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}'+
-                  '</div>',
-
-        link: function(scope, element, attrs, controller, transclude){
-y
-            function refresh() { 
-                scope.contacts.forEach(function(contact){
-                    var child_scope = scope.$new()
-
-                    child_scope[attrs.contactsAs] = contact
-
-                    transclude(child_scope, function(clone){
-                        element.append(clone)
-                    })
-                })
-            }
-
-            scope.$watchCollection('contacts', refresh)
-        },
+        //template: ,
 
         controller: function($scope, $element, $attrs){
-            $scope.isLoading = false;
-            $scope.contacts = cmContactsModel.contacts;
-            $scope.contactsQty = cmContactsModel.contacts.length;
+            $scope.isLoading            = false;
+            $scope[$attrs.contactsAs]   = cmContactsModel.contacts;
+            $scope.contactsQty          = cmContactsModel.contacts.length;
+
 
             cmContactsModel.on('start:load-contacts',function(){
                 console.log('load-contacts start')
@@ -44,8 +22,16 @@ y
                 console.log('load-contacts finished')
                 $scope.isLoading = false;
             })
+            console.log('BEFORE:')
+            console.dir(cmContactsModel.contacts)
 
-            cmContactsModel.getAll();
+            //cmContactsModel.getAll();
+
+            cmContactsModel.on('finish:load-contacts', function(){
+                console.log('done!')
+                console.log(cmContactsModel.contacts.length)
+                console.log($scope[$attrs.contactsAs].length)
+            })
 
             /**
              * handle every single contact via model

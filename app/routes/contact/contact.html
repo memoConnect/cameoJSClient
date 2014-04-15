@@ -37,10 +37,14 @@
             <div class="cm-input-ctn" ng-class="{'cm-input-disabled':!editable}">
                 <input name="displayName" ng-model="identity.displayName" placeholder="{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" ng-disabled="!editable" />
             </div>
-            <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':!editable}">
-                <input name="phoneNumber" ng-model="identity.phoneNumber.value" placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" ng-disabled="!editable" />
-            </div>
-            <div cm-type-chooser choose-to-data="phoneType"></div>
+
+            <cm-multi-input cm-data="">
+                <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':!editable}">
+                    <input name="phoneNumber" ng-model="identity.phoneNumber.value" placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" ng-disabled="!editable" />
+                </div>
+                <div cm-type-chooser choose-to-data="phoneType"></div>
+            </cm-multi-input>
+
             <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':!editable}">
                 <input name="email" ng-model="identity.email.value" placeholder="{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}" ng-disabled="!editable" />
             </div>

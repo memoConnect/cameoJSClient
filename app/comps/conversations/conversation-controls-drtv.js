@@ -1,4 +1,4 @@
-function cmConversationControls(cmUserModel, cmNotify){
+function cmConversationControls(cmNotify, $location, $rootScope){
     return{
         restrict : 'AE',
         templateUrl : 'comps/conversations/conversation-controls.html',      
@@ -39,6 +39,11 @@ function cmConversationControls(cmUserModel, cmNotify){
                 else
                     $scope.bodyVisible = true;
             };
+
+            $scope.manageRecipients = function(){
+                $location.path('/recipients')
+            }
+
         }
     }
 }

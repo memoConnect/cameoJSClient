@@ -8,6 +8,7 @@ var cmConversations = angular.module('cmConversations', [
     'cmUtil',
 //    'cmCron',
     'cmIdentity',
+    'cmObject',
     'cmUserModel',
     'cmNotify',
     'ui.bootstrap'
@@ -27,6 +28,7 @@ cmConversations.factory('cmConversationModel',[
     'cmUserModel',
     'cmRecipientModel',
     'cmNotify',
+    'cmObject',
     '$q',
     '$rootScope',
     cmConversationModel
@@ -80,6 +82,8 @@ cmConversations.service('cmPurlModel',[
 cmConversations.directive('cmConversationControls', [
     'cmUserModel',
     'cmNotify',
+    '$location',
+    '$rootScope',
     cmConversationControls
 ])
 
@@ -105,6 +109,7 @@ cmConversations.directive('cmConversation', [
     'cmLogger',
     'cmNotify',
     '$location',
+    '$rootScope',
     cmConversation
 ])
 
