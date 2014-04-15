@@ -104,6 +104,10 @@ angular.module('cmUi', [
     cmMultiInput
 ])
 
+.directive('cmLargeInput',[
+    cmLargeInput
+])
+
 .filter('cmDigits', [
     function(){
         return function(number, digits){

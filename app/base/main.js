@@ -281,7 +281,8 @@ addPackage('pckUi',{
         'shared/ui/date-seperator-drtv',
         'shared/ui/scroll-to-drtv',
         'shared/ui/reload-drtv',
-        'shared/ui/multi-input-drtv'
+        'shared/ui/multi-input-drtv',
+        'shared/ui/large-input-drtv'
     ]
 })
 
