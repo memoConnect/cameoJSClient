@@ -1,3 +1,4 @@
+
 exports.config = {
 
     // The location of the selenium standalone server .jar file.
@@ -55,8 +56,9 @@ exports.config = {
     onPrepare: function () {
         // At this point, global 'protractor' object will be set up, and jasmine
         // will be available. For example, you can add a Jasmine reporter with:
-        //     jasmine.getEnv().addReporter(new jasmine.JUnitXmlReporter(
-        //         'outputdir/', true, true));
+        require('jasmine-reporters');
+        jasmine.getEnv().addReporter(
+            new jasmine.JUnitXmlReporter('e2e.xml', true, true));
     },
 
     // The params object will be passed directly to the protractor instance,
