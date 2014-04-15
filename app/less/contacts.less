@@ -2,9 +2,9 @@
 cm-contact-tag {
     display: block;  
     background: @cm-overlay-light;
-    color: @cm-dark-grey;
-    //border-bottom: solid @cm-grey @cm-border-width;
-    height: @cm-unit + @cm-vertical-padding;
+    color: @cm-font-color;
+    border-bottom: solid @cm-border-grey @cm-border-width;
+    height: @cm-unit + 2*@cm-vertical-padding;
     position:relative;
     padding: @cm-vertical-padding 0;
     overflow:hidden;
@@ -24,12 +24,14 @@ cm-contact-tag {
         .name {            
             .single-line;            
             line-height: 0.5*@cm-unit;
+            font-weight: bold;
         }
 
         .about {
             .single-line;
             font-size:@cm-small-font;
             line-height:0.5*@cm-unit;
+            color: @cm-font-color-light;
             margin:0;
             padding:0;
         }
@@ -38,10 +40,11 @@ cm-contact-tag {
     .separator{
         display:inline-block;
         width: 0.1*@cm-unit;
-        height: @cm-unit;
-        border-left:@cm-border-width solid @cm-grey;
-        border-right:@cm-border-width solid @cm-grey;
+        height: 0.8*@cm-unit;
+        border-left:@cm-border-width solid @cm-border-grey;
+        border-right:@cm-border-width solid @cm-border-grey;
         padding: 0;
+        margin: 0.1*@cm-unit 0;
     }
 
     button {

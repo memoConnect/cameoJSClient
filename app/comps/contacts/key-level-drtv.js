@@ -15,6 +15,11 @@ function cmKeyLevel(){
             scope.$watch(attrs.level, function(x){
                 draw(x)
             })
+
+            scope.$watch(attrs.keySize, function(key_size){
+                key_size = key_size - 1
+                draw(Math.floor(key_size/2048))
+            })
         }
     }
 }
