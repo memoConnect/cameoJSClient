@@ -1,9 +1,11 @@
-function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUtil, $q, $rootScope){
+function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUtil, cmObject, $q, $rootScope){
     var self = this,
         events = {};
 
     this.contacts = [];
     this.groups = [];
+
+    cmObject.addEventHandlingTo(this)
 
     /**
      * Init Object
@@ -17,7 +19,8 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
      * add to contacts and creates identities
      * @param contact
      * @private
-     */
+     */ 
+
     function _add(contact){
         var check = false,
             i = 0;
@@ -55,6 +58,7 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
 
         if(this.contacts.length < 1 && cmUserModel.isAuth() !== false){
             this.trigger('start:load-contacts');
+            this.loading = true;
 
             cmContactsAdapter.getAll().then(
                 function(data){
@@ -67,13 +71,12 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
                 function(){
                     deferred.reject();
                 }
-            ).finally(
-                function(){
-                    self.trigger('finish:load-contacts');
-                }
-            )
+            ).finally(function(){
+                self.trigger('finish:load-contacts');
+            })
         } else {
             deferred.resolve(self.contacts);
+            self.trigger('finish:load-contacts');
         }
 
         return deferred.promise;
@@ -153,11 +156,16 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
     this.addContact = function(data){
         // TODO: add to contacts and send to api
         var defer = $q.defer();
+
+        this.trigger('before-add-contact')
+
         cmContactsAdapter
         .addContact(data.identity)
         .then(
             function(data){
+                this.trigger('add-contact', data)
                 _add(data);
+                this.trigger('after-add-contact', data)
                 defer.resolve();
             },
             function(){
@@ -176,18 +184,6 @@ function cmContactsModel(cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUt
     $rootScope.$on('logout', function(){
         resetContacts();
     });
-
-    this.on = function(event, callback){
-        events[event] = events[event] || [];
-        events[event].push(callback);
-    }
-
-    this.trigger = function(event, data){
-        events[event] = events[event] || [];
-        events[event].forEach(function(callback){
-            callback(data);
-        });
-    }
 
     init();
 }

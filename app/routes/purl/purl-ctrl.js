@@ -18,6 +18,7 @@ define([
         function($scope, $routeParams, $location, cmPurlModel, cmUserModel, cmUtil, cmLogger){
             $scope.data = null;
             $scope.showConversation = false;
+            $scope.cmUserModel = cmUserModel;
 
             if(cmUtil.checkKeyExists($routeParams,'idPurl') && cmUtil.validateString($routeParams.idPurl)){
 
@@ -26,9 +27,15 @@ define([
                         $scope.conversationId  = data.id;
                         $scope.showConversation = true;
                     },
-                    function(){
-                        cmLogger.error('cant get PURL Message');
-                        $location.path('/404');
+                    function(response){
+                        if(typeof response !== 'undefined' && cmUtil.checkKeyExists(response, 'status')){
+                            if(response.status == 401){
+                                // goto talks and show modal
+                                console.log(response)
+                            }
+                        } else {
+                            $location.path('/404');
+                        }
                     }
                 );
 

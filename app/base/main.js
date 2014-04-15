@@ -15,6 +15,9 @@ var config = {
         'angular-translate': 'vendor/angular-translate/angular-translate',
         'angular-growl': 'vendor/angular-growl/angular-growl',
 
+        'angular-moment-wrap': 'vendor/angular-moment/angular-moment',
+        'moment': 'vendor/angular-moment/moment-with-langs',
+
         // requirejs stuff
         'angularAMD': 'vendor/requirejs/angularAMD',
         'ngload': 'vendor/requirejs/ngload',
@@ -22,12 +25,13 @@ var config = {
         // global provider without AMD
         'cmApi': 'shared/cmApi',
         'cmUi': 'shared/ui/ui-module',
-        'cmLanguage': 'shared/i18n/language',
+        'cmLanguage': 'shared/cmLanguage',
         'cmLogger': 'shared/cmLogger',
         'cmNotify': 'shared/cmNotify',
         'cmLocalStorage': 'shared/cmLocalStorage',
         'cmUserModel': 'shared/cmUserModel',
         'cmIdentity': 'shared/cmIdentity',
+        'cmObject' : 'shared/cmObject',
 
         // cameo modules/services
         'cmAuth': 'shared/cmAuth',
@@ -72,6 +76,7 @@ var config = {
         'angular-swipe': ['angular'],
         'angular-translate': ['angular'],
         'angular-growl': ['angular'],
+        'angular-moment-wrap': ['angular','moment'],
 
         'ui-bootstrap': ['angular'],
         'ui-bootstrap-tpls': ['angular'],
@@ -88,6 +93,7 @@ var config = {
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
 //        'cmCron' : ['angular'],
         'cmIdentity': ['angular', 'cmAuth'],
+        'cmObject': ['angular'],
         'cmUserModel': ['angular', 'cmLocalStorage','cmIdentity'],
         'cmApi': ['angular', 'cmLogger'],
         'cmProfile' : ['angular', 'cmApi', 'cmAuth'],
@@ -153,7 +159,8 @@ addPackage('pckUser',{
     ],
     resources : [
         'comps/user/login-drtv',
-        'comps/user/key-pair-drtv'
+        'comps/user/key-pair-drtv',
+        'comps/user/user-rights-drtv'
     ]
 })
 
@@ -221,6 +228,8 @@ addPackage('pckContacts',{
         'comps/contacts/contacts-filter-controls-drtv',
         'comps/contacts/contacts-list-drtv',
         'comps/contacts/contact-tag-drtv',
+        'comps/contacts/contact-brief-drtv',
+        'comps/contacts/key-level-drtv',
         'comps/contacts/search-cameo-identity-drtv',    
         'comps/contacts/type-chooser-drtv',
 
@@ -271,7 +280,8 @@ addPackage('pckUi',{
         'shared/ui/resize-textarea',
         'shared/ui/date-seperator-drtv',
         'shared/ui/scroll-to-drtv',
-        'shared/ui/reload-drtv'
+        'shared/ui/reload-drtv',
+        'shared/ui/multi-input-drtv'
     ]
 })
 

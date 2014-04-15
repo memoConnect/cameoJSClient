@@ -7,7 +7,6 @@ function cmLogin($location, cmNotify, cmUserModel, cmCrypt, cmEnv) {
         scope       :   {},
 
         controller  :   function ($scope, $rootScope) {
-            console.log(cmEnv)
             $scope.cmEnv = cmEnv;
             $scope.showSpinner = false;
             $scope.alertState = '';

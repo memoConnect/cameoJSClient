@@ -6,7 +6,8 @@ var cmContacts = angular.module('cmContacts',[
     'cmUser',
     'cmUtil',
     'cmLanguage',
-    'cmIdentity'
+    'cmIdentity',
+    'cmObject'
 ])
 
 cmContacts.service('cmContactsModel',[
@@ -14,6 +15,7 @@ cmContacts.service('cmContactsModel',[
     'cmContactsAdapter',
     'cmIdentityFactory',
     'cmUtil',
+    'cmObject',
     '$q',
     '$rootScope',
     cmContactsModel
@@ -58,7 +60,16 @@ cmContacts.directive('cmContactsFilterControls',[
 ])
 
 cmContacts.directive('cmContactTag',[
+    '$location',
     cmContactTag
+])
+
+cmContacts.directive('cmContactBrief', [
+    cmContactBrief
+])
+
+cmContacts.directive('cmKeyLevel',[
+    cmKeyLevel
 ])
 
 cmContacts.directive('cmTypeChooser',[

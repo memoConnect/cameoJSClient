@@ -13,50 +13,39 @@ cm-conversation-tag{
     background: @cm-overlay-light;
     color: @cm-dark-grey;
     border-bottom: solid @cm-border-grey @cm-border-width;
-    height: 3.6em;
+    height: @cm-unit + 2*@cm-vertical-padding;
+    line-hieght:@cm-unit;
+    padding: @cm-vertical-padding 0;
     position:relative;
 
-    cm-avatar{
-      position:absolute;
-      left:0;
-      top:0.3em;
-      height:3em;
-      width:3em;
+    > * {
+        height: @cm-unit;
+        vertical-align:middle;
+        padding: 0 @cm-horizontal-padding;
     }
 
-    .details{
-      margin-left: 3em;
-      margin-right: 30%;
-      text-align:left;
-      padding:0.3em;
+    .details{      
+        text-align:left;
 
-      .subject {
-        .single-line;
-        line-height:1.2em;
-        font-weight:bold;
-      }
+        .subject {
+            .single-line;
+            line-height:0.5*@cm-unit;
+            font-weight:bold;
+        }
 
-      cm-message{
-        .single-line;
-        fonts-size:1em;
-        line-height:1.8em;
-        margin:0;
-        padding:0;
-      }
+        cm-message{
+            .single-line;        
+            line-height:0.5*@cm-unit;
+        }
     }
 
     .meta{
-        position:absolute;
-        width: 30%;
-        right: 0;
-        top:0.3em;
-        height:3em;
-        padding-right:0.3em;
+        padding-right:@cm-horizontal-padding;
 
         .top {
-            font-size: 0.8em;
-            line-height:1.2em;
-            white-space: nowrap;
+            .single-line;        
+            font-size: @cm-small-font;
+            line-height:0.4*@cm-unit;
             text-align:right;
 
             .last-updated{
@@ -65,9 +54,9 @@ cm-conversation-tag{
         }
 
         .bottom {
-            font-size: 1.0em;
-            line-height: 2.04em;
-            white-space: nowrap;
+            .single-line;        
+            font-size: @cm-base-font;
+            line-height: 0.6*@cm-unit;            
             text-align:right;
 
             > * {
@@ -79,7 +68,7 @@ cm-conversation-tag{
             }
 
             cm-recipient-counter{
-              font-size:2.04em;
+              font-size:1.8em;
               .background {
                 color:@cm-ci-color;
               }
@@ -121,6 +110,7 @@ cm-recipient-counter{
   }
 }
 @cm-conversation-control-height:2em;
+
 cm-conversation-controls{
   display:block;
   position:fixed;
@@ -185,7 +175,7 @@ cm-conversation-controls{
       .add-recipients{
         display:inline-block;
         position:relative;
-        padding-right:3em;
+        padding-right:2em;
       }
       cm-avatar{
         margin-right:0.5em;
@@ -194,7 +184,7 @@ cm-conversation-controls{
         }
       }
       cm-edge{
-        font-size:3em;
+        font-size:2.5em;
       }
     }
 
@@ -266,6 +256,7 @@ div.answer{
   i.cm-post {
     right: 0.1em;
   }
+
   .message{
     width: 22rem;
     position: relative;
@@ -293,6 +284,10 @@ div.answer{
       border-style: none solid solid;
       border-width: medium @cm-border-width @cm-border-width;
     }
+  }
+  div.message.large {
+    width: 26rem;
+    margin-left: 0.5rem;
   }
 }
 

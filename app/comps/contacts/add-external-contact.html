@@ -1,5 +1,5 @@
 <h3 ng-click="toggleForm()">
-    {{'DIRV.EXTERN_CONTACT.HEADER'|cmTranslate}} <i class="fa" ng-class="{'fa-angle-up':formVisible,'fa-angle-down':!formVisible}"></i>
+    {{'DRTV.EXTERN_CONTACT.HEADER'|cmTranslate}} <i class="fa" ng-class="{'fa-angle-up':formVisible,'fa-angle-down':!formVisible}"></i>
 </h3>
 
 <form class="form-horizontal" name="addExternContact" ng-show="formVisible" ng-submit="checkForm()">
@@ -11,7 +11,7 @@
                 <span class="input-group-addon self-size"><i class="fa" ng-class="{'fa-check':!displayNameExists,'fa-times':displayNameExists}"></i></span>
             </div>
             <div class="alert alert-danger alert-mini-padding" ng-show="addExternContact.displayName.$valid && displayNameExists">
-                {{'DIRV.EXTERN_CONTACT.INFO.DISPLAYNAME_EXISTS'|cmTranslate}}
+                {{'DRTV.EXTERN_CONTACT.INFO.DISPLAYNAME_EXISTS'|cmTranslate}}
             </div>
         </div>
     </div>
@@ -31,24 +31,24 @@
     </div>
 
     <div class="form-group">
-        <label class="{{labelSize}} control-label">{{'DIRV.VALIDATE_PHONE.LABEL'|cmTranslate}}</label>
+        <label class="{{labelSize}} control-label">{{'DRTV.VALIDATE_PHONE.LABEL'|cmTranslate}}</label>
         <div class="{{colSize}}">
-            <input type="text" class="form-control" name="phone" ng-model="data.phone" placeholder="{{'DIRV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}"  cm-validate-phone />
+            <input type="text" class="form-control" name="phone" ng-model="data.phone" placeholder="{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}"  cm-validate-phone />
             <div cm-type-chooser choose-to-data="phoneProvider" choose-type="provider"></div>
             <div cm-type-chooser choose-to-data="phoneType"></div>
             <div class="alert alert-danger alert-mini-padding" ng-show="addExternContact.phone.$dirty && addExternContact.phone.$invalid">
-                {{'DIRV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}
+                {{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}
             </div>
         </div>
     </div>
 
     <div class="form-group">
-        <label class="{{labelSize}} control-label">{{'DIRV.VALIDATE_EMAIL.LABEL'|cmTranslate}}</label>
+        <label class="{{labelSize}} control-label">{{'DRTV.VALIDATE_EMAIL.LABEL'|cmTranslate}}</label>
         <div class="{{colSize}}">
-            <input type="text" class="form-control" name="email" ng-model="data.email" placeholder="{{'DIRV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}" cm-validate-email />
+            <input type="text" class="form-control" name="email" ng-model="data.email" placeholder="{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}" cm-validate-email />
             <div cm-type-chooser choose-to-data="email_type"></div>
             <div class="alert alert-danger alert-mini-padding" ng-show="addExternContact.email.$dirty && addExternContact.email.$invalid">
-                {{'DIRV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}
+                {{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}
             </div>
         </div>
     </div>

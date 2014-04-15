@@ -10,7 +10,8 @@ cameo_config = {
         'login': {
             hasCtrl: true,
             isOtherwise: true,
-            css: 'no-header no-footer'
+            css: 'no-header no-footer',
+            guests: true
         },
         'start': {
             hasCtrl: true
@@ -29,12 +30,16 @@ cameo_config = {
             routes:['/conversation/:conversationId?'],
             hasCtrl: true
         },
+        'recipients': {
+            hasCtrl:true
+        },
         'registration': {
             hasCtrl: true
         },
         'purl': {
             routes:['/purl/:idPurl?'],
-            hasCtrl: true
+            hasCtrl: true,
+            guests: true
         },
         'profile': {},
         'filter': {
@@ -44,6 +49,10 @@ cameo_config = {
             routes:['/contacts/:tab?'],
             hasCtrl: true
         },
+        'contact': {
+            routes:['/contact/:id'],
+            hasCtrl: true
+        },
         'verification': {
             routes:['/verification/:secret']
         },
@@ -51,14 +60,18 @@ cameo_config = {
             templateUrl: 'routes/landingpages/server_down.html'
         },
         'terms': {
-            css: 'no-footer'
+            css: 'no-footer',
+            guests: true
         },
-        'disclaimer': {},
+        'disclaimer': {
+            guests: true
+        },
         '404': {
             templateUrl:'routes/landingpages/404.html'
         },
         'version': {
-            hasCtrl: true
+            hasCtrl: true,
+            guests: true
         }
     },
 

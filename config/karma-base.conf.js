@@ -16,11 +16,16 @@ module.exports = function(config) {
 
             'app/vendor/angular-translate/angular-translate.js',
 
+            'app/vendor/angular-moment/moment-with-langs.js',
+            'app/vendor/angular-moment/angular-moment.js',
+
             'app/vendor/!(require*)/*.js',
 
             'app/vendor/crypto/sjcl/sjcl.min.js',
             'app/vendor/crypto/jsencrypt/jsencrypt.min.js',
 
+
+            'app/shared/cmObject.js',
             'app/shared/cmLogger.js',
             'app/shared/cmNotify.js',
             'app/shared/cmApi.js',
@@ -31,7 +36,7 @@ module.exports = function(config) {
             'app/shared/cmCrypt.js',
             'app/shared/cmLocalStorage.js',
 
-            'app/shared/i18n/language.js',
+            'app/shared/cmLanguage.js',
 
             'app/shared/ui/!(*module).js',
             'app/shared/ui/*module.js',

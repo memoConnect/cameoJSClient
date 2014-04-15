@@ -6,6 +6,8 @@ angular.module('cmUi', [
 
 .directive('cmView', [
     '$route',
+    '$location',
+    'cmUserModel',
     cmView
 ])
 
@@ -47,6 +49,7 @@ angular.module('cmUi', [
 ])
 
 .directive('cmAvatar',[
+    'cmLogger',
     cmAvatar
 ])
 
@@ -59,6 +62,7 @@ angular.module('cmUi', [
     '$document',
     '$location',
     'cmUserModel',
+    'cmVersion',
     cmMenu
 ])
 
@@ -94,6 +98,10 @@ angular.module('cmUi', [
 .directive('cmReload',[
     '$route',
     cmReload
+])
+
+.directive('cmMultiInput',[
+    cmMultiInput
 ])
 
 .filter('cmDigits', [

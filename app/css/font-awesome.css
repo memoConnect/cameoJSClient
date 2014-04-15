@@ -207,11 +207,11 @@
     width:1em;
     height:0.8em;
 }
-.cm-rhino-bubble-font:before{content:'\f044'}
+.cm-rhino-bubble-glyph:before{content:'\f044'}
 .cm-rhino-positive:before{content:'\f002'}
 .cm-client-add:before{content:'\f003'}
-.cm-add:before{content:'\f004'}
-.cm-add-edge:before{content:'\f005'}
+.cm-edge-add:before{content:'\f004'}
+.cm-edge:before{content:'\f005'}
 .cm-addressbook-positive:before{content:'\f026'}
 .cm-addressbook:before{content:'\f006'}
 .cm-load-to-rhino:before{content:'\f027'}
@@ -224,10 +224,12 @@
 .cm-envelope-closed:before{content:'\f00c'}
 .cm-envelope-open:before{content:'\f00d'}
 .cm-send:before{content:'\f00e'}
+.cm-checkbox-bg:before{content:'\f050'}
 .cm-checkbox:before{content:'\f028'}
 .cm-checker:before{content:'\f029'}
 .cm-checkbox-right:before{content:'\f010'}
 .cm-checkbox-wrong:before{content:'\f02a'}
+.cm-checkbox-add:before{content:'\f04e'}
 .cm-lock:before{content:'\f011'}
 .cm-unlock:before{content:'\f012'}
 .cm-fix:before{content:'\f013'}
