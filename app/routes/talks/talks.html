@@ -14,11 +14,13 @@
             <i class="fa cm-edge-add"></i>
         </a>
 
-        <div class="cm-form-group">
-            <div class="cm-form-control white-control with-inputter with-outside-icon">
-                <input type="text" value="" ng-model="search" />                                
-            </div><i class="fa cm-search"></i>
-        </div>
+        <input 
+            type            = "text" 
+            value           = "" 
+            ng-model        = "search" 
+            cm-icon         = "cm-search"
+            cm-large-input
+        />  
     </header>
 
     <ul>
@@ -29,7 +31,8 @@
             <i class="fa cm-info"></i>  {{'TALKS.LIST_EMPTY'|cmTranslate}}
         </li>
         <li ng-repeat="conversation in conversations | filter:search" ng-click="goToConversation(conversation.id)">
-            <cm-conversation-tag cm-data="conversation"></cm-conversation-tag>
+            <cm-conversation-tag cm-data="conversation" cm-rubber-space>
+            </cm-conversation-tag>
 
             <!--
             <a href="#/conversation/{{conversation.id}}" class="clearfix">

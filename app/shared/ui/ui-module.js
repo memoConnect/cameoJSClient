@@ -6,6 +6,8 @@ angular.module('cmUi', [
 
 .directive('cmView', [
     '$route',
+    '$location',
+    'cmUserModel',
     cmView
 ])
 
@@ -100,6 +102,10 @@ angular.module('cmUi', [
 
 .directive('cmMultiInput',[
     cmMultiInput
+])
+
+.directive('cmLargeInput',[
+    cmLargeInput
 ])
 
 .filter('cmDigits', [

@@ -62,8 +62,8 @@ cm-edge, [cm-edge] {
 
 cm-avatar {
   display:inline-block;
-  width:3rem;
-  height:3rem;
+  width:@cm-unit;
+  height:@cm-unit;
   vertical-align:middle;
   position:relative;
   background-size:cover;
@@ -149,5 +149,19 @@ cm-multi-input{
         }
       }
     }
+  }
+}
+
+cm-rubber-space,
+[cm-rubber-space] {
+
+  display: block;
+  text-align: left;
+  white-space: nowrap;
+
+  > *{
+    display: inline-block;
+    vertical-align: top;
+    min-height: 1px;
   }
 }

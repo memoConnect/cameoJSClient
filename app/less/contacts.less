@@ -1,40 +1,70 @@
-cm-contact-tag {display: block;  
+cm-contact-tag {
+    display: block;  
     background: @cm-overlay-light;
-    color: @cm-dark-grey;
-    border-bottom: solid @cm-grey @cm-border-width;
-    height: 3.6em;
+    color: @cm-font-color;
+    border-bottom: solid @cm-border-grey @cm-border-width;
+    height: @cm-unit + 2*@cm-vertical-padding;
     position:relative;
+    padding: @cm-vertical-padding 0;
+    overflow:hidden;
 
-    cm-avatar{
-        position:absolute;
-        left:0;
-        top:0.3em;
-        height:3em;
-        width:3em;
+    > * { 
+        height: @cm-unit;
+        width: @cm-unit;
+        vertical-align:middle;
+        padding:0;
     }
 
-    .details{
-        margin-left: 3em;
-        margin-right: 50%;
+    cm-contact-brief{
+        display: inline-block;
         text-align:left;
-        padding:0.3em;
+        padding: 0 @cm-horizontal-padding;
 
         .name {            
-            .single-line;
-            white-space: nowrap;
-            font-size:1.2em;
-            line-height:1.5em; //=1.8 parent-em
-            .single-line;
+            .single-line;            
+            line-height: 0.5*@cm-unit;
+            font-weight: bold;
         }
 
-        .about{
+        .about {
             .single-line;
-            fonts-size:1em;
-            line-height:1.2em;
+            font-size:@cm-small-font;
+            line-height:0.5*@cm-unit;
+            color: @cm-font-color-light;
             margin:0;
             padding:0;
         }
     }
+
+    .separator{
+        display:inline-block;
+        width: 0.1*@cm-unit;
+        height: 0.8*@cm-unit;
+        border-left:@cm-border-width solid @cm-border-grey;
+        border-right:@cm-border-width solid @cm-border-grey;
+        padding: 0;
+        margin: 0.1*@cm-unit 0;
+    }
+
+    button {
+        width: @cm-unit;
+        height: @cm-unit;
+        background: transparent;
+        font-size: 0.8*@cm-unit;
+        line-height:  @cm-unit;
+        overflow:hidden;
+        color:@cm-ci-color;
+
+        &:disabled{
+            color:@cm-light-grey;
+        }
+    }
+
+    /*
+    
+
+    
+    
 
     .actions {      
         .single-line;  
@@ -48,14 +78,10 @@ cm-contact-tag {display: block;
 
         *{ vertical-align:middle; }
 
-        .separator{
-             display:inline-block;
-             width:0.2em;
-             height:100%;
-             border-left:@cm-border-width solid @cm-grey;
-             border-right:@cm-border-width solid @cm-grey;
-        }
+
     }
+
+    */
 }
 
 
@@ -66,7 +92,7 @@ cm-contacts-filter-controls{
 
     .sort, .filter{
         display:inline-block;
-        width: 50%;
+        width: 15.95rem;
 
         button {
             display:block;
@@ -83,7 +109,7 @@ cm-contacts-filter-controls{
     }    
 
     .sort{
-        padding-right:0.05em;        
+        margin-right:0.05rem;        
 
         .overlay {
             left:0;
@@ -91,7 +117,7 @@ cm-contacts-filter-controls{
     }
 
     .filter{
-        padding-left:0.05em;           
+        margin-left:0.05rem;           
 
         .overlay {
             right:0;
@@ -102,7 +128,7 @@ cm-contacts-filter-controls{
         position: absolute;
         background: @cm-dark-grey;   
         color: @cm-border-grey;
-        width: 50%;
+        width: 16rem;
         z-index:99;
 
         li{
@@ -116,4 +142,9 @@ cm-contacts-list{
     display:block !important;
 }
 
-
+cm-key-level {
+    text-align:center;
+    padding:0.5em;
+    line-height: 1em;
+    white-space:normal;
+}

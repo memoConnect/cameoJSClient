@@ -16,12 +16,27 @@
 
 @cm-form-alert-red: #F4DFDF;
 
-@cm-header-height: 4rem;
-@cm-footer-height: 4rem;
+@cm-unit: 4rem;
+@cm-vertical-padding: 0.3rem;
+@cm-horizontal-padding: 0.3rem;
+
+@cm-header-height: @cm-unit + 2*@cm-vertical-padding;
+@cm-footer-height: @cm-unit;
+
 @cm-app-width: 32rem;
 
+@cm-small-font: 1.2rem;
+@cm-base-font:  1.4rem;
+@cm-large-font: 1.6rem;
+
+@cm-font-color: @cm-dark-grey;
+@cm-font-color-light: @cm-grey;
+
+
+
 @cm-border-radius: 0.357em;
-@cm-large-font: 1.4em;
+
+
 @cm-border-width: 0.1rem;
 
 // Message
@@ -40,7 +55,7 @@ html, body {
 }
 
 body {
-    font-size: 1.4em;
+    font-size: @cm-base-font;
     width:100%;
     background-color:#fff;
     cursor:default;
@@ -136,17 +151,16 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     box-sizing:border-box;
 
     section{
-        font-size: 1.2em;
         > header {
             position:relative;
-            padding-top:0.5em;
-            padding-bottom:0.5em;
+            padding-top:1rem;
+            padding-bottom:1.5rem;
             background:rgba(255,255,255,0.5);
             h1 {
                 display:block;            
                 margin:0;
-                line-height:1em;
-                font-size:1em;
+                line-height:1.2em;
+                font-size: 1.2em;
                 text-align:center;
                 font-weight:bold;            
             }

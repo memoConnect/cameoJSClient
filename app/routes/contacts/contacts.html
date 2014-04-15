@@ -1,9 +1,9 @@
 <cm-header cm-rubber-space>
-    <cm-back cm-weight="1" back-to="/talks"></cm-back>
+    <cm-back     cm-weight="1" back-to="/talks"></cm-back>
     <cm-identity cm-weight="10"></cm-identity>
-    <cm-logo cm-weight="8"></cm-logo>
-    <cm-reload cm-weight="8"></cm-reload>
-    <cm-menu cm-weight="2"></cm-menu>
+    <cm-logo     cm-weight="8"></cm-logo>
+    <cm-reload   cm-weight="8"></cm-reload>
+    <cm-menu     cm-weight="2"></cm-menu>
 </cm-header>
 
 <section ng-controller="ContactsCtrl">
@@ -15,11 +15,14 @@
             <i class="fa cm-edge-add"></i>
         </a>
 
-        <div class="cm-form-group">
-            <div class="cm-form-control white-control with-inputter with-outside-icon">
-                <input type="text" value="" ng-model="search" />                                
-            </div><i class="fa cm-search"></i>
-        </div>
+        <input 
+            type            = "text" 
+            value           = "" 
+            ng-model        = "search" 
+            cm-icon         = "cm-search"
+            cm-large-input
+        />     
+
     </header>
 
     <cm-contacts-filter-controls
@@ -29,12 +32,25 @@
     </cm-contacts-filter-controls>
     
 
-    <cm-contacts-list contacts-as="contact">
-        <cm-contact-tag cm-data="contact">
-            <span class="separator"></span>
+    <cm-contacts-list contacts-as="contacts">
+        <div ng-show="isLoading" class="empty-list">
+            <cm-spinner ></cm-spinner>
+        </div>
+
+        <div ng-show="!contacts.length && !isLoading" class="empty-list">
+            <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
+        </div>
+
+        <cm-contact-tag cm-rubber-space ng-repeat="contact in contacts | filter:search">
+            <cm-avatar cm-data = "contact.identity" ></cm-avatar>    
+            <cm-key-level key-size = "contact.identity.getWeakestKeySize()"></cm-key-level>
+            <cm-contact-brief cm-data = "contact" cm-weight="1"></cm-contact-brief>     
+            <span class="separator" ></span>
             <i class="fa cm-write fa-3x" ng-click="startConversation(contact.identity.id)"></i>
         </cm-contact-tag>
+
     </cm-contacts-list>
+    
 
     <!--old friend request-->
     <div style="background:white;margin-top:1em;padding:1em">

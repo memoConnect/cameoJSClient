@@ -34,9 +34,11 @@ cmNotify.config(['growlProvider', '$httpProvider', function (growlProvider, $htt
  * cmNotify.error('LOGIN.INFO.404', {ttl:5000, hideGlobal:true});
  */
 .service('cmNotify', [
+
     '$rootScope',
     'growl',
     '$document',
+
     function ($rootScope, growl, $document) {
 
         var notifications = []
@@ -53,7 +55,6 @@ cmNotify.config(['growlProvider', '$httpProvider', function (growlProvider, $htt
                 .css('display',options.hideGlobal ? 'none' : null)
             }
         }
-
 
 
 
