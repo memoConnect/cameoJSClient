@@ -4,7 +4,7 @@ function cmValidateEmail(){
     //http://stackoverflow.com/questions/16863389/angular-js-email-validation-with-unicode-characters
     return {
         require: 'ngModel',
-        link: function(scope,element,attrs,model){
+        link: function(scope, element, attrs, model){
             element.on('blur', function(evt){
                 scope.$apply(function(){
                     var val = element.val();

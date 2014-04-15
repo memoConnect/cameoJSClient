@@ -3,7 +3,7 @@
 function cmValidatePhone(cmAuth){
     return {
         require: 'ngModel',
-        link: function(scope,element,attrs,model){
+        link: function(scope, element, attrs, model){
             element.on('blur', function(evt){
                 scope.$apply(function(){
                     var val = element.val();

@@ -6,7 +6,7 @@ function cmMultiInput(){
         scope: true,
         transclude: true,
 
-        template: '<div ng-repeat="item in collection" class="cm-multi-input-wrap">' +
+        template: '<div ng-repeat="(itemKey,item) in collection" class="cm-multi-input-wrap">' +
                     '<div ng-transclude ng-keyup="showMultiplier()"></div>'+
                     '<div class="cm-multiplier" ng-click="multiply()" ng-show="isMultiplyable">'+
                         '<i class="fa cm-checkbox-bg"></i>'+
