@@ -123,6 +123,16 @@ module.exports = function (grunt) {
             testConfig.config.wwwUrl = wwwUrl;
         }
 
+        var platform = process.platform
+        console.log("OS: " + platform)
+        if (platform.match(/linux/)) {
+            testConfig.config.chromeDriverPath = "../test/lib/ptor/chromedriver_linux"
+        } else if (platform.match(/mac/)) {
+            testConfig.config.chromeDriverPath = "../test/lib/ptor/chromedriver_mac"
+        } else if (platform.match(/win/)) {
+            testConfig.config.chromeDriverPath = "../test/lib/ptor/chromedriver_win.exe"
+        }
+
         return testConfig;
     })();
 
@@ -359,7 +369,7 @@ module.exports = function (grunt) {
                     'data': {
                         'phonegapFiles': //                            '<script src="cordova.js"></script>' +
                             '<script src="phonegap.js"></script>' +
-                                '<script src="phonegap-adapter.js"></script>',
+                            '<script src="phonegap-adapter.js"></script>',
                         'phonegapElements': '<div class="well">' +
                             '<p id="networkState"></p>' +
                             '<p id="contactsNumber"></p>' +
@@ -421,6 +431,16 @@ module.exports = function (grunt) {
                 },
                 'files': {
                     'phonegap-build/www/config.xml': ['templates/config-phonegap.tpl.xml']
+                }
+            }, 'config-protractor': {
+                'options': {
+                    'data': {
+                        'chromeDriverPath': globalCameoTestConfig.config.chromeDriverPath,
+                        'browserName': 'chrome'
+                    }
+                },
+                'files': {
+                    'config/ptor.e2e.conf.js': ['templates/ptor.e2e.conf.tpl.js']
                 }
             }
         },
@@ -521,7 +541,7 @@ module.exports = function (grunt) {
     ]);
 
     // watch
-    grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'template:config-phonegap', 'concat:less', 'less']);
+    grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'template:config-phonegap', 'template:config-protractor', 'concat:less', 'less']);
     grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
 
     // deploy it for me babe !!
