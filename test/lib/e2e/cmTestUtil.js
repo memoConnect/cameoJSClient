@@ -5,6 +5,9 @@ var config = require("../../e2e/config-e2e-tests.js")
 
 this.waitForPageLoad = function (ptor) {
 
+    // add some initial delay
+    ptor.sleep(100)
+
     ptor.wait(function () {
 
         return ptor.executeScript('return window != undefined && window._route != undefined').then(function (boolean) {
