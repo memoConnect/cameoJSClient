@@ -8,7 +8,6 @@ function cmConversationControls(cmNotify, $location, $rootScope){
         require: '^cmConversation',
 
         link: function($scope, $element, $attrs, cmConversation){
-            $scope.cmUserModel = cmUserModel;
             $scope.isNew = cmConversation.isNew();
 
             $scope.setLevel = function(level){
