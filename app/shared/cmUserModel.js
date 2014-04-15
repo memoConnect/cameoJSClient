@@ -113,10 +113,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
 
         this.isGuest = function(){
             if(this.data.userType == 'external'){
-                console.log('GAST!')
                 return true;
-            } else {
-                console.log('Kein GAST!')
             }
 
             return false;
