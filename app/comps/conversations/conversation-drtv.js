@@ -12,6 +12,8 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
                 conversation_offset  = $attrs.offset,
                 conversation_limit   = $attrs.limit
 
+
+            $scope.cmUserModel = cmUserModel;
             $scope.new_conversation = !conversation_id;
 
 

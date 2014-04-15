@@ -1,9 +1,9 @@
 <cm-header cm-rubber-space>
-    <cm-back cm-weight="1" back-to="/talks" class="overblend-avatar"></cm-back>
-    <cm-identity cm-weight="10" ></cm-identity>
+    <cm-back cm-weight="1" back-to="/talks" class="overblend-avatar" ng-if="!isGuest"></cm-back>
+    <cm-identity cm-weight="10" ng-if="!isGuest"></cm-identity>
     <cm-logo cm-weight="8" ></cm-logo>
     <cm-reload cm-weight="8"></cm-reload>
-    <cm-menu cm-weight="2" ></cm-menu>
+    <cm-menu cm-weight="2" ng-if="!isGuest"></cm-menu>
 </cm-header>
 
 <div ng-controller="PurlCtrl">

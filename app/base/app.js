@@ -189,6 +189,9 @@ define([
                 // momentjs
                 $window.moment.lang(cmLanguage.getCurrentLanguage());
 
+                // @todo link with rights?!
+                $rootScope.isGuest = cmUserModel.isGuest();
+
                 $rootScope.urlHistory = $rootScope.urlHistory || [];
                 if(
                        !_currentRoute_

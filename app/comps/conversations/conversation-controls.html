@@ -16,10 +16,10 @@
                 <div ng-if="conversation.recipients.length == 1" ng-click="$emit('cmOverlay:show', 'add-recipients')" class="add-recipients">
                     <cm-avatar cm-view="unknown"></cm-avatar>
                     {{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS'|cmTranslate}}
-                    <cm-edge><i class="fa cm-add"></i></cm-edge>
+                    <cm-edge ng-if="!isGuest"><i class="fa cm-add"></i></cm-edge>
                 </div>
 
-                <cm-edge ng-if="conversation.recipients.length > 1" ng-click="$emit('cmOverlay:show', 'add-recipients')"><i class="fa cm-add"></i></cm-edge>
+                <cm-edge ng-if="conversation.recipients.length > 1 && !isGuest" ng-click="$emit('cmOverlay:show', 'add-recipients')"><i class="fa cm-add"></i></cm-edge>
             </div>
         </div>
 

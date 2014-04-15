@@ -1,4 +1,4 @@
-function cmConversationControls(cmNotify){
+function cmConversationControls(cmUserModel, cmNotify){
     return{
         restrict : 'AE',
         templateUrl : 'comps/conversations/conversation-controls.html',      
@@ -8,6 +8,7 @@ function cmConversationControls(cmNotify){
         require: '^cmConversation',
 
         link: function($scope, $element, $attrs, cmConversation){
+            $scope.cmUserModel = cmUserModel;
             $scope.isNew = cmConversation.isNew();
 
             $scope.setLevel = function(level){

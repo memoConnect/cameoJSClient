@@ -14,9 +14,9 @@
 <div id="scrollerBottom"></div>
 
 <div class="answer clearfix">
-    <i class="fa cm-plus attachments with-cursor"></i>
+    <i class="fa cm-plus attachments with-cursor" ng-if="!isGuest"></i>
     <div class="message">
-        <textarea cm-resize-textarea cm-max-rows="4" ng-model="my_message_text"></textarea>
+        <textarea cm-resize-textarea cm-max-rows="4" ng-model="my_message_text">{{isGuest}}</textarea>
         <i class="fa cm-smile-negative with-cursor"></i>
         <div class="inputter"></div>
     </div>

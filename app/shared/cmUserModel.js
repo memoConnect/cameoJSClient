@@ -15,7 +15,6 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
     function(cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmNotify,$rootScope, $q, $location){
         var self = this,
             isAuth = false,
-            token = false,
             initialize = ''; // empty, run, done ! important for isAuth check
 
         var dataModel = {
@@ -29,7 +28,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             preferredMessageType: 'default',
             created: '',
             lastUpdated: '',
-            userType: 'external',            
+            userType: 'external',
             storage: {},
             identity: {}
         }
@@ -114,7 +113,10 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
 
         this.isGuest = function(){
             if(this.data.userType == 'external'){
+                console.log('GAST!')
                 return true;
+            } else {
+                console.log('Kein GAST!')
             }
 
             return false;
@@ -325,23 +327,16 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          * @TODO handle Token with identity
          */
         this.getToken = function(){
-            if(token !== false){
+            var token = cmAuth.getToken();
+            if(token !== undefined && token !== 'undefined' && token !== null){
                 return token;
-            } else if(this.isGuest() !== true) {
-                token = cmAuth.getToken();
-                if(token !== undefined && token !== 'undefined' && token !== null){
-                    return token;
-                }
             }
 
             return false;
         };
 
         this.storeToken = function(t){
-            token = t;
-            if(this.isGuest !== true){
-                cmAuth.storeToken(t);
-            }
+            cmAuth.storeToken(t);
         };
 
         this.removeToken = function(){
@@ -390,7 +385,6 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          * clear identity storage
          */
         function resetUser(){
-            token = '';
             self.data = angular.extend({}, dataModel);
         }
 
