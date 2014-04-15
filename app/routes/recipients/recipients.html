@@ -1,5 +1,5 @@
 <cm-header cm-rubber-space>
-    <cm-back cm-weight="1" back-to ="conversation" plain-back="true"></cm-back>
+    <cm-back cm-weight="1" back-to ="conversation" plain-back="true" page-title = "cmTranslate('RECIPIENTS.LABEL.DONE')"> </cm-back>
     <cm-logo cm-weight="1"></cm-logo>
     <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
@@ -21,15 +21,9 @@
     <cm-contacts-list contacts-as="contacts">
         <cm-contact-tag ng-repeat="contact in contacts" cm-rubber-space>   
             <cm-avatar cm-data = "contact.identity"></cm-avatar> 
-            <cm-key-level level="3"></cm-key-level>
+            <cm-key-level key-size = "contact.identity.getWeakestKeySize()" ></cm-key-level>
             <cm-contact-brief   cm-data = "contact" cm-weight="1"></cm-contact-brief>     
             <cm-contact-type    cm-data = "contact" ></cm-contact-type>
-            <button ng-click="editContact(contact.identity.id)">
-                <i 
-                    class    = "fa cm-fa cm-rhino-positive" 
-                    ng-class = "{'cm-rhino-positive': contact.contactType == 'internal', }"
-                ></i>
-            </button>
             <span class="separator" ></span>
             <button ng-click="toggleRecipient(contact.identity)" ng-disabled = "selected[contact.identity.id] && disabled_remove">                
                 <i class="fa" ng-class="{'cm-checkbox': !selected[contact.identity.id], 'cm-checkbox-right' : selected[contact.identity.id]}"></i>              

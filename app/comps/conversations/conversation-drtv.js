@@ -7,48 +7,11 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
         scope: true,
 
         controller: function ($scope, $element, $attrs) {
-            var conversation_id      = $scope.$eval($attrs.cmConversations) || $scope.$eval($attrs.conversationId),
+            var self                 = this,
+                conversation_id      = $scope.$eval($attrs.cmConversations) || $scope.$eval($attrs.conversationId),
                 conversation_subject = $scope.$eval($attrs.cmSubject),
                 conversation_offset  = $attrs.offset,
                 conversation_limit   = $attrs.limit
-
-            
-
-            $scope.init = function (conversation) {
-                
-                $rootScope.pendingConversation = conversation
-
-                // reload detail of conversation
-                $scope.conversation = conversation.update();
-
-                $scope.my_message_text  = ""
-                $scope.password         = ""
-                $scope.show_contacts    = false
-                //$scope.passphrase_valid = $scope.conversation.passphraseValid()
-
-                /*
-                if($scope.conversation.passphrase != '' && $scope.passphrase_valid !== false){
-                    $scope.passphrase = $scope.conversation.passphrase;
-                    $scope.conversation.decrypt();
-                } else {
-                    $scope.$watch("passphrase", function (new_passphrase) {                        
-                        $scope.conversation.setPassphrase(new_passphrase)
-                        $scope.passphrase_valid = $scope.conversation.passphraseValid()
-                        if ($scope.passphrase_valid) $scope.conversation.decrypt()
-                    })
-                }
-                */
-
-                $scope.$watch("conversation.subject", function (new_subject) {
-                    $scope.conversation.updateSubject(new_subject||'')
-                })
-                
-
-                //cron
-//                if($scope.new_conversation !== true){
-//                    cmCron.add('Conversation-'+conversation.id,{instance: conversation,task:function(conversation){self.update()}});
-//                }
-            }
 
             $scope.sendMessage = function () {
 
@@ -143,24 +106,70 @@ function cmConversation(cmConversationsModel, cmMessageFactory, cmUserModel, cmR
 
 
 
-            $scope.new_conversation = !conversation_id && !$rootScope.pendingConversation;
+            this.addPendingRecipients = function(){
+                $rootScope.pendingRecipients = $rootScope.pendingRecipients || []
+                $rootScope.pendingRecipients.forEach(function(pendingRecipient){
+                    $scope.conversation.addRecipient(pendingRecipient)
+                })
+                $rootScope.pendingRecipients = []
+            }
 
+            this.init = function (conversation) {
+                
+                $rootScope.pendingConversation = conversation
+
+                // reload detail of conversation
+                $scope.conversation = conversation.update();
+
+                self.addPendingRecipients()
+
+                $scope.my_message_text  = ""
+                $scope.password         = ""
+                $scope.show_contacts    = false
+                //$scope.passphrase_valid = $scope.conversation.passphraseValid()
+
+                /*
+                if($scope.conversation.passphrase != '' && $scope.passphrase_valid !== false){
+                    $scope.passphrase = $scope.conversation.passphrase;
+                    $scope.conversation.decrypt();
+                } else {
+                    $scope.$watch("passphrase", function (new_passphrase) {                        
+                        $scope.conversation.setPassphrase(new_passphrase)
+                        $scope.passphrase_valid = $scope.conversation.passphraseValid()
+                        if ($scope.passphrase_valid) $scope.conversation.decrypt()
+                    })
+                }
+                */
+
+                $scope.$watch("conversation.subject", function (new_subject) {
+                    $scope.conversation.updateSubject(new_subject||'')
+                })
+                
+
+                //cron
+//                if($scope.new_conversation !== true){
+//                    cmCron.add('Conversation-'+conversation.id,{instance: conversation,task:function(conversation){self.update()}});
+//                }
+            }
+
+
+            $scope.new_conversation = !conversation_id && !$rootScope.pendingConversation;
 
             if(conversation_id){
                 cmConversationsModel.getConversation(conversation_id).then(
                     function (conversation) {
-                        $scope.init(conversation)
+                        self.init(conversation)
                         $scope.conversation.decryptPassphrase()
                         $scope.conversation.decrypt()
                     }
                 )
             } else if($rootScope.pendingConversation){
-                $scope.init($rootScope.pendingConversation)
+                self.init($rootScope.pendingConversation)
             } else {
                 cmConversationsModel.createNewConversation().then(
                     function(newConversation){
                         newConversation.addRecipient(cmUserModel.data.identity);
-                        $scope.init(newConversation);
+                        self.init(newConversation);
                         $scope.conversation.setPassphrase()
                     }
                 );

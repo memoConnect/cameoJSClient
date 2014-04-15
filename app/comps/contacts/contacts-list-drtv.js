@@ -36,15 +36,25 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope, $location){
             /**
              * handle every single contact via model
              */
-            $scope.startConversation = function(id){
-                cmLogger.debug('editContact '+id);
+            $scope.startConversation = function(contact){
+                delete $rootScope.pendingConversation                
+                if(contact.identity){
+                    $rootScope.pendingRecipients= [contact.identity]
+                }else{
+                    cmLogger.error('Unable to find identity on contact. '+contact)                    
+                }
+                $location.path('/conversation');
             };
             /**
              * edit contact
              * @param id
              */
-            $scope.editContact = function(id){
-                $location.path('/contact/'+id);
+            $scope.editContact = function(contact){
+                if(contact.identity){
+                    $location.path('/contact/'+contact.identity.id);
+                }else{
+                    cmLogger.error('Unable to find identity on contact. '+contact)                    
+                }                
             };
             /**
              * delete contact via model
@@ -52,13 +62,6 @@ function cmContactsList(cmContactsModel, cmLogger, $rootScope, $location){
              */
             $scope.deleteContact = function(id){
                 cmLogger.debug('deleteContact '+id);
-            };
-            /**
-             * select contact
-             * @param identity
-             */
-            $scope.selectContact = function(identity){
-                $rootScope.$broadcast('cmContacts:selected', identity)
             };
         }
     }

@@ -16,7 +16,7 @@ function cmBack($window, $location){
             $scope.fakeBack = '';
             // check page-title attribute in directive
             if('pageTitle' in $attrs){
-                $scope.pageTitle = $scope.$eval($attrs.pageTitle);
+                $scope.pageTitle = $scope.$eval($attrs.pageTitle);                
             }
             // check default back-to attribute
             if('backTo' in $attrs){
