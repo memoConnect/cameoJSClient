@@ -114,12 +114,42 @@ textarea[cm-resize-textarea]{
 }
 
 cm-spinner {
-  display: block;
+  display:block;
   position:relative;
-  top: 50%;
-  left: 50%;
-  width: 1px;
-  height: 1px;
+  top:50%;
+  left:50%;
+  width:1px;
+  height:1px;
+}
+
+cm-multi-input{
+  display:block;
+  .cm-multi-input-wrap{
+    position: relative;
+    .cm-multiplier{
+      display:none;
+    }
+    &:last-child{
+      .cm-multiplier {
+        .with-cursor;
+        display: block;
+        position: absolute;
+        right:2em;
+        top:-1em;
+        background:#ff0000;
+        i{
+          position:absolute;
+          font-size:3em;
+        }
+        i.cm-checkbox-bg {
+          color:@cm-white;
+        }
+        i.cm-checkbox-add {
+          color:@cm-black;
+        }
+      }
+    }
+  }
 }
 
 cm-rubber-space,
