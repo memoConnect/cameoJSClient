@@ -15,8 +15,8 @@
 
 <div class="answer clearfix">
     <i class="fa cm-plus attachments with-cursor" cm-user-rights></i>
-    <div class="message">
-        <textarea cm-resize-textarea cm-max-rows="4" ng-model="my_message_text">{{isGuest}}</textarea>
+    <div class="message" ng-class="{'large':cmIsGuest}">
+        <textarea cm-resize-textarea cm-max-rows="4" ng-model="my_message_text"></textarea>
         <i class="fa cm-smile-negative with-cursor"></i>
         <div class="inputter"></div>
     </div>

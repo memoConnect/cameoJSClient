@@ -191,8 +191,8 @@ define([
                 // momentjs
                 $window.moment.lang(cmLanguage.getCurrentLanguage());
 
-                // @todo link with rights?!
-                $rootScope.isGuest = cmUserModel.isGuest();
+                // important for HTML Manipulation to switch classes etc.
+                $rootScope.cmIsGuest = cmUserModel.isGuest();
 
                 $rootScope.urlHistory = $rootScope.urlHistory || [];
                 if(
