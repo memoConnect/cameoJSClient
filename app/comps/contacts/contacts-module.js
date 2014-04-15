@@ -68,6 +68,10 @@ cmContacts.directive('cmContactBrief', [
     cmContactBrief
 ])
 
+cmContacts.directive('cmContactType', [
+    cmContactType
+])
+
 cmContacts.directive('cmKeyLevel',[
     cmKeyLevel
 ])

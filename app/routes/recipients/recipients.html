@@ -22,9 +22,13 @@
         <cm-contact-tag ng-repeat="contact in contacts" cm-rubber-space>   
             <cm-avatar cm-data = "contact.identity"></cm-avatar> 
             <cm-key-level level="3"></cm-key-level>
-            <cm-contact-brief cm-data = "contact" cm-weight="1"></cm-contact-brief>     
+            <cm-contact-brief   cm-data = "contact" cm-weight="1"></cm-contact-brief>     
+            <cm-contact-type    cm-data = "contact" ></cm-contact-type>
             <button ng-click="editContact(contact.identity.id)">
-                <i class="fa cm-fa cm-rhino-positive" ></i>
+                <i 
+                    class    = "fa cm-fa cm-rhino-positive" 
+                    ng-class = "{'cm-rhino-positive': contact.contactType == 'internal', }"
+                ></i>
             </button>
             <span class="separator" ></span>
             <button ng-click="toggleRecipient(contact.identity)" ng-disabled = "selected[contact.identity.id] && disabled_remove">                

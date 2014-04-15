@@ -44,14 +44,12 @@
         <cm-contact-tag cm-rubber-space ng-repeat="contact in contacts | filter:search">
             <cm-avatar cm-data = "contact.identity" ></cm-avatar>    
             <cm-key-level key-size = "contact.identity.getWeakestKeySize()"></cm-key-level>
-            <cm-contact-brief cm-data = "contact" cm-weight="1"></cm-contact-brief>     
-            <button>
-                <i class="fa cm-fa cm-rhino-positive" ng-if = ""></i>
-            </button>
+            <cm-contact-brief   cm-data = "contact" cm-weight="1"></cm-contact-brief>     
+            <cm-contact-type    cm-data = "contact"></cm-contact-type>
             <span class="separator" ></span>
-            <button>
-                <i class="fa cm-write" ng-click="startConversation(contact.identity.id)"></i>
-            <button>
+            <button ng-click="startConversation(contact.identity.id)">
+                <i class="fa cm-write"></i>
+            </button>
         </cm-contact-tag>
 
     </cm-contacts-list>
