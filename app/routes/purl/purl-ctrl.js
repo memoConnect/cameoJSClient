@@ -30,8 +30,10 @@ define([
                     function(response){
                         if(typeof response !== 'undefined' && cmUtil.checkKeyExists(response, 'status')){
                             if(response.status == 401){
-                                // goto talks and show modal
-                                console.log(response)
+                                /**
+                                 * @todo goto talks and show modal
+                                 */
+                                cmUserModel.doLogout();
                             }
                         } else {
                             $location.path('/404');
