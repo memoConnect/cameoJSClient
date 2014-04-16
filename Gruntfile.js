@@ -515,8 +515,8 @@ module.exports = function (grunt) {
 
         // watch
         watch: {
-            files: ['app/less/*.less', 'templates/*.tpl.*', ],
-            tasks: ['genAllTemplates']
+            files: ['app/less/*.less', 'templates/*.tpl.*', 'app/comps/**/!(package)*', 'app/shared/ui/!(package)*'],
+            tasks: ['genAllTemplates','packages']
         },
         less: {
             development: {
