@@ -180,6 +180,7 @@ module.exports = function (grunt) {
                     process: concatCmFiles
                 },
                 files: {
+                    'app/comps/validate/package.js': ['app/comps/validate/module-validate.js','app/comps/validate/!(module-validate|package)*'],
                     'app/shared/ui/package.js': ['app/shared/ui/module-ui.js', 'app/shared/ui/!(module-ui|package)*']
                 }
             }
