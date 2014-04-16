@@ -55,11 +55,7 @@ angular.module('cmContacts').directive('cmContactsList',[
                  * @param id
                  */
                 $scope.editContact = function (contact) {
-                    if (contact.identity) {
-                        $location.path('/contact/' + contact.identity.id);
-                    } else {
-                        cmLogger.error('Unable to find identity on contact. ' + contact)
-                    }
+                    $location.path('/contact/' + contact.id);
                 };
                 /**
                  * delete contact via model
