@@ -225,16 +225,6 @@ module.exports = function (grunt) {
                         dest: 'dist/cockpit'
                     }
                 ]
-            },
-            'packages': {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'app/shared/ui/',
-                        src: '**/package.js',
-                        dest: 'app/shared/ui/'
-                    }
-                ]
             }
         },
         copy: {
@@ -578,7 +568,7 @@ module.exports = function (grunt) {
     // watch
     grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'template:config-phonegap', 'template:config-protractor', 'concat:less', 'less']);
     grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
-    grunt.registerTask('packages', ['concat:packages','uglify:packages']);
+    grunt.registerTask('packages', ['concat:packages']);
 
     // deploy it for me babe !!
     grunt.registerTask('deploy', ['clean:dist', 'genAllTemplates', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
