@@ -212,8 +212,8 @@
 .cm-client-add:before{content:'\f003'}
 .cm-edge-add:before{content:'\f004'}
 .cm-edge:before{content:'\f005'}
-.cm-addressbook-positive:before{content:'\f026'}
-.cm-addressbook:before{content:'\f006'}
+.cm-address-book-positive:before{content:'\f026'}
+.cm-address-book:before{content:'\f006'}
 .cm-load-to-rhino:before{content:'\f027'}
 .cm-load-to:before{content:'\f039'}
 .cm-left:before{content:'\f007'}
