@@ -42,12 +42,8 @@ module.exports = function(config) {
             'app/comps/contacts/package.js',
             'app/comps/user/package.js',
             'app/comps/validate/package.js',
-
-            'app/comps/files/!(*module).js',
-            'app/comps/files/*module.js',
-
-            'app/comps/conversations/!(*module).js',
-            'app/comps/conversations/*module.js',
+            'app/comps/conversations/package.js',
+            'app/comps/files/package.js',
 
             'test/lib/angular/angular-mocks.js',
 
