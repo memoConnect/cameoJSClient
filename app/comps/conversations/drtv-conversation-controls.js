@@ -8,7 +8,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
     function(cmUserModel, cmNotify, $location, $rootScope){
         return{
             restrict : 'AE',
-            templateUrl : 'comps/conversations/tpl-conversation-controls.html',
+            templateUrl : 'comps/conversations/drtv-conversation-controls.html',
             scope : {
                 conversation :"=cmData"
             },

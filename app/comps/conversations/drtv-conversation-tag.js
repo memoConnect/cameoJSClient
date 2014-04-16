@@ -8,7 +8,7 @@ angular.module('cmConversations').directive('cmConversationTag',[
             scope: {
                 conversation : "=cmData"
             },
-            templateUrl : 'comps/conversations/tpl-conversation-tag.html',
+            templateUrl : 'comps/conversations/drtv-conversation-tag.html',
             priority: 0
         }
     }

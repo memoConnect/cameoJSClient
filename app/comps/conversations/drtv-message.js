@@ -6,7 +6,7 @@ angular.module('cmConversations').directive('cmMessage', [
             restrict: 'AE',
             require: '^cmConversation',
             scope: true,
-            templateUrl: 'comps/conversations/tpl-message.html',
+            templateUrl: 'comps/conversations/drtv-message.html',
             controller: function ($scope, $element, $attrs) {
                 if($attrs.truncate !== undefined){
                     $scope.truncate = $attrs.truncate;

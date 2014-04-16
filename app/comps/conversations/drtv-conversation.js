@@ -14,7 +14,7 @@ angular.module('cmConversations').directive('cmConversation', [
     function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location, $rootScope) {
         return {
             restrict: 'AE',
-            templateUrl: 'comps/conversations/conversation.html',
+            templateUrl: 'comps/conversations/drtv-conversation.html',
             scope: true,
 
             controller: function ($scope, $element, $attrs) {
