@@ -147,12 +147,12 @@ module.exports = function (grunt) {
                 .replace(/(')/gm,"\\'");// uncomment single quotes,
             filepath = filepath.replace('app/','');
 
-            return  "angular.module('"+filepath+"', []).run([\n" +
+            return  ";angular.module('"+filepath+"', []).run([\n" +
                 "'$templateCache', function($templateCache) {\n"+
                 "$templateCache.put('"+filepath+"'," +
                 "\n'"+lines+"'" +
                 ");\n"+
-                "}]);"
+                "}])"
             // scripts clear use_strict
         } else {
             var file = src
