@@ -38,8 +38,7 @@ module.exports = function(config) {
 
             'app/shared/cmLanguage.js',
 
-            'app/shared/ui/!(*module).js',
-            'app/shared/ui/*module.js',
+            'app/shared/ui/package.js',
 
             'app/comps/files/!(*module).js',
             'app/comps/files/*module.js',
@@ -69,32 +68,7 @@ module.exports = function(config) {
 //            'test/unit/comps/user/*spec.js',
             'test/unit/comps/validate/*spec.js',
 
-            // all frontend files
-            //{pattern: 'app/**/*.js', included: false},
-            // tests
-            //{pattern: 'test/unit/**/*.fix.spec.js', included: false},
-            //{pattern: 'test/unit/**/*.fix.amd-spec.js', included: false},
-
-//            {pattern: 'test/unit/**/app.amd-spec.js', included: false},
-//            {pattern: 'test/unit/**/auth.amd-spec.js', included: false},
-//            {pattern: 'test/unit/**/contacts.amd-spec.js', included: false},
-//            {pattern: 'test/unit/**/search-cameo-identity-drtv.amd-spec.js', included: false},
-//            {pattern: 'test/unit/**/crypt.amd-spec.js', included: false},
-//            {pattern: 'test/unit/**/nav-tabs-drtv.amd-spec.js', included: false},
-//            {pattern: 'test/unit/**/point-spinner-drtv.amd-spec.js', included: false},
-//            {pattern: 'test/unit/**/type-chooser-drtv.amd-spec.js', included: false},
-//            {pattern: 'test/unit/**/validate-email-drtv.amd-spec.js', included: false},
-//            {pattern: 'test/unit/**/validate-phone-drtv.amd-spec.js', included: false},
-//            {pattern: 'test/unit/**/contacts-modl.amd-spec.js', included: false},
-//            {pattern: 'test/unit/**/user-modl.amd-spec.js', included: false},
-//            {pattern: 'test/unit/**/registration-ctrl.amd-spec.js', included: false},
-//            {pattern: 'test/unit/**/util.amd-spec.js', included: false},
-
-            // test lib
-            //{pattern: 'test/lib/**/*.js', included: false},
-            // requirejs main file
-            //{pattern: 'test/unit/base/main.js', included: true},
-            // load and json templates
+            //
             'app/**/*.html',
             'app/**/*.json'
 //            {pattern: 'app/**/*.json', included: false}

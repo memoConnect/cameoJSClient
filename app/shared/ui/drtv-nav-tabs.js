@@ -5,7 +5,7 @@ angular.module('cmUi').directive('cmNavTabs',[
     function (){
         return {
             scope: true,
-            templateUrl: 'shared/ui/nav-tabs.html',
+            templateUrl: 'shared/ui/drtv-nav-tabs.html',
 
             controller: function($rootScope, $scope, $routeParams){
                 /**

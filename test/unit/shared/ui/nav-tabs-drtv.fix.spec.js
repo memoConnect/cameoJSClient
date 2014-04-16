@@ -22,7 +22,7 @@ describe('Directive cmNavTabs', function () {
         })
     })
     beforeEach(inject(function(_$rootScope_, _$compile_, $templateCache){
-        $templateCache.put('shared/ui/nav-tabs.html', window.__html__['app/shared/ui/nav-tabs.html'])
+        $templateCache.put('shared/ui/drtv-nav-tabs.html', window.__html__['app/shared/ui/drtv-nav-tabs.html'])
 
         el = angular.element('<div cm-nav-tabs></div>')
         $rootScope = _$rootScope_.$new()

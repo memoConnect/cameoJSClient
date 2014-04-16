@@ -144,7 +144,8 @@ module.exports = function (grunt) {
                 .replace(/(\r\n|\n|\r|\t)/gm,'')// clear system signs
                 .replace(/\s{2,100}(<)/gm,'<')// clear whitespaces TODO: with html <
                 .replace(/\s{2,100}/gm,' ')// clear whitespaces TODO: with html <
-                .replace(/(')/gm,"\\'");// uncomment single quotes
+                .replace(/(')/gm,"\\'");// uncomment single quotes,
+            filepath = filepath.replace('app/','');
 
             return  "angular.module('"+filepath+"', []).run([\n" +
                 "'$templateCache', function($templateCache) {\n"+
@@ -175,11 +176,12 @@ module.exports = function (grunt) {
                 dest: 'app/css/app.less'
             },
             packages: {
-                options:{
+                options: {
                     process: concatCmFiles
                 },
-                src: ['app/shared/ui/module-ui.js','app/shared/ui/!(module-ui|package)*'],
-                dest: 'app/shared/ui/package.js'
+                files: {
+                    'app/shared/ui/package.js': ['app/shared/ui/module-ui.js', 'app/shared/ui/!(module-ui|package)*']
+                }
             }
         },
         coffee: {
