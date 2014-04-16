@@ -137,7 +137,10 @@ module.exports = function (grunt) {
     })();
 
 
-    var concatCmFiles = function(src, filepath){
+
+    var concatCmTemplatesFound = [];
+
+    var concatConvertCmFiles = function(src, filepath){
         // templates to template cache
         if(filepath.search(/.*\.html/g) != -1){
             var lines = src
@@ -146,22 +149,55 @@ module.exports = function (grunt) {
                 .replace(/\s{2,100}/gm,' ')// clear whitespaces on line
                 .replace(/(')/gm,"\\'");// uncomment single quotes,
             filepath = filepath.replace('app/','');
+            // add to template array for module schmusi
+            concatCmTemplatesFound.push(filepath);
 
-            return  ";angular.module('"+filepath+"', []).run([\n" +
+            return  "angular.module('"+filepath+"', []).run([\n" +
                 "'$templateCache', function($templateCache) {\n"+
                 "$templateCache.put('"+filepath+"'," +
                 "\n'"+lines+"'" +
                 ");\n"+
-                "}])"
-            // scripts clear use_strict
+                "}]);";
+        // module banger
+        } else if(filepath.search(/.*\/module-.*/g) != -1) {
+            // add founded templates to package module
+            if(concatCmTemplatesFound.length > 0) {
+                var templateNames = "'"+concatCmTemplatesFound.join("','")+"'";
+                concatCmTemplatesFound = [];
+                return src
+                    .replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1')
+                    .replace(/\]\)/g, ','+templateNames+'])')
+                    .replace(/(\;)$/g, '')
+            } else {
+                return src
+                    .replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1')
+                    .replace(/(\;)$/g, '')
+            }
+        // clear scripts use_strict, clear also angular.module(..) and last ;
         } else {
-            var file = src
+            return src
                 .replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1')
                 .replace(/(angular\.module\(.*\))/g, '')
                 .replace(/(\;)$/g, '')
-            return file;
         }
-    }
+    };
+
+    var concatCreateCmPackages = function(packagesObject){
+        var packages = {},
+            packagesObject = packagesObject||{};
+
+        Object.keys(packagesObject).forEach(function(packageName){
+            var packagePath = packagesObject[packageName];
+
+            packages[packagePath+'/package.js'] = [
+                packagePath+'/*.html', // at last all templates
+                packagePath+'/module-'+packageName+'.js', // at first module
+                packagePath+'/!(module-'+packageName+'|package)*.js' // all directives / services / factorys etc
+            ];
+        });
+
+        return packages;
+    };
 
     // write config
     grunt.initConfig({
@@ -181,16 +217,17 @@ module.exports = function (grunt) {
             },
             packages: {
                 options: {
-                    process: concatCmFiles
+                    banner: "'use strict';\n\n",
+                    process: concatConvertCmFiles
                 },
-                files: {
-                    'app/comps/conversations/package.js': ['app/comps/conversations/module-conversations.js','app/comps/conversations/!(module-conversations|package)*.js','app/comps/conversations/*.html'],
-                    'app/comps/contacts/package.js': ['app/comps/contacts/module-contacts.js','app/comps/contacts/!(module-contacts|package)*.js','app/comps/contacts/*.html'],
-                    'app/comps/user/package.js': ['app/comps/user/module-user.js','app/comps/user/!(module-user|package)*.js','app/comps/user/*.html'],
-                    'app/comps/validate/package.js': ['app/comps/validate/module-validate.js','app/comps/validate/!(module-validate|package)*.js','app/comps/validate/*.html'],
-                    'app/comps/files/package.js': ['app/comps/files/module-files.js','app/comps/files/!(module-files|package)*.js','app/comps/files/*.html'],
-                    'app/shared/ui/package.js': ['app/shared/ui/module-ui.js', 'app/shared/ui/!(module-ui|package)*.js','app/shared/ui/*.html']
-                }
+                files: concatCreateCmPackages({
+                    'conversations': 'app/comps/conversations',
+                    'contacts': 'app/comps/contacts',
+                    'user': 'app/comps/user',
+                    'validate': 'app/comps/validate',
+                    'files': 'app/comps/files',
+                    'ui': 'app/shared/ui'
+                })
             }
         },
         coffee: {

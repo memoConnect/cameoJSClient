@@ -8,8 +8,8 @@ angular.module('cmUi').directive('cmRubberSpace',[
 
             link : function(scope, element, attrs, controller){
                 var total_weight    = 0,
-                    available_space = 100
-                width           = element[0].offsetWidth
+                    available_space = 100,
+                    width           = element[0].offsetWidth
 
                 //remove text nodes:
                 angular.forEach(element[0].childNodes, function(el){
