@@ -88,9 +88,9 @@ angular.module('cmConversations').directive('cmConversation', [
 
                     captchaImageData && passphrase_valid
                         ?   $scope.conversation
-                        .newMessage(captchaImageData)
-                        .sendTo($scope.conversation)
-                        : null
+                            .newMessage(captchaImageData)
+                            .sendTo($scope.conversation)
+                        :   null
 
                     if (!passphrase_valid)    cmNotify.warn('CONVERSTAION.WARN.PASSPHRASE_INVALID')
                 }
@@ -180,7 +180,11 @@ angular.module('cmConversations').directive('cmConversation', [
                         }
                     )
                 } else if($rootScope.pendingConversation){
-                    self.init($rootScope.pendingConversation)
+                    if($rootScope.pendingConversation.id){
+                        $location.path('conversation/'+$rootScope.pendingConversation.id)
+                    }else{
+                        self.init($rootScope.pendingConversation)
+                    }
                 } else {
                     cmConversationsModel.createNewConversation().then(
                         function(newConversation){
