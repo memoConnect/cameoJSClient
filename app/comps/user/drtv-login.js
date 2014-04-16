@@ -69,7 +69,10 @@ angular.module('cmUser').directive('cmLogin', [
                             $scope.stopSpinner();
 
                             $rootScope.$broadcast('cmLogin:success');
-                            $location.path("/talks");
+
+                            if(!$location.$$path.match(/\/purl\/.*/)){
+                                $location.path("/talks");
+                            }
                         },
                         function(error){
                             isIdle = false;

@@ -168,8 +168,6 @@ angular.module('cmConversations').directive('cmConversation', [
 
 
                 $scope.new_conversation = !conversation_id
-                console.log($scope.new_conversation)
-                console.log($rootScope.pendingConversation)
 
                 if(conversation_id){
                     cmConversationsModel.getConversation(conversation_id).then(
