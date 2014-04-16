@@ -60,6 +60,7 @@ var config = {
 
         // packages
         'pckContacts': 'comps/contacts/package',
+        'pckUser': 'comps/user/package',
         'pckValidate': 'comps/validate/package',
         'pckUi': 'shared/ui/package',
         'pckConversations': 'comps/conversations/package'
@@ -109,19 +110,23 @@ var config = {
             'cmNotify',
             'cmLogger'
         ],
-
+        // packages
         'pckContacts': [
-            'angular',
             'cmApi',
             'cmLogger',
             'cmUtil',
             'cmIdentity'
         ],
+        'pckUser': [
+            'cmAuth',
+            'cmUserModel',
+            'cmCrypt',
+            'cmUtil'
+        ],
         'pckValidate': [
             'util-passchk-fast'
         ],
         'pckUi': [
-            'angular',
             'cmAuth',
             'cmLogger',
             'cmLanguage',
@@ -165,8 +170,6 @@ function addPackage(package_name, package) {
     })
 }
 
-
-
 addPackage('pckFiles',{
     root: 'comps/files/files-module',
     deps: [
@@ -190,21 +193,21 @@ addPackage('pckFiles',{
     ]
 })
 
-addPackage('pckUser',{
-    root: 'comps/user/user-module',
-    deps: [
-        'angular',
-        'cmAuth',
-        'cmUserModel',
-        'cmCrypt',
-        'cmUtil'
-    ],
-    resources : [
-        'comps/user/login-drtv',
-        'comps/user/key-pair-drtv',
-        'comps/user/user-rights-drtv'
-    ]
-})
+//addPackage('pckUser',{
+//    root: 'comps/user/user-module',
+//    deps: [
+//        'angular',
+//        'cmAuth',
+//        'cmUserModel',
+//        'cmCrypt',
+//        'cmUtil'
+//    ],
+//    resources : [
+//        'comps/user/login-drtv',
+//        'comps/user/key-pair-drtv',
+//        'comps/user/user-rights-drtv'
+//    ]
+//})
 
 //addPackage('pckConversations',{
 //    root: 'comps/conversations/conversations-module',
