@@ -8,14 +8,9 @@ describe('registration', function () {
 
     var ptor;
 
-    beforeEach(function () {
-        ptor = protractor.getInstance();
-        ptor.ignoreSynchronization = true;
-        util.ptor = ptor
-        util.setPtorInstance(ptor)
-//        browser.ignoreSynchronization = true;
-    });
-
+    ptor = protractor.getInstance();
+    ptor.ignoreSynchronization = true;
+    util.setPtorInstance(ptor)
 
     it('should contain 7 input fields with placeholders', function () {
 
@@ -87,6 +82,7 @@ describe('registration', function () {
 
     })
 
+    // todo: test emails and phonenumbers
     it('should link to term of use', function() {
 
         // we need to scroll to bottom of page, because the bottom navbar might hide the link...
@@ -97,19 +93,28 @@ describe('registration', function () {
         util.waitForPageLoad("/terms");
     })
 
-//    it('should create account with valid credentials', function() {
-//        ptor.get(config.wwwUrl + "#/registration");
-//        util.waitForPageLoad();
-//
-//        $("[data-qa='input-loginName']").sendKeys(loginName)
-//        $("[data-qa='input-password']").sendKeys(password)
-//        $("[data-qa='input-passwordConfirm']").sendKeys(password)
-//
-//
-//        $("[data-qa='btn-createUser']").click()
-//
-//        util.waitForPageLoad("/talks")
-//
-//    })
+    it('should create account with valid credentials', function() {
+        ptor.get(config.wwwUrl + "#/registration");
+        util.waitForPageLoad();
+
+        $("[data-qa='input-loginName']").sendKeys(loginName)
+        $("[data-qa='input-password']").sendKeys(password)
+        $("[data-qa='input-passwordConfirm']").sendKeys(password)
+
+        $("[data-qa='link-terms']").sendKeys(protractor.Key.END)
+        $("[data-qa='icon-checkbox-agb']").click()
+
+        $("[data-qa='btn-createUser']").click()
+
+        util.waitForPageLoad("/talks")
+
+        // todo better test of welcome screen
+        $(".modal").isDisplayed().then(function(b){
+            expect(b).toBe(true)
+        })
+
+    })
+
+
 
 })
