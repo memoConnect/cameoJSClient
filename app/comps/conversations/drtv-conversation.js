@@ -129,8 +129,7 @@ angular.module('cmConversations').directive('cmConversation', [
                 }
 
                 this.init = function (conversation) {
-
-                    $rootScope.pendingConversation = conversation
+                    $rootScope.pendingConversation = conversation;
 
                     // reload detail of conversation
                     $scope.conversation = conversation.update();
@@ -169,6 +168,8 @@ angular.module('cmConversations').directive('cmConversation', [
 
 
                 $scope.new_conversation = !conversation_id
+                console.log($scope.new_conversation)
+                console.log($rootScope.pendingConversation)
 
                 if(conversation_id){
                     cmConversationsModel.getConversation(conversation_id).then(

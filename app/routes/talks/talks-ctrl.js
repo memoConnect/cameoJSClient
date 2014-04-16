@@ -78,6 +78,11 @@ define([
 
                 return false;
             }
+
+            $scope.createNewConversation = function(){
+                delete($rootScope.pendingConversation);
+                $location.path('/conversation/')
+            }
         }
     ]);
 });
