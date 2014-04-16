@@ -138,11 +138,14 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             return deferred.promise;
         };
 
-        this.doLogout = function(){
+        this.doLogout = function(goToLogin){
             isAuth = false;
             this.removeToken();
             $rootScope.$broadcast('logout');
-            $location.path("/login");
+
+            if(typeof goToLogin === 'undefined' || goToLogin !== false){
+                $location.path("/login");
+            }
         };
 
         /**

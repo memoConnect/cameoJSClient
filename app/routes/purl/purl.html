@@ -6,6 +6,6 @@
     <cm-menu cm-user-rights></cm-menu>
 </header>
 
-<div ng-controller="PurlCtrl">
+<div ng-controller="PurlCtrl" ng-hide="isModalVisible">
     <cm-conversation conversation-id="conversationId" ng-if="showConversation"></cm-conversation>
 </div>
