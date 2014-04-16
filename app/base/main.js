@@ -58,12 +58,13 @@ var config = {
         'ui-bootstrap': 'vendor/ui-bootstrap/ui-bootstrap.0.10.0',
         'ui-bootstrap-tpls': 'vendor/ui-bootstrap/ui-bootstrap-tpls.0.10.0',
 
-        // packages
+        // packages generated via grunt task 'packages'
         'pckContacts': 'comps/contacts/package',
         'pckUser': 'comps/user/package',
         'pckValidate': 'comps/validate/package',
         'pckUi': 'shared/ui/package',
-        'pckConversations': 'comps/conversations/package'
+        'pckConversations': 'comps/conversations/package',
+        'pckFiles': 'comps/files/package'
     },
 
     packages: [
@@ -151,6 +152,17 @@ var config = {
             'pckUi',
             '_v/captcha/captchagen/captchagen',
             'util-base64'
+        ],
+
+        'pckFiles': [
+            'cmApi',
+            'cmLogger',
+            'cmCrypt',
+            'cmUtil',
+            'vendor/filesaver/filesaver',
+            'angular-resource',
+            'util-base64_decode'
+            //'vendor/base64_decode'
         ]
 
 //        'bootstrap': ['jquery']
@@ -170,28 +182,28 @@ function addPackage(package_name, package) {
     })
 }
 
-addPackage('pckFiles',{
-    root: 'comps/files/files-module',
-    deps: [
-        'cmApi',
-        'cmLogger',
-        'cmCrypt',
-        'cmUtil',
-        'vendor/filesaver/filesaver',
-        'angular-resource',
-        'util-base64_decode'
-        //'vendor/base64_decode'
-    ],
-    resources : [
-        'comps/files/filesAdapter-srvc',
-        'comps/files/chunk-fctr',
-        'comps/files/file-fctr',
-        'comps/files/file-input-drtv',
-        'comps/files/upload-drtv',
-        'comps/files/download-drtv',
-        'comps/files/file-size-fltr'
-    ]
-})
+//addPackage('pckFiles',{
+//    root: 'comps/files/files-module',
+//    deps: [
+//        'cmApi',
+//        'cmLogger',
+//        'cmCrypt',
+//        'cmUtil',
+//        'vendor/filesaver/filesaver',
+//        'angular-resource',
+//        'util-base64_decode'
+//        //'vendor/base64_decode'
+//    ],
+//    resources : [
+//        'comps/files/filesAdapter-srvc',
+//        'comps/files/chunk-fctr',
+//        'comps/files/file-fctr',
+//        'comps/files/file-input-drtv',
+//        'comps/files/upload-drtv',
+//        'comps/files/download-drtv',
+//        'comps/files/file-size-fltr'
+//    ]
+//})
 
 //addPackage('pckUser',{
 //    root: 'comps/user/user-module',

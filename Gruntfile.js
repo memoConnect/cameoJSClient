@@ -142,8 +142,8 @@ module.exports = function (grunt) {
         if(filepath.search(/.*\.html/g) != -1){
             var lines = src
                 .replace(/(\r\n|\n|\r|\t)/gm,'')// clear system signs
-                .replace(/\s{2,100}(<)/gm,'<')// clear whitespaces TODO: with html <
-                .replace(/\s{2,100}/gm,' ')// clear whitespaces TODO: with html <
+                .replace(/\s{2,100}(<)/gm,'<')// clear whitespaces before html tag
+                .replace(/\s{2,100}/gm,' ')// clear whitespaces on line
                 .replace(/(')/gm,"\\'");// uncomment single quotes,
             filepath = filepath.replace('app/','');
 
@@ -184,11 +184,12 @@ module.exports = function (grunt) {
                     process: concatCmFiles
                 },
                 files: {
-                    'app/comps/conversations/package.js': ['app/comps/conversations/module-conversations.js','app/comps/conversations/!(module-conversations|package)*.js','app/comps/conversations/tpl-*'],
-                    'app/comps/contacts/package.js': ['app/comps/contacts/module-contacts.js','app/comps/contacts/!(module-contacts|package)*.js','app/comps/contacts/tpl-*'],
-                    'app/comps/user/package.js': ['app/comps/user/module-user.js','app/comps/user/!(module-user|package)*','app/comps/user/tpl-*'],
-                    'app/comps/validate/package.js': ['app/comps/validate/module-validate.js','app/comps/validate/!(module-validate|package)*','app/comps/validate/tpl-*'],
-                    'app/shared/ui/package.js': ['app/shared/ui/module-ui.js', 'app/shared/ui/!(module-ui|package)*','app/shared/ui/tpl-*']
+                    'app/comps/conversations/package.js': ['app/comps/conversations/module-conversations.js','app/comps/conversations/!(module-conversations|package)*.js','app/comps/conversations/*.html'],
+                    'app/comps/contacts/package.js': ['app/comps/contacts/module-contacts.js','app/comps/contacts/!(module-contacts|package)*.js','app/comps/contacts/*.html'],
+                    'app/comps/user/package.js': ['app/comps/user/module-user.js','app/comps/user/!(module-user|package)*.js','app/comps/user/*.html'],
+                    'app/comps/validate/package.js': ['app/comps/validate/module-validate.js','app/comps/validate/!(module-validate|package)*.js','app/comps/validate/*.html'],
+                    'app/comps/files/package.js': ['app/comps/files/module-files.js','app/comps/files/!(module-files|package)*.js','app/comps/files/*.html'],
+                    'app/shared/ui/package.js': ['app/shared/ui/module-ui.js', 'app/shared/ui/!(module-ui|package)*.js','app/shared/ui/*.html']
                 }
             }
         },
