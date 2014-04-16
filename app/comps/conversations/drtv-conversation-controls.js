@@ -1,10 +1,12 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmConversationControls', [
+
     'cmUserModel',
     'cmNotify',
     '$location',
     '$rootScope',
+
     function(cmUserModel, cmNotify, $location, $rootScope){
         return{
             restrict : 'AE',
@@ -14,11 +16,21 @@ angular.module('cmConversations').directive('cmConversationControls', [
             },
             require: '^cmConversation',
 
-            link: function($scope, $element, $attrs, cmConversation){
-                $scope.isNew = cmConversation.isNew();
+            link: function(scope, element, attrs, cmConversation){                
+                var levels = ['unsafe', 'safe', 'safer']
 
-                $scope.setLevel = function(level){
-                    if(cmUserModel.isGuest() !== true){
+                scope.isNew       = cmConversation.isNew();
+                scope.bodyVisible = scope.isNew;
+
+                //Todo: get rid of this! :
+                scope.$watchCollection(attrs.cmData, function(conversation){
+                    if(conversation && !scope.safetyLevel) scope._setLevel(levels[conversation.getSafetyLevel()])
+                })
+            },
+
+            controller: function($scope, $element, $attrs){
+
+                $scope._setLevel = function(level){
                         if(level == 'unsafe'){
                             $scope.conversation.setPassphrase('')
                             $scope.conversation.setKeyTransmission('symmetric')
@@ -35,11 +47,13 @@ angular.module('cmConversations').directive('cmConversationControls', [
                         }
 
                         $scope.safetyLevel = level;
-                    }
                 }
 
-                $scope.bodyVisible = $scope.isNew;
-                $scope.safetyLevel = 'safer'
+                $scope.setLevel = function(level){
+                    if(cmUserModel.isGuest() !== true){
+                        $scope._setLevel(level)
+                    }
+                }
 
                 $scope.handle = function(){
                     if($scope.bodyVisible)
@@ -51,7 +65,6 @@ angular.module('cmConversations').directive('cmConversationControls', [
                 $scope.manageRecipients = function(){
                     $location.path('/recipients')
                 }
-
             }
         }
     }
