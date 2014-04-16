@@ -12,14 +12,16 @@ describe('Route: Contacts', function () {
 
     util.login()
 
-    util.get('#/contacts')
+    
 
 
     beforeEach(function () {
+
     });
 
 
     it('should be found at "#/contacts".', function(){
+        util.get('/contacts')
         ptor.getCurrentUrl().then(function(url){
             expect(url).toMatch(/\#\/contacts$/)
         })

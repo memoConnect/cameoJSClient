@@ -34,9 +34,9 @@ this.waitForPageLoad = function (expectedRoute) {
 }
 
 this.get = function(path) {
-    var url = config.wwwUrl +'#/' + path
+    var url = config.wwwUrl + '#' + path 
     ptor.get(url)
-    this.waitForPageLoad(url)
+    this.waitForPageLoad()
 }
 
 
@@ -52,7 +52,7 @@ this.logout = function(){
 
 this.login = function(username, password){
     this.logout()
-    this.get('#/login')
+    this.get('/login')
     
 
     $("[data-qa='login-btn']").click();
@@ -66,6 +66,7 @@ this.login = function(username, password){
     $("[data-qa='login-submit-btn']").click();
 
     this.waitForPageLoad()
+    ptor.sleep(5000)
 }
 
 this.waitForModalClose = function () {
