@@ -71,7 +71,7 @@ describe('cmIdentityFactory', function(){
     }))
 
     it('should exists', function(){
-        expect(cmIdentity).toBeDefined()
+        expect(cmIdentityFactory).toBeDefined()
     })
 
     it('should have create function', function(){
