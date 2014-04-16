@@ -184,9 +184,14 @@ module.exports = function (grunt) {
                     process: concatCmFiles
                 },
                 files: {
+
                     'app/comps/validate/package.js': ['app/comps/validate/module-validate.js','app/comps/validate/!(module-validate|package)*.js','app/comps/validate/tpl-*'],
                     'app/comps/conversations/package.js': ['app/comps/conversations/module-conversations.js','app/comps/conversations/!(module-conversations|package)*.js','app/comps/conversations/tpl-*'],
-                    'app/shared/ui/package.js': ['app/shared/ui/module-ui.js', 'app/shared/ui/!(module-ui|package)*.js','app/shared/ui//tpl-*']
+                    'app/comps/contacts/package.js': ['app/comps/contacts/module-contacts.js','app/comps/contacts/!(module-contacts|package)*.js','app/comps/contacts/tpl-*'],
+                    'app/comps/user/package.js': ['app/comps/user/module-user.js','app/comps/user/!(module-user|package)*','app/comps/contacts/tpl-*'],
+                    'app/comps/validate/package.js': ['app/comps/validate/module-validate.js','app/comps/validate/!(module-validate|package)*','app/comps/contacts/tpl-*'],
+                    'app/shared/ui/package.js': ['app/shared/ui/module-ui.js', 'app/shared/ui/!(module-ui|package)*','app/comps/contacts/tpl-*']
+
                 }
             }
         },

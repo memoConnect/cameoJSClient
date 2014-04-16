@@ -24,7 +24,6 @@ module.exports = function(config) {
             'app/vendor/crypto/sjcl/sjcl.min.js',
             'app/vendor/crypto/jsencrypt/jsencrypt.min.js',
 
-
             'app/shared/cmObject.js',
             'app/shared/cmLogger.js',
             'app/shared/cmNotify.js',
@@ -38,44 +37,37 @@ module.exports = function(config) {
 
             'app/shared/cmLanguage.js',
 
+            // packages
             'app/shared/ui/package.js',
+            'app/comps/contacts/package.js',
+            'app/comps/user/package.js',
+            'app/comps/validate/package.js',
 
             'app/comps/files/!(*module).js',
             'app/comps/files/*module.js',
 
-            'app/comps/contacts/!(*module).js',
-            'app/comps/contacts/*module.js',
-
             'app/comps/conversations/!(*module).js',
             'app/comps/conversations/*module.js',
 
-            'app/comps/user/!(*module).js',
-            'app/comps/user/*module.js',
-
-            'app/comps/validate/package.js',
-
             'test/lib/angular/angular-mocks.js',
 
+            // specs
             'test/unit/shared/*spec.js',
             'test/unit/shared/ui/*spec.js',
             'test/unit/shared/i18n/*spec.js',
 
-            
             'test/unit/comps/files/*spec.js',
             'test/unit/comps/contacts/*spec.js',
             'test/unit/comps/conversations/*spec.js',
 //            'test/unit/comps/user/*spec.js',
             'test/unit/comps/validate/*spec.js',
 
-            //
-            'app/**/*.html',
+            // json files
             'app/**/*.json'
-//            {pattern: 'app/**/*.json', included: false}
         ],
 
         // generate js files from html templates to expose them during testing.
         preprocessors: {
-            'app/**/*.html': ['html2js'],
             'app/**/*.json': ['html2js']
         },
 

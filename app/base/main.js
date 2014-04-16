@@ -59,6 +59,7 @@ var config = {
         'ui-bootstrap-tpls': 'vendor/ui-bootstrap/ui-bootstrap-tpls.0.10.0',
 
         // packages
+        'pckContacts': 'comps/contacts/package',
         'pckValidate': 'comps/validate/package',
         'pckUi': 'shared/ui/package',
         'pckConversations': 'comps/conversations/package'
@@ -109,10 +110,16 @@ var config = {
             'cmLogger'
         ],
 
+        'pckContacts': [
+            'angular',
+            'cmApi',
+            'cmLogger',
+            'cmUtil',
+            'cmIdentity'
+        ],
         'pckValidate': [
             'util-passchk-fast'
         ],
-
         'pckUi': [
             'angular',
             'cmAuth',
@@ -246,32 +253,32 @@ addPackage('pckUser',{
 //    ]
 //})
 
-addPackage('pckContacts',{
-    root: 'comps/contacts/contacts-module',
-    deps: [
-        'angular',
-        'cmApi', 
-        'cmLogger', 
-        'cmUtil',
-        'cmIdentity',
-//        'cmCron'
-    ],
-    resources : [
-        'comps/contacts/contactsModel-srvc',
-        'comps/contacts/contactsAdapter-srvc',
-
-        'comps/contacts/contacts-filter-controls-drtv',
-        'comps/contacts/contacts-list-drtv',
-        'comps/contacts/contact-tag-drtv',
-        'comps/contacts/contact-brief-drtv',
-        'comps/contacts/key-level-drtv',
-        'comps/contacts/search-cameo-identity-drtv',    
-        'comps/contacts/type-chooser-drtv',
-
-        'comps/contacts/add-external-contact-drtv',
-        'comps/contacts/contact-request-list-drtv',      
-    ]
-})
+//addPackage('pckContacts',{
+//    root: 'comps/contacts/contacts-module',
+//    deps: [
+//        'angular',
+//        'cmApi',
+//        'cmLogger',
+//        'cmUtil',
+//        'cmIdentity',
+////        'cmCron'
+//    ],
+//    resources : [
+//        'comps/contacts/contactsModel-srvc',
+//        'comps/contacts/contactsAdapter-srvc',
+//
+//        'comps/contacts/contacts-filter-controls-drtv',
+//        'comps/contacts/contacts-list-drtv',
+//        'comps/contacts/contact-tag-drtv',
+//        'comps/contacts/contact-brief-drtv',
+//        'comps/contacts/key-level-drtv',
+//        'comps/contacts/search-cameo-identity-drtv',
+//        'comps/contacts/type-chooser-drtv',
+//
+//        'comps/contacts/add-external-contact-drtv',
+//        'comps/contacts/contact-request-list-drtv',
+//    ]
+//})
 
 //addPackage('pckValidate',{
 //    root: 'comps/validate/validate-module',
