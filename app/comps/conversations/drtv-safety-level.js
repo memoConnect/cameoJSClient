@@ -9,6 +9,7 @@ angular.module('cmConversations').directive('cmSafetyLevel',[
             link: function(scope, element, attrs){
 
                 function draw(x){
+                    element.children().remove()
                     for(var i = 0; i < x; i++){
                         element.append('<i class="fa cm-lock"></i>')
                     }
