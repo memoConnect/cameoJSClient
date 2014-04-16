@@ -56,7 +56,7 @@ define([
                 cmUserModel.comesFromRegistration = false;
 
                 var modalInstance = $modal.open({
-                    templateUrl: 'comps/user/welcome.html',
+                    templateUrl: 'comps/user/modal-welcome.html',
                     controller: function ($rootScope, $scope, $modalInstance) {
 
                     }

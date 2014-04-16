@@ -17,12 +17,12 @@ describe('Directive cmNavTabs', function () {
 
     beforeEach(function(){
         module('cmUi')
+        module('shared/ui/drtv-nav-tabs.html')
         module(function($provide) {
             $provide.value('$routeParams', routeMock);
         })
     })
-    beforeEach(inject(function(_$rootScope_, _$compile_, $templateCache){
-        $templateCache.put('shared/ui/drtv-nav-tabs.html', window.__html__['app/shared/ui/drtv-nav-tabs.html'])
+    beforeEach(inject(function(_$rootScope_, _$compile_){
 
         el = angular.element('<div cm-nav-tabs></div>')
         $rootScope = _$rootScope_.$new()
