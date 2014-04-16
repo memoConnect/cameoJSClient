@@ -137,6 +137,27 @@ module.exports = function (grunt) {
     })();
 
 
+    var concatCmFiles = function(src, filepath){
+        // templates to template cache
+        if(filepath.search(/.*\.html/g) != -1){
+            var lines = src
+                .replace(/(\r\n|\n|\r|\t)/gm,'')// clear system signs
+                .replace(/\s{2,100}(<)/gm,'<')// clear whitespaces TODO: with html <
+                .replace(/\s{2,100}/gm,' ')// clear whitespaces TODO: with html <
+                .replace(/(')/gm,"\\'");// uncomment single quotes
+
+            return  "angular.module('"+filepath+"', []).run([\n" +
+                "'$templateCache', function($templateCache) {\n"+
+                "$templateCache.put('"+filepath+"'," +
+                "\n'"+lines+"'" +
+                ");\n"+
+                "}]);"
+            // scripts clear use_strict
+        } else {
+            return src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+        }
+    }
+
     // write config
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -155,25 +176,7 @@ module.exports = function (grunt) {
             },
             packages: {
                 options:{
-                    process: function(src, filepath) {
-                        // templates to template cache
-                        if(filepath.search(/.*\.html/g) != -1){
-                            var lines = src
-                                .replace(/(\r\n|\n|\r|\t)/gm,'')// clear system signs
-                                .replace(/\s{4}/gm,'')// clear whitespaces TODO: with html <
-                                .replace(/(')/gm,"\\'");// uncomment single quotes
-
-                            return  "angular.module('"+filepath+"', []).run([\n" +
-                                        "'$templateCache', function($templateCache) {\n"+
-                                        "$templateCache.put('"+filepath+"'," +
-                                        "\n'"+lines+"'" +
-                                        ");\n"+
-                                    "}]);"
-                        // scripts clear use_strict
-                        } else {
-                            return src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
-                        }
-                    }
+                    process: concatCmFiles
                 },
                 src: ['app/shared/ui/module-ui.js','app/shared/ui/!(module-ui|package)*'],
                 dest: 'app/shared/ui/package.js'
