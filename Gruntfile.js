@@ -541,14 +541,20 @@ module.exports = function (grunt) {
     // tests unit
     grunt.registerTask('tests-unit', [
         'genAllTemplates',
+        'packages',
         'karma:jenkins'
     ]);
     grunt.registerTask('tests-e2e', [
         'genAllTemplates',
+        'packages',
+        'protractor:default'
+    ]);
+    grunt.registerTask('tests-2e2', [ // for dummies
+        'genAllTemplates',
+        'packages',
         'protractor:default'
     ]);
     grunt.registerTask('tests-all', [
-        'genAllTemplates',
         'tests-unit',
         'tests-e2e'
     ]);
@@ -585,5 +591,5 @@ module.exports = function (grunt) {
     grunt.registerTask('packages', ['concat:packages']);
 
     // deploy it for me babe !!
-    grunt.registerTask('deploy', ['clean:dist', 'genAllTemplates', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
+    grunt.registerTask('deploy', ['clean:dist', 'genAllTemplates', 'concat:less', 'less', 'packages', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
 };
