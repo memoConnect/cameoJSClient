@@ -12,9 +12,9 @@ describe('registration', function () {
     ptor.ignoreSynchronization = true;
     util.setPtorInstance(ptor)
 
-    util.logout()
-
     it('should contain 7 input fields with placeholders', function () {
+
+        util.logout()
 
         util.get("/registration");
 

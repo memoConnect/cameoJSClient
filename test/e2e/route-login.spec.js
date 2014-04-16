@@ -8,10 +8,10 @@ describe('login screen', function () {
     ptor.ignoreSynchronization = true;
     util.setPtorInstance(ptor)
 
-    util.logout()
 
     it('should contain two buttons', function () {
 
+        util.logout()
         util.get("");
 
         ptor.getCurrentUrl().then(function (url) {

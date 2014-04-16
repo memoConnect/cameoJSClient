@@ -41,7 +41,7 @@ this.get = function(path) {
 
 
 this.logout = function(){
-    this.get('#')
+    this.get('')
     //This might change in the future:
     ptor.wait(function(){
         return ptor.executeScript('return localStorage.removeItem("token")').then(function(){

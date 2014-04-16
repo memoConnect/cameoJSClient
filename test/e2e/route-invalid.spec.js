@@ -8,11 +8,16 @@ describe('invalid route', function () {
     ptor.ignoreSynchronization = true;
     util.setPtorInstance(ptor)
 
-    util.logout()
-    util.get("#/foo")
+    it("should go to login route", function() {
 
-    ptor.getCurrentUrl().then(function(url){
-        expect(url).toMatch(/\#\/login$/)
+        util.logout()
+        util.get("/foo")
+
+        ptor.getCurrentUrl().then(function(url){
+            expect(url).toMatch(/\#\/login$/)
+        })
+
     })
+
 
 })
