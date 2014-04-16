@@ -33,6 +33,28 @@ this.waitForPageLoad = function (expectedRoute) {
 
 }
 
+this.logout = function(){
+    //This might change in the future:
+    localStorage.removeItem('token');
+}
+
+this.login = function(username, password){
+    this.logout()
+    this.waitForPageLoad();
+
+    $("[data-qa='login-btn']").click();
+
+    var user    = $("input[name=user]");
+    var pw      = $("input[name=pw]");
+
+    user.sendKeys(config.existingLoginName);
+    pw.sendKeys(config.existingPassword);
+
+    $("[data-qa='login-submit-btn']").click();
+
+    this.waitForPageLoad()
+}
+
 this.waitForModalClose = function () {
 
     ptor.wait(function () {
