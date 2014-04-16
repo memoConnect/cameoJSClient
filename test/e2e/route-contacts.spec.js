@@ -10,8 +10,6 @@ describe('Route: Contacts', function () {
     ptor.ignoreSynchronization = true;
     util.setPtorInstance(ptor)
 
-    util.login()
-
     
 
 
@@ -21,6 +19,8 @@ describe('Route: Contacts', function () {
 
 
     it('should be found at "#/contacts".', function(){
+        util.login()
+        
         util.get('/contacts')
         ptor.getCurrentUrl().then(function(url){
             expect(url).toMatch(/\#\/contacts$/)
@@ -28,9 +28,17 @@ describe('Route: Contacts', function () {
     })
 
     it('should have a header.', function(){
-        $('cm-header').then(function(element){
-            expect(element.isPresent()).toBeTrue()
-        })
+        expect($('cm-header').isPresent()).toBe(true)
+    })
+
+    it('should have a footer.', function(){
+        expect($('cm-footer').isPresent()).toBe(true)
+    })
+
+    //Tofo:Filter
+
+    it('should have a contact list.', function(){
+        expect($('cm-contacts-list').isPresent()).toBe(true)
     })
 
 })

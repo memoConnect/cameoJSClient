@@ -66,7 +66,6 @@ this.login = function(username, password){
     $("[data-qa='login-submit-btn']").click();
 
     this.waitForPageLoad()
-    ptor.sleep(5000)
 }
 
 this.waitForModalClose = function () {
