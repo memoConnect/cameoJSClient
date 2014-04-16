@@ -77,15 +77,9 @@ describe('login screen', function () {
         $("[data-qa='login-submit-btn']").click();
 
         util.waitForSpinner(ptor)
-
-
-        expect($("[data-qa='login-info']").isDisplayed()).toBe(true)
-        $("[data-qa='login-info']").getText().then(function (text) {
-            expect(text).not.toBe("")
-        })
+        util.checkWarning("login-info")
 
         $("body").sendKeys(protractor.Key.ESCAPE);
-
         util.waitForModalClose(ptor)
     })
 

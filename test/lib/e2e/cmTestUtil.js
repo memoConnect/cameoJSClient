@@ -12,7 +12,7 @@ this.setPtorInstance = function(newPtor) {
 this.waitForPageLoad = function (expectedRoute) {
 
     // add some initial delay
-    ptor.sleep(100)
+    ptor.sleep(50)
 
     ptor.wait(function () {
 
@@ -41,6 +41,9 @@ this.waitForModalClose = function () {
 }
 
 this.waitForSpinner = function () {
+
+    // add some initial delay
+    ptor.sleep(50)
 
     ptor.wait(function () {
         return $$(".cm-spinner").then(function (elements) {
