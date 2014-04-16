@@ -4,7 +4,9 @@
 'use strict';
 
 angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject'])
-.factory('cmIdentityModel',['cmAuth', 'cmCrypt', 'cmObject', '$q', function(cmAuth, cmCrypt, cmObject, $q){
+.factory('cmIdentityModel',[
+'cmAuth', 'cmCrypt', 'cmObject', '$q',
+function(cmAuth, cmCrypt, cmObject, $q){
     var Identity = function(identity_data){
 
         this.id,
@@ -155,7 +157,9 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject'])
 
     return Identity;
 }])
-.factory('cmIdentityFactory',['$rootScope','cmIdentityModel', function($rootScope, cmIdentityModel){
+.factory('cmIdentityFactory',[
+'$rootScope','cmIdentityModel',
+function($rootScope, cmIdentityModel){
     var instances = [];
 
     $rootScope.$on('logout', function(){

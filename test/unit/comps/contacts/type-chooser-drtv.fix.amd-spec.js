@@ -5,9 +5,8 @@ describe('Directive cmTypeChooser', function () {
         scope
 
     beforeEach(module('cmContacts'))
-    beforeEach(inject(function ($rootScope, $compile, $templateCache) {
-            $templateCache.put('comps/contacts/type-chooser.html', window.__html__['app/comps/contacts/type-chooser.html'])
-
+    beforeEach(module('comps/contacts/drtv-type-chooser.html'))
+    beforeEach(inject(function ($rootScope, $compile) {
             scope = $rootScope.$new()
             el = angular.element('<div cm-type-chooser></div>')
             el = $compile(el)(scope)
@@ -100,7 +99,7 @@ describe('Directive cmTypeChooser', function () {
             scope.$digest()
         }))
 
-        it('scope variable should setted to \'private\' is default',function(){
+        it('scope variable should set to \'private\' is default',function(){
             expect(scope.moep.type).toBe('private')
         })
 

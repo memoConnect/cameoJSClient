@@ -11,8 +11,10 @@ cm-contact-tag {
     > * { 
         height: @cm-unit;
         width: @cm-unit;
+        line-height: @cm-unit;
         vertical-align:middle;
         padding:0;
+        overflow:hidden;
     }
 
     cm-contact-brief{
@@ -46,15 +48,24 @@ cm-contact-tag {
         margin: 0.1*@cm-unit 0;
     }
 
-    button {
-        width: @cm-unit;
-        height: @cm-unit;
-        background: transparent;
-        font-size: 0.8*@cm-unit;
-        line-height:  @cm-unit;
-        overflow:hidden;
-        color:@cm-ci-color;
+    cm-contact-type{
+        font-size: 0.5*@cm-unit;
+        text-align:center;
+        &.internal{
+            color: @cm-ci-color;
+        }
+        &.external{
+            color: @cm-font-color;
+        }
+        &.local{
+            color: @cm-font-color;
+        }
+    }
 
+    button {    
+        font-size: 0.8*@cm-unit;                
+        color:@cm-ci-color;
+        text-align:center;
         &:disabled{
             color:@cm-light-grey;
         }
