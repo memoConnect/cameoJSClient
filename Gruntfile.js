@@ -156,28 +156,27 @@ module.exports = function (grunt) {
             packages: {
                 options:{
                     process: function(src, filepath) {
+                        // templates to template cache
                         if(filepath.search(/.*\.html/g) != -1){
-                            var nums = (src.match(/\n/g)||[]).length;
                             var lines = src
                                 .replace(/(\r\n|\n|\r|\t)/gm,'')// clear system signs
-                                .replace(/\s{2,100}/gm,'')// clear whitespaces TODO: with html <
+                                .replace(/\s{4}/gm,'')// clear whitespaces TODO: with html <
                                 .replace(/(')/gm,"\\'");// uncomment single quotes
 
-                            return  "// Source: " + nums+" "+filepath + "\n" +
-                                    "angular.module('"+filepath+"', []).run([\n" +
+                            return  "angular.module('"+filepath+"', []).run([\n" +
                                         "'$templateCache', function($templateCache) {\n"+
                                         "$templateCache.put('"+filepath+"'," +
                                         "\n'"+lines+"'" +
                                         ");\n"+
                                     "}]);"
+                        // scripts clear use_strict
                         } else {
-//                            return '// Source: ' + filepath + '\n' +
-//                                src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+                            return src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
                         }
                     }
                 },
-                src: ['app/shared/ui/ui-module.js','app/shared/ui/!(ui-module|_package)*'],
-                dest: 'app/shared/ui/_package.js'
+                src: ['app/shared/ui/module-ui.js','app/shared/ui/!(module-ui|package)*'],
+                dest: 'app/shared/ui/package.js'
             }
         },
         coffee: {
@@ -224,6 +223,16 @@ module.exports = function (grunt) {
                         cwd: 'dist/cockpit',
                         src: '**/*.js',
                         dest: 'dist/cockpit'
+                    }
+                ]
+            },
+            'packages': {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'app/shared/ui/',
+                        src: '**/package.js',
+                        dest: 'app/shared/ui/'
                     }
                 ]
             }
@@ -569,7 +578,7 @@ module.exports = function (grunt) {
     // watch
     grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'template:config-phonegap', 'template:config-protractor', 'concat:less', 'less']);
     grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
-    grunt.registerTask('packages', ['concat:packages']);
+    grunt.registerTask('packages', ['concat:packages','uglify:packages']);
 
     // deploy it for me babe !!
     grunt.registerTask('deploy', ['clean:dist', 'genAllTemplates', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);

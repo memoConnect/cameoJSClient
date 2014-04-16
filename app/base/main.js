@@ -58,7 +58,7 @@ var config = {
         'ui-bootstrap': 'vendor/ui-bootstrap/ui-bootstrap.0.10.0',
         'ui-bootstrap-tpls': 'vendor/ui-bootstrap/ui-bootstrap-tpls.0.10.0',
 
-        'jquery': 'vendor/jquery/jquery-2.1.0'
+        'pckUi': 'shared/ui/package'
     },
 
     packages: [
@@ -104,6 +104,16 @@ var config = {
             'angular-growl',
             'cmNotify',
             'cmLogger'
+        ],
+
+        'pckUi': [
+            'angular',
+            'cmAuth',
+            'cmLogger',
+            'cmLanguage',
+            'cmUserModel',
+            'util-spin',
+            'ui-bootstrap'
         ]
 
 //        'bootstrap': ['jquery']
@@ -250,40 +260,20 @@ addPackage('pckValidate',{
     ]
 })
 
-addPackage('pckUi',{
-    root: 'shared/ui/ui-module',
-    deps: [
-        'angular',    
-        'cmAuth',
-        'cmLogger',
-        'cmLanguage',
-        'cmUserModel',
-        'util-spin',
-        'ui-bootstrap'
-    ],
-    resources : [
-        'shared/ui/view-drtv',
-        'shared/ui/adaptive-change-drtv',
-        'shared/ui/rubber-space-drtv',
-        'shared/ui/nav-tabs-drtv',
-        'shared/ui/point-spinner-drtv',
-        'shared/ui/spinner-drtv',
-        'shared/ui/overlay-drtv',
-        'shared/ui/header-drtv',
-        'shared/ui/back-drtv',
-        'shared/ui/identity-drtv',
-        'shared/ui/avatar-drtv',
-        'shared/ui/logo-drtv',
-        'shared/ui/menu-drtv',
-        'shared/ui/edge-drtv',
-        'shared/ui/footer-drtv',
-        'shared/ui/resize-textarea',
-        'shared/ui/date-seperator-drtv',
-        'shared/ui/scroll-to-drtv',
-        'shared/ui/reload-drtv',
-        'shared/ui/multi-input-drtv',
-        'shared/ui/large-input-drtv'
-    ]
-})
+//addPackage('pckUi',{
+//    root: 'shared/ui/ui-module',
+//    deps: [
+//        'angular',
+//        'cmAuth',
+//        'cmLogger',
+//        'cmLanguage',
+//        'cmUserModel',
+//        'util-spin',
+//        'ui-bootstrap'
+//    ],
+//    resources : [
+//        'shared/ui/package'
+//    ]
+//})
 
-require.config(config)
+require.config(config);
