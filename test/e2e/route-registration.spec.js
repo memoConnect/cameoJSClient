@@ -11,11 +11,15 @@ describe('registration', function () {
     beforeEach(function () {
         ptor = protractor.getInstance();
         ptor.ignoreSynchronization = true;
+        util.ptor = ptor
 //        browser.ignoreSynchronization = true;
     });
 
 
     it('should contain 7 input fields with placeholders', function () {
+
+        ptor.get(config.wwwUrl + "#/logout");
+        util.waitForPageLoad(ptor);
 
         ptor.get(config.wwwUrl + "#/registration");
         util.waitForPageLoad(ptor);

@@ -8,14 +8,18 @@ describe('login screen', function () {
     beforeEach(function () {
         ptor = protractor.getInstance();
         ptor.ignoreSynchronization = true;
-//        browser.ignoreSynchronization = true;
+        util.setPtorInstance(ptor)
     });
 
 
     it('should contain two buttons', function () {
 
-        ptor.get(config.wwwUrl);
+        ptor.get(config.wwwUrl + "#/logout");
         util.waitForPageLoad(ptor);
+
+        ptor.get(config.wwwUrl);
+        util.waitForPageLoad();
+
         ptor.getCurrentUrl().then(function(url){
             expect(url).toMatch(/\#\/login$/)
         })
@@ -30,7 +34,7 @@ describe('login screen', function () {
 
         $("[data-qa='register-btn']").click();
 
-        util.waitForPageLoad(ptor);
+        util.waitForPageLoad();
         ptor.getCurrentUrl().then(function(url){
             expect(url).toMatch(/\#\/registration/)
         })
@@ -40,7 +44,7 @@ describe('login screen', function () {
     it('should prompt for username and password after click on login and close it', function () {
 
         ptor.get(config.wwwUrl);
-        util.waitForPageLoad(ptor);
+        util.waitForPageLoad();
 
         $("[data-qa='login-btn']").click();
 

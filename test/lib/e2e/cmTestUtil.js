@@ -3,7 +3,13 @@
  */
 var config = require("../../e2e/config-e2e-tests.js")
 
-this.waitForPageLoad = function (ptor) {
+var ptor
+
+this.setPtorInstance = function(newPtor) {
+    ptor = newPtor
+}
+
+this.waitForPageLoad = function (expectedRoute) {
 
     // add some initial delay
     ptor.sleep(100)
@@ -11,8 +17,6 @@ this.waitForPageLoad = function (ptor) {
     ptor.wait(function () {
 
         return ptor.executeScript('return window != undefined && window._route != undefined').then(function (boolean) {
-
-//            console.log("Page loaded: " + boolean)
 
             if (boolean) {
                 return ptor.executeScript('return window._route.status').then(function (status) {
@@ -26,7 +30,7 @@ this.waitForPageLoad = function (ptor) {
 
 }
 
-this.waitForModalClose = function (ptor) {
+this.waitForModalClose = function () {
 
     ptor.wait(function () {
         return $$(".modal").then(function (elements) {
@@ -36,7 +40,7 @@ this.waitForModalClose = function (ptor) {
 
 }
 
-this.waitForSpinner = function (ptor) {
+this.waitForSpinner = function () {
 
     ptor.wait(function () {
         return $$(".cm-spinner").then(function (elements) {
