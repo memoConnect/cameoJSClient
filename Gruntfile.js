@@ -137,6 +137,32 @@ module.exports = function (grunt) {
     })();
 
 
+    var concatCmFiles = function(src, filepath){
+        // templates to template cache
+        if(filepath.search(/.*\.html/g) != -1){
+            var lines = src
+                .replace(/(\r\n|\n|\r|\t)/gm,'')// clear system signs
+                .replace(/\s{2,100}(<)/gm,'<')// clear whitespaces before html tag
+                .replace(/\s{2,100}/gm,' ')// clear whitespaces on line
+                .replace(/(')/gm,"\\'");// uncomment single quotes,
+            filepath = filepath.replace('app/','');
+
+            return  "angular.module('"+filepath+"', []).run([\n" +
+                "'$templateCache', function($templateCache) {\n"+
+                "$templateCache.put('"+filepath+"'," +
+                "\n'"+lines+"'" +
+                ");\n"+
+                "}]);"
+            // scripts clear use_strict
+        } else {
+            var file = src
+                .replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1')
+                .replace(/(angular\.module\(.*\))/g, '')
+                .replace(/(\;)$/g, '')
+            return file;
+        }
+    }
+
     // write config
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -150,8 +176,21 @@ module.exports = function (grunt) {
                 dest: 'app/js/controller/built.raw.js'
             },
             less: {
-                src: ['app/less/base.less', 'app/less/bootstrap.less', 'app/less/!(basebootstrap).less'],
+                src: ['app/less/base.less', 'app/less/bootstrap.less', 'app/less/!(base|bootstrap).less'],
                 dest: 'app/css/app.less'
+            },
+            packages: {
+                options: {
+                    process: concatCmFiles
+                },
+                files: {
+                    'app/comps/conversations/package.js': ['app/comps/conversations/module-conversations.js','app/comps/conversations/!(module-conversations|package)*.js','app/comps/conversations/*.html'],
+                    'app/comps/contacts/package.js': ['app/comps/contacts/module-contacts.js','app/comps/contacts/!(module-contacts|package)*.js','app/comps/contacts/*.html'],
+                    'app/comps/user/package.js': ['app/comps/user/module-user.js','app/comps/user/!(module-user|package)*.js','app/comps/user/*.html'],
+                    'app/comps/validate/package.js': ['app/comps/validate/module-validate.js','app/comps/validate/!(module-validate|package)*.js','app/comps/validate/*.html'],
+                    'app/comps/files/package.js': ['app/comps/files/module-files.js','app/comps/files/!(module-files|package)*.js','app/comps/files/*.html'],
+                    'app/shared/ui/package.js': ['app/shared/ui/module-ui.js', 'app/shared/ui/!(module-ui|package)*.js','app/shared/ui/*.html']
+                }
             }
         },
         coffee: {
@@ -476,8 +515,8 @@ module.exports = function (grunt) {
 
         // watch
         watch: {
-            files: ['app/less/*.less', 'templates/*.tpl.*' ],
-            tasks: 'genAllTemplates'
+            files: ['app/less/*.less', 'templates/*.tpl.*', 'app/comps/**/!(package)*', 'app/shared/ui/!(package)*'],
+            tasks: ['genAllTemplates','packages']
         },
         less: {
             development: {
@@ -502,14 +541,20 @@ module.exports = function (grunt) {
     // tests unit
     grunt.registerTask('tests-unit', [
         'genAllTemplates',
+        'packages',
         'karma:jenkins'
     ]);
     grunt.registerTask('tests-e2e', [
         'genAllTemplates',
+        'packages',
+        'protractor:default'
+    ]);
+    grunt.registerTask('tests-2e2', [ // for dummies
+        'genAllTemplates',
+        'packages',
         'protractor:default'
     ]);
     grunt.registerTask('tests-all', [
-        'genAllTemplates',
         'tests-unit',
         'tests-e2e'
     ]);
@@ -543,7 +588,8 @@ module.exports = function (grunt) {
     // watch
     grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'template:config-phonegap', 'template:config-protractor', 'concat:less', 'less']);
     grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
+    grunt.registerTask('packages', ['concat:packages']);
 
     // deploy it for me babe !!
-    grunt.registerTask('deploy', ['clean:dist', 'genAllTemplates', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
+    grunt.registerTask('deploy', ['clean:dist', 'genAllTemplates', 'concat:less', 'less', 'packages', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
 };

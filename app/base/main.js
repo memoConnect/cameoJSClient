@@ -58,7 +58,13 @@ var config = {
         'ui-bootstrap': 'vendor/ui-bootstrap/ui-bootstrap.0.10.0',
         'ui-bootstrap-tpls': 'vendor/ui-bootstrap/ui-bootstrap-tpls.0.10.0',
 
-        'jquery': 'vendor/jquery/jquery-2.1.0'
+        // packages generated via grunt task 'packages'
+        'pckContacts': 'comps/contacts/package',
+        'pckUser': 'comps/user/package',
+        'pckValidate': 'comps/validate/package',
+        'pckUi': 'shared/ui/package',
+        'pckConversations': 'comps/conversations/package',
+        'pckFiles': 'comps/files/package'
     },
 
     packages: [
@@ -104,6 +110,59 @@ var config = {
             'angular-growl',
             'cmNotify',
             'cmLogger'
+        ],
+        // packages
+        'pckContacts': [
+            'cmApi',
+            'cmLogger',
+            'cmUtil',
+            'cmIdentity'
+        ],
+        'pckUser': [
+            'cmAuth',
+            'cmUserModel',
+            'cmCrypt',
+            'cmUtil'
+        ],
+        'pckValidate': [
+            'util-passchk-fast'
+        ],
+        'pckUi': [
+            'cmAuth',
+            'cmLogger',
+            'cmLanguage',
+            'cmUserModel',
+            'util-spin',
+            'ui-bootstrap'
+        ],
+
+        'pckConversations': [
+            'angular',
+            'cmApi',
+            'cmLogger',
+            'cmNotify',
+            'cmCrypt',
+            'cmAuth',
+            'cmUtil',
+//        'cmCron',
+            'cmUserModel',
+            'cmIdentity',
+            'pckContacts',
+            'pckFiles',
+            'pckUi',
+            '_v/captcha/captchagen/captchagen',
+            'util-base64'
+        ],
+
+        'pckFiles': [
+            'cmApi',
+            'cmLogger',
+            'cmCrypt',
+            'cmUtil',
+            'vendor/filesaver/filesaver',
+            'angular-resource',
+            'util-base64_decode'
+            //'vendor/base64_decode'
         ]
 
 //        'bootstrap': ['jquery']
@@ -123,168 +182,145 @@ function addPackage(package_name, package) {
     })
 }
 
+//addPackage('pckFiles',{
+//    root: 'comps/files/files-module',
+//    deps: [
+//        'cmApi',
+//        'cmLogger',
+//        'cmCrypt',
+//        'cmUtil',
+//        'vendor/filesaver/filesaver',
+//        'angular-resource',
+//        'util-base64_decode'
+//        //'vendor/base64_decode'
+//    ],
+//    resources : [
+//        'comps/files/filesAdapter-srvc',
+//        'comps/files/chunk-fctr',
+//        'comps/files/file-fctr',
+//        'comps/files/file-input-drtv',
+//        'comps/files/upload-drtv',
+//        'comps/files/download-drtv',
+//        'comps/files/file-size-fltr'
+//    ]
+//})
 
+//addPackage('pckUser',{
+//    root: 'comps/user/user-module',
+//    deps: [
+//        'angular',
+//        'cmAuth',
+//        'cmUserModel',
+//        'cmCrypt',
+//        'cmUtil'
+//    ],
+//    resources : [
+//        'comps/user/login-drtv',
+//        'comps/user/key-pair-drtv',
+//        'comps/user/user-rights-drtv'
+//    ]
+//})
 
-addPackage('pckFiles',{
-    root: 'comps/files/files-module',
-    deps: [
-        'cmApi',
-        'cmLogger',
-        'cmCrypt',
-        'cmUtil',
-        'vendor/filesaver/filesaver',
-        'angular-resource',
-        'util-base64_decode'
-        //'vendor/base64_decode'
-    ],
-    resources : [
-        'comps/files/filesAdapter-srvc',
-        'comps/files/chunk-fctr',
-        'comps/files/file-fctr',
-        'comps/files/file-input-drtv',
-        'comps/files/upload-drtv',
-        'comps/files/download-drtv',
-        'comps/files/file-size-fltr'
-    ]
-})
+//addPackage('pckConversations',{
+//    root: 'comps/conversations/conversations-module',
+//    deps: [
+//        'angular',
+//        'cmApi',
+//        'cmLogger',
+//        'cmNotify',
+//        'cmCrypt',
+//        'cmAuth',
+//        'cmUtil',
+////        'cmCron',
+//        'cmUserModel',
+//        'cmIdentity',
+//        'pckContacts',
+//        'pckFiles',
+//        'pckUi',
+//        '_v/captcha/captchagen/captchagen',
+//        'util-base64'
+//    ],
+//    resources : [
+//        'comps/conversations/conversationsAdapter-srvc',
+//        'comps/conversations/conversationsModel-srvc',
+//
+//        'comps/conversations/purlModel-srvc',
+//
+//        'comps/conversations/conversationFactory-srvc',
+//        'comps/conversations/conversationModel-srvc',
+//
+//        'comps/conversations/messageFactory-srvc',
+//        'comps/conversations/messageModel-srvc',
+//
+//        'comps/conversations/recipientModel-srvc',
+//
+//        'comps/conversations/conversation-tag-drtv',
+//        'comps/conversations/safety-level-drtv',
+//        'comps/conversations/recipient-counter-drtv',
+//
+//        'comps/conversations/conversation-controls-drtv',
+//        'comps/conversations/attachments-drtv',
+//        'comps/conversations/captcha-drtv',
+//        'comps/conversations/conversation-drtv',
+//        'comps/conversations/password-input-drtv',
+//
+//        'comps/conversations/message-drtv',
+//    ]
+//})
 
-addPackage('pckUser',{
-    root: 'comps/user/user-module',
-    deps: [
-        'angular',
-        'cmAuth',
-        'cmUserModel',
-        'cmCrypt',
-        'cmUtil'
-    ],
-    resources : [
-        'comps/user/login-drtv',
-        'comps/user/key-pair-drtv',
-        'comps/user/user-rights-drtv'
-    ]
-})
+//addPackage('pckContacts',{
+//    root: 'comps/contacts/contacts-module',
+//    deps: [
+//        'angular',
+//        'cmApi',
+//        'cmLogger',
+//        'cmUtil',
+//        'cmIdentity',
+////        'cmCron'
+//    ],
+//    resources : [
+//        'comps/contacts/contactsModel-srvc',
+//        'comps/contacts/contactsAdapter-srvc',
+//
+//        'comps/contacts/contacts-filter-controls-drtv',
+//        'comps/contacts/contacts-list-drtv',
+//        'comps/contacts/contact-tag-drtv',
+//        'comps/contacts/contact-brief-drtv',
+//        'comps/contacts/key-level-drtv',
+//        'comps/contacts/search-cameo-identity-drtv',
+//        'comps/contacts/type-chooser-drtv',
+//
+//        'comps/contacts/add-external-contact-drtv',
+//        'comps/contacts/contact-request-list-drtv',
+//    ]
+//})
 
-addPackage('pckConversations',{
-    root: 'comps/conversations/conversations-module',
-    deps: [
-        'angular',
-        'cmApi', 
-        'cmLogger', 
-        'cmNotify',
-        'cmCrypt', 
-        'cmAuth',
-        'cmUtil',
-//        'cmCron',
-        'cmUserModel',
-        'cmIdentity',
-        'pckContacts',
-        'pckFiles',
-        'pckUi',
-        '_v/captcha/captchagen/captchagen',
-        'util-base64'
-    ],    
-    resources : [
-        'comps/conversations/conversationsAdapter-srvc',
-        'comps/conversations/conversationsModel-srvc',
+//addPackage('pckValidate',{
+//    root: 'comps/validate/validate-module',
+//    deps: [
+//        'util-passchk-fast'
+//    ],
+//    resources : [
+//        'comps/validate/email-drtv',
+//        'comps/validate/password-drtv',
+//        'comps/validate/phone-drtv'
+//    ]
+//})
 
-        'comps/conversations/purlModel-srvc',
+//addPackage('pckUi',{
+//    root: 'shared/ui/ui-module',
+//    deps: [
+//        'angular',
+//        'cmAuth',
+//        'cmLogger',
+//        'cmLanguage',
+//        'cmUserModel',
+//        'util-spin',
+//        'ui-bootstrap'
+//    ],
+//    resources : [
+//        'shared/ui/package'
+//    ]
+//})
 
-        'comps/conversations/conversationFactory-srvc',
-        'comps/conversations/conversationModel-srvc',
-
-        'comps/conversations/messageFactory-srvc',
-        'comps/conversations/messageModel-srvc',
-
-        'comps/conversations/recipientModel-srvc',
-
-        'comps/conversations/conversation-tag-drtv',
-        'comps/conversations/safety-level-drtv',
-        'comps/conversations/recipient-counter-drtv',
-
-        'comps/conversations/conversation-controls-drtv',
-        'comps/conversations/attachments-drtv',
-        'comps/conversations/captcha-drtv',
-        'comps/conversations/conversation-drtv',
-        'comps/conversations/password-input-drtv',
-
-        'comps/conversations/message-drtv',
-    ]
-})
-
-addPackage('pckContacts',{
-    root: 'comps/contacts/contacts-module',
-    deps: [
-        'angular',
-        'cmApi', 
-        'cmLogger', 
-        'cmUtil',
-        'cmIdentity',
-//        'cmCron'
-    ],
-    resources : [
-        'comps/contacts/contactsModel-srvc',
-        'comps/contacts/contactsAdapter-srvc',
-
-        'comps/contacts/contacts-filter-controls-drtv',
-        'comps/contacts/contacts-list-drtv',
-        'comps/contacts/contact-tag-drtv',
-        'comps/contacts/contact-brief-drtv',        
-        'comps/contacts/contact-type-drtv',
-        'comps/contacts/key-level-drtv',
-        'comps/contacts/search-cameo-identity-drtv',    
-        'comps/contacts/type-chooser-drtv',
-
-        'comps/contacts/add-external-contact-drtv',
-        'comps/contacts/contact-request-list-drtv',      
-    ]
-})
-
-addPackage('pckValidate',{
-    root: 'comps/validate/validate-module',
-    deps: [
-        'util-passchk-fast'
-    ],
-    resources : [
-        'comps/validate/email-drtv',
-        'comps/validate/password-drtv',
-        'comps/validate/phone-drtv'
-    ]
-})
-
-addPackage('pckUi',{
-    root: 'shared/ui/ui-module',
-    deps: [
-        'angular',    
-        'cmAuth',
-        'cmLogger',
-        'cmLanguage',
-        'cmUserModel',
-        'util-spin',
-        'ui-bootstrap'
-    ],
-    resources : [
-        'shared/ui/view-drtv',
-        'shared/ui/adaptive-change-drtv',
-        'shared/ui/rubber-space-drtv',
-        'shared/ui/nav-tabs-drtv',
-        'shared/ui/point-spinner-drtv',
-        'shared/ui/spinner-drtv',
-        'shared/ui/overlay-drtv',
-        'shared/ui/header-drtv',
-        'shared/ui/back-drtv',
-        'shared/ui/identity-drtv',
-        'shared/ui/avatar-drtv',
-        'shared/ui/logo-drtv',
-        'shared/ui/menu-drtv',
-        'shared/ui/edge-drtv',
-        'shared/ui/footer-drtv',
-        'shared/ui/resize-textarea',
-        'shared/ui/date-seperator-drtv',
-        'shared/ui/scroll-to-drtv',
-        'shared/ui/reload-drtv',
-        'shared/ui/multi-input-drtv',
-        'shared/ui/large-input-drtv'
-    ]
-})
-
-require.config(config)
+require.config(config);
