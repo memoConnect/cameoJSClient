@@ -101,6 +101,10 @@ angular.module('cmConversations').directive('cmConversation', [
                         .sendTo($scope.conversation)
                 }
 
+                /**
+                 *
+                 * @returns {boolean|*|$scope.new_conversation}
+                 */
                 this.isNew = function(){
                     return $scope.new_conversation;
                 }
@@ -115,9 +119,6 @@ angular.module('cmConversations').directive('cmConversation', [
                     }
                     return false;
                 }
-
-
-
 
                 this.addPendingRecipients = function(){
                     $rootScope.pendingRecipients = $rootScope.pendingRecipients || []
