@@ -48,10 +48,10 @@ describe('login screen', function () {
         var pw = $("input[name=pw]");
 
         user.getAttribute("placeholder").then(function (text) {
-            expect(text).toBeDefined;
+            expect(text).not.toBe("");
         });
         pw.getAttribute("placeholder").then(function (text) {
-            expect(text).toBeDefined;
+            expect(text).not.toBe("");
         });
 
         $("body").sendKeys(protractor.Key.ESCAPE);
