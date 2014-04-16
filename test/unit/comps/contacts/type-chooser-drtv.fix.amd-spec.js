@@ -114,21 +114,4 @@ describe('Directive cmTypeChooser', function () {
         })
 
     })
-
-    describe('test with cm-disabled & cm-choose-value-to', function(){
-
-        beforeEach(inject(function ($rootScope, $compile) {
-            scope = $rootScope.$new()
-
-            el = angular.element('<div cm-type-chooser cm-choose-value-to="moep"></div>')
-            el = $compile(el)(scope)
-            scope.$digest()
-        }))
-
-        it('no button should be active',function(){
-            expect($('div.btn-group-justified .btn-primary', el).length).toEqual(0)
-        })
-
-    })
-
 })
