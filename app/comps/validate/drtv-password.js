@@ -5,7 +5,7 @@ angular.module('cmValidate').directive('cmPassword', [
     function (cmCrypt) {
         return  {
             restrict: 'A',
-            templateUrl: 'comps/validate/password.html',
+            templateUrl: 'comps/validate/drtv-password.html',
             scope: {
                 password: '=parentItem'
             },

@@ -43,8 +43,7 @@ module.exports = function(config) {
             'app/comps/files/!(*module).js',
             'app/comps/files/*module.js',
 
-            'app/comps/contacts/!(*module).js',
-            'app/comps/contacts/*module.js',
+            'app/comps/contacts/package.js',
 
             'app/comps/conversations/!(*module).js',
             'app/comps/conversations/*module.js',
