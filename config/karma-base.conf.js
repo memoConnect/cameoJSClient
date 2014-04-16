@@ -52,8 +52,7 @@ module.exports = function(config) {
             'app/comps/user/!(*module).js',
             'app/comps/user/*module.js',
 
-            'app/comps/validate/!(*module).js',
-            'app/comps/validate/*module.js',
+            'app/comps/validate/package.js',
 
             'test/lib/angular/angular-mocks.js',
 

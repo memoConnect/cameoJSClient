@@ -58,6 +58,8 @@ var config = {
         'ui-bootstrap': 'vendor/ui-bootstrap/ui-bootstrap.0.10.0',
         'ui-bootstrap-tpls': 'vendor/ui-bootstrap/ui-bootstrap-tpls.0.10.0',
 
+        // packages
+        'pckValidate': 'comps/validate/package',
         'pckUi': 'shared/ui/package'
     },
 
@@ -104,6 +106,10 @@ var config = {
             'angular-growl',
             'cmNotify',
             'cmLogger'
+        ],
+
+        'pckValidate': [
+            'util-passchk-fast'
         ],
 
         'pckUi': [
@@ -248,17 +254,17 @@ addPackage('pckContacts',{
     ]
 })
 
-addPackage('pckValidate',{
-    root: 'comps/validate/validate-module',
-    deps: [
-        'util-passchk-fast'
-    ],
-    resources : [
-        'comps/validate/email-drtv',
-        'comps/validate/password-drtv',
-        'comps/validate/phone-drtv'
-    ]
-})
+//addPackage('pckValidate',{
+//    root: 'comps/validate/validate-module',
+//    deps: [
+//        'util-passchk-fast'
+//    ],
+//    resources : [
+//        'comps/validate/email-drtv',
+//        'comps/validate/password-drtv',
+//        'comps/validate/phone-drtv'
+//    ]
+//})
 
 //addPackage('pckUi',{
 //    root: 'shared/ui/ui-module',
