@@ -143,6 +143,7 @@ angular.module('cmConversations').directive('cmConversation', [
                     //$scope.passphrase_valid = $scope.conversation.passphraseValid()
 
                     /*
+                    * @todo remove??? 16.04.2014
                      if($scope.conversation.passphrase != '' && $scope.passphrase_valid !== false){
                      $scope.passphrase = $scope.conversation.passphrase;
                      $scope.conversation.decrypt();
