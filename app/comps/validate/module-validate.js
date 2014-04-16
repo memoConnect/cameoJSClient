@@ -2,4 +2,4 @@
 
 angular.module('cmValidate', [
     'cmAuth'
-]);
+])

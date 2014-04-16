@@ -60,7 +60,8 @@ var config = {
 
         // packages
         'pckValidate': 'comps/validate/package',
-        'pckUi': 'shared/ui/package'
+        'pckUi': 'shared/ui/package',
+        'pckConversations': 'comps/conversations/package'
     },
 
     packages: [
@@ -120,6 +121,24 @@ var config = {
             'cmUserModel',
             'util-spin',
             'ui-bootstrap'
+        ],
+
+        'pckConversations': [
+            'angular',
+            'cmApi',
+            'cmLogger',
+            'cmNotify',
+            'cmCrypt',
+            'cmAuth',
+            'cmUtil',
+//        'cmCron',
+            'cmUserModel',
+            'cmIdentity',
+            'pckContacts',
+            'pckFiles',
+            'pckUi',
+            '_v/captcha/captchagen/captchagen',
+            'util-base64'
         ]
 
 //        'bootstrap': ['jquery']
@@ -180,52 +199,52 @@ addPackage('pckUser',{
     ]
 })
 
-addPackage('pckConversations',{
-    root: 'comps/conversations/conversations-module',
-    deps: [
-        'angular',
-        'cmApi', 
-        'cmLogger', 
-        'cmNotify',
-        'cmCrypt', 
-        'cmAuth',
-        'cmUtil',
-//        'cmCron',
-        'cmUserModel',
-        'cmIdentity',
-        'pckContacts',
-        'pckFiles',
-        'pckUi',
-        '_v/captcha/captchagen/captchagen',
-        'util-base64'
-    ],    
-    resources : [
-        'comps/conversations/conversationsAdapter-srvc',
-        'comps/conversations/conversationsModel-srvc',
-
-        'comps/conversations/purlModel-srvc',
-
-        'comps/conversations/conversationFactory-srvc',
-        'comps/conversations/conversationModel-srvc',
-
-        'comps/conversations/messageFactory-srvc',
-        'comps/conversations/messageModel-srvc',
-
-        'comps/conversations/recipientModel-srvc',
-
-        'comps/conversations/conversation-tag-drtv',
-        'comps/conversations/safety-level-drtv',
-        'comps/conversations/recipient-counter-drtv',
-
-        'comps/conversations/conversation-controls-drtv',
-        'comps/conversations/attachments-drtv',
-        'comps/conversations/captcha-drtv',
-        'comps/conversations/conversation-drtv',
-        'comps/conversations/password-input-drtv',
-
-        'comps/conversations/message-drtv',
-    ]
-})
+//addPackage('pckConversations',{
+//    root: 'comps/conversations/conversations-module',
+//    deps: [
+//        'angular',
+//        'cmApi',
+//        'cmLogger',
+//        'cmNotify',
+//        'cmCrypt',
+//        'cmAuth',
+//        'cmUtil',
+////        'cmCron',
+//        'cmUserModel',
+//        'cmIdentity',
+//        'pckContacts',
+//        'pckFiles',
+//        'pckUi',
+//        '_v/captcha/captchagen/captchagen',
+//        'util-base64'
+//    ],
+//    resources : [
+//        'comps/conversations/conversationsAdapter-srvc',
+//        'comps/conversations/conversationsModel-srvc',
+//
+//        'comps/conversations/purlModel-srvc',
+//
+//        'comps/conversations/conversationFactory-srvc',
+//        'comps/conversations/conversationModel-srvc',
+//
+//        'comps/conversations/messageFactory-srvc',
+//        'comps/conversations/messageModel-srvc',
+//
+//        'comps/conversations/recipientModel-srvc',
+//
+//        'comps/conversations/conversation-tag-drtv',
+//        'comps/conversations/safety-level-drtv',
+//        'comps/conversations/recipient-counter-drtv',
+//
+//        'comps/conversations/conversation-controls-drtv',
+//        'comps/conversations/attachments-drtv',
+//        'comps/conversations/captcha-drtv',
+//        'comps/conversations/conversation-drtv',
+//        'comps/conversations/password-input-drtv',
+//
+//        'comps/conversations/message-drtv',
+//    ]
+//})
 
 addPackage('pckContacts',{
     root: 'comps/contacts/contacts-module',

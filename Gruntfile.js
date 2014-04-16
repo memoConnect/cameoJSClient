@@ -155,7 +155,11 @@ module.exports = function (grunt) {
                 "}]);"
             // scripts clear use_strict
         } else {
-            return src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+            var file = src
+                .replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1')
+                .replace(/(angular\.module\(.*\))/g, '')
+                .replace(/(\;)$/g, '')
+            return file;
         }
     }
 
@@ -180,8 +184,9 @@ module.exports = function (grunt) {
                     process: concatCmFiles
                 },
                 files: {
-                    'app/comps/validate/package.js': ['app/comps/validate/module-validate.js','app/comps/validate/!(module-validate|package)*'],
-                    'app/shared/ui/package.js': ['app/shared/ui/module-ui.js', 'app/shared/ui/!(module-ui|package)*']
+                    'app/comps/validate/package.js': ['app/comps/validate/module-validate.js','app/comps/validate/!(module-validate|package)*.js','app/comps/validate/tpl-*'],
+                    'app/comps/conversations/package.js': ['app/comps/conversations/module-conversations.js','app/comps/conversations/!(module-conversations|package)*.js','app/comps/conversations/tpl-*'],
+                    'app/shared/ui/package.js': ['app/shared/ui/module-ui.js', 'app/shared/ui/!(module-ui|package)*.js','app/shared/ui//tpl-*']
                 }
             }
         },

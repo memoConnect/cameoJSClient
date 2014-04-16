@@ -2,8 +2,8 @@ angular.module('cmUi', [
     'cmLanguage',
     'cmUserModel',
     'ui.bootstrap'
-]);
-angular.module('cmUi').directive('cmAdaptiveChange', [
+])
+.directive('cmAdaptiveChange', [
     '$timeout',
     function ($timeout){
         return {
@@ -32,8 +32,8 @@ angular.module('cmUi').directive('cmAdaptiveChange', [
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmAvatar',[
+])
+.directive('cmAvatar',[
     'cmLogger',
     function (cmLogger){
 
@@ -87,8 +87,8 @@ angular.module('cmUi').directive('cmAvatar',[
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmBack',[
+])
+.directive('cmBack',[
     '$window',
     '$location',
     function ($window, $location){
@@ -128,8 +128,8 @@ angular.module('cmUi').directive('cmBack',[
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmDateSeperator',[
+])
+.directive('cmDateSeperator',[
     function (){
         return{
             restrict: 'AE',
@@ -141,8 +141,8 @@ angular.module('cmUi').directive('cmDateSeperator',[
                       '</div>'
         }
     }
-]);
-angular.module('cmUi').directive('cmEdge',[
+])
+.directive('cmEdge',[
     '$location',
     function (){
         return{
@@ -163,8 +163,8 @@ angular.module('cmUi').directive('cmEdge',[
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmFooter',[
+])
+.directive('cmFooter',[
     '$location',
     'cmTranslate',
     function ($location, cmTranslate){
@@ -199,15 +199,15 @@ angular.module('cmUi').directive('cmFooter',[
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmHeader',[
+])
+.directive('cmHeader',[
     function (){
         return {
             restrict: 'AE'
         }
     }
-]);
-angular.module('cmUi').directive('cmIdentity',[
+])
+.directive('cmIdentity',[
     'cmUserModel',
     function (cmUserModel){
         return {
@@ -219,8 +219,8 @@ angular.module('cmUi').directive('cmIdentity',[
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmLargeInput',[
+])
+.directive('cmLargeInput',[
     function(){
         return {
             restrict: 'A',
@@ -236,8 +236,8 @@ angular.module('cmUi').directive('cmLargeInput',[
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmLogo',[
+])
+.directive('cmLogo',[
     function (){
         return {
             restrict: 'AE',
@@ -251,13 +251,8 @@ angular.module('cmUi').directive('cmLogo',[
                 '<i class="fa cm-logo-net"></i>'
         }
     }
-]);
-angular.module('shared/ui/drtv-menu.html', []).run([
-'$templateCache', function($templateCache) {
-$templateCache.put('shared/ui/drtv-menu.html',
-'<div class="cm-handler" ng-click="handleMenu()"><i class="fa cm-menu"></i></div><div class="cm-menu-layer" ng-show="menuVisible"><div cm-transparent-bg ng-click="handleMenu()"></div><div class="cm-menu-list"><ul class="list-group"><li class="cm-nose-wrapper" ng-click="handleMenu()"><i class="fa cm-nose-up"></i></li><li class="cm-list-group-item" ng-repeat="btn in btns" ng-class="btn.css" ng-click="goTo(btn.href)"><i class="fa" ng-if="btn.icon != undefined" ng-class="btn.icon"></i><span>{{btn.i18n|cmTranslate}}</span><div class="clearfix"></div></li><li class="cm-list-group-item" ng-click="logout()"><i class="fa cm-logout"></i><a class="logout">{{\'MENU.LOGOUT\'|cmTranslate}}</a><div class="clearfix"></div></li><li class="cm-list-group-item"><i class="fa cm-rhino-positive"></i><span>{{\'CAMEO.VERSION\'|cmTranslate}}: {{cmVersion.version}}<br /></span><div class="clearfix"></div></li></ul><div class="bottom-filler"></div></div></div>');
-}]);
-angular.module('cmUi').directive('cmMenu',[
+])
+.directive('cmMenu',[
     '$window',
     '$document',
     '$location',
@@ -350,8 +345,8 @@ angular.module('cmUi').directive('cmMenu',[
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmMultiInput',[
+])
+.directive('cmMultiInput',[
     function (){
         return {
             restrict: 'AE',
@@ -399,13 +394,8 @@ angular.module('cmUi').directive('cmMultiInput',[
             }
         }
     }
-]);
-angular.module('shared/ui/drtv-nav-tabs.html', []).run([
-'$templateCache', function($templateCache) {
-$templateCache.put('shared/ui/drtv-nav-tabs.html',
-'<ul class="nav nav-tabs"><li ng-repeat="tab in tabs" ng-class="{active:activeTab == tab.i18n}" ng-click="setActiveTab(tab.i18n)" title="{{\'NAVIGATION.TABS.\'+tab.i18n|cmTranslate}}"><a> {{\'NAVIGATION.TABS.\'+tab.i18n|cmTranslate}}</a></li></ul>');
-}]);
-angular.module('cmUi').directive('cmNavTabs',[
+])
+.directive('cmNavTabs',[
     '$routeParams',
     function (){
         return {
@@ -438,8 +428,8 @@ angular.module('cmUi').directive('cmNavTabs',[
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmOverlay',[
+])
+.directive('cmOverlay',[
     '$rootScope',
     function ($rootScope){
         return {
@@ -481,8 +471,8 @@ angular.module('cmUi').directive('cmOverlay',[
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmPointSpinner',[
+])
+.directive('cmPointSpinner',[
     function (){
         return {
             scope: true,
@@ -511,8 +501,8 @@ angular.module('cmUi').directive('cmPointSpinner',[
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmReload',[
+])
+.directive('cmReload',[
     '$route',
     function ($route){
         return {
@@ -527,8 +517,8 @@ angular.module('cmUi').directive('cmReload',[
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmResizeTextarea',[
+])
+.directive('cmResizeTextarea',[
     function () {
         return {
             restrict: 'A',
@@ -639,8 +629,8 @@ angular.module('cmUi').directive('cmResizeTextarea',[
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmRubberSpace',[
+])
+.directive('cmRubberSpace',[
     function (){
         return {
             restrict : 'AE',
@@ -686,8 +676,8 @@ angular.module('cmUi').directive('cmRubberSpace',[
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmScrollTo',[
+])
+.directive('cmScrollTo',[
     '$timeout',
     function ($timeout){
         return {
@@ -714,8 +704,8 @@ angular.module('cmUi').directive('cmScrollTo',[
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmSpinner',[
+])
+.directive('cmSpinner',[
     function (){
         return {
             restrict: 'AE',
@@ -762,8 +752,8 @@ angular.module('cmUi').directive('cmSpinner',[
             }
         }
     }
-]);
-angular.module('cmUi').directive('cmView', [
+])
+.directive('cmView', [
     '$route',
     '$location',
     'cmUserModel',
@@ -780,8 +770,8 @@ angular.module('cmUi').directive('cmView', [
             }
         }
     }
-]);
-angular.module('cmUi').filter('cmDigits', [
+])
+.filter('cmDigits', [
     function(){
         return function(number, digits){
             var x   = parseFloat(number)
@@ -793,8 +783,8 @@ angular.module('cmUi').filter('cmDigits', [
             return str.match(/^[0-9\.]*$/) ? str : '0'
         }
     }
-]);
-angular.module('cmUi').filter('truncate', [
+])
+.filter('truncate', [
     function () {
         return function (text, length, end) {
             if (isNaN(length))
@@ -812,4 +802,4 @@ angular.module('cmUi').filter('truncate', [
 
         };
     }
-]);
+])
