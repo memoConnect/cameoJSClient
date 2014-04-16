@@ -4,7 +4,6 @@ angular.module('cmUi').directive('cmBack',[
     '$window',
     '$location',
     function ($window, $location){
-
         return {
             restrict: 'AE',
             scope: true,

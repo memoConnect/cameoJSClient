@@ -11,9 +11,9 @@
     <header>
         <h1>{{"CONTACTS.HEADING"|cmTranslate}}</h1>       
 
-        <a ng-click="openAddModal()" cm-edge>
+        <button ng-click="openAddModal()" cm-edge>
             <i class="fa cm-edge-add"></i>
-        </a>
+        </button>
 
         <input 
             type            = "text" 
@@ -45,8 +45,11 @@
             <cm-avatar cm-data="contact.identity" ng-click="editContact(contact.id)"></cm-avatar>
             <cm-key-level key-size="contact.identity.getWeakestKeySize()"></cm-key-level>
             <cm-contact-brief cm-data="contact" cm-weight="1" ng-click="editContact(contact.id)"></cm-contact-brief>
+            <cm-contact-type    cm-data = "contact"></cm-contact-type>
             <span class="separator" ></span>
-            <i class="fa cm-write fa-3x" ng-click="startConversation(contact.identity.id)"></i>
+            <button ng-click="startConversation(contact)">
+                <i class="fa cm-write"></i>
+            </button>
         </cm-contact-tag>
 
     </cm-contacts-list>

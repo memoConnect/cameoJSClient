@@ -99,7 +99,7 @@ describe('Directive cmTypeChooser', function () {
             scope.$digest()
         }))
 
-        it('scope variable should setted to \'private\' is default',function(){
+        it('scope variable should set to \'private\' is default',function(){
             expect(scope.moep.type).toBe('private')
         })
 

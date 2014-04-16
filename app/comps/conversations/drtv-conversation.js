@@ -14,52 +14,15 @@ angular.module('cmConversations').directive('cmConversation', [
     function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location, $rootScope) {
         return {
             restrict: 'AE',
-            templateUrl: 'comps/conversations/tpl-conversation.html',
+            templateUrl: 'comps/conversations/conversation.html',
             scope: true,
 
             controller: function ($scope, $element, $attrs) {
-                var conversation_id      = $scope.$eval($attrs.cmConversations) || $scope.$eval($attrs.conversationId),
+                var self                 = this,
+                    conversation_id      = $scope.$eval($attrs.cmConversations) || $scope.$eval($attrs.conversationId),
                     conversation_subject = $scope.$eval($attrs.cmSubject),
                     conversation_offset  = $attrs.offset,
                     conversation_limit   = $attrs.limit
-
-
-
-                $scope.init = function (conversation) {
-
-                    $rootScope.pendingConversation = conversation
-
-                    // reload detail of conversation
-                    $scope.conversation = conversation.update();
-
-                    $scope.my_message_text  = ""
-                    $scope.password         = ""
-                    $scope.show_contacts    = false
-                    //$scope.passphrase_valid = $scope.conversation.passphraseValid()
-
-                    /*
-                    if($scope.conversation.passphrase != '' && $scope.passphrase_valid !== false){
-                        $scope.passphrase = $scope.conversation.passphrase;
-                        $scope.conversation.decrypt();
-                    } else {
-                        $scope.$watch("passphrase", function (new_passphrase) {
-                            $scope.conversation.setPassphrase(new_passphrase)
-                            $scope.passphrase_valid = $scope.conversation.passphraseValid()
-                            if ($scope.passphrase_valid) $scope.conversation.decrypt()
-                        })
-                    }
-                    */
-
-                    $scope.$watch("conversation.subject", function (new_subject) {
-                        $scope.conversation.updateSubject(new_subject||'')
-                    })
-
-
-                    //cron
-    //                if($scope.new_conversation !== true){
-    //                    cmCron.add('Conversation-'+conversation.id,{instance: conversation,task:function(conversation){self.update()}});
-    //                }
-                }
 
                 $scope.sendMessage = function () {
 
@@ -89,7 +52,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                     }
                                 })
                         }
-                     }
+                    }
 
                     if (!passphrase_valid)    cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID')
                     if (message_empty)        cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY')
@@ -103,12 +66,12 @@ angular.module('cmConversations').directive('cmConversation', [
 
                     passphrase_valid && !assetId_missing && !recipients_missing
                         ?   $scope.conversation
-                            .newMessage(':asset,'+$scope.assetId, $scope.conversation.passphrase)
-                            .sendTo($scope.conversation)
-                            .then(function () {
-                                if ($scope.new_conversation) $location.url('/conversation/' + $scope.conversation.id)
-                                $scope.assetId = undefined
-                            })
+                        .newMessage(':asset,'+$scope.assetId, $scope.conversation.passphrase)
+                        .sendTo($scope.conversation)
+                        .then(function () {
+                            if ($scope.new_conversation) $location.url('/conversation/' + $scope.conversation.id)
+                            $scope.assetId = undefined
+                        })
                         :   null
 
                     if (!passphrase_valid)    cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID')
@@ -123,8 +86,8 @@ angular.module('cmConversations').directive('cmConversation', [
 
                     captchaImageData && passphrase_valid
                         ?   $scope.conversation
-                            .newMessage(captchaImageData)
-                            .sendTo($scope.conversation)
+                        .newMessage(captchaImageData)
+                        .sendTo($scope.conversation)
                         : null
 
                     if (!passphrase_valid)    cmNotify.warn('CONVERSTAION.WARN.PASSPHRASE_INVALID')
@@ -151,23 +114,73 @@ angular.module('cmConversations').directive('cmConversation', [
                     return false;
                 }
 
+
+
+
+                this.addPendingRecipients = function(){
+                    $rootScope.pendingRecipients = $rootScope.pendingRecipients || []
+                    $rootScope.pendingRecipients.forEach(function(pendingRecipient){
+                        $scope.conversation.addRecipient(pendingRecipient)
+                    })
+                    $rootScope.pendingRecipients = []
+                }
+
+                this.init = function (conversation) {
+
+                    $rootScope.pendingConversation = conversation
+
+                    // reload detail of conversation
+                    $scope.conversation = conversation.update();
+
+                    self.addPendingRecipients()
+
+                    $scope.my_message_text  = ""
+                    $scope.password         = ""
+                    $scope.show_contacts    = false
+                    //$scope.passphrase_valid = $scope.conversation.passphraseValid()
+
+                    /*
+                     if($scope.conversation.passphrase != '' && $scope.passphrase_valid !== false){
+                     $scope.passphrase = $scope.conversation.passphrase;
+                     $scope.conversation.decrypt();
+                     } else {
+                     $scope.$watch("passphrase", function (new_passphrase) {
+                     $scope.conversation.setPassphrase(new_passphrase)
+                     $scope.passphrase_valid = $scope.conversation.passphraseValid()
+                     if ($scope.passphrase_valid) $scope.conversation.decrypt()
+                     })
+                     }
+                     */
+
+                    $scope.$watch("conversation.subject", function (new_subject) {
+                        $scope.conversation.updateSubject(new_subject||'')
+                    })
+
+
+                    //cron
+//                if($scope.new_conversation !== true){
+//                    cmCron.add('Conversation-'+conversation.id,{instance: conversation,task:function(conversation){self.update()}});
+//                }
+                }
+
+
                 $scope.new_conversation = !conversation_id && !$rootScope.pendingConversation;
 
                 if(conversation_id){
                     cmConversationsModel.getConversation(conversation_id).then(
                         function (conversation) {
-                            $scope.init(conversation)
+                            self.init(conversation)
                             $scope.conversation.decryptPassphrase()
                             $scope.conversation.decrypt()
                         }
                     )
                 } else if($rootScope.pendingConversation){
-                    $scope.init($rootScope.pendingConversation)
+                    self.init($rootScope.pendingConversation)
                 } else {
                     cmConversationsModel.createNewConversation().then(
                         function(newConversation){
                             newConversation.addRecipient(cmUserModel.data.identity);
-                            $scope.init(newConversation);
+                            self.init(newConversation);
                             $scope.conversation.setPassphrase()
                         }
                     );
