@@ -12,13 +12,11 @@ describe('registration', function () {
     ptor.ignoreSynchronization = true;
     util.setPtorInstance(ptor)
 
+    util.logout()
+
     it('should contain 7 input fields with placeholders', function () {
 
-        ptor.get(config.wwwUrl + "#/logout");
-        util.waitForPageLoad();
-
-        ptor.get(config.wwwUrl + "#/registration");
-        util.waitForPageLoad();
+        util.get("/registration");
 
         $$("input").then(function (elements) {
             expect(elements.length).toBe(7)
@@ -45,8 +43,7 @@ describe('registration', function () {
 
     it('should display error if username too short', function () {
 
-        ptor.get(config.wwwUrl + "#/registration");
-        util.waitForPageLoad();
+        util.get("/registration");
 
         $("[data-qa='input-loginName']").sendKeys("moep")
 
@@ -94,8 +91,7 @@ describe('registration', function () {
     })
 
     it('should create account with valid credentials', function() {
-        ptor.get(config.wwwUrl + "#/registration");
-        util.waitForPageLoad();
+        util.get("/registration");
 
         $("[data-qa='input-loginName']").sendKeys(loginName)
         $("[data-qa='input-password']").sendKeys(password)

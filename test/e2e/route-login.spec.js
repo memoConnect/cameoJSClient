@@ -1,22 +1,20 @@
 var config = require("./config-e2e-tests.js")
 var util = require("../lib/e2e/cmTestUtil.js")
 
-describe('invalid', function () {
+describe('login screen', function () {
 
     var ptor;
     ptor = protractor.getInstance();
     ptor.ignoreSynchronization = true;
     util.setPtorInstance(ptor)
 
+    util.logout()
+
     it('should contain two buttons', function () {
 
-        ptor.get(config.wwwUrl + "#/logout");
-        util.waitForPageLoad();
+        util.get("");
 
-        ptor.get(config.wwwUrl);
-        util.waitForPageLoad();
-
-        ptor.getCurrentUrl().then(function(url){
+        ptor.getCurrentUrl().then(function (url) {
             expect(url).toMatch(/\#\/login$/)
         })
 
@@ -36,8 +34,7 @@ describe('invalid', function () {
 
     it('should prompt for username and password after click on login and close it', function () {
 
-        ptor.get(config.wwwUrl);
-        util.waitForPageLoad();
+        util.get("");
 
         $("[data-qa='login-btn']").click();
 
@@ -92,12 +89,11 @@ describe('invalid', function () {
 
     })
 
-    it('dont show login page when already logged in', function() {
+    it('dont show login page when already logged in', function () {
 
-        ptor.get(config.wwwUrl);
-        util.waitForPageLoad();
+        util.get("");
 
-        ptor.getCurrentUrl().then(function(url){
+        ptor.getCurrentUrl().then(function (url) {
             expect(url).toMatch(/\#\/talks$/)
         })
     })
