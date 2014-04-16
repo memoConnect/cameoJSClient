@@ -139,6 +139,7 @@ angular.module('cmConversations').directive('cmConversation', [
                     $scope.my_message_text  = ""
                     $scope.password         = ""
                     $scope.show_contacts    = false
+
                     //$scope.passphrase_valid = $scope.conversation.passphraseValid()
 
                     /*
