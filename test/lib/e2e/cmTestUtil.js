@@ -34,8 +34,9 @@ this.waitForPageLoad = function (expectedRoute) {
 }
 
 this.get = function(path) {
-    return ptor.get(config.wwwUrl + path)
-    this.waitForPageLoad()
+    var url = config.wwwUrl +'#/' + path
+    ptor.get(url)
+    this.waitForPageLoad(url)
 }
 
 
