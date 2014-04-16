@@ -587,7 +587,7 @@ module.exports = function (grunt) {
 
     // watch
     grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'template:config-phonegap', 'template:config-protractor', 'concat:less', 'less']);
-    grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
+    grunt.registerTask('watcher', ['genAllTemplates', 'packages', 'watch']);
     grunt.registerTask('packages', ['concat:packages']);
 
     // deploy it for me babe !!
