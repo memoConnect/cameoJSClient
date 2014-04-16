@@ -33,14 +33,26 @@ this.waitForPageLoad = function (expectedRoute) {
 
 }
 
+this.get = function(path) {
+    return ptor.get(config.wwwUrl + path)
+    this.waitForPageLoad()
+}
+
+
 this.logout = function(){
+    this.get('#')
     //This might change in the future:
-    localStorage.removeItem('token');
+    ptor.wait(function(){
+        return ptor.executeScript('return localStorage.removeItem("token")').then(function(){
+            return true
+        })
+    }, 500, 'timeout: logout failed.')
 }
 
 this.login = function(username, password){
     this.logout()
-    this.waitForPageLoad();
+    this.get('#/login')
+    
 
     $("[data-qa='login-btn']").click();
 

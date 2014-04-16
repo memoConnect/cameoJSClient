@@ -5,20 +5,31 @@ describe('Route: Contacts', function () {
 
     var ptor;
 
+
+    ptor = protractor.getInstance();
+    ptor.ignoreSynchronization = true;
+    util.setPtorInstance(ptor)
+
     util.login()
 
-    ptor.get('#/contacts')
-    util.waitForPageLoad()
-
+    util.get('#/contacts')
 
 
     beforeEach(function () {
-        ptor = protractor.getInstance();
-        ptor.ignoreSynchronization = true;
-        util.setPtorInstance(ptor)
     });
 
 
+    it('should be found at "#/contacts".', function(){
+        ptor.getCurrentUrl().then(function(url){
+            expect(url).toMatch(/\#\/contacts$/)
+        })
+    })
+
+    it('should have a header.', function(){
+        $('cm-header').then(function(element){
+            expect(element.isPresent()).toBeTrue()
+        })
+    })
 
 })
 
