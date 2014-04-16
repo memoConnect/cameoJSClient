@@ -15,7 +15,7 @@ describe('login screen', function () {
     it('should contain two buttons', function () {
 
         ptor.get(config.wwwUrl + "#/logout");
-        util.waitForPageLoad(ptor);
+        util.waitForPageLoad();
 
         ptor.get(config.wwwUrl);
         util.waitForPageLoad();
@@ -34,10 +34,7 @@ describe('login screen', function () {
 
         $("[data-qa='register-btn']").click();
 
-        util.waitForPageLoad();
-        ptor.getCurrentUrl().then(function(url){
-            expect(url).toMatch(/\#\/registration/)
-        })
+        util.waitForPageLoad("/registration");
 
     });
 
@@ -60,7 +57,7 @@ describe('login screen', function () {
 
         $("body").sendKeys(protractor.Key.ESCAPE);
 
-        util.waitForModalClose(ptor)
+        util.waitForModalClose()
 
     });
 
@@ -76,11 +73,11 @@ describe('login screen', function () {
 
         $("[data-qa='login-submit-btn']").click();
 
-        util.waitForSpinner(ptor)
+        util.waitForSpinner()
         util.checkWarning("login-info")
 
         $("body").sendKeys(protractor.Key.ESCAPE);
-        util.waitForModalClose(ptor)
+        util.waitForModalClose()
     })
 
     it('should login with correct credentials', function () {
@@ -95,17 +92,15 @@ describe('login screen', function () {
 
         $("[data-qa='login-submit-btn']").click();
 
-        util.waitForPageLoad(ptor)
+        util.waitForPageLoad("/talks")
 
-        ptor.getCurrentUrl().then(function(url){
-            expect(url).toMatch(/\#\/talks$/)
-        })
     })
 
     it('dont show login page when already logged in', function() {
 
         ptor.get(config.wwwUrl);
-        util.waitForPageLoad(ptor);
+        util.waitForPageLoad();
+
         ptor.getCurrentUrl().then(function(url){
             expect(url).toMatch(/\#\/talks$/)
         })

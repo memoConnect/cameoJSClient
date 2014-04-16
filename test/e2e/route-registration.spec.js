@@ -12,6 +12,7 @@ describe('registration', function () {
         ptor = protractor.getInstance();
         ptor.ignoreSynchronization = true;
         util.ptor = ptor
+        util.setPtorInstance(ptor)
 //        browser.ignoreSynchronization = true;
     });
 
@@ -19,10 +20,10 @@ describe('registration', function () {
     it('should contain 7 input fields with placeholders', function () {
 
         ptor.get(config.wwwUrl + "#/logout");
-        util.waitForPageLoad(ptor);
+        util.waitForPageLoad();
 
         ptor.get(config.wwwUrl + "#/registration");
-        util.waitForPageLoad(ptor);
+        util.waitForPageLoad();
 
         $$("input").then(function (elements) {
             expect(elements.length).toBe(7)
@@ -50,7 +51,7 @@ describe('registration', function () {
     it('should display error if username too short', function () {
 
         ptor.get(config.wwwUrl + "#/registration");
-        util.waitForPageLoad(ptor);
+        util.waitForPageLoad();
 
         $("[data-qa='input-loginName']").sendKeys("moep")
 
@@ -86,18 +87,29 @@ describe('registration', function () {
 
     })
 
-//    it('should link to term of use', function() {
+    it('should link to term of use', function() {
+
+        // we need to scroll to bottom of page, because the bottom navbar might hide the link...
+        // todo: find a less hackisch way to do this
+        $("[data-qa='link-terms']").sendKeys(protractor.Key.END)
+
+        $("[data-qa='link-terms']").click()
+        util.waitForPageLoad("/terms");
+    })
+
+//    it('should create account with valid credentials', function() {
+//        ptor.get(config.wwwUrl + "#/registration");
+//        util.waitForPageLoad();
 //
-//        $("[data-qa='link-terms']").click()
-//        ptor.sleep(3000)
-//        util.waitForPageLoad(ptor);
-//        ptor.getCurrentUrl().then(function(url){
-//            expect(url).toMatch(/\#\/terms$/)
-//        })
+//        $("[data-qa='input-loginName']").sendKeys(loginName)
+//        $("[data-qa='input-password']").sendKeys(password)
+//        $("[data-qa='input-passwordConfirm']").sendKeys(password)
+//
+//
+//        $("[data-qa='btn-createUser']").click()
+//
+//        util.waitForPageLoad("/talks")
 //
 //    })
-
-
-
 
 })

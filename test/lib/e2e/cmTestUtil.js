@@ -11,16 +11,19 @@ this.setPtorInstance = function(newPtor) {
 
 this.waitForPageLoad = function (expectedRoute) {
 
-    // add some initial delay
-    ptor.sleep(100)
-
     ptor.wait(function () {
 
         return ptor.executeScript('return window != undefined && window._route != undefined').then(function (boolean) {
 
             if (boolean) {
-                return ptor.executeScript('return window._route.status').then(function (status) {
-                    return status == "success"
+
+                // get current route
+                return ptor.executeScript('return window._route').then(function(route) {
+                    if(expectedRoute == undefined || route.path == expectedRoute) {
+                        return route.status == "success"
+                    } else {
+//                        console.log("unexpected route:" + route.path)
+                    }
                 })
             }
         })
