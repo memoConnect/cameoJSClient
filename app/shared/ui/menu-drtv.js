@@ -74,7 +74,6 @@ function cmMenu($window, $document, $location, cmUserModel, cmVersion){
             };
 
             $scope.goTo = function(url){
-                console.log(url)
                 if(typeof url !== 'undefined'){
                     $location.path(url);
                 }

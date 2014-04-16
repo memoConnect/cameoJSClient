@@ -28,7 +28,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             preferredMessageType: 'default',
             created: '',
             lastUpdated: '',
-            userType: 'external',            
+            userType: 'external',
             storage: {},
             identity: {}
         }

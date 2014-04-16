@@ -76,7 +76,18 @@ function cmContactsAdapter(cmApi, cmLogger, cmUtil){
         addContact: function(data){
             return cmApi.post({
                 url:'/contact',
-                data: {identity:data, groups:[]}
+                data: {identity:data.identity||{}, groups:data.groups||[]}
+            })
+        },
+        editContact: function(id, data){
+            return cmApi.put({
+                url:'/contact/'+id,
+                data: data||{}
+            })
+        },
+        deleteContact: function(id){
+            return cmApi.delete({
+                url:'/contact/'+id
             })
         }
     }

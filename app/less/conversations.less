@@ -30,12 +30,14 @@ cm-conversation-tag{
         .subject {
             .single-line;
             line-height:0.5*@cm-unit;
+            color: @cm-font-color;
             font-weight:bold;
         }
 
         cm-message{
             .single-line;        
-            line-height:0.5*@cm-unit;
+            line-height: 0.5*@cm-unit;
+            color: @cm-font-color-light;
         }
     }
 
@@ -284,6 +286,10 @@ div.answer{
       border-style: none solid solid;
       border-width: medium @cm-border-width @cm-border-width;
     }
+  }
+  div.message.large {
+    width: 26rem;
+    margin-left: 0.5rem;
   }
 }
 

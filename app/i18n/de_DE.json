@@ -195,6 +195,23 @@
             "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}",
             "EMAIL": "{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}"
         },
+        "INFO": {
+            "EMPTY": {
+                "DISPLAYNAME": "{{'DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}"
+            },
+            "INVALID": {
+                "EMAIL": "{{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}",
+                "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}"
+            },
+            "SUCCESS": {
+                "SAVE": "Kontakt wurde erfolgreich angelegt",
+                "EDIT": "Kontakt wurde erfolgreich gespeichert"
+            },
+            "ERROR": {
+                "SAVE": "Kontakt konnte nicht angelegt werden",
+                "EDIT": "Kontakt konnte nicht gespeichert werden"
+            }
+        },
         "FOOTER":{
             "SAVE": "speichern"
         }

@@ -46,6 +46,7 @@ cmContacts.directive('cmContactsList',[
     'cmContactsModel',
     'cmLogger',
     '$rootScope',
+    '$location',
     cmContactsList
 ])
 

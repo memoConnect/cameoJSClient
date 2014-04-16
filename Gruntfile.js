@@ -11,13 +11,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-dalek');
     grunt.loadNpmTasks('grunt-phonegap');
     grunt.loadNpmTasks('grunt-template');
     grunt.loadNpmTasks('grunt-phonegap-build');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-coffee');
-
+    grunt.loadNpmTasks('grunt-protractor-runner');
 
     // cameo secrets
     var globalCameoSecrets = (function () {
@@ -122,6 +121,16 @@ module.exports = function (grunt) {
         if (wwwUrl) {
             console.log("wwwUrl: " + wwwUrl);
             testConfig.config.wwwUrl = wwwUrl;
+        }
+
+        var platform = process.platform
+        console.log("OS: " + platform)
+        if (platform.match(/linux/)) {
+            testConfig.config.chromeDriverPath = "../test/lib/ptor/chromedriver_linux"
+        } else if (platform.match(/mac/)) {
+            testConfig.config.chromeDriverPath = "../test/lib/ptor/chromedriver_mac"
+        } else if (platform.match(/win/)) {
+            testConfig.config.chromeDriverPath = "../test/lib/ptor/chromedriver_win.exe"
         }
 
         return testConfig;
@@ -305,46 +314,18 @@ module.exports = function (grunt) {
             }
 
         },
-        // e2e tests
-        dalek: {
+        protractor: {
             options: {
-                reporter: ['console', 'junit'],
-                "junit-reporter": {
-                    "dest": "target/test-reports/dalek.xml"
+                configFile: "config/ptor.e2e.conf.js", // Default config file
+                keepAlive: true, // If false, the grunt process stops when the test fails.
+                noColor: false, // If true, protractor will not use colors in its output.
+                args: {
+                    // Arguments passed to the command
                 }
-
-            }, browsers: [
-                {
-                    "chrome": {
-                        "portRange": [6100, 6120]
-                    }
-                }
-                ,
-                {
-                    "firefox": {
-                        "portRange": [6500, 6620]
-                    }
-                }
-            ], jenkins: {
-                options: {
-                    browser: ['phantomjs'],
-                    reporter: ['console', 'junit']
-
-                },
-                src: ['test/e2e/*.dalek.js']
-            }, local: {
-                options: {
-                    browser: ['chrome'],
-                    reporter: ['console']
-                }, src: ['test/e2e/*.dalek.js']
-            }, localAll: {
-                options: {
-                    browser: ['chrome', 'firefox'],
-                    reporter: ['console']
-                }, src: ['test/e2e/*.dalek.js']
+            },
+            default: {
             }
         },
-
         // phonegap create apk local
         phonegap: {
             // https://www.npmjs.org/package/grunt-phonegap
@@ -414,7 +395,7 @@ module.exports = function (grunt) {
                     'data': {
                         'phonegapFiles': //                            '<script src="cordova.js"></script>' +
                             '<script src="phonegap.js"></script>' +
-                                '<script src="phonegap-adapter.js"></script>',
+                            '<script src="phonegap-adapter.js"></script>',
                         'phonegapElements': '<div class="well">' +
                             '<p id="networkState"></p>' +
                             '<p id="contactsNumber"></p>' +
@@ -476,6 +457,16 @@ module.exports = function (grunt) {
                 },
                 'files': {
                     'phonegap-build/www/config.xml': ['templates/config-phonegap.tpl.xml']
+                }
+            }, 'config-protractor': {
+                'options': {
+                    'data': {
+                        'chromeDriverPath': globalCameoTestConfig.config.chromeDriverPath,
+                        'browserName': 'chrome'
+                    }
+                },
+                'files': {
+                    'config/ptor.e2e.conf.js': ['templates/ptor.e2e.conf.tpl.js']
                 }
             }
         },
@@ -539,24 +530,16 @@ module.exports = function (grunt) {
         'genAllTemplates',
         'karma:jenkins'
     ]);
-    // tests e2e
     grunt.registerTask('tests-e2e', [
         'genAllTemplates',
-        'dalek:jenkins'
+        'protractor:default'
     ]);
     grunt.registerTask('tests-all', [
         'genAllTemplates',
-        'karma:jenkins',
-        'dalek:jenkins'
+        'tests-unit',
+        'tests-e2e'
     ]);
-    grunt.registerTask('tests-e2e-local', [
-        'genAllTemplates',
-        'dalek:local'
-    ]);
-    grunt.registerTask('tests-e2e-localAll', [
-        'genAllTemplates',
-        'dalek:localAll'
-    ]);
+
     // phonegap to device
     grunt.registerTask('phonegap', [
         'phonegap:build',
@@ -584,7 +567,7 @@ module.exports = function (grunt) {
     ]);
 
     // watch
-    grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'template:config-phonegap', 'concat:less', 'less']);
+    grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'template:config-phonegap', 'template:config-protractor', 'concat:less', 'less']);
     grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
     grunt.registerTask('packages', ['concat:packages']);
 

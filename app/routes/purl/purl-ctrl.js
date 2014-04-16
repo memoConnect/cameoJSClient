@@ -18,6 +18,7 @@ define([
         function($scope, $routeParams, $location, cmPurlModel, cmUserModel, cmUtil, cmLogger){
             $scope.data = null;
             $scope.showConversation = false;
+            $scope.cmUserModel = cmUserModel;
 
             if(cmUtil.checkKeyExists($routeParams,'idPurl') && cmUtil.validateString($routeParams.idPurl)){
 

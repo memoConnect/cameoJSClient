@@ -60,3 +60,92 @@ cm-header{
     text-align:right;
   }
 }
+
+/** Do Not Touch - Performance Alternative to JS Directive - used in PURLS **/
+header.menu{
+  display:block;
+  position:fixed;
+  top:0;
+  z-index:10;
+  padding: @cm-vertical-padding 0;
+  width:@cm-app-width;
+  color:@cm-white;
+  background:@cm-bg-color;
+  line-height:@cm-unit;
+  font-size:@cm-large-font;
+  white-space:nowrap;
+
+  > *{
+    vertical-align: middle;
+  }
+
+  cm-logo{
+    display: block;
+    width: 9rem;
+    margin: 0 auto;
+    color:@cm-ci-color;
+    text-align: center;
+  }
+
+  cm-back{
+    display: inline-block;
+    width: 1.1rem;
+    position: absolute;
+    left: 0;
+    top: @cm-vertical-padding;
+    text-align:left;
+    z-index:1;
+    .with-cursor;
+    .back-wrap{
+      text-overflow:ellipsis;
+      overflow:hidden;
+    }
+    i {
+      margin-left:0.2rem;
+      margin-right:0.5rem;
+      vertical-align:text-bottom;
+    }
+    span {
+      position: relative;
+      font-size:0.8em;
+    }
+    &.overblend-avatar{
+      .back-wrap{
+        position:relative;
+        width:3em;
+      }
+    }
+  }
+
+  cm-identity{
+    display: inline-block;
+    width: 10.5rem;
+    position: absolute;
+    left: 1.15rem;
+    top: @cm-vertical-padding;
+    color:@cm-white;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+    text-align:left;
+    font-size:0.8em;
+    .with-cursor;
+  }
+
+  cm-reload{
+    display: inline-block;
+    width: 6rem;
+    text-align:right;
+    position: absolute;
+    top: @cm-vertical-padding;
+    right: 3.1rem;
+  }
+
+  cm-menu{
+    display: inline-block;
+    width: 3rem;
+    position: absolute;
+    top: @cm-vertical-padding;
+    right: 0.01rem;
+  }
+}

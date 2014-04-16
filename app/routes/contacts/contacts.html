@@ -1,9 +1,9 @@
 <cm-header cm-rubber-space>
-    <cm-back cm-weight="1" back-to="/talks"></cm-back>
+    <cm-back     cm-weight="1" back-to="/talks"></cm-back>
     <cm-identity cm-weight="10"></cm-identity>
-    <cm-logo cm-weight="8"></cm-logo>
-    <cm-reload cm-weight="8"></cm-reload>
-    <cm-menu cm-weight="2"></cm-menu>
+    <cm-logo     cm-weight="8"></cm-logo>
+    <cm-reload   cm-weight="8"></cm-reload>
+    <cm-menu     cm-weight="2"></cm-menu>
 </cm-header>
 
 <section ng-controller="ContactsCtrl">
@@ -15,11 +15,14 @@
             <i class="fa cm-edge-add"></i>
         </a>
 
-        <div class="cm-form-group">
-            <div class="cm-form-control white-control with-inputter with-outside-icon">
-                <input type="text" value="" ng-model="search" />                                
-            </div><i class="fa cm-search"></i>
-        </div>
+        <input 
+            type            = "text" 
+            value           = "" 
+            ng-model        = "search" 
+            cm-icon         = "cm-search"
+            cm-large-input
+        />     
+
     </header>
 
     <cm-contacts-filter-controls
@@ -38,12 +41,14 @@
             <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
         </div>
 
-        <cm-contact-tag cm-rubber-space ng-repeat="contact in contacts">
-            <cm-avatar cm-data = "contact.identity" ></cm-avatar>    
-            <cm-contact-brief cm-data = "contact" cm-weight="1"></cm-contact-brief>     
+        <cm-contact-tag cm-rubber-space ng-repeat="contact in contacts | filter:search">
+            <cm-avatar cm-data="contact.identity" ng-click="editContact(contact.id)"></cm-avatar>
+            <cm-key-level key-size="contact.identity.getWeakestKeySize()"></cm-key-level>
+            <cm-contact-brief cm-data="contact" cm-weight="1" ng-click="editContact(contact.id)"></cm-contact-brief>
             <span class="separator" ></span>
             <i class="fa cm-write fa-3x" ng-click="startConversation(contact.identity.id)"></i>
         </cm-contact-tag>
+
     </cm-contacts-list>
     
 

@@ -1,10 +1,10 @@
-<cm-header cm-rubber-space>
-    <cm-back cm-weight="1" back-to="/talks" class="overblend-avatar"></cm-back>
-    <cm-identity cm-weight="10" ></cm-identity>
-    <cm-logo cm-weight="8" ></cm-logo>
-    <cm-reload cm-weight="8"></cm-reload>
-    <cm-menu cm-weight="2" ></cm-menu>
-</cm-header>
+<header class="menu">
+    <cm-back back-to="/talks" class="overblend-avatar" cm-user-rights></cm-back>
+    <cm-identity cm-user-rights></cm-identity>
+    <cm-logo></cm-logo>
+    <cm-reload></cm-reload>
+    <cm-menu cm-user-rights></cm-menu>
+</header>
 
 <div ng-controller="PurlCtrl">
     <cm-conversation conversation-id="conversationId" ng-if="showConversation"></cm-conversation>
