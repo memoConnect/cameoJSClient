@@ -12,8 +12,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
     '$rootScope', 
     '$q', 
     '$location',
-    '$route',
-    function(cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmObject, cmNotify, cmLogger, $rootScope, $q, $location, $route){
+    function(cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmObject, cmNotify, cmLogger, $rootScope, $q, $location){
         var self = this,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
@@ -163,7 +162,6 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
 
             if(typeof goToLogin === 'undefined' || goToLogin !== false){
                 $location.path("/login");
-                $route.reload();
             }
         };
 
