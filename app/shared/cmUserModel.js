@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt', 'cmNotify'])
+angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt', 'cmNotify', 'cmLogger'])
 .service('cmUserModel',[
 
     'cmAuth', 
@@ -8,11 +8,12 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
     'cmIdentityFactory', 
     'cmCrypt',
     'cmNotify',
+    'cmLogger'
     '$rootScope', 
     '$q', 
     '$location', 
 
-    function(cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmNotify,$rootScope, $q, $location){
+    function(cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmNotify, cmLogger, $rootScope, $q, $location){
         var self = this,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
@@ -139,6 +140,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         };
 
         this.doLogout = function(goToLogin){
+            co
             isAuth = false;
             this.removeToken();
             $rootScope.$broadcast('logout');

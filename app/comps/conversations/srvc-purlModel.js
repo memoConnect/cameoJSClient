@@ -17,30 +17,37 @@ angular.module('cmConversations').service('cmPurlModel',[
             self.purls = [];
         });
 
-        function handleConversation(conversation_data){
+        this.handleConversation = function(conversation_data){
             var conversation = cmConversationFactory.create(conversation_data);
             cmConversationsModel.addConversation(conversation);
 
-            return conversation;
+            return conversation.id;
         }
 
         /**
          * @TODO add Function to cmUserModel to handle Guests and add Identities
          * @param identity
          */
-        function handleIdentity(identity_data){
+        this.handleIdentity = function(identity_data){
             if(identity_data.id != cmUserModel.data.id){
-                cmUserModel.setIdentity(identity_data);
+                if(identity_data.userType == 'external'){
+                    cmUserModel.doLogout(false);
+                    cmUserModel.setIdentity(identity_data);
+                }
             }
+
+            return this;
         }
 
         /**
          * @param token
          */
-        function handleToken(token){
+        this.handleToken = function(token){
             if(typeof token !== 'undefined'){
                 cmUserModel.storeToken(token);
             }
+
+            return this;
         }
 
         this.getPurl = function(id){
@@ -49,10 +56,11 @@ angular.module('cmConversations').service('cmPurlModel',[
             if(typeof id !== 'undefined'){
                 cmConversationsAdapter.getPurl(id).then(
                     function (data) {
-                        handleIdentity(data.identity);
-                        handleToken(data.token);
-
-                        deferred.resolve(handleConversation(data.conversation));
+//                        handleIdentity(data.identity);
+//                        handleToken(data.token);
+//
+//                        deferred.resolve(handleConversation(data.conversation));
+                        deferred.resolve(data);
                     },
                     function (response) {
                         deferred.reject(response);
