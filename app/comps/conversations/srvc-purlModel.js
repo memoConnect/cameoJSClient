@@ -31,11 +31,11 @@ angular.module('cmConversations').service('cmPurlModel',[
          */
         this.handleIdentity = function(identity_data){
             if(identity_data.userType == 'external'){
-                cmLogger.info('cmPurlModel:handleIdentity:externUser')
+                cmLogger.debug('cmPurlModel:handleIdentity:externUser')
                 cmUserModel.doLogout(false);
                 cmUserModel.setIdentity(identity_data);
             } else if(identity_data.id != cmUserModel.data.id){
-                cmLogger.info('cmPurlModel:handleIdentity:externUser')
+                cmLogger.debug('cmPurlModel:handleIdentity:externUser')
             }
 
             return this;

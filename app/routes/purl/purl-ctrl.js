@@ -1,6 +1,5 @@
 define([
     'app',
-    'cmLogger',
     'cmUtil',
     'ngload!pckUser',
     'ngload!pckConversations'
@@ -15,8 +14,7 @@ define([
         'cmPurlModel',
         'cmUserModel',
         'cmUtil',
-        'cmLogger',
-        function($scope, $routeParams, $location, $modal, cmPurlModel, cmUserModel, cmUtil, cmLogger){
+        function($scope, $routeParams, $location, $modal, cmPurlModel, cmUserModel, cmUtil){
             $scope.data = null;
             $scope.showConversation = false;
 

@@ -121,7 +121,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         };
 
         this.doLogin = function(user, pass){
-            cmLogger.info('cmUserModel:doLogin');
+            cmLogger.debug('cmUserModel:doLogin');
 
             var deferred = $q.defer();
 
@@ -142,7 +142,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         };
 
         this.doLogout = function(goToLogin){
-            cmLogger.info('cmUserModel:doLogout');
+            cmLogger.debug('cmUserModel:doLogout');
 
             isAuth = false;
             this.removeToken();
@@ -345,7 +345,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         };
 
         this.removeToken = function(){
-            cmLogger.info('cmUserModel:removeToken');
+            cmLogger.debug('cmUserModel:removeToken');
             cmAuth.removeToken();
         };
 
@@ -362,7 +362,6 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          * @param value
          */
         this.storageSave = function(key, value){
-            console.log(isAuth)
             if(isAuth !== false && self.data.storage !== null){
                 self.data.storage.save(key, value);
             }
@@ -391,7 +390,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          * clear identity storage
          */
         function resetUser(){
-            cmLogger.info('cmUserModel:resetUser');
+            cmLogger.debug('cmUserModel:resetUser');
             self.data = angular.extend({}, dataModel);
         }
 
