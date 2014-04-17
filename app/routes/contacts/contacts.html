@@ -42,10 +42,10 @@
         </div>
 
         <cm-contact-tag cm-rubber-space ng-repeat="contact in contacts | filter:search">
-            <cm-avatar          cm-data = "contact.identity"        ng-click="editContact(contact)"></cm-avatar>
+            <cm-avatar cm-data="contact.identity" ng-click="editContact(contact)"></cm-avatar>
             <cm-key-level key-size="contact.identity.getWeakestKeySize()"></cm-key-level>
-            <cm-contact-brief   cm-data = "contact" cm-weight="1"   ng-click="editContact(contact)"></cm-contact-brief>
-            <cm-contact-type    cm-data = "contact"></cm-contact-type>
+            <cm-contact-brief cm-data="contact" cm-weight="1" ng-click="editContact(contact)"></cm-contact-brief>
+            <cm-contact-type cm-data="contact"></cm-contact-type>
             <span class="separator" ></span>
             <button ng-click="startConversation(contact)">
                 <i class="fa cm-write"></i>

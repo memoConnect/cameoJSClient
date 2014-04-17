@@ -68,7 +68,7 @@ define([
                     emails: [],
                     groups: []
                 },
-                // merge givven identity with default
+                // merge given identity with default
                 identity = angular.extend({}, emptyIdentity, $scope.identity);
 
                 // validation
@@ -82,8 +82,9 @@ define([
                     identity.email = identity.emails[0].value;
                     identity.preferredMessageType = 'mail';
                 }
+
                 //////////////////////
-                if($scope.form.$invalid){
+                if($scope.cmForm.$invalid){
                     return false;
                 }
 

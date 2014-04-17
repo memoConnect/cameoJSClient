@@ -26,8 +26,10 @@ describe('Route: Contact', function () {
     })
 
     describe('open internal contact', function(){
-        it('click on first',function(){
-            $('cm-contacts-list cm-contact-tag cm-avatar').click()
+        it('search and click to detail',function(){
+            $("[data-qa='input-search']").sendKeys('internal')
+
+            $$('cm-contacts-list cm-contact-tag cm-avatar').first().click()
             util.expectCurrentUrl('#/contact/.*')
         })
 
@@ -71,6 +73,22 @@ describe('Route: Contact', function () {
                     expect(boolean).toBeTruthy()
                 })
             })
+        })
+
+        it('create external contact', function(){
+            $("[data-qa='input-displayname']").sendKeys('moeper')
+            $("[data-qa='input-phonenumber']").sendKeys('12345')
+            $("[data-qa='input-email']").sendKeys('die@gibts.net')
+
+            $('cm-footer button').click()
+
+            util.waitForPageLoad('/contacts')
+        })
+
+        it('search and click to detail',function(){
+            $("[data-qa='input-search']").sendKeys('moeper')
+
+            expect($$('cm-contacts-list cm-contact-tag cm-avatar').count()).toBe(1)
         })
     })
 })
