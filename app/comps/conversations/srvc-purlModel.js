@@ -6,9 +6,10 @@ angular.module('cmConversations').service('cmPurlModel',[
     'cmConversationFactory',
     'cmUserModel',
     'cmAuth',
+    'cmLogger',
     '$q',
     '$rootScope',
-    function(cmConversationsAdapter, cmConversationsModel, cmConversationFactory, cmUserModel, cmAuth, $q, $rootScope) {
+    function(cmConversationsAdapter, cmConversationsModel, cmConversationFactory, cmUserModel, cmAuth, cmLogger, $q, $rootScope) {
         var self = this;
 
         this.purls = [];
@@ -29,11 +30,12 @@ angular.module('cmConversations').service('cmPurlModel',[
          * @param identity
          */
         this.handleIdentity = function(identity_data){
-            if(identity_data.id != cmUserModel.data.id){
-                if(identity_data.userType == 'external'){
-                    cmUserModel.doLogout(false);
-                    cmUserModel.setIdentity(identity_data);
-                }
+            if(identity_data.userType == 'external'){
+                cmLogger.info('cmPurlModel:handleIdentity:externUser')
+                cmUserModel.doLogout(false);
+                cmUserModel.setIdentity(identity_data);
+            } else if(identity_data.id != cmUserModel.data.id){
+                cmLogger.info('cmPurlModel:handleIdentity:externUser')
             }
 
             return this;

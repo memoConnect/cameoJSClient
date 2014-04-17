@@ -8,7 +8,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
     'cmIdentityFactory', 
     'cmCrypt',
     'cmNotify',
-    'cmLogger'
+    'cmLogger',
     '$rootScope', 
     '$q', 
     '$location', 
@@ -121,6 +121,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         };
 
         this.doLogin = function(user, pass){
+            cmLogger.info('cmUserModel:doLogin');
+
             var deferred = $q.defer();
 
             cmAuth.requestToken(user, pass).then(
@@ -140,7 +142,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         };
 
         this.doLogout = function(goToLogin){
-            co
+            cmLogger.info('cmUserModel:doLogout');
+
             isAuth = false;
             this.removeToken();
             $rootScope.$broadcast('logout');
@@ -342,6 +345,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         };
 
         this.removeToken = function(){
+            cmLogger.info('cmUserModel:removeToken');
             cmAuth.removeToken();
         };
 
@@ -387,6 +391,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          * clear identity storage
          */
         function resetUser(){
+            cmLogger.info('cmUserModel:resetUser');
             self.data = angular.extend({}, dataModel);
         }
 
