@@ -14,8 +14,6 @@ angular.module('cmContacts').directive('cmContactType',[
                 icon = (type == 'external')  ? 'cm-address-book'     : icon
                 icon = (type == 'local')     ? 'cm-mobile'           : icon
 
-                console.log(type)
-
                 element.append(
                     angular.element('<i></i>')
                     .addClass('fa')

@@ -2,29 +2,12 @@ var config = require("./config-e2e-tests.js")
 var util = require("../lib/e2e/cmTestUtil.js")
 
 describe('Route: Contacts', function () {
-
-    var ptor;
-
-
-    ptor = protractor.getInstance();
-    ptor.ignoreSynchronization = true;
-    util.setPtorInstance(ptor)
-
-    
-
-
-    beforeEach(function () {
-
-    });
-
+    var ptor = util.getPtorInstance()
 
     it('should be found at "#/contacts".', function(){
         util.login()
-        
         util.get('/contacts')
-        ptor.getCurrentUrl().then(function(url){
-            expect(url).toMatch(/\#\/contacts$/)
-        })
+        util.expectCurrentUrl('#/contacts')
     })
 
     it('should have a header.', function(){
@@ -40,6 +23,4 @@ describe('Route: Contacts', function () {
     it('should have a contact list.', function(){
         expect($('cm-contacts-list').isPresent()).toBe(true)
     })
-
 })
-

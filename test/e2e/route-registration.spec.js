@@ -6,11 +6,7 @@ var password = "PWD_Z" + Date.now();
 
 describe('registration', function () {
 
-    var ptor;
-
-    ptor = protractor.getInstance();
-    ptor.ignoreSynchronization = true;
-    util.setPtorInstance(ptor)
+    var ptor = util.getPtorInstance()
 
     it('should contain 7 input fields with placeholders', function () {
 
@@ -110,7 +106,4 @@ describe('registration', function () {
         })
 
     })
-
-
-
 })

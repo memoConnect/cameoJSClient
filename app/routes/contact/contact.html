@@ -9,10 +9,10 @@
 <section ng-controller="ContactCtrl">
     <div cm-transparent-bg></div>
 
-    <div class="cm-contact-body">
+    <div class="cm-contact-body" ng-if="contact && identity">
         <div class="cm-contact-details" cm-rubber-space>
             <div cm-weight="1">
-                <cm-avatar cm-data="identity" ng-if="identity" cm-view="{{chooseAvatar?'unknown':''}}"></cm-avatar>
+                <cm-avatar cm-data="identity" cm-view="{{chooseAvatar?'unknown':''}}"></cm-avatar>
             </div>
             <div cm-weight="1">
                 <div class="cm-contact-widget">
@@ -22,7 +22,7 @@
                     <i class="fa cm-right"></i>
                 </div>
                 <div class="cm-contact-actions" cm-rubber-space>
-                    <i cm-weight="1" class="fa cm-rhino-positive"></i>
+                    <cm-contact-type cm-data="contact" cm-weight="1"></cm-contact-type>
                     <i cm-weight="1" class="fa cm-write with-white-bg"></i>
                 </div>
             </div>
