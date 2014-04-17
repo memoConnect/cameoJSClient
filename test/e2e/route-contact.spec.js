@@ -25,13 +25,14 @@ describe('Route: Contact', function () {
         })
     })
 
-    describe('open contact internal contact', function(){
+    describe('open internal contact', function(){
         it('click on first',function(){
             $('cm-contacts-list cm-contact-tag cm-avatar').click()
             util.expectCurrentUrl('#/contact/.*')
         })
 
         it('should be an internal cameo user', function(){
+            util.waitForElement('cm-contact-type')
             expect($('cm-contact-type').getAttribute('class')).toBe('internal')
         })
 
