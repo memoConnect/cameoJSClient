@@ -72,7 +72,7 @@ this.login = function(username, password){
 
     $("[data-qa='login-submit-btn']").click();
 
-    this.waitForPageLoad()
+    this.waitForPageLoad("/talks")
 }
 
 this.waitForModalClose = function () {
