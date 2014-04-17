@@ -100,7 +100,7 @@ var config = {
 //        'cmCron' : ['angular'],
         'cmIdentity': ['angular', 'cmAuth'],
         'cmObject': ['angular'],
-        'cmUserModel': ['angular', 'cmLocalStorage','cmIdentity'],
+        'cmUserModel': ['angular', 'cmLocalStorage','cmIdentity','cmLogger'],
         'cmApi': ['angular', 'cmLogger'],
         'cmProfile' : ['angular', 'cmApi', 'cmAuth'],
         'cmLogger' : ['angular'],

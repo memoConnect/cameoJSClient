@@ -6,9 +6,11 @@ angular.module('cmConversations').service('cmPurlModel',[
     'cmConversationFactory',
     'cmUserModel',
     'cmAuth',
+    'cmLogger',
     '$q',
     '$rootScope',
-    function(cmConversationsAdapter, cmConversationsModel, cmConversationFactory, cmUserModel, cmAuth, $q, $rootScope) {
+    '$route',
+    function(cmConversationsAdapter, cmConversationsModel, cmConversationFactory, cmUserModel, cmAuth, cmLogger, $q, $rootScope, $route) {
         var self = this;
 
         this.purls = [];
@@ -17,30 +19,43 @@ angular.module('cmConversations').service('cmPurlModel',[
             self.purls = [];
         });
 
-        function handleConversation(conversation_data){
+        this.handleConversation = function(conversation_data){
             var conversation = cmConversationFactory.create(conversation_data);
             cmConversationsModel.addConversation(conversation);
 
-            return conversation;
+            return conversation.id;
         }
 
         /**
          * @TODO add Function to cmUserModel to handle Guests and add Identities
          * @param identity
          */
-        function handleIdentity(identity_data){
-            if(identity_data.id != cmUserModel.data.id){
+        this.handleIdentity = function(identity_data){
+            var currentIdentity = cmUserModel.getIdentity();
+
+            if(identity_data.userType == 'external'){
+                cmLogger.debug('cmPurlModel:handleIdentity:externUser')
+                cmUserModel.doLogout(false);
+
                 cmUserModel.setIdentity(identity_data);
+
+            } else if(identity_data.id != cmUserModel.data.id){
+                cmLogger.debug('cmPurlModel:handleIdentity:internUser')
+                $route.reload();
             }
+
+            return this;
         }
 
         /**
          * @param token
          */
-        function handleToken(token){
+        this.handleToken = function(token){
             if(typeof token !== 'undefined'){
                 cmUserModel.storeToken(token);
             }
+
+            return this;
         }
 
         this.getPurl = function(id){
@@ -49,10 +64,11 @@ angular.module('cmConversations').service('cmPurlModel',[
             if(typeof id !== 'undefined'){
                 cmConversationsAdapter.getPurl(id).then(
                     function (data) {
-                        handleIdentity(data.identity);
-                        handleToken(data.token);
-
-                        deferred.resolve(handleConversation(data.conversation));
+//                        handleIdentity(data.identity);
+//                        handleToken(data.token);
+//
+//                        deferred.resolve(handleConversation(data.conversation));
+                        deferred.resolve(data);
                     },
                     function (response) {
                         deferred.reject(response);

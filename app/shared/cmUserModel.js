@@ -1,18 +1,19 @@
 'use strict';
 
-angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt', 'cmNotify'])
+angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt', 'cmNotify', 'cmLogger'])
 .service('cmUserModel',[
-
-    'cmAuth', 
+    'cmAuth',
     'cmLocalStorage', 
     'cmIdentityFactory', 
     'cmCrypt',
+    'cmObject',
     'cmNotify',
+    'cmLogger',
     '$rootScope', 
     '$q', 
-    '$location', 
-
-    function(cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmNotify,$rootScope, $q, $location){
+    '$location',
+    '$route',
+    function(cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmObject, cmNotify, cmLogger, $rootScope, $q, $location, $route){
         var self = this,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
@@ -33,6 +34,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             identity: {}
         }
 
+        cmObject.addEventHandlingTo(this)
+
         this.comesFromRegistration = false;
 
         this.init = function(identity_data){
@@ -46,6 +49,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
                     isAuth = true;
                     self.initStorage();
                     self.syncLocalKeys();
+
+                    self.trigger('init');
                 },
                 function(response){
                     if(typeof response == 'object' && response.status == 401){
@@ -83,6 +88,19 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             return deferred.promise;
         };
 
+        /**
+         * Returns current active Identity
+         * @returns {data.identity|*}
+         */
+        this.getIdentity = function(){
+            return this.data.identity;
+        }
+
+        this.setIdentity = function(identity_data){
+            cmLogger.debug('cmUserModel:setIdentity');
+            this.init(identity_data);
+        };
+
         this.data = angular.extend({}, dataModel);
 
         /**
@@ -107,10 +125,6 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             isAuth = true
         }
 
-        this.setIdentity = function(identity_data){
-            this.init(identity_data);
-        };
-
         this.isGuest = function(){
             if(this.data.userType == 'external'){
                 return true;
@@ -120,6 +134,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         };
 
         this.doLogin = function(user, pass){
+            cmLogger.debug('cmUserModel:doLogin');
+
             var deferred = $q.defer();
 
             cmAuth.requestToken(user, pass).then(
@@ -139,12 +155,15 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         };
 
         this.doLogout = function(goToLogin){
+            cmLogger.debug('cmUserModel:doLogout');
+
             isAuth = false;
             this.removeToken();
             $rootScope.$broadcast('logout');
 
             if(typeof goToLogin === 'undefined' || goToLogin !== false){
                 $location.path("/login");
+                $route.reload();
             }
         };
 
@@ -340,6 +359,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         };
 
         this.removeToken = function(){
+            cmLogger.debug('cmUserModel:removeToken');
             cmAuth.removeToken();
         };
 
@@ -356,7 +376,6 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          * @param value
          */
         this.storageSave = function(key, value){
-            console.log(isAuth)
             if(isAuth !== false && self.data.storage !== null){
                 self.data.storage.save(key, value);
             }
@@ -385,6 +404,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          * clear identity storage
          */
         function resetUser(){
+            cmLogger.debug('cmUserModel:resetUser');
             self.data = angular.extend({}, dataModel);
         }
 

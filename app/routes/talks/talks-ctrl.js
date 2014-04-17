@@ -17,15 +17,15 @@ define([
         'cmUtil',
         '$modal',
         '$location',
-        function($scope, $rootScope, cmUserModel, cmConversationsModel, cmUtil, $modal,$location) {
+        function($scope, $rootScope, cmUserModel, cmConversationsModel, cmUtil, $modal, $location) {
             $scope.loading = true;
             cmConversationsModel.on('finish:load',function(){
                 $scope.loading = false;
             });
 
-            cmConversationsModel.getConversations();
-
-            $scope.cmUtil = cmUtil;
+            if(cmUserModel.isAuth() !== false){
+                cmConversationsModel.getConversations();
+            }
 
             $scope.conversations = cmConversationsModel.conversations;
 
@@ -33,7 +33,9 @@ define([
              * load more Conversations
              */
             $scope.loadMore = function(){
-                cmConversationsModel.getConversations(cmConversationsModel.limit, cmConversationsModel.conversations.length);
+                if(cmUserModel.isAuth() !== false){
+                    cmConversationsModel.getConversations(cmConversationsModel.limit, cmConversationsModel.conversations.length);
+                }
             };
 
             /**

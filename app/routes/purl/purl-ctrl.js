@@ -1,6 +1,5 @@
 define([
     'app',
-    'cmLogger',
     'cmUtil',
     'ngload!pckUser',
     'ngload!pckConversations'
@@ -15,17 +14,22 @@ define([
         'cmPurlModel',
         'cmUserModel',
         'cmUtil',
-        'cmLogger',
-        function($scope, $routeParams, $location, $modal, cmPurlModel, cmUserModel, cmUtil, cmLogger){
+        function($scope, $routeParams, $location, $modal, cmPurlModel, cmUserModel, cmUtil){
             $scope.data = null;
             $scope.showConversation = false;
-            $scope.isModalVisible = false;
 
             if(cmUtil.checkKeyExists($routeParams,'idPurl') && cmUtil.validateString($routeParams.idPurl)){
 
                 cmPurlModel.getPurl($routeParams.idPurl).then(
                     function(data){
-                        $scope.conversationId  = data.id;
+                        // identity check internal || external user
+                        cmPurlModel.handleIdentity(data.identity);
+
+                        if(typeof data.token !== 'undefined'){
+                            cmPurlModel.handleToken(data.token)
+                        }
+
+                        $scope.conversationId = cmPurlModel.handleConversation(data.conversation);
                         $scope.showConversation = true;
                     },
                     function(response){
@@ -45,7 +49,6 @@ define([
             }
 
             $scope.showLogin = function () {
-                $scope.isModalVisible = true;
                 $scope.hideHeader();
 
                 var modalInstance = $modal.open({
@@ -53,25 +56,14 @@ define([
                     template: '<div cm-login></div>',
                     controller: function ($rootScope, $scope, $modalInstance) {
                         $rootScope.$on('cmLogin:success', function(){
-                            if($modalInstance != undefined){
-                                $modalInstance.close();
+//                            if($modalInstance != undefined){
+//                                $modalInstance.close();
                                 location.reload();
-                            }
+//                            }
                         })
                     }
                 });
-
-                modalInstance.result
-                    .then(
-                    function () {
-
-                    },
-                    function () {
-                        $scope.isModalVisible = false;
-                    }
-                );
             };
-
 
             $scope.hideHeader = function(){
                 angular.element(document.querySelector('header')).addClass('ng-hide');

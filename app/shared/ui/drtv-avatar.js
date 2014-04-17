@@ -13,24 +13,7 @@ angular.module('cmUi').directive('cmAvatar',[
         return {
             restrict : 'AE',
             link: function($scope, $element, $attrs){
-
-                // is unknown avatar for add reciepients or choose avatar
-                if($attrs.cmView == 'unknown'){
-                    $element.css({'background-image': 'url(' + avatarMocks.none +')'});
-                } else {
-                    // normal avatar from identity
-                    var identity = $scope.$eval($attrs.cmData);
-
-                    // directive has a undefined attribute
-                    if(identity == undefined){
-                        cmLogger.error('cmAvatar gets undefined indentity. Is promise still pending?');
-                        return false;
-                        // check if identity is with model
-                    } else if(identity['init'] == undefined){
-                        cmLogger.error('cmAvatar gets indentity without model');
-                        return false;
-                    }
-                }
+                var identity;
 
                 function refresh(){
                     // hide the complete avatar
@@ -48,6 +31,29 @@ angular.module('cmUi').directive('cmAvatar',[
                             $element.attr('title',identity.getDisplayName());
                         }
                     }
+                }
+
+                // is unknown avatar for add reciepients or choose avatar
+                if($attrs.cmView == 'unknown'){
+                    $element.css({'background-image': 'url(' + avatarMocks.none +')'});
+                } else {
+                    // normal avatar from identity
+                    identity = $scope.$eval($attrs.cmData);
+
+                    // directive has a undefined attribute
+                    if(identity == undefined){
+                        cmLogger.error('cmAvatar gets undefined indentity. Is promise still pending?');
+                        return false;
+                        // check if identity is with model
+                    } else if(identity['init'] == undefined){
+                        cmLogger.error('cmAvatar gets indentity without model');
+                        return false;
+                    }
+
+                    identity.on('init:finish', function(){
+                        cmLogger.debug('cmAvatar:IdentityTrigger:initFinish');
+                        refresh();
+                    });
                 }
 
                 refresh()

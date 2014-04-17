@@ -103,12 +103,7 @@ function(cmAuth, cmCrypt, cmObject, $q){
          * @param identity_data
          */
         this.init = function(identity_data){
-            //var deferred = $q.defer();
-
             if(typeof identity_data === 'object'){
-
-                //init:
-
                 this.id = identity_data.id;
                 this.displayName            = identity_data.displayName
                 this.userKey                = identity_data.userKey
@@ -126,7 +121,7 @@ function(cmAuth, cmCrypt, cmObject, $q){
                     self.addKey(publicKey_data)
                 })
 
-                //deferred.resolve();
+                this.trigger('init:finish');
 
             } else if(typeof identity_data === 'string'){
                 this.id = identity_data;
@@ -137,19 +132,15 @@ function(cmAuth, cmCrypt, cmObject, $q){
                         self.trigger('load', data)
                         if(typeof data =='string'){
                             cmLogger('cmAuth.getIdentity() should forward an object, got string instead. ')
-                           // deferred.reject()
-                        }else{                 
+                        }else{
                             self.init(data)    
-                           // deferred.resolve();
                         }
                         self.trigger('after-load', data)
                     }
                 )
-            } else {
-             //   deferred.reject();
             }
 
-            return this
+            return this;
         }
 
         this.init(identity_data);
