@@ -2,8 +2,10 @@
     "config": {
         "wwwUrl": "https://dev.cameo.io/app/"
     },
-    "testData": {
-        "accountName": "Z1395672127689",
-        "accountPassword": "PWD_Z1395672127689"
-    }
+    "testData": [
+        "loginUser1 = 'prickly_yonath'",
+        "passwordUser1 = 'password'",
+        "purlUser1 = '5FwynM6cti'",
+        "purlExtern = 'BS4PcRK3AP'"
+    ]
 }

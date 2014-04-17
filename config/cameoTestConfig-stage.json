@@ -2,8 +2,11 @@
     "config": {
         "wwwUrl": "https://stage.cameo.io/app/"
     },
-    "testData": {
-        "accountName": "BMeSfHXQ",
-        "accountPassword": "password"
-    }
+    "testData": [
+        "loginUser1 = 'tender_morse'",
+        "passwordUser1 = 'password'",
+        "purlUser1 = 'twOdhtRiRk'",
+        "purlExtern = 'QfehpTcMUF'"
+    ]
 }
+

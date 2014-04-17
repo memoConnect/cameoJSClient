@@ -490,8 +490,7 @@ module.exports = function (grunt) {
                 'options': {
                     'data': {
                         'currentWwwUrl': globalCameoTestConfig.config.wwwUrl,
-                        'accountName': globalCameoTestConfig.testData.accountName,
-                        'accountPassword': globalCameoTestConfig.testData.accountPassword
+                        'testData': "this." + globalCameoTestConfig.testData.join(";\nthis.") + ";"
                     }
                 },
                 'files': {
