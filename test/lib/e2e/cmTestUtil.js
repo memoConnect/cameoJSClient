@@ -71,8 +71,8 @@ this.logout = function(){
 this.login = function(username, password){
     this.logout()
     this.get('/login')
-    
 
+    $("body").sendKeys(protractor.Key.HOME)
     $("[data-qa='login-btn']").click();
 
     var user    = $("input[name=user]");
