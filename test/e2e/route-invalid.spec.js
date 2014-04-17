@@ -3,21 +3,11 @@ var util = require("../lib/e2e/cmTestUtil.js")
 
 describe('invalid route', function () {
 
-    var ptor;
-    ptor = protractor.getInstance();
-    ptor.ignoreSynchronization = true;
-    util.setPtorInstance(ptor)
+    var ptor = util.getPtorInstance()
 
     it("should go to login route", function() {
-
         util.logout()
         util.get("/foo")
-
-        ptor.getCurrentUrl().then(function(url){
-            expect(url).toMatch(/\#\/login$/)
-        })
-
+        util.expectCurrentUrl('#/login$')
     })
-
-
 })

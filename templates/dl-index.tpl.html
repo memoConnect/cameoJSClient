@@ -1,3 +1,52 @@
-Android <a href="/dl/<%= phonegapBaseFilename %>.apk"><%= phonegapBaseFilename %></a>
-iOS <a href="/dl/<%= phonegapBaseFilename %>.ipa"><%= phonegapBaseFilename %></a>
-WindowsPhone <a href="/dl/<%= phonegapBaseFilename %>.xap"><%= phonegapBaseFilename %></a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cameoNET App Center</title>
+
+    <link rel="stylesheet" href="../app/css/font-awesome.css">
+    <style>
+        body{font-size:2em;background:#000;color:#fff;font-family: "Helvetica Neue",Helvetica,Arial,sans-serif}
+        .logo{color:#02BED2;padding:0.2em 0.5em;font-size:3em}
+        a {color:#fff}
+        a:hover, a:focus {color:#02BED2}
+        ul{list-style:none}
+        li{display:block;margin:1em 0;line-height:1em}
+        li:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0}
+        li img{width:10%;float:left;margin-right:1em}
+        li div{padding:2em 0}
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <i class="fa cm-logo-c"></i><i class="fa cm-logo-a"></i><i class="fa cm-logo-m"></i><i class="fa cm-logo-e"></i><i class="fa cm-logo-o"></i><i class="fa cm-logo-net"></i>
+        App Center
+    </div>
+    <ul>
+        <li>
+            <img src="../app/gfx/dl/android-ci.png" />
+            <div>
+                Android<br />
+                <a href="/dl/<%= phonegapBaseFilename %>.apk"><%= phonegapBaseFilename %></a>
+            </div>
+        </li>
+        <li>
+            <img src="../app/gfx/dl/apple-ci.png" />
+            <div>
+                iOS<br/>
+                <a href="/dl/<%= phonegapBaseFilename %>.ipa"><%= phonegapBaseFilename %></a><br />
+            </div>
+        </li>
+        <li>
+            <img src="../app/gfx/dl/windows-ci.png" />
+            <div>
+                WindowsPhone<br />
+                <a href="/dl/<%= phonegapBaseFilename %>.xap"><%= phonegapBaseFilename %></a><br />
+            </div>
+        </li>
+    </ul>
+
+</body>
+</html>

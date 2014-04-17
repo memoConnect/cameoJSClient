@@ -9,17 +9,21 @@ this.setPtorInstance = function(newPtor) {
     ptor = newPtor
 }
 
+this.getPtorInstance = function(){
+    ptor = protractor.getInstance()
+    ptor.ignoreSynchronization = true
+//    util.setPtorInstance(ptor)
+    return ptor;
+}
+
 this.waitForPageLoad = function (expectedRoute) {
-
     ptor.wait(function () {
-
         return ptor.executeScript('return window != undefined && window._route != undefined').then(function (boolean) {
 
             if (boolean) {
-
                 // get current route
                 return ptor.executeScript('return window._route').then(function(route) {
-                    if(expectedRoute == undefined || route.path == expectedRoute) {
+                    if(expectedRoute == undefined || route.path.search(expectedRoute) != -1) {
                         return route.status == "success"
                     } else {
 //                        console.log("unexpected route:" + route.path)
@@ -28,9 +32,18 @@ this.waitForPageLoad = function (expectedRoute) {
             }
         })
 
+    }, config.routeTimeout, 'waitForPage '+expectedRoute+' timeout reached')
+}
 
-    }, config.routeTimeout, "timeout")
+this.waitForElement = function(selector){
+    // add some initial delay
+//    ptor.sleep(100)
 
+    ptor.wait(function () {
+        return $$(selector).then(function (elements) {
+            return elements.length > 0
+        })
+    }, config.waitForTimeout, 'waitForElement '+selector+' timeout is reached')
 }
 
 this.get = function(path) {
@@ -39,6 +52,11 @@ this.get = function(path) {
     this.waitForPageLoad()
 }
 
+this.expectCurrentUrl = function(match){
+    ptor.getCurrentUrl().then(function(url){
+        expect(url).toMatch(match)
+    })
+}
 
 this.logout = function(){
     this.get('')
@@ -65,7 +83,7 @@ this.login = function(username, password){
 
     $("[data-qa='login-submit-btn']").click();
 
-    this.waitForPageLoad()
+    this.waitForPageLoad("/talks")
 }
 
 this.waitForModalClose = function () {
@@ -79,7 +97,6 @@ this.waitForModalClose = function () {
 }
 
 this.waitForSpinner = function () {
-
     // add some initial delay
     ptor.sleep(100)
 
@@ -87,7 +104,7 @@ this.waitForSpinner = function () {
         return $$(".cm-spinner").then(function (elements) {
             return elements.length == 0
         })
-    }, config.routeTimeout, "timeout")
+    }, config.routeTimeout, 'waitForSpinner timeout reached')
 
 }
 

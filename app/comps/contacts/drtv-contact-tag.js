@@ -1,12 +1,11 @@
 'use strict';
 
 angular.module('cmContacts').directive('cmContactTag',[
-    '$location',
-    function ($location){
+    function (){
         return {
             restrict: 'AE',
             require: '^cmContactsList',
-            priority: 2,
+            priority: 2
         }
     }
 ]);

@@ -13,6 +13,7 @@ angular.module('cmUi').directive('cmLargeInput',[
                 element.wrap(outer_wrapper)
                 element.after(icon)
                 element.wrap(inner_wrapper)
+                element.attr('data-qa','input-search')
             }
         }
     }
