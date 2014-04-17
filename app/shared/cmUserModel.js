@@ -310,7 +310,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
                     cmAuth.savePublicKey({
                         name:    local_key.name, 
                         key:     local_key.getPublicKey(),
-                        keySize: 0, //@Todo                        
+                        keySize: 0 //@Todo
                     })
                     .then(function(data){
                         var key = new cmCrypt.Key()                        
