@@ -1,23 +1,23 @@
 'use strict';
 
-angular.module('cmUser').directive('cmUserRights', [
+angular.module('cmUi').directive('cmAnswerArea', [
     'cmUserModel',
     'cmEnv',
     function (cmUserModel, cmEnv) {
         return {
             restrict : 'AE',
             link: function(scope, element, attrs){
-                function removeElement(){
+                function addClass(){
                     if(cmUserModel.isGuest() !== false){
-                        element.remove();
+                        element.addClass('large');
                     }
                 }
 
                 cmUserModel.on('init',function(){
-                    removeElement();
+                    addClass();
                 })
 
-                removeElement();
+                addClass();
             }
         }
     }

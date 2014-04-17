@@ -2,18 +2,18 @@
 
 angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt', 'cmNotify', 'cmLogger'])
 .service('cmUserModel',[
-
-    'cmAuth', 
+    'cmAuth',
     'cmLocalStorage', 
     'cmIdentityFactory', 
     'cmCrypt',
+    'cmObject',
     'cmNotify',
     'cmLogger',
     '$rootScope', 
     '$q', 
-    '$location', 
-
-    function(cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmNotify, cmLogger, $rootScope, $q, $location){
+    '$location',
+    '$route',
+    function(cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmObject, cmNotify, cmLogger, $rootScope, $q, $location, $route){
         var self = this,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
@@ -34,6 +34,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             identity: {}
         }
 
+        cmObject.addEventHandlingTo(this)
+
         this.comesFromRegistration = false;
 
         this.init = function(identity_data){
@@ -47,6 +49,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
                     isAuth = true;
                     self.initStorage();
                     self.syncLocalKeys();
+
+                    self.trigger('init');
                 },
                 function(response){
                     if(typeof response == 'object' && response.status == 401){
@@ -84,6 +88,19 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             return deferred.promise;
         };
 
+        /**
+         * Returns current active Identity
+         * @returns {data.identity|*}
+         */
+        this.getIdentity = function(){
+            return this.data.identity;
+        }
+
+        this.setIdentity = function(identity_data){
+            cmLogger.debug('cmUserModel:setIdentity');
+            this.init(identity_data);
+        };
+
         this.data = angular.extend({}, dataModel);
 
         /**
@@ -107,10 +124,6 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         this.setAuth = function(){
             isAuth = true
         }
-
-        this.setIdentity = function(identity_data){
-            this.init(identity_data);
-        };
 
         this.isGuest = function(){
             if(this.data.userType == 'external'){
@@ -150,6 +163,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
 
             if(typeof goToLogin === 'undefined' || goToLogin !== false){
                 $location.path("/login");
+                $route.reload();
             }
         };
 
