@@ -128,7 +128,8 @@
             "MESSAGES": "Nachrichten"
         },
         "TEXT": {
-            "REQUEST_CAPTCHA": "Bitte ein (neues) Captcha senden."
+            "REQUEST_CAPTCHA": "Bitte ein (neues) Captcha senden.",
+            "ENCRYPTED" : "- verschlüsselt -"
         },
         "WARN": {
             "MESSAGE_EMPTY": "Das Textfeld ist leer.",
