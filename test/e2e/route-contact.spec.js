@@ -88,7 +88,7 @@ describe('Route: Contact', function () {
         it('search and click to detail',function(){
             $("[data-qa='input-search']").sendKeys('moeper')
 
-            expect($$('cm-contacts-list cm-contact-tag cm-avatar').count()).toBe(1)
+            expect($$('cm-contacts-list cm-contact-tag cm-avatar').count()).not.toBe(0)
         })
     })
 })
