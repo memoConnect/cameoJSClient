@@ -18,6 +18,7 @@ describe('Route: Contact', function () {
     })
 
     it('contacts should exists in list', function(){
+        util.waitForElement('cm-contact-tag');
         var tags = $$('cm-contacts-list cm-contact-tag')
         tags.count().then(function(count){
             expect(count).not.toEqual(0)
