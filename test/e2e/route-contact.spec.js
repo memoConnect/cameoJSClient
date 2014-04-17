@@ -12,10 +12,13 @@ describe('Route: Contact', function () {
     })
 
     it('should have a contact list.', function(){
+//        util.waitForSpinner();
+        util.waitForElement('cm-contacts-list');
         expect($('cm-contacts-list').isPresent()).toBe(true)
     })
 
     it('contacts should exists in list', function(){
+        util.waitForElement('cm-contact-tag');
         var tags = $$('cm-contacts-list cm-contact-tag')
         tags.count().then(function(count){
             expect(count).not.toEqual(0)

@@ -32,7 +32,18 @@ this.waitForPageLoad = function (expectedRoute) {
             }
         })
 
-    }, config.routeTimeout, "waitForPage timeout reached")
+    }, config.routeTimeout, 'waitForPage '+expectedRoute+' timeout reached')
+}
+
+this.waitForElement = function(selector){
+    // add some initial delay
+//    ptor.sleep(100)
+
+    ptor.wait(function () {
+        return $$(selector).then(function (elements) {
+            return elements.length > 0
+        })
+    }, config.waitForTimeout, 'waitForElement '+selector+' timeout is reached')
 }
 
 this.get = function(path) {
@@ -72,7 +83,7 @@ this.login = function(username, password){
 
     $("[data-qa='login-submit-btn']").click();
 
-    this.waitForPageLoad()
+    this.waitForPageLoad("/talks")
 }
 
 this.waitForModalClose = function () {
@@ -86,7 +97,6 @@ this.waitForModalClose = function () {
 }
 
 this.waitForSpinner = function () {
-
     // add some initial delay
     ptor.sleep(100)
 
@@ -94,7 +104,7 @@ this.waitForSpinner = function () {
         return $$(".cm-spinner").then(function (elements) {
             return elements.length == 0
         })
-    }, config.routeTimeout, "timeout")
+    }, config.routeTimeout, 'waitForSpinner timeout reached')
 
 }
 
