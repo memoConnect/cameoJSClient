@@ -80,8 +80,8 @@ describe('login screen', function () {
         var user = $("input[name=user]");
         var pw = $("input[name=pw]");
 
-        user.sendKeys(config.existingLoginName);
-        pw.sendKeys(config.existingPassword);
+        user.sendKeys(config.loginUser1);
+        pw.sendKeys(config.passwordUser1);
 
         $("[data-qa='login-submit-btn']").click();
 

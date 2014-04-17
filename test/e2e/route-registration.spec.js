@@ -58,7 +58,7 @@ describe('registration', function () {
 
     it('should display error if username exists', function () {
 
-        $("[data-qa='input-loginName']").sendKeys(config.existingLoginName)
+        $("[data-qa='input-loginName']").sendKeys(config.loginUser1)
 
         ptor.wait(function () {
             return $("[data-qa='register-info-username-exists']").isDisplayed()
