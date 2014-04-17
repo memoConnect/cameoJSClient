@@ -169,7 +169,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     }
                 }
 
-                message.decrypt(this.passphrase);
+                //message.decrypt(this.passphrase);
 
                 return this
             };
@@ -294,8 +294,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     result = false
                 }
 
-                console.log('check, passphrase: "'+this.passphrase+'"')
-
                 return result
             }
 
@@ -330,7 +328,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 if(this.keyTransmission == 'symmetric'){
                     self.encryptedPassphraseList = [{keyId: '_passwd', encryptedPassphrase: cmCrypt.encryptWithShortKey(self.password, self.passphrase)}]
-                    console.log('gleich: '+ cmCrypt.decrypt(self.password, self.encryptedPassphraseList[0].encryptedPassphrase))
                 }
 
                 return this
@@ -360,8 +357,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
 
             this.setPassphrase = function (passphrase) {
-                this.passphrase = passphrase
-                if(passphrase == undefined) self.passphrase = self.passphrase || cmCrypt.generatePassphrase()
+                if(passphrase == undefined){
+                    this.passphrase = this.passphrase || cmCrypt.generatePassphrase()
+                }else{
+                    this.passphrase = passphrase
+                }
                 return this;
             }
 
@@ -370,7 +370,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 var success = true
                 if (this.passphrase) {
                     this.messages.forEach(function (message) {
-                        success = success && message.decrypt(self.passphrase); //@TODO
+                        if(typeof self.passphrase !== "undefined"){
+                            success = success && message.decrypt(self.passphrase); //@TODO
+                        } else {
+                            success = false
+                        }
                     })
                 }
                 return success

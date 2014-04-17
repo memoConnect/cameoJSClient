@@ -49,7 +49,7 @@ angular.module('cmConversations').service('cmConversationsModel', [
                     }
 
                     if(checkConversation !== null){
-                        //                checkConversation.update();
+                        //checkConversation.update();
                     } else {
                         if(typeof firstItem !== 'undefined' && firstItem !== false){
                             this.conversations.unshift(conversation);

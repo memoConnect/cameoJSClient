@@ -14,7 +14,7 @@ angular.module('cmConversations').directive('cmMessage', [
 
                 $scope.message = $scope.$eval($attrs.cmData) || $scope.$eval($attrs.cmMessage);
 
-                $scope.message.decrypt($scope.passphrase);
+                //$scope.message.decrypt($scope.passphrase);
                 $scope.textOnly = !!$scope.$eval($attrs.textOnly)
 
 

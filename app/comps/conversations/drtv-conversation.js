@@ -33,14 +33,16 @@ angular.module('cmConversations').directive('cmConversation', [
                         recipients_missing  = $scope.conversation.recipients.length <= 0 //@todo mocked
 
                     if(!message_empty && passphrase_valid && !recipients_missing){
-                        if($scope.conversation.id == ''){
+                        if($scope.conversation.id == ''){                            
                             $scope.conversation.save().then(
                                 function(){
                                     $scope.sendMessage();
                                 }
                             );
                         } else {
-                            cmMessageFactory.create( {body: $scope.my_message_text} )
+                            cmMessageFactory.create()
+                                .setText($scope.my_message_text)
+                                .setPublicData($scope.conversation.passphrase ? [] : ['text'])                                
                                 .encrypt($scope.conversation.passphrase)
                                 .addTo($scope.conversation)
                                 .sendTo($scope.conversation.id)
@@ -52,6 +54,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                         cmConversationsModel.addConversation($scope.conversation, true);
                                         $location.path('/conversation/' + $scope.conversation.id);
                                     }
+                                    
                                 })
                         }
                     }
