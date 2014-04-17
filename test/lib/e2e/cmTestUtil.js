@@ -37,7 +37,7 @@ this.waitForPageLoad = function (expectedRoute) {
 
 this.waitForElement = function(selector){
     // add some initial delay
-//    ptor.sleep(100)
+    ptor.sleep(100)
 
     ptor.wait(function () {
         return $$(selector).then(function (elements) {
