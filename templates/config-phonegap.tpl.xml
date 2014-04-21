@@ -20,8 +20,6 @@
     <preference name="ios-statusbarstyle" value="default" />
     <preference name="detect-data-types" value="true" />
     <preference name="exit-on-suspend" value="true" />
-    <preference name="show-splash-screen-spinner" value="false" />
-    <preference name="auto-hide-splash-screen" value="true" />
     <preference name="EnableViewportScale" value="true" />
     <preference name="MediaPlaybackRequiresUserAction" value="true" />
     <preference name="AllowInlineMediaPlayback" value="true" />
@@ -39,12 +37,14 @@
     <preference name="BackgroundColor" value="0x02BED2"/>
     <preference name="KeepRunning" value="true"/>
     <preference name="DisallowOverscroll" value="true"/>
-    <preference name="LoadingDialog" value=""/>
-    <preference name="LoadUrlTimeoutValue" value="20000" />
-    <preference name="disable-cursor" value="true" />
 
-    <preference name="SplashScreenDelay" value="5000" />
-    <preference name="splashscreen" value="res/screen/splash.png" />
+    <!--<preference name="LoadingDialog" value=" "/>-->
+    <!--<preference name="show-splash-screen-spinner" value="false" />-->
+    <preference name="auto-hide-splash-screen" value="true" />
+
+    <preference name="LoadUrlTimeoutValue" value="5000" />
+    <preference name="disable-cursor" value="true" />
+    <preference name="SplashScreenDelay" value="1000" />
 
     <gap:platform name="android" />
     <gap:platform name="winphone" />
@@ -58,18 +58,25 @@
     <icon src="res/icon/android/icon-48-mdpi.png" gap:platform="android" gap:density="mdpi" />
     <icon src="res/icon/android/icon-72-hdpi.png" gap:platform="android" gap:density="hdpi" />
     <icon src="res/icon/android/icon-96-xhdpi.png" gap:platform="android" gap:density="xhdpi" />
-    <icon src="res/icon/default.png" />
 
 	<icon src="res/icon/default.png" gap:platform="winphone" />
 	<icon src="res/icon/default.png" gap:platform="winphone" gap:role="background" />
 
+    <icon src="res/icon/default.png" />
+
 	<!-- Splash -->
-    <gap:splash src="res/screen/android/splash.9.png" gap:platform="android" gap:density="ldpi" />
-    <gap:splash src="res/screen/android/splash.9.png" gap:platform="android" gap:density="mdpi" />
-    <gap:splash src="res/screen/android/splash.9.png" gap:platform="android" gap:density="hdpi" />
-    <gap:splash src="res/screen/android/splash.9.png" gap:platform="android" gap:density="xhdpi" />
+    <gap:splash src="res/screen/android/drawable-port-ldpi/screen.png" gap:platform="android" gap:density="ldpi" />
+    <gap:splash src="res/screen/android/drawable-port-mdpi/screen.png" gap:platform="android" gap:density="mdpi" />
+    <gap:splash src="res/screen/android/drawable-port-hdpi/screen.png" gap:platform="android" gap:density="hdpi" />
+    <gap:splash src="res/screen/android/drawable-port-xhdpi/screen.png" gap:platform="android" gap:density="xhdpi" />
+
+    <gap:splash src="res/screen/ios/Default~iphone.png" gap:platform="ios" width="320" height="480" />
+    <gap:splash src="res/screen/ios/Default@2x~iphone.png" gap:platform="ios" width="640" height="960" />
+    <gap:splash src="res/screen/ios/Default-568h@2x~iphone.png" gap:platform="ios" width="640" height="1136" />
+    <gap:splash src="res/screen/ios/Default-Portrait~ipad.png" gap:platform="ios" width="768" height="1024 " />
+    <gap:splash src="res/screen/ios/Default-Portrait@2x~ipad.png" gap:platform="ios" width="1536" height="2048" />
+
+    <gap:splash src="res/screen/windows-phone/screen-portrait.png" gap:platform="winphone" />
+
     <gap:splash src="res/screen/splash.png" />
-
-	<gap:splash src="res/screen/splash.jpg" gap:platform="winphone" />
-
 </widget>
