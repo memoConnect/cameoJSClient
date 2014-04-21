@@ -30,12 +30,14 @@ angular.module('cmObject', [])
             return(this)
         }
 
+        /*
+
         this.addChainHandlingTo = function(obj){
             obj._chains = {}
 
             obj.$chain = function(name){
                 name  = name || 'default'
-                
+
                 obj._chains[name] = {}
                 obj._chains[name].deferred = $q.defer()
 
@@ -59,5 +61,7 @@ angular.module('cmObject', [])
                 return obj._chains[name]
             }
         }
+        
+        */
     }
 ])
