@@ -280,7 +280,7 @@ module.exports = function (grunt) {
             }
         },
         copy: {
-            'phonegap-resources': {
+            'resources-phonegap': {
                 files: [
                     {
                         expand: true,
@@ -292,7 +292,7 @@ module.exports = function (grunt) {
                     // copy all icon and splashs to /www/res
                     {
                         expand: true,
-                        cwd: 'phonegap-res/res/',
+                        cwd: 'resource/phonegap/res/',
                         src: ['**'],
                         dest: 'phonegap-build/www/res/'
                     },
@@ -300,13 +300,13 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         flatten: true,
-                        src: 'phonegap-res/*.js',
+                        src: 'resource/phonegap/*.js',
                         dest: 'phonegap-build/www/'
                     }
 
                 ]
             },
-            'local-phonegap-resources': {
+            'local-resources-phonegap': {
                 files: [
                     {
                         expand: true,
@@ -318,7 +318,7 @@ module.exports = function (grunt) {
                     // copy all icon and splashs to /www/res
                     {
                         expand: true,
-                        cwd: 'phonegap-res/res/',
+                        cwd: 'resource/phonegap/res/',
                         src: ['**'],
                         dest: 'phonegap-build/www/res/'
                     },
@@ -326,7 +326,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         flatten: true,
-                        src: 'phonegap-res/*.js',
+                        src: 'resource/phonegap/*.js',
                         dest: 'phonegap-build/www/'
                     }
 
@@ -364,6 +364,17 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'phonegap-target',
                         src: ['*', '!*.zip'],
+                        dest: 'dist/dl/'
+                    }
+                ]
+            },
+            'resource-dl': {
+                files: [
+                    {
+                        expand: true,
+                        flatten: false,
+                        cwd: 'resource/download/',
+                        src: ['**'],
                         dest: 'dist/dl/'
                     }
                 ]
@@ -412,14 +423,14 @@ module.exports = function (grunt) {
             // https://www.npmjs.org/package/grunt-phonegap
             config: {
                 root: 'dist/app',
-                config: 'phonegap-res/config.xml',
+                config: 'resource/phonegap/config.xml',
                 path: 'phonegap-build',
                 plugins: [
-//                    './phonegap-res/plugins/org.apache.cordova.console',
-//                    './phonegap-res/plugins/org.apache.cordova.device',
-//                    './phonegap-res/plugins/org.apache.cordova.network-information',
-                    './phonegap-res/plugins/org.apache.cordova.splashscreen',
-//                    './phonegap-res/plugins/org.apache.cordova.contacts'
+//                    './resource/phonegap/plugins/org.apache.cordova.console',
+//                    './resource/phonegap/plugins/org.apache.cordova.device',
+//                    './resource/phonegap/plugins/org.apache.cordova.network-information',
+                    './resource/phonegap/plugins/org.apache.cordova.splashscreen',
+//                    './resource/phonegap/plugins/org.apache.cordova.contacts'
                 ],
                 platforms: ['android'],
                 maxBuffer: 200, // You may need to raise this for iOS.
@@ -444,13 +455,13 @@ module.exports = function (grunt) {
                     return(19)
                 },
 
-                // relative to /phonegap-res
+                // relative to /resource/phonegap
                 icons: {
                     android: {
-                        ldpi: 'phonegap-res/res/icon/android/icon-36-ldpi.png',
-                        mdpi: 'phonegap-res/res/icon/android/icon-48-mdpi.png',
-                        hdpi: 'phonegap-res/res/icon/android/icon-72-hdpi.png',
-                        xhdpi: 'phonegap-res/res/icon/android/icon-96-xhdpi.png'
+                        ldpi: 'resource/phonegap/res/icon/android/icon-36-ldpi.png',
+                        mdpi: 'resource/phonegap/res/icon/android/icon-48-mdpi.png',
+                        hdpi: 'resource/phonegap/res/icon/android/icon-72-hdpi.png',
+                        xhdpi: 'resource/phonegap/res/icon/android/icon-96-xhdpi.png'
                     }
                 },
 
@@ -458,11 +469,11 @@ module.exports = function (grunt) {
                 // Only works for Android and IOS
                 screens: {
                     android: {
-                        default: 'phonegap-res/res/screen/android/drawable-port-mdpi/screen.png',
-                        ldpi: 'phonegap-res/res/screen/android/drawable-port-ldpi/screen.png',
-                        mdpi: 'phonegap-res/res/screen/android/drawable-port-mdpi/screen.png',
-                        hdpi: 'phonegap-res/res/screen/android/drawable-port-hdpi/screen.png',
-                        xhdpi: 'phonegap-res/res/screen/android/drawable-port-xhdpi/screen.png'
+                        default: 'resource/phonegap/res/screen/android/drawable-port-mdpi/screen.png',
+                        ldpi: 'resource/phonegap/res/screen/android/drawable-port-ldpi/screen.png',
+                        mdpi: 'resource/phonegap/res/screen/android/drawable-port-mdpi/screen.png',
+                        hdpi: 'resource/phonegap/res/screen/android/drawable-port-hdpi/screen.png',
+                        xhdpi: 'resource/phonegap/res/screen/android/drawable-port-xhdpi/screen.png'
                     }
                 }
             }
@@ -571,7 +582,7 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'phonegap-res/config.xml': ['templates/config-phonegap.tpl.xml']
+                    'resource/phonegap/config.xml': ['templates/config-phonegap.tpl.xml']
                 }
             },
             'config-protractor': {
@@ -587,7 +598,7 @@ module.exports = function (grunt) {
             }
         },
         // create zip and upload to build server
-        "phonegap-build": {
+        'phonegap-build': {
             debug: {
                 options: {
                     archive: "phonegap-target/cameoNetApp.zip",
@@ -618,8 +629,8 @@ module.exports = function (grunt) {
         // splashscrenn for apps
         phonegapsplash: {
             build: {
-                src: 'phonegap-res/res/splash-canevas.png',
-                dest: 'phonegap-res/res',
+                src: 'resource/phonegap/res/splash-canevas.png',
+                dest: 'resource/phonegap/res',
                 options: {
                     layouts: ['portrait'],
                     profiles: ['android','ios','windows-phone']
@@ -675,7 +686,7 @@ module.exports = function (grunt) {
         'template:local-config-phonegap',
         'phonegap:build',
         'template:local-index-phonegap',
-        'copy:local-phonegap-resources'
+        'copy:local-resources-phonegap'
         //'phonegap:run'
     ]);
     // phonegap to build server
@@ -684,10 +695,11 @@ module.exports = function (grunt) {
         'clean:phonegap-build',
         'deploy',
         //   'phonegap:build',
-        'copy:phonegap-resources',
+        'copy:resources-phonegap',
         'template:index-phonegap',
         'template:config-phonegap',
         'template:index-dl',
+        'copy:resources-dl',
         'compress',
         'phonegap-build:debug',
         'copy:phonegap-target'
