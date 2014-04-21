@@ -368,7 +368,7 @@ module.exports = function (grunt) {
                     }
                 ]
             },
-            'resource-dl': {
+            'resources-dl': {
                 files: [
                     {
                         expand: true,
