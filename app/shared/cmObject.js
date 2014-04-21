@@ -2,6 +2,9 @@
 
 angular.module('cmObject', [])
 .service('cmObject', [
+
+    '$q',
+
     function(){
         var self = this
 
@@ -25,6 +28,36 @@ angular.module('cmObject', [])
             }
 
             return(this)
+        }
+
+        this.addChainHandlingTo = function(obj){
+            obj._chains = {}
+
+            obj.$chain = function(name){
+                name  = name || 'default'
+                
+                obj._chains[name] = {}
+                obj._chains[name].deferred = $q.defer()
+
+                for(var key in obj){
+
+                    if(typeof obj[key] == 'function'){
+
+                        obj._chains[name][key] = function(){
+                            var args = Array.prototype.slice.call(arguments, 0)
+
+                            obj._chains[name].deferred
+                            .then(function(result){
+                                return obj[key].apply(obj, args.length > 0 ? args, result)                                 
+                            })
+                            return obj._chains[name]
+                        }
+
+                    } 
+                }
+
+                return obj._chains[name]
+            }
         }
     }
 ])
