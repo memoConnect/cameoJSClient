@@ -34,30 +34,41 @@ angular.module('cmObject', [])
         this.addChainHandlingTo = function(obj){
             obj._chains = {}
 
-
-            obj.$chain = function(name){
-                name  = name || 'default'
-
-                obj._chains[name] = {}
-                obj._chains[name].deferred = $q.defer()
-
-                obj._chains[name].deferred.resolve()
+            function Chain(obj){
+                var deferred = $q.defer()
+                    self     = deferred.promise
 
                 for(var key in obj){
-
+                    
                     if(typeof obj[key] == 'function'){
-                        obj._chains[name][key] = function(){
+                        var function_name = key
+                        self[function_name] = function(){
+                            console.log(function_name)
                             var args = Array.prototype.slice.call(arguments, 0)
 
-                            obj._chains[name].deferred.promise
-                            .then(function(result){
-                                return obj[key].apply(obj, args.length > 0 ? args : result)                                 
+                            self.then(function(result){                                
+                                return obj[function_name].apply(obj, args.length > 0 ? args : result)                                 
                             })
-                            return obj._chains[name]
+
+                            return self
                         }
 
                     } 
                 }
+
+                deferred.resolve()
+
+
+
+                return self
+            }
+
+
+            obj.$chain = function(name){
+                name  = name || 'default'
+
+                obj._chains[name] = new Chain(obj)
+                
                 return obj._chains[name]
             }
         }

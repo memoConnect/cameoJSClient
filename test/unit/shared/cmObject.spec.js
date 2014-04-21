@@ -65,7 +65,7 @@ describe('cmObject', function(){
             cmObject.addEventHandlingTo(myObject)
 
             myObject.function_1 = function(){
-                console.log('ding')
+                console.log('deng')
                 var deferred = $q.defer()
 
                 this.on('step_1', function(){
@@ -75,8 +75,8 @@ describe('cmObject', function(){
                 return deferred.promise
             }
 
-
             myObject.function_2 = function(input){
+                                console.log('dang')
                 var deferred = $q.defer()
 
                 this.x = input
@@ -104,15 +104,27 @@ describe('cmObject', function(){
                 return deferred.promise
             }
 
-            console.log(
-            myObject.$chain()
-            .function_1()
-            //.function_2()
-            //.function_3()
-            //.function_4()
-            )
+            var done = false
 
-            $rootScope.$apply()
+            runs(function(){                
+                myObject.$chain()
+                .function_1()
+                .function_2()
+                //.function_3()
+                //.function_4()                
+                .then(function(){
+                    console.log('dong')
+                    done = true
+                })
+
+                $rootScope.$apply()
+            })
+
+            
+            waitsFor(function(){
+                return done
+            }, 'chain to resolve.', 500)
+
 
 
             console.log('x: '+myObject.x)
