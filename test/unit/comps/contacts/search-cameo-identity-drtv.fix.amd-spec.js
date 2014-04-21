@@ -4,10 +4,8 @@ xdescribe('Directive cmSearchCameoIdentity', function () {
     var $scope, directive, promise, $ModelContacts;
 
     beforeEach(module('cmContacts'))
-
-    beforeEach(inject(function ($rootScope, $compile, $templateCache, $q) {
-        $templateCache.put('comps/contacts/search-cameo-identity.html', window.__html__['app/comps/contacts/search-cameo-identity.html']);
-
+    beforeEach(module('comps/contacts/search-cameo-identity.html'))
+    beforeEach(inject(function ($rootScope, $compile, $q) {
         directive = angular.element('<div cm-search-cameo-identity></div>')
         $compile(directive)($rootScope.$new());
         $rootScope.$digest()

@@ -17,15 +17,15 @@ define([
         'cmUtil',
         '$modal',
         '$location',
-        function($scope, $rootScope, cmUserModel, cmConversationsModel, cmUtil, $modal,$location) {
+        function($scope, $rootScope, cmUserModel, cmConversationsModel, cmUtil, $modal, $location) {
             $scope.loading = true;
             cmConversationsModel.on('finish:load',function(){
                 $scope.loading = false;
             });
 
-            cmConversationsModel.getConversations();
-
-            $scope.cmUtil = cmUtil;
+            if(cmUserModel.isAuth() !== false){
+                cmConversationsModel.getConversations();
+            }
 
             $scope.conversations = cmConversationsModel.conversations;
 
@@ -33,7 +33,9 @@ define([
              * load more Conversations
              */
             $scope.loadMore = function(){
-                cmConversationsModel.getConversations(cmConversationsModel.limit, cmConversationsModel.conversations.length);
+                if(cmUserModel.isAuth() !== false){
+                    cmConversationsModel.getConversations(cmConversationsModel.limit, cmConversationsModel.conversations.length);
+                }
             };
 
             /**
@@ -56,7 +58,7 @@ define([
                 cmUserModel.comesFromRegistration = false;
 
                 var modalInstance = $modal.open({
-                    templateUrl: 'comps/user/welcome.html',
+                    templateUrl: 'comps/user/modal-welcome.html',
                     controller: function ($rootScope, $scope, $modalInstance) {
 
                     }
@@ -77,6 +79,11 @@ define([
                 }
 
                 return false;
+            }
+
+            $scope.createNewConversation = function(){
+                delete($rootScope.pendingConversation);
+                $location.path('/conversation/')
             }
         }
     ]);

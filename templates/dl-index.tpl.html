@@ -1,3 +1,59 @@
-Android <a href="/dl/<%= phonegapBaseFilename %>.apk"><%= phonegapBaseFilename %></a>
-iOS <a href="/dl/<%= phonegapBaseFilename %>.ipa"><%= phonegapBaseFilename %></a>
-WindowsPhone <a href="/dl/<%= phonegapBaseFilename %>.xap"><%= phonegapBaseFilename %></a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cameoNET App Center</title>
+
+    <link rel="stylesheet" href="../app/css/font-awesome.css">
+    <style>
+        body{font-size:12px;background:#000;color:#fff;font-family: "Helvetica Neue",Helvetica,Arial,sans-serif}
+        .logo{color:#02BED2;padding:0.2em 0.5em;font-size:40px;white-space:nowrap}
+        a {color:#fff}
+        a:hover, a:focus {color:#02BED2}
+        ul{list-style:none}
+        li{display:block;margin:10px 0}
+        li:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0}
+        li .image{float:left;margin-right:10px}
+        li .image img{width:50px}
+        li div{padding:5px 0}
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <i class="fa cm-logo-c"></i><i class="fa cm-logo-a"></i><i class="fa cm-logo-m"></i><i class="fa cm-logo-e"></i><i class="fa cm-logo-o"></i><i class="fa cm-logo-net"></i><br />
+        App Center
+    </div>
+    <ul>
+        <li>
+            <a href="/dl/<%= phonegapBaseFilename %>.apk" class="image">
+                <img src="../app/gfx/dl/android-ci.png" />
+            </a>
+            <div>
+                Android<br />
+                <a href="/dl/<%= phonegapBaseFilename %>.apk"><%= phonegapBaseFilename %></a>
+            </div>
+        </li>
+        <li>
+            <a href="/dl/<%= phonegapBaseFilename %>.ipa" class="image">
+                <img src="../app/gfx/dl/apple-ci.png" />
+            </a>
+            <div>
+                iOS<br/>
+                <a href="/dl/<%= phonegapBaseFilename %>.ipa"><%= phonegapBaseFilename %></a><br />
+            </div>
+        </li>
+        <li>
+            <a href="/dl/<%= phonegapBaseFilename %>.xap" class="image">
+                <img src="../app/gfx/dl/windows-ci.png" />
+            </a>
+            <div>
+                WindowsPhone<br />
+                <a href="/dl/<%= phonegapBaseFilename %>.xap"><%= phonegapBaseFilename %></a><br />
+            </div>
+        </li>
+    </ul>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<div class="control">
+    <div cm-transparent-bg ng-show="bodyVisible" ng-click="handle()"></div>
+
+    <div ng-show="bodyVisible" class="body">
+
+        <div class="cm-form-group" ng-show="isNew">
+            <div class="cm-form-control with-inputter">
+                <input type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" cm-adaptive-change />
+            </div>
+        </div>
+
+        <div class="body-group">
+            <div class="recipients-list">
+                <cm-avatar cm-data="recipient" cm-with-name="true" cm-view="hide-owner" ng-repeat="recipient in conversation.recipients"></cm-avatar>
+
+                <div ng-click ="manageRecipients()" ng-if="conversation.recipients.length == 1" class="add-recipients" cm-user-rights>
+                    <cm-avatar cm-view="unknown"></cm-avatar>
+                    {{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS'|cmTranslate}}
+                    <cm-edge><i class="fa cm-edge-add"></i></cm-edge>
+                </div>
+
+                <div ng-click = "manageRecipients()" ng-if="conversation.recipients.length > 1" class="add-recipients" cm-user-rights>
+                    <cm-edge ><i class="fa cm-edge-add"></i></cm-edge>
+                </div>
+            </div>
+        </div>
+
+        <div class="body-group">
+            <div class="safety-levels" cm-rubber-space>
+                <div cm-weight="3"></div>
+                <div cm-weight="2">
+                    <div class="cm-safety-level level-safer" ng-class="{active:(safetyLevel=='safer')}" ng-click="setLevel('safer')">
+                        <i class="fa cm-lock"></i><i class="fa cm-lock"></i>
+                    </div>
+                </div>
+                <div cm-weight="1"></div>
+                <div cm-weight="2">
+                    <div class="cm-safety-level level-safe" ng-class="{active:(safetyLevel=='safe')}" ng-click="setLevel('safe')">
+                        <i class="fa cm-lock"></i>
+                    </div>
+                </div>
+                <div cm-weight="1"></div>
+                <div cm-weight="2">
+                    <div class="cm-safety-level level-unsafe" ng-class="{active:(safetyLevel=='unsafe')}" ng-click="setLevel('unsafe')">
+                        <i class="fa cm-unlock"></i>
+                    </div>
+                </div>
+                <div cm-weight="3"></div>
+            </div>
+            <div class="cm-center">
+                <i class="fa cm-info"></i>
+                {{'CONVERSATION.PLACEHOLDER.INFO'|cmTranslate}}
+            </div>
+
+            <div ng-if="safetyLevel =='safe'">
+                <div class="cm-form-group" >
+                    <div class="cm-form-control with-inputter">
+                        <input type="text" ng-model="conversation.password" placeholder="{{ 'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change/>
+                    </div>
+                </div>
+                <div style="text-align:center; cursor:pointer" ng-click="conversation.decryptPassphrase(); conversation.decrypt()">
+                    <i class="fa cm-key fa-2x"></i>
+                </div>
+            </div>
+            <div style="text-align:center; cursor:pointer">
+                <a href="#/settings">
+                    {{'CONVERSATION.LABEL.KEY_GENERATION'}}
+                </a>
+            </div>
+        </div>
+
+
+        <button ng-click="handle()" class="cm-btn" ng-if="!isNew">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
+        <button ng-click="handle()" class="cm-btn" ng-if="isNew">{{'CONVERSATION.CONTROL.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
+    </div>
+
+    <div class="cm-bar" cm-rubber-space ng-click="handle()">
+        <div cm-weight="1" class="grip-left">
+            <i class="fa cm-grip"></i>
+        </div>
+        <div cm-weight="8" class="cm-bar-infos">
+            {{conversation.subject||'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}
+            <cm-safety-level level="conversation.getSafetyLevel()"></cm-safety-level>
+            <cm-recipient-counter>{{conversation.recipients.length||0}}</cm-recipient-counter>
+        </div>
+        <div cm-weight="1"></div>
+    </div>
+</div>
+
+<!--
+<cm-overlay id="add-recipients">
+    <div ng-click="$emit('cmOverlay:hide', 'add-recipients')">
+        <i class="fa cm-close fa-2x pull-right"></i>
+        <br />
+        <div class="clearfix"></div>
+    </div>
+    <cm-contacts-list contacts-as="contact">
+        <cm-contact-tag cm-data="contact" ng-click="selectContact(contact.identity); selected = true">
+            <span class="separator"></span>
+            <i class="fa fa-3x" ng-class="{'cm-checkbox': !selected, 'cm-checkbox-right': selected}" ng-click="editContact(contact.identity.id)"></i>
+        </cm-contact-tag>
+    </cm-contacts-list>
+</cm-overlay>
+-->

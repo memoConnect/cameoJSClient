@@ -137,6 +137,68 @@ module.exports = function (grunt) {
     })();
 
 
+
+    var concatCmTemplatesFound = [];
+
+    var concatConvertCmFiles = function(src, filepath){
+        // templates to template cache
+        if(filepath.search(/.*\.html/g) != -1){
+            var lines = src
+                .replace(/(\r\n|\n|\r|\t)/gm,'')// clear system signs
+                .replace(/\s{2,100}(<)/gm,'<')// clear whitespaces before html tag
+                .replace(/\s{2,100}/gm,' ')// clear whitespaces on line
+                .replace(/(')/gm,"\\'");// uncomment single quotes,
+            filepath = filepath.replace('app/','');
+            // add to template array for module schmusi
+            concatCmTemplatesFound.push(filepath);
+
+            return  "angular.module('"+filepath+"', []).run([\n" +
+                "'$templateCache', function($templateCache) {\n"+
+                "$templateCache.put('"+filepath+"'," +
+                "\n'"+lines+"'" +
+                ");\n"+
+                "}]);";
+        // module banger
+        } else if(filepath.search(/.*\/module-.*/g) != -1) {
+            // add founded templates to package module
+            if(concatCmTemplatesFound.length > 0) {
+                var templateNames = "'"+concatCmTemplatesFound.join("','")+"'";
+                concatCmTemplatesFound = [];
+                return src
+                    .replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1')
+                    .replace(/\]\)/g, ','+templateNames+'])')
+                    .replace(/(\;)$/g, '')
+            } else {
+                return src
+                    .replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1')
+                    .replace(/(\;)$/g, '')
+            }
+        // clear scripts use_strict, clear also angular.module(..) and last ;
+        } else {
+            return src
+                .replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1')
+                .replace(/(angular\.module\(.*\))/g, '')
+                .replace(/(\;)$/g, '')
+        }
+    };
+
+    var concatCreateCmPackages = function(packagesObject){
+        var packages = {},
+            packagesObject = packagesObject||{};
+
+        Object.keys(packagesObject).forEach(function(packageName){
+            var packagePath = packagesObject[packageName];
+
+            packages[packagePath+'/package.js'] = [
+                packagePath+'/*.html', // at last all templates
+                packagePath+'/module-'+packageName+'.js', // at first module
+                packagePath+'/!(module-'+packageName+'|package)*.js' // all directives / services / factorys etc
+            ];
+        });
+
+        return packages;
+    };
+
     // write config
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -150,8 +212,22 @@ module.exports = function (grunt) {
                 dest: 'app/js/controller/built.raw.js'
             },
             less: {
-                src: ['app/less/base.less', 'app/less/bootstrap.less', 'app/less/!(basebootstrap).less'],
+                src: ['app/less/base.less', 'app/less/bootstrap.less', 'app/less/!(base|bootstrap).less'],
                 dest: 'app/css/app.less'
+            },
+            packages: {
+                options: {
+                    banner: "'use strict';\n\n",
+                    process: concatConvertCmFiles
+                },
+                files: concatCreateCmPackages({
+                    'conversations': 'app/comps/conversations',
+                    'contacts': 'app/comps/contacts',
+                    'user': 'app/comps/user',
+                    'validate': 'app/comps/validate',
+                    'files': 'app/comps/files',
+                    'ui': 'app/shared/ui'
+                })
             }
         },
         coffee: {
@@ -414,8 +490,7 @@ module.exports = function (grunt) {
                 'options': {
                     'data': {
                         'currentWwwUrl': globalCameoTestConfig.config.wwwUrl,
-                        'accountName': globalCameoTestConfig.testData.accountName,
-                        'accountPassword': globalCameoTestConfig.testData.accountPassword
+                        'testData': "this." + globalCameoTestConfig.testData.join(";\nthis.") + ";"
                     }
                 },
                 'files': {
@@ -476,8 +551,8 @@ module.exports = function (grunt) {
 
         // watch
         watch: {
-            files: ['app/less/*.less', 'templates/*.tpl.*' ],
-            tasks: 'genAllTemplates'
+            files: ['app/less/*.less', 'templates/*.tpl.*', 'app/comps/**/!(package)*', 'app/shared/ui/!(package)*'],
+            tasks: ['genAllTemplates','packages']
         },
         less: {
             development: {
@@ -502,14 +577,20 @@ module.exports = function (grunt) {
     // tests unit
     grunt.registerTask('tests-unit', [
         'genAllTemplates',
+        'packages',
         'karma:jenkins'
     ]);
     grunt.registerTask('tests-e2e', [
         'genAllTemplates',
+        'packages',
+        'protractor:default'
+    ]);
+    grunt.registerTask('tests-2e2', [ // for dummies
+        'genAllTemplates',
+        'packages',
         'protractor:default'
     ]);
     grunt.registerTask('tests-all', [
-        'genAllTemplates',
         'tests-unit',
         'tests-e2e'
     ]);
@@ -542,8 +623,9 @@ module.exports = function (grunt) {
 
     // watch
     grunt.registerTask('genAllTemplates', ['template:config-tests', 'template:config-webApp', 'template:www-index', 'template:config-phonegap', 'template:config-protractor', 'concat:less', 'less']);
-    grunt.registerTask('watcher', ['genAllTemplates', 'watch']);
+    grunt.registerTask('watcher', ['genAllTemplates', 'packages', 'watch']);
+    grunt.registerTask('packages', ['concat:packages']);
 
     // deploy it for me babe !!
-    grunt.registerTask('deploy', ['clean:dist', 'genAllTemplates', 'concat:less', 'less', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
+    grunt.registerTask('deploy', ['clean:dist', 'genAllTemplates', 'concat:less', 'less', 'packages', 'copy:dev-deploy', 'uglify:dev-deploy', 'copy:cockpit', 'uglify:cockpit']);
 };

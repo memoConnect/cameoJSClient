@@ -1,0 +1,168 @@
+<cm-conversation-controls cm-data="conversation"></cm-conversation-controls>
+
+<div id="scrollerTop"></div>
+
+<div ng-repeat="message in conversation.messages" cm-scroll-to="#scrollerBottom">
+    <cm-date-seperator ng-if="(compareDate(message.created,conversation.messages[$index - 1].created))">{{message.created | date:'dd.MM.yyyy'}}</cm-date-seperator>
+    <cm-message
+        cm-data = "message"
+        class   = "{{ message.isOwn() ? 'right' : ''}}"
+    >
+    </cm-message>
+</div>
+
+<div id="scrollerBottom"></div>
+
+<div class="answer clearfix">
+    <i class="fa cm-plus attachments with-cursor" cm-user-rights></i>
+    <div class="message" cm-answer-area>
+        <textarea cm-resize-textarea cm-max-rows="4" ng-model="my_message_text"></textarea>
+        <i class="fa cm-smile-negative with-cursor"></i>
+        <div class="inputter"></div>
+    </div>
+    <i class="fa cm-post arrow with-cursor" ng-click="sendMessage()"></i>
+</div>
+
+<!--
+<section>
+	<div class="cm-tools">
+		<i
+			class	 = "fa fa-plus-square" 			
+			style	 = "cursor:pointer"
+			ng-click = "show_contacts = !show_contacts"
+			ng-hide	 = "show_contacts"
+		>
+		</i>
+
+		<i
+			class	 = "fa fa-minus-square" 			
+			style	 = "cursor:pointer"
+			ng-click = "show_contacts = !show_contacts"
+			ng-show	 = "show_contacts"
+		>
+		</i>
+
+
+		{{'CONVERSATION.TAG.RECIPIENTS' |cmTranslate}}:
+
+		<span ng-repeat = "recipient in conversation.recipients">
+			{{recipient.identity.getDisplayName()}}
+			<i
+				class		= "fa fa-times-circle"
+				style		= "cursor:pointer"
+				ng-click	= "recipient.removeFrom(conversation)"
+			>
+			</i> 
+			{{$last? '' : ','}}
+		</span> 				
+
+		<cm-contacts-list ng-show ="show_contacts"></cm-contacts-list>
+
+	</div>
+	<div>
+		{{'CONVERSATION.TAG.SUBJECT' |cmTranslate}}:
+		<input type="text" ng-model = "conversation.subject" ng-if ="new_conversation " cm-adaptive-change>
+		<span ng-if ="!new_conversation && conversation.subject "> {{conversation.subject}} </span>
+	</div>
+
+	<div>
+		{{"CONVERSATION.TAG.PASSPHRASE"|cmTranslate}}:
+		<input type ="{{revealPassword ? 'text' : 'password'}}" ng-model="passphrase" cm-password-input cm-adaptive-change>
+		 
+
+        <i
+        	class	 = "fa"
+        	style	 = "cursor:pointer" 
+        	ng-class = "{'fa-eye':revealPassword,'fa-eye-slash': !revealPassword}"
+        	ng-click = "revealPassword = !revealPassword"
+        ></i>
+
+		<i
+			class	 =	"fa fa-key"
+			style	 =	"cursor: pointer"
+			ng-click =	"generatePassphrase()"
+		></i>
+
+		<i
+			class	 =	"fa fa-circle"
+			style	 =	"color: {{passphrase_valid ? 'green' : 'red'}}"			
+		></i>
+
+
+		<br/>
+
+		<i
+			class	 = "fa fa-th-large"
+			style	 = "cursor: pointer"
+			ng-click = "show_captcha = !show_captcha"
+			ng-hide	 = "new_conversation"
+		></i>				
+
+		<br/>
+		<div
+			ng-show = "show_captcha"			
+		>
+			<cm-captcha ></cm-captcha><br/>
+			<i class="fa fa-refresh" style ="cursor:pointer" ng-click="refreshCaptcha()"></i>
+			<button ng-click = "requestCaptcha()"> {{"CONVERSATION.LABEL.REQUEST_CAPTCHA" | cmTranslate}}</button>
+			<button ng-click = "sendCaptcha()"> {{"CONVERSATION.LABEL.SEND_CAPTCHA" | cmTranslate}}</button>
+		</div>
+
+	</div>
+
+	<br/>
+
+
+
+	<div class="cm-messages">		
+		<h4>{{'CONVERSATION.TAG.MESSAGES' |cmTranslate}}:</h4>
+		<cm-message 
+			ng-repeat		= "message in conversation.messages"
+			cm-data 		= "message" 
+		></cm-message>
+	</div>
+
+
+
+	<button 
+		ng-disabled = "mode && mode =='asset'"
+		ng-click= "mode = 'asset'"
+	>	
+		<i class="fa fa-paperclip"></i>
+	</button>
+
+	<button 
+		ng-disabled = "!mode || mode == 'message'" 
+		ng-click= "mode = 'message'"
+	>	
+		<i class="fa fa-keyboard-o"></i>
+	</button>
+
+
+
+	<div ng-show = "!mode || mode =='message'">
+		<textarea cm-message-input ng-model="my_message_text"></textarea>
+	
+		<button ng-click="sendMessage()">{{"CONVERSATION.LABEL.SEND" | cmTranslate}}</button> <br/>
+	</div>
+
+	<cm-emoticons></cm-emoticons>
+
+	<div ng-show = "mode && mode == 'asset'">
+		<input type = "text" ng-model ="assetId"> <button ng-click="sendAsset()">{{"CONVERSATION.LABEL.SEND" | cmTranslate}}</button>
+
+		<cm-upload cm-chunk-size = "10" ng-model = "assetId" cm-passphrase="passphrase">
+			<cm-file-input></cm-file-input>
+			{{progress*100 | cmDigits : 2 }}%			
+			<progressbar value="progress" max="1">{{progress*100 | cmDigits : 2 }}%</progressbar>  
+			<button ng-click="upload()"><i class="fa fa-upload"></i></button>			
+		</cm-upload>
+	</div>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+</section>
+
+-->

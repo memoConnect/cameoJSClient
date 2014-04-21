@@ -5,9 +5,8 @@ describe('Directive cmTypeChooser', function () {
         scope
 
     beforeEach(module('cmContacts'))
-    beforeEach(inject(function ($rootScope, $compile, $templateCache) {
-            $templateCache.put('comps/contacts/type-chooser.html', window.__html__['app/comps/contacts/type-chooser.html'])
-
+    beforeEach(module('comps/contacts/drtv-type-chooser.html'))
+    beforeEach(inject(function ($rootScope, $compile) {
             scope = $rootScope.$new()
             el = angular.element('<div cm-type-chooser></div>')
             el = $compile(el)(scope)

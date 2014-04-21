@@ -126,8 +126,9 @@ cm-conversation-controls{
     font-size:1em;
     overflow:hidden;
     padding-bottom:1em;
-    .bar{
-      cursor:pointer;
+    .cm-bar{
+      .with-cursor;
+      text-align:center;
       .border-radius-bottom;
       background:@cm-white;
       color:@cm-dark-grey;
@@ -148,6 +149,11 @@ cm-conversation-controls{
         }
         .foreground{
           color:@cm-white;
+        }
+      }
+      .cm-bar-infos{
+        cm-safety-level, cm-recipient-counter{
+          margin-left:0.2em;
         }
       }
     }
@@ -186,7 +192,7 @@ cm-conversation-controls{
         }
       }
       cm-edge{
-        font-size:2.5em;
+        font-size:@cm-unit;
       }
     }
 

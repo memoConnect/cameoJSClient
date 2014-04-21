@@ -64,10 +64,10 @@
 	<icon src="res/icon/default.png" gap:platform="winphone" gap:role="background" />
 
 	<!-- Splash -->
-    <gap:splash src="res/screen/android/screen-ldpi-portrait.png" gap:platform="android" gap:density="ldpi" />
-    <gap:splash src="res/screen/android/screen-mdpi-portrait.png" gap:platform="android" gap:density="mdpi" />
-    <gap:splash src="res/screen/android/screen-hdpi-portrait.png" gap:platform="android" gap:density="hdpi" />
-    <gap:splash src="res/screen/android/screen-xhdpi-portrait.png" gap:platform="android" gap:density="xhdpi" />
+    <gap:splash src="res/screen/android/splash.9.png" gap:platform="android" gap:density="ldpi" />
+    <gap:splash src="res/screen/android/splash.9.png" gap:platform="android" gap:density="mdpi" />
+    <gap:splash src="res/screen/android/splash.9.png" gap:platform="android" gap:density="hdpi" />
+    <gap:splash src="res/screen/android/splash.9.png" gap:platform="android" gap:density="xhdpi" />
     <gap:splash src="res/screen/splash.png" />
 
 	<gap:splash src="res/screen/splash.jpg" gap:platform="winphone" />

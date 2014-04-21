@@ -4,7 +4,9 @@
 'use strict';
 
 angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject'])
-.factory('cmIdentityModel',['cmAuth', 'cmCrypt', 'cmObject', '$q', function(cmAuth, cmCrypt, cmObject, $q){
+.factory('cmIdentityModel',[
+'cmAuth', 'cmCrypt', 'cmObject', '$q',
+function(cmAuth, cmCrypt, cmObject, $q){
     var Identity = function(identity_data){
 
         this.id,
@@ -101,12 +103,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject'])
          * @param identity_data
          */
         this.init = function(identity_data){
-            //var deferred = $q.defer();
-
             if(typeof identity_data === 'object'){
-
-                //init:
-
                 this.id = identity_data.id;
                 this.displayName            = identity_data.displayName
                 this.userKey                = identity_data.userKey
@@ -124,7 +121,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject'])
                     self.addKey(publicKey_data)
                 })
 
-                //deferred.resolve();
+                this.trigger('init:finish');
 
             } else if(typeof identity_data === 'string'){
                 this.id = identity_data;
@@ -135,19 +132,15 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject'])
                         self.trigger('load', data)
                         if(typeof data =='string'){
                             cmLogger('cmAuth.getIdentity() should forward an object, got string instead. ')
-                           // deferred.reject()
-                        }else{                 
+                        }else{
                             self.init(data)    
-                           // deferred.resolve();
                         }
                         self.trigger('after-load', data)
                     }
                 )
-            } else {
-             //   deferred.reject();
             }
 
-            return this
+            return this;
         }
 
         this.init(identity_data);
@@ -155,7 +148,9 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject'])
 
     return Identity;
 }])
-.factory('cmIdentityFactory',['$rootScope','cmIdentityModel', function($rootScope, cmIdentityModel){
+.factory('cmIdentityFactory',[
+'$rootScope','cmIdentityModel',
+function($rootScope, cmIdentityModel){
     var instances = [];
 
     $rootScope.$on('logout', function(){
