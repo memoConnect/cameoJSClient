@@ -44,7 +44,7 @@
 
     <preference name="LoadUrlTimeoutValue" value="5000" />
     <preference name="disable-cursor" value="true" />
-    <preference name="SplashScreenDelay" value="1000" />
+    <preference name="SplashScreenDelay" value="5000" />
 
     <gap:platform name="android" />
     <gap:platform name="winphone" />
