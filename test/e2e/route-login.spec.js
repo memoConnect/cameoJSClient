@@ -62,7 +62,6 @@ describe('login screen', function () {
 
     it('should login with correct credentials', function () {
         $("[data-qa='login-btn']").click();
-
         var user = $("input[name=user]");
         var pw = $("input[name=pw]");
 
