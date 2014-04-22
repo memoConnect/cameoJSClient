@@ -12,27 +12,24 @@ describe('Route: Purl', function () {
         if(typeof param !== 'undefined')
             moep = param;
 
-        describe('should checkFormForInternUser "'+moep+'": ', function(){
+        it('should have back button "'+moep+'"', function(){
+            expect($('cm-back').isPresent()).toBe(true)
+        })
 
-            it('should have back button', function(){
-                expect($('cm-back').isPresent()).toBe(true)
-            })
+        it('should have identity "'+moep+'"', function(){
+            expect($('cm-identity').isPresent()).toBe(true)
+        })
 
-            it('should have identity', function(){
-                expect($('cm-identity').isPresent()).toBe(true)
-            })
+        it('should have menu "'+moep+'"', function(){
+            expect($('cm-menu').isPresent()).toBe(true)
+        })
 
-            it('should have menu', function(){
-                expect($('cm-menu').isPresent()).toBe(true)
-            })
+        it('should have attachment button "'+moep+'"', function(){
+            expect($('i[data-qa="attachments-btn"]').isPresent()).toBe(true)
+        })
 
-            it('should have attachment button', function(){
-                expect($('i[data-qa="attachments-btn"]').isPresent()).toBe(true)
-            })
-
-            it('should have normal answer container', function(){
-                expect($('[data-qa="answer-ctn"]').getAttribute('class')).not.toMatch('large')
-            })
+        it('should have normal answer container "'+moep+'"', function(){
+            expect($('[data-qa="answer-ctn"]').getAttribute('class')).not.toMatch('large')
         })
     }
 
@@ -42,44 +39,57 @@ describe('Route: Purl', function () {
         if(typeof param !== 'undefined')
             moep = param;
 
-        describe('should checkFormForExternUser "'+moep+'": ', function(){
+        it('should have back button "'+moep+'"', function(){
+            expect($('cm-back').isPresent()).toBe(false)
+        })
 
-            it('should have back button', function(){
-                expect($('cm-back').isPresent()).toBe(false)
-            })
+        it('should have identity  "'+moep+'"', function(){
+            expect($('cm-identity').isPresent()).toBe(false)
+        })
 
-            it('should have identity', function(){
-                expect($('cm-identity').isPresent()).toBe(false)
-            })
+        it('should have menu "'+moep+'"', function(){
+            expect($('cm-menu').isPresent()).toBe(false)
+        })
 
-            it('should have menu', function(){
-                expect($('cm-menu').isPresent()).toBe(false)
-            })
+        it('should have attachment button "'+moep+'"', function(){
+            expect($('i[data-qa="attachments-btn"]').isPresent()).toBe(false)
+        })
 
-            it('should have attachment button', function(){
-                expect($('i[data-qa="attachments-btn"]').isPresent()).toBe(false)
-            })
-
-            it('should have large answer container', function(){
-                expect($('[data-qa="answer-ctn"]').getAttribute('class')).toMatch('large')
-            })
+        it('should have large answer container "'+moep+'"', function(){
+            expect($('[data-qa="answer-ctn"]').getAttribute('class')).toMatch('large')
         })
     }
 
-    xdescribe("User1 open Purl and is logged in", function(){
+
+    /**
+     * Test 1
+     * Intern User is logged in and Purl is for that User
+     */
+    describe("User1 open Purl and is logged in", function(){
         it('open "#/purl/+' + config.purlUser1 +'" after login.', function(){
             util.login()
             util.get('/purl/' + config.purlUser1)
             util.expectCurrentUrl('#/purl/' + config.purlUser1)
 
+            /**
+             * for next test
+             * cm-message describes that messages in purl are loaded and loading process is finish
+             */
             util.waitForElement('cm-message');
+        })
+
+        describe('should checkFormForInternUser "Test1": ', function(){
             checkFormForInternUser('Test 1');
         })
     })
 
-    xdescribe("User1 open Purl and is logged out", function(){
+    /**
+     * Test 2
+     * Intern User is logged out and Purl is for that User
+     */
+    describe("User1 open Purl and is logged out", function(){
         it('open "#/purl/+' + config.purlUser1 +'" after logout before login.', function(){
-//            util.logout();
+            util.logout();
             util.get('/purl/' + config.purlUser1)
             util.expectCurrentUrl('#/purl/' + config.purlUser1)
         })
@@ -104,42 +114,60 @@ describe('Route: Purl', function () {
         it('should be same url', function(){
             util.expectCurrentUrl('#/purl/' + config.purlUser1)
 
+            /**
+             * for next test
+             * cm-message describes that messages in purl are loaded and loading process is finish
+             */
             util.waitForElement('cm-message');
-            checkFormForInternUser('Test 2');
+        })
 
-//            describe('should checkFormForInternUser : ', function(){
-//
-//                it('should have back button', function(){
-//                    expect($('cm-back').isPresent()).toBe(true)
-//                })
-//
-//                it('should have identity', function(){
-//                    expect($('cm-identity').isPresent()).toBe(true)
-//                })
-//
-//                it('should have menu', function(){
-//                    expect($('cm-menu').isPresent()).toBe(true)
-//                })
-//
-//                it('should have attachment button', function(){
-//                    expect($('i[data-qa="attachments-btn"]').isPresent()).toBe(true)
-//                })
-//
-//                it('should have normal answer container', function(){
-//                    expect($('[data-qa="answer-ctn"]').getAttribute('class')).not.toMatch('large')
-//                })
-//            })
+        describe('should checkFormForInternUser', function(){
+            checkFormForInternUser('Test 2');
         })
     })
 
-    xdescribe("Extern User open Purl, no User is logged in", function(){
+    /**
+     * Test 3
+     * Extern User open Purl when Browser is "empty"
+     */
+    describe("Extern User open Purl, no User is logged in", function(){
         it('open "#/purl/+' + config.purlExtern +'"', function(){
-//            util.logout();
+            util.logout();
             util.get('/purl/' + config.purlExtern)
             util.expectCurrentUrl('#/purl/' + config.purlExtern)
 
+            /**
+             * for next test
+             * cm-message describes that messages in purl are loaded and loading process is finish
+             */
             util.waitForElement('cm-message');
-            checkFormForExternUser();
+        })
+
+        describe('should checkFormForInternUser', function(){
+            checkFormForExternUser('Test 3');
+        })
+    })
+
+    /**
+     * Test 4
+     * Extern User open Purl when Browser is Intern User 1 is logged in
+     */
+    describe("Extern User open Purl, no User is logged in", function(){
+        it('open "#/purl/+' + config.purlExtern +'"', function(){
+            util.login();
+
+            util.get('/purl/' + config.purlExtern)
+            util.expectCurrentUrl('#/purl/' + config.purlExtern)
+
+            /**
+             * for next test
+             * cm-message describes that messages in purl are loaded and loading process is finish
+             */
+            util.waitForElement('cm-message');
+        })
+
+        describe('should checkFormForInternUser', function(){
+            checkFormForExternUser('Test 4');
         })
     })
 })
