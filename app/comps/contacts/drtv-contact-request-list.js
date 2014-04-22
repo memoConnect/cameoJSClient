@@ -5,36 +5,24 @@ angular.module('cmContacts').directive('cmContactRequestList',[
     'cmNotify',
     function (cmContactsModel, cmNotify){
         return {
-            restrict: 'A',
+            restrict: 'AE',
             scope: {},
-            templateUrl: 'comps/contacts/drtv-contact-request-list.html',
-            controller: function($scope, $element, $attrs){
-                $scope.results = [];
-                $scope.loaded = false;
-
-                /**
-                 * load all requests pending/
-                 */
-                $scope.loadFriendRequests = function(){
-                    cmContactsModel.getFriendRequests().then(
-                        function(data){
-                            $scope.results = data;
-                            $scope.loaded = true;
-                        }
-                    )
-                };
+            controller: function($scope){
+                $scope.requests = cmContactsModel.requests;
+                $scope.isLoading = false;
 
                 /**
                  * fired by repeat and accept that
                  * @param id
                  */
                 $scope.acceptRequest = function(item){
-                    cmContactsModel.answerFriendRequest(item.id, 'accept').then(
-                        function(){
-                            cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT');
-                            rmFromModel(item);
-                        }
-                    );
+                    console.log(item)
+//                    cmContactsModel.answerFriendRequest(item.id, 'accept').then(
+//                        function(){
+//                            cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT');
+//                            rmFromModel(item);
+//                        }
+//                    );
                 };
 
                 /**
@@ -42,12 +30,12 @@ angular.module('cmContacts').directive('cmContactRequestList',[
                  * @param id
                  */
                 $scope.rejectRequest = function(item){
-                    cmContactsModel.answerFriendRequest(item.id, 'reject').then(
-                        function(){
-                            cmNotify.warn('CONTACTS.INFO.REQUEST.REJECT');
-                            rmFromModel(item);
-                        }
-                    );
+//                    cmContactsModel.answerFriendRequest(item.id, 'reject').then(
+//                        function(){
+//                            cmNotify.warn('CONTACTS.INFO.REQUEST.REJECT');
+//                            rmFromModel(item);
+//                        }
+//                    );
                 };
 
                 /**
