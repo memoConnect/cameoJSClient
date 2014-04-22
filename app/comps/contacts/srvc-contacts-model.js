@@ -14,6 +14,7 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         this.contacts = [];
         this.groups = [];
+        this.requests = [];
 
         cmObject.addEventHandlingTo(this)
 
@@ -23,6 +24,7 @@ angular.module('cmContacts').service('cmContactsModel',[
         function init(){
             self.getAll();
             self.getGroups();
+            self.getFriendRequests();
         }
 
         /**
@@ -140,7 +142,14 @@ angular.module('cmContacts').service('cmContactsModel',[
         };
 
         this.getFriendRequests = function(){
-            return cmContactsAdapter.getFriendRequests();
+            if(cmUserModel.isAuth() !== false){
+                cmContactsAdapter.getFriendRequests().then(
+                    function(data){
+                        self.requests = data;
+                    }
+                )
+            }
+//            return cmContactsAdapter.getFriendRequests();
         };
 
         this.sendFriendRequest = function(id){
