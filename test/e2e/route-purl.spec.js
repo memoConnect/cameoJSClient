@@ -65,7 +65,7 @@ describe('Route: Purl', function () {
      * Test 1
      * Intern User is logged in and Purl is for that User
      */
-    xdescribe("User1 open Purl and is logged in", function(){
+    describe("User1 open Purl and is logged in", function(){
         it('open "#/purl/+' + config.purlUser1 +'" after login.', function(){
             util.login()
             util.get('/purl/' + config.purlUser1)
@@ -87,7 +87,7 @@ describe('Route: Purl', function () {
      * Test 2
      * Intern User is logged out and Purl is for that User
      */
-    xdescribe("User1 open Purl and is logged out", function(){
+    describe("User1 open Purl and is logged out", function(){
         it('open "#/purl/+' + config.purlUser1 +'" after logout before login.', function(){
             util.logout();
             util.get('/purl/' + config.purlUser1)
@@ -130,7 +130,7 @@ describe('Route: Purl', function () {
      * Test 3
      * Extern User open Purl when Browser is "empty"
      */
-    xdescribe("Extern User open Purl, no User is logged in", function(){
+    describe("Extern User open Purl, no User is logged in", function(){
         it('open "#/purl/+' + config.purlExtern +'"', function(){
             util.logout();
             util.get('/purl/' + config.purlExtern)
@@ -152,7 +152,7 @@ describe('Route: Purl', function () {
      * Test 4
      * Extern User open Purl when Browser is Intern User 1 is logged in
      */
-    xdescribe("Extern User open Purl, no User is logged in", function(){
+    describe("Extern User open Purl, no User is logged in", function(){
         it('open "#/purl/+' + config.purlExtern +'"', function(){
             util.login();
 
@@ -220,7 +220,54 @@ describe('Route: Purl', function () {
         })
 
         describe('should checkFormForInternUser', function(){
-            checkFormForInternUser('Test 2');
+            checkFormForInternUser('Test 5');
+        })
+    })
+
+    /**
+     * Test 6
+     * Intern User 2 open Purl, then Intern User 1 will see his PURL
+     */
+    describe("Intern User 2 is logged in, User 1 open Purl", function(){
+        it('open "#/purl/+' + config.purlUser1 +'", after User 2 logged in', function(){
+            util.logout();
+
+            util.login(config.loginUser2, config.passwordUser2);
+
+            util.get('/purl/' + config.purlUser1)
+            util.expectCurrentUrl('#/purl/' + config.purlUser1)
+        })
+
+
+        it('login modal should be visible, when Intern User1 open his Purl', function(){
+            util.waitForElement('[data-qa="modal-login"]');
+            expect($('[data-qa="modal-login"]').isPresent()).toBe(true)
+        })
+
+        it('should login with correct credentials', function () {
+            var user = $("input[name=user]");
+            var pw = $("input[name=pw]");
+
+            user.sendKeys(config.loginUser1);
+            pw.sendKeys(config.passwordUser1);
+
+            $("[data-qa='login-submit-btn']").click();
+
+            util.waitForPageLoad("/purl/" + config.purlUser1)
+        })
+
+        it('should be same url', function(){
+            util.expectCurrentUrl('#/purl/' + config.purlUser1)
+
+            /**
+             * for next test
+             * cm-message describes that messages in purl are loaded and loading process is finish
+             */
+            util.waitForElement('cm-message');
+        })
+
+        describe('should checkFormForInternUser', function(){
+            checkFormForInternUser('Test 6');
         })
     })
 })
