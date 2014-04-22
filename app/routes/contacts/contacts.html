@@ -7,7 +7,7 @@
 </cm-header>
 
 <section ng-controller="ContactsCtrl">
-
+    <!-- contact list -->
     <div ng-if="activeSection == 'list'">
         <header class="cm-list-header">
             <h1>{{"CONTACTS.HEADING"|cmTranslate}}</h1>
@@ -43,7 +43,7 @@
 
         </cm-contacts-list>
     </div>
-
+    <!-- request list -->
     <div ng-if="activeSection == 'requests'">
         <cm-contact-request-list>
             <div ng-show="isLoading" class="empty-list">
@@ -66,8 +66,11 @@
             </cm-contact-tag>
         </cm-contact-request-list>
     </div>
+    <!-- search identity -->
+    <div cm-search-cameo-identity ng-if="activeSection == 'search'">
 
-    <div cm-search-cameo-identity ng-if="activeSection == 'search'"></div>
+
+    </div>
 
 </section>
 
