@@ -100,15 +100,18 @@ this.waitForModalClose = function () {
 }
 
 this.waitForSpinner = function () {
-    // add some initial delay
-    ptor.sleep(100)
-
-    ptor.wait(function () {
-        return $$(".cm-spinner").then(function (elements) {
-            return elements.length == 0
+    // wait until spinner appears
+    ptor.wait(function(){
+        return $$("cm-spinner").then(function (elements) {
+            return elements.length > 0
         })
-    }, config.routeTimeout, 'waitForSpinner timeout reached')
-
+    }, config.routeTimeout, 'waitForSpinner start timeout reached').then(function(){
+        ptor.wait(function () {
+            return $("cm-spinner").isDisplayed().then(function (isDisplayed) {
+                return ! isDisplayed
+            })
+        }, config.routeTimeout, 'waitForSpinner stop timeout reached')
+    })
 }
 
 this.checkWarning = function (qaValue) {
