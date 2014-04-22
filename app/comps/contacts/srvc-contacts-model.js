@@ -6,14 +6,17 @@ angular.module('cmContacts').service('cmContactsModel',[
     'cmIdentityFactory',
     'cmUtil',
     'cmObject',
+    'cmLogger',
+    'cmNotify',
     '$q',
     '$rootScope',
-    function (cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUtil, cmObject, $q, $rootScope){
+    function (cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUtil, cmObject, cmLogger, cmNotify, $q, $rootScope){
         var self = this,
             events = {};
 
         this.contacts = [];
         this.groups = [];
+        this.requests = [];
 
         cmObject.addEventHandlingTo(this)
 
@@ -23,6 +26,7 @@ angular.module('cmContacts').service('cmContactsModel',[
         function init(){
             self.getAll();
             self.getGroups();
+            self.getFriendRequests();
         }
 
         /**
@@ -139,8 +143,54 @@ angular.module('cmContacts').service('cmContactsModel',[
             return cmContactsAdapter.getAllFromGroup(group,limit,offset);
         };
 
+        /**
+         * Friend Request Handling
+         */
+
+        /**
+         * add Friend Request to Model
+         * @param identity_data
+         * @private
+         */
+        this._addFriendRequest = function(identity_data){
+            var i = 0,
+                check = false;
+
+            if(this.requests.length == 0){
+                this.requests.push({identity: cmIdentityFactory.create(identity_data.id), message:''});
+            } else {
+                while(i < this.requests.length){
+                    if(this.requests[i].identity.id == identity_data.id){
+                        check = true;
+                        break;
+                    }
+                    i++;
+                }
+
+                if(check !== true){
+                    this.requests.push({identity: cmIdentityFactory.create(identity_data.id), message:''});
+                }
+            }
+        };
+
         this.getFriendRequests = function(){
-            return cmContactsAdapter.getFriendRequests();
+            if(cmUserModel.isAuth() !== false){
+                cmContactsAdapter.getFriendRequests().then(
+                    function(data){
+                        cmLogger.debug('cmContactsModel:getFriendRequests:done');
+                        var old_length = self.requests.length;
+
+                        angular.forEach(data, function(value){
+                            self._addFriendRequest(value);
+                        });
+
+                        if(old_length < self.requests.length){
+                            self.trigger('friendRequests:loaded');
+                            cmNotify.info('new Friend Requests', {ttl:1000})
+                        }
+                    }
+                )
+            }
         };
 
         this.sendFriendRequest = function(id){

@@ -1,4 +1,6 @@
 <div class="cm-handler" ng-click="handleMenu()">
+    <cm-notify-signal></cm-notify-signal>
+
     <i class="fa cm-menu"></i>
 </div>
 <div class="cm-menu-layer" ng-show="menuVisible">
@@ -10,7 +12,9 @@
             </li>
             <li class="cm-list-group-item" ng-repeat="btn in btns" ng-class="btn.css" ng-click="goTo(btn.href)">
                 <i class="fa" ng-if="btn.icon != undefined" ng-class="btn.icon"></i>
-                <span>{{btn.i18n|cmTranslate}}</span>
+                <span>{{btn.i18n|cmTranslate}}
+                    <cm-friend-request-counter ng-if="btn.drtv != undefined && btn.drtv == 'cm-friend-request-counter'"></cm-friend-request-counter>
+                </span>
                 <div class="clearfix"></div>
             </li>
             <li class="cm-list-group-item" ng-click="logout()" data-qa="logout-btn">
