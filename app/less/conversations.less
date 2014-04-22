@@ -177,22 +177,30 @@ cm-conversation-controls{
       }
     }
 
-    .recipients-list{
-      position:relative;
-      overflow:hidden;
+    .recipients-list {
+      position: relative;
+      overflow: hidden;
+      .add-new-recipients, .add-recipients {
+        display: inline-block;
+        position: relative;
+        height: @cm-unit;
+      }
+      .add-new-recipients{
+        padding-right:@cm-unit;
+      }
       .add-recipients{
-        display:inline-block;
-        position:relative;
-        padding-right:2em;
+        width:@cm-unit;
       }
       cm-avatar{
+        vertical-align:top;
         margin-right:0.5em;
         &:last-child{
           margin-right:0;
         }
       }
       cm-edge{
-        font-size:@cm-unit;
+        vertical-align:top;
+        font-size:@cm-unit+1;
       }
     }
 
