@@ -8,66 +8,48 @@
 
 <section ng-controller="ContactsCtrl">
 
-    <header>
-        <h1>{{"CONTACTS.HEADING"|cmTranslate}}</h1>       
+    <div ng-if="activeSection == 'list'">
 
-        <button ng-click="openAddModal()" cm-edge data-qa="add-contact">
-            <i class="fa cm-edge-add"></i>
-        </button>
+        <header>
+            <h1>{{"CONTACTS.HEADING"|cmTranslate}}</h1>
 
-        <input 
-            type            = "text" 
-            value           = "" 
-            ng-model        = "search" 
-            cm-icon         = "cm-search"
-            cm-large-input
-        />     
-
-    </header>
-
-    <cm-contacts-filter-controls
-        sort-by     = ""
-        filter-by   = ""
-    >
-    </cm-contacts-filter-controls>
-    
-
-    <cm-contacts-list contacts-as="contacts">
-        <div ng-show="isLoading" class="empty-list">
-            <cm-spinner ></cm-spinner>
-        </div>
-
-        <div ng-show="!contacts.length && !isLoading" class="empty-list">
-            <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
-        </div>
-
-        <cm-contact-tag cm-rubber-space ng-repeat="contact in contacts | filter:search">
-            <cm-avatar cm-data="contact.identity" ng-click="editContact(contact)"></cm-avatar>
-            <cm-key-level key-size="contact.identity.getWeakestKeySize()"></cm-key-level>
-            <cm-contact-brief cm-data="contact" cm-weight="1" ng-click="editContact(contact)"></cm-contact-brief>
-            <cm-contact-type cm-data="contact"></cm-contact-type>
-            <span class="separator" ></span>
-            <button ng-click="startConversation(contact)">
-                <i class="fa cm-write"></i>
+            <button ng-click="openAddModal()" cm-edge data-qa="add-contact">
+                <i class="fa cm-edge-add"></i>
             </button>
-        </cm-contact-tag>
 
-    </cm-contacts-list>
-    
+            <input type="text" value="" ng-model="search" cm-icon="cm-search" cm-large-input />
+        </header>
 
-    <!--old friend request-->
-    <div style="background:white;margin-top:1em;padding:1em">
-        <div cm-nav-tabs></div>
-        <br >
+        <cm-contacts-filter-controls sort-by="" filter-by=""></cm-contacts-filter-controls>
 
-        <div ng-if="activeTab == 'ADD'">
-            <div cm-search-cameo-identity></div>
+        <cm-contacts-list contacts-as="contacts">
+            <div ng-show="isLoading" class="empty-list">
+                <cm-spinner ></cm-spinner>
+            </div>
 
-            <div cm-add-external-contact ng-hide="true"></div>
-        </div>
+            <div ng-show="!contacts.length && !isLoading" class="empty-list">
+                <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
+            </div>
 
-        <div cm-contact-request-list ng-if="activeTab == 'REQUESTS'"></div>
+            <cm-contact-tag cm-rubber-space ng-repeat="contact in contacts | filter:search">
+                <cm-avatar cm-data="contact.identity" ng-click="editContact(contact)"></cm-avatar>
+                <cm-key-level key-size="contact.identity.getWeakestKeySize()"></cm-key-level>
+                <cm-contact-brief cm-data="contact" cm-weight="1" ng-click="editContact(contact)"></cm-contact-brief>
+                <cm-contact-type cm-data="contact"></cm-contact-type>
+                <span class="separator" ></span>
+                <button ng-click="startConversation(contact)">
+                    <i class="fa cm-write"></i>
+                </button>
+            </cm-contact-tag>
+
+        </cm-contacts-list>
+
     </div>
+
+    <div cm-contact-request-list ng-if="activeSection == 'requests'"></div>
+
+    <div cm-search-cameo-identity ng-if="activeSection == 'search'"></div>
+
 </section>
 
 <cm-footer cm-rubber-space></cm-footer>

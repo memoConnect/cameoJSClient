@@ -7,7 +7,7 @@
                     <i class="fa cm-checker pull-right"></i>
                 </a>
             </li>
-            <li ng-show="!results.length" class="empty-list">
+            <li ng-show="!results.length && loaded == true" class="empty-list">
                 <i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_REQUESTS'|cmTranslate}}
             </li>
         </ul>

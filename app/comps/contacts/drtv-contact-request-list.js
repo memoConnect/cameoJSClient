@@ -10,6 +10,7 @@ angular.module('cmContacts').directive('cmContactRequestList',[
             templateUrl: 'comps/contacts/drtv-contact-request-list.html',
             controller: function($scope, $element, $attrs){
                 $scope.results = [];
+                $scope.loaded = false;
 
                 /**
                  * load all requests pending/
@@ -18,6 +19,7 @@ angular.module('cmContacts').directive('cmContactRequestList',[
                     cmContactsModel.getFriendRequests().then(
                         function(data){
                             $scope.results = data;
+                            $scope.loaded = true;
                         }
                     )
                 };

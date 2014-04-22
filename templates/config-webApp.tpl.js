@@ -13,9 +13,6 @@ cameo_config = {
             css: 'no-header no-footer',
             guests: true
         },
-        'start': {
-            hasCtrl: true
-        },
         'settings': {
             hasCtrl: true,
             css: 'no-footer'
@@ -46,7 +43,7 @@ cameo_config = {
             hasCtrl: true
         },
         'contacts': {
-            routes:['/contacts/:tab?'],
+            routes:['/contacts/:section?'],
             hasCtrl: true
         },
         'contact': {
