@@ -35,30 +35,31 @@ angular.module('cmObject', [])
             obj._chains = {}
 
             function Chain(obj){
-                var deferred = $q.defer()
-                    self     = deferred.promise
+                var deferred     = $q.defer(),
+                    self         = this,
+                    last_promise = deferred.promise
 
-                for(var key in obj){
-                    
-                    if(typeof obj[key] == 'function'){
-                        var function_name = key
-                        self[function_name] = function(){
-                            console.log(function_name)
-                            var args = Array.prototype.slice.call(arguments, 0)
 
-                            self.then(function(result){                                
-                                return obj[function_name].apply(obj, args.length > 0 ? args : result)                                 
-                            })
+                angular.forEach(obj, function(value, key){                    
+                    if(typeof obj[key] != 'function')  return null
 
-                            return self
-                        }
+                    self[key] = function(){
+                        var args = Array.prototype.slice.call(arguments, 0)
 
-                    } 
+                        last_promise = last_promise.then(function(result){                                
+                            return obj[key].apply(obj, args.length > 0 ? args : [result])                                 
+                        })
+
+                        return self
+                    }
+                })
+
+                self.then = function(){                    
+                    last_promise = last_promise.then.apply(last_promise, Array.prototype.slice.call(arguments, 0))
+                    return self
                 }
 
                 deferred.resolve()
-
-
 
                 return self
             }
@@ -67,7 +68,7 @@ angular.module('cmObject', [])
             obj.$chain = function(name){
                 name  = name || 'default'
 
-                obj._chains[name] = new Chain(obj)
+                obj._chains[name] = obj._chains[name] || new Chain(obj)
                 
                 return obj._chains[name]
             }

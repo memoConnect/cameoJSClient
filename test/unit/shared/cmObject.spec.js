@@ -65,24 +65,22 @@ describe('cmObject', function(){
             cmObject.addEventHandlingTo(myObject)
 
             myObject.function_1 = function(){
-                console.log('deng')
                 var deferred = $q.defer()
 
-                this.on('step_1', function(){
-                    deferred.resolve('5')
+                this.on('step_1', function(){              
+                    deferred.resolve(5)
                 })
 
                 return deferred.promise
             }
 
             myObject.function_2 = function(input){
-                                console.log('dang')
                 var deferred = $q.defer()
 
                 this.x = input
 
-                this.on('step_2', function(){
-                    deferred.resolve('input+5')
+                this.on('step_2', function(){   
+                    deferred.resolve(input+2)
                 })
 
                 return deferred.promise
@@ -110,13 +108,16 @@ describe('cmObject', function(){
                 myObject.$chain()
                 .function_1()
                 .function_2()
-                //.function_3()
-                //.function_4()                
+                .function_3()
+                .function_4('overwrite_result')                
                 .then(function(){
-                    console.log('dong')
                     done = true
                 })
 
+                $rootScope.$apply()
+                myObject.trigger('step_1')
+                $rootScope.$apply()
+                myObject.trigger('step_2')                                
                 $rootScope.$apply()
             })
 
@@ -125,11 +126,11 @@ describe('cmObject', function(){
                 return done
             }, 'chain to resolve.', 500)
 
-
-
-            console.log('x: '+myObject.x)
-            console.log('y: '+myObject.y)
-            console.log('z: '+myObject.z)
+            runs(function(){
+                expect(myObject.x).toBe(5)
+                expect(myObject.y).toBe(10)
+                expect(myObject.z).toBe('overwrite_result')
+            })
 
 
 
