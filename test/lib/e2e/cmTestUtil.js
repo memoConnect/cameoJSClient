@@ -8,6 +8,8 @@ var ptor
 
 this.setPtorInstance = function (newPtor) {
     ptor = newPtor
+
+    return this
 }
 
 this.getPtorInstance = function () {
@@ -33,29 +35,34 @@ this.waitForPageLoad = function (expectedRoute) {
         })
 
     }, config.routeTimeout, 'waitForPage ' + expectedRoute + ' timeout reached')
+    return this
 }
 
 this.waitForElement = function (selector) {
-    // add some initial delay
-    ptor.sleep(100)
 
     ptor.wait(function () {
         return $$(selector).then(function (elements) {
             return elements.length > 0
         })
     }, config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
+
+    return this
 }
 
 this.get = function (path) {
     var url = config.wwwUrl + '#' + path
     ptor.get(url)
     this.waitForPageLoad()
+
+    return this
 }
 
 this.expectCurrentUrl = function (match) {
     ptor.getCurrentUrl().then(function (url) {
         expect(url).toMatch(match)
     })
+
+    return this
 }
 
 this.logout = function () {
@@ -69,6 +76,7 @@ this.logout = function () {
         } else {
         }
     })
+    return this
 }
 
 this.login = function (username, password) {
@@ -81,12 +89,17 @@ this.login = function (username, password) {
     var user = $("input[name=user]");
     var pw = $("input[name=pw]");
 
-    user.sendKeys(config.loginUser1);
-    pw.sendKeys(config.passwordUser1);
+    var loginUser = username || config.loginUser1;
+    var loginPassword = password || config.passwordUser1;
+
+    user.sendKeys(loginUser);
+    pw.sendKeys(loginPassword);
 
     $("[data-qa='login-submit-btn']").click();
 
     this.waitForPageLoad("/talks")
+
+    return this
 }
 
 this.waitForModalClose = function () {
@@ -97,6 +110,7 @@ this.waitForModalClose = function () {
         })
     }, config.routeTimeout, "timeout")
 
+    return this
 }
 
 this.waitForSpinner = function () {
@@ -112,6 +126,8 @@ this.waitForSpinner = function () {
             })
         }, config.routeTimeout, 'waitForSpinner stop timeout reached')
     })
+
+    return this
 }
 
 this.checkWarning = function (qaValue) {
@@ -121,6 +137,8 @@ this.checkWarning = function (qaValue) {
     warn.getText().then(function (text) {
         expect(text).not.toBe("")
     })
+
+    return this
 }
 
 this.clearInput = function (qaValue) {
@@ -128,4 +146,6 @@ this.clearInput = function (qaValue) {
     var input = $(css)
     input.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, "a"));
     input.sendKeys(protractor.Key.BACK_SPACE);
+
+    return this
 }

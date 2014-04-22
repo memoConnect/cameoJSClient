@@ -6,7 +6,9 @@
         "loginUser1 = 'tender_morse'",
         "passwordUser1 = 'password'",
         "purlUser1 = 'twOdhtRiRk'",
-        "purlExtern = 'QfehpTcMUF'"
+        "purlExtern = 'QfehpTcMUF'",
+        "loginUser2 = 'sad_archimedes'",
+        "passwordUser2 = 'password'"
     ]
 }
 

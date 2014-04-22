@@ -12,7 +12,7 @@
         <header class="cm-list-header">
             <h1>{{'CONTACTS.HEADING.LIST'|cmTranslate}}</h1>
 
-            <button ng-click="openAddModal()" cm-edge data-qa="add-contact">
+            <button ng-click="openAddModal()" cm-edge data-qa="add-contact-btn">
                 <i class="fa cm-edge-add"></i>
             </button>
 
@@ -36,7 +36,7 @@
                 <cm-contact-brief cm-data="contact" cm-weight="1" ng-click="editContact(contact)"></cm-contact-brief>
                 <cm-contact-type cm-data="contact"></cm-contact-type>
                 <span class="separator"></span>
-                <button ng-click="startConversation(contact)">
+                <button ng-click="startConversation(contact)" data-qa="start-new-conversation-btn">
                     <i class="fa cm-write"></i>
                 </button>
             </cm-contact-tag>

@@ -5,22 +5,70 @@ describe('Route: Contacts', function () {
     var ptor = util.getPtorInstance()
 
     it('should be found at "#/contacts".', function(){
-        util.login()
-        util.get('/contacts')
-        util.expectCurrentUrl('#/contacts')
+        util
+        .login()
+        .get('/contacts')
+        .expectCurrentUrl('#/contacts')
     })
 
     it('should have a header.', function(){
-        expect($('cm-header').isPresent()).toBe(true)
+        util.waitForElement('cm-header')
     })
 
     it('should have a footer.', function(){
-        expect($('cm-footer').isPresent()).toBe(true)
+        util.waitForElement('cm-footer')
     })
 
-    //Tofo:Filter
+    it('should have a button to add new a contact.', function(){
+        //Todo: Funktionalität testen:
+        util.waitForElement('[data-qa="add-contact-btn"]')
+    })
+
+    //Todo:Filter
 
     it('should have a contact list.', function(){
-        expect($('cm-contacts-list').isPresent()).toBe(true)
+        util.waitForElement('cm-contacts-list')
     })
+
+    describe('contact list', function(){
+        
+        it('should have an avatar.', function(){
+            util.waitForElement('cm-contacts-list cm-avatar')            
+            $('cm-contacts-list cm-avatar').click()
+            util.waitForPageLoad(/\/contact\/[a-zA-Z0-9]+$/)       
+        })
+
+
+        it('should have key security indicator.', function(){
+            util.get('/contacts')
+            util.waitForElement('cm-contacts-list cm-key-level')
+        })
+
+
+        it('should have brief contact details.', function(){
+            util.waitForElement('cm-contacts-list cm-contact-brief')
+            $('cm-contacts-list cm-contact-brief').click()
+            util.waitForPageLoad(/\/contact\/[a-zA-Z0-9]+$/)
+        })
+
+
+        it('should have contact type indicator.', function(){
+            util.get('/contacts') 
+            util.waitForElement('cm-contacts-list cm-contact-type')
+        })
+
+
+        it('should have a seperator.', function(){
+            util.waitForElement('cm-contacts-list .separator')           
+        })
+
+
+        it('should have a button to compose a new message.', function(){
+            util.waitForElement('cm-contacts-list [data-qa="start-new-conversation-btn"]')  
+        })
+
+
+    })
+
+
 })
