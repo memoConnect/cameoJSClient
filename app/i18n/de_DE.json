@@ -150,15 +150,17 @@
 	
 	"CONTACTS": {
 		"WELCOME": "Adressbuch",
-		"HEADING": "Kontakte",
+		"HEADING": {
+            "LIST": "Kontakte",
+            "REQUESTS": "Kontaktanfragen"
+        },
         "LIST_EMPTY": "Bisher keine Kontakte vorhanden",
         "PLACEHOLDER": {
             "ADD_NEW_CONTACT": "geben Sie hier eine cameoId ein"
         },
         "HEADER": {
             "SEARCH_CAMEO_ID": "Kontakt hinzufügen",
-            "CONTACTS_LIST": "Kontakte",
-            "REQUEST_LIST": "Kontaktanfragen"
+            "CONTACTS_LIST": "Kontakte"
         },
         "INFO": {
             "NO_RESULTS": "Keine cameo Kontakte gefunden",

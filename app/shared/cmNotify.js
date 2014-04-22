@@ -56,8 +56,6 @@ cmNotify.config(['growlProvider', '$httpProvider', function (growlProvider, $htt
             }
         }
 
-
-
         $rootScope.$on('growlMessage', function(event, message){
             notifications.push(message)
             $rootScope.$broadcast('cmNotify:update')
@@ -88,6 +86,9 @@ cmNotify.config(['growlProvider', '$httpProvider', function (growlProvider, $htt
     }
 ])
 
+// TODO link to drtv's:
+// drtv-contact-request-list.js:36
+
 /**
  * directive for <div cm-notify>
  */
@@ -99,10 +100,8 @@ cmNotify.directive('cmNotify', function () {
 });
 
 cmNotify.directive('cmNotifySignal', [
-
     '$rootScope',
     'cmNotify',
-
     function ($rootScope, cmNotify) {
         'use strict';
         return {

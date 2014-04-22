@@ -125,13 +125,54 @@ cm-contacts-filter-controls{
     }
 }
 
-cm-contacts-list{
+cm-contacts-list, cm-contact-request-list{
     display:block !important;
 }
 
 cm-key-level {
-    text-align:center;
-    padding:0.5em;
-    line-height: 1em;
-    white-space:normal;
+  text-align:center;
+  padding:0.5em;
+  line-height: 1em;
+  white-space:normal;
 }
+
+cm-contact-request-list{
+  header{
+    background:@cm-input-bg-color;
+    padding:0 1em;
+    line-height:4rem;
+    font-weight:bold;
+    i{
+      margin-right:1em;
+      vertical-align:text-bottom;
+    }
+  }
+  cm-contact-tag{
+    button{
+      color:@cm-readed-grey;
+    }
+    &.is-new{
+      strong{
+        color:@cm-warning-color;
+      }
+      button{
+        color:@cm-ci-color;
+      }
+    }
+    &.message-open{
+      height:auto;
+      .cm-request-brief{
+        overflow:visible;
+        white-space:normal;
+        height:auto;
+      }
+    }
+  }
+  .cm-request-brief{
+    padding-left:1em;
+    &.with-message{
+      line-height:2rem;
+    }
+  }
+}
+
