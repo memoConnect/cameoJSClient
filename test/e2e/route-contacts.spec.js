@@ -18,9 +18,20 @@ describe('Route: Contacts', function () {
         expect($('cm-footer').isPresent()).toBe(true)
     })
 
-    //Tofo:Filter
+    it('should have a button to add new a contact.', function(){
+        //Todo: Funktionalität testen:
+        $([data-qa="add-contact"]).isPresent()).toBe(true)
+    })
+
+    //Todo:Filter
 
     it('should have a contact list.', function(){
         expect($('cm-contacts-list').isPresent()).toBe(true)
     })
+
+    describe('contact list', function(){
+        
+    })
+
+
 })
