@@ -6,6 +6,8 @@
         "loginUser1 = 'prickly_yonath'",
         "passwordUser1 = 'password'",
         "purlUser1 = '5FwynM6cti'",
-        "purlExtern = 'BS4PcRK3AP'"
+        "purlExtern = 'BS4PcRK3AP'",
+        "loginUser2 = 'lonely_pasteur'",
+        "passwordUser2 = 'password'"
     ]
 }
