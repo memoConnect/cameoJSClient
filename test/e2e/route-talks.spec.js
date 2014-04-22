@@ -57,7 +57,6 @@ describe('talks', function () {
 
     it('should open a new conversation on button click', function(){
         $("body").sendKeys(protractor.Key.HOME)
-        ptor.sleep(10000)
         $("[cm-edge]").click()
         util.waitForPageLoad("/conversation/")
     })

@@ -9,69 +9,62 @@ describe('Route: Contacts', function () {
         .login()
         .get('/contacts')
         .expectCurrentUrl('#/contacts')
-        .waitForSpinner()
     })
 
     it('should have a header.', function(){
-        expect($('cm-header').isPresent()).toBe(true)
+        util.waitForElement('cm-header')
     })
 
     it('should have a footer.', function(){
-        expect($('cm-footer').isPresent()).toBe(true)
+        util.waitForElement('cm-footer')
     })
 
     it('should have a button to add new a contact.', function(){
         //Todo: Funktionalität testen:
-        expect($('[data-qa="add-contact-btn"]').isPresent()).toBe(true)
+        util.waitForElement('[data-qa="add-contact-btn"]')
     })
 
     //Todo:Filter
 
     it('should have a contact list.', function(){
-        expect($('cm-contacts-list').isPresent()).toBe(true)
+        util.waitForElement('cm-contacts-list')
     })
 
     describe('contact list', function(){
         
         it('should have an avatar.', function(){
-            var element = $('cm-contacts-list cm-avatar')
-            expect(element.isPresent()).toBe(true)
-            
-            element.click()
+            util.waitForElement('cm-contacts-list cm-avatar')            
+            $('cm-contacts-list cm-avatar').click()
             util.waitForPageLoad(/\/contact\/[a-zA-Z0-9]+$/)       
         })
 
 
         it('should have key security indicator.', function(){
             util.get('/contacts')
-            util.waitForSpinner()
-            expect($('cm-contacts-list cm-key-level').isPresent()).toBe(true)           
+            util.waitForElement('cm-contacts-list cm-key-level')
         })
 
 
         it('should have brief contact details.', function(){
-            var element = $('cm-contacts-list cm-contact-brief')
-            expect(element.isPresent()).toBe(true)
-            
-            element.click()
+            util.waitForElement('cm-contacts-list cm-contact-brief')
+            $('cm-contacts-list cm-contact-brief').click()
             util.waitForPageLoad(/\/contact\/[a-zA-Z0-9]+$/)
         })
 
 
         it('should have contact type indicator.', function(){
             util.get('/contacts') 
-            util.waitForSpinner()
-            expect($('cm-contacts-list cm-contact-type').isPresent()).toBe(true)   
+            util.waitForElement('cm-contacts-list cm-contact-type')
         })
 
 
         it('should have a seperator.', function(){
-            expect($('cm-contacts-list .separator').isPresent()).toBe(true)            
+            util.waitForElement('cm-contacts-list .separator')           
         })
 
 
         it('should have a button to compose a new message.', function(){
-            expect($('cm-contacts-list [data-qa="start-new-conversation-btn"]').isPresent()).toBe(true)            
+            util.waitForElement('cm-contacts-list [data-qa="start-new-conversation-btn"]')  
         })
 
 
