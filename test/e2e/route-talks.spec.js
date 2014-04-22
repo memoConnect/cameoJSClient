@@ -7,8 +7,8 @@ describe('talks', function () {
 
     it('should be at "#/talks".', function(){
         util.login()
-        util.get('/talks')
-        util.expectCurrentUrl('#/talks')
+       util.get('/talks')
+       util.expectCurrentUrl('#/talks')
     })
 
     it('should have a header.', function(){
@@ -54,5 +54,9 @@ describe('talks', function () {
         util.waitForPageLoad("/talks")
     })
 
-    // todo: open new conversation
+    it('should open a new conversation on button click', function(){
+        $("body").sendKeys(protractor.Key.HOME)
+        $("[cm-edge]").click()
+        util.waitForPageLoad("/conversation/")
+    })
 })

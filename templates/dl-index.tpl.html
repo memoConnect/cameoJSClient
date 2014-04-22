@@ -8,52 +8,52 @@
 
     <link rel="stylesheet" href="../app/css/font-awesome.css">
     <style>
+        body,html,.table{height:100%;padding:0;margin:0}
         body{font-size:12px;background:#000;color:#fff;font-family: "Helvetica Neue",Helvetica,Arial,sans-serif}
-        .logo{color:#02BED2;padding:0.2em 0.5em;font-size:40px;white-space:nowrap}
+        .table{display:table;margin: 0 auto}
+        .cell{display:table-cell;text-align:center;vertical-align:middle}
+        .center-box{padding:25px;margin:50px 0;box-shadow:0 0 10px 10px rgba(255, 255, 255, 0.5);border-radius:50px}
+        .header{color:#02BED2;font-size:40px;line-height:20px;white-space:nowrap;margin-bottom:20px}
+        .header .cm-rhino-positive{font-size:80px}
+        .header span{font-size:20px}
         a {color:#fff}
         a:hover, a:focus {color:#02BED2}
-        ul{list-style:none}
-        li{display:block;margin:10px 0}
-        li:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0}
-        li .image{float:left;margin-right:10px}
-        li .image img{width:50px}
-        li div{padding:5px 0}
+        ul{list-style:none;padding:0;margin:0}
+        li{display:block;border-top:dotted 1px #02BED2}
+        li a{display:block;padding:20px 0}
     </style>
 </head>
 <body>
-    <div class="logo">
-        <i class="fa cm-logo-c"></i><i class="fa cm-logo-a"></i><i class="fa cm-logo-m"></i><i class="fa cm-logo-e"></i><i class="fa cm-logo-o"></i><i class="fa cm-logo-net"></i><br />
-        App Center
+    <div class="table">
+        <div class="cell">
+            <div class="center-box">
+                <div class="header">
+                    <i class="fa cm-rhino-positive"></i><br />
+                    <i class="fa cm-logo-c"></i><i class="fa cm-logo-a"></i><i class="fa cm-logo-m"></i><i class="fa cm-logo-e"></i><i class="fa cm-logo-o"></i><i class="fa cm-logo-net"></i><br />
+                    <span>
+                        App Center<br />
+                        <%= phonegapBaseFilename %>
+                    </span>
+                </div>
+                <ul>
+                    <li>
+                        <a href="/dl/<%= phonegapBaseFilename %>.apk">
+                            <img src="/dl/gfx/172x60_android_store.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/dl/<%= phonegapBaseFilename %>.ipa">
+                            <img src="/dl/gfx/172x60_apple_store.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/dl/<%= phonegapBaseFilename %>.xap">
+                            <img src="/dl/gfx/172x60_windows_store.png" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <ul>
-        <li>
-            <a href="/dl/<%= phonegapBaseFilename %>.apk" class="image">
-                <img src="../app/gfx/dl/android-ci.png" />
-            </a>
-            <div>
-                Android<br />
-                <a href="/dl/<%= phonegapBaseFilename %>.apk"><%= phonegapBaseFilename %></a>
-            </div>
-        </li>
-        <li>
-            <a href="/dl/<%= phonegapBaseFilename %>.ipa" class="image">
-                <img src="../app/gfx/dl/apple-ci.png" />
-            </a>
-            <div>
-                iOS<br/>
-                <a href="/dl/<%= phonegapBaseFilename %>.ipa"><%= phonegapBaseFilename %></a><br />
-            </div>
-        </li>
-        <li>
-            <a href="/dl/<%= phonegapBaseFilename %>.xap" class="image">
-                <img src="../app/gfx/dl/windows-ci.png" />
-            </a>
-            <div>
-                WindowsPhone<br />
-                <a href="/dl/<%= phonegapBaseFilename %>.xap"><%= phonegapBaseFilename %></a><br />
-            </div>
-        </li>
-    </ul>
-
 </body>
 </html>

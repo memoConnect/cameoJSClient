@@ -162,9 +162,6 @@ define([
             $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) }
             $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) }
 
-            // hide app spinner
-            angular.element($window.document.getElementsByClassName('app-spinner')[0]).css('display','none');
-
             // passing wrong route calls
             $rootScope.$on("$routeChangeStart", function(){
                 // expections
@@ -190,6 +187,10 @@ define([
             };
 
             $rootScope.$on('$routeChangeSuccess', function(schmu, _currentRoute_, _prevRoute_){
+
+                // hide app spinner
+                angular.element($window.document.getElementsByClassName('app-spinner')[0])
+                    .css('display','none');
 
                 // momentjs
                 $window.moment.lang(cmLanguage.getCurrentLanguage());
