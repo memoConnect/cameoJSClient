@@ -30,27 +30,27 @@ describe('Route: Purl', function () {
 
     function checkFormForExternUser(){
         it('should have back button', function(){
-            expect($('cm-back').isPresent()).toBe(true)
+            expect($('cm-back').isPresent()).toBe(false)
         })
 
         it('should have identity', function(){
-            expect($('cm-identity').isPresent()).toBe(true)
+            expect($('cm-identity').isPresent()).toBe(false)
         })
 
         it('should have menu', function(){
-            expect($('cm-menu').isPresent()).toBe(true)
+            expect($('cm-menu').isPresent()).toBe(false)
         })
 
         it('should have attachment button', function(){
-            expect($('i[data-qa="attachments-btn"]').isPresent()).toBe(true)
+            expect($('i[data-qa="attachments-btn"]').isPresent()).toBe(false)
         })
 
-        it('should have normal answer container', function(){
-            expect($('[data-qa="answer-ctn"]').getAttribute('class')).not.toMatch('large')
+        it('should have large answer container', function(){
+            expect($('[data-qa="answer-ctn"]').getAttribute('class')).toMatch('large')
         })
     }
 
-    xdescribe("User1 open Purl and is logged in", function(){
+    describe("User1 open Purl and is logged in", function(){
         it('open "#/purl/+'+ config.purlUser1 +'" after login.', function(){
             util.login()
             util.get('/purl/'+config.purlUser1)
@@ -60,7 +60,7 @@ describe('Route: Purl', function () {
         checkFormForInternUser();
     })
 
-    xdescribe("User1 open Purl and is logged out", function(){
+    describe("User1 open Purl and is logged out", function(){
         it('open "#/purl/+'+ config.purlUser1 +'" after logout before login.', function(){
             util.logout();
             util.get('/purl/'+config.purlUser1)
@@ -87,6 +87,16 @@ describe('Route: Purl', function () {
             util.expectCurrentUrl('#/purl/'+config.purlUser1)
         })
 
-        //checkFormForInternUser();
+        checkFormForInternUser();
+    })
+
+    describe("Extern User open Purl, no User is logged in", function(){
+        it('open "#/purl/+'+ config.purlExtern +'"', function(){
+            util.logout();
+            util.get('/purl/'+config.purlExtern)
+            util.expectCurrentUrl('#/purl/'+config.purlExtern)
+        })
+
+        checkFormForExternUser();
     })
 })
