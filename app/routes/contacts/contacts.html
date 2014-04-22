@@ -7,10 +7,10 @@
 </cm-header>
 
 <section ng-controller="ContactsCtrl">
-
+    <!-- contact list -->
     <div ng-if="activeSection == 'list'">
         <header class="cm-list-header">
-            <h1>{{"CONTACTS.HEADING"|cmTranslate}}</h1>
+            <h1>{{'CONTACTS.HEADING.LIST'|cmTranslate}}</h1>
 
             <button ng-click="openAddModal()" cm-edge data-qa="add-contact-btn">
                 <i class="fa cm-edge-add"></i>
@@ -43,9 +43,14 @@
 
         </cm-contacts-list>
     </div>
-
+    <!-- request list -->
     <div ng-if="activeSection == 'requests'">
         <cm-contact-request-list>
+
+            <header>
+                <i class="fa cm-contacts cm-lg-icon"></i> {{'CONTACTS.HEADING.REQUESTS'|cmTranslate}}
+            </header>
+
             <div ng-show="isLoading" class="empty-list">
                 <cm-spinner ></cm-spinner>
             </div>
@@ -54,11 +59,11 @@
                 <i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_REQUESTS'|cmTranslate}}
             </div>
 
-            <cm-contact-tag cm-rubber-space ng-repeat="request in requests">
-                <pre>{{request}}</pre>
+            <cm-contact-tag cm-rubber-space ng-repeat="request in requests" ng-class="{'is-new':request.state == undefined,'message-open':request.isOpen}">
                 <cm-avatar cm-data="request.identity"></cm-avatar>
-                <div>
-                    {{request.identity.getDisplayName()}}
+                <div class="cm-request-brief" cm-weight="1" ng-click="toggleBrief(request)" ng-class="{'with-message':request.message != ''}">
+                    <strong>{{request.identity.getDisplayName()}}</strong><br />
+                    {{request.message}}
                 </div>
                 <button ng-click="acceptRequest(request)">
                     <i class="fa cm-checkbox"></i>
@@ -66,8 +71,11 @@
             </cm-contact-tag>
         </cm-contact-request-list>
     </div>
+    <!-- search identity -->
+    <div cm-search-cameo-identity ng-if="activeSection == 'search'">
 
-    <div cm-search-cameo-identity ng-if="activeSection == 'search'"></div>
+
+    </div>
 
 </section>
 

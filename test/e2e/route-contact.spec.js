@@ -54,7 +54,9 @@ describe('Route: Contact', function () {
         })
     })
 
-    describe('create external contact', function(){
+    describe('create extern contact', function(){
+        var userName = 'moeper_'+ Date.now();
+
         it('open modal and click create new contact',function(){
             util.expectCurrentUrl('#/contacts')
 
@@ -76,7 +78,7 @@ describe('Route: Contact', function () {
         })
 
         it('create external contact', function(){
-            $("[data-qa='input-displayname']").sendKeys('moeper')
+            $("[data-qa='input-displayname']").sendKeys(userName)
             $("[data-qa='input-phonenumber']").sendKeys('12345')
             $("[data-qa='input-email']").sendKeys('die@gibts.net')
 
@@ -86,9 +88,9 @@ describe('Route: Contact', function () {
         })
 
         it('search and click to detail',function(){
-            $("[data-qa='input-search']").sendKeys('moeper')
+            $("[data-qa='input-search']").sendKeys(userName)
 
-            expect($$('cm-contacts-list cm-contact-tag cm-avatar').count()).not.toBe(0)
+            expect($$('cm-contacts-list cm-contact-tag cm-avatar').count()).toBe(1)
         })
     })
 })

@@ -3,7 +3,8 @@
 angular.module('cmContacts').directive('cmContactRequestList',[
     'cmContactsModel',
     'cmNotify',
-    function (cmContactsModel, cmNotify){
+    '$rootScope',
+    function (cmContactsModel, cmNotify, $rootScope){
         return {
             restrict: 'AE',
             scope: true,
@@ -15,18 +16,28 @@ angular.module('cmContacts').directive('cmContactRequestList',[
                     $scope.requests = cmContactsModel.requests;
                 });
 
+                $scope.toggleBrief = function(request){
+                    if(request.isOpen == undefined || request.isOpen == false){
+                        request.state = 'new';
+                        request.isOpen = true;
+                    } else {
+                        request.isOpen = false;
+                    }
+                };
+
                 /**
                  * fired by repeat and accept that
                  * @param id
                  */
                 $scope.acceptRequest = function(item){
-                    console.log(item)
-//                    cmContactsModel.answerFriendRequest(item.id, 'accept').then(
-//                        function(){
-//                            cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT');
-//                            rmFromModel(item);
-//                        }
-//                    );
+                    cmContactsModel.answerFriendRequest(item.identity.id, 'accept').then(
+                        function(){
+                            cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT');
+                            $rootScope.$broadcast('cmNotify:update');
+                            removeRequest(item);
+                            cmContactsModel.trigger('friendRequests:updated')
+                        }
+                    );
                 };
 
                 /**
@@ -37,7 +48,7 @@ angular.module('cmContacts').directive('cmContactRequestList',[
 //                    cmContactsModel.answerFriendRequest(item.id, 'reject').then(
 //                        function(){
 //                            cmNotify.warn('CONTACTS.INFO.REQUEST.REJECT');
-//                            rmFromModel(item);
+//                            removeRequest(item);
 //                        }
 //                    );
                 };
@@ -47,10 +58,10 @@ angular.module('cmContacts').directive('cmContactRequestList',[
                  * remove request from results
                  * @param id
                  */
-                function rmFromModel(item){
+                function removeRequest(item){
                     if(angular.isDefined(item)){
-                        var index = $scope.results.indexOf(item);
-                        $scope.results.splice(index,1);
+                        var index = $scope.requests.indexOf(item);
+                        $scope.requests.splice(index,1);
                     }
                 }
             }
