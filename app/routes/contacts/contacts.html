@@ -10,8 +10,7 @@
 <section ng-controller="ContactsCtrl">
 
     <div ng-if="activeSection == 'list'">
-
-        <header>
+        <header class="cm-list-header">
             <h1>{{"CONTACTS.HEADING"|cmTranslate}}</h1>
 
             <button ng-click="openAddModal()" cm-edge data-qa="add-contact">
@@ -37,17 +36,36 @@
                 <cm-key-level key-size="contact.identity.getWeakestKeySize()"></cm-key-level>
                 <cm-contact-brief cm-data="contact" cm-weight="1" ng-click="editContact(contact)"></cm-contact-brief>
                 <cm-contact-type cm-data="contact"></cm-contact-type>
-                <span class="separator" ></span>
+                <span class="separator"></span>
                 <button ng-click="startConversation(contact)">
                     <i class="fa cm-write"></i>
                 </button>
             </cm-contact-tag>
 
         </cm-contacts-list>
-
     </div>
 
-    <div cm-contact-request-list ng-if="activeSection == 'requests'"></div>
+    <div ng-if="activeSection == 'requests'">
+        <cm-contact-request-list>
+            <div ng-show="isLoading" class="empty-list">
+                <cm-spinner ></cm-spinner>
+            </div>
+
+            <div ng-show="!requests.length && !isLoading" class="empty-list">
+                <i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_REQUESTS'|cmTranslate}}
+            </div>
+
+            <cm-contact-tag cm-rubber-space ng-repeat="request in requests">
+                <cm-avatar cm-data="request.identity"></cm-avatar>
+                <div>
+                    {{request.displayName}} ({{request.cameoId}})
+                </div>
+                <button ng-click="acceptRequest(request)">
+                    <i class="fa cm-checkbox"></i>
+                </button>
+            </cm-contact-tag>
+        </cm-contact-request-list>
+    </div>
 
     <div cm-search-cameo-identity ng-if="activeSection == 'search'"></div>
 

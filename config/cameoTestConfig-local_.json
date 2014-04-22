@@ -1,0 +1,12 @@
+{
+    "config": {
+        "apiUrl": "localhost:9000/api/v1",
+        "wwwUrl": "http://localhost:9000/app/"
+    },
+    "testData": [
+            "loginUser1 = 'BMeSfHXQ'",
+            "passwordUser1 = 'password'",
+            "purlUser1 = 'V3Ml6hzqX8'",
+            "purlExtern = 'MSaKlj4hJP'"
+    ]
+}
