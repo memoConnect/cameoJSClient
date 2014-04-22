@@ -1,12 +1,11 @@
 {
     "config": {
-        "wwwUrl": "http://localhost:9000/app/"
+        "wwwUrl": "http://localhost:9000"
     },
     "testData": [
-            "loginUser1 = 'BMeSfHXQ'",
-            "passwordUser1 = 'password'",
-            "purlUser1 = 'V3Ml6hzqX8'",
-            "purlExtern = 'MSaKlj4hJP'"
+        "loginUser1 = 'prickly_yonath'",
+        "passwordUser1 = 'password'",
+        "purlUser1 = '5FwynM6cti'",
+        "purlExtern = 'BS4PcRK3AP'"
     ]
-
 }
