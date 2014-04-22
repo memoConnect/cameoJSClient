@@ -47,6 +47,10 @@ angular.module('cmConversations').directive('cmConversation', [
                                 .addTo($scope.conversation)
                                 .sendTo($scope.conversation.id)
                                 .then(function(){
+                                    $scope.conversation.$chain()
+                                    .encryptPassphrase()
+                                    .saveEncryptedPassphraseList()
+
                                     $scope.conversation.numberOfMessages++;
                                     $scope.my_message_text = "";
 
