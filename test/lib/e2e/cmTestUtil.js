@@ -89,8 +89,11 @@ this.login = function (username, password) {
     var user = $("input[name=user]");
     var pw = $("input[name=pw]");
 
-    user.sendKeys(config.loginUser1);
-    pw.sendKeys(config.passwordUser1);
+    var loginUser = username || config.loginUser1;
+    var loginPassword = password || config.passwordUser1;
+
+    user.sendKeys(loginUser);
+    pw.sendKeys(loginPassword);
 
     $("[data-qa='login-submit-btn']").click();
 
