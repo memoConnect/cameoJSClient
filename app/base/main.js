@@ -40,8 +40,6 @@ require.config({
 //        'cmCron': 'shared/cmCron',
 
         'cmProfile': 'comps/cmProfile',
-        //'cmConversations': 'comps/conversation/conversations-module',
-        //'cmContacts': 'comps/contacts/cmContacts',
 
         // shared
         'util-spin': 'vendor/util/spin',
