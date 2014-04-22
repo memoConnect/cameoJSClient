@@ -143,8 +143,34 @@ angular.module('cmContacts').service('cmContactsModel',[
             return cmContactsAdapter.getAllFromGroup(group,limit,offset);
         };
 
-        this._addFriendRequest = function(identity_data){
+        /**
+         * Friend Request Handling
+         */
 
+        /**
+         * add Friend Request to Model
+         * @param identity_data
+         * @private
+         */
+        this._addFriendRequest = function(identity_data){
+            var i = 0,
+                check = false;
+
+            if(this.requests.length == 0){
+                this.requests.push({identity: cmIdentityFactory.create(identity_data.id), message:''});
+            } else {
+                while(i < this.requests.length){
+                    if(this.requests[i].identity.id == identity_data.id){
+                        check = true;
+                        break;
+                    }
+                    i++;
+                }
+
+                if(check !== true){
+                    this.requests.push({identity: cmIdentityFactory.create(identity_data.id), message:''});
+                }
+            }
         };
 
         this.getFriendRequests = function(){
@@ -152,19 +178,19 @@ angular.module('cmContacts').service('cmContactsModel',[
                 cmContactsAdapter.getFriendRequests().then(
                     function(data){
                         cmLogger.debug('cmContactsModel:getFriendRequests:done');
-                        self.requests = data;
-                        angular.forEach(data, function(){
+                        var old_length = self.requests.length;
 
+                        angular.forEach(data, function(value){
+                            self._addFriendRequest(value);
                         });
 
-                        self.trigger('friendRequests:loaded');
-                        if(data.length > 0){
+                        if(old_length < self.requests.length){
+                            self.trigger('friendRequests:loaded');
                             cmNotify.info('new Friend Requests', {ttl:1000})
                         }
                     }
                 )
             }
-//            return cmContactsAdapter.getFriendRequests();
         };
 
         this.sendFriendRequest = function(id){

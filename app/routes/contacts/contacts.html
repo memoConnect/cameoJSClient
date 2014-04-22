@@ -59,7 +59,7 @@
                 <pre>{{request}}</pre>
                 <cm-avatar cm-data="request.identity"></cm-avatar>
                 <div>
-                    {{request.displayName}} ({{request.cameoId}})
+                    {{request.identity.getDisplayName()}}
                 </div>
                 <button ng-click="acceptRequest(request)">
                     <i class="fa cm-checkbox"></i>
