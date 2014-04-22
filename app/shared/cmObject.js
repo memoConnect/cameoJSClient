@@ -72,6 +72,8 @@ angular.module('cmObject', [])
                 
                 return obj._chains[name]
             }
+
+            return this 
         }
         
     }
