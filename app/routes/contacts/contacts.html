@@ -56,6 +56,7 @@
             </div>
 
             <cm-contact-tag cm-rubber-space ng-repeat="request in requests">
+                <pre>{{request}}</pre>
                 <cm-avatar cm-data="request.identity"></cm-avatar>
                 <div>
                     {{request.displayName}} ({{request.cameoId}})

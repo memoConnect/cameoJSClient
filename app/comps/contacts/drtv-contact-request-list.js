@@ -6,10 +6,14 @@ angular.module('cmContacts').directive('cmContactRequestList',[
     function (cmContactsModel, cmNotify){
         return {
             restrict: 'AE',
-            scope: {},
+            scope: true,
             controller: function($scope){
                 $scope.requests = cmContactsModel.requests;
                 $scope.isLoading = false;
+
+                cmContactsModel.on('friendRequests:loaded', function(){
+                    $scope.requests = cmContactsModel.requests;
+                });
 
                 /**
                  * fired by repeat and accept that

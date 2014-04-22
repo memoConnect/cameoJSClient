@@ -143,12 +143,20 @@ angular.module('cmContacts').service('cmContactsModel',[
             return cmContactsAdapter.getAllFromGroup(group,limit,offset);
         };
 
+        this._addFriendRequest = function(identity_data){
+
+        };
+
         this.getFriendRequests = function(){
             if(cmUserModel.isAuth() !== false){
                 cmContactsAdapter.getFriendRequests().then(
                     function(data){
                         cmLogger.debug('cmContactsModel:getFriendRequests:done');
                         self.requests = data;
+                        angular.forEach(data, function(){
+
+                        });
+
                         self.trigger('friendRequests:loaded');
                         if(data.length > 0){
                             cmNotify.info('new Friend Requests', {ttl:1000})
