@@ -33,7 +33,10 @@ angular.module('cmContacts').directive('cmFriendRequestCounter', [
 
                 cmContactsModel.on('friendRequests:loaded', function(){
                     show();
-                })
+                });
+                cmContactsModel.on('friendRequests:updated', function(){
+                    show();
+                });
 
                 show();
             }

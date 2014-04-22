@@ -35,6 +35,7 @@ angular.module('cmContacts').directive('cmContactRequestList',[
                             cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT');
                             $rootScope.$broadcast('cmNotify:update');
                             removeRequest(item);
+                            cmContactsModel.trigger('friendRequests:updated')
                         }
                     );
                 };
