@@ -54,11 +54,11 @@ describe('Route: Contact', function () {
         })
     })
 
-    describe('create extern contact', function(){
+    describe('create external contact', function(){
         it('open modal and click create new contact',function(){
             util.expectCurrentUrl('#/contacts')
 
-            $('[data-qa="add-contact"]').click()
+            $('[data-qa="add-contact-btn"]').click()
 
             $$('.modal-content a').last().click()
 
