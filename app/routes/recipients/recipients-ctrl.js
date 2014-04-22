@@ -45,9 +45,6 @@ define([
                 ?   $scope.removeRecipient(recipient)
                 :   $scope.addRecipient(recipient)
             }
-
-            conversation.on('after-recipient-add', function(){console.log('add')})
-            conversation.on('after-recipient-add', function(){console.log('add')})
         }
     ])
 })

@@ -98,6 +98,7 @@ cmNotify.directive('cmNotify', function () {
     }
 });
 
+
 cmNotify.directive('cmNotifySignal', [
 
     '$rootScope',
