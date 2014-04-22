@@ -6,7 +6,29 @@ describe('Route: Purl', function () {
 
     var ptor = util.getPtorInstance()
 
-    function checkFormForSignUser(){
+    function checkFormForInternUser(){
+        it('should have back button', function(){
+            expect($('cm-back').isPresent()).toBe(true)
+        })
+
+        it('should have identity', function(){
+            expect($('cm-identity').isPresent()).toBe(true)
+        })
+
+        it('should have menu', function(){
+            expect($('cm-menu').isPresent()).toBe(true)
+        })
+
+        it('should have attachment button', function(){
+            expect($('i[data-qa="attachments-btn"]').isPresent()).toBe(true)
+        })
+
+        it('should have normal answer container', function(){
+            expect($('[data-qa="answer-ctn"]').getAttribute('class')).not.toMatch('large')
+        })
+    }
+
+    function checkFormForExternUser(){
         it('should have back button', function(){
             expect($('cm-back').isPresent()).toBe(true)
         })
@@ -35,7 +57,7 @@ describe('Route: Purl', function () {
             util.expectCurrentUrl('#/purl/'+config.purlUser1)
         })
 
-        checkFormForSignUser();
+        checkFormForInternUser();
     })
 
     xdescribe("User1 open Purl and is logged out", function(){
@@ -65,6 +87,6 @@ describe('Route: Purl', function () {
             util.expectCurrentUrl('#/purl/'+config.purlUser1)
         })
 
-        //checkFormForSignUser();
+        //checkFormForInternUser();
     })
 })
