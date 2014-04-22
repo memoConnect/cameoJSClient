@@ -2,17 +2,17 @@
  * Created by reimerei on 15.04.14.
  */
 var config = require("../../e2e/config-e2e-tests.js")
+var self = this
 
 var ptor
 
-this.setPtorInstance = function(newPtor) {
+this.setPtorInstance = function (newPtor) {
     ptor = newPtor
 }
 
-this.getPtorInstance = function(){
+this.getPtorInstance = function () {
     ptor = protractor.getInstance()
     ptor.ignoreSynchronization = true
-//    util.setPtorInstance(ptor)
     return ptor;
 }
 
@@ -22,8 +22,8 @@ this.waitForPageLoad = function (expectedRoute) {
 
             if (boolean) {
                 // get current route
-                return ptor.executeScript('return window._route').then(function(route) {
-                    if(expectedRoute == undefined || route.path.search(expectedRoute) != -1) {
+                return ptor.executeScript('return window._route').then(function (route) {
+                    if (expectedRoute == undefined || route.path.search(expectedRoute) != -1) {
                         return route.status == "success"
                     } else {
 //                        console.log("unexpected route:" + route.path)
@@ -32,10 +32,10 @@ this.waitForPageLoad = function (expectedRoute) {
             }
         })
 
-    }, config.routeTimeout, 'waitForPage '+expectedRoute+' timeout reached')
+    }, config.routeTimeout, 'waitForPage ' + expectedRoute + ' timeout reached')
 }
 
-this.waitForElement = function(selector){
+this.waitForElement = function (selector) {
     // add some initial delay
     ptor.sleep(100)
 
@@ -43,40 +43,43 @@ this.waitForElement = function(selector){
         return $$(selector).then(function (elements) {
             return elements.length > 0
         })
-    }, config.waitForTimeout, 'waitForElement '+selector+' timeout is reached')
+    }, config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
 }
 
-this.get = function(path) {
-    var url = config.wwwUrl + '#' + path 
+this.get = function (path) {
+    var url = config.wwwUrl + '#' + path
     ptor.get(url)
     this.waitForPageLoad()
 }
 
-this.expectCurrentUrl = function(match){
-    ptor.getCurrentUrl().then(function(url){
+this.expectCurrentUrl = function (match) {
+    ptor.getCurrentUrl().then(function (url) {
         expect(url).toMatch(match)
     })
 }
 
-this.logout = function(){
-    this.get('')
-    //This might change in the future:
-    ptor.wait(function(){
-        return ptor.executeScript('return localStorage.removeItem("token")').then(function(){
-            return true
-        })
-    }, 500, 'timeout: logout failed.')
+this.logout = function () {
+    this.get('/login')
+
+    $$("cm-menu").then(function (elements) {
+        if (elements.length > 0) {
+            $("cm-menu").click()
+            self.waitForElement(".cm-menu-list")
+            $("[data-qa='logout-btn']").click()
+        } else {
+        }
+    })
 }
 
-this.login = function(username, password){
+this.login = function (username, password) {
     this.logout()
     this.get('/login')
 
-//    $("body").sendKeys(protractor.Key.HOME)
+    $("body").sendKeys(protractor.Key.HOME)
     $("[data-qa='login-btn']").click();
 
-    var user    = $("input[name=user]");
-    var pw      = $("input[name=pw]");
+    var user = $("input[name=user]");
+    var pw = $("input[name=pw]");
 
     user.sendKeys(config.loginUser1);
     pw.sendKeys(config.passwordUser1);
@@ -108,7 +111,7 @@ this.waitForSpinner = function () {
 
 }
 
-this.checkWarning = function(qaValue) {
+this.checkWarning = function (qaValue) {
     var css = "[data-qa='" + qaValue + "']"
     var warn = $(css)
     expect(warn.isDisplayed()).toBe(true)
@@ -117,7 +120,7 @@ this.checkWarning = function(qaValue) {
     })
 }
 
-this.clearInput = function(qaValue) {
+this.clearInput = function (qaValue) {
     var css = "[data-qa='" + qaValue + "']"
     var input = $(css)
     input.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, "a"));

@@ -105,5 +105,12 @@ describe('registration', function () {
             expect(b).toBe(true)
         })
 
+        // modal should only be displayed on first visit
+        util.get("/talks");
+        $$(".modal").then(function(elements) {
+            expect(elements.length).toBe(0)
+        })
+
+
     })
 })
