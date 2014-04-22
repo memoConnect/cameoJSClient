@@ -2,7 +2,10 @@
 
 angular.module('cmObject', [])
 .service('cmObject', [
-    function(){
+
+    '$q',
+
+    function($q){
         var self = this
 
         this.addEventHandlingTo = function(obj){
@@ -26,5 +29,52 @@ angular.module('cmObject', [])
 
             return(this)
         }
+
+
+        this.addChainHandlingTo = function(obj){
+            obj._chains = {}
+
+            function Chain(obj){
+                var deferred     = $q.defer(),
+                    self         = this,
+                    last_promise = deferred.promise
+
+
+                angular.forEach(obj, function(value, key){                    
+                    if(typeof obj[key] != 'function')  return null
+
+                    self[key] = function(){
+                        var args = Array.prototype.slice.call(arguments, 0)
+
+                        last_promise = last_promise.then(function(result){                                
+                            return obj[key].apply(obj, args.length > 0 ? args : [result])                                 
+                        })
+
+                        return self
+                    }
+                })
+
+                self.then = function(){                    
+                    last_promise = last_promise.then.apply(last_promise, Array.prototype.slice.call(arguments, 0))
+                    return self
+                }
+
+                deferred.resolve()
+
+                return self
+            }
+
+
+            obj.$chain = function(name){
+                name  = name || 'default'
+
+                obj._chains[name] = obj._chains[name] || new Chain(obj)
+                
+                return obj._chains[name]
+            }
+
+            return this 
+        }
+        
     }
 ])

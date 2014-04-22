@@ -1,0 +1,16 @@
+{
+    "config": {
+        "apiUrl": "https://dev.cameo.io/api/v1",
+        "wwwUrl": "http://localhost:9000/app/",
+        "autoLogin": true
+    },
+    "phonegap": {
+        "baseName" : "cameoNet-default",
+        "appId" : "io.cameo.cameonet.client.web.mobile.app.local"
+
+    },
+    "testData": {
+        "accountName": "Z1395672127689",
+        "accountPassword": "PWD_Z1395672127689"
+    }
+}

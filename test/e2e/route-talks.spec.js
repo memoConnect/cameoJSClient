@@ -27,17 +27,18 @@ describe('talks', function () {
         })
     })
 
-    it('load 10 more elements on load more', function(){
-
-        $("[data-qa=load-more-btn]").sendKeys(protractor.Key.END)
-        $('[data-qa=load-more-btn]').click()
-
-        util.waitForSpinner()
-
-        $$('[data-qa=conversation-list-element]').then(function(elements){
-            expect(elements.length).toBeGreaterThan(10)
-        })
-    })
+    // disabled untill spinner is implemented for load more
+//    it('load 10 more elements on load more', function(){
+//
+//        $("[data-qa=load-more-btn]").sendKeys(protractor.Key.END)
+//        $('[data-qa=load-more-btn]').click()
+//
+//        util.waitForSpinner()
+//
+//        $$('[data-qa=conversation-list-element]').then(function(elements){
+//            expect(elements.length).toBeGreaterThan(10)
+//        })
+//    })
 
     it('should open conversation when clicked', function(){
 
