@@ -189,7 +189,8 @@ define([
             $rootScope.$on('$routeChangeSuccess', function(schmu, _currentRoute_, _prevRoute_){
 
                 // hide app spinner
-                angular.element($window.document.getElementsByClassName('app-spinner')[0]).css('display','none');
+                angular.element($window.document.getElementsByClassName('app-spinner')[0])
+                    .css('display','none');
 
                 // momentjs
                 $window.moment.lang(cmLanguage.getCurrentLanguage());
