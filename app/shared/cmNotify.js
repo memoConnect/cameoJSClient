@@ -107,7 +107,7 @@ cmNotify.directive('cmNotifySignal', [
         'use strict';
         return {
             restrict: 'AE',
-            template: '<i class="fa" ng-class="{\'cm-bell-ring\': unreadNotifications, \'cm-bell\' : !unreadNotifications}"></i>',
+            template: '<i class="fa" ng-class="{\'cm-bell-ring cm-orange\': unreadNotifications, \'cm-bell\' : !unreadNotifications}"></i>',
             scope: true,
 
             controller: function ($scope, $element, $attrs) {

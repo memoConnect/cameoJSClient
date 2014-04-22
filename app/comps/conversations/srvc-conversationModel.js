@@ -27,7 +27,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
             var self = this;
 
 
-            cmObject.addEventHandlingTo(this)
+            cmObject
+            .addEventHandlingTo(this)
+            .addChainHandlingTo(this)
 
             $rootScope.$on('logout', function(){
                 self.messages = [];
@@ -150,7 +152,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @param message
              * @returns {cmConversationModel.ConversationModel}
              */
-            this.addMessage = function (message) {
+            this.addMessage = function (message, encrypt_passphrase) {
+
                 if(this.messages.length == 0){
                     this.messages.push(message); // kunstgriff, eine neue conversation, hat erstmal nur eine message, da is der id abgleich egal
                 }else {
@@ -338,7 +341,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                        this.encryptedPassphraseList
                     && this.encryptedPassphraseList.length !=0
                 ){
-                    cmConversationsAdapter.updateEncryptedPassphraseList(this.id, this.encryptedPassphraseList)
+                    return cmConversationsAdapter.updateEncryptedPassphraseList(this.id, this.encryptedPassphraseList)
+                }else{
+                    return $q.defer().resolve().promise
                 }
             }
 

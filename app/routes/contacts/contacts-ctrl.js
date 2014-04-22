@@ -7,14 +7,10 @@ define([
     'use strict';
 
     app.register.controller('ContactsCtrl',[
-        '$scope',
-        '$modal',
-        function($scope, $modal){
-            // deprecated tabs for friendrequests
-            $scope.tabs = [
-                {i18n:'ADD','default':true},
-                {i18n:'REQUESTS'}
-            ];
+        '$scope', '$modal', '$routeParams',
+        function($scope, $modal, $routeParams){
+            // set active setion
+            $scope.activeSection = $routeParams.section || 'list';
 
             // search or add modal popup
             $scope.openAddModal = function(){
