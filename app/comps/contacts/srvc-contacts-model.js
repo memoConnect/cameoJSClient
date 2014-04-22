@@ -6,9 +6,11 @@ angular.module('cmContacts').service('cmContactsModel',[
     'cmIdentityFactory',
     'cmUtil',
     'cmObject',
+    'cmLogger',
+    'cmNotify',
     '$q',
     '$rootScope',
-    function (cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUtil, cmObject, $q, $rootScope){
+    function (cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUtil, cmObject, cmLogger, cmNotify, $q, $rootScope){
         var self = this,
             events = {};
 
@@ -145,7 +147,12 @@ angular.module('cmContacts').service('cmContactsModel',[
             if(cmUserModel.isAuth() !== false){
                 cmContactsAdapter.getFriendRequests().then(
                     function(data){
+                        cmLogger.debug('cmContactsModel:getFriendRequests:done');
                         self.requests = data;
+                        self.trigger('friendRequests:loaded');
+                        if(data.length > 0){
+                            cmNotify.info('new Friend Requests', {ttl:1000})
+                        }
                     }
                 )
             }

@@ -9,11 +9,33 @@ angular.module('cmContacts').directive('cmFriendRequestCounter', [
             restrict : 'AE',
             scope: true,
             link: function(scope, element, attrs){
-                scope.counter = cmContactsModel.requests;
+                scope.counter = 0;
 
-                console.log('Counter FR ' + scope.counter)
+                function setColor(){
+                    if(scope.counter > 0){
+                        element.parent().parent().addClass('info')
+                    } else {
+                        element.parent().parent().removeClass('info')
+                    }
+                }
 
-                element.html(scope.counter);
+                function show(){
+                    scope.counter = cmContactsModel.requests.length;
+
+                    if(scope.counter > 0){
+                        element.html(' (' + scope.counter +')');
+                    } else {
+                        element.html('');
+                    }
+
+                    setColor();
+                }
+
+                cmContactsModel.on('friendRequests:loaded', function(){
+                    show();
+                })
+
+                show();
             }
         }
     }

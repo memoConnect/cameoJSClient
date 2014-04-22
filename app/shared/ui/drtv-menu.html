@@ -10,8 +10,9 @@
             </li>
             <li class="cm-list-group-item" ng-repeat="btn in btns" ng-class="btn.css" ng-click="goTo(btn.href)">
                 <i class="fa" ng-if="btn.icon != undefined" ng-class="btn.icon"></i>
-                <span>{{btn.i18n|cmTranslate}}</span>
-                <cm-friend-request-counter ng-if="btn.drtv != undefined && btn.drtv == 'cm-friend-request-counter'"></cm-friend-request-counter>
+                <span>{{btn.i18n|cmTranslate}}
+                    <cm-friend-request-counter ng-if="btn.drtv != undefined && btn.drtv == 'cm-friend-request-counter'"></cm-friend-request-counter>
+                </span>
                 <div class="clearfix"></div>
             </li>
             <li class="cm-list-group-item" ng-click="logout()">
