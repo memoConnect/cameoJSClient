@@ -13,13 +13,13 @@
             <div class="recipients-list">
                 <cm-avatar cm-data="recipient" cm-with-name="true" cm-view="hide-owner" ng-repeat="recipient in conversation.recipients"></cm-avatar>
 
-                <div ng-click ="manageRecipients()" ng-if="conversation.recipients.length == 1" class="add-recipients" cm-user-rights>
+                <div ng-click ="manageRecipients()" ng-if="conversation.recipients.length == 1" class="add-new-recipients" cm-user-rights>
                     <cm-avatar cm-view="unknown"></cm-avatar>
                     {{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS'|cmTranslate}}
                     <cm-edge><i class="fa cm-edge-add"></i></cm-edge>
                 </div>
 
-                <div ng-click = "manageRecipients()" ng-if="conversation.recipients.length > 1" class="add-recipients" cm-user-rights>
+                <div ng-click="manageRecipients()" ng-if="conversation.recipients.length > 1" class="add-recipients" cm-user-rights>
                     <cm-edge ><i class="fa cm-edge-add"></i></cm-edge>
                 </div>
             </div>

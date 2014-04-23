@@ -1,10 +1,9 @@
 'use strict';
 
 angular.module('cmContacts').directive('cmFriendRequestCounter', [
-    'cmUserModel',
     'cmContactsModel',
     'cmEnv',
-    function (cmUserModel, cmContactsModel, cmEnv) {
+    function (cmContactsModel, cmEnv) {
         return {
             restrict : 'AE',
             scope: true,
