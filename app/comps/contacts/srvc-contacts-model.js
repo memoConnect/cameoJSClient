@@ -64,7 +64,7 @@ angular.module('cmContacts').service('cmContactsModel',[
          * Model Logic
          */
         this.searchCameoIdentity = function(cameoId){
-            return cmContactsAdapter.searchCameoIdentity(cameoId);
+            return cmContactsAdapter.searchCameoIdentity(cameoId, true);
         };
 
         this.getAll = function(limit, offset){
