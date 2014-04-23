@@ -151,8 +151,9 @@ define([
     ]);
 
     // app run handling
-    app.run(['$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmLanguage',
-        function ($rootScope, $location, $window, $route, cmUserModel, cmLanguage) {
+    app.run([
+        '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmLanguage', 'cmLogger',
+        function ($rootScope, $location, $window, $route, cmUserModel, cmLanguage, cmLogger) {
 
             //prep $rootScope with useful tools
             $rootScope.console = console
@@ -181,12 +182,12 @@ define([
 
             // url hashing for backbutton
             $rootScope.urlHistory = [];
-
+            // detect back button event
             window.onpopstate = function(){
                 $rootScope.urlHistory.pop();
             };
 
-            $rootScope.$on('$routeChangeSuccess', function(schmu, _currentRoute_, _prevRoute_){
+            $rootScope.$on('$routeChangeSuccess', function(){
 
                 // hide app spinner
                 angular.element($window.document.getElementsByClassName('app-spinner')[0])
@@ -198,22 +199,19 @@ define([
                 // important for HTML Manipulation to switch classes etc.
                 $rootScope.cmIsGuest = cmUserModel.isGuest();
 
+                // handle url history for backbutton handling
                 $rootScope.urlHistory = $rootScope.urlHistory || [];
-                if(
-                       !_currentRoute_
-                    || !_currentRoute_.$$route 
-                    || !_currentRoute_.$$route.originalPath
-                    || !_prevRoute_
-                    || !_prevRoute_.$$route
-                ) return null
-                    
-                var currentRoute = _currentRoute_.$$route.originalPath,
-                    prevRoute = _prevRoute_ ? _prevRoute_.$$route.originalPath: '';
 
-                if(currentRoute.indexOf("/login") != -1 || currentRoute == prevRoute)
+                var currentRoute = $location.$$path,
+                    prevRoute = $rootScope.urlHistory.length > 0
+                              ? $rootScope.urlHistory[$rootScope.urlHistory.length - 1]
+                              : '';
+                // clear if same route
+                if(currentRoute.indexOf('/login') != -1 || currentRoute == prevRoute)
                     $rootScope.urlHistory = [];
-                else if(currentRoute !== $rootScope.urlHistory[$rootScope.urlHistory.length - 1]) {
-                    $rootScope.urlHistory.push(currentRoute);
+                // push new route
+                else if(currentRoute !== prevRoute) {
+                    $rootScope.urlHistory.push($location.$$path);
                 }
                 
             });
