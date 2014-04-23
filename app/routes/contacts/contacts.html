@@ -7,14 +7,34 @@
 </cm-header>
 
 <section ng-controller="ContactsCtrl">
-
     <div ng-if="activeSection == 'list'">
         <header class="cm-list-header">
             <h1>{{"CONTACTS.HEADING"|cmTranslate}}</h1>
 
-            <button ng-click="openAddModal()" cm-edge data-qa="add-contact-btn">
+            <button ng-click="openModal('add-contact')" cm-edge data-qa="add-contact-btn">
                 <i class="fa cm-edge-add"></i>
             </button>
+
+            <cm-modal
+                id            = "add-contact"
+                title         = "CONTACTS.ADD_MODAL.TITLE" 
+                type          = "plain"
+                nose          = "right-top"
+                severity      = "info"
+                nose-position = "0" 
+            >
+
+                    <a href="#/contacts/search">
+                        <i class="fa cm-search"></i>
+                        {{"CONTACTS.LABEL.SEARCH_IDENTITY"|cmTranslate}}
+                    </a>
+
+                    <a href="#/contact/new">
+                        <i class="fa cm-load-to-rhino"></i>
+                        {{"CONTACTS.LABEL.ADD_EXTERN"|cmTranslate}}
+                    </a>
+
+            </cm-modal>
 
             <input type="text" value="" ng-model="search" cm-icon="cm-search" cm-large-input />
         </header>
@@ -44,11 +64,11 @@
                 </button>
 
                 <cm-modal 
-                    id      = "myTestModal" 
-                    title   = "My Test Title"
-                    type    = "plain" 
-                    nose    = "right-top"
-                    severity= "warn"
+                    id              = "myTestModal" 
+                    type            = "plain" 
+                    nose            = "top-right"
+                    severity        = "warn"
+                    node-position   = "10%"
                 >
                     Name: {{contact.identity.displayName}}
                 </cm-modal>

@@ -1,33 +1,79 @@
 angular.module('cmUi').service('cmModal',[
 
     '$rootScope',
+    'cmObject',
+    'cmLogger',
+    '$compile',
 
-    function($rootScope){
+    function($rootScope, cmObject, cmLogger, $compile){
 
-        var modal_instances = {}
+        var modal_instances = {},
+            modalService = {}
 
-        var modalService = {
-            register : function(id, scope){
-                var old_scope
+        cmObject.addEventHandlingTo(modalService)
 
-                if(old_scope = modal_instances[id]){
-                    old_scope.close()
-                }
+        modalService.register = function(id, scope){
 
+            if(!id){
+                cmLogger.error('cmModal: unable to register modal without an id.')
+                return null
+            }
+
+            var old_scope = modal_instances[id]
+
+            if(old_scope != scope){
                 modal_instances[id] = scope
-            },
+                console.log('register id: '+id)
+                this.trigger('register', id)
+            }
 
-            open : function(id){
+            return this
+            
+        }
+
+        modalService.open = function(id){
+            if(modal_instances[id]){
+                console.log('already there.')
                 modal_instances[id].open() 
-            },
+            } else {
+                console.log('wait for register')
+                this.on('register', function(registered_id){
+                    console.log('register!'+registered_id)
+                    if(registered_id == id) modal_instances[id].open() 
+                })
+            }
 
-            close : function(id){
-                modal_instances[id].close()
-            } 
+            return this
+        }
+
+        modalService.close = function(id){
+            modal_instances[id].close()
+            return this
+        }
+
+        modalService.create = function(config){
+            var attrs = '',
+                scope = $rootScope.$new()
+
+            //Todo: könnte man schöner machen:
+            angular.forEach(config, function(value, key){
+                attrs += key+'="'+value+'"'
+            })
+
+            $compile('<cm-modal '+attrs+' ></cm-modal>')(scope)
+
+            return this
         }
 
         $rootScope.openModal    = modalService.open
         $rootScope.closeModal   = modalService.close
+
+        //close all modals on route change:
+        $rootScope.$on('$routeChangeStart', function(){
+            angular.forEach(modal_instances, function(modal_instance, key){
+                modal_instance.close()
+            })
+        })
 
         return modalService
     }

@@ -15,6 +15,7 @@ angular.module('cmObject', [])
                 obj._callbacks[event_name] = obj._callbacks[event_name] || []
 
                 obj._callbacks[event_name].forEach(function(callback){
+                    console.log('data: '+data)
                     callback.apply(obj, [data])
                 })
 

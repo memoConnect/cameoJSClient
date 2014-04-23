@@ -3,8 +3,9 @@
 angular.module('cmUi').directive('cmModal', [
 
     'cmModal',
+    'cmTranslate',
 
-    function (cmModal){
+    function (cmModal, cmTranslate){
         return {
             restrict: 'AE',
             transclude: true,
@@ -92,11 +93,15 @@ angular.module('cmUi').directive('cmModal', [
 
                 addNose()
                 scope.toggle(false)
+
+                cmModal.register(attrs.id, scope)
             },
 
-            controller: function($scope, $element, $attrs){
-                cmModal.register($attrs.id, $scope)
-                $scope.title = $attrs.title
+            controller: function($scope, $element, $attrs){                
+
+                $scope.title    = cmTranslate($attrs.title)
+                $scope.severity = $attrs.severity || 'info'
+
             }
         }
     }
