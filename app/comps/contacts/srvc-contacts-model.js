@@ -69,8 +69,7 @@ angular.module('cmContacts').service('cmContactsModel',[
         this.getAll = function(limit, offset){
             var deferred = $q.defer(),
                 i = 0;
-
-            if(this.contacts.length < 1 && cmUserModel.isAuth() !== false){
+            if(this.contacts.length < 1 && cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
                 this.trigger('start:load-contacts');
                 this.loading = true;
 
@@ -122,7 +121,7 @@ angular.module('cmContacts').service('cmContactsModel',[
         this.getGroups = function(){
             var deferred = $q.defer();
 
-            if(this.groups.length < 1 && cmUserModel.isAuth() !== false){
+            if(this.groups.length < 1 && cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
                 cmContactsAdapter.getGroups().then(
                     function(data){
                         self.groups = data;
@@ -174,7 +173,7 @@ angular.module('cmContacts').service('cmContactsModel',[
         };
 
         this.getFriendRequests = function(){
-            if(cmUserModel.isAuth() !== false){
+            if(cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
                 cmContactsAdapter.getFriendRequests().then(
                     function(data){
                         cmLogger.debug('cmContactsModel:getFriendRequests:done');
