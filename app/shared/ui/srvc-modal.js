@@ -23,7 +23,6 @@ angular.module('cmUi').service('cmModal',[
 
             if(old_scope != scope){
                 modal_instances[id] = scope
-                console.log('register id: '+id)
                 this.trigger('register', id)
             }
 
@@ -33,12 +32,9 @@ angular.module('cmUi').service('cmModal',[
 
         modalService.open = function(id){
             if(modal_instances[id]){
-                console.log('already there.')
                 modal_instances[id].open() 
             } else {
-                console.log('wait for register')
                 this.on('register', function(registered_id){
-                    console.log('register!'+registered_id)
                     if(registered_id == id) modal_instances[id].open() 
                 })
             }
