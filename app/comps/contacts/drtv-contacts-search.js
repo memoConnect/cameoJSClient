@@ -44,12 +44,13 @@ angular.module('cmContacts').directive('cmContactsSearch',[
                         .sendFriendRequest(contact.id)
                         .then(
                             function(){
-                                var index = $scope.results.indexOf(item);
-                                $scope.results.splice(index,1);
-                                cmNotify.success('CONTACTS.INFO.REQUEST.SENDED');
+                                var index = $scope.results.indexOf(contact);
+                                $scope.results.splice(contact,1);
+                                cmNotify.success('CONTACTS.INFO.REQUEST.SENDED', {ttl:2000});
+                                cmContactsModel.trigger('friendRequest:send');
                             },
                             function(){
-                                cmNotify.error('CONTACTS.INFO.REQUEST.FAILED');
+                                cmNotify.error('CONTACTS.INFO.REQUEST.FAILED', {ttl:2000});
                             }
                         )
                     }

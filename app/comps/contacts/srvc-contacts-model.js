@@ -72,7 +72,7 @@ angular.module('cmContacts').service('cmContactsModel',[
 
             var deferred = $q.defer(),
                 i = 0;
-            if(this.contacts.length < 1 && cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
+            if(cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
                 this.trigger('start:load-contacts');
                 this.loading = true;
 
@@ -296,6 +296,10 @@ angular.module('cmContacts').service('cmContactsModel',[
         });
 
         this.on('friendRequests:updated', function(){
+            init();
+        });
+
+        this.on('friendRequest:send', function(){
             init();
         });
     }
