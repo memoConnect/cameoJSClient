@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmContacts').directive('cmContactRequestList',[
+angular.module('cmContacts').directive('cmFriendRequestList',[
     'cmContactsModel',
     'cmNotify',
     '$rootScope',
