@@ -4,8 +4,9 @@ angular.module('cmUi').directive('cmModal', [
 
     'cmModal',
     'cmTranslate',
+    '$compile',
 
-    function (cmModal, cmTranslate){
+    function (cmModal, cmTranslate, $compile){
         return {
             restrict: 'AE',
             transclude: true,
@@ -50,6 +51,16 @@ angular.module('cmUi').directive('cmModal', [
                     element.find('article').append(nose)
                 }
 
+                scope.setData = function(data){
+                    scope[attrs.cmDataAs || 'data'] = data
+
+                    transclude(scope,function(clone){
+                        element.find('ng-transclude').html('').append(clone);
+                    })
+
+                    return this
+                }
+
                 scope.toggle = function(on){
                     on = (on == undefined ? $element.css('display') == 'none' : on)
                     if(on){
@@ -67,12 +78,7 @@ angular.module('cmUi').directive('cmModal', [
                     this.toggle(false)  
                 }
 
-
-
-
-
                 scope.toggle(false)
-                
 
                 //close modal when clicked outside:
                 element.on('click', function(){
@@ -97,14 +103,20 @@ angular.module('cmUi').directive('cmModal', [
                 cmModal.register(attrs.id, scope)
             },
 
+//            compile: function(tElement, tAttr, transclude) {
+//                var contents = tElement.contents().remove();
+//                var compiledContents;
+//                return function(scope, iElement, iAttr) {
+//                    if(!compiledContents) {
+//                        compiledContents = $compile(contents, transclude);
+//                    }
+//                    compiledContents(scope, function(clone, scope) {
+//                        iElement.append(clone);
+//                    });
+//                };
+//            },
+
             controller: function($scope, $element, $attrs){   
-
-
-                $scope.setData = function(data){
-                    $scope[$attrs.dataAs || 'data'] = data
-                    $scope.$apply()
-                    return this
-                }
 
                 $scope.title    = cmTranslate($attrs.title)
                 $scope.severity = $attrs.severity || 'info'

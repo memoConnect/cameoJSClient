@@ -39,6 +39,10 @@ angular.module('cmContacts').directive('cmContactsSearch',[
                  * @param id
                  */
                 $scope.sendRequest = function(contact){
+
+                    console.log(contact)
+                    return false;
+
                     if(angular.isDefined(contact.id)){
                         cmContactsModel
                         .sendFriendRequest(contact.id)

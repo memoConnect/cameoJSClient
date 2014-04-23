@@ -57,12 +57,12 @@ define([
             if(cmUserModel.comesFromRegistration !== false){
                 cmUserModel.comesFromRegistration = false;
 
-                cmModal.create({
+                cmModal
+                .create({
                     id: 'welcome',
                     title: 'CAMEO.WELCOME'
-                })                
+                })
                 .open('welcome')
-
             }
 
             

@@ -63,7 +63,7 @@ angular.module('cmUi').service('cmModal',[
 
             $compile('<cm-modal '+attrs+' ></cm-modal>')(scope)
 
-            return this
+            return this;
         }
 
         $rootScope.openModal    = modalService.open

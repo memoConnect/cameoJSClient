@@ -26,7 +26,9 @@
     </cm-contact-tag>
 </div>
 
-<cm-modal id="modalSendRequest" data-as="contact">
+<cm-modal id="modalSendRequest" cm-data-as="contact">
+
+    {{severity}}
     {{contact.displayName}}
     {{contact.cameoId}}
     <button ng-click="sendRequest(contact)">
