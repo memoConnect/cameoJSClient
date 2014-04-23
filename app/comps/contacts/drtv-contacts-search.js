@@ -1,14 +1,15 @@
 'use strict';
 
-angular.module('cmContacts').directive('cmSearchCameoIdentity',[
+angular.module('cmContacts').directive('cmContactsSearch',[
     'cmContactsModel',
     'cmNotify',
     function (cmContactsModel, cmNotify){
         return {
-            restrict: 'A',
-            scope: {},
-            templateUrl: 'comps/contacts/drtv-search-cameo-identity.html',
+            restrict: 'E',
+            scope: false,
+            templateUrl: 'comps/contacts/drtv-contacts-search.html',
             controller: function($scope){
+                $scope.pristine = true;
                 $scope.results = [];
 
                 /**
@@ -16,13 +17,16 @@ angular.module('cmContacts').directive('cmSearchCameoIdentity',[
                  * @returns {boolean}
                  */
                 $scope.search = function(){
-                    if($scope.searchCameoId.string.$invalid){
+                    if($scope.searchCameoId.string.$invalid || $scope.string == ''){
                         $scope.results = [];
+                        $scope.pristine = true;
                         return false;
                     }
 
+                    $scope.pristine = false;
+
                     cmContactsModel.searchCameoIdentity($scope.string)
-                        .then(
+                    .then(
                         function(data){
                             $scope.results = data;
                         }
@@ -34,11 +38,11 @@ angular.module('cmContacts').directive('cmSearchCameoIdentity',[
                  * Send friendship via model to api
                  * @param id
                  */
-                $scope.sendFriendRequest = function(item){
-                    if(angular.isDefined(item.id)){
+                $scope.sendRequest = function(contact){
+                    if(angular.isDefined(contact.id)){
                         cmContactsModel
-                            .sendFriendRequest(item.id)
-                            .then(
+                        .sendFriendRequest(contact.id)
+                        .then(
                             function(){
                                 var index = $scope.results.indexOf(item);
                                 $scope.results.splice(index,1);

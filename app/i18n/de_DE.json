@@ -152,7 +152,8 @@
 		"WELCOME": "Adressbuch",
 		"HEADING": {
             "LIST": "Kontakte",
-            "REQUESTS": "Kontaktanfragen"
+            "REQUESTS": "Kontaktanfragen",
+            "SEARCH": "Suche"
         },
         "LIST_EMPTY": "Bisher keine Kontakte vorhanden",
         "PLACEHOLDER": {

@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('cmUi').directive('cmBack',[
+    '$rootScope',
     '$window',
     '$location',
-    function ($window, $location){
+    function ($rootScope, $window, $location){
         return {
             restrict: 'AE',
             scope: true,
@@ -11,7 +12,7 @@ angular.module('cmUi').directive('cmBack',[
                         '<i class="fa cm-left" ng-show="isVisible"></i>'+
                         '<span ng-if="pageTitle">{{pageTitle}}</span>'+
                       '</div>',
-            controller: function($rootScope, $scope, $element, $attrs){
+            controller: function($scope, $element, $attrs){
                 // vars
                 $scope.isVisible = $rootScope.urlHistory.length > 1 ? true : false;
                 $scope.pageTitle = '';
@@ -28,7 +29,7 @@ angular.module('cmUi').directive('cmBack',[
                 // bind click event
                 angular.element($element[0].querySelector('.back-wrap')).bind('click', function(){
                     // if history has more then one index
-                    if($rootScope.urlHistory.length > 0 && !'plainBack' in $attrs){
+                    if($rootScope.urlHistory.length > 0 && ('plainBack' in $attrs) == false){
                         $window.history.back();
                         // if is set an default path in route
                     } else if($scope.backTo != ''){

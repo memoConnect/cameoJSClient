@@ -7,52 +7,51 @@
 </cm-header>
 
 <section ng-controller="ContactsCtrl">
-    <!-- contact list -->
-    <div ng-if="activeSection == 'list'">
-        <header class="cm-list-header">
-            <h1>{{'CONTACTS.HEADING.LIST'|cmTranslate}}</h1>
+    <div ng-switch="activeSection">
+        <!-- contact list -->
+        <div ng-switch-when="list">
+            <header class="cm-list-header">
+                <h1>{{'CONTACTS.HEADING.LIST'|cmTranslate}}</h1>
 
-            <button ng-click="openAddModal()" cm-edge data-qa="add-contact-btn">
-                <i class="fa cm-edge-add"></i>
-            </button>
-
-            <input type="text" value="" ng-model="search" cm-icon="cm-search" cm-large-input />
-        </header>
-
-        <cm-contacts-filter-controls sort-by="" filter-by=""></cm-contacts-filter-controls>
-
-        <cm-contacts-list contacts-as="contacts">
-            <div ng-show="isLoading" class="empty-list">
-                <cm-spinner ></cm-spinner>
-            </div>
-
-            <div ng-show="!contacts.length && !isLoading" class="empty-list">
-                <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
-            </div>
-
-            <cm-contact-tag cm-rubber-space ng-repeat="contact in contacts | filter:search">
-                <cm-avatar cm-data="contact.identity" ng-click="editContact(contact)"></cm-avatar>
-                <cm-key-level key-size="contact.identity.getWeakestKeySize()"></cm-key-level>
-                <cm-contact-brief cm-data="contact" cm-weight="1" ng-click="editContact(contact)"></cm-contact-brief>
-                <cm-contact-type cm-data="contact"></cm-contact-type>
-                <span class="separator"></span>
-                <button ng-click="startConversation(contact)" data-qa="start-new-conversation-btn">
-                    <i class="fa cm-write"></i>
+                <button ng-click="openAddModal()" cm-edge data-qa="add-contact-btn">
+                    <i class="fa cm-edge-add"></i>
                 </button>
-            </cm-contact-tag>
 
-        </cm-contacts-list>
-    </div>
-    <!-- request list -->
-    <div ng-if="activeSection == 'requests'">
-        <cm-friend-request-list>
+                <input type="text" value="" ng-model="search" cm-icon="cm-search" cm-large-input />
+            </header>
 
+            <cm-contacts-filter-controls sort-by="" filter-by=""></cm-contacts-filter-controls>
+
+            <cm-contacts-list contacts-as="contacts">
+                <div ng-show="isLoading" class="empty-list">
+                    <cm-spinner ></cm-spinner>
+                </div>
+
+                <div ng-show="!contacts.length && !isLoading" class="empty-list">
+                    <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
+                </div>
+
+                <cm-contact-tag cm-rubber-space ng-repeat="contact in contacts | filter:search">
+                    <cm-avatar cm-data="contact.identity" ng-click="editContact(contact)"></cm-avatar>
+                    <cm-key-level key-size="contact.identity.getWeakestKeySize()"></cm-key-level>
+                    <cm-contact-brief cm-data="contact" cm-weight="1" ng-click="editContact(contact)"></cm-contact-brief>
+                    <cm-contact-type cm-data="contact"></cm-contact-type>
+                    <span class="separator"></span>
+                    <button ng-click="startConversation(contact)" data-qa="start-new-conversation-btn">
+                        <i class="fa cm-write"></i>
+                    </button>
+                </cm-contact-tag>
+
+            </cm-contacts-list>
+        </div>
+        <!-- request list -->
+        <cm-friend-request-list ng-switch-when="requests">
             <header>
                 <i class="fa cm-contacts cm-lg-icon"></i> {{'CONTACTS.HEADING.REQUESTS'|cmTranslate}}
             </header>
 
             <div ng-show="isLoading" class="empty-list">
-                <cm-spinner ></cm-spinner>
+                <cm-spinner></cm-spinner>
             </div>
 
             <div ng-show="!requests.length && !isLoading" class="empty-list">
@@ -70,13 +69,9 @@
                 </button>
             </cm-contact-tag>
         </cm-friend-request-list>
+    	<!-- search identity -->
+        <cm-contacts-search ng-switch-when="search"></cm-contacts-search>
     </div>
-    <!-- search identity -->
-    <div cm-search-cameo-identity ng-if="activeSection == 'search'">
-
-
-    </div>
-
 </section>
 
 <cm-footer cm-rubber-space></cm-footer>
