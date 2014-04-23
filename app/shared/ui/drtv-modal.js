@@ -22,12 +22,6 @@ angular.module('cmUi').directive('cmModal', [
             
 
             link: function(scope, element, attrs, controller, transclude){
-                var to_be_parent =  angular.element(document.getElementById('cm-app'))
-
-                //move modal up the dom hierarchy, if necessary:
-                if(element.parent()[0] != to_be_parent[0]) to_be_parent.append(element)
-
-
 
                 function addNose(){
                     if(!attrs.nose) return null
@@ -76,6 +70,7 @@ angular.module('cmUi').directive('cmModal', [
 
 
 
+
                 scope.toggle(false)
                 
 
@@ -94,10 +89,22 @@ angular.module('cmUi').directive('cmModal', [
                 addNose()
                 scope.toggle(false)
 
+                var to_be_parent =  angular.element(document.getElementById('cm-app'))
+
+                //move modal up the dom hierarchy, if necessary:
+                if(element.parent()[0] != to_be_parent[0]) to_be_parent.append(element)
+
                 cmModal.register(attrs.id, scope)
             },
 
-            controller: function($scope, $element, $attrs){                
+            controller: function($scope, $element, $attrs){   
+
+
+                $scope.setData = function(data){
+                    $scope[$attrs.dataAs || 'data'] = data
+                    $scope.$apply()
+                    return this
+                }
 
                 $scope.title    = cmTranslate($attrs.title)
                 $scope.severity = $attrs.severity || 'info'

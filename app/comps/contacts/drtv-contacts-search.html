@@ -20,8 +20,16 @@
         <div class="cm-request-brief" cm-weight="1">
             <strong>{{contact.displayName}}</strong>
         </div>
-        <button ng-click="sendRequest(contact)">
+        <button ng-click="openModal('modalSendRequest',contact)">
             <i class="fa cm-checkbox"></i>
         </button>
     </cm-contact-tag>
 </div>
+
+<cm-modal id="modalSendRequest" data-as="contact">
+    {{contact.displayName}}
+    {{contact.cameoId}}
+    <button ng-click="sendRequest(contact)">
+        send request
+    </button>
+</cm-modal>

@@ -45,6 +45,7 @@
 
             <cm-contacts-filter-controls sort-by="" filter-by=""></cm-contacts-filter-controls>
 
+
             <cm-contacts-list contacts-as="contacts">
                 <div ng-show="isLoading" class="empty-list">
                     <cm-spinner ></cm-spinner>
@@ -53,6 +54,7 @@
                 <div ng-show="!contacts.length && !isLoading" class="empty-list">
                     <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
                 </div>
+
 
                 <cm-contact-tag ng-repeat="contact in contacts | filter:search" ng-switch="contact.contactType">
                     <div ng-switch-when="pending" cm-rubber-space>

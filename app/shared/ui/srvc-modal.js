@@ -30,12 +30,17 @@ angular.module('cmUi').service('cmModal',[
             
         }
 
-        modalService.open = function(id){
+        modalService.open = function(id, data){
             if(modal_instances[id]){
-                modal_instances[id].open() 
+                modal_instances[id]
+                .setData(data)
+                .open() 
             } else {
                 this.on('register', function(registered_id){
-                    if(registered_id == id) modal_instances[id].open() 
+                    if(registered_id == id) 
+                        modal_instances[id]
+                        .setData(data)
+                        .open() 
                 })
             }
 
@@ -47,7 +52,7 @@ angular.module('cmUi').service('cmModal',[
             return this
         }
 
-        modalService.create = function(config){
+        modalService.create = function(config, template){
             var attrs = '',
                 scope = $rootScope.$new()
 
