@@ -16,6 +16,10 @@ angular.module('cmContacts').directive('cmFriendRequestList',[
                     $scope.requests = cmContactsModel.requests;
                 });
 
+                cmContactsModel.on('friendRequests:updated', function(){
+                    $scope.requests = cmContactsModel.requests;
+                });
+
                 $scope.toggleBrief = function(request){
                     if(request.isOpen == undefined || request.isOpen == false){
                         request.state = 'new';
@@ -30,14 +34,25 @@ angular.module('cmContacts').directive('cmFriendRequestList',[
                  * @param id
                  */
                 $scope.acceptRequest = function(item){
-                    cmContactsModel.answerFriendRequest(item.identity.id, 'accept').then(
-                        function(){
-                            cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT');
-                            $rootScope.$broadcast('cmNotify:update');
-                            removeRequest(item);
-                            cmContactsModel.trigger('friendRequests:updated')
-                        }
-                    );
+                    if(typeof item == 'object'){
+                        item.accept().then(
+                            function(){
+                                cmContactsModel.removeFriendRequest(item);
+
+                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT');
+
+                                $rootScope.$broadcast('cmNotify:update');
+
+                                cmContactsModel.trigger('friendRequests:updated');
+                            },
+
+                            function(){
+                                /**
+                                 * @todo accept fails
+                                 */
+                            }
+                        )
+                    }
                 };
 
                 /**
@@ -45,23 +60,46 @@ angular.module('cmContacts').directive('cmFriendRequestList',[
                  * @param id
                  */
                 $scope.rejectRequest = function(item){
-//                    cmContactsModel.answerFriendRequest(item.id, 'reject').then(
-//                        function(){
-//                            cmNotify.warn('CONTACTS.INFO.REQUEST.REJECT');
-//                            removeRequest(item);
-//                        }
-//                    );
+                    if(typeof item == 'object'){
+                        item.reject().then(
+                            function(){
+                                cmContactsModel.removeFriendRequest(item);
+
+                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT');
+
+                                $rootScope.$broadcast('cmNotify:update');
+
+                                cmContactsModel.trigger('friendRequests:updated');
+                            },
+
+                            function(){
+                                /**
+                                 * @todo accept fails
+                                 */
+                            }
+                        )
+                    }
                 };
 
-                /**
-                 * @private
-                 * remove request from results
-                 * @param id
-                 */
-                function removeRequest(item){
-                    if(angular.isDefined(item)){
-                        var index = $scope.requests.indexOf(item);
-                        $scope.requests.splice(index,1);
+                $scope.ignoreRequest = function(item){
+                    if(typeof item == 'object'){
+                        item.ignore().then(
+                            function(){
+                                cmContactsModel.removeFriendRequest(item);
+
+                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT');
+
+                                $rootScope.$broadcast('cmNotify:update');
+
+                                cmContactsModel.trigger('friendRequests:updated');
+                            },
+
+                            function(){
+                                /**
+                                 * @todo accept fails
+                                 */
+                            }
+                        )
                     }
                 }
             }
