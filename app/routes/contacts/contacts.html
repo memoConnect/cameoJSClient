@@ -58,20 +58,7 @@
                 <span class="separator"></span>
                 <button ng-click="startConversation(contact)" data-qa="start-new-conversation-btn">
                     <i class="fa cm-write"></i>
-                </button>
-                <button ng-click = "openModal('myTestModal')">
-                    O
-                </button>
-
-                <cm-modal 
-                    id              = "myTestModal" 
-                    type            = "plain" 
-                    nose            = "top-right"
-                    severity        = "warn"
-                    node-position   = "10%"
-                >
-                    Name: {{contact.identity.displayName}}
-                </cm-modal>
+                </button>                
             </cm-contact-tag>
 
         </cm-contacts-list>

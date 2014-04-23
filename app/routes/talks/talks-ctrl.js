@@ -57,14 +57,15 @@ define([
             if(cmUserModel.comesFromRegistration !== false){
                 cmUserModel.comesFromRegistration = false;
 
+                cmModal.create({
+                    id: 'welcome',
+                    title: 'CAMEO.WELCOME'
+                })                
+                .open('welcome')
 
             }
 
-            cmModal.create({
-                id: 'welcome',
-                title: 'CAMEO.WELCOME'
-            })
-            .open()
+            
 
             $scope.goToConversation = function(id){
                 if(typeof id != 'undefined'){
