@@ -39,7 +39,7 @@ angular.module('cmContacts').directive('cmFriendRequestList',[
                             function(){
                                 cmContactsModel.removeFriendRequest(item);
 
-                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT');
+                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT',{ttl:2000});
 
                                 $rootScope.$broadcast('cmNotify:update');
 
