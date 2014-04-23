@@ -4,13 +4,14 @@ angular.module('cmContacts').service('cmContactsModel',[
     'cmUserModel',
     'cmContactsAdapter',
     'cmIdentityFactory',
+    'cmFriendRequestModel',
     'cmUtil',
     'cmObject',
     'cmLogger',
     'cmNotify',
     '$q',
     '$rootScope',
-    function (cmUserModel, cmContactsAdapter, cmIdentityFactory, cmUtil, cmObject, cmLogger, cmNotify, $q, $rootScope){
+    function (cmUserModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmUtil, cmObject, cmLogger, cmNotify, $q, $rootScope){
         var self = this,
             events = {};
 
@@ -63,13 +64,15 @@ angular.module('cmContacts').service('cmContactsModel',[
          * Model Logic
          */
         this.searchCameoIdentity = function(cameoId){
-            return cmContactsAdapter.searchCameoIdentity(cameoId);
+            return cmContactsAdapter.searchCameoIdentity(cameoId, true);
         };
 
         this.getAll = function(limit, offset){
+            cmLogger.debug('cmContactsModel:getAll');
+
             var deferred = $q.defer(),
                 i = 0;
-            if(this.contacts.length < 1 && cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
+            if(cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
                 this.trigger('start:load-contacts');
                 this.loading = true;
 
@@ -119,6 +122,8 @@ angular.module('cmContacts').service('cmContactsModel',[
         };
 
         this.getGroups = function(){
+            cmLogger.debug('cmContactsModel:getGroups');
+
             var deferred = $q.defer();
 
             if(this.groups.length < 1 && cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
@@ -151,28 +156,25 @@ angular.module('cmContacts').service('cmContactsModel',[
          * @param identity_data
          * @private
          */
-        this._addFriendRequest = function(identity_data){
+        this._addFriendRequest = function(request_data){
             var i = 0,
                 check = false;
 
-            if(this.requests.length == 0){
-                this.requests.push({identity: cmIdentityFactory.create(identity_data.id), message:''});
-            } else {
-                while(i < this.requests.length){
-                    if(this.requests[i].identity.id == identity_data.id){
-                        check = true;
-                        break;
-                    }
-                    i++;
+            while(i < this.requests.length){
+                if(this.requests[i].identity.id == identity_data.id){
+                    check = true;
+                    break;
                 }
+                i++;
+            }
 
-                if(check !== true){
-                    this.requests.push({identity: cmIdentityFactory.create(identity_data.id), message:''});
-                }
+            if(check !== true){
+                this.requests.push(new cmFriendRequestModel({identity: cmIdentityFactory.create(request_data.identity.id), message:request_data.message || '', created:request_data.created || ''}));
             }
         };
 
         this.getFriendRequests = function(){
+            cmLogger.debug('cmContactsModel:getFriendRequests');
             if(cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
                 cmContactsAdapter.getFriendRequests().then(
                     function(data){
@@ -191,6 +193,15 @@ angular.module('cmContacts').service('cmContactsModel',[
                 )
             }
         };
+
+        this.removeFriendRequest = function(request){
+            cmLogger.debug('cmContactsModel:removeFriendRequest');
+
+            var index = this.requests.indexOf(request);
+            this.requests.splice(request,1);
+
+            return this;
+        }
 
         this.sendFriendRequest = function(id){
             return cmContactsAdapter.sendFriendRequest(id);
@@ -279,5 +290,17 @@ angular.module('cmContacts').service('cmContactsModel',[
         });
 
         init();
+
+        cmUserModel.on('init', function(){
+           init();
+        });
+
+        this.on('friendRequests:updated', function(){
+            init();
+        });
+
+        this.on('friendRequest:send', function(){
+            init();
+        });
     }
 ]);

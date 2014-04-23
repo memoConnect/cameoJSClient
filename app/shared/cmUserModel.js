@@ -38,6 +38,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
         this.comesFromRegistration = false;
 
         this.init = function(identity_data){
+            cmLogger.debug('cmUserModel:init');
             this.loadIdentity(identity_data).then(
                 function(identity){
                     angular.extend(self.data, identity);
@@ -49,10 +50,13 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
                     self.initStorage();
                     self.syncLocalKeys();
 
+                    cmLogger.debug('cmUserModel:init:ready');
                     self.trigger('init');
                 },
                 function(response){
+                    cmLogger.debug('cmUserModel:init:reject');
                     if(typeof response == 'object' && response.status == 401){
+                        cmLogger.debug('cmUserModel:init:reject:401');
                         self.doLogout();
                     }
                 }
@@ -283,9 +287,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
             var keys = this.loadLocalKeys(),
                 result = false
 
-            console.log('my private keys:')
-            keys.forEach(function(key){                
-                console.log(key.getPrivateKey())
+            keys.forEach(function(key){         
                 result = result || !!key.getPrivateKey()
             })
 

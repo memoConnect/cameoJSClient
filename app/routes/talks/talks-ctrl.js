@@ -15,9 +15,9 @@ define([
         'cmUserModel',
         'cmConversationsModel',
         'cmUtil',
-        '$modal',
+        'cmModal',
         '$location',
-        function($scope, $rootScope, cmUserModel, cmConversationsModel, cmUtil, $modal, $location) {
+        function($scope, $rootScope, cmUserModel, cmConversationsModel, cmUtil, cmModal, $location) {
             $scope.loading = true;
             cmConversationsModel.on('finish:load',function(){
                 $scope.loading = false;
@@ -57,21 +57,15 @@ define([
             if(cmUserModel.comesFromRegistration !== false){
                 cmUserModel.comesFromRegistration = false;
 
-                var modalInstance = $modal.open({
-                    templateUrl: 'comps/user/modal-welcome.html',
-                    controller: function ($rootScope, $scope, $modalInstance) {
-
-                    }
-                });
-
-                modalInstance.result
-                    .then(
-                    function () {
-                    },
-                    function () {
-                    }
-                );
+                cmModal
+                .create({
+                    id: 'welcome',
+                    title: 'CAMEO.WELCOME'
+                })
+                .open('welcome')
             }
+
+            
 
             $scope.goToConversation = function(id){
                 if(typeof id != 'undefined'){
@@ -85,6 +79,7 @@ define([
                 delete($rootScope.pendingConversation);
                 $location.path('/conversation/')
             }
+
         }
     ]);
 });

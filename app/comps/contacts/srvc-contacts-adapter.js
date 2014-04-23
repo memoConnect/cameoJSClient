@@ -11,12 +11,13 @@ angular.module('cmContacts').service('cmContactsAdapter',[
              * @param string
              * @returns {*|HttpPromise}
              */
-            searchCameoIdentity: function(string){
+            searchCameoIdentity: function(string, excludeContacts){
                 return cmApi.post({
                     url:'/identity/search',
                     data: {
                         search: string,
-                        fields: ['cameoId','displayName']
+                        fields: ['cameoId','displayName'],
+                        excludeContacts: excludeContacts || true
                     }
                 });
             },
