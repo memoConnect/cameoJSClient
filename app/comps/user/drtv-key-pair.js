@@ -32,7 +32,6 @@ angular.module('cmUser').directive('cmKeyPair', [
 
                     if(cmUserModel.data.identity.keys.length > 0){
                         cmUserModel.data.identity.keys.forEach(function(key){
-//                        console.dir(key)
                             $scope.ownKeys.push(key.exportData());
                         });
                     }

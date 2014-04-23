@@ -31,6 +31,7 @@
                     <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
                 </div>
 
+
                 <cm-contact-tag ng-repeat="contact in contacts | filter:search" ng-switch="contact.contactType">
                     <div ng-switch-when="pending" cm-rubber-space>
                         <cm-avatar cm-data="contact.identity"></cm-avatar>
@@ -45,8 +46,16 @@
                         <button ng-click="startConversation(contact)" data-qa="start-new-conversation-btn">
                             <i class="fa cm-write"></i>
                         </button>
+                        <button ng-click = "openModal('myTestModal')">
+                  		  O
+                		</button>
+
+                		<cm-modal id = "myTestModal" type = "plain" nose = "top-right">
+                   			Name: {{contact.identity.displayName}}
+                		</cm-modal>
                     </div>
                 </cm-contact-tag>
+
 
             </cm-contacts-list>
         </div>

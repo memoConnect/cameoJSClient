@@ -28,10 +28,6 @@ angular.module('cmContacts').directive('cmContactsList',[
 
                 //cmContactsModel.getAll();
 
-                cmContactsModel.on('finish:load-contacts', function () {
-
-                });
-
                 /**
                  * handle every single contact via model
                  */
