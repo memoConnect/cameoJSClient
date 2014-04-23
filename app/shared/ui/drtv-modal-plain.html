@@ -1,3 +1,8 @@
-<article ng-transclude>
-
+<article>
+    <header>
+        <button ng-click = "close()" class="close"><i class="fa cm-close"></i></button>
+        <h2>{{title}}</h2>
+    </header>
+    <div class="content" ng-transclude>
+    </div>
 </article>

@@ -43,7 +43,13 @@
                     O
                 </button>
 
-                <cm-modal id = "myTestModal" type = "plain" nose = "top-right">
+                <cm-modal 
+                    id      = "myTestModal" 
+                    title   = "My Test Title"
+                    type    = "plain" 
+                    nose    = "right-top"
+                    severity= "warn"
+                >
                     Name: {{contact.identity.displayName}}
                 </cm-modal>
             </cm-contact-tag>

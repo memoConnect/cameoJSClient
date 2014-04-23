@@ -213,7 +213,11 @@ module.exports = function (grunt) {
                 dest: 'app/js/controller/built.raw.js'
             },
             less: {
-                src: ['app/less/base.less', 'app/less/bootstrap.less', 'app/less/!(base|bootstrap).less'],
+                src:    [   
+                            'app/less/base.less', 
+                            'app/less/bootstrap.less', 
+                            'app/less/!(base|bootstrap).less'
+                        ],
                 dest: 'app/css/app.less'
             },
             packages: {
@@ -246,7 +250,6 @@ module.exports = function (grunt) {
                 'Gruntfile.js',
                 'app/js/bootstrap/*.js',
                 'app/js/service/*.js',
-                'app/js/bootstrap/*.js',
                 'app/js/directives/*.js',
                 'app/js/controller/*.js',
                 'test/jasmine/**/*.js'
