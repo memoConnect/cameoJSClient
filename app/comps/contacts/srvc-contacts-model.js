@@ -294,5 +294,9 @@ angular.module('cmContacts').service('cmContactsModel',[
         cmUserModel.on('init', function(){
            init();
         });
+
+        this.on('friendRequests:updated', function(){
+            init();
+        });
     }
 ]);

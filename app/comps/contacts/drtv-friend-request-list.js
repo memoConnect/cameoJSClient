@@ -63,13 +63,13 @@ angular.module('cmContacts').directive('cmFriendRequestList',[
                     if(typeof item == 'object'){
                         item.reject().then(
                             function(){
-                                cmContactsModel.removeFriendRequest(item);
-
-                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT');
-
-                                $rootScope.$broadcast('cmNotify:update');
-
-                                cmContactsModel.trigger('friendRequests:updated');
+//                                cmContactsModel.removeFriendRequest(item);
+//
+//                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT');
+//
+//                                $rootScope.$broadcast('cmNotify:update');
+//
+//                                cmContactsModel.trigger('friendRequests:updated');
                             },
 
                             function(){
@@ -85,13 +85,13 @@ angular.module('cmContacts').directive('cmFriendRequestList',[
                     if(typeof item == 'object'){
                         item.ignore().then(
                             function(){
-                                cmContactsModel.removeFriendRequest(item);
-
-                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT');
-
-                                $rootScope.$broadcast('cmNotify:update');
-
-                                cmContactsModel.trigger('friendRequests:updated');
+//                                cmContactsModel.removeFriendRequest(item);
+//
+//                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT');
+//
+//                                $rootScope.$broadcast('cmNotify:update');
+//
+//                                cmContactsModel.trigger('friendRequests:updated');
                             },
 
                             function(){
