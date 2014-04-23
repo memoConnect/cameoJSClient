@@ -74,7 +74,7 @@ angular.module('cmContacts').directive('cmFriendRequestList',[
 
                             function(){
                                 /**
-                                 * @todo accept fails
+                                 * @todo reject fails
                                  */
                             }
                         )
@@ -96,7 +96,7 @@ angular.module('cmContacts').directive('cmFriendRequestList',[
 
                             function(){
                                 /**
-                                 * @todo accept fails
+                                 * @todo ignrore fails
                                  */
                             }
                         )
