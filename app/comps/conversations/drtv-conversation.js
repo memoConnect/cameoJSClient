@@ -164,9 +164,12 @@ angular.module('cmConversations').directive('cmConversation', [
                      }
                      */
 
-                    $scope.$watch("conversation.subject", function (new_subject) {
-                        $scope.conversation.updateSubject(new_subject||'')
-                    })
+                    /**
+                     * @TODO important?
+                     */
+//                    $scope.$watch("conversation.subject", function (new_subject) {
+//                        $scope.conversation.updateSubject(new_subject||'')
+//                    })
 
 
                     //cron
