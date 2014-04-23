@@ -279,5 +279,9 @@ angular.module('cmContacts').service('cmContactsModel',[
         });
 
         init();
+
+        cmUserModel.on('init', function(){
+           init();
+        });
     }
 ]);
