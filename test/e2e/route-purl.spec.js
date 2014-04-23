@@ -175,7 +175,7 @@ describe('Route: Purl - ', function () {
      * Test 5
      * Extern User has open Purl then Intern User 1 will see his PURL
      */
-    xdescribe("Test 5 - Extern User open Purl, then User 1 open Purl", function(){
+    describe("Test 5 - Extern User open Purl, then User 1 open Purl", function(){
         it('should open "#/purl/+' + config.purlExtern +'"', function(){
             util.logout();
 
