@@ -116,11 +116,6 @@ angular.module('cmUi').directive('cmModal', [
 
                 addNose()
 
-//                var to_be_parent = angular.element(document.getElementById('cm-app'))
-//
-//                //move modal up the dom hierarchy, if necessary:
-//                if(element.parent()[0] != to_be_parent[0]) to_be_parent.append(element)
-
                 cmModal.register(attrs.id, scope)
 
                 scope.refresh();

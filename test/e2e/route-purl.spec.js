@@ -87,16 +87,16 @@ describe('Route: Purl - ', function () {
      * Test 2
      * Intern User is logged out and Purl is for that User
      */
-    describe("Test 2 - User1 open Purl and is logged out", function(){
-        it('should open "#/purl/+' + config.purlUser1 +'" after logout before login.', function(){
+    describe('Test 2 - User1 open Purl and is logged out "#/purl/' + config.purlUser1 +'"', function(){
+        it('should open after logout before login.', function(){
             util.logout();
             util.get('/purl/' + config.purlUser1)
             util.expectCurrentUrl('#/purl/' + config.purlUser1)
         })
 
         it('login modal should be visible', function(){
-            util.waitForElement('[data-qa="modal-login"]');
-            expect($('[data-qa="modal-login"]').isPresent()).toBe(true)
+            util.waitForElement("[data-qa='modal-login']");
+            expect($("[data-qa='modal-login']").isPresent()).toBe(true)
         })
 
         it('should login with correct credentials', function () {
@@ -134,8 +134,8 @@ describe('Route: Purl - ', function () {
      * Test 3
      * Extern User open Purl when Browser is "empty"
      */
-    describe("Test 3 - Extern User open Purl, no User is logged in", function(){
-        it('should open "#/purl/+' + config.purlExtern +'"', function(){
+    describe('Test 3 - Extern User open Purl, no User is logged in "#/purl/' + config.purlExtern +'"', function(){
+        it('should open', function(){
             util.logout();
             util.get('/purl/' + config.purlExtern)
             util.expectCurrentUrl('#/purl/' + config.purlExtern)
@@ -156,8 +156,8 @@ describe('Route: Purl - ', function () {
      * Test 4
      * Extern User open Purl when Browser is Intern User 1 is logged in
      */
-    describe("Test 4 - User 1 is logged in, Extern User open Purl", function(){
-        it('should open "#/purl/+' + config.purlExtern +'"', function(){
+    describe('Test 4 - User 1 is logged in, Extern User open Purl "#/purl/' + config.purlExtern +'"', function(){
+        it('should open', function(){
             util.login();
 
             util.get('/purl/' + config.purlExtern)
@@ -179,8 +179,8 @@ describe('Route: Purl - ', function () {
      * Test 5
      * Extern User has open Purl then Intern User 1 will see his PURL
      */
-    describe("Test 5 - Extern User open Purl, then User 1 open Purl", function(){
-        it('should open "#/purl/+' + config.purlExtern +'"', function(){
+    describe('Test 5 - Extern User open Purl, then User 1 open Purl "#/purl/' + config.purlExtern +'"', function(){
+        it('should open', function(){
             util.logout();
 
             util.get('/purl/' + config.purlExtern)
@@ -232,8 +232,8 @@ describe('Route: Purl - ', function () {
      * Test 6
      * Intern User 2 open Purl, then Intern User 1 will see his PURL
      */
-    describe("Test 6 - Intern User 2 is logged in, User 1 open Purl", function(){
-        it('should open "#/purl/+' + config.purlUser1 +'", after User 2 logged in', function(){
+    describe('Test 6 - Intern User 2 is logged in, User 1 open Purl "#/purl/' + config.purlUser1 +'"', function(){
+        it('should open after User 2 logged in', function(){
             util.logout();
 
             util.login(config.loginUser2, config.passwordUser2);

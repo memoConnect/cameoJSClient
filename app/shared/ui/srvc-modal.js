@@ -68,10 +68,6 @@ angular.module('cmUi').service('cmModal',[
                 return this;
             }
 
-//            if(angular.element($document.querySelector('#'+config.id)).length>0){
-//                angular.element($document.querySelector('#'+config.id)).remove();
-//            }
-
             var attrs = '',
                 scope = $rootScope.$new()
 
@@ -80,12 +76,12 @@ angular.module('cmUi').service('cmModal',[
                 attrs += key+'="'+value+'"'
             });
 
-            $compile('<cm-modal '+attrs+' >'+template+'</cm-modal>')(scope)
+            var modal = $compile('<cm-modal '+attrs+' >'+template+'</cm-modal>')(scope)
+            // move modal up the dom hierarchy, if necessary:
+            angular.element(document.getElementById('cm-app')).append(modal)
 
-            return this;
+            return modal;
         }
-
-
 
         $rootScope.openModal    = modalService.open
         $rootScope.closeModal   = modalService.close
