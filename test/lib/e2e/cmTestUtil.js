@@ -21,11 +21,10 @@ this.getPtorInstance = function () {
 this.waitForPageLoad = function (expectedRoute) {
     ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route != undefined').then(function (boolean) {
-
             if (boolean) {
                 // get current route
                 return ptor.executeScript('return window._route').then(function (route) {
-                    if (expectedRoute == undefined || route.path.search(expectedRoute) != -1) {
+                    if (expectedRoute == undefined || route != undefined && route.path.search(expectedRoute) != -1) {
                         return route.status == "success"
                     } else {
 //                        console.log("unexpected route:" + route.path)
