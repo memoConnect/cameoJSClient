@@ -77,10 +77,9 @@ describe('registration', function () {
 
     // todo: test emails and phonenumbers
     it('should link to term of use', function() {
-
         // we need to scroll to bottom of page, because the bottom navbar might hide the link...
         // todo: find a less hackisch way to do this
-        $("[data-qa='link-terms']").sendKeys(protractor.Key.END)
+        $("body").sendKeys(protractor.Key.END)
 
         $("[data-qa='link-terms']").click()
         util.waitForPageLoad("/terms");
@@ -101,13 +100,13 @@ describe('registration', function () {
         util.waitForPageLoad("/talks")
 
         // todo better test of welcome screen
-        $(".modal").isDisplayed().then(function(b){
+        $("cm-modal").isDisplayed().then(function(b){
             expect(b).toBe(true)
         })
 
         // modal should only be displayed on first visit
         util.get("/talks");
-        $$(".modal").then(function(elements) {
+        $$("cm-modal").then(function(elements) {
             expect(elements.length).toBe(0)
         })
 
