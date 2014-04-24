@@ -27,7 +27,7 @@ angular.module('cmUi').directive('cmAvatar',[
                         // show name under avatar
                         if($attrs.cmWithName){
                             $element.addClass('with-name');
-                            $element.append('<div class="name">'+identity.getDisplayName()+'</div>');
+                            $element.append('<div class="name" data-qa="avatar-display-name">'+identity.getDisplayName()+'</div>');
                             $element.attr('title',identity.getDisplayName());
                         }
                     }
