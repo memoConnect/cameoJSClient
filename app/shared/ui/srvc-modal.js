@@ -68,6 +68,10 @@ angular.module('cmUi').service('cmModal',[
                 return this;
             }
 
+//            if(angular.element($document.querySelector('#'+config.id)).length>0){
+//                angular.element($document.querySelector('#'+config.id)).remove();
+//            }
+
             var attrs = '',
                 scope = $rootScope.$new()
 

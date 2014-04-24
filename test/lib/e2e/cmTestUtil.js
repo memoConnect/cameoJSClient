@@ -113,6 +113,14 @@ this.login = function (username, password) {
     return this
 }
 
+this.waitForModalOpen = function(id){
+    ptor.wait(function(){
+        return $("#"+id).isDisplayed()
+    }, config.routeTimeout, "waitForModalOpen "+id+" timeout reached")
+
+    return this
+}
+
 this.waitForModalClose = function () {
 
     ptor.wait(function () {

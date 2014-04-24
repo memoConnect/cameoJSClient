@@ -37,16 +37,14 @@ describe('login screen', function () {
         });
 
         $("body").sendKeys(protractor.Key.ESCAPE);
-
         util.waitForModalClose()
-
     });
 
     it('should show error on wrong login', function () {
         $("[data-qa='login-btn']").click();
 
-        var user = $("input[name=user]");
-        var pw = $("input[name=pw]");
+        var user = $("input[name='user']");
+        var pw = $("input[name='pw']");
 
         user.sendKeys("moep");
         pw.sendKeys("moep!");
@@ -63,8 +61,8 @@ describe('login screen', function () {
     it('should login with correct credentials', function () {
         $("[data-qa='login-btn']").click();
 
-        var user = $("input[name=user]");
-        var pw = $("input[name=pw]");
+        var user = $("input[name='user']");
+        var pw = $("input[name='pw']");
 
         user.sendKeys(config.loginUser1);
         pw.sendKeys(config.passwordUser1);
