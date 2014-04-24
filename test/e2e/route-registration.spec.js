@@ -102,6 +102,10 @@ describe('registration', function () {
         // todo better test of welcome screen
         util.waitForElement("cm-modal")
 
+        $("body").sendKeys(protractor.Key.ESCAPE);
+        util.waitForModalClose()
+        expect($(".empty-list").isPresent()).toBe(true)
+
         // modal should only be displayed on first visit
         util.get("/talks");
         $$("cm-modal").then(function(elements) {
