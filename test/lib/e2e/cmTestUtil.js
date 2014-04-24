@@ -49,6 +49,17 @@ this.waitForElement = function (selector) {
     return this
 }
 
+this.waitForElementDisappear = function (selector) {
+
+    ptor.wait(function () {
+        return $(selector).isDisplayed().then(function (isDisplayed) {
+            return ! isDisplayed
+        })
+    }, config.waitForTimeout, 'waitForElementDisappear ' + selector + ' timeout is reached')
+
+    return this
+}
+
 this.get = function (path) {
     var url = config.wwwUrl + '#' + path
     ptor.get(url)

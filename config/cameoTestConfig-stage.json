@@ -5,10 +5,15 @@
     "testData": [
         "loginUser1 = 'tender_morse'",
         "passwordUser1 = 'password'",
+        "cameoIdUser1 = 'tender_morse'",
         "purlUser1 = 'twOdhtRiRk'",
+        "contactUser1cameoId ='Desperate Kirch'",
+        "contactUser1login = 'desperate_kirch'",
+        "contactUser1password = 'password'",
         "purlExtern = 'QfehpTcMUF'",
         "loginUser2 = 'sad_archimedes'",
-        "passwordUser2 = 'password'"
+        "passwordUser2 = 'password'",
+        "cameoIdUser2 = 'sad_archimedes'"
     ]
 }
 
