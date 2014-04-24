@@ -432,7 +432,7 @@ module.exports = function (grunt) {
 //                    './resource/phonegap/plugins/org.apache.cordova.console',
 //                    './resource/phonegap/plugins/org.apache.cordova.device',
 //                    './resource/phonegap/plugins/org.apache.cordova.network-information',
-                    './resource/phonegap/plugins/org.apache.cordova.splashscreen',
+                    './resource/phonegap/plugins/org.apache.cordova.splashscreen'
 //                    './resource/phonegap/plugins/org.apache.cordova.contacts'
                 ],
                 platforms: ['android'],

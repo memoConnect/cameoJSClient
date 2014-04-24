@@ -100,11 +100,15 @@ describe('Route: Purl - ', function () {
         })
 
         it('should login with correct credentials', function () {
+
+            ptor.sleep(1000);
+
             var user = $("input[name=user]");
             var pw = $("input[name=pw]");
 
             user.sendKeys(config.loginUser1);
             pw.sendKeys(config.passwordUser1);
+
 
             $("[data-qa='login-submit-btn']").click();
 
