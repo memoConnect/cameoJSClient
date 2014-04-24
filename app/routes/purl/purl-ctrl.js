@@ -53,8 +53,9 @@ define([
 
                 cmModal.create({
                     id: 'login',
-                    'class': 'with-title no-padding'
-                },'<div cm-login></div>')
+                    'class': 'with-title no-padding',
+                    'cm-close-btn': false
+                },'<div cm-login></div>');
                 cmModal.open('login');
 
                 $rootScope.$on('cmLogin:success', function(){
