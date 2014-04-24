@@ -207,8 +207,8 @@ angular.module('cmContacts').service('cmContactsModel',[
             return this;
         }
 
-        this.sendFriendRequest = function(id){
-            return cmContactsAdapter.sendFriendRequest(id);
+        this.sendFriendRequest = function(id, message){
+            return cmContactsAdapter.sendFriendRequest(id, message);
         };
 
         this.answerFriendRequest = function(id, type){

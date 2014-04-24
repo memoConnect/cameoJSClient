@@ -68,10 +68,10 @@ angular.module('cmContacts').service('cmContactsAdapter',[
                     url:'/friendRequests'
                 })
             },
-            sendFriendRequest: function(id){
+            sendFriendRequest: function(id, message){
                 return cmApi.post({
                     url:'/friendRequest',
-                    data: {identityId: id}
+                    data: {identityId: id, message: message || null}
                 })
             },
             answerFriendRequest: function(id, type){
