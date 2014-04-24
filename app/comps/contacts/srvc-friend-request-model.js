@@ -16,15 +16,13 @@ angular.module('cmContacts').factory('cmFriendRequestModel',[
             self.reject = function(){
                 cmLogger.debug('cmFriendRequestModel:reject');
 
-//                return cmContactsAdapter.answerFriendRequest(self.identity.id, 'reject');
-                return self;
+                return cmContactsAdapter.answerFriendRequest(self.identity.id, 'reject');
             };
 
             self.ignore = function(){
                 cmLogger.debug('cmFriendRequestModel:ignore');
 
-//                return cmContactsAdapter.answerFriendRequest(self.identity.id, 'ignore');
-                return self;
+                return cmContactsAdapter.answerFriendRequest(self.identity.id, 'ignore');
             };
 
             return object
