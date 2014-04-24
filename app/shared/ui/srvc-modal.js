@@ -62,12 +62,16 @@ angular.module('cmUi').service('cmModal',[
         }
 
         modalService.create = function(config, template){
-
+            // clear existing instance
             if(modal_instances[config.id] != undefined){
                 console.log('intance exists')
-                return this;
+                delete modal_instances[config.id];
+                // clear DOM element
+                if(angular.element(document.getElementById(config.id)).length > 0){
+                    angular.element(document.getElementById(config.id)).remove();
+                }
             }
-
+            // create new element
             var attrs = '',
                 scope = $rootScope.$new()
 
