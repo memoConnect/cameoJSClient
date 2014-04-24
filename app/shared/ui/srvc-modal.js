@@ -60,16 +60,18 @@ angular.module('cmUi').service('cmModal',[
             return this
         }
 
-        self.create = function(config, template){
+        self.create = function(config, template, target){
             // clear existing instance
             if(self.instances[config.id] != undefined){
                 console.log('intance exists')
                 delete self.instances[config.id];
-                // clear DOM element
-                if(angular.element(document.getElementById(config.id)).length > 0){
-                    angular.element(document.getElementById(config.id)).remove();
-                }
             }
+
+            // clear DOM element, if neccessary
+            if(angular.element(document.getElementById(config.id)).length > 0){
+                angular.element(document.getElementById(config.id)).remove();
+            }
+
             // create new element
             var attrs = '',
                 scope = $rootScope.$new()
@@ -81,7 +83,7 @@ angular.module('cmUi').service('cmModal',[
 
             var modal = $compile('<cm-modal '+attrs+' >'+template+'</cm-modal>')(scope)
             // move modal up the dom hierarchy, if necessary:
-            angular.element(document.getElementById('cm-app')).append(modal)
+            angular.element(target || document.getElementById('cm-app') || 'body').append(modal)
 
             return modal
         }

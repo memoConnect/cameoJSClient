@@ -32,27 +32,24 @@ describe('cmModal', function(){
 
             expect(modal_element.attr('id')).toBe('my_modal')
             expect(modal_element.attr('my_attr')).toBe('my_test_attribute')
-
             expect(modal_element.find('my-test-tag').length).toBe(1)
 
             expect(cmModal.instances['my_modal']).toBeDefined()
 
-
-            console.log(angular.element('body').find('cm-modal').length)
             expect(angular.element('body').find('cm-modal').length).toBe(1)
 
-            var dublicate = angular.element('<cm-modal id="dublicate"></cm-modal>')
+            var dublicate = angular.element('<cm-modal id="dublicate"></cm-modal>')[0]
             
             angular.element('body').append(dublicate)
 
-            expect(dublicate.parent()).toBeDefined()
+            expect(dublicate).toBeDefined()
 
             modal_element = cmModal.create({
                 id:         "dublicate",
                 my_attr:    "my_test_attribute"
             }, "<my-test-tag></my-test-tag>")
 
-            expect(dublicate.parent()).toBeUndefined()
+            expect(angular.element(dublicate).parent().length).toBe(0)
 
         })
 

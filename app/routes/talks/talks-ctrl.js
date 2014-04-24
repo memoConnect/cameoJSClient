@@ -62,7 +62,8 @@ define([
                     id: 'welcome',
                     title: 'CAMEO.WELCOME'
                 })
-                .open('welcome')
+                
+                cmModal.open('welcome')
             }
 
             
