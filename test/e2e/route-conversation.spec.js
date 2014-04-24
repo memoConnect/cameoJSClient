@@ -1,7 +1,7 @@
 var config = require("./config-e2e-tests.js")
 var util = require("../lib/e2e/cmTestUtil.js")
 
-describe('talks', function () {
+describe('single conversation', function () {
 
     var ptor = util.getPtorInstance()
     var newSubject = "wicked_test_subject_" + Date.now();
@@ -38,11 +38,7 @@ describe('talks', function () {
     it('should filter contacts', function () {
         $("[data-qa='input-search']").sendKeys(config.contactUser1DisplayName)
 
-        ptor.wait(function () {
-            return $$("[data-qa='contact-display-name']").then(function (elements) {
-                return elements.length == 1
-            })
-        }, config.waitForTimeout, 'timed out waiting for filter')
+        util.waitForElement("[data-qa='contact-display-name']")
     })
 
     it('add contact to conversation', function () {
@@ -122,11 +118,7 @@ describe('talks', function () {
 
     it('there should be two messages, in the right order with the right text and authors', function () {
         // wait until second message appears
-        ptor.wait(function () {
-            return $$("cm-message").then(function (elements) {
-                return elements.length == 2
-            })
-        }, config.waitForTimeout, 'timed out waiting second message')
+        util.waitForElements("cm-message", 2)
 
         $$('cm-message').then(function (elements) {
             expect(elements.length).toBe(2)
@@ -148,6 +140,7 @@ describe('talks', function () {
         $$("cm-conversation-tag").then(function (elements) {
             elements[0].click()
             util.waitForPageLoad("/conversation/.*")
+            util.waitForElements("cm-message", 2)
             $$('cm-message').then(function (elements) {
                 expect(elements.length).toBe(2)
                 expect(elements[0].getText()).toContain(messageText)
