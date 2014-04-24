@@ -10,7 +10,7 @@ describe('login screen', function () {
         util.get("");
         util.expectCurrentUrl('#/login$')
 
-        $$("[data-qa]").then(function (elements) {
+        $$("[data-qa='register-btn'],[data-qa='login-btn']").then(function (elements) {
             expect(elements.length).toBe(2)
         })
     });
