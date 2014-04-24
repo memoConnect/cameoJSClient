@@ -8,24 +8,23 @@ angular.module('cmUi').service('cmModal',[
 
     function($rootScope, cmObject, cmLogger, $compile, $document){
 
-        var modal_instances = {},
-            modalService = {}
+        var self = {}
 
-        cmObject.addEventHandlingTo(modalService)
+        cmObject.addEventHandlingTo(self)
 
-        modalService.visible = false;
+        self.instances = {}
 
-        modalService.register = function(id, scope){
+        self.register = function(id, scope){
 
-            if(!id){
-                cmLogger.error('cmModal: unable to register modal without an id.')
+            if(!scope){
+                cmLogger.error('cmModal: unable to register modal without id or scope.')
                 return null
             }
 
-            var old_scope = modal_instances[id]
+            var old_scope = this.instances[id]
 
             if(old_scope != scope){
-                modal_instances[id] = scope
+                this.instances[id] = scope
                 this.trigger('register', id)
             }
 
@@ -33,15 +32,15 @@ angular.module('cmUi').service('cmModal',[
             
         }
 
-        modalService.open = function(id, data){
-            if(modal_instances[id]){
-                modal_instances[id]
+        self.open = function(id, data){
+            if(this.instances[id]){
+                this.instances[id]
                 .setData(data)
                 .open() 
             } else {
                 this.on('register', function(registered_id){
                     if(registered_id == id) 
-                        modal_instances[id]
+                        self.instances[id]
                         .setData(data)
                         .open() 
                 })
@@ -49,23 +48,23 @@ angular.module('cmUi').service('cmModal',[
             return this
         }
 
-        modalService.close = function(id){
-            modal_instances[id].close()
+        self.close = function(id){
+            this.instances[id].close()
             return this
         }
 
-        modalService.closeAll = function(){
-            angular.forEach(modal_instances, function(modal_instance, key){
+        self.closeAll = function(){
+            angular.forEach(this.instances, function(modal_instance, key){
                 modal_instance.close()
             })
             return this
         }
 
-        modalService.create = function(config, template){
+        self.create = function(config, template){
             // clear existing instance
-            if(modal_instances[config.id] != undefined){
+            if(self.instances[config.id] != undefined){
                 console.log('intance exists')
-                delete modal_instances[config.id];
+                delete self.instances[config.id];
                 // clear DOM element
                 if(angular.element(document.getElementById(config.id)).length > 0){
                     angular.element(document.getElementById(config.id)).remove();
@@ -84,12 +83,14 @@ angular.module('cmUi').service('cmModal',[
             // move modal up the dom hierarchy, if necessary:
             angular.element(document.getElementById('cm-app')).append(modal)
 
-            return modal;
+            return modal
         }
 
-        $rootScope.openModal    = modalService.open
-        $rootScope.closeModal   = modalService.close
-        $rootScope.isModalVisible = modalService.visible
+
+
+        $rootScope.openModal    = self.open
+        $rootScope.closeModal   = self.close
+        $rootScope.isModalVisible = false
 //        $rootScope.$watch('isModalVisible' ,function(newValue){
 //            console.log('watch modal '+newValue)
 //            $rootScope.isModalVisible = newValue;
@@ -97,15 +98,15 @@ angular.module('cmUi').service('cmModal',[
 
         //close all modals on route change:
         $rootScope.$on('$routeChangeStart', function(){
-            modalService.closeAll();
+            self.closeAll();
         })
 
         $document.bind('keydown', function (evt) {
             if (evt.which === 27) {
-                modalService.closeAll();
+                self.closeAll();
             }
         });
 
-        return modalService
+        return self
     }
 ])
