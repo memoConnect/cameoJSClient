@@ -21,43 +21,43 @@ angular.module('cmUi').service('cmModal',[
                 return null
             }
 
-            var old_scope = this.instances[id]
+            var old_scope = self.instances[id]
 
             if(old_scope != scope){
-                this.instances[id] = scope
-                this.trigger('register', id)
+                self.instances[id] = scope
+                self.trigger('register', id)
             }
 
-            return this
+            return self
             
         }
 
         self.open = function(id, data){
-            if(this.instances[id]){
-                this.instances[id]
+            if(self.instances[id]){
+                self.instances[id]
                 .setData(data)
                 .open() 
             } else {
-                this.on('register', function(registered_id){
+                self.on('register', function(registered_id){
                     if(registered_id == id) 
                         self.instances[id]
                         .setData(data)
                         .open() 
                 })
             }
-            return this
+            return self
         }
 
         self.close = function(id){
-            this.instances[id].close()
-            return this
+            self.instances[id].close()
+            return self
         }
 
         self.closeAll = function(){
-            angular.forEach(this.instances, function(modal_instance, key){
+            angular.forEach(self.instances, function(modal_instance, key){
                 modal_instance.close()
             })
-            return this
+            return self
         }
 
         self.create = function(config, template, target){
@@ -81,7 +81,7 @@ angular.module('cmUi').service('cmModal',[
                 attrs += key+'="'+value+'"'
             });
 
-            var modal = $compile('<cm-modal '+attrs+' >'+template+'</cm-modal>')(scope)
+            var modal = $compile('<cm-modal '+attrs+' >'+template||''+'</cm-modal>')(scope)
             // move modal up the dom hierarchy, if necessary:
             angular.element(target || document.getElementById('cm-app') || 'body').append(modal)
 

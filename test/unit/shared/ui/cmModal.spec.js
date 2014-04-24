@@ -2,8 +2,7 @@ describe('cmModal', function(){
 
     describe('service', function(){
 
-        var cmModal, $rootScope, modal_element
-
+        var cmModal, $rootScope
         beforeEach(module('cmUi'))
         beforeEach(inject(function(_cmModal_, _$rootScope_){
             cmModal     = _cmModal_
@@ -23,16 +22,16 @@ describe('cmModal', function(){
         it('should provide a function "create" to create a new modal.', function(){
             expect(typeof cmModal.create).toBe('function')
 
-            modal_element = cmModal.create({
-                                id:         "my_modal",
-                                my_attr:    "my_test_attribute"
-                            }, "<my-test-tag></my-test-tag>")
+            var el = cmModal.create({
+                id:         "my_modal",
+                my_attr:    "my_test_attribute"
+            }, "<my-test-tag></my-test-tag>")
 
             $rootScope.$apply()
 
-            expect(modal_element.attr('id')).toBe('my_modal')
-            expect(modal_element.attr('my_attr')).toBe('my_test_attribute')
-            expect(modal_element.find('my-test-tag').length).toBe(1)
+            expect(el.attr('id')).toBe('my_modal')
+            expect(el.attr('my_attr')).toBe('my_test_attribute')
+            expect(el.find('my-test-tag').length).toBe(1)
 
             expect(cmModal.instances['my_modal']).toBeDefined()
 
@@ -44,7 +43,7 @@ describe('cmModal', function(){
 
             expect(dublicate).toBeDefined()
 
-            modal_element = cmModal.create({
+            cmModal.create({
                 id:         "dublicate",
                 my_attr:    "my_test_attribute"
             }, "<my-test-tag></my-test-tag>")
@@ -53,36 +52,44 @@ describe('cmModal', function(){
 
         })
 
-        it('should provide a function "open" to open an existing modal.', function(){
+        it('should provide functiony "open" and "close" to open resp. close an existing modal.', function(){
             expect(typeof cmModal.open).toBe('function')
 
-            cmModal.open('my_modal')
-            expect(modal_element.hasClass('active')).toBe(true)
-        })
+            var el = cmModal.create({ id:"my_modal" }, 'Hello World')
 
-        it('should provide a function "close" to close an existing modal.', function(){
-            expect(typeof cmModal.close).toBe('function')
+            $rootScope.$apply()
+
+            expect(el.hasClass('active')).toBe(false)
+
+            cmModal.open('my_modal')
+
+            expect(el.hasClass('active')).toBe(true)
 
             cmModal.close('my_modal')
-            expect(modal_element.hasClass('active')).toBe(false)
+
+            expect(el.hasClass('active')).toBe(false)
         })
 
         it('should provide a function "closeAll" to close all existing modals.', function(){
 
             expect(typeof cmModal.closeAll).toBe('function')
 
-            cmModal.create({
-                                id:         "my_modal_1",
-                                my_attr:    "my_test_attribute"
-                            }, "<my-test-tag></my-test-tag>")
+            var el_1 = cmModal.create({ id:"my_modal_1" }, 'Hello World')
+                el_2 = cmModal.create({ id:"my_modal_2" }, 'Hello User')
+            
 
-            cmModal.create({
-                                id:         "my_modal_2",
-                                my_attr:    "my_test_attribute"
-                            }, "<my-test-tag></my-test-tag>")
+            $rootScope.$apply()
 
-            cmModal.open('my_modal_1')
+            cmModal.open('my_modal_1'),
             cmModal.open('my_modal_2')
+
+            expect(el_1.hasClass('active')).toBe(true)
+            expect(el_2.hasClass('active')).toBe(true)
+
+            cmModal.closeAll()
+
+            expect(el_1.hasClass('active')).toBe(false)
+            expect(el_2.hasClass('active')).toBe(false)
 
         })
 
