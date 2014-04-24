@@ -39,19 +39,19 @@ describe('Route: Purl - ', function () {
         if(typeof param !== 'undefined')
             moep = param;
 
-        it('should have back button "'+moep+'"', function(){
+        it('should not have back button "'+moep+'"', function(){
             expect($('cm-back').isPresent()).toBe(false)
         })
 
-        it('should have identity  "'+moep+'"', function(){
+        it('should not have identity  "'+moep+'"', function(){
             expect($('cm-identity').isPresent()).toBe(false)
         })
 
-        it('should have menu "'+moep+'"', function(){
+        it('should not have menu "'+moep+'"', function(){
             expect($('cm-menu').isPresent()).toBe(false)
         })
 
-        it('should have attachment button "'+moep+'"', function(){
+        it('should not have attachment button "'+moep+'"', function(){
             expect($('i[data-qa="attachments-btn"]').isPresent()).toBe(false)
         })
 

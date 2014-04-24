@@ -6,9 +6,14 @@
     "testData": [
         "loginUser1 = 'BMeSfHXQ'",
         "passwordUser1 = 'password'",
+        "cameoIdUser1 = 'bwyVeVnCvuO'",
         "purlUser1 = 'V3Ml6hzqX8'",
+        "contactUser1DisplayName ='9kxZWFFbOCh0K9DZoHrv'",
+        "contactUser1Login = 'fbgblqym'",
+        "contactUser1password = 'password'",
         "purlExtern = 'MSaKlj4hJP'",
         "loginUser2 = '2VqTftqh'",
-        "passwordUser2 = 'password'"
+        "passwordUser2 = 'password'",
+        "cameoIdUser2 = 'KG5mSGTY8l3'"
     ]
 }

@@ -19,13 +19,13 @@
     </header>
 
     <cm-contacts-list contacts-as="contacts">
-        <cm-contact-tag ng-repeat="contact in contacts" cm-rubber-space>   
+        <cm-contact-tag ng-repeat="contact in contacts | filter: search" cm-rubber-space>
             <cm-avatar cm-data = "contact.identity"></cm-avatar> 
             <cm-key-level key-size = "contact.identity.getWeakestKeySize()" ></cm-key-level>
             <cm-contact-brief   cm-data = "contact" cm-weight="1"></cm-contact-brief>     
             <cm-contact-type    cm-data = "contact" ></cm-contact-type>
             <span class="separator" ></span>
-            <button ng-click="toggleRecipient(contact.identity)" ng-disabled = "selected[contact.identity.id] && disabled_remove">                
+            <button ng-click="toggleRecipient(contact.identity)" ng-disabled = "selected[contact.identity.id] && disabled_remove" data-qa="btn-select-contact">
                 <i class="fa" ng-class="{'cm-checkbox': !selected[contact.identity.id], 'cm-checkbox-right' : selected[contact.identity.id]}"></i>              
             </button>
         </cm-contact-tag>
@@ -33,5 +33,5 @@
 
 </section>
 <cm-footer cm-rubber-space>
-    <a href="#/conversation" cm-weight = "1">{{'RECIPIENTS.LABEL.DONE' | cmTranslate}}</a>
+    <a href="#/conversation" cm-weight = "1" data-qa="btn-done">{{'RECIPIENTS.LABEL.DONE' | cmTranslate}}</a>
 </cm-footer>

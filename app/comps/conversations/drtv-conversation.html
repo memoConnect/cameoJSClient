@@ -16,11 +16,11 @@
 <div class="answer clearfix">
     <i class="fa cm-plus attachments with-cursor" cm-user-rights data-qa="attachments-btn"></i>
     <div class="message" cm-answer-area data-qa="answer-ctn">
-        <textarea cm-resize-textarea cm-max-rows="4" ng-model="my_message_text"></textarea>
+        <textarea data-qa="input-answer" cm-resize-textarea cm-max-rows="4" ng-model="my_message_text"></textarea>
         <i class="fa cm-smile-negative with-cursor"></i>
         <div class="inputter"></div>
     </div>
-    <i class="fa cm-post arrow with-cursor" ng-click="sendMessage()"></i>
+    <i class="fa cm-post arrow with-cursor" data-qa="btn-send-answer" ng-click="sendMessage()"></i>
 </div>
 
 <!--
