@@ -63,27 +63,16 @@ angular.module('cmUi').directive('cmModal', [
                 }
 
                 scope.toggle = function(on){
-                    on = (on == undefined ? $element.css('display') == 'none' : on)
-                    if(on){
-                        element.css('display', 'block')
-                        
-                        // timeout for scope apply and animation
-                        $timeout(function () {
+                    on = (on == undefined ? $element.hasClass('active') : on)
+                    if(on){                        
+                        element.addClass('active')
+                        $timeout(function(){
                             $rootScope.isModalVisible = true;
-                            // trigger CSS transitions
-                            scope.animate = 'in';
-                        });
-
+                        })                        
                     }else{
-
-                        // timeout for scope apply and animation
-                        $timeout(function () {
-                            scope.animate = 'out';
-                            $timeout(function(){
-                                element.css('display', 'none')
-                                $rootScope.isModalVisible = false;
-                                scope.animate = 'none';
-                            }, 3000)
+                        element.removeClass('active')
+                        $timeout(function(){
+                            $rootScope.isModalVisible = false;
                         })
                     }
                 }
@@ -96,11 +85,6 @@ angular.module('cmUi').directive('cmModal', [
                     this.toggle(false)  
                 }
 
-
-
-                scope.toggle(false)
-                scope.animate = 'none'
-
                 //close modal when clicked on backdrop
                 angular.element(element.children()[1]).on('click', function(){
                     scope.close()
@@ -111,10 +95,10 @@ angular.module('cmUi').directive('cmModal', [
 
                 element
                 .addClass(attrs.severity)
+                .css('transition-duration', '300ms')
 
 
                 addNose()
-                scope.toggle(false)
 
                 var to_be_parent =  angular.element(document.getElementById('cm-app'))
 

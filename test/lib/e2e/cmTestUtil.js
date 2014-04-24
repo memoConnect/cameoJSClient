@@ -105,18 +105,15 @@ this.login = function (username, password) {
 this.waitForModalClose = function () {
 
     ptor.wait(function () {
-        return $$("cm-modal").then(function (elements) {
 
-            var allHidden = true
+        var allHidden = true
 
-            elements.each(function(element){
-                if(element.isDisplayed()){
-                    allHidden = false
-                }
-            })
-
-            return allHidden
+        $$("cm-modal").each(function(element){
+            if(element.isDisplayed()){
+                allHidden = false
+            }
         })
+        return allHidden
     }, config.routeTimeout, "waitForModalClose timeout reached")
 
     return this

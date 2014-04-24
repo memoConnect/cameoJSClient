@@ -1,13 +1,20 @@
 cm-modal {
+    display:none;
+    position: fixed;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999;
+    width: 32rem;
+    margin:0 auto;
+    transition: all ease-out;
 
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 99999;
-  width: 32rem;
-  margin:0 auto;
+    &.active{
+        display: block;   
+    }
+
+
 
   .backdrop {
     background-color: @cm-overlay-dark;
@@ -18,25 +25,6 @@ cm-modal {
     right: 0;
     z-index: 1;
 
-    &.fade-in{
-        -webkit-animation: backdrop_in 300ms ease-out;
-        animation: backdrop_in 300ms ease-out;
-    }
-
-    &.fade-out{
-        -webkit-animation: backdrop_in 300ms reverse ease-out;
-        animation: backdrop_in 300ms reverse ease-out;
-    }
-
-   // &.fade {
-   //   opacity: 0;
-   //   filter: alpha(opacity=0)
-   // }
-
-   // &.in {
-   //   opacity: .7;
-   //   filter: alpha(opacity=70)
-   // }
   }
 
   &.nose-top {
@@ -64,31 +52,7 @@ cm-modal {
     margin: auto;
     margin-top: @cm-header-height;
 
-    &.fade-in{
-        -webkit-animation: article_in 300ms ease-out;
-        animation: article_in 300ms ease-out;
-    }
 
-    &.fade-out{
-        -webkit-animation: article_in 300ms ease-out reverse;
-        animation: article_in 300ms ease-out reverse;
-    }
-
-   // &.fade {
-   //   -webkit-transform: translate(0, -25%);
-   //   -ms-transform: translate(0, -25%);
-   //   transform: translate(0, -25%);
-   //   -webkit-transition: -webkit-transform .3s ease-out;
-   //   -moz-transition: -moz-transform .3s ease-out;
-   //   -o-transition: -o-transform .3s ease-out;
-   //   transition: transform .3s ease-out
-   // }
-
-   &.in {
-     -webkit-transform: translate(0, 0);
-     -ms-transform: translate(0, 0);
-     transform: translate(0, 0)
-   }
 
     header {
       position: relative;
@@ -242,32 +206,6 @@ cm-modal {
   }
 
 }
-
-.backdrop_in(){
-    from {      
-        background-color:rgba(0,0,0,0);
-    }
-    to {    
-        background-color:@cm-overlay-dark;
-    }
-}
-
-.article_in() {
-    from {      
-        top:-25%
-    }
-    to {    
-        top:0;
-    }
-}
-
-@keyframes backdrop_in {.backdrop_in;}
-@-webkit-keyframes backdrop_in {.backdrop_in;}
-@keyframes article_in { .article_in;}
-@-webkit-keyframes article_in { .article_in;}
-
-
-
 
 /*
 
