@@ -95,14 +95,11 @@ describe('Route: Purl - ', function () {
         })
 
         it('login modal should be visible', function(){
-            util.waitForElement("[data-qa='modal-login']");
+            //util.waitForElement("[data-qa='modal-login']");
             expect($("[data-qa='modal-login']").isPresent()).toBe(true)
         })
 
         it('should login with correct credentials', function () {
-
-            ptor.sleep(1000);
-
             var user = $("input[name=user]");
             var pw = $("input[name=pw]");
 
