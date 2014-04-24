@@ -3,10 +3,10 @@
  */
 'use strict';
 
-angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject'])
+angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger'])
 .factory('cmIdentityModel',[
-'cmAuth', 'cmCrypt', 'cmObject', '$q',
-function(cmAuth, cmCrypt, cmObject, $q){
+'cmAuth', 'cmCrypt', 'cmObject', 'cmLogger',
+function(cmAuth, cmCrypt, cmObject, cmLogger){
     var Identity = function(identity_data){
 
         this.id,
@@ -121,7 +121,7 @@ function(cmAuth, cmCrypt, cmObject, $q){
                     self.addKey(publicKey_data)
                 })
 
-                this.trigger('init:finish');
+                this.trigger('init:finish', this);
 
             } else if(typeof identity_data === 'string'){
                 this.id = identity_data;
@@ -164,8 +164,6 @@ function($rootScope, cmIdentityModel){
          * @returns {*}
          */
         create: function(data){
-
-
             var identity = null,
                 i = 0;
 

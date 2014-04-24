@@ -19,7 +19,7 @@ angular.module('cmContacts').service('cmContactsModel',[
         this.groups = [];
         this.requests = [];
 
-        cmObject.addEventHandlingTo(this)
+        cmObject.addEventHandlingTo(this);
 
         /**
          * Init Object
