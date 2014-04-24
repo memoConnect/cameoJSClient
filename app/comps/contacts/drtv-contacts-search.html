@@ -16,9 +16,9 @@
     </div>
 
     <cm-contact-tag cm-rubber-space ng-repeat="contact in results">
-        <!--<cm-avatar cm-data="contact.identity"></cm-avatar>-->
+        <cm-avatar cm-data="contact"></cm-avatar>
         <div class="cm-request-brief" cm-weight="1">
-            <strong>{{contact.displayName}}</strong>
+            <strong>{{contact.getDisplayName()}}</strong>
         </div>
         <button ng-click="openModal('modalSendRequest',contact)">
             <i class="fa cm-checkbox"></i>
