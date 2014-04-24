@@ -3,7 +3,7 @@
 </header>
 
 <section class="cm-bg-transparent">
-    <form name="searchCameoId">
+    <form name="searchCameoId" autocomplete="off">
         <input cm-large-input type="text" ng-model="string" name="string" cm-icon="cm-search" placeholder="{{'CONTACTS.PLACEHOLDER.ADD_NEW_CONTACT'|cmTranslate}}" ng-minlength="4" ng-keyup="search()" />
 
         <div class="cm-alert" ng-show="searchCameoId.string.$error.minlength">
