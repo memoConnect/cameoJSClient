@@ -51,17 +51,14 @@ angular.module('cmUi').directive('cmModal', [
 
                     element.find('article').append(nose)
                 }
-
+                // add external data to scope
                 scope.setData = function(data){
-                    scope[attrs.cmDataAs || 'data'] = data
-
-                    transclude(scope,function(clone){
-                        element.find('ng-transclude').html('').append(clone);
-                    })
-
+                    if(data != undefined) {
+                        scope[attrs.cmDataAs || 'data'] = data
+                    }
                     return this
                 }
-
+                // toggle visiblity modal
                 scope.toggle = function(on){
                     on = (on == undefined ? $element.hasClass('active') : on)
                     if(on){                        
@@ -97,7 +94,6 @@ angular.module('cmUi').directive('cmModal', [
                 .addClass(attrs.severity)
                 .css('transition-duration', '300ms')
 
-
                 addNose()
 
                 var to_be_parent =  angular.element(document.getElementById('cm-app'))
@@ -106,6 +102,10 @@ angular.module('cmUi').directive('cmModal', [
                 if(element.parent()[0] != to_be_parent[0]) to_be_parent.append(element)
 
                 cmModal.register(attrs.id, scope)
+
+                transclude(scope, function (clone) {
+                    element.find('ng-transclude').append(clone);
+                })
             },
 
             controller: function($scope, $element, $attrs){   

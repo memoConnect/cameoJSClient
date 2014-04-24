@@ -62,9 +62,10 @@ angular.module('cmUi').service('cmModal',[
         }
 
         modalService.create = function(config, template){
-            console.log(angular.element(document.querySelector('#'+config.id)).length)
-            if(angular.element(document.querySelector('#'+config.id)).length > 0){
-                return false;
+
+            if(modal_instances[config.id] != undefined){
+                console.log('intance exists')
+                return this;
             }
 
             var attrs = '',
@@ -73,9 +74,9 @@ angular.module('cmUi').service('cmModal',[
             //Todo: könnte man schöner machen:
             angular.forEach(config, function(value, key){
                 attrs += key+'="'+value+'"'
-            })
+            });
 
-            $compile('<cm-modal '+attrs+' >'+(template||'')+'</cm-modal>')(scope)
+            $compile('<cm-modal '+attrs+' >'+template+'</cm-modal>')(scope)
 
             return this;
         }
