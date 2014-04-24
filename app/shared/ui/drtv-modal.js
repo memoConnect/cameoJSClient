@@ -5,7 +5,7 @@ angular.module('cmUi').directive('cmModal', [
     function (cmModal, cmTranslate, $rootScope, $timeout){
 
         // handle nose position
-        function addNose(attrs){
+        function addNose(element, attrs){
             if(!attrs.nose) return null
 
             var nose        =   angular.element('<i class="nose fa"></i>'),
@@ -107,7 +107,7 @@ angular.module('cmUi').directive('cmModal', [
                 .addClass(attrs.severity)
                 .css('transition-duration', '300ms');
 
-                addNose(attrs);
+                addNose(element, attrs);
                 // register modal to service
                 cmModal.register(attrs.id, scope);
                 // refresh content
