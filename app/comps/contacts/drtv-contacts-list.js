@@ -55,8 +55,8 @@ angular.module('cmContacts').directive('cmContactsList',[
                  * delete contact via model
                  * @param id
                  */
-                $scope.deleteContact = function (id) {
-                    cmLogger.debug('deleteContact ' + id);
+                $scope.deleteContact = function (contact) {
+                    cmLogger.debug('deleteContact ' + contact.id);
                 };
             }
         }
