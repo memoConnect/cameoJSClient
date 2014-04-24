@@ -5,7 +5,7 @@ angular.module('cmContacts').directive('cmContactBrief', [
         return {
             restrict : 'AE',
             //templateUrl : 'comps/contacts/contact-brief.html',
-            template: '<div class="name">{{contact.identity.getDisplayName()}}</div>'+
+            template: '<div class="name" data-qa="contact-display-name">{{contact.identity.getDisplayName()}}</div>'+
                 '<div class="about">about</div>' ,
             require: '^cmContactTag',
             priority: 1

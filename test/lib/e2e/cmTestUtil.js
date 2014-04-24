@@ -38,11 +38,33 @@ this.waitForPageLoad = function (expectedRoute) {
     return this
 }
 
-this.waitForElement = function (selector) {
+this.waitForElement = function (selector, count) {
 
     ptor.wait(function () {
         return $$(selector).then(function (elements) {
             return elements.length > 0
+        })
+    }, config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
+
+    return this
+}
+
+this.waitForElementDisappear = function (selector) {
+
+    ptor.wait(function () {
+        return $(selector).isDisplayed().then(function (isDisplayed) {
+            return ! isDisplayed
+        })
+    }, config.waitForTimeout, 'waitForElementDisappear ' + selector + ' timeout is reached')
+
+    return this
+}
+
+this.waitForElements = function (selector, count) {
+
+    ptor.wait(function () {
+        return $$(selector).then(function (elements) {
+            return elements.length == count
         })
     }, config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
 
@@ -102,21 +124,26 @@ this.login = function (username, password) {
     return this
 }
 
+this.waitForModalOpen = function(id){
+    ptor.wait(function(){
+        return $("#"+id).isDisplayed()
+    }, config.routeTimeout, "waitForModalOpen "+id+" timeout reached")
+
+    return this
+}
+
 this.waitForModalClose = function () {
 
     ptor.wait(function () {
-        return $$("cm-modal").then(function (elements) {
 
-            var allHidden = true
+        var allHidden = true
 
-            elements.each(function(element){
-                if(element.isDisplayed()){
-                    allHidden = false
-                }
-            })
-
-            return allHidden
+        $$("cm-modal").each(function(element){
+            if(element.isDisplayed()){
+                allHidden = false
+            }
         })
+        return allHidden
     }, config.routeTimeout, "waitForModalClose timeout reached")
 
     return this

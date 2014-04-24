@@ -1,11 +1,11 @@
 <div class="control">
     <div cm-transparent-bg ng-show="bodyVisible" ng-click="handle()"></div>
 
-    <div ng-show="bodyVisible" class="body">
+    <div ng-show="bodyVisible" class="body" data-qa="conversation-options-menu">
 
         <div class="cm-form-group" ng-show="isNew">
             <div class="cm-form-control with-inputter">
-                <input type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" cm-adaptive-change />
+                <input type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" cm-adaptive-change data-qa="input-subject"/>
             </div>
         </div>
 
@@ -70,11 +70,11 @@
         </div>
 
 
-        <button ng-click="handle()" class="cm-btn" ng-if="!isNew">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
-        <button ng-click="handle()" class="cm-btn" ng-if="isNew">{{'CONVERSATION.CONTROL.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
+        <button ng-click="handle()" class="cm-btn" ng-if="!isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
+        <button ng-click="handle()" class="cm-btn" ng-if="isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
     </div>
 
-    <div class="cm-bar" cm-rubber-space ng-click="handle()">
+    <div class="cm-bar" cm-rubber-space ng-click="handle()" data-qa="conversation-options-bar">
         <div cm-weight="1" class="grip-left">
             <i class="fa cm-grip"></i>
         </div>

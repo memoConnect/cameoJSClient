@@ -25,6 +25,21 @@ angular.module('cmUi').directive('cmModal', [
 
             link: function(scope, element, attrs, controller, transclude){
 
+
+                scope.refresh = function(){                   
+
+                    transclude(scope, function (clone) {
+                        var transclude_container = element.find('ng-transclude')
+
+                        transclude_container
+                        .children()
+                        .remove()
+
+                        transclude_container
+                        .append(clone);                 
+                    })
+                }
+
                 function addNose(){
                     if(!attrs.nose) return null
 
@@ -51,50 +66,41 @@ angular.module('cmUi').directive('cmModal', [
 
                     element.find('article').append(nose)
                 }
-
+                // add external data to scope
                 scope.setData = function(data){
-                    scope[attrs.cmDataAs || 'data'] = data
-
-                    transclude(scope,function(clone){
-                        element.find('ng-transclude').html('').append(clone);
-                    })
-
+                    if(data != undefined) {
+                        scope[attrs.cmDataAs || 'data'] = data
+                    }
                     return this
                 }
 
+                // toggle visiblity modal
                 scope.toggle = function(on){
-                    on = (on == undefined ? $element.css('display') == 'none' : on)
+                    on = (on == undefined ? $element.hasClass('active') : on)
                     if(on){
-                        element.css('display', 'block')
-                        // timeout for scope apply and animation
-                        $timeout(function () {
+                        scope.refresh()                        
+                        element.addClass('active')
+                        $timeout(function(){
                             $rootScope.isModalVisible = true;
-                            // trigger CSS transitions
-                            scope.animate = true;
-                        });
-                    }else{
-                        element.css('display', 'none')
-
-                        // timeout for scope apply and animation
-                        $timeout(function () {
-                            scope.animate = false;
-
-                            $rootScope.$apply(function () {
-                                $rootScope.isModalVisible = false;
-                            })
+                        })                        
+                    } else {
+                        element.removeClass('active')
+                        $timeout(function(){
+                            $rootScope.isModalVisible = false;
                         })
                     }
                 }
 
                 scope.open = function(){
-                    this.toggle(true)  
+                    this.toggle(true)
                 }
 
                 scope.close = function(){
-                    this.toggle(false)  
+                    this.toggle(false);
                 }
 
-                scope.toggle(false)
+                scope.refresh()
+
 
                 //close modal when clicked on backdrop
                 angular.element(element.children()[1]).on('click', function(){
@@ -106,24 +112,18 @@ angular.module('cmUi').directive('cmModal', [
 
                 element
                 .addClass(attrs.severity)
-
+                .css('transition-duration', '300ms')
 
                 addNose()
-                scope.toggle(false)
-
-                var to_be_parent =  angular.element(document.getElementById('cm-app'))
-
-                //move modal up the dom hierarchy, if necessary:
-                if(element.parent()[0] != to_be_parent[0]) to_be_parent.append(element)
 
                 cmModal.register(attrs.id, scope)
+
+                scope.refresh();
             },
 
             controller: function($scope, $element, $attrs){   
-
                 $scope.title    = cmTranslate($attrs.title)
                 $scope.severity = $attrs.severity || 'info'
-
             }
         }
     }

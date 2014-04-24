@@ -1,13 +1,14 @@
 <cm-avatar cm-data="conversation.getLastMessage().from"></cm-avatar>
 
 <div class="details" cm-weight="3">
-    <div class="subject">
+    <div class="subject" data-qa="conversation-subject">
         {{conversation.getSubjectLine()}}
     </div>
     <cm-message
         ng-if     = "conversation.getLastMessage()"
         cm-data   = "conversation.getLastMessage()"
         text-only = "true"
+        data-qa   = "conversation-last-message"
     ></cm-message>
 </div>
 
