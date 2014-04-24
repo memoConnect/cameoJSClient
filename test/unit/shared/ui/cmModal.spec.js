@@ -99,7 +99,7 @@ describe('cmModal', function(){
     describe('directive', function(){
         //Todo; actually this is already covered implicitly by the service tests above
         /*
-        * <cm-modal data-as="moep"></cm-modal>
+        * <cm-modal cm-data-as="moep"></cm-modal>
         * <cm-modal cm-close-btn="false"></cm-modal>
         * <cm-modal cm-close-btn="true"></cm-modal> //default
         * */

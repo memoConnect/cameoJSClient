@@ -149,19 +149,16 @@
     },
 	
 	"CONTACTS": {
-		"WELCOME": "Adressbuch",
 		"HEADING": {
             "LIST": "Kontakte",
             "REQUESTS": "Kontaktanfragen",
-            "SEARCH": "Suche"
+            "SEARCH": "Suche",
+            "SEND_REQUEST": "Freundschaftsanfrage"
         },
         "LIST_EMPTY": "Bisher keine Kontakte vorhanden",
         "PLACEHOLDER": {
-            "ADD_NEW_CONTACT": "geben Sie hier eine cameoId ein"
-        },
-        "HEADER": {
-            "SEARCH_CAMEO_ID": "Kontakt hinzufügen",
-            "CONTACTS_LIST": "Kontakte"
+            "ADD_NEW_CONTACT": "geben Sie hier eine cameoId ein",
+            "REQUEST_MESSAGE": "Hier ist Platz für eine Mitteilung für die Freunschaftsanfrage"
         },
         "INFO": {
             "NO_RESULTS": "Keine cameo Kontakte gefunden",
@@ -181,7 +178,8 @@
             "SORT": "sortieren",
             "FILTER": "filtern",
             "SEARCH_IDENTITY": "Cameo Indentität suchen",
-            "ADD_EXTERN": "neuen externen Kontakt anlegen"
+            "ADD_EXTERN": "neuen externen Kontakt anlegen",
+            "SEND_REQUEST": "senden"
         },
         "BUTTON": {
             "RESET": "zurücksetzen",

@@ -115,7 +115,7 @@ angular.module('cmUi').directive('cmModal', [
             },
 
             controller: function($scope, $element, $attrs){   
-                $scope.title    = cmTranslate($attrs.title);
+                $scope.title    = cmTranslate($attrs.cmTitle);
                 $scope.severity = $attrs.severity || 'info';
             }
         }
