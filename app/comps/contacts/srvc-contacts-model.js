@@ -300,6 +300,11 @@ angular.module('cmContacts').service('cmContactsModel',[
             init();
         });
 
+        this.on('friendRequest:send', function(){
+            this._clearContacts();
+            init();
+        });
+
         cmUserModel.on('init', function(){
             init();
         });
