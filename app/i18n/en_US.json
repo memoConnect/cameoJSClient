@@ -149,19 +149,16 @@
     },
 
 	"CONTACTS": {
-		"WELCOME": "Addressbook",
         "HEADING": {
             "LIST": "Contacts",
             "REQUESTS": "Contact requests",
-            "SEARCH": "Search"
+            "SEARCH": "Search",
+            "SEND_REQUEST": "Request"
         },
         "LIST_EMPTY": "No contacts exists",
         "PLACEHOLDER": {
-            "ADD_NEW_CONTACT": "please insert a cameoId"
-        },
-        "HEADER": {
-            "SEARCH_CAMEO_ID": "Add contact",
-            "CONTACTS_LIST": "Contacts"
+            "ADD_NEW_CONTACT": "please insert a cameoId",
+            "REQUEST_MESSAGE": "here is place for a message for the request"
         },
         "INFO": {
             "NO_RESULTS": "No cameo contacts found",
@@ -181,7 +178,8 @@
             "SORT": "arrange",
             "FILTER": "filter",
             "SEARCH_IDENTITY": "search Cameo indentity",
-            "ADD_EXTERN": "create new extern contact"
+            "ADD_EXTERN": "create new extern contact",
+            "SEND_REQUEST": "send"
         },
         "BUTTON": {
             "RESET": "reset",

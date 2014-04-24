@@ -14,8 +14,6 @@ cm-modal {
         display: block;   
     }
 
-
-
   .backdrop {
     background-color: @cm-overlay-dark;
     position: absolute;
@@ -24,7 +22,6 @@ cm-modal {
     left: 0;
     right: 0;
     z-index: 1;
-
   }
 
   &.nose-top {
@@ -52,8 +49,6 @@ cm-modal {
     margin: auto;
     margin-top: @cm-header-height;
 
-
-
     header {
       position: relative;
       margin-bottom: 1rem;
@@ -73,7 +68,6 @@ cm-modal {
         font-weight: normal !important;
         opacity: 1 !important;
         text-shadow: initial !important;
-
       }
 
       h2 {
@@ -106,7 +100,7 @@ cm-modal {
         line-height: @cm-unit;
         color: @cm-font-color;
         font-size: @cm-large-font;
-        text-align: center;
+        text-align: left;
         vertical-align: middle;
         .single-line;
 
@@ -125,6 +119,18 @@ cm-modal {
         }
       }
 
+      button{
+        text-align:center;
+      }
+
+      .modal-row {
+        border-top: @cm-border-grey @cm-border-width solid;
+        padding:0.5rem 1.5rem;
+        textarea {
+          display:block;
+          width:100%;
+        }
+      }
     }
 
     footer {

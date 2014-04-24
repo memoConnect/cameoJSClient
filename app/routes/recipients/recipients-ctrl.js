@@ -1,15 +1,12 @@
 define([
     'app'
-
 ], function (app) {
     'use strict';
 
     app.register.controller('RecipientsCtrl', [
-
         '$scope',
         '$rootScope',
         '$location',
-
         function ($scope, $rootScope, $location) {
             
             var conversation = $rootScope.pendingConversation
@@ -22,8 +19,6 @@ define([
             $scope.selected = {}
 
             $scope.disabled_remove = !!conversation.id
-
-            console.log($scope.disabled_remove)
 
             conversation.recipients.forEach(function(recipient){
                 $scope.selected[recipient.id] = true

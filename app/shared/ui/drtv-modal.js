@@ -1,13 +1,37 @@
 'use strict';
 
 angular.module('cmUi').directive('cmModal', [
-
-    'cmModal',
-    'cmTranslate',
-    '$rootScope',
-    '$timeout',
-
+    'cmModal', 'cmTranslate', '$rootScope', '$timeout',
     function (cmModal, cmTranslate, $rootScope, $timeout){
+
+        // handle nose position
+        function addNose(element, attrs){
+            if(!attrs.nose) return null
+
+            var nose        =   angular.element('<i class="nose fa"></i>'),
+                nose_side   =   attrs.nose.split('-'),
+                nose_class  =   {
+                    'top-left':     'cm-nose-up flip',
+                    'top-right':    'cm-nose-up',
+                    'left-top':     'cm-nose-left flip',
+                    'left-bottom':  'cm-nose-left',
+                    'right-top':    'cm-nose-right',
+                    'right-bottom': 'cm-nose-right flip',
+                    'bottom-left':  'cm-nose-down flip',
+                    'bottom-right': 'cm-nose-down'
+                }
+
+            nose
+                .addClass(nose_class[attrs.nose])
+                .addClass(nose_side[0])
+                .css(nose_side[1], attrs.nosePosition || '2rem')
+
+            element
+                .addClass('nose-'+nose_side[0])
+
+            element.find('article').append(nose)
+        }
+
         return {
             restrict: 'AE',
             transclude: true,
@@ -15,116 +39,85 @@ angular.module('cmUi').directive('cmModal', [
             
             templateUrl: function(tElement, tAttrs){
                 var type = tAttrs.type || 'plain',
-                    templateUrl =   {
-                                        'plain'     : 'shared/ui/drtv-modal-plain.html'
-                                    }
+                    templateUrl = {
+                        'plain': 'shared/ui/drtv-modal-plain.html'
+                    };
 
-                return templateUrl[type]
+                return templateUrl[type];
             },
-            
 
             link: function(scope, element, attrs, controller, transclude){
 
+                scope.closeBtn = attrs.cmCloseBtn || true;
 
+                // refresh modal content
                 scope.refresh = function(){                   
-
                     transclude(scope, function (clone) {
-                        var transclude_container = element.find('ng-transclude')
+                        var transclude_container = element.find('ng-transclude');
 
                         transclude_container
                         .children()
-                        .remove()
+                        .remove();
 
                         transclude_container
                         .append(clone);                 
                     })
-                }
+                };
 
-                function addNose(){
-                    if(!attrs.nose) return null
-
-                    var nose        =   angular.element('<i class="nose fa"></i>'),
-                        nose_side   =   attrs.nose.split('-'),
-                        nose_class  =   {
-                                            'top-left':     'cm-nose-up flip',
-                                            'top-right':    'cm-nose-up',
-                                            'left-top':     'cm-nose-left flip',
-                                            'left-bottom':  'cm-nose-left',
-                                            'right-top':    'cm-nose-right',
-                                            'right-bottom': 'cm-nose-right flip',
-                                            'bottom-left':  'cm-nose-down flip',
-                                            'bottom-right': 'cm-nose-down'
-                                        }
-
-                    nose
-                    .addClass(nose_class[attrs.nose]) 
-                    .addClass(nose_side[0])
-                    .css(nose_side[1], attrs.nosePosition || '2rem')
-
-                    element
-                    .addClass('nose-'+nose_side[0])
-
-                    element.find('article').append(nose)
-                }
                 // add external data to scope
                 scope.setData = function(data){
                     if(data != undefined) {
-                        scope[attrs.cmDataAs || 'data'] = data
+                        scope[attrs.cmDataAs || 'data'] = data;
                     }
-                    return this
-                }
+                    return this;
+                };
 
                 // toggle visiblity modal
                 scope.toggle = function(on){
-                    on = (on == undefined ? $element.hasClass('active') : on)
+                    on = (on == undefined ? $element.hasClass('active') : on);
                     if(on){
-                        scope.refresh()                        
-                        element.addClass('active')
+                        scope.refresh();
+                        element.addClass('active');
                         $timeout(function(){
                             $rootScope.isModalVisible = true;
                         })                        
                     } else {
-                        element.removeClass('active')
+                        element.removeClass('active');
                         $timeout(function(){
                             $rootScope.isModalVisible = false;
                         })
                     }
-                }
+                };
 
+                // open modal
                 scope.open = function(){
-                    this.toggle(true)
-                }
-
+                    this.toggle(true);
+                };
+                // close modal
                 scope.close = function(){
                     this.toggle(false);
-                }
+                };
 
-                scope.refresh()
-
-
-                //close modal when clicked on backdrop
+                // close modal when clicked on backdrop
                 angular.element(element.children()[1]).on('click', function(){
                     scope.close()
-                })
-//                element.children().on('click', function(event){
-//                    event.stopPropagation()
-//                })
+                });
 
                 element
                 .addClass(attrs.severity)
-                .css('transition-duration', '300ms')
+                .css('transition-duration', '300ms');
 
-                addNose()
-
-                cmModal.register(attrs.id, scope)
-
+                addNose(element, attrs);
+                // register modal to service
+                cmModal.register(attrs.id, scope);
+                // refresh content
                 scope.refresh();
             },
 
             controller: function($scope, $element, $attrs){   
-                $scope.title    = cmTranslate($attrs.title)
-                $scope.severity = $attrs.severity || 'info'
+                $scope.title    = cmTranslate($attrs.cmTitle);
+                $scope.severity = $attrs.severity || 'info';
             }
         }
     }
-])
+]);

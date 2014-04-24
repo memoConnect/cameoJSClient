@@ -1,3 +1,19 @@
+<cm-modal id="modalSendRequest" class="no-padding" cm-data-as="contact" cm-title="CONTACTS.HEADING.SEND_REQUEST">
+    <div class="modal-row" cm-rubber-space>
+        <cm-avatar cm-data="contact"></cm-avatar>
+        <div class="cm-request-brief" cm-weight="1">
+            <strong>{{contact.getDisplayName()}}</strong>
+        </div>
+    </div>
+    <div class="modal-row">
+        <textarea placeholder="{{'CONTACTS.PLACEHOLDER.REQUEST_MESSAGE'|cmTranslate}}" ng-model="contact.message"></textarea>
+    </div>
+    <button class="cm-btn cm-btn-block cm-btn-primary" ng-click="sendRequest(contact)">
+        {{'CONTACTS.LABEL.SEND_REQUEST'|cmTranslate}}
+        <i class="fa cm-send"></i>
+    </button>
+</cm-modal>
+
 <header class="inScreen">
     <i class="fa cm-search-cl cm-lg-icon"></i> {{'CONTACTS.HEADING.SEARCH'|cmTranslate}}
 </header>
@@ -27,12 +43,3 @@
         </button>
     </cm-contact-tag>
 </section>
-
-<cm-modal id="modalSendRequest" cm-data-as="contact">
-    {{severity}}
-    {{contact.displayName}}
-    {{contact.cameoId}}
-    <button ng-click="sendRequest(contact)">
-        send request
-    </button>
-</cm-modal>

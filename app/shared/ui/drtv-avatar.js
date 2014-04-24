@@ -50,14 +50,13 @@ angular.module('cmUi').directive('cmAvatar',[
                         return false;
                     }
 
-                }
-
-                refresh();
-
-                identity.on('init:finish', function(){
-                    cmLogger.debug('cmAvatar:IdentityTrigger:initFinish');
                     refresh();
-                });
+
+                    identity.on('init:finish', function(){
+                        cmLogger.debug('cmAvatar:IdentityTrigger:initFinish');
+                        refresh();
+                    });
+                }
             }
         }
     }

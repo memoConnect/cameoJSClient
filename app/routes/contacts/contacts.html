@@ -15,36 +15,33 @@
                 <h1>{{'CONTACTS.HEADING.LIST'|cmTranslate}}</h1>
 
                 <button ng-click="openModal('add-contact')" cm-edge data-qa="add-contact-btn">
-                <i class="fa cm-edge-add"></i>
-            </button>
+                    <i class="fa cm-edge-add"></i>
+                </button>
 
-            <cm-modal
-                id            = "add-contact"
-                title         = "CONTACTS.ADD_MODAL.TITLE" 
-                type          = "plain"
-                nose          = "right-top"
-                severity      = "info"
-                nose-position = "0" 
-            >
+                <cm-modal
+                        id            = "add-contact"
+                        cm-title      = "CONTACTS.ADD_MODAL.TITLE"
+                        type          = "plain"
+                        nose          = "right-top"
+                        severity      = "info"
+                        nose-position = "0">
 
-                    <a href="#/contacts/search">
-                        <i class="fa cm-search-cl"></i>
-                        {{"CONTACTS.LABEL.SEARCH_IDENTITY"|cmTranslate}}
-                    </a>
+                        <a href="#/contacts/search">
+                            <i class="fa cm-search-cl"></i>
+                            {{"CONTACTS.LABEL.SEARCH_IDENTITY"|cmTranslate}}
+                        </a>
 
-                    <a href="#/contact/new">
-                        <i class="fa cm-load-to-rhino"></i>
-                        {{"CONTACTS.LABEL.ADD_EXTERN"|cmTranslate}}
-                    </a>
+                        <a href="#/contact/new">
+                            <i class="fa cm-load-to-rhino"></i>
+                            {{"CONTACTS.LABEL.ADD_EXTERN"|cmTranslate}}
+                        </a>
 
-            </cm-modal>
+                </cm-modal>
 
                 <input type="text" value="" ng-model="search" cm-icon="cm-search" cm-large-input />
             </header>
 
-
             <cm-contacts-filter-controls sort-by="" filter-by=""></cm-contacts-filter-controls>
-
 
             <cm-contacts-list contacts-as="contacts">
                 <div ng-show="isLoading" class="empty-list">
@@ -54,7 +51,6 @@
                 <div ng-show="!contacts.length && !isLoading" class="empty-list">
                     <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
                 </div>
-
 
                 <cm-contact-tag ng-repeat="contact in contacts | filter:search" cm-rubber-space ng-class="{'disabled':contact.contactType == 'pending'}">
                     <cm-avatar cm-data="contact.identity" ng-click="editContact(contact)"></cm-avatar>
@@ -66,7 +62,6 @@
                         <i class="fa cm-write"></i>
                     </button>
                 </cm-contact-tag>
-
 
             </cm-contacts-list>
         </div>
