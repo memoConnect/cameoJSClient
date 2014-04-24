@@ -25,9 +25,18 @@ angular.module('cmUi').directive('cmModal', [
 
             link: function(scope, element, attrs, controller, transclude){
 
-                scope.refresh = function(){
+
+                scope.refresh = function(){                   
+
                     transclude(scope, function (clone) {
-                        element.find('ng-transclude').append(clone);
+                        var transclude_container = element.find('ng-transclude')
+
+                        transclude_container
+                        .children()
+                        .remove()
+
+                        transclude_container
+                        .append(clone);                 
                     })
                 }
 
@@ -64,10 +73,12 @@ angular.module('cmUi').directive('cmModal', [
                     }
                     return this
                 }
+
                 // toggle visiblity modal
                 scope.toggle = function(on){
                     on = (on == undefined ? $element.hasClass('active') : on)
-                    if(on){                        
+                    if(on){
+                        scope.refresh()                        
                         element.addClass('active')
                         $timeout(function(){
                             $rootScope.isModalVisible = true;
@@ -86,8 +97,10 @@ angular.module('cmUi').directive('cmModal', [
 
                 scope.close = function(){
                     this.toggle(false);
-                    //scope.refresh();
                 }
+
+                scope.refresh()
+
 
                 //close modal when clicked on backdrop
                 angular.element(element.children()[1]).on('click', function(){
