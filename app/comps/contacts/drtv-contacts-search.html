@@ -1,6 +1,8 @@
-<header class="cm-list-header">
-    <h1>{{'CONTACTS.HEADING.SEARCH'|cmTranslate}}</h1>
+<header class="inScreen">
+    <i class="fa cm-contacts cm-lg-icon"></i> {{'CONTACTS.HEADING.SEARCH'|cmTranslate}}
+</header>
 
+<section class="cm-bg-transparent">
     <form name="searchCameoId">
         <input cm-large-input type="text" ng-model="string" name="string" cm-icon="cm-search" placeholder="{{'CONTACTS.PLACEHOLDER.ADD_NEW_CONTACT'|cmTranslate}}" ng-minlength="4" ng-keyup="search()" />
 
@@ -8,9 +10,9 @@
             <i class="fa cm-info"></i> {{'CONTACTS.INFO.MORE_CHARS_NEEDED'|cmTranslate}}
         </div>
     </form>
-</header>
+</section>
 
-<div>
+<section>
     <div ng-show="searchCameoId.string.$valid && !pristine &&  results.length < 1" class="empty-list">
         <i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_RESULTS'|cmTranslate}}
     </div>
@@ -21,13 +23,12 @@
             <strong>{{contact.getDisplayName()}}</strong>
         </div>
         <button ng-click="openModal('modalSendRequest',contact)">
-            <i class="fa cm-checkbox"></i>
+            <i class="fa cm-contacts"></i>
         </button>
     </cm-contact-tag>
-</div>
+</section>
 
 <cm-modal id="modalSendRequest" cm-data-as="contact">
-
     {{severity}}
     {{contact.displayName}}
     {{contact.cameoId}}

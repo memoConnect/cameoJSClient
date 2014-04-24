@@ -5,7 +5,7 @@ cm-contact-tag {
     border-bottom: solid @cm-border-grey @cm-border-width;
     height: @cm-unit + 2*@cm-vertical-padding;
     position:relative;
-    padding: @cm-vertical-padding 0;
+    padding: @cm-vertical-padding 1rem @cm-vertical-padding 0.2rem;
     overflow:hidden;
 
     > * { 
@@ -62,9 +62,14 @@ cm-contact-tag {
         }
     }
 
+    cm-avatar{
+      margin-right: 0.4rem;
+    }
+
     button {    
-        font-size: 0.8*@cm-unit;                
-        color:@cm-ci-color;
+//        font-size: 0.8*@cm-unit;
+        font-size: 2.5rem;
+        color:@cm-light-grey;
         text-align:center;
         &:disabled{
             color:@cm-light-grey;
@@ -137,16 +142,6 @@ cm-key-level {
 }
 
 cm-friend-request-list{
-  header{
-    background:@cm-input-bg-color;
-    padding:0 1em;
-    line-height:4rem;
-    font-weight:bold;
-    i{
-      margin-right:1em;
-      vertical-align:text-bottom;
-    }
-  }
   cm-contact-tag{
     button{
       color:@cm-readed-grey;
