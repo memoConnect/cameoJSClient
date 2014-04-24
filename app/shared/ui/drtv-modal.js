@@ -66,22 +66,24 @@ angular.module('cmUi').directive('cmModal', [
                     on = (on == undefined ? $element.css('display') == 'none' : on)
                     if(on){
                         element.css('display', 'block')
+                        
                         // timeout for scope apply and animation
                         $timeout(function () {
                             $rootScope.isModalVisible = true;
                             // trigger CSS transitions
-                            scope.animate = true;
+                            scope.animate = 'in';
                         });
+
                     }else{
-                        element.css('display', 'none')
 
                         // timeout for scope apply and animation
                         $timeout(function () {
-                            scope.animate = false;
-
-                            $rootScope.$apply(function () {
+                            scope.animate = 'out';
+                            $timeout(function(){
+                                element.css('display', 'none')
                                 $rootScope.isModalVisible = false;
-                            })
+                                scope.animate = 'none';
+                            }, 3000)
                         })
                     }
                 }
@@ -94,7 +96,10 @@ angular.module('cmUi').directive('cmModal', [
                     this.toggle(false)  
                 }
 
+
+
                 scope.toggle(false)
+                scope.animate = 'none'
 
                 //close modal when clicked on backdrop
                 angular.element(element.children()[1]).on('click', function(){
