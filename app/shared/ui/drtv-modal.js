@@ -25,6 +25,12 @@ angular.module('cmUi').directive('cmModal', [
 
             link: function(scope, element, attrs, controller, transclude){
 
+                scope.refresh = function(){
+                    transclude(scope, function (clone) {
+                        element.find('ng-transclude').append(clone);
+                    })
+                }
+
                 function addNose(){
                     if(!attrs.nose) return null
 
@@ -66,7 +72,7 @@ angular.module('cmUi').directive('cmModal', [
                         $timeout(function(){
                             $rootScope.isModalVisible = true;
                         })                        
-                    }else{
+                    } else {
                         element.removeClass('active')
                         $timeout(function(){
                             $rootScope.isModalVisible = false;
@@ -75,11 +81,12 @@ angular.module('cmUi').directive('cmModal', [
                 }
 
                 scope.open = function(){
-                    this.toggle(true)  
+                    this.toggle(true)
                 }
 
                 scope.close = function(){
-                    this.toggle(false)  
+                    this.toggle(false);
+                    //scope.refresh();
                 }
 
                 //close modal when clicked on backdrop
@@ -98,25 +105,17 @@ angular.module('cmUi').directive('cmModal', [
 
 //                var to_be_parent = angular.element(document.getElementById('cm-app'))
 //
-//                if(angular.element(document.getElementById(attrs.id)).length>0){
-//                    angular.element(document.getElementById(attrs.id)).remove();
-//                }
-//
 //                //move modal up the dom hierarchy, if necessary:
 //                if(element.parent()[0] != to_be_parent[0]) to_be_parent.append(element)
 
                 cmModal.register(attrs.id, scope)
 
-                transclude(scope, function (clone) {
-                    element.find('ng-transclude').append(clone);
-                })
+                scope.refresh();
             },
 
             controller: function($scope, $element, $attrs){   
-
                 $scope.title    = cmTranslate($attrs.title)
                 $scope.severity = $attrs.severity || 'info'
-
             }
         }
     }
