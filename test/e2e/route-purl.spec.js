@@ -274,4 +274,26 @@ describe('Route: Purl - ', function () {
             checkFormForInternUser('Test 6');
         })
     })
+
+    /**
+     * Test 7
+     */
+    describe("Test 7 - Intern User open Purl which not exists", function(){
+        it('should be 404 path', function(){
+            util.login()
+            util.get('/purl/moep')
+            util.expectCurrentUrl('#/404')
+        })
+    })
+
+    /**
+     * Test 8
+     */
+    describe("Test 8 - Extern User open Purl which not exists", function(){
+        it('should be 404 path', function(){
+            util.logout()
+            util.get('/purl/moep')
+            util.expectCurrentUrl('#/404')
+        })
+    })
 })
