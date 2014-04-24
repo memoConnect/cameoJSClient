@@ -12,6 +12,8 @@ angular.module('cmUi').service('cmModal',[
 
         cmObject.addEventHandlingTo(modalService)
 
+        modalService.visible = false;
+
         modalService.register = function(id, scope){
 
             if(!id){
@@ -43,7 +45,6 @@ angular.module('cmUi').service('cmModal',[
                         .open() 
                 })
             }
-
             return this
         }
 
@@ -68,6 +69,11 @@ angular.module('cmUi').service('cmModal',[
 
         $rootScope.openModal    = modalService.open
         $rootScope.closeModal   = modalService.close
+        $rootScope.isModalVisible = modalService.visible
+//        $rootScope.$watch('isModalVisible' ,function(newValue){
+//            console.log('watch modal '+newValue)
+//            $rootScope.isModalVisible = newValue;
+//        });
 
         //close all modals on route change:
         $rootScope.$on('$routeChangeStart', function(){

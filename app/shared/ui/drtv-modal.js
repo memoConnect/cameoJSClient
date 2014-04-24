@@ -4,9 +4,10 @@ angular.module('cmUi').directive('cmModal', [
 
     'cmModal',
     'cmTranslate',
-    '$compile',
+    '$rootScope',
+    '$timeout',
 
-    function (cmModal, cmTranslate, $compile){
+    function (cmModal, cmTranslate, $rootScope, $timeout){
         return {
             restrict: 'AE',
             transclude: true,
@@ -64,9 +65,24 @@ angular.module('cmUi').directive('cmModal', [
                 scope.toggle = function(on){
                     on = (on == undefined ? $element.css('display') == 'none' : on)
                     if(on){
-                        element.css('display', 'block')                        
+                        element.css('display', 'block')
+                        // timeout for scope apply and animation
+                        $timeout(function () {
+                            $rootScope.isModalVisible = true;
+                            // trigger CSS transitions
+                            scope.animate = true;
+                        });
                     }else{
                         element.css('display', 'none')
+
+                        // timeout for scope apply and animation
+                        $timeout(function () {
+                            scope.animate = false;
+
+                            $rootScope.$apply(function () {
+                                $rootScope.isModalVisible = false;
+                            })
+                        })
                     }
                 }
 
@@ -80,13 +96,13 @@ angular.module('cmUi').directive('cmModal', [
 
                 scope.toggle(false)
 
-                //close modal when clicked outside:
-                element.on('click', function(){
+                //close modal when clicked on backdrop
+                angular.element(element.children()[1]).on('click', function(){
                     scope.close()
                 })
-                element.children().on('click', function(event){
-                    event.stopPropagation()
-                })     
+//                element.children().on('click', function(event){
+//                    event.stopPropagation()
+//                })
 
                 element
                 .addClass(attrs.severity)
@@ -102,19 +118,6 @@ angular.module('cmUi').directive('cmModal', [
 
                 cmModal.register(attrs.id, scope)
             },
-
-//            compile: function(tElement, tAttr, transclude) {
-//                var contents = tElement.contents().remove();
-//                var compiledContents;
-//                return function(scope, iElement, iAttr) {
-//                    if(!compiledContents) {
-//                        compiledContents = $compile(contents, transclude);
-//                    }
-//                    compiledContents(scope, function(clone, scope) {
-//                        iElement.append(clone);
-//                    });
-//                };
-//            },
 
             controller: function($scope, $element, $attrs){   
 
