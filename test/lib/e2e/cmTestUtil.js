@@ -20,16 +20,14 @@ this.getPtorInstance = function () {
 
 this.waitForPageLoad = function (expectedRoute) {
     ptor.wait(function () {
-        return ptor.executeScript('return window != undefined && window._route != undefined').then(function (boolean) {
-            if (boolean) {
+        return ptor.executeScript('return window != undefined && window._route').then(function (route) {
+            if (route) {
                 // get current route
-                return ptor.executeScript('return window._route').then(function (route) {
-                    if (expectedRoute == undefined || route != undefined && route.path.search(expectedRoute) != -1) {
-                        return route.status == "success"
-                    } else {
+                if (expectedRoute == undefined || route.path.search(expectedRoute) != -1) {
+                    return route.status == "success"
+                } else {
 //                        console.log("unexpected route:" + route.path)
-                    }
-                })
+                }
             }
         })
 
@@ -52,7 +50,7 @@ this.waitForElementDisappear = function (selector) {
 
     ptor.wait(function () {
         return $(selector).isDisplayed().then(function (isDisplayed) {
-            return ! isDisplayed
+            return !isDisplayed
         })
     }, config.waitForTimeout, 'waitForElementDisappear ' + selector + ' timeout is reached')
 
@@ -123,10 +121,10 @@ this.login = function (username, password) {
     return this
 }
 
-this.waitForModalOpen = function(id){
-    ptor.wait(function(){
-        return $("#"+id).isDisplayed()
-    }, config.routeTimeout, "waitForModalOpen "+id+" timeout reached")
+this.waitForModalOpen = function (id) {
+    ptor.wait(function () {
+        return $("#" + id).isDisplayed()
+    }, config.routeTimeout, "waitForModalOpen " + id + " timeout reached")
 
     return this
 }
@@ -137,8 +135,8 @@ this.waitForModalClose = function () {
 
         var allHidden = true
 
-        $$("cm-modal").each(function(element){
-            if(element.isDisplayed()){
+        $$("cm-modal").each(function (element) {
+            if (element.isDisplayed()) {
                 allHidden = false
             }
         })
@@ -150,14 +148,14 @@ this.waitForModalClose = function () {
 
 this.waitForSpinner = function () {
     // wait until spinner appears
-    ptor.wait(function(){
+    ptor.wait(function () {
         return $$("cm-spinner").then(function (elements) {
             return elements.length > 0
         })
-    }, config.routeTimeout, 'waitForSpinner start timeout reached').then(function(){
+    }, config.routeTimeout, 'waitForSpinner start timeout reached').then(function () {
         ptor.wait(function () {
             return $("cm-spinner").isDisplayed().then(function (isDisplayed) {
-                return ! isDisplayed
+                return !isDisplayed
             })
         }, config.routeTimeout, 'waitForSpinner stop timeout reached')
     })
