@@ -4,7 +4,8 @@ angular.module('cmContacts').directive('cmContactsSearch',[
     'cmContactsModel',
     'cmIdentityFactory',
     'cmNotify',
-    function (cmContactsModel, cmIdentityFactory, cmNotify){
+    'cmModal',
+    function (cmContactsModel, cmIdentityFactory, cmNotify, cmModal){
         return {
             restrict: 'E',
             scope: false,
@@ -46,13 +47,16 @@ angular.module('cmContacts').directive('cmContactsSearch',[
                 $scope.sendRequest = function(contact){
                     if(angular.isDefined(contact.id)){
                         cmContactsModel
-                        .sendFriendRequest(contact.id)
+                        .sendFriendRequest(contact.id, contact.message)
                         .then(
                             function(){
+                                // clear from list
                                 var index = $scope.results.indexOf(contact);
                                 $scope.results.splice(contact,1);
+                                // notify
                                 cmNotify.success('CONTACTS.INFO.REQUEST.SENDED', {ttl:2000});
                                 cmContactsModel.trigger('friendRequest:send');
+                                cmModal.closeAll();
                             },
                             function(){
                                 cmNotify.error('CONTACTS.INFO.REQUEST.FAILED', {ttl:2000});
