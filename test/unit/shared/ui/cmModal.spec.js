@@ -97,6 +97,6 @@ describe('cmModal', function(){
     })
 
     describe('directive', function(){
-
+        //Todo; actually this is already covered implicitly by the service tests above
     })
 })
