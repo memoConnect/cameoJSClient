@@ -2,8 +2,9 @@
 
 angular.module('cmContacts').directive('cmContactsSearch',[
     'cmContactsModel',
+    'cmIdentityFactory',
     'cmNotify',
-    function (cmContactsModel, cmNotify){
+    function (cmContactsModel, cmIdentityFactory, cmNotify){
         return {
             restrict: 'E',
             scope: false,
@@ -28,7 +29,11 @@ angular.module('cmContacts').directive('cmContactsSearch',[
                     cmContactsModel.searchCameoIdentity($scope.string)
                     .then(
                         function(data){
-                            $scope.results = data;
+                            var tmp = [];
+                            angular.forEach(data, function(value){
+                                tmp.push(cmIdentityFactory.create(value.id));
+                            });
+                            $scope.results = tmp;
                         }
                     );
                     return true;
