@@ -60,6 +60,10 @@ angular.module('cmContacts').service('cmContactsModel',[
             }
         }
 
+        this._clearContacts = function(){
+            this.contacts = [];
+        }
+
         /**
          * Model Logic
          */
@@ -291,15 +295,17 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         init();
 
-        cmUserModel.on('init', function(){
-           init();
-        });
-
         this.on('friendRequests:updated', function(){
+            this._clearContacts();
             init();
         });
 
         this.on('friendRequest:send', function(){
+            this._clearContacts();
+            init();
+        });
+
+        cmUserModel.on('init', function(){
             init();
         });
     }

@@ -280,3 +280,5 @@
 .cm-close:before{content:'\f043'}
 .cm-visible:before{content:'\f04c'}
 .cm-hidden:before{content:'\f04d'}
+.cm-clipboard:before{content:'\f051'}
+.cm-search-cl:before{content:'\f052'}

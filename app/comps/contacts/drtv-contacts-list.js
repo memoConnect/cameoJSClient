@@ -32,27 +32,31 @@ angular.module('cmContacts').directive('cmContactsList',[
                  * handle every single contact via model
                  */
                 $scope.startConversation = function (contact) {
-                    delete $rootScope.pendingConversation
-                    if (contact.identity) {
-                        $rootScope.pendingRecipients = [contact.identity]
-                    } else {
-                        cmLogger.error('Unable to find identity on contact. ' + contact)
+                    if(contact.contactType != 'pending'){
+                        delete $rootScope.pendingConversation
+                        if (contact.identity) {
+                            $rootScope.pendingRecipients = [contact.identity]
+                        } else {
+                            cmLogger.error('Unable to find identity on contact. ' + contact)
+                        }
+                        $location.path('/conversation');
                     }
-                    $location.path('/conversation');
                 };
                 /**
                  * edit contact
                  * @param id
                  */
                 $scope.editContact = function (contact) {
-                    $location.path('/contact/' + contact.id);
+                    if(contact.contactType != 'pending') {
+                        $location.path('/contact/' + contact.id);
+                    }
                 };
                 /**
                  * delete contact via model
                  * @param id
                  */
-                $scope.deleteContact = function (id) {
-                    cmLogger.debug('deleteContact ' + id);
+                $scope.deleteContact = function (contact) {
+                    cmLogger.debug('deleteContact ' + contact.id);
                 };
             }
         }
