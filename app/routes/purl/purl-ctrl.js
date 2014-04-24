@@ -8,13 +8,14 @@ define([
 
     app.register.controller('PurlCtrl',[
         '$scope',
+        '$rootScope',
         '$routeParams',
         '$location',
-        '$modal',
+        'cmModal',
         'cmPurlModel',
         'cmUserModel',
         'cmUtil',
-        function($scope, $routeParams, $location, $modal, cmPurlModel, cmUserModel, cmUtil){
+        function($scope, $rootScope, $routeParams, $location, cmModal, cmPurlModel, cmUserModel, cmUtil){
             $scope.data = null;
             $scope.showConversation = false;
 
@@ -51,17 +52,14 @@ define([
             $scope.showLogin = function () {
                 $scope.hideHeader();
 
-                var modalInstance = $modal.open({
-                    windowClass: 'cm-modal-with-title',
-                    template: '<div cm-login></div>',
-                    controller: function ($rootScope, $scope, $modalInstance) {
-                        $rootScope.$on('cmLogin:success', function(){
-//                            if($modalInstance != undefined){
-//                                $modalInstance.close();
-                                location.reload();
-//                            }
-                        })
-                    }
+                cmModal.create({
+                    id: 'login',
+                    'class': 'with-title no-padding'
+                },'<div cm-login></div>')
+                cmModal.open('login');
+
+                $rootScope.$on('cmLogin:success', function(){
+                    location.reload();
                 });
             };
 

@@ -20,10 +20,10 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                  * create shadow of textarea for calcing the rows
                  */
                 function createShadow(){
-                    var existingShadow = document.getElementById('shadow');
+                    var existingShadow = document.getElementById('textarea-shadow');
 
                     if(existingShadow == null){
-                        $shadow = angular.element('<div id="shadow"></div>').css({
+                        $shadow = angular.element('<div id="textarea-shadow"></div>').css({
                             position: 'fixed',
                             top: -10000,
                             left: -10000,

@@ -4,8 +4,9 @@ angular.module('cmUi').service('cmModal',[
     'cmObject',
     'cmLogger',
     '$compile',
+    '$document',
 
-    function($rootScope, cmObject, cmLogger, $compile){
+    function($rootScope, cmObject, cmLogger, $compile, $document){
 
         var modal_instances = {},
             modalService = {}
@@ -53,7 +54,19 @@ angular.module('cmUi').service('cmModal',[
             return this
         }
 
+        modalService.closeAll = function(){
+            angular.forEach(modal_instances, function(modal_instance, key){
+                modal_instance.close()
+            })
+            return this
+        }
+
         modalService.create = function(config, template){
+            console.log(angular.element(document.querySelector('#'+config.id)).length)
+            if(angular.element(document.querySelector('#'+config.id)).length > 0){
+                return false;
+            }
+
             var attrs = '',
                 scope = $rootScope.$new()
 
@@ -62,10 +75,12 @@ angular.module('cmUi').service('cmModal',[
                 attrs += key+'="'+value+'"'
             })
 
-            $compile('<cm-modal '+attrs+' ></cm-modal>')(scope)
+            $compile('<cm-modal '+attrs+' >'+(template||'')+'</cm-modal>')(scope)
 
             return this;
         }
+
+
 
         $rootScope.openModal    = modalService.open
         $rootScope.closeModal   = modalService.close
@@ -77,10 +92,14 @@ angular.module('cmUi').service('cmModal',[
 
         //close all modals on route change:
         $rootScope.$on('$routeChangeStart', function(){
-            angular.forEach(modal_instances, function(modal_instance, key){
-                modal_instance.close()
-            })
+            modalService.closeAll();
         })
+
+        $document.bind('keydown', function (evt) {
+            if (evt.which === 27) {
+                modalService.closeAll();
+            }
+        });
 
         return modalService
     }
