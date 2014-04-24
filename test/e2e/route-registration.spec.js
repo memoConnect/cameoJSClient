@@ -100,9 +100,7 @@ describe('registration', function () {
         util.waitForPageLoad("/talks")
 
         // todo better test of welcome screen
-        $("cm-modal").isDisplayed().then(function(b){
-            expect(b).toBe(true)
-        })
+        util.waitForElement("cm-modal")
 
         // modal should only be displayed on first visit
         util.get("/talks");
