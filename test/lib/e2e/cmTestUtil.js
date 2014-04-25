@@ -183,7 +183,7 @@ this.clearInput = function (qaValue) {
 }
 
 this.waitAndCloseNotify = function() {
-    self.waitForElement("cm-notify")
+    self.waitForElement("[data-qa='cm-notify-close-btn']")
     $("[data-qa='cm-notify-close-btn']").click()
-    self.waitForElementDisappear("cm-notify")
+    self.waitForElements("[data-qa='cm-notify-close-btn']",0)
 }
