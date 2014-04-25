@@ -20,6 +20,16 @@ angular.module('cmContacts').directive('cmFriendRequestList',[
                     $scope.requests = cmContactsModel.requests;
                 });
 
+                /**
+                 * reset
+                 */
+                $rootScope.$on('$routeChangeSuccess', function(){
+                    angular.forEach(cmContactsModel.requests, function(value){
+                        value.isOpen = false;
+                        value.showBar = false;
+                    });
+                });
+
                 $scope.toggleBrief = function(request){
                     if((request.isOpen == undefined || request.isOpen == false ) && request.message != ''){
                         request.state = 'new';
