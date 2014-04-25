@@ -9,6 +9,7 @@ define([
     app.register.controller('ContactCtrl',
         function(
          $scope,
+         $rootScope,
          $location,
          $routeParams,
          cmContactsModel,
@@ -52,6 +53,21 @@ define([
                     }
                 );
             }
+
+            /**
+             * handle every single contact via model
+             */
+            $scope.startConversation = function () {
+                if($scope.contact.contactType != 'pending'){
+                    delete $rootScope.pendingConversation
+                    if ($scope.identity) {
+                        $rootScope.pendingRecipients = [$scope.identity]
+                    } else {
+                        cmLogger.error('Unable to find identity on contact. ' + $scope.contact)
+                    }
+                    $location.path('/conversation');
+                }
+            };
 
             $scope.saveUser = function(){
                 // declaration
