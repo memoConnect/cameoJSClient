@@ -177,7 +177,8 @@
                 "SENDED": "Request is send",
                 "FAILED": "Request couldn't send",
                 "ACCEPT": "You accept the request",
-                "REJECT": "Request is rejected"
+                "REJECT": "Request is rejected",
+                "IGNORE": "User ignored"
             }
         },
         "LABEL": {
@@ -196,6 +197,11 @@
         },
         "TAG" : {
             "FILTER": "Filter"
+        },
+        "REQUESTS":{
+            "ACCEPT": "accept",
+            "REJECT": "reject",
+            "IGNORE": "ignore"
         }
 	},
 
