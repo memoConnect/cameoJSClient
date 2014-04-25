@@ -100,8 +100,8 @@ describe('cmModal', function(){
         //Todo; actually this is already covered implicitly by the service tests above
         /*
         * <cm-modal cm-data-as="moep"></cm-modal>
-        * <cm-modal cm-close-btn="false"></cm-modal>
-        * <cm-modal cm-close-btn="true"></cm-modal> //default
+        * <cm-modal cm-close-btn="boolean"></cm-modal>
+        * <cm-modal cm-title="'CAMEO.WELCOME'"></cm-modal>
         * */
     })
 })

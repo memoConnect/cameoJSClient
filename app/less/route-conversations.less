@@ -282,10 +282,12 @@ div.answer{
     text-align: left;
     textarea{
       width: 82%;
-      background-color: transparent;
-      border: none;
-      font-size: 0.8em;
+      border: none !important;
+      background: transparent;
       margin-bottom: 0.5em;
+    }
+    textarea[cm-rows='1']{
+      line-height:4rem;
     }
     .inputter {
       width: 100%;

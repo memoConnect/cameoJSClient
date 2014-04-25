@@ -1,18 +1,18 @@
 cm-modal {
-    display:none;
-    position: fixed;
-    top:0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 99999;
-    width: 32rem;
-    margin:0 auto;
-    transition: all ease-out;
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  width: 32rem;
+  margin: 0 auto;
+  transition: all ease-out;
 
-    &.active{
-        display: block;   
-    }
+  &.active {
+    display: block;
+  }
 
   .backdrop {
     background-color: @cm-overlay-dark;
@@ -51,7 +51,6 @@ cm-modal {
 
     header {
       position: relative;
-      margin-bottom: 1rem;
 
       button.close {
         position: absolute;
@@ -119,16 +118,16 @@ cm-modal {
         }
       }
 
-      button{
-        text-align:center;
+      button {
+        text-align: center;
       }
 
       .modal-row {
         border-top: @cm-border-grey @cm-border-width solid;
-        padding:0.5rem 1.5rem;
+        padding: 0.5rem 1.5rem;
         textarea {
-          display:block;
-          width:100%;
+          display: block;
+          width: 100%;
         }
       }
     }
@@ -212,40 +211,3 @@ cm-modal {
   }
 
 }
-
-/*
-
-ALT
-
-.modal{
-overflow:auto;
-overflow-y:auto;
-}
-
-.modal-dialog{
-width:@cm-app-width;
-padding:2rem;
-margin:0 auto;
-.cm-alert{
-  font-size:1.2em;margin-bottom:0;
-  .fa.cm-info{color:@cm-warning-color;font-size:1.5em;vertical-align:middle}
-}
-}
-.modal-spinner{position:fixed;top:50%;left:50%;z-index:999}
-
-.cm-with-nose-to-add-edge{
-.modal-dialog{
-  padding-top:0;
-  position: relative;
-  top:@cm-header-height;
-  i{
-    position:absolute;
-    right:-0.3em;
-    top:0;
-    font-size:2em;
-    color:@cm-black;
-  }
-}
-}
-
-*/

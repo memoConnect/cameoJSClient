@@ -15,7 +15,7 @@ angular.module('cmUser').directive('cmKeyPair', [
 
             controller: function($scope, $element, $attrs){
                 $scope.ownKeys = [];
-                $scope.active = 'finishCreateKey';
+                $scope.active = 'showOwnKeys';
 
                 $scope.state = '';
                 $scope.privKey = '';
