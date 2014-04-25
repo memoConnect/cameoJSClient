@@ -129,8 +129,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         cmConversationsAdapter.getConversationSummary(this.id).then(
                             function(data){
                                 if(self.messages.length < data.numberOfMessages){
-//                                    var offset = 0;
-//                                    var clearAllMessages = true;
                                     if(self.messages.length > 1){
                                         offset = self.messages.length;
                                         clearAllMessages = false;
