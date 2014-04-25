@@ -55,7 +55,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     if (conversation_data.recipients) {
                         conversation_data.recipients.forEach(function (item) {
     //                        new cmRecipientModel(cmIdentityFactory.create(item.identityId)).addTo(self);
-                            self.addRecipient(new cmRecipientModel(cmIdentityFactory.create(item.identityId)));
+                            self.addRecipient(new cmRecipientModel(cmIdentityFactory.create(item.identity)));
                         })
                     }
 
