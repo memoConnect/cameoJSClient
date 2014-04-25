@@ -80,15 +80,9 @@ describe('single conversation', function () {
         $("[data-qa='btn-send-answer']").click()
     })
 
-    it('message should appear in conversation', function () {
-        util.waitForElement('cm-message')
-    })
-
     it('there should be only one message, and it should contain the message text', function () {
-        $$('cm-message').then(function (elements) {
-            expect(elements.length).toBe(1)
-            expect(elements[0].getText()).toContain(messageText)
-        })
+        util.waitForElements('cm-message',1)
+        expect($('cm-message').getText()).toContain(messageText)
     })
 
     it('log in as contact, the created conversation should be listed first', function () {
