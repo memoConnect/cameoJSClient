@@ -93,9 +93,9 @@
                     </button>
                 </section>
                 <section class="cm-request-bar" ng-show="request.showBar">
-                    <button ng-click="acceptRequest(request)" data-qa="btn-acceptRequest"><i class="fa cm-info">{{'CONTACTS.REQUESTS.ACCEPT'|cmTranslate}}</i></button>
-                    <button ng-click="rejectRequest(request)"><i class="fa cm-info">{{'CONTACTS.REQUESTS.REJECT'|cmTranslate}}</i></button>
-                    <button ng-click="ignoreRequest(request)"><i class="fa cm-info">{{'CONTACTS.REQUESTS.IGNORE'|cmTranslate}}</i></button>
+                    <button ng-click="acceptRequest(request)" data-qa="btn-acceptRequest"><i class="fa cm-checkbox-right">{{'CONTACTS.REQUESTS.ACCEPT'|cmTranslate}}</i></button>
+                    <button ng-click="rejectRequest(request)" data-qa="btn-rejectRequest"><i class="fa cm-reject">{{'CONTACTS.REQUESTS.REJECT'|cmTranslate}}</i></button>
+                    <button ng-click="ignoreRequest(request)"><i class="fa cm-ignore">{{'CONTACTS.REQUESTS.IGNORE'|cmTranslate}}</i></button>
                 </section>
             </cm-contact-tag>
         </cm-friend-request-list>
