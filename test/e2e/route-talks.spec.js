@@ -57,6 +57,8 @@ describe('talks', function () {
 
     it('should open a new conversation on button click', function(){
         $("body").sendKeys(protractor.Key.HOME)
+        // wait for browser to scroll, todo: find a better way to do this
+        ptor.sleep(250)
         $("[cm-edge]").click()
         util.waitForPageLoad("/conversation/")
     })
