@@ -42,7 +42,8 @@ angular.module('cmContacts').service('cmContactsModel',[
 
             if(typeof contact === 'object' && cmUtil.objLen(contact) > 0){
                 while(i < self.contacts.length){
-                    if(self.contacts[i].id == contact.id){
+
+                    if(self.contacts[i].identity.id == contact.identity.id){
                         check = true;
                         break;
                     }
@@ -86,6 +87,7 @@ angular.module('cmContacts').service('cmContactsModel',[
                             _add(data[i]);
                             i++;
                         }
+
                         deferred.resolve(self.contacts);
                     },
                     function(){
@@ -98,6 +100,8 @@ angular.module('cmContacts').service('cmContactsModel',[
                 deferred.resolve(self.contacts);
                 self.trigger('finish:load-contacts');
             }
+
+
 
             return deferred.promise;
         };
