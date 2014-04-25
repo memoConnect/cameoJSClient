@@ -79,15 +79,22 @@
                 <i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_REQUESTS'|cmTranslate}}
             </div>
 
-            <cm-contact-tag cm-rubber-space ng-repeat="request in requests" ng-class="{'is-new':request.state == undefined,'message-open':request.isOpen}">
-                <cm-avatar cm-data="request.identity"></cm-avatar>
-                <div class="cm-request-brief" cm-weight="1" ng-click="toggleBrief(request)" ng-class="{'with-message':request.message != ''}">
-                    <strong>{{request.identity.getDisplayName()}}</strong><br />
-                    {{request.message}}
-                </div>
-                <button ng-click="acceptRequest(request)">
-                    <i class="fa cm-checkbox"></i>
-                </button>
+            <cm-contact-tag ng-repeat="request in requests" ng-class="{'is-new':request.state == undefined,'message-open':request.isOpen, 'show-bar':request.showBar}">
+                <section cm-rubber-space>
+                    <cm-avatar cm-data="request.identity"></cm-avatar>
+                    <div class="cm-request-brief" cm-weight="1" ng-click="toggleBrief(request)" ng-class="{'with-message':request.message != ''}">
+                        <strong>{{request.identity.getDisplayName()}}</strong><br />
+                        {{request.message}}
+                    </div>
+                    <button ng-click="toggleBar(request)">
+                        <i class="fa cm-contacts"></i>
+                    </button>
+                </section>
+                <section class="cm-request-bar" ng-show="request.showBar">
+                    <button ng-click="acceptRequest(request)"><i class="fa cm-info">{{'CONTACTS.REQUESTS.ACCEPT'|cmTranslate}}</i></button>
+                    <button ng-click="rejectRequest(request)"><i class="fa cm-info">{{'CONTACTS.REQUESTS.REJECT'|cmTranslate}}</i></button>
+                    <button ng-click="ignoreRequest(request)"><i class="fa cm-info">{{'CONTACTS.REQUESTS.IGNORE'|cmTranslate}}</i></button>
+                </section>
             </cm-contact-tag>
         </cm-friend-request-list>
     	<!-- search identity -->

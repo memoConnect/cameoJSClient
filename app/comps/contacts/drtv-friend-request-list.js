@@ -21,13 +21,25 @@ angular.module('cmContacts').directive('cmFriendRequestList',[
                 });
 
                 $scope.toggleBrief = function(request){
-                    if(request.isOpen == undefined || request.isOpen == false){
+                    if((request.isOpen == undefined || request.isOpen == false ) && request.message != ''){
                         request.state = 'new';
                         request.isOpen = true;
                     } else {
                         request.isOpen = false;
                     }
                 };
+
+                $scope.toggleBar = function(request){
+                    if(request.showBar !== 'undefined'){
+                        if(request.showBar){
+                            request.showBar = false;
+                        } else {
+                            request.showBar = true;
+                        }
+                    } else {
+                        request.showBar = true;
+                    }
+                }
 
                 /**
                  * fired by repeat and accept that

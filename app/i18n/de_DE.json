@@ -168,7 +168,8 @@
                 "SENDED": "Die Anfrage wurde verschickt.",
                 "FAILED": "Die Anfrage konnte nicht verschickt werden",
                 "ACCEPT": "Sie sind nun mit diesem Kontakt verbunden",
-                "REJECT": "Die Anfrage wurde ignoriert"
+                "REJECT": "Die Anfrage wurde zurückgewiesen",
+                "IGNORE": "Der User wird nun ignoriert"
             }
         },
         "LABEL": {
@@ -187,6 +188,11 @@
         },
         "TAG":{
             "FILTER" : "Filter"
+        },
+        "REQUESTS":{
+            "ACCEPT": "akzeptieren",
+            "REJECT": "zurückweisen",
+            "IGNORE": "ignorieren"
         }
 	},
 
