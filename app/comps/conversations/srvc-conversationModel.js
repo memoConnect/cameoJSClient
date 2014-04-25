@@ -113,23 +113,35 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return deferred.promise;
             }
 
-            this.update = function(){
-                if(this.id != ''){
-                    cmConversationsAdapter.getConversationSummary(this.id).then(
-                        function(data){
-                            if(self.messages.length < data.numberOfMessages){
-                                var offset = 0;
-                                var clearAllMessages = true;
-                                if(self.messages.length > 1){
-                                    offset = self.messages.length;
-                                    clearAllMessages = false;
-                                }
-                                var limit = data.numberOfMessages - offset;
+            this.update = function(conversation_data){
+                var offset = 0;
+                var clearAllMessages = true;
 
-                                self.updateMessages(limit, offset, clearAllMessages);
-                            }
+                if(this.id != ''){
+                    if(typeof conversation_data !== 'undefined'){
+                        if(this.messages.length > 1){
+                            offset = this.messages.length;
+                            clearAllMessages = false;
                         }
-                    )
+                        var limit = data.numberOfMessages - offset;
+                        this.updateMessages(limit, offset, clearAllMessages);
+                    } else {
+                        cmConversationsAdapter.getConversationSummary(this.id).then(
+                            function(data){
+                                if(self.messages.length < data.numberOfMessages){
+//                                    var offset = 0;
+//                                    var clearAllMessages = true;
+                                    if(self.messages.length > 1){
+                                        offset = self.messages.length;
+                                        clearAllMessages = false;
+                                    }
+                                    var limit = data.numberOfMessages - offset;
+
+                                    self.updateMessages(limit, offset, clearAllMessages);
+                                }
+                            }
+                        )
+                    }
                 }
 
                 return this;

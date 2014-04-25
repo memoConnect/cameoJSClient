@@ -135,7 +135,7 @@ angular.module('cmConversations').service('cmConversationsModel', [
                     self.quantity = data.numberOfConversations;
 
                     data.conversations.forEach(function (conversation_data) {
-                        self.addConversation(cmConversationFactory.create(conversation_data).update())
+                        self.addConversation(cmConversationFactory.create(conversation_data).update(conversation_data))
                     })
                 }
             ).finally (function(){
