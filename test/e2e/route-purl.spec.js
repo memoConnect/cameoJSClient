@@ -278,6 +278,7 @@ describe('Route: Purl - ', function () {
     describe("Test 7 - Intern User open Purl which not exists", function(){
         it('should be 404 path', function(){
             util.login()
+            util.waitForPageLoad('/talks')
             util.get('/purl/moep')
             util.expectCurrentUrl('#/404')
         })

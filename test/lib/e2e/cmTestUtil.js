@@ -8,7 +8,6 @@ var ptor
 
 this.setPtorInstance = function (newPtor) {
     ptor = newPtor
-
     return this
 }
 
@@ -181,4 +180,10 @@ this.clearInput = function (qaValue) {
     input.sendKeys(protractor.Key.BACK_SPACE);
 
     return this
+}
+
+this.waitAndCloseNotify = function() {
+    self.waitForElement("[data-qa='cm-notify-close-btn']")
+    $("[data-qa='cm-notify-close-btn']").click()
+    self.waitForElements("[data-qa='cm-notify-close-btn']",0)
 }
