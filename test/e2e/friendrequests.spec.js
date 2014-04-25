@@ -56,6 +56,7 @@ describe('Friendrequests', function () {
                 $("cm-modal [data-qa='input-friendrequestMessage']").sendKeys(requestMessage)
                 // send request
                 $("cm-modal [data-qa='btn-sendRequest']").click()
+                util·waitAndCloseNotify
             })
 
             it('check request is removed', function(){
@@ -86,14 +87,11 @@ describe('Friendrequests', function () {
             it('login and accept', function() {
                 util.login(user1ToAccept, password)
                 util.waitForPageLoad("/talks")
-
             })
 
             it('check menu', function(){
                 // bell is orange
-                expect($('cm-menu cm-notfiy-signal i.cm-bell-ring').isPresent()).toBe(true)
-
-                expect($('cm-menu .qa-btn-request-notify.info').isPresent()).toBe(true)
+                expect($('i.cm-bell-ring-orange').isPresent()).toBe(true)
             })
 
             it('accept request', function(){
