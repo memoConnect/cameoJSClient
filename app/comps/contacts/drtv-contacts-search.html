@@ -6,9 +6,9 @@
         </div>
     </div>
     <div class="modal-row">
-        <textarea placeholder="{{'CONTACTS.PLACEHOLDER.REQUEST_MESSAGE'|cmTranslate}}" ng-model="contact.message"></textarea>
+        <textarea placeholder="{{'CONTACTS.PLACEHOLDER.REQUEST_MESSAGE'|cmTranslate}}" ng-model="contact.message" data-qa="input-friendrequestMessage"></textarea>
     </div>
-    <button class="cm-btn cm-btn-block cm-btn-primary" ng-click="sendRequest(contact)">
+    <button class="cm-btn cm-btn-block cm-btn-primary" ng-click="sendRequest(contact)" data-qa="btn-sendRequest">
         {{'CONTACTS.LABEL.SEND_REQUEST'|cmTranslate}}
         <i class="fa cm-send"></i>
     </button>
@@ -38,7 +38,7 @@
         <div class="cm-request-brief" cm-weight="1">
             <strong>{{contact.getDisplayName()}}</strong>
         </div>
-        <button ng-click="openModal('modalSendRequest',contact)">
+        <button ng-click="openModal('modalSendRequest',contact)" data-qa="btn-openModal">
             <i class="fa cm-contacts"></i>
         </button>
     </cm-contact-tag>
