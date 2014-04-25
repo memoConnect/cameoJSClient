@@ -81,7 +81,7 @@ angular.module('cmUi').service('cmModal',[
                 attrs += key+'="'+value+'"'
             });
 
-            var modal = $compile('<cm-modal '+attrs+' >'+template||''+'</cm-modal>')(scope)
+            var modal = $compile('<cm-modal '+attrs+' >'+(template||'')+'</cm-modal>')(scope)
             // move modal up the dom hierarchy, if necessary:
             angular.element(target || document.getElementById('cm-app') || 'body').append(modal)
 

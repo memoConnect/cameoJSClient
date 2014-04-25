@@ -119,7 +119,8 @@
         "LABEL": {
             "SEND": "abschicken",
             "REQUEST_CAPTCHA": "Captcha anfordern",
-            "SEND_CAPTCHA": "Captcha senden"
+            "SEND_CAPTCHA": "Captcha senden",
+            "KEY_GENERATION": "Für gute Verschlüsselung hier ein Keypair erzeugen"
         },
         "TAG": {
             "RECIPIENTS": "Empfänger",
@@ -147,12 +148,20 @@
             "CLOSE": "schließen"
         }
     },
+
+    "RECIPIENTS": {
+        "HEADING": "Empfänger hinzufügen",
+        "LABEL": {
+            "DONE": "Fertig"
+        }
+    },
 	
 	"CONTACTS": {
 		"HEADING": {
             "LIST": "Kontakte",
             "REQUESTS": "Kontaktanfragen",
             "SEARCH": "Suche",
+            "NEW_CONTACTS": "Neue Kontakte",
             "SEND_REQUEST": "Freundschaftsanfrage"
         },
         "LIST_EMPTY": "Bisher keine Kontakte vorhanden",

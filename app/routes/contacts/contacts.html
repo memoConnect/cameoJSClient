@@ -20,22 +20,24 @@
 
                 <cm-modal
                         id            = "add-contact"
-                        cm-title      = "CONTACTS.ADD_MODAL.TITLE"
+                        cm-title      = "CONTACTS.HEADING.NEW_CONTACTS"
                         type          = "plain"
                         nose          = "right-top"
                         severity      = "info"
-                        nose-position = "0">
-
-                        <a href="#/contacts/search">
-                            <i class="fa cm-search-cl"></i>
-                            {{"CONTACTS.LABEL.SEARCH_IDENTITY"|cmTranslate}}
-                        </a>
-
-                        <a href="#/contact/new">
-                            <i class="fa cm-load-to-rhino"></i>
-                            {{"CONTACTS.LABEL.ADD_EXTERN"|cmTranslate}}
-                        </a>
-
+                        nose-position = "0"
+                        class="no-padding">
+                        <div class="modal-row">
+                            <a href="#/contacts/search">
+                                <i class="fa cm-search-cl"></i>
+                                {{"CONTACTS.LABEL.SEARCH_IDENTITY"|cmTranslate}}
+                            </a>
+                        </div>
+                        <div class="modal-row">
+                            <a href="#/contact/new">
+                                <i class="fa cm-load-to-rhino"></i>
+                                {{"CONTACTS.LABEL.ADD_EXTERN"|cmTranslate}}
+                            </a>
+                        </div>
                 </cm-modal>
 
                 <input type="text" value="" ng-model="search" cm-icon="cm-search" cm-large-input />

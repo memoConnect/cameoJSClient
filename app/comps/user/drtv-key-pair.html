@@ -1,11 +1,13 @@
 <div>
-    <button ng-click="showOwnKeys()">Show Keys</button>
-    <button ng-click="showCreateKey()">new Key</button>
-    <button ng-click="showImportKeys()">import Key</button>
-    <button ng-click="syncKeys()">sync Key</button>
+    <button class="btn btn-default" ng-click="showOwnKeys()" ng-class="{'btn-primary': active == 'showOwnKeys'}">all</button>&nbsp;
+    <button class="btn btn-default" ng-click="showCreateKey()" ng-class="{'btn-primary': active == 'createNewKey'}">create</button>&nbsp;
+    <button class="btn btn-default" ng-click="showImportKeys()" ng-class="{'btn-primary': active == 'finishCreateKey'}">import</button>&nbsp;
+    <button class="btn btn-default" ng-click="syncKeys()">sync</button>
 </div>
 
-<div ng-if="active == 'showOwnKeys'">
+<br/>
+
+<div ng-if="active == 'showOwnKeys'" ng-init="showOwnKeys()">
     Liste eigener PubKeys, zum verwalten
     <ul class="list-group">
         <li class="list-group-item" ng-repeat="key in ownKeys"style="color:#000">

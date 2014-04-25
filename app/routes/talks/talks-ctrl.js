@@ -60,7 +60,7 @@ define([
                 cmModal
                 .create({
                     id: 'welcome',
-                    title: 'CAMEO.WELCOME'
+                    'cm-title': 'CAMEO.WELCOME'
                 })
                 
                 cmModal.open('welcome')

@@ -5,7 +5,8 @@ angular.module('cmContacts').directive('cmContactsSearch',[
     'cmIdentityFactory',
     'cmNotify',
     'cmModal',
-    function (cmContactsModel, cmIdentityFactory, cmNotify, cmModal){
+    '$timeout',
+    function (cmContactsModel, cmIdentityFactory, cmNotify, cmModal, $timeout){
         return {
             restrict: 'E',
             scope: false,
@@ -18,6 +19,7 @@ angular.module('cmContacts').directive('cmContactsSearch',[
                  * searching for an existing cameoId
                  * @returns {boolean}
                  */
+                $scope.timeout = null;
                 $scope.search = function(){
                     if($scope.searchCameoId.string.$invalid || $scope.string == ''){
                         $scope.results = [];
@@ -27,16 +29,21 @@ angular.module('cmContacts').directive('cmContactsSearch',[
 
                     $scope.pristine = false;
 
-                    cmContactsModel.searchCameoIdentity($scope.string)
-                    .then(
-                        function(data){
-                            var tmp = [];
-                            angular.forEach(data, function(value){
-                                tmp.push(cmIdentityFactory.create(value.id));
-                            });
-                            $scope.results = tmp;
-                        }
-                    );
+                    if($scope.timeout != null) $timeout.cancel($scope.timeout)
+
+                    $scope.timeout = $timeout(function(){
+                        cmContactsModel.searchCameoIdentity($scope.string)
+                            .then(
+                            function(data){
+                                var tmp = [];
+                                angular.forEach(data, function(value){
+                                    tmp.push(cmIdentityFactory.create(value.id));
+                                });
+                                $scope.results = tmp;
+                            }
+                        );
+                    },500);
+
                     return true;
                 };
 

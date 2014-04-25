@@ -11,9 +11,10 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                 var minHeight = element[0].offsetHeight,
                     paddingLeft = element.css('paddingLeft'),
                     paddingRight = element.css('paddingRight'),
-                    threshold = 10,
+                    threshold = 15,
                     maxRows = attrs.cmMaxRows || 2,
                     oneRowHeight = 0,
+                    unit = 'px',
                     $shadow;
 
                 /**
@@ -64,9 +65,12 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                     if(oneRowHeight == 0){
                         oneRowHeight = newHeight/2
                     }
+
+                    element.attr('cm-rows',val.search('<br/>') == -1 ? 1 : Math.round(newHeight/oneRowHeight));
+
                     // if maxrows isn't reached set height
                     if(maxRows*oneRowHeight > newHeight)
-                        element.css('height', newHeight+'px');
+                        element.css('height', newHeight+unit);
                 }
 
                 /**

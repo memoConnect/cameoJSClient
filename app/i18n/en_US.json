@@ -117,9 +117,10 @@
     "CONVERSATION" : {
         "HEADING": "Conversation",
         "LABEL" : {
-            "SEND" : "send",
-            "REQUEST_CAPTCHA" : "ask for Captcha",
-            "SEND_CAPTCHA" : "send Captcha"
+            "SEND": "send",
+            "REQUEST_CAPTCHA": "ask for Captcha",
+            "SEND_CAPTCHA": "send Captcha",
+            "KEY_GENERATION": "for good encryption you can here generate a keypair"
         },
         "TAG" : {
             "RECIPIENTS" : "Recipients",
@@ -148,11 +149,19 @@
         }
     },
 
+    "RECIPIENTS": {
+        "HEADING": "add recipients",
+        "LABEL": {
+            "DONE": "done"
+        }
+    },
+
 	"CONTACTS": {
         "HEADING": {
             "LIST": "Contacts",
             "REQUESTS": "Contact requests",
             "SEARCH": "Search",
+            "NEW_CONTACTS": "New contacts",
             "SEND_REQUEST": "Request"
         },
         "LIST_EMPTY": "No contacts exists",
