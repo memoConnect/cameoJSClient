@@ -44,14 +44,14 @@
         },
         "INFO": {
             "MIN_LETTER_COUNT": "Please use at least {{count}} letters.",
-            "TERMS": "Confirm terms!",
+            "TERMS": "You need to accept the terms of use!",
             "EMPTY": {
                 "PASSWORD": "Please insert a Password."
             },
             "USERNAME": {
                 "EXISTS": "Username exists! Please choose an other.",
                 "EMPTY": "Please insert a username.",
-                "INVALID": "Username is'nt valid. Avoid Spaces."
+                "INVALID": "Invalid username. Avoid Spaces."
             },
             "INVALID_EMAIL": "{{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}",
             "INVALID_PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}"
@@ -102,16 +102,16 @@
 
     "PASSWORD": {
         "LABEL_PW": "Passwort",
-        "LABEL_CONFIRM": "Passwort bestätigen",
+        "LABEL_CONFIRM": "Confirm password",
         "ERROR": {
-            "EMPTY": ""
+            "EMPTY": "Please enter a password"
         }
     },
 
     "TALKS": {
         "HEADING": "Talks",
         "MORE": "load more",
-        "LIST_EMPTY": "No talks exists"
+        "LIST_EMPTY": "No talks yet!"
     },
 
     "CONVERSATION" : {
@@ -135,7 +135,7 @@
         "WARN" : {
             "MESSAGE_EMPTY" : "The input field is empty.",
             "RECIPIENTS_MISSING" : "Please add at least one recipient.",
-            "PASSPHRASE_INVALID" : "Passphrase invalid."
+            "PASSPHRASE_INVALID" : "Invalid passphrase"
         },
         "PLACEHOLDER": {
             "NO_SUBJECT": "add subject",
@@ -164,20 +164,20 @@
             "NEW_CONTACTS": "New contacts",
             "SEND_REQUEST": "Request"
         },
-        "LIST_EMPTY": "No contacts exists",
+        "LIST_EMPTY": "No contacts yet!",
         "PLACEHOLDER": {
             "ADD_NEW_CONTACT": "please insert a cameoId",
             "REQUEST_MESSAGE": "here is place for a message for the request"
         },
         "INFO": {
             "NO_RESULTS": "No cameo contacts found",
-            "MORE_CHARS_NEEDED": "Please type more chars",
-            "NO_REQUESTS": "No requests exists",
+            "MORE_CHARS_NEEDED": "Please type more letters",
+            "NO_REQUESTS": "No requests",
             "REQUEST":{
-                "SENDED": "Request is send",
-                "FAILED": "Request couldn't send",
-                "ACCEPT": "You accept the request",
-                "REJECT": "Request is rejected",
+                "SENDED": "Request send",
+                "FAILED": "Could not send request",
+                "ACCEPT": "Request accepted",
+                "REJECT": "Request rejected",
                 "IGNORE": "User ignored"
             }
         },
@@ -185,7 +185,7 @@
             "DISPLAYNAME": "Displayname",
             "NAME": "Name",
             "SURNAME": "Surname",
-            "SORT": "arrange",
+            "SORT": "sort",
             "FILTER": "filter",
             "SEARCH_IDENTITY": "search Cameo indentity",
             "ADD_EXTERN": "create new extern contact",
@@ -259,32 +259,32 @@
             }
         },
         "VALIDATE_EMAIL": {
-            "LABEL": "E-Mail",
-            "PLACEHOLDER": "E-Mail",
+            "LABEL": "E-mail",
+            "PLACEHOLDER": "E-mail",
             "INFO": {
-                "INVALID": "The email isn't right. Please check!",
-                "EMPTY": "The email field is empty"
+                "INVALID": "Invalid e-mail. Please check!",
+                "EMPTY": "The e-mail field is empty"
             }
         },
         "VALIDATE_PHONE": {
             "LABEL": "Phone",
             "PLACEHOLDER": "Phone",
             "INFO": {
-                "INVALID_PHONE_NUMBER": "The string supplied did not seem to be a phone number.",
+                "INVALID_PHONE_NUMBER": "The string supplied does not seem to be a phone number.",
                 "EMPTY": "The phone field is empty"
             }
         },
         "EXTERN_CONTACT": {
             "HEADER": "Add extern contact",
             "INFO": {
-                "DISPLAYNAME_EXISTS": "The displayname exists already in your addressbook.",
+                "DISPLAYNAME_EXISTS": "The displayname already exists in your addressbook.",
                 "EMPTY":{
                     "DISPLAYNAME": "The Displayname is empty.",
-                    "NAME": "Your Name is empty.",
-                    "SURNAME": "Your surname is empty.",
+                    "NAME": "Name is empty.",
+                    "SURNAME": "Surname is empty.",
                     "PHONE_OR_EMAIL": "Please enter a phonenumber or a email address."
                 },
-                "SAVE_FAIL": "Saving of your new contact failed."
+                "SAVE_FAIL": "Saving contact failed."
             }
         },
         "TYPE_CHOOSER": {

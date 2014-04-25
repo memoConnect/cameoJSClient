@@ -23,7 +23,9 @@
                 </div>
                 <div class="cm-contact-actions" cm-rubber-space ng-if="contact">
                     <cm-contact-type cm-data="contact" cm-weight="1"></cm-contact-type>
-                    <i cm-weight="1" class="fa cm-write with-white-bg"></i>
+                    <button class="with-white-bg" ng-click="startConversation()" data-qa="start-new-conversation-btn" cm-weight="1">
+                        <i class="fa cm-write "></i>
+                    </button>b
                 </div>
             </div>
         </div>
