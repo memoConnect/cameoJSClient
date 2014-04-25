@@ -48,15 +48,7 @@ module.exports = function(config) {
             'test/lib/angular/angular-mocks.js',
 
             // specs
-            'test/unit/shared/*spec.js',
-            'test/unit/shared/ui/*spec.js',
-            'test/unit/shared/i18n/*spec.js',
-
-            'test/unit/comps/files/*spec.js',
-            'test/unit/comps/contacts/*spec.js',
-            'test/unit/comps/conversations/*spec.js',
-//            'test/unit/comps/user/*spec.js',
-            'test/unit/comps/validate/*spec.js',
+            'test/unit/**/*.spec.js',
 
             // json files
             'app/**/*.json'

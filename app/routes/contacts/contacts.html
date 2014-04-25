@@ -34,7 +34,7 @@
                         </div>
                         <div class="modal-row">
                             <a href="#/contact/new">
-                                <i class="fa cm-load-to"></i>
+                                <i class="fa cm-load-to-rhino"></i>
                                 {{"CONTACTS.LABEL.ADD_EXTERN"|cmTranslate}}
                             </a>
                         </div>
@@ -88,12 +88,12 @@
                         <strong>{{request.identity.getDisplayName()}}</strong><br />
                         {{request.message}}
                     </div>
-                    <button ng-click="toggleBar(request)">
+                    <button ng-click="toggleBar(request)" data-qa="btn-toggleBar">
                         <i class="fa cm-checkbox"></i>
                     </button>
                 </section>
                 <section class="cm-request-bar" ng-show="request.showBar">
-                    <button ng-click="acceptRequest(request)"><i class="fa cm-info">{{'CONTACTS.REQUESTS.ACCEPT'|cmTranslate}}</i></button>
+                    <button ng-click="acceptRequest(request)" data-qa="btn-acceptRequest"><i class="fa cm-info">{{'CONTACTS.REQUESTS.ACCEPT'|cmTranslate}}</i></button>
                     <button ng-click="rejectRequest(request)"><i class="fa cm-info">{{'CONTACTS.REQUESTS.REJECT'|cmTranslate}}</i></button>
                     <button ng-click="ignoreRequest(request)"><i class="fa cm-info">{{'CONTACTS.REQUESTS.IGNORE'|cmTranslate}}</i></button>
                 </section>
