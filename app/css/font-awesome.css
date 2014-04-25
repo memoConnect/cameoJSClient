@@ -282,3 +282,5 @@
 .cm-hidden:before{content:'\f04d'}
 .cm-clipboard:before{content:'\f051'}
 .cm-search-cl:before{content:'\f052'}
+.cm-reject:before{content:'\f053'}
+.cm-ignore:before{content:'\f054'}
