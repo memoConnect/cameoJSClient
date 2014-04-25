@@ -165,7 +165,7 @@ angular.module('cmContacts').service('cmContactsModel',[
                 check = false;
 
             while(i < this.requests.length){
-                if(this.requests[i].identity.id == identity_data.id){
+                if(this.requests[i].identity.id == request_data.id){
                     check = true;
                     break;
                 }
