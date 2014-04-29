@@ -10,12 +10,17 @@ var cmApi = angular.module('cmApi', ['cmLogger']);
 
 cmApi.provider('cmApi',[
 function($injector){
-    var rest_api = "";
+    var rest_api    = "",
+        stack_url   = "" 
 
     this.restApiUrl = function(url){
         rest_api = url;
-        return(this)
-    };
+        return this
+    }
+
+    this.stackPath = function(path){
+        stack_path = path
+    }
 
     this.$get = [
 
@@ -33,7 +38,7 @@ function($injector){
         config works almost like in $http(config)
 
         most important keys are:
-            url:	api path to call i.e. '/account/check',
+            path:	api path to call i.e. '/account/check',
                     will give an error message if passed something different from a path (like 'http://dev.cameo.io/...')
                     in that case your call will most likely fail brutally
 
@@ -49,7 +54,7 @@ function($injector){
         example: (!!check tests in cmApi.spec.js!!)
 
         cmApi.get({
-            url:     '/pony',
+            path:     '/pony',
             exp_ok:  'pony',
         })
 
@@ -143,8 +148,65 @@ function($injector){
 
 
         */
+       
+        //check if the sever's response matches the api conventions
+        function responseValid(response, exp_ok, exp_ko){
+            var valid =    response
+                            //response must have a res key that equals 'OK' or 'KO':
+                        && (response.res == 'OK' || response.res == 'KO')
+                            //if your request was granted and something was expected in return, it must be present:
+                        && (response.res == "OK" && exp_ok ? exp_ok in response.data : true)
+                            //if your request was denied and something was expected in return, it must be present:
+                        && (response.res == "KO" && exp_ko ? exp_ko in response.data : true)
+
+            if(!valid) cmLogger.error('Api response invalid; '+(exp_ok||exp_ko ? 'expected: ':'') + (exp_ok||'') +', '+(exp_ko||''), response)
+
+            return(valid)
+        }
+       
+       function handleSuccess(response, config, deferred){
+            //$http call was successfull:
+            //reponse includes config and data, we only need the data:
+            var response = response.data
+
+            responseValid(response, config.exp_ok, config.exp_ko)
+            ?   //response valid, check if OK:
+                //if a certain key was expected, resolve promise resp. reject the promise with the according values
+                //if nothing was expected, just resolve or reject with value of 'data' in the response body if present or all the data
+                //reponse should now look similar to this:
+                /*
+                    "res":  "OK",
+                    "data": {
+                                "some_key":             "some_value",
+                                "some expected_key":    "some_other value"
+                            }
+
+                */
+                response.res =='OK'
+                ? deferred.resolve( config.exp_ok ? response.data[config.exp_ok] : response.data || response)
+                : deferred.reject(  config.exp_ko ? response.data[config.exp_ko] : response.data || response)
+            :   //response invalid, call through:
+                deferred.reject(undefined, response)
+        }
+    
+
+       function handleError(response, config, deferred){                                            
+//                    cmLogger.error('Api call failed: \n '+config.method+' '+config.path, response)
+//                    window.location.href='#/server_down' //@ Todo
+                    //error messages should come trough backend
+                    deferred.reject(response)
+       }
+
+
 
         var api = function(method, config){
+
+            config = config ? config : method
+
+            if(config.url){
+                cmLogger.warn('cmApi: "url" in config object is deprecated.')
+            }
+
             var deferred	=	$q.defer(),
 
                 //get authentification token from cmAuth if present
@@ -158,70 +220,18 @@ function($injector){
                                 :	undefined
 
 
-            //Api calls are restricted to the preconfigured api base path and have to start with a '/'
-            if(!config.url.match(/^\//g)) cmLogger.error('Api calls are restricted to '+rest_api+' . You tried: "'+ config.url+'". Path has to start with a "/"')
-
-
             //extend or overwrite config
             config			=	config || {}	// make sure config is defined
             config.method	= 	method			// overwrite method
             config.url		= 	rest_api +		// base url API
-                                config.url 		// path to specific method
+                                config.path 	// path to specific method
             config.headers	=	angular.extend(token ? {'Authorization': token} : {}, config.headers || {})	//add authorization token to the header
             config.headers	=	angular.extend(twoFactorToken ? {'X-TwoFactorToken': twoFactorToken} : {}, config.headers || {})	//add two factor authorization token to the header
 
-            //check if the response matches the api conventions
-            function responseValid(response, exp_ok, exp_ko){
-                var valid =    response
-                                //response must have a res key that equals 'OK' or 'KO':
-                            && (response.res == 'OK' || response.res == 'KO')
-                                //if your request was granted and something was expected in return, it must be present:
-                            && (response.res == "OK" && exp_ok ? exp_ok in response.data : true)
-                                //if your request was denied and something was expected in return, it must be present:
-                            && (response.res == "KO" && exp_ko ? exp_ko in response.data : true)
 
-                if(!valid) cmLogger.error('Api response invalid; '+(exp_ok||exp_ko ? 'expected: ':'') + (exp_ok||'') +', '+(exp_ko||''), response)
-
-                return(valid)
-            }
-
-            /**
-             * for Weily with Comment, moep!
-             */
-//                console.log(config)
             $http(config).then(
-
-                function(response){
-                    //$http call was successfull:
-                    //reponse includes config and data, we only need the data:
-                    var response = response.data
-
-                    responseValid(response, config.exp_ok, config.exp_ko)
-                    ?	//response valid, check if OK:
-                        //if a certain key was expected, resolve promise resp. reject the promise with the according values
-                        //if nothing was expected, just resolve or reject with value of 'data' in the response body if present or all the data
-                        //reponse should now look similar to this:
-                        /*
-                            "res":	"OK",
-                            "data": {
-                                        "some_key": 			"some_value",
-                                        "some expected_key": 	"some_other value"
-                                    }
-
-                        */
-                        response.res =='OK'
-                        ? deferred.resolve(	config.exp_ok ? response.data[config.exp_ok] : response.data || response)
-                        : deferred.reject(	config.exp_ko ? response.data[config.exp_ko] : response.data || response)
-                    :	//response invalid, call through:
-                        deferred.reject(undefined, response)
-                },
-
-                function(response){                                            
-//                    cmLogger.error('Api call failed: \n '+config.method+' '+config.url, response)
-//                    window.location.href='#/server_down' //@ Todo
-                    //error messages should come trough backend
-                    deferred.reject(response)                                        
-                }
+                function(response){ handleSuccess(response, config, deferred) },
+                function(response){ handleError(reponse, config, deferred) }
             )
 
             return deferred.promise
@@ -233,6 +243,33 @@ function($injector){
         api.head			=	function(config){ return api('HEAD', 	config) }
         api.put				=	function(config){ return api('PUT', 	config) }
         api.jsonp			=	function(config){ return api('JSONP',	config) }
+
+        api.stack = function(method, config){
+            var deferred = $q.defer()
+
+            api.call_stack = api.call_stack || []
+
+            api.call_stack.push({
+                deferred : deferred,
+                config   : config
+            })
+
+            return deferred.promise
+        }
+
+        api.commit = function(){
+
+            api.call_stack.forEach(function(){
+
+            })
+
+            api.post({
+                path: '/callstack',
+                data: {
+                    requests: [] 
+                } 
+            })
+        }
 
         return api
         }]

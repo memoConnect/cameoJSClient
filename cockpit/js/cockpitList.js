@@ -39,7 +39,7 @@ cockpitList.controller("cockpitListCtrl", [
         function updateList() {
             filterSettings.offset = 0
             cmApi.post({
-                url: '/' + $routeParams.elementName,
+                path: '/' + $routeParams.elementName,
                 data: filterSettings
             }).then(
                 function (data) {
@@ -60,7 +60,7 @@ cockpitList.controller("cockpitListCtrl", [
         $scope.loadMore = function () {
             filterSettings.offset += filterSettings.limit
             cmApi.post({
-                url: '/' + $routeParams.elementName,
+                path: '/' + $routeParams.elementName,
                 data: filterSettings
             }).then(
                 function (data) {
@@ -78,12 +78,12 @@ cockpitList.controller("cockpitListCtrl", [
         }
 
         $scope.editElement = function (id) {
-            $location.url('/' + $scope.name + '/' + id)
+            $location.path('/' + $scope.name + '/' + id)
         }
 
         $scope.createNew = function () {
             cmApi.post({
-                url: '/' + $routeParams.elementName + '/new'
+                path: '/' + $routeParams.elementName + '/new'
             }).then(
                 function (data) {
                     $scope.list = $scope.list.concat(data)
@@ -97,7 +97,7 @@ cockpitList.controller("cockpitListCtrl", [
 
         $scope.deleteElement = function (id) {
             cmApi.delete({
-                url: '/' + $routeParams.elementName + "/" + id
+                path: '/' + $routeParams.elementName + "/" + id
             }).then(
                 function () {
                     for (var i = $scope.list.length; i--;) {

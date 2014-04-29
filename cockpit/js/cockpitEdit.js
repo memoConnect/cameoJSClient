@@ -19,7 +19,7 @@ cockpitEdit.controller("cockpitEditCtrl", [
         $scope.saveFailText = "request failed";
 
         cmApi.get({
-            url: '/' + $scope.elementName + '/' + $scope.elementNameId
+            path: '/' + $scope.elementName + '/' + $scope.elementNameId
         }).then(
             function (data) {
                 if (data.attributes.length > 0) {
@@ -52,7 +52,7 @@ cockpitEdit.controller("cockpitEditCtrl", [
             });
 
             cmApi.put({
-                url: '/' + $scope.elementName + '/' + $scope.elementNameId,
+                path: '/' + $scope.elementName + '/' + $scope.elementNameId,
                 data: updatedAttributes
             }).then(
                 function (data) {

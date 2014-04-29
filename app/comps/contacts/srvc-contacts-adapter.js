@@ -13,7 +13,7 @@ angular.module('cmContacts').service('cmContactsAdapter',[
              */
             searchCameoIdentity: function(string, excludeContacts){
                 return cmApi.post({
-                    url:'/identity/search',
+                    path:'/identity/search',
                     data: {
                         search: string,
                         fields: ['cameoId','displayName'],
@@ -29,7 +29,7 @@ angular.module('cmContacts').service('cmContactsAdapter',[
              */
             getAll: function(limit, offset){
                 return cmApi.get({
-                    url:'/contacts' + cmUtil.handleLimitOffset(limit,offset)
+                    path:'/contacts' + cmUtil.handleLimitOffset(limit,offset)
                 });
             },
             /**
@@ -39,7 +39,7 @@ angular.module('cmContacts').service('cmContactsAdapter',[
              */
             getOne: function(id){
                 return cmApi.get({
-                    url:'/contact/'+id
+                    path:'/contact/'+id
                 })
             },
             /**
@@ -48,7 +48,7 @@ angular.module('cmContacts').service('cmContactsAdapter',[
              */
             getGroups: function(){
                 return cmApi.get({
-                    url:'/contact-groups'
+                    path:'/contact-groups'
                 })
             },
             /**
@@ -60,41 +60,41 @@ angular.module('cmContacts').service('cmContactsAdapter',[
              */
             getAllFromGroup: function(group,limit,offset){
                 return cmApi.get({
-                    url:'/contact-group/' + group + cmUtil.handleLimitOffset(limit,offset)
+                    path:'/contact-group/' + group + cmUtil.handleLimitOffset(limit,offset)
                 })
             },
             getFriendRequests: function(){
                 return cmApi.get({
-                    url:'/friendRequests'
+                    path:'/friendRequests'
                 })
             },
             sendFriendRequest: function(id, message){
                 return cmApi.post({
-                    url:'/friendRequest',
+                    path:'/friendRequest',
                     data: {identityId: id, message: message || null}
                 })
             },
             answerFriendRequest: function(id, type){
                 return cmApi.post({
-                    url:'/friendRequest/answer',
+                    path:'/friendRequest/answer',
                     data: {identityId:id, answerType:type}
                 })
             },
             addContact: function(data){
                 return cmApi.post({
-                    url:'/contact',
+                    path:'/contact',
                     data: {identity:data.identity||{}, groups:data.groups||[]}
                 })
             },
             editContact: function(id, data){
                 return cmApi.put({
-                    url:'/contact/'+id,
+                    path:'/contact/'+id,
                     data: data||{}
                 })
             },
             deleteContact: function(id){
                 return cmApi.delete({
-                    url:'/contact/'+id
+                    path:'/contact/'+id
                 })
             }
         }
