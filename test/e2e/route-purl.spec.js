@@ -275,12 +275,16 @@ describe('Route: Purl - ', function () {
     /**
      * Test 7
      */
-    describe("Test 7 - Intern User open Purl which not exists", function(){
+    describe("Test 7 - Internal user opens Purl that does not exists:", function(){
         it('should be 404 path', function(){
             util.login()
             util.waitForPageLoad('/talks')
             util.get('/purl/moep')
-            util.expectCurrentUrl('#/404')
+            ptor.wait(function () {
+                    return ptor.getCurrentUrl().then(function(url){
+                        return url.match(/#\/404$/)
+                    })
+            }, 5000, 'unable to load 404 page.')
         })
     })
 
