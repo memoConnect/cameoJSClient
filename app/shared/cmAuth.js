@@ -11,7 +11,7 @@ function(cmApi){
             var auth = _Base64.encode(login + ":" + pass);
 
             return cmApi.get({
-                url: '/token',
+                path: '/token',
                 headers: { 'Authorization': 'Basic '+auth } ,
                 exp_ok: 'token'
             })
@@ -34,14 +34,14 @@ function(cmApi){
 
         createUser: function(data){
             return cmApi.post({
-                url: '/account',
+                path: '/account',
                 data: data
             })
         },
 
         checkAccountName: function(name, reservationSecret){
             return cmApi.post({
-                url: '/account/check',
+                path: '/account/check',
                 data: {
                     loginName: name,
                     reservationSecret: reservationSecret
@@ -53,7 +53,7 @@ function(cmApi){
 
         checkPhoneNumber: function(number){
             return cmApi.post({
-                url: '/services/checkPhoneNumber',
+                path: '/services/checkPhoneNumber',
                 data: { phoneNumber:number },
                 exp_ok: 'phoneNumber'
             })
@@ -61,13 +61,13 @@ function(cmApi){
 
         getIdentity: function(id){
             return cmApi.get({
-                url: '/identity'+ (id ? '/'+id : '')
+                path: '/identity'+ (id ? '/'+id : '')
             })
         },
 
         savePublicKey: function(data){
             return cmApi.post({
-                url: '/identity/publicKey',
+                path: '/identity/publicKey',
                 data: {
                     name: data.name,
                     key: data.key,
@@ -79,14 +79,14 @@ function(cmApi){
         // two factor authentication
         requestTwoFactorKey: function() {
             return cmApi.get({
-                url: '/twoFactorAuth'
+                path: '/twoFactorAuth'
             })
         },
 
         // ask the api for a new authentication token:
         requestTwoFactorToken: function(key){
             return cmApi.post({
-                url: '/twoFactorAuth/confirm',
+                path: '/twoFactorAuth/confirm',
                 data: { key: key },
                 exp_ok: "token"
             })

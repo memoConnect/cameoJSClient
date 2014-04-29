@@ -4,7 +4,7 @@ angular.module('cmFiles').service('cmFilesAdapter', [
         return {
             prepareFile: function(config){
                 return cmApi.post({
-                    url :    "/file",
+                    path :    "/file",
                     data: {},
                     exp_ok : 'id',
                     headers : {
@@ -18,7 +18,7 @@ angular.module('cmFiles').service('cmFilesAdapter', [
 
             addChunk: function(fileId, index, chunk) {
                 return cmApi.post({
-                    url:    "/file/"+fileId,
+                    path:    "/file/"+fileId,
                     data:   {
                         chunk: chunk
                     },
@@ -31,19 +31,19 @@ angular.module('cmFiles').service('cmFilesAdapter', [
 
             getFileInfo: function(fileId){
                 return cmApi.get({
-                    url: "/file/"+fileId
+                    path: "/file/"+fileId
                 })
             },
 
             getFile: function(assetId){
                 return cmApi.get({
-                    url: "/file/"+assetId
+                    path: "/file/"+assetId
                 })
             },
 
             getChunk: function(assetId, chunkId){
                 return cmApi.get({
-                    url: "/file/"+assetId+"/"+chunkId,
+                    path: "/file/"+assetId+"/"+chunkId,
                     exp_ok: 'chunk'
                 })
             }

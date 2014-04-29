@@ -37,12 +37,12 @@ describe('cmApi', function(){
 
             var resolved = 0
 
-            cmApi('GET',	{url:'/test'}).then(function(){ resolved++ })
-            cmApi('POST',	{url:'/test'}).then(function(){ resolved++ })
-            cmApi('DELETE',	{url:'/test'}).then(function(){ resolved++ })
-            cmApi('HEAD',	{url:'/test'}).then(function(){ resolved++ })
-            cmApi('PUT',	{url:'/test'}).then(function(){ resolved++ })
-            cmApi('JSONP',	{url:'/test'}).then(function(){ resolved++ })
+            cmApi('GET',	{path:'/test'}).then(function(){ resolved++ })
+            cmApi('POST',	{path:'/test'}).then(function(){ resolved++ })
+            cmApi('DELETE',	{path:'/test'}).then(function(){ resolved++ })
+            cmApi('HEAD',	{path:'/test'}).then(function(){ resolved++ })
+            cmApi('PUT',	{path:'/test'}).then(function(){ resolved++ })
+            cmApi('JSONP',	{path:'/test'}).then(function(){ resolved++ })
 
             $httpBackend.flush()
 
@@ -51,37 +51,37 @@ describe('cmApi', function(){
 
         it('should provide a function for GET requests.', function(){
             $httpBackend.expect('GET', 'my_rest_api/test').respond(200, {res:'OK'} )
-            cmApi.get( {url:'/test'} )
+            cmApi.get( {path:'/test'} )
             $httpBackend.flush()
         })
 
         it('should provide a function for GET requests.', function(){
             $httpBackend.expect('POST',	'my_rest_api/test').respond(200, {res:'OK'} )
-            cmApi.post( {url:'/test'} )
+            cmApi.post( {path:'/test'} )
             $httpBackend.flush()
         })
 
         it('should provide a function for DELETE requests.', function(){
             $httpBackend.expect('DELETE', 'my_rest_api/test').respond(200, {res:'OK'} )
-            cmApi.delete( {url:'/test'} )
+            cmApi.delete( {path:'/test'} )
             $httpBackend.flush()
         })
 
         it('should provide a function for HEAD requests.', function(){
             $httpBackend.expect('HEAD',	'my_rest_api/test').respond(200, {res:'OK'} )
-            cmApi.head( {url:'/test'} )
+            cmApi.head( {path:'/test'} )
             $httpBackend.flush()
         })
 
         it('should provide a function for PUT requests.', function(){
             $httpBackend.expect('PUT', 'my_rest_api/test').respond(200, {res:'OK'} )
-            cmApi.put( {url:'/test'} )
+            cmApi.put( {path:'/test'} )
             $httpBackend.flush()
         })
 
         it('should provide a function for JSONP requests.', function(){
             $httpBackend.expect('JSONP', 'my_rest_api/test').respond(200, {res:'OK'} )
-            cmApi.jsonp( {url:'/test'} )
+            cmApi.jsonp( {path:'/test'} )
             $httpBackend.flush()
         })
 
@@ -98,7 +98,7 @@ describe('cmApi', function(){
 
             cmApi
             .get({
-                url: '/test',
+                path: '/test',
                 exp_ok:	'pony'
             })
             .then(
@@ -130,7 +130,7 @@ describe('cmApi', function(){
 
             cmApi
             .get({
-                url: '/test',
+                path: '/test',
                 exp_ok:	'pony'
             })
             .then(
@@ -162,7 +162,7 @@ describe('cmApi', function(){
 
             cmApi
             .get({
-                url: '/test',
+                path: '/test',
                 exp_ok: 'pony'
             })
             .then(
@@ -193,7 +193,7 @@ describe('cmApi', function(){
 
             cmApi
             .get({
-                url: '/test',
+                path: '/test',
                 exp_ok:	'pony'
             })
             .then(
@@ -223,13 +223,13 @@ describe('cmApi with cmAuth present', function(){
 
     it('should extend api calls with an authorization token', inject(function(cmApi, $httpBackend){
         $httpBackend.expect('GET', '/test', null, function(headers){ return 'Authorization' in headers }).respond(200, {res:'OK'} )
-        cmApi.get( {url:'/test'} )
+        cmApi.get( {path:'/test'} )
         $httpBackend.flush()
     }))
 
     it('should extend api calls with an two factor authorization token, if present', inject(function(cmApi, $httpBackend){
         $httpBackend.expect('GET', '/test', null, function(headers){ return 'X-TwoFactorToken' in headers }).respond(200, {res:'OK'} )
-        cmApi.get( {url:'/test'} )
+        cmApi.get( {path:'/test'} )
         $httpBackend.flush()
     }))
 })
