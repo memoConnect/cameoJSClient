@@ -8,7 +8,7 @@ describe('Friendrequests', function () {
         password = 'password',
         requestMessage = 'moep moep mooooeeeppp?'
 
-    it('user1 "'+user1ToAccept+'" to accept do registration and logout', function () {
+    it('user1 to accept do registration and logout', function () {
         util.logout();
         util.get('/registration')
 
@@ -30,7 +30,7 @@ describe('Friendrequests', function () {
 
     it('user2', function(){
 
-        describe('"'+config.loginUser1+'" accpect "'+user1ToAccept+'" login and search for user1', function(){
+        describe('user2 login and search for user1', function(){
             util.login(config.loginUser1,config.passwordUser1)
             util.waitForPageLoad('/talks')
 
@@ -82,8 +82,8 @@ describe('Friendrequests', function () {
         })
     })
 
-    it('user1 "'+user1ToAccept+'"', function(){
-        describe('again', function(){
+    it('user1 accept request', function(){
+        describe('again "'+user1ToAccept+"'", function(){
             it('login and accept', function() {
                 util.login(user1ToAccept, password)
                 util.waitForPageLoad("/talks")
@@ -125,7 +125,6 @@ describe('Friendrequests', function () {
 
             it('check if request converted to contact', function(){
                 util.get('/contacts')
-                util.waitForElement('cm-contact-tag')
                 // search for user2
                 $("[data-qa='input-search']").sendKeys(config.displayNameUser1)
                 util.waitForElements('cm-contact-tag', 1)

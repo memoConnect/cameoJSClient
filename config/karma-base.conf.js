@@ -66,7 +66,6 @@ module.exports = function(config) {
         // list of files to exclude
         exclude: [
             'app/**/main.js'
-//            'test/**/contacts-ctrl.AMDspec.js'
         ],
 
         // test results reporter to use
