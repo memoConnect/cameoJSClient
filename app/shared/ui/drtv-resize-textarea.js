@@ -8,8 +8,7 @@ angular.module('cmUi').directive('cmResizeTextarea',[
 
             link: function (scope, element, attrs) {
                 // vars
-                var minHeight = element[0].offsetHeight,
-                    paddingLeft = element.css('paddingLeft'),
+                var paddingLeft = element.css('paddingLeft'),
                     paddingRight = element.css('paddingRight'),
                     threshold = 15,
                     maxRows = attrs.cmMaxRows || 2,
@@ -26,10 +25,10 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         top: -10000+unit,
                         left: -10000+unit,
                         width: element[0].offsetWidth - parseInt(paddingLeft || 0) - parseInt(paddingRight || 0)+unit,
-                        fontSize: element.css('fontSize'),
-                        fontFamily: element.css('fontFamily'),
-                        lineHeight: element.css('lineHeight'),
-                        resize: 'none'
+                        'font-size': element.css('fontSize'),
+                        'font-family': element.css('fontFamily'),
+                        'line-height': element.css('lineHeight'),
+                        'word-wrap': 'break-word'
                     });
                     element.after($shadow);
                 }
@@ -52,21 +51,30 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         .replace(/\n/g, '<br/>')
                         .replace(/\s{2,}/g, function(space) { return times('&nbsp;', space.length - 1) + ' ' });
                     $shadow.html(val);
-                    // calc new height for textarea
-                    var newHeight = Math.max($shadow[0].offsetHeight + threshold , minHeight);
-                    // default are two rows of a textarea that we are divide through 2
-                    if(oneRowHeight == 0){
-                        console.log($shadow[0].offsetHeight)
-                        oneRowHeight = newHeight/2
+
+
+                    // on init get one row height
+                    var shadowHeight = $shadow[0].offsetHeight;
+                    if(shadowHeight == 0){
+                        $shadow.html('&nbsp;');// fill to get one row
+                        shadowHeight = $shadow[0].offsetHeight;
+
+                        if(oneRowHeight == 0 ){
+                            oneRowHeight = shadowHeight
+                        }
                     }
 
-                    console.log(val.search(/\n/)+" - "+val.search('<br\/>'))
-
-                    element.attr('cm-rows',val.search('<br/>') == -1 ? 1 : Math.round(newHeight/oneRowHeight));
+                    // on init get one row height
+                    element.attr('cm-rows',Math.round(shadowHeight/oneRowHeight));
 
                     // if maxrows isn't reached set height
-                    if(maxRows*oneRowHeight > newHeight)
-                        element.css('height', newHeight+unit);
+                    if(shadowHeight < (oneRowHeight*2)) {
+                        element.css('height', (oneRowHeight*2) + unit);
+                    } else if(maxRows*oneRowHeight >= shadowHeight) {
+                        element.css('height', shadowHeight + unit);
+                    } else {
+                        element.css('height', (maxRows*oneRowHeight) + unit);
+                    }
                 }
 
                 /**
