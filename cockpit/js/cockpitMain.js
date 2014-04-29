@@ -18,7 +18,7 @@ cockpitMain.controller("cockpitMainCtrl", [
         function getListing() {
 
             cmApi.get({
-                url: '/lists',
+                path: '/lists',
                 exp_ok: 'lists'
             }).then(
                 function (lists) {

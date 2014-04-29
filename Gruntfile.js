@@ -128,7 +128,7 @@ module.exports = function (grunt) {
         console.log("OS: " + platform)
         if (platform.match(/linux/)) {
             testConfig.config.chromeDriverPath = "../test/lib/ptor/chromedriver_linux"
-        } else if (platform.match(/mac/)) {
+        } else if (platform.match(/darwin/)) {
             testConfig.config.chromeDriverPath = "../test/lib/ptor/chromedriver_mac"
         } else if (platform.match(/win/)) {
             testConfig.config.chromeDriverPath = "../test/lib/ptor/chromedriver_win.exe"
