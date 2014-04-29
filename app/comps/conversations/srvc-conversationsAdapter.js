@@ -40,9 +40,9 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                 })
             },
 
-            getPpath: function(id){
+            getPurl: function(id){
                 return cmApi.get({
-                    path:'/ppath/' + id
+                    path:'/purl/' + id
                 })
             },
 
