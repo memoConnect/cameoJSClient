@@ -231,7 +231,7 @@ function($injector){
 
             $http(config).then(
                 function(response){ handleSuccess(response, config, deferred) },
-                function(response){ handleError(reponse, config, deferred) }
+                function(response){ handleError(response, config, deferred) }
             )
 
             return deferred.promise
