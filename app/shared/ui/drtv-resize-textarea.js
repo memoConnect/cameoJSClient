@@ -21,24 +21,17 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                  * create shadow of textarea for calcing the rows
                  */
                 function createShadow(){
-                    var existingShadow = document.getElementById('textarea-shadow');
-
-                    if(existingShadow == null){
-                        $shadow = angular.element('<div id="textarea-shadow"></div>').css({
-                            position: 'fixed',
-                            top: -10000,
-                            left: -10000,
-                            width: element[0].offsetWidth - parseInt(paddingLeft || 0) - parseInt(paddingRight || 0),
-                            fontSize: element.css('fontSize'),
-                            fontFamily: element.css('fontFamily'),
-                            lineHeight: element.css('lineHeight'),
-                            resize: 'none'
-                        });
-
-                        angular.element(document.body).append($shadow);
-                    } else {
-                        $shadow = angular.element(existingShadow)
-                    }
+                    $shadow = angular.element('<div></div>').css({
+                        position: 'fixed',
+                        top: -10000+unit,
+                        left: -10000+unit,
+                        width: element[0].offsetWidth - parseInt(paddingLeft || 0) - parseInt(paddingRight || 0)+unit,
+                        fontSize: element.css('fontSize'),
+                        fontFamily: element.css('fontFamily'),
+                        lineHeight: element.css('lineHeight'),
+                        resize: 'none'
+                    });
+                    element.after($shadow);
                 }
 
                 /**
@@ -63,8 +56,11 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                     var newHeight = Math.max($shadow[0].offsetHeight + threshold , minHeight);
                     // default are two rows of a textarea that we are divide through 2
                     if(oneRowHeight == 0){
+                        console.log($shadow[0].offsetHeight)
                         oneRowHeight = newHeight/2
                     }
+
+                    console.log(val.search(/\n/)+" - "+val.search('<br\/>'))
 
                     element.attr('cm-rows',val.search('<br/>') == -1 ? 1 : Math.round(newHeight/oneRowHeight));
 
