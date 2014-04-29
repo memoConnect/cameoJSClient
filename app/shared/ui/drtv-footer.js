@@ -9,7 +9,7 @@ angular.module('cmUi').directive('cmFooter',[
             priority: '0',
 
             link : function(scope, element){
-                //if element has no chrildren add default elements:
+                //if element has no children add default elements:
                 if(element.children().length == 0 ) {
                     scope.btns.forEach(function(btn){
                         var el = angular.element('<a cm-weight="1">'+cmTranslate(btn.i18n)+'</a>');

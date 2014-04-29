@@ -51,12 +51,12 @@ angular.module('cmUi').directive('cmAvatar',[
                     }
 
                     refresh();
-                }
 
-                identity.on('init:finish', function(){
-                    cmLogger.debug('cmAvatar:IdentityTrigger:initFinish');
-                    refresh();
-                });
+                    identity.on('init:finish', function(){
+                        cmLogger.debug('cmAvatar:IdentityTrigger:initFinish');
+                        refresh();
+                    });
+                }
             }
         }
     }
