@@ -69,7 +69,7 @@ define([
                         && $scope.invalidLoginName() == false
                         && reservationSecrets[lastloginName] == undefined) {
                         // check loginName
-                        cmAuth.checkAccountName($scope.registrationForm.loginName.$viewValue)
+                        cmAuth.checkAccountName(lastloginName)
                             .then(
                             // valid case
                             function(reservationSecret){
@@ -79,20 +79,25 @@ define([
                             },
                             // invalid or exists
                             function(data){
+                                console.log('da')
                                 // alternatives case
                                 if(typeof data == "string"){
+                                    console.log('case 1')
                                     $scope.showError.LoginNameExists = true;
 
+                                // invalid case
+                                } else if(typeof data == "object" && data.data.error == 'invalid login name') {
+                                    console.log('case 2')
+                                    $scope.showError.LoginNameInvalid = true;
+                                } else if(typeof data == "object" && data.alternative !== undefined){
+                                    onsole.log('case 3')
+                                    $scope.showError.LoginNameExists = true;
                                     /**
                                      * @TODO
                                      * show alternatives
                                      */
                                     $scope.userNameAlternatives = data;
                                     $scope.showUserNameAlternatives = true;
-
-                                // invalid case
-                                } else if(typeof data == "object" && data.data.error == 'invalid login name') {
-                                    $scope.showError.LoginNameInvalid = true;
                                 }
 
                                 $scope.registrationForm.loginName.$valid = false;
@@ -198,6 +203,9 @@ define([
                                 }
                             )
                             return true;
+                        },
+                        function(response){
+                            console.log(response);
                         }
                     );
                 }
