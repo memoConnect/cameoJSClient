@@ -51,7 +51,7 @@
             "USERNAME": {
                 "EXISTS": "Der Nutzername ist bereits vergeben. Bitte wählen Sie einen anderen.",
                 "EMPTY": "Bitte geben Sie einen Nutzername an.",
-                "INVALID": "Der Nutzername ist nicht valide. Vermeiden Sie Leerzeichen."
+                "INVALID": "Der Nutzername ist nicht valide. Vermeiden Sie Umlaute, Leer- und Sonderzeichen."
             },
             "INVALID_EMAIL": "{{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}",
             "INVALID_PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}"
