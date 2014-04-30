@@ -57,7 +57,9 @@ define([
                 .debugEnabled(true)
 
             cmApiProvider
-                .restApiUrl( cameo_config.restApi );
+                .restApiUrl( cameo_config.restApi )
+                .stackPath( cameo_config.stackPath )
+                .enableCallStack()
 
             cmLanguageProvider
                 .cacheLangFiles(cameo_config.cache_lang_files)

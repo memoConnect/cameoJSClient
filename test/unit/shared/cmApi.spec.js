@@ -8,6 +8,8 @@ describe('cmApi', function(){
         'cmApiProvider',
         function(cmApiProvider){
             cmApiProvider.restApiUrl('my_rest_api')
+            cmApiProvider.stackPath('my_stack_path')
+            cmApiProvider.enableCallStack()
         }
     ]))
 
@@ -37,12 +39,12 @@ describe('cmApi', function(){
 
             var resolved = 0
 
-            cmApi('GET',	{path:'/test'}).then(function(){ resolved++ })
-            cmApi('POST',	{path:'/test'}).then(function(){ resolved++ })
-            cmApi('DELETE',	{path:'/test'}).then(function(){ resolved++ })
-            cmApi('HEAD',	{path:'/test'}).then(function(){ resolved++ })
-            cmApi('PUT',	{path:'/test'}).then(function(){ resolved++ })
-            cmApi('JSONP',	{path:'/test'}).then(function(){ resolved++ })
+            cmApi('GET',	{path:'/test'}, true).then(function(){ resolved++ })
+            cmApi('POST',	{path:'/test'}, true).then(function(){ resolved++ })
+            cmApi('DELETE',	{path:'/test'}, true).then(function(){ resolved++ })
+            cmApi('HEAD',	{path:'/test'}, true).then(function(){ resolved++ })
+            cmApi('PUT',	{path:'/test'}, true).then(function(){ resolved++ })
+            cmApi('JSONP',	{path:'/test'}, true).then(function(){ resolved++ })
 
             $httpBackend.flush()
 
@@ -51,37 +53,37 @@ describe('cmApi', function(){
 
         it('should provide a function for GET requests.', function(){
             $httpBackend.expect('GET', 'my_rest_api/test').respond(200, {res:'OK'} )
-            cmApi.get( {path:'/test'} )
+            cmApi.get( {path:'/test'}, true )
             $httpBackend.flush()
         })
 
         it('should provide a function for GET requests.', function(){
             $httpBackend.expect('POST',	'my_rest_api/test').respond(200, {res:'OK'} )
-            cmApi.post( {path:'/test'} )
+            cmApi.post( {path:'/test'}, true )
             $httpBackend.flush()
         })
 
         it('should provide a function for DELETE requests.', function(){
             $httpBackend.expect('DELETE', 'my_rest_api/test').respond(200, {res:'OK'} )
-            cmApi.delete( {path:'/test'} )
+            cmApi.delete( {path:'/test'}, true )
             $httpBackend.flush()
         })
 
         it('should provide a function for HEAD requests.', function(){
             $httpBackend.expect('HEAD',	'my_rest_api/test').respond(200, {res:'OK'} )
-            cmApi.head( {path:'/test'} )
+            cmApi.head( {path:'/test'}, true )
             $httpBackend.flush()
         })
 
         it('should provide a function for PUT requests.', function(){
             $httpBackend.expect('PUT', 'my_rest_api/test').respond(200, {res:'OK'} )
-            cmApi.put( {path:'/test'} )
+            cmApi.put( {path:'/test'}, true )
             $httpBackend.flush()
         })
 
         it('should provide a function for JSONP requests.', function(){
             $httpBackend.expect('JSONP', 'my_rest_api/test').respond(200, {res:'OK'} )
-            cmApi.jsonp( {path:'/test'} )
+            cmApi.jsonp( {path:'/test'}, true )
             $httpBackend.flush()
         })
 
@@ -100,7 +102,7 @@ describe('cmApi', function(){
             .get({
                 path: '/test',
                 exp_ok:	'pony'
-            })
+            }, true)
             .then(
                 function(pony){
                     my_pony = pony
@@ -132,7 +134,7 @@ describe('cmApi', function(){
             .get({
                 path: '/test',
                 exp_ok:	'pony'
-            })
+            }, true)
             .then(
                 function(pony){
                     my_pony = pony
@@ -157,14 +159,14 @@ describe('cmApi', function(){
                 "data": {
                     "alternative" : "kitty"
                 }
-            })
+            }, true)
 
 
             cmApi
             .get({
                 path: '/test',
                 exp_ok: 'pony'
-            })
+            }, true)
             .then(
                 function(pony){
                     my_pony = pony
@@ -195,7 +197,7 @@ describe('cmApi', function(){
             .get({
                 path: '/test',
                 exp_ok:	'pony'
-            })
+            }, true)
             .then(
                 function(pony){
                     my_pony = pony
@@ -209,6 +211,57 @@ describe('cmApi', function(){
             expect(my_pony).not.toBeDefined()
             expect(my_alternative).not.toBeDefined()
         })
+
+
+
+        it('should provide a callstack functionality.', function(){
+            expect(typeof cmApi.stack).toBe('function')
+            expect(typeof cmApi.commit).toBe('function')
+            expect(cmApi.call_stack).toBeDefined()
+        })
+
+        describe('call stack', function(){
+
+            it('should be empty at first.', function(){
+                expect(cmApi.call_stack.length).toBe(0)
+            })
+
+            it('should commit nothing if no calls are pending.', function(){
+                cmApi.commit()
+                //expects are located in afterEach
+            })
+
+            it('should stack api calls instead of sending them.', function(){
+                cmApi.get({
+                    path: '/my_path',
+                    data: 'my_data'
+                })
+
+                cmApi.get({
+                    path: '/my_path',
+                    data: 'my_data'
+                })
+
+                expect(cmApi.call_stack.length).toBe(2)
+                //expects are located in afterEach
+            })
+
+            it('should commit pending requests with one api call.', function(){
+                $httpBackend
+                .expect('POST', 'my_rest_api/my_stack_path')
+
+                cmApi.commit()
+
+                //@TODO, Zwischenstand, hier gehts weiter
+
+                //$httpBackend.flush()
+            })
+
+
+
+        })
+
+
     })
 })
 
@@ -223,13 +276,13 @@ describe('cmApi with cmAuth present', function(){
 
     it('should extend api calls with an authorization token', inject(function(cmApi, $httpBackend){
         $httpBackend.expect('GET', '/test', null, function(headers){ return 'Authorization' in headers }).respond(200, {res:'OK'} )
-        cmApi.get( {path:'/test'} )
+        cmApi.get( {path:'/test'}, true)
         $httpBackend.flush()
     }))
 
     it('should extend api calls with an two factor authorization token, if present', inject(function(cmApi, $httpBackend){
         $httpBackend.expect('GET', '/test', null, function(headers){ return 'X-TwoFactorToken' in headers }).respond(200, {res:'OK'} )
-        cmApi.get( {path:'/test'} )
+        cmApi.get( {path:'/test'}, true)
         $httpBackend.flush()
     }))
 })

@@ -14,7 +14,7 @@ function(cmApi){
                 path: '/token',
                 headers: { 'Authorization': 'Basic '+auth } ,
                 exp_ok: 'token'
-            })
+            }, true)
         },
 
         // delete Token

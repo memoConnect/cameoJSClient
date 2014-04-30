@@ -1,11 +1,16 @@
 'use strict';
 
 describe('cmAuth', function () {
-    var cmAuth, $httpBackend;
+    var cmAuth, cmApi, $httpBackend
 
     beforeEach(module('cmAuth'))
-    beforeEach(inject(function (_cmAuth_, _$httpBackend_) {
-        cmAuth = _cmAuth_;
+    beforeEach(module('cmApi', function(){
+
+    }))
+
+    beforeEach(inject(function (_cmAuth_, _cmApi_, _$httpBackend_) {
+        cmAuth  = _cmAuth_
+        cmApi   = _cmApi_ 
         $httpBackend = _$httpBackend_
     }));
 
@@ -57,6 +62,7 @@ describe('cmAuth', function () {
             );
 
             var promise = cmAuth.createUser();
+
             promise.then(
                 function (data) {
                     expect(typeof data).toBe('object')
