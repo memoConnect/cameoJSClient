@@ -56,19 +56,21 @@ describe('registration', function () {
 
         util.get("/registration");
 
-        $("[data-qa='input-loginName']").sendKeys("moep moep")
+        $("[data-qa='input-loginName']").sendKeys("moep-moep")
+
+        ptor.wait(function () {
+            return $("[data-qa='register-info-username-invalid']").isDisplayed()
+        }, 1000, "username invalid timeout")
 
         util.checkWarning("register-info-username-invalid")
 
-        // it should disappear if we type more letters
+        // it should disappear if we correct the name
         util.clearInput('input-loginName');
-        $("[data-qa='input-loginName']").sendKeys("moepmoep")
-        expect($("[data-qa='register-info-username-invalid']").isDisplayed()).toBe(false)
-
-        util.clearInput('input-loginName')
     })
 
     it('should display error if username exists', function () {
+
+        util.get("/registration");
 
         $("[data-qa='input-loginName']").sendKeys(config.loginUser1)
 
