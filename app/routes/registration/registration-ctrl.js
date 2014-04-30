@@ -25,10 +25,24 @@ define([
             LoginNameInvalid: false
         };
 
+        /**
+         * getLoginNameError for GUI
+         * @returns {boolean}
+         */
+        $scope.getLoginNameError = function(){
+            if($scope.showError.LoginNameExists || $scope.showError.LoginNameEmpty || $scope.showError.LoginNameInvalid){
+                return true;
+            }
+            return false;
+        }
+
         $scope.formData = {loginName: '', password: '', email: '', phoneNumber: '', name: ''};
         $scope.userNameAlternatives = [];
         $scope.showUserNameAlternatives = false;
 
+        /**
+         * Toogle Function for AGB Check
+         */
         $scope.acceptTerms = function(){
             if(!$scope.formData.agb){
                 $scope.formData.agb = true;
@@ -38,7 +52,8 @@ define([
         };
 
         /**
-         * checks if LoginName exists, because Login Name have to be unique
+         *
+         * @returns {boolean|*|FormController.$dirty|ngModel.NgModelController.$dirty|ngModel.NgModelController#$setPristine.$dirty|ngModel.NgModelController#$setViewValue.$dirty}
          */
         $scope.invalidLoginName = function(){
             return $scope.registrationForm.loginName.$dirty
@@ -49,6 +64,9 @@ define([
         // timeout for verfication
         var verifyTO;
 
+        /**
+        * checks if LoginName exists, because Login Name have to be unique
+        */
         $scope.verifyLoginName = function(){
 
             // clear exists timeout
@@ -72,25 +90,21 @@ define([
                         cmAuth.checkAccountName(lastloginName)
                             .then(
                             // valid case
-                            function(reservationSecret){
+                            function(data){
+                                console.log('hier')
                                 $scope.registrationForm.loginName.$valid = true;
                                 // save reservation secret
-                                reservationSecrets[lastloginName] = reservationSecret;
+                                reservationSecrets[lastloginName] = data.reservationSecret;
                             },
                             // invalid or exists
-                            function(data){
+                            function(response){
                                 console.log('da')
-                                // alternatives case
-                                if(typeof data == "string"){
-                                    console.log('case 1')
-                                    $scope.showError.LoginNameExists = true;
-
                                 // invalid case
-                                } else if(typeof data == "object" && data.data.error == 'invalid login name') {
-                                    console.log('case 2')
+                                if(typeof response.data == "object" && response.data.error == 'invalid login name') {
+//                                    console.log('case 2')
                                     $scope.showError.LoginNameInvalid = true;
-                                } else if(typeof data == "object" && data.alternative !== undefined){
-                                    onsole.log('case 3')
+                                } else if(typeof response.data == "object" && typeof response.data.alternative !== 'undefined'){
+                                    console.log('case 3')
                                     $scope.showError.LoginNameExists = true;
                                     /**
                                      * @TODO
@@ -117,6 +131,10 @@ define([
         };
 
 
+        /**
+         * validate Registration Form
+         * @returns {*}
+         */
         $scope.validateForm = function(){
             var deferred = $q.defer();
 
@@ -129,9 +147,14 @@ define([
                 reservationSecret: null
             };
 
-            // check cameoName == loginName
+            // check loginName
             if ($scope.registrationForm.loginName.$valid == false) {
-                $scope.showLoginNameEmptyError = true;
+                if($scope.registrationForm.loginName.$viewValue == undefined
+                   || $scope.registrationForm.loginName.$viewValue.toString() == ''){
+                    $scope.showError.LoginNameEmpty = true;
+                } else if($scope.registrationForm.loginName.$error.minlength !== false){
+                    $scope.showError.LoginNameInvalid = true;
+                }
             } else {
                 data.loginName = $scope.registrationForm.loginName.$viewValue;
             }
@@ -172,6 +195,8 @@ define([
 
             if (!data.loginName in reservationSecrets) {
                 $scope.registrationForm.loginName.focus();
+                $scope.checkLoginName();
+            } else if(reservationSecrets.length == 0) {
                 $scope.checkLoginName();
             } else {
                 data.reservationSecret = reservationSecrets[data.loginName];

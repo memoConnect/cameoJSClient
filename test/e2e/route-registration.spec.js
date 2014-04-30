@@ -32,7 +32,7 @@ describe('registration', function () {
 
         $("[data-qa='btn-createUser']").click()
 
-//        util.checkWarning("register-info-username-empty")
+        util.checkWarning("register-info-username-empty")
         util.checkWarning("drtv-password-error-emtpy")
         util.checkWarning("register-info-terms")
     })
@@ -48,6 +48,22 @@ describe('registration', function () {
         // it should disappear if we type more letters
         $("[data-qa='input-loginName']").sendKeys("moep")
         expect($("[data-qa='register-info-user-min-letter-count']").isDisplayed()).toBe(false)
+
+        util.clearInput('input-loginName')
+    })
+
+    it('should display error if username is invalid', function () {
+
+        util.get("/registration");
+
+        $("[data-qa='input-loginName']").sendKeys("moep moep")
+
+        util.checkWarning("register-info-username-invalid")
+
+        // it should disappear if we type more letters
+        util.clearInput('input-loginName');
+        $("[data-qa='input-loginName']").sendKeys("moepmoep")
+        expect($("[data-qa='register-info-username-invalid']").isDisplayed()).toBe(false)
 
         util.clearInput('input-loginName')
     })

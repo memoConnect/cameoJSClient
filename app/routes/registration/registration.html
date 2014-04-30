@@ -12,8 +12,8 @@
 
             <h4>{{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}</h4>
 
-            <div class="cm-input-ctn" ng-class="{'cm-input-error':showError.LoginNameExists, 'cm-input-error':showError.LoginNameEmpty, 'cm-input-error':showError.LoginNameInvalid}" data-qa="form-input">
-                <input id="loginName" name="loginName" data-qa="input-loginName" ng-class="{'cm-input-error':showError.LoginNameExists, 'cm-input-error':showError.LoginNameEmpty, 'cm-input-error':showError.LoginNameInvalid}" type="text"  ng-model="formData.loginName" ng-keyup="verifyLoginName();" ng-minlength="6" ng-maxlength="20" maxlength="20" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}} *" required />
+            <div class="cm-input-ctn" ng-class="{'cm-input-error':getLoginNameError()}" data-qa="form-input">
+                <input id="loginName" name="loginName" data-qa="input-loginName" ng-class="{'cm-input-error':getLoginNameError()}" type="text"  ng-model="formData.loginName" ng-keyup="verifyLoginName();" ng-minlength="6" ng-maxlength="20" maxlength="20" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}} *" required />
             </div>
             <div class="cm-alert" ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid" data-qa="register-info-user-min-letter-count">
                 <div ng-show="invalidLoginName()">
