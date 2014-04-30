@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('cmFiles').service('cmFilesAdapter', [
     'cmApi',
     function (cmApi){
