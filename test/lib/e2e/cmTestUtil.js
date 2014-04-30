@@ -62,7 +62,7 @@ this.waitForElements = function (selector, count) {
         return $$(selector).then(function (elements) {
             return elements.length == count
         })
-    }, config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
+    }, config.waitForTimeout, 'waitForElements ' + selector + ' timeout is reached')
 
     return this
 }
