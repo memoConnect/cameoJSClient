@@ -34,7 +34,7 @@ this.waitForPageLoad = function (expectedRoute) {
     return this
 }
 
-this.waitForElement = function (selector, count) {
+this.waitForElement = function (selector) {
 
     ptor.wait(function () {
         return $$(selector).then(function (elements) {

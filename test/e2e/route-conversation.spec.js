@@ -81,7 +81,12 @@ describe('single conversation', function () {
     })
 
     it('there should be only one message, and it should contain the message text', function () {
-        util.waitForElements('cm-message',1)
+//        util.waitForElements('cm-message',1)
+
+        ptor.wait(function () {
+            return util.waitForElements('cm-message',1)
+        }, 1000, "cm-message count timeout");
+
         expect($('cm-message').getText()).toContain(messageText)
     })
 
