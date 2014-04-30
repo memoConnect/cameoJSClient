@@ -51,7 +51,7 @@
             "USERNAME": {
                 "EXISTS": "Username exists! Please choose an other.",
                 "EMPTY": "Please insert a username.",
-                "INVALID": "Invalid username. Avoid Spaces."
+                "INVALID": "Invalid username. Avoid spaces and special character!"
             },
             "INVALID_EMAIL": "{{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}",
             "INVALID_PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}"
