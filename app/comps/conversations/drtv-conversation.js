@@ -31,9 +31,11 @@ angular.module('cmConversations').directive('cmConversation', [
                  * Files Array
                  * @type {Array}
                  */
-                $scope.files = [];
-
                 $scope.sendMessage = function () {
+
+                    console.log($scope.files)
+                    $scope.files = []
+                    return false;
 
                     var passphrase_valid    = !!$scope.conversation.passphraseValid(),
                         message_empty       = !$scope.my_message_text,

@@ -15,10 +15,13 @@
 
 <div class="answer clearfix">
 
-    <cm-upload ng-model="files" cm-user-rights data-qa="attachments-btn">
+    <cm-attachments ng-model="files" cm-user-rights data-qa="attachments-btn">
         <i class="fa cm-plus"></i>
         <cm-file-input></cm-file-input>
-    </cm-upload>
+        <cm-attachments-preview>
+            <pre>{{files}}</pre>
+        </cm-attachments-preview>
+    </cm-attachments>
 
     <div class="message" cm-answer-area data-qa="answer-ctn">
         <textarea data-qa="input-answer" cm-resize-textarea cm-max-rows="4" ng-model="my_message_text"></textarea>
