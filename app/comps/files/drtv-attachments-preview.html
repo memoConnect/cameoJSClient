@@ -1,0 +1,9 @@
+<pre>{{files}}</pre>
+<div ng-repeat="attachment in files">
+    <div ng-if="attachment.type.search('^image/') == 0">
+        <img cm-blob-view="attachment.file" />
+    </div>
+    <div ng-if="attachment.type.search('^image/') == -1" class="{{attachment.type}}">
+
+    </div>
+</div>

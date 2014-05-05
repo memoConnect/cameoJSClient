@@ -58,7 +58,6 @@ angular.module('cmFiles').factory('cmFile', [
 
                     endByte  = (endByte > this.file.size) ? this.file.size : endByte;
 
-
                     var chunk = new cmChunk()
                     self.chunks.push(chunk)
 

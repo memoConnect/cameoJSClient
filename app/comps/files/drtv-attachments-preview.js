@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('cmFiles').directive('cmAttachmentsPreview',[
-    function () {
+    '$q',
+    function ($q) {
         return {
             restrict: 'E',
-            require: '^cmAttachments',
-            link: function (scope, element, attributes, attachmentsCtrl) {
+            templateUrl: 'comps/files/drtv-attachments-preview.html',
+            controller: function($scope){
 
             }
         }
