@@ -25,7 +25,7 @@ describe('Route: Purl - ', function () {
         })
 
         it('should have attachment button "'+moep+'"', function(){
-            expect($('i[data-qa="attachments-btn"]').isPresent()).toBe(true)
+            expect($('[data-qa="attachments-btn"]').isPresent()).toBe(true)
         })
 
         it('should have normal answer container "'+moep+'"', function(){
@@ -52,7 +52,7 @@ describe('Route: Purl - ', function () {
         })
 
         it('should not have attachment button "'+moep+'"', function(){
-            expect($('i[data-qa="attachments-btn"]').isPresent()).toBe(false)
+            expect($('[data-qa="attachments-btn"]').isPresent()).toBe(false)
         })
 
         it('should have large answer container "'+moep+'"', function(){
