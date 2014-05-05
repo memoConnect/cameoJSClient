@@ -19,7 +19,6 @@ angular.module('cmFiles').factory('cmFile', [
                     }
 
                     this.chopIntoChunks(chunkSize);
-                    this.maxChunks = this.chunks.length;
                 }
 
                 return this;
@@ -103,12 +102,16 @@ angular.module('cmFiles').factory('cmFile', [
                 return (
                         self.encryptedName && self.chunks
                     ?   cmFilesAdapter.prepareFile({
-                    name    : self.encryptedName,
-                    size    : self.encryptedSize,
-                    type    : self.type,
-                    chunks  : self.chunks.length
-                })
-                    .then(function(id){ return self.id = id })
+                        name    : self.encryptedName,
+                        size    : self.encryptedSize,
+                        type    : self.type,
+                        chunks  : self.chunks.length
+                        })
+                        .then(
+                            function(id){
+                                return self.id = id
+                            }
+                        )
                     :   cmLogger.error('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
                     )
             }

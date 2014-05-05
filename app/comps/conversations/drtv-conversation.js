@@ -24,7 +24,16 @@ angular.module('cmConversations').directive('cmConversation', [
                     conversation_id      = $scope.$eval($attrs.cmConversations) || $scope.$eval($attrs.conversationId),
                     conversation_subject = $scope.$eval($attrs.cmSubject),
                     conversation_offset  = $attrs.offset,
-                    conversation_limit   = $attrs.limit
+                    conversation_limit   = $attrs.limit,
+                    assets               = [];
+
+                function isMessageValid(){
+                    if($scope.my_message_text != '' || assets.length > 0){
+                        return true;
+                    }
+
+                    return false;
+                }
 
 
                 /**
@@ -33,13 +42,27 @@ angular.module('cmConversations').directive('cmConversation', [
                  */
                 $scope.sendMessage = function () {
 
+                    /**
+                     * Nested Function in drtv-attachments
+                     */
                     if($scope.hasFiles()) {
-                        console.log($scope.files)
-                        return false;
+                        $scope.prepareFilesForUpload($scope.conversation.passphrase).then(function(){
+                            angular.forEach($scope.files, function(file){
+                                if(file.id != undefined){
+                                    assets.push(new cmAssetFactory.create(file));
+                                }
+                            });
+                            /**
+                             * Nested Function in drtv-attachments
+                             */
+                            $scope.resetFiles();
+
+                            $scope.sendMessage();
+                        });
                     }
 
                     var passphrase_valid    = !!$scope.conversation.passphraseValid(),
-                        message_empty       = !$scope.my_message_text,
+                        message_empty       = !isMessageValid() ,
                         recipients_missing  = $scope.conversation.recipients.length <= 0 //@todo mocked
 
                     if(!message_empty && passphrase_valid && !recipients_missing){
@@ -50,25 +73,23 @@ angular.module('cmConversations').directive('cmConversation', [
                                 }
                             );
                         } else {
-
-                            // TODO: preinit assets
-                            // /api/file -> fileId
                             // $scope.files = []
 
                             cmMessageFactory.create()
+                                .addAssets(assets)
                                 .setText($scope.my_message_text)
                                 .setPublicData($scope.conversation.passphrase ? [] : ['text'])                                
                                 .encrypt($scope.conversation.passphrase)
                                 .addTo($scope.conversation)
                                 .sendTo($scope.conversation.id)
                                 .then(function(){
-                                    
                                     $scope.conversation.$chain()
                                     .encryptPassphrase()
                                     .saveEncryptedPassphraseList()
 
                                     $scope.conversation.numberOfMessages++;
                                     $scope.my_message_text = "";
+                                    assets = [];
 
                                     if($scope.new_conversation !== false){
                                         cmConversationsModel.addConversation($scope.conversation, true);

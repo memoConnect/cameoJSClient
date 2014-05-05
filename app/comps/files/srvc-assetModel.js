@@ -9,6 +9,9 @@ angular.module('cmFiles').factory('cmAssetModel',[
              // Attributes
             var self = this;
 
+            this.id = 'undefined';
+            this.file = null;
+
             // expand object
             cmObject.addEventHandlingTo(this);
 
@@ -23,8 +26,13 @@ angular.module('cmFiles').factory('cmAssetModel',[
 
                 if(typeof data == 'string'){
                     this.id = id;
+                    /**
+                     * DO API Call
+                     */
                 } else if(typeof data == 'object'){
                     // todo
+                    this.id = data.id;
+                    this.file = data;
                 }
 
             }

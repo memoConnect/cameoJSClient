@@ -2,8 +2,8 @@
 
 angular.module('cmFiles').directive('cmAttachments',[
     'cmFile',
-    'cmAssetFactory',
-    function (cmFile){
+    '$q',
+    function (cmFile, $q){
         return {
             restrict : 'E',
             controller : function($scope, $element, $attrs){
@@ -66,6 +66,25 @@ angular.module('cmFiles').directive('cmAttachments',[
 //                        })
 
                 };
+
+                $scope.prepareForUpload = function(passphrase){
+                    var defered = $q.defer();
+
+                    angular.forEach($scope.files, function(file, index){
+                        file
+                        .encryptName(passphrase)
+                        .encryptChunks(passphrase)
+                        .prepareForUpload().then(
+                            function(){
+                                if(index == ($scope.files.length -1)){
+                                    defered.resolve();
+                                }
+                            }
+                        );
+                    });
+
+                    return defered.promise();
+                }
 
                 $scope.hasFiles = function(){
                     return $scope.files.length > 0;

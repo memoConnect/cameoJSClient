@@ -25,11 +25,6 @@ angular.module('cmFiles').factory('cmAssetFactory', [
 
                         i++;
                     }
-
-                    if(asset == null){
-                        asset = new cmAssetModel(id);
-                        instances.push(asset);
-                    }
                 } else if (typeof data == 'object'){
                     while(i < instances.length){
                         if(typeof instances[i] === 'object' &&
@@ -40,6 +35,11 @@ angular.module('cmFiles').factory('cmAssetFactory', [
 
                         i++;
                     }
+                }
+
+                if(asset == null){
+                    asset = new cmAssetModel(data);
+                    instances.push(asset);
                 }
 
                 return asset;
