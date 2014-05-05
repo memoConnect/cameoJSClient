@@ -57,8 +57,6 @@ angular.module('cmFiles').directive('cmUpload',[
                     $scope.$parent[$attrs.ngModel] = fileId
                     $scope.fileId = fileId
                 }
-
-
             }
         }
     }
