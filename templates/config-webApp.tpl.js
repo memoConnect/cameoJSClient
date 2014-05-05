@@ -2,6 +2,11 @@ cameo_config = {
     restApi: '<%= currentApiUrl %>',
     version: '<%= currentVersion %>',
 
+    commitSize: 50,
+    commitInterval: 500,
+    useCallStack: true,
+    callStackPath: '/callStack',
+
     token: null,
     supported_languages: ['de_DE', 'en_US'],
     path_to_languages: 'i18n',

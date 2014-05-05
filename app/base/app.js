@@ -58,8 +58,10 @@ define([
 
             cmApiProvider
                 .restApiUrl( cameo_config.restApi )
-                .stackPath( cameo_config.stackPath )
-                .enableCallStack()
+                .callStackPath( cameo_config.callStackPath )
+                .useCallStack( cameo_config.useCallStack)
+                .commitSize( cameo_config.commitSize )
+                .commitInterval( cameo_config.commitInterval )
 
             cmLanguageProvider
                 .cacheLangFiles(cameo_config.cache_lang_files)

@@ -11,25 +11,34 @@ var cmApi = angular.module('cmApi', ['cmLogger']);
 cmApi.provider('cmApi',[
     function($injector){
         var rest_api    = "",
-            stack_path  = "",
+            call_stack_path  = "",
+            call_stack_disabled = true,
             commit_size = 10,
-            call_stack_disabled = true
+            commit_interval = 2000
 
         this.restApiUrl = function(url){
             rest_api = url;
             return this
         }
 
-        this.stackPath = function(path){
-            stack_path = path
+        this.useCallStack = function (on){
+            call_stack_disabled = !on
+            return this
+        }
+
+        this.callStackPath = function(path){
+            call_stack_path = path
+            return this
         }
 
         this.commitSize = function(size){
             commit_size = size
+            return this
         }
 
-        this.enableCallStack = function (){
-            call_stack_disabled = false
+        this.commitInterval = function(interval){
+            commit_interval = interval 
+            return this
         }
 
         this.$get = [
@@ -39,8 +48,10 @@ cmApi.provider('cmApi',[
             '$httpBackend',
             '$injector',
             '$q',
+            '$interval',
+            '$cacheFactory',
 
-            function(cmLogger, $http, $httpBackend, $injector, $q){
+            function(cmLogger, $http, $httpBackend, $injector, $q, $interval, $cacheFactory){
                 /***
                 All api calls require a config object:
 
@@ -228,8 +239,8 @@ cmApi.provider('cmApi',[
 
 
                     //extend or overwrite config
-                    config			=	config || {}	// make sure config is defined
-                    config.method	= 	method			// overwrite method
+                    config			=	config || {}	        // make sure config is defined
+                    config.method	= 	config.method || method	// set method
                     config.url		= 	config.url ||
                                         (
                                             rest_api +		// base url API
@@ -247,17 +258,30 @@ cmApi.provider('cmApi',[
                     return deferred.promise
                 }
 
-                api.get		= function(config, force){ return force || call_stack_disabled ? api('GET',	   config) : api.stack('GET',    config) }
-                api.post	= function(config, force){ return force || call_stack_disabled ? api('POST',   config) : api.stack('POST',   config) }
-                api.delete	= function(config, force){ return force || call_stack_disabled ? api('DELETE', config) : api.stack('DELETE', config) }
-                api.head	= function(config, force){ return force || call_stack_disabled ? api('HEAD',   config) : api.stack('HEAD',   config) }
-                api.put		= function(config, force){ return force || call_stack_disabled ? api('PUT',    config) : api.stack('PUT',    config) }
-                api.jsonp	= function(config, force){ return force || call_stack_disabled ? api('JSONP',  config) : api.stack('JSONP',  config) }
+                api.get		= function(config, force){ return (force || call_stack_disabled) ? api('GET',	 config) : api.stack('GET',    config) }
+                api.post	= function(config, force){ return (force || call_stack_disabled) ? api('POST',   config) : api.stack('POST',   config) }
+                api.delete	= function(config, force){ return (force || call_stack_disabled) ? api('DELETE', config) : api.stack('DELETE', config) }
+                api.head	= function(config, force){ return (force || call_stack_disabled) ? api('HEAD',   config) : api.stack('HEAD',   config) }
+                api.put		= function(config, force){ return (force || call_stack_disabled) ? api('PUT',    config) : api.stack('PUT',    config) }
+                api.jsonp	= function(config, force){ return (force || call_stack_disabled) ? api('JSONP',  config) : api.stack('JSONP',  config) }
 
 
-                api.call_stack = []
+                api.call_stack = api.call_stack || []
+                api.call_stack_cache = $cacheFactory('call_stack_cache')
 
                 api.stack = function(method, config){
+
+                    if(call_stack_disabled){
+                        cmLogger.error('unable to call ".stack()", callstack disabled.')
+                        return null
+                    }
+
+                    console.log('stack: ' + config.path)
+
+                    config          = config ? config : method
+                    config.method   = config.method || method
+                    config.url      = config.url || (rest_api + config.path)
+
                     var deferred = $q.defer()
 
                     api.call_stack.push({
@@ -271,7 +295,7 @@ cmApi.provider('cmApi',[
 
                 api.commit = function(){
 
-                    console.log(api.call_stack)
+                    console.log('commit')
 
                     if(api.call_stack.length == 0) return null        
 
@@ -291,21 +315,19 @@ cmApi.provider('cmApi',[
 
 
                     var requests = [],
-                        deferred = []
+                        deferred_items = []
 
                     //prepare requests:
                     items_to_commit.forEach(function(item, index){                        
                         requests.push(item.config)
-                        deferred.push(item.deferred)
+                        deferred_items.push(item.deferred)
                     })
 
-
-                    console.log(requests)
-
+                    console.log(call_stack_path)
 
                     //post requests to call stack api:
                     api.post({
-                        path: stack_path,
+                        path: call_stack_path,
                         data: {
                             requests: requests
                         },
@@ -313,23 +335,36 @@ cmApi.provider('cmApi',[
                     }, true).then(function(responses){
 
                         requests.forEach(function(request, index){
-                            var virtual_url     = rest_api + stack_path + request.path,
-                                virtual_request = request
-                                response        = response[index]
-                                deferred        = deferred[index]
+                            var virtual_url     = rest_api + call_stack_path + index,
+                                virtual_request = request,
+                                response        = responses[index],
+                                deferred        = deferred_items[index]
 
                             virtual_request.url = virtual_url
+                            virtual_request.cache = api.call_stack_cache
 
+                            api.call_stack_cache.put(virtual_url, response.data)                  
+
+
+                            /*
                             //create virtual backend route:
                             $httpBackend.when(request.method, virtual_url, request.data)
                             .respond(response.status, response.data)
 
+                            console.log(response.data)
+                            */
+
                             //resolve promise with virtual backend call:
                             deferred.resolve(api(virtual_request))
                         })
+
+                        
                     })
 
                 }
+
+                if(!call_stack_disabled && commit_interval) $interval(function(){ api.commit() }, commit_interval, false)
+
                 return api
             }
         ]

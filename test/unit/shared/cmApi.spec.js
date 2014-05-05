@@ -7,9 +7,12 @@ describe('cmApi', function(){
     beforeEach(module('cmApi',[
         'cmApiProvider',
         function(cmApiProvider){
-            cmApiProvider.restApiUrl('my_rest_api')
-            cmApiProvider.stackPath('my_stack_path')
-            cmApiProvider.enableCallStack()
+            cmApiProvider
+            .restApiUrl('my_rest_api')
+            .callStackPath('/my_stack_path')
+            .useCallStack(true)
+            .commitSize(50)
+            .commitInterval(false)
         }
     ]))
 
@@ -220,6 +223,12 @@ describe('cmApi', function(){
             expect(cmApi.call_stack).toBeDefined()
         })
 
+
+
+
+
+
+
         describe('call stack', function(){
 
             it('should be empty at first.', function(){
@@ -246,15 +255,66 @@ describe('cmApi', function(){
                 //expects are located in afterEach
             })
 
-            it('should commit pending requests with one api call.', function(){
+            it('should commit pending requests with one api call and resolve promises separately.', function(){
                 $httpBackend
                 .expect('POST', 'my_rest_api/my_stack_path')
+                .respond(200, {
+                    res:    'OK',
+                    data:   {
+                        responses: [
+                            {
+                                status: 200,
+                                data: {
+                                    res: 'OK',
+                                    data: {
+                                        'test1':'test1'
+
+                                    }
+                                }
+                            },
+                            {
+                                status: 232,
+                                data: {
+                                    res: 'KO',
+                                    data: {
+                                        'test2':'test2'
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                })
+
+                var error   = false,
+                    success = false
+            
+                cmApi.get({
+                    path: '/my_path',
+                    data: 'my_data'
+                }).then(
+                    function(response){ success = true },
+                    null
+                )
+
+                cmApi.get({
+                    path: '/my_path',
+                    data: 'my_other_data'
+                }).then(
+                    null,                
+                    function(response){ error   = true }
+                )
+
 
                 cmApi.commit()
 
-                //@TODO, Zwischenstand, hier gehts weiter
+                expect(cmApi.call_stack.length).toBe(0)
 
-                //$httpBackend.flush()
+                $httpBackend.flush()
+
+                expect(success).toBe(true)
+                expect(error).toBe(true)
+
+                
             })
 
 
@@ -264,6 +324,56 @@ describe('cmApi', function(){
 
     })
 })
+
+
+
+
+
+
+describe('cmApi with short interval', function(){
+
+    var cmApi, $httpBackend, $interval;
+
+    beforeEach(module('cmApi',[
+        'cmApiProvider',
+        function(cmApiProvider){
+            cmApiProvider
+            .restApiUrl('my_rest_api')
+            .callStackPath('/my_stack_path')
+            .useCallStack(true)
+            .commitSize(50)
+            .commitInterval(5)
+        }
+    ]))
+
+    beforeEach(inject(function(_cmApi_, _$httpBackend_, _$interval_){
+        cmApi        = _cmApi_
+        $httpBackend = _$httpBackend_
+        $interval    = _$interval_
+
+        jasmine.Clock.useMock();
+
+    }))
+
+    afterEach(function(){
+        $httpBackend.verifyNoOutstandingExpectation()
+        $httpBackend.verifyNoOutstandingRequest()
+    })
+
+    it('should commit call stack every 5 milliseconds.', function(){
+        spyOn(cmApi, 'commit');
+        $interval.flush(50)
+
+        expect(cmApi.commit.calls.length).toBe(10)
+    })
+
+})
+
+
+
+
+
+
 
 describe('cmApi with cmAuth present', function(){
     beforeEach(module('cmApi'))
