@@ -26,6 +26,13 @@ angular.module('cmConversations').directive('cmConversation', [
                     conversation_offset  = $attrs.offset,
                     conversation_limit   = $attrs.limit
 
+
+                /**
+                 * Files Array
+                 * @type {Array}
+                 */
+                $scope.files = [];
+
                 $scope.sendMessage = function () {
 
                     var passphrase_valid    = !!$scope.conversation.passphraseValid(),
