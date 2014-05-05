@@ -253,7 +253,7 @@ angular.module('cmFiles').factory('cmFile', [
                 return this
             }
 
-            init(data);
+            this.init(data);
         }
     }
 ]);

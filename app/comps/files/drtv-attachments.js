@@ -37,8 +37,7 @@ angular.module('cmFiles').directive('cmAttachments',[
 
                 this.setFile = function(fileData){
 
-                    var file = new cmFile();
-
+                    var file = new cmFile(fileData);
                     $scope.files.push(file);
 
 //                    $scope.readyForUpload = file
@@ -54,6 +53,14 @@ angular.module('cmFiles').directive('cmAttachments',[
 //                            self.setFileId(file.id)
 //                        })
 
+                }
+
+                $scope.hasFiles = function(){
+                    return $scope.files.length > 0;
+                }
+
+                $scope.resetFiles = function(){
+                    $scope.files = [];
                 }
 
 //                this.setFileId = function(fileId){
