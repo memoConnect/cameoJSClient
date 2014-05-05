@@ -2,6 +2,7 @@
 
 angular.module('cmFiles').directive('cmAttachments',[
     'cmFile',
+    'cmAssetFactory',
     function (cmFile){
         return {
             restrict : 'E',
@@ -36,6 +37,17 @@ angular.module('cmFiles').directive('cmAttachments',[
                 $scope.files = [];
 
                 this.setFile = function(fileData){
+                    var bool = true;
+
+                    angular.forEach($scope.files, function(value){
+                        if(value.name == fileData.name){
+                            bool = false;
+                        }
+                    });
+
+                    if(!bool){
+                        return false;
+                    }
 
                     var file = new cmFile(fileData);
                     $scope.files.push(file);
