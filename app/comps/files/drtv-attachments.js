@@ -53,15 +53,15 @@ angular.module('cmFiles').directive('cmAttachments',[
 //                            self.setFileId(file.id)
 //                        })
 
-                }
+                };
 
                 $scope.hasFiles = function(){
                     return $scope.files.length > 0;
-                }
+                };
 
                 $scope.resetFiles = function(){
                     $scope.files = [];
-                }
+                };
 
 //                this.setFileId = function(fileId){
 //                    $scope.$parent[$attrs.ngModel] = fileId
