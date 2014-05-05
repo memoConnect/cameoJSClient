@@ -23,12 +23,12 @@ describe('cmAssetFactory', function(){
         expect(cmAssetFactory.getQty).toBeDefined()
     })
 
-    xit('there should be one instance after create one', function(){
+    it('there should be one instance after create one', function(){
         cmAssetFactory.create(tmpInstance_1);
         expect(cmAssetFactory.getQty()).toBe(1);
     })
 
-    xit('there should be two instances after create two', function(){
+    it('there should be two instances after create two', function(){
         cmAssetFactory.create(tmpInstance_1);
         cmAssetFactory.create(tmpInstance_2);
         expect(cmAssetFactory.getQty()).toBe(2);
