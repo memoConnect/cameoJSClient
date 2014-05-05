@@ -47,6 +47,11 @@ angular.module('cmConversations').directive('cmConversation', [
                                 }
                             );
                         } else {
+
+                            // TODO: preinit assets
+                            // /api/file -> fileId
+                            // $scope.files = []
+
                             cmMessageFactory.create()
                                 .setText($scope.my_message_text)
                                 .setPublicData($scope.conversation.passphrase ? [] : ['text'])                                
@@ -211,8 +216,6 @@ angular.module('cmConversations').directive('cmConversation', [
                         }
                     );
                 }
-
-
             }
         }
     }
