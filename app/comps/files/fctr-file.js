@@ -8,7 +8,15 @@ angular.module('cmFiles').factory('cmFile', [
     '$q',
     function (cmFilesAdapter, cmLogger, cmChunk, cmCrypt, $q){
 
-        return function(){
+        return function(data){
+
+            this.init = function(data){
+                if(typeof data !== 'undefined'){
+                    this.importFile(data);
+                }
+
+                return this;
+            }
 
             this.importFile = function(file){
                 this.file     = file
@@ -244,6 +252,8 @@ angular.module('cmFiles').factory('cmFile', [
 
                 return this
             }
+
+            init(data);
         }
     }
 ]);
