@@ -8,23 +8,33 @@ angular.module('cmFiles').factory('cmFile', [
     '$q',
     function (cmFilesAdapter, cmLogger, cmChunk, cmCrypt, $q){
 
-        return function(data){
+        return function(fileData){
 
-            this.init = function(data){
-                if(typeof data !== 'undefined'){
-                    this.importFile(data);
+            this.init = function(fileData, chunkSize){
+                if(typeof fileData !== 'undefined'){
+                    this.importFile(fileData);
+
+                    if(!chunkSize){
+                        chunkSize = 256;
+                    }
+
+                    this.chopIntoChunks(chunkSize);
+                    this.maxChunks = this.chunks.length;
                 }
 
                 return this;
             }
 
             this.importFile = function(file){
-                this.file     = file
-                this.id   = undefined
-                this.name = file.name
-                this.type = file.type
-                this.size = file.size
-                return this
+                this.file     = file;
+                this.id   = undefined;
+
+
+                this.name = file.name;
+                this.type = file.type;
+                this.size = file.size;
+
+                return this;
             }
 
             this.chopIntoChunks = function(chunkSize){
@@ -253,7 +263,7 @@ angular.module('cmFiles').factory('cmFile', [
                 return this
             }
 
-            this.init(data);
+            this.init(fileData);
         }
     }
 ]);
