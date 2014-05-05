@@ -28,18 +28,27 @@ cm-attachments{
 cm-attachments-preview{
   display:block;
   position:absolute;
-  bottom:@cm-unit;
+  bottom:@cm-footer-height;
   width:@cm-app-width;
   background-color:rgba(255,255,255,0.9);
 
-  .ng-scope{
+  .attachments-list{
     padding:@cm-vertical-padding;
   }
 
-  img{
-    max-width:@cm-app-width - 1;
-    max-height:@cm-unit * 2;
-    margin:0 auto;
-    display:block;
+  .attachment{
+    position:relative;
+    height:@cm-unit * 2;
+    div[cm-spinner]{
+      position: absolute;
+      left:50%;
+      top:50%;
+    }
+    img{
+      display:block;
+      max-width:@cm-app-width - 1;
+      max-height:@cm-unit * 2;
+      margin:0 auto;
+    }
   }
 }

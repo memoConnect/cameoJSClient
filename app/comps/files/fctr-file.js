@@ -10,9 +10,9 @@ angular.module('cmFiles').factory('cmFile', [
 
         return function(fileData){
 
-            this.init = function(fileData, chunkSize){
-                if(typeof fileData !== 'undefined'){
-                    this.importFile(fileData);
+            this.init = function(blob, chunkSize){
+                if(typeof blob !== 'undefined'){
+                    this.importFile(blob);
 
                     if(!chunkSize){
                         chunkSize = 256;
@@ -25,14 +25,14 @@ angular.module('cmFiles').factory('cmFile', [
                 return this;
             }
 
-            this.importFile = function(file){
-                this.file     = file;
+            this.importFile = function(blob){
+                this.blob = blob;
                 this.id   = undefined;
 
 
-                this.name = file.name;
-                this.type = file.type;
-                this.size = file.size;
+                this.name = blob.name;
+                this.type = blob.type;
+                this.size = blob.size;
 
                 return this;
             }
@@ -44,26 +44,26 @@ angular.module('cmFiles').factory('cmFile', [
                     index       = 0,
                     promises    = []
 
-                if(!this.file) {
+                if(!this.blob) {
                     cmLogger.error('Unable to chop file into Chunks; cmFile.file missing. Try calling cmFile.importFile() first.')
                     return null
                 }
 
                 self.chunks   = []
 
-                while(endByte < this.file.size){
+                while(endByte < this.blob.size){
 
                     startByte   = index*1024*chunkSize
                     endByte     = startByte + 1024*chunkSize
 
-                    endByte  = (endByte > this.file.size) ? this.file.size : endByte;
+                    endByte  = (endByte > this.blob.size) ? this.blob.size : endByte;
 
                     var chunk = new cmChunk()
                     self.chunks.push(chunk)
 
                     promises.push(
                         chunk
-                            .importFileSlice(self.file, startByte, endByte)
+                            .importFileSlice(self.blob, startByte, endByte)
                             .blobToBinaryString()
                     )
 
