@@ -143,4 +143,4 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
         return Message;
     }
-])
+]);

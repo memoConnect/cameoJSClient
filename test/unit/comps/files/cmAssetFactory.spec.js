@@ -1,7 +1,9 @@
 'use strict';
 
 describe('cmAssetFactory', function(){
-    var cmAssetFactory
+    var cmAssetFactory,
+        tmpInstance_1 = 'moep_1',
+        tmpInstance_2 = 'moep_2';
 
     beforeEach(module('cmFiles'));
 
@@ -19,5 +21,25 @@ describe('cmAssetFactory', function(){
 
     it('should have getQty function', function(){
         expect(cmAssetFactory.getQty).toBeDefined()
+    })
+
+    xit('there should be one instance after create one', function(){
+        cmAssetFactory.create(tmpInstance_1);
+        expect(cmAssetFactory.getQty()).toBe(1);
+    })
+
+    xit('there should be two instances after create two', function(){
+        cmAssetFactory.create(tmpInstance_1);
+        cmAssetFactory.create(tmpInstance_2);
+        expect(cmAssetFactory.getQty()).toBe(2);
+    })
+
+    it('there should be two instances after create two and create one of them twice', function(){
+        cmAssetFactory.create(tmpInstance_1);
+        cmAssetFactory.create(tmpInstance_2);
+        expect(cmAssetFactory.getQty()).toBe(2);
+
+        cmAssetFactory.create(tmpInstance_1);
+        expect(cmAssetFactory.getQty()).toBe(2);
     })
 })

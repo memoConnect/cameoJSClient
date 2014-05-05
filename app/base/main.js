@@ -157,6 +157,7 @@ require.config({
             'cmLogger',
             'cmCrypt',
             'cmUtil',
+            'cmObject',
             'vendor/filesaver/filesaver',
             'angular-resource',
             'util-base64_decode'
