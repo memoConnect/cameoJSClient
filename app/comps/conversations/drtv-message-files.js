@@ -3,7 +3,7 @@
 angular.module('cmConversations').directive('cmMessageFiles', [
     'cmFileFactory',
     'cmLogger',
-    function (cmAssetFactory, cmLogger) {
+    function (cmFileFactory, cmLogger) {
         return {
             restrict: 'E',
             require: '^cmMessage',

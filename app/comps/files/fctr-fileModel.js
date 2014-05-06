@@ -9,6 +9,8 @@ angular.module('cmFiles').factory('cmFileModel', [
     function (cmFilesAdapter, cmLogger, cmChunk, cmCrypt, $q){
         var FileModel = function(fileData){
 
+            this.status = 'new';
+
             this.importFile = function(blob){
                 this.blob = blob;
                 this.id   = undefined;
