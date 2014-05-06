@@ -224,7 +224,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                     self.size += chunk.blob.size
                 })
 
-                this.trigger('decrypt:finish');
+                this.reassembleChunks();
 
             }
 

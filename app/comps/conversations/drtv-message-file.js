@@ -54,10 +54,6 @@ angular.module('cmConversations').directive('cmMessageFile', [
                     $scope.file.on('download:finish', function(){
                         $scope.file.state = 'cached';
                     });
-
-                    $scope.file.on('decrypt:finish', function(){
-                        $scope.file.reassembleChunks();
-                    });
                 }
             }
         }
