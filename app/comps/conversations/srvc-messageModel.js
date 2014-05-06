@@ -101,7 +101,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
                         self.files.push(file);
                         self.fileIds.push(file.id);
                     });
-
                 }
 
                 return this;
@@ -136,14 +135,13 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 this.publicData = public_data
 
                 return  cmConversationsAdapter.sendMessage(conversationId, {
-                            encrypted:  this.encryptedData,
-                            plain:      this.publicData
-                        })
-                        .then(function (message_data) {
-                            self.init(message_data)
-
-                            self.uploadFiles();
-                        })
+                    encrypted: this.encryptedData,
+                    plain: this.publicData
+                })
+                .then(function (message_data) {
+                    self.init(message_data)
+                    self.uploadFiles();
+                })
             }
 
             this.isOwn = function(){
@@ -151,27 +149,25 @@ angular.module('cmConversations').factory('cmMessageModel',[
             }
 
             this.init = function (message_data) {
-                if(!message_data) return this
+                if(!message_data) return this;
 
                 this.secretData = undefined;
                 this.publicData = undefined;
 
                 if(message_data.dummy && message_data.dummy !== false){
                     this.from = cmIdentityFactory.createDummy();
-
                 } else {
                     this.id         = message_data.id;
                     this.from       = (!message_data.fromIdentity) ? cmUserModel.data.identity : cmIdentityFactory.create(message_data.fromIdentity);
                     this.created    = message_data.created;
 
-                    this.plainData      = message_data.plain 
-                    this.encryptedData  = message_data.encrypted
+                    this.plainData      = message_data.plain;
+                    this.encryptedData  = message_data.encrypted;
                 }
-
+                // compare plain to this
                 for(var key in this.plainData){
-                    self[key] = self[key] || message_data.plain[key] 
+                    this[key] = message_data.plain[key] || this[key];
                 }
-
             }
 
             this.init(data);
