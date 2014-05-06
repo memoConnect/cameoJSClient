@@ -7,8 +7,8 @@ angular.module('cmFiles').directive('cmBlobView',[
             link: function(scope, element, attrs){
                 // TODO: thumbnail
                 // load image via fileapi
-                scope.$watch(attrs.cmBlobView, function(attachment){
-                    if(typeof attachment.blob == 'object'){
+                scope.$watch(attrs.cmBlobView, function(file){
+                    if(typeof file.blob == 'object'){
                         // get for img tag base64 url
                         var reader = new FileReader();
                         // promise when base64 loaded
@@ -17,13 +17,13 @@ angular.module('cmFiles').directive('cmBlobView',[
                             element.attr('src',e.target.result);
                             // hide spinner
                             scope.$apply(function(){
-                                attachment.loaded = true;
+                                file.loaded = true;
                             });
                         };
-                        reader.readAsDataURL(attachment.blob)
+                        reader.readAsDataURL(file.blob)
                     } else {
                         // hide spinner
-                        attachment.loaded = true;
+                        file.loaded = true;
                     }
                 })
             }

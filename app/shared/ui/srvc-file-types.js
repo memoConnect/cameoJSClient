@@ -52,9 +52,6 @@ angular.module('cmUi').service('cmFileTypes',[
 
         return {
             find: function(mime, filename){
-
-                console.log(mime, filename)
-
                 var self = this,
                     file = 'unknown';
                 // search for mimetype
