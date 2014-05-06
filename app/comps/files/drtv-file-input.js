@@ -4,7 +4,7 @@ angular.module('cmFiles').directive('cmFileInput', [
     function () {
         return {
             restrict: 'AE',
-            require: '^cmAttachments',
+            require: '^cmFiles',
             scope: {},
             template: '<input type="file">',
 

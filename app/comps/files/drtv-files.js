@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmFiles').directive('cmAttachments',[
+angular.module('cmFiles').directive('cmFiles',[
     'cmFileFactory',
     '$q',
     function (cmFileFactory, $q){

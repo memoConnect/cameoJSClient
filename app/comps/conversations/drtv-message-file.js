@@ -3,7 +3,8 @@
 angular.module('cmConversations').directive('cmMessageFile', [
     'cmFileFactory',
     'cmLogger',
-    function (cmFileFactory, cmLogger) {
+    '$timeout',
+    function (cmFileFactory, cmLogger, $timeout) {
         return {
             restrict: 'E',
             require: '^cmMessage',
@@ -21,6 +22,11 @@ angular.module('cmConversations').directive('cmMessageFile', [
                     // todo: download
                     // $scope.file = cmFileFactory.create()
                 }
+
+                $timeout(function(){
+                    $scope.file.loaded = true;
+                    $scope.$apply();
+                },1000)
             }
         }
     }
