@@ -4,16 +4,16 @@ angular.module('cmConversations').factory('cmMessageModel',[
     'cmConversationsAdapter',
     'cmCrypt',
     'cmIdentityFactory',
+    'cmFileFactory',
     'cmUserModel',
-    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmUserModel){
+    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel){
 
         var Message = function(data){
             //Attributes:
             var self = this;
 
-
             //secret data:
-            this.secret = ['text', 'fileIds'];
+            this.secret = ['text','fileIds'];
 
             //public data
             this.public = [];
@@ -60,7 +60,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 var secret_data = {}
 
                 this.secret.forEach(function(key){
-                    if(self[key]) secret_data[key] = self[key]                        
+                    if(self[key]) secret_data[key] = self[key]
                 })
 
                 var secret_JSON = JSON.stringify(secret_data)
@@ -75,6 +75,8 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                 //expose data on message Object
                 angular.extend(self, decrypted_data) // watch out: this only works for simple properties, "from" will break
+                this.initFiles();
+
 
                 return !!decrypted_data
             }
@@ -100,10 +102,13 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 var i = 0,
                     check = false;
 
+                /**
+                 * Array of cmFiles Objects
+                 */
                 if(this.files.length == 0){
                     this.files.push(file);
-                    self.fileIds.push(file.id);
                 } else {
+
                     while(i < this.files.length){
                         if(this.files[i].id == file.id){
                             check = true;
@@ -114,7 +119,17 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                     if(check !== true){
                         this.files.push(file);
-                        self.fileIds.push(file.id);
+                    }
+                }
+
+                /**
+                 * Array of cmFiles Objects
+                 */
+                if(this.fileIds.length == 0){
+                    this.fileIds.push(file.id);
+                } else {
+                    if(this.fileIds.indexOf(file.id) == -1){
+                        this.fileIds.push(file.id);
                     }
                 }
 
@@ -129,7 +144,8 @@ angular.module('cmConversations').factory('cmMessageModel',[
             this.addFiles = function(array){
                 if(typeof array !== 'undefined' && array.length > 0){
                     angular.forEach(array, function(file){
-                        self._addFiles(file);
+                        self._addFile(file);
+
                     });
                 }
 
@@ -161,7 +177,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
                     if(self[key]) public_data[key] = self[key]
                 })
 
-
                 this.publicData = public_data
 
                 return  cmConversationsAdapter.sendMessage(conversationId, {
@@ -178,6 +193,25 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 return (!this.from || cmUserModel.data.id == this.from.id)
             }
 
+            /**
+             * initialize Files from Message Data (fileIds)
+             * @returns {Message}
+             */
+            this.initFiles = function(){
+                if(this.fileIds.length > 0){
+                    angular.forEach(this.fileIds, function(id){
+                        self._addFile(cmFileFactory.create(id));
+                    });
+                }
+
+                return this;
+            }
+
+            /**
+             * Initialize Message Object
+             * @param message_data
+             * @returns {Message}
+             */
             this.init = function (message_data) {
                 if(!message_data) return this;
 
@@ -198,6 +232,8 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 for(var key in this.plainData){
                     this[key] = message_data.plain[key] || this[key];
                 }
+
+                this.initFiles();
             }
 
             this.init(data);
