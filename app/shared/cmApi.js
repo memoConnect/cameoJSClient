@@ -2,7 +2,7 @@
 
 //This Module handels api calls
 
-var cmApi = angular.module('cmApi', ['cmLogger']);
+var cmApi = angular.module('cmApi', ['cmLogger', 'cmObject']);
 
 //TODO config cameo
 
@@ -11,10 +11,13 @@ var cmApi = angular.module('cmApi', ['cmLogger']);
 cmApi.provider('cmApi',[
     function($injector){
         var rest_api    = "",
-            call_stack_path  = "",
             call_stack_disabled = true,
+            call_stack_path = "",
             commit_size = 10,
-            commit_interval = 2000
+            commit_interval = 2000,
+            events_disabled = true,
+            events_path = "",
+            events_interval = 5000
 
         this.restApiUrl = function(url){
             rest_api = url;
@@ -41,9 +44,26 @@ cmApi.provider('cmApi',[
             return this
         }
 
+        this.useEvents = function (on){
+            events_disabled = !on
+            return this
+        }
+
+        this.eventsPath = function(path){
+            events_path = path
+            return this
+        }
+
+        this.eventsInterval = function(interval){
+            events_interval = interval 
+            return this
+        }
+
+
         this.$get = [
 
             'cmLogger',
+            'cmObject',
             '$http',
             '$httpBackend',
             '$injector',
@@ -51,7 +71,7 @@ cmApi.provider('cmApi',[
             '$interval',
             '$cacheFactory',
 
-            function(cmLogger, $http, $httpBackend, $injector, $q, $interval, $cacheFactory){
+            function(cmLogger, cmObject, $http, $httpBackend, $injector, $q, $interval, $cacheFactory){
                 /***
                 All api calls require a config object:
 
@@ -172,26 +192,27 @@ cmApi.provider('cmApi',[
                 */
                
                 //check if the sever's response complies with the api conventions
-                function compliesWithApiConventions(response, exp_ok, exp_ko){
-                    var valid =    response
+                function compliesWithApiConventions(body, exp_ok, exp_ko){
+                    var valid =    body
                                     //response must have a res key that equals 'OK' or 'KO':
-                                && (response.res == 'OK' || response.res == 'KO')
+                                && (body.res == 'OK' || body.res == 'KO')
                                     //if your request was granted and something was expected in return, it must be present:
-                                && (response.res == "OK" && exp_ok ? exp_ok in response.data : true)
+                                && (body.res == "OK" && exp_ok ? exp_ok in body.data : true)
                                     //if your request was denied and something was expected in return, it must be present:
-                                && (response.res == "KO" && exp_ko ? exp_ko in response.data : true)
+                                && (body.res == "KO" && exp_ko ? exp_ko in body.data : true)
 
-                    if(!valid) cmLogger.error('Api response invalid; '+(exp_ok||exp_ko ? 'expected: ':'') + (exp_ok||'') +', '+(exp_ko||''), response)
+                    if(!valid) cmLogger.error('Api response invalid; '+(exp_ok||exp_ko ? 'expected: ':'') + (exp_ok||'') +', '+(exp_ko||''), body)
 
                     return(valid)
                 }
                
-               function handleSuccess(response, config, deferred){
-                    //$http call was successfull:
-                    //reponse includes config and data, we only need the data:
-                    var response = response.data
+               function handleSuccess(response, deferred){
+                    //$http call was successfull
+                    
+                    var config  = response.config,
+                        body    = response.data
 
-                    compliesWithApiConventions(response, config.exp_ok, config.exp_ko)
+                    compliesWithApiConventions(body, config.exp_ok, config.exp_ko)
                     ?   //response valid, check if OK:
                         //if a certain key was expected, resolve promise resp. reject the promise with the according values
                         //if nothing was expected, just resolve or reject with value of 'data' in the response body if present or all the data
@@ -204,33 +225,30 @@ cmApi.provider('cmApi',[
                                     }
 
                         */
-                        response.res =='OK'
-                        ? deferred.resolve( config.exp_ok ? response.data[config.exp_ok] : response.data || response)
-                        : deferred.reject(  config.exp_ko ? response.data[config.exp_ko] : response.data || response)
+                        body.res =='OK'
+                        ? deferred.resolve( config.exp_ok ? body.data[config.exp_ok] : body.data || response)
+                        : deferred.reject(  config.exp_ko ? body.data[config.exp_ko] : body.data || response)
+
                     :   //response invalid, call through:
                         deferred.reject(undefined, response)
                 }
             
 
-                function handleError(response, config, deferred){                                            
-//                    cmLogger.error('Api call failed: \n '+config.method+' '+config.path, response)
+                function handleError(response, deferred){        
+                    cmLogger.error('Api call failed: \n '+response.config.method+' '+response.config.path, response)
 //                    window.location.href='#/server_down' //@ Todo
                     //error messages should come trough backend
                     deferred.reject(response)
                 }
 
                 function prepareConfig(config, method, token, twoFactorToken){
-                    //if method and config are present overwrite config.method
-                    !config
-                    ?   config          = method || {}
-                    :   config.method   = method
                     
-                    config          =   config || {}        // make sure config is defined
                     config.url      =   config.url ||
                                         (
                                             rest_api +      // base url API
                                             config.path     // path to specific method
                                         )
+                    config.method   =   method || config.method 
                     config.headers  =   angular.extend(token           ? {'Authorization': token} : {}, config.headers || {})   //add authorization token to the header
                     config.headers  =   angular.extend(twoFactorToken  ? {'X-TwoFactorToken': twoFactorToken} : {}, config.headers || {})   //add two factor authorization token to the header
 
@@ -251,12 +269,12 @@ cmApi.provider('cmApi',[
                                             :	undefined
 
 
-                    prepareConfig(config, method, token, twoFactortoken)                  
+                    prepareConfig(config, method, token, twoFactorToken)                  
 
 
                     $http(config).then(
-                        function(response){ handleSuccess(response, config, deferred) },
-                        function(response){ handleError(response, config, deferred) }
+                        function(response){ handleSuccess(response, deferred) },
+                        function(response){ handleError(response, deferred) }
                     )
 
                     return deferred.promise
@@ -270,9 +288,14 @@ cmApi.provider('cmApi',[
                 api.jsonp	= function(config, force){ return (force || call_stack_disabled) ? api('JSONP',  config) : api.stack('JSONP',  config) }
 
 
+
+                //CALL STACK:
+
                 api.call_stack = api.call_stack || []
                 api.call_stack_cache = $cacheFactory('call_stack_cache')
 
+
+                //Puts a requests on the call stack
                 api.stack = function(method, config){
 
                     if(call_stack_disabled){
@@ -280,7 +303,6 @@ cmApi.provider('cmApi',[
                         return null
                     }
 
-                    console.log('stack: ' + config.path)
 
                     prepareConfig(config, method)
 
@@ -295,9 +317,8 @@ cmApi.provider('cmApi',[
                 }
 
 
+                // Commits all requests on callstack to the API
                 api.commit = function(){
-
-                    console.log('commit')
 
                     //dont do anything, if call stack is empty:
                     if(api.call_stack.length == 0) return null        
@@ -317,10 +338,8 @@ cmApi.provider('cmApi',[
                     var index = api.call_stack.length
                     while(index--){ if(!api.call_stack[index]) api.call_stack.splice(index,1) }
 
-                    //prepare requests:
+                    //prepare request configs:
                     items_to_commit.forEach(function(item, index){ configs.push(item.config) })
-
-                    console.log(call_stack_path)
 
                     //post requests to call stack api:
                     api.post({
@@ -330,25 +349,66 @@ cmApi.provider('cmApi',[
                     }, true)
                     .then(function(responses){
 
-                        requests.forEach(function(request, index){
+                        responses.forEach(function(request, index){
 
-                            var response = responses[index],
-                                data     = response.data,
-                                stauts   = response.status,
-                                deferred = items[index]                       
+                            var response =  {
+                                                data   : responses[index].body,
+                                                status : responses[index].status,
+                                                config : items_to_commit[index].config,
+                                            },
 
-                            status[0] == '2'
-                            ?   handleSuccess(response, config, deferred)
-                            :   hanldeError(response, config, deferred)
+                                deferred = items_to_commit[index].deferred
+
+                            200 <= response.status && response.status < 300
+                            ?   handleSuccess(response, deferred)
+                            :   handleError(response, deferred)
                
-                        })
-
-                        
+                        })                        
                     })
 
                 }
 
                 if(!call_stack_disabled && commit_interval) $interval(function(){ api.commit() }, commit_interval, false)
+
+
+
+                //API EVENTS:
+                
+                cmObject.addEventHandlingTo(api)
+
+                api.subscriptionId
+
+                api.subscribeToEventStream = function(){
+                    return  api.post({
+                                path: events_path,
+                                exp_ok: 'id'
+                            })
+                            .then(function(id){
+                                api.subscriptionId = id
+                            })
+                }
+
+                api.getEvents = function(){
+                    if(!api.subscriptionId){
+
+                        //if no subscriptionId is present, get one and try again later:
+                        subscribeToEventsStream()
+                        .then(function(){ api.getEvents() })
+
+                    }else{
+                        api.get({
+                            path: events_path + '/' + api.subscriptionId,
+                            exp_ok: 'events'
+                        })
+                        .then(function(events){
+                            events.forEach(function(event){
+                                api.trigger(event.name, event.data)
+                            })
+                        })
+                    }
+                }
+
+                if(!events_disabled && events_interval) $interval(function(){ api.getEvents() }, events_interval, false)
 
                 return api
             }

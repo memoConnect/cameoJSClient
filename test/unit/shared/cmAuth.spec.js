@@ -102,13 +102,14 @@ describe('cmAuth', function () {
                     "res": "OK"
                 });
 
-                var promise = cmAuth.requestTwoFactorKey()
-                promise.then(
-                    function (res) {
-                        expect(res).toEqual({res: "OK"})
-                    }
-                );
+                var success
+
+                cmAuth.requestTwoFactorKey()
+                .then(function (res) { success = true })
+
                 $httpBackend.flush()
+
+                expect(success).toBe(true)
             });
 
             it("confirm twoFactorKey and return twoFactorToken", function () {

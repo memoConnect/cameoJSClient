@@ -80,7 +80,7 @@ function(cmApi){
         requestTwoFactorKey: function() {
             return cmApi.get({
                 path: '/twoFactorAuth'
-            })
+            }, true)
         },
 
         // ask the api for a new authentication token:
@@ -89,7 +89,7 @@ function(cmApi){
                 path: '/twoFactorAuth/confirm',
                 data: { key: key },
                 exp_ok: "token"
-            })
+            }, true)
         },
 
         // delete Token

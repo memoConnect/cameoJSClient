@@ -99,7 +99,7 @@ require.config({
         'cmIdentity': ['angular', 'cmAuth'],
         'cmObject': ['angular'],
         'cmUserModel': ['angular', 'cmLocalStorage','cmIdentity','cmLogger'],
-        'cmApi': ['angular', 'cmLogger'],
+        'cmApi': ['angular', 'cmLogger', 'cmObject'],
         'cmProfile' : ['angular', 'cmApi', 'cmAuth'],
         'cmLogger' : ['angular'],
         'cmLanguage' : [

@@ -62,6 +62,9 @@ define([
                 .useCallStack( cameo_config.useCallStack)
                 .commitSize( cameo_config.commitSize )
                 .commitInterval( cameo_config.commitInterval )
+                .useEvents( cameo_config.useEvents )
+                .eventsPath( cameo_config.eventsPath )
+                .eventsInterval( cameo_config.eventsInterval )
 
             cmLanguageProvider
                 .cacheLangFiles(cameo_config.cache_lang_files)

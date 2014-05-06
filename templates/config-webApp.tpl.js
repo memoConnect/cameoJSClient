@@ -6,6 +6,9 @@ cameo_config = {
     commitInterval: 500,
     useCallStack: true,
     callStackPath: '/callStack',
+    useEvents: false,
+    eventsPath: '/events',
+    eventsInterval: '5000',
 
     token: null,
     supported_languages: ['de_DE', 'en_US'],
