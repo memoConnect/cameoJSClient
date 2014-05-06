@@ -37,7 +37,7 @@ angular.module('cmFiles').factory('cmAssetModel',[
 
             }
 
-            this.init(id);
+            this.init(data);
         };
 
         return Asset;
