@@ -28,7 +28,7 @@ angular.module('cmConversations').directive('cmConversation', [
                     files               = [];
 
                 function isMessageValid(){
-                    if($scope.my_message_text != '' || assets.length > 0){
+                    if($scope.my_message_text != '' || files.length > 0){
                         return true;
                     }
 
