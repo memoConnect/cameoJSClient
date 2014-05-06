@@ -113,6 +113,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
              */
             this.uploadFiles = function(){
                 if(this.files.length > 0){
+                    console.log('cmMessageModel.uploadFiles')
                     console.dir(this.files)
                 }
 
@@ -128,7 +129,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 var public_data = {}    
 
                 this.public.forEach(function(key){
-                    console.log(key)
                     if(self[key]) public_data[key] = self[key]
                 })
 
