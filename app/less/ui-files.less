@@ -4,11 +4,26 @@ cm-message-file{
   height:@cm-unit * 2;
   margin:0 auto;
 
-  div[cm-spinner]{
-    position:absolute;
-    z-index:1;
-    left:50%;
-    top:50%;
+  .file-image{
+    position:relative;
+    height:@cm-unit * 2;
+    margin:0 auto;
+
+    div[cm-spinner]{
+      z-index:1;
+      position:absolute;
+      left:50%;
+      top:50%;
+    }
+    img{
+      display:block;
+      max-width:@cm-app-width - 1;
+      max-height:@cm-unit * 2;
+      margin:0 auto;
+    }
+  }
+  .file{
+    margin:0 auto;
   }
 }
 
@@ -72,6 +87,8 @@ cm-files-preview{
     margin:0 auto;
   }
 }
+
+
 
 .file {
   background:url(../gfx/filetype_map_small.png) transparent 0 0;

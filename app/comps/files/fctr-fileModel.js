@@ -229,13 +229,13 @@ angular.module('cmFiles').factory('cmFileModel', [
                 var self = this,
                     data = []
 
-                if(!this.chunks) cmLogger.error('Unable reassemlbe chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.')
+                if(!this.chunks) cmLogger.error('Unable reassemble chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.')
 
                 this.chunks.forEach(function(chunk){
                     data.push(chunk.blob)
                 })
 
-                self.blob = Blob(data, {type: self.type})
+                this.blob = new Blob(data, {type: self.type})
 
                 return this
             }
