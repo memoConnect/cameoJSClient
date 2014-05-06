@@ -11,22 +11,25 @@ angular.module('cmConversations').directive('cmMessageFile', [
             require: '^cmMessage',
             templateUrl: 'comps/conversations/drtv-message-file.html',
             controller: function ($scope, $element, $attrs) {
-                console.log($scope.file)
+
                 // exists fileModl
                 if(typeof $scope.file == 'object'){
 
-                    if($scope.file.state == 'new'){
+                    if($scope.file.state == 'new' && $scope.file.id == undefined){
                         // todo: upload
+                        $scope.progress = 0;
+                        $scope.file.uploadChunks().then(null, null, function(progress){
+                            $scope.progress += progress
+                        })
+                    } else if($scope.file.state == 'new' && $scope.file.id != undefined){
+                        // todo: download
+
                     }
-                // file from api
-                } else if(typeof $scope.file == 'string'){
-                    // todo: download
-                    // $scope.file = cmFileFactory.create()
                 }
 
                 $timeout(function(){
                     $scope.file.loaded = true;
-                    $scope.$apply();
+//                    $scope.$apply();
                 },1000)
 
                 $scope.toggleJob = function(){

@@ -8,9 +8,9 @@ angular.module('cmFiles').directive('cmFileInput', [
             scope: {},
             template: '<input type="file">',
 
-            link: function (scope, element, attributes, attachmentsCtrl) {
+            link: function (scope, element, attributes, cmFilesCtrl) {
                 element.on("change", function (event) {
-                    attachmentsCtrl.setFile(event.target.files[0]);
+                    cmFilesCtrl.setFile(event.target.files[0]);
                     scope.$apply();
                 });
             }

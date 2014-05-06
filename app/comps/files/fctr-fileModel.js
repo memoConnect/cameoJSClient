@@ -261,6 +261,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                 if(typeof fileData !== 'undefined'){
                     if(typeof fileData == 'string'){
                         // todo download
+                        this.id = fileData;
                     } else if(typeof fileData == 'object'){
                         this.importFile(fileData);
 
