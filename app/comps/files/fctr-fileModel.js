@@ -5,9 +5,12 @@ angular.module('cmFiles').factory('cmFileModel', [
     'cmLogger',
     'cmChunk',
     'cmCrypt',
+    'cmObject',
     '$q',
-    function (cmFilesAdapter, cmLogger, cmChunk, cmCrypt, $q){
+    function (cmFilesAdapter, cmLogger, cmChunk, cmCrypt, cmObject, $q){
         var FileModel = function(fileData){
+
+            cmObject.addEventHandlingTo(this);
 
             this.state = 'new';
 
@@ -122,8 +125,10 @@ angular.module('cmFiles').factory('cmFileModel', [
                         .upload(self.id, index)
                         .then(
                         function(){
+                            self.trigger('upload:chunk', chunk.encryptedRaw.length / self.encryptedSize);
+
                             deferredChunk.resolve()
-                            deferred.notify(chunk.encryptedRaw.length / self.encryptedSize)
+//                            deferred.notify(chunk.encryptedRaw.length / self.encryptedSize)
                         },
 
                         function(response){
@@ -134,14 +139,14 @@ angular.module('cmFiles').factory('cmFileModel', [
 
                 $q.all(promises)
                     .then(
-                    function(data)      { deferred.resolve(self.id) },
+                    function(data)      { self.trigger('upload:finish'); deferred.resolve(self.id) },
                     function(response)  { deferred.reject(response) }
                 )
 
                 return deferred.promise
             }
 
-            this.importByFileId = function(){
+            this.importByFile = function(){
                 var self     = this
 
                 return (
@@ -158,7 +163,7 @@ angular.module('cmFiles').factory('cmFileModel', [
             this.decryptName = function(passphrase) {
                 this.encryptedName
                     ?   this.name = cmCrypt.decrypt(passphrase, this.encryptedName)
-                    :   cmLogger.error('Unable to decrypt filename; cmFile.encryptedFileName missing. Try calling cmFile.imporByFileId() first.')
+                    :   cmLogger.error('Unable to decrypt filename; cmFile.encryptedFileName missing. Try calling cmFile.imporByFile) first.')
                 return this
             }
 
@@ -169,7 +174,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                 self.chunks = []
 
                 if(!self.chunkIndices || !self.id){
-                    cmLogger.error('cmFile.downloadChunks(); cmFile.chunks or cmFile.id missing. Try calling cmFile.importByFileId() first.')
+                    cmLogger.error('cmFile.downloadChunks(); cmFile.chunks or cmFile.id missing. Try calling cmFile.importByFile() first.')
                     return null
                 }
 
@@ -243,7 +248,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                     this.blob,
                     this.name
                 )
-                    :   cmLogger.error('Unable to prompt saveAs; cmFile.blob is missing, try cmFile.importByFileId().')
+                    :   cmLogger.error('Unable to prompt saveAs; cmFile.blob is missing, try cmFile.importByFile().')
 
                 return this
             }

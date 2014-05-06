@@ -164,8 +164,9 @@ angular.module('cmConversations').factory('cmMessageModel',[
              */
             this.uploadFiles = function(){
                 if(this.files.length > 0){
-                    console.log('cmMessageModel.uploadFiles')
-                    console.dir(this.files)
+                    angular.forEach(this.files, function(file){
+                       file.uploadChunks();
+                    });
                 }
 
                 return this;
