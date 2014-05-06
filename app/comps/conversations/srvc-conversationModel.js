@@ -297,7 +297,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     result = false
                 }
 
-
                 if(this.keyTransmission == 'asymmetric' && !cmUserModel.hasPrivateKey()){
                     cmNotify.warn('CONVERSATION.WARN.PRIVATE_KEY_MISSING')
                     result = false
@@ -362,8 +361,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.passphrase = ''
                 this.encryptedPassphraseList.forEach(function(item){
                     if(!self.passphrase){
-                        self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase) ||''
-                        if(item.keyId=="_passwd"){
+                        self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase) || ''
+                        if(item.keyId == "_passwd"){
                             self.passphrase = cmCrypt.decrypt(self.password, item.encryptedPassphrase) || ''
                         }
                     }
