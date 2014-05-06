@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmMessageFiles', [
-    'cmAssetFactory',
+    'cmFileFactory',
     'cmLogger',
     function (cmAssetFactory, cmLogger) {
         return {

@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('cmFiles').factory('cmAssetFactory', [
-    'cmAssetModel',
+angular.module('cmFiles').factory('cmFileFactory', [
+    'cmFileModel',
     '$rootScope',
-    function(cmAssetModel, $rootScope){
+    function(cmFileModel, $rootScope){
         var instances = [];
 
         $rootScope.$on('logout', function(){
@@ -38,7 +38,7 @@ angular.module('cmFiles').factory('cmAssetFactory', [
                 }
 
                 if(asset == null){
-                    asset = new cmAssetModel(data);
+                    asset = new cmFileModel(data);
                     instances.push(asset);
                 }
 

@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmFiles').directive('cmAttachments',[
-    'cmFile',
+    'cmFileFactory',
     '$q',
-    function (cmFile, $q){
+    function (cmFileFactory, $q){
         return {
             restrict : 'E',
             controller : function($scope, $element, $attrs){
@@ -53,7 +53,7 @@ angular.module('cmFiles').directive('cmAttachments',[
                         return false;
                     }
 
-                    var file = new cmFile(blob);
+                    var file = cmFileFactory.create(blob);
                     $scope.files.push(file);
                 };
                 /**

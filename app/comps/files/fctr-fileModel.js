@@ -1,28 +1,13 @@
 'use strict';
 
-angular.module('cmFiles').factory('cmFile', [
+angular.module('cmFiles').factory('cmFileModel', [
     'cmFilesAdapter',
     'cmLogger',
     'cmChunk',
     'cmCrypt',
     '$q',
     function (cmFilesAdapter, cmLogger, cmChunk, cmCrypt, $q){
-
-        return function(fileData){
-
-            this.init = function(blob, chunkSize){
-                if(typeof blob !== 'undefined'){
-                    this.importFile(blob);
-
-                    if(!chunkSize){
-                        chunkSize = 256;
-                    }
-
-                    this.chopIntoChunks(chunkSize);
-                }
-
-                return this;
-            }
+        var FileModel = function(fileData){
 
             this.importFile = function(blob){
                 this.blob = blob;
@@ -100,20 +85,20 @@ angular.module('cmFiles').factory('cmFile', [
                 var self = this
 
                 return (
-                        self.encryptedName && self.chunks
-                    ?   cmFilesAdapter.prepareFile({
+                    self.encryptedName && self.chunks
+                        ?   cmFilesAdapter.prepareFile({
                         name    : self.encryptedName,
                         size    : self.encryptedSize,
                         type    : self.type,
                         chunks  : self.chunks.length
-                        })
+                    })
                         .then(
-                            function(id){
-                                return self.id = id
-                            }
-                        )
-                    :   cmLogger.error('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
+                        function(id){
+                            return self.id = id
+                        }
                     )
+                        :   cmLogger.error('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
+                )
             }
 
             this.uploadChunks = function() {
@@ -169,7 +154,7 @@ angular.module('cmFiles').factory('cmFile', [
                             self.chunkIndices  = details.chunks
                             self.id            = id
                         })
-                    )
+                )
             }
 
             this.decryptName = function(passphrase) {
@@ -265,7 +250,33 @@ angular.module('cmFiles').factory('cmFile', [
                 return this
             }
 
+            /**
+             *
+             * @param blob
+             * @param chunkSize
+             * @returns {FileModel}
+             */
+            this.init = function(fileData, chunkSize){
+                if(typeof fileData !== 'undefined'){
+                    if(typeof fileData == 'string'){
+                        // todo download
+                    } else if(typeof fileData == 'object'){
+                        this.importFile(fileData);
+
+                        if(!chunkSize){
+                            chunkSize = 256;
+                        }
+
+                        this.chopIntoChunks(chunkSize);
+                    }
+                }
+
+                return this;
+            }
+
             this.init(fileData);
         }
+
+        return FileModel;
     }
 ]);

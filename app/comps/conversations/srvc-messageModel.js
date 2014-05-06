@@ -13,15 +13,14 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
 
             //secret data:
-//            this.secret = ['text', 'fileIds'];
-            this.secret = ['text','files'];
+            this.secret = ['text', 'fileIds'];
 
             //public data
             this.public = [];
 
             //files
             this.files = [];
-
+            this.fileIds = [];
 
             //sets which data should not be encrypted
             this.setPublicData = function(data){
@@ -99,7 +98,8 @@ angular.module('cmConversations').factory('cmMessageModel',[
             this.addFiles = function(array){
                 if(typeof array !== 'undefined' && array.length > 0){
                     angular.forEach(array, function(file){
-                        self.files.push(file.id);
+                        self.files.push(file);
+                        self.fileIds.push(file.id);
                     });
 
                 }

@@ -6,7 +6,6 @@ angular.module('cmConversations').directive('cmConversation', [
     'cmMessageFactory',
     'cmUserModel',
     'cmRecipientModel',
-    'cmAssetFactory',
     'cmCrypt',
 //    'cmCron',
     'cmLogger',
@@ -14,7 +13,7 @@ angular.module('cmConversations').directive('cmConversation', [
     '$location',
     '$rootScope',
 
-    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmAssetFactory, cmCrypt, cmLogger, cmNotify, $location, $rootScope) {
+    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location, $rootScope) {
         return {
             restrict: 'AE',
             templateUrl: 'comps/conversations/drtv-conversation.html',
@@ -26,7 +25,7 @@ angular.module('cmConversations').directive('cmConversation', [
                     conversation_subject = $scope.$eval($attrs.cmSubject),
                     conversation_offset  = $attrs.offset,
                     conversation_limit   = $attrs.limit,
-                    assets               = [];
+                    files               = [];
 
                 function isMessageValid(){
                     if($scope.my_message_text != '' || assets.length > 0){
@@ -52,7 +51,7 @@ angular.module('cmConversations').directive('cmConversation', [
                         $scope.prepareFilesForUpload($scope.conversation.passphrase).then(function(){
                             angular.forEach($scope.files, function(file){
                                 if(file.id != undefined){
-                                    assets.push(new cmAssetFactory.create(file));
+                                    files.push(file);
                                 }
                             });
                             /**
@@ -82,9 +81,9 @@ angular.module('cmConversations').directive('cmConversation', [
                             );
                         } else {
                             cmMessageFactory.create()
-                                .addFiles(assets)
+                                .addFiles(files)
                                 .setText($scope.my_message_text)
-                                .setPublicData($scope.conversation.passphrase ? [] : ['text','files'])
+                                .setPublicData($scope.conversation.passphrase ? [] : ['text','fileIds'])
                                 .encrypt($scope.conversation.passphrase)
                                 .addTo($scope.conversation)
                                 .sendTo($scope.conversation.id)
@@ -95,7 +94,7 @@ angular.module('cmConversations').directive('cmConversation', [
 
                                     $scope.conversation.numberOfMessages++;
                                     $scope.my_message_text = "";
-                                    assets = [];
+                                    files = [];
 
                                     if($scope.new_conversation !== false){
                                         cmConversationsModel.addConversation($scope.conversation, true);
