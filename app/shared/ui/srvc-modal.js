@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('cmUi').service('cmModal',[
 
     '$rootScope',

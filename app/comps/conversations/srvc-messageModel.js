@@ -96,7 +96,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
              * @param array
              */
             this.addAssets = function(array){
-                if(typeof array !== 'undefined'){
+                if(typeof array !== 'undefined' && array.length > 0){
                     angular.forEeach(array, function(asset){
                         self.files.push(asset.id);
                     });
