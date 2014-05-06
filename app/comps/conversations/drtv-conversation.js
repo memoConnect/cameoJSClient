@@ -82,16 +82,16 @@ angular.module('cmConversations').directive('cmConversation', [
                             );
                         } else {
                             cmMessageFactory.create()
-                                .addAssets(assets)
+                                .addFiles(assets)
                                 .setText($scope.my_message_text)
-                                .setPublicData($scope.conversation.passphrase ? [] : ['text'])
+                                .setPublicData($scope.conversation.passphrase ? [] : ['text','files'])
                                 .encrypt($scope.conversation.passphrase)
                                 .addTo($scope.conversation)
                                 .sendTo($scope.conversation.id)
                                 .then(function(){
-                                    $scope.conversation.$chain()
-                                    .encryptPassphrase()
-                                    .saveEncryptedPassphraseList();
+//                                    $scope.conversation.$chain()
+//                                    .encryptPassphrase()
+//                                    .saveEncryptedPassphraseList();
 
                                     $scope.conversation.numberOfMessages++;
                                     $scope.my_message_text = "";

@@ -14,10 +14,10 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
             //secret data:
 //            this.secret = ['text', 'fileIds'];
-            this.secret = ['text'];
+            this.secret = ['text','files'];
 
             //public data
-            this.public = ['files'];
+            this.public = [];
 
             //files
             this.files = [];
@@ -92,15 +92,28 @@ angular.module('cmConversations').factory('cmMessageModel',[
             }
 
             /**
-             * add Assets to Message
+             * add Files to Message
              * @param array
+             * @returns {cmMessageModel.Message}
              */
-            this.addAssets = function(array){
+            this.addFiles = function(array){
                 if(typeof array !== 'undefined' && array.length > 0){
-                    angular.forEach(array, function(asset){
-                        self.files.push(asset.id);
+                    angular.forEach(array, function(file){
+                        self.files.push(file.id);
                     });
 
+                }
+
+                return this;
+            }
+
+            /**
+             * Handle Upload from new Files
+             * @returns {cmMessageModel.Message}
+             */
+            this.uploadFiles = function(){
+                if(this.files.length > 0){
+                    console.dir(this.files)
                 }
 
                 return this;
@@ -115,6 +128,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 var public_data = {}    
 
                 this.public.forEach(function(key){
+                    console.log(key)
                     if(self[key]) public_data[key] = self[key]
                 })
 
@@ -127,6 +141,8 @@ angular.module('cmConversations').factory('cmMessageModel',[
                         })
                         .then(function (message_data) {
                             self.init(message_data)
+
+                            self.uploadFiles();
                         })
             }
 
