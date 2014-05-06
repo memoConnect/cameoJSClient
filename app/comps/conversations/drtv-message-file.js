@@ -4,7 +4,8 @@ angular.module('cmConversations').directive('cmMessageFile', [
     'cmFileFactory',
     'cmLogger',
     '$timeout',
-    function (cmFileFactory, cmLogger, $timeout) {
+    'cmJob',
+    function (cmFileFactory, cmLogger, $timeout, cmJob) {
         return {
             restrict: 'E',
             require: '^cmMessage',
@@ -27,6 +28,13 @@ angular.module('cmConversations').directive('cmMessageFile', [
                     $scope.file.loaded = true;
                     $scope.$apply();
                 },1000)
+
+                $scope.toggleJob = function(){
+                    if(!cmJob.isActive())
+                        cmJob.start('JOB.FILES_IN_UPLOAD_PROGRESS');
+                    else
+                        cmJob.stop();
+                }
             }
         }
     }
