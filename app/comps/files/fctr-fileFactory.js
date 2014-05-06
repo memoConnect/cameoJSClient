@@ -11,29 +11,35 @@ angular.module('cmFiles').factory('cmFileFactory', [
         });
 
         return {
-            create: function(data){
+            create: function(data, explicit){
                 var file = null,
                     i = 0;
+1
+                if(typeof explicit === 'undefined'){
+                    explicit = false;
+                }
 
-                if(typeof data == 'string'){
-                    while(i < instances.length){
-                        if(typeof instances[i] === 'object' &&
-                            instances[i].id == data){
-                            file = instances[i];
+                if(explicit !== true) {
+                    if (typeof data == 'string') {
+                        while (i < instances.length) {
+                            if (typeof instances[i] === 'object' &&
+                                instances[i].id == data) {
+                                file = instances[i];
                                 break;
-                        }
+                            }
 
-                        i++;
-                    }
-                } else if (typeof data == 'object'){
-                    while(i < instances.length){
-                        if(typeof instances[i] === 'object' &&
-                            instances[i].id == data.id){
-                            file = instances[i];
-                            break;
+                            i++;
                         }
+                    } else if (typeof data == 'object') {
+                        while (i < instances.length) {
+                            if (typeof instances[i] === 'object' &&
+                                instances[i].id == data.id) {
+                                file = instances[i];
+                                break;
+                            }
 
-                        i++;
+                            i++;
+                        }
                     }
                 }
 
