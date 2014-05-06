@@ -91,15 +91,45 @@ angular.module('cmConversations').factory('cmMessageModel',[
             }
 
             /**
-             * add Files to Message
-             * @param array
+             * add cmFile Object to Message Object
+             * checks if cmFile Object still added or not
+             * @param file
+             * @private
+             */
+            this._addFile = function(file){
+                var i = 0,
+                    check = false;
+
+                if(this.files.length == 0){
+                    this.files.push(file);
+                    self.fileIds.push(file.id);
+                } else {
+                    while(i < this.files.length){
+                        if(this.files[i].id == file.id){
+                            check = true;
+                            break;
+                        }
+                        i++;
+                    }
+
+                    if(check !== true){
+                        this.files.push(file);
+                        self.fileIds.push(file.id);
+                    }
+                }
+
+                return this;
+            }
+
+            /**
+             * add cmFiles to Message Wrapper Function for Arrays
+             * @param array of cmFileObjects
              * @returns {cmMessageModel.Message}
              */
             this.addFiles = function(array){
                 if(typeof array !== 'undefined' && array.length > 0){
                     angular.forEach(array, function(file){
-                        self.files.push(file);
-                        self.fileIds.push(file.id);
+                        self._addFiles(file);
                     });
                 }
 
