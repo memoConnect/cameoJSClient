@@ -9,6 +9,7 @@ angular.module('cmConversations', [
 //    'cmCron',
     'cmIdentity',
     'cmObject',
+    'cmJob',
     'cmUserModel',
     'cmNotify',
     'ui.bootstrap'

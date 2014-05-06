@@ -32,6 +32,7 @@ require.config({
         'cmUserModel': 'shared/cmUserModel',
         'cmIdentity': 'shared/cmIdentity',
         'cmObject' : 'shared/cmObject',
+        'cmJob' : 'shared/cmJob',
 
         // cameo modules/services
         'cmAuth': 'shared/cmAuth',
@@ -98,6 +99,7 @@ require.config({
 //        'cmCron' : ['angular'],
         'cmIdentity': ['angular', 'cmAuth'],
         'cmObject': ['angular'],
+        'cmJob': ['angular'],
         'cmUserModel': ['angular', 'cmLocalStorage','cmIdentity','cmLogger'],
         'cmApi': ['angular', 'cmLogger'],
         'cmProfile' : ['angular', 'cmApi', 'cmAuth'],
