@@ -18,10 +18,6 @@ angular.module('cmUser').directive('cmLogin', [
                 $scope.alertState = '';
                 $scope.passwordType = 'password';
                 $scope.loginData = {
-                    'Dumpuser': {
-                        user: 'r1Zhpq8e',
-                        pass: 'password'
-                    },
                     'DumpuserLocal': {
                         user: '2VqTftqh',
                         pass: 'password'
