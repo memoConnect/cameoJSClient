@@ -85,6 +85,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                     cmConversationsAdapter.newConversation((this.subject || '')).then(
                         function (conversation_data) {
+
                             self.init(conversation_data);
 
                             var i = 0;
@@ -123,7 +124,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                             offset = this.messages.length;
                             clearAllMessages = false;
                         }
-                        var limit = data.numberOfMessages - offset;
+                        var limit = conversation_data.numberOfMessages - offset;
                         this.updateMessages(limit, offset, clearAllMessages);
                     } else {
                         cmConversationsAdapter.getConversationSummary(this.id).then(
