@@ -171,8 +171,8 @@ cmApi.provider('cmApi',[
 
                 */
                
-                //check if the sever's response matches the api conventions
-                function responseValid(response, exp_ok, exp_ko){
+                //check if the sever's response complies with the api conventions
+                function compliesWithApiConventions(response, exp_ok, exp_ko){
                     var valid =    response
                                     //response must have a res key that equals 'OK' or 'KO':
                                 && (response.res == 'OK' || response.res == 'KO')
@@ -191,7 +191,7 @@ cmApi.provider('cmApi',[
                     //reponse includes config and data, we only need the data:
                     var response = response.data
 
-                    responseValid(response, config.exp_ok, config.exp_ko)
+                    compliesWithApiConventions(response, config.exp_ok, config.exp_ko)
                     ?   //response valid, check if OK:
                         //if a certain key was expected, resolve promise resp. reject the promise with the according values
                         //if nothing was expected, just resolve or reject with value of 'data' in the response body if present or all the data
@@ -212,42 +212,46 @@ cmApi.provider('cmApi',[
                 }
             
 
-               function handleError(response, config, deferred){                                            
-        //                    cmLogger.error('Api call failed: \n '+config.method+' '+config.path, response)
-        //                    window.location.href='#/server_down' //@ Todo
-                            //error messages should come trough backend
-                            deferred.reject(response)
-               }
+                function handleError(response, config, deferred){                                            
+//                    cmLogger.error('Api call failed: \n '+config.method+' '+config.path, response)
+//                    window.location.href='#/server_down' //@ Todo
+                    //error messages should come trough backend
+                    deferred.reject(response)
+                }
 
+                function prepareConfig(config, method, token, twoFactorToken){
+                    //if method and config are present overwrite config.method
+                    !config
+                    ?   config          = method || {}
+                    :   config.method   = method
+                    
+                    config          =   config || {}        // make sure config is defined
+                    config.url      =   config.url ||
+                                        (
+                                            rest_api +      // base url API
+                                            config.path     // path to specific method
+                                        )
+                    config.headers  =   angular.extend(token           ? {'Authorization': token} : {}, config.headers || {})   //add authorization token to the header
+                    config.headers  =   angular.extend(twoFactorToken  ? {'X-TwoFactorToken': twoFactorToken} : {}, config.headers || {})   //add two factor authorization token to the header
+
+                }
 
 
                 var api = function(method, config){
-
-                    config = config ? config : method
-
                     var deferred	=	$q.defer(),
 
                         //get authentification token from cmAuth if present
-                        token 		= 	$injector.has('cmAuth')
-                                        ?	$injector.get('cmAuth').getToken()
-                                        :	undefined,
+                        token 		    = 	$injector.has('cmAuth')
+                                            ?	$injector.get('cmAuth').getToken()
+                                            :	undefined,
 
                         //get twoFactorAuth token from cmAuth if present
                         twoFactorToken	= 	$injector.has('cmAuth')
-                                        ?	$injector.get('cmAuth').getTwoFactorToken()
-                                        :	undefined
+                                            ?	$injector.get('cmAuth').getTwoFactorToken()
+                                            :	undefined
 
 
-                    //extend or overwrite config
-                    config			=	config || {}	        // make sure config is defined
-                    config.method	= 	config.method || method	// set method
-                    config.url		= 	config.url ||
-                                        (
-                                            rest_api +		// base url API
-                                            config.path 	// path to specific method
-                                        )
-                    config.headers	=	angular.extend(token           ? {'Authorization': token} : {}, config.headers || {})	//add authorization token to the header
-                    config.headers	=	angular.extend(twoFactorToken  ? {'X-TwoFactorToken': twoFactorToken} : {}, config.headers || {})	//add two factor authorization token to the header
+                    prepareConfig(config, method, token, twoFactortoken)                  
 
 
                     $http(config).then(
@@ -278,9 +282,7 @@ cmApi.provider('cmApi',[
 
                     console.log('stack: ' + config.path)
 
-                    config          = config ? config : method
-                    config.method   = config.method || method
-                    config.url      = config.url || (rest_api + config.path)
+                    prepareConfig(config, method)
 
                     var deferred = $q.defer()
 
@@ -297,9 +299,11 @@ cmApi.provider('cmApi',[
 
                     console.log('commit')
 
+                    //dont do anything, if call stack is empty:
                     if(api.call_stack.length == 0) return null        
 
-                    var items_to_commit = []
+                    var items_to_commit = [],
+                        configs         = []
 
                     //pick items from callstack to commit:
                     api.call_stack.forEach(function(item, index){
@@ -313,49 +317,30 @@ cmApi.provider('cmApi',[
                     var index = api.call_stack.length
                     while(index--){ if(!api.call_stack[index]) api.call_stack.splice(index,1) }
 
-
-                    var requests = [],
-                        deferred_items = []
-
                     //prepare requests:
-                    items_to_commit.forEach(function(item, index){                        
-                        requests.push(item.config)
-                        deferred_items.push(item.deferred)
-                    })
+                    items_to_commit.forEach(function(item, index){ configs.push(item.config) })
 
                     console.log(call_stack_path)
 
                     //post requests to call stack api:
                     api.post({
                         path: call_stack_path,
-                        data: {
-                            requests: requests
-                        },
+                        data: { requests: configs },
                         exp_ok : 'responses' 
-                    }, true).then(function(responses){
+                    }, true)
+                    .then(function(responses){
 
                         requests.forEach(function(request, index){
-                            var virtual_url     = rest_api + call_stack_path + index,
-                                virtual_request = request,
-                                response        = responses[index],
-                                deferred        = deferred_items[index]
 
-                            virtual_request.url = virtual_url
-                            virtual_request.cache = api.call_stack_cache
+                            var response = responses[index],
+                                data     = response.data,
+                                stauts   = response.status,
+                                deferred = items[index]                       
 
-                            api.call_stack_cache.put(virtual_url, response.data)                  
-
-
-                            /*
-                            //create virtual backend route:
-                            $httpBackend.when(request.method, virtual_url, request.data)
-                            .respond(response.status, response.data)
-
-                            console.log(response.data)
-                            */
-
-                            //resolve promise with virtual backend call:
-                            deferred.resolve(api(virtual_request))
+                            status[0] == '2'
+                            ?   handleSuccess(response, config, deferred)
+                            :   hanldeError(response, config, deferred)
+               
                         })
 
                         
