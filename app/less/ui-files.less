@@ -3,8 +3,10 @@ cm-message-file{
   position:relative;
   height:@cm-unit * 2;
   margin:0 auto;
+
   div[cm-spinner]{
-    position: absolute;
+    position:absolute;
+    z-index:1;
     left:50%;
     top:50%;
   }
@@ -13,27 +15,27 @@ cm-message-file{
 cm-files{
   display:block;
   position:relative;
-  width: @cm-unit;
-  height: @cm-unit;
+  width:@cm-unit;
+  height:@cm-unit;
 
   cm-file-input{
-    height: 100%;
-    overflow: hidden;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 100%;
+    height:100%;
+    overflow:hidden;
+    position:absolute;
+    right:0;
+    top:0;
+    width:100%;
 
     input{
       .with-cursor;
-      bottom: 0;
-      font-size: 1000px !important;
-      height: 300px;
-      margin: 0;
-      opacity: 0;
-      padding: 0;
-      position: absolute;
-      right: 0;
+      bottom:0;
+      font-size:1000px !important;
+      height:300px;
+      margin:0;
+      opacity:0;
+      padding:0;
+      position:absolute;
+      right:0;
     }
   }
 }
@@ -52,8 +54,10 @@ cm-files-preview{
     position:relative;
     height:@cm-unit * 2;
     margin:0 auto;
+
     div[cm-spinner]{
-      position: absolute;
+      z-index:1;
+      position:absolute;
       left:50%;
       top:50%;
     }
@@ -70,46 +74,46 @@ cm-files-preview{
 }
 
 .file {
-  background: url(../gfx/filetype_map_small.png) transparent 0 0;
-  height: 60px !important;
-  width: 60px !important;
-  border: 0;
-  cursor: pointer;
-  padding: 0;
-  vertical-align: text-bottom;
-  &.pdf {background-position: 0 -240px}
-  &.txt {background-position: 0 -300px}
-  &.xlsx {background-position: 0 -360px}
-  &.doc {background-position: 0 -420px}
-  &.php {background-position: 0 -480px}
-  &.css {background-position: 0 -540px}
-  &.xls {background-position: 0 -600px}
-  &.zip {background-position: 0 -660px}
-  &.rar {background-position: 0 -720px}
-  &.sit {background-position: 0 -780px}
-  &.jpg {background-position: 0 -840px}
-  &.gif {background-position: 0 -900px}
-  &.bmp {background-position: 0 -960px}
-  &.tif {background-position: 0 -1020px}
-  &.eps {background-position: 0 -1080px}
-  &.png {background-position: 0 -1140px}
-  &.mov {background-position: 0 -1200px}
-  &.mpg {background-position: 0 -1260px}
-  &.mp4 {background-position: 0 -1320px}
-  &.flv {background-position: 0 -1380px}
-  &.avi {background-position: 0 -1440px}
-  &.xml {background-position: 0 -1500px}
-  &.html {background-position: 0 -1560px}
-  &.chm {background-position: 0 -1620px}
-  &.ttf {background-position: 0 -1680px}
-  &.exe {background-position: 0 -1740px}
-  &.dmg {background-position: 0 -1800px}
-  &.mp3 {background-position: 0 -1860px}
-  &.wav {background-position: 0 -1920px}
-  &.wma {background-position: 0 -1980px}
-  &.aif {background-position: 0 -2040px}
-  &.ogg {background-position: 0 -2100px}
-  &.ppt {background-position: 0 -2160px}
-  &.pps {background-position: 0 -2220px}
-  &.unknown {background-position: 0 -2280px}
+  background:url(../gfx/filetype_map_small.png) transparent 0 0;
+  height:60px !important;
+  width:60px !important;
+  border:0;
+  cursor:pointer;
+  padding:0;
+  vertical-align:text-bottom;
+  &.pdf{background-position:0 -240px}
+  &.txt{background-position:0 -300px}
+  &.xlsx{background-position:0 -360px}
+  &.doc{background-position:0 -420px}
+  &.php{background-position:0 -480px}
+  &.css{background-position:0 -540px}
+  &.xls{background-position:0 -600px}
+  &.zip{background-position:0 -660px}
+  &.rar{background-position:0 -720px}
+  &.sit{background-position:0 -780px}
+  &.jpg{background-position:0 -840px}
+  &.gif{background-position:0 -900px}
+  &.bmp{background-position:0 -960px}
+  &.tif{background-position:0 -1020px}
+  &.eps{background-position:0 -1080px}
+  &.png{background-position:0 -1140px}
+  &.mov{background-position:0 -1200px}
+  &.mpg{background-position:0 -1260px}
+  &.mp4{background-position:0 -1320px}
+  &.flv{background-position:0 -1380px}
+  &.avi{background-position:0 -1440px}
+  &.xml{background-position:0 -1500px}
+  &.html{background-position:0 -1560px}
+  &.chm{background-position:0 -1620px}
+  &.ttf{background-position:0 -1680px}
+  &.exe{background-position:0 -1740px}
+  &.dmg{background-position:0 -1800px}
+  &.mp3{background-position:0 -1860px}
+  &.wav{background-position:0 -1920px}
+  &.wma{background-position:0 -1980px}
+  &.aif{background-position:0 -2040px}
+  &.ogg{background-position:0 -2100px}
+  &.ppt{background-position:0 -2160px}
+  &.pps{background-position:0 -2220px}
+  &.unknown{background-position:0 -2280px}
 }
