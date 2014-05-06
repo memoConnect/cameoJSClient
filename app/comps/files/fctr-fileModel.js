@@ -9,7 +9,7 @@ angular.module('cmFiles').factory('cmFileModel', [
     function (cmFilesAdapter, cmLogger, cmChunk, cmCrypt, $q){
         var FileModel = function(fileData){
 
-            this.status = 'new';
+            this.state = 'new';
 
             this.importFile = function(blob){
                 this.blob = blob;
@@ -141,10 +141,8 @@ angular.module('cmFiles').factory('cmFileModel', [
                 return deferred.promise
             }
 
-            this.importByFileId = function(id){
+            this.importByFileId = function(){
                 var self     = this
-
-                this.id = id
 
                 return (
                     cmFilesAdapter.getFileInfo(this.id)
@@ -153,7 +151,6 @@ angular.module('cmFiles').factory('cmFileModel', [
                             self.type          = details.fileType
                             self.encryptedSize = details.fileSize
                             self.chunkIndices  = details.chunks
-                            self.id            = id
                         })
                 )
             }
@@ -200,7 +197,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                     function(response)  { deferred.reject(response) }
                 )
 
-                return  deferred.promise
+                return deferred.promise
             }
 
             this.decryptChunks = function(passphrase){
@@ -262,11 +259,12 @@ angular.module('cmFiles').factory('cmFileModel', [
                     if(typeof fileData == 'string'){
                         // todo download
                         this.id = fileData;
+                        this.state = 'exists';
                     } else if(typeof fileData == 'object'){
                         this.importFile(fileData);
 
                         if(!chunkSize){
-                            chunkSize = 256;
+                            chunkSize = 128;
                         }
 
                         this.chopIntoChunks(chunkSize);

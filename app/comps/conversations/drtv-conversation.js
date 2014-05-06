@@ -184,14 +184,6 @@ angular.module('cmConversations').directive('cmConversation', [
                      }
                      */
 
-                    /**
-                     * @TODO important?
-                     */
-//                    $scope.$watch("conversation.subject", function (new_subject) {
-//                        $scope.conversation.updateSubject(new_subject||'')
-//                    })
-
-
                     //cron
 //                if($scope.new_conversation !== true){
 //                    cmCron.add('Conversation-'+conversation.id,{instance: conversation,task:function(conversation){self.update()}});

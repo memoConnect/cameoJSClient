@@ -14,7 +14,7 @@ angular.module('cmFiles').factory('cmFileFactory', [
             create: function(data, explicit){
                 var file = null,
                     i = 0;
-1
+
                 if(typeof explicit === 'undefined'){
                     explicit = false;
                 }

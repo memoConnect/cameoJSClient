@@ -1,7 +1,8 @@
 <div>
+    {{file.state}}
     <div cm-spinner ng-hide="file.loaded" ng-click="toggleJob()"></div>
     {{file.id}}
-    <progressbar ng-if="file.status == 'new'" value="progress" max="1">
+    <progressbar ng-if="file.state != 'cached'" value="progress" max="1">
         {{progress*100 | cmDigits : 2 }} %
     </progressbar>
 </div>
