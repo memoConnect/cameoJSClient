@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('cmFiles').directive('cmAttachmentsPreview',[
+angular.module('cmFiles').directive('cmFilesPreview',[
     'cmFileTypes',
     function(cmFileTypes) {
         return {
             restrict: 'E',
-            templateUrl: 'comps/files/drtv-attachments-preview.html',
+            templateUrl: 'comps/files/drtv-files-preview.html',
             controller: function($scope){
                 $scope.cmFileTypes = cmFileTypes;
             }

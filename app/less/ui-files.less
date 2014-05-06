@@ -1,5 +1,17 @@
-cm-attachments{
-  display:inline-block;
+cm-message-file{
+  display:block;
+  position:relative;
+  height:@cm-unit * 2;
+  margin:0 auto;
+  div[cm-spinner]{
+    position: absolute;
+    left:50%;
+    top:50%;
+  }
+}
+
+cm-files{
+  display:block;
   position:relative;
   width: @cm-unit;
   height: @cm-unit;
@@ -25,18 +37,18 @@ cm-attachments{
     }
   }
 }
-cm-attachments-preview{
+cm-files-preview{
   display:block;
   position:absolute;
   bottom:@cm-footer-height;
   width:@cm-app-width;
   background-color:rgba(255,255,255,0.9);
 
-  .attachments-list{
+  .file-list{
     padding:@cm-vertical-padding;
   }
 
-  .attachment-image{
+  .file-image{
     position:relative;
     height:@cm-unit * 2;
     margin:0 auto;
@@ -52,12 +64,12 @@ cm-attachments-preview{
       margin:0 auto;
     }
   }
-  .attachment{
+  .file{
     margin:0 auto;
   }
 }
 
-.attachment {
+.file {
   background: url(../gfx/filetype_map_small.png) transparent 0 0;
   height: 60px !important;
   width: 60px !important;

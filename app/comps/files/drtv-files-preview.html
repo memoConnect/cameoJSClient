@@ -1,0 +1,9 @@
+<div class="files-list" ng-repeat="file in files">
+    <div class="file-image" ng-if="file.type.search('^image/') == 0">
+        <div cm-spinner ng-hide="file.loaded"></div>
+        <img cm-blob-view="file" />
+    </div>
+    <div ng-if="file.type.search('^image/') == -1" class="file {{cmFileTypes.find(file.type, file.name)}}">
+
+    </div>
+</div>

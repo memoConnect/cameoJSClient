@@ -1,9 +1,0 @@
-<div class="attachments-list" ng-repeat="attachment in files">
-    <div class="attachment-image" ng-if="attachment.type.search('^image/') == 0">
-        <div cm-spinner ng-hide="attachment.loaded"></div>
-        <img cm-blob-view="attachment" />
-    </div>
-    <div ng-if="attachment.type.search('^image/') == -1" class="attachment {{cmFileTypes.find(attachment.type, attachment.name)}}">
-
-    </div>
-</div>
