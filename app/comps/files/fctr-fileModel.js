@@ -190,15 +190,16 @@ angular.module('cmFiles').factory('cmFileModel', [
                     chunk
                         .download(self.id, index)
                         .then(function(){
+                            self.trigger('download:chunk', chunk.encryptedRaw.length / self.encryptedSize);
                             deferredChunk.resolve(chunk)
-                            deferred.notify(chunk.encryptedRaw.length / self.encryptedSize)
+//                            deferred.notify(chunk.encryptedRaw.length / self.encryptedSize)
                         })
                 })
 
 
                 $q.all(promises)
                     .then(
-                    function(chunks)    { deferred.resolve(chunks) },
+                    function(chunks)    { self.trigger('download:finish'); deferred.resolve(chunks) },
                     function(response)  { deferred.reject(response) }
                 )
 
@@ -223,6 +224,8 @@ angular.module('cmFiles').factory('cmFileModel', [
                     self.size += chunk.blob.size
                 })
 
+                this.trigger('decrypt:finish');
+
             }
 
             this.reassembleChunks = function(){
@@ -236,6 +239,8 @@ angular.module('cmFiles').factory('cmFileModel', [
                 })
 
                 this.blob = new Blob(data, {type: self.type})
+
+                self.trigger('reassemble:finish');
 
                 return this
             }

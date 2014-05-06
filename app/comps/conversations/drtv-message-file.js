@@ -23,19 +23,9 @@ angular.module('cmConversations').directive('cmMessageFile', [
                 // exists fileModel
                 if(typeof $scope.file == 'object'){
 
-                    if($scope.file.state == 'new'){
-                        // todo: upload
-                        $scope.progress = 0;
-                        $scope.file.uploadChunks().then(null, null, function(progress){
-                            $scope.progress += progress
-                        }).then(function(){
-                            $scope.file.state = 'cached';
-
-                        })
-                    } else if($scope.file.state == 'exists'){
+                  if($scope.file.state == 'exists'){
                         // todo: download
-                        $scope.progress = 0;
-                        $scope.file.importByFileId().then(function() {
+                        $scope.file.importByFile().then(function() {
 
                             $scope.file.decryptName($scope.conversation.passphrase)
 
@@ -43,15 +33,8 @@ angular.module('cmConversations').directive('cmMessageFile', [
                             .then(
                                 function(){
                                     $scope.file.decryptChunks($scope.conversation.passphrase)
-                                },
-                                null,
-                                function (progress) {
-                                    $scope.progress += progress
-                                })
-                            .then(function () {
-                                $scope.file.state = 'cached';
-                                $scope.file.reassembleChunks()
-                            })
+                                }
+                            )
                         })
                     }
 
@@ -70,6 +53,10 @@ angular.module('cmConversations').directive('cmMessageFile', [
 
                     $scope.file.on('download:finish', function(){
                         $scope.file.state = 'cached';
+                    });
+
+                    $scope.file.on('decrypt:finish', function(){
+                        $scope.file.reassembleChunks();
                     });
                 }
             }
