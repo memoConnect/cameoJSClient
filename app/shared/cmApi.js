@@ -11,7 +11,7 @@ var cmApi = angular.module('cmApi', ['cmLogger']);
 cmApi.provider('cmApi',[
 function($injector){
     var rest_api    = "",
-        stack_url   = "" 
+        stack_path   = ""
 
     this.restApiUrl = function(url){
         rest_api = url;
