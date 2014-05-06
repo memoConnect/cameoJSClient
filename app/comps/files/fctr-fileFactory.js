@@ -12,14 +12,14 @@ angular.module('cmFiles').factory('cmFileFactory', [
 
         return {
             create: function(data){
-                var asset = null,
+                var file = null,
                     i = 0;
 
                 if(typeof data == 'string'){
                     while(i < instances.length){
                         if(typeof instances[i] === 'object' &&
                             instances[i].id == data){
-                                asset = instances[i];
+                            file = instances[i];
                                 break;
                         }
 
@@ -29,7 +29,7 @@ angular.module('cmFiles').factory('cmFileFactory', [
                     while(i < instances.length){
                         if(typeof instances[i] === 'object' &&
                             instances[i].id == data.id){
-                            asset = instances[i];
+                            file = instances[i];
                             break;
                         }
 
@@ -37,12 +37,12 @@ angular.module('cmFiles').factory('cmFileFactory', [
                     }
                 }
 
-                if(asset == null){
-                    asset = new cmFileModel(data);
-                    instances.push(asset);
+                if(file == null){
+                    file = new cmFileModel(data);
+                    instances.push(file);
                 }
 
-                return asset;
+                return file;
             },
             getQty: function(){
                 return instances.length;
