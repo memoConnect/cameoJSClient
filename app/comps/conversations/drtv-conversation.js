@@ -100,7 +100,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                         cmConversationsModel.addConversation($scope.conversation, true);
                                         $location.path('/conversation/' + $scope.conversation.id);
                                     }
-                                    
+
                                 });
                         }
                     }
