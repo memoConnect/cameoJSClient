@@ -382,7 +382,7 @@ cmApi.provider('cmApi',[
                     return  api.post({
                                 path: events_path,
                                 exp_ok: 'id'
-                            })
+                            }, true)
                             .then(function(id){
                                 api.subscriptionId = id
                             })
@@ -392,14 +392,14 @@ cmApi.provider('cmApi',[
                     if(!api.subscriptionId){
 
                         //if no subscriptionId is present, get one and try again later:
-                        subscribeToEventsStream()
+                        api.subscribeToEventStream()
                         .then(function(){ api.getEvents() })
 
                     }else{
                         api.get({
                             path: events_path + '/' + api.subscriptionId,
                             exp_ok: 'events'
-                        })
+                        }, true)
                         .then(function(events){
                             events.forEach(function(event){
                                 api.trigger(event.name, event.data)

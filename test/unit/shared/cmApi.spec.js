@@ -13,6 +13,9 @@ describe('cmApi', function(){
             .useCallStack(true)
             .commitSize(50)
             .commitInterval(false)
+            .useEvents(true)
+            .eventsPath('/events')
+            .eventsInterval(false)
         }
     ]))
 
@@ -317,7 +320,87 @@ describe('cmApi', function(){
                 
             })
 
+        })
 
+        describe('events', function(){
+
+            it('should provide a function "subscribeToEventStream" to subscribe to event streams.', function(){
+                expect(typeof cmApi.subscribeToEventStream).toBe('function')
+
+                $httpBackend
+                .expect('POST', 'my_rest_api/events')
+                .respond(200,{
+                    res : "OK",
+                    data : {
+                        "id" : "my_id"
+                    }
+                })
+
+                cmApi.subscribeToEventStream()
+
+                $httpBackend.flush()
+
+                expect(cmApi.subscriptionId).toBe('my_id')
+
+            })
+
+            it('should provide a function "getEvents" to retrieve events from backend and trigger them.', function(){
+                expect(typeof cmApi.getEvents).toBe('function')
+
+
+                cmApi.subscriptionId = 'my_id'
+
+                $httpBackend
+                .expect('GET', 'my_rest_api/events/my_id')
+                .respond(200,{
+                    res : "OK",
+                    data : {
+                        "events" : [
+                            {
+                                "name" : "my_first_event",
+                                "data" : "my_first_data"
+                            },
+                            {
+                                "name" : "my_second_event",
+                                "data" : "my_second_data"
+                            },
+                        ]
+                    }
+                })
+
+                var data_1, data_2, data_3
+
+                cmApi.getEvents()
+
+                cmApi.on('my_first_event', function(data){
+                    data_1 = data
+                })
+                cmApi.on('my_second_event', function(data){
+                    data_2 = data
+                })
+                cmApi.on('my_third_event', function(data){
+                    data_3 = data
+                })
+
+                $httpBackend.flush()
+
+                expect(data_1).toBe('my_first_data')
+                expect(data_2).toBe('my_second_data')
+                expect(data_3).not.toBeDefined()
+            })
+
+            it('should try to get an subscription id, when none is present and getEvents() is called.', function(){
+                delete cmApi.subscriptionId
+                spyOn(cmApi, 'subscribeToEventStream').andCallThrough()
+
+                $httpBackend.expect('POST', 'my_rest_api/events').respond('200')
+
+                cmApi.getEvents()
+
+                expect(cmApi.subscribeToEventStream).toHaveBeenCalled()
+
+                $httpBackend.flush()
+            })
 
         })
 
@@ -326,11 +409,7 @@ describe('cmApi', function(){
 })
 
 
-
-
-
-
-describe('cmApi with short commit interval', function(){
+describe('cmApi with short intervals', function(){
 
     var cmApi, $httpBackend, $interval;
 
@@ -343,6 +422,9 @@ describe('cmApi with short commit interval', function(){
             .useCallStack(true)
             .commitSize(50)
             .commitInterval(5)
+            .useEvents( true )
+            .eventsInterval(5)
+            .eventsPath('/events')
         }
     ]))
 
@@ -361,16 +443,21 @@ describe('cmApi with short commit interval', function(){
     })
 
     it('should commit call stack every 5 milliseconds.', function(){
-        spyOn(cmApi, 'commit');
+        spyOn(cmApi, 'commit')
         $interval.flush(50)
 
         expect(cmApi.commit.calls.length).toBe(10)
     })
 
+    it('should get Events every 5 milliseconds.', function(){
+
+        spyOn(cmApi, 'getEvents').andCallFake(function(){})
+        $interval.flush(50)
+
+        expect(cmApi.getEvents.calls.length).toBe(10)
+    })
+
 })
-
-
-
 
 
 
