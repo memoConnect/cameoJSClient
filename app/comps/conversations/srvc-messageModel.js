@@ -6,7 +6,8 @@ angular.module('cmConversations').factory('cmMessageModel',[
     'cmIdentityFactory',
     'cmFileFactory',
     'cmUserModel',
-    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel){
+    '$rootScope',
+    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, $rootScope){
 
         var Message = function(data){
             //Attributes:
@@ -21,6 +22,11 @@ angular.module('cmConversations').factory('cmMessageModel',[
             //files
             this.files = [];
             this.fileIds = [];
+
+            $rootScope.$on('logout', function(){
+                self.files = [];
+                self.fileIds = [];
+            });
 
             //sets which data should not be encrypted
             this.setPublicData = function(data){
