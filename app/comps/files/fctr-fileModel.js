@@ -82,7 +82,6 @@ angular.module('cmFiles').factory('cmFileModel', [
                 return this
             }
 
-
             this.prepareForUpload = function() {
                 var self = this
 
