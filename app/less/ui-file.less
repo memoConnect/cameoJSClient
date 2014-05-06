@@ -1,0 +1,27 @@
+cm-upload{
+  display:inline-block;
+  position:relative;
+  width: @cm-unit;
+  height: @cm-unit;
+
+  cm-file-input{
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+
+    input{
+      .with-cursor;
+      bottom: 0;
+      font-size: 1000px !important;
+      height: 300px;
+      margin: 0;
+      opacity: 0;
+      padding: 0;
+      position: absolute;
+      right: 0;
+    }
+  }
+}

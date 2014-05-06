@@ -45,9 +45,9 @@ function(cmApi){
                 data: {
                     loginName: name,
                     reservationSecret: reservationSecret
-                },
-                exp_ok: 'reservationSecret',
-                exp_ko: 'alternative'
+                }
+//                exp_ok: 'reservationSecret',
+//                exp_ko: 'alternative'
             })
         },
 

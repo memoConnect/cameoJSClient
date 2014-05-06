@@ -32,7 +32,7 @@ describe('registration', function () {
 
         $("[data-qa='btn-createUser']").click()
 
-//        util.checkWarning("register-info-username-empty")
+        util.checkWarning("register-info-username-empty")
         util.checkWarning("drtv-password-error-emtpy")
         util.checkWarning("register-info-terms")
     })
@@ -52,7 +52,25 @@ describe('registration', function () {
         util.clearInput('input-loginName')
     })
 
+    it('should display error if username is invalid', function () {
+
+        util.get("/registration");
+
+        $("[data-qa='input-loginName']").sendKeys("moep-moep")
+
+        ptor.wait(function () {
+            return $("[data-qa='register-info-username-invalid']").isDisplayed()
+        }, 1000, "username invalid timeout")
+
+        util.checkWarning("register-info-username-invalid")
+
+        // it should disappear if we correct the name
+        util.clearInput('input-loginName');
+    })
+
     it('should display error if username exists', function () {
+
+        util.get("/registration");
 
         $("[data-qa='input-loginName']").sendKeys(config.loginUser1)
 

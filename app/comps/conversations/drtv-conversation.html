@@ -14,7 +14,12 @@
 <div id="scrollerBottom"></div>
 
 <div class="answer clearfix">
-    <i class="fa cm-plus attachments with-cursor" cm-user-rights data-qa="attachments-btn"></i>
+
+    <cm-upload cm-chunk-size="10" ng-model="assetId" cm-passphrase="passphrase" cm-user-rights data-qa="attachments-btn">
+        <i class="fa cm-plus"></i>
+        <cm-file-input></cm-file-input>
+    </cm-upload>
+
     <div class="message" cm-answer-area data-qa="answer-ctn">
         <textarea data-qa="input-answer" cm-resize-textarea cm-max-rows="4" ng-model="my_message_text"></textarea>
         <i class="fa cm-smile-negative with-cursor"></i>

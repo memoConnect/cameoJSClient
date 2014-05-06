@@ -82,8 +82,8 @@ describe('cmAuth', function () {
             var promise = cmAuth.checkAccountName();
 
             promise.then(
-                function (reservationSecret) {
-                    expect(reservationSecret).toBe('VaXdx3xAAzk3cTXvdDlC')
+                function (response) {
+                    expect(response.reservationSecret).toBe('VaXdx3xAAzk3cTXvdDlC')
                 }
             );
             $httpBackend.flush()

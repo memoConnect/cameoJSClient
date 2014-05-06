@@ -34,7 +34,7 @@ this.waitForPageLoad = function (expectedRoute) {
     return this
 }
 
-this.waitForElement = function (selector, count) {
+this.waitForElement = function (selector) {
 
     ptor.wait(function () {
         return $$(selector).then(function (elements) {
@@ -62,7 +62,7 @@ this.waitForElements = function (selector, count) {
         return $$(selector).then(function (elements) {
             return elements.length == count
         })
-    }, config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
+    }, config.waitForTimeout, 'waitForElements ' + selector + ' timeout is reached')
 
     return this
 }
