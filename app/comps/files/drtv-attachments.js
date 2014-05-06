@@ -35,12 +35,16 @@ angular.module('cmFiles').directive('cmAttachments',[
 //                }
 
                 $scope.files = [];
-
-                this.setFile = function(fileData){
+                /**
+                 * function called via <input type=file>
+                 * @param blob
+                 * @returns {boolean}
+                 */
+                this.setFile = function(blob){
                     var bool = true;
 
                     angular.forEach($scope.files, function(value){
-                        if(value.name == fileData.name){
+                        if(value.name == blob.name){
                             bool = false;
                         }
                     });
@@ -49,25 +53,17 @@ angular.module('cmFiles').directive('cmAttachments',[
                         return false;
                     }
 
-                    var file = new cmFile(fileData);
+                    var file = new cmFile(blob);
                     $scope.files.push(file);
-
-//                    $scope.readyForUpload = file
-//                        .importFile(file_handle)
-//                        .chopIntoChunks($scope.chunkSize)
-//                        .then(function(){
-//                            return file
-//                                .encryptName($scope.passphrase)
-//                                .encryptChunks($scope.passphrase)
-//                                .prepareForUpload()
-//                        })
-//                        .then(function(){
-//                            self.setFileId(file.id)
-//                        })
-
                 };
-
-                $scope.prepareForUpload = function(passphrase){
+                /**
+                 * prepare all files for upload
+                 * encrypt name & chunks
+                 * api call to get fileId
+                 * @param passphrase
+                 * @returns {*}
+                 */
+                $scope.prepareFilesForUpload = function(passphrase){
                     var defered = $q.defer();
 
                     angular.forEach($scope.files, function(file, index){
@@ -83,21 +79,21 @@ angular.module('cmFiles').directive('cmAttachments',[
                         );
                     });
 
-                    return defered.promise();
+                    return defered.promise;
                 }
-
+                /**
+                 * function for parent to check if files in queue
+                 * @returns {boolean}
+                 */
                 $scope.hasFiles = function(){
                     return $scope.files.length > 0;
                 };
-
+                /**
+                 * clear files
+                 */
                 $scope.resetFiles = function(){
                     $scope.files = [];
                 };
-
-//                this.setFileId = function(fileId){
-//                    $scope.$parent[$attrs.ngModel] = fileId
-//                    $scope.fileId = fileId
-//                }
             }
         }
     }

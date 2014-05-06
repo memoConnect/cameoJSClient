@@ -6,6 +6,7 @@ angular.module('cmConversations').directive('cmConversation', [
     'cmMessageFactory',
     'cmUserModel',
     'cmRecipientModel',
+    'cmAssetFactory',
     'cmCrypt',
 //    'cmCron',
     'cmLogger',
@@ -13,7 +14,7 @@ angular.module('cmConversations').directive('cmConversation', [
     '$location',
     '$rootScope',
 
-    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location, $rootScope) {
+    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmAssetFactory, cmCrypt, cmLogger, cmNotify, $location, $rootScope) {
         return {
             restrict: 'AE',
             templateUrl: 'comps/conversations/drtv-conversation.html',
@@ -44,6 +45,8 @@ angular.module('cmConversations').directive('cmConversation', [
 
                     /**
                      * Nested Function in drtv-attachments
+                     * check if files exists
+                     * after success reverse in here without files
                      */
                     if($scope.hasFiles()) {
                         $scope.prepareFilesForUpload($scope.conversation.passphrase).then(function(){
@@ -59,8 +62,13 @@ angular.module('cmConversations').directive('cmConversation', [
 
                             $scope.sendMessage();
                         });
+                        return false;
                     }
 
+                    /**
+                     * validate answer form
+                     * @type {boolean}
+                     */
                     var passphrase_valid    = !!$scope.conversation.passphraseValid(),
                         message_empty       = !isMessageValid() ,
                         recipients_missing  = $scope.conversation.recipients.length <= 0 //@todo mocked
@@ -73,19 +81,17 @@ angular.module('cmConversations').directive('cmConversation', [
                                 }
                             );
                         } else {
-                            // $scope.files = []
-
                             cmMessageFactory.create()
                                 .addAssets(assets)
                                 .setText($scope.my_message_text)
-                                .setPublicData($scope.conversation.passphrase ? [] : ['text'])                                
+                                .setPublicData($scope.conversation.passphrase ? [] : ['text'])
                                 .encrypt($scope.conversation.passphrase)
                                 .addTo($scope.conversation)
                                 .sendTo($scope.conversation.id)
                                 .then(function(){
                                     $scope.conversation.$chain()
                                     .encryptPassphrase()
-                                    .saveEncryptedPassphraseList()
+                                    .saveEncryptedPassphraseList();
 
                                     $scope.conversation.numberOfMessages++;
                                     $scope.my_message_text = "";
@@ -96,7 +102,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                         $location.path('/conversation/' + $scope.conversation.id);
                                     }
                                     
-                                })
+                                });
                         }
                     }
 
@@ -104,27 +110,6 @@ angular.module('cmConversations').directive('cmConversation', [
                     if (message_empty)        cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY')
                     if (recipients_missing)   cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING')
                 }
-
-                $scope.sendAsset = function () {
-                    var passphrase_valid = !!$scope.conversation.passphraseValid(),
-                        recipients_missing = $scope.conversation.recipients.length <= 1,
-                        assetId_missing = !$scope.assetId
-
-                    passphrase_valid && !assetId_missing && !recipients_missing
-                        ?   $scope.conversation
-                        .newMessage(':asset,'+$scope.assetId, $scope.conversation.passphrase)
-                        .sendTo($scope.conversation)
-                        .then(function () {
-                            if ($scope.new_conversation) $location.url('/conversation/' + $scope.conversation.id)
-                            $scope.assetId = undefined
-                        })
-                        :   null
-
-                    if (!passphrase_valid)    cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID')
-                    if (assetId_missing)      cmNotify.warn('CONVERSATION.WARN.ASSET_ID_MISSING')
-                    if (recipients_missing)   cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING')
-                }
-
 
                 $scope.sendCaptcha = function () {
                     var passphrase_valid = !!$scope.conversation.passphraseValid(),
