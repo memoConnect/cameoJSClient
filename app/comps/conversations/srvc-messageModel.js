@@ -71,7 +71,8 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                 var secret_JSON = JSON.stringify(secret_data)
 
-                this.encryptedData = cmCrypt.encryptWithShortKey(passphrase, secret_JSON) //@ TODO!!!!
+                this.encryptedData = cmCrypt.encryptWithShortKey(passphrase, secret_JSON)
+                //@ TODO!!!!
 
                 return this;
             }
