@@ -87,6 +87,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                 .addTo($scope.conversation)
                                 .sendTo($scope.conversation.id)
                                 .then(function(){
+                                    //@ TODO: solve rekeying another way:
                                     $scope.conversation.$chain()
                                     .encryptPassphrase()
                                     .saveEncryptedPassphraseList();
