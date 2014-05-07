@@ -207,7 +207,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                 }
 
                 /**
-                 * start download with first chunk in array
+                 * start upload with first chunk in array
                  */
                 this.uploadChunk(0);
 
