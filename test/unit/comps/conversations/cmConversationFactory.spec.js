@@ -8,8 +8,6 @@ describe('cmConversationFactory', function(){
 
     beforeEach(module('cmConversations'));
 
-    beforeEach(module('cmFiles'));
-
     beforeEach(inject(function(_cmConversationFactory_){
         cmConversationFactory = _cmConversationFactory_
     }))
