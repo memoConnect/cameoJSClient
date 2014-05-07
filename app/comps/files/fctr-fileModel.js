@@ -139,7 +139,11 @@ angular.module('cmFiles').factory('cmFileModel', [
 
                 $q.all(promises)
                     .then(
-                    function(data)      { self.trigger('upload:finish'); deferred.resolve(self.id) },
+                    function(data)      {
+                        self.trigger('upload:finish');
+                        self.state = 'cached';
+                        deferred.resolve(self.id);
+                    },
                     function(response)  { deferred.reject(response) }
                 )
 
@@ -199,7 +203,11 @@ angular.module('cmFiles').factory('cmFileModel', [
 
                 $q.all(promises)
                     .then(
-                    function(chunks)    { self.trigger('download:finish'); deferred.resolve(chunks) },
+                    function(chunks)    {
+                        self.trigger('download:finish');
+                        self.state = 'cached';
+                        deferred.resolve(chunks);
+                    },
                     function(response)  { deferred.reject(response) }
                 )
 

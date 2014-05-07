@@ -43,16 +43,8 @@ angular.module('cmConversations').directive('cmMessageFile', [
                         $scope.progress += progress;
                     });
 
-                    $scope.file.on('upload:finish', function(){
-                        $scope.file.state = 'cached';
-                    });
-
                     $scope.file.on('download:chunk', function(progress){
                         $scope.progress += progress;
-                    });
-
-                    $scope.file.on('download:finish', function(){
-                        $scope.file.state = 'cached';
                     });
                 }
             }
