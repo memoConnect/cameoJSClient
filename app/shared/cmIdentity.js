@@ -163,38 +163,48 @@ function($rootScope, cmIdentityModel){
          * @param data id or object
          * @returns {*}
          */
-        create: function(data){
+
+        get: function(data){
             var identity = null,
-                i = 0;
+                id       = data.id || data
 
-                if(this.getQty() > 0){
-                    if(typeof data === 'string'){
-                        while(i < instances.length){
-                            if(typeof instances[i] === 'object' && instances[i].id == data){
-                                identity = instances[i];
-                                break;
-                            }
-                            i++;
-                        }
-                    } else if(typeof data === 'object'){
-                        while(i < instances.length){
-                            if(typeof instances[i] === 'object' && instances[i].id == data.id){
-                                identity = instances[i];
-                                break;
-                            }
-                            i++;
-                        }
-                    }
-                }
+            identity = this.getById(id) 
 
-                if(identity === null){
-                    identity = new cmIdentityModel(data);
-                    
-                    instances.push(identity);
-                }
+            if(identity === null){
+                identity = new cmIdentityModel(data);
+                instances.push(identity);
+            }
 
             return identity;
         },
+
+        create: function(data){
+            if(typeof data != 'object'){
+                return null  
+            } else {
+                return this.get(data)
+            }
+        },
+
+
+        //get Message by id
+        getById: function(id){
+            var identity = null;
+
+            for(var i = 0; i < instances.length; i++){
+                if(
+                    typeof instances[i] === 'object' &&
+                    instances[i].id == id
+                ){
+                    identity = instances[i];
+                    break;
+                }
+            }
+
+            return identity
+        },
+
+
         getQty: function(){
             return instances.length;
         }

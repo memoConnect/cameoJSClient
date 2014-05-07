@@ -2,9 +2,10 @@
 
 angular.module('cmConversations').service('cmConversationsAdapter', [
     'cmApi',
+    'cmObject',
     'cmUtil',
-    function (cmApi, cmUtil){
-        return {
+    function (cmApi, cmObject, cmUtil){
+        var adapter = {
 
             newConversation: function(subject) {
                 return	cmApi.post({
@@ -90,5 +91,12 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                         })
             }
         }
+
+        cmObject.addEventHandlingTo(adapter)
+       
+        cmApi.on('conversation:new-message', function(event, data){ adapter.trigger('new-message', data) })
+           
+
+        return adapter
     }
 ])

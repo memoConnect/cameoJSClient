@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('cmConversations').factory('cmConversationModel',[
+
     'cmConversationsAdapter',
     'cmMessageFactory',
     'cmIdentityFactory',
@@ -9,27 +10,138 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmRecipientModel',
     'cmNotify',
     'cmObject',
+    'cmLogger',
     '$q',
     '$rootScope',
-    function (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, $q, $rootScope){
-        var ConversationModel = function(data){
-            //Attributes:
-            this.id = '',
-            this.subject = '',
-            this.messages = [],
-            this.recipients = [],
-            this.passphrase = '',
-            this.created = '',
-            this.lastUpdated = '',
-            this.numberOfMessages = 0,
-            this.encryptedPassphraseList = [];
-            this.keyTransmission = 'asymmetric' || 'symmetric'
-            var self = this;
 
+    function (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, cmLogger, $q, $rootScope){
+
+        /**
+        * Represents a Conversation.
+        * @constructor
+        * @param {Object} [data] - The conversation data as received from the backend.
+        */
+       
+        var ConversationModel = function(data){
+
+            this.id                 = undefined
+            this.recipients         = []            //list of RecipientModel objects
+            this.messages           = []            //list of MessageModel object
+
+            this.timeOfCreation     = 0             //timestamp of the conversation's creation
+            this.timeOfLastUpdate   = 0             //timestamp of the conversations's last Update
+
+            this.subject            = ''            //subject line
+
+            this.encryptedPassphraseList = []
+
+            var self = this
+
+
+            // Add event and chain handling to the Conversation:
 
             cmObject
             .addEventHandlingTo(this)
             .addChainHandlingTo(this)
+
+
+            /**
+             * Function to initialize the conversation. Should never be called from the outside.
+             * @param {Object} [data] - The conversation data as required by .importData(), see below.
+             */
+
+            this._init = function(data){
+                this.importData(data)
+
+                cmConversationsAdapter
+                .on('new-message', function(event, data){ self.addMessage(data) })
+
+                this.trigger('init')
+            }
+
+
+            /**
+             * Function to import data as received from the backend.
+             * @param {Object} data -  The conversation data as recieved from the backend.
+             */
+
+
+            this.importData = function(data){
+
+                if(!data) return this
+
+                //There is no invalid data, importData looks for everything useable in data; if it finds nothing it wont update anything
+                this.id                      = data.id           || this.id
+                this.timeOfCreation          = data.created      || this.timeOfCreation
+                this.timeOfLastUpdate        = data.lastUpdated  || this.timeOfLastUpdate
+
+                this.encryptedPassphraseList = this.encryptedPassphraseList.concat(data.encryptedPassphraseList || [])
+
+                var messages = data.messages || []
+                messages.forEach(function(message_data)  
+                    { self.addMessage(cmMessageFactory.get(message_data))  })
+
+                var recipients = data.recipients || []
+                recipients.forEach(function(recipient_data)
+                    { self.addRecipient(cmRecipientModel(cmIdentityFactory.get(recipient_data))) })
+            }
+
+            /**
+             * Function to add a message to a conversation.
+             * @param {MessageModel} message.
+             */
+            
+      
+            this.addMessage = function(message){
+                if(this.messages.indexOf(message) == -1){
+                    this.messages.push( message )
+                    this.trigger('message-added')
+                } else {
+                    cmLogger.error('conversationModel: unable to add message; duplicate detected. (id:'+message.id+')')
+                }
+
+                return this
+            }
+
+
+
+            /**
+             * Function to add a recipient to a conversation.
+             * @param {RecipientModel} recipient.
+             */
+            
+
+            this.addRecipient = function(recipient){
+                if(this.recipients.indexOf(message) == -1){
+                    this.Recipient.push( recipient )
+                    this.trigger('recipient-added')
+                } else {
+                    cmLogger.error('conversationModel: unable to add recipient; duplicate detected. (id:'+recipient.id+')')
+                }
+                return this
+            }
+
+
+            
+            /* COVERSATION REFACTORING:
+
+            CONVERSATION REFACTORING */
+
+
+
+
+
+
+
+
+
+
+            //Attributes:
+            this.passphrase = '',
+            this.created = '',
+            this.lastUpdated = '',
+            this.numberOfMessages = 0,
+            this.keyTransmission = 'asymmetric' || 'symmetric'
 
             $rootScope.$on('logout', function(){
                 self.messages = [];
@@ -42,6 +154,12 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.init = function (conversation_data) {
 
+                cmLogger('conversationModel: .init() is deprecated, please use .importData().')
+
+                this.importData(conversation_data)
+                return this
+
+                /*
                 if(typeof conversation_data !== 'undefined'){
                     this.id                 = conversation_data.id;
                     this.subject            = conversation_data.subject;
@@ -66,6 +184,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         })
                     }
                 }
+                */
             }
 
             this.sync = function(){
@@ -162,6 +281,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @param message
              * @returns {cmConversationModel.ConversationModel}
              */
+            
+            /*
             this.addMessage = function (message, encrypt_passphrase) {
 
                 if(this.messages.length == 0){
@@ -186,6 +307,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 return this
             };
+            */
 
             this.getLastMessage = function(){
                 if(this.messages.length > 0){
@@ -212,6 +334,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * Recipient Handling
              */
 
+
+            /*
             this.getRecipientList = function(){
                 var list = []
 
@@ -221,6 +345,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 return list.join(', ')
             }
+            */
 
             this.hasRecipient = function(identity){
                 var check = false;
@@ -278,6 +403,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             this.getSubjectLine = function(){
+
+                cmLogger.debug('conversationModel: TODO, Subject Line')
+
+                return ""
+
                 var lastMessage = this.getLastMessage();
                 return     this.subject
                         || (lastMessage ? lastMessage.from.getDisplayName() : false)
@@ -428,8 +558,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
 
 
-            this.init(data);
 
+            //this.init(data);
+
+            this._init(data)
         }
 
         return ConversationModel;
