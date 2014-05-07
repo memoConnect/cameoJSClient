@@ -199,8 +199,6 @@ angular.module('cmFiles').factory('cmFileModel', [
             };
 
             this.uploadChunks = function() {
-                var self = this;
-
                 if(!this.id){
                     cmLogger.error('Unable to upload chunks; cmFile.id missing. Try calling cmFile.prepareForDownload() first.')
                     return null;
@@ -210,41 +208,6 @@ angular.module('cmFiles').factory('cmFileModel', [
                  * start download with first chunk in array
                  */
                 this.uploadChunk(0);
-
-//                var deferred = $q.defer(),
-//                    promises = []
-//
-//                self.chunks.forEach(function(chunk, index){
-//                    var deferredChunk = $q.defer()
-//
-//                    promises.push(deferredChunk.promise)
-//
-//                    chunk
-//                        .upload(self.id, index)
-//                        .then(
-//                        function(){
-//                            self.trigger('upload:chunk', chunk.encryptedRaw.length / self.encryptedSize);
-//
-//                            deferredChunk.resolve()
-//                        },
-//
-//                        function(response){
-//                            deferredChunk.reject(response)
-//                        }
-//                    );
-//                });
-//
-//                $q.all(promises)
-//                    .then(
-//                    function(data)      {
-//                        self.trigger('upload:finish');
-//                        self.state = 'cached';
-//                        deferred.resolve(self.id);
-//                    },
-//                    function(response)  { deferred.reject(response) }
-//                )
-//
-//                return deferred.promise
 
                 return this;
             };

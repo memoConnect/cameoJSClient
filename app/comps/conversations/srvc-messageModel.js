@@ -6,12 +6,15 @@ angular.module('cmConversations').factory('cmMessageModel',[
     'cmIdentityFactory',
     'cmFileFactory',
     'cmUserModel',
+    'cmObject',
     '$rootScope',
-    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, $rootScope){
+    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, cmObject, $rootScope){
 
         var Message = function(data){
             //Attributes:
             var self = this;
+
+            cmObject.addEventHandlingTo(this);
 
             //secret data:
             this.secret = ['text','fileIds'];
@@ -179,7 +182,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 })
                 .then(function (message_data) {
                     self.init(message_data)
-                    self.uploadFiles();
+                        self.trigger('message:send');
                 })
             }
 
@@ -245,6 +248,13 @@ angular.module('cmConversations').factory('cmMessageModel',[
             }
 
             this.init(data);
+
+            /**
+             * Event Handling
+             */
+            this.on('message:send', function(){
+                self.uploadFiles();
+            });
         };
 
         return Message;
