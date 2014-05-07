@@ -29,12 +29,11 @@ angular.module('cmConversations').directive('cmMessageFile', [
                     }
 
                     $scope.file.on('progress:chunk', function(progress){
-                        console.log($scope.progress, progress)
                         $scope.progress += progress;
                     });
 
                     $scope.file.on('download:finish', function(){
-                        //$scope.progress = 1;
+                        $scope.progress = 1;
                         $scope.file
                             .decryptName()
                             .decryptChunks();
