@@ -12,5 +12,6 @@ angular.module('cmConversations', [
     'cmJob',
     'cmUserModel',
     'cmNotify',
+    'cmFiles',
     'ui.bootstrap'
 ])
