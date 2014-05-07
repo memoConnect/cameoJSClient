@@ -7,22 +7,10 @@
 
         <!--<img ng-if = "hasCaptcha" src ="{{hasCaptcha ? message.body :''}}" class="img-responsive img-rounded"/>-->
         <!--<pre ng-if = "captchaRequest">{{'CONVERSATION.TEXT.REQUEST_CAPTCHA' | cmTranslate}}</pre>-->
-        <!--<cm-download
-            ng-if          = "hasAsset" 
-            cm-data        = "assetId"
-            cm-passphrase  = "passphrase"
-        >
-            <button ng-click="download()">
-                {{fileId}}<br/>
-                {{fileName}} ({{fileSize | cmFileSize}}) <br/>
-                <progress value="{{progress}}" max =""></progress>
-                <br/>
-                {{progress*100 | cmDigits : 2}}%
-            </button>
-        </cm-download>-->
         <!--<pre ng-if ="!(hasCaptcha || captchaRequest || hasAsset)" style ="text-align:left">{{ message.decryptedBody }}</pre>-->
+
         <span class="text" ng-if="useTruncate">{{ message.text | truncate : 5 }}</span>
-        <span class="text">{{ message.text|| 'CONVERSATION.TEXT.ENCRYPTED' | cmTranslate }}</span>
+        <span class="text" ng-if="message.isTextExists">{{ message.text || 'CONVERSATION.TEXT.ENCRYPTED' | cmTranslate }}</span>
 
         <div ng-if="message.files" >
             <cm-message-file ng-repeat="file in message.files"></cm-message-file>
@@ -35,13 +23,12 @@
         <div class="assets clearfix">
             <span class="date green cm-fl">{{ message.created | date:'HH:mm'}}</span>
             <span class="envelope green cm-fl"><i class="fa cm-envelope-open"></i></span>
-            <span class="security green cm-fl"><cm-safety-level level ="conversation.getSafetyLevel()"></cm-safety-level></span>
+            <span class="security green cm-fl">
+                <cm-safety-level level ="conversation.getSafetyLevel()"></cm-safety-level>
+            </span>
         </div>
 
     </div>
-    <!--<footer>-->
-        <!--<cm-attachments></cm-attachments> &lt;!&ndash;{{ message.created }}&ndash;&gt;-->
-    <!--</footer>-->
 </article>
 
 {{textOnly ? message.text  : ''}}

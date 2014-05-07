@@ -122,14 +122,9 @@ angular.module('cmFiles').factory('cmChunk', [
              * @returns {Chunk}
              */
             this.decrypt = function(passphrase){
-                if(passphrase != ''){
-                    this.encryptedRaw
-                        ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw)
-                        :   cmLogger.error('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.')
-
-                } else {
-                    this.raw = this.encryptedRaw;
-                }
+                this.encryptedRaw
+                    ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw)
+                    :   cmLogger.error('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.')
 
                 return this
             }

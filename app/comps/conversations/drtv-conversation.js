@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmConversation', [
-
     'cmConversationsModel',
     'cmMessageFactory',
     'cmUserModel',
@@ -12,7 +11,6 @@ angular.module('cmConversations').directive('cmConversation', [
     'cmNotify',
     '$location',
     '$rootScope',
-
     function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location, $rootScope) {
         return {
             restrict: 'AE',

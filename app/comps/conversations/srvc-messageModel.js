@@ -62,9 +62,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
             }
 
             this.encrypt = function (passphrase) {
-
                 // merge secret_data into json string:
-
                 var secret_data = {}
 
                 this.secret.forEach(function(key){
@@ -86,7 +84,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 angular.extend(self, decrypted_data)
                 // watch out: this only works for simple properties, "from" will break
                 this.initFiles();
-
 
                 return !!decrypted_data
             }
@@ -238,6 +235,14 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                     this.plainData      = message_data.plain;
                     this.encryptedData  = message_data.encrypted;
+
+                    // TODO: check with encryption
+                    this.isTextExists = true;
+                    // check is files sended with text in plainData
+                    if(this.plainData['text'] == undefined && this.plainData['fileIds'] != undefined){
+                        this.isTextExists = false;
+                    }
+
                 }
                 // compare plain to this
                 for(var key in this.plainData){

@@ -24,22 +24,8 @@ angular.module('cmConversations').directive('cmMessageFile', [
                 if(typeof $scope.file == 'object'){
 
                     if($scope.file.state == 'exists'){
-                        /**
-                         example?
-                         cmFileDownload.add($scope.file)
-                         */
                         $scope.file
                             .setPassphrase($scope.conversation.passphrase)
-                            .decryptName();
-//                            .importFile()
-//                            .then(function() {
-//                                $scope.file
-//                                    .decryptName()
-//                                    .downloadChunks()
-//                                    .then(function(){
-//                                        $scope.file.decryptChunks()
-//                                    })
-//                            })
                     }
 
                     $scope.file.on('progress:chunk', function(progress){
@@ -47,7 +33,9 @@ angular.module('cmConversations').directive('cmMessageFile', [
                     });
 
                     $scope.file.on('download:finish', function(){
-                        $scope.file.decryptChunks();
+                        $scope.file
+                            .decryptName()
+                            .decryptChunks();
                     });
                 }
             }

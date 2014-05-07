@@ -25,6 +25,8 @@ angular.module('cmFiles').factory('cmFileModel', [
                 return this;
             };
 
+            // upload for state = new
+
             this.importBlob = function(blob){
                 this.blob = blob;
                 this.id   = undefined;
