@@ -189,7 +189,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                 )
             };
 
-            this.uploadChunk = function(index){
+            this._uploadChunk = function(index){
                 var chunk = this.chunks[index];
 
                 chunk
@@ -217,12 +217,12 @@ angular.module('cmFiles').factory('cmFileModel', [
                 /**
                  * start upload with first chunk in array
                  */
-                this.uploadChunk(0);
+                this._uploadChunk(0);
 
                 return this;
             };
 
-            this.downloadChunk = function(index){
+            this._downloadChunk = function(index){
                 var chunk = new cmChunk();
 
                 this.chunks[index] = chunk;
@@ -252,9 +252,15 @@ angular.module('cmFiles').factory('cmFileModel', [
                 /**
                  * start download with first chunk in array
                  */
-                this.downloadChunk(0);
+                this._downloadChunk(0);
 
                 return this;
+            };
+
+            this.downloadStart = function(){
+                if(this.id != ''){
+                    cmFileDownload.add(this);
+                }
             };
 
             this.promptSaveAs = function(){
@@ -290,9 +296,13 @@ angular.module('cmFiles').factory('cmFileModel', [
                         // todo download
                         this.id = fileData;
 
-                        this.importFile();
+                        this.importFile().then(
+                            function(){
+                                self.state = 'exists';
+                                self.trigger('import:finish');
+                            }
+                        );
 
-                        this.state = 'exists';
                     } else if(typeof fileData == 'object'){
                         this.importBlob(fileData);
 
@@ -317,12 +327,8 @@ angular.module('cmFiles').factory('cmFileModel', [
                self.decryptChunks();
             });
 
-            this.on('request:download', function(){
-                cmFileDownload.add(self);
-            });
-
             this.on('download:chunk', function(index){
-               self.downloadChunk(index + 1);
+               self._downloadChunk(index + 1);
             });
 
             this.on('download:finish', function(){

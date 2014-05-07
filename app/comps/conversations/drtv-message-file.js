@@ -20,13 +20,21 @@ angular.module('cmConversations').directive('cmMessageFile', [
                     return mime == undefined ? false : mime.search('^image/') != -1;
                 };
 
+                function getFile(){
+                    $scope.file.setPassphrase($scope.conversation.passphrase);
+                    $scope.file.downloadStart();
+                }
+
                 // exists fileModel
                 if(typeof $scope.file == 'object'){
 
                     if($scope.file.state == 'exists'){
-                        $scope.file.setPassphrase($scope.conversation.passphrase);
-                        $scope.file.trigger('request:download');
+                        getFile();
                     }
+
+                    $scope.file.on('import:finish', function(){
+                        getFile();
+                    });
 
                     $scope.file.on('progress:chunk', function(progress){
                         $scope.progress += progress;
