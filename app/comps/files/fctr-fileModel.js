@@ -363,7 +363,7 @@ angular.module('cmFiles').factory('cmFileModel', [
             });
 
 
-            this.on('donwload:finish', function(){
+            this.on('download:finish', function(){
                 self.state = 'cached';
             });
         };
