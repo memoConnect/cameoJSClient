@@ -33,7 +33,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 //data may be a string or an array
                 data = typeof data == 'string' ? [data] : data
 
-
                 //set keys for all data to secret:
                 var all_the_data =  this.secret.concat(this.public)
                                     .filter(function(elem, pos, arr) {
@@ -61,7 +60,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
             this.encrypt = function (passphrase) {
 
-                //merge secret_data into json string:
+                // merge secret_data into json string:
 
                 var secret_data = {}
 
@@ -80,8 +79,9 @@ angular.module('cmConversations').factory('cmMessageModel',[
             this.decrypt = function (passphrase) {
                 var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase, this.encryptedData))
 
-                //expose data on message Object
-                angular.extend(self, decrypted_data) // watch out: this only works for simple properties, "from" will break
+                // expose data on message Object
+                angular.extend(self, decrypted_data)
+                // watch out: this only works for simple properties, "from" will break
                 this.initFiles();
 
 

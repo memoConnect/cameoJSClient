@@ -14,17 +14,24 @@ angular.module('cmFiles').factory('cmFileModel', [
 
             this.state = 'new';
 
-            this.importFile = function(blob){
+            this.setPassphrase = function(passphrase){
+                this.passphrase = passphrase;// TODO: || null;
+                // console.log('passphrase',typeof passphrase+' '+passphrase,typeof this.passphrase+' '+this.passphrase)
+                return this;
+            };
+
+            // upload for state = new
+
+            this.importBlob = function(blob){
                 this.blob = blob;
                 this.id   = undefined;
-
 
                 this.name = blob.name;
                 this.type = blob.type;
                 this.size = blob.size;
 
                 return this;
-            }
+            };
 
             this.chopIntoChunks = function(chunkSize){
                 var self        = this,
@@ -62,28 +69,32 @@ angular.module('cmFiles').factory('cmFileModel', [
                 return  $q.all(promises)
             }
 
-            this.encryptName = function(passphrase){
-                this.name
-                    ?   this.encryptedName = cmCrypt.encryptWithShortKey(passphrase, this.name)
-                    :   cmLogger.error('Unable to encrypt filename; cmFile.name missing. Try calling cmFile.importFile() first.')
+            this.encryptName = function(){
+                if(this.name){
+                    this.encryptedName = cmCrypt.encryptWithShortKey(this.passphrase, this.name);
+                } else {
+                    cmLogger.error('Unable to encrypt filename; cmFile.name missing. Try calling cmFile.importFile() first.');
+                }
 
-                return this
-            }
+                return this;
+            };
 
-            this.encryptChunks = function(passphrase) {
-                var self = this
+            this.encryptChunks = function() {
+                var self = this;
 
-                this.encryptedSize = 0
+                this.encryptedSize = 0;
 
-                this.chunks
-                    ?   this.chunks.forEach(function(chunk){
-                    chunk.encrypt(passphrase)
-                    self.encryptedSize += chunk.encryptedRaw.length
-                })
-                    :   cmLogger.error('Unable to encrypt chunks; cmFile.chunks missing. Try calling cmFile.chopIntoChunks() first.')
+                if(this.chunks){
+                    this.chunks.forEach(function(chunk){
+                        chunk.encrypt(self.passphrase);
+                        self.encryptedSize += chunk.encryptedRaw.length;
+                    })
+                } else {
+                    cmLogger.error('Unable to encrypt chunks; cmFile.chunks missing. Try calling cmFile.chopIntoChunks() first.');
+                }
 
-                return this
-            }
+                return this;
+            };
 
             this.prepareForUpload = function() {
                 var self = this
@@ -103,7 +114,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                     )
                         :   cmLogger.error('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
                 )
-            }
+            };
 
             this.uploadChunks = function() {
                 var self = this
@@ -148,28 +159,32 @@ angular.module('cmFiles').factory('cmFileModel', [
                 )
 
                 return deferred.promise
-            }
+            };
 
-            this.importByFile = function(){
-                var self     = this
+            // download for state = exists
+
+            this.importFile = function(){
+                var self = this;
 
                 return (
                     cmFilesAdapter.getFileInfo(this.id)
                         .then(function(details){
-                            self.encryptedName = details.fileName
-                            self.type          = details.fileType
-                            self.encryptedSize = details.fileSize
-                            self.chunkIndices  = details.chunks
+                            self.encryptedName = details.fileName;
+                            self.type          = details.fileType;
+                            self.encryptedSize = details.fileSize;
+                            self.chunkIndices  = details.chunks;
                         })
                 )
-            }
+            };
 
-            this.decryptName = function(passphrase) {
-                this.encryptedName
-                    ?   this.name = cmCrypt.decrypt(passphrase, this.encryptedName)
-                    :   cmLogger.error('Unable to decrypt filename; cmFile.encryptedFileName missing. Try calling cmFile.imporByFile) first.')
-                return this
-            }
+            this.decryptName = function() {
+                if(this.encryptedName){
+                    this.name = cmCrypt.decrypt(this.passphrase, this.encryptedName);
+                } else {
+                    cmLogger.error('Unable to decrypt filename; cmFile.encryptedFileName missing. Try calling cmFile.imporByFile) first.');
+                }
+                return this;
+            };
 
             this.downloadChunk = function(index){
                 var deferredChunk = $q.defer()
@@ -230,29 +245,28 @@ angular.module('cmFiles').factory('cmFileModel', [
                 )
 
                 return deferred.promise
-            }
+            };
 
-            this.decryptChunks = function(passphrase){
-                var promises =  []
+            this.decryptChunks = function(){
+                var self = this;
 
                 if(!this.chunks){
-                    cmLogger.error('Unable to decrypt chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.')
+                    cmLogger.error('Unable to decrypt chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.');
                     return null
                 }
 
-                self.size = 0
+                self.size = 0;
 
                 this.chunks.forEach(function(chunk){
                     chunk
-                        .decrypt(passphrase)
-                        .binaryStringToBlob()
+                        .decrypt(self.passphrase)
+                        .binaryStringToBlob();
 
-                    self.size += chunk.blob.size
-                })
+                    self.size += chunk.blob.size;
+                });
 
                 this.reassembleChunks();
-
-            }
+            };
 
             this.reassembleChunks = function(){
                 var self = this,
@@ -269,7 +283,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                 self.trigger('reassemble:finish');
 
                 return this
-            }
+            };
 
             this.promptSaveAs = function(){
                 var self = this
@@ -282,7 +296,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                     :   cmLogger.error('Unable to prompt saveAs; cmFile.blob is missing, try cmFile.importByFile().')
 
                 return this
-            }
+            };
 
             /**
              *
@@ -297,7 +311,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                         this.id = fileData;
                         this.state = 'exists';
                     } else if(typeof fileData == 'object'){
-                        this.importFile(fileData);
+                        this.importBlob(fileData);
 
                         if(!chunkSize){
                             chunkSize = 128;
@@ -308,10 +322,10 @@ angular.module('cmFiles').factory('cmFileModel', [
                 }
 
                 return this;
-            }
+            };
 
             this.init(fileData);
-        }
+        };
 
         return FileModel;
     }

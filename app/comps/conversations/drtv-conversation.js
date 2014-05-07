@@ -43,12 +43,13 @@ angular.module('cmConversations').directive('cmConversation', [
                 $scope.sendMessage = function () {
 
                     /**
-                     * Nested Function in drtv-attachments
+                     * Nested functions in comps/files/drtv-files.js
                      * check if files exists
-                     * after success reverse in here without files
+                     * after success resolve step again in here without files
                      */
                     if($scope.hasFiles()) {
-                        $scope.prepareFilesForUpload($scope.conversation.passphrase).then(function(){
+                        $scope.prepareFilesForUpload($scope.conversation.passphrase)
+                            .then(function(){
                             angular.forEach($scope.files, function(file){
                                 if(file.id != undefined){
                                     files.push(file);

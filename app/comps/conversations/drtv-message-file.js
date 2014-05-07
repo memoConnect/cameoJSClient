@@ -11,7 +11,7 @@ angular.module('cmConversations').directive('cmMessageFile', [
             restrict: 'E',
             require: '^cmMessage',
             templateUrl: 'comps/conversations/drtv-message-file.html',
-            controller: function ($scope, $element, $attrs) {
+            controller: function ($scope) {
                 $scope.progress = 0;
 
                 $scope.cmFileTypes = cmFileTypes;
@@ -23,21 +23,24 @@ angular.module('cmConversations').directive('cmMessageFile', [
                 // exists fileModel
                 if(typeof $scope.file == 'object'){
 
-                  if($scope.file.state == 'exists'){
+                    if($scope.file.state == 'exists'){
+                        /**
+                         example?
+                         cmFileDownload.add($scope.file)
+                         */
                         // todo: download
-                        $scope.file.importByFile().then(function() {
-
-                            $scope.file.decryptName($scope.conversation.passphrase)
-
-                            $scope.file.downloadChunks()
-                            .then(
-                                function(){
-                                    $scope.file.decryptChunks($scope.conversation.passphrase)
-                                }
-                            )
-                        })
+                        $scope.file
+                            .setPassphrase($scope.conversation.passphrase)
+                            .importFile()
+                            .then(function() {
+                                $scope.file
+                                    .decryptName()
+                                    .downloadChunks()
+                                    .then(function(){
+                                        $scope.file.decryptChunks()
+                                    })
+                            })
                     }
-
 
                     $scope.file.on('upload:chunk', function(progress){
                         $scope.progress += progress;
