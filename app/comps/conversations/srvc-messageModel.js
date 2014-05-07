@@ -160,20 +160,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
             }
 
             /**
-             * Handle Upload from new Files
-             * @returns {cmMessageModel.Message}
-             */
-            this.uploadFiles = function(){
-                if(this.files.length > 0){
-                    angular.forEach(this.files, function(file){
-                       file.uploadChunks();
-                    });
-                }
-
-                return this;
-            }
-
-            /**
              * send message to backend object
              * @param conversation
              * @returns {*|Promise|!Promise.<RESULT>}
@@ -199,6 +185,20 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
             this.isOwn = function(){
                 return (!this.from || cmUserModel.data.id == this.from.id)
+            }
+
+            /**
+             * Handle Upload from new Files
+             * @returns {cmMessageModel.Message}
+             */
+            this.uploadFiles = function(){
+                if(this.files.length > 0){
+                    angular.forEach(this.files, function(file){
+                        file.uploadChunks();
+                    });
+                }
+
+                return this;
             }
 
             /**
