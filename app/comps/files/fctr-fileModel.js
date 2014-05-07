@@ -345,7 +345,7 @@ angular.module('cmFiles').factory('cmFileModel', [
             });
 
             this.on('download:chunk', function(event,index){
-//                self._downloadChunk(index + 1);
+                self._downloadChunk(index + 1);
                 self._decryptChunk(index);
             });
 
@@ -371,7 +371,7 @@ angular.module('cmFiles').factory('cmFileModel', [
             this.on('decrypt:chunk', function(event,index){
 //                cmLogger.debug('decrypt:chunk');
 //                self._decryptChunk(index + 1);
-                self._downloadChunk(index + 1);
+//                self._downloadChunk(index + 1);
             });
 
             this.on('decrypt:finish', function(event,index){
