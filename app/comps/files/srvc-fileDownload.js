@@ -21,11 +21,11 @@ angular.module('cmFiles').service('cmFileDownload', [
          */
         this.add = function(file){
             if(typeof file == 'object'){
-                stack.push(file);
+                this.stack.push(file);
 
                 if(this.atWork !== true){
                     this.atWork = true;
-                    this.run(stack.shift());
+                    this.run(this.stack.shift());
                 }
             }
         };

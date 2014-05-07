@@ -25,7 +25,7 @@ angular.module('cmFiles').service('cmFilesAdapter', [
                         chunk: chunk
                     },
                     headers:{
-                        "X-Index":      index
+                        "X-Index": index
                     }
                 })
 

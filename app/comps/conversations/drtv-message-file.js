@@ -28,26 +28,26 @@ angular.module('cmConversations').directive('cmMessageFile', [
                          example?
                          cmFileDownload.add($scope.file)
                          */
-                        // todo: download
                         $scope.file
                             .setPassphrase($scope.conversation.passphrase)
-                            .importFile()
-                            .then(function() {
-                                $scope.file
-                                    .decryptName()
-                                    .downloadChunks()
-                                    .then(function(){
-                                        $scope.file.decryptChunks()
-                                    })
-                            })
+                            .decryptName();
+//                            .importFile()
+//                            .then(function() {
+//                                $scope.file
+//                                    .decryptName()
+//                                    .downloadChunks()
+//                                    .then(function(){
+//                                        $scope.file.decryptChunks()
+//                                    })
+//                            })
                     }
 
-                    $scope.file.on('upload:chunk', function(progress){
+                    $scope.file.on('progress:chunk', function(progress){
                         $scope.progress += progress;
                     });
 
-                    $scope.file.on('download:chunk', function(progress){
-                        $scope.progress += progress;
+                    $scope.file.on('download:finish', function(){
+                        $scope.file.decryptChunks();
                     });
                 }
             }
