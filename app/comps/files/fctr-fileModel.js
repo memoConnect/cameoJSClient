@@ -340,7 +340,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                self.decryptChunks();
             });
 
-            this.on('download:chunk', function(index){
+            this.on('download:chunk', function(event,index){
                self._downloadChunk(index + 1);
             });
 
@@ -348,7 +348,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                 self.state = 'cached';
             });
 
-            this.on('upload:chunk', function(index){
+            this.on('upload:chunk', function(event,index){
                 self._uploadChunk(index + 1);
             });
 
@@ -356,17 +356,17 @@ angular.module('cmFiles').factory('cmFileModel', [
                 self.state = 'cached';
             });
 
-            this.on('encrypt:chunk', function(index){
+            this.on('encrypt:chunk', function(event,index){
                 cmLogger.debug('encrypt:chunk');
                self._encryptChunk(index + 1);
             });
 
-            this.on('decrypt:chunk', function(index){
+            this.on('decrypt:chunk', function(event,index){
                 cmLogger.debug('decrypt:chunk');
                 self._decryptChunk(index + 1);
             });
 
-            this.on('decrypt:finish', function(index){
+            this.on('decrypt:finish', function(event,index){
                 self.reassembleChunks();
             });
         };
