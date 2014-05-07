@@ -2,6 +2,5 @@
 
 angular.module('cmUi', [
     'cmLanguage',
-    'cmUserModel',
-    'ui.bootstrap'
+    'cmUserModel'
 ])

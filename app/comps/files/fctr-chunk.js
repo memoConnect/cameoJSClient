@@ -47,12 +47,6 @@ angular.module('cmFiles').factory('cmChunk', [
             return new Blob(byteArrays, {type: contentType});
         }
 
-
-
-
-
-
-
         return  function Chunk(file, start, end){
 
             this.importFileSlice = function (file, start, end){
@@ -122,6 +116,11 @@ angular.module('cmFiles').factory('cmChunk', [
                     })
             }
 
+            /**
+             * @TODO leere phasephrase ??!??!
+             * @param passphrase
+             * @returns {Chunk}
+             */
             this.decrypt = function(passphrase){
                 this.encryptedRaw
                     ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw)

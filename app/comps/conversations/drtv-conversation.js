@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmConversation', [
-
     'cmConversationsModel',
     'cmMessageFactory',
     'cmUserModel',
@@ -12,7 +11,6 @@ angular.module('cmConversations').directive('cmConversation', [
     'cmNotify',
     '$location',
     '$rootScope',
-
     function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location, $rootScope) {
         return {
             restrict: 'AE',
@@ -24,12 +22,53 @@ angular.module('cmConversations').directive('cmConversation', [
                     conversation_id      = $scope.$eval($attrs.cmConversations) || $scope.$eval($attrs.conversationId),
                     conversation_subject = $scope.$eval($attrs.cmSubject),
                     conversation_offset  = $attrs.offset,
-                    conversation_limit   = $attrs.limit
+                    conversation_limit   = $attrs.limit,
+                    files               = [];
 
+                function isMessageValid(){
+                    if($scope.my_message_text != '' || files.length > 0){
+                        return true;
+                    }
+
+                    return false;
+                }
+
+
+                /**
+                 * Files Array
+                 * @type {Array}
+                 */
                 $scope.sendMessage = function () {
 
+                    /**
+                     * Nested functions in comps/files/drtv-files.js
+                     * check if files exists
+                     * after success resolve step again in here without files
+                     */
+                    if($scope.hasFiles()) {
+                        $scope.prepareFilesForUpload($scope.conversation.passphrase)
+                            .then(function(){
+                            angular.forEach($scope.files, function(file){
+                                if(file.id != undefined){
+                                    files.push(file);
+                                }
+                            });
+                            /**
+                             * Nested Function in drtv-attachments
+                             */
+                            $scope.resetFiles();
+
+                            $scope.sendMessage();
+                        });
+                        return false;
+                    }
+
+                    /**
+                     * validate answer form
+                     * @type {boolean}
+                     */
                     var passphrase_valid    = !!$scope.conversation.passphraseValid(),
-                        message_empty       = !$scope.my_message_text,
+                        message_empty       = !isMessageValid() ,
                         recipients_missing  = $scope.conversation.recipients.length <= 0 //@todo mocked
 
                     if(!message_empty && passphrase_valid && !recipients_missing){
@@ -41,26 +80,27 @@ angular.module('cmConversations').directive('cmConversation', [
                             );
                         } else {
                             cmMessageFactory.create()
+                                .addFiles(files)
                                 .setText($scope.my_message_text)
-                                .setPublicData($scope.conversation.passphrase ? [] : ['text'])                                
+                                .setPublicData($scope.conversation.passphrase ? [] : ['text','fileIds'])
                                 .encrypt($scope.conversation.passphrase)
                                 .addTo($scope.conversation)
                                 .sendTo($scope.conversation.id)
                                 .then(function(){
-                                    
                                     $scope.conversation.$chain()
                                     .encryptPassphrase()
-                                    .saveEncryptedPassphraseList()
+                                    .saveEncryptedPassphraseList();
 
                                     $scope.conversation.numberOfMessages++;
                                     $scope.my_message_text = "";
+                                    files = [];
 
                                     if($scope.new_conversation !== false){
                                         cmConversationsModel.addConversation($scope.conversation, true);
                                         $location.path('/conversation/' + $scope.conversation.id);
                                     }
-                                    
-                                })
+
+                                });
                         }
                     }
 
@@ -68,27 +108,6 @@ angular.module('cmConversations').directive('cmConversation', [
                     if (message_empty)        cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY')
                     if (recipients_missing)   cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING')
                 }
-
-                $scope.sendAsset = function () {
-                    var passphrase_valid = !!$scope.conversation.passphraseValid(),
-                        recipients_missing = $scope.conversation.recipients.length <= 1,
-                        assetId_missing = !$scope.assetId
-
-                    passphrase_valid && !assetId_missing && !recipients_missing
-                        ?   $scope.conversation
-                        .newMessage(':asset,'+$scope.assetId, $scope.conversation.passphrase)
-                        .sendTo($scope.conversation)
-                        .then(function () {
-                            if ($scope.new_conversation) $location.url('/conversation/' + $scope.conversation.id)
-                            $scope.assetId = undefined
-                        })
-                        :   null
-
-                    if (!passphrase_valid)    cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID')
-                    if (assetId_missing)      cmNotify.warn('CONVERSATION.WARN.ASSET_ID_MISSING')
-                    if (recipients_missing)   cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING')
-                }
-
 
                 $scope.sendCaptcha = function () {
                     var passphrase_valid = !!$scope.conversation.passphraseValid(),
@@ -164,14 +183,6 @@ angular.module('cmConversations').directive('cmConversation', [
                      }
                      */
 
-                    /**
-                     * @TODO important?
-                     */
-//                    $scope.$watch("conversation.subject", function (new_subject) {
-//                        $scope.conversation.updateSubject(new_subject||'')
-//                    })
-
-
                     //cron
 //                if($scope.new_conversation !== true){
 //                    cmCron.add('Conversation-'+conversation.id,{instance: conversation,task:function(conversation){self.update()}});
@@ -204,8 +215,6 @@ angular.module('cmConversations').directive('cmConversation', [
                         }
                     );
                 }
-
-
             }
         }
     }

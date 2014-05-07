@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('cmFiles').service('cmFilesAdapter', [
     'cmApi',
     function (cmApi){
@@ -23,7 +25,7 @@ angular.module('cmFiles').service('cmFilesAdapter', [
                         chunk: chunk
                     },
                     headers:{
-                        "X-Index":      index
+                        "X-Index": index
                     }
                 })
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmMessage', [
-    function cmMessage() {
+    function () {
         return {
             restrict: 'AE',
             require: '^cmConversation',

@@ -85,6 +85,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                     cmConversationsAdapter.newConversation((this.subject || '')).then(
                         function (conversation_data) {
+
                             self.init(conversation_data);
 
                             var i = 0;
@@ -123,7 +124,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                             offset = this.messages.length;
                             clearAllMessages = false;
                         }
-                        var limit = data.numberOfMessages - offset;
+                        var limit = conversation_data.numberOfMessages - offset;
                         this.updateMessages(limit, offset, clearAllMessages);
                     } else {
                         cmConversationsAdapter.getConversationSummary(this.id).then(
@@ -296,7 +297,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     result = false
                 }
 
-
                 if(this.keyTransmission == 'asymmetric' && !cmUserModel.hasPrivateKey()){
                     cmNotify.warn('CONVERSATION.WARN.PRIVATE_KEY_MISSING')
                     result = false
@@ -361,8 +361,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.passphrase = ''
                 this.encryptedPassphraseList.forEach(function(item){
                     if(!self.passphrase){
-                        self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase) ||''
-                        if(item.keyId=="_passwd"){
+                        self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase) || ''
+                        if(item.keyId == "_passwd"){
                             self.passphrase = cmCrypt.decrypt(self.password, item.encryptedPassphrase) || ''
                         }
                     }

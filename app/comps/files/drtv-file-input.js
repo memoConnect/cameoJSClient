@@ -4,13 +4,14 @@ angular.module('cmFiles').directive('cmFileInput', [
     function () {
         return {
             restrict: 'AE',
-            require: '^cmUpload',
+            require: '^cmFiles',
             scope: {},
-            template: '<input type="file" placeholder="{FILES.PLACEHOLDER.UPLOAD|cmTranslate}">',
+            template: '<input type="file">',
 
-            link: function (scope, element, attributes, uploadCtrl) {
+            link: function (scope, element, attributes, cmFilesCtrl) {
                 element.on("change", function (event) {
-                    uploadCtrl.setFile(event.target.files[0])
+                    cmFilesCtrl.setFile(event.target.files[0]);
+                    scope.$apply();
                 });
             }
         }

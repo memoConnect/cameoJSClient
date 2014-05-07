@@ -12,6 +12,7 @@ define([
     'cmUserModel',
     'cmIdentity',
     'cmObject',
+    'cmJob',
 
     'cmLanguage',
     'cmLogger',
@@ -27,8 +28,8 @@ define([
         'ngCookies',
         'swipe',
         'angularMoment',
-        'ui.bootstrap',
         'cmObject',
+        'cmJob',
         // insert cameo provider
         'cmApi',
         'cmUi',
