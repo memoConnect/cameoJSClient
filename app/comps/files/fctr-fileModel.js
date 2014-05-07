@@ -130,7 +130,7 @@ angular.module('cmFiles').factory('cmFileModel', [
 
             this.encryptChunks = function() {
                 if(this.chunks){
-                    this._encryptChunks(0);
+                    this._encryptChunk(0);
                 } else {
                     cmLogger.error('Unable to encrypt chunks; cmFile.chunks missing. Try calling cmFile.chopIntoChunks() first.');
                 }
