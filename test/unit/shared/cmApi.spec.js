@@ -434,7 +434,8 @@ describe('cmApi with short intervals', function(){
         $interval    = _$interval_
 
         jasmine.Clock.useMock();
-
+        spyOn(cmApi, 'commit')
+        spyOn(cmApi, 'getEvents')
     }))
 
     afterEach(function(){
@@ -442,18 +443,13 @@ describe('cmApi with short intervals', function(){
         $httpBackend.verifyNoOutstandingRequest()
     })
 
-    it('should commit call stack every 5 milliseconds.', function(){
-        spyOn(cmApi, 'commit')
+    it('should commit call stack every 5 milliseconds.', function(){        
         $interval.flush(50)
-
         expect(cmApi.commit.calls.length).toBe(10)
     })
 
     it('should get Events every 5 milliseconds.', function(){
-
-        spyOn(cmApi, 'getEvents').andCallFake(function(){})
         $interval.flush(50)
-
         expect(cmApi.getEvents.calls.length).toBe(10)
     })
 
