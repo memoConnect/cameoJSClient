@@ -167,34 +167,52 @@ angular.module('cmFiles').factory('cmFileModel', [
                 return this
             }
 
+            this.downloadChunk = function(index){
+                var deferredChunk = $q.defer()
+
+                promises.push(deferredChunk.promise)
+
+                var chunk = new cmChunk()
+
+                self.chunks[index] = chunk
+
+                chunk
+                    .download(self.id, index)
+                    .then(function(){
+                        self.trigger('download:chunk', chunk.encryptedRaw.length / self.encryptedSize);
+                        deferredChunk.resolve(chunk)
+                    })
+            }
+
             this.downloadChunks = function(){
                 var self        = this,
                     promises    = [],
                     deferred    = $q.defer()
-                self.chunks = []
+                    self.chunks = []
 
                 if(!self.chunkIndices || !self.id){
                     cmLogger.error('cmFile.downloadChunks(); cmFile.chunks or cmFile.id missing. Try calling cmFile.importByFile() first.')
                     return null
                 }
 
-                self.chunkIndices.forEach(function(index){
-                    var deferredChunk = $q.defer()
 
-                    promises.push(deferredChunk.promise)
 
-                    var chunk = new cmChunk()
-
-                    self.chunks[index] = chunk
-
-                    chunk
-                        .download(self.id, index)
-                        .then(function(){
-                            self.trigger('download:chunk', chunk.encryptedRaw.length / self.encryptedSize);
-                            deferredChunk.resolve(chunk)
-//                            deferred.notify(chunk.encryptedRaw.length / self.encryptedSize)
-                        })
-                })
+//                self.chunkIndices.forEach(function(index){
+//                    var deferredChunk = $q.defer()
+//
+//                    promises.push(deferredChunk.promise)
+//
+//                    var chunk = new cmChunk()
+//
+//                    self.chunks[index] = chunk
+//
+//                    chunk
+//                        .download(self.id, index)
+//                        .then(function(){
+//                            self.trigger('download:chunk', chunk.encryptedRaw.length / self.encryptedSize);
+//                            deferredChunk.resolve(chunk)
+//                        })
+//                })
 
 
                 $q.all(promises)
