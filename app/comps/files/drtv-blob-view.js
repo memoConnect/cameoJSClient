@@ -29,7 +29,7 @@ angular.module('cmFiles').directive('cmBlobView',[
 
                 function handleBlob(file){
                     if(file.hasBlob() !== true){
-                        file.trigger('request:blob');
+//                        file.trigger('request:blob');
                     } else {
                         showFile(file);
                     }

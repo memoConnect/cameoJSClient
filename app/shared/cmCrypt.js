@@ -34,9 +34,9 @@ angular.module('cmCrypt', ['cmLogger'])
             encryptWithShortKey: function (secretKey, secretString) {
                 var parameters = { cipher: "aes", ks: 256, iter: 4096 };
 
-                if(secretKey == ''){
-                    return _Base64.encode(secretString);
-                }
+//                if(secretKey == ''){
+//                    return _Base64.encode(secretString);
+//                }
 
                 if (null == secretString)
                     return "";
@@ -56,9 +56,9 @@ angular.module('cmCrypt', ['cmLogger'])
             encrypt: function (secretKey, secretString) {
                 var parameters = {cipher: "aes", ks: 256, iter: 500 };
 
-                if(secretKey == ''){
-                    return _Base64.encode(secretString);
-                }
+//                if(secretKey == ''){
+//                    return _Base64.encode(secretString);
+//                }
 
                 if (null == secretString)
                     return "";
@@ -77,9 +77,9 @@ angular.module('cmCrypt', ['cmLogger'])
              * @returns decrypted string
              */
             decrypt: function (secretKey, secretString) {
-                if(secretKey == ''){
-                    return _Base64.decode(secretString);
-                }
+//                if(secretKey == ''){
+//                    return _Base64.decode(secretString);
+//                }
 
                 if (null == secretString)
                     return false;

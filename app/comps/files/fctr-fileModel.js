@@ -56,6 +56,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                             self.type          = details.fileType;
                             self.encryptedSize = details.fileSize;
                             self.chunkIndices  = details.chunks;
+                            self.maxChunks      = details.maxChunks;
                         })
                 )
             };
@@ -147,7 +148,7 @@ angular.module('cmFiles').factory('cmFileModel', [
 
                 this.size += chunk.blob.size;
 
-                if(index == (this.chunks.length - 1)){
+                if(index == (this.chunkIndices.length - 1)){
                     this.trigger('decrypt:finish');
                 } else {
                     this.trigger('decrypt:chunk', index);
@@ -164,6 +165,10 @@ angular.module('cmFiles').factory('cmFileModel', [
 
                 return this;
             };
+
+            this.decryptStart = function(){
+                this.decryptChunks();
+            }
 
             this.reassembleChunks = function(){
                 var self = this,
@@ -245,11 +250,10 @@ angular.module('cmFiles').factory('cmFileModel', [
                     .then(function(){
 
                         var percent = (chunk.encryptedRaw.length / self.encryptedSize);
-//                        var percent = ((index+1) / self.chunkIndices.length)*100;
                         self.trigger('progress:chunk', percent);
 
                         if(index == (self.chunkIndices.length - 1)){
-                            self.trigger('download:finish');
+                            self.trigger('download:finish', index);
                         } else {
                             self.trigger('download:chunk', index);
                         }
@@ -337,15 +341,18 @@ angular.module('cmFiles').factory('cmFileModel', [
              */
 
             this.on('request:blob', function(){
-               self.decryptChunks();
+               //self.decryptChunks();
             });
 
             this.on('download:chunk', function(event,index){
-               self._downloadChunk(index + 1);
+//                self._downloadChunk(index + 1);
+                self._decryptChunk(index);
             });
 
-            this.on('download:finish', function(){
-                self.state = 'cached';
+            this.on('download:finish', function(event,index){
+//                self.state = 'cached';
+//                cmLogger.debug('download:finish');
+                self._decryptChunk(index);
             });
 
             this.on('upload:chunk', function(event,index){
@@ -357,17 +364,23 @@ angular.module('cmFiles').factory('cmFileModel', [
             });
 
             this.on('encrypt:chunk', function(event,index){
-                cmLogger.debug('encrypt:chunk');
-               self._encryptChunk(index + 1);
+//                cmLogger.debug('encrypt:chunk');
+                self._encryptChunk(index + 1);
             });
 
             this.on('decrypt:chunk', function(event,index){
-                cmLogger.debug('decrypt:chunk');
-                self._decryptChunk(index + 1);
+//                cmLogger.debug('decrypt:chunk');
+//                self._decryptChunk(index + 1);
+                self._downloadChunk(index + 1);
             });
 
             this.on('decrypt:finish', function(event,index){
+//                cmLogger.debug('decrypt:finish');
                 self.reassembleChunks();
+            });
+
+            this.on('reassemble:finish', function(){
+                self.state = 'cached';
             });
         };
 
