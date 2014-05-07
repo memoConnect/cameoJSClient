@@ -1,6 +1,6 @@
 describe('cmModal', function(){
 
-    xdescribe('service', function(){
+    describe('service', function(){
 
         var cmModal, $rootScope
         beforeEach(module('cmUi'))
