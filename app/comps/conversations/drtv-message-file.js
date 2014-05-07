@@ -33,6 +33,7 @@ angular.module('cmConversations').directive('cmMessageFile', [
                     });
 
                     $scope.file.on('download:finish', function(){
+                        $scope.progress = 1;
                         $scope.file
                             .decryptName()
                             .decryptChunks();

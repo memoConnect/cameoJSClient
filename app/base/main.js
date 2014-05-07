@@ -53,10 +53,6 @@ require.config({
         'crypto-ats-oka': 'vendor/crypto/ats-oka/ats-oka.min',
         'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt.min',
 
-        // ui
-        'ui-bootstrap': 'vendor/ui-bootstrap/ui-bootstrap.0.10.0',
-        'ui-bootstrap-tpls': 'vendor/ui-bootstrap/ui-bootstrap-tpls.0.10.0',
-
         // packages generated via grunt task 'packages'
         'pckContacts': 'comps/contacts/package',
         'pckUser': 'comps/user/package',
@@ -82,9 +78,6 @@ require.config({
         'angular-translate': ['angular'],
         'angular-growl': ['angular'],
         'angular-moment-wrap': ['angular','moment'],
-
-        'ui-bootstrap': ['angular'],
-        'ui-bootstrap-tpls': ['angular'],
 
         'cmNotify': ['angular-growl'],
         'cmAuth': ['angular', 'util-base64', 'cmCrypt','cmApi'],
@@ -132,8 +125,7 @@ require.config({
             'cmLogger',
             'cmLanguage',
             'cmUserModel',
-            'util-spin',
-            'ui-bootstrap'
+            'util-spin'
         ],
 
         'pckConversations': [

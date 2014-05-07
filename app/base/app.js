@@ -28,7 +28,6 @@ define([
         'ngCookies',
         'swipe',
         'angularMoment',
-        'ui.bootstrap',
         'cmObject',
         'cmJob',
         // insert cameo provider
