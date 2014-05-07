@@ -270,6 +270,14 @@ angular.module('cmFiles').factory('cmFileModel', [
                 return this;
             };
 
+            this.hasBlob = function(){
+                if(this.blob !== 'undefined'){
+                    return true;
+                }
+
+                return false;
+            }
+
             /**
              *
              * @param fileData
@@ -282,11 +290,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                         // todo download
                         this.id = fileData;
 
-                        this.importFile().then(
-                            function(){
-                                cmFileDownload.add(self);
-                            }
-                        );
+                        this.importFile();
 
                         this.state = 'exists';
                     } else if(typeof fileData == 'object'){
@@ -308,6 +312,14 @@ angular.module('cmFiles').factory('cmFileModel', [
             /**
              * Event Handling
              */
+
+            this.on('request:blob', function(){
+               self.decryptChunks();
+            });
+
+            this.on('request:download', function(){
+                cmFileDownload.add(self);
+            });
 
             this.on('download:chunk', function(index){
                self.downloadChunk(index + 1);

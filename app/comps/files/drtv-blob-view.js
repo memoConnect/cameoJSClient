@@ -7,7 +7,7 @@ angular.module('cmFiles').directive('cmBlobView',[
             link: function(scope, element, attrs){
                 // TODO: thumbnail
 
-                function handleBlob(file){
+                function showFile(file){
                     if(typeof file.blob == 'object'){
                         // get for img tag base64 url
                         var reader = new FileReader();
@@ -25,6 +25,15 @@ angular.module('cmFiles').directive('cmBlobView',[
                         // hide spinner
                         file.loaded = true;
                     }
+                }
+
+                function handleBlob(file){
+                    if(file.hasBlob() !== true){
+                        file.trigger('request:blob');
+                    } else {
+                        showFile(file);
+                    }
+
                 }
 
                 // load image via fileapi
