@@ -2,12 +2,13 @@
 
 angular.module('cmFiles').factory('cmFileModel', [
     'cmFilesAdapter',
+    'cmFileDownload',
     'cmLogger',
     'cmChunk',
     'cmCrypt',
     'cmObject',
     '$q',
-    function (cmFilesAdapter, cmLogger, cmChunk, cmCrypt, cmObject, $q){
+    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, $q){
         var FileModel = function(fileData){
 
             cmObject.addEventHandlingTo(this);
