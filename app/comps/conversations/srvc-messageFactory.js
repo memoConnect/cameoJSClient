@@ -24,8 +24,8 @@ angular.module('cmConversations').factory('cmMessageFactory',[
                 message = this.getById(id) 
 
                 if(message === null){
-                    message = new cmMessageModel(data);
-                    instances.push(message);
+                    message = new cmMessageModel(data)
+                    instances.push(message)
                 }
 
                 return message;
