@@ -27,7 +27,7 @@ angular.module('cmFiles').directive('cmFiles',[
                         return false;
                     }
 
-                    var file = cmFileFactory.create(blob);
+                    var file = cmFileFactory.create(blob,true);
                     $scope.files.push(file);
                 };
                 /**
