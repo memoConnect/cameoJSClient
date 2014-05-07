@@ -1,7 +1,7 @@
 <div>
-    <progressbar ng-if="file.state != 'cached'" value="progress" max="1">
-        {{progress*100 | cmDigits : 2 }} %
-    </progressbar>
+    <progress value="{{progress}}" max="1" ng-if="file.state != 'cached'">
+        {{progress*100 | cmDigits: 2}} %
+    </progress>
 
     <div ng-if="file.state == 'cached'">
         <div class="file-image" ng-if="isImage(file.type)">

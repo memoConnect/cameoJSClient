@@ -239,7 +239,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                     // TODO: check with encryption
                     this.isTextExists = true;
                     // check is files sended with text in plainData
-                    if(this.plainData['text'] == undefined && this.plainData['fileIds'] != undefined){
+                    if(this.plainData != undefined && this.plainData['text'] == undefined && this.plainData['fileIds'] != undefined){
                         this.isTextExists = false;
                     }
 

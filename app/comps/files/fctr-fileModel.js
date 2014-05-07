@@ -9,6 +9,11 @@ angular.module('cmFiles').factory('cmFileModel', [
     'cmObject',
     '$q',
     function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, $q){
+
+        function roundToTwo(num) {
+            return +(Math.round(num + "e+2")  + "e-2");
+        }
+
         var FileModel = function(fileData){
 
             var self = this;
@@ -190,7 +195,10 @@ angular.module('cmFiles').factory('cmFileModel', [
                 chunk
                     .upload(self.id, index)
                     .then(function(){
-                        self.trigger('progress:chunk', chunk.encryptedRaw.length / self.encryptedSize);
+
+                        var percent = (chunk.encryptedRaw.length / self.encryptedSize);
+
+                        self.trigger('progress:chunk', percent);
 
                         if(index == (self.chunks.length - 1)){
                             self.trigger('upload:finish');
@@ -222,7 +230,10 @@ angular.module('cmFiles').factory('cmFileModel', [
                 chunk
                     .download(self.id, index)
                     .then(function(){
-                        self.trigger('progress:chunk', chunk.encryptedRaw.length / self.encryptedSize);
+
+                        var percent = (chunk.encryptedRaw.length / self.encryptedSize);
+//                        var percent = ((index+1) / self.chunkIndices.length)*100;
+                        self.trigger('progress:chunk', percent);
 
                         if(index == (self.chunkIndices.length - 1)){
                             self.trigger('download:finish');
