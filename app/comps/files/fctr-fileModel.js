@@ -24,6 +24,9 @@ angular.module('cmFiles').factory('cmFileModel', [
 
             this.chunks = [];
 
+            this.encryptedSize = 0;
+            this.size = 0;
+
             this.setPassphrase = function(passphrase){
                 this.passphrase = passphrase;// TODO: || null;
                 // console.log('passphrase',typeof passphrase+' '+passphrase,typeof this.passphrase+' '+this.passphrase)
@@ -112,16 +115,22 @@ angular.module('cmFiles').factory('cmFileModel', [
                 return this;
             };
 
+            this._encryptChunk = function(index){
+                var chunk = this.chunks[index];
+
+                chunk.encrypt(this.passphrase);
+                this.encryptedSize += chunk.encryptedRaw.length;
+
+                if(index == (this.chunks.length - 1)){
+                    this.trigger('encrypt:finish');
+                } else {
+                    this.trigger('encrypt:chunk', index);
+                }
+            };
+
             this.encryptChunks = function() {
-                var self = this;
-
-                this.encryptedSize = 0;
-
                 if(this.chunks){
-                    this.chunks.forEach(function(chunk){
-                        chunk.encrypt(self.passphrase);
-                        self.encryptedSize += chunk.encryptedRaw.length;
-                    })
+                    this._encryptChunks(0);
                 } else {
                     cmLogger.error('Unable to encrypt chunks; cmFile.chunks missing. Try calling cmFile.chopIntoChunks() first.');
                 }
@@ -129,25 +138,29 @@ angular.module('cmFiles').factory('cmFileModel', [
                 return this;
             };
 
-            this.decryptChunks = function(){
-                var self = this;
+            this._decryptChunk = function(index){
+                var chunk = this.chunks[index];
 
+                chunk
+                    .decrypt(this.passphrase)
+                    .binaryStringToBlob();
+
+                this.size += chunk.blob.size;
+
+                if(index == (this.chunks.length - 1)){
+                    this.trigger('decrypt:finish');
+                } else {
+                    this.trigger('decrypt:chunk', index);
+                }
+            };
+
+            this.decryptChunks = function(){
                 if(!this.chunks){
                     cmLogger.error('Unable to decrypt chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.');
                     return null
                 }
 
-                self.size = 0;
-
-                this.chunks.forEach(function(chunk){
-                    chunk
-                        .decrypt(self.passphrase)
-                        .binaryStringToBlob();
-
-                    self.size += chunk.blob.size;
-                });
-
-                this.reassembleChunks();
+                this._decryptChunk(0);
 
                 return this;
             };
@@ -336,11 +349,25 @@ angular.module('cmFiles').factory('cmFileModel', [
             });
 
             this.on('upload:chunk', function(index){
-                self.uploadChunk(index + 1);
+                self._uploadChunk(index + 1);
             });
 
             this.on('upload:finish', function(){
                 self.state = 'cached';
+            });
+
+            this.on('encrypt:chunk', function(index){
+                cmLogger.debug('encrypt:chunk');
+               self._encryptChunk(index + 1);
+            });
+
+            this.on('decrypt:chunk', function(index){
+                cmLogger.debug('decrypt:chunk');
+                self._decryptChunk(index + 1);
+            });
+
+            this.on('decrypt:finish', function(index){
+                self.reassembleChunks();
             });
         };
 
