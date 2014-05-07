@@ -339,7 +339,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     })
                 }
 
-                if(this.keyTransmission == 'symmetric'){
+                if(this.keyTransmission == 'symmetric' && self.password){
                     self.encryptedPassphraseList = [{keyId: '_passwd', encryptedPassphrase: cmCrypt.encryptWithShortKey(self.password, self.passphrase)}]
                 }
 
@@ -353,7 +353,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 ){
                     return cmConversationsAdapter.updateEncryptedPassphraseList(this.id, this.encryptedPassphraseList)
                 }else{
-                    return $q.defer().resolve().promise
+                    return $q.when(true)
                 }
             }
 
