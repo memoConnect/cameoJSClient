@@ -68,8 +68,9 @@ angular.module('cmFiles').directive('cmFiles',[
 
                     angular.forEach($scope.files, function(file, index){
                         file
-                        .encryptName(passphrase)
-                        .encryptChunks(passphrase)
+                        .setPassphrase(passphrase)
+                        .encryptName()
+                        .encryptChunks()
                         .prepareForUpload().then(
                             function(){
                                 if(index == ($scope.files.length -1)){
