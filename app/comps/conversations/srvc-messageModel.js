@@ -7,8 +7,9 @@ angular.module('cmConversations').factory('cmMessageModel',[
     'cmFileFactory',
     'cmUserModel',
     'cmObject',
+    'cmLogger',
     '$rootScope',
-    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, cmObject, $rootScope){
+    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, cmObject, cmLogger, $rootScope){
 
         var Message = function(data){
             //Attributes:
@@ -95,6 +96,10 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
 
                 this.initFiles();
+
+                if(!!decrypted_data){
+                    this.trigger('decrypt:success');
+                }
 
                 return !!decrypted_data
             }
@@ -224,7 +229,17 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 }
 
                 return this;
-            }
+            };
+
+            this.decryptFiles = function(passphrase){
+                cmLogger.debug('cmMessageModel:decryptFiles');
+                angular.forEach(this.files, function(file){
+                    file.setPassphrase(passphrase);
+                    file.downloadStart();
+                });
+
+                return this;
+            };
 
             /**
              * Initialize Message Object

@@ -341,7 +341,6 @@ angular.module('cmFiles').factory('cmFileModel', [
             });
 
             this.on('download:finish', function(event, index){
-//                self.state = 'cached';
                 cmLogger.debug('download:finish');
                 self._decryptChunk(index);
             });
@@ -373,7 +372,6 @@ angular.module('cmFiles').factory('cmFileModel', [
             this.on('reassemble:finish', function(){
                 cmLogger.debug('reassemble:finish');
                 self.state = 'cached';
-                console.log(this.hasBlob())
             });
         };
 

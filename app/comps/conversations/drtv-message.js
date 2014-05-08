@@ -17,6 +17,12 @@ angular.module('cmConversations').directive('cmMessage', [
                         element.addClass('right');
                     }
                 }
+
+                scope.message.on('init:files', function(){
+                    if (scope.message.files.length > 0) {
+                        element.addClass('file-view');
+                    }
+                });
             },
 
             controller: function ($scope, $element, $attrs) {
@@ -29,6 +35,10 @@ angular.module('cmConversations').directive('cmMessage', [
                 $scope.textOnly = !!$scope.$eval($attrs.textOnly);
 
                 $scope.is_my_own_message = $scope.message.isOwn();
+
+                $scope.message.on('init:files', function(){
+                    $scope.message.decryptFiles($scope.conversation.passphrase);
+                });
 
                 /*
                 $scope.message.decrypt($scope.passphrase);
