@@ -152,7 +152,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 if(typeof array !== 'undefined' && array.length > 0){
                     angular.forEach(array, function(file){
                         self._addFile(file);
-
                     });
                 }
 
@@ -173,7 +172,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                 this.publicData = public_data
 
-                return  cmConversationsAdapter.sendMessage(conversationId, {
+                return cmConversationsAdapter.sendMessage(conversationId, {
                     encrypted: this.encryptedData,
                     plain: this.publicData
                 })

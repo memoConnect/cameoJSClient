@@ -56,6 +56,8 @@ angular.module('cmFiles').factory('cmFileModel', [
                             self.encryptedSize = details.fileSize;
                             self.chunkIndices  = details.chunks;
                             self.maxChunks     = details.maxChunks;
+
+                            self.trigger('importFile:finish');
                         })
                 )
             };
@@ -256,15 +258,22 @@ angular.module('cmFiles').factory('cmFileModel', [
             };
 
             this.downloadChunks = function(){
-                if(!this.chunkIndices || !this.id){
-                    cmLogger.error('cmFile.downloadChunks(); cmFile.chunks or cmFile.id missing. Try calling cmFile.importFile() first.')
+                if(!this.id){
+                    cmLogger.error('cmFile.downloadChunks(); cmFile.id missing.')
                     return null;
                 }
 
-                /**
-                 * start download with first chunk in array
-                 */
-                this._downloadChunk(0);
+                this.importFile().then(
+                    function(){
+                        self.state = 'exists';
+                        self.trigger('import:finish');
+
+                        /**
+                         * start download with first chunk in array
+                         */
+                        self._downloadChunk(0);
+                    }
+                );
 
                 return this;
             };
@@ -307,14 +316,6 @@ angular.module('cmFiles').factory('cmFileModel', [
                     if(typeof fileData == 'string'){
                         // todo download
                         this.id = fileData;
-
-                        this.importFile().then(
-                            function(){
-                                self.state = 'exists';
-                                self.trigger('import:finish');
-                            }
-                        );
-
                     } else if(typeof fileData == 'object'){
                         this.importBlob(fileData);
 
@@ -334,10 +335,6 @@ angular.module('cmFiles').factory('cmFileModel', [
             /**
              * Event Handling
              */
-
-            this.on('request:blob', function(){
-               //self.decryptChunks();
-            });
 
             this.on('download:chunk', function(event, index){
 //                self._downloadChunk(index + 1);

@@ -2,7 +2,7 @@
 
 <div id="scrollerTop"></div>
 
-<div ng-repeat="message in conversation.messages" cm-scroll-to="#scrollerBottom">
+<div ng-repeat="message in conversation.messages" cm-scroll-to="#scrollerBottom" cm-last-message>
     <cm-date-seperator ng-if="(compareDate(message.created,conversation.messages[$index - 1].created))">{{message.created | date:'dd.MM.yyyy'}}</cm-date-seperator>
     <cm-message
         cm-data = "message"
