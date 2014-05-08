@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('cmFiles').directive('cmBlobView',[
-    function () {
+    '$rootScope',
+    function ($rootScope) {
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
@@ -19,6 +20,9 @@ angular.module('cmFiles').directive('cmBlobView',[
                             scope.$apply(function(){
                                 file.loaded = true;
                             });
+                            if(attrs.cmScrollToTarget) {
+                                $rootScope.$broadcast('scroll:to',attrs.cmScrollToTarget)
+                            }
                         };
                         reader.readAsDataURL(file.blob)
                     } else {

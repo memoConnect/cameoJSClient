@@ -109,10 +109,10 @@ angular.module('cmFiles').factory('cmChunk', [
                 this.raw = undefined
                 this.blob  = undefined
 
-                return  cmFilesAdapter.getChunk(id, index)
-                    .then(function(data){
-                        return self.encryptedRaw = data
-                    })
+                return cmFilesAdapter.getChunk(id, index)
+                .then(function(data){
+                    return self.encryptedRaw = data
+                })
             }
 
             /**

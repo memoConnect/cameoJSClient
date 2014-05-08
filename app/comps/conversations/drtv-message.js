@@ -20,7 +20,7 @@ angular.module('cmConversations').directive('cmMessage', [
 
                 scope.message.on('init:files', function(){
                     if (scope.message.files.length > 0) {
-                        element.addClass('file-view');
+//                        element.addClass('file-view');
                         /**
                          * @TODO Problem, wenn man die Converation wieder betritt
                          */

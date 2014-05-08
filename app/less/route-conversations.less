@@ -224,7 +224,7 @@ cm-conversation-controls{
           height:5rem;
           padding:0.3em;
         }
-        &.level-safer{
+        &.safetylevel-safer-btn{
           i{
             width: 0.65em;
             position: relative;
@@ -279,6 +279,17 @@ cm-conversation {
           max-width: @cm-message-right-max-width;
         }
       }
+      .text{
+        span{
+          margin: 0.5rem 0;
+        }
+        &.own-message{
+          span {
+            margin: 0;
+            margin-bottom: 0.5rem;
+          }
+        }
+      }
       span {
         display: block;
         &.nose {
@@ -301,13 +312,6 @@ cm-conversation {
             font-size: 1.5em;
           }
         }
-        &.text {
-          margin: 0.5rem 0;
-          &.own-message{
-            margin:0;
-            margin-bottom: 0.5rem;
-          }
-        }
       }
       div.author {
         position: absolute;
@@ -324,19 +328,16 @@ cm-conversation {
       }
       div.assets {
         position: absolute;
-        bottom: 0.2em;
-        right: 0;
-        margin-right: 0.4rem;
-
+        bottom: 0.2rem;
+        right: 1rem;
         &.green {
           span {
             color: @cm-green;
           }
         }
-
         span {
           display: inline;
-          font-size: 0.6em;
+          font-size: @cm-small-font;
           &.date {
             text-align: right;
             overflow: hidden; //@todo temporär
@@ -366,9 +367,6 @@ div.answer{
   left:0;
   right:0;
 
-  .arrow {
-    color: @cm-green;
-  }
   i {
     position: absolute;
     font-size: 2em;

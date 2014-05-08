@@ -425,7 +425,18 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
 
                 return level
-            }
+            };
+
+            this.getSafetyLevelClass = function(addon){
+                var level = this.getSafetyLevel();
+                var className = '';
+                switch(level){
+                    case 0: className = 'unsafe'; break;
+                    case 1: className = 'safe'; break;
+                    case 2: className = 'safer'; break;
+                }
+                return 'safetylevel-'+className+addon;
+            };
 
 
             this.init(data);

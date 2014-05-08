@@ -1,12 +1,23 @@
-button, a, cm-reload, cm-notify-signal, cm-back {
+button, a, cm-reload, cm-notify-signal, cm-back, cm-conversation-controls cm-key {
   .fa:hover, .fa:focus {
     color: @cm-ci-color
   }
 }
 
-.level-safer{background-color:@cm-green}
-.level-safe{background-color:@cm-yellow}
-.level-unsafe{background-color:@cm-red}
+.safetylevel {
+  &-safer{
+    &-btn{background-color:@cm-green}
+    &-wrap{color:@cm-green}
+  }
+  &-safe{
+    &-btn{background-color:@cm-yellow}
+    &-wrap{color:@cm-yellow}
+  }
+  &-unsafe{
+    &-btn{background-color:@cm-red}
+    &-wrap{color:@cm-red}
+  }
+}
 
 button.full {
     display:block !important;
@@ -90,7 +101,7 @@ cm-date-seperator {
   display:block;
   div.date-seperator {
     position: relative;
-    font-size: 0.7em;
+    font-size: @cm-small-font;
     .date{
       color: #fff;
       background-color: @cm-overlay-dark;

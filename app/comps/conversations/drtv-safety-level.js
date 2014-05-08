@@ -8,17 +8,44 @@ angular.module('cmConversations').directive('cmSafetyLevel',[
 
             link: function(scope, element, attrs){
 
-                function draw(x){
-                    element.children().remove()
-                    for(var i = 0; i < x; i++){
-                        element.append('<i class="fa cm-lock"></i>')
+                function drawLevel(x){
+                    // clear all
+                    element.children().remove();
+                    // draw x
+                    if(x == 0) {
+                        element.append('<i class="fa cm-unlock"></i>');
+                    } else {
+                        for (var i = 0; i < x; i++) {
+                            element.append('<i class="fa cm-lock"></i>');
+                        }
                     }
-                    if(x == 0) element.append('<i class="fa cm-unlock"></i>')
                 }
 
-                scope.$watch(attrs.level, function(x){
-                    draw(x)
-                })
+                // for conversation model
+                if(attrs.cmLevel) {
+                    scope.$watch(attrs.cmLevel, function (level) {
+                        drawLevel(level)
+                    })
+                }
+
+                // for conversation controls
+                if(attrs.cmLevelState) {
+                    scope.$watch(attrs.cmLevelState, function (state) {
+                        var level = 0;
+                        switch (state) {
+                            case 'unsafe':
+                                level = 0;
+                                break;
+                            case 'safe':
+                                level = 1;
+                                break;
+                            case 'safer':
+                                level = 2;
+                                break;
+                        }
+                        drawLevel(level);
+                    })
+                }
             }
         }
     }

@@ -12,18 +12,18 @@ angular.module('cmConversations').factory('cmMessageModel',[
     function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, cmObject, cmLogger, $rootScope){
 
         var Message = function(data){
-            //Attributes:
+            // attributes
             var self = this;
 
             cmObject.addEventHandlingTo(this);
 
-            //secret data:
+            // secret data
             this.secret = ['text','fileIds'];
 
-            //public data
+            // public data
             this.public = [];
 
-            //files
+            // files
             this.files = [];
             this.fileIds = [];
 
@@ -32,13 +32,14 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 self.fileIds = [];
             });
 
-            //sets which data should not be encrypted
+            // sets which data should not be encrypted
             this.setPublicData = function(data){
-                //data may be a string or an array
+                // data may be a string or an array
                 data = typeof data == 'string' ? [data] : data;
 
-                //set keys for all data to secret:
-                var all_the_data =  this.secret.concat(this.public)
+                // set keys for all data to secret:
+                var all_the_data = this.secret
+                                    .concat(this.public)
                                     .filter(function(elem, pos, arr) {
                                         return arr.indexOf(elem) == pos;
                                     });
@@ -46,7 +47,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 this.secret = all_the_data;
                 this.public = [];
 
-                //set keys for selected data to public
+                // set keys for selected data to public
                 data.forEach(function(key){
                     var secret_pos = self.secret.indexOf(key);
                     if( secret_pos != -1) self.secret.splice(secret_pos, 1);
@@ -147,7 +148,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 }
 
                 return this;
-            }
+            };
 
             /**
              * add cmFiles to Message Wrapper Function for Arrays
@@ -162,35 +163,36 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 }
 
                 return this;
-            }
+            };
 
             /**
              * send message to backend object
              * @param conversation
              * @returns {*|Promise|!Promise.<RESULT>}
              */
-            this.sendTo = function (conversationId) {
-                var public_data = {}    
+            this.sendTo = function (conversationId){
+                var public_data = {};
 
                 this.public.forEach(function(key){
-                    if(self[key]) public_data[key] = self[key]
-                })
+                    if(self[key])
+                        public_data[key] = self[key]
+                });
 
-                this.publicData = public_data
+                this.publicData = public_data;
 
                 return cmConversationsAdapter.sendMessage(conversationId, {
                     encrypted: this.encryptedData,
                     plain: this.publicData
                 })
                 .then(function (message_data) {
-                    self.init(message_data)
-                        self.trigger('message:send');
-                })
-            }
+                    self.init(message_data);
+                    self.trigger('message:send');
+                });
+            };
 
             this.isOwn = function(){
-                return (!this.from || cmUserModel.data.id == this.from.id)
-            }
+                return (!this.from || cmUserModel.data.id == this.from.id);
+            };
 
             /**
              * Handle Upload from new Files
@@ -204,7 +206,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 }
 
                 return this;
-            }
+            };
 
             /**
              * initialize Files from Message Data (fileIds)
@@ -222,10 +224,11 @@ angular.module('cmConversations').factory('cmMessageModel',[
             };
 
             this.decryptFiles = function(passphrase){
-                cmLogger.debug('cmMessageModel:decryptFiles');
+//                cmLogger.debug('cmMessageModel:decryptFiles');
                 angular.forEach(this.files, function(file){
-                    file.setPassphrase(passphrase);
-                    file.downloadStart();
+                    file
+                        .setPassphrase(passphrase)
+                        .downloadStart();
                 });
 
                 return this;
@@ -258,7 +261,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 }
 
                 this.initFiles();
-            }
+            };
 
             this.init(data);
 
