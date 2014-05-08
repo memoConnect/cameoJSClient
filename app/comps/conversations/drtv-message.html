@@ -5,26 +5,31 @@
     <div class="message {{ is_my_own_message ? 'right' : 'left'}} cm-fl">
         <span class="nose {{ is_my_own_message ? 'right' : 'left'}}"><i class="fa {{ is_my_own_message ? 'cm-nose-right' : 'cm-nose-left'}}"></i></span>
 
-        <!--<img ng-if = "hasCaptcha" src ="{{hasCaptcha ? message.body :''}}" class="img-responsive img-rounded"/>-->
-        <!--<pre ng-if = "captchaRequest">{{'CONVERSATION.TEXT.REQUEST_CAPTCHA' | cmTranslate}}</pre>-->
-        <!--<pre ng-if ="!(hasCaptcha || captchaRequest || hasAsset)" style ="text-align:left">{{ message.decryptedBody }}</pre>-->
-
+        <!--
+        <img ng-if = "hasCaptcha" src ="{{hasCaptcha ? message.body :''}}" class="img-responsive img-rounded"/>
+        <pre ng-if = "captchaRequest">{{'CONVERSATION.TEXT.REQUEST_CAPTCHA' | cmTranslate}}</pre>
+        <pre ng-if ="!(hasCaptcha || captchaRequest || hasAsset)" style ="text-align:left">{{ message.decryptedBody }}</pre>
         <span class="text" ng-if="useTruncate">{{ message.text | truncate : 5 }}</span>
-        <span class="text" ng-if="message.isTextExists">{{ message.text || 'CONVERSATION.TEXT.ENCRYPTED' | cmTranslate }}</span>
-
-        <div ng-if="message.files" >
-            <cm-message-file ng-repeat="file in message.files"></cm-message-file>
-        </div>
+        -->
 
         <div class="author" ng-if="!is_my_own_message" data-qa="message-author">
             <span class="from grey">{{ message.from.getDisplayName() }}</span>
         </div>
 
-        <div class="assets clearfix">
-            <span class="date green cm-fl">{{ message.created | date:'HH:mm'}}</span>
-            <span class="envelope green cm-fl"><i class="fa cm-envelope-open"></i></span>
-            <span class="security green cm-fl">
-                <cm-safety-level level ="conversation.getSafetyLevel()"></cm-safety-level>
+        <div class="text" ng-class="{'own-message':is_my_own_message}">
+            <span ng-if="!displayEncrypted() && message.text">{{ message.text }}</span>
+            <span ng-if="displayEncrypted()">{{ 'CONVERSATION.TEXT.ENCRYPTED' | cmTranslate }} </span>
+        </div>
+
+        <div>
+            <cm-message-file ng-repeat="file in message.files"></cm-message-file>
+        </div>
+
+        <div class="assets clearfix {{conversation.getSafetyLevelClass('-wrap')}}">
+            <span class="date cm-fl">{{ message.created | date:'HH:mm'}}</span>
+            <span class="envelope cm-fl"><i class="fa cm-envelope-open"></i></span>
+            <span class="security cm-fl">
+                <cm-safety-level cm-level="conversation.getSafetyLevel()"></cm-safety-level>
             </span>
         </div>
 

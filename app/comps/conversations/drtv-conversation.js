@@ -23,46 +23,86 @@ angular.module('cmConversations').directive('cmConversation', [
                     conversation_subject = $scope.$eval($attrs.cmSubject),
                     conversation_offset  = $attrs.offset,
                     conversation_limit   = $attrs.limit,
-                    files               = [];
+                    files               = [],
+                    isSending             = false;
 
+                /**
+                 * check if is new
+                 * @returns {boolean|*|$scope.new_conversation}
+                 */
+                this.isNew = function(){
+                    return $scope.new_conversation;
+                }
+
+                /**
+                 * start sending process
+                 * with preparing files for upload
+                 * after preparation send message
+                 */
+                $scope.send = function(){
+                    if(isSending !== true){
+                        isSending = true;
+
+                        /**
+                         * Nested functions in comps/files/drtv-files.js
+                         * check if files exists
+                         * after success resolve step again in here without files
+                         */
+                        if($scope.hasFiles()) {
+                            $scope.prepareFilesForUpload($scope.conversation.passphrase)
+                                .then(function(){
+                                    angular.forEach($scope.files, function(file){
+                                        if(file.id != undefined){
+                                            files.push(file);
+                                        }
+                                    });
+
+                                    /**
+                                     * Nested Function in drtv-attachments
+                                     */
+                                    $scope.resetFiles();
+
+                                    sendMessage();
+                                });
+                            return false;
+                        } else {
+                            sendMessage();
+                        }
+                    }
+                };
+
+                /**
+                 * compare date for date-seperator
+                 * @param currentDate
+                 * @param prevDate
+                 * @returns {boolean}
+                 */
+                $scope.compareDate = function(current, prev){
+                    if(typeof current !== 'undefined' && typeof prev !== 'undefined'){
+                        if( (new Date(current)).getDate() > (new Date(prev)).getDate() ){
+                            return true;
+                        }
+                    } else if(typeof current !== 'undefined' && typeof prev === 'undefined') {
+                        return true;
+                    }
+                    return false;
+                }
+
+                /**
+                 * validator helper
+                 * @returns {boolean}
+                 */
                 function isMessageValid(){
                     if($scope.my_message_text != '' || files.length > 0){
                         return true;
                     }
-
                     return false;
                 }
 
-
                 /**
-                 * Files Array
-                 * @type {Array}
+                 * send message to api
                  */
-                $scope.sendMessage = function () {
-
-                    /**
-                     * Nested functions in comps/files/drtv-files.js
-                     * check if files exists
-                     * after success resolve step again in here without files
-                     */
-                    if($scope.hasFiles()) {
-                        $scope.prepareFilesForUpload($scope.conversation.passphrase)
-                            .then(function(){
-                            angular.forEach($scope.files, function(file){
-                                if(file.id != undefined){
-                                    files.push(file);
-                                }
-                            });
-                            /**
-                             * Nested Function in drtv-attachments
-                             */
-                            $scope.resetFiles();
-
-                            $scope.sendMessage();
-                        });
-                        return false;
-                    }
-
+                function sendMessage() {
                     /**
                      * validate answer form
                      * @type {boolean}
@@ -70,14 +110,16 @@ angular.module('cmConversations').directive('cmConversation', [
                     var passphrase_valid    = !!$scope.conversation.passphraseValid(),
                         message_empty       = !isMessageValid() ,
                         recipients_missing  = $scope.conversation.recipients.length <= 0 //@todo mocked
-
+                    // is everything valid?
                     if(!message_empty && passphrase_valid && !recipients_missing){
-                        if($scope.conversation.id == ''){                            
+                        // create new conversation
+                        if($scope.conversation.id == ''){
                             $scope.conversation.save().then(
                                 function(){
-                                    $scope.sendMessage();
+                                    sendMessage();
                                 }
                             );
+                        // add to existing conversation
                         } else {
                             cmMessageFactory.create()
                                 .addFiles(files)
@@ -89,27 +131,39 @@ angular.module('cmConversations').directive('cmConversation', [
                                 .then(function(){
                                     //@ TODO: solve rekeying another way:
                                     $scope.conversation.$chain()
-                                    .encryptPassphrase()
-                                    .saveEncryptedPassphraseList();
+                                        .encryptPassphrase()
+                                        .decrypt();
+                                    // workaround, that new message will be decryptet to
 
                                     $scope.conversation.numberOfMessages++;
                                     $scope.my_message_text = "";
                                     files = [];
+                                    isSending = false;
 
+                                    // route to detailpage of conversation
                                     if($scope.new_conversation !== false){
                                         cmConversationsModel.addConversation($scope.conversation, true);
                                         $location.path('/conversation/' + $scope.conversation.id);
                                     }
-
+                                    cmLogger.debug('message:sended')
                                 });
                         }
-                    }
+                    } else {
+                        // notify handler
+                        if (!passphrase_valid)
+                            cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID', {ttl:5000});
+                        if (message_empty)
+                            cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY', {ttl:5000});
+                        if (recipients_missing)
+                            cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING', {ttl:5000});
 
-                    if (!passphrase_valid)    cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID')
-                    if (message_empty)        cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY')
-                    if (recipients_missing)   cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING')
+                        // enable send button
+                        isSending = false;
+                    }
                 }
 
+                /*
+                // old stuff
                 $scope.sendCaptcha = function () {
                     var passphrase_valid = !!$scope.conversation.passphraseValid(),
                         captchaImageData = $element.find('canvas')[0].toDataURL("image/png")
@@ -128,33 +182,15 @@ angular.module('cmConversations').directive('cmConversation', [
                         .newMessage(":requestCaptcha")
                         .sendTo($scope.conversation)
                 }
-
-                /**
-                 *
-                 * @returns {boolean|*|$scope.new_conversation}
-                 */
-                this.isNew = function(){
-                    return $scope.new_conversation;
-                }
-
-                $scope.compareDate = function(current, prev){
-                    if(typeof current !== 'undefined' && typeof prev !== 'undefined'){
-                        if( (new Date(current)).getDate() > (new Date(prev)).getDate() ){
-                            return true;
-                        }
-                    } else if(typeof current !== 'undefined' && typeof prev === 'undefined') {
-                        return true;
-                    }
-                    return false;
-                }
+                */
 
                 this.addPendingRecipients = function(){
-                    $rootScope.pendingRecipients = $rootScope.pendingRecipients || []
+                    $rootScope.pendingRecipients = $rootScope.pendingRecipients || [];
                     $rootScope.pendingRecipients.forEach(function(pendingRecipient){
-                        $scope.conversation.addRecipient(pendingRecipient)
-                    })
+                        $scope.conversation.addRecipient(pendingRecipient);
+                    });
                     $rootScope.pendingRecipients = []
-                }
+                };
 
                 this.init = function (conversation) {
                     $rootScope.pendingConversation = conversation;
@@ -168,28 +204,29 @@ angular.module('cmConversations').directive('cmConversation', [
                     $scope.password         = ""
                     $scope.show_contacts    = false
 
-                    //$scope.passphrase_valid = $scope.conversation.passphraseValid()
-
                     /*
-                    * @todo remove??? 16.04.2014
-                     if($scope.conversation.passphrase != '' && $scope.passphrase_valid !== false){
-                     $scope.passphrase = $scope.conversation.passphrase;
-                     $scope.conversation.decrypt();
-                     } else {
-                     $scope.$watch("passphrase", function (new_passphrase) {
-                     $scope.conversation.setPassphrase(new_passphrase)
                      $scope.passphrase_valid = $scope.conversation.passphraseValid()
-                     if ($scope.passphrase_valid) $scope.conversation.decrypt()
-                     })
+
+                     @todo remove??? 16.04.2014
+                     if($scope.conversation.passphrase != '' && $scope.passphrase_valid !== false){
+                        $scope.passphrase = $scope.conversation.passphrase;
+                        $scope.conversation.decrypt();
+                     } else {
+                        $scope.$watch("passphrase", function (new_passphrase) {
+                            $scope.conversation.setPassphrase(new_passphrase)
+                            $scope.passphrase_valid = $scope.conversation.passphraseValid()
+                            if ($scope.passphrase_valid)
+                                $scope.conversation.decrypt()
+                         })
                      }
+
+                     // cron
+                     if($scope.new_conversation !== true){
+                         cmCron.add('Conversation-'+conversation.id,{instance: conversation,task:function(conversation){self.update()}});
+                     }
+
                      */
-
-                    //cron
-//                if($scope.new_conversation !== true){
-//                    cmCron.add('Conversation-'+conversation.id,{instance: conversation,task:function(conversation){self.update()}});
-//                }
                 }
-
 
                 $scope.new_conversation = !conversation_id
 

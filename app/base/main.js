@@ -50,7 +50,6 @@ require.config({
 
         // crypto
         'crypto-sjcl': 'vendor/crypto/sjcl/sjcl.min',
-        'crypto-ats-oka': 'vendor/crypto/ats-oka/ats-oka.min',
         'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt.min',
 
         // packages generated via grunt task 'packages'

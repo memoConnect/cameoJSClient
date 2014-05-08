@@ -39,9 +39,7 @@ angular.module('cmFiles').service('cmFileDownload', [
                 file.downloadChunks();
 
                 file.on('download:finish', function(){
-                    if(self.stack.length > 0){
-                        self.run(self.stack.shift());
-                    }
+                    self.run(self.stack.shift());
                 });
             } else {
                 if(this.stack.length == 0) {

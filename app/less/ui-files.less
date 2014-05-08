@@ -1,14 +1,34 @@
+cm-message{
+  &.file-view{
+    article{
+      color:@cm-white;
+      div.message{
+        padding-bottom:1.5em;
+        &.left, &.right{
+          background-color:@cm-overlay-dark;
+        }
+      }
+      span.nose{
+        &.left, &.right{
+          i {
+            color: @cm-overlay-dark;
+          }
+        }
+      }
+    }
+  }
+}
+
 cm-message-file{
   display:block;
   position:relative;
-  height:@cm-unit * 2;
+  min-height:@cm-unit;
   margin:0 auto;
+  margin-bottom: 0.5em;
 
   .file-image{
+    min-height:@cm-unit;
     position:relative;
-    height:@cm-unit * 2;
-    margin:0 auto;
-
     div[cm-spinner]{
       z-index:1;
       position:absolute;
@@ -17,13 +37,16 @@ cm-message-file{
     }
     img{
       display:block;
-      max-width:@cm-app-width - 1;
-      max-height:@cm-unit * 2;
+      max-width:@cm-message-min-width;
+      min-height:@cm-unit * 2;
       margin:0 auto;
     }
   }
   .file{
     margin:0 auto;
+  }
+  &:last-child{
+    margin-bottom:0;
   }
 }
 
@@ -33,7 +56,7 @@ cm-files{
   width:@cm-unit;
   height:@cm-unit;
 
-  cm-file-input{
+  cm-file-choose{
     height:100%;
     overflow:hidden;
     position:absolute;
@@ -54,6 +77,7 @@ cm-files{
     }
   }
 }
+
 cm-files-preview{
   display:block;
   position:absolute;
@@ -88,7 +112,9 @@ cm-files-preview{
   }
 }
 
-
+//.bg-pos(@x,@y){
+//  background-position:@x  -@y;
+//}
 
 .file {
   background:url(../gfx/filetype_map_small.png) transparent 0 0;

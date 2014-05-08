@@ -6,33 +6,7 @@ angular.module('cmFiles').directive('cmFiles',[
     function (cmFileFactory, $q){
         return {
             restrict : 'E',
-            controller : function($scope, $element, $attrs){
-
-//                var self = this,
-//                    file = new cmFile()
-//
-//                $scope.progress = 0
-//                $scope.readyForUpload = undefined
-//
-//                $scope.chunkSize = $scope.$eval($attrs.cmChunkSize)
-//                $scope.$parent.$watch($attrs.cmChunkSize, function(new_chunk_size){ $scope.chunkSize = new_chunk_size })
-//
-//                $scope.passphrase = $scope.$parent.$eval($attrs.cmPassphrase)
-//                $scope.$parent.$watch($attrs.cmPassphrase, function(passphrase){ $scope.passphrase = passphrase })
-//
-//                $scope.fileId = $scope.$parent.$eval($attrs.ngModel)
-//                $scope.$parent.$watch($attrs.ngModel, function(ngModel){ $scope.fileId = ngModel })
-//
-//                $scope.upload = function(){
-//                    $scope.progress = 0
-//                    if(!$scope.readyForUpload) return null
-//
-//                    $scope.readyForUpload.then(function(){
-//                        file
-//                            .uploadChunks()
-//                            .then(null, null, function(progress){ $scope.progress += progress })
-//                    })
-//                }
+            controller : function($scope){
 
                 $scope.files = [];
                 /**
@@ -53,7 +27,7 @@ angular.module('cmFiles').directive('cmFiles',[
                         return false;
                     }
 
-                    var file = cmFileFactory.create(blob);
+                    var file = cmFileFactory.create(blob,true);
                     $scope.files.push(file);
                 };
                 /**
@@ -64,24 +38,21 @@ angular.module('cmFiles').directive('cmFiles',[
                  * @returns {*}
                  */
                 $scope.prepareFilesForUpload = function(passphrase){
-                    var defered = $q.defer();
+                    var defered = $q.defer(),
+                        promises = [];
 
-                    angular.forEach($scope.files, function(file, index){
-                        file
-                        .setPassphrase(passphrase)
-                        .encryptName()
-                        .encryptChunks()
-                        .prepareForUpload().then(
-                            function(){
-                                if(index == ($scope.files.length -1)){
-                                    defered.resolve();
-                                }
-                            }
-                        );
+                    // create all files and get fileIds
+                    angular.forEach($scope.files, function(file){
+                        promises.push(
+                            file
+                            .setPassphrase(passphrase)
+                            .encryptName()
+                            .prepareForUpload()
+                        )
                     });
 
-                    return defered.promise;
-                }
+                    return $q.all(promises);
+                };
                 /**
                  * function for parent to check if files in queue
                  * @returns {boolean}
@@ -94,6 +65,7 @@ angular.module('cmFiles').directive('cmFiles',[
                  */
                 $scope.resetFiles = function(){
                     $scope.files = [];
+                    $scope.$broadcast('reset:files');
                 };
             }
         }

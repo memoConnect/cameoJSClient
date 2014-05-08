@@ -29,37 +29,36 @@
             <div class="safety-levels" cm-rubber-space>
                 <div cm-weight="3"></div>
                 <div cm-weight="2">
-                    <div class="cm-safety-level level-safer" ng-class="{active:(safetyLevel=='safer')}" ng-click="setLevel('safer')">
+                    <div class="cm-safety-level safetylevel-safer-btn" ng-class="{active:(safetyLevel=='safer')}" ng-click="setLevel('safer')">
                         <i class="fa cm-lock"></i><i class="fa cm-lock"></i>
                     </div>
                 </div>
                 <div cm-weight="1"></div>
                 <div cm-weight="2">
-                    <div class="cm-safety-level level-safe" ng-class="{active:(safetyLevel=='safe')}" ng-click="setLevel('safe')">
+                    <div class="cm-safety-level safetylevel-safe-btn" ng-class="{active:(safetyLevel=='safe')}" ng-click="setLevel('safe')">
                         <i class="fa cm-lock"></i>
                     </div>
                 </div>
                 <div cm-weight="1"></div>
                 <div cm-weight="2">
-                    <div class="cm-safety-level level-unsafe" ng-class="{active:(safetyLevel=='unsafe')}" ng-click="setLevel('unsafe')">
+                    <div class="cm-safety-level safetylevel-unsafe-btn" ng-class="{active:(safetyLevel=='unsafe')}" ng-click="setLevel('unsafe')">
                         <i class="fa cm-unlock"></i>
                     </div>
                 </div>
                 <div cm-weight="3"></div>
             </div>
+
             <div class="cm-center">
                 <i class="fa cm-info"></i>
                 {{'CONVERSATION.PLACEHOLDER.INFO'|cmTranslate}}
             </div>
 
-            <div ng-if="safetyLevel =='safe'">
-                <div class="cm-form-group" >
-                    <div class="cm-form-control with-inputter">
+            <div ng-if="safetyLevel == 'safe'">
+                <div class="cm-form-group">
+                    <div class="cm-form-control with-inputter" ng-class="{'with-inside-icon':!isNew}">
                         <input type="text" ng-model="conversation.password" placeholder="{{ 'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change/>
+                        <i class="fa cm-key fa-2x with-cursor" ng-click="conversation.decryptPassphrase(); conversation.decrypt(); handle()" ng-if="!isNew"></i>
                     </div>
-                </div>
-                <div style="text-align:center; cursor:pointer" ng-click="conversation.decryptPassphrase(); conversation.decrypt()">
-                    <i class="fa cm-key fa-2x"></i>
                 </div>
             </div>
             <div style="text-align:center; cursor:pointer">
@@ -68,7 +67,6 @@
                 </a>
             </div>
         </div>
-
 
         <button ng-click="handle()" class="cm-btn" ng-if="!isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
         <button ng-click="handle()" class="cm-btn" ng-if="isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
@@ -80,7 +78,7 @@
         </div>
         <div cm-weight="8" class="cm-bar-infos">
             {{conversation.subject||'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}
-            <cm-safety-level level="conversation.getSafetyLevel()"></cm-safety-level>
+            <cm-safety-level cm-level="conversation.getSafetyLevel()" cm-level-state="safetyLevel"></cm-safety-level>
             <cm-recipient-counter>{{conversation.recipients.length||0}}</cm-recipient-counter>
         </div>
         <div cm-weight="1"></div>

@@ -2,13 +2,14 @@
 
 angular.module('cmUi').directive('cmScrollTo',[
     '$timeout',
-    function ($timeout){
+    '$rootScope',
+    function ($timeout, $rootScope){
         return {
             restrict: 'A',
             link: function($scope, $element, $attrs){
 
-                function initTimeout(){
-                    var anchor = angular.element(document.querySelector($attrs.cmScrollTo)),
+                function initTimeout(target){
+                    var anchor = angular.element(document.querySelector(target)),
                         body = angular.element(document.querySelector('body')),
                         html = angular.element(document.querySelector('html'));
 
@@ -20,9 +21,13 @@ angular.module('cmUi').directive('cmScrollTo',[
                 }
 
                 if($attrs.ngRepeat && $scope.$last && $attrs.cmScrollTo != ''){
-                    initTimeout();
+                    initTimeout($attrs.cmScrollTo);
+                    // this because of cm-blob-view
+                    $rootScope.$on('scroll:to',function(event,target){
+                        initTimeout(target);
+                    })
                 } else if(!$attrs.ngRepeat){
-                    initTimeout();
+                    initTimeout($attrs.cmScrollTo);
                 }
             }
         }

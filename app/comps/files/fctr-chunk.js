@@ -73,7 +73,6 @@ angular.module('cmFiles').factory('cmChunk', [
                     reader   = new FileReader(),
                     deferred = $q.defer()
 
-
                 reader.onload = function(event){
                     self.raw = event.target.result.replace('data:application/octet-stream;base64,', '')
                     deferred.resolve(self.raw)
@@ -90,7 +89,7 @@ angular.module('cmFiles').factory('cmChunk', [
             this.encrypt = function(passphrase) {
 
                 this.raw
-                    ?   this.encryptedRaw = cmCrypt.encryptWithShortKey(passphrase, this.raw)     //Todo: long Key!
+                    ?   this.encryptedRaw = cmCrypt.encryptWithShortKey(passphrase, this.raw, true)     //Todo: long Key!
                     :   cmLogger.error('Unable ro encrypt; chunk.raw is empty.  Try calling chunk.blobToBinaryString() first.')
 
                 return this
@@ -110,10 +109,10 @@ angular.module('cmFiles').factory('cmChunk', [
                 this.raw = undefined
                 this.blob  = undefined
 
-                return  cmFilesAdapter.getChunk(id, index)
-                    .then(function(data){
-                        return self.encryptedRaw = data
-                    })
+                return cmFilesAdapter.getChunk(id, index)
+                .then(function(data){
+                    return self.encryptedRaw = data
+                })
             }
 
             /**
@@ -123,7 +122,7 @@ angular.module('cmFiles').factory('cmChunk', [
              */
             this.decrypt = function(passphrase){
                 this.encryptedRaw
-                    ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw)
+                    ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw, true)
                     :   cmLogger.error('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.')
 
                 return this

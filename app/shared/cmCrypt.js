@@ -31,8 +31,12 @@ angular.module('cmCrypt', ['cmLogger'])
              * @param secretString a string that should be enrypted
              * @returns base64 encoded encrypted string
              */
-            encryptWithShortKey: function (secretKey, secretString) {
+            encryptWithShortKey: function (secretKey, secretString, withoutBase64) {
                 var parameters = { cipher: "aes", ks: 256, iter: 4096 };
+
+//                if(secretKey == ''){
+//                    return withoutBase64 ? secretString : _Base64.encode(secretString);
+//                }
 
                 if (null == secretString)
                     return "";
@@ -41,7 +45,7 @@ angular.module('cmCrypt', ['cmLogger'])
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                return _Base64.encode(encryptedSecretString);
+                return withoutBase64 ? encryptedSecretString : _Base64.encode(encryptedSecretString);
             },
             /**
              * this method encrypts strings
@@ -49,8 +53,12 @@ angular.module('cmCrypt', ['cmLogger'])
              * @param secretString a string that should be encrypted
              * @returns base64 encoded encrypted string
              */
-            encrypt: function (secretKey, secretString) {
+            encrypt: function (secretKey, secretString, withoutBase64) {
                 var parameters = {cipher: "aes", ks: 256, iter: 500 };
+
+//                if(secretKey == ''){
+//                    return withoutBase64 ? secretString : _Base64.encode(secretString);
+//                }
 
                 if (null == secretString)
                     return "";
@@ -60,7 +68,7 @@ angular.module('cmCrypt', ['cmLogger'])
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                return _Base64.encode(encryptedSecretString);
+                return withoutBase64 ? encryptedSecretString : _Base64.encode(encryptedSecretString);
             },
             /**
              * this method decrypts uuencoded strings
@@ -68,11 +76,15 @@ angular.module('cmCrypt', ['cmLogger'])
              * @param secretString a base64 encoded string that should be decrypted
              * @returns decrypted string
              */
-            decrypt: function (secretKey, secretString) {
+            decrypt: function (secretKey, secretString, withoutBase64) {
+//                if(secretKey == ''){
+//                    return withoutBase64 ? secretString : _Base64.decode(secretString);
+//                }
+
                 if (null == secretString)
                     return false;
 
-                var decodedSecretString = _Base64.decode(secretString),
+                var decodedSecretString = withoutBase64 ? secretString : _Base64.decode(secretString),
                     decryptedString;
 
                 try {

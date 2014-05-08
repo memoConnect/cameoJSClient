@@ -303,7 +303,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 }
 
                 if(this.keyTransmission == 'symmetric' && this.passphrase && !this.password){
-                    cmNotify.warn('CONVERSATION.WARN.PASSWORD_MISSING')
+//                    cmNotify.warn('CONVERSATION.WARN.PASSWORD_MISSING')
                     result = false
                 }
 
@@ -425,7 +425,18 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
 
                 return level
-            }
+            };
+
+            this.getSafetyLevelClass = function(addon){
+                var level = this.getSafetyLevel();
+                var className = '';
+                switch(level){
+                    case 0: className = 'unsafe'; break;
+                    case 1: className = 'safe'; break;
+                    case 2: className = 'safer'; break;
+                }
+                return 'safetylevel-'+className+addon;
+            };
 
 
             this.init(data);

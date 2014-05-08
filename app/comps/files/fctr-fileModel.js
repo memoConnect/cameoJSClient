@@ -20,13 +20,15 @@ angular.module('cmFiles').factory('cmFileModel', [
 
             cmObject.addEventHandlingTo(this);
 
-            this.state = 'new';
+            this.state = '';
 
             this.chunks = [];
 
+            this.encryptedSize = 0;
+            this.size = 0;
+
             this.setPassphrase = function(passphrase){
                 this.passphrase = passphrase;// TODO: || null;
-                // console.log('passphrase',typeof passphrase+' '+passphrase,typeof this.passphrase+' '+this.passphrase)
                 return this;
             };
 
@@ -53,6 +55,9 @@ angular.module('cmFiles').factory('cmFileModel', [
                             self.type          = details.fileType;
                             self.encryptedSize = details.fileSize;
                             self.chunkIndices  = details.chunks;
+                            self.maxChunks     = details.maxChunks;
+
+                            self.trigger('importFile:finish');
                         })
                 )
             };
@@ -90,8 +95,8 @@ angular.module('cmFiles').factory('cmFileModel', [
                     index++
                 }
 
-                return  $q.all(promises)
-            }
+                return $q.all(promises)
+            };
 
             this.encryptName = function(){
                 if(this.name){
@@ -112,16 +117,22 @@ angular.module('cmFiles').factory('cmFileModel', [
                 return this;
             };
 
+            this._encryptChunk = function(index){
+                var chunk = this.chunks[index];
+
+                chunk.encrypt(this.passphrase);
+                this.encryptedSize += chunk.encryptedRaw.length;
+
+                if(index == (this.chunks.length - 1)){
+                    this.trigger('encrypt:finish');
+                } else {
+                    this.trigger('encrypt:chunk', index);
+                }
+            };
+
             this.encryptChunks = function() {
-                var self = this;
-
-                this.encryptedSize = 0;
-
                 if(this.chunks){
-                    this.chunks.forEach(function(chunk){
-                        chunk.encrypt(self.passphrase);
-                        self.encryptedSize += chunk.encryptedRaw.length;
-                    })
+                    this._encryptChunk(0);
                 } else {
                     cmLogger.error('Unable to encrypt chunks; cmFile.chunks missing. Try calling cmFile.chopIntoChunks() first.');
                 }
@@ -129,27 +140,35 @@ angular.module('cmFiles').factory('cmFileModel', [
                 return this;
             };
 
-            this.decryptChunks = function(){
-                var self = this;
+            this._decryptChunk = function(index){
+                var chunk = this.chunks[index];
 
+                chunk
+                    .decrypt(this.passphrase)
+                    .binaryStringToBlob();
+
+                this.size += chunk.blob.size;
+
+                if(index == (this.chunkIndices.length - 1)){
+                    this.trigger('decrypt:finish');
+                } else {
+                    this.trigger('decrypt:chunk', index);
+                }
+            };
+
+            this.decryptChunks = function(){
                 if(!this.chunks){
                     cmLogger.error('Unable to decrypt chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.');
                     return null
                 }
 
-                self.size = 0;
-
-                this.chunks.forEach(function(chunk){
-                    chunk
-                        .decrypt(self.passphrase)
-                        .binaryStringToBlob();
-
-                    self.size += chunk.blob.size;
-                });
-
-                this.reassembleChunks();
+                this._decryptChunk(0);
 
                 return this;
+            };
+
+            this.decryptStart = function(){
+                this.decryptChunks();
             };
 
             this.reassembleChunks = function(){
@@ -164,7 +183,7 @@ angular.module('cmFiles').factory('cmFileModel', [
 
                 this.blob = new Blob(data, {type: self.type})
 
-                self.trigger('reassemble:finish');
+                self.trigger('file:cached');
 
                 return this;
             };
@@ -175,30 +194,27 @@ angular.module('cmFiles').factory('cmFileModel', [
                 return (
                     self.encryptedName && self.chunks
                         ?   cmFilesAdapter.prepareFile({
-                        name    : self.encryptedName,
-                        size    : self.encryptedSize,
-                        type    : self.type,
-                        chunks  : self.chunks.length
-                    })
-                        .then(
-                        function(id){
-                            return self.id = id
-                        }
-                    )
+                                name    : self.encryptedName,
+                                size    : self.blob.size,//self.encryptedSize,
+                                type    : self.type,
+                                chunks  : self.chunks.length
+                            })
+                            .then(function(id){
+                                return self.id = id
+                            })
                         :   cmLogger.error('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
                 )
             };
 
-            this.uploadChunk = function(index){
+            this._uploadChunk = function(index){
                 var chunk = this.chunks[index];
 
                 chunk
-                    .upload(self.id, index)
+                    .encrypt(this.passphrase)
+                    .upload(this.id, index)
                     .then(function(){
 
-                        var percent = (chunk.encryptedRaw.length / self.encryptedSize);
-
-                        self.trigger('progress:chunk', percent);
+                        self.trigger('progress:chunk', (index/self.chunks.length));
 
                         if(index == (self.chunks.length - 1)){
                             self.trigger('upload:finish');
@@ -215,46 +231,63 @@ angular.module('cmFiles').factory('cmFileModel', [
                 }
 
                 /**
-                 * start download with first chunk in array
+                 * start upload with first chunk in array
                  */
-                this.uploadChunk(0);
+                this._uploadChunk(0);
 
                 return this;
             };
 
-            this.downloadChunk = function(index){
+            this._downloadChunk = function(index){
                 var chunk = new cmChunk();
 
                 this.chunks[index] = chunk;
 
                 chunk
                     .download(self.id, index)
-                    .then(function(){
+                    .then(
+                        function(){
+                            self.trigger('progress:chunk', (index/self.chunks.length));
 
-                        var percent = (chunk.encryptedRaw.length / self.encryptedSize);
-//                        var percent = ((index+1) / self.chunkIndices.length)*100;
-                        self.trigger('progress:chunk', percent);
-
-                        if(index == (self.chunkIndices.length - 1)){
-                            self.trigger('download:finish');
-                        } else {
-                            self.trigger('download:chunk', index);
+                            if(index == (self.chunkIndices.length - 1)){
+                                self.trigger('download:finish', index);
+                            } else {
+                                self.trigger('download:chunk', index);
+                            }
+                        },
+                        function(){
+                            self.trigger('progress:chunk', 1);
+                            self.trigger('download:finish', {'error':true});
+                            self.trigger('file:cached');
                         }
-                    });
+                );
             };
 
             this.downloadChunks = function(){
-                if(!this.chunkIndices || !this.id){
-                    cmLogger.error('cmFile.downloadChunks(); cmFile.chunks or cmFile.id missing. Try calling cmFile.importFile() first.')
+                if(!this.id){
+                    cmLogger.error('cmFile.downloadChunks(); cmFile.id missing.')
                     return null;
                 }
 
-                /**
-                 * start download with first chunk in array
-                 */
-                this.downloadChunk(0);
+                this.importFile().then(
+                    function(){
+                        self.state = 'exists';
+                        self.trigger('import:finish');
+
+                        /**
+                         * start download with first chunk in array
+                         */
+                        self._downloadChunk(0);
+                    }
+                );
 
                 return this;
+            };
+
+            this.downloadStart = function(){
+                if(this.id != '' && this.state == 'exists'){
+                    cmFileDownload.add(this);
+                }
             };
 
             this.promptSaveAs = function(){
@@ -270,6 +303,14 @@ angular.module('cmFiles').factory('cmFileModel', [
                 return this;
             };
 
+            this.hasBlob = function(){
+                if(this.blob !== 'undefined'){
+                    return true;
+                }
+
+                return false;
+            }
+
             /**
              *
              * @param fileData
@@ -279,17 +320,10 @@ angular.module('cmFiles').factory('cmFileModel', [
             this.init = function(fileData, chunkSize){
                 if(typeof fileData !== 'undefined'){
                     if(typeof fileData == 'string'){
-                        // todo download
-                        this.id = fileData;
-
-                        this.importFile().then(
-                            function(){
-                                cmFileDownload.add(self);
-                            }
-                        );
-
                         this.state = 'exists';
+                        this.id = fileData;
                     } else if(typeof fileData == 'object'){
+                        this.state = 'new';
                         this.importBlob(fileData);
 
                         if(!chunkSize){
@@ -308,20 +342,49 @@ angular.module('cmFiles').factory('cmFileModel', [
             /**
              * Event Handling
              */
-
-            this.on('download:chunk', function(index){
-               self.downloadChunk(index + 1);
+            this.on('download:chunk', function(event, index){
+//                self._downloadChunk(index + 1);
+                self._decryptChunk(index);
             });
 
-            this.on('download:finish', function(){
-                self.state = 'cached';
+            this.on('download:finish', function(event, index){
+//                cmLogger.debug('download:finish');
+                if(typeof index == 'number') {
+                    self._decryptChunk(index);
+                // error on download
+                } else if(index.error) {
+                    cmLogger.error('chunk not found');
+                    self.state = 'cached';
+                }
             });
 
-            this.on('upload:chunk', function(index){
-                self.uploadChunk(index + 1);
+            this.on('upload:chunk', function(event, index){
+                self._uploadChunk(index + 1);
             });
 
             this.on('upload:finish', function(){
+                cmLogger.debug('upload:finish');
+                self.state = 'cached';
+            });
+
+            this.on('encrypt:chunk', function(event, index){
+//                cmLogger.debug('encrypt:chunk');
+                self._encryptChunk(index + 1);
+            });
+
+            this.on('decrypt:chunk', function(event, index){
+//                cmLogger.debug('decrypt:chunk '+index);
+//                self._decryptChunk(index + 1);
+                self._downloadChunk(index + 1);
+            });
+
+            this.on('decrypt:finish', function(event, index){
+//                cmLogger.debug('decrypt:finish');
+                self.reassembleChunks();
+            });
+
+            this.on('file:cached', function(){
+                cmLogger.debug('file:cached');
                 self.state = 'cached';
             });
         };
