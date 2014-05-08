@@ -94,7 +94,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 }
 
 
-                this.initFiles().decryptFiles(passphrase);
+                this.initFiles();
 
                 return !!decrypted_data
             }
@@ -169,15 +169,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 return this;
             }
 
-            this.decryptFiles = function(passphrase){
-                angular.forEach(self.files, function(file){
-                    file.setPassphrase(passphrase);
-                    file.downloadStart();
-                });
-
-                return this;
-            }
-
             /**
              * send message to backend object
              * @param conversation
@@ -229,6 +220,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                     angular.forEach(this.fileIds, function(id){
                         self._addFile(cmFileFactory.create(id));
                     });
+                    this.trigger('init:files');
                 }
 
                 return this;
