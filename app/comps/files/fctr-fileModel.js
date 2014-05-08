@@ -8,7 +8,8 @@ angular.module('cmFiles').factory('cmFileModel', [
     'cmCrypt',
     'cmObject',
     '$q',
-    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, $q){
+    'cmUtil',
+    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, $q, cmUtil){
 
         function roundToTwo(num) {
             return +(Math.round(num + "e+2")  + "e-2");
@@ -53,7 +54,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                         .then(function(details){
                             self.encryptedName = details.fileName;
                             self.type          = details.fileType;
-                            self.encryptedSize = details.fileSize;
+                            self.size          = details.fileSize;
                             self.chunkIndices  = details.chunks;
                             self.maxChunks     = details.maxChunks;
 
@@ -147,6 +148,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                     .decrypt(this.passphrase)
                     .binaryStringToBlob();
 
+                this.encryptedSize += chunk.encryptedRaw.length
                 this.size += chunk.blob.size;
 
                 if(index == (this.chunkIndices.length - 1)){
@@ -182,6 +184,8 @@ angular.module('cmFiles').factory('cmFileModel', [
                 })
 
                 this.blob = new Blob(data, {type: self.type})
+
+//                console.log(cmUtil.bytesToStr(this.blob.size),cmUtil.bytesToStr(this.encryptedSize))
 
                 self.trigger('file:cached');
 

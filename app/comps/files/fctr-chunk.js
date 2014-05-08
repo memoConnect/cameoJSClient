@@ -54,7 +54,7 @@ angular.module('cmFiles').factory('cmChunk', [
                     chunk   = slicer.call(file, start, end)
 
                 this.raw = undefined
-                this.blob  = undefined
+                this.blob = undefined
 
                 if (file.webkitSlice) { // android default browser in version 4.0.4 has webkitSlice instead of slice()
                     str2ab_blobreader(chunk, function(buf) { // we cannot send a blob, because body payload will be empty

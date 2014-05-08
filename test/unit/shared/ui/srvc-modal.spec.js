@@ -55,7 +55,11 @@ describe('cmModal', function(){
         it('should provide functiony "open" and "close" to open resp. close an existing modal.', function(){
             expect(typeof cmModal.open).toBe('function')
 
-            var el = cmModal.create({ id:"my_modal" }, 'Hello World')
+            var el = cmModal.create({
+                id:"my_modal",
+                'class': 'with-title no-padding',
+                'cm-close-btn': false
+            }, 'Hello World')
 
             $rootScope.$apply()
 

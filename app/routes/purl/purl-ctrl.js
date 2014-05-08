@@ -20,7 +20,6 @@ define([
             $scope.showConversation = false;
 
             if(cmUtil.checkKeyExists($routeParams,'idPurl') && cmUtil.validateString($routeParams.idPurl)){
-
                 cmPurlModel.getPurl($routeParams.idPurl).then(
                     function(data){
                         // identity check internal || external user

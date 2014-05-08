@@ -37,14 +37,15 @@ angular.module('cmUi').service('cmModal',[
         self.open = function(id, data){
             if(self.instances[id]){
                 self.instances[id]
-                .setData(data)
-                .open() 
+                    .setData(data)
+                    .open()
             } else {
-                self.on('register', function(registered_id){
-                    if(registered_id == id) 
+                self.on('register', function(event, registered_id){
+                    if(registered_id == id) {
                         self.instances[id]
-                        .setData(data)
-                        .open() 
+                            .setData(data)
+                            .open()
+                    }
                 })
             }
             return self
