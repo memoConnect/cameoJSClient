@@ -1,14 +1,33 @@
+cm-message{
+  &.file-view{
+    article{
+      color:@cm-white;
+      div.message{
+        padding-bottom:1.5em;
+        &.left, &.right{
+          background-color:@cm-overlay-dark;
+        }
+      }
+      span.nose{
+        &.left, &.right{
+          i {
+            color: @cm-overlay-dark;
+          }
+        }
+      }
+    }
+  }
+}
+
 cm-message-file{
   display:block;
   position:relative;
-  height:@cm-unit * 2;
+  min-height:@cm-unit;
   margin:0 auto;
 
   .file-image{
+    min-height:@cm-unit;
     position:relative;
-    height:@cm-unit * 2;
-    margin:0 auto;
-
     div[cm-spinner]{
       z-index:1;
       position:absolute;
@@ -17,8 +36,8 @@ cm-message-file{
     }
     img{
       display:block;
-      max-width:@cm-app-width - 1;
-      max-height:@cm-unit * 2;
+      max-width:@cm-message-min-width;
+      min-height:@cm-unit * 2;
       margin:0 auto;
     }
   }
@@ -54,6 +73,7 @@ cm-files{
     }
   }
 }
+
 cm-files-preview{
   display:block;
   position:absolute;

@@ -247,7 +247,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                     .download(self.id, index)
                     .then(function(){
 
-                        self.trigger('progress:chunk', (chunk.encryptedRaw.length / self.encryptedSize));
+                        self.trigger('progress:chunk', (index/self.chunks.length));
 
                         if(index == (self.chunkIndices.length - 1)){
                             self.trigger('download:finish', index);

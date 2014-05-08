@@ -127,6 +127,21 @@ cm-spinner {
   height:1px;
 }
 
+cm-progressbar{
+  display:block;
+  width:100%;
+  min-height:@cm-unit;
+  .percent{
+    text-align: center;
+    color: @cm-ci-color;
+    line-height: @cm-unit;
+  }
+  .progressbar{
+    height:0.2em;
+    background: @cm-ci-color;
+  }
+}
+
 cm-multi-input{
   display:block;
   .cm-multi-input-wrap{

@@ -241,6 +241,116 @@ cm-conversation-controls{
     }
   }
 }
+cm-conversation {
+  cm-message {
+    margin: 0.5em 0;
+    word-wrap: break-word;
+    &.right {
+      text-align: right;
+    }
+    article {
+      div.avatar {
+        font-size: 1.5em;
+        width: 1.5em;
+        height: 1.5em;
+        margin-right: 0.7rem;
+        cm-avatar {
+          width: inherit !important;
+          height: inherit !important;
+        }
+      }
+      div.message {
+        position: relative;
+        padding: 0.5em;
+        min-width: @cm-message-min-width;
+        -webkit-border-radius: @cm-border-radius;
+        -moz-border-radius: @cm-border-radius;
+        border-radius: @cm-border-radius;
+        border: none;
+        text-align: left;
+        &.left {
+          background-color: @cm-msg-bg-color-other;
+          max-width: @cm-message-left-max-width;
+        }
+        &.right {
+          background-color: @cm-msg-bg-color-own;
+          margin-right: 0.7rem;
+          max-width: @cm-message-right-max-width;
+        }
+      }
+      span {
+        display: block;
+        &.nose {
+          position: absolute;
+          &.left {
+            top: 0.2em;
+            left: -0.4em;
+            i {
+              color: @cm-msg-bg-color-other
+            }
+          }
+          &.right {
+            top: 0.5em;
+            right: -0.39em;
+            i {
+              color: @cm-msg-bg-color-own
+            }
+          }
+          i {
+            font-size: 1.5em;
+          }
+        }
+        &.text {
+          margin: 0.5rem 0;
+          &.own-message{
+            margin:0;
+            margin-bottom: 0.5rem;
+          }
+        }
+      }
+      div.author {
+        position: absolute;
+        top: -0.3rem;
+        left: 0;
+        margin-left: 0.6rem;
+        span {
+          display: inline;
+          font-size: 0.6em;
+          &.grey {
+            color: @cm-grey;
+          }
+        }
+      }
+      div.assets {
+        position: absolute;
+        bottom: 0.2em;
+        right: 0;
+        margin-right: 0.4rem;
+
+        &.green {
+          span {
+            color: @cm-green;
+          }
+        }
+
+        span {
+          display: inline;
+          font-size: 0.6em;
+          &.date {
+            text-align: right;
+            overflow: hidden; //@todo temporär
+          }
+          &.security {
+            text-align: right;
+          }
+          &.envelope {
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+}
 
 
 
