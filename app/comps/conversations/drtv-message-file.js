@@ -36,7 +36,7 @@ angular.module('cmConversations').directive('cmMessageFile', [
                         getFile();
                     });
 
-                    $scope.file.on('progress:chunk', function(progress){
+                    $scope.file.on('progress:chunk', function(e, progress){
                         $scope.progress += progress;
                     });
 

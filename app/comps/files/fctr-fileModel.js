@@ -29,7 +29,6 @@ angular.module('cmFiles').factory('cmFileModel', [
 
             this.setPassphrase = function(passphrase){
                 this.passphrase = passphrase;// TODO: || null;
-                // console.log('passphrase',typeof passphrase+' '+passphrase,typeof this.passphrase+' '+this.passphrase)
                 return this;
             };
 
@@ -56,7 +55,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                             self.type          = details.fileType;
                             self.encryptedSize = details.fileSize;
                             self.chunkIndices  = details.chunks;
-                            self.maxChunks      = details.maxChunks;
+                            self.maxChunks     = details.maxChunks;
                         })
                 )
             };
@@ -94,7 +93,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                     index++
                 }
 
-                return  $q.all(promises)
+                return $q.all(promises)
             }
 
             this.encryptName = function(){
@@ -193,16 +192,14 @@ angular.module('cmFiles').factory('cmFileModel', [
                 return (
                     self.encryptedName && self.chunks
                         ?   cmFilesAdapter.prepareFile({
-                        name    : self.encryptedName,
-                        size    : self.encryptedSize,
-                        type    : self.type,
-                        chunks  : self.chunks.length
-                    })
-                        .then(
-                        function(id){
-                            return self.id = id
-                        }
-                    )
+                                name    : self.encryptedName,
+                                size    : self.blob.size,//self.encryptedSize,
+                                type    : self.type,
+                                chunks  : self.chunks.length
+                            })
+                            .then(function(id){
+                                return self.id = id
+                            })
                         :   cmLogger.error('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
                 )
             };
@@ -211,12 +208,11 @@ angular.module('cmFiles').factory('cmFileModel', [
                 var chunk = this.chunks[index];
 
                 chunk
-                    .upload(self.id, index)
+                    .encrypt(this.passphrase)
+                    .upload(this.id, index)
                     .then(function(){
 
-                        var percent = (chunk.encryptedRaw.length / self.encryptedSize);
-
-                        self.trigger('progress:chunk', percent);
+                        self.trigger('progress:chunk', (index/self.chunks.length));
 
                         if(index == (self.chunks.length - 1)){
                             self.trigger('upload:finish');
@@ -249,8 +245,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                     .download(self.id, index)
                     .then(function(){
 
-                        var percent = (chunk.encryptedRaw.length / self.encryptedSize);
-                        self.trigger('progress:chunk', percent);
+                        self.trigger('progress:chunk', (chunk.encryptedRaw.length / self.encryptedSize));
 
                         if(index == (self.chunkIndices.length - 1)){
                             self.trigger('download:finish', index);
@@ -344,17 +339,18 @@ angular.module('cmFiles').factory('cmFileModel', [
                //self.decryptChunks();
             });
 
-            this.on('download:chunk', function(event,index){
-                self._downloadChunk(index + 1);
+            this.on('download:chunk', function(event, index){
+//                self._downloadChunk(index + 1);
                 self._decryptChunk(index);
             });
 
-            this.on('download:finish', function(event,index){
+            this.on('download:finish', function(event, index){
+//                self.state = 'cached';
 //                cmLogger.debug('download:finish');
                 self._decryptChunk(index);
             });
 
-            this.on('upload:chunk', function(event,index){
+            this.on('upload:chunk', function(event, index){
                 self._uploadChunk(index + 1);
             });
 
@@ -362,16 +358,18 @@ angular.module('cmFiles').factory('cmFileModel', [
                 self.state = 'cached';
             });
 
-            this.on('encrypt:chunk', function(event,index){
+            this.on('encrypt:chunk', function(event, index){
 //                cmLogger.debug('encrypt:chunk');
                 self._encryptChunk(index + 1);
             });
 
-            this.on('decrypt:chunk', function(event,index){
-//                cmLogger.debug('decrypt:chunk');
+            this.on('decrypt:chunk', function(event, index){
+//                cmLogger.debug('decrypt:chunk '+index);
+//                self._decryptChunk(index + 1);
+                self._downloadChunk(index + 1);
             });
 
-            this.on('decrypt:finish', function(event,index){
+            this.on('decrypt:finish', function(event, index){
 //                cmLogger.debug('decrypt:finish');
                 self.reassembleChunks();
             });

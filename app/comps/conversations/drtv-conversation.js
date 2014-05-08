@@ -48,18 +48,18 @@ angular.module('cmConversations').directive('cmConversation', [
                     if($scope.hasFiles()) {
                         $scope.prepareFilesForUpload($scope.conversation.passphrase)
                             .then(function(){
-                            angular.forEach($scope.files, function(file){
-                                if(file.id != undefined){
-                                    files.push(file);
-                                }
-                            });
-                            /**
-                             * Nested Function in drtv-attachments
-                             */
-                            $scope.resetFiles();
+                                angular.forEach($scope.files, function(file){
+                                    if(file.id != undefined){
+                                        files.push(file);
+                                    }
+                                });
+                                /**
+                                 * Nested Function in drtv-attachments
+                                 */
+                                $scope.resetFiles();
 
-                            $scope.sendMessage();
-                        });
+                                $scope.sendMessage();
+                            });
                         return false;
                     }
 
