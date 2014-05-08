@@ -5,5 +5,6 @@ angular.module('cmFiles',[
     'cmApi',
     'cmUtil',
     'cmLogger',
-    'cmCrypt'
+    'cmCrypt',
+    'cmObject'
 ]);

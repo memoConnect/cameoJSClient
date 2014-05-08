@@ -32,6 +32,7 @@ require.config({
         'cmUserModel': 'shared/cmUserModel',
         'cmIdentity': 'shared/cmIdentity',
         'cmObject' : 'shared/cmObject',
+        'cmJob' : 'shared/cmJob',
 
         // cameo modules/services
         'cmAuth': 'shared/cmAuth',
@@ -51,10 +52,6 @@ require.config({
         'crypto-sjcl': 'vendor/crypto/sjcl/sjcl.min',
         'crypto-ats-oka': 'vendor/crypto/ats-oka/ats-oka.min',
         'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt.min',
-
-        // ui
-        'ui-bootstrap': 'vendor/ui-bootstrap/ui-bootstrap.0.10.0',
-        'ui-bootstrap-tpls': 'vendor/ui-bootstrap/ui-bootstrap-tpls.0.10.0',
 
         // packages generated via grunt task 'packages'
         'pckContacts': 'comps/contacts/package',
@@ -82,9 +79,6 @@ require.config({
         'angular-growl': ['angular'],
         'angular-moment-wrap': ['angular','moment'],
 
-        'ui-bootstrap': ['angular'],
-        'ui-bootstrap-tpls': ['angular'],
-
         'cmNotify': ['angular-growl'],
         'cmAuth': ['angular', 'util-base64', 'cmCrypt','cmApi'],
         'cmCrypt': [
@@ -98,6 +92,7 @@ require.config({
 //        'cmCron' : ['angular'],
         'cmIdentity': ['angular', 'cmAuth'],
         'cmObject': ['angular'],
+        'cmJob': ['angular'],
         'cmUserModel': ['angular', 'cmLocalStorage','cmIdentity','cmLogger'],
         'cmApi': ['angular', 'cmLogger', 'cmObject'],
         'cmProfile' : ['angular', 'cmApi', 'cmAuth'],
@@ -130,8 +125,7 @@ require.config({
             'cmLogger',
             'cmLanguage',
             'cmUserModel',
-            'util-spin',
-            'ui-bootstrap'
+            'util-spin'
         ],
 
         'pckConversations': [
@@ -157,6 +151,7 @@ require.config({
             'cmLogger',
             'cmCrypt',
             'cmUtil',
+            'cmObject',
             'vendor/filesaver/filesaver',
             'angular-resource',
             'util-base64_decode'
