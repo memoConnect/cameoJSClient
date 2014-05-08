@@ -24,9 +24,14 @@ angular.module('cmObject', [])
                 return obj
             }
 
-            obj.on = function(event_name, callback){
-                obj._callbacks[event_name] = obj._callbacks[event_name] || []
-                obj._callbacks[event_name].push(callback)
+            obj.on = function(event_names, callback){
+                var event_names = event_names instanceof Array ? event_names : event_names.split(' ') 
+
+                event_names.forEach(function(event_name){
+                    obj._callbacks[event_name] = obj._callbacks[event_name] || []
+                    obj._callbacks[event_name].push(callback)
+                })
+
                 return obj
             }
 

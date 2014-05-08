@@ -26,14 +26,17 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.id                 = undefined
             this.recipients         = []            //list of RecipientModel objects
-            this.messages           = []            //list of MessageModel object
+            this.messages           = []            //list of MessageModel objects
 
             this.timeOfCreation     = 0             //timestamp of the conversation's creation
             this.timeOfLastUpdate   = 0             //timestamp of the conversations's last Update
 
-            this.subject            = ''            //subject line
+            this.subject            = ''            //subject
+            this.tagLine            = ''            //mini preview line, will be the subject most of the time
 
             this.encryptedPassphraseList = []
+
+            this.lastMessage        = undefined
 
             var self = this
 
@@ -54,7 +57,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.importData(data)
 
                 cmConversationsAdapter
-                .on('new-message', function(event, data){ self.addMessage(data) })
+                .on('new-message', function(event, message_data){ self.addMessage(cmMessageFactory.get(message_data)) })
+
+                self
+                .on('message-added', function(event, data){ self.updateTagLine() })                
 
                 this.trigger('init')
             }
@@ -95,7 +101,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.addMessage = function(message){
                 if(this.messages.indexOf(message) == -1){
                     this.messages.push( message )
-                    this.trigger('message-added')
+                    this.lastMessage = message
+                    this.trigger('message-added', message)
                 } else {
                     cmLogger.error('conversationModel: unable to add message; duplicate detected. (id:'+message.id+')')
                 }
@@ -118,6 +125,14 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 } else {
                     cmLogger.error('conversationModel: unable to add recipient; duplicate detected. (id:'+recipient.id+')')
                 }
+                return this
+            }
+
+            this.updateTagLine = function(){
+                this.tagLine =     this.subject
+                                //|| (this.lastMessage ? this.lastMessage.from.getDisplayName() : false)
+                                || this.recipients.map(function(recipient){ return recipient.displayName }).join(', ') //@Todo identity.displayName
+
                 return this
             }
 
@@ -310,10 +325,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
             */
 
             this.getLastMessage = function(){
-                if(this.messages.length > 0){
-                    return this.messages[(this.messages.length - 1)];
-                }
-                return null
+                cmLogger.debug('cmConversationModel: getLastMessage is deprecated.')
+                return this.lastMessage
             }
 
             this.updateMessages = function(limit, offset, clearMessages){
@@ -335,17 +348,14 @@ angular.module('cmConversations').factory('cmConversationModel',[
              */
 
 
-            /*
+            
             this.getRecipientList = function(){
-                var list = []
+                cmLogger.debug('cmConversationModel: .getRecipientList() is deprecated.')
+  
 
-                this.recipients.forEach(function(recipient){
-                    list.push(recipient.getDisplayName())
-                })
-
-                return list.join(', ')
+                return "deprecated"
             }
-            */
+        
 
             this.hasRecipient = function(identity){
                 var check = false;
@@ -404,14 +414,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.getSubjectLine = function(){
 
-                cmLogger.debug('conversationModel: TODO, Subject Line')
+                cmLogger.debug('conversationModel: getSubjectLine is deprecated; use .subjectLine')
 
-                return ""
-
-                var lastMessage = this.getLastMessage();
-                return     this.subject
-                        || (lastMessage ? lastMessage.from.getDisplayName() : false)
-                        || this.getRecipientList()
+                return ""                
             }
 
             /**

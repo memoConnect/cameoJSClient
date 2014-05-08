@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('cmUi').directive('cmAvatar',[
+
     'cmLogger',
+
     function (cmLogger){
 
         var avatarMocks = {
@@ -12,6 +14,7 @@ angular.module('cmUi').directive('cmAvatar',[
 
         return {
             restrict : 'AE',
+
             link: function($scope, $element, $attrs){
                 var identity;
 
@@ -32,6 +35,11 @@ angular.module('cmUi').directive('cmAvatar',[
                         }
                     }
                 }
+                
+                $scope.$watchCollection('conversation.lastMessage', function(value){
+                   console.log(value)
+                   // console.dir(value)
+                })
 
                 // is unknown avatar for add reciepients or choose avatar
                 if($attrs.cmView == 'unknown'){
