@@ -132,13 +132,18 @@ cm-progressbar{
   width:100%;
   min-height:@cm-unit;
   .percent{
+    font-size:@cm-mega-font;
     text-align: center;
     color: @cm-ci-color;
     line-height: @cm-unit;
+    span{
+      display:inline-block;
+      font-size:@cm-base-font;
+    }
   }
   .progressbar{
-    height:0.2em;
-    background: @cm-ci-color;
+    height:0.1em;
+    background:@cm-ci-color;
   }
 }
 
