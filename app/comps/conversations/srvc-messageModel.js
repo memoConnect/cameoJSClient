@@ -35,65 +35,55 @@ angular.module('cmConversations').factory('cmMessageModel',[
             //sets which data should not be encrypted
             this.setPublicData = function(data){
                 //data may be a string or an array
-                data = typeof data == 'string' ? [data] : data
+                data = typeof data == 'string' ? [data] : data;
 
                 //set keys for all data to secret:
                 var all_the_data =  this.secret.concat(this.public)
                                     .filter(function(elem, pos, arr) {
                                         return arr.indexOf(elem) == pos;
-                                    })
+                                    });
 
-                this.secret = all_the_data
-                this.public = []
+                this.secret = all_the_data;
+                this.public = [];
 
                 //set keys for selected data to public
                 data.forEach(function(key){
-                    var secret_pos = self.secret.indexOf(key)
-                    if( secret_pos != -1) self.secret.splice(secret_pos, 1)
+                    var secret_pos = self.secret.indexOf(key);
+                    if( secret_pos != -1) self.secret.splice(secret_pos, 1);
 
-                    self.public.push(key)
-                })
+                    self.public.push(key);
+                });
 
-                return this
-            }
+                return this;
+            };
 
             this.setText = function(text){
-                this.text = text
-                return this
-            }
+                this.text = text;
+                return this;
+            };
 
             this.encrypt = function (passphrase) {
                 // merge secret_data into json string:
-                var secret_data = {}
+                var secret_data = {};
 
                 this.secret.forEach(function(key){
                     if(self[key]) secret_data[key] = self[key]
-                })
+                });
 
-                var secret_JSON = JSON.stringify(secret_data)
+                var secret_JSON = JSON.stringify(secret_data);
 
-                this.encryptedData = cmCrypt.encryptWithShortKey(passphrase, secret_JSON)
+                this.encryptedData = cmCrypt.encryptWithShortKey(passphrase, secret_JSON);
                 //@ TODO!!!!
 
                 return this;
-            }
+            };
 
             this.decrypt = function (passphrase) {
-                var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase, this.encryptedData))
+                var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase, this.encryptedData));
 
                 // expose data on message Object
-                angular.extend(self, decrypted_data)
+                angular.extend(self, decrypted_data);
                 // watch out: this only works for simple properties, "from" will break
-
-                /**
-                 * workaround
-                 */
-                if(this.text !== 'undefined' && this.text != ''){
-                    this.isTextExists = true;
-                } else {
-                    this.isTextExists = false;
-                }
-
 
                 this.initFiles();
 
@@ -102,7 +92,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 }
 
                 return !!decrypted_data
-            }
+            };
 
             /**
              * add to local conversation object
@@ -113,7 +103,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 conversation.addMessage(self);
 
                 return this;
-            }
+            };
 
             /**
              * add cmFile Object to Message Object
@@ -261,14 +251,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                     this.plainData      = message_data.plain;
                     this.encryptedData  = message_data.encrypted;
-
-                    // TODO: check with encryption
-                    this.isTextExists = true;
-                    // check is files sended with text in plainData
-                    if(this.plainData != undefined && this.plainData['text'] == undefined && this.plainData['fileIds'] != undefined){
-                        this.isTextExists = false;
-                    }
-
                 }
                 // compare plain to this
                 for(var key in this.plainData){

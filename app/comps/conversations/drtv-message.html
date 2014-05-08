@@ -5,16 +5,19 @@
     <div class="message {{ is_my_own_message ? 'right' : 'left'}} cm-fl">
         <span class="nose {{ is_my_own_message ? 'right' : 'left'}}"><i class="fa {{ is_my_own_message ? 'cm-nose-right' : 'cm-nose-left'}}"></i></span>
 
-        <!--<img ng-if = "hasCaptcha" src ="{{hasCaptcha ? message.body :''}}" class="img-responsive img-rounded"/>-->
-        <!--<pre ng-if = "captchaRequest">{{'CONVERSATION.TEXT.REQUEST_CAPTCHA' | cmTranslate}}</pre>-->
-        <!--<pre ng-if ="!(hasCaptcha || captchaRequest || hasAsset)" style ="text-align:left">{{ message.decryptedBody }}</pre>-->
+        <!--
+        <img ng-if = "hasCaptcha" src ="{{hasCaptcha ? message.body :''}}" class="img-responsive img-rounded"/>
+        <pre ng-if = "captchaRequest">{{'CONVERSATION.TEXT.REQUEST_CAPTCHA' | cmTranslate}}</pre>
+        <pre ng-if ="!(hasCaptcha || captchaRequest || hasAsset)" style ="text-align:left">{{ message.decryptedBody }}</pre>
+        <span class="text" ng-if="useTruncate">{{ message.text | truncate : 5 }}</span>
+        -->
 
         <div class="author" ng-if="!is_my_own_message" data-qa="message-author">
             <span class="from grey">{{ message.from.getDisplayName() }}</span>
         </div>
 
-        <span class="text" ng-if="useTruncate">{{ message.text | truncate : 5 }}</span>
-        <span class="text" ng-if="message.isTextExists" ng-class="{'own-message':is_my_own_message}">{{ message.text || 'CONVERSATION.TEXT.ENCRYPTED' | cmTranslate }}</span>
+        <span class="text" ng-class="{'own-message':is_my_own_message}" ng-if="!displayEncrypted()">{{ message.text }}</span>
+        <span class="text" ng-if="displayEncrypted()">{{ 'CONVERSATION.TEXT.ENCRYPTED' | cmTranslate }} </span>
 
         <div>
             <cm-message-file ng-repeat="file in message.files"></cm-message-file>

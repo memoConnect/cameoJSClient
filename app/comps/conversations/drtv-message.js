@@ -26,9 +26,21 @@ angular.module('cmConversations').directive('cmMessage', [
             },
 
             controller: function ($scope, $element, $attrs) {
-                if($attrs.truncate !== undefined){
+                /*
+                 $scope.message.decrypt($scope.passphrase);
+
+                 $scope.truncateLength = $scope.$eval($attrs.truncate);
+
+                 if ($scope.message.text.match(/^data:image/)) {
+                    $scope.hasCaptcha = true;
+                 }
+                 if ($scope.message.text.match(/:requestCaptcha/)) {
+                    $scope.captchaRequest = true;
+                 }
+                 if($attrs.truncate !== undefined){
                     $scope.truncate = $attrs.truncate;
-                }
+                 }
+                 */
 
                 $scope.message = $scope.$eval($attrs.cmData) || $scope.$eval($attrs.cmMessage);
 
@@ -36,22 +48,12 @@ angular.module('cmConversations').directive('cmMessage', [
 
                 $scope.is_my_own_message = $scope.message.isOwn();
 
-                $scope.message.on('init:files', function(){
-                    $scope.message.decryptFiles($scope.conversation.passphrase);
-                });
-
-                /*
-                $scope.message.decrypt($scope.passphrase);
-
-                $scope.truncateLength = $scope.$eval($attrs.truncate);
-
-                if ($scope.message.text.match(/^data:image/)) {
-                    $scope.hasCaptcha = true;
-                }
-                if ($scope.message.text.match(/:requestCaptcha/)) {
-                    $scope.captchaRequest = true;
-                }
-                */
+                $scope.displayEncrypted = function(){
+                    if($scope.message.text != undefined || $scope.message.text == undefined && $scope.message.files.length > 0){
+                        return false;
+                    }
+                    return true;
+                };
             }
         }
     }
