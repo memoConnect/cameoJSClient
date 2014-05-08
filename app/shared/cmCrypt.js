@@ -35,7 +35,7 @@ angular.module('cmCrypt', ['cmLogger'])
                 var parameters = { cipher: "aes", ks: 256, iter: 4096 };
 
 //                if(secretKey == ''){
-//                    return _Base64.encode(secretString);
+//                    return withoutBase64 ? secretString : _Base64.encode(secretString);
 //                }
 
                 if (null == secretString)
@@ -57,7 +57,7 @@ angular.module('cmCrypt', ['cmLogger'])
                 var parameters = {cipher: "aes", ks: 256, iter: 500 };
 
 //                if(secretKey == ''){
-//                    return _Base64.encode(secretString);
+//                    return withoutBase64 ? secretString : _Base64.encode(secretString);
 //                }
 
                 if (null == secretString)
@@ -78,7 +78,7 @@ angular.module('cmCrypt', ['cmLogger'])
              */
             decrypt: function (secretKey, secretString, withoutBase64) {
 //                if(secretKey == ''){
-//                    return _Base64.decode(secretString);
+//                    return withoutBase64 ? secretString : _Base64.decode(secretString);
 //                }
 
                 if (null == secretString)

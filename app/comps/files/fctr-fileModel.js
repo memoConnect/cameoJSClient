@@ -96,7 +96,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                 }
 
                 return $q.all(promises)
-            }
+            };
 
             this.encryptName = function(){
                 if(this.name){
@@ -169,7 +169,7 @@ angular.module('cmFiles').factory('cmFileModel', [
 
             this.decryptStart = function(){
                 this.decryptChunks();
-            }
+            };
 
             this.reassembleChunks = function(){
                 var self = this,
@@ -314,7 +314,6 @@ angular.module('cmFiles').factory('cmFileModel', [
             this.init = function(fileData, chunkSize){
                 if(typeof fileData !== 'undefined'){
                     if(typeof fileData == 'string'){
-                        // todo download
                         this.id = fileData;
                     } else if(typeof fileData == 'object'){
                         this.importBlob(fileData);
