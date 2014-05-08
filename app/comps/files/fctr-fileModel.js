@@ -279,7 +279,7 @@ angular.module('cmFiles').factory('cmFileModel', [
             };
 
             this.downloadStart = function(){
-                if(this.id != ''){
+                if(this.id != '' && this.state != 'cached'){
                     cmFileDownload.add(this);
                 }
             };
