@@ -342,7 +342,7 @@ angular.module('cmFiles').factory('cmFileModel', [
 
             this.on('download:finish', function(event, index){
 //                self.state = 'cached';
-//                cmLogger.debug('download:finish');
+                cmLogger.debug('download:finish');
                 self._decryptChunk(index);
             });
 
@@ -366,12 +366,14 @@ angular.module('cmFiles').factory('cmFileModel', [
             });
 
             this.on('decrypt:finish', function(event, index){
-//                cmLogger.debug('decrypt:finish');
+                cmLogger.debug('decrypt:finish');
                 self.reassembleChunks();
             });
 
             this.on('reassemble:finish', function(){
+                cmLogger.debug('reassemble:finish');
                 self.state = 'cached';
+                console.log(this.hasBlob())
             });
         };
 

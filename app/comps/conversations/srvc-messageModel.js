@@ -83,7 +83,18 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 // expose data on message Object
                 angular.extend(self, decrypted_data)
                 // watch out: this only works for simple properties, "from" will break
-                this.initFiles();
+
+                /**
+                 * workaround
+                 */
+                if(this.text !== 'undefined' && this.text != ''){
+                    this.isTextExists = true;
+                } else {
+                    this.isTextExists = false;
+                }
+
+
+                this.initFiles().decryptFiles(passphrase);
 
                 return !!decrypted_data
             }
@@ -154,6 +165,15 @@ angular.module('cmConversations').factory('cmMessageModel',[
                         self._addFile(file);
                     });
                 }
+
+                return this;
+            }
+
+            this.decryptFiles = function(passphrase){
+                angular.forEach(self.files, function(file){
+                    file.setPassphrase(passphrase);
+                    file.downloadStart();
+                });
 
                 return this;
             }

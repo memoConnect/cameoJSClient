@@ -303,7 +303,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 }
 
                 if(this.keyTransmission == 'symmetric' && this.passphrase && !this.password){
-                    cmNotify.warn('CONVERSATION.WARN.PASSWORD_MISSING')
+//                    cmNotify.warn('CONVERSATION.WARN.PASSWORD_MISSING')
                     result = false
                 }
 
