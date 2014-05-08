@@ -12,7 +12,8 @@ angular.module('cmConversations').directive('cmLastMessage', [
                 function loadFiles() {
                     var i = $scope.conversation.messages.length;
                     while(i > 0){
-                        $scope.conversation.messages[(i-1)].decryptFiles($scope.conversation.passphrase);
+                        $scope.conversation.messages[(i-1)]
+                            .decryptFiles($scope.conversation.passphrase);
                         i--;
                     }
                 }

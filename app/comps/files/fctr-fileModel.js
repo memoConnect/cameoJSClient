@@ -20,7 +20,7 @@ angular.module('cmFiles').factory('cmFileModel', [
 
             cmObject.addEventHandlingTo(this);
 
-            this.state = 'new';
+            this.state = '';
 
             this.chunks = [];
 
@@ -183,7 +183,7 @@ angular.module('cmFiles').factory('cmFileModel', [
 
                 this.blob = new Blob(data, {type: self.type})
 
-                self.trigger('reassemble:finish');
+                self.trigger('file:cached');
 
                 return this;
             };
@@ -245,16 +245,22 @@ angular.module('cmFiles').factory('cmFileModel', [
 
                 chunk
                     .download(self.id, index)
-                    .then(function(){
+                    .then(
+                        function(){
+                            self.trigger('progress:chunk', (index/self.chunks.length));
 
-                        self.trigger('progress:chunk', (index/self.chunks.length));
-
-                        if(index == (self.chunkIndices.length - 1)){
-                            self.trigger('download:finish', index);
-                        } else {
-                            self.trigger('download:chunk', index);
+                            if(index == (self.chunkIndices.length - 1)){
+                                self.trigger('download:finish', index);
+                            } else {
+                                self.trigger('download:chunk', index);
+                            }
+                        },
+                        function(){
+                            self.trigger('progress:chunk', 1);
+                            self.trigger('download:finish', {'error':true});
+                            self.trigger('file:cached');
                         }
-                    });
+                );
             };
 
             this.downloadChunks = function(){
@@ -279,7 +285,7 @@ angular.module('cmFiles').factory('cmFileModel', [
             };
 
             this.downloadStart = function(){
-                if(this.id != '' && this.state != 'cached'){
+                if(this.id != '' && this.state == 'exists'){
                     cmFileDownload.add(this);
                 }
             };
@@ -314,8 +320,10 @@ angular.module('cmFiles').factory('cmFileModel', [
             this.init = function(fileData, chunkSize){
                 if(typeof fileData !== 'undefined'){
                     if(typeof fileData == 'string'){
+                        this.state = 'exists';
                         this.id = fileData;
                     } else if(typeof fileData == 'object'){
+                        this.state = 'new';
                         this.importBlob(fileData);
 
                         if(!chunkSize){
@@ -334,7 +342,6 @@ angular.module('cmFiles').factory('cmFileModel', [
             /**
              * Event Handling
              */
-
             this.on('download:chunk', function(event, index){
 //                self._downloadChunk(index + 1);
                 self._decryptChunk(index);
@@ -342,7 +349,13 @@ angular.module('cmFiles').factory('cmFileModel', [
 
             this.on('download:finish', function(event, index){
 //                cmLogger.debug('download:finish');
-                self._decryptChunk(index);
+                if(typeof index == 'number') {
+                    self._decryptChunk(index);
+                // error on download
+                } else if(index.error) {
+                    cmLogger.error('chunk not found');
+                    self.state = 'cached';
+                }
             });
 
             this.on('upload:chunk', function(event, index){
@@ -350,6 +363,7 @@ angular.module('cmFiles').factory('cmFileModel', [
             });
 
             this.on('upload:finish', function(){
+                cmLogger.debug('upload:finish');
                 self.state = 'cached';
             });
 
@@ -369,8 +383,8 @@ angular.module('cmFiles').factory('cmFileModel', [
                 self.reassembleChunks();
             });
 
-            this.on('reassemble:finish', function(){
-                cmLogger.debug('reassemble:finish');
+            this.on('file:cached', function(){
+                cmLogger.debug('file:cached');
                 self.state = 'cached';
             });
         };

@@ -224,11 +224,12 @@ angular.module('cmConversations').factory('cmMessageModel',[
             };
 
             this.decryptFiles = function(passphrase){
-//                cmLogger.debug('cmMessageModel:decryptFiles');
                 angular.forEach(this.files, function(file){
-                    file
-                        .setPassphrase(passphrase)
-                        .downloadStart();
+                    if(file.state == 'exists') {
+                        file
+                            .setPassphrase(passphrase)
+                            .downloadStart();
+                    }
                 });
 
                 return this;

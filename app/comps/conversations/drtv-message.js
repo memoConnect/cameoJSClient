@@ -8,10 +8,15 @@ angular.module('cmConversations').directive('cmMessage', [
             templateUrl: 'comps/conversations/drtv-message.html',
 
             link: function(scope, element){
+
+                function setFileView(){
+                    element.addClass('file-view');
+                }
+
                 if(!scope.textOnly) {
                     // add css classes
                     if (scope.message.files.length > 0) {
-                        element.addClass('file-view');
+                        setFileView();
                     }
                     if (scope.message.isOwn()) {
                         element.addClass('right');
@@ -20,10 +25,7 @@ angular.module('cmConversations').directive('cmMessage', [
 
                 scope.message.on('init:files', function(){
                     if (scope.message.files.length > 0) {
-//                        element.addClass('file-view');
-                        /**
-                         * @TODO Problem, wenn man die Converation wieder betritt
-                         */
+                        setFileView();
                         scope.message.decryptFiles(scope.conversation.passphrase);
                     }
                 });

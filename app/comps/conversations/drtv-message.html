@@ -17,7 +17,7 @@
         </div>
 
         <div class="text" ng-class="{'own-message':is_my_own_message}">
-            <span ng-if="!displayEncrypted()">{{ message.text }}</span>
+            <span ng-if="!displayEncrypted() && message.text">{{ message.text }}</span>
             <span ng-if="displayEncrypted()">{{ 'CONVERSATION.TEXT.ENCRYPTED' | cmTranslate }} </span>
         </div>
 

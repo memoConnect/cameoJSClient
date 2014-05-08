@@ -65,7 +65,6 @@ angular.module('cmUi').service('cmModal',[
         self.create = function(config, template, target){
             // clear existing instance
             if(self.instances[config.id] != undefined){
-                console.log('intance exists')
                 delete self.instances[config.id];
             }
 
@@ -89,8 +88,6 @@ angular.module('cmUi').service('cmModal',[
 
             return modal
         }
-
-
 
         $rootScope.openModal    = self.open
         $rootScope.closeModal   = self.close

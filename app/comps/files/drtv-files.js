@@ -6,7 +6,7 @@ angular.module('cmFiles').directive('cmFiles',[
     function (cmFileFactory, $q){
         return {
             restrict : 'E',
-            controller : function($scope, $element, $attrs){
+            controller : function($scope){
 
                 $scope.files = [];
                 /**
@@ -38,23 +38,21 @@ angular.module('cmFiles').directive('cmFiles',[
                  * @returns {*}
                  */
                 $scope.prepareFilesForUpload = function(passphrase){
-                    var defered = $q.defer();
+                    var defered = $q.defer(),
+                        promises = [];
 
-                    angular.forEach($scope.files, function(file, index){
-                        file
-                        .setPassphrase(passphrase)
-                        .encryptName()
-                        .prepareForUpload().then(
-                            function(){
-                                if(index == ($scope.files.length -1)){
-                                    defered.resolve();
-                                }
-                            }
-                        );
+                    // create all files and get fileIds
+                    angular.forEach($scope.files, function(file){
+                        promises.push(
+                            file
+                            .setPassphrase(passphrase)
+                            .encryptName()
+                            .prepareForUpload()
+                        )
                     });
 
-                    return defered.promise;
-                }
+                    return $q.all(promises);
+                };
                 /**
                  * function for parent to check if files in queue
                  * @returns {boolean}
@@ -67,6 +65,7 @@ angular.module('cmFiles').directive('cmFiles',[
                  */
                 $scope.resetFiles = function(){
                     $scope.files = [];
+                    $scope.$broadcast('reset:files');
                 };
             }
         }

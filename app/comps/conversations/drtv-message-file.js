@@ -22,13 +22,8 @@ angular.module('cmConversations').directive('cmMessageFile', [
 
                 // exists fileModel
                 if(typeof $scope.file == 'object'){
-
                     $scope.file.on('progress:chunk', function(e, progress){
                         $scope.progress = progress;
-                    });
-
-                    $scope.file.on('download:finish', function(){
-                        $scope.progress = 1;
                     });
                 }
             }
