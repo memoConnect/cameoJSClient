@@ -60,7 +60,6 @@ describe('Route: Purl - ', function () {
         })
     }
 
-
     /**
      * Test 1
      * Intern User is logged in and Purl is for that User

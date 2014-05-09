@@ -60,7 +60,7 @@ describe('single conversation', function () {
 
     it('should save options', function () {
         $("[data-qa='btn-save-options']").click()
-        util.waitForElementDisappear("[data-qa='conversation-options-menu']")
+        util.waitForElementHidden("[data-qa='conversation-options-menu']")
     })
 
     it('the bar should display the new subject', function () {

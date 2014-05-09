@@ -17,56 +17,6 @@ this.getPtorInstance = function () {
     return ptor;
 }
 
-this.waitForPageLoad = function (expectedRoute) {
-    ptor.wait(function () {
-        return ptor.executeScript('return window != undefined && window._route').then(function (route) {
-            if (route) {
-                // get current route
-                if (expectedRoute == undefined || route.path.search(expectedRoute) != -1) {
-                    return route.status == "success"
-                } else {
-//                        console.log("unexpected route:" + route.path)
-                }
-            }
-        })
-
-    }, config.routeTimeout, 'waitForPage ' + expectedRoute + ' timeout reached')
-    return this
-}
-
-this.waitForElement = function (selector) {
-
-    ptor.wait(function () {
-        return $$(selector).then(function (elements) {
-            return elements.length > 0
-        })
-    }, config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
-
-    return this
-}
-
-this.waitForElementDisappear = function (selector) {
-
-    ptor.wait(function () {
-        return $(selector).isDisplayed().then(function (isDisplayed) {
-            return !isDisplayed
-        })
-    }, config.waitForTimeout, 'waitForElementDisappear ' + selector + ' timeout is reached')
-
-    return this
-}
-
-this.waitForElements = function (selector, count) {
-
-    ptor.wait(function () {
-        return $$(selector).then(function (elements) {
-            return elements.length == count
-        })
-    }, config.waitForTimeout, 'waitForElements ' + selector + ' timeout is reached')
-
-    return this
-}
-
 this.get = function (path) {
     var url = config.wwwUrl + '#' + path
     ptor.get(url)
@@ -120,6 +70,68 @@ this.login = function (username, password) {
     return this
 }
 
+this.waitForPageLoad = function (expectedRoute) {
+    ptor.wait(function () {
+        return ptor.executeScript('return window != undefined && window._route').then(function (route) {
+            if (route) {
+                // get current route
+                if (expectedRoute == undefined || route.path.search(expectedRoute) != -1) {
+                    return route.status == "success"
+                } else {
+//                        console.log("unexpected route:" + route.path)
+                }
+            }
+        })
+
+    }, config.routeTimeout, 'waitForPage ' + expectedRoute + ' timeout reached')
+    return this
+}
+
+this.waitForElement = function (selector) {
+
+    ptor.wait(function () {
+        return $$(selector).then(function (elements) {
+            return elements.length > 0
+        })
+    }, config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
+
+    return this
+}
+
+this.waitForElements = function (selector, count) {
+
+    if(count) {
+        ptor.wait(function () {
+            return $$(selector).then(function (elements) {
+                return elements.length == count
+            })
+        }, config.waitForTimeout, 'waitForElements ' + selector + ' count: ' + count + ' timeout is reached')
+    }
+
+    return this
+}
+
+this.waitForElementHidden = function (selector, timeout) {
+
+    ptor.wait(function () {
+        return $(selector).isDisplayed().then(function (isDisplayed) {
+            return !isDisplayed
+        })
+    }, timeout || config.waitForTimeout, 'waitForElementHidden ' + selector + ' timeout is reached')
+
+    return this
+}
+
+this.waitForElementDisappear = function(selector, timeout){
+    ptor.wait(function () {
+        return $(selector).isElementPresent().then(function (isPresent) {
+            return !isPresent
+        })
+    }, timeout || config.waitForTimeout, 'waitForElementDisappear ' + selector + ' timeout is reached')
+
+    return this
+}
+
 this.waitForModalOpen = function (id) {
     ptor.wait(function () {
         return $("#" + id).isDisplayed()
@@ -159,6 +171,16 @@ this.waitForSpinner = function () {
         }, config.routeTimeout, 'waitForSpinner stop timeout reached')
     })
 
+    return this
+}
+
+this.waitForProgressbar = function () {
+    // wait until progress bar appear
+    ptor.wait(function () {
+        return $$("cm-progressbar").then(function (elements) {
+            return elements.length == 0
+        })
+    }, config.routeTimeout, 'waitForProgressbar timeout reached')
     return this
 }
 
