@@ -70,9 +70,9 @@ describe('FileUpload unsafe', function () {
         $("[data-qa='btn-save-options']").click()
     })
 
-    toDo(1, smallFileMP3, 'mp3', '.file', messageUnsafe)
+    //toDo(1, smallFileMP3, 'mp3', '.file', messageUnsafe)
 
-    toDo(2, smallImageJPG, 'jpg', '.file-image img')
+    toDo(1, smallImageJPG, 'jpg', '.file-image img')
 
-    toDo(3, largeImageJPG, 'jpg', '.file-image img', messageUnsafe)
+    toDo(2, largeImageJPG, 'jpg', '.file-image img', messageUnsafe)
 })
