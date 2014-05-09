@@ -41,9 +41,7 @@ function toDo(index, file, extension, selector, message){
         if(message)
             expect(elements.last().$('.text span').getText()).toBe(message)
         else {
-            elements.last().$$('.text span').then(function(_elements_){
-                expect(_elements_.length).toEqual(0);
-            })
+            expect(elements.last().$('.text').getText()).toBe('')
         }
     })
 
