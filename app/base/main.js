@@ -79,7 +79,7 @@ require.config({
         'angular-moment-wrap': ['angular','moment'],
 
         'cmNotify': ['angular-growl'],
-        'cmAuth': ['angular', 'util-base64', 'cmCrypt','cmApi'],
+        'cmAuth': ['angular', 'util-base64', 'cmCrypt', 'cmApi'],
         'cmCrypt': [
             'angular',
             'util-base64',
@@ -89,7 +89,10 @@ require.config({
         ],
         'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
 //        'cmCron' : ['angular'],
-        'cmIdentity': ['angular', 'cmAuth'],
+        'cmIdentity': [
+            'angular',
+            'cmAuth'
+        ],
         'cmObject': ['angular'],
         'cmJob': ['angular'],
         'cmUserModel': ['angular', 'cmLocalStorage','cmIdentity','cmLogger'],
