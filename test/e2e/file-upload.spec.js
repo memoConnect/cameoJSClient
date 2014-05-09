@@ -1,6 +1,6 @@
 var config = require("./config-e2e-tests.js")
 var util = require("../lib/e2e/cmTestUtil.js")
-var path = require('path');
+var path = require('path')
 
 var ptor = util.getPtorInstance(),
     subjectUnsafe = 'subjectUnsafe FileUpload',
@@ -36,12 +36,15 @@ function toDo(index, file, extension, selector, message){
         // wait for upload
         util.waitForElements('cm-message', index)
 
-        var elements = $$('cm-message .text')
+        var elements = $$('cm-message')
 
         if(message)
-            expect(elements.last().getText()).toBe(message)
-        else
-            expect(elements.last().isDisplayed()).toBeFalsy()
+            expect(elements.last().$('.text span').getText()).toBe(message)
+        else {
+            elements.last().$$('.text span').then(function(_elements_){
+                expect(_elements_.length).toEqual(0);
+            })
+        }
     })
 
     it(file+' in message displayed', function(){
