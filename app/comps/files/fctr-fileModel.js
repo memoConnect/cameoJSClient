@@ -30,6 +30,15 @@ angular.module('cmFiles').factory('cmFileModel', [
 
             this.setPassphrase = function(passphrase){
                 this.passphrase = passphrase;// TODO: || null;
+
+                return this;
+            };
+
+            this.setState = function(state){
+                var arr_states = ['new','exists','cached'];
+                if(arr_states.indexOf(state) != -1)
+                    this.state = state;
+
                 return this;
             };
 
@@ -275,8 +284,9 @@ angular.module('cmFiles').factory('cmFileModel', [
 
                 this.importFile().then(
                     function(){
-                        self.state = 'exists';
-                        self.trigger('import:finish');
+                        self
+                            .setState('exists')
+                            .trigger('import:finish');
 
                         /**
                          * start download with first chunk in array
@@ -313,7 +323,22 @@ angular.module('cmFiles').factory('cmFileModel', [
                 }
 
                 return false;
-            }
+            };
+
+            /**
+             * keep the buffer clean when file is cached
+             * @returns {FileModel}
+             */
+            this.clearBuffer = function(){
+                if(this.state == 'cached') {
+                    this.encryptedName = null;
+                    this.passphrase = null;
+                    this.chunkIndices = null;
+                    this.chunks = null;
+                }
+
+                return this;
+            };
 
             /**
              *
@@ -324,11 +349,13 @@ angular.module('cmFiles').factory('cmFileModel', [
             this.init = function(fileData, chunkSize){
                 if(typeof fileData !== 'undefined'){
                     if(typeof fileData == 'string'){
-                        this.state = 'exists';
-                        this.id = fileData;
+                        this
+                            .setState('exists')
+                            .id = fileData;
                     } else if(typeof fileData == 'object'){
-                        this.state = 'new';
-                        this.importBlob(fileData);
+                        this
+                            .setState('new')
+                            .importBlob(fileData);
 
                         if(!chunkSize){
                             chunkSize = 128;
@@ -358,7 +385,7 @@ angular.module('cmFiles').factory('cmFileModel', [
                 // error on download
                 } else if(index.error) {
                     cmLogger.error('chunk not found');
-                    self.state = 'cached';
+                    self.setState('cached');
                 }
             });
 
@@ -368,7 +395,7 @@ angular.module('cmFiles').factory('cmFileModel', [
 
             this.on('upload:finish', function(){
                 cmLogger.debug('upload:finish');
-                self.state = 'cached';
+                self.setState('cached');
             });
 
             this.on('encrypt:chunk', function(event, index){
@@ -389,7 +416,10 @@ angular.module('cmFiles').factory('cmFileModel', [
 
             this.on('file:cached', function(){
                 cmLogger.debug('file:cached');
-                self.state = 'cached';
+                self
+                    .decryptName()
+                    .clearBuffer()
+                    .setState('cached')
             });
         };
 

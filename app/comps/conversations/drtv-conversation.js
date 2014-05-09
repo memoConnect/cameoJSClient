@@ -23,8 +23,9 @@ angular.module('cmConversations').directive('cmConversation', [
                     conversation_subject = $scope.$eval($attrs.cmSubject),
                     conversation_offset  = $attrs.offset,
                     conversation_limit   = $attrs.limit,
-                    files               = [],
-                    isSending             = false;
+                    files                = [];
+
+                $scope.isSending = false;
 
                 /**
                  * check if is new
@@ -40,8 +41,8 @@ angular.module('cmConversations').directive('cmConversation', [
                  * after preparation send message
                  */
                 $scope.send = function(){
-                    if(isSending !== true){
-                        isSending = true;
+                    if($scope.isSending !== true){
+                        $scope.isSending = true;
 
                         /**
                          * Nested functions in comps/files/drtv-files.js
@@ -138,7 +139,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                     $scope.conversation.numberOfMessages++;
                                     $scope.my_message_text = "";
                                     files = [];
-                                    isSending = false;
+                                    $scope.isSending = false;
 
                                     // route to detailpage of conversation
                                     if($scope.new_conversation !== false){
@@ -158,7 +159,7 @@ angular.module('cmConversations').directive('cmConversation', [
                             cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING', {ttl:5000});
 
                         // enable send button
-                        isSending = false;
+                        $scope.isSending = false;
                     }
                 }
 

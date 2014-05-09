@@ -20,6 +20,7 @@ angular.module('cmUi').service('cmFileTypes',[
             {e:'mp4',m:'video/mp4'},
             {e:'flv',m:'video/x-flv'},
             {e:'avi',m:'video/x-msvideo'},
+//            {e:'3gpp',m:'video/3gpp'},
             // audio
             {e:'mp3',m:'audio/mpeg'},
             {e:'mp3',m:'audio/mp3'},

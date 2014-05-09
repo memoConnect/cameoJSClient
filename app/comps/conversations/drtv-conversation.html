@@ -22,7 +22,7 @@
         <div class="inputter"></div>
     </div>
 
-    <i class="fa cm-post with-cursor {{conversation.getSafetyLevelClass('-wrap')}}" data-qa="btn-send-answer" ng-click="send()"></i>
+    <i class="fa cm-post with-cursor {{conversation.getSafetyLevelClass('-wrap')}}" ng-class="{'is-disabled':isSending}" data-qa="btn-send-answer" ng-click="send()"></i>
 </div>
 
 <!--
