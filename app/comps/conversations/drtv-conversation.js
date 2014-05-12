@@ -132,8 +132,8 @@ angular.module('cmConversations').directive('cmConversation', [
                                 .then(function(){
                                     //@ TODO: solve rekeying another way:
                                     $scope.conversation.$chain()
-                                        .encryptPassphrase()
-                                        .decrypt();
+                                    .encryptPassphrase()
+                                    //.decrypt();
                                     // workaround, that new message will be decryptet to
 
                                     $scope.conversation.numberOfMessages++;
