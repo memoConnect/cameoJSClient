@@ -277,8 +277,9 @@ angular.module('cmFiles').factory('cmFileModel', [
             };
 
             this.downloadChunks = function(){
-                if(!this.id){
-                    cmLogger.error('cmFile.downloadChunks(); cmFile.id missing.')
+                cmLogger.debug('cmFileModel:downloadChunks');
+                if(!this.id && this.state == 'exists'){
+                    cmLogger.error('cmFile.downloadChunks();')
                     return null;
                 }
 
@@ -299,6 +300,7 @@ angular.module('cmFiles').factory('cmFileModel', [
             };
 
             this.downloadStart = function(){
+                cmLogger.debug('cmFileModel:downloadStart');
                 if(this.id != '' && this.state == 'exists'){
                     cmFileDownload.add(this);
                 }
@@ -374,12 +376,12 @@ angular.module('cmFiles').factory('cmFileModel', [
              * Event Handling
              */
             this.on('download:chunk', function(event, index){
-//                self._downloadChunk(index + 1);
+                self._downloadChunk(index + 1);
                 self._decryptChunk(index);
             });
 
             this.on('download:finish', function(event, index){
-//                cmLogger.debug('download:finish');
+                cmLogger.debug('download:finish');
                 if(typeof index == 'number') {
                     self._decryptChunk(index);
                 // error on download
@@ -404,22 +406,22 @@ angular.module('cmFiles').factory('cmFileModel', [
             });
 
             this.on('decrypt:chunk', function(event, index){
-//                cmLogger.debug('decrypt:chunk '+index);
+                cmLogger.debug('decrypt:chunk '+index);
 //                self._decryptChunk(index + 1);
-                self._downloadChunk(index + 1);
+//                self._downloadChunk(index + 1);
             });
 
             this.on('decrypt:finish', function(event, index){
-//                cmLogger.debug('decrypt:finish');
+                cmLogger.debug('decrypt:finish');
                 self.reassembleChunks();
             });
 
             this.on('file:cached', function(){
                 cmLogger.debug('file:cached');
                 self
+                    .setState('cached')
                     .decryptName()
                     .clearBuffer()
-                    .setState('cached')
             });
         };
 
