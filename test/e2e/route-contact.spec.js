@@ -88,6 +88,9 @@ describe('Route: Contact', function () {
         })
 
         it('search and click to detail',function(){
+            util.expectCurrentUrl('/contacts')
+            util.waitForElement('cm-contact-tag')
+
             $("[data-qa='input-search']").sendKeys(userName)
 
             expect($$('cm-contacts-list cm-contact-tag cm-avatar').count()).toBe(1)
