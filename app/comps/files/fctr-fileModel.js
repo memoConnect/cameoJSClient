@@ -381,7 +381,7 @@ angular.module('cmFiles').factory('cmFileModel', [
             });
 
             this.on('download:finish', function(event, index){
-                cmLogger.debug('download:finish');
+//                cmLogger.debug('download:finish');
                 if(typeof index == 'number') {
                     self._decryptChunk(index);
                 // error on download
@@ -396,7 +396,7 @@ angular.module('cmFiles').factory('cmFileModel', [
             });
 
             this.on('upload:finish', function(){
-                cmLogger.debug('upload:finish');
+//                cmLogger.debug('upload:finish');
                 self.setState('cached');
             });
 
@@ -412,12 +412,12 @@ angular.module('cmFiles').factory('cmFileModel', [
             });
 
             this.on('decrypt:finish', function(event, index){
-                cmLogger.debug('decrypt:finish');
+//                cmLogger.debug('decrypt:finish');
                 self.reassembleChunks();
             });
 
             this.on('file:cached', function(){
-                cmLogger.debug('file:cached');
+//                cmLogger.debug('file:cached');
                 self
                     .setState('cached')
                     .decryptName()
