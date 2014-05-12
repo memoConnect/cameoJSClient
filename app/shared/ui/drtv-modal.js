@@ -87,15 +87,21 @@ angular.module('cmUi').directive('cmModal', [
                             $rootScope.isModalVisible = false;
                         })
                     }
+
+                    return this
                 };
 
                 // open modal
                 scope.open = function(){
                     this.toggle(true);
+
+                    return this
                 };
                 // close modal
                 scope.close = function(){
                     this.toggle(false);
+
+                    return this
                 };
 
                 // close modal when clicked on backdrop

@@ -40,9 +40,8 @@ angular.module('cmUi').service('cmModal',[
                     .setData(data)
                     .open()
             } else {
-                // Todo: schöner machen, so gibts jedesmal nen neues event =(
-                self.on('register', function(event, registered_id){
-                    if(registered_id == id) self.open(id, data)
+                self.one('register', function(event, registered_id){
+                    return !!(registered_id == id ? self.open(id, data) : false)                              
                 })
             }
             return self
