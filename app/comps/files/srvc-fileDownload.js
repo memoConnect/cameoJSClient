@@ -35,10 +35,10 @@ angular.module('cmFiles').service('cmFileDownload', [
          * @param index
          */
         this.run = function(file){
-            if(typeof file == 'object'){
+            if(typeof file == 'object' && file.state == 'exists'){
                 file.downloadChunks();
 
-                file.on('download:finish', function(){
+                file.on('file:cached', function(){
                     self.run(self.stack.shift());
                 });
             } else {

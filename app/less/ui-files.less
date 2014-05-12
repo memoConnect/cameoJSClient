@@ -2,13 +2,21 @@ cm-message{
   &.file-view{
     article{
       color:@cm-white;
+      .author span{
+        color:@cm-light-grey;
+      }
       div.message{
-        padding:1.5em 0;
+        padding-bottom:1.5em;
         &.left, &.right{
           background-color:@cm-overlay-dark;
         }
-        &.right{
-          padding-top:0;
+        &.left{
+          padding-top:1.5rem;
+          .text{
+            span {
+              margin-top: 0;
+            }
+          }
         }
       }
       span.nose{

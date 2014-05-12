@@ -78,7 +78,7 @@ describe('cmModal', function(){
 
             expect(typeof cmModal.closeAll).toBe('function')
 
-            var el_1 = cmModal.create({ id:"my_modal_1" }, 'Hello World')
+            var el_1 = cmModal.create({ id:"my_modal_1" }, 'Hello World'),
                 el_2 = cmModal.create({ id:"my_modal_2" }, 'Hello User')
             
 
