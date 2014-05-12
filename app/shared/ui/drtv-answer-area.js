@@ -2,11 +2,10 @@
 
 angular.module('cmUi').directive('cmAnswerArea', [
     'cmUserModel',
-    'cmEnv',
-    function (cmUserModel, cmEnv) {
+    function (cmUserModel) {
         return {
             restrict : 'AE',
-            link: function(scope, element, attrs){
+            link: function(scope, element){
                 function addClass(){
                     if(cmUserModel.isGuest() !== false){
                         element.addClass('large');
