@@ -13,10 +13,10 @@ var ptor = util.getPtorInstance(),
 function testFile(file, extension, index){
     var selector = '.file'
 
-    chooseFileAndUpload(file, selector);
+    chooseFileAndUpload(file, selector, index);
 
     it(file+' in message displayed', function(){
-        util.waitForProgressbar()
+        util.waitForProgressbar(10000)
 
         var elements = $$('cm-message cm-message-file')
 
@@ -27,10 +27,10 @@ function testFile(file, extension, index){
 function testImage(file, extension, index){
     var selector = '.file-image img'
 
-    chooseFileAndUpload(file, selector);
+    chooseFileAndUpload(file, selector, index);
 
     it(file+' in message displayed', function(){
-        util.waitForProgressbar()
+        util.waitForProgressbar(10000)
 
         var elements = $$('cm-message cm-message-file')
 
@@ -38,7 +38,7 @@ function testImage(file, extension, index){
     })
 }
 
-function chooseFileAndUpload(file, selector){
+function chooseFileAndUpload(file, selector, index){
     it(file+' choose and check preview',function(){
         $("[data-qa='btn-file-choose']").sendKeys(file)
 
@@ -50,6 +50,8 @@ function chooseFileAndUpload(file, selector){
 
     it('fill message and send check preview',function(){
         $("[data-qa='btn-send-answer']").click()
+
+        util.waitForElements('cm-message',index)
 
         // preview should be empty
         $$('cm-files-preview '+selector).then(function(elements) {
@@ -82,7 +84,7 @@ describe('FileUpload unsafe', function () {
         var file = files[index],
             pathToFile = file[(file['image'] != undefined ? 'image' : 'file')],
             extension = util.getFileExtension(pathToFile),
-            testIndex = parseInt(index+1)
+            testIndex = parseInt(index)+1
         // create expects
         if(file['image'] != undefined)
             testImage(pathToFile, extension, testIndex)

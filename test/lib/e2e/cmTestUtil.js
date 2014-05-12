@@ -174,13 +174,13 @@ this.waitForSpinner = function () {
     return this
 }
 
-this.waitForProgressbar = function () {
+this.waitForProgressbar = function (timeout) {
     // wait until progress bar appear
     ptor.wait(function () {
         return $$("cm-progressbar").then(function (elements) {
             return elements.length == 0
         })
-    }, config.routeTimeout, 'waitForProgressbar timeout reached')
+    }, timeout || config.routeTimeout, 'waitForProgressbar timeout reached')
     return this
 }
 
