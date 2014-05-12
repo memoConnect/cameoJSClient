@@ -254,6 +254,10 @@ angular.module('cmConversations').directive('cmConversation', [
                         }
                     );
                 }
+
+                $rootScope.on('cmUserModel:doLogout',function(){
+                    $rootScope.pendingRecipients = [];
+                });
             }
         }
     }
