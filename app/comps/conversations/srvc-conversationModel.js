@@ -23,9 +23,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.lastUpdated = '',
             this.numberOfMessages = 0,
             this.encryptedPassphraseList = [];
+            this.encryptionType = 'none'; // 'none' || 'symmetric' || 'asymmetric'
             this.keyTransmission = 'asymmetric' || 'symmetric'
             var self = this;
-
 
             cmObject
             .addEventHandlingTo(this)
@@ -49,7 +49,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     this.lastUpdated        = conversation_data.lastUpdated;
 
 
-                    this.encryptedPassphraseList = this.encryptedPassphraseList.concat(conversation_data.encryptedPassphraseList || [])
+                    this.encryptedPassphraseList = this.encryptedPassphraseList.concat(conversation_data.encryptedPassphraseList || []);
+                    this.setEncryptionType();
+
 
                     // register all recipients as Recipient objects
                     if (conversation_data.recipients) {
@@ -66,11 +68,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         })
                     }
                 }
-            }
+            };
 
             this.sync = function(){
                 //cmConversationsAdapter.addRecipient(this.id, identity.id)
-            }
+            };
 
             this.save = function(){
 
@@ -144,7 +146,33 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 }
 
                 return this;
-            }
+            };
+
+            this.setEncryptionType = function(){
+                var i = 0,
+                    check = false;
+                if(this.encryptedPassphraseList.length = 0){
+                    this.encryptionType = 'none';
+                } else {
+                    while(i < this.encryptedPassphraseList.length){
+                        if(this.encryptedPassphraseLis[i].keyId == '_passwd'){
+                            check = true;
+                            break;
+                        }
+                        i++;
+                    }
+
+                    if(check !== false){
+                        this.encryptionType = 'symmetric';
+                    } else {
+                        this.encryptionType = 'asymmetric';
+                    }
+                }
+            };
+
+            this.getEncryptionType = function(){
+                return this.encryptionType;
+            };
 
             /**
              * @TODO with timestamp
@@ -309,7 +337,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 return result
             }
-
 
             this.setKeyTransmission = function(mode){
                 var old_mode = this.keyTransmission
