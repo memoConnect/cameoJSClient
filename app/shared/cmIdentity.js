@@ -18,6 +18,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger','cmApi'
             this.displayName,
             this.userKey,
             this.cameoId,
+            this.avatarId,
             this.avatar,
             this.email                   = { value: undefined, isVerified: undefined },
             this.phoneNumber             = { value: undefined, isVerified: undefined },

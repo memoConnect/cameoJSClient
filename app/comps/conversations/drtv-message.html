@@ -13,7 +13,7 @@
         -->
 
         <div class="author" ng-if="!is_my_own_message" data-qa="message-author">
-            <span class="from grey">{{ message.from.getDisplayName() }}</span>
+            <span class="from">{{ message.from.getDisplayName() }}</span>
         </div>
 
         <div class="text" ng-class="{'own-message':is_my_own_message}">
