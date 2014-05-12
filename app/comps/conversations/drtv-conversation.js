@@ -258,7 +258,7 @@ angular.module('cmConversations').directive('cmConversation', [
                 /**
                  * Delete Pending Recipeints on Logout
                  */
-                $rootScope.on('cmUserModel:doLogout',function(){
+                cmUserModel.on('cmUserModel:doLogout',function(){
                     $rootScope.pendingRecipients = [];
                 });
             }
