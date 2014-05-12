@@ -59,7 +59,7 @@ angular.module('cmContacts').directive('cmContactsSearch',[
                             function(){
                                 // clear from list
                                 var index = $scope.results.indexOf(contact);
-                                $scope.results.splice(contact,1);
+                                $scope.results.splice(index,1);
                                 // notify
                                 cmNotify.success('CONTACTS.INFO.REQUEST.SENDED', {ttl:2000});
                                 cmContactsModel.trigger('friendRequest:send');
