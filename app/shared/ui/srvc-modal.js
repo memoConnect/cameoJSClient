@@ -40,12 +40,8 @@ angular.module('cmUi').service('cmModal',[
                     .setData(data)
                     .open()
             } else {
-                self.on('register', function(event, registered_id){
-                    if(registered_id == id) {
-                        self.instances[id]
-                            .setData(data)
-                            .open()
-                    }
+                self.one('register', function(event, registered_id){
+                    return !!(registered_id == id ? self.open(id, data) : false)                              
                 })
             }
             return self
@@ -79,13 +75,13 @@ angular.module('cmUi').service('cmModal',[
                 scope = $rootScope.$new()
 
             //Todo: könnte man schöner machen:
-            angular.forEach(config, function(value, key){
-                attrs += key+'="'+value+'"'
-            });
+            angular.forEach(config, function(value, key){ attrs += key+'="'+value+'"' });
 
             var modal = $compile('<cm-modal '+attrs+' >'+(template||'')+'</cm-modal>')(scope)
             // move modal up the dom hierarchy, if necessary:
             angular.element(target || document.getElementById('cm-app') || 'body').append(modal)
+
+            // the modal directive (<cm-modal>) will register itself on next digest
 
             return modal
         }
