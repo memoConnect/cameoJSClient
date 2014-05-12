@@ -3,9 +3,12 @@ cm-message{
     article{
       color:@cm-white;
       div.message{
-        padding-bottom:1.5em;
+        padding:1.5em 0;
         &.left, &.right{
           background-color:@cm-overlay-dark;
+        }
+        &.right{
+          padding-top:0;
         }
       }
       span.nose{
