@@ -17,21 +17,19 @@ angular.module('cmUi').directive('cmAvatar',[
                         element.css('display','none');
                     } else {
                         // get avatar image from model
-                        if(identity && identity['getAvatar'] != undefined){
-                            identity
-                                .getAvatar()
-                                .then(
-                                    function(base64){
-                                        if(base64.search('\r') != -1){
-                                            base64 = base64.replace(/(\r\n|\n|\r)/gm,'');
-                                        }
-                                        element.css({'background-image': 'url(' + base64 +')'});
-                                    },
-                                    function(){
-                                        element.css({'background-image': 'url(' + avatarMocks.none +')'});
+                        identity
+                            .getAvatar()
+                            .then(
+                                function(base64){
+                                    if(base64.search('\r') != -1){
+                                        base64 = base64.replace(/(\r\n|\n|\r)/gm,'');
                                     }
-                                );
-                        }
+                                    element.css({'background-image': 'url(' + base64 +')'});
+                                },
+                                function(){
+                                    element.css({'background-image': 'url(' + avatarMocks.none +')'});
+                                }
+                            );
                         // show name under avatar
                         if(attrs.cmWithName){
                             element.addClass('with-name');
@@ -47,7 +45,7 @@ angular.module('cmUi').directive('cmAvatar',[
                 } else {
                     var identity = scope.$eval(attrs.cmData);
 
-                    if(identity != undefined){
+                    if(identity && identity['getAvatar'] != undefined){
                         refresh(identity);
 
                         identity.on('init:finish',function(event, identity){

@@ -53,7 +53,8 @@ define([
                 cmModal.create({
                     id: 'login',
                     'class': 'with-title no-padding',
-                    'cm-close-btn': false
+                    'cm-close-btn': false,
+                    'cm-close-on-backdrop': false
                 },'<div cm-login></div>');
                 cmModal.open('login');
 

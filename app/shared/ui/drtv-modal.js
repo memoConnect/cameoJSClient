@@ -105,9 +105,11 @@ angular.module('cmUi').directive('cmModal', [
                 };
 
                 // close modal when clicked on backdrop
-                angular.element(element.children()[1]).on('click', function(){
-                    scope.close()
-                });
+                if(!attrs.cmCloseOnBackdrop) {
+                    angular.element(element.children()[1]).on('click', function () {
+                        scope.close()
+                    });
+                }
 
                 element
                 .addClass(attrs.severity)

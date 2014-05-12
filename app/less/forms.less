@@ -59,9 +59,12 @@ form {
 
     input,select{
       .clear-form-border;
-      background:@cm-light-grey;
+      background-color:@cm-light-grey;
       width: 100%;
       height:@cm-form-control-height;
+      &:-webkit-autofill{
+        background-color:@cm-light-grey;
+      }
     }
 
     &.white-control{
