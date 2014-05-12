@@ -98,7 +98,6 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger','cmApi'
             };
 
             this.addKey = function(key_data){
-                console.log('addKey')
                 //key_data maybe a string containing a public or Private key, or a key Object (cmCrypt.Key)
 
                 var key,
@@ -119,7 +118,6 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger','cmApi'
 
             this.getWeakestKeySize = function(){
                 var size = undefined
-                console.log('identity keysize',this.displayName,this.keys)
                 this.keys.forEach(function(key){
                     size = size !=undefined ? Math.min(size, key.getSize()) : key.getSize()
                 })
@@ -147,7 +145,6 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger','cmApi'
 
                     identity_data.publicKeys = identity_data.publicKeys || []
                     identity_data.publicKeys.forEach(function(publicKey_data){
-                        console.log('loop addKey')
                         self.addKey(publicKey_data)
                     })
 

@@ -22,7 +22,7 @@ angular.module('cmUser').directive('cmLogin', [
                         user: '2VqTftqh',
                         pass: 'password'
                     },
-                    'TestUser': {
+                    'TrustingBrown': {
                         user: 'trusting_brown',
                         pass: 'password'
                     }
