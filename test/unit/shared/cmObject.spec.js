@@ -47,6 +47,41 @@ describe('cmObject', function(){
             expect(myObject.x).toBe(3)
         })
 
+        it('should be able to set a limit of trigger times.', function(){
+            var myObject = {},
+                x        = 0,
+                y        = 0,
+                z        = 0,
+                o        = 0
+
+            cmObject.addEventHandlingTo(myObject)
+
+            //always increase x
+            myObject.on('step', function(){ x++ })
+
+            //set y to x, but only three times
+            myObject.on('step', function(){ y = x }, 3)            
+
+            //set z to x, two times, but consider call only as successfull if x is even
+            myObject.on('step', function(){ z = x; return x%2 == 0 }, 2)
+
+            //set o to x until x == 5
+            myObject.on('step', function(){ o = x; return x == 5 })
+
+            myObject
+            .trigger('step')
+            .trigger('step')
+            .trigger('step')            
+            .trigger('step')            
+            .trigger('step')            
+            .trigger('step')
+
+            expect(x).toBe(6)
+            expect(y).toBe(3)
+            expect(z).toBe(4)
+            expect(o).toBe(5)
+        })
+
     })
 
 
