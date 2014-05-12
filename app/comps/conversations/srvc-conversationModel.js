@@ -59,8 +59,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 cmConversationsAdapter
                 .on('new-message', function(event, message_data){ self.addMessage(cmMessageFactory.get(message_data)) })
 
+                /*
                 self
-                .on('message-added', function(event, data){ self.updateTagLine() })                
+                .on('message-added recipient-added subject-updated', function(event, data){ self.updateTagLine() })                
+                */
 
                 this.trigger('init')
             }
@@ -119,8 +121,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
             
 
             this.addRecipient = function(recipient){
-                if(this.recipients.indexOf(message) == -1){
-                    this.Recipient.push( recipient )
+                if(this.recipients.indexOf(recipient) == -1){
+                    this.recipients.push( recipient )
+                    recipient.on('update', function(){
+                        self.trigger('recipient:update') //Todo: noch icht gelöst =/
+                    })
                     this.trigger('recipient-added')
                 } else {
                     cmLogger.error('conversationModel: unable to add recipient; duplicate detected. (id:'+recipient.id+')')
@@ -129,6 +134,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
 
             this.updateTagLine = function(){
+                console.dir(this.recipients)
                 this.tagLine =     this.subject
                                 //|| (this.lastMessage ? this.lastMessage.from.getDisplayName() : false)
                                 || this.recipients.map(function(recipient){ return recipient.displayName }).join(', ') //@Todo identity.displayName
@@ -367,19 +373,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 return check
             }
-
-            this.addRecipient = function (identity) {
-                this.trigger('before-add-recipient', identity)
-
-                if(identity && !this.hasRecipient(identity)){
-                    this.recipients.push(cmRecipientModel(identity));
-                }else{
-                    console.warn('Recipient already present.') //@ Todo
-                }
-
-                this.trigger('after-add-recipient', identity)
-                return this;
-            };
 
             this.removeRecipient = function (identity) {
                 this.trigger('before-remove-recipient', identity)
