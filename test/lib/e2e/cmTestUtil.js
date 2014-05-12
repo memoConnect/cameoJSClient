@@ -209,3 +209,7 @@ this.waitAndCloseNotify = function() {
     $("[data-qa='cm-notify-close-btn']").click()
     self.waitForElements("[data-qa='cm-notify-close-btn']",0)
 }
+
+this.getFileExtension = function(file){
+    return file.split('.').pop()
+}
