@@ -95,9 +95,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                             }
 
                             if(self.passphrase && self.checkKeyTransmission()){
-                                self.encryptPassphrase()
-                                self.saveEncryptedPassphraseList()
-                                self.passphrase
+                                self
+                                .encryptPassphrase()
+                                .saveEncryptedPassphraseList()
+                                //self.passphrase
                             }
 
                             deferred.resolve();
@@ -361,7 +362,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.passphrase = ''
                 this.encryptedPassphraseList.forEach(function(item){
                     if(!self.passphrase){
-                        self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase) || ''
+                        self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase, item.keyId) || ''
                         if(item.keyId == "_passwd"){
                             self.passphrase = cmCrypt.decrypt(self.password, item.encryptedPassphrase) || ''
                         }

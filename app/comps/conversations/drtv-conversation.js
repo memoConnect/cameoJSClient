@@ -131,8 +131,8 @@ angular.module('cmConversations').directive('cmConversation', [
                                 .sendTo($scope.conversation.id)
                                 .then(function(){
                                     //@ TODO: solve rekeying another way:
-                                    $scope.conversation.$chain()
-                                    .encryptPassphrase()
+                                    //$scope.conversation.$chain()
+                                    //.encryptPassphrase()
                                     //.decrypt();
                                     // workaround, that new message will be decryptet to
 
@@ -235,7 +235,7 @@ angular.module('cmConversations').directive('cmConversation', [
                     cmConversationsModel.getConversation(conversation_id).then(
                         function (conversation) {
                             self.init(conversation)
-                            $scope.conversation.decryptPassphrase()
+                            //$scope.conversation.decryptPassphrase() //doppelt
                             $scope.conversation.decrypt()
                         }
                     )
