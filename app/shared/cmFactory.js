@@ -5,7 +5,14 @@ var cmApi = angular.module('cmFactory', []);
 
 cmFactory.cmFactory('cmFactory',[
 
-    //do dependencies
+    //no dependencies
+
+
+    /**
+     * generic Factory
+     * @param {object} [config] 
+     */
+
 
     var cmFactory = function(data){
 
