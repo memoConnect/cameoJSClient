@@ -149,17 +149,12 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             this.setEncryptionType = function(){
-                var i = 0,
-                    check = false;
+                var check = false;
                 if(this.encryptedPassphraseList.length = 0){
                     this.encryptionType = 'none';
                 } else {
-                    while(i < this.encryptedPassphraseList.length){
-                        if(this.encryptedPassphraseList[i].keyId == '_passwd'){
-                            check = true;
-                            break;
-                        }
-                        i++;
+                    if(this.encryptedPassphraseList[0].keyId == '_passwd'){
+                        check = true;
                     }
 
                     if(check !== false){
@@ -449,7 +444,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         level = 0
                     }
                 }
-
 
                 return level
             };
