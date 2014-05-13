@@ -51,7 +51,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
 
                     this.encryptedPassphraseList = this.encryptedPassphraseList.concat(conversation_data.encryptedPassphraseList || []);
-                    this.setEncryptionType();
+                    this.setEncryptionType()
 
 
                     // register all recipients as Recipient objects
@@ -68,6 +68,16 @@ angular.module('cmConversations').factory('cmConversationModel',[
                             self.addMessage(cmMessageFactory.create(message_data));
                         })
                     }
+
+                    this.decrypt() //Todo: maybe this is too much
+
+                    this.on('after-add-recipient', function(){
+                        //@ TODO: solve rekeying another way:
+                        this.$chain()
+                        .encryptPassphrase()
+                        .saveEncryptedPassphraseList()
+
+                    })
                 }
             };
 
@@ -208,7 +218,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     }
                 }
 
-                //message.decrypt(this.passphrase);
+                message.decrypt(this.passphrase);
 
                 return this
             };
@@ -378,7 +388,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return this
             }
 
-            this.saveEncryptedPassphraseList = function(){
+            this.saveEncryptedPassphraseList = function(){  
                 if(
                        this.encryptedPassphraseList
                     && this.encryptedPassphraseList.length !=0

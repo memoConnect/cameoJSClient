@@ -35,7 +35,6 @@ angular.module('cmConversations').directive('cmConversation', [
                  * @returns {boolean|*|$scope.new_conversation}
                  */
                 this.isNew = function(){
-                    console.log($scope.new_conversation)
                     return $scope.new_conversation;
                 }
 
@@ -137,8 +136,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                     //@ TODO: solve rekeying another way:
                                     $scope.conversation.$chain()
                                     .encryptPassphrase()
-                                    .decrypt();
-                                    // workaround, that new message will be decryptet to
+                                    .saveEncryptedPassphraseList()
 
                                     $scope.conversation.numberOfMessages++;
                                     $scope.my_message_text = "";
