@@ -155,7 +155,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     this.encryptionType = 'none';
                 } else {
                     while(i < this.encryptedPassphraseList.length){
-                        if(this.encryptedPassphraseLis[i].keyId == '_passwd'){
+                        if(this.encryptedPassphraseList[i].keyId == '_passwd'){
                             check = true;
                             break;
                         }
