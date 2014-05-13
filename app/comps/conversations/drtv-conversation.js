@@ -34,7 +34,7 @@ angular.module('cmConversations').directive('cmConversation', [
                  * check if is new
                  * @returns {boolean|*|$scope.new_conversation}
                  */
-                $scope.isNew = function(){
+                this.isNew = function(){
                     return $scope.new_conversation;
                 }
 
@@ -134,9 +134,9 @@ angular.module('cmConversations').directive('cmConversation', [
                                 .sendTo($scope.conversation.id)
                                 .then(function(){
                                     //@ TODO: solve rekeying another way:
-                                    //$scope.conversation.$chain()
-                                    //.encryptPassphrase()
-                                    //.decrypt();
+                                    $scope.conversation.$chain()
+                                    .encryptPassphrase()
+                                    .decrypt();
                                     // workaround, that new message will be decryptet to
 
                                     $scope.conversation.numberOfMessages++;
@@ -186,36 +186,17 @@ angular.module('cmConversations').directive('cmConversation', [
                     $scope.password         = '';
                     $scope.show_contacts    = false;
 
-                    console.log($scope.conversation.getEncryptionType());
-                    console.log('keyTransmission',$scope.conversation.keyTransmission);
+//                    console.log($scope.conversation.getEncryptionType());
+//                    console.log('keyTransmission',$scope.conversation.keyTransmission);
 
                     /**
                      * open Controls if conversation not new and symmetric encrypted and without password
                      */
-                    if($scope.isNew() != true && $scope.password == '' && $scope.conversation.getEncryptionType() == 'symmetric'){
-                        $timeout(function(){
-                            $scope.toggleControls();
-                            $scope._setLevel('safe');
-                        });
-                    }
-
-                    if($scope.isNew() != true && $scope.password == '' && $scope.conversation.getEncryptionType() == 'asymmetric'){
-                        $timeout(function(){
-                            $scope._setLevel('safer');
-                        });
-                    }
-
-                    if($scope.isNew() != true && $scope.password == '' && $scope.conversation.getEncryptionType() == 'none'){
-                        $timeout(function(){
-                            $scope._setLevel('unsafe');
-                        });
-                    }
-
-                    if($scope.isNew() != false){
-                        $timeout(function(){
-                            $scope._setLevel('unsafe');
-                        });
-                    }
+//                    if($scope.isNew() != true && $scope.password == '' && $scope.conversation.getEncryptionType() == 'symmetric'){
+//                        $timeout(function(){
+//                            $scope.toggleControls();
+//                        });
+//                    }
                 };
 
                 $scope.new_conversation = !conversation_id;

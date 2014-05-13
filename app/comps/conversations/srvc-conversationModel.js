@@ -50,8 +50,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     this.lastUpdated        = conversation_data.lastUpdated;
 
 
+                    console.log('encryptedPassphraseList',this.encryptedPassphraseList);
                     this.encryptedPassphraseList = this.encryptedPassphraseList.concat(conversation_data.encryptedPassphraseList || []);
                     this.setEncryptionType();
+                    console.log('getEncryptionType()', this.getEncryptionType());
 
 
                     // register all recipients as Recipient objects
@@ -393,7 +395,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.passphrase = '';
                 this.encryptedPassphraseList.forEach(function(item){
                     if(!self.passphrase){
-                        self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase, item.keyId) || ''
+                        self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase, item.keyId) || '';
                         if(item.keyId == "_passwd"){
                             self.passphrase = cmCrypt.decrypt(self.password, item.encryptedPassphrase) || '';
                         }
