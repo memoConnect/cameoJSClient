@@ -5,20 +5,8 @@ define([
     'angular-swipe',
     'angular-moment-wrap',
     // cameo files
-//    'cmCron',
-    'cmLocalStorage',
-    'cmApi',
-    'cmAuth',
-    'cmUserModel',
-    'cmIdentity',
-    'cmObject',
-    'cmJob',
-
-    'cmLanguage',
-    'cmLogger',
-    'cmNotify',
-
-    'pckUi',
+    'pckCore',
+//    'pckUi',
     'base/config'
 ], function (angularAMD) {
     'use strict';
@@ -28,19 +16,7 @@ define([
         'ngCookies',
         'swipe',
         'angularMoment',
-        'cmObject',
-        'cmJob',
-        // insert cameo provider
-        'cmApi',
-        'cmUi',
-        'cmLanguage',
-        'cmNotify',
-        'cmLogger',
-        'cmLocalStorage',
-//        'cmCron',
-        'cmAuth',
-        'cmUserModel',
-        'cmIdentity'
+        'cmCore'
     ]);
 
     app.constant('cmEnv',cameo_config.env);
@@ -71,10 +47,7 @@ define([
     // app route config
     app.config([
         '$routeProvider',
-        '$locationProvider',
-        //'$compileProvider',
-
-        function ($routeProvider, $locationProvider) {
+        function ($routeProvider) {
             /**
              * this option makes location use without #-tag
              * @param settings

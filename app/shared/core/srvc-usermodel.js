@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt', 'cmNotify', 'cmLogger'])
+angular.module('cmCore')
 .service('cmUserModel',[
     'cmAuth',
     'cmLocalStorage', 

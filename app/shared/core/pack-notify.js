@@ -4,9 +4,8 @@
 //wrapper
 //todo: growl directive wrappen?
 
-var cmNotify = angular.module('cmNotify', ['angular-growl'])
-
-cmNotify.config(['growlProvider', '$httpProvider', function (growlProvider, $httpProvider) {
+angular.module('cmCore')
+.config(['growlProvider', '$httpProvider', function (growlProvider, $httpProvider) {
     //intercept messages from Backend:
     /*
      {
@@ -92,15 +91,14 @@ cmNotify.config(['growlProvider', '$httpProvider', function (growlProvider, $htt
 /**
  * directive for <div cm-notify>
  */
-cmNotify.directive('cmNotify', function () {
+.directive('cmNotify', function () {
     return {
         priority: 10000,
         template: '<div growl></div>'
     }
-});
+})
 
-
-cmNotify.directive('cmNotifySignal', [
+.directive('cmNotifySignal', [
     '$rootScope',
     'cmNotify',
     function ($rootScope, cmNotify) {

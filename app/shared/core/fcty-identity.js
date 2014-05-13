@@ -1,10 +1,6 @@
-/**
- * Created by Empujador on 17.03.14.
- */
 'use strict';
 
-angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger','cmApi'])
-.factory('cmIdentityModel',[
+angular.module('cmCore').factory('cmIdentityModel',[
     'cmAuth',
     'cmCrypt',
     'cmObject',

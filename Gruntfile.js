@@ -226,6 +226,7 @@ module.exports = function (grunt) {
                     process: concatConvertCmFiles
                 },
                 files: concatCreateCmPackages({
+                    'core': 'app/shared/core',
                     'conversations': 'app/comps/conversations',
                     'contacts': 'app/comps/contacts',
                     'user': 'app/comps/user',
@@ -641,7 +642,11 @@ module.exports = function (grunt) {
 
         // watch
         watch: {
-            files: ['app/less/*.less', 'templates/*.tpl.*', 'app/comps/**/!(package)*', 'app/shared/ui/!(package)*'],
+            files: [
+                'app/less/*.less',
+                'templates/*.tpl.*',
+                'app/comps/**/!(package)*',
+                'app/shared/**/!(package)*'],
             tasks: ['genAllTemplates','packages']
         },
         less: {

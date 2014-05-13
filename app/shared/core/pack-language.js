@@ -1,4 +1,3 @@
-
 'use strict';
 
 // Provides:
@@ -21,16 +20,20 @@
 // last language is stored in local storage (fallback cookie)
 // Todo: new logger, add notify
 
-var cmLanguage = angular.module('cmLanguage', ['pascalprecht.translate', 'cmNotify', 'cmLogger']);
-
-cmLanguage.service('cmTranslate', ['$translate', function($translate){ return $translate }]);
-
-cmLanguage.filter('cmTranslate', ['translateFilter', function(translateFilter){ return translateFilter }]);
+angular.module('cmCore')
+.service('cmTranslate', [
+    '$translate', function($translate){ return $translate }
+])
+.filter('cmTranslate', [
+    'translateFilter', function(translateFilter){ return translateFilter }
+])
 
 //Does not work as intended <div cm-translate="LANG.DE_DE"></div> stays empty
-cmLanguage.directive('cmTranslate', ['translateDirective', function(translateDirective){ return translateDirective[0] }]);
+.directive('cmTranslate', [
+    'translateDirective', function(translateDirective){ return translateDirective[0] }
+])
 
-cmLanguage.provider('cmLanguage', [
+.provider('cmLanguage', [
     '$translateProvider',
     function($translateProvider){
 
@@ -117,26 +120,25 @@ cmLanguage.provider('cmLanguage', [
             }
         ]
     }
-]);
+])
 
-cmLanguage.directive('cmLanguageSelect', [
+.directive('cmLanguageSelect', [
     'cmLanguage',
     function(cmLanguage){
         return {
-
             restrict: 'AE',
             transclude: true,
             template: '<select ng-model="language" ng-options="getLanguageName(lang_key) for lang_key in languages">'+
                       '<a ng-repeat="key in languages">{{languages}}</a>'+
                       '</select>',
 
-            link: function(scope, element, attrs ){
+            link: function(scope, element){
                 element.find('select').on('change', function(){
                     cmLanguage.switchLanguage(scope.language)
                 })
             },
 
-            controller: function($scope, $element, $attrs){
+            controller: function($scope){
                 $scope.languages = cmLanguage.getSupportedLanguages()
                 $scope.getLanguageName = cmLanguage.getLanguageName
                 $scope.language = cmLanguage.getCurrentLanguage()

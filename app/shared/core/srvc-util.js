@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmUtil', [])
+angular.module('cmCore')
 .service('cmUtil', [
     '$q', 
     function($q){

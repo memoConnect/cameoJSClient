@@ -1,10 +1,6 @@
-/**
- * Simple wrapper around AngularJS Logger
- * Timestamp and log level will be added to each log message
- */
-var cmLogger = angular.module('cmLogger', []);
+'use strict';
 
-cmLogger.provider('cmLogger', [
+angular.module('cmCore').provider('cmLogger', [
     '$logProvider',
     function($logProvider){
         var debug_enabled = true;

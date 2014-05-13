@@ -1,10 +1,7 @@
 'use strict';
 
-angular.module('cmObject', [])
-.service('cmObject', [
-
+angular.module('cmCore').service('cmObject', [
     '$q',
-
     function($q){
         var self = this
 
@@ -120,4 +117,4 @@ angular.module('cmObject', [])
         }
         
     }
-])
+]);

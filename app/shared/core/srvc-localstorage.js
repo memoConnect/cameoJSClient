@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('cmLocalStorage', ['cmLogger','cmCrypt']).
-service('LocalStorageAdapter',function(){
+angular.module('cmCore').service('LocalStorageAdapter', [
+function(){
     return {
         /**
          * check usability in browser
@@ -78,7 +78,7 @@ service('LocalStorageAdapter',function(){
             }
         }
     }
-}).
+}]).
 factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt','$rootScope', function(LocalStorageAdapter, cmCrypt, $rootScope){
     var LocalStorageService = function(){
         var self = this,

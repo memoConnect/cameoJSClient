@@ -1,11 +1,11 @@
 define([
     'app',
-    'util-base64',
+//    'util-base64',
     'ngload!pckUser',
     'ngload!pckConversations',
     'ngload!pckUi',
-    'ngload!cmUtil',
-    'ngload!cmUserModel'
+//    'ngload!cmUtil',
+//    'ngload!cmUserModel'
 ], function (app) {
     'use strict';
 

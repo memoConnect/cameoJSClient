@@ -1,14 +1,6 @@
 'use strict';
 
-//This Module handels api calls
-
-var cmApi = angular.module('cmApi', ['cmLogger']);
-
-//TODO config cameo
-
-//Service to handle all api calls
-
-cmApi.provider('cmApi',[
+angular.module('cmCore').provider('cmApi',[
 function($injector){
     var rest_api    = "",
         stack_path   = ""

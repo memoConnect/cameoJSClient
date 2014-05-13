@@ -1,6 +1,6 @@
 define([
     'app',
-    'cmUtil',
+//    'cmUtil',
     'ngload!pckUser',
     'ngload!pckConversations'
 ], function(app){

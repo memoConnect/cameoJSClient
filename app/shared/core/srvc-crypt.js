@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('cmCrypt', ['cmLogger'])
-.service('cmCrypt',[
+angular.module('cmCore').service('cmCrypt',[
     'cmLogger',
     '$q',
     '$rootScope',

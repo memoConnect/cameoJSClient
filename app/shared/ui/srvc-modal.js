@@ -107,4 +107,4 @@ angular.module('cmUi').service('cmModal',[
 
         return self
     }
-])
+]);

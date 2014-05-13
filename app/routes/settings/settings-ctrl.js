@@ -1,9 +1,9 @@
 define([
     'app',
-    'cmUserModel',
+//    'cmUserModel',
     'ngload!pckUser',
-    'ngload!cmUtil',
-    'ngload!cmCrypt'
+//    'ngload!cmUtil',
+//    'ngload!cmCrypt'
 ], function (app) {
     'use strict';
 

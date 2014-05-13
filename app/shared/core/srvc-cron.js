@@ -1,9 +1,7 @@
 'use strict';
 
-angular.module('cmCron', [])
-.service('cmCron', [
-    '$rootScope',
-    function($q){
+angular.module('cmCore').service('cmCron', [
+    function(){
         this.jobs           =  {};
         this.interval       = null;
         this.intervalSec    = 5;
