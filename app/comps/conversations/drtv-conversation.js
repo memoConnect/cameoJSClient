@@ -35,6 +35,7 @@ angular.module('cmConversations').directive('cmConversation', [
                  * @returns {boolean|*|$scope.new_conversation}
                  */
                 this.isNew = function(){
+                    console.log($scope.new_conversation)
                     return $scope.new_conversation;
                 }
 
@@ -149,7 +150,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                         cmConversationsModel.addConversation($scope.conversation, true);
                                         $location.path('/conversation/' + $scope.conversation.id);
                                     }
-                                    cmLogger.debug('message:sended')
+                                    cmLogger.debug('message:sent')
                                 });
                         }
                     } else {

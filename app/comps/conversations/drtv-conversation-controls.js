@@ -17,7 +17,8 @@ angular.module('cmConversations').directive('cmConversationControls', [
             link: function(scope, element, attrs, cmConversation){
                 var levels = ['unsafe', 'safe', 'safer'];
 
-                scope.bodyVisible = cmConversation.isNew()
+                scope.bodyVisible   = cmConversation.isNew()
+                scope.isNew         = cmConversation.isNew()
 
                 //Todo: get rid of this! :
                 scope.$watch('conversation', function(conversation){
