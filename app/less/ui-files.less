@@ -128,13 +128,18 @@ cm-files-preview{
 //}
 
 .file {
-  background:url(../gfx/filetype_map_small.png) transparent 0 0;
+  display: inline-block;
+  background:url(../gfx/filetype_map_small.png) transparent 0 -2340px;
   height:60px !important;
   width:60px !important;
   border:0;
   cursor:pointer;
   padding:0;
   vertical-align:text-bottom;
+  &.dir{background-position:0 0}
+  &.dir-download{background-position:0 -60px}
+  &.dir-safe{background-position:0 -120px}
+  &.dir-public{background-position:0 -180px}
   &.pdf{background-position:0 -240px}
   &.txt{background-position:0 -300px}
   &.xlsx{background-position:0 -360px}
@@ -167,7 +172,8 @@ cm-files-preview{
   &.wma{background-position:0 -1980px}
   &.aif{background-position:0 -2040px}
   &.ogg{background-position:0 -2100px}
-  &.ppt{background-position:0 -2160px}
-  &.pps{background-position:0 -2220px}
-  &.unknown{background-position:0 -2280px}
+  &.\33ggp{background-position:0 -2160px}
+  &.ppt{background-position:0 -2220px}
+  &.pps{background-position:0 -2280px}
+  &.unknown{background-position:0 -2340px}
 }
