@@ -309,6 +309,12 @@ angular.module('cmContacts').service('cmContactsModel',[
             init();
         });
 
+        this.on('after-add-contact', function(){
+            console.log('after-add-contact');
+            this._clearContacts();
+            init();
+        });
+
         cmUserModel.on('init', function(){
             init();
         });

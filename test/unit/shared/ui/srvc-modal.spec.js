@@ -1,6 +1,6 @@
 describe('cmModal', function(){
 
-    xdescribe('service', function(){
+    describe('service', function(){
 
         var cmModal, $rootScope
         beforeEach(module('cmUi'))
@@ -52,12 +52,24 @@ describe('cmModal', function(){
 
         })
 
-        it('should provide functiony "open" and "close" to open resp. close an existing modal.', function(){
+        it('should provide functions "open" and "close" to open resp. close an existing modal.', function(){
             expect(typeof cmModal.open).toBe('function')
 
-            var el = cmModal.create({ id:"my_modal" }, 'Hello World')
+            var el = cmModal.create({
+                id:"my_modal",
+                'class': 'with-title no-padding',
+                'cm-close-btn': false
+            }, 'Hello World')
+
+            expect(el.hasClass('with-title')).toBe(true)
+            expect(el.hasClass('no-padding')).toBe(true)
+
+            //modal should not yet be registered, it will be registered on next digest:
+            expect(cmModal.instances['my_modal']).toBeUndefined()
 
             $rootScope.$apply()
+
+            expect(cmModal.instances['my_modal']).toBeDefined()
 
             expect(el.hasClass('active')).toBe(false)
 
@@ -68,13 +80,32 @@ describe('cmModal', function(){
             cmModal.close('my_modal')
 
             expect(el.hasClass('active')).toBe(false)
+
+        })
+
+        it('should be able to call .open() prior to registration, execution should be delayed until registration.', function(){
+
+            //modal should be opened upon registration, which will occur later
+            cmModal.open('delayed_modal')
+
+            expect(cmModal.instances['delayed_modal']).toBeUndefined()
+
+            var el = cmModal.create({ id: 'delayed_modal' }, 'I am delayed.')
+
+            //will trigger registration:
+            $rootScope.$apply()
+
+            expect(cmModal.instances['delayed_modal']).toBeDefined()
+
+            //modal should open right after registration:
+            expect(el.hasClass('active')).toBe(true)
         })
 
         it('should provide a function "closeAll" to close all existing modals.', function(){
 
             expect(typeof cmModal.closeAll).toBe('function')
 
-            var el_1 = cmModal.create({ id:"my_modal_1" }, 'Hello World')
+            var el_1 = cmModal.create({ id:"my_modal_1" }, 'Hello World'),
                 el_2 = cmModal.create({ id:"my_modal_2" }, 'Hello User')
             
 

@@ -381,14 +381,17 @@ cmApi.provider('cmApi',[
                 api.subscribeToEventStream = function(){
                     return  api.post({
                                 path: events_path,
-                                exp_ok: 'id'
+                                exp_ok: 'id',
+                                data:{
+                                    secret: 'b4plIJMNITRDeJ9vl0JG' //only working on dev
+                                }
                             }, true)
                             .then(function(id){
                                 api.subscriptionId = id
                             })
                 }
 
-                api.getEvents = function(){
+                api.getEvents = function(force){
                     if(!api.subscriptionId){
 
                         //if no subscriptionId is present, get one and try again later:
@@ -399,16 +402,16 @@ cmApi.provider('cmApi',[
                         api.get({
                             path: events_path + '/' + api.subscriptionId,
                             exp_ok: 'events'
-                        }, true)
+                        }, force)
                         .then(function(events){
                             events.forEach(function(event){
-                                api.trigger(event.name, event.data)
+                                api.trigger(event.type, event.content)
                             })
                         })
                     }
                 }
 
-                if(!events_disabled && events_interval) $interval(function(){ api.getEvents() }, events_interval, false)
+                if(!events_disabled && events_interval) $interval(function(){ api.getEvents(false) }, events_interval, false)
 
                 return api
             }

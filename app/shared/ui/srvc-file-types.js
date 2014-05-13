@@ -20,6 +20,7 @@ angular.module('cmUi').service('cmFileTypes',[
             {e:'mp4',m:'video/mp4'},
             {e:'flv',m:'video/x-flv'},
             {e:'avi',m:'video/x-msvideo'},
+//            {e:'3gpp',m:'video/3gpp'},
             // audio
             {e:'mp3',m:'audio/mpeg'},
             {e:'mp3',m:'audio/mp3'},
@@ -36,8 +37,8 @@ angular.module('cmUi').service('cmFileTypes',[
             {e:['docx','doc'],m:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'},
             {e:['pps','ppt'],m:'application/vnd.ms-powerpoint'},
             // various
-            {e:'php',m:''},
-            {e:'css',m:'te/css'},
+            {e:'php',m:'text/php'},
+            {e:'css',m:'text/css'},
             {e:'zip',m:'application/zip'},
             {e:'rar',m:'application/x-rar-compressed'},
             {e:'sit',m:'application/x-stuffit'},
@@ -53,33 +54,39 @@ angular.module('cmUi').service('cmFileTypes',[
         return {
             find: function(mime, filename){
                 var self = this,
-                    file = 'unknown';
+                    extension = 'unknown';
                 // search for mimetype
-                angular.forEach(fileMimeTypes, function (type) {
-                    if (mime != '' && type.m == mime) {
-                        file = self.getExtension(type.e, filename);
-                    }
-                })
+                if(mime != undefined) {
+                    angular.forEach(fileMimeTypes, function (type) {
+                        if (mime != '' && type.m == mime) {
+                            extension = self.getExtension(type.e, filename);
+                        }
+                    });
+                }
 
-                return file;
+                return extension;
             },
 
             getExtension: function(extensions, filename){
-                var file = 'unknown';
+                var extension = 'unknown';
 
                 // only one extension
-                if (typeof extensions == 'string')
-                    file = extensions;
+                if (typeof extensions == 'string' && extensions != '')
+                    extension = extensions;
                 // more extensions exists
-                else if(typeof extensions == 'array'){
-                    angular.forEach(extensions, function (extension) {
-                        if (filename.search(extension) != -1){
-                            file = extension;
-                        }
-                    })
+                else if(typeof extensions == 'object'){
+                    if(filename == undefined || filename == ''){
+                        extension = extensions[0];
+                    } else {
+                        angular.forEach(extensions, function (inExtension) {
+                            if (filename.search(inExtension+'$') != -1) {
+                                extension = inExtension;
+                            }
+                        })
+                    }
                 }
 
-                return file;
+                return extension;
             }
         }
     }

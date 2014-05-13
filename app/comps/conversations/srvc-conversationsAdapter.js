@@ -94,7 +94,7 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
 
         cmObject.addEventHandlingTo(adapter)
        
-        cmApi.on('conversation:new-message', function(event, data){ adapter.trigger('new-message', data) })
+        cmApi.on('conversation:new-message', function(event, data){ adapter.trigger('message:new', data) })
            
 
         return adapter

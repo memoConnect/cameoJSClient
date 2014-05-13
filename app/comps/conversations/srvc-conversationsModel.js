@@ -1,37 +1,45 @@
 'use strict';
 
 angular.module('cmConversations').service('cmConversationsModel', [
+
     'cmConversationsAdapter',
     'cmConversationFactory',
+    'cmObject',
     '$q',
     '$rootScope',
-    function(cmConversationsAdapter, cmConversationFactory, $q, $rootScope) {
+
+    function(cmConversationsAdapter, cmConversationFactory, cmObject, $q, $rootScope) {
         var self = this,
             events = {};
 
-        this.isLoading = false;
-        this.conversations = [];
-        this.quantity = 0;
-        this.limit = 10; // 5
-        this.offset = 0; //13
+        this.isLoading      = false;
+        this.conversations  = [];
+        this.quantity       = 0;
+        this.limit          = 10; // 5
+        this.offset         = 0; //13
 
         $rootScope.$on('logout', function(){
             self.conversations = [];
         });
 
-        this.on = function(event, callback){
-            events[event] = events[event] || [];
-            events[event].push(callback);
-        }
 
-        this.trigger = function(event, data){
-            events[event] = events[event] || [];
-            events[event].forEach(function(callback){
-                callback(data);
-            });
-        }
+        cmObject.addEventHandlingTo(this)
+
+
 
         //Methods:
+        
+        this._init = function(){
+            cmConversationsAdapter
+            .on('message:new', function(event, data){ 
+                this.getConversation(data.conversationId).then(function(conversation){
+                    console.dir(conversation)
+                    console.log(vonversation instanceof cmConversationModel)
+                    conversation.trigger('message:new', data.message) 
+                })
+            })
+        }
+
         this.addConversation = function(conversation, firstItem){
             var i = 0,
                 checkConversation = null;
@@ -142,5 +150,7 @@ angular.module('cmConversations').service('cmConversationsModel', [
                 self.trigger('finish:load');
             })
         }
+
+        this._init()
     }
 ])

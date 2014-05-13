@@ -3,25 +3,27 @@
  */
 'use strict';
 
-angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger'])
+angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger','cmApi'])
 .factory('cmIdentityModel',[
-
     'cmAuth',
-    'cmCrypt', 
-    'cmObject', 
+    'cmCrypt',
+    'cmObject',
     'cmLogger',
-
-    function(cmAuth, cmCrypt, cmObject, cmLogger){
+    'cmApi',
+    '$q',
+    function(cmAuth, cmCrypt, cmObject, cmLogger, cmApi, $q){
         var Identity = function(identity_data){
 
             this.id,
             this.displayName,
             this.userKey,
             this.cameoId,
+            this.avatarId,
+            this.avatar,
             this.email                   = { value: undefined, isVerified: undefined },
             this.phoneNumber             = { value: undefined, isVerified: undefined },
             this.preferredMessageType,
-            this.keys                    = [],         
+            this.keys                    = [],
             this.userType,
             this.created,
             this.lastUpdated;
@@ -40,14 +42,14 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger'])
                     var key_2 = new cmCrypt.Key()
 
                     key_2.setKey(key.getPrivateKey())
-                   
+
                     var encrypted_passphrase = key.encrypt(passphrase)
-                    
+
                     encrypted_key_list.push({
                         keyId:                 key.id,
-                        encryptedPassphrase:   encrypted_passphrase   
+                        encryptedPassphrase:   encrypted_passphrase
                     })
-                }) 
+                })
 
                 return encrypted_key_list
             }
@@ -69,15 +71,34 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger'])
 
             */
 
-            this.getAvatar = function(mock){
-                var avatar = ''; // api returns image src
-                if(mock != undefined)
-                    return mock;
-                return avatar;
+            /**
+             * get and cached avatar of identity
+             * @returns {promise}
+             */
+            this.getAvatar = function(){
+                var defer = $q.defer();
+                // get and cache avatar
+                if(this.avatarId) {
+                    if (this.avatar == undefined) {
+                        cmApi.get({
+                            path: "/file/"+this.avatarId+"/"+0,
+                            exp_ok: 'chunk'
+                        }).then(function(base64){
+                            self.avatar = base64;
+                            defer.resolve(base64);
+                        });
+                        // return cached avatar
+                    } else {
+                        defer.resolve(this.avatar);
+                    }
+                } else {
+                    defer.reject();
+                }
+                return defer.promise;
             };
 
             this.addKey = function(key_data){
-                //key_data maybe a string containing a public or Private key, or a key Object (cmCrypt.Key)            
+                //key_data maybe a string containing a public or Private key, or a key Object (cmCrypt.Key)
 
                 var key,
                     is_object  = (typeof key_data == 'object'),
@@ -86,11 +107,11 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger'])
 
                 if( can_update )                key = key_data  //already a Key object
                 if( is_object && !can_update)   key = (new cmCrypt.Key()).importData(key_data) //from backend or localstorgae
-                if( is_string)                  key = new cmCrypt.Key(key_data) //plain text public or private key          
+                if( is_string)                  key = new cmCrypt.Key(key_data) //plain text public or private key
 
-                key 
-                ?   key.updateKeyList(self.keys) 
-                :   cmLogger.error('uanable to add key, unknown format: '+key_data)              
+                key
+                ?   key.updateKeyList(self.keys)
+                :   cmLogger.error('uanable to add key, unknown format: '+key_data)
 
                 return this
             }
@@ -113,16 +134,17 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger'])
                     this.displayName            = identity_data.displayName
                     this.userKey                = identity_data.userKey
                     this.cameoId                = identity_data.cameoId
+                    this.avatarId               = identity_data.avatar
                     this.email                  = identity_data.email
                     this.phoneNumber            = identity_data.phoneNumber
-                    this.preferredMessageType   = identity_data.preferredMessageType                                
+                    this.preferredMessageType   = identity_data.preferredMessageType
                     this.userType               = identity_data.userType
                     this.created                = identity_data.created
-                    this.lastUpdated            = identity_data.lastUpdated 
+                    this.lastUpdated            = identity_data.lastUpdated
                     this.keys                   = []
 
                     identity_data.publicKeys = identity_data.publicKeys || []
-                    identity_data.publicKeys.forEach(function(publicKey_data){                      
+                    identity_data.publicKeys.forEach(function(publicKey_data){
                         self.addKey(publicKey_data)
                     })
 
@@ -138,7 +160,7 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger'])
                             if(typeof data =='string'){
                                 cmLogger('cmAuth.getIdentity() should forward an object, got string instead. ')
                             }else{
-                                self.init(data)    
+                                self.init(data)
                             }
                             self.trigger('after-load', data)
                         }

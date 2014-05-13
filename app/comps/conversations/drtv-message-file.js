@@ -22,21 +22,8 @@ angular.module('cmConversations').directive('cmMessageFile', [
 
                 // exists fileModel
                 if(typeof $scope.file == 'object'){
-
-                    if($scope.file.state == 'exists'){
-                        $scope.file
-                            .setPassphrase($scope.conversation.passphrase)
-                    }
-
-                    $scope.file.on('progress:chunk', function(progress){
-                        $scope.progress += progress;
-                    });
-
-                    $scope.file.on('download:finish', function(){
-                        $scope.progress = 1;
-                        $scope.file
-                            .decryptName()
-                            .decryptChunks();
+                    $scope.file.on('progress:chunk', function(e, progress){
+                        $scope.progress = progress;
                     });
                 }
             }

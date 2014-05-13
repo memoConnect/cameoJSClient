@@ -372,13 +372,13 @@ describe('cmApi', function(){
 
                 cmApi.getEvents()
 
-                cmApi.on('my_first_event', function(data){
+                cmApi.on('my_first_event', function(event, data){
                     data_1 = data
                 })
-                cmApi.on('my_second_event', function(data){
+                cmApi.on('my_second_event', function(event, data){
                     data_2 = data
                 })
-                cmApi.on('my_third_event', function(data){
+                cmApi.on('my_third_event', function(event, data){
                     data_3 = data
                 })
 

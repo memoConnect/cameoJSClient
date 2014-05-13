@@ -20,7 +20,6 @@ define([
             $scope.showConversation = false;
 
             if(cmUtil.checkKeyExists($routeParams,'idPurl') && cmUtil.validateString($routeParams.idPurl)){
-
                 cmPurlModel.getPurl($routeParams.idPurl).then(
                     function(data){
                         // identity check internal || external user
@@ -54,7 +53,8 @@ define([
                 cmModal.create({
                     id: 'login',
                     'class': 'with-title no-padding',
-                    'cm-close-btn': false
+                    'cm-close-btn': false,
+                    'cm-close-on-backdrop': false
                 },'<div cm-login></div>');
                 cmModal.open('login');
 
