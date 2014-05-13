@@ -123,9 +123,23 @@ cm-files-preview{
   }
 }
 
-//.bg-pos(@x,@y){
-//  background-position:@x  -@y;
-//}
+@files: dir dir-download dir-safe dir-public;
+@filespx: 60;
+@filesnum: length(@files);
+.spriteLoop(@index:0) when (@index < @filesnum){
+  @name: extract(@files, @index+1);
+  @selector: ~".@{name}";
+  @posy: @{filespx} * @{index};
+
+  @{selector} {
+    .bg-pos(0, -@{posy})
+  }
+  // next item
+  .spriteLoop(@index + 1);
+}
+.bg-pos(@x:0,@y:0){
+  background-position:~`"@{x}px @{y}px"`;
+}
 
 .file {
   display: inline-block;
@@ -136,6 +150,9 @@ cm-files-preview{
   cursor:pointer;
   padding:0;
   vertical-align:text-bottom;
+
+  .spriteLoop();
+
   &.dir{background-position:0 0}
   &.dir-download{background-position:0 -60px}
   &.dir-safe{background-position:0 -120px}
