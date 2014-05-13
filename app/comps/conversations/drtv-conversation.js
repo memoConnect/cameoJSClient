@@ -44,6 +44,7 @@ angular.module('cmConversations').directive('cmConversation', [
                  * after preparation send message
                  */
                 $scope.send = function(){
+                    console.log('send start '+$scope.conversation.passphrase)
                     if($scope.isSending !== true){
                         $scope.isSending = true;
 
@@ -70,6 +71,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                 });
                             return false;
                         } else {
+                            console.log('before sendMessage  '+$scope.conversation.passphrase)
                             sendMessage();
                         }
                     }
@@ -115,6 +117,7 @@ angular.module('cmConversations').directive('cmConversation', [
                         message_empty       = !isMessageValid() ,
                         recipients_missing  = $scope.conversation.recipients.length <= 0 //@todo mocked
                     // is everything valid?
+                    console.log('earliy Messagesend: '+$scope.conversation.passphrase)
                     if(!message_empty && passphrase_valid && !recipients_missing){
                         // create new conversation
                         if($scope.conversation.id == ''){
@@ -125,6 +128,7 @@ angular.module('cmConversations').directive('cmConversation', [
                             );
                         // add to existing conversation
                         } else {
+                            console.log('before send: '+$scope.conversation.passphrase)
                             cmMessageFactory.create()
                                 .addFiles(files)
                                 .setText($scope.my_message_text)
@@ -134,8 +138,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                 .sendTo($scope.conversation.id)
                                 .then(function(){
                                     //@ TODO: solve rekeying another way:
-                                    $scope.conversation.$chain()
-                                    .encryptPassphrase()
+                                    $scope.conversation
                                     .saveEncryptedPassphraseList()
 
                                     $scope.conversation.numberOfMessages++;
