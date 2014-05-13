@@ -136,8 +136,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                     //@ TODO: solve rekeying another way:
                                     $scope.conversation.$chain()
                                     .encryptPassphrase()
-                                    .decrypt();
-                                    // workaround, that new message will be decryptet to
+                                    .saveEncryptedPassphraseList()
 
                                     $scope.conversation.numberOfMessages++;
                                     $scope.my_message_text = "";
@@ -149,7 +148,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                         cmConversationsModel.addConversation($scope.conversation, true);
                                         $location.path('/conversation/' + $scope.conversation.id);
                                     }
-                                    cmLogger.debug('message:sended')
+                                    cmLogger.debug('message:sent')
                                 });
                         }
                     } else {
