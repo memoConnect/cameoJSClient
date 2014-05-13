@@ -11,7 +11,8 @@ angular.module('cmConversations').directive('cmConversation', [
     'cmNotify',
     '$location',
     '$rootScope',
-    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location, $rootScope) {
+    '$timeout',
+    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location, $rootScope, $timeout) {
         return {
             restrict: 'AE',
             templateUrl: 'comps/conversations/drtv-conversation.html',
@@ -26,12 +27,14 @@ angular.module('cmConversations').directive('cmConversation', [
                     files                = [];
 
                 $scope.isSending = false;
+                $scope.conversation = {};
+
 
                 /**
                  * check if is new
                  * @returns {boolean|*|$scope.new_conversation}
                  */
-                this.isNew = function(){
+                $scope.isNew = function(){
                     return $scope.new_conversation;
                 }
 
@@ -163,28 +166,6 @@ angular.module('cmConversations').directive('cmConversation', [
                     }
                 }
 
-                /*
-                // old stuff
-                $scope.sendCaptcha = function () {
-                    var passphrase_valid = !!$scope.conversation.passphraseValid(),
-                        captchaImageData = $element.find('canvas')[0].toDataURL("image/png")
-
-                    captchaImageData && passphrase_valid
-                        ?   $scope.conversation
-                            .newMessage(captchaImageData)
-                            .sendTo($scope.conversation)
-                        :   null
-
-                    if (!passphrase_valid)    cmNotify.warn('CONVERSTAION.WARN.PASSPHRASE_INVALID')
-                }
-
-                $scope.requestCaptcha = function () {
-                    $scope.conversation
-                        .newMessage(":requestCaptcha")
-                        .sendTo($scope.conversation)
-                }
-                */
-
                 this.addPendingRecipients = function(){
                     $rootScope.pendingRecipients = $rootScope.pendingRecipients || [];
                     $rootScope.pendingRecipients.forEach(function(pendingRecipient){
@@ -193,73 +174,82 @@ angular.module('cmConversations').directive('cmConversation', [
                     $rootScope.pendingRecipients = []
                 };
 
-                this.init = function (conversation) {
+                $scope.init = function (conversation) {
                     $rootScope.pendingConversation = conversation;
 
                     // reload detail of conversation
                     $scope.conversation = conversation.update();
 
-                    self.addPendingRecipients()
+                    self.addPendingRecipients();
 
-                    $scope.my_message_text  = ""
-                    $scope.password         = ""
-                    $scope.show_contacts    = false
+                    $scope.my_message_text  = '';
+                    $scope.password         = '';
+                    $scope.show_contacts    = false;
 
-                    /*
-                     $scope.passphrase_valid = $scope.conversation.passphraseValid()
+                    console.log($scope.conversation.getEncryptionType());
+                    console.log('keyTransmission',$scope.conversation.keyTransmission);
 
-                     @todo remove??? 16.04.2014
-                     if($scope.conversation.passphrase != '' && $scope.passphrase_valid !== false){
-                        $scope.passphrase = $scope.conversation.passphrase;
-                        $scope.conversation.decrypt();
-                     } else {
-                        $scope.$watch("passphrase", function (new_passphrase) {
-                            $scope.conversation.setPassphrase(new_passphrase)
-                            $scope.passphrase_valid = $scope.conversation.passphraseValid()
-                            if ($scope.passphrase_valid)
-                                $scope.conversation.decrypt()
-                         })
-                     }
-
-                     // cron
-                     if($scope.new_conversation !== true){
-                         cmCron.add('Conversation-'+conversation.id,{instance: conversation,task:function(conversation){self.update()}});
-                     }
-
+                    /**
+                     * open Controls if conversation not new and symmetric encrypted and without password
                      */
-                }
+                    if($scope.isNew() != true && $scope.password == '' && $scope.conversation.getEncryptionType() == 'symmetric'){
+                        $timeout(function(){
+                            $scope.toggleControls();
+                            $scope._setLevel('safe');
+                        });
+                    }
 
-                $scope.new_conversation = !conversation_id
+                    if($scope.isNew() != true && $scope.password == '' && $scope.conversation.getEncryptionType() == 'asymmetric'){
+                        $timeout(function(){
+                            $scope._setLevel('safer');
+                        });
+                    }
+
+                    if($scope.isNew() != true && $scope.password == '' && $scope.conversation.getEncryptionType() == 'none'){
+                        $timeout(function(){
+                            $scope._setLevel('unsafe');
+                        });
+                    }
+
+                    if($scope.isNew() != false){
+                        $timeout(function(){
+                            $scope._setLevel('unsafe');
+                        });
+                    }
+                };
+
+                $scope.new_conversation = !conversation_id;
 
                 if(conversation_id){
                     cmConversationsModel.getConversation(conversation_id).then(
                         function (conversation) {
-                            self.init(conversation)
-                            $scope.conversation.decryptPassphrase()
-                            $scope.conversation.decrypt()
+                            $scope.init(conversation);
+//                            $scope.conversation.decryptPassphrase();
+                            $scope.conversation.decrypt();
                         }
                     )
                 } else if($rootScope.pendingConversation){
                     if($rootScope.pendingConversation.id){
                         $location.path('conversation/'+$rootScope.pendingConversation.id)
                     }else{
-                        self.init($rootScope.pendingConversation)
+                        $scope.init($rootScope.pendingConversation)
                     }
                 } else {
                     cmConversationsModel.createNewConversation().then(
                         function(newConversation){
                             newConversation.addRecipient(cmUserModel.data.identity);
-                            self.init(newConversation);
-                            $scope.conversation.setPassphrase()
+                            $scope.init(newConversation);
+                            $scope.conversation.setPassphrase();
                         }
                     );
                 }
 
                 /**
-                 * Delete Pending Recipeints on Logout
+                 * Delete explicit pending Objects
                  */
                 cmUserModel.on('cmUserModel:doLogout',function(){
                     $rootScope.pendingRecipients = [];
+                    $rootScope.pendingConversation = null;
                 });
             }
         }
