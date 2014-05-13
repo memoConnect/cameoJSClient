@@ -50,8 +50,6 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger','cmApi'
                         encryptedPassphrase:   encrypted_passphrase
                     })
                 })
-                console.log('keylist')
-                console.dir(encrypted_key_list)
                 return encrypted_key_list
             }
 
@@ -114,8 +112,6 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger','cmApi'
                 ?   key.updateKeyList(self.keys)
                 :   cmLogger.error('uanable to add key, unknown format: '+key_data)
 
-                console.dir(self.keys)
-
                 return this
             }
 
@@ -132,7 +128,6 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger','cmApi'
              * @param identity_data
              */
             this.init = function(identity_data){
-                console.log('init identity')
                 if(typeof identity_data === 'object'){
                     this.id = identity_data.id;
                     this.displayName            = identity_data.displayName
@@ -149,7 +144,6 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger','cmApi'
 
                     identity_data.publicKeys = identity_data.publicKeys || []
                     identity_data.publicKeys.forEach(function(publicKey_data){
-                        console.log('add key')
                         self.addKey(publicKey_data)
                     })
 
