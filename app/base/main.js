@@ -2,6 +2,7 @@ require.config({
     baseUrl: "",
     // alias libraries paths
     urlArgs: "bust=" + (new Date()).getTime(),
+    waitSeconds: 0,
     paths: {
         'app': 'base/app',
         'screen': 'base/screen',
@@ -163,3 +164,5 @@ require.config({
     // kick start application
     deps: ['app']
 });
+
+//console.log(Uint32Array.toString())
