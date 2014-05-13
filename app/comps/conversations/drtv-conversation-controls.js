@@ -1,31 +1,32 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmConversationControls', [
+
     'cmUserModel',
     'cmNotify',
+    'cmLogger',
     '$location',
-    function(cmUserModel, cmNotify, $location){
+
+    function(cmUserModel, cmNotify, cmLogger, $location){
         return{
             restrict : 'AE',
             templateUrl : 'comps/conversations/drtv-conversation-controls.html',
-            scope : {
-                conversation :"=cmData"
-            },
+            scope : true,
             require: '^cmConversation',
 
             link: function(scope, element, attrs, cmConversation){
                 var levels = ['unsafe', 'safe', 'safer'];
 
-                scope.isNew       = cmConversation.isNew();
-                scope.bodyVisible = scope.isNew;
+                scope.bodyVisible = cmConversation.isNew()
 
                 //Todo: get rid of this! :
-                scope.$watchCollection(attrs.cmData, function(conversation){
-                    if(conversation.id && !scope.safetyLevel){
+                scope.$watch('conversation', function(conversation){
+                    if(conversation && conversation.getSafetyLevel && !scope.safetyLevel){
+
                         scope._setLevel(levels[conversation.getSafetyLevel()]);
 
-                        if(cmConversation.isNew() != true && (conversation.password == '' || conversation.password == undefined)&& conversation.getEncryptionType() == 'symmetric') {
-                            scope.toggleControls();
+                        if(!cmConversation.isNew() && !conversation.password && conversation.getEncryptionType() == 'symmetric') {
+                            scope.bodyVisible = true
                         }
                     }
                 });
