@@ -50,7 +50,6 @@ angular.module('cmIdentity', ['cmAuth', 'cmCrypt', 'cmObject','cmLogger','cmApi'
                         encryptedPassphrase:   encrypted_passphrase
                     })
                 })
-
                 return encrypted_key_list
             }
 

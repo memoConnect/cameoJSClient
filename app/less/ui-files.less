@@ -36,6 +36,7 @@ cm-message-file{
   min-height:@cm-unit;
   margin:0 auto;
   margin-bottom: 0.5em;
+  text-align: center;
 
   .file-image{
     min-height:@cm-unit;
@@ -96,7 +97,8 @@ cm-files-preview{
   width:@cm-app-width;
   background-color:rgba(255,255,255,0.9);
 
-  .file-list{
+  .files-list{
+    text-align:center;
     padding:@cm-vertical-padding;
   }
 
@@ -123,10 +125,6 @@ cm-files-preview{
   }
 }
 
-//.bg-pos(@x,@y){
-//  background-position:@x  -@y;
-//}
-
 .file {
   display: inline-block;
   background:url(../gfx/filetype_map_small.png) transparent 0 -2340px;
@@ -136,44 +134,18 @@ cm-files-preview{
   cursor:pointer;
   padding:0;
   vertical-align:text-bottom;
-  &.dir{background-position:0 0}
-  &.dir-download{background-position:0 -60px}
-  &.dir-safe{background-position:0 -120px}
-  &.dir-public{background-position:0 -180px}
-  &.pdf{background-position:0 -240px}
-  &.txt{background-position:0 -300px}
-  &.xlsx{background-position:0 -360px}
-  &.doc{background-position:0 -420px}
-  &.php{background-position:0 -480px}
-  &.css{background-position:0 -540px}
-  &.xls{background-position:0 -600px}
-  &.zip{background-position:0 -660px}
-  &.rar{background-position:0 -720px}
-  &.sit{background-position:0 -780px}
-  &.jpg{background-position:0 -840px}
-  &.gif{background-position:0 -900px}
-  &.bmp{background-position:0 -960px}
-  &.tif{background-position:0 -1020px}
-  &.eps{background-position:0 -1080px}
-  &.png{background-position:0 -1140px}
-  &.mov{background-position:0 -1200px}
-  &.mpg{background-position:0 -1260px}
-  &.mp4{background-position:0 -1320px}
-  &.flv{background-position:0 -1380px}
-  &.avi{background-position:0 -1440px}
-  &.xml{background-position:0 -1500px}
-  &.html{background-position:0 -1560px}
-  &.chm{background-position:0 -1620px}
-  &.ttf{background-position:0 -1680px}
-  &.exe{background-position:0 -1740px}
-  &.dmg{background-position:0 -1800px}
-  &.mp3{background-position:0 -1860px}
-  &.wav{background-position:0 -1920px}
-  &.wma{background-position:0 -1980px}
-  &.aif{background-position:0 -2040px}
-  &.ogg{background-position:0 -2100px}
-  &.\33ggp{background-position:0 -2160px}
-  &.ppt{background-position:0 -2220px}
-  &.pps{background-position:0 -2280px}
-  &.unknown{background-position:0 -2340px}
 }
+@files:dir dir-download dir-safe dir-public pdf txt xlsx doc php css xls zip rar sit jpg gif bmp tif eps png mov mpg mp4 flv avi xml html chm ttf exe dmg mp3 wav wma aif ogg '\33ggp' ppt pps unknown;
+@filesnum:length(@files);
+.spriteFiles(@index:0) when (@index < @filesnum){
+  @name: extract(@files, @index + 1);
+  @selector: ~".file.@{name}";
+
+  .bg-pos(@y) when (@y < 1){background-position:0 0;}
+  .bg-pos(@y) when (@y > 0){background-position:~`"0 -@{y}px"`;}
+
+  @{selector} {.bg-pos(60 * @index)}
+  // next item
+  .spriteFiles(@index + 1);
+}
+.spriteFiles();

@@ -87,6 +87,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.save = function(){
 
+                this.encryptPassphrase()
+
                 var deferred = $q.defer();
 
 
@@ -98,14 +100,15 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                     cmConversationsAdapter.newConversation((this.subject || '')).then(
                         function (conversation_data) {
-
-                            self.init(conversation_data);
+                            self.init(conversation_data)
 
                             var i = 0;
                             while(i < self.recipients.length){
                                 cmConversationsAdapter.addRecipient(self.id, self.recipients[i].id);
                                 i++;
                             }
+
+                           
 
                             if(self.passphrase && self.checkKeyTransmission()){
                                 self
