@@ -10,7 +10,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmRecipientModel',
     'cmNotify',
     'cmObject',
-<<<<<<< HEAD
     'cmLogger',
     '$q',
     '$rootScope',
@@ -23,12 +22,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
         * @param {Object} [data] - The conversation data as received from the backend.
         */
        
-=======
-    'cmUtil',
-    '$q',
-    '$rootScope',
-    function (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, cmUtil, $q, $rootScope){
->>>>>>> refs/heads/dev
         var ConversationModel = function(data){
 
             this.id                 = undefined
@@ -169,18 +162,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.created = '',
             this.lastUpdated = '',
             this.numberOfMessages = 0,
-<<<<<<< HEAD
             this.keyTransmission = 'asymmetric' || 'symmetric'
-=======
-            this.encryptedPassphraseList = [];
-            this.encryptionType = 'none'; // 'none' || 'symmetric' || 'asymmetric'
-            this.keyTransmission = 'asymmetric' || 'symmetric'
-            var self = this;
 
-            cmObject
-            .addEventHandlingTo(this)
-            .addChainHandlingTo(this)
->>>>>>> refs/heads/dev
 
             $rootScope.$on('logout', function(){
                 self.messages = [];
@@ -235,12 +218,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                     })
                 }
-<<<<<<< HEAD
                 */
-            }
-=======
-            };
->>>>>>> refs/heads/dev
 
             this.sync = function(){
                 //cmConversationsAdapter.addRecipient(this.id, identity.id)
@@ -393,17 +371,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
             */
 
             this.getLastMessage = function(){
-<<<<<<< HEAD
                 cmLogger.debug('cmConversationModel: getLastMessage is deprecated.')
                 return this.lastMessage
             }
-=======
-                if(this.messages.length > 0){
-                    return this.messages[(this.messages.length - 1)];
-                }
-                return null
-            };
->>>>>>> refs/heads/dev
+
 
             /**
              * @param limit
@@ -428,8 +399,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * Recipient Handling
              */
 
-
-<<<<<<< HEAD
             
             this.getRecipientList = function(){
                 cmLogger.debug('cmConversationModel: .getRecipientList() is deprecated.')
@@ -437,15 +406,12 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 return "deprecated"
             }
-        
-=======
                 this.recipients.forEach(function(recipient){
                     list.push(recipient.getDisplayName())
                 });
 
                 return list.join(', ')
-            };
->>>>>>> refs/heads/dev
+            }
 
             this.hasRecipient = function(identity){
                 var check = false;
@@ -457,22 +423,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return check;
             };
 
-<<<<<<< HEAD
-=======
-            this.addRecipient = function (identity) {
-                this.trigger('before-add-recipient', identity)
-
-                if(identity && !this.hasRecipient(identity)){
-                    this.recipients.push(cmRecipientModel(identity));
-                }else{
-                    console.warn('Recipient already present.') //@ Todo
-                }
-
-                this.trigger('after-add-recipient', identity);
-                return this;
-            };
-
->>>>>>> refs/heads/dev
             this.removeRecipient = function (identity) {
                 this.trigger('before-remove-recipient', identity)
 

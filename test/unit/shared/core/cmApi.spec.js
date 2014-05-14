@@ -1,6 +1,6 @@
 'use strict';
 
-describe('cmApi', function(){
+describe('base config', function(){
 
     var cmApi, $httpBackend;
 
@@ -370,7 +370,7 @@ describe('cmApi', function(){
 
                 var data_1, data_2, data_3
 
-                cmApi.getEvents()
+                cmApi.getEvents(true)
 
                 cmApi.on('my_first_event', function(event, data){
                     data_1 = data
@@ -413,8 +413,10 @@ describe('cmApi with short intervals', function(){
 
     var cmApi, $httpBackend, $interval;
 
-    beforeEach(module('cmApi',[
+    beforeEach(module('cmCore',[
+
         'cmApiProvider',
+
         function(cmApiProvider){
             cmApiProvider
             .restApiUrl('my_rest_api')

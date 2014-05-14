@@ -403,7 +403,7 @@ angular.module('cmCore').provider('cmApi',[
                         }, force)
                         .then(function(events){
                             events.forEach(function(event){
-                                api.trigger(event.type, event.content)
+                                api.trigger(event.name, event.data)
                             })
                         })
                     }

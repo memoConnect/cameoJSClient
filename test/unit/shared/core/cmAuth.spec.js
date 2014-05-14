@@ -3,20 +3,11 @@
 describe('cmAuth', function () {
     var cmAuth, cmApi, $httpBackend
 
-<<<<<<< HEAD:test/unit/shared/cmAuth.spec.js
-    beforeEach(module('cmAuth'))
-    beforeEach(module('cmApi', function(){
-
-    }))
+    beforeEach(module('cmCore'))
 
     beforeEach(inject(function (_cmAuth_, _cmApi_, _$httpBackend_) {
         cmAuth  = _cmAuth_
         cmApi   = _cmApi_ 
-=======
-    beforeEach(module('cmCore'))
-    beforeEach(inject(function (_cmAuth_, _$httpBackend_) {
-        cmAuth = _cmAuth_;
->>>>>>> refs/heads/dev:test/unit/shared/core/cmAuth.spec.js
         $httpBackend = _$httpBackend_
     }));
 
