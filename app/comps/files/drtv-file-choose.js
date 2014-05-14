@@ -18,10 +18,31 @@ angular.module('cmFiles').directive('cmFileChoose', [
                     element.find('input').attr('cm-resets',index);
                 }
 
-                // file is selected
-                element.on('change', function (event) {
-                    cmFilesCtrl.setFile(event.target.files[0]);
-                });
+                // phonegap fix for 4.4
+                if (typeof device != 'undefined' &&
+                    device.platform.toLowerCase() === 'android' &&
+                    device.version.indexOf('4.4') === 0) {
+
+                    document.addEventListener("deviceready", function () {
+                        element
+                            .on('click', function () {
+                                filechooser.open({}, function (data) {
+
+                                    // {"filepath":"\/storage\/emulated\/0\/DCIM\/Camera\/IMG_20140510_154258893_HDR.jpg"}
+                                    var file = new File(data.filepath);
+                                    console.log(file)
+                                    cmFilesCtrl.setFile(file);
+                                });
+                            });
+                    }, false);
+
+                } else {
+                    // default fileapi
+                    // file is selected
+                    element.on('change', function (event) {
+                        cmFilesCtrl.setFile(event.target.files[0]);
+                    });
+                }
 
                 // reset files from sended message
                 scope.$on('reset:files',function(){

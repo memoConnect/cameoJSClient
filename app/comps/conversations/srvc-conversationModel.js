@@ -137,12 +137,14 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 if(this.id != ''){
                     if(typeof conversation_data !== 'undefined'){
-                        if(this.messages.length > 1){
-                            offset = this.messages.length;
-                            clearAllMessages = false;
+                        if(this.messages.length < conversation_data.numberOfMessages) {
+                            if (this.messages.length > 1) {
+                                offset = this.messages.length;
+                                clearAllMessages = false;
+                            }
+                            var limit = conversation_data.numberOfMessages - offset;
+                            this.updateMessages(limit, offset, clearAllMessages);
                         }
-                        var limit = conversation_data.numberOfMessages - offset;
-                        this.updateMessages(limit, offset, clearAllMessages);
                     } else {
                         cmConversationsAdapter.getConversationSummary(this.id).then(
                             function(data){
@@ -231,7 +233,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     return this.messages[(this.messages.length - 1)];
                 }
                 return null
-            }
+            };
 
             /**
              * @param limit
@@ -239,20 +241,18 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @param clearMessages
              */
             this.updateMessages = function(limit, offset, clearMessages){
-                if(typeof limit !== 'undefined' && limit > 0){
-                    cmConversationsAdapter.getConversation(this.id, limit, offset).then(
-                        function(data){
-                            if(typeof clearMessages !== 'undefined' && clearMessages !== false){
-                                self.messages = [];
-                            }
-
-                            data.messages.forEach(function(message_data) {
-                                self.addMessage(cmMessageFactory.create(message_data));
-                            });
+                cmConversationsAdapter.getConversation(this.id, limit, offset).then(
+                    function(data){
+                        if(typeof clearMessages !== 'undefined' && clearMessages !== false){
+                            self.messages = [];
                         }
-                    )
-                }
-            }
+
+                        data.messages.forEach(function(message_data) {
+                            self.addMessage(cmMessageFactory.create(message_data));
+                        });
+                    }
+                )
+            };
 
             /**
              * Recipient Handling
@@ -263,20 +263,20 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 this.recipients.forEach(function(recipient){
                     list.push(recipient.getDisplayName())
-                })
+                });
 
                 return list.join(', ')
-            }
+            };
 
             this.hasRecipient = function(identity){
                 var check = false;
 
                 this.recipients.forEach(function(recipient){
                     check = check || (identity.id == recipient.id)
-                })
+                });
 
-                return check
-            }
+                return check;
+            };
 
             this.addRecipient = function (identity) {
                 this.trigger('before-add-recipient', identity)
@@ -287,7 +287,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     console.warn('Recipient already present.') //@ Todo
                 }
 
-                this.trigger('after-add-recipient', identity)
+                this.trigger('after-add-recipient', identity);
                 return this;
             };
 

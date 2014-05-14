@@ -429,11 +429,9 @@ module.exports = function (grunt) {
                 config: 'resource/phonegap/config.xml',
                 path: 'phonegap-build',
                 plugins: [
-//                    './resource/phonegap/plugins/org.apache.cordova.console',
-//                    './resource/phonegap/plugins/org.apache.cordova.device',
-//                    './resource/phonegap/plugins/org.apache.cordova.network-information',
-                    './resource/phonegap/plugins/org.apache.cordova.splashscreen'
-//                    './resource/phonegap/plugins/org.apache.cordova.contacts'
+                    './resource/phonegap/plugins/org.apache.cordova.device',
+                    './resource/phonegap/plugins/org.apache.cordova.splashscreen',
+                    './resource/phonegap/plugins/com.cesidiodibenedetto.filechooser'
                 ],
                 platforms: ['android'],
                 maxBuffer: 200, // You may need to raise this for iOS.
@@ -688,8 +686,8 @@ module.exports = function (grunt) {
     grunt.registerTask('phonegap-local', [
         'template:local-config-phonegap',
         'phonegap:build',
-        'template:local-index-phonegap',
-        'copy:local-resources-phonegap'
+        'copy:local-resources-phonegap',
+        'template:local-index-phonegap'
         //'phonegap:run'
     ]);
     // phonegap to build server

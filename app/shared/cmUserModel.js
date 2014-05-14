@@ -367,7 +367,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          * LocalStorage Functions
          */
         this.initStorage = function(){
-            self.data.storage = cmLocalStorage.create(self.data.id,self.data.userKey);
+            this.data.storage = cmLocalStorage.create(this.data.id,this.data.userKey);
         }
 
         /**
@@ -376,8 +376,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          * @param value
          */
         this.storageSave = function(key, value){
-            if(isAuth !== false && self.data.storage !== null){
-                self.data.storage.save(key, value);
+            if(isAuth !== false && this.data.storage !== null){
+                this.data.storage.save(key, value);
             }
         };
         /**
@@ -385,8 +385,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          * @param key
          */
         this.storageGet = function(key){            
-            if(isAuth !== false && self.data.storage !== null){
-                return self.data.storage.get(key);
+            if(isAuth !== false && this.data.storage !== null){
+                return this.data.storage.get(key);
             }
 
             return null;
@@ -396,8 +396,8 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          * @param key
          */
         this.storageRemove = function(key){
-            if(isAuth !== false && self.data.storage !== null){
-                self.data.storage.remove(key);
+            if(isAuth !== false && this.data.storage !== null){
+                this.data.storage.remove(key);
             }
         };
         /**
@@ -405,7 +405,7 @@ angular.module('cmUserModel', ['cmAuth','cmLocalStorage','cmIdentity', 'cmCrypt'
          */
         function resetUser(){
             cmLogger.debug('cmUserModel:resetUser');
-            self.data = angular.extend({}, dataModel);
+            this.data = angular.extend({}, dataModel);
         }
 
         $rootScope.$on('logout', function(){
