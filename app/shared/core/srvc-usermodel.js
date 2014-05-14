@@ -17,6 +17,14 @@ angular.module('cmCore')
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
 
+        /**
+         * @ngdoc service
+         * @name cmUserModel
+         * @module cmCore.cmUserModel
+         * @description MOEP
+         *
+         * @type {{isActive: boolean, id: string, userKey: string, displayName: string, cameoId: string, email: {}, phoneNumber: {}, preferredMessageType: string, created: string, lastUpdated: string, userType: string, storage: {}, identity: {}}}
+         */
         var dataModel = {
             isActive: false,
             id: '',
@@ -37,6 +45,13 @@ angular.module('cmCore')
 
         this.comesFromRegistration = false;
 
+        /**
+         * @name cmUserModel#init
+         * @description initialize cmUserModel
+         *
+         * @param identity_data
+         * @return this
+         */
         this.init = function(identity_data){
             cmLogger.debug('cmUserModel:init');
             this.loadIdentity(identity_data).then(

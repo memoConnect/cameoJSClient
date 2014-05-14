@@ -19,6 +19,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-protractor-runner');
 
+    grunt.loadNpmTasks('grunt-ngdocs');
+
     // cameo secrets
     var globalCameoSecrets = (function () {
         src = '../cameoSecrets/cameoJSClientSecrets.json';
@@ -389,6 +391,7 @@ module.exports = function (grunt) {
             'dev-deploy': ['dist/app/less'],
             'dist-app': ['dist/app'],
             'dist': ['dist'],
+            'docs': ['docs'],
             'phonegap-target': ['phonegap-target'],
             'phonegap-build': ['phonegap-build']
         },
@@ -666,6 +669,29 @@ module.exports = function (grunt) {
                     done();
                 }
             }
+        },
+
+        ngdocs: {
+            options: {
+                dest: 'docs',
+                scripts: ['app/vendor/requirejs/require.js','app/vendor/angular/angular.js'],
+                deferLoad: true,
+                html5Mode: true,
+                startPage: '/app',
+                title: 'CameoNET JS Client',
+                image: '',
+                imageLink: '',
+                titleLink: '/api',
+                bestMatch: false
+            },
+            app: {
+                src: ['app/**/*.js'],
+                title: 'APP Documentation'
+            },
+            shared: {
+                src: ['app/shared/**/*.js'],
+                title: 'Shared Resources'
+            }
         }
     });
 
@@ -744,4 +770,6 @@ module.exports = function (grunt) {
         'uglify:dev-deploy',
         'copy:cockpit',
         'uglify:cockpit']);
+
+    grunt.registerTask('create-docs', ['clean:docs', 'ngdocs:shared']);
 };
