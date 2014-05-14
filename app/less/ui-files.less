@@ -127,13 +127,15 @@ cm-files-preview{
 
 .file {
   display: inline-block;
-  background:url(../gfx/filetype_map_small.png) transparent 0 -2340px;
-  height:60px !important;
-  width:60px !important;
+  background:url(../gfx/filetype_map_small.png) transparent 0 -39em;
+  background-size: 1em;
+  height:1em !important;
+  width:1em !important;
   border:0;
   cursor:pointer;
   padding:0;
   vertical-align:text-bottom;
+  font-size:@cm-unit;
 }
 @files:dir dir-download dir-safe dir-public pdf txt xlsx doc php css xls zip rar sit jpg gif bmp tif eps png mov mpg mp4 flv avi xml html chm ttf exe dmg mp3 wav wma aif ogg '\33ggp' ppt pps unknown;
 @filesnum:length(@files);
@@ -142,9 +144,9 @@ cm-files-preview{
   @selector: ~".file.@{name}";
 
   .bg-pos(@y) when (@y < 1){background-position:0 0;}
-  .bg-pos(@y) when (@y > 0){background-position:~`"0 -@{y}px"`;}
+  .bg-pos(@y) when (@y > 0){background-position:~`"0 -@{y}em"`;}
 
-  @{selector} {.bg-pos(60 * @index)}
+  @{selector} {.bg-pos(@index)}
   // next item
   .spriteFiles(@index + 1);
 }
