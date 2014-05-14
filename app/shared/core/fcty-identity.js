@@ -83,7 +83,6 @@ angular.module('cmCore').factory('cmIdentityModel',[
                             exp_ok: 'chunk'
                         // resolve all waiter
                         }).then(function (base64) {
-                            console.log('! resolve promise', self.avatarId)
                             self.avatar = base64;
                             self.avatarPromise.resolve(base64);
                         });

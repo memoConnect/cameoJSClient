@@ -35,7 +35,7 @@
     <div ng-repeat="bundle in types">
         <h3 ng-if="bundle.title">{{bundle.title}}</h3>
         <figure ng-repeat="css in bundle.css.split(' ')">
-            <i class="file {{css}}"></i>
+            <div class="file {{css}}"></div>
             <figcaption>{{css}}</figcaption>
         </figure>
     </div>
