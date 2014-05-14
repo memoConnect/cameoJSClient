@@ -3,7 +3,7 @@
 describe('cmAuth', function () {
     var cmAuth, $httpBackend;
 
-    beforeEach(module('cmAuth'))
+    beforeEach(module('cmCore'))
     beforeEach(inject(function (_cmAuth_, _$httpBackend_) {
         cmAuth = _cmAuth_;
         $httpBackend = _$httpBackend_

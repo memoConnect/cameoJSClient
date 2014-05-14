@@ -4,7 +4,7 @@ describe('cmApi', function(){
 
     var cmApi, $httpBackend;
 
-    beforeEach(module('cmApi',[
+    beforeEach(module('cmCore',[
         'cmApiProvider',
         function(cmApiProvider){
             cmApiProvider.restApiUrl('my_rest_api')
@@ -213,7 +213,7 @@ describe('cmApi', function(){
 })
 
 describe('cmApi with cmAuth present', function(){
-    beforeEach(module('cmApi'))
+    beforeEach(module('cmCore'))
 
     beforeEach(module(function ($provide) {
         $provide.value('cmAuth', {

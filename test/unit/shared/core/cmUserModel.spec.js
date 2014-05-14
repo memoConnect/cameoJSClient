@@ -7,7 +7,7 @@ describe('cmUserModel', function(){
     var cmUserModel;
         cmCrypt;
 
-    beforeEach(module("cmUserModel"))
+    beforeEach(module("cmCore"))
 
     beforeEach(inject(function(_cmUserModel_, _cmCrypt_) {
 

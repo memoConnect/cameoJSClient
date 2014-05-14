@@ -83,7 +83,7 @@ describe("cmLanguage", function() {
 
         var ctrl, scope, cmLanguage, cmTranslate, $compile, $httpBackend
 
-        beforeEach(module('cmLanguage', [
+        beforeEach(module('cmCore', [
 
             'cmLanguageProvider',
 

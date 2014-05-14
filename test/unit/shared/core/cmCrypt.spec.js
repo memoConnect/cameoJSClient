@@ -3,7 +3,7 @@
 describe('cmCrypt', function () {
     var cmCrypt;
 
-    beforeEach(module('cmCrypt'))
+    beforeEach(module('cmCore'))
     beforeEach(inject(function(_cmCrypt_) {
         cmCrypt = _cmCrypt_;
     }))

@@ -3,7 +3,7 @@
 describe('cmLogger', function(){
     var cmLogger, log;
 
-    beforeEach(module('cmLogger'))
+    beforeEach(module('cmCore'))
     beforeEach(inject(function(_cmLogger_){
         cmLogger = _cmLogger_
     }))

@@ -8,7 +8,7 @@ describe("cmNotify", function() {
         $httpBackend,
         $http
 
-    beforeEach(module("cmNotify"))
+    beforeEach(module("cmCore"))
     beforeEach(inject(function(_cmNotify_, _$rootScope_, _$compile_, _$http_, _$httpBackend_){
         cmNotify        = _cmNotify_
         $compile        = _$compile_

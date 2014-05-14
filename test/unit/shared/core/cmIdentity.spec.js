@@ -7,7 +7,7 @@ describe('cmIdentityModel', function(){
         return new cmIdentityModel;
     }
 
-    beforeEach(module('cmIdentity'))
+    beforeEach(module('cmCore'))
 
     beforeEach(inject(function(_cmIdentityModel_){
         cmIdentityModel = _cmIdentityModel_
@@ -64,7 +64,7 @@ describe('cmIdentityModel', function(){
 describe('cmIdentityFactory', function(){
     var cmIdentityFactory, cmIdentityModel;
 
-    beforeEach(module('cmIdentity'))
+    beforeEach(module('cmCore'))
 
     beforeEach(inject(function(_cmIdentityFactory_){
         cmIdentityFactory = _cmIdentityFactory_

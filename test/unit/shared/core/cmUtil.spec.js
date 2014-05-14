@@ -4,7 +4,7 @@ var cmUtil;
 
 describe('cmUtil', function(){
 
-    beforeEach(module("cmUtil"))
+    beforeEach(module("cmCore"))
 
     beforeEach(inject(function(_cmUtil_) {
         cmUtil = _cmUtil_

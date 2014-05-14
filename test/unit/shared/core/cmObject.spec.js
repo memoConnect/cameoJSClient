@@ -3,7 +3,7 @@
 describe('cmObject', function(){
     var cmObject, $q, $rootScope
 
-    beforeEach(module('cmObject'))
+    beforeEach(module('cmCore'))
     beforeEach(inject(function(_cmObject_, _$q_, _$rootScope_){
         cmObject    = _cmObject_
         $q          = _$q_

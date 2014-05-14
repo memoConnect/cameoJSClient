@@ -24,21 +24,8 @@ module.exports = function(config) {
             'app/vendor/crypto/sjcl/sjcl.min.js',
             'app/vendor/crypto/jsencrypt/jsencrypt.min.js',
 
-            'app/shared/cmJob.js',
-            'app/shared/cmObject.js',
-            'app/shared/cmLogger.js',
-            'app/shared/cmNotify.js',
-            'app/shared/cmApi.js',
-            'app/shared/cmAuth.js',
-            'app/shared/cmUserModel.js',
-            'app/shared/cmIdentity.js',
-            'app/shared/cmUtil.js',
-            'app/shared/cmCrypt.js',
-            'app/shared/cmLocalStorage.js',
-
-            'app/shared/cmLanguage.js',
-
             // packages
+            'app/shared/core/package.js',
             'app/shared/ui/package.js',
             'app/comps/contacts/package.js',
             'app/comps/user/package.js',

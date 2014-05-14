@@ -3,7 +3,7 @@
 describe('LocalStorageAdapter', function(){
     var LocalStorageAdapter;
 
-    beforeEach(module('cmLocalStorage'))
+    beforeEach(module('cmCore'))
 
     beforeEach(inject(function(_LocalStorageAdapter_){
         LocalStorageAdapter = _LocalStorageAdapter_
@@ -45,7 +45,7 @@ describe('LocalStorageService', function(){
         return new LocalStorageService;
     }
 
-    beforeEach(module('cmLocalStorage'))
+    beforeEach(module('cmCore'))
 
     beforeEach(inject(function(_LocalStorageService_){
         LocalStorageService = _LocalStorageService_
@@ -89,7 +89,7 @@ describe('LocalStorageService', function(){
 describe('cmLocalStorage', function(){
     var cmLocalStorage, LocalStorageService;
 
-    beforeEach(module('cmLocalStorage'))
+    beforeEach(module('cmCore'))
 
     beforeEach(inject(function(_cmLocalStorage_, _LocalStorageService_){
         cmLocalStorage = _cmLocalStorage_
