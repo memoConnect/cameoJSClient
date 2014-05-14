@@ -674,14 +674,14 @@ module.exports = function (grunt) {
         ngdocs: {
             options: {
                 dest: 'docs',
-                scripts: ['app/vendor/requirejs/require.js','app/vendor/angular/angular.js'],
-                deferLoad: true,
+                scripts: ['app/vendor/requirejs/require.js','app/vendor/angular/angular.js','https://code.angularjs.org/1.2.16/angular-animate.min.js'],
+                deferLoad: false,
                 html5Mode: true,
                 startPage: '/app',
                 title: 'CameoNET JS Client',
                 image: '',
                 imageLink: '',
-                titleLink: '/api',
+                titleLink: '/app',
                 bestMatch: false
             },
             app: {
