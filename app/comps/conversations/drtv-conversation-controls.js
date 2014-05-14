@@ -34,7 +34,20 @@ angular.module('cmConversations').directive('cmConversationControls', [
             },
 
             controller: function($scope){
-                $scope.showPassword = false;
+                $scope.showPassword = true;
+
+                $scope.togglePassphraseMethod = function(type){
+                    if(typeof type !== 'undefined'){
+                       switch(type){
+                           case "password":
+                               $scope.showPassword = true;
+                               break;
+                           case "passcaptcha":
+                               $scope.showPassword = false;
+                               break;
+                       }
+                    }
+                };
 
                 $scope._setLevel = function(level){
                     if(level == 'unsafe'){

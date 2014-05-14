@@ -54,8 +54,8 @@
             <div ng-if="safetyLevel == 'safe'">
 
                 <div cm-rubber-space>
-                    <button class="cm-btn-black" cm-weight="1" ng-class="{'active':isNew}">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</button>
-                    <button class="cm-btn-black" cm-weight="1">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA'|cmTranslate}}</button>
+                    <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':!showPassword}" ng-click="togglePassphraseMethod('password');">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</button>
+                    <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':showPassword}" ng-click="togglePassphraseMethod('passcaptcha');">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA'|cmTranslate}}</button>
                 </div>
 
                 <div class="cm-form-group" ng-if="showPassword">
@@ -66,7 +66,7 @@
                 </div>
 
                 <div ng-if="!showPassword">
-                    Capacha!
+                    Captcha!
                 </div>
             </div>
             <div style="text-align:center; cursor:pointer" cm-user-rights>
