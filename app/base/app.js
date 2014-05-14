@@ -6,7 +6,6 @@ define([
     'angular-moment-wrap',
     // cameo files
     'pckCore',
-//    'pckUi',
     'base/config'
 ], function (angularAMD) {
     'use strict';

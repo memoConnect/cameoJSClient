@@ -414,4 +414,4 @@ angular.module('cmCore')
 
         this.init();
     }
-]);
+])
