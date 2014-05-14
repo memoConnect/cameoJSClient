@@ -188,12 +188,27 @@ module.exports = function (grunt) {
             packagesObject = packagesObject||{};
 
         Object.keys(packagesObject).forEach(function(packageName){
-            var packagePath = packagesObject[packageName];
+            var settings,
+                moduleName = packageName;
+                exclude = '!(module-'+moduleName+'|package)',
+                include = '*',
+                packagePath = packagesObject[packageName],
+                file = 'package.js';
 
-            packages[packagePath+'/package.js'] = [
+            if(typeof packagePath == "object"){
+                settings = packagePath;
+                // override
+                moduleName = settings.moduleName||moduleName;
+                include = settings.include||include;
+                exclude = settings.exclude||exclude;
+                packagePath = settings.packagePath||packagePath;
+                file = settings.file||file;
+            }
+
+            packages[packagePath+'/'+file] = [
                 packagePath+'/*.html', // at last all templates
-                packagePath+'/module-'+packageName+'.js', // at first module
-                packagePath+'/!(module-'+packageName+'|package)*.js' // all directives / services / factorys etc
+                packagePath+'/module-'+moduleName+'.js', // at first module
+                packagePath+'/'+exclude+include+'.js' // all directives / services / factorys etc
             ];
         });
 
@@ -227,6 +242,13 @@ module.exports = function (grunt) {
                 },
                 files: concatCreateCmPackages({
                     'core': 'app/shared/core',
+                    'core-cockpit': {
+                        packagePath:'app/shared/core',
+                        moduleName:'core-cockpit',
+//                        include:'*(*api|*auth|*crypt|*logger)',
+                        exclude:'!(module|package|*identity|*language|*notify|*cron|*job|*localstorage|*object|*usermodel|*util)',
+                        file:'package-cockpit.js'
+                    },
                     'conversations': 'app/comps/conversations',
                     'contacts': 'app/comps/contacts',
                     'user': 'app/comps/user',

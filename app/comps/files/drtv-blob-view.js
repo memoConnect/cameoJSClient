@@ -44,15 +44,17 @@ angular.module('cmFiles').directive('cmBlobView',[
                 // load image via fileapi
                 scope.$watch(attrs.cmBlobView, handleBlob);
 
-                // open modal
-                element.on('click',function(){
-                    cmModal.create({
-                        id: 'image-view',
-                        'class': 'modal-image-fullscreen',
-                        'type': 'fullscreen'
-                    }, '<img src="'+element.attr('src')+'" cm-stay-in-viewport  />');
-                    cmModal.open('image-view');
-                });
+                if(attrs.cmFullscreen) {
+                    // open modal
+                    element.on('click', function () {
+                        cmModal.create({
+                            id: 'image-view',
+                            'class': 'modal-image-fullscreen',
+                            'type': 'fullscreen'
+                        }, '<img src="' + element.attr('src') + '" cm-stay-in-viewport /><cm-message-assets></cm-message-assets>');
+                        cmModal.open('image-view');
+                    });
+                }
             }
         }
     }
