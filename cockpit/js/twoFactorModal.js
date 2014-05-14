@@ -1,4 +1,4 @@
-angular.module("twoFactorModal", ["cmLogger", "ui.bootstrap", "cmAuth"])
+angular.module("twoFactorModal", ["cmCore", "ui.bootstrap"])
 
     .service("twoFactorModal", ["$modal", "cmAuth",
 

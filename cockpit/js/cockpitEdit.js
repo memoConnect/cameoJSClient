@@ -1,4 +1,4 @@
-var cockpitEdit = angular.module("cockpitEdit", ["ui.bootstrap", "ngRoute", "cmApi", "cmLogger"]);
+var cockpitEdit = angular.module("cockpitEdit", ["ui.bootstrap", "ngRoute", "cmCore"]);
 
 cockpitEdit.controller("cockpitEditCtrl", [
     '$scope',
