@@ -1,15 +1,12 @@
 'use strict';
-
-<<<<<<< HEAD:app/shared/cmApi.js
 //This Module handels api calls
 
-var cmApi = angular.module('cmApi', ['cmLogger', 'cmObject']);
+angular.module('cmCore').provider('cmApi',[
 
 //TODO config cameo
 
 //Service to handle all api calls
 
-cmApi.provider('cmApi',[
     function($injector){
         var rest_api    = "",
             call_stack_disabled = true,
@@ -24,12 +21,6 @@ cmApi.provider('cmApi',[
             rest_api = url;
             return this
         }
-=======
-angular.module('cmCore').provider('cmApi',[
-function($injector){
-    var rest_api    = "",
-        stack_path   = ""
->>>>>>> refs/heads/dev:app/shared/core/prov-api.js
 
         this.useCallStack = function (on){
             call_stack_disabled = !on
