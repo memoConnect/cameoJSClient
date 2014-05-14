@@ -25,14 +25,7 @@
             <cm-message-file ng-repeat="file in message.files"></cm-message-file>
         </div>
 
-        <div class="assets clearfix {{conversation.getSafetyLevelClass('-wrap')}}">
-            <span class="date cm-fl">{{ message.created | date:'HH:mm'}}</span>
-            <span class="envelope cm-fl"><i class="fa cm-envelope-open"></i></span>
-            <span class="security cm-fl">
-                <cm-safety-level cm-level="conversation.getSafetyLevel()"></cm-safety-level>
-            </span>
-        </div>
-
+        <cm-message-assets></cm-message-assets>
     </div>
 </article>
 
