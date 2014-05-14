@@ -25,7 +25,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.numberOfMessages = 0,
             this.encryptedPassphraseList = [];
             this.encryptionType = 'none'; // 'none' || 'symmetric' || 'asymmetric'
-            this.keyTransmission = 'asymmetric' || 'symmetric'
+            this.keyTransmission = 'asymmetric' || 'symmetric';
+            this.passCaptcha = '';
             var self = this;
 
             cmObject
@@ -108,8 +109,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                                 i++;
                             }
 
-                           
-
                             if(self.passphrase && self.checkKeyTransmission()){
                                 self
                                 .encryptPassphrase()
@@ -129,7 +128,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 }
 
                 return deferred.promise;
-            }
+            };
 
             this.update = function(conversation_data){
                 var offset = 0;

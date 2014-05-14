@@ -1,4 +1,4 @@
-<div class="control">
+ <div class="control">
     <div cm-transparent-bg ng-show="bodyVisible" ng-click="toggleControls()"></div>
     <div ng-show="bodyVisible" class="body" data-qa="conversation-options-menu">
         <div class="cm-form-group" ng-show="isNew">
@@ -52,11 +52,21 @@
             </div>
 
             <div ng-if="safetyLevel == 'safe'">
-                <div class="cm-form-group">
+
+                <div cm-rubber-space>
+                    <button class="cm-btn-black" cm-weight="1" ng-class="{'active':isNew}">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</button>
+                    <button class="cm-btn-black" cm-weight="1">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA'|cmTranslate}}</button>
+                </div>
+
+                <div class="cm-form-group" ng-if="showPassword">
                     <div class="cm-form-control with-inputter" ng-class="{'with-inside-icon':!isNew}">
                         <input type="text" ng-model="conversation.password" placeholder="{{ 'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change/>
                         <i class="fa cm-key fa-2x with-cursor" ng-click="toggleControls(); conversation.decrypt();" ng-if="!isNew"></i>
                     </div>
+                </div>
+
+                <div ng-if="!showPassword">
+                    Capacha!
                 </div>
             </div>
             <div style="text-align:center; cursor:pointer" cm-user-rights>

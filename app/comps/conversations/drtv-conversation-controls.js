@@ -34,6 +34,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
             },
 
             controller: function($scope){
+                $scope.showPassword = false;
 
                 $scope._setLevel = function(level){
                     if(level == 'unsafe'){
