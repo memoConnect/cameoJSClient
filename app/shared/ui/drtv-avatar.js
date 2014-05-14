@@ -52,6 +52,10 @@ angular.module('cmUi').directive('cmAvatar',[
                             refresh(identity);
                         })
                     }
+
+                    element.on('click',function(){
+                        refresh(identity)
+                    })
                 }
             }
         }
