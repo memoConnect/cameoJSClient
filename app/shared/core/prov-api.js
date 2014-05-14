@@ -374,7 +374,7 @@ angular.module('cmCore').provider('cmApi',[
                 
                 cmObject.addEventHandlingTo(api)
 
-                api.subscriptionId
+                api.subscriptionId = undefined
 
                 api.subscribeToEventStream = function(){
                     return  api.post({

@@ -116,8 +116,9 @@ angular.module('cmConversations').directive('cmConversation', [
                         recipients_missing  = $scope.conversation.recipients.length <= 0 //@todo mocked
                     // is everything valid?
                     if(!message_empty && passphrase_valid && !recipients_missing){
+
                         // create new conversation
-                        if($scope.conversation.id == ''){
+                        if(!$scope.conversation.id){
                             $scope.conversation.save().then(
                                 function(){
                                     sendMessage();

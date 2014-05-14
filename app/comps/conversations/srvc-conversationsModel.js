@@ -31,10 +31,8 @@ angular.module('cmConversations').service('cmConversationsModel', [
         
         this._init = function(){
             cmConversationsAdapter
-            .on('message:new', function(event, data){ 
-                this.getConversation(data.conversationId).then(function(conversation){
-                    console.dir(conversation)
-                    console.log(vonversation instanceof cmConversationModel)
+            .on('message:new', function(event, data){
+                self.getConversation(data.conversationId).then(function(conversation){
                     conversation.trigger('message:new', data.message) 
                 })
             })
@@ -83,9 +81,10 @@ angular.module('cmConversations').service('cmConversationsModel', [
             var i = 0,
                 check = false,
                 conversation = null,
-                deferred = $q.defer();
+                deferred = $q.defer()
 
-            if(typeof id !== 'undefined'){
+            if(id){
+
                 while(i < this.conversations.length){
                     if(id == this.conversations[i].id){
                         check = true;
@@ -95,13 +94,14 @@ angular.module('cmConversations').service('cmConversationsModel', [
                     i++;
                 }
 
+
                 if(check !== true){
                     cmConversationsAdapter.getConversation(id).then(
                         function (conversation_data) {
                             conversation = cmConversationFactory.create(conversation_data);
-                            self.addConversation(conversation);
+                            self.addConversation(conversation)
 
-                            deferred.resolve(conversation);
+                            deferred.resolve(conversation)
                         },
 
                         function () {
@@ -143,7 +143,7 @@ angular.module('cmConversations').service('cmConversationsModel', [
                     self.quantity = data.numberOfConversations;
 
                     data.conversations.forEach(function (conversation_data) {
-                        self.addConversation(cmConversationFactory.create(conversation_data).update(conversation_data))
+                        self.addConversation(cmConversationFactory.create(conversation_data))//.importData(conversation_data)
                     })
                 }
             ).finally (function(){

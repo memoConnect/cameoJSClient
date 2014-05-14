@@ -56,8 +56,14 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this._init = function(data){
                 this.importData(data)
 
+                /*
                 cmConversationsAdapter
                 .on('message:new', function(event, message_data){ self.addMessage(cmMessageFactory.get(message_data)) })
+                */
+               
+                self.on('message:new', function(event, message_data){
+                    self.addMessage(cmMessageFactory.get(message_data))
+                })
 
                 /*
                 self
@@ -86,27 +92,27 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.encryptedPassphraseList = this.encryptedPassphraseList.concat(data.encryptedPassphraseList || [])
 
                 var messages = data.messages || []
-                messages.forEach(function(message_data)  
-                    { self.addMessage(cmMessageFactory.get(message_data))  })
+                messages.forEach(
+                    function(message_data) { self.addMessage(cmMessageFactory.get(message_data)) }
+                )
 
                 var recipients = data.recipients || []
-                recipients.forEach(function(recipient_data)
-                    { self.addRecipient(cmRecipientModel(cmIdentityFactory.get(recipient_data))) })
+                recipients.forEach(
+                    function(recipient_data){ self.addRecipient(cmRecipientModel(cmIdentityFactory.get(recipient_data))) }
+                )
             }
 
             /**
              * Function to add a message to a conversation.
              * @param {MessageModel} message.
-             */
-            
-      
+             */  
             this.addMessage = function(message){
                 if(this.messages.indexOf(message) == -1){
                     this.messages.push( message )
                     this.lastMessage = message
                     this.trigger('message-added', message)
                 } else {
-                    cmLogger.error('conversationModel: unable to add message; duplicate detected. (id:'+message.id+')')
+                    cmLogger.warn('conversationModel: unable to add message; duplicate detected. (id:'+message.id+')')
                 }
 
                 return this
@@ -133,6 +139,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return this
             }
 
+
+            //Todo: Raus Tagline sollte ne eigene Direktive sein
             this.updateTagLine = function(){
                 console.dir(this.recipients)
                 this.tagLine =     this.subject
@@ -144,13 +152,15 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
 
             
-            /* COVERSATION REFACTORING:
+            /* COVERSATION REFACTORING todo:
 
             CONVERSATION REFACTORING */
 
 
-
-
+            //Mock;
+    
+            this.update = function(){ cmLogger.warn('cmModel: .update() is deprecated.'); return self}
+            this.getEncryptionType = function(){return null}
 
 
 
@@ -176,7 +186,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.init = function (conversation_data) {
 
-                cmLogger('conversationModel: .init() is deprecated, please use .importData().')
+                cmLogger.warn('conversationModel: .init() is deprecated, please use .importData().')
 
                 this.importData(conversation_data)
                 return this
@@ -219,19 +229,19 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     })
                 }
                 */
+            }
 
             this.sync = function(){
                 //cmConversationsAdapter.addRecipient(this.id, identity.id)
             };
 
             this.save = function(){
-
                 this.encryptPassphrase()
 
                 var deferred = $q.defer();
 
 
-                if(this.id == ''){
+                if(!this.id){
                     if(!this.checkKeyTransmission()){
                         deferred.reject()
                         return deferred.promise
@@ -405,12 +415,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
   
 
                 return "deprecated"
-            }
-                this.recipients.forEach(function(recipient){
-                    list.push(recipient.getDisplayName())
-                });
-
-                return list.join(', ')
             }
 
             this.hasRecipient = function(identity){
