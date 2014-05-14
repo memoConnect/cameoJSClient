@@ -1,11 +1,12 @@
 define([
     'app',
-    'ngload!cmAuth',
-    'ngload!cmUserModel',
-    'ngload!cmNotify',
-    'ngload!cmLogger',
+//    'ngload!cmAuth',
+//    'ngload!cmUserModel',
+//    'ngload!cmNotify',
+//    'ngload!cmLogger',
     'ngload!pckValidate',
-    'ngload!cmUtil'
+    'ngload!pckUi'
+//    'ngload!cmUtil'
 ], function (app) {
     'use strict';
 

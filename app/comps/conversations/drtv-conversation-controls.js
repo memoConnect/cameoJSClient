@@ -1,29 +1,36 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmConversationControls', [
+
     'cmUserModel',
     'cmNotify',
+    'cmLogger',
     '$location',
-    function(cmUserModel, cmNotify, $location){
+
+    function(cmUserModel, cmNotify, cmLogger, $location){
         return{
             restrict : 'AE',
             templateUrl : 'comps/conversations/drtv-conversation-controls.html',
-            scope : {
-                conversation :"=cmData"
-            },
+            scope : true,
             require: '^cmConversation',
 
-            link: function(scope, element, attrs, cmConversation){                
+            link: function(scope, element, attrs, cmConversation){
                 var levels = ['unsafe', 'safe', 'safer'];
 
-                scope.isNew       = cmConversation.isNew();
-                scope.bodyVisible = scope.isNew;
+                scope.bodyVisible   = cmConversation.isNew()
+                scope.isNew         = cmConversation.isNew()
 
                 //Todo: get rid of this! :
-                scope.$watchCollection(attrs.cmData, function(conversation){
-                    if(conversation && !scope.safetyLevel)
+                scope.$watch('conversation', function(conversation){
+                    if(conversation && conversation.getSafetyLevel && !scope.safetyLevel){
+
                         scope._setLevel(levels[conversation.getSafetyLevel()]);
-                })
+
+                        if(!cmConversation.isNew() && !conversation.password && conversation.getEncryptionType() == 'symmetric') {
+                            scope.bodyVisible = true
+                        }
+                    }
+                });
             },
 
             controller: function($scope){
@@ -53,7 +60,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
                     }
                 };
 
-                $scope.handle = function(){
+                $scope.toggleControls = function(){
                     if($scope.bodyVisible)
                         $scope.bodyVisible = false;
                     else

@@ -406,7 +406,7 @@ angular.module('cmFiles').factory('cmFileModel', [
             });
 
             this.on('decrypt:chunk', function(event, index){
-                cmLogger.debug('decrypt:chunk '+index);
+//                cmLogger.debug('decrypt:chunk '+index);
 //                self._decryptChunk(index + 1);
 //                self._downloadChunk(index + 1);
             });

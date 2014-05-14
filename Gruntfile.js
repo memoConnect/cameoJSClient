@@ -226,6 +226,7 @@ module.exports = function (grunt) {
                     process: concatConvertCmFiles
                 },
                 files: concatCreateCmPackages({
+                    'core': 'app/shared/core',
                     'conversations': 'app/comps/conversations',
                     'contacts': 'app/comps/contacts',
                     'user': 'app/comps/user',
@@ -429,11 +430,9 @@ module.exports = function (grunt) {
                 config: 'resource/phonegap/config.xml',
                 path: 'phonegap-build',
                 plugins: [
-//                    './resource/phonegap/plugins/org.apache.cordova.console',
-//                    './resource/phonegap/plugins/org.apache.cordova.device',
-//                    './resource/phonegap/plugins/org.apache.cordova.network-information',
-                    './resource/phonegap/plugins/org.apache.cordova.splashscreen'
-//                    './resource/phonegap/plugins/org.apache.cordova.contacts'
+                    './resource/phonegap/plugins/org.apache.cordova.device',
+                    './resource/phonegap/plugins/org.apache.cordova.splashscreen',
+                    './resource/phonegap/plugins/com.cesidiodibenedetto.filechooser'
                 ],
                 platforms: ['android'],
                 maxBuffer: 200, // You may need to raise this for iOS.
@@ -643,7 +642,11 @@ module.exports = function (grunt) {
 
         // watch
         watch: {
-            files: ['app/less/*.less', 'templates/*.tpl.*', 'app/comps/**/!(package)*', 'app/shared/ui/!(package)*'],
+            files: [
+                'app/less/*.less',
+                'templates/*.tpl.*',
+                'app/comps/**/!(package)*',
+                'app/shared/**/!(package)*'],
             tasks: ['genAllTemplates','packages']
         },
         less: {
@@ -688,8 +691,8 @@ module.exports = function (grunt) {
     grunt.registerTask('phonegap-local', [
         'template:local-config-phonegap',
         'phonegap:build',
-        'template:local-index-phonegap',
-        'copy:local-resources-phonegap'
+        'copy:local-resources-phonegap',
+        'template:local-index-phonegap'
         //'phonegap:run'
     ]);
     // phonegap to build server

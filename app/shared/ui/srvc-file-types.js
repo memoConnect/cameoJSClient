@@ -20,7 +20,6 @@ angular.module('cmUi').service('cmFileTypes',[
             {e:'mp4',m:'video/mp4'},
             {e:'flv',m:'video/x-flv'},
             {e:'avi',m:'video/x-msvideo'},
-//            {e:'3gpp',m:'video/3gpp'},
             // audio
             {e:'mp3',m:'audio/mpeg'},
             {e:'mp3',m:'audio/mp3'},
@@ -28,6 +27,7 @@ angular.module('cmUi').service('cmFileTypes',[
             {e:'wma',m:'audio/x-ms-wma'},
             {e:['aif','aiff','aifc'],m:'audio/x-aiff'},
             {e:'ogg',m:'audio/ogg'},
+            {e:'3gpp',m:'video/3gpp'},
             // docs
             {e:'pdf',m:'application/pdf'},
             {e:'txt',m:'text/plain'},

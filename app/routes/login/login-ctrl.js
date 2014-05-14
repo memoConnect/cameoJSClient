@@ -13,5 +13,6 @@ define([
             $scope.goToReg = function(){
                 $location.path('/registration');
             };
-    }]);
+        }
+    ]);
 });

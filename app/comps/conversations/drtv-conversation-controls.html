@@ -1,8 +1,6 @@
 <div class="control">
-    <div cm-transparent-bg ng-show="bodyVisible" ng-click="handle()"></div>
-
+    <div cm-transparent-bg ng-show="bodyVisible" ng-click="toggleControls()"></div>
     <div ng-show="bodyVisible" class="body" data-qa="conversation-options-menu">
-
         <div class="cm-form-group" ng-show="isNew">
             <div class="cm-form-control with-inputter">
                 <input type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" cm-adaptive-change data-qa="input-subject"/>
@@ -57,7 +55,7 @@
                 <div class="cm-form-group">
                     <div class="cm-form-control with-inputter" ng-class="{'with-inside-icon':!isNew}">
                         <input type="text" ng-model="conversation.password" placeholder="{{ 'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change/>
-                        <i class="fa cm-key fa-2x with-cursor" ng-click="handle(); conversation.decryptPassphrase(); conversation.decrypt();" ng-if="!isNew"></i>
+                        <i class="fa cm-key fa-2x with-cursor" ng-click="toggleControls(); conversation.decrypt();" ng-if="!isNew"></i>
                     </div>
                 </div>
             </div>
@@ -68,17 +66,17 @@
             </div>
         </div>
 
-        <button ng-click="handle()" class="cm-btn" ng-if="!isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
-        <button ng-click="handle()" class="cm-btn" ng-if="isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
+        <button ng-click="toggleControls()" class="cm-btn" ng-if="!isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
+        <button ng-click="toggleControls()" class="cm-btn" ng-if="isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
     </div>
 
-    <div class="cm-bar" cm-rubber-space ng-click="handle()" data-qa="conversation-options-bar">
+    <div class="cm-bar" cm-rubber-space ng-click="toggleControls()" data-qa="conversation-options-bar">
         <div cm-weight="1" class="grip-left">
             <i class="fa cm-grip"></i>
         </div>
         <div cm-weight="8" class="cm-bar-infos">
             {{conversation.subject||'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}
-            <cm-safety-level cm-level="conversation.getSafetyLevel()" cm-level-state="safetyLevel"></cm-safety-level>
+            <cm-safety-level cm-level="conversation.getSafetyLevel()"></cm-safety-level>
             <cm-recipient-counter>{{conversation.recipients.length||0}}</cm-recipient-counter>
         </div>
         <div cm-weight="1"></div>

@@ -10,6 +10,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmRecipientModel',
     'cmNotify',
     'cmObject',
+<<<<<<< HEAD
     'cmLogger',
     '$q',
     '$rootScope',
@@ -22,6 +23,12 @@ angular.module('cmConversations').factory('cmConversationModel',[
         * @param {Object} [data] - The conversation data as received from the backend.
         */
        
+=======
+    'cmUtil',
+    '$q',
+    '$rootScope',
+    function (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, cmUtil, $q, $rootScope){
+>>>>>>> refs/heads/dev
         var ConversationModel = function(data){
 
             this.id                 = undefined
@@ -162,7 +169,18 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.created = '',
             this.lastUpdated = '',
             this.numberOfMessages = 0,
+<<<<<<< HEAD
             this.keyTransmission = 'asymmetric' || 'symmetric'
+=======
+            this.encryptedPassphraseList = [];
+            this.encryptionType = 'none'; // 'none' || 'symmetric' || 'asymmetric'
+            this.keyTransmission = 'asymmetric' || 'symmetric'
+            var self = this;
+
+            cmObject
+            .addEventHandlingTo(this)
+            .addChainHandlingTo(this)
+>>>>>>> refs/heads/dev
 
             $rootScope.$on('logout', function(){
                 self.messages = [];
@@ -188,7 +206,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     this.lastUpdated        = conversation_data.lastUpdated;
 
 
-                    this.encryptedPassphraseList = this.encryptedPassphraseList.concat(conversation_data.encryptedPassphraseList || [])
+                    this.encryptedPassphraseList = this.encryptedPassphraseList.concat(conversation_data.encryptedPassphraseList || []);
+                    this.setEncryptionType()
+
 
                     // register all recipients as Recipient objects
                     if (conversation_data.recipients) {
@@ -204,15 +224,31 @@ angular.module('cmConversations').factory('cmConversationModel',[
                             self.addMessage(cmMessageFactory.create(message_data));
                         })
                     }
+
+                    this.decrypt() //Todo: maybe this is too much
+
+                    this.on('after-add-recipient', function(){
+                        //@ TODO: solve rekeying another way:
+                        this.$chain()
+                        .encryptPassphrase()
+                        .saveEncryptedPassphraseList()
+
+                    })
                 }
+<<<<<<< HEAD
                 */
             }
+=======
+            };
+>>>>>>> refs/heads/dev
 
             this.sync = function(){
                 //cmConversationsAdapter.addRecipient(this.id, identity.id)
-            }
+            };
 
             this.save = function(){
+
+                this.encryptPassphrase()
 
                 var deferred = $q.defer();
 
@@ -225,14 +261,15 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                     cmConversationsAdapter.newConversation((this.subject || '')).then(
                         function (conversation_data) {
-
-                            self.init(conversation_data);
+                            self.init(conversation_data)
 
                             var i = 0;
                             while(i < self.recipients.length){
                                 cmConversationsAdapter.addRecipient(self.id, self.recipients[i].id);
                                 i++;
                             }
+
+                           
 
                             if(self.passphrase && self.checkKeyTransmission()){
                                 self
@@ -261,12 +298,14 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 if(this.id != ''){
                     if(typeof conversation_data !== 'undefined'){
-                        if(this.messages.length > 1){
-                            offset = this.messages.length;
-                            clearAllMessages = false;
+                        if(this.messages.length < conversation_data.numberOfMessages) {
+                            if (this.messages.length > 1) {
+                                offset = this.messages.length;
+                                clearAllMessages = false;
+                            }
+                            var limit = conversation_data.numberOfMessages - offset;
+                            this.updateMessages(limit, offset, clearAllMessages);
                         }
-                        var limit = conversation_data.numberOfMessages - offset;
-                        this.updateMessages(limit, offset, clearAllMessages);
                     } else {
                         cmConversationsAdapter.getConversationSummary(this.id).then(
                             function(data){
@@ -285,7 +324,28 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 }
 
                 return this;
-            }
+            };
+
+            this.setEncryptionType = function(){
+                var check = false;
+                if(this.encryptedPassphraseList.length == 0){
+                    this.encryptionType = 'none';
+                } else if(this.encryptedPassphraseList.length > 0) {
+                    if(this.encryptedPassphraseList[0].keyId == '_passwd'){
+                        check = true;
+                    }
+
+                    if(check !== false){
+                        this.encryptionType = 'symmetric';
+                    } else {
+                        this.encryptionType = 'asymmetric';
+                    }
+                }
+            };
+
+            this.getEncryptionType = function(){
+                return this.encryptionType;
+            };
 
             /**
              * @TODO with timestamp
@@ -326,17 +386,30 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     }
                 }
 
-                //message.decrypt(this.passphrase);
+                message.decrypt(this.passphrase);
 
                 return this
             };
             */
 
             this.getLastMessage = function(){
+<<<<<<< HEAD
                 cmLogger.debug('cmConversationModel: getLastMessage is deprecated.')
                 return this.lastMessage
             }
+=======
+                if(this.messages.length > 0){
+                    return this.messages[(this.messages.length - 1)];
+                }
+                return null
+            };
+>>>>>>> refs/heads/dev
 
+            /**
+             * @param limit
+             * @param offset
+             * @param clearMessages
+             */
             this.updateMessages = function(limit, offset, clearMessages){
                 cmConversationsAdapter.getConversation(this.id, limit, offset).then(
                     function(data){
@@ -349,13 +422,14 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         });
                     }
                 )
-            }
+            };
 
             /**
              * Recipient Handling
              */
 
 
+<<<<<<< HEAD
             
             this.getRecipientList = function(){
                 cmLogger.debug('cmConversationModel: .getRecipientList() is deprecated.')
@@ -364,17 +438,41 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return "deprecated"
             }
         
+=======
+                this.recipients.forEach(function(recipient){
+                    list.push(recipient.getDisplayName())
+                });
+
+                return list.join(', ')
+            };
+>>>>>>> refs/heads/dev
 
             this.hasRecipient = function(identity){
                 var check = false;
 
                 this.recipients.forEach(function(recipient){
                     check = check || (identity.id == recipient.id)
-                })
+                });
 
-                return check
-            }
+                return check;
+            };
 
+<<<<<<< HEAD
+=======
+            this.addRecipient = function (identity) {
+                this.trigger('before-add-recipient', identity)
+
+                if(identity && !this.hasRecipient(identity)){
+                    this.recipients.push(cmRecipientModel(identity));
+                }else{
+                    console.warn('Recipient already present.') //@ Todo
+                }
+
+                this.trigger('after-add-recipient', identity);
+                return this;
+            };
+
+>>>>>>> refs/heads/dev
             this.removeRecipient = function (identity) {
                 this.trigger('before-remove-recipient', identity)
 
@@ -431,30 +529,30 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     result = false
                 }
 
-                if(this.keyTransmission == 'symmetric' && this.passphrase && !this.password){
-                    cmNotify.warn('CONVERSATION.WARN.PASSWORD_MISSING')
+                if(this.keyTransmission == 'symmetric' && this.passphrase && !this.password && this.id != ''){
+//                    cmNotify.warn('CONVERSATION.WARN.PASSWORD_MISSING')
+                    this.trigger('password:missing');
                     result = false
                 }
 
                 return result
             }
 
-
             this.setKeyTransmission = function(mode){
-                var old_mode = this.keyTransmission
+                var old_mode = this.keyTransmission;
 
-                this.keyTransmission = mode
+                this.keyTransmission = mode;
 
                 if(this.checkKeyTransmission()){
-                    return true
+                    return true;
                 } else {
                     //this.keyTransmission = old_mode
-                    return false
+                    return false;
                 }
 
                 //this.decryptPassphrase()
                 //this.decrypt()
-             }
+             };
 
             this.encryptPassphrase = function(){
                 this.encryptedPassphraseList = [];
@@ -475,7 +573,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return this
             }
 
-            this.saveEncryptedPassphraseList = function(){
+            this.saveEncryptedPassphraseList = function(){  
                 if(
                        this.encryptedPassphraseList
                     && this.encryptedPassphraseList.length !=0
@@ -487,18 +585,18 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
 
             this.decryptPassphrase = function(){
-                this.passphrase = ''
+                this.passphrase = '';
                 this.encryptedPassphraseList.forEach(function(item){
                     if(!self.passphrase){
-                        self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase, item.keyId) || ''
+                        self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase, item.keyId) || '';
                         if(item.keyId == "_passwd"){
-                            self.passphrase = cmCrypt.decrypt(self.password, item.encryptedPassphrase) || ''
+                            self.passphrase = cmCrypt.decrypt(self.password, item.encryptedPassphrase) || '';
                         }
                     }
-                })
+                });
 
-                return this
-            }
+                return this;
+            };
 
             this.setPassphrase = function (passphrase) {
                 if(passphrase == undefined){
@@ -551,7 +649,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         level = 0
                     }
                 }
-
 
                 return level
             };
