@@ -202,7 +202,7 @@ module.exports = function (grunt) {
                 include = settings.include||include;
                 exclude = settings.exclude||exclude;
                 packagePath = settings.packagePath||packagePath;
-                file = settings.file|file;
+                file = settings.file||file;
             }
 
             packages[packagePath+'/'+file] = [
