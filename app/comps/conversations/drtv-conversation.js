@@ -44,11 +44,6 @@ angular.module('cmConversations').directive('cmConversation', [
                  * after preparation send message
                  */
                 $scope.send = function(){
-                    console.log('hasCaptcha', $scope.hasCaptcha);
-
-                    return false;
-
-
                     if($scope.isSending !== true){
                         $scope.isSending = true;
 

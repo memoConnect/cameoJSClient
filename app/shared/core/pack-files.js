@@ -1,6 +1,317 @@
 'use strict';
 
-angular.module('cmFiles').factory('cmFileModel', [
+angular.module('cmCore').service('cmFilesAdapter', [
+    'cmApi',
+    function (cmApi){
+        return {
+            prepareFile: function(config){
+                return cmApi.post({
+                    path :    "/file",
+                    data: {},
+                    exp_ok : 'id',
+                    headers : {
+                        "X-File-Name":  config.name,
+                        "X-File-Size":  config.size,
+                        "X-File-Type":  config.type,
+                        "X-Max-Chunks": config.chunks
+                    }
+                })
+            },
+
+            addChunk: function(fileId, index, chunk) {
+                return cmApi.post({
+                    path:    "/file/"+fileId,
+                    data:   {
+                        chunk: chunk
+                    },
+                    headers:{
+                        "X-Index": index
+                    }
+                })
+
+            },
+
+            getFileInfo: function(fileId){
+                return cmApi.get({
+                    path: "/file/"+fileId
+                })
+            },
+
+            getFile: function(assetId){
+                return cmApi.get({
+                    path: "/file/"+assetId
+                })
+            },
+
+            getChunk: function(assetId, chunkId){
+                return cmApi.get({
+                    path: "/file/"+assetId+"/"+chunkId,
+                    exp_ok: 'chunk'
+                })
+            }
+        }
+    }
+])
+.service('cmFileDownload', [
+    'cmLogger',
+    '$rootScope',
+    function(cmLogger, $rootScope){
+        var self = this;
+
+        this.stack = [];
+        this.atWork = false;
+
+        $rootScope.$on('logout', function(){
+            self.atWork = false;
+            self.stack = [];
+            self.stop();
+        });
+
+        /**
+         * add cmFileObject to Stack
+         * @param file
+         */
+        this.add = function(file){
+            if(typeof file == 'object'){
+                this.stack.push(file);
+
+                if(this.atWork !== true){
+                    this.atWork = true;
+                    this.run(this.stack.shift());
+                }
+            }
+        };
+
+        /**
+         * work on stack queue, start download process in files
+         * @param index
+         */
+        this.run = function(file){
+            if(typeof file == 'object' && file.state == 'exists'){
+                file.downloadChunks();
+
+                file.on('file:cached', function(){
+                    self.run(self.stack.shift());
+                });
+            } else {
+                if(this.stack.length == 0) {
+                    this.atWork = false;
+                } else {
+                    this.run(this.stack.shift());
+                }
+            }
+        };
+
+        /**
+         * Stops Downloading
+         */
+        this.stop = function(){
+            cmLogger.debug('cmFileDownload:stop');
+        };
+
+        /**
+         * Return Stack Quantity
+         * @returns {Array}
+         */
+        this.getQty = function(){
+            return stack.length;
+        };
+    }
+])
+.factory('cmChunk', [
+    'cmFilesAdapter',
+    'cmLogger',
+    'cmCrypt',
+    '$q',
+    function (cmFilesAdapter, cmLogger, cmCrypt, $q){
+
+        function str2ab_blobreader(str, callback) {
+
+            var blob;
+            var BlobBuilder = window.MozBlobBuilder || window.WebKitBlobBuilder || window.BlobBuilder;
+            if (typeof(BlobBuilder) !== 'undefined') {
+                var bb = new BlobBuilder();
+                bb.append(str);
+                blob = bb.getBlob();
+            } else {
+                blob = new Blob([str]);
+            }
+            var f = new FileReader();
+            f.onload = function(e) {
+                callback(e.target.result)
+            };
+            f.readAsArrayBuffer(blob);
+        }
+
+        function binaryStringtoBlob(byteCharacters, contentType, sliceSize) {
+            contentType = contentType || '';
+            sliceSize   = sliceSize   || 512;
+
+            var byteArrays = [];
+
+            for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+                var byteNumbers = new Array(slice.length);
+                for (var i = 0; i < slice.length; i++) {
+                    byteNumbers[i] = slice.charCodeAt(i);
+                }
+
+                var byteArray = new Uint8Array(byteNumbers);
+
+                byteArrays.push(byteArray);
+            }
+
+            return new Blob(byteArrays, {type: contentType});
+        }
+
+        return  function Chunk(file, start, end){
+
+            this.importFileSlice = function (file, start, end){
+                var slicer  = file.webkitSlice || file.mozSlice || file.slice,
+                    chunk   = slicer.call(file, start, end)
+
+                this.raw = undefined
+                this.blob = undefined
+
+                if (file.webkitSlice) { // android default browser in version 4.0.4 has webkitSlice instead of slice()
+                    str2ab_blobreader(chunk, function(buf) { // we cannot send a blob, because body payload will be empty
+                        chunk = buf
+                    });
+                }
+
+                this.blob = chunk
+                this.size = end-start
+
+                return this
+            }
+
+            this.blobToBinaryString = function(){
+                var self     = this,
+                    reader   = new FileReader(),
+                    deferred = $q.defer()
+
+                reader.onload = function(event){
+                    self.raw = event.target.result.replace('data:application/octet-stream;base64,', '')
+                    deferred.resolve(self.raw)
+                }
+
+                this.blob
+                    ?   reader.readAsBinaryString(this.blob)
+                    :   cmLogger.error('Unable ro convert to raw; chunk.blob is empty.  Try calling chunk.importFileSlice() first.')
+
+                return deferred.promise
+
+            }
+
+            this.encrypt = function(passphrase) {
+
+                this.raw
+                    ?   this.encryptedRaw = cmCrypt.encryptWithShortKey(passphrase, this.raw, true)     //Todo: long Key!
+                    :   cmLogger.error('Unable ro encrypt; chunk.raw is empty.  Try calling chunk.blobToBinaryString() first.')
+
+                return this
+            }
+
+            this.upload = function(id, index){
+                return(
+                    this.encryptedRaw
+                        ?   cmFilesAdapter.addChunk(id, index, this.encryptedRaw)
+                        :   cmLogger.error('Unable to upload; chunk.encryptedRaw is empty. Try calling chunk.encrypt() first.')
+                )
+            }
+
+            this.download = function(id, index){
+                var self = this
+
+                this.raw = undefined
+                this.blob  = undefined
+
+                return cmFilesAdapter.getChunk(id, index)
+                    .then(function(data){
+                        return self.encryptedRaw = data
+                    })
+            }
+
+            /**
+             * @TODO leere phasephrase ??!??!
+             * @param passphrase
+             * @returns {Chunk}
+             */
+            this.decrypt = function(passphrase){
+                this.encryptedRaw
+                    ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw, true)
+                    :   cmLogger.error('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.')
+
+                return this
+            }
+
+            this.binaryStringToBlob = function(){
+                this.raw
+                    ?   this.blob = binaryStringtoBlob(this.raw)
+                    :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.')
+                return this
+            }
+        }
+    }
+])
+.factory('cmFileFactory', [
+    'cmFileModel',
+    '$rootScope',
+    function(cmFileModel, $rootScope){
+        var instances = [];
+
+        $rootScope.$on('logout', function(){
+            instances = [];
+        });
+
+        return {
+            create: function(data, explicit){
+                var file = null,
+                    i = 0;
+
+                if(typeof explicit === 'undefined'){
+                    explicit = false;
+                }
+
+                if(explicit !== true) {
+                    if (typeof data == 'string') {
+                        while (i < instances.length) {
+                            if (typeof instances[i] === 'object' &&
+                                instances[i].id == data) {
+                                file = instances[i];
+                                break;
+                            }
+
+                            i++;
+                        }
+                    } else if (typeof data == 'object') {
+                        while (i < instances.length) {
+                            if (typeof instances[i] === 'object' &&
+                                instances[i].id == data.id) {
+                                file = instances[i];
+                                break;
+                            }
+
+                            i++;
+                        }
+                    }
+                }
+
+                if(file == null){
+                    file = new cmFileModel(data);
+                    instances.push(file);
+                }
+
+                return file;
+            },
+            getQty: function(){
+                return instances.length;
+            }
+        }
+    }
+])
+.factory('cmFileModel', [
     'cmFilesAdapter',
     'cmFileDownload',
     'cmLogger',
@@ -8,8 +319,7 @@ angular.module('cmFiles').factory('cmFileModel', [
     'cmCrypt',
     'cmObject',
     '$q',
-    'cmUtil',
-    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, $q, cmUtil){
+    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, $q){
 
         function roundToTwo(num) {
             return +(Math.round(num + "e+2")  + "e-2");
@@ -207,14 +517,14 @@ angular.module('cmFiles').factory('cmFileModel', [
                 return (
                     self.encryptedName && self.chunks
                         ?   cmFilesAdapter.prepareFile({
-                                name    : self.encryptedName,
-                                size    : self.blob.size,//self.encryptedSize,
-                                type    : self.type,
-                                chunks  : self.chunks.length
-                            })
-                            .then(function(id){
-                                return self.id = id
-                            })
+                        name    : self.encryptedName,
+                        size    : self.blob.size,//self.encryptedSize,
+                        type    : self.type,
+                        chunks  : self.chunks.length
+                    })
+                        .then(function(id){
+                            return self.id = id
+                        })
                         :   cmLogger.error('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
                 )
             };
@@ -259,20 +569,20 @@ angular.module('cmFiles').factory('cmFileModel', [
                 chunk
                     .download(self.id, index)
                     .then(
-                        function(){
-                            self.trigger('progress:chunk', (index/self.chunks.length));
+                    function(){
+                        self.trigger('progress:chunk', (index/self.chunks.length));
 
-                            if(index == (self.chunkIndices.length - 1)){
-                                self.trigger('download:finish', index);
-                            } else {
-                                self.trigger('download:chunk', index);
-                            }
-                        },
-                        function(){
-                            self.trigger('progress:chunk', 1);
-                            self.trigger('download:finish', {'error':true});
-                            self.trigger('file:cached');
+                        if(index == (self.chunkIndices.length - 1)){
+                            self.trigger('download:finish', index);
+                        } else {
+                            self.trigger('download:chunk', index);
                         }
+                    },
+                    function(){
+                        self.trigger('progress:chunk', 1);
+                        self.trigger('download:finish', {'error':true});
+                        self.trigger('file:cached');
+                    }
                 );
             };
 
@@ -384,7 +694,7 @@ angular.module('cmFiles').factory('cmFileModel', [
 //                cmLogger.debug('download:finish');
                 if(typeof index == 'number') {
                     self._decryptChunk(index);
-                // error on download
+                    // error on download
                 } else if(index.error) {
                     cmLogger.error('chunk not found');
                     self.setState('cached');
