@@ -54,8 +54,8 @@
             <div ng-if="safetyLevel == 'safe'">
 
                 <div cm-rubber-space>
-                    <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':showCaptcha}" ng-click="toggleCaptcha('password');">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</button>
-                    <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':!showCaptcha}" ng-click="toggleCaptcha('captcha');">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA'|cmTranslate}}</button>
+                    <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':hasCaptcha}" ng-click="toggleCaptcha('password');">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</button>
+                    <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':!hasCaptcha}" ng-click="toggleCaptcha('captcha');">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA'|cmTranslate}}</button>
                 </div>
 
                 <div class="cm-form-group">
@@ -65,13 +65,13 @@
                     </div>
                 </div>
 
-                <div class="captcha" ng-if="showCaptcha && isNew">
+                <div class="captcha" ng-if="hasCaptcha && isNew">
                     <cm-captcha></cm-captcha>
                     <button class="refresh" ng-click="refreshCaptcha()" ng-if="isNew"><i class="fa cm-change"></i></button>
-                    <p>
+                    <p ng-if="!isNew">
                         <button ng-click="requestCaptcha()"><i class="fa cm-key"></i> {{"CONVERSATION.LABEL.REQUEST_CAPTCHA" | cmTranslate}}</button>
                     </p>
-                    <p>
+                    <p ng-if="!isNew">
                         <button ng-click="sendCaptcha()"><i class="fa cm-send"></i> {{"CONVERSATION.LABEL.SEND_CAPTCHA" | cmTranslate}}</button>
                     </p>
                 </div>

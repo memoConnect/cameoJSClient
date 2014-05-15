@@ -33,16 +33,16 @@ angular.module('cmConversations').directive('cmConversationControls', [
             },
 
             controller: function($scope){
-                $scope.showCaptcha = false;
+                $scope.hasCaptcha = false;
 
                 $scope.toggleCaptcha = function(type){
                     if(typeof type !== 'undefined'){
                        switch(type){
                            case "password":
-                               $scope.showCaptcha = false;
+                               $scope.hasCaptcha = false;
                                break;
                            case "captcha":
-                               $scope.showCaptcha = true;
+                               $scope.hasCaptcha = true;
                                break;
                        }
                     }
