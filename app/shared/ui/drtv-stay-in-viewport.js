@@ -16,13 +16,23 @@ angular.module('cmUi').directive('cmStayInViewport',[
                     };
                     var image = {
                         w:element[0].width,
-                        h:element[0].height
+                        h:element[0].height,
+                        isPortrait: element[0].height > element[0].width
                     };
                     // calc height if greater than viewport
-                    if(image.h > viewport.h){
-                        element.css('height',(viewport.h-20)+"px");
+                    if(image.isPortrait) {
+                        element.parent().addClass('is-portrait');
+                        if (image.h > viewport.h) {
+                            element.css('height', (viewport.h - 150) + 'px');
+                            element.css('max-width', 'none');
+                        } else {
+                            element.css('height', image.h + 'px');
+                            element.css('max-width', 'none');
+                        }
                     } else {
-                        element.css('height',image.h+"px");
+                        element.parent().addClass('is-landscape');
+                        element.css('width', '90%');
+                        element.css('max-width', 'none');
                     }
                     // show image
                     element.css('visibility','visible');

@@ -27,7 +27,11 @@ angular.module('cmConversations').directive('cmMessageFile', [
                         id: 'image-view',
                         'class': 'modal-image-fullscreen',
                         'type': 'fullscreen'
-                    }, '<img src="'+$element.find('img').attr('src')+'" cm-stay-in-viewport /><cm-message-assets></cm-message-assets>', null, $scope);
+                    }, '<figure>' +
+                        '<img src="'+$element.find('img').attr('src')+'" cm-stay-in-viewport />' +
+                        '<figcaption><cm-message-assets></cm-message-assets></figcaption>' +
+                       '</figure>' +
+                       '<cm-footer><i class="fa cm-grid"></i></cm-footer>', null, $scope);
                     cmModal.open('image-view');
                 };
 

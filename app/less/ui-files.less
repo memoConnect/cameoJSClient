@@ -138,14 +138,28 @@ cm-modal.modal-image-fullscreen{
       display:table-cell;
       vertical-align:middle;
       text-align:center;
-      cm-message-assets{
-        display:block;
-        text-align:right;
+      figure{
+        display:inline-block;
+        img{
+          max-width:90%;
+          max-height:50%;
+        }
+        figcaption{
+          text-align: right;
+        }
+        &.is-landscape{
+          figcaption{
+            padding-right:5%;
+          }
+        }
       }
-    }
-    img{
-      max-width:90%;
-      max-height:50%;
+      cm-footer{
+        text-align:right;
+        color:@cm-white;
+        i.cm-grid{
+          margin:@cm-unit - 3;
+        }
+      }
     }
   }
   .backdrop{
