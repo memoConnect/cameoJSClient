@@ -16,13 +16,16 @@ angular.module('cmFiles').directive('cmBlobView',[
                         reader.onload = function(e){
                             // set attribute
                             element.attr('src',e.target.result);
-                            // hide spinner
-                            scope.$apply(function(){
-                                file.loaded = true;
+                            element.on('load', function(){
+                                // hide spinner
+                                scope.$apply(function(){
+                                    file.loaded = true;
+                                });
+
+                                if(attrs.cmScrollToTarget) {
+                                    $rootScope.$broadcast('scroll:to',attrs.cmScrollToTarget)
+                                }
                             });
-                            if(attrs.cmScrollToTarget) {
-                                $rootScope.$broadcast('scroll:to',attrs.cmScrollToTarget)
-                            }
                         };
                         reader.readAsDataURL(file.blob)
                     } else {

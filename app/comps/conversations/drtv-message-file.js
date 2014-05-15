@@ -27,12 +27,16 @@ angular.module('cmConversations').directive('cmMessageFile', [
                         id: 'image-view',
                         'class': 'modal-image-fullscreen',
                         'type': 'fullscreen'
-                    }, '<figure>' +
-                        '<img src="'+$element.find('img').attr('src')+'" cm-stay-in-viewport />' +
+                    }, '<figure ng-style="fullscreenVisibility">' +
+                        '<img cm-stay-in-viewport cm-src="fullscreenImage" cm-loaded-spinner="fullscreenSpinner" cm-loaded-visibility="fullscreenVisibility" />' +
                         '<figcaption><cm-message-assets></cm-message-assets></figcaption>' +
                        '</figure>' +
                        '<cm-footer><i class="fa cm-grid"></i></cm-footer>', null, $scope);
                     cmModal.open('image-view');
+
+                    $scope.fullscreenSpinner = true;
+                    $scope.fullscreenVisibility = {visibility:'hidden'};
+                    $scope.fullscreenImage = $element.find('img').attr('src');
                 };
 
                 // exists fileModel
