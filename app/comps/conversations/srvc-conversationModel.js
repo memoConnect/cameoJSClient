@@ -140,6 +140,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     this.passCaptcha.name = this.passCaptcha.encryptedName = 'captcha';
 
                     this.passCaptcha
+                        .setPassphrase('')
                         .importBase64(this.tmpPassCaptcha)
                         .prepareForUpload().then(
                             function(){

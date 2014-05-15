@@ -387,8 +387,8 @@ angular.module('cmCore')
                     this.type = base64.replace(new RegExp('^(data:(.*);base64,.*)','i'),'$2');
 
                     this.blob = base64toBlob(base64,this.type);
-                    
-                    this.chopIntoChunks();
+
+                    this.chopIntoChunks(128);
                 }
 
                 return this;
@@ -496,6 +496,7 @@ angular.module('cmCore')
                 if(this.chunks){
                     this._encryptChunk(0);
                 } else {
+                    console.log(this.chunks)
                     cmLogger.error('Unable to encrypt chunks; cmFile.chunks missing. Try calling cmFile.chopIntoChunks() first.');
                 }
 

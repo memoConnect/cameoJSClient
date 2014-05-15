@@ -120,7 +120,6 @@ angular.module('cmConversations').directive('cmConversation', [
                         if($scope.conversation.id == ''){
                             $scope.conversation.save().then(
                                 function(){
-
                                     sendMessage();
                                 }
                             );
