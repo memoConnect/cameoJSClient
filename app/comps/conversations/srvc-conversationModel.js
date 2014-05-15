@@ -4,6 +4,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmConversationsAdapter',
     'cmMessageFactory',
     'cmIdentityFactory',
+    'cmFileFactory',
     'cmCrypt',
     'cmUserModel',
     'cmRecipientModel',
@@ -12,7 +13,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmUtil',
     '$q',
     '$rootScope',
-    function (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, cmUtil, $q, $rootScope){
+    function (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, cmUtil, $q, $rootScope){
         var ConversationModel = function(data){
             //Attributes:
             this.id = '',
@@ -26,7 +27,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.encryptedPassphraseList = [];
             this.encryptionType = 'none'; // 'none' || 'symmetric' || 'asymmetric'
             this.keyTransmission = 'asymmetric' || 'symmetric';
-            this.passCaptcha = '';
+            this.passCaptcha = undefined;
             this.tmpPassCaptcha = '';
             var self = this;
 
@@ -134,9 +135,17 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             this.savePassCaptcha = function(){
-                var deferred = $q.defer();
-
                 if(this.tmpPassCaptcha != ''){
+                    this.passCaptcha = cmFileFactory.create();
+                    this.passCaptcha.name = this.passCaptcha.encryptedName = 'captcha';
+
+                    this.passCaptcha
+                        .importBase64(this.tmpPassCaptcha)
+                        .prepareForUpload().then(
+                            function(){
+                                self.passCaptcha.uploadChunks();
+                            }
+                        );
 
                 }
 
@@ -496,6 +505,18 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
 
             this.init(data);
+
+            /**
+             * Event Handling
+             */
+
+//            this.passCaptcha.on('upload:finish', function(){
+//                cmConversationsAdapter.updateCaptcha(self.id, self.passCaptcha.id)
+//                    .then(function(data){
+//                        console.log('data',data);
+//                    });
+//            });
+
 
         }
 

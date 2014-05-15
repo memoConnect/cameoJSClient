@@ -335,6 +335,8 @@ angular.module('cmCore').service('cmFilesAdapter', [
 
             this.chunks = [];
 
+            this.name = '';
+            this.encryptedName = '';
             this.encryptedSize = 0;
             this.size = 0;
 
@@ -353,6 +355,44 @@ angular.module('cmCore').service('cmFilesAdapter', [
             };
 
             // upload for state = new
+
+            function base64toBlob(b64Data, contentType, sliceSize) {
+                b64Data = b64Data.replace(new RegExp('^(data:(.*);base64,)','i'),'');
+                contentType = contentType || '';
+                sliceSize = sliceSize || 512;
+
+                var byteCharacters = atob(b64Data);
+                var byteArrays = [];
+
+                for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                    var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+                    var byteNumbers = new Array(slice.length);
+                    for (var i = 0; i < slice.length; i++) {
+                        byteNumbers[i] = slice.charCodeAt(i);
+                    }
+
+                    var byteArray = new Uint8Array(byteNumbers);
+
+                    byteArrays.push(byteArray);
+                }
+
+                var blob = new Blob(byteArrays, {type: contentType});
+                return blob;
+            }
+
+
+            this.importBase64 = function(base64){
+                if(typeof base64 !== 'undefined'){
+                    this.type = base64.replace(new RegExp('^(data:(.*);base64,.*)','i'),'$2');
+
+                    this.blob = base64toBlob(base64,this.type);
+                    
+                    this.chopIntoChunks();
+                }
+
+                return this;
+            };
 
             this.importBlob = function(blob){
                 this.blob = blob;
@@ -380,6 +420,8 @@ angular.module('cmCore').service('cmFilesAdapter', [
                             self.trigger('importFile:finish');
                         })
                 )
+
+                return this;
             };
 
             this.chopIntoChunks = function(chunkSize){

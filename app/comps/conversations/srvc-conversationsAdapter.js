@@ -70,6 +70,15 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                         })
             },
 
+            updateCaptcha: function(id, idFile){
+                return  cmApi.put({
+                            path:    '/conversation/%1'.replace(/%1/, id),
+                            data:   {
+                                        passCaptcha: idFile
+                                    }
+                        })
+            },
+
             sendMessage: function(id, message){
                 return	cmApi.post({
                             path:	"/conversation/%1/message".replace(/%1/, id),
