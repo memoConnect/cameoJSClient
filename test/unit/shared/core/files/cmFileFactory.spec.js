@@ -6,7 +6,6 @@ describe('cmFileFactory', function(){
         tmpInstance_2 = 'moep_2';
 
     beforeEach(module('cmCore'));
-
     beforeEach(inject(function(_cmFileFactory_){
         cmFileFactory = _cmFileFactory_
     }))
@@ -15,11 +14,8 @@ describe('cmFileFactory', function(){
         expect(cmFileFactory).toBeDefined()
     })
 
-    it('should have create function', function(){
+    it('should have methods', function(){
         expect(cmFileFactory.create).toBeDefined()
-    })
-
-    it('should have getQty function', function(){
         expect(cmFileFactory.getQty).toBeDefined()
     })
 
