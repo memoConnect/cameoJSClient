@@ -1,10 +1,13 @@
 'use strict';
 
 angular.module('cmConversations').service('cmConversationsAdapter', [
+
     'cmApi',
     'cmObject',
     'cmUtil',
-    function (cmApi, cmObject, cmUtil){
+    'cmLogger',
+
+    function (cmApi, cmObject, cmUtil, cmLogger){
         var adapter = {
 
             newConversation: function(subject) {
@@ -36,9 +39,8 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
             },
 
             getConversationSummary: function(id){
-                return cmApi.get({
-                    path: '/conversation/' + id + '/summary'
-                })
+                cmLogger.warn('cmConversationAdapter: .getConversationSummary is deprecated; use .getConversation(id, 1, 0) instead')
+                return this.getConversation(id, 1, 0)
             },
 
             getPurl: function(id){

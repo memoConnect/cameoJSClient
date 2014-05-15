@@ -113,7 +113,7 @@ angular.module('cmConversations').directive('cmConversation', [
                      */
                     var passphrase_valid    = !!$scope.conversation.passphraseValid(),
                         message_empty       = !isMessageValid() ,
-                        recipients_missing  = $scope.conversation.recipients.length <= 0 //@todo mocked
+                        recipients_missing  = $scope.conversation.recipients.length < 0 //@todo mocked
                     // is everything valid?
                     if(!message_empty && passphrase_valid && !recipients_missing){
 
@@ -218,7 +218,6 @@ angular.module('cmConversations').directive('cmConversation', [
                 } else {
                     cmConversationsModel.createNewConversation().then(
                         function(newConversation){
-                            newConversation.addRecipient(cmUserModel.data.identity);
                             $scope.init(newConversation);
                             $scope.conversation.setPassphrase();
                         }

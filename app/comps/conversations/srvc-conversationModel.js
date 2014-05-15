@@ -103,7 +103,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
 
             /**
-             * Function to add a message to a conversation.
+             * Function to add a message to a conversation. Will not update the backend.
              * @param {MessageModel} message.
              */  
             this.addMessage = function(message){
@@ -121,7 +121,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
 
             /**
-             * Function to add a recipient to a conversation.
+             * Function to add a recipient to a conversation. Will not update the backend.
              * @param {RecipientModel} recipient.
              */
             
@@ -140,13 +140,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
 
 
-            //Todo: Raus Tagline sollte ne eigene Direktive sein
+            //Todo: Ist als Filter gelöst: cmTagline
             this.updateTagLine = function(){
-                console.dir(this.recipients)
-                this.tagLine =     this.subject
-                                //|| (this.lastMessage ? this.lastMessage.from.getDisplayName() : false)
-                                || this.recipients.map(function(recipient){ return recipient.displayName }).join(', ') //@Todo identity.displayName
-
+                cmLogger('cmConversationModel: .updateTagline() is deprecated.')
                 return this
             }
 
