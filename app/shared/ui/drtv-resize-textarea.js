@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('cmUi').directive('cmResizeTextarea',[
-    function () {
+    '$timeout',
+    function ($timeout) {
         return {
             restrict: 'A',
-            scope: false,
-
             link: function (scope, element, attrs) {
                 // vars
                 var paddingLeft = element.css('paddingLeft'),
@@ -52,7 +51,6 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         .replace(/\s{2,}/g, function(space) { return times('&nbsp;', space.length - 1) + ' ' });
                     $shadow.html(val);
 
-
                     // on init get one row height
                     var shadowHeight = $shadow[0].offsetHeight;
                     if(shadowHeight == 0){
@@ -84,11 +82,11 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                  */
                 function insertTextAtCursor(el, text) {
                     var val = el.value, endIndex, range;
-                    if (typeof el.selectionStart != "undefined" && typeof el.selectionEnd != "undefined") {
+                    if (typeof el.selectionStart != 'undefined' && typeof el.selectionEnd != 'undefined') {
                         endIndex = el.selectionEnd;
                         el.value = val.slice(0, el.selectionStart) + text + val.slice(endIndex);
                         el.selectionStart = el.selectionEnd = endIndex + text.length;
-                    } else if (typeof document.selection != "undefined" && typeof document.selection.createRange != "undefined") {
+                    } else if (typeof document.selection != 'undefined' && typeof document.selection.createRange != 'undefined') {
                         el.focus();
                         range = document.selection.createRange();
                         range.collapse(false);
@@ -99,8 +97,8 @@ angular.module('cmUi').directive('cmResizeTextarea',[
 
                 // style textarea
                 element.css({
-                    "overflow": "hidden",
-                    "resize": "none"
+                    "overflow": 'hidden',
+                    "resize": 'none'
                 });
 
                 // event binding
@@ -111,6 +109,19 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         return(false)
                     }
                     return true;
+                });
+
+                // watch on ngModel for extern changes
+                var timeoutWatch = null;
+                scope.$watch(attrs.ngModel,function(newValue){
+                    if(newValue == ''){
+                        if(timeoutWatch != null)
+                            $timeout.remove(timeoutWatch);
+                        timeoutWatch = $timeout(function(){
+                            update();
+                            timeoutWatch = null;
+                        },50);
+                    }
                 });
 
                 // init

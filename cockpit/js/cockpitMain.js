@@ -1,4 +1,4 @@
-var cockpitMain = angular.module("cockpitMain", ["ngRoute", "cmApi", "cmLogger", "cmAuth", "twoFactorModal"])
+var cockpitMain = angular.module("cockpitMain", ["ngRoute", "cmCore", "twoFactorModal"])
 
 
 cockpitMain.controller("cockpitMainCtrl", [

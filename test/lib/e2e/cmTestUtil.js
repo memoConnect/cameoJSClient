@@ -38,7 +38,7 @@ this.logout = function () {
 
     $$("cm-menu").then(function (elements) {
         if (elements.length > 0) {
-            $("cm-menu").click()
+            $("cm-menu .cm-handler").click()
             self.waitForElement(".cm-menu-list")
             $("[data-qa='logout-btn']").click()
         } else {
