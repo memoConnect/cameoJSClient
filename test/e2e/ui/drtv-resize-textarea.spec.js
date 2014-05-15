@@ -25,10 +25,10 @@ describe('Textarea Resize', function () {
 
     it('check rows calculation max 4', function(){
         var textarea = $("[data-qa='input-answer']"),
-            oneRow = 'moep moep moep moep',
-            twoRows = 'moep moep moep moepp \n second row'
-            fourRows = 'moep moep moep moepp \n second row \n third row \n fourth row'
-            moreThanMaxRows = 'moep moep moep moepp \n second row \n third row \n fourth row \n sixth \n seventh \n eigth \n'
+            oneRow = 'moep moep moep',
+            twoRows = 'moep moep moep \nsecond row'
+            fourRows = 'moep moep moep \nsecond row \nthird row \nfourth row'
+            moreThanMaxRows = 'moep moep moep \nsecond row \nthird row \nfourth row \nsixth row \nseventh row \neigth row'
 
         textarea.sendKeys(oneRow)
 
