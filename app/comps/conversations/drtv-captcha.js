@@ -3,15 +3,15 @@
 angular.module('cmConversations').directive('cmCaptcha',[
     function (){
         return {
-            restrict: 		'AE',
-            require:		'^cmConversation',
-            template:		'<canvas id="canvas" width="100" height="37"></canvas>', //MOCK
+            restrict: 'AE',
+            scope: true,
+            require: '^cmConversation',
+            template: '<canvas id="canvas"></canvas>', //MOCK
 
-            controller:		function($scope, $element, $attrs){
-
+            controller:	function($scope, $element, $attrs){
                 var captcha;
 
-                $scope.captchaDim = "405x150";
+                $scope.captchaDim = $element[0].offsetWidth + 'x' + $element[0].offsetHeight;
                 $scope.captchaFont = "sans";
                 $scope.captchaImageData = '';
 
@@ -29,10 +29,11 @@ angular.module('cmConversations').directive('cmCaptcha',[
                 };
 
                 $scope.refreshCaptcha = function(){
-                    captcha.refresh($scope.passphrase);
+                    captcha.refresh($scope.conversation.password);
                 };
 
-                $scope.$watch('passphrase', $scope.refreshCaptcha)
+                $scope.$watch('conversation.password', $scope.refreshCaptcha);
+                $scope.$on('captcha:refresh',$scope.refreshCaptcha);
 
                 $scope.create();
             }

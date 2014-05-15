@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmConversationControls', [
-
     'cmUserModel',
     'cmNotify',
     'cmLogger',
@@ -17,8 +16,8 @@ angular.module('cmConversations').directive('cmConversationControls', [
             link: function(scope, element, attrs, cmConversation){
                 var levels = ['unsafe', 'safe', 'safer'];
 
-                scope.bodyVisible   = cmConversation.isNew()
-                scope.isNew         = cmConversation.isNew()
+                scope.bodyVisible   = cmConversation.isNew();
+                scope.isNew         = cmConversation.isNew();
 
                 //Todo: get rid of this! :
                 scope.$watch('conversation', function(conversation){
@@ -34,19 +33,23 @@ angular.module('cmConversations').directive('cmConversationControls', [
             },
 
             controller: function($scope){
-                $scope.showPassword = true;
+                $scope.showCaptcha = false;
 
-                $scope.togglePassphraseMethod = function(type){
+                $scope.toggleCaptcha = function(type){
                     if(typeof type !== 'undefined'){
                        switch(type){
                            case "password":
-                               $scope.showPassword = true;
+                               $scope.showCaptcha = false;
                                break;
-                           case "passcaptcha":
-                               $scope.showPassword = false;
+                           case "captcha":
+                               $scope.showCaptcha = true;
                                break;
                        }
                     }
+                };
+
+                $scope.refreshCaptcha = function(){
+                    $scope.$broadcast('captcha:refresh');
                 };
 
                 $scope._setLevel = function(level){
