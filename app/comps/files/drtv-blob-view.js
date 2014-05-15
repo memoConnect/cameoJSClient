@@ -2,8 +2,7 @@
 
 angular.module('cmFiles').directive('cmBlobView',[
     '$rootScope',
-    'cmModal',
-    function ($rootScope, cmModal) {
+    function ($rootScope) {
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
@@ -17,13 +16,16 @@ angular.module('cmFiles').directive('cmBlobView',[
                         reader.onload = function(e){
                             // set attribute
                             element.attr('src',e.target.result);
-                            // hide spinner
-                            scope.$apply(function(){
-                                file.loaded = true;
+                            element.on('load', function(){
+                                // hide spinner
+                                scope.$apply(function(){
+                                    file.loaded = true;
+                                });
+
+                                if(attrs.cmScrollToTarget) {
+                                    $rootScope.$broadcast('scroll:to',attrs.cmScrollToTarget)
+                                }
                             });
-                            if(attrs.cmScrollToTarget) {
-                                $rootScope.$broadcast('scroll:to',attrs.cmScrollToTarget)
-                            }
                         };
                         reader.readAsDataURL(file.blob)
                     } else {
@@ -43,18 +45,6 @@ angular.module('cmFiles').directive('cmBlobView',[
 
                 // load image via fileapi
                 scope.$watch(attrs.cmBlobView, handleBlob);
-
-                if(attrs.cmFullscreen) {
-                    // open modal
-                    element.on('click', function () {
-                        cmModal.create({
-                            id: 'image-view',
-                            'class': 'modal-image-fullscreen',
-                            'type': 'fullscreen'
-                        }, '<img src="' + element.attr('src') + '" cm-stay-in-viewport /><cm-message-assets></cm-message-assets>');
-                        cmModal.open('image-view');
-                    });
-                }
             }
         }
     }

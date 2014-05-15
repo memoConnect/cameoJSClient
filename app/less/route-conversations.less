@@ -279,6 +279,9 @@ cm-conversation {
           max-width: @cm-message-right-max-width;
         }
       }
+      cm-message-assets {
+        display: block;
+      }
       .text{
         span{
           margin: 0.5rem 0;
@@ -392,13 +395,14 @@ div.answer{
     margin: 0 auto;
     text-align: left;
     textarea{
-      width: 82%;
-      border: none !important;
-      background: transparent;
-      margin-bottom: 0.5em;
+      width:82%;
+      border:none !important;
+      background:transparent;
+      margin-bottom:0.5em;
+      padding:2px;
     }
-    textarea[cm-rows='1']{
-      line-height:4rem;
+    textarea[rows='1']{
+      margin:1rem 0;
     }
     .inputter {
       width: 100%;
