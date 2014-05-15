@@ -31,9 +31,9 @@ angular.module('cmCore')
             userType: '',
             storage: {},
             identity: {}
-        }
+        };
 
-        cmObject.addEventHandlingTo(this)
+        cmObject.addEventHandlingTo(this);
 
         this.comesFromRegistration = false;
 
@@ -403,13 +403,13 @@ angular.module('cmCore')
         /**
          * clear identity storage
          */
-        function resetUser(){
+        this.resetUser = function(){
             cmLogger.debug('cmUserModel:resetUser');
             this.data = angular.extend({}, dataModel);
         }
 
         $rootScope.$on('logout', function(){
-            resetUser();
+            self.resetUser();
         });
 
         this.init();
