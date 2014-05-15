@@ -59,7 +59,7 @@ angular.module('cmUi').service('cmModal',[
             return self
         }
 
-        self.create = function(config, template, target){
+        self.create = function(config, template, target, scope){
             // clear existing instance
             if(self.instances[config.id] != undefined){
                 delete self.instances[config.id];
@@ -72,7 +72,7 @@ angular.module('cmUi').service('cmModal',[
 
             // create new element
             var attrs = '',
-                scope = $rootScope.$new()
+                scope = scope || $rootScope.$new()
 
             //Todo: könnte man schöner machen:
             angular.forEach(config, function(value, key){ attrs += key+'="'+value+'"' });
