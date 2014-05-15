@@ -1,4 +1,4 @@
-var app = angular.module("cockpit", ["ngRoute", "cmAuth", "cmApi", "cmCrypt", "cmLogger", "cockpitList", "cockpitEdit", "cockpitMain"])
+var app = angular.module("cockpit", ["ngRoute", "cmCore", "cockpitList", "cockpitEdit", "cockpitMain"])
 
 app.config(["cmApiProvider",
     function (cmApiProvider) {
