@@ -25,17 +25,22 @@ angular.module('cmConversations').directive('cmCaptcha',[
                     });
                     captcha.generate();
 
+
                     $scope.conversation.password = captcha.text();
+                    $scope.conversation.tmpPassCaptcha = captcha.uri();
                 };
 
                 $scope.refreshCaptcha = function(){
                     captcha.refresh($scope.conversation.password);
+                    $scope.conversation.tmpPassCaptcha = captcha.uri();
                 };
+
+                $scope.create();
 
                 $scope.$watch('conversation.password', $scope.refreshCaptcha);
                 $scope.$on('captcha:refresh',$scope.refreshCaptcha);
 
-                $scope.create();
+
             }
         }
     }

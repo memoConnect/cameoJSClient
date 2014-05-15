@@ -27,6 +27,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.encryptionType = 'none'; // 'none' || 'symmetric' || 'asymmetric'
             this.keyTransmission = 'asymmetric' || 'symmetric';
             this.passCaptcha = '';
+            this.tmpPassCaptcha = '';
             var self = this;
 
             cmObject
@@ -50,10 +51,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     this.numberOfMessages   = conversation_data.numberOfMessages;
                     this.lastUpdated        = conversation_data.lastUpdated;
 
-
                     this.encryptedPassphraseList = this.encryptedPassphraseList.concat(conversation_data.encryptedPassphraseList || []);
-                    this.setEncryptionType()
-
+                    this.setEncryptionType();
 
                     // register all recipients as Recipient objects
                     if (conversation_data.recipients) {
@@ -70,7 +69,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         })
                     }
 
-                    this.decrypt() //Todo: maybe this is too much
+                    this.decrypt(); //Todo: maybe this is too much
 
                     this.on('after-add-recipient', function(){
                         //@ TODO: solve rekeying another way:
@@ -80,6 +79,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                     })
                 }
+
+                return this;
             };
 
             this.sync = function(){
@@ -101,7 +102,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                     cmConversationsAdapter.newConversation((this.subject || '')).then(
                         function (conversation_data) {
-                            self.init(conversation_data)
+                            self
+                            .init(conversation_data)
+                            .savePassCaptcha();
 
                             var i = 0;
                             while(i < self.recipients.length){
@@ -128,6 +131,16 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 }
 
                 return deferred.promise;
+            };
+
+            this.savePassCaptcha = function(){
+                var deferred = $q.defer();
+
+                if(this.tmpPassCaptcha != ''){
+
+                }
+
+                return this;
             };
 
             this.update = function(conversation_data){

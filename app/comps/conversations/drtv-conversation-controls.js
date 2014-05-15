@@ -40,6 +40,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
                        switch(type){
                            case "password":
                                $scope.hasCaptcha = false;
+                               $scope.conversation.passCaptcha = '';
                                break;
                            case "captcha":
                                $scope.hasCaptcha = true;
