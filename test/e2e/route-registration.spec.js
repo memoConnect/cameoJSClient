@@ -76,7 +76,7 @@ describe('registration', function () {
 
         ptor.wait(function () {
             return $("[data-qa='register-info-username-exists']").isDisplayed()
-        }, 1000, "username exists timeout")
+        }, 5000, "username exists timeout")
 
         util.checkWarning("register-info-username-exists")
         util.clearInput('input-loginName')

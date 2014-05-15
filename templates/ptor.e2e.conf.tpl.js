@@ -6,9 +6,7 @@ exports.config = {
     allScriptsTimeout: 30000,
     specs: ['../test/e2e/**/*.spec.js'],
 
-    capabilities: {
-        'browserName': '<%= browserName %>'
-    },
+    <%= capabilities %>,
 
     onPrepare: function () {
         require('jasmine-reporters');

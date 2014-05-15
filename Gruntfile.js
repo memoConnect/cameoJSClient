@@ -613,7 +613,18 @@ module.exports = function (grunt) {
                 'options': {
                     'data': {
                         'chromeDriverPath': globalCameoTestConfig.config.chromeDriverPath,
-                        'browserName': 'chrome'
+                        'capabilities' : "capabilities:{'browserName':'chrome'}"
+                    }
+                },
+                'files': {
+                    'config/ptor.e2e.conf.js': ['templates/ptor.e2e.conf.tpl.js']
+                }
+            },
+            'config-protractor-multi': {
+                'options': {
+                    'data': {
+                        'chromeDriverPath': globalCameoTestConfig.config.chromeDriverPath,
+                        'capabilities' : "multiCapabilities:[{'browserName': 'chrome'}, {'browserName': 'firefox'}]"
                     }
                 },
                 'files': {
@@ -706,9 +717,15 @@ module.exports = function (grunt) {
         'tests-unit',
         'tests-e2e'
     ]);
+    grunt.registerTask('tests-multi', [
+        // we only need to generate templates for tests
+        'template:config-tests',
+        'template:config-protractor-multi',
+        'protractor:default'
+    ])
+
     // shortcuts
     grunt.registerTask('tests-2e2', ['tests-e2e']);
-
     // phonegap to device
     grunt.registerTask('phonegap-local', [
         'template:local-config-phonegap',
