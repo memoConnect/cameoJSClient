@@ -1,18 +1,19 @@
 'use strict';
 
-angular.module('cmCore').service('cmFilesAdapter', [
+angular.module('cmCore')
+.service('cmFilesAdapter', [
     'cmApi',
     function (cmApi){
         return {
             prepareFile: function(config){
                 return cmApi.post({
-                    path :    "/file",
+                    path: '/file',
                     data: {},
-                    exp_ok : 'id',
-                    headers : {
-                        "X-File-Name":  config.name,
-                        "X-File-Size":  config.size,
-                        "X-File-Type":  config.type,
+                    exp_ok: 'id',
+                    headers: {
+                        "X-File-Name": config.name,
+                        "X-File-Size": config.size,
+                        "X-File-Type": config.type,
                         "X-Max-Chunks": config.chunks
                     }
                 })
@@ -20,32 +21,31 @@ angular.module('cmCore').service('cmFilesAdapter', [
 
             addChunk: function(fileId, index, chunk) {
                 return cmApi.post({
-                    path:    "/file/"+fileId,
-                    data:   {
+                    path: '/file/'+fileId,
+                    data: {
                         chunk: chunk
                     },
-                    headers:{
+                    headers: {
                         "X-Index": index
                     }
                 })
-
             },
 
             getFileInfo: function(fileId){
                 return cmApi.get({
-                    path: "/file/"+fileId
+                    path: '/file/'+fileId
+                })
+            },
+            // TODO: duplicated? see above!
+            getFile: function(fileId){
+                return cmApi.get({
+                    path: '/file/'+fileId
                 })
             },
 
-            getFile: function(assetId){
+            getChunk: function(fileId, chunkId){
                 return cmApi.get({
-                    path: "/file/"+assetId
-                })
-            },
-
-            getChunk: function(assetId, chunkId){
-                return cmApi.get({
-                    path: "/file/"+assetId+"/"+chunkId,
+                    path: '/file/'+fileId+'/'+chunkId,
                     exp_ok: 'chunk'
                 })
             }
@@ -114,7 +114,7 @@ angular.module('cmCore').service('cmFilesAdapter', [
          * @returns {Array}
          */
         this.getQty = function(){
-            return stack.length;
+            return this.stack.length;
         };
     }
 ])
@@ -322,7 +322,7 @@ angular.module('cmCore').service('cmFilesAdapter', [
     function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, $q){
 
         function roundToTwo(num) {
-            return +(Math.round(num + "e+2")  + "e-2");
+            return +(Math.round(num + 'e+2') + 'e-2');
         }
 
         var FileModel = function(fileData){
