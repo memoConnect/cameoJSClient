@@ -111,8 +111,8 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                     return true;
                 });
 
+                // watch on ngModel for extern changes
                 var timeoutWatch = null;
-
                 scope.$watch(attrs.ngModel,function(newValue){
                     if(newValue == ''){
                         if(timeoutWatch != null)
