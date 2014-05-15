@@ -23,7 +23,7 @@ describe('Textarea Resize', function () {
         expect(textarea.getCssValue('overflow')).toBe('hidden')
     })
 
-    it('check rows calculation max 4', function(){
+    it('check rows calculation max 4 text with newlines', function(){
         var textarea = $("[data-qa='input-answer']"),
             oneRow = 'moep moep moep',
             twoRows = 'moep moep moep \nsecond row'
@@ -59,5 +59,14 @@ describe('Textarea Resize', function () {
         expect(textarea.getAttribute('value')).toBe('')
         expect(textarea.getAttribute('rows')).toBe('1')
         expect(textarea.getCssValue('overflow')).toBe('hidden')
+    })
+
+    it('check input without newlines', function(){
+        var textarea = $("[data-qa='input-answer']"),
+            longText = 'mmmmmmmmeeeeeeeeoooooooooopppppppppppppppppp'
+
+        textarea.sendKeys(longText)
+        expect(textarea.getAttribute('value')).toBe(longText)
+        expect(textarea.getAttribute('rows')).toBe('3')
     })
 })
