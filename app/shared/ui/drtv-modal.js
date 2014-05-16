@@ -126,14 +126,6 @@ angular.module('cmUi').directive('cmModal', [
             controller: function($scope, $element, $attrs){   
                 $scope.title    = cmTranslate($attrs.cmTitle);
                 $scope.severity = $attrs.severity || 'info';
-
-                // don't hide on route change
-                $scope.$on('$destroy',function(){
-                    $rootScope.isModalVisible = true;
-                    $timeout(function(){
-                        $rootScope.isModalVisible = false;
-                    },500)
-                });
             }
         }
     }
