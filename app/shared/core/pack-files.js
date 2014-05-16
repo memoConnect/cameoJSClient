@@ -393,7 +393,6 @@ angular.module('cmCore')
                 return blob;
             }
 
-
             this.importBase64 = function(base64){
                 if(typeof base64 !== 'undefined'){
                     this.type = base64.replace(new RegExp('^(data:(.*);base64,.*)','i'),'$2');
