@@ -15,7 +15,7 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                 })
             },
 
-            updateConversation: function(conversation){
+            _updateConversation: function(conversation){
                 return cmApi.put({
                     path: '/conversation/' + conversation.id,
                     data: conversation

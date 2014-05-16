@@ -549,7 +549,7 @@ angular.module('cmCore')
 
 //                console.log(cmUtil.bytesToStr(this.blob.size),cmUtil.bytesToStr(this.encryptedSize))
 
-                self.trigger('file:cached');
+                self.trigger('file:cached', this);
 
                 return this;
             };
@@ -749,7 +749,7 @@ angular.module('cmCore')
             });
 
             this.on('upload:finish', function(){
-//                cmLogger.debug('upload:finish');
+                cmLogger.debug('upload:finish');
                 self.setState('cached');
             });
 

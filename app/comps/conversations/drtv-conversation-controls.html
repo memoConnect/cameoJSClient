@@ -53,7 +53,7 @@
 
             <div ng-if="safetyLevel == 'safe'">
 
-                <div cm-rubber-space>
+                <div cm-rubber-space ng-if="isNew">
                     <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':hasCaptcha}" ng-click="toggleCaptcha('password');">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</button>
                     <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':!hasCaptcha}" ng-click="toggleCaptcha('captcha');">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA'|cmTranslate}}</button>
                 </div>
@@ -75,6 +75,11 @@
                         <button ng-click="sendCaptcha()"><i class="fa cm-send"></i> {{"CONVERSATION.LABEL.SEND_CAPTCHA" | cmTranslate}}</button>
                     </p>
                 </div>
+
+                <div class="captcha" ng-if="!isNew">
+                    <img cm-blob-view="conversation.passCaptcha" />
+                </div>
+
             </div>
             <div style="text-align:center; cursor:pointer" cm-user-rights>
                 <a href="#/settings">

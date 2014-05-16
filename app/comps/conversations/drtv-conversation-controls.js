@@ -26,7 +26,11 @@ angular.module('cmConversations').directive('cmConversationControls', [
                         scope._setLevel(levels[conversation.getSafetyLevel()]);
 
                         if(!cmConversation.isNew() && !conversation.password && conversation.getEncryptionType() == 'symmetric') {
-                            scope.bodyVisible = true
+                            scope.bodyVisible = true;
+
+                            if(typeof conversation.passCaptcha == 'object'){
+
+                            }
                         }
                     }
                 });

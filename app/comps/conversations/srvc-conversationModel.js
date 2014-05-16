@@ -11,9 +11,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmNotify',
     'cmObject',
     'cmUtil',
+    'cmLogger',
     '$q',
     '$rootScope',
-    function (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, cmUtil, $q, $rootScope){
+    function (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, cmUtil, cmLogger, $q, $rootScope){
         var ConversationModel = function(data){
             //Attributes:
             this.id = '',
@@ -71,6 +72,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     }
 
                     this.decrypt(); //Todo: maybe this is too much
+
+                    this.initPassCaptcha(conversation_data);
 
                     this.on('after-add-recipient', function(){
                         //@ TODO: solve rekeying another way:
@@ -134,6 +137,15 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return deferred.promise;
             };
 
+            this.initPassCaptcha = function(conversation_data){
+                if(typeof conversation_data.passCaptcha !== 'undefined' && conversation_data.passCaptcha != '' && this.passCaptcha == undefined){
+                    this.passCaptcha = cmFileFactory.create(conversation_data.passCaptcha);
+                    this.passCaptcha
+                        .setPassphrase('')
+                        .downloadStart();
+                }
+            };
+
             this.savePassCaptcha = function(){
                 if(this.tmpPassCaptcha != ''){
                     this.passCaptcha = cmFileFactory.create();
@@ -148,6 +160,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                             }
                         );
 
+                    this.passCaptcha.on('upload:finish', function(){
+                        cmConversationsAdapter.updateCaptcha(self.id, self.passCaptcha.id);
+                    });
                 }
 
                 return this;
@@ -165,8 +180,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                                 clearAllMessages = false;
                             }
                             var limit = conversation_data.numberOfMessages - offset;
-                            this.updateMessages(limit, offset, clearAllMessages);
+                            this._updateConversation(limit, offset, clearAllMessages);
                         }
+
+                        this.initPassCaptcha(conversation_data);
                     } else {
                         cmConversationsAdapter.getConversationSummary(this.id).then(
                             function(data){
@@ -177,7 +194,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                                     }
                                     var limit = data.numberOfMessages - offset;
 
-                                    self.updateMessages(limit, offset, clearAllMessages);
+                                    self._updateConversation(limit, offset, clearAllMessages);
+
+                                    this.initPassCaptcha(data);
                                 }
                             }
                         )
@@ -185,6 +204,33 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 }
 
                 return this;
+            };
+
+            /**
+             * @param limit
+             * @param offset
+             * @param clearMessages
+             */
+            this._updateConversation = function(limit, offset, clearMessages){
+                cmConversationsAdapter.getConversation(this.id, limit, offset).then(
+                    function(data){
+                        /**
+                         * passCaptcha Handling
+                         */
+                        self.initPassCaptcha(data);
+
+                        /**
+                         * Message Handling
+                         */
+                        if(typeof clearMessages !== 'undefined' && clearMessages !== false){
+                            self.messages = [];
+                        }
+
+                        data.messages.forEach(function(message_data) {
+                            self.addMessage(cmMessageFactory.create(message_data));
+                        });
+                    }
+                )
             };
 
             this.setEncryptionType = function(){
@@ -255,25 +301,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     return this.messages[(this.messages.length - 1)];
                 }
                 return null
-            };
-
-            /**
-             * @param limit
-             * @param offset
-             * @param clearMessages
-             */
-            this.updateMessages = function(limit, offset, clearMessages){
-                cmConversationsAdapter.getConversation(this.id, limit, offset).then(
-                    function(data){
-                        if(typeof clearMessages !== 'undefined' && clearMessages !== false){
-                            self.messages = [];
-                        }
-
-                        data.messages.forEach(function(message_data) {
-                            self.addMessage(cmMessageFactory.create(message_data));
-                        });
-                    }
-                )
             };
 
             /**
@@ -510,16 +537,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             /**
              * Event Handling
              */
-
-//            this.passCaptcha.on('upload:finish', function(){
-//                cmConversationsAdapter.updateCaptcha(self.id, self.passCaptcha.id)
-//                    .then(function(data){
-//                        console.log('data',data);
-//                    });
-//            });
-
-
-        }
+        };
 
         return ConversationModel;
     }
