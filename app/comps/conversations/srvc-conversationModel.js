@@ -70,6 +70,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 .on('message-added recipient-added subject-updated', function(event, data){ self.updateTagLine() })                
                 */
 
+                //Todo:
+                self.on('message-added', function(){ self.numberOfMessages++ })
+
                 this.trigger('init')
             }
 
@@ -107,6 +110,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @param {MessageModel} message.
              */  
             this.addMessage = function(message){
+                console.log('ding')
                 if(this.messages.indexOf(message) == -1){
                     this.messages.push( message )
                     this.lastMessage = message
@@ -280,7 +284,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 var offset = 0;
                 var clearAllMessages = true;
 
-                if(this.id != ''){
+                if(this.id){
                     if(typeof conversation_data !== 'undefined'){
                         if(this.messages.length < conversation_data.numberOfMessages) {
                             if (this.messages.length > 1) {
