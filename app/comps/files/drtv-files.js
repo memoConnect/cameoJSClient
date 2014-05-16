@@ -7,7 +7,6 @@ angular.module('cmFiles').directive('cmFiles',[
         return {
             restrict : 'E',
             controller : function($scope){
-
                 $scope.files = [];
                 /**
                  * function called via <input type=file>
@@ -29,6 +28,13 @@ angular.module('cmFiles').directive('cmFiles',[
 
                     var file = cmFileFactory.create(blob,true);
                     $scope.files.push(file);
+                };
+
+                this.removeFile = function(file){
+                    if(cmFileFactory.remove(file)){
+                        var index = $scope.files.indexOf(file);
+                        $scope.files.splice(index,1);
+                    }
                 };
                 /**
                  * prepare all files for upload

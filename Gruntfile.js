@@ -18,6 +18,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-protractor-runner');
+    grunt.loadNpmTasks('grunt-shell');
 
     // cameo secrets
     var globalCameoSecrets = (function () {
@@ -699,6 +700,11 @@ module.exports = function (grunt) {
                     done();
                 }
             }
+        },
+        shell: {
+            'node-webserver': {
+                command: 'node ./scripts/web-server.js'
+            }
         }
     });
 
@@ -783,4 +789,6 @@ module.exports = function (grunt) {
         'uglify:dev-deploy',
         'copy:cockpit',
         'uglify:cockpit']);
+
+    grunt.registerTask('node webserver', ['shell:node-webserver']);
 };
