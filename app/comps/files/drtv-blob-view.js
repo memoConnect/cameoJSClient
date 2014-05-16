@@ -35,14 +35,16 @@ angular.module('cmFiles').directive('cmBlobView',[
                 }
 
                 function handleBlob(file){
-                    console.log('handleBlob', file);
-
                     if(typeof file !== 'undefined'){
                         if(file.state == 'cached'){
                             showFile(file);
                         }
 
                         file.on('file:cached', function(){
+                            showFile(file);
+                        });
+
+                        file.on('upload:finish', function(){
                             showFile(file);
                         });
                     }

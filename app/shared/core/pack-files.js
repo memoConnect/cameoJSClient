@@ -547,8 +547,6 @@ angular.module('cmCore')
 
                 this.blob = new Blob(data, {type: self.type})
 
-//                console.log(cmUtil.bytesToStr(this.blob.size),cmUtil.bytesToStr(this.encryptedSize))
-
                 self.trigger('file:cached', this);
 
                 return this;
@@ -630,7 +628,7 @@ angular.module('cmCore')
             };
 
             this.downloadChunks = function(){
-                cmLogger.debug('cmFileModel:downloadChunks');
+//                cmLogger.debug('cmFileModel:downloadChunks');
                 if(!this.id && this.state == 'exists'){
                     cmLogger.error('cmFile.downloadChunks();')
                     return null;
@@ -653,7 +651,7 @@ angular.module('cmCore')
             };
 
             this.downloadStart = function(){
-                cmLogger.debug('cmFileModel:downloadStart');
+//                cmLogger.debug('cmFileModel:downloadStart');
                 if(this.id != '' && this.state == 'exists'){
                     cmFileDownload.add(this);
                 }
@@ -749,7 +747,7 @@ angular.module('cmCore')
             });
 
             this.on('upload:finish', function(){
-                cmLogger.debug('upload:finish');
+//                cmLogger.debug('upload:finish');
                 self.setState('cached');
             });
 
