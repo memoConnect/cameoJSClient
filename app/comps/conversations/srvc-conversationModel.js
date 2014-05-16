@@ -4,15 +4,17 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmConversationsAdapter',
     'cmMessageFactory',
     'cmIdentityFactory',
+    'cmFileFactory',
     'cmCrypt',
     'cmUserModel',
     'cmRecipientModel',
     'cmNotify',
     'cmObject',
     'cmUtil',
+    'cmLogger',
     '$q',
     '$rootScope',
-    function (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, cmUtil, $q, $rootScope){
+    function (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, cmUtil, cmLogger, $q, $rootScope){
         var ConversationModel = function(data){
             //Attributes:
             this.id = '',
@@ -25,7 +27,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.numberOfMessages = 0,
             this.encryptedPassphraseList = [];
             this.encryptionType = 'none'; // 'none' || 'symmetric' || 'asymmetric'
-            this.keyTransmission = 'asymmetric' || 'symmetric'
+            this.keyTransmission = 'asymmetric' || 'symmetric';
+            this.passCaptcha = undefined;
+            this.tmpPassCaptcha = '';
             var self = this;
 
             cmObject
@@ -49,10 +53,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     this.numberOfMessages   = conversation_data.numberOfMessages;
                     this.lastUpdated        = conversation_data.lastUpdated;
 
-
                     this.encryptedPassphraseList = this.encryptedPassphraseList.concat(conversation_data.encryptedPassphraseList || []);
-                    this.setEncryptionType()
-
+                    this.setEncryptionType();
 
                     // register all recipients as Recipient objects
                     if (conversation_data.recipients) {
@@ -69,7 +71,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         })
                     }
 
-                    this.decrypt() //Todo: maybe this is too much
+                    this.decrypt(); //Todo: maybe this is too much
+
+                    this.initPassCaptcha(conversation_data);
 
                     this.on('after-add-recipient', function(){
                         //@ TODO: solve rekeying another way:
@@ -79,6 +83,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                     })
                 }
+
+                return this;
             };
 
             this.sync = function(){
@@ -100,15 +106,15 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                     cmConversationsAdapter.newConversation((this.subject || '')).then(
                         function (conversation_data) {
-                            self.init(conversation_data)
+                            self
+                            .init(conversation_data)
+                            .savePassCaptcha();
 
                             var i = 0;
                             while(i < self.recipients.length){
                                 cmConversationsAdapter.addRecipient(self.id, self.recipients[i].id);
                                 i++;
                             }
-
-                           
 
                             if(self.passphrase && self.checkKeyTransmission()){
                                 self
@@ -129,7 +135,38 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 }
 
                 return deferred.promise;
-            }
+            };
+
+            this.initPassCaptcha = function(conversation_data){
+                if(typeof conversation_data.passCaptcha !== 'undefined' && conversation_data.passCaptcha != '' && this.passCaptcha == undefined){
+                    this.passCaptcha = cmFileFactory.create(conversation_data.passCaptcha);
+                    this.passCaptcha
+                        .setPassphrase('')
+                        .downloadStart();
+                }
+            };
+
+            this.savePassCaptcha = function(){
+                if(this.tmpPassCaptcha != ''){
+                    this.passCaptcha = cmFileFactory.create();
+                    this.passCaptcha.name = this.passCaptcha.encryptedName = 'captcha';
+
+                    this.passCaptcha
+                        .setPassphrase('')
+                        .importBase64(this.tmpPassCaptcha)
+                        .prepareForUpload().then(
+                            function(){
+                                self.passCaptcha.uploadChunks();
+                            }
+                        );
+
+                    this.passCaptcha.on('upload:finish', function(){
+                        cmConversationsAdapter.updateCaptcha(self.id, self.passCaptcha.id);
+                    });
+                }
+
+                return this;
+            };
 
             this.update = function(conversation_data){
                 var offset = 0;
@@ -143,8 +180,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                                 clearAllMessages = false;
                             }
                             var limit = conversation_data.numberOfMessages - offset;
-                            this.updateMessages(limit, offset, clearAllMessages);
+                            this._updateConversation(limit, offset, clearAllMessages);
                         }
+
+                        this.initPassCaptcha(conversation_data);
                     } else {
                         cmConversationsAdapter.getConversationSummary(this.id).then(
                             function(data){
@@ -155,7 +194,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                                     }
                                     var limit = data.numberOfMessages - offset;
 
-                                    self.updateMessages(limit, offset, clearAllMessages);
+                                    self._updateConversation(limit, offset, clearAllMessages);
+
+                                    this.initPassCaptcha(data);
                                 }
                             }
                         )
@@ -163,6 +204,33 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 }
 
                 return this;
+            };
+
+            /**
+             * @param limit
+             * @param offset
+             * @param clearMessages
+             */
+            this._updateConversation = function(limit, offset, clearMessages){
+                cmConversationsAdapter.getConversation(this.id, limit, offset).then(
+                    function(data){
+                        /**
+                         * passCaptcha Handling
+                         */
+                        self.initPassCaptcha(data);
+
+                        /**
+                         * Message Handling
+                         */
+                        if(typeof clearMessages !== 'undefined' && clearMessages !== false){
+                            self.messages = [];
+                        }
+
+                        data.messages.forEach(function(message_data) {
+                            self.addMessage(cmMessageFactory.create(message_data));
+                        });
+                    }
+                )
             };
 
             this.setEncryptionType = function(){
@@ -233,25 +301,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     return this.messages[(this.messages.length - 1)];
                 }
                 return null
-            };
-
-            /**
-             * @param limit
-             * @param offset
-             * @param clearMessages
-             */
-            this.updateMessages = function(limit, offset, clearMessages){
-                cmConversationsAdapter.getConversation(this.id, limit, offset).then(
-                    function(data){
-                        if(typeof clearMessages !== 'undefined' && clearMessages !== false){
-                            self.messages = [];
-                        }
-
-                        data.messages.forEach(function(message_data) {
-                            self.addMessage(cmMessageFactory.create(message_data));
-                        });
-                    }
-                )
             };
 
             /**
@@ -485,7 +534,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.init(data);
 
-        }
+            /**
+             * Event Handling
+             */
+        };
 
         return ConversationModel;
     }

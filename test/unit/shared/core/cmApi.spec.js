@@ -2,7 +2,7 @@
 
 describe('cmApi', function(){
 
-    var cmApi, $httpBackend;
+    var cmApi, $httpBackend
 
     beforeEach(module('cmCore',[
         'cmApiProvider',
@@ -12,8 +12,8 @@ describe('cmApi', function(){
     ]))
 
     beforeEach(inject(function(_cmApi_, _$httpBackend_){
-        cmApi = _cmApi_;
-        $httpBackend = _$httpBackend_;
+        cmApi = _cmApi_
+        $httpBackend = _$httpBackend_
     }))
 
     afterEach(function(){

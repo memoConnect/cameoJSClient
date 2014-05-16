@@ -10,7 +10,7 @@ angular.module('cmFiles').directive('cmFileChoose', [
             require: '^cmFiles',
             template: tpl,
 
-            link: function (scope, element, attributes, cmFilesCtrl) {
+            link: function (scope, element, attrs, cmFilesCtrl) {
                 var index = 1;
 
                 // add countrer for save resets
@@ -27,11 +27,10 @@ angular.module('cmFiles').directive('cmFileChoose', [
                         element
                             .on('click', function () {
                                 filechooser.open({}, function (data) {
-
                                     // {"filepath":"\/storage\/emulated\/0\/DCIM\/Camera\/IMG_20140510_154258893_HDR.jpg"}
-                                    var file = new File(data.filepath);
-                                    console.log(file)
-                                    cmFilesCtrl.setFile(file);
+//                                    var file = new File(data.filepath);
+//                                    console.log(file)
+//                                    cmFilesCtrl.setFile(file);
                                 });
                             });
                     }, false);
@@ -50,6 +49,45 @@ angular.module('cmFiles').directive('cmFileChoose', [
                     index++;
                     addCounter();
                 });
+
+                if(attrs.cmDroparea){
+                    var droparea = angular.element(document.getElementById(attrs.cmDroparea));
+
+                    if(droparea != undefined) {
+                        droparea.on('dragleave', function (evt) {
+                            var target = evt.target;
+                            if (target && target === droparea[0]) {
+                                droparea.removeClass('files-dragged');
+                            }
+                            evt.preventDefault();
+                            evt.stopPropagation();
+                        });
+
+                        droparea.on('dragenter', function (evt) {
+                            droparea.addClass('files-dragged');
+                            evt.preventDefault();
+                            evt.stopPropagation();
+                        });
+
+                        droparea.on('dragover', function (evt) {
+                            evt.preventDefault();
+                            evt.stopPropagation();
+                        });
+
+                        droparea.on('drop', function (evt) {
+                            evt.preventDefault();
+                            evt.stopPropagation();
+
+                            var files = evt.dataTransfer.files;
+
+                            for (var i=0, l=files.length; i<l; i++) {
+                                cmFilesCtrl.setFile(files[i]);
+                            }
+
+                            droparea.removeClass('files-dragged');
+                        });
+                    }
+                }
 
                 // init
                 addCounter();

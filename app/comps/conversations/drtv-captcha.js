@@ -3,17 +3,17 @@
 angular.module('cmConversations').directive('cmCaptcha',[
     function (){
         return {
-            restrict: 		'AE',
-            require:		'^cmConversation',
-            template:		'<canvas id="canvas" width="100" height="37" class="img-rounded"></canvas>', //MOCK
+            restrict: 'AE',
+            scope: true,
+            require: '^cmConversation',
+            template: '<canvas id="canvas"></canvas>', //MOCK
 
-            controller:		function($scope, $element, $attrs){
-
+            controller:	function($scope, $element, $attrs){
                 var captcha;
 
-                $scope.captchaDim = "700x150"
-                $scope.captchaFont = "sans"
-                $scope.captchaImageData = ''
+                $scope.captchaDim = $element[0].offsetWidth + 'x' + $element[0].offsetHeight;
+                $scope.captchaFont = "sans";
+                $scope.captchaImageData = '';
 
                 $scope.create = function(){
                     var dim = $scope.captchaDim.split("x");
@@ -25,19 +25,23 @@ angular.module('cmConversations').directive('cmCaptcha',[
                     });
                     captcha.generate();
 
-                    $scope.pass = captcha.text();
+
+                    $scope.conversation.password = captcha.text();
+                    $scope.conversation.tmpPassCaptcha = captcha.uri();
                 };
 
                 $scope.refreshCaptcha = function(){
-                    captcha.refresh($scope.passphrase);
-                }
-
-                $scope.$watch('passphrase', $scope.refreshCaptcha)
+                    captcha.refresh($scope.conversation.password);
+                    $scope.conversation.tmpPassCaptcha = captcha.uri();
+                };
 
                 $scope.create();
+
+                $scope.$watch('conversation.password', $scope.refreshCaptcha);
+                $scope.$on('captcha:refresh',$scope.refreshCaptcha);
 
 
             }
         }
     }
-])
+]);

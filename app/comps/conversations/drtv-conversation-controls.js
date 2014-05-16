@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmConversationControls', [
-
     'cmUserModel',
     'cmNotify',
     'cmLogger',
@@ -17,8 +16,8 @@ angular.module('cmConversations').directive('cmConversationControls', [
             link: function(scope, element, attrs, cmConversation){
                 var levels = ['unsafe', 'safe', 'safer'];
 
-                scope.bodyVisible   = cmConversation.isNew()
-                scope.isNew         = cmConversation.isNew()
+                scope.bodyVisible   = cmConversation.isNew();
+                scope.isNew         = cmConversation.isNew();
 
                 //Todo: get rid of this! :
                 scope.$watch('conversation', function(conversation){
@@ -27,13 +26,36 @@ angular.module('cmConversations').directive('cmConversationControls', [
                         scope._setLevel(levels[conversation.getSafetyLevel()]);
 
                         if(!cmConversation.isNew() && !conversation.password && conversation.getEncryptionType() == 'symmetric') {
-                            scope.bodyVisible = true
+                            scope.bodyVisible = true;
+
+                            if(typeof conversation.passCaptcha == 'object'){
+
+                            }
                         }
                     }
                 });
             },
 
             controller: function($scope){
+                $scope.hasCaptcha = false;
+
+                $scope.toggleCaptcha = function(type){
+                    if(typeof type !== 'undefined'){
+                       switch(type){
+                           case "password":
+                               $scope.hasCaptcha = false;
+                               $scope.conversation.passCaptcha = '';
+                               break;
+                           case "captcha":
+                               $scope.hasCaptcha = true;
+                               break;
+                       }
+                    }
+                };
+
+                $scope.refreshCaptcha = function(){
+                    $scope.$broadcast('captcha:refresh');
+                };
 
                 $scope._setLevel = function(level){
                     if(level == 'unsafe'){
