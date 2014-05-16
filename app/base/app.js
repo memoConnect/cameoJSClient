@@ -6,6 +6,7 @@ define([
     'angular-moment-wrap',
     // cameo files
     'pckCore',
+    'pckUi',
     'base/config'
 ], function (angularAMD) {
     'use strict';
@@ -15,7 +16,8 @@ define([
         'ngCookies',
         'swipe',
         'angularMoment',
-        'cmCore'
+        'cmCore',
+        'cmUi'
     ]);
 
     app.constant('cmEnv',cameo_config.env);

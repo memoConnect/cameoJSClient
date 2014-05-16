@@ -51,7 +51,7 @@ describe('talks', function () {
     })
 
     it('should go back to talks from conversation view', function () {
-        $("cm-back .back-wrap").click()
+        $("cm-back").click()
         util.waitForPageLoad("/talks")
     })
 

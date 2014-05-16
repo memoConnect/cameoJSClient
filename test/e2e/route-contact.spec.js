@@ -49,7 +49,7 @@ describe('Route: Contact', function () {
         })
 
         it('click on back button',function(){
-            $('cm-back .back-wrap').click()
+            $('cm-back').click()
             util.expectCurrentUrl('#/contacts')
         })
     })

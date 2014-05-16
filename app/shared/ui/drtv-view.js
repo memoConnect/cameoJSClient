@@ -2,9 +2,8 @@
 
 angular.module('cmUi').directive('cmView', [
     '$route',
-    '$location',
     'cmUserModel',
-    function ($route, $location, cmUserModel){
+    function ($route, cmUserModel){
         return {
             restrict: 'A',
             controller: function($scope){
@@ -12,7 +11,6 @@ angular.module('cmUi').directive('cmView', [
                     cmUserModel.doLogout();
                     return false;
                 }
-
                 $scope.css = $route.current.$$route.css;
             }
         }
