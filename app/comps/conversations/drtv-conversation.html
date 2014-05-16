@@ -9,10 +9,10 @@
 
 <div id="conversation-bottom"></div>
 
-<div class="answer clearfix">
+<div class="answer clearfix" id="files-droparea">
     <cm-files ng-model="files" cm-user-rights data-qa="attachments-btn">
         <i class="fa cm-plus"></i>
-        <cm-file-choose></cm-file-choose>
+        <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
         <cm-files-preview></cm-files-preview>
     </cm-files>
 

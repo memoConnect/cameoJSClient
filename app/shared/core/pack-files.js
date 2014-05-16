@@ -305,6 +305,18 @@ angular.module('cmCore')
 
                 return file;
             },
+            remove: function(file){
+                var bool = false;
+
+                var index = instances.indexOf(file);
+                if(index != -1) {
+                    instances.splice(index, 1);
+                    delete instances[index];
+                    bool = true;
+                }
+
+                return bool;
+            },
             getQty: function(){
                 return instances.length;
             }
