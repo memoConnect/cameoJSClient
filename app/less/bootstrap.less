@@ -130,3 +130,18 @@ div[cm-transparent-bg]{
 .cm-bg-transparent{
   background-color: @cm-overlay-light-transparent;
 }
+
+.cm-table{
+  display:table;
+  width:100%;
+  height:100%;
+  .cm-row{
+    display:table-row;
+    .cm-cell {
+      display:table-cell;
+      &.cm-middle {
+        vertical-align: middle;
+      }
+    }
+  }
+}
