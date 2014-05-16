@@ -36,7 +36,7 @@ angular.module('cmFiles').directive('cmBlobView',[
 
                 function handleBlob(file){
                     if(typeof file !== 'undefined'){
-                        if(file.state == 'cached'){
+                        if(file.state == 'cached' || file.state == 'new'){
                             showFile(file);
                         }
 
