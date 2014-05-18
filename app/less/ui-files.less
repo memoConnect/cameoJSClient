@@ -63,6 +63,11 @@ cm-message-file{
   }
 }
 
+.answer.files-dragged{
+  opacity:0.8;
+  background-color:@cm-black;
+}
+
 cm-files{
   display:block;
   position:relative;
@@ -98,9 +103,16 @@ cm-files-preview{
   width:@cm-app-width;
   background-color:rgba(255,255,255,0.9);
 
-  .files-list{
+  .file-wrap{
+    position: relative;
     text-align:center;
     padding:@cm-vertical-padding;
+    i.cm-close{
+      position: absolute;
+      right: 1em;
+      top: 35%;
+      .with-cursor;
+    }
   }
 
   .file-image{

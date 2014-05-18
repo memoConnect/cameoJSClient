@@ -35,12 +35,19 @@ angular.module('cmFiles').directive('cmBlobView',[
                 }
 
                 function handleBlob(file){
-                    if(file.hasBlob() !== true){
-//                        file.trigger('request:blob');
-                    } else {
-                        showFile(file);
-                    }
+                    if(typeof file !== 'undefined'){
+                        if(file.state == 'cached' || file.state == 'new'){
+                            showFile(file);
+                        }
 
+                        file.on('file:cached', function(){
+                            showFile(file);
+                        });
+
+                        file.on('upload:finish', function(){
+                            showFile(file);
+                        });
+                    }
                 }
 
                 // load image via fileapi

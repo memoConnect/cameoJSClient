@@ -141,7 +141,8 @@
             "NO_SUBJECT": "add subject",
             "ADD_RECIPIENTS": "add recipients",
             "INFO": "info",
-            "PASSWORD": "password"
+            "PASSWORD": "password",
+            "PASSCAPTCHA": "passcaptcha"
         },
         "CONTROL": {
             "SAVE": "save",

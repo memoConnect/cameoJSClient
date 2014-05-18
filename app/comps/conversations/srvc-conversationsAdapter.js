@@ -19,7 +19,7 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                 })
             },
 
-            updateConversation: function(conversation){
+            _updateConversation: function(conversation){
                 return cmApi.put({
                     path: '/conversation/' + conversation.id,
                     data: conversation
@@ -73,6 +73,15 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                             path:    '/conversation/%1'.replace(/%1/, id),
                             data:   {
                                         subject: subject
+                                    }
+                        })
+            },
+
+            updateCaptcha: function(id, idFile){
+                return  cmApi.put({
+                            path:    '/conversation/%1'.replace(/%1/, id),
+                            data:   {
+                                        passCaptcha: idFile
                                     }
                         })
             },

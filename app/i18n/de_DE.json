@@ -141,7 +141,8 @@
             "NO_SUBJECT": "Betreff eingeben",
             "ADD_RECIPIENTS": "Empfänger hinzufügen",
             "INFO": "Info",
-            "PASSWORD": "Passwort"
+            "PASSWORD": "Passwort",
+            "PASSCAPTCHA": "Passcaptcha"
         },
         "CONTROL": {
             "SAVE": "speichern",
