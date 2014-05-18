@@ -15,7 +15,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
     '$q',
     '$rootScope',
 
-    function (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, cmLogger, $q, $rootScope){
+    function (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, cmLogger, $q, $rootScope){
 
         /**
         * Represents a Conversation.

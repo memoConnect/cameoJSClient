@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('cmConversations').factory('cmMessageModel',[
+
     'cmConversationsAdapter',
     'cmCrypt',
     'cmIdentityFactory',
@@ -9,6 +10,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
     'cmObject',
     'cmLogger',
     '$rootScope',
+    
     function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, cmObject, cmLogger, $rootScope){
 
         var Message = function(data){
