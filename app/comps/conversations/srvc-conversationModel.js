@@ -462,7 +462,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             */
 
             this.getLastMessage = function(){
-                cmLogger.debug('cmConversationModel: getLastMessage is deprecated.')
+//                cmLogger.debug('cmConversationModel: getLastMessage is deprecated.')
                 if(this.messages.length > 0){
                     return this.messages[(this.messages.length - 1)];
                 }
