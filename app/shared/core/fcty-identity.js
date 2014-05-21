@@ -170,8 +170,6 @@ angular.module('cmCore').factory('cmIdentityModel',[
             }
 
             this.init(identity_data);
-
-            this.on('init:finish', function(){console.log('ich bin fertig')})
         }
 
         return Identity;
