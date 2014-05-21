@@ -59,7 +59,7 @@ angular.module('cmCore')
 
                 obj._callbacks[event_name].forEach(function(callback_obj, index){
                     // call callback function and delete if need be, see ._call()
-                    if(!_call(callback_obj, event, data)) var xxx = 0//delete obj._callbacks[event_name][index]
+                    if(!_call(callback_obj, event, data)) delete obj._callbacks[event_name][index]
                 })
 
                 return obj

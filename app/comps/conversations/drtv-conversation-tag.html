@@ -1,9 +1,8 @@
-<!--<cm-avatar cm-data="$filter('cmLatestMessage')(conversation).from"></cm-avatar>-->
-<cm-avatar cm-data="conversation.getLastMessage().from"></cm-avatar>
+<cm-avatar cm-data="(conversation | cmLatestMessage).from"></cm-avatar>
 
 <div class="details" cm-weight="3">
     <div class="subject" data-qa="conversation-subject">
-        {{conversation|cmTagline}}
+        {{conversation | cmTagline}}
     </div>
     <cm-message
         ng-if     = "conversation.lastMessage"
