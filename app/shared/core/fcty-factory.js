@@ -1,4 +1,6 @@
-//This Module provides a generic Factory
+'use strict';
+
+//This factory provides a generic Factory
 
 angular.module('cmCore')
 .factory('cmFactory',[
@@ -32,6 +34,8 @@ angular.module('cmCore')
              * @param  {object} configuration data
              */
             this.setup = function(config){
+                if(config.model instanceof cmModel) cmLogger.error('cmFactory: wrong model type.')
+                this.model = config.model
                 return this
             }
 
@@ -65,8 +69,8 @@ angular.module('cmCore')
 
             /**
              * Function to create a new model instance
-             * @param {string|object} args instance id, data set including an instance id or data set without an id
-             * @return {model} returns a new model instance populated with the provided data
+             * @param {String|Object} args instance id, data set including an instance id or data set without an id
+             * @return {cmModel} returns a new model instance populated with the provided data
              */
 
             this.new = function(args){
