@@ -160,7 +160,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             //Mock;
     
-            this.update = function(){ cmLogger.warn('cmModel: .update() is deprecated.'); return self}
+            this.update = function(){ cmLogger.warn('cmModel: .update() is deprecated.'); return this}
             this.getEncryptionType = function(){return null}
 
 
@@ -195,7 +195,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 cmLogger.warn('conversationModel: .init() is deprecated, please use .importData().')
 
                 this.importData(conversation_data)
-                return this
+                return this;
 
                 /*
                 if(typeof conversation_data !== 'undefined'){
@@ -345,7 +345,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                                     self._updateConversation(limit, offset, clearAllMessages);
 
-                                    this.initPassCaptcha(data);
+                                    self.initPassCaptcha(data);
                                 }
                             }
                         )
