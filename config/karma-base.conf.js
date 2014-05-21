@@ -10,28 +10,28 @@ module.exports = function(config) {
         files: [
             'test/lib/jquery/*.js',
 
-            'm/base/config.js',
+            'app/base/config.js',
 
-            'm/vendor/angular/angular.js',
+            'app/vendor/angular/angular.js',
 
-            'm/vendor/angular-translate/angular-translate.js',
+            'app/vendor/angular-translate/angular-translate.js',
 
-            'm/vendor/angular-moment/moment-with-langs.js',
-            'm/vendor/angular-moment/angular-moment.js',
+            'app/vendor/angular-moment/moment-with-langs.js',
+            'app/vendor/angular-moment/angular-moment.js',
 
-            'm/vendor/!(require*)/*.js',
+            'app/vendor/!(require*)/*.js',
 
-            'm/vendor/crypto/sjcl/sjcl.min.js',
-            'm/vendor/crypto/jsencrypt/jsencrypt.min.js',
+            'app/vendor/crypto/sjcl/sjcl.min.js',
+            'app/vendor/crypto/jsencrypt/jsencrypt.min.js',
 
             // packages
-            'm/shared/core/package.js',
-            'm/shared/ui/package.js',
-            'm/comps/contacts/package.js',
-            'm/comps/user/package.js',
-            'm/comps/validate/package.js',
-            'm/comps/conversations/package.js',
-            'm/comps/files/package.js',
+            'app/shared/core/package.js',
+            'app/shared/ui/package.js',
+            'app/comps/contacts/package.js',
+            'app/comps/user/package.js',
+            'app/comps/validate/package.js',
+            'app/comps/conversations/package.js',
+            'app/comps/files/package.js',
 
             'test/lib/angular/angular-mocks.js',
 
@@ -39,21 +39,21 @@ module.exports = function(config) {
             'test/unit/**/*.spec.js',
 
             // json files
-            'm/**/*.json'
+            'app/**/*.json'
         ],
 
         // generate js files from html templates to expose them during testing.
         preprocessors: {
-            'm/**/*.json': ['html2js']
+            'app/**/*.json': ['html2js']
         },
 
         html2JsRequireJsPreprocessor: {
-            stripPrefix: 'm/'
+            stripPrefix: 'app/'
         },
 
         // list of files to exclude
         exclude: [
-            'm/**/main.js'
+            'app/**/main.js'
         ],
 
         // test results reporter to use
