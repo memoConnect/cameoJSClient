@@ -183,18 +183,6 @@ angular.module('cmConversations').directive('cmConversation', [
                     $scope.my_message_text  = '';
                     $scope.password         = '';
                     $scope.show_contacts    = false;
-
-//                    console.log($scope.conversation.getEncryptionType());
-//                    console.log('keyTransmission',$scope.conversation.keyTransmission);
-
-                    /**
-                     * open Controls if conversation not new and symmetric encrypted and without password
-                     */
-//                    if($scope.isNew() != true && $scope.password == '' && $scope.conversation.getEncryptionType() == 'symmetric'){
-//                        $timeout(function(){
-//                            $scope.toggleControls();
-//                        });
-//                    }
                 };
 
                 $scope.new_conversation = !conversation_id;
