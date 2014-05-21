@@ -11,27 +11,46 @@ angular.module('cmConversations').factory('cmMessageFactory',[
         });
 
         return {
-            create: function(data){
-                var message = null;
-
-                if(data && data.id){
-                    for(var i = 0; i < instances.length; i++){
-                        if(typeof instances[i] === 'object' &&
-                            instances[i].id == data.id){
-
-                            message = instances[i];
-                            break;
-                        }
-                    }
+            get: function(data){
+                if(!data){
+                    cmLogger.error('cmMessageFactory: unable to get Message. data: '+data)
+                    return null
                 }
 
+                var message = null,
+                    id      = data.id || data
+
+                message = this.getById(id) 
+
                 if(message === null){
-                    message = new cmMessageModel(data);
-                    instances.push(message);
+                    message = new cmMessageModel(data)
+                    instances.push(message)
                 }
 
                 return message;
             },
+
+            create: function(data){
+                return this.get(data || {})
+            },
+
+            //get Message by id
+            getById: function(id){
+                var message = null;
+
+                for(var i = 0; i < instances.length; i++){
+                    if(
+                        typeof instances[i] === 'object' &&
+                        instances[i].id == id
+                    ){
+                        message = instances[i];
+                        break;
+                    }
+                }
+
+                return message
+            },
+
             getQty: function(){
                 return instances.length;
             }

@@ -27,15 +27,24 @@ define([
 
     // cameo configuration for our providers
     app.config([
+
         'cmLanguageProvider',
         'cmLoggerProvider',
         'cmApiProvider',
+
         function (cmLanguageProvider, cmLoggerProvider, cmApiProvider){
             cmLoggerProvider
                 .debugEnabled(true)
 
             cmApiProvider
-                .restApiUrl( cameo_config.restApi );
+                .restApiUrl( cameo_config.restApi )
+                .callStackPath( cameo_config.callStackPath )
+                .useCallStack( false )//cameo_config.useCallStack)
+                .commitSize( cameo_config.commitSize )
+                .commitInterval( cameo_config.commitInterval )
+                .useEvents( cameo_config.useEvents )
+                .eventsPath( cameo_config.eventsPath )
+                .eventsInterval( 5000)//cameo_config.eventsInterval )
 
             cmLanguageProvider
                 .cacheLangFiles(cameo_config.cache_lang_files)

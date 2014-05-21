@@ -1,11 +1,13 @@
 'use strict';
 
 describe('cmAuth', function () {
-    var cmAuth, $httpBackend;
+    var cmAuth, cmApi, $httpBackend
 
     beforeEach(module('cmCore'))
-    beforeEach(inject(function (_cmAuth_, _$httpBackend_) {
-        cmAuth = _cmAuth_;
+
+    beforeEach(inject(function (_cmAuth_, _cmApi_, _$httpBackend_) {
+        cmAuth  = _cmAuth_
+        cmApi   = _cmApi_ 
         $httpBackend = _$httpBackend_
     }));
 
@@ -57,6 +59,7 @@ describe('cmAuth', function () {
             );
 
             var promise = cmAuth.createUser();
+
             promise.then(
                 function (data) {
                     expect(typeof data).toBe('object')
@@ -96,13 +99,14 @@ describe('cmAuth', function () {
                     "res": "OK"
                 });
 
-                var promise = cmAuth.requestTwoFactorKey()
-                promise.then(
-                    function (res) {
-                        expect(res).toEqual({res: "OK"})
-                    }
-                );
+                var success
+
+                cmAuth.requestTwoFactorKey()
+                .then(function (res) { success = true })
+
                 $httpBackend.flush()
+
+                expect(success).toBe(true)
             });
 
             it("confirm twoFactorKey and return twoFactorToken", function () {

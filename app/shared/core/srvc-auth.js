@@ -1,7 +1,10 @@
 'use strict';
 
-angular.module('cmCore').service('cmAuth', [
+angular.module('cmCore')
+.service('cmAuth', [
+
     'cmApi',
+    
     function(cmApi){
         return {
 
@@ -13,7 +16,7 @@ angular.module('cmCore').service('cmAuth', [
                     path: '/token',
                     headers: { 'Authorization': 'Basic '+auth } ,
                     exp_ok: 'token'
-                })
+                }, true)
             },
 
             // delete Token
@@ -79,7 +82,7 @@ angular.module('cmCore').service('cmAuth', [
             requestTwoFactorKey: function() {
                 return cmApi.get({
                     path: '/twoFactorAuth'
-                })
+                }, true)
             },
 
             // ask the api for a new authentication token:
@@ -88,7 +91,7 @@ angular.module('cmCore').service('cmAuth', [
                     path: '/twoFactorAuth/confirm',
                     data: { key: key },
                     exp_ok: "token"
-                })
+                }, true)
             },
 
             // delete Token
@@ -107,5 +110,4 @@ angular.module('cmCore').service('cmAuth', [
             }
 
         }
-    }]
-);
+    }]);

@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('cmConversations').factory('cmMessageModel',[
+
     'cmConversationsAdapter',
     'cmCrypt',
     'cmIdentityFactory',
@@ -9,6 +10,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
     'cmObject',
     'cmLogger',
     '$rootScope',
+    
     function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, cmObject, cmLogger, $rootScope){
 
         var Message = function(data){
@@ -250,7 +252,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                     this.from = cmIdentityFactory.createDummy();
                 } else {
                     this.id         = message_data.id;
-                    this.from       = (!message_data.fromIdentity) ? cmUserModel.data.identity : cmIdentityFactory.create(message_data.fromIdentity);
+                    this.from       = (!message_data.fromIdentity) ? cmUserModel.data.identity : cmIdentityFactory.get(message_data.fromIdentity);
                     this.created    = message_data.created;
 
                     this.plainData      = message_data.plain;

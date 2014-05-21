@@ -1,15 +1,14 @@
 define([
     'app',
-//    'util-base64',
     'ngload!pckUser',
     'ngload!pckConversations',
     'ngload!pckUi',
-//    'ngload!cmUtil',
-//    'ngload!cmUserModel'
+
 ], function (app) {
     'use strict';
 
     app.register.controller('ConversationsCtrl',[
+
         '$scope',
         '$rootScope',
         'cmUserModel',
@@ -17,6 +16,7 @@ define([
         'cmUtil',
         'cmModal',
         '$location',
+
         function($scope, $rootScope, cmUserModel, cmConversationsModel, cmUtil, cmModal, $location) {
             $scope.loading = true;
             cmConversationsModel.on('finish:load',function(){
@@ -36,7 +36,7 @@ define([
                 if(cmUserModel.isAuth() !== false){
                     cmConversationsModel.getConversations(cmConversationsModel.limit, cmConversationsModel.conversations.length);
                 }
-            };
+            }
 
             /**
              * Show More Button
@@ -52,7 +52,7 @@ define([
                 }
 
                 return true;
-            };
+            }
 
             if(cmUserModel.comesFromRegistration !== false){
                 cmUserModel.comesFromRegistration = false;

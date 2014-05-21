@@ -12,9 +12,16 @@ angular.module('cmUi').directive('cmAvatar',[
 
         return {
             restrict : 'AE',
+<<<<<<< HEAD
 
+            link: function($scope, $element, $attrs){
+                var identity;
+
+                function refresh(){
+=======
             link: function(scope, element, attrs){
                 function refresh(identity){
+>>>>>>> refs/heads/dev
                     // hide the complete avatar
                     if(attrs.cmView == 'hide-owner' && identity.isAppOwner){
                         element.css('display','none');
@@ -41,14 +48,17 @@ angular.module('cmUi').directive('cmAvatar',[
                         }
                     }
                 }
+                
+                $scope.$watchCollection('conversation.lastMessage', function(value){
+                   console.log(value)
+                   // console.dir(value)
+                })
 
                 // is unknown avatar for add reciepients or choose avatar
                 if(attrs.cmView == 'unknown'){
                     element.css({'background-image': 'url(' + avatarMocks.none +')'});
                 } else {
                     var identity = scope.$eval(attrs.cmData);
-
-                    console.log(identity)
 
                     if(identity && identity['getAvatar'] != undefined){
                         refresh(identity);
@@ -57,12 +67,8 @@ angular.module('cmUi').directive('cmAvatar',[
                             refresh(identity);
                         })
                     }
-
-                    element.on('click',function(){
-                        refresh(identity)
-                    })
                 }
             }
         }
     }
-])
+]);

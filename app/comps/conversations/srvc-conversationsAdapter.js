@@ -1,10 +1,14 @@
 'use strict';
 
 angular.module('cmConversations').service('cmConversationsAdapter', [
+
     'cmApi',
+    'cmObject',
     'cmUtil',
-    function (cmApi, cmUtil){
-        return {
+    'cmLogger',
+
+    function (cmApi, cmObject, cmUtil, cmLogger){
+        var adapter = {
 
             newConversation: function(subject) {
                 return	cmApi.post({
@@ -35,6 +39,9 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
             },
 
             getConversationSummary: function(id){
+                cmLogger.warn('cmConversationAdapter: .getConversationSummary is deprecated; use .getConversation(id, 1, 0) instead')
+                //return this.getConversation(id, 1, 0)
+
                 return cmApi.get({
                     path: '/conversation/' + id + '/summary'
                 })
@@ -99,5 +106,12 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                         })
             }
         }
+
+        cmObject.addEventHandlingTo(adapter)
+       
+        cmApi.on('conversation:new-message', function(event, data){ adapter.trigger('message:new', data) })
+           
+
+        return adapter
     }
 ])

@@ -6,13 +6,11 @@ angular.module('cmConversations').directive('cmConversation', [
     'cmUserModel',
     'cmRecipientModel',
     'cmCrypt',
-//    'cmCron',
     'cmLogger',
     'cmNotify',
     '$location',
     '$rootScope',
-    '$timeout',
-    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location, $rootScope, $timeout) {
+    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location, $rootScope) {
         return {
             restrict: 'AE',
             templateUrl: 'comps/conversations/drtv-conversation.html',
@@ -113,11 +111,12 @@ angular.module('cmConversations').directive('cmConversation', [
                      */
                     var passphrase_valid    = !!$scope.conversation.passphraseValid(),
                         message_empty       = !isMessageValid() ,
-                        recipients_missing  = $scope.conversation.recipients.length <= 0 //@todo mocked
+                        recipients_missing  = $scope.conversation.recipients.length < 0 //@todo mocked
                     // is everything valid?
                     if(!message_empty && passphrase_valid && !recipients_missing){
+
                         // create new conversation
-                        if($scope.conversation.id == ''){
+                        if(!$scope.conversation.id){
                             $scope.conversation.save().then(
                                 function(){
                                     sendMessage();
@@ -184,18 +183,6 @@ angular.module('cmConversations').directive('cmConversation', [
                     $scope.my_message_text  = '';
                     $scope.password         = '';
                     $scope.show_contacts    = false;
-
-//                    console.log($scope.conversation.getEncryptionType());
-//                    console.log('keyTransmission',$scope.conversation.keyTransmission);
-
-                    /**
-                     * open Controls if conversation not new and symmetric encrypted and without password
-                     */
-//                    if($scope.isNew() != true && $scope.password == '' && $scope.conversation.getEncryptionType() == 'symmetric'){
-//                        $timeout(function(){
-//                            $scope.toggleControls();
-//                        });
-//                    }
                 };
 
                 $scope.new_conversation = !conversation_id;
@@ -204,7 +191,6 @@ angular.module('cmConversations').directive('cmConversation', [
                     cmConversationsModel.getConversation(conversation_id).then(
                         function (conversation) {
                             $scope.init(conversation);
-//                            $scope.conversation.decryptPassphrase();
                             $scope.conversation.decrypt();
                         }
                     )
