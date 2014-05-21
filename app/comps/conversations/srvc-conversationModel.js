@@ -151,12 +151,25 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return this
             }
 
-
             
             /* COVERSATION REFACTORING todo:
 
             CONVERSATION REFACTORING */
 
+
+
+
+            this.getSubjectLine = function(){
+
+                var lastMessage = this.getLastMessage();
+
+                return     this.subject
+
+                        || (lastMessage && lastMessage.from ? lastMessage.from.getDisplayName() : false)
+
+                        || this.getRecipientList()
+
+            }
 
             //Mock;
     
@@ -450,7 +463,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.getLastMessage = function(){
                 cmLogger.debug('cmConversationModel: getLastMessage is deprecated.')
-                return this.lastMessage
+                if(this.messages.length > 0){
+                    return this.messages[(this.messages.length - 1)];
+                }
+                return null
             }
 
 
@@ -463,7 +479,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 cmLogger.debug('cmConversationModel: .getRecipientList() is deprecated.')
   
 
-                return "deprecated"
+                return this.recipients.map(function(recipient){ 
+                                                return recipient.displayName || 'CONTACT.ERROR.MISSING_DISPLAYNAME' 
+                                            }).join(', ')
             }
 
             this.hasRecipient = function(identity){
@@ -507,13 +525,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     this.subject = subject;
                 }
             };
-
-            this.getSubjectLine = function(){
-
-                cmLogger.debug('conversationModel: getSubjectLine is deprecated; use .subjectLine')
-
-                return ""                
-            }
 
             /**
              * Crypt Handling

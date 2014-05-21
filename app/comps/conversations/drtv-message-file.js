@@ -1,12 +1,14 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmMessageFile', [
+    
     'cmFileFactory',
     'cmLogger',
     '$timeout',
     'cmJob',
     'cmFileTypes',
     'cmModal',
+
     function (cmFileFactory, cmLogger, $timeout, cmJob, cmFileTypes, cmModal) {
         return {
             restrict: 'E',

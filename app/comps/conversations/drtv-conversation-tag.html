@@ -3,7 +3,8 @@
 
 <div class="details" cm-weight="3">
     <div class="subject" data-qa="conversation-subject">
-        {{conversation|cmTagline}}
+        {{conversation.getSubjectLine()}}
+        
     </div>
     <cm-message
         ng-if     = "conversation.lastMessage"
@@ -19,7 +20,7 @@
         <cm-safety-level cm-level="conversation.getSafetyLevel()"></cm-safety-level>
 
         <span class="last-updated small">
-            {{conversation.timeofLastUpdate | date:'HH:mm'}}
+            {{conversation.timeOfLastUpdate | date:'HH:mm'}}
         </span>
 
     </div>
