@@ -2,7 +2,7 @@ var app = angular.module("cockpit", ["ngRoute", "cmCore", "cockpitList", "cockpi
 
 app.config(["cmApiProvider",
     function (cmApiProvider) {
-        cmApiProvider.restApiUrl(cameo_config.restApi.replace("/api/v1", "/api/cockpit/v1"))
+        cmApiProvider.restApiUrl(cameo_config.restApi.replace("/a/v1", "/a/cockpit/v1"))
     }
 ])
 

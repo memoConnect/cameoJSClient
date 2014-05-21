@@ -1,6 +1,6 @@
 {
     "config": {
-        "apiUrl": "https://dev.cameo.io/api/v1",
+        "apiUrl": "https://dev.cameo.io/a/v1",
         "autoLogin": true
     },
     "phonegap": {

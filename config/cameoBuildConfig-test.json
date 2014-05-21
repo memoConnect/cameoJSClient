@@ -1,6 +1,6 @@
 {
     "config": {
-        "apiUrl": "http://localhost:9000/api/v1",
+        "apiUrl": "http://localhost:9000/a/v1",
         "autoLogin": false
     },
     "phonegap": {

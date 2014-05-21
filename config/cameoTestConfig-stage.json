@@ -1,6 +1,6 @@
 {
     "config": {
-        "wwwUrl": "https://stage.cameo.io/app/"
+        "wwwUrl": "https://stage.cameo.io/m/"
     },
     "testData": [
         "loginUser1 = 'tender_morse'",
