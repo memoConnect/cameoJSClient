@@ -150,7 +150,6 @@ angular.module('cmConversations').service('cmConversationsModel', [
                 self.trigger('finish:load');
             })
         }
-
         this._init()
     }
 ])

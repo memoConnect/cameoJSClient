@@ -205,7 +205,6 @@ angular.module('cmConversations').directive('cmConversation', [
                     cmConversationsModel.getConversation(conversation_id).then(
                         function (conversation) {
                             $scope.init(conversation);
-//                            $scope.conversation.decryptPassphrase();
                             $scope.conversation.decrypt();
                         }
                     )
