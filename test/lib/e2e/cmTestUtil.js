@@ -83,7 +83,7 @@ this.waitForPageLoad = function (expectedRoute) {
             }
         })
 
-    }, config.routeTimeout, 'waitForPage ' + expectedRoute + ' timeout reached')
+    }, config.routeTimeout, 'waitForPage ' + (expectedRoute || 'any page') + ' timeout reached')
     return this
 }
 
