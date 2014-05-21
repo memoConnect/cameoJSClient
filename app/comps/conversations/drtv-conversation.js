@@ -203,6 +203,7 @@ angular.module('cmConversations').directive('cmConversation', [
                 } else {
                     cmConversationsModel.createNewConversation().then(
                         function(newConversation){
+                            newConversation.addRecipient(cmUserModel.data.identity);
                             $scope.init(newConversation);
                             $scope.conversation.setPassphrase();
                         }
