@@ -92,6 +92,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.id                      = data.id           || this.id
                 this.timeOfCreation          = data.created      || this.timeOfCreation
                 this.timeOfLastUpdate        = data.lastUpdated  || this.timeOfLastUpdate
+                this.subject                 = data.subject      || this.subject
 
                 this.encryptedPassphraseList = this.encryptedPassphraseList.concat(data.encryptedPassphraseList || [])
 
@@ -102,7 +103,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 var recipients = data.recipients || []
                 recipients.forEach(
-                    function(recipient_data){ self.addRecipient(cmRecipientModel(cmIdentityFactory.get(recipient_data))) }
+                    function(recipient_data){ self.addRecipient(cmRecipientModel(cmIdentityFactory.get(recipient_data.identity))) }
                 )
             }
 
@@ -111,7 +112,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @param {MessageModel} message.
              */  
             this.addMessage = function(message){
-                console.log('ding')
                 if(this.messages.indexOf(message) == -1){
                     this.messages.push( message )
                     this.lastMessage = message
