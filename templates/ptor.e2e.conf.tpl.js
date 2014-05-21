@@ -5,7 +5,7 @@ exports.config = {
     chromeDriver: '<%= chromeDriverPath %>',
     allScriptsTimeout: 30000,
     specs: [
-        '../test/e2e/**/*.spec.js'
+        '../test/e2e/**/route-login.spec.js'
     ],
 
     <%= capabilities %>,
