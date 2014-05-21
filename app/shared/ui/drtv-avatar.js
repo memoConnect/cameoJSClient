@@ -41,11 +41,6 @@ angular.module('cmUi').directive('cmAvatar',[
                         }
                     }
                 }
-                
-                scope.$watchCollection('conversation.lastMessage', function(value){
-                   console.log(value)
-                   // console.dir(value)
-                })
 
                 // is unknown avatar for add reciepients or choose avatar
                 if(attrs.cmView == 'unknown'){

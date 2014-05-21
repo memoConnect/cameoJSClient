@@ -12,7 +12,6 @@ angular.module('cmConversations').factory('cmMessageFactory',[
 
         return {
             get: function(data){
-
                 if(!data){
                     cmLogger.error('cmMessageFactory: unable to get Message. data: '+data)
                     return null
