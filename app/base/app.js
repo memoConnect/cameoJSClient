@@ -140,8 +140,8 @@ define([
 
     // app run handling
     app.run([
-        '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmLanguage', 'cmLogger','cfpLoadingBar',
-        function ($rootScope, $location, $window, $route, cmUserModel, cmLanguage, cmLogger, cfpLoadingBar) {
+        '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmLanguage', 'cmLogger','cfpLoadingBar','cmEnv',
+        function ($rootScope, $location, $window, $route, cmUserModel, cmLanguage, cmLogger, cfpLoadingBar, cmEnv) {
 
             //prep $rootScope with useful tools
             $rootScope.console = console
@@ -250,11 +250,15 @@ define([
              * Loading Bar on RouteChange
              */
             $rootScope.$on('$routeChangeStart', function(){
-                cfpLoadingBar.start();
+                if(cmEnv.loadingBar !== false){
+                    cfpLoadingBar.start();
+                }
             });
 
             $rootScope.$on('$routeChangeSuccess', function(){
-                cfpLoadingBar.complete();
+                if(cmEnv.loadingBar !== false){
+                    cfpLoadingBar.complete();
+                }
             })
         }
     ]);
