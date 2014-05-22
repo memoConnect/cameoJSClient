@@ -1,5 +1,6 @@
 'use strict';
 
 angular.module('cmUi', [
-    'cmCore'
+    'cmCore',
+    'ngSanitize'
 ])
