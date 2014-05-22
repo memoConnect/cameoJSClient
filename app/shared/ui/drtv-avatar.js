@@ -48,8 +48,6 @@ angular.module('cmUi').directive('cmAvatar',[
                 } else {
                     var identity = scope.$eval(attrs.cmData);
 
-                    console.log(identity)
-
                     if(identity && identity['getAvatar'] != undefined){
                         refresh(identity);
 
