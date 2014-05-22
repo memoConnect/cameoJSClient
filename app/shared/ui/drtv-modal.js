@@ -40,7 +40,8 @@ angular.module('cmUi').directive('cmModal', [
             templateUrl: function(tElement, tAttrs){
                 var type = tAttrs.type || 'plain',
                     templateUrl = {
-                        'plain': 'shared/ui/drtv-modal-plain.html'
+                        'plain': 'shared/ui/drtv-modal-plain.html',
+                        'fullscreen': 'shared/ui/drtv-modal-fullscreen.html'
                     };
 
                 return templateUrl[type];
@@ -87,21 +88,29 @@ angular.module('cmUi').directive('cmModal', [
                             $rootScope.isModalVisible = false;
                         })
                     }
+
+                    return this
                 };
 
                 // open modal
                 scope.open = function(){
                     this.toggle(true);
+
+                    return this
                 };
                 // close modal
                 scope.close = function(){
                     this.toggle(false);
+
+                    return this
                 };
 
                 // close modal when clicked on backdrop
-                angular.element(element.children()[1]).on('click', function(){
-                    scope.close()
-                });
+                if(!attrs.cmCloseOnBackdrop) {
+                    angular.element(element.children()[1]).on('click', function () {
+                        scope.close()
+                    });
+                }
 
                 element
                 .addClass(attrs.severity)

@@ -1,8 +1,21 @@
+<style type="text/css">
+    li.list-group-item{
+        color:#000;
+    }
+    li.private-key{
+        background:#428BCA;
+        color:#fff;
+    }
+</style>
+
 <div>
     <button class="btn btn-default" ng-click="showOwnKeys()" ng-class="{'btn-primary': active == 'showOwnKeys'}">all</button>&nbsp;
     <button class="btn btn-default" ng-click="showCreateKey()" ng-class="{'btn-primary': active == 'createNewKey'}">create</button>&nbsp;
-    <button class="btn btn-default" ng-click="showImportKeys()" ng-class="{'btn-primary': active == 'finishCreateKey'}">import</button>&nbsp;
+    <button class="btn btn-default" ng-click="showImportKeys()" ng-class="{'btn-primary': active == 'finishCreateKey'}">import</button>
+    <!--
+    &nbsp;
     <button class="btn btn-default" ng-click="syncKeys()">sync</button>
+    -->
 </div>
 
 <br/>
@@ -10,8 +23,8 @@
 <div ng-if="active == 'showOwnKeys'" ng-init="showOwnKeys()">
     Liste eigener PubKeys, zum verwalten
     <ul class="list-group">
-        <li class="list-group-item" ng-repeat="key in ownKeys"style="color:#000">
-            {{key.name}} - {{key.size}} - {{key.id}} <span ng-if="key.privKey">- local</span>
+        <li class="list-group-item" ng-repeat="key in ownKeys" ng-class="{'private-key':key.privKey}">
+            {{key.name}} - {{key.size}}<!-- - {{key.id}}--><span ng-if="key.privKey"> - local</span>
         </li>
     </ul>
 </div>

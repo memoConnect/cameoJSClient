@@ -141,7 +141,8 @@
             "NO_SUBJECT": "add subject",
             "ADD_RECIPIENTS": "add recipients",
             "INFO": "info",
-            "PASSWORD": "password"
+            "PASSWORD": "password",
+            "PASSCAPTCHA": "passcaptcha"
         },
         "CONTROL": {
             "SAVE": "save",
@@ -318,5 +319,10 @@
         "KEYS":{
             "STORE_NEW": "Key saved!"
         }
+    },
+
+    "JOB": {
+        "IN_PROGRESS": "You have editet this site without saving. Do you would leave this page?",
+        "FILES_IN_UPLOAD_PROGRESS": "Files are in upload progress. Do you would leave this page?"
     }
 }

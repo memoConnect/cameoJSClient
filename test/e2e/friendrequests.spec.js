@@ -25,6 +25,9 @@ describe('Friendrequests', function () {
 
         util.waitForPageLoad('/talks')
         util.expectCurrentUrl('/talks')
+
+        // close modal
+        $("body").sendKeys(protractor.Key.ESCAPE);
         util.logout()
     })
 
@@ -117,9 +120,12 @@ describe('Friendrequests', function () {
                     // close notify
                     util.waitAndCloseNotify()
                     // list shouldn't have this request anymore
-                    $$('cm-contact-tag').then(function(elements) {
-                        expect(elements.length).not.toEqual(requestLen)
-                    })
+
+                    ptor.wait(function () {
+                        return $$('cm-contact-tag').then(function(elements) {
+                            return elements.length != requestLen
+                        })
+                    }, 5000, 'waiting for friendrequest to disappear.')
                 })
             })
 

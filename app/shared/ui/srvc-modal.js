@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('cmUi').service('cmModal',[
 
     '$rootScope',
@@ -35,14 +37,11 @@ angular.module('cmUi').service('cmModal',[
         self.open = function(id, data){
             if(self.instances[id]){
                 self.instances[id]
-                .setData(data)
-                .open() 
+                    .setData(data)
+                    .open()
             } else {
-                self.on('register', function(registered_id){
-                    if(registered_id == id) 
-                        self.instances[id]
-                        .setData(data)
-                        .open() 
+                self.one('register', function(event, registered_id){
+                    return !!(registered_id == id ? self.open(id, data) : false)                              
                 })
             }
             return self
@@ -60,10 +59,9 @@ angular.module('cmUi').service('cmModal',[
             return self
         }
 
-        self.create = function(config, template, target){
+        self.create = function(config, template, target, scope){
             // clear existing instance
             if(self.instances[config.id] != undefined){
-                console.log('intance exists')
                 delete self.instances[config.id];
             }
 
@@ -74,21 +72,19 @@ angular.module('cmUi').service('cmModal',[
 
             // create new element
             var attrs = '',
-                scope = $rootScope.$new()
+                scope = scope || $rootScope.$new()
 
             //Todo: könnte man schöner machen:
-            angular.forEach(config, function(value, key){
-                attrs += key+'="'+value+'"'
-            });
+            angular.forEach(config, function(value, key){ attrs += key+'="'+value+'"' });
 
             var modal = $compile('<cm-modal '+attrs+' >'+(template||'')+'</cm-modal>')(scope)
             // move modal up the dom hierarchy, if necessary:
             angular.element(target || document.getElementById('cm-app') || 'body').append(modal)
 
+            // the modal directive (<cm-modal>) will register itself on next digest
+
             return modal
         }
-
-
 
         $rootScope.openModal    = self.open
         $rootScope.closeModal   = self.close
@@ -111,4 +107,4 @@ angular.module('cmUi').service('cmModal',[
 
         return self
     }
-])
+]);

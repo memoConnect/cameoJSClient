@@ -18,6 +18,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-protractor-runner');
+    grunt.loadNpmTasks('grunt-shell');
 
     // cameo secrets
     var globalCameoSecrets = (function () {
@@ -188,12 +189,27 @@ module.exports = function (grunt) {
             packagesObject = packagesObject||{};
 
         Object.keys(packagesObject).forEach(function(packageName){
-            var packagePath = packagesObject[packageName];
+            var settings,
+                moduleName = packageName;
+                exclude = '!(module-'+moduleName+'|package)',
+                include = '*',
+                packagePath = packagesObject[packageName],
+                file = 'package.js';
 
-            packages[packagePath+'/package.js'] = [
+            if(typeof packagePath == "object"){
+                settings = packagePath;
+                // override
+                moduleName = settings.moduleName||moduleName;
+                include = settings.include||include;
+                exclude = settings.exclude||exclude;
+                packagePath = settings.packagePath||packagePath;
+                file = settings.file||file;
+            }
+
+            packages[packagePath+'/'+file] = [
                 packagePath+'/*.html', // at last all templates
-                packagePath+'/module-'+packageName+'.js', // at first module
-                packagePath+'/!(module-'+packageName+'|package)*.js' // all directives / services / factorys etc
+                packagePath+'/module-'+moduleName+'.js', // at first module
+                packagePath+'/'+exclude+include+'.js' // all directives / services / factorys etc
             ];
         });
 
@@ -226,6 +242,14 @@ module.exports = function (grunt) {
                     process: concatConvertCmFiles
                 },
                 files: concatCreateCmPackages({
+                    'core': 'app/shared/core',
+                    'core-cockpit': {
+                        packagePath:'app/shared/core',
+                        moduleName:'core-cockpit',
+//                        include:'*(*api|*auth|*crypt|*logger)',
+                        exclude:'!(module|package|*identity|*language|*notify|*cron|*job|*localstorage|*object|*usermodel|*util)',
+                        file:'package-cockpit.js'
+                    },
                     'conversations': 'app/comps/conversations',
                     'contacts': 'app/comps/contacts',
                     'user': 'app/comps/user',
@@ -429,11 +453,9 @@ module.exports = function (grunt) {
                 config: 'resource/phonegap/config.xml',
                 path: 'phonegap-build',
                 plugins: [
-//                    './resource/phonegap/plugins/org.apache.cordova.console',
-//                    './resource/phonegap/plugins/org.apache.cordova.device',
-//                    './resource/phonegap/plugins/org.apache.cordova.network-information',
-                    './resource/phonegap/plugins/org.apache.cordova.splashscreen'
-//                    './resource/phonegap/plugins/org.apache.cordova.contacts'
+                    './resource/phonegap/plugins/org.apache.cordova.device',
+                    './resource/phonegap/plugins/org.apache.cordova.splashscreen',
+                    './resource/phonegap/plugins/com.cesidiodibenedetto.filechooser'
                 ],
                 platforms: ['android'],
                 maxBuffer: 200, // You may need to raise this for iOS.
@@ -592,7 +614,18 @@ module.exports = function (grunt) {
                 'options': {
                     'data': {
                         'chromeDriverPath': globalCameoTestConfig.config.chromeDriverPath,
-                        'browserName': 'chrome'
+                        'capabilities' : "capabilities:{'browserName':'chrome'}"
+                    }
+                },
+                'files': {
+                    'config/ptor.e2e.conf.js': ['templates/ptor.e2e.conf.tpl.js']
+                }
+            },
+            'config-protractor-multi': {
+                'options': {
+                    'data': {
+                        'chromeDriverPath': globalCameoTestConfig.config.chromeDriverPath,
+                        'capabilities' : "multiCapabilities:[{'browserName': 'chrome'}, {'browserName': 'firefox'}]"
                     }
                 },
                 'files': {
@@ -643,7 +676,11 @@ module.exports = function (grunt) {
 
         // watch
         watch: {
-            files: ['app/less/*.less', 'templates/*.tpl.*', 'app/comps/**/!(package)*', 'app/shared/ui/!(package)*'],
+            files: [
+                'app/less/*.less',
+                'templates/*.tpl.*',
+                'app/comps/**/!(package)*',
+                'app/shared/**/!(package)*'],
             tasks: ['genAllTemplates','packages']
         },
         less: {
@@ -663,6 +700,11 @@ module.exports = function (grunt) {
                     done();
                 }
             }
+        },
+        shell: {
+            'node-webserver': {
+                command: 'node ./scripts/web-server.js'
+            }
         }
     });
 
@@ -681,15 +723,21 @@ module.exports = function (grunt) {
         'tests-unit',
         'tests-e2e'
     ]);
+    grunt.registerTask('tests-multi', [
+        // we only need to generate templates for tests
+        'template:config-tests',
+        'template:config-protractor-multi',
+        'protractor:default'
+    ])
+
     // shortcuts
     grunt.registerTask('tests-2e2', ['tests-e2e']);
-
     // phonegap to device
     grunt.registerTask('phonegap-local', [
         'template:local-config-phonegap',
         'phonegap:build',
-        'template:local-index-phonegap',
-        'copy:local-resources-phonegap'
+        'copy:local-resources-phonegap',
+        'template:local-index-phonegap'
         //'phonegap:run'
     ]);
     // phonegap to build server
@@ -741,4 +789,6 @@ module.exports = function (grunt) {
         'uglify:dev-deploy',
         'copy:cockpit',
         'uglify:cockpit']);
+
+    grunt.registerTask('node webserver', ['shell:node-webserver']);
 };

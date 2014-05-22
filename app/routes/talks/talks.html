@@ -33,28 +33,6 @@
         <li ng-repeat="conversation in conversations | filter:search" ng-click="goToConversation(conversation.id)" data-qa="conversation-list-element">
             <cm-conversation-tag cm-data="conversation" cm-rubber-space>
             </cm-conversation-tag>
-            <!--
-            <a href="#/conversation/{{conversation.id}}" class="clearfix">
-                <div class="cm-avatar">
-                    <i class="fa cm-person"></i>
-                </div>
-                <div class="cm-message-info">
-                    <div>{{conversation.lastUpdated}}</div>
-                    <div class="cm-recipients" ng-if="conversation.recipients.length>1">
-                        <span class="cm-recipient-qty">{{conversation.recipients.length}}</span>
-                        <i class="fa cm-group"></i>
-                    </div>
-                    <div class="cm-messages-qty" ng-class="{'cm-unreaded':conversation.count>0}">
-                        ({{conversation.count}})
-                    </div>
-                </div>
-                <div class="cm-message-body">
-                    <div>Subject: {{conversation.subject}}</div>
-                    <div cm-message-small cm-data="conversation.newestMessage()" ng-if="conversation.newestMessage()"></div>
-                </div>
-            </a>
-            -->
-
         </li>
     </ul>
 

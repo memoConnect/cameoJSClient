@@ -18,15 +18,11 @@ angular.module('cmUser').directive('cmLogin', [
                 $scope.alertState = '';
                 $scope.passwordType = 'password';
                 $scope.loginData = {
-                    'Dumpuser': {
-                        user: 'r1Zhpq8e',
-                        pass: 'password'
-                    },
                     'DumpuserLocal': {
                         user: '2VqTftqh',
                         pass: 'password'
                     },
-                    'TestUser': {
+                    'TrustingBrown': {
                         user: 'trusting_brown',
                         pass: 'password'
                     }
@@ -67,18 +63,15 @@ angular.module('cmUser').directive('cmLogin', [
                         function(){
                             isIdle = false;
                             $scope.stopSpinner();
-
-                            $rootScope.$broadcast('cmLogin:success');
-
                             if(!$location.$$path.match(/\/purl\/.*/)){
                                 $location.path("/talks");
                             }
+                            $rootScope.$broadcast('cmLogin:success');
                         },
                         function(error){
                             isIdle = false;
                             $rootScope.$broadcast('cmLogin:error');
                             $scope.stopSpinner();
-
                             $scope.alertState = error.status;
                         }
                     );

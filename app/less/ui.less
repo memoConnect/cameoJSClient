@@ -1,12 +1,29 @@
-button, a, cm-reload, cm-notify-signal, cm-back {
+button, a,
+cm-reload,
+cm-notify-signal,
+cm-back,
+cm-conversation-controls cm-key,
+div.answer
+{
   .fa:hover, .fa:focus {
-    color: @cm-ci-color
+    color: @cm-ci-color!important;
   }
 }
 
-.level-safer{background-color:@cm-green}
-.level-safe{background-color:@cm-yellow}
-.level-unsafe{background-color:@cm-red}
+.safetylevel {
+  &-safer{
+    &-btn{background-color:@cm-green}
+    &-wrap{color:@cm-green}
+  }
+  &-safe{
+    &-btn{background-color:@cm-yellow}
+    &-wrap{color:@cm-yellow}
+  }
+  &-unsafe{
+    &-btn{background-color:@cm-red}
+    &-wrap{color:@cm-red}
+  }
+}
 
 button.full {
     display:block !important;
@@ -60,7 +77,7 @@ cm-edge, [cm-edge] {
     right:0;
     top:0;
     i:hover{
-      color:@cm-white;
+      color:@cm-white!important;
     }
   }
 }
@@ -90,11 +107,11 @@ cm-date-seperator {
   display:block;
   div.date-seperator {
     position: relative;
+    font-size: @cm-small-font;
     .date{
       color: #fff;
       background-color: @cm-overlay-dark;
       text-align: center;
-      font-size: 0.7em;
       -webkit-border-radius: @cm-border-radius;
       -moz-border-radius: @cm-border-radius;
       border-radius: @cm-border-radius;
@@ -125,6 +142,26 @@ cm-spinner {
   left:50%;
   width:1px;
   height:1px;
+}
+
+cm-progressbar{
+  display:block;
+  width:100%;
+  min-height:@cm-unit;
+  .percent{
+    font-size:@cm-mega-font;
+    text-align: center;
+    color: @cm-ci-color;
+    line-height: @cm-unit;
+    span{
+      display:inline-block;
+      font-size:@cm-base-font;
+    }
+  }
+  .progressbar{
+    height:0.1em;
+    background:@cm-ci-color;
+  }
 }
 
 cm-multi-input{

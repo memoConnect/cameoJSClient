@@ -1,26 +1,28 @@
-<cm-conversation-controls cm-data="conversation"></cm-conversation-controls>
+<cm-conversation-controls></cm-conversation-controls>
 
-<div id="scrollerTop"></div>
+<div id="conversation-top"></div>
 
-<div ng-repeat="message in conversation.messages" cm-scroll-to="#scrollerBottom">
+<div ng-repeat="message in conversation.messages" cm-scroll-to="#conversation-bottom" cm-last-message>
     <cm-date-seperator ng-if="(compareDate(message.created,conversation.messages[$index - 1].created))">{{message.created | date:'dd.MM.yyyy'}}</cm-date-seperator>
-    <cm-message
-        cm-data = "message"
-        class   = "{{ message.isOwn() ? 'right' : ''}}"
-    >
-    </cm-message>
+    <cm-message cm-data="message"></cm-message>
 </div>
 
-<div id="scrollerBottom"></div>
+<div id="conversation-bottom"></div>
 
-<div class="answer clearfix">
-    <i class="fa cm-plus attachments with-cursor" cm-user-rights data-qa="attachments-btn"></i>
+<div class="answer clearfix" id="files-droparea">
+    <cm-files ng-model="files" cm-user-rights data-qa="attachments-btn">
+        <i class="fa cm-plus"></i>
+        <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
+        <cm-files-preview></cm-files-preview>
+    </cm-files>
+
     <div class="message" cm-answer-area data-qa="answer-ctn">
         <textarea data-qa="input-answer" cm-resize-textarea cm-max-rows="4" ng-model="my_message_text"></textarea>
         <i class="fa cm-smile-negative with-cursor"></i>
         <div class="inputter"></div>
     </div>
-    <i class="fa cm-post arrow with-cursor" data-qa="btn-send-answer" ng-click="sendMessage()"></i>
+
+    <i class="fa cm-post with-cursor {{conversation.getSafetyLevelClass('-wrap')}}" ng-class="{'is-disabled':isSending}" data-qa="btn-send-answer" ng-click="send()"></i>
 </div>
 
 <!--
@@ -112,8 +114,6 @@
 
 	<br/>
 
-
-
 	<div class="cm-messages">		
 		<h4>{{'CONVERSATION.TAG.MESSAGES' |cmTranslate}}:</h4>
 		<cm-message 
@@ -121,8 +121,6 @@
 			cm-data 		= "message" 
 		></cm-message>
 	</div>
-
-
 
 	<button 
 		ng-disabled = "mode && mode =='asset'"
@@ -158,11 +156,5 @@
 			<button ng-click="upload()"><i class="fa fa-upload"></i></button>			
 		</cm-upload>
 	</div>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
 </section>
-
 -->

@@ -1,10 +1,14 @@
 'use strict';
 
 angular.module('cmConversations').service('cmConversationsAdapter', [
+
     'cmApi',
+    'cmObject',
     'cmUtil',
-    function (cmApi, cmUtil){
-        return {
+    'cmLogger',
+
+    function (cmApi, cmObject, cmUtil, cmLogger){
+        var adapter = {
 
             newConversation: function(subject) {
                 return	cmApi.post({
@@ -15,7 +19,7 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                 })
             },
 
-            updateConversation: function(conversation){
+            _updateConversation: function(conversation){
                 return cmApi.put({
                     path: '/conversation/' + conversation.id,
                     data: conversation
@@ -35,6 +39,9 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
             },
 
             getConversationSummary: function(id){
+                cmLogger.warn('cmConversationAdapter: .getConversationSummary is deprecated; use .getConversation(id, 1, 0) instead')
+                //return this.getConversation(id, 1, 0)
+
                 return cmApi.get({
                     path: '/conversation/' + id + '/summary'
                 })
@@ -70,6 +77,15 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                         })
             },
 
+            updateCaptcha: function(id, idFile){
+                return  cmApi.put({
+                            path:    '/conversation/%1'.replace(/%1/, id),
+                            data:   {
+                                        passCaptcha: idFile
+                                    }
+                        })
+            },
+
             sendMessage: function(id, message){
                 return	cmApi.post({
                             path:	"/conversation/%1/message".replace(/%1/, id),
@@ -90,5 +106,12 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                         })
             }
         }
+
+        cmObject.addEventHandlingTo(adapter)
+       
+        cmApi.on('conversation:new-message', function(event, data){ adapter.trigger('message:new', data) })
+           
+
+        return adapter
     }
 ])

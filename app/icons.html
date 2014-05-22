@@ -6,90 +6,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cameoAwesome</title>
 
+    <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/font-awesome.css">
+    <script src="vendor/angular/angular.js"></script>
     <style>
-        body{font-size:5em}
-        i{padding:2px;border:1px solid #000;position:relative;margin-bottom:20px}
-        i:hover:after{content:attr(class);font-size:15px;position:absolute;left:0;bottom:-20px;padding:0 2px;white-space:nowrap}
+        body{font-size:5em;font-family:verdana;width:auto;padding:10px}
+        h1{font-size:24px;color:#02BED2}
+        h3{font-size:20px;margin:2px 0;border-bottom:solid 1px #02BED2;color:#02BED2}
+        figure{margin:5px;position:relative;display:inline-block;text-align:center}
+        figure i{border:solid 1px #02BED2}
+        figure figcaption{font-size:15px;padding:2px 0}
     </style>
 </head>
-<body>
-<i class="fa cm-logo"></i><br>
-<i class="fa cm-logo-c"></i>
-<i class="fa cm-logo-a"></i>
-<i class="fa cm-logo-m"></i>
-<i class="fa cm-logo-e"></i>
-<i class="fa cm-logo-o"></i>
-<i class="fa cm-logo-net"></i><br>
-<i class="fa cm-rhino-bubble-glyph"></i>
-<i class="fa cm-rhino-positive"></i>
-<i class="fa cm-client-add "></i>
-<i class="fa cm-edge"></i>
-<i class="fa cm-edge-add"></i>
-<i class="fa cm-address-book-positive"></i>
-<i class="fa cm-address-book"></i>
-<i class="fa cm-load-to-rhino"></i>
-<i class="fa cm-load-to"></i>
-<i class="fa cm-left"></i>
-<i class="fa cm-right"></i>
-<i class="fa cm-down"></i>
-<i class="fa cm-up"></i>
-<i class="fa cm-change"></i>
-<i class="fa cm-envelope-closed"></i>
-<i class="fa cm-envelope-open"></i>
-<i class="fa cm-send"></i>
-<i class="fa cm-checkbox-bg"></i>
-<i class="fa cm-checkbox"></i>
-<i class="fa cm-checker"></i>
-<i class="fa cm-checkbox-right"></i>
-<i class="fa cm-checkbox-wrong"></i>
-<i class="fa cm-checkbox-add"></i>
-<i class="fa cm-lock"></i>
-<i class="fa cm-unlock"></i>
-<i class="fa cm-fix"></i>
-<i class="fa cm-group"></i>
-<i class="fa cm-person"></i>
-<i class="fa cm-mobile"></i>
-<i class="fa cm-in"></i>
-<i class="fa cm-out"></i>
-<i class="fa cm-info"></i>
-<i class="fa cm-key"></i>
-<i class="fa cm-logout"></i>
-<i class="fa cm-menu"></i>
-<i class="fa cm-post"></i>
-<i class="fa cm-post-attention"></i>
-<i class="fa cm-search"></i>
-<i class="fa cm-settings"></i>
-<i class="fa cm-smile-negative"></i>
-<i class="fa cm-smile-positive"></i>
-<i class="fa cm-write"></i>
-<i class="fa cm-bell"></i>
-<i class="fa cm-bell-ring"></i>
-<i class="fa cm-camera"></i>
-<i class="fa cm-pictures"></i>
-<i class="fa cm-location"></i>
-<i class="fa cm-nose-left"></i>
-<i class="fa cm-nose-right"></i>
-<i class="fa cm-nose-up"></i>
-<i class="fa cm-nose-down"></i>
-<i class="fa cm-scroll-pane"></i>
-<i class="fa cm-contacts"></i>
-<i class="fa cm-arrange"></i>
-<i class="fa cm-filter"></i>
-<i class="fa cm-anchor"></i>
-<i class="fa cm-attention"></i>
-<i class="fa cm-video"></i>
-<i class="fa cm-file"></i>
-<i class="fa cm-grid"></i>
-<i class="fa cm-grip"></i>
-<i class="fa cm-plus"></i>
-<i class="fa cm-sound"></i>
-<i class="fa cm-close"></i>
-<i class="fa cm-visible"></i>
-<i class="fa cm-hidden"></i>
-<i class="fa cm-clipboard"></i>
-<i class="fa cm-search-cl"></i>
-<i class="fa cm-reject"></i>
-<i class="fa cm-ignore"></i>
+<body ng-app ng-controller="iconsCtrl">
+
+    <h1>cameoawesome</h1>
+
+    <div ng-repeat="bundle in icons">
+        <h3 ng-if="bundle.title">{{bundle.title}}</h3>
+        <figure ng-repeat="css in bundle.css.split(' ')">
+            <i class="fa {{css}}"></i>
+            <figcaption>{{css}}</figcaption>
+        </figure>
+    </div>
+
+    <h1>filetypes</h1>
+
+    <div ng-repeat="bundle in types">
+        <h3 ng-if="bundle.title">{{bundle.title}}</h3>
+        <figure ng-repeat="css in bundle.css.split(' ')">
+            <div class="file {{css}}"></div>
+            <figcaption>{{css}}</figcaption>
+        </figure>
+    </div>
+
+    <script>
+        function iconsCtrl($scope){
+            $scope.icons = [
+                {title:'ci icons',css:'cm-logo cm-logo-c cm-logo-a cm-logo-m cm-logo-e cm-logo-o cm-logo-net cm-rhino-bubble-glyph cm-rhino-positive'},
+                {title:'specials',css:'cm-edge cm-edge-add cm-search cm-menu cm-scroll-pane cm-grip'},
+                {title:'contact handler',css:'cm-client-add cm-address-book-positive cm-address-book cm-load-to-rhino cm-load-to'},
+                {title:'checkbox',css:'cm-checkbox-bg cm-checkbox cm-checker cm-checkbox-right cm-checkbox-wrong cm-checkbox-add'},
+                {title:'directions',css:'cm-nose-left cm-nose-right cm-nose-up cm-nose-down cm-left cm-right cm-down cm-up'},
+                {title:'notifications',css:'cm-info cm-attention cm-reject cm-ignore cm-bell cm-bell-ring'},
+                {title:'message states',css:'cm-envelope-closed cm-envelope-open cm-send cm-lock cm-unlock'},
+                {title:'handler',css:'cm-write cm-contacts cm-key cm-visible cm-hidden cm-group cm-person cm-arrange cm-filter cm-anchor cm-clipboard cm-search-cl cm-change cm-grid cm-close cm-fix cm-settings cm-in cm-out cm-logout'},
+                {title:'answer',css:'cm-plus cm-smile-negative cm-smile-positive cm-post cm-post-attention'},
+                {title:'media',css:'cm-video cm-file cm-sound cm-location cm-pictures cm-camera cm-mobile'}
+            ];
+
+            $scope.types = [
+                {title:'default',css:'unknown test-if-none-exists-selector-get-question-mark moep'},
+                {title:'dirs',css:'dir dir-download dir-safe dir-public zip rar sit'},
+                {title:'docs',css:'pdf txt xlsx doc php css ppt pps'},
+                {title:'images',css:'jpg gif bmp tif eps png'},
+                {title:'videos',css:'mov mpg mp4 flv avi'},
+                {title:'audio',css:'mp3 wav wma aif ogg 3ggp'},
+                {title:'misc',css:'xml html chm ttf exe dmg'}
+            ];
+        }
+
+    </script>
 </body>
 </html>

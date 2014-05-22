@@ -1,6 +1,6 @@
 'use strict';
 // E-mail, Phone etc. verification
-var cmProfile = angular.module('cmProfile', ['cmApi', 'cmAuth']); //cmAuth should not be needed here
+var cmProfile = angular.module('cmProfile', ['cmCore']); //cmAuth should not be needed here
 
 cmProfile.controller('ProfileCtrl', [
     '$scope',

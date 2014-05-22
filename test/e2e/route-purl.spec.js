@@ -25,7 +25,7 @@ describe('Route: Purl - ', function () {
         })
 
         it('should have attachment button "'+moep+'"', function(){
-            expect($('i[data-qa="attachments-btn"]').isPresent()).toBe(true)
+            expect($('[data-qa="attachments-btn"]').isPresent()).toBe(true)
         })
 
         it('should have normal answer container "'+moep+'"', function(){
@@ -52,7 +52,7 @@ describe('Route: Purl - ', function () {
         })
 
         it('should not have attachment button "'+moep+'"', function(){
-            expect($('i[data-qa="attachments-btn"]').isPresent()).toBe(false)
+            expect($('[data-qa="attachments-btn"]').isPresent()).toBe(false)
         })
 
         it('should have large answer container "'+moep+'"', function(){
@@ -60,12 +60,11 @@ describe('Route: Purl - ', function () {
         })
     }
 
-
     /**
      * Test 1
      * Intern User is logged in and Purl is for that User
      */
-    describe("Test 1 - User1 open Purl and is logged in", function(){
+    describe("Test 1 - User1 opens Purl and is logged in", function(){
         it('should open "#/purl/+' + config.purlUser1 +'" after login.', function(){
             util.login()
             util.get('/purl/' + config.purlUser1)
@@ -87,7 +86,7 @@ describe('Route: Purl - ', function () {
      * Test 2
      * Intern User is logged out and Purl is for that User
      */
-    describe('Test 2 - User1 open Purl and is logged out "#/purl/' + config.purlUser1 +'"', function(){
+    describe('Test 2 - User1 opens Purl and is logged out "#/purl/' + config.purlUser1 +'"', function(){
         it('should open after logout before login.', function(){
             util.logout();
             util.get('/purl/' + config.purlUser1)
@@ -95,7 +94,7 @@ describe('Route: Purl - ', function () {
         })
 
         it('login modal should be visible', function(){
-            //util.waitForElement("[data-qa='modal-login']");
+            util.waitForElement("[data-qa='modal-login']");
             expect($("[data-qa='modal-login']").isPresent()).toBe(true)
         })
 
@@ -131,7 +130,7 @@ describe('Route: Purl - ', function () {
      * Test 3
      * Extern User open Purl when Browser is "empty"
      */
-    describe('Test 3 - Extern User open Purl, no User is logged in "#/purl/' + config.purlExtern +'"', function(){
+    describe('Test 3 - Extern User opens Purl, no User is logged in "#/purl/' + config.purlExtern +'"', function(){
         it('should open', function(){
             util.logout();
             util.get('/purl/' + config.purlExtern)
@@ -176,7 +175,7 @@ describe('Route: Purl - ', function () {
      * Test 5
      * Extern User has open Purl then Intern User 1 will see his PURL
      */
-    describe('Test 5 - Extern User open Purl, then User 1 open Purl "#/purl/' + config.purlExtern +'"', function(){
+    describe('Test 5 - Extern User opens Purl, then User 1 open Purl "#/purl/' + config.purlExtern +'"', function(){
         it('should open', function(){
             util.logout();
 
@@ -291,7 +290,7 @@ describe('Route: Purl - ', function () {
     /**
      * Test 8
      */
-    describe("Test 8 - Extern User open Purl which not exists", function(){
+    describe("Test 8 - External User tries to open non-existing Purl:", function(){
         it('should be 404 path', function(){
             util.logout()
             util.get('/purl/moep')

@@ -30,7 +30,10 @@
   .cm-ci-color;
   box-shadow: 0 0 0.3em 0.3em rgba(255, 255, 255, 0.15);
   &:hover{
-      color:@cm-white
+    color:@cm-white;
+  }
+  &.inactive{
+    color:@cm-grey;
   }
 }
 .cm-orange {
@@ -75,6 +78,7 @@
     .pos-tr;padding:0;
     i.cm-edge{z-index:0;.cm-ci-color;.pos-tr}
     i.cm-edge-add{z-index:1;color:@cm-white;.pos-tr;top:2px}
+
   }
 }
 
@@ -128,4 +132,19 @@ div[cm-transparent-bg]{
 
 .cm-bg-transparent{
   background-color: @cm-overlay-light-transparent;
+}
+
+.cm-table{
+  display:table;
+  width:100%;
+  height:100%;
+  .cm-row{
+    display:table-row;
+    .cm-cell {
+      display:table-cell;
+      &.cm-middle {
+        vertical-align: middle;
+      }
+    }
+  }
 }

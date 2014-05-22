@@ -1,52 +1,66 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmMessage', [
-    function cmMessage() {
+    function () {
         return {
             restrict: 'AE',
-            require: '^cmConversation',
             scope: true,
             templateUrl: 'comps/conversations/drtv-message.html',
-            controller: function ($scope, $element, $attrs) {
-                if($attrs.truncate !== undefined){
-                    $scope.truncate = $attrs.truncate;
+
+            link: function(scope, element){
+
+                function setFileView(){
+                    element.addClass('file-view');
                 }
 
-                $scope.message = $scope.$eval($attrs.cmData) || $scope.$eval($attrs.cmMessage);
-
-                //$scope.message.decrypt($scope.passphrase);
-                $scope.textOnly = !!$scope.$eval($attrs.textOnly)
-
-
-    //            $scope.truncateLength = $scope.$eval($attrs.truncate);
-
-                /*
-                if ($scope.message.text.match(/^data:image/)) {
-                    $scope.hasCaptcha = true;
-                }
-                if ($scope.message.text.match(/:requestCaptcha/)) {
-                    $scope.captchaRequest = true;
-                }
-
-
-                $scope.checkAsset = function(){
-                    if ($scope.message.text.match(/^:asset,/)) {
-
-                        $scope.assetId = $scope.message.text.replace(/^:asset,/,'')
-
-                        $scope.hasAsset = true;
-                    }else{
-                        $scope.hasAsset = false
+                if(!scope.textOnly) {
+                    // add css classes
+                    if (scope.message.files.length > 0) {
+                        setFileView();
+                    }
+                    if (scope.message.isOwn()) {
+                        element.addClass('right');
                     }
                 }
 
-                $scope.$watchCollection('message', function(message){
-                    $scope.checkAsset()
-                })
-                */
+                scope.message.on('init:files', function(){
+                    if (scope.message.files.length > 0) {
+                        setFileView();
+                        scope.message.decryptFiles(scope.conversation.passphrase);
+                    }
+                });
+            },
+
+            controller: function ($scope, $element, $attrs) {
+                /*
+                 $scope.message.decrypt($scope.passphrase);
+
+                 $scope.truncateLength = $scope.$eval($attrs.truncate);
+
+                 if ($scope.message.text.match(/^data:image/)) {
+                    $scope.hasCaptcha = true;
+                 }
+                 if ($scope.message.text.match(/:requestCaptcha/)) {
+                    $scope.captchaRequest = true;
+                 }
+                 if($attrs.truncate !== undefined){
+                    $scope.truncate = $attrs.truncate;
+                 }
+                 */
+
+                $scope.message = $scope.$eval($attrs.cmData) || $scope.$eval($attrs.cmMessage);
+
+                $scope.textOnly = !!$scope.$eval($attrs.textOnly);
 
                 $scope.is_my_own_message = $scope.message.isOwn();
+
+                $scope.displayEncrypted = function(){
+                    if($scope.message.text != undefined || $scope.message.text == undefined && $scope.message.files.length > 0){
+                        return false;
+                    }
+                    return true;
+                };
             }
         }
     }
-])
+]);

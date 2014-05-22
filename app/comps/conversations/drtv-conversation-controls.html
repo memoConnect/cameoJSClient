@@ -1,8 +1,6 @@
-<div class="control">
-    <div cm-transparent-bg ng-show="bodyVisible" ng-click="handle()"></div>
-
+ <div class="control">
+    <div cm-transparent-bg ng-show="bodyVisible" ng-click="toggleControls()"></div>
     <div ng-show="bodyVisible" class="body" data-qa="conversation-options-menu">
-
         <div class="cm-form-group" ng-show="isNew">
             <div class="cm-form-control with-inputter">
                 <input type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" cm-adaptive-change data-qa="input-subject"/>
@@ -29,58 +27,78 @@
             <div class="safety-levels" cm-rubber-space>
                 <div cm-weight="3"></div>
                 <div cm-weight="2">
-                    <div class="cm-safety-level level-safer" ng-class="{active:(safetyLevel=='safer')}" ng-click="setLevel('safer')">
+                    <div class="cm-safety-level safetylevel-safer-btn" ng-class="{active:(safetyLevel=='safer')}" ng-click="setLevel('safer')">
                         <i class="fa cm-lock"></i><i class="fa cm-lock"></i>
                     </div>
                 </div>
                 <div cm-weight="1"></div>
                 <div cm-weight="2">
-                    <div class="cm-safety-level level-safe" ng-class="{active:(safetyLevel=='safe')}" ng-click="setLevel('safe')">
+                    <div class="cm-safety-level safetylevel-safe-btn" ng-class="{active:(safetyLevel=='safe')}" ng-click="setLevel('safe')">
                         <i class="fa cm-lock"></i>
                     </div>
                 </div>
                 <div cm-weight="1"></div>
                 <div cm-weight="2">
-                    <div class="cm-safety-level level-unsafe" ng-class="{active:(safetyLevel=='unsafe')}" ng-click="setLevel('unsafe')">
+                    <div class="cm-safety-level safetylevel-unsafe-btn" ng-class="{active:(safetyLevel=='unsafe')}" ng-click="setLevel('unsafe')">
                         <i class="fa cm-unlock"></i>
                     </div>
                 </div>
                 <div cm-weight="3"></div>
             </div>
+
             <div class="cm-center">
                 <i class="fa cm-info"></i>
                 {{'CONVERSATION.PLACEHOLDER.INFO'|cmTranslate}}
             </div>
 
-            <div ng-if="safetyLevel =='safe'">
-                <div class="cm-form-group" >
-                    <div class="cm-form-control with-inputter">
+            <div ng-if="safetyLevel == 'safe'">
+
+                <div cm-rubber-space ng-if="isNew">
+                    <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':hasCaptcha}" ng-click="toggleCaptcha('password');">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</button>
+                    <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':!hasCaptcha}" ng-click="toggleCaptcha('captcha');">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA'|cmTranslate}}</button>
+                </div>
+
+                <div class="cm-form-group">
+                    <div class="cm-form-control with-inputter" ng-class="{'with-inside-icon':!isNew}">
                         <input type="text" ng-model="conversation.password" placeholder="{{ 'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change/>
+                        <i class="fa cm-key fa-2x with-cursor" ng-click="toggleControls(); conversation.decrypt();" ng-if="!isNew"></i>
                     </div>
                 </div>
-                <div style="text-align:center; cursor:pointer" ng-click="conversation.decryptPassphrase(); conversation.decrypt()">
-                    <i class="fa cm-key fa-2x"></i>
+
+                <div class="captcha" ng-if="hasCaptcha && isNew">
+                    <cm-captcha></cm-captcha>
+                    <button class="refresh" ng-click="refreshCaptcha()" ng-if="isNew"><i class="fa cm-change"></i></button>
+                    <p ng-if="!isNew">
+                        <button ng-click="requestCaptcha()"><i class="fa cm-key"></i> {{"CONVERSATION.LABEL.REQUEST_CAPTCHA" | cmTranslate}}</button>
+                    </p>
+                    <p ng-if="!isNew">
+                        <button ng-click="sendCaptcha()"><i class="fa cm-send"></i> {{"CONVERSATION.LABEL.SEND_CAPTCHA" | cmTranslate}}</button>
+                    </p>
                 </div>
+
+                <div class="captcha" ng-if="!isNew">
+                    <img cm-blob-view="conversation.passCaptcha" />
+                </div>
+
             </div>
-            <div style="text-align:center; cursor:pointer">
+            <div style="text-align:center; cursor:pointer" cm-user-rights>
                 <a href="#/settings">
                     {{'CONVERSATION.LABEL.KEY_GENERATION'|cmTranslate}}
                 </a>
             </div>
         </div>
 
-
-        <button ng-click="handle()" class="cm-btn" ng-if="!isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
-        <button ng-click="handle()" class="cm-btn" ng-if="isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
+        <button ng-click="toggleControls()" class="cm-btn" ng-if="!isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
+        <button ng-click="toggleControls()" class="cm-btn" ng-if="isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
     </div>
 
-    <div class="cm-bar" cm-rubber-space ng-click="handle()" data-qa="conversation-options-bar">
+    <div class="cm-bar" cm-rubber-space ng-click="toggleControls()" data-qa="conversation-options-bar">
         <div cm-weight="1" class="grip-left">
             <i class="fa cm-grip"></i>
         </div>
         <div cm-weight="8" class="cm-bar-infos">
             {{conversation.subject||'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}
-            <cm-safety-level level="conversation.getSafetyLevel()"></cm-safety-level>
+            <cm-safety-level cm-level="conversation.getSafetyLevel()"></cm-safety-level>
             <cm-recipient-counter>{{conversation.recipients.length||0}}</cm-recipient-counter>
         </div>
         <div cm-weight="1"></div>

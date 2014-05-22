@@ -224,7 +224,7 @@ cm-conversation-controls{
           height:5rem;
           padding:0.3em;
         }
-        &.level-safer{
+        &.safetylevel-safer-btn{
           i{
             width: 0.65em;
             position: relative;
@@ -241,8 +241,119 @@ cm-conversation-controls{
     }
   }
 }
-
-
+cm-conversation {
+  cm-message {
+    margin: 0.5em 0;
+    word-wrap: break-word;
+    &.right {
+      text-align: right;
+    }
+    article {
+      div.avatar {
+        font-size: 1.5em;
+        width: 1.5em;
+        height: 1.5em;
+        margin-right: 0.7rem;
+        cm-avatar {
+          width: inherit !important;
+          height: inherit !important;
+        }
+      }
+      div.message {
+        min-height: @cm-unit/2;
+        position: relative;
+        padding: 0.5em;
+        min-width: @cm-message-min-width;
+        -webkit-border-radius: @cm-border-radius;
+        -moz-border-radius: @cm-border-radius;
+        border-radius: @cm-border-radius;
+        border: none;
+        text-align: left;
+        &.left {
+          background-color: @cm-msg-bg-color-other;
+          max-width: @cm-message-left-max-width;
+        }
+        &.right {
+          background-color: @cm-msg-bg-color-own;
+          margin-right: 0.7rem;
+          max-width: @cm-message-right-max-width;
+        }
+      }
+      cm-message-assets {
+        display: block;
+      }
+      .text{
+        span{
+          margin: 0.5rem 0;
+        }
+        &.own-message{
+          span {
+            margin: 0;
+            margin-bottom: 0.5rem;
+          }
+        }
+      }
+      span {
+        display: block;
+        &.nose {
+          position: absolute;
+          &.left {
+            top: 0.2em;
+            left: -0.4em;
+            i {
+              color: @cm-msg-bg-color-other
+            }
+          }
+          &.right {
+            top: 0.5em;
+            right: -0.39em;
+            i {
+              color: @cm-msg-bg-color-own
+            }
+          }
+          i {
+            font-size: 1.5em;
+          }
+        }
+      }
+      div.author {
+        position: absolute;
+        top: -0.3rem;
+        left: 0;
+        margin-left: 0.6rem;
+        span {
+          display: inline;
+          font-size: 0.6em;
+          color: @cm-grey;
+        }
+      }
+      div.assets {
+        position: absolute;
+        bottom: 0.2rem;
+        right: 1rem;
+        &.green {
+          span {
+            color: @cm-green;
+          }
+        }
+        span {
+          display: inline;
+          font-size: @cm-small-font;
+          &.date {
+            text-align: right;
+            overflow: hidden; //@todo temporär
+          }
+          &.security {
+            text-align: right;
+          }
+          &.envelope {
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+}
 
 div.answer{
   width:@cm-app-width;
@@ -257,21 +368,24 @@ div.answer{
   left:0;
   right:0;
 
-  .arrow {
-    color: @cm-green;
-  }
   i {
     position: absolute;
     font-size: 2em;
     padding: 0;
     top: 20%
   }
-  i.attachments {
-    left: 0.1em;
+  cm-files {
+    left: 0;
+    top: 0;
+    position: absolute;
   }
   i.cm-post {
-    right: 0.1em;
+    right: 0;
+    &.is-disabled{
+      color:@cm-grey;
+    }
   }
+
 
   .message{
     width: 22rem;
@@ -281,13 +395,14 @@ div.answer{
     margin: 0 auto;
     text-align: left;
     textarea{
-      width: 82%;
-      border: none !important;
-      background: transparent;
-      margin-bottom: 0.5em;
+      width:82%;
+      border:none !important;
+      background:transparent;
+      margin-bottom:0.5em;
+      padding:2px;
     }
-    textarea[cm-rows='1']{
-      line-height:4rem;
+    textarea[rows='1']{
+      margin:1rem 0;
     }
     .inputter {
       width: 100%;
@@ -309,3 +424,25 @@ div.answer{
   }
 }
 
+div.captcha {
+  cm-captcha {
+    display: inline-block;
+    width: 26rem;
+    height: 10rem;
+  }
+  position: relative;
+  text-align: left;
+  margin-top: 0.5rem;
+  button.refresh {
+    position: absolute;
+    top: 4rem;
+    right: 0.5rem;
+
+    color: @cm-grey;
+    font-size: 2.5em;
+  }
+  p {
+    margin:0 0 0.5rem 0;
+    text-align: center;
+  }
+}

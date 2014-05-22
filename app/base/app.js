@@ -8,18 +8,7 @@ define([
     'angular-loading-bar',
 
     // cameo files
-//    'cmCron',
-    'cmLocalStorage',
-    'cmApi',
-    'cmAuth',
-    'cmUserModel',
-    'cmIdentity',
-    'cmObject',
-
-    'cmLanguage',
-    'cmLogger',
-    'cmNotify',
-
+    'pckCore',
     'pckUi',
     'base/config'
 ], function (angularAMD) {
@@ -30,22 +19,9 @@ define([
         'ngCookies',
         'swipe',
         'angularMoment',
-        'ui.bootstrap',
-
         'angular-loading-bar',
-
-        'cmObject',
-        // insert cameo provider
-        'cmApi',
-        'cmUi',
-        'cmLanguage',
-        'cmNotify',
-        'cmLogger',
-        'cmLocalStorage',
-//        'cmCron',
-        'cmAuth',
-        'cmUserModel',
-        'cmIdentity'
+        'cmCore',
+        'cmUi'
     ]);
 
     app.constant('cmEnv',cameo_config.env);
@@ -55,15 +31,24 @@ define([
 
     // cameo configuration for our providers
     app.config([
+
         'cmLanguageProvider',
         'cmLoggerProvider',
         'cmApiProvider',
+
         function (cmLanguageProvider, cmLoggerProvider, cmApiProvider){
             cmLoggerProvider
                 .debugEnabled(true)
 
             cmApiProvider
-                .restApiUrl( cameo_config.restApi );
+                .restApiUrl( cameo_config.restApi )
+                .callStackPath( cameo_config.callStackPath )
+                .useCallStack( false )//cameo_config.useCallStack)
+                .commitSize( cameo_config.commitSize )
+                .commitInterval( cameo_config.commitInterval )
+                .useEvents( cameo_config.useEvents )
+                .eventsPath( cameo_config.eventsPath )
+                .eventsInterval( 5000)//cameo_config.eventsInterval )
 
             cmLanguageProvider
                 .cacheLangFiles(cameo_config.cache_lang_files)
@@ -76,10 +61,7 @@ define([
     // app route config
     app.config([
         '$routeProvider',
-        '$locationProvider',
-        //'$compileProvider',
-
-        function ($routeProvider, $locationProvider) {
+        function ($routeProvider) {
             /**
              * this option makes location use without #-tag
              * @param settings

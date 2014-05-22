@@ -1,12 +1,13 @@
 {
     "config": {
-        "wwwUrl": "https://stage.cameo.io/app/"
+        "wwwUrl": "https://stage.cameo.io/m/"
     },
     "testData": [
         "loginUser1 = 'tender_morse'",
         "passwordUser1 = 'password'",
         "cameoIdUser1 = 'tender_morse'",
         "purlUser1 = 'twOdhtRiRk'",
+        "displayNameUser1 = 'Tender Morse'",
         "contactUser1cameoId ='Desperate Kirch'",
         "contactUser1Login = 'desperate_kirch'",
         "contactUser1password = 'password'",

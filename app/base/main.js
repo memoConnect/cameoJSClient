@@ -2,6 +2,7 @@ require.config({
     baseUrl: "",
     // alias libraries paths
     urlArgs: "bust=" + (new Date()).getTime(),
+    waitTimeout: 0,
     paths: {
         'app': 'base/app',
         'screen': 'base/screen',
@@ -26,22 +27,6 @@ require.config({
         'ngload': 'vendor/requirejs/ngload',
 
         // global provider without AMD
-        'cmApi': 'shared/cmApi',
-        'cmUi': 'shared/ui/ui-module',
-        'cmLanguage': 'shared/cmLanguage',
-        'cmLogger': 'shared/cmLogger',
-        'cmNotify': 'shared/cmNotify',
-        'cmLocalStorage': 'shared/cmLocalStorage',
-        'cmUserModel': 'shared/cmUserModel',
-        'cmIdentity': 'shared/cmIdentity',
-        'cmObject' : 'shared/cmObject',
-
-        // cameo modules/services
-        'cmAuth': 'shared/cmAuth',
-        'cmCrypt': 'shared/cmCrypt',
-        'cmUtil': 'shared/cmUtil',
-//        'cmCron': 'shared/cmCron',
-
         'cmProfile': 'comps/cmProfile',
 
         // shared
@@ -52,14 +37,10 @@ require.config({
 
         // crypto
         'crypto-sjcl': 'vendor/crypto/sjcl/sjcl.min',
-        'crypto-ats-oka': 'vendor/crypto/ats-oka/ats-oka.min',
         'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt.min',
 
-        // ui
-        'ui-bootstrap': 'vendor/ui-bootstrap/ui-bootstrap.0.10.0',
-        'ui-bootstrap-tpls': 'vendor/ui-bootstrap/ui-bootstrap-tpls.0.10.0',
-
         // packages generated via grunt task 'packages'
+        'pckCore': 'shared/core/package',
         'pckContacts': 'comps/contacts/package',
         'pckUser': 'comps/user/package',
         'pckValidate': 'comps/validate/package',
@@ -68,12 +49,6 @@ require.config({
         'pckFiles': 'comps/files/package'
     },
 
-    packages: [
-        {name: '_v', location: 'vendor' },
-        {name: '_c', location: 'comps'  },
-        {name: '_s', location: 'shared' }
-//        {name: '_d', location: 'directives'}
-    ],
     // Add angular modules that does not support AMD out of the box, put it in a shim
     shim: {
         'angularAMD': ['angular'],
@@ -88,85 +63,42 @@ require.config({
 
         'angular-loading-bar': ['angular', 'angular-animate'],
 
-        'ui-bootstrap': ['angular'],
-        'ui-bootstrap-tpls': ['angular'],
-
-        'cmNotify': ['angular-growl'],
-        'cmAuth': ['angular', 'util-base64', 'cmCrypt','cmApi'],
-        'cmCrypt': [
+        // packages
+        'pckCore': [
             'angular',
+            'angular-growl',
+            'angular-translate',
             'util-base64',
-            'cmLogger',
             'crypto-sjcl',
             'crypto-jsencrypt'
         ],
-        'cmLocalStorage' : ['angular', 'cmLogger','cmCrypt'],
-//        'cmCron' : ['angular'],
-        'cmIdentity': ['angular', 'cmAuth'],
-        'cmObject': ['angular'],
-        'cmUserModel': ['angular', 'cmLocalStorage','cmIdentity','cmLogger'],
-        'cmApi': ['angular', 'cmLogger'],
-        'cmProfile' : ['angular', 'cmApi', 'cmAuth'],
-        'cmLogger' : ['angular'],
-        'cmLanguage' : [
-            'angular',
-            'angular-translate',
-            'angular-growl',
-            'cmNotify',
-            'cmLogger'
-        ],
-        // packages
         'pckContacts': [
-            'cmApi',
-            'cmLogger',
-            'cmUtil',
-            'cmIdentity'
+            'pckCore'
         ],
         'pckUser': [
-            'cmAuth',
-            'cmUserModel',
-            'cmCrypt',
-            'cmUtil'
+            'pckCore'
         ],
         'pckValidate': [
             'util-passchk-fast'
         ],
         'pckUi': [
-            'cmAuth',
-            'cmLogger',
-            'cmLanguage',
-            'cmUserModel',
-            'util-spin',
-            'ui-bootstrap'
+            'pckCore',
+            'util-spin'
         ],
-
         'pckConversations': [
             'angular',
-            'cmApi',
-            'cmLogger',
-            'cmNotify',
-            'cmCrypt',
-            'cmAuth',
-            'cmUtil',
-//        'cmCron',
-            'cmUserModel',
-            'cmIdentity',
+            'pckCore',
             'pckContacts',
             'pckFiles',
             'pckUi',
-            '_v/captcha/captchagen/captchagen',
+            'vendor/captcha/captchagen/captchagen',
             'util-base64'
         ],
-
         'pckFiles': [
-            'cmApi',
-            'cmLogger',
-            'cmCrypt',
-            'cmUtil',
+            'pckCore',
             'vendor/filesaver/filesaver',
             'angular-resource',
             'util-base64_decode'
-            //'vendor/base64_decode'
         ]
     },
     // kick start application
