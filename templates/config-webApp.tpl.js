@@ -82,6 +82,6 @@ cameo_config = {
 
     env: {
         autoLogin: ('<%= autoLogin %>' == 'true'),
-        loadingBar: ('true' == 'true')
+        loadingBar: ('<%= loadingBar %>' == 'true')
     }
 };
