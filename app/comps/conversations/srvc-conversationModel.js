@@ -682,7 +682,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * Event Handling
              */
             this.on('feedback:decrypt:fail', function(){
-                cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG')
+                cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG',{ttl:2000})
             });
         }
 
