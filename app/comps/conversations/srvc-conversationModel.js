@@ -613,7 +613,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return this;
             }
 
-            this.decrypt = function () {
+            this.decrypt = function (feedback) {
                 this.decryptPassphrase()
                 var success = true
                 if (this.passphrase) {
@@ -624,6 +624,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                             success = false
                         }
                     })
+                } else {
+                    if(typeof feedback === 'boolean' && feedback !== false){
+                        this.trigger('feedback:decrypt:fail');
+                    }
                 }
                 return success
             };
@@ -670,11 +674,16 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return 'safetylevel-'+className+addon;
             };
 
-
-
             //this.init(data);
 
             this._init(data)
+
+            /**
+             * Event Handling
+             */
+            this.on('feedback:decrypt:fail', function(){
+                cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG')
+            });
         }
 
         return ConversationModel;
