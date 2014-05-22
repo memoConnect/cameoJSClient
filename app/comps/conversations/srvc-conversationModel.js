@@ -155,18 +155,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
             /* COVERSATION REFACTORING todo:
 
             CONVERSATION REFACTORING */
-
-
-
-
             this.getSubjectLine = function(){
-
                 var lastMessage = this.getLastMessage();
-
-                return     this.subject
-
+                return this.subject
                         || (lastMessage && lastMessage.from ? lastMessage.from.getDisplayName() : false)
-
                         || this.getRecipientList()
 
             }

@@ -1,7 +1,8 @@
 {
     "config": {
         "apiUrl": "https://dev.cameo.io/a/v1",
-        "autoLogin": true
+        "autoLogin": true,
+        "loadingBar": true
     },
     "phonegap": {
         "baseName" : "cameoNet-dev",
