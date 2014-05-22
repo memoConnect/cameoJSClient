@@ -57,6 +57,7 @@ cm-message-file{
   }
   .file{
     margin:0 auto;
+    font-size:@cm-unit*1.5;
   }
   &:last-child{
     margin-bottom:0;
@@ -112,6 +113,9 @@ cm-files-preview{
       right: 1em;
       top: 35%;
       .with-cursor;
+    }
+    .file{
+      font-size:@cm-unit*1.5;
     }
   }
 
@@ -192,7 +196,7 @@ cm-modal.modal-image-fullscreen{
   cursor:pointer;
   padding:0;
   vertical-align:text-bottom;
-  font-size:4em;
+  font-size:1em;
 }
 @files:dir dir-download dir-safe dir-public pdf txt xlsx doc php css xls zip rar sit jpg gif bmp tif eps png mov mpg mp4 flv avi xml html chm ttf exe dmg mp3 wav wma aif ogg '\33gpp' ppt pps unknown;
 @filesnum:length(@files);
