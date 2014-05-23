@@ -33,7 +33,7 @@
                 </div>
                 <div cm-weight="1"></div>
                 <div cm-weight="2">
-                    <div class="cm-safety-level safetylevel-safe-btn" ng-class="{active:(safetyLevel=='safe')}" ng-click="setLevel('safe')">
+                    <div class="cm-safety-level safetylevel-safe-btn" ng-class="{active:(safetyLevel=='safe')}" ng-click="setLevel('safe')" data-qa="btn-safetyLevel-save">
                         <i class="fa cm-lock"></i>
                     </div>
                 </div>
@@ -54,8 +54,8 @@
             <div ng-if="safetyLevel == 'safe'">
 
                 <div cm-rubber-space ng-if="isNew">
-                    <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':hasCaptcha}" ng-click="toggleCaptcha('password');">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</button>
-                    <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':!hasCaptcha}" ng-click="toggleCaptcha('captcha');">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA'|cmTranslate}}</button>
+                    <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':hasCaptcha}" ng-click="toggleCaptcha('password');" data-qa="btn-toogle-password">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</button>
+                    <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':!hasCaptcha}" ng-click="toggleCaptcha('captcha');" data-qa="btn-toogle-passcaptcha">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA'|cmTranslate}}</button>
                 </div>
 
                 <div class="cm-form-group">
