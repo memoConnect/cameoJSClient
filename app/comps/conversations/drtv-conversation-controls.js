@@ -29,6 +29,10 @@ angular.module('cmConversations').directive('cmConversationControls', [
                         if(!cmConversation.isNew() && !conversation.password && conversation.getEncryptionType() == 'symmetric') {
                             scope.bodyVisible = true;
                         }
+
+                        conversation.on('decrypt:ok', function(){
+                            scope.toggleControls();
+                        })
                     }
                 });
             },
@@ -89,6 +93,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
                 $scope.manageRecipients = function(){
                     $location.path('/recipients')
                 }
+
             }
         }
     }
