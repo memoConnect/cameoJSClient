@@ -13,6 +13,7 @@ require.config({
         'angular-cookies': 'vendor/angular/angular-cookies',
         'angular-animate': 'vendor/angular/angular-animate',
         'angular-swipe': 'vendor/angular/angular-swipe',
+        'angular-sanitize': 'vendor/angular/angular-sanitize',
 
         'angular-translate': 'vendor/angular-translate/angular-translate',
         'angular-growl': 'vendor/angular-growl/angular-growl',
@@ -58,6 +59,7 @@ require.config({
         'angular-animate': ['angular'],
         'angular-swipe': ['angular'],
         'angular-translate': ['angular'],
+        'angular-sanitize': ['angular'],
         'angular-growl': ['angular'],
         'angular-moment-wrap': ['angular','moment'],
 
@@ -68,6 +70,7 @@ require.config({
             'angular',
             'angular-growl',
             'angular-translate',
+            'angular-sanitize',
             'util-base64',
             'crypto-sjcl',
             'crypto-jsencrypt'
@@ -97,6 +100,7 @@ require.config({
         'pckFiles': [
             'pckCore',
             'vendor/filesaver/filesaver',
+//            'vendor/filesaver/saveAs',
             'angular-resource',
             'util-base64_decode'
         ]
