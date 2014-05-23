@@ -5,8 +5,9 @@ angular.module('cmConversations').directive('cmConversationControls', [
     'cmNotify',
     'cmLogger',
     '$location',
+    '$timeout',
 
-    function(cmUserModel, cmNotify, cmLogger, $location){
+    function(cmUserModel, cmNotify, cmLogger, $location, $timeout){
         return{
             restrict : 'AE',
             templateUrl : 'comps/conversations/drtv-conversation-controls.html',
@@ -27,11 +28,11 @@ angular.module('cmConversations').directive('cmConversationControls', [
 
                         if(!cmConversation.isNew() && !conversation.password && conversation.getEncryptionType() == 'symmetric') {
                             scope.bodyVisible = true;
-
-                            if(typeof conversation.passCaptcha == 'object'){
-
-                            }
                         }
+
+                        conversation.on('decrypt:ok', function(){
+                            scope.toggleControls();
+                        })
                     }
                 });
             },
@@ -92,6 +93,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
                 $scope.manageRecipients = function(){
                     $location.path('/recipients')
                 }
+
             }
         }
     }
