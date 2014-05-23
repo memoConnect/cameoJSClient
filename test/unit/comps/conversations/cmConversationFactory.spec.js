@@ -5,7 +5,11 @@ describe('cmConversationFactory', function(){
         tmpInstance_1 = {id:'moep_1',data:{}},
         tmpInstance_2 = {id:'moep_2',data:{}};
 
-
+    beforeEach(function(){
+        module(function($provide){
+            $provide.constant('cmEnv',{});
+        })
+    })
     beforeEach(module('cmConversations'));
 
     beforeEach(inject(function(_cmConversationFactory_){

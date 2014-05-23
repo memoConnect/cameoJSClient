@@ -3,6 +3,11 @@
 describe('cmFileModel', function() {
     var cmFileModel
 
+    beforeEach(function(){
+        module(function($provide){
+            $provide.constant('cmEnv',{});
+        })
+    })
     beforeEach(module('cmCore'));
     beforeEach(inject(function (_cmFileModel_) {
         cmFileModel = new _cmFileModel_()

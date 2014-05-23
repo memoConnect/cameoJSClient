@@ -13,6 +13,7 @@ module.exports = function(config) {
             'app/base/config.js',
 
             'app/vendor/angular/angular.js',
+            'app/vendor/angular/angular-sanitize.js',
 
             'app/vendor/angular-translate/angular-translate.js',
 

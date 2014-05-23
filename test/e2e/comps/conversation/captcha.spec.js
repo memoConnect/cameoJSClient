@@ -31,7 +31,7 @@ describe('Captcha: ', function () {
             expect($('cm-captcha').isDisplayed()).toBe(true)
         })
 
-        it('should be exists an "captcha-image" element contains an img after saving and reloading the conversation', function(){
+        xit('should be exists an "captcha-image" element contains an img after saving and reloading the conversation', function(){
             $("[data-qa='btn-save-options']").click()
             $("[data-qa='input-answer']").sendKeys(messageText)
             $("[data-qa='btn-send-answer']").click()
