@@ -28,10 +28,6 @@ angular.module('cmConversations').directive('cmConversationControls', [
 
                         if(!cmConversation.isNew() && !conversation.password && conversation.getEncryptionType() == 'symmetric') {
                             scope.bodyVisible = true;
-
-                            if(typeof conversation.passCaptcha == 'object'){
-
-                            }
                         }
                     }
                 });
