@@ -5,8 +5,9 @@ angular.module('cmConversations').directive('cmConversationControls', [
     'cmNotify',
     'cmLogger',
     '$location',
+    '$timeout',
 
-    function(cmUserModel, cmNotify, cmLogger, $location){
+    function(cmUserModel, cmNotify, cmLogger, $location, $timeout){
         return{
             restrict : 'AE',
             templateUrl : 'comps/conversations/drtv-conversation-controls.html',

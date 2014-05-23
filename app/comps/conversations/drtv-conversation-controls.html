@@ -61,7 +61,7 @@
                 <div class="cm-form-group">
                     <div class="cm-form-control with-inputter" ng-class="{'with-inside-icon':!isNew}">
                         <input type="text" ng-model="conversation.password" placeholder="{{ 'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change/>
-                        <i class="fa cm-key fa-2x with-cursor" ng-click="toggleControls(); conversation.decrypt(true);" ng-if="!isNew"></i>
+                        <i class="fa cm-key fa-2x with-cursor" ng-click="conversation.decrypt(true);" ng-if="!isNew"></i>
                     </div>
                 </div>
 

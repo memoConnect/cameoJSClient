@@ -624,11 +624,16 @@ angular.module('cmConversations').factory('cmConversationModel',[
                             success = false
                         }
                     })
+                }
+
+                if(success !== false){
+                    this.trigger('decrypt:ok');
                 } else {
                     if(typeof feedback === 'boolean' && feedback !== false){
                         this.trigger('feedback:decrypt:fail');
                     }
                 }
+
                 return success
             };
 
