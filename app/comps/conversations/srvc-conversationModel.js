@@ -95,6 +95,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.subject                 = data.subject      || this.subject
 
                 this.encryptedPassphraseList = this.encryptedPassphraseList.concat(data.encryptedPassphraseList || [])
+                /**
+                 * muss bleiben, aktuelle falsche stelle, sollte in die init
+                 */
+                this.setEncryptionType();
+                this.initPassCaptcha(data);
 
                 var messages = data.messages || []
                 messages.forEach(
@@ -614,7 +619,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
 
             this.decrypt = function (feedback) {
-                console.log('decrypt')
                 this.decryptPassphrase()
                 var success = true
                 if (this.passphrase != '') {
