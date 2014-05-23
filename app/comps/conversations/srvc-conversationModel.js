@@ -614,9 +614,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
 
             this.decrypt = function (feedback) {
+                console.log('decrypt')
                 this.decryptPassphrase()
                 var success = true
-                if (this.passphrase) {
+                if (this.passphrase != '') {
                     this.messages.forEach(function (message) {
                         if(typeof self.passphrase !== "undefined"){
                             success = success && message.decrypt(self.passphrase); //@TODO
@@ -624,6 +625,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                             success = false
                         }
                     })
+                } else {
+                    success = false
                 }
 
                 if(success !== false){
@@ -687,6 +690,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * Event Handling
              */
             this.on('feedback:decrypt:fail', function(){
+//                cmLogger.debug('on:feedback:decrypt:fail')
                 cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG',{ttl:2000})
             });
         }
