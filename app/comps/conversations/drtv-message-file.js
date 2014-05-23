@@ -19,8 +19,8 @@ angular.module('cmConversations').directive('cmMessageFile', [
 
                 $scope.cmFileTypes = cmFileTypes;
 
-                $scope.isImage = function(mime){
-                    return mime == undefined ? false : mime.search('^image/') != -1;
+                $scope.isEmbed = function(mime, specificMime){
+                    return mime == undefined ? false : mime.search('^('+(specificMime||'image|video|audio')+')') != -1;
                 };
 
                 $scope.showFullscreen = function(){

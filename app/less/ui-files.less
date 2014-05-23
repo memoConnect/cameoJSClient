@@ -38,7 +38,7 @@ cm-message-file{
   margin-bottom: 0.5em;
   text-align: center;
 
-  .file-image{
+  .file-image, .file-html5{
     min-height:@cm-unit;
     position:relative;
     div[cm-spinner]{
@@ -53,6 +53,9 @@ cm-message-file{
       max-width:@cm-message-min-width;
       min-height:@cm-unit * 2;
       margin:0 auto;
+    }
+    video, audio{
+      width:100%;
     }
   }
   .file{

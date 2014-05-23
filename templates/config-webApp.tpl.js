@@ -82,6 +82,7 @@ cameo_config = {
 
     env: {
         autoLogin: ('<%= autoLogin %>' == 'true'),
-        loadingBar: ('<%= loadingBar %>' == 'true')
+        loadingBar: ('<%= loadingBar %>' == 'true'),
+        isiOS: ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false )
     }
 };

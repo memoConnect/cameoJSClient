@@ -22,7 +22,7 @@ angular.module('cmUi').directive('cmScrollTo',[
 
                 if($attrs.ngRepeat && $scope.$last && $attrs.cmScrollTo != ''){
                     initTimeout($attrs.cmScrollTo);
-                    // this because of cm-blob-view
+                    // this because of cm-blob-image
                     $rootScope.$on('scroll:to',function(event,target){
                         initTimeout(target);
                     })

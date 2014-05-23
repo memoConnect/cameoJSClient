@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmFiles').directive('cmBlobView',[
+angular.module('cmFiles').directive('cmBlobImage',[
     '$rootScope',
     function ($rootScope) {
         return {
@@ -51,7 +51,7 @@ angular.module('cmFiles').directive('cmBlobView',[
                 }
 
                 // load image via fileapi
-                scope.$watch(attrs.cmBlobView, handleBlob);
+                scope.$watch(attrs.cmBlobImage, handleBlob);
             }
         }
     }

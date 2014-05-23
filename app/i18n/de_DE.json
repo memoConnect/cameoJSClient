@@ -315,9 +315,18 @@
         "LOGOUT": "Logout"
     },
 
-    "NOTIFY": {
+    "NOTIFY":{
         "KEYS":{
             "STORE_NEW": "Schlüssel erfolgreich gespeichert!"
+        },
+        "SAVE_AS":{
+            "IOS_NOT_SUPPORT": "Leider unterstützt iOS das herunterladen von Dateien nicht. Öffnen Sie diesen Talk auf einem nicht iOS Gerät um diese Datei downloaden zukönnen. Unterstütze Formate gehen trotzdem: .pdf"
+        }
+    },
+
+    "MODAL": {
+        "ALERT": {
+            "OK": "OK"
         }
     },
 
