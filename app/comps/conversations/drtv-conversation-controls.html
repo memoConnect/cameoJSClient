@@ -65,7 +65,7 @@
                     </div>
                 </div>
 
-                <div class="captcha" ng-if="hasCaptcha && isNew">
+                <div class="captcha" ng-if="hasCaptcha && isNew" data-qa="captcha-canvas">
                     <cm-captcha></cm-captcha>
                     <button class="refresh" ng-click="refreshCaptcha()" ng-if="isNew"><i class="fa cm-change"></i></button>
                     <p ng-if="!isNew">
@@ -76,7 +76,7 @@
                     </p>
                 </div>
 
-                <div class="captcha" ng-if="!isNew">
+                <div class="captcha" ng-if="!isNew" data-qa="captcha-image">
                     <img cm-blob-view="conversation.passCaptcha" />
                 </div>
 
