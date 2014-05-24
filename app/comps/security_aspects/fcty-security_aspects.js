@@ -23,12 +23,12 @@ angular.module('cmSecurityAspects')
 
 
             /**
-             * Function to check if the aspect applis to the target.
+             * Function to check if the aspect applies to the target.
              * @param  {*}      target to evaluate against.
-             * @return {Number}        value of the aspect or 0 if it does not apply at all
+             * @return {Number}        value of the aspect or false if it does not apply at all
              */
             this.check = config.check || function(target){
-                return 0
+                return false
             }
         }
 
@@ -65,62 +65,65 @@ angular.module('cmSecurityAspects')
             }
 
             /**
-             * Function to filter security aspects by their evaluation against a target
-             * @param   {*}         target              Object the aspects will evaluate against.
-             * @param   {Number}    [polarization = 1]  determines which aspects should be returned (-1 for those who apply with a negative value, 0 for those that do not apply and 1 for those that apply with a positive value)             
-             * @return  {Array}                         Array of all not applying or positivly/negative evaluating aspects
+             * Function to get all applying security aspects
+             * @param   {Object} target                     Object the aspects should apply to
+             * @package {Array}  [applying_aspects = []]    Array of already applying aspects, used to resolve dependencies
+             * @return  {Array}                             Array of all applying aspects
              */
-            
-            this.evaluate = function(target, polarization){
-                var matching_aspects = []
+            this.getApplyingAspects = function(target, applying_aspects){
 
+                applying_aspects = applying_aspects || []
 
-                     matching_aspects = this.aspects.filter(function(aspect){
-                        var result  =      aspect.dependency.every(function(dependency){ matching_aspects.indexOf(dependency) != -1 })
-                                        && aspect.check(target)
-      
-                        return  polarization == 0
-                                ?   result == 0
-                                :   result * polarization > 0
-                        
-                    })
+                var additional_aspects = this.aspects.filter(function(aspect){
+                    return  // aspect already assumed to apply, do not add again:   
+                               applying_aspects.indexOf(aspect) == -1  
+                            // check if all dependencies apply:
+                            && aspect.dependencies.every(function(dependency){ applying_aspects.indexOf(dependency) != -1 })
+                            //check if aspect applies:
+                            && aspect.check(target) !== false
+                })
+
+                return  additional_aspects.length == 0
+                        ?   applying_aspects
+                        :   this.getApplyingAspects(applying_aspects.concat(additional_aspects))
+
             }
 
             /**
-             * Function to get all aspects that evaluate positively against the target
-             * @param  {*}          target to evaluate against
-             * @return {Array}       Array of aspects
+             * Function to get all security aspects that evaluate positively against the target
+             * @param  {*}          target  to evaluate against
+             * @return {Array}              Array of aspects
              */
             this.getPositiveAspects = function(target){
-                return this.evaluate(target, 1)
+                return this.getApplyingAspects(target).filter(function(aspect){ return aspect.value > 0 })
             }
 
             /**
-             * Function to get all aspects that evaluate positively against the target
-             * @param  {*}          target to evaluate against
-             * @return {Array}       Array of aspects
+             * Function to get all security aspects that evaluate positively against the target
+             * @param  {*}          target  to evaluate against
+             * @return {Array}              Array of aspects
              */           
-
             this.getNegativeAspects = function(target){
-                return this.evaluate(target, -1)
+                return this.getApplyingAspects(target).filter(function(aspect){ return aspect.value < 0 })
             }
 
             /**
-             * Function to get all aspects that evaluate positively against the target
-             * @param  {*}          target to evaluate against
-             * @return {Array}       Array of aspects
-             */
-            this.getNotApllyingAspects = function(target){
-                return this.evaluate(target, 0)
+            * Function to get all security aspects that evaluate neutrally (value == 0) against the target
+            * @param  {*}          target  to evaluate against
+            * @return {Array}              Array of aspects
+            */           
+            this.getNeutralAspects = function(target){
+                return this.getApplyingAspects(target).filter(function(aspect){ return aspect.value === 0 })
             }
 
             /**
-             * Function to get all aspects that evaluate positively against the target
-             * @param  {*}          target to evaluate against
-             * @return {Array}       Array of aspects
+             * Function to get all security aspects that do not apply to the target
+             * @param  {*}          target  to evaluate against
+             * @return {Array}              Array of aspects
              */
-            this.getApllyingAspects = function(target){
-                return this.evaluate(target,1).concat(this.evaluate(target, -1))
+            this.getNonApplyingAspects = function(target){
+                var applying_aspects = this.getApllyingAspects(target)
+                return this.aspects.filter(function(aspect){ return applying_aspects.indexOf(aspect) == -1 })
             }
         }
 
