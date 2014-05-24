@@ -77,8 +77,12 @@ angular.module('cmSecurityAspects')
                 var additional_aspects = this.aspects.filter(function(aspect){
                     return  // aspect already assumed to apply, do not add again:   
                                applying_aspects.indexOf(aspect) == -1  
-                            // check if all dependencies apply:
-                            && aspect.dependencies.every(function(dependency){ applying_aspects.indexOf(dependency) != -1 })
+                            // check if all dependencies are among the applying aspects:
+                            && aspect.dependencies.every(function(dependency_id){
+                                    applying_aspects.some(function(applying_aspect){ 
+                                        return applying_aspect.id == dependency_id 
+                                    }) 
+                               })
                             //check if aspect applies:
                             && aspect.check(target) !== false
                 })
