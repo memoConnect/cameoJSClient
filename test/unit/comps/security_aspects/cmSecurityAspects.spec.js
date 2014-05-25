@@ -11,11 +11,9 @@ describe('cmSecurityAspects', function(){
 
     it('should provide a factory to handle security aspects', function(){
         var test_object = {
-            my_attribute: 15,
-            my_method: function(){ return 'hello world' }
-        }
-
-        console.log(security_aspects)
+                my_attribute: 15,
+                my_method: function(){ return 'hello world' }
+            }
 
         security_aspects
         .setTarget(test_object)
@@ -23,7 +21,6 @@ describe('cmSecurityAspects', function(){
             id:             'SA1',
             value:          1,
             check:          function(target){
-                                console.log(target)
                                 return target.my_attribute == 15
                             }
         })
@@ -31,7 +28,7 @@ describe('cmSecurityAspects', function(){
             id:             'SA2',
             value:          -1,
             check:          function(target){
-                               return target.my_attribute == 4
+                               return target.my_attribute > 3
                             }
         })
         .addAspect({
@@ -39,38 +36,85 @@ describe('cmSecurityAspects', function(){
             value:          1,
             dependencies:   ['SA1'],
             check:          function(target){
-                                return typeof target.my_method == 'function'
+                                console.log(target.my_method())
+                                return target.my_method() == 'ping'
                             }
         })
         .addAspect({
             id:             'SA4',
             value:          2,
-            dependencies:   ['SA1', 'SA2'],
+            dependencies:   ['SA1', 'SA3'],
             check:          function(target){
                                 return true
                             }
         })
         .addAspect({
             id:             'SA5',
-            value:           4,
-            dependencies:   ['SA1'],
+            value:           -2,
+            dependencies:   ['SA2'],
             check:          function(target){
-                                return target.my_method > 3
+                                return target.my_method().length > 0
                             }
         })
         .addAspect({
             id:             'SA6',
-            value:          -2,
+            value:          0,
+            dependencies:   ['SA5'],
             check:          function(target){
-                                return target.my_method.length > 0
+                                return target.my_attribute == 4
                             }
         })
 
-        var applying  = security_aspects.getApplyingAspects(),
-            positives = security_aspects.getPositiveAspects(),
-            negatives = security_aspects.getNegativeAspects(),
-            neutrals  = security_aspects.getNeutralAspects()
+        var applying    = security_aspects.getApplyingAspects(),
+            positives   = security_aspects.getPositiveAspects(),
+            negatives   = security_aspects.getNegativeAspects(),
+            neutrals    = security_aspects.getNeutralAspects(),
+            nonapplying = security_aspects.getNonApplyingAspects()
+        
 
-        expect(applying.length).toBe(4) //SA1, SA3, SA5, SA6
+        expect(applying.length).toBe(3)     //SA1, SA2, SA5
+        expect(positives.length).toBe(1)    //SA1
+        expect(negatives.length).toBe(2)    //SA2, SA5
+        expect(neutrals.length).toBe(0)     //
+        expect(nonapplying.length).toBe(3)  //SA3, SA4, SA6
+
+        
+
+
+        test_object.my_method = function() { return 'ping' }
+
+        applying    = security_aspects.getApplyingAspects(),
+        positives   = security_aspects.getPositiveAspects(),
+        negatives   = security_aspects.getNegativeAspects(),
+        neutrals    = security_aspects.getNeutralAspects(),
+        nonapplying = security_aspects.getNonApplyingAspects()
+
+        expect(applying.length).toBe(5)     //SA1, SA2, SA3, SA4, SA5
+        expect(positives.length).toBe(3)    //SA1, SA3, SA4
+        expect(negatives.length).toBe(2)    //SA2, SA5
+        expect(neutrals.length).toBe(0)     //
+        expect(nonapplying.length).toBe(1)  //SA6
+
+
+
+
+        test_object.my_attribute = 4
+
+        applying    = security_aspects.getApplyingAspects(),
+        positives   = security_aspects.getPositiveAspects(),
+        negatives   = security_aspects.getNegativeAspects(),
+        neutrals    = security_aspects.getNeutralAspects(),
+        nonapplying = security_aspects.getNonApplyingAspects()
+
+        expect(applying.length).toBe(3)     //SA2, SA5, SA6
+        expect(positives.length).toBe(0)    //
+        expect(negatives.length).toBe(2)    //SA2, SA5
+        expect(neutrals.length).toBe(1)     //SA6
+        expect(nonapplying.length).toBe(3)  //SA1, SA2, SA3
+        
+        
+
+        
+
     })    
 })
