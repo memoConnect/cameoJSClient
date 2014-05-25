@@ -15,6 +15,8 @@ describe('cmSecurityAspects', function(){
             my_method: function(){ return 'hello world' }
         }
 
+        console.log(security_aspects)
+
         security_aspects
         .setTarget(test_object)
         .addAspect({
