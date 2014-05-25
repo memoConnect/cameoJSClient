@@ -32,6 +32,7 @@ module.exports = function(config) {
             'app/comps/validate/package.js',
             'app/comps/conversations/package.js',
             'app/comps/files/package.js',
+            'app/comps/security_aspects/package.js',
 
             'test/lib/angular/angular-mocks.js',
 

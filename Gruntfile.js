@@ -162,7 +162,7 @@ module.exports = function (grunt) {
                 "}]);";
         // module banger
         } else if(filepath.search(/.*\/module-.*/g) != -1) {
-            // add founded templates to package module
+            // add found templates to package module
             if(concatCmTemplatesFound.length > 0) {
                 var templateNames = "'"+concatCmTemplatesFound.join("','")+"'";
                 concatCmTemplatesFound = [];
@@ -255,6 +255,7 @@ module.exports = function (grunt) {
                     'user': 'app/comps/user',
                     'validate': 'app/comps/validate',
                     'files': 'app/comps/files',
+                    'security_aspects': 'app/comps/security_aspects',
                     'ui': 'app/shared/ui'
                 })
             }
