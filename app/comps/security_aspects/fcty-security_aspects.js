@@ -50,6 +50,8 @@ angular.module('cmSecurityAspects')
                 return this
             }
 
+            /****/
+
 
             /**
              * Function to add a new SecurityAspect instance to the list
