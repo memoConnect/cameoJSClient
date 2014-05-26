@@ -20,18 +20,27 @@ angular.module('cmUi').directive('cmAvatar',[
                         element.css('display','none');
                     } else {
                         // get avatar image from model
-                        identity
+                        var file = identity
                             .getAvatar()
-                            .then(
-                                function(blob){
-                                    var urlCreator = window.URL || window.webkitURL;
-                                    var imageUrl = urlCreator.createObjectURL( blob );
-                                    element.css({'background-image': 'url(' + imageUrl+')'});
-                                },
-                                function(){
-                                    element.css({'background-image': 'url(' + avatarMocks.none +')'});
-                                }
-                            );
+                            .downloadStart()
+//                            .then(
+//                                function(blob){
+//                                    var urlCreator = window.URL || window.webkitURL;
+//                                    var imageUrl = urlCreator.createObjectURL( blob );
+//                                    element.css({'background-image': 'url(' + imageUrl+')'});
+//                                },
+//                                function(){
+//                                    element.css({'background-image': 'url(' + avatarMocks.none +')'});
+//                                }
+//                            );
+
+                        file.on('file:cached', function(){
+                            console.log('alter')
+                            var urlCreator = window.URL || window.webkitURL;
+                            var imageUrl = urlCreator.createObjectURL( file.blob );
+                            element.css({'background-image': 'url(' + imageUrl+')'});
+                        });
+
                         // show name under avatar
                         if(attrs.cmWithName){
                             element.addClass('with-name');

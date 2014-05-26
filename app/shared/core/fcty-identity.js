@@ -6,8 +6,9 @@ angular.module('cmCore').factory('cmIdentityModel',[
     'cmObject',
     'cmLogger',
     'cmApi',
+    'cmFileFactory',
     '$q',
-    function(cmAuth, cmCrypt, cmObject, cmLogger, cmApi, $q){
+    function(cmAuth, cmCrypt, cmObject, cmLogger, cmApi, cmFileFactory, $q){
         var Identity = function(identity_data){
 
             this.id,
@@ -71,27 +72,32 @@ angular.module('cmCore').factory('cmIdentityModel',[
              * @returns {promise}
              */
             this.getAvatar = function(){
-                var defer = $q.defer();
-                // get avatar
+//                var defer = $q.defer();
+//                // get avatar
+//                if(this.avatarId){
+//                    // create avatar promise
+//                    if(this.avatarPromise == undefined){
+//                        this.avatarPromise = defer;
+//                        // api call
+//                        cmApi.getBinary({
+//                            path: "/file/" + this.avatarId + "/" + 0
+//                        }).then(function(blob){
+//                            self.avatar = blob;
+//                            self.avatarPromise.resolve(blob);
+//                        });
+//                    }
+//                    // else get resolved promise
+//                // reject promise
+//                } else {
+//                    this.avatarPromise = defer;
+//                    this.avatarPromise.reject();
+//                }
+//                return this.avatarPromise.promise;
                 if(this.avatarId){
-                    // create avatar promise
-                    if(this.avatarPromise == undefined){
-                        this.avatarPromise = defer;
-                        // api call
-                        cmApi.getBinary({
-                            path: "/file/" + this.avatarId + "/" + 0
-                        }).then(function(blob){
-                            self.avatar = blob;
-                            self.avatarPromise.resolve(blob);
-                        });
-                    }
-                    // else get resolved promise
-                // reject promise
-                } else {
-                    this.avatarPromise = defer;
-                    this.avatarPromise.reject();
+                   return cmFileFactory.create(this.avatarId);
                 }
-                return this.avatarPromise.promise;
+
+                return false;
             };
 
             this.addKey = function(key_data){
