@@ -48,7 +48,7 @@ define([
                 .commitInterval( cameo_config.commitInterval )
                 .useEvents( cameo_config.useEvents )
                 .eventsPath( cameo_config.eventsPath )
-                .eventsInterval( 5000)//cameo_config.eventsInterval )
+                .eventsInterval( 5000 )//cameo_config.eventsInterval )
 
             cmLanguageProvider
                 .cacheLangFiles(cameo_config.cache_lang_files)
@@ -140,8 +140,8 @@ define([
 
     // app run handling
     app.run([
-        '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmLanguage', 'cmLogger','cfpLoadingBar','cmEnv',
-        function ($rootScope, $location, $window, $route, cmUserModel, cmLanguage, cmLogger, cfpLoadingBar, cmEnv) {
+        '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmLanguage', 'cmLogger','cfpLoadingBar','cmEnv', 'cmApi',
+        function ($rootScope, $location, $window, $route, cmUserModel, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi) {
 
             //prep $rootScope with useful tools
             $rootScope.console = console
@@ -260,6 +260,10 @@ define([
                     cfpLoadingBar.complete();
                 }
             })
+
+            //Todo:
+            
+            if(cmUserModel.getToken()) cmApi.listenToEvents()
         }
     ]);
 
