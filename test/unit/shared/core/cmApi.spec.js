@@ -438,11 +438,13 @@ describe('cmApi with short intervals', function(){
         jasmine.Clock.useMock();
         spyOn(cmApi, 'commit')
         spyOn(cmApi, 'getEvents')
+        cmApi.listenToEvents()
     }))
 
     afterEach(function(){
         $httpBackend.verifyNoOutstandingExpectation()
         $httpBackend.verifyNoOutstandingRequest()
+        cmApi.stopListeningToEvents()
     })
 
     it('should commit call stack every 5 milliseconds.', function(){        
