@@ -62,7 +62,8 @@ angular.module('cmCore').service('cmCrypt',[
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                return withoutBase64 ? encryptedSecretString : this.base64Encode(encryptedSecretString);
+//                return withoutBase64 ? encryptedSecretString : this.base64Encode(encryptedSecretString);
+                return encryptedSecretString;
             },
             /**
              * this method encrypts strings
@@ -85,7 +86,8 @@ angular.module('cmCore').service('cmCrypt',[
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                return withoutBase64 ? encryptedSecretString : this.base64Encode(encryptedSecretString);
+//                return withoutBase64 ? encryptedSecretString : this.base64Encode(encryptedSecretString);
+                return encryptedSecretString;
             },
             /**
              * this method decrypts uuencoded strings
@@ -105,7 +107,8 @@ angular.module('cmCore').service('cmCrypt',[
                     decryptedString;
 
                 try {
-                    decryptedString = sjcl.decrypt(secretKey, decodedSecretString)
+//                    decryptedString = sjcl.decrypt(secretKey, decodedSecretString)
+                    decryptedString = sjcl.decrypt(secretKey, secretString)
                 } catch (e) {
                     //cmLogger.warn('Unable to decrypt.', e)
                 }
