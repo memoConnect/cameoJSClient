@@ -297,7 +297,7 @@ angular.module('cmCore').provider('cmApi',[
 
                     prepareConfig(config, 'GET', token);
                     // assume binary as blob
-                    config.responseType = 'blob';
+//                    config.responseType = 'blob';
 
                     $http(config).then(
                         function(response){
