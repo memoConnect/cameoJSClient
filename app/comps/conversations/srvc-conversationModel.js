@@ -580,7 +580,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 }
 
                 if(this.keyTransmission == 'symmetric' && self.password){
-                    self.encryptedPassphraseList = [{keyId: '_passwd', encryptedPassphrase: cmCrypt.encryptWithShortKey(self.password, self.passphrase)}]
+                    self.encryptedPassphraseList = [{keyId: '_passwd', encryptedPassphrase: cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(self.password, self.passphrase))}]
                 }
 
                 return this
@@ -603,7 +603,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     if(!self.passphrase){
                         self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase, item.keyId) || '';
                         if(item.keyId == "_passwd"){
-                            self.passphrase = cmCrypt.decrypt(self.password, item.encryptedPassphrase) || '';
+                            self.passphrase = cmCrypt.decrypt(self.password, cmCrypt.base64Decode(item.encryptedPassphrase)) || '';
                         }
                     }
                 });

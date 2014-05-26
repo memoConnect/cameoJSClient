@@ -207,7 +207,8 @@ angular.module('cmCore')
             this.encrypt = function(passphrase) {
 
                 this.raw
-                    ?   this.encryptedRaw = cmCrypt.encryptWithShortKey(passphrase, this.raw, true)     //Todo: long Key!
+//                    ?   this.encryptedRaw = cmCrypt.encryptWithShortKey(passphrase, this.raw, true)     //Todo: long Key!
+                    ?   this.encryptedRaw = cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(passphrase, this.raw))     //Todo: long Key!
                     :   cmLogger.error('Unable ro encrypt; chunk.raw is empty.  Try calling chunk.blobToBinaryString() first.')
 
                 return this
@@ -240,7 +241,7 @@ angular.module('cmCore')
              */
             this.decrypt = function(passphrase){
                 this.encryptedRaw
-                    ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw, true)
+                    ?   this.raw = cmCrypt.decrypt(passphrase, cmCrypt.base64Decode(this.encryptedRaw))
                     :   cmLogger.error('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.')
 
                 return this
@@ -475,7 +476,7 @@ angular.module('cmCore')
 
             this.encryptName = function(){
                 if(this.name){
-                    this.encryptedName = cmCrypt.encryptWithShortKey(this.passphrase, this.name);
+                    this.encryptedName = cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(this.passphrase, this.name));
                 } else {
                     cmLogger.error('Unable to encrypt filename; cmFile.name missing. Try calling cmFile.importFile() first.');
                 }
@@ -485,7 +486,7 @@ angular.module('cmCore')
 
             this.decryptName = function() {
                 if(this.encryptedName){
-                    this.name = cmCrypt.decrypt(this.passphrase, this.encryptedName);
+                    this.name = cmCrypt.decrypt(this.passphrase, cmCrypt.base64Decode(this.encryptedName));
                 } else {
                     cmLogger.error('Unable to decrypt filename; cmFile.encryptedFileName missing. Try calling cmFile.imporByFile) first.');
                 }
