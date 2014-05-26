@@ -696,12 +696,13 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * Event Handling
              */
             this.on('feedback:decrypt:fail', function(){
-//                cmLogger.debug('on:feedback:decrypt:fail')
                 cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG',{ttl:2000})
             });
 
             this.on('message-added', function(event, message){
-                message.decrypt(self.passphrase);
+                if(self.passphrase != ''){
+                    message.decrypt(self.passphrase);
+                }
             });
         }
 
