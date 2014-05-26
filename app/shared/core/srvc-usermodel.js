@@ -2,6 +2,7 @@
 
 angular.module('cmCore')
 .service('cmUserModel',[
+
     'cmAuth',
     'cmLocalStorage', 
     'cmIdentityFactory', 
@@ -12,6 +13,7 @@ angular.module('cmCore')
     '$rootScope', 
     '$q', 
     '$location',
+
     function(cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmObject, cmNotify, cmLogger, $rootScope, $q, $location){
         var self = this,
             isAuth = false,
@@ -146,7 +148,7 @@ angular.module('cmCore')
                     cmAuth.storeToken(token);
 
                     self.init();
-
+                    $rootScope.$broadcast('login');
                     deferred.resolve();
                 },
                 function(state, response){
