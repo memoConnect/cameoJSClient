@@ -73,31 +73,21 @@ angular.module('cmCore').factory('cmIdentityModel',[
             this.getAvatar = function(){
                 var defer = $q.defer();
                 // get avatar
-                if(this.avatarId) {
+                if(this.avatarId){
                     // create avatar promise
-                    if (this.avatarPromise == undefined) {
+                    if(this.avatarPromise == undefined){
                         this.avatarPromise = defer;
                         // api call
                         cmApi.getBinary({
                             path: "/file/" + this.avatarId + "/" + 0
-//                            exp_ok: 'chunk'
-                            // resolve all waiter
-//                        }).then(function (base64) {
-//                            self.avatar = base64;
-//                            self.avatarPromise.resolve(base64);
-//                        });)
-                        }).then(function (binary) {
-                            console.log('getAvatar then '+self.avatarId)
-                            self.avatar = binary;
-                            self.avatarPromise.resolve(binary);
+                        }).then(function(blob){
+                            self.avatar = blob;
+                            self.avatarPromise.resolve(blob);
                         });
-                    } else {
-                        console.log('getAvatar else '+self.avatarId)
                     }
                     // else get resolved promise
                 // reject promise
                 } else {
-                    console.log('getAvatar reject '+self.avatarId)
                     this.avatarPromise = defer;
                     this.avatarPromise.reject();
                 }

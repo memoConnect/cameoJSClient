@@ -290,13 +290,13 @@ angular.module('cmCore').provider('cmApi',[
                 api.jsonp	= function(config, force){ return (force || call_stack_disabled) ? api('JSONP',  config) : api.stack('JSONP',  config) }
 
 
-                // binary
+                // binary mock
                 api.getBinary = function(config){
                     var deferred = $q.defer(),
                         token = $injector.has('cmAuth') ? $injector.get('cmAuth').getToken() : undefined;
 
                     prepareConfig(config, 'GET', token)
-
+                    // assume binary as blob
                     config.responseType = 'blob';
 
                     $http(config).then(

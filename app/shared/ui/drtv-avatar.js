@@ -24,12 +24,6 @@ angular.module('cmUi').directive('cmAvatar',[
                         identity
                             .getAvatar()
                             .then(
-//                                function(base64){
-//                                    if(base64.search('\r') != -1){
-//                                        base64 = base64.replace(/(\r\n|\n|\r)/gm,'');
-//                                    }
-//                                    element.css({'background-image': 'url(' + base64 +')'});
-//                                },
                                 function(blob){
                                     var urlCreator = window.URL || window.webkitURL;
                                     var imageUrl = urlCreator.createObjectURL( blob );
