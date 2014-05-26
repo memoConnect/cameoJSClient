@@ -36,7 +36,6 @@ describe('cmSecurityAspects', function(){
             value:          1,
             dependencies:   ['SA1'],
             check:          function(target){
-                                console.log(target.my_method())
                                 return target.my_method() == 'ping'
                             }
         })
