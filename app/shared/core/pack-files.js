@@ -203,7 +203,6 @@ angular.module('cmCore')
             }
 
             this.encrypt = function(passphrase) {
-
                 this.raw
                     ?   this.encryptedRaw = cmCrypt.encryptWithShortKey(passphrase, this.raw)  //Todo: long Key!
                     :   cmLogger.error('Unable ro encrypt; chunk.raw is empty.  Try calling chunk.blobToBinaryString() first.')

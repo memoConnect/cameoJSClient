@@ -51,9 +51,9 @@ angular.module('cmCore').service('cmCrypt',[
             encryptWithShortKey: function (secretKey, secretString) {
                 var parameters = { cipher: "aes", ks: 256, iter: 4096 };
 
-//                if(secretKey == ''){
-//                    return withoutBase64 ? secretString : _Base64.encode(secretString);
-//                }
+                if(secretKey == ''){
+                    return secretString;
+                }
 
                 if (null == secretString)
                     return "";
@@ -73,9 +73,9 @@ angular.module('cmCore').service('cmCrypt',[
             encrypt: function (secretKey, secretString) {
                 var parameters = {cipher: "aes", ks: 256, iter: 500 };
 
-//                if(secretKey == ''){
-//                    return withoutBase64 ? secretString : _Base64.encode(secretString);
-//                }
+                if(secretKey == ''){
+                    return secretString;
+                }
 
                 if (null == secretString)
                     return "";
@@ -94,9 +94,10 @@ angular.module('cmCore').service('cmCrypt',[
              * @returns decrypted string
              */
             decrypt: function (secretKey, secretString) {
-//                if(secretKey == ''){
-//                    return withoutBase64 ? secretString : _Base64.decode(secretString);
-//                }
+                if(secretKey == ''){
+                    return secretString;
+                }
+
 
                 if (null == secretString)
                     return false;
