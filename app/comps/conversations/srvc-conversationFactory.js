@@ -1,46 +1,17 @@
 'use strict';
 
-angular.module('cmConversations').factory('cmConversationFactory',[
+angular.module('cmConversations').service('cmConversationFactory',[
+
     '$rootScope',
+    'cmFactory',
     'cmConversationModel',
-    function ($rootScope, cmConversationModel){
-        var instances = [];
 
-        $rootScope.$on('logout', function(){
-            instances = [];
-        });
+    function ($rootScope, cmFactory, cmConversationModel){
 
-        return {
-            create: function(data){
-                var i = 0,
-                    conversation = null;
+        var conversationFactory = new cmFactory(cmConversationModel)
 
-                if(typeof data !== 'undefined'){
-                    while(i < instances.length){
-                        if(typeof instances[i] === 'object' &&
-                            instances[i].id == data.id){
+        $rootScope.$on('logout', function(){ conversationFactory.reset() })
 
-                            conversation = instances[i];
-                            break;
-                        }
-                        i++;
-                    }
-
-                    if(conversation === null){
-                        conversation = new cmConversationModel(data);
-                        instances.push(conversation);
-                    }
-
-                } else {
-                    conversation = new cmConversationModel();
-                    instances.push(conversation);
-                }
-
-                return conversation;
-            },
-            getQty: function(){
-                return instances.length;
-            }
-        }
+        return  conversationFactory
     }
 ])
