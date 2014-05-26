@@ -39,6 +39,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.lastMessage        = undefined
 
+            this.passphrase         = ''
+
             var self = this
 
 
@@ -696,6 +698,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.on('feedback:decrypt:fail', function(){
 //                cmLogger.debug('on:feedback:decrypt:fail')
                 cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG',{ttl:2000})
+            });
+
+            this.on('message-added', function(event, message){
+                message.decrypt(self.passphrase);
             });
         }
 
