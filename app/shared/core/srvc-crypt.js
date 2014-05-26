@@ -25,6 +25,24 @@ angular.module('cmCore').service('cmCrypt',[
             },
 
             /**
+             * this methods encodes a string base64
+             * @param string
+             * @returns {*}
+             */
+            base64Encode: function(string){
+                return _Base64.encode(string);
+            },
+
+            /**
+             * this method decodes a string base64
+             * @param string
+             * @returns {*}
+             */
+            base64Decode: function(string){
+                return _Base64.decode(string);
+            },
+
+            /**
              * this method encrypts strings
              * @param secretKey a secret key with max len of 10 chars
              * @param secretString a string that should be enrypted
@@ -44,7 +62,7 @@ angular.module('cmCore').service('cmCrypt',[
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                return withoutBase64 ? encryptedSecretString : _Base64.encode(encryptedSecretString);
+                return withoutBase64 ? encryptedSecretString : this.base64Encode(encryptedSecretString);
             },
             /**
              * this method encrypts strings
@@ -67,7 +85,7 @@ angular.module('cmCore').service('cmCrypt',[
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                return withoutBase64 ? encryptedSecretString : _Base64.encode(encryptedSecretString);
+                return withoutBase64 ? encryptedSecretString : this.base64Encode(encryptedSecretString);
             },
             /**
              * this method decrypts uuencoded strings
@@ -83,7 +101,7 @@ angular.module('cmCore').service('cmCrypt',[
                 if (null == secretString)
                     return false;
 
-                var decodedSecretString = withoutBase64 ? secretString : _Base64.decode(secretString),
+                var decodedSecretString = withoutBase64 ? secretString : this.base64Decode(secretString),
                     decryptedString;
 
                 try {
