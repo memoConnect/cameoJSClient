@@ -246,9 +246,9 @@ angular.module('cmCore')
                 return this
             }
 
-            this.binaryStringToBlob = function(){
+            this.binaryStringToBlob = function(contentType){
                 this.raw
-                    ?   this.blob = binaryStringtoBlob(this.raw)
+                    ?   this.blob = binaryStringtoBlob(this.raw, contentType)
                     :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.')
                 return this
             }
