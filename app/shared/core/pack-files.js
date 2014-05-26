@@ -20,11 +20,10 @@ angular.module('cmCore')
             },
 
             addChunk: function(fileId, index, chunk) {
-                return cmApi.post({
+                return cmApi.postBinary({
                     path: '/file/'+fileId,
-                    data: {
-                        chunk: chunk
-                    },
+//                    data: {chunk: chunk},
+                    data: chunk,
                     headers: {
                         "X-Index": index
                     }
@@ -44,9 +43,8 @@ angular.module('cmCore')
             },
 
             getChunk: function(fileId, chunkId){
-                return cmApi.get({
-                    path: '/file/'+fileId+'/'+chunkId,
-                    exp_ok: 'chunk'
+                return cmApi.getBinary({
+                    path: '/file/'+fileId+'/'+chunkId
                 })
             }
         }
