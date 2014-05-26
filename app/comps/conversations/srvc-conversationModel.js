@@ -122,7 +122,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 if(this.messages.indexOf(message) == -1){
                     this.messages.push( message )
                     this.lastMessage = message
-                    this.trigger('message-added', message)
+                    this.trigger('message:added', message)
                 } else {
                     cmLogger.warn('conversationModel: unable to add message; duplicate detected. (id:'+message.id+')')
                 }
@@ -699,7 +699,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG',{ttl:2000})
             });
 
-            this.on('message-added', function(event, message){
+            this.on('message:added', function(event, message){
                 if(self.passphrase != ''){
                     message.decrypt(self.passphrase);
                 }
