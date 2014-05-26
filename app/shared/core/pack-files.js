@@ -331,7 +331,9 @@ angular.module('cmCore')
     'cmCrypt',
     'cmObject',
     '$q',
-    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, $q){
+    'cmModal',
+    'cmEnv',
+    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, $q, cmModal, cmEnv){
 
         function roundToTwo(num) {
             return +(Math.round(num + 'e+2') + 'e-2');
@@ -669,15 +671,24 @@ angular.module('cmCore')
             };
 
             this.promptSaveAs = function(){
-                var self = this;
+                // iOS can't save blob via browser
 
-                this.name && this.blob
-                    ?   saveAs(
-                    this.blob,
-                    this.name
-                )
-                    :   cmLogger.error('Unable to prompt saveAs; cmFile.blob is missing, try cmFile.importByFile().')
+                var downloadAttrSupported = ( "download" in document.createElement("a") );
+                var iOSWorkingMimeTypes = ( this.type.match(/(application\/pdf)/g) ? true : false );
 
+                if(cmEnv.isiOS && !downloadAttrSupported && !iOSWorkingMimeTypes){
+                    cmModal.create({
+                        id:'saveas',
+                        type: 'alert'
+                    },'<span>{{\'NOTIFY.SAVE_AS.IOS_NOT_SUPPORT\'|cmTranslate}}</span>');
+                    cmModal.open('saveas');
+                } else {
+                    if(this.name && this.blob){
+                        saveAs(this.blob, this.name);
+                    } else {
+                        cmLogger.error('Unable to prompt saveAs; cmFile.blob is missing, try cmFile.importByFile().');
+                    }
+                }
                 return this;
             };
 

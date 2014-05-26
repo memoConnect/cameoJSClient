@@ -5,6 +5,11 @@ describe('cmFileFactory', function(){
         tmpInstance_1 = 'moep_1',
         tmpInstance_2 = 'moep_2';
 
+    beforeEach(function(){
+        module(function($provide){
+            $provide.constant('cmEnv',{});
+        })
+    })
     beforeEach(module('cmCore'));
     beforeEach(inject(function(_cmFileFactory_){
         cmFileFactory = _cmFileFactory_

@@ -95,6 +95,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.subject                 = data.subject      || this.subject
 
                 this.encryptedPassphraseList = this.encryptedPassphraseList.concat(data.encryptedPassphraseList || [])
+                /**
+                 * muss bleiben, aktuelle falsche stelle, sollte in die init
+                 */
+                this.setEncryptionType();
+                this.initPassCaptcha(data);
 
                 var messages = data.messages || []
                 messages.forEach(
@@ -155,18 +160,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
             /* COVERSATION REFACTORING todo:
 
             CONVERSATION REFACTORING */
-
-
-
-
             this.getSubjectLine = function(){
-
                 var lastMessage = this.getLastMessage();
-
-                return     this.subject
-
+                return this.subject
                         || (lastMessage && lastMessage.from ? lastMessage.from.getDisplayName() : false)
-
                         || this.getRecipientList()
 
             }
@@ -621,10 +618,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return this;
             }
 
-            this.decrypt = function () {
+            this.decrypt = function (feedback) {
                 this.decryptPassphrase()
                 var success = true
-                if (this.passphrase) {
+                if (this.passphrase != '') {
                     this.messages.forEach(function (message) {
                         if(typeof self.passphrase !== "undefined"){
                             success = success && message.decrypt(self.passphrase); //@TODO
@@ -632,7 +629,18 @@ angular.module('cmConversations').factory('cmConversationModel',[
                             success = false
                         }
                     })
+                } else {
+                    success = false
                 }
+
+                if(success !== false){
+                    this.trigger('decrypt:ok');
+                } else {
+                    if(typeof feedback === 'boolean' && feedback !== false){
+                        this.trigger('feedback:decrypt:fail');
+                    }
+                }
+
                 return success
             };
 
@@ -678,11 +686,17 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return 'safetylevel-'+className+addon;
             };
 
-
-
             //this.init(data);
 
             this._init(data)
+
+            /**
+             * Event Handling
+             */
+            this.on('feedback:decrypt:fail', function(){
+//                cmLogger.debug('on:feedback:decrypt:fail')
+                cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG',{ttl:2000})
+            });
         }
 
         return ConversationModel;

@@ -11,10 +11,14 @@ require.config({
         'angular-route': 'vendor/angular/angular-route',
         'angular-resource': 'vendor/angular/angular-resource',
         'angular-cookies': 'vendor/angular/angular-cookies',
+        'angular-animate': 'vendor/angular/angular-animate',
         'angular-swipe': 'vendor/angular/angular-swipe',
+        'angular-sanitize': 'vendor/angular/angular-sanitize',
 
         'angular-translate': 'vendor/angular-translate/angular-translate',
         'angular-growl': 'vendor/angular-growl/angular-growl',
+
+        'angular-loading-bar': 'vendor/util/loading-bar',
 
         'angular-moment-wrap': 'vendor/angular-moment/angular-moment',
         'moment': 'vendor/angular-moment/moment-with-langs',
@@ -52,16 +56,21 @@ require.config({
         'ngload': ['angularAMD'],
         'angular-route': ['angular'],
         'angular-cookies': ['angular'],
+        'angular-animate': ['angular'],
         'angular-swipe': ['angular'],
         'angular-translate': ['angular'],
+        'angular-sanitize': ['angular'],
         'angular-growl': ['angular'],
         'angular-moment-wrap': ['angular','moment'],
+
+        'angular-loading-bar': ['angular', 'angular-animate'],
 
         // packages
         'pckCore': [
             'angular',
             'angular-growl',
             'angular-translate',
+            'angular-sanitize',
             'util-base64',
             'crypto-sjcl',
             'crypto-jsencrypt'
@@ -90,7 +99,8 @@ require.config({
         ],
         'pckFiles': [
             'pckCore',
-            'vendor/filesaver/filesaver',
+//            'vendor/filesaver/filesaver',
+            'vendor/filesaver/saveAs',
             'angular-resource',
             'util-base64_decode'
         ]

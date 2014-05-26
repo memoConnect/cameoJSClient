@@ -2,7 +2,7 @@
     <i class="fa cm-close"></i>
     <div class="file-image" ng-if="isImage(file.type)">
         <div cm-spinner ng-hide="file.loaded"></div>
-        <img cm-blob-view="file" />
+        <img cm-blob-image="file" />
     </div>
     <div ng-if="!isImage(file.type)" class="file {{cmFileTypes.find(file.type, file.name)}}"></div>
 </div>

@@ -4,6 +4,9 @@ define([
     'angular-cookies',
     'angular-swipe',
     'angular-moment-wrap',
+
+    'angular-loading-bar',
+
     // cameo files
     'pckCore',
     'pckUi',
@@ -16,6 +19,7 @@ define([
         'ngCookies',
         'swipe',
         'angularMoment',
+        'angular-loading-bar',
         'cmCore',
         'cmUi'
     ]);
@@ -136,8 +140,8 @@ define([
 
     // app run handling
     app.run([
-        '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmLanguage', 'cmLogger',
-        function ($rootScope, $location, $window, $route, cmUserModel, cmLanguage, cmLogger) {
+        '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmLanguage', 'cmLogger','cfpLoadingBar','cmEnv',
+        function ($rootScope, $location, $window, $route, cmUserModel, cmLanguage, cmLogger, cfpLoadingBar, cmEnv) {
 
             //prep $rootScope with useful tools
             $rootScope.console = console
@@ -242,6 +246,20 @@ define([
 //            window.onresize = function() { initScreenWidth(32) }
 
 
+            /**
+             * Loading Bar on RouteChange
+             */
+            $rootScope.$on('$routeChangeStart', function(){
+                if(cmEnv.loadingBar !== false){
+                    cfpLoadingBar.start();
+                }
+            });
+
+            $rootScope.$on('$routeChangeSuccess', function(){
+                if(cmEnv.loadingBar !== false){
+                    cfpLoadingBar.complete();
+                }
+            })
         }
     ]);
 

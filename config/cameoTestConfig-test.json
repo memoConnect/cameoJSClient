@@ -1,7 +1,8 @@
 {
     "config": {
         "wwwUrl": "http://localhost:9000/m/",
-        "autoLogin": false
+        "autoLogin": false,
+        "loadingBar": false
     },
     "testData": [
         "loginUser1 = 'BMeSfHXQ'",
