@@ -244,9 +244,9 @@ angular.module('cmCore')
                 return this
             }
 
-            this.binaryStringToBlob = function(contentType){
+            this.binaryStringToBlob = function(){
                 this.raw
-                    ?   this.blob = binaryStringtoBlob(this.raw, contentType)
+                    ?   this.blob = binaryStringtoBlob(this.raw)
                     :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.')
                 return this
             }
@@ -273,6 +273,7 @@ angular.module('cmCore')
                 }
 
                 if(explicit !== true) {
+                    // existing via id
                     if (typeof data == 'string') {
                         while (i < instances.length) {
                             if (typeof instances[i] === 'object' &&
@@ -283,6 +284,7 @@ angular.module('cmCore')
 
                             i++;
                         }
+                    //
                     } else if (typeof data == 'object') {
                         while (i < instances.length) {
                             if (typeof instances[i] === 'object' &&
@@ -295,7 +297,7 @@ angular.module('cmCore')
                         }
                     }
                 }
-
+                // create model
                 if(file == null){
                     file = new cmFileModel(data);
                     instances.push(file);
@@ -556,6 +558,8 @@ angular.module('cmCore')
                     data.push(chunk.blob)
                 })
 
+                console.log('reassembleChunks',data);
+
                 this.blob = new Blob(data, {type: self.type})
 
                 self.trigger('file:cached', this);
@@ -721,10 +725,12 @@ angular.module('cmCore')
              */
             this.init = function(fileData, chunkSize){
                 if(typeof fileData !== 'undefined'){
+                    // existing file via fileId
                     if(typeof fileData == 'string'){
                         this
                             .setState('exists')
                             .id = fileData;
+                    // fileApi blob prepare upload
                     } else if(typeof fileData == 'object'){
                         this
                             .setState('new')
