@@ -15,7 +15,7 @@ angular.module('cmCore')
          */
 
 
-        var cmFactory = function(data){
+        return function cmFactory(data){
 
             this.model      = undefined     //expects model to have .refresh() function
             this.instances  = []
@@ -94,7 +94,5 @@ angular.module('cmCore')
 
             this._init(data)
         }
-
-        return factory
     }
 ])

@@ -1,10 +1,12 @@
 'use strict';
 
 angular.module('cmContacts').directive('cmAddExternalContact',[
+
     'cmContactsModel',
     'cmLogger',
     'cmNotify',
     '$location',
+    
     function (cmContactsModel, cmLogger, cmNotify, $location){
 
         function fulltrim(string){
