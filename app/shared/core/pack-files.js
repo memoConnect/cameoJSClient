@@ -205,8 +205,7 @@ angular.module('cmCore')
             this.encrypt = function(passphrase) {
 
                 this.raw
-//                    ?   this.encryptedRaw = cmCrypt.encryptWithShortKey(passphrase, this.raw, true)     //Todo: long Key!
-                    ?   this.encryptedRaw = cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(passphrase, this.raw))     //Todo: long Key!
+                    ?   this.encryptedRaw = cmCrypt.encryptWithShortKey(passphrase, this.raw)  //Todo: long Key!
                     :   cmLogger.error('Unable ro encrypt; chunk.raw is empty.  Try calling chunk.blobToBinaryString() first.')
 
                 return this
@@ -239,7 +238,8 @@ angular.module('cmCore')
              */
             this.decrypt = function(passphrase){
                 this.encryptedRaw
-                    ?   this.raw = cmCrypt.decrypt(passphrase, cmCrypt.base64Decode(this.encryptedRaw))
+//                    ?   this.raw = cmCrypt.decrypt(passphrase, cmCrypt.base64Decode(this.encryptedRaw))
+                    ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw)
                     :   cmLogger.error('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.')
 
                 return this
