@@ -474,7 +474,7 @@ angular.module('cmCore')
 
             this.encryptName = function(){
                 if(this.name){
-                    this.encryptedName = cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(this.passphrase, this.name));
+                    this.encryptedName = cmCrypt.encryptWithShortKey(this.passphrase, this.name);
                 } else {
                     cmLogger.error('Unable to encrypt filename; cmFile.name missing. Try calling cmFile.importFile() first.');
                 }
@@ -484,7 +484,7 @@ angular.module('cmCore')
 
             this.decryptName = function() {
                 if(this.encryptedName){
-                    this.name = cmCrypt.decrypt(this.passphrase, cmCrypt.base64Decode(this.encryptedName));
+                    this.name = cmCrypt.decrypt(this.passphrase, this.encryptedName);
                 } else {
                     cmLogger.error('Unable to decrypt filename; cmFile.encryptedFileName missing. Try calling cmFile.imporByFile) first.');
                 }
