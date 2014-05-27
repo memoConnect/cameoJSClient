@@ -1,17 +1,16 @@
 'use strict';
 
 angular.module('cmUi').directive('cmIcons',[
-    function cmSafetyLevel(){
+    function cmIcons(){
         return {
             restrict:   'AE',
             template:   '',
-            scope:      {
-                            alt :   "@",
-                            count:  "@",
-                            icons:  "@"
-                        },
+            scope:      {},
 
             link: function(scope, element, attrs){
+
+                scope.icons = attrs.icons
+
                 function draw(){
                     // clear all
                     element.children().remove();
@@ -25,22 +24,13 @@ angular.module('cmUi').directive('cmIcons',[
                     }
                 }
 
+
                 scope.$watch(attrs.count, function(count) {
                     scope.count = count
                     draw()
                 })
 
-                scope.$watch(attrs.icons, function(icon) {
-                    scope.icons = icon
-                    console.log(icon)
-                    draw()
-                })
-
-                scope.$watch(attrs.alt, function(alt) {
-                    scope.alt = alt
-                    draw()
-                })
-
+                draw()
             }
         }
     }
