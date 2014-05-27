@@ -161,7 +161,7 @@ define([
                     if (!path_regex.test(path)) {
                         $location.path("/login");
                     }
-                } else if (path == "/login" || path == "/registration") {
+                } else if ((path == "/login" || path == "/registration") && cmUserModel.isGuest() !== true) {
                     $location.path("/talks");
                 } else if (path == "/logout"){
                     cmUserModel.doLogout();
