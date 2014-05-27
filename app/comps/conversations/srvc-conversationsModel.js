@@ -3,12 +3,13 @@
 angular.module('cmConversations').service('cmConversationsModel', [
 
     'cmConversationsAdapter',
-    'cmConversationFactory',
+    'cmConversationFactory',    
+    'cmSecurityAspectsConversation',
     'cmObject',
     '$q',
     '$rootScope',
 
-    function(cmConversationsAdapter, cmConversationFactory, cmObject, $q, $rootScope) {
+    function(cmConversationsAdapter, cmConversationFactory, cmSecurityAspectsConversation, cmObject, $q, $rootScope) {
         var self = this,
             events = {};
 
@@ -17,6 +18,8 @@ angular.module('cmConversations').service('cmConversationsModel', [
         this.quantity       = 0;
         this.limit          = 10; // 5
         this.offset         = 0; //13
+
+        this.securityAspects = new cmSecurityAspectsConversation(this)
 
         $rootScope.$on('logout', function(){
             self.conversations = [];
