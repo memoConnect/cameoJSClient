@@ -159,15 +159,6 @@ cm-modal {
         height: @cm-unit*0.66;
       }
     }
-    &.webreader{
-      text-align:center;
-      .attention{
-        .cm-orange;
-      }
-      .redirect{
-        .cm-grey;
-      }
-    }
   }
 
   .nose {
@@ -242,4 +233,18 @@ cm-modal {
     }
   }
 
+  &.webreader{
+    font-size:@cm-large-font;
+    text-align:center;
+    .attention{
+      .cm-orange;
+    }
+    .redirect{
+      .cm-grey;
+      text-align:center;
+      i{
+        .cm-grey;
+      }
+    }
+  }
 }
