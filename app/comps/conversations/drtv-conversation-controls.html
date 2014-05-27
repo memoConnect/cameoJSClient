@@ -2,8 +2,6 @@
     <div cm-transparent-bg ng-show="bodyVisible" ng-click="toggleControls()"></div>
     <div ng-show="bodyVisible" class="body" data-qa="conversation-options-menu">
 
-        
-
         <div class="cm-form-group" ng-show="isNew">
             <div class="cm-form-control with-inputter">
                 <input type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" cm-adaptive-change data-qa="input-subject"/>
@@ -11,6 +9,9 @@
         </div>
 
         <div class="body-group">
+            
+            <cm-icons count="4" icon="cm-lock"></cm-icons>
+
             <div class="recipients-list">
                 <cm-avatar cm-data="recipient" cm-with-name="true" cm-view="hide-owner" ng-repeat="recipient in conversation.recipients"></cm-avatar>
 
