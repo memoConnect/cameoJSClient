@@ -8,14 +8,18 @@ angular.module('cmUser').directive('cmUserRights', [
             restrict : 'AE',
             link: function(scope, element, attrs){
                 function removeElement(){
-                    if(cmUserModel.isGuest() !== false){
+                    // remove for guest
+                    if(cmUserModel.isGuest() !== false && attrs['cmUserRights'] == ''){
+                        element.remove();
+                    // remove for logged user
+                    } else if(attrs['cmUserRights'] == 'showForGuest' && cmUserModel.isGuest() === false) {
                         element.remove();
                     }
                 }
 
                 cmUserModel.on('init',function(){
                     removeElement();
-                })
+                });
 
                 removeElement();
             }

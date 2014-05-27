@@ -8,9 +8,10 @@ angular.module('cmConversations').directive('cmConversation', [
     'cmCrypt',
     'cmLogger',
     'cmNotify',
+    'cmModal',
     '$location',
     '$rootScope',
-    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location, $rootScope) {
+    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope) {
         return {
             restrict: 'AE',
             templateUrl: 'comps/conversations/drtv-conversation.html',
@@ -27,6 +28,25 @@ angular.module('cmConversations').directive('cmConversation', [
                 $scope.isSending = false;
                 $scope.conversation = {};
 
+                /**
+                 * modal for fast registration
+                 */
+                $scope.openFastRegister = function(){
+                    cmModal.create({
+                        id: 'fast-registration',
+                        type: 'plain',
+                        nose: 'top-right',
+                        'cm-close-btn': false
+                    },'' +
+                        '<div>Zum nutzen dieser Fkuntionfsjidk gnsd jfgndkj</div>' +
+                        '<footer>' +
+                            '<button class="btn cm-btn cm-btn-lg cm-btn-block cm-btn-primary" ng-click="close()">' +
+                            '<span>{{\'MODAL.ALERT.LATER\'|cmTranslate}}</span>' +
+                            '</button>' +
+                        '</footer>'
+                    );
+                    cmModal.open('fast-registration')
+                };
 
                 /**
                  * check if is new
