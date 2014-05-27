@@ -20,11 +20,10 @@ angular.module('cmCore')
             },
 
             addChunk: function(fileId, index, chunk) {
-                return cmApi.post({
+                return cmApi.postBinary({
                     path: '/file/'+fileId,
-                    data: {
-                        chunk: chunk
-                    },
+//                    data: {chunk: chunk},
+                    data: chunk,
                     headers: {
                         "X-Index": index
                     }
@@ -44,9 +43,8 @@ angular.module('cmCore')
             },
 
             getChunk: function(fileId, chunkId){
-                return cmApi.get({
-                    path: '/file/'+fileId+'/'+chunkId,
-                    exp_ok: 'chunk'
+                return cmApi.getBinary({
+                    path: '/file/'+fileId+'/'+chunkId
                 })
             }
         }
@@ -205,9 +203,8 @@ angular.module('cmCore')
             }
 
             this.encrypt = function(passphrase) {
-
                 this.raw
-                    ?   this.encryptedRaw = cmCrypt.encryptWithShortKey(passphrase, this.raw, true)     //Todo: long Key!
+                    ?   this.encryptedRaw = cmCrypt.encryptWithShortKey(passphrase, this.raw)  //Todo: long Key!
                     :   cmLogger.error('Unable ro encrypt; chunk.raw is empty.  Try calling chunk.blobToBinaryString() first.')
 
                 return this
@@ -234,14 +231,14 @@ angular.module('cmCore')
             }
 
             /**
-             * @TODO leere phasephrase ??!??!
              * @param passphrase
              * @returns {Chunk}
              */
             this.decrypt = function(passphrase){
                 this.encryptedRaw
-                    ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw, true)
+                    ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw)
                     :   cmLogger.error('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.')
+
 
                 return this
             }
@@ -275,6 +272,7 @@ angular.module('cmCore')
                 }
 
                 if(explicit !== true) {
+                    // existing via id
                     if (typeof data == 'string') {
                         while (i < instances.length) {
                             if (typeof instances[i] === 'object' &&
@@ -285,6 +283,7 @@ angular.module('cmCore')
 
                             i++;
                         }
+                    //
                     } else if (typeof data == 'object') {
                         while (i < instances.length) {
                             if (typeof instances[i] === 'object' &&
@@ -297,7 +296,7 @@ angular.module('cmCore')
                         }
                     }
                 }
-
+                // create model
                 if(file == null){
                     file = new cmFileModel(data);
                     instances.push(file);
@@ -509,7 +508,7 @@ angular.module('cmCore')
                 if(this.chunks){
                     this._encryptChunk(0);
                 } else {
-                    console.log(this.chunks)
+//                    console.log(this.chunks)
                     cmLogger.error('Unable to encrypt chunks; cmFile.chunks missing. Try calling cmFile.chopIntoChunks() first.');
                 }
 
@@ -557,6 +556,8 @@ angular.module('cmCore')
                 this.chunks.forEach(function(chunk){
                     data.push(chunk.blob)
                 })
+
+//                console.log('reassembleChunks',data);
 
                 this.blob = new Blob(data, {type: self.type})
 
@@ -723,10 +724,12 @@ angular.module('cmCore')
              */
             this.init = function(fileData, chunkSize){
                 if(typeof fileData !== 'undefined'){
+                    // existing file via fileId
                     if(typeof fileData == 'string'){
                         this
                             .setState('exists')
                             .id = fileData;
+                    // fileApi blob prepare upload
                     } else if(typeof fileData == 'object'){
                         this
                             .setState('new')

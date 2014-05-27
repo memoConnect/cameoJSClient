@@ -6,8 +6,9 @@ angular.module('cmCore').factory('cmIdentityModel',[
     'cmObject',
     'cmLogger',
     'cmApi',
+    'cmFileFactory',
     '$q',
-    function(cmAuth, cmCrypt, cmObject, cmLogger, cmApi, $q){
+    function(cmAuth, cmCrypt, cmObject, cmLogger, cmApi, cmFileFactory, $q){
         var Identity = function(identity_data){
 
             this.id,
@@ -68,32 +69,17 @@ angular.module('cmCore').factory('cmIdentityModel',[
 
             /**
              * get and cached avatar of identity
-             * @returns {promise}
+             *
              */
             this.getAvatar = function(){
-                var defer = $q.defer();
-                // get avatar
-                if(this.avatarId) {
-                    // create avatar promise
-                    if (this.avatarPromise == undefined) {
-                        this.avatarPromise = defer;
-                        // api call
-                        cmApi.get({
-                            path: "/file/" + this.avatarId + "/" + 0,
-                            exp_ok: 'chunk'
-                        // resolve all waiter
-                        }).then(function (base64) {
-                            self.avatar = base64;
-                            self.avatarPromise.resolve(base64);
-                        });
-                    }
-                    // else get resolved promise
-                // reject promise
-                } else {
-                    this.avatarPromise = defer;
-                    this.avatarPromise.reject();
+                if(this.avatarId){
+                    var file = cmFileFactory.create(this.avatarId);
+                        file.setPassphrase('')
+                            .downloadStart();
+
+                    return file;
                 }
-                return this.avatarPromise.promise;
+                return false;
             };
 
             this.addKey = function(key_data){

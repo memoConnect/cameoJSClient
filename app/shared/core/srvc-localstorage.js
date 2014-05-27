@@ -93,13 +93,15 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt','$rootScope', fu
             if(value == null){
                 return {}
             } else {
-                return JSON.parse(cmCrypt.decrypt(cryptKey,value));
+//                return JSON.parse(cmCrypt.decrypt(cryptKey,value));
+                return JSON.parse(cmCrypt.decrypt(cryptKey,cmCrypt.base64Decode(value)));
             }
         }
 
         function saveStorageValue(value){
             try {
-                LocalStorageAdapter.save(storageKey, cmCrypt.encrypt(cryptKey,JSON.stringify(value)));
+//                LocalStorageAdapter.save(storageKey, cmCrypt.encrypt(cryptKey,JSON.stringify(value)));
+                LocalStorageAdapter.save(storageKey, cmCrypt.base64Encode(cmCrypt.encrypt(cryptKey,JSON.stringify(value))));
                 return true;
             } catch(e){
                 //
