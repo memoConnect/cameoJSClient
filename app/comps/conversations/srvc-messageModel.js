@@ -84,6 +84,14 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
             this.decrypt = function (passphrase) {
 //                var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase, cmCrypt.base64Decode(this.encryptedData)));
+
+                /**
+                 * @TODO Workaround for old Messages in dev and stage
+                 */
+                if(typeof this.encryptedData == 'string' && this.encryptedData != '' && this.encryptedData.charAt(0) != '{'){
+                    this.encryptedData = cmCrypt.base64Decode(this.encryptedData);
+                }
+
                 var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase,this.encryptedData));
 
                 // expose data on message Object
