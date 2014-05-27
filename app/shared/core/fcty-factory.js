@@ -71,7 +71,7 @@ angular.module('cmCore')
              */
 
             self.register = function(instance){
-                if(self.indexOf(instance)){
+                if(self.indexOf(instance) == -1){
                     self.push(instance)
                     self.trigger('register', instance)
 
