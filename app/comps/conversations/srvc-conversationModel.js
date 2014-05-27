@@ -12,10 +12,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmNotify',
     'cmObject',
     'cmLogger',
+    'cmSecurityAspectsConversation',
     '$q',
     '$rootScope',
 
-    function (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, cmLogger, $q, $rootScope){
+    function (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, cmLogger, cmSecurityAspectsConversation,$q, $rootScope){
 
         /**
         * Represents a Conversation.

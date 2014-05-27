@@ -47,7 +47,8 @@ require.config({
         'pckValidate': 'comps/validate/package',
         'pckUi': 'shared/ui/package',
         'pckConversations': 'comps/conversations/package',
-        'pckFiles': 'comps/files/package'
+        'pckFiles': 'comps/files/package',
+        'pckSecurityAspects': 'comps/security-aspects/package'
     },
 
     // Add angular modules that does not support AMD out of the box, put it in a shim
@@ -78,6 +79,9 @@ require.config({
         'pckContacts': [
             'pckCore'
         ],
+        'pckSecurityAspects': [
+            'angular'
+        ],
         'pckUser': [
             'pckCore'
         ],
@@ -94,6 +98,7 @@ require.config({
             'pckContacts',
             'pckFiles',
             'pckUi',
+            'pckSecurityAspects',
             'vendor/captcha/captchagen/captchagen',
             'util-base64'
         ],

@@ -3,7 +3,7 @@
 angular.module('cmConversations').service('cmConversationsModel', [
 
     'cmConversationsAdapter',
-    'cmConversationFactory',
+    'cmConversationFactory',    
     'cmObject',
     '$q',
     '$rootScope',
@@ -17,6 +17,7 @@ angular.module('cmConversations').service('cmConversationsModel', [
         this.quantity       = 0;
         this.limit          = 10; // 5
         this.offset         = 0; //13
+
 
         $rootScope.$on('logout', function(){
             self.conversations = [];
