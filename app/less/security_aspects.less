@@ -1,0 +1,16 @@
+cm-security-indicator{
+    display:block;
+    .positive{
+        color: @cm-color-positive;
+        float:left;
+    }
+    .negative{
+        color: @cm-color-negative;
+        float:right;
+    }
+    &:after{
+        content:'';
+        clear:both;
+        float:none;
+    }
+}
