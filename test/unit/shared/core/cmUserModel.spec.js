@@ -7,6 +7,12 @@ describe('cmUserModel', function(){
     var cmUserModel;
         cmCrypt;
 
+    beforeEach(function(){
+        module(function($provide){
+            $provide.constant('cmEnv',{});
+        })
+    })
+
     beforeEach(module("cmCore"))
 
     beforeEach(inject(function(_cmUserModel_, _cmCrypt_) {

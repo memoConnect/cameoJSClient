@@ -3,8 +3,6 @@
 
 angular.module('cmCore').provider('cmApi',[
 
-//TODO config cameo
-
 //Service to handle all api calls
 
     function($injector){
@@ -68,8 +66,9 @@ angular.module('cmCore').provider('cmApi',[
             '$q',
             '$interval',
             '$cacheFactory',
+            '$rootScope',
 
-            function(cmLogger, cmObject, $http, $httpBackend, $injector, $q, $interval, $cacheFactory){
+            function(cmLogger, cmObject, $http, $httpBackend, $injector, $q, $interval, $cacheFactory, $rootScope){
                 /***
                 All api calls require a config object:
 
@@ -267,8 +266,7 @@ angular.module('cmCore').provider('cmApi',[
                                             :	undefined
 
 
-                    prepareConfig(config, method, token, twoFactorToken)                  
-
+                    prepareConfig(config, method, token, twoFactorToken)
 
                     $http(config).then(
                         function(response){ handleSuccess(response, deferred) },
@@ -278,6 +276,12 @@ angular.module('cmCore').provider('cmApi',[
                     return deferred.promise
                 }
 
+                /**
+                 * Shortcuts for api()
+                 * @param {Object}  config  config object as used by api()
+                 * @param {Boolean}         force direct api call not using the callstack   
+                 */
+
                 api.get		= function(config, force){ return (force || call_stack_disabled) ? api('GET',	 config) : api.stack('GET',    config) }
                 api.post	= function(config, force){ return (force || call_stack_disabled) ? api('POST',   config) : api.stack('POST',   config) }
                 api.delete	= function(config, force){ return (force || call_stack_disabled) ? api('DELETE', config) : api.stack('DELETE', config) }
@@ -285,6 +289,44 @@ angular.module('cmCore').provider('cmApi',[
                 api.put		= function(config, force){ return (force || call_stack_disabled) ? api('PUT',    config) : api.stack('PUT',    config) }
                 api.jsonp	= function(config, force){ return (force || call_stack_disabled) ? api('JSONP',  config) : api.stack('JSONP',  config) }
 
+
+                // binary mock
+                api.getBinary = function(config){
+                    var deferred = $q.defer(),
+                        token = $injector.has('cmAuth') ? $injector.get('cmAuth').getToken() : undefined;
+
+                    prepareConfig(config, 'GET', token);
+                    // assume binary as blob
+//                    config.responseType = 'blob';
+
+                    $http(config).then(
+                        function(response){
+                            deferred.resolve(response.data)
+                        },
+                        function(response){
+                            deferred.reject(response)
+                        }
+                    );
+
+                    return deferred.promise
+                };
+
+                api.postBinary = function(config){
+                    var deferred = $q.defer(),
+                        token = $injector.has('cmAuth') ? $injector.get('cmAuth').getToken() : undefined;
+                    prepareConfig(config, 'POST', token);
+
+                    $http(config).then(
+                        function(response){
+                            deferred.resolve(response.data)
+                        },
+                        function(response){
+                            deferred.reject(response)
+                        }
+                    );
+
+                    return deferred.promise
+                };
 
 
                 //CALL STACK:
@@ -409,7 +451,21 @@ angular.module('cmCore').provider('cmApi',[
                     }
                 }
 
-                if(!events_disabled && events_interval) $interval(function(){ api.getEvents(false) }, events_interval, false)
+                api.listenToEvents = function(){
+                    //Dont listen to Events twice: 
+                    api.stopListeningToEvents()
+                    //Start listening:
+                    if(!events_disabled && events_interval) api._events_promise = $interval(function(){ api.getEvents(false) }, events_interval, false)
+                }
+
+                api.stopListeningToEvents = function(){
+                    if(api._events_promise) $interval.cancel(api._events_promise)
+                }                 
+
+                if(!events_disabled && events_interval){
+                    $rootScope.$on('login',     function(){ api.listenToEvents() })
+                    $rootScope.$on('logout',    function(){ api.stopListeningToEvents() })
+                }
 
                 return api
             }

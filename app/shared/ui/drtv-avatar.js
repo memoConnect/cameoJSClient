@@ -11,7 +11,7 @@ angular.module('cmUi').directive('cmAvatar',[
         };
 
         return {
-            restrict : 'AE',
+            restrict: 'AE',
 
             link: function(scope, element, attrs){
                 function refresh(identity){
@@ -20,19 +20,24 @@ angular.module('cmUi').directive('cmAvatar',[
                         element.css('display','none');
                     } else {
                         // get avatar image from model
-                        identity
-                            .getAvatar()
-                            .then(
-                                function(base64){
-                                    if(base64.search('\r') != -1){
-                                        base64 = base64.replace(/(\r\n|\n|\r)/gm,'');
-                                    }
-                                    element.css({'background-image': 'url(' + base64 +')'});
-                                },
-                                function(){
-                                    element.css({'background-image': 'url(' + avatarMocks.none +')'});
-                                }
-                            );
+                        var file = identity.getAvatar();
+
+                        file.on('file:cached', function(){
+//                            console.log('avatar:cached');
+//                            console.log(file);
+//                            console.log(file.blob);
+//                            var urlCreator = window.URL || window.webkitURL;
+//                            var imageUrl = urlCreator.createObjectURL( file.blob );
+//                            element.css({'background-image': 'url('+imageUrl+')'});
+
+                            var reader = new FileReader();
+                            reader.onload = function(e){
+//                                console.log(e.target.result)
+                                element.css({'background-image': 'url('+ e.target.result +')'});
+                            };
+                            reader.readAsDataURL(file.blob);
+                        });
+
                         // show name under avatar
                         if(attrs.cmWithName){
                             element.addClass('with-name');

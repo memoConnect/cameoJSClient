@@ -25,17 +25,35 @@ angular.module('cmCore').service('cmCrypt',[
             },
 
             /**
+             * this methods encodes a string base64
+             * @param string
+             * @returns {*}
+             */
+            base64Encode: function(string){
+                return _Base64.encode(string);
+            },
+
+            /**
+             * this method decodes a string base64
+             * @param string
+             * @returns {*}
+             */
+            base64Decode: function(string){
+                return _Base64.decode(string);
+            },
+
+            /**
              * this method encrypts strings
              * @param secretKey a secret key with max len of 10 chars
              * @param secretString a string that should be enrypted
              * @returns base64 encoded encrypted string
              */
-            encryptWithShortKey: function (secretKey, secretString, withoutBase64) {
+            encryptWithShortKey: function (secretKey, secretString) {
                 var parameters = { cipher: "aes", ks: 256, iter: 4096 };
 
-//                if(secretKey == ''){
-//                    return withoutBase64 ? secretString : _Base64.encode(secretString);
-//                }
+                if(secretKey == ''){
+                    return secretString;
+                }
 
                 if (null == secretString)
                     return "";
@@ -44,7 +62,7 @@ angular.module('cmCore').service('cmCrypt',[
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                return withoutBase64 ? encryptedSecretString : _Base64.encode(encryptedSecretString);
+                return encryptedSecretString;
             },
             /**
              * this method encrypts strings
@@ -52,12 +70,12 @@ angular.module('cmCore').service('cmCrypt',[
              * @param secretString a string that should be encrypted
              * @returns base64 encoded encrypted string
              */
-            encrypt: function (secretKey, secretString, withoutBase64) {
+            encrypt: function (secretKey, secretString) {
                 var parameters = {cipher: "aes", ks: 256, iter: 500 };
 
-//                if(secretKey == ''){
-//                    return withoutBase64 ? secretString : _Base64.encode(secretString);
-//                }
+                if(secretKey == ''){
+                    return secretString;
+                }
 
                 if (null == secretString)
                     return "";
@@ -67,7 +85,7 @@ angular.module('cmCore').service('cmCrypt',[
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                return withoutBase64 ? encryptedSecretString : _Base64.encode(encryptedSecretString);
+                return encryptedSecretString;
             },
             /**
              * this method decrypts uuencoded strings
@@ -75,21 +93,26 @@ angular.module('cmCore').service('cmCrypt',[
              * @param secretString a base64 encoded string that should be decrypted
              * @returns decrypted string
              */
-            decrypt: function (secretKey, secretString, withoutBase64) {
-//                if(secretKey == ''){
-//                    return withoutBase64 ? secretString : _Base64.decode(secretString);
-//                }
+            decrypt: function (secretKey, secretString) {
+
+                if(secretString != '' && typeof secretString == 'object'){
+                    secretString = JSON.stringify(secretString)
+                }
+
+                if(secretKey == ''){
+                    return secretString;
+                }
 
                 if (null == secretString)
                     return false;
 
-                var decodedSecretString = withoutBase64 ? secretString : _Base64.decode(secretString),
-                    decryptedString;
+                var decryptedString;
 
                 try {
-                    decryptedString = sjcl.decrypt(secretKey, decodedSecretString)
+                    decryptedString = sjcl.decrypt(secretKey, secretString)
                 } catch (e) {
-                    //cmLogger.warn('Unable to decrypt.', e)
+//                    cmLogger.warn('Unable to decrypt.', e)
+//                    console.warn(e)
                 }
 
                 return decryptedString || false

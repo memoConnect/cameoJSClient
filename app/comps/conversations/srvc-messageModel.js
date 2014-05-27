@@ -75,6 +75,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                 var secret_JSON = JSON.stringify(secret_data);
 
+                //this.encryptedData = cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(passphrase, secret_JSON));
                 this.encryptedData = cmCrypt.encryptWithShortKey(passphrase, secret_JSON);
                 //@ TODO!!!!
 
@@ -82,7 +83,8 @@ angular.module('cmConversations').factory('cmMessageModel',[
             };
 
             this.decrypt = function (passphrase) {
-                var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase, this.encryptedData));
+//                var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase, cmCrypt.base64Decode(this.encryptedData)));
+                var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase,this.encryptedData));
 
                 // expose data on message Object
                 angular.extend(self, decrypted_data);
