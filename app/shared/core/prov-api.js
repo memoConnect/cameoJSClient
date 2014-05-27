@@ -266,8 +266,7 @@ angular.module('cmCore').provider('cmApi',[
                                             :	undefined
 
 
-                    prepareConfig(config, method, token, twoFactorToken)                  
-
+                    prepareConfig(config, method, token, twoFactorToken)
 
                     $http(config).then(
                         function(response){ handleSuccess(response, deferred) },
@@ -290,6 +289,44 @@ angular.module('cmCore').provider('cmApi',[
                 api.put		= function(config, force){ return (force || call_stack_disabled) ? api('PUT',    config) : api.stack('PUT',    config) }
                 api.jsonp	= function(config, force){ return (force || call_stack_disabled) ? api('JSONP',  config) : api.stack('JSONP',  config) }
 
+
+                // binary mock
+                api.getBinary = function(config){
+                    var deferred = $q.defer(),
+                        token = $injector.has('cmAuth') ? $injector.get('cmAuth').getToken() : undefined;
+
+                    prepareConfig(config, 'GET', token);
+                    // assume binary as blob
+//                    config.responseType = 'blob';
+
+                    $http(config).then(
+                        function(response){
+                            deferred.resolve(response.data)
+                        },
+                        function(response){
+                            deferred.reject(response)
+                        }
+                    );
+
+                    return deferred.promise
+                };
+
+                api.postBinary = function(config){
+                    var deferred = $q.defer(),
+                        token = $injector.has('cmAuth') ? $injector.get('cmAuth').getToken() : undefined;
+                    prepareConfig(config, 'POST', token);
+
+                    $http(config).then(
+                        function(response){
+                            deferred.resolve(response.data)
+                        },
+                        function(response){
+                            deferred.reject(response)
+                        }
+                    );
+
+                    return deferred.promise
+                };
 
 
                 //CALL STACK:
