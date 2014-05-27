@@ -35,11 +35,13 @@ describe('cmConversationFactory', function(){
         expect(cmConversationFactory.length).toBe(2)
     })
 
-    it('should still have stored only one instance when .create()gets called again with the same data.', function(){
+    it('should still have stored only one instance when .create() gets called again with the same data.', function(){
         cmConversationFactory.create(tmpInstance_1)
         expect(cmConversationFactory.length).toBe(1)       
+        cmConversationFactory.create(tmpInstance_2)
+        expect(cmConversationFactory.length).toBe(2)              
         cmConversationFactory.create(tmpInstance_1)
-        expect(cmConversationFactory.length).toBe(1)       
+        expect(cmConversationFactory.length).toBe(2)
     })
 
     it('should have no instances stroed after call of .reset().', function(){

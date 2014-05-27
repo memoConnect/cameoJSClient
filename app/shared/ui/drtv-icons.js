@@ -4,53 +4,43 @@ angular.module('cmUi').directive('cmIcons',[
     function cmSafetyLevel(){
         return {
             restrict:   'AE',
-            scope:      {
-                            
-                        },
             template:   '',
+            scope:      {
+                            alt :   "@",
+                            count:  "@",
+                            icons:  "@"
+                        },
 
             link: function(scope, element, attrs){
-
-
-
-                function drawLevel(x){
+                function draw(){
                     // clear all
                     element.children().remove();
                     // draw x
-                    if(x == 0) {
-                        element.append('<i class="fa cm-unlock"></i>');
+                    if(scope.count == 0 && scope.alt) {
+                        element.append('<i class="fa '+scope.alt+'"></i>')
                     } else {
-                        for (var i = 0; i < x; i++) {
-                            element.append('<i class="fa cm-lock"></i>');
+                        for (var i = 0; i < scope.count; i++) {
+                            element.append('<i class="fa '+scope.icons+'"></i>')
                         }
                     }
                 }
 
-                // for conversation model
-                if(attrs.cmLevel) {
-                    scope.$watch(attrs.cmLevel, function (level) {
-                        drawLevel(level)
-                    })
-                }
+                scope.$watch(attrs.count, function(count) {
+                    scope.count = count
+                    draw()
+                })
 
-                // for conversation controls
-                if(attrs.cmLevelState) {
-                    scope.$watch(attrs.cmLevelState, function (state) {
-                        var level = 0;
-                        switch (state) {
-                            case 'unsafe':
-                                level = 0;
-                                break;
-                            case 'safe':
-                                level = 1;
-                                break;
-                            case 'safer':
-                                level = 2;
-                                break;
-                        }
-                        drawLevel(level);
-                    })
-                }
+                scope.$watch(attrs.icons, function(icon) {
+                    scope.icons = icon
+                    console.log(icon)
+                    draw()
+                })
+
+                scope.$watch(attrs.alt, function(alt) {
+                    scope.alt = alt
+                    draw()
+                })
+
             }
         }
     }
