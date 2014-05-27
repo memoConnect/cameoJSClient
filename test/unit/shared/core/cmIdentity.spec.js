@@ -7,6 +7,12 @@ describe('cmIdentityModel', function(){
         return new cmIdentityModel;
     }
 
+    beforeEach(function(){
+        module(function($provide){
+            $provide.constant('cmEnv',{});
+        })
+    })
+
     beforeEach(module('cmCore'))
 
     beforeEach(inject(function(_cmIdentityModel_){
@@ -63,6 +69,12 @@ describe('cmIdentityModel', function(){
 
 describe('cmIdentityFactory', function(){
     var cmIdentityFactory, cmIdentityModel;
+
+    beforeEach(function(){
+        module(function($provide){
+            $provide.constant('cmEnv',{});
+        })
+    })
 
     beforeEach(module('cmCore'))
 

@@ -8,6 +8,12 @@ describe('cmRecipientModel', function(){
         return new cmRecipientModel({});
     }
 
+    beforeEach(function(){
+        module(function($provide){
+            $provide.constant('cmEnv',{});
+        })
+    })
+
     beforeEach(module('cmConversations'));
 
     beforeEach(inject(function(_cmRecipientModel_){

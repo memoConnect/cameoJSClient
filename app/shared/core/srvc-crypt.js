@@ -94,10 +94,14 @@ angular.module('cmCore').service('cmCrypt',[
              * @returns decrypted string
              */
             decrypt: function (secretKey, secretString) {
+
+                if(secretString != '' && typeof secretString == 'object'){
+                    secretString = JSON.stringify(secretString)
+                }
+
                 if(secretKey == ''){
                     return secretString;
                 }
-
 
                 if (null == secretString)
                     return false;
@@ -107,7 +111,8 @@ angular.module('cmCore').service('cmCrypt',[
                 try {
                     decryptedString = sjcl.decrypt(secretKey, secretString)
                 } catch (e) {
-                    //cmLogger.warn('Unable to decrypt.', e)
+//                    cmLogger.warn('Unable to decrypt.', e)
+//                    console.warn(e)
                 }
 
                 return decryptedString || false

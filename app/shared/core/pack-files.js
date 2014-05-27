@@ -231,15 +231,14 @@ angular.module('cmCore')
             }
 
             /**
-             * @TODO leere phasephrase ??!??!
              * @param passphrase
              * @returns {Chunk}
              */
             this.decrypt = function(passphrase){
                 this.encryptedRaw
-//                    ?   this.raw = cmCrypt.decrypt(passphrase, cmCrypt.base64Decode(this.encryptedRaw))
                     ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw)
                     :   cmLogger.error('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.')
+
 
                 return this
             }
@@ -509,7 +508,7 @@ angular.module('cmCore')
                 if(this.chunks){
                     this._encryptChunk(0);
                 } else {
-                    console.log(this.chunks)
+//                    console.log(this.chunks)
                     cmLogger.error('Unable to encrypt chunks; cmFile.chunks missing. Try calling cmFile.chopIntoChunks() first.');
                 }
 
@@ -558,7 +557,7 @@ angular.module('cmCore')
                     data.push(chunk.blob)
                 })
 
-                console.log('reassembleChunks',data);
+//                console.log('reassembleChunks',data);
 
                 this.blob = new Blob(data, {type: self.type})
 

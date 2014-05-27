@@ -23,16 +23,16 @@ angular.module('cmUi').directive('cmAvatar',[
                         var file = identity.getAvatar();
 
                         file.on('file:cached', function(){
-                            console.log('avatar:cached');
-                            console.log(file);
-                            console.log(file.blob);
+//                            console.log('avatar:cached');
+//                            console.log(file);
+//                            console.log(file.blob);
 //                            var urlCreator = window.URL || window.webkitURL;
 //                            var imageUrl = urlCreator.createObjectURL( file.blob );
 //                            element.css({'background-image': 'url('+imageUrl+')'});
 
                             var reader = new FileReader();
                             reader.onload = function(e){
-                                console.log(e.target.result)
+//                                console.log(e.target.result)
                                 element.css({'background-image': 'url('+ e.target.result +')'});
                             };
                             reader.readAsDataURL(file.blob);
