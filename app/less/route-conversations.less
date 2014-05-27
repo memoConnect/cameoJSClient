@@ -111,135 +111,137 @@ cm-recipient-counter{
     z-index:2;
   }
 }
+
 @cm-conversation-control-height:2em;
 
 cm-conversation-controls{
-  display:block;
-  position:fixed;
-  height:@cm-conversation-control-height;
-  width:@cm-app-width;
-  top:@cm-header-height;
-  z-index:2;
-  .control{
-    line-height:2em;
-    white-space:nowrap;
-    font-size:1em;
-    overflow:hidden;
-    padding-bottom:1em;
-    .cm-bar{
-      .with-cursor;
-      text-align:center;
-      .border-radius-bottom;
-      background:@cm-white;
-      color:@cm-dark-grey;
-      *{
-        vertical-align:middle;
-      }
-      .grey-box-shadow;
-      .grip-left{
-        text-align:left;
-        i{
-          margin-left:0.5em;
+    display:block;
+    position:fixed;
+    height:@cm-conversation-control-height;
+    width:@cm-app-width;
+    top:@cm-header-height;
+    z-index:2;
+    .control{
+        line-height:2em;
+        white-space:nowrap;
+        font-size:1em;
+        overflow:hidden;
+        padding-bottom:1em;
+        .cm-bar{
+            .with-cursor;
+            text-align:center;
+            .border-radius-bottom;
+            background:@cm-white;
+            color:@cm-dark-grey;
+            *{
+            vertical-align:middle;
+            }
+            .grey-box-shadow;
+            .grip-left{
+            text-align:left;
+            i{
+              margin-left:0.5em;
+            }
         }
-      }
-      cm-recipient-counter{
-        font-size:2em;
-        .background{
-          color:@cm-dark-grey;
-        }
-        .foreground{
-          color:@cm-white;
-        }
-      }
-      .cm-bar-infos{
-        cm-safety-level, cm-recipient-counter{
-          margin-left:0.2em;
-        }
-      }
-    }
 
-    .body{
-      .body-group{
-        background:@cm-white;
-        padding:0.5em;
-        border-bottom:@cm-border-grey @cm-border-width solid;
-      }
-      &:last-child{
-        border-bottom:0;
-      }
-      .cm-btn{
-        color:@cm-ci-color;
-        .cm-btn-black;
-        .cm-btn-block;
-      }
-      .cm-form-group{
-        padding:0;
-      }
-    }
+        cm-recipient-counter{
+            font-size:2em;
+                .background{
+                  color:@cm-dark-grey;
+                }
+                .foreground{
+                  color:@cm-white;
+                }
+            }
+            .cm-bar-infos{
+                cm-safety-level, cm-recipient-counter{
+                  margin-left:0.2em;
+                }
+            }
+        }
 
-    .recipients-list {
-      position: relative;
-      overflow: hidden;
-      .add-new-recipients, .add-recipients {
-        display: inline-block;
-        position: relative;
-        height: @cm-unit;
-      }
-      .add-new-recipients{
-        padding-right:@cm-unit;
-      }
-      .add-recipients{
-        width:@cm-unit;
-      }
-      cm-avatar{
-        vertical-align:top;
-        margin-right:0.5em;
-        &:last-child{
-          margin-right:0;
+        .body{
+            .body-group{
+                background:@cm-white;
+                padding:0.5em;
+                border-bottom:@cm-border-grey @cm-border-width solid;
+            }
+            &:last-child{
+                border-bottom:0;
+            }
+            .cm-btn{
+                color:@cm-ci-color;
+                .cm-btn-black;
+                .cm-btn-block;
+            }
+            .cm-form-group{
+                padding:0;
+            }
         }
-      }
-      cm-edge{
-        vertical-align:top;
-        font-size:@cm-unit+1;
-      }
-    }
 
-    .safety-levels{
-      [cm-weight]{
-        vertical-align: middle;
-      }
-      .cm-safety-level{
-        color:@cm-white;
-        width:4rem;
-        height:4rem;
-        font-size:2rem;
-        padding:0.4em;
-        .border-radius;
-        i:focus, i:hover{
-          color:@cm-white;
-        }
-        &.active{
-          font-size:3rem;
-          width:5rem;
-          height:5rem;
-          padding:0.3em;
-        }
-        &.safetylevel-safer-btn{
-          i{
-            width: 0.65em;
+        .recipients-list {
             position: relative;
-            left: -0.3em;
-          }
+            overflow: hidden;
+            .add-new-recipients, .add-recipients {
+                display: inline-block;
+                position: relative;
+                height: @cm-unit;
+            }
+            .add-new-recipients{
+                padding-right:@cm-unit;
+            }
+            .add-recipients{
+                width:@cm-unit;
+            }
+            cm-avatar{
+                vertical-align:top;
+                margin-right:0.5em;
+                &:last-child{
+                    margin-right:0;
+                }
+            }
+            cm-edge{
+                vertical-align:top;
+                font-size:@cm-unit+1;
+            }
         }
-      }
-    }
 
-    .cm-center{
-      .cm-info{
-        color:@cm-ci-color;
-      }
+        .safety-levels{
+            [cm-weight]{
+                vertical-align: middle;
+            }
+            .cm-safety-level{
+                color:@cm-white;
+                width:4rem;
+                height:4rem;
+                font-size:2rem;
+                padding:0.4em;
+                .border-radius;
+                i:focus, i:hover{
+                  color:@cm-white;
+                }
+                &.active{
+                  font-size:3rem;
+                  width:5rem;
+                  height:5rem;
+                  padding:0.3em;
+                }
+                &.safetylevel-safer-btn{
+                    i{
+                        width: 0.65em;
+                        position: relative;
+                        left: -0.3em;
+                    }
+                }
+            }
+        }
+
+        .cm-center{
+            .cm-info{
+                color:@cm-ci-color;
+            }
+        }
     }
-  }
 }
 cm-conversation {
   cm-message {

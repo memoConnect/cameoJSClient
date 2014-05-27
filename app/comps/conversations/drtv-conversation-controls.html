@@ -9,8 +9,10 @@
         </div>
 
         <div class="body-group">
-            
-            <cm-icons count="4" icon="cm-lock"></cm-icons>
+            <cm-security-indicator/>
+        </div>
+
+        <div class="body-group">
 
             <div class="recipients-list">
                 <cm-avatar cm-data="recipient" cm-with-name="true" cm-view="hide-owner" ng-repeat="recipient in conversation.recipients"></cm-avatar>
