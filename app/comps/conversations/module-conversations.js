@@ -2,5 +2,6 @@
 
 angular.module('cmConversations', [
     'cmCore',
-    'cmFiles'
+    'cmFiles',
+    'cmSecurityAspects'
 ])
