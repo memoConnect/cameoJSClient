@@ -34,16 +34,19 @@ angular.module('cmConversations').directive('cmConversation', [
                 $scope.openFastRegister = function(){
                     cmModal.create({
                         id: 'fast-registration',
-                        type: 'plain',
+                        'class': 'webreader',
+                        type: 'alert',
                         nose: 'top-right',
-                        'cm-close-btn': false
+                        'cm-close-btn': false,
+                        'cm-footer-label': 'MODAL.WEBREADER.LATER',
+                        'cm-footer-icon': 'cm-close'
                     },'' +
-                        '<div>Zum nutzen dieser Fkuntionfsjidk gnsd jfgndkj</div>' +
-                        '<footer>' +
-                            '<button class="btn cm-btn cm-btn-lg cm-btn-block cm-btn-primary" ng-click="close()">' +
-                            '<span>{{\'MODAL.ALERT.LATER\'|cmTranslate}}</span>' +
-                            '</button>' +
-                        '</footer>'
+                        '<div class="attention">' +
+                            '<i class="fa cm-attention cm-lg-icon"></i> {{\'MODAL.WEBREADER.NOTICE\'|cmTranslate}}' +
+                        '</div>'+
+                        '<a href="#/registration" class="redirect">' +
+                            '<i class="fa cm-key cm-lg-icon"></i> {{\'MODAL.WEBREADER.REGISTRATION\'|cmTranslate}}' +
+                        '</a>'
                     );
                     cmModal.open('fast-registration')
                 };

@@ -327,6 +327,11 @@
     "MODAL": {
         "ALERT": {
             "OK": "OK"
+        },
+        "WEBREADER": {
+            "NOTICE": "Zum nutzen dieser Funktion bitte registrieren!",
+            "REGISTRATION": "Jetzt registrieren",
+            "LATER": "später"
         }
     },
 
