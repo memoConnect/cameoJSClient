@@ -24,14 +24,12 @@ angular.module('cmUi').directive('cmIcons',[
                     }
                 }
 
-
                 scope.$watch(attrs.count, function(count) {
-                    scope.count = count
+                    scope.count = attrs.count
                     draw()
                 })
-
-                draw()
             }
+
         }
     }
 ])

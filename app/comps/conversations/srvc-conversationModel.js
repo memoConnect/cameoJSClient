@@ -42,6 +42,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.passphrase         = ''
 
+            this.securityAspects    = cmSecurityAspectsConversation.setTarget(this)
+
             var self = this
 
 
