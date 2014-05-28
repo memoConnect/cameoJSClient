@@ -127,8 +127,8 @@ angular.module('cmConversations').directive('cmConversation', [
                             cmMessageFactory.create()
                                 .addFiles(files)
                                 .setText($scope.my_message_text)
-                                .setPublicData($scope.conversation.passphrase ? [] : ['text','fileIds'])
-                                .encrypt($scope.conversation.passphrase)
+                                .setPublicData($scope.conversation.security.passphrase ? [] : ['text','fileIds'])
+                                .encrypt($scope.conversation.security.passphrase)
                                 .addTo($scope.conversation)
                                 .sendTo($scope.conversation.id)
                                 .then(function(){

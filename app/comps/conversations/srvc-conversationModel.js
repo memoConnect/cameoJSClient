@@ -57,6 +57,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                                         console.log(passphrase)
                                         return      passphrase
                                                 ||  item.keyId == "_passwd"
+                                                    //TODO check return value when password == ''
                                                     ?   cmCrypt.decrypt(self.password, cmCrypt.base64Decode(item.encryptedPassphrase)) || ''
                                                     :   cmUserModel.decryptPassphrase(item.encryptedPassphrase, item.keyId) || ''
                                     },'')
@@ -89,8 +90,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.subject            = ''            //subject
 
             this.encryptedPassphraseList = []
-
-            this.passphrase         = ''
 
             this.securityAspects    = cmSecurityAspectsConversation.setTarget(this)
 
@@ -338,8 +337,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                                 i++;
                             }
 
-                            if(self.passphrase && self.checkKeyTransmission()){
-                                self
+                            if(self.security.passphrase && self.checkKeyTransmission()){
+                                self.security
                                 .encryptPassphrase()
                                 .saveEncryptedPassphraseList()
                                 //self.passphrase
@@ -701,7 +700,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             this.passphraseValid = function () {
-                return !this.messages[0] || this.messages[0].decrypt(this.passphrase)
+                return !this.messages[0] || this.messages[0].decrypt(this.security.passphrase)
             };
 
             this.getWeakestKeySize = function(){
@@ -754,8 +753,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
             });
 
             this.on('message:added', function(event, message){
-                if(self.passphrase != ''){
-                    message.decrypt(self.passphrase);
+                if(self.security.passphrase != ''){
+                    message.decrypt(self.security.passphrase);
                 }
             });
         }
