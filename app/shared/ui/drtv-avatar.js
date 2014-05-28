@@ -22,7 +22,8 @@ angular.module('cmUi').directive('cmAvatar',[
                         // get avatar image from model
                         var file = identity.getAvatar();
 
-                        file.on('file:cached', function(){
+                        if(typeof file.on == 'function'){
+                            file.on('file:cached', function(){
 //                            console.log('avatar:cached');
 //                            console.log(file);
 //                            console.log(file.blob);
@@ -30,13 +31,14 @@ angular.module('cmUi').directive('cmAvatar',[
 //                            var imageUrl = urlCreator.createObjectURL( file.blob );
 //                            element.css({'background-image': 'url('+imageUrl+')'});
 
-                            var reader = new FileReader();
-                            reader.onload = function(e){
+                                var reader = new FileReader();
+                                reader.onload = function(e){
 //                                console.log(e.target.result)
-                                element.css({'background-image': 'url('+ e.target.result +')'});
-                            };
-                            reader.readAsDataURL(file.blob);
-                        });
+                                    element.css({'background-image': 'url('+ e.target.result +')'});
+                                };
+                                reader.readAsDataURL(file.blob);
+                            });
+                        }
 
                         // show name under avatar
                         if(attrs.cmWithName){

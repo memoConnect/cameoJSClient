@@ -104,8 +104,8 @@ require.config({
         ],
         'pckFiles': [
             'pckCore',
-//            'vendor/filesaver/filesaver',
-            'vendor/filesaver/saveAs',
+            'vendor/filesaver/filesaver',
+//            'vendor/filesaver/saveAs',
             'angular-resource',
             'util-base64_decode'
         ]
