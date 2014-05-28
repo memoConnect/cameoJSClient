@@ -1,10 +1,12 @@
 <div ng-controller="PurlCtrl">
     <cm-header cm-rubber-space ng-hide="isModalVisible">
         <cm-back cm-weight="1" back-to="/talks" class="overlap-identity" cm-user-rights></cm-back>
-        <cm-identity cm-weight="10" cm-user-rights></cm-identity>
-        <div cm-weight="10" class="fast-sign-in" cm-user-rights="showForGuest" ng-click="goToRegister()">
-            <i class="fa cm-register"></i>
-            <span>{{'PURL.SIGN_IN'|cmTranslate}}</span>
+        <div cm-weight="10" class="purl-identity-wrap">
+            <cm-identity cm-user-rights></cm-identity>
+            <div class="fast-sign-in" cm-user-rights="showForGuest" ng-click="goToRegister()">
+                <i class="fa cm-register"></i>
+                <span>{{'PURL.SIGN_IN'|cmTranslate}}</span>
+            </div>
         </div>
         <cm-logo cm-weight="8"></cm-logo>
         <cm-reload cm-weight="6"></cm-reload>
