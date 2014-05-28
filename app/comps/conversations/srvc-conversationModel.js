@@ -3,12 +3,13 @@
 angular.module('cmConversations').factory('cmConversationModel',[
 
     'cmConversationsAdapter',
-    'cmMessageFactory',
+    'cmMessageModel',
     'cmIdentityFactory',
     'cmFileFactory',
     'cmCrypt',
     'cmUserModel',
     'cmRecipientModel',
+    'cmFactory',
     'cmNotify',
     'cmObject',
     'cmLogger',
@@ -16,7 +17,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
     '$q',
     '$rootScope',
 
-    function (cmConversationsAdapter, cmMessageFactory, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmNotify, cmObject, cmLogger, cmSecurityAspectsConversation,$q, $rootScope){
+    function (cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmFactory, cmNotify, cmObject, cmLogger, cmSecurityAspectsConversation,$q, $rootScope){
 
         /**
         * Represents a Conversation.
@@ -27,22 +28,36 @@ angular.module('cmConversations').factory('cmConversationModel',[
         var ConversationModel = function(data){
 
             this.id                 = undefined
-            this.recipients         = []            //list of RecipientModel objects
-            this.messages           = []            //list of MessageModel objects
 
+            //--> factory
+            this.recipients         = []            //list of RecipientModel objects
+            //--> factory
+            this.messages           = new cmFactory(cmMessageModel)            //list of MessageModel objects
+
+            //--> meta
             this.timeOfCreation     = 0             //timestamp of the conversation's creation
+            //--> meta
             this.timeOfLastUpdate   = 0             //timestamp of the conversations's last Update
 
             this.subject            = ''            //subject
-            this.tagLine            = ''            //mini preview line, will be the subject most of the time
 
             this.encryptedPassphraseList = []
-
-            this.lastMessage        = undefined
 
             this.passphrase         = ''
 
             this.securityAspects    = cmSecurityAspectsConversation.setTarget(this)
+
+            this.meta               =   {           //stores meta data, not yet implemented, TODO
+                                        }
+
+            this.preferences        =   {           //settings the user can change
+
+                                        }
+
+            this.encryption         =   {           //encryption handling
+
+                                        }
+
 
             var self = this
 
@@ -67,6 +82,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 .on('message:new', function(event, message_data){ self.addMessage(cmMessageFactory.get(message_data)) })
                 */
                
+
+                //Todo: fire event on factory and delegate to conversation or something
                 self.on('message:new', function(event, message_data){
                     self.addMessage(cmMessageFactory.get(message_data))
                 })
@@ -108,7 +125,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 var messages = data.messages || []
                 messages.forEach(
-                    function(message_data) { self.addMessage(cmMessageFactory.get(message_data)) }
+                    function(message_data) { self.messages.create(message_data) }
                 )
 
                 var recipients = data.recipients || []
@@ -125,7 +142,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 if(this.messages.indexOf(message) == -1){
                     this.messages.push( message )
                     this.lastMessage = message
-                    this.trigger('message:added', message)
+                    this.trigger('message:added', message) 
                 } else {
                     cmLogger.warn('conversationModel: unable to add message; duplicate detected. (id:'+message.id+')')
                 }
@@ -144,6 +161,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.addRecipient = function(recipient){
                 if(this.recipients.indexOf(recipient) == -1){
                     this.recipients.push( recipient )
+
+
+                    //self.recipients.create(cmRecipientModel(recipient))
+
                     recipient.on('update', function(){
                         self.trigger('recipient:update') //Todo: noch icht gelöst =/
                     })
