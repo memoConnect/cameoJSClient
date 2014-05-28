@@ -150,6 +150,10 @@
         }
     },
 
+    "PURL": {
+        "SIGN_IN": "registrieren"
+    },
+
     "RECIPIENTS": {
         "HEADING": "Empfänger hinzufügen",
         "LABEL": {
