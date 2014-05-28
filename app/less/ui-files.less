@@ -191,7 +191,7 @@ cm-modal.modal-image-fullscreen{
 
 .file {
   display: inline-block;
-  background:url(../gfx/filetype_map_small.png) transparent 0 -39em;
+  background:~"url(../gfx/filetype_map_small.png) transparent 0 -@{unknown-default}em";
   background-size:~"1em @{filesnum}em";
   height:1em !important;
   width:1em !important;
@@ -201,8 +201,9 @@ cm-modal.modal-image-fullscreen{
   vertical-align:text-bottom;
   font-size:1em;
 }
-@files:dir dir-download dir-safe dir-public pdf txt xlsx doc php css xls zip rar sit jpg gif bmp tif eps png mov mpg mp4 flv avi xml html chm ttf exe dmg mp3 wav wma aif ogg '\33gpp' ppt pps unknown;
+@files:dir dir-download dir-safe dir-public pdf txt xlsx doc php css xls zip rar sit jpg gif bmp tif eps png mov mpg mp4 flv avi xml html chm ttf exe dmg mp3 wav wma aif ogg '\33gpp' aac ppt pps unknown;
 @filesnum:length(@files);
+@unknown-default:@filesnum - 1;
 .spriteFiles(@index:0) when (@index < @filesnum){
   @name: extract(@files, @index + 1);
   @selector: ~".file.@{name}";

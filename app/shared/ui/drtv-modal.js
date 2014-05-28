@@ -51,6 +51,8 @@ angular.module('cmUi').directive('cmModal', [
             link: function(scope, element, attrs, controller, transclude){
 
                 scope.closeBtn = attrs.cmCloseBtn || true;
+                scope.footerLabel = attrs.cmFooterLabel || undefined;
+                scope.footerIcon = attrs.cmFooterIcon || undefined;
 
                 // refresh modal content
                 scope.refresh = function(){                   

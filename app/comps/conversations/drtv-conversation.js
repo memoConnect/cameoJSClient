@@ -8,9 +8,10 @@ angular.module('cmConversations').directive('cmConversation', [
     'cmCrypt',
     'cmLogger',
     'cmNotify',
+    'cmModal',
     '$location',
     '$rootScope',
-    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location, $rootScope) {
+    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope) {
         return {
             restrict: 'AE',
             templateUrl: 'comps/conversations/drtv-conversation.html',
@@ -26,7 +27,6 @@ angular.module('cmConversations').directive('cmConversation', [
 
                 $scope.isSending = false;
                 $scope.conversation = {};
-
 
                 /**
                  * check if is new

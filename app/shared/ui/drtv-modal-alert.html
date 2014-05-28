@@ -1,11 +1,12 @@
 <article class="cm-modal-alert">
-    <header>
-        <button ng-click="close()" class="close" ng-show="closeBtn"><i class="fa cm-close"></i></button>
+    <header ng-show="closeBtn">
+        <button ng-click="close()" class="close"><i class="fa cm-close"></i></button>
     </header>
     <ng-transclude class="content"></ng-transclude>
     <footer>
-        <button class="btn cm-btn cm-btn-lg cm-btn-block cm-btn-primary" ng-click="close()">
-            <span>{{'MODAL.ALERT.OK'|cmTranslate}}</span>
+        <button class="cm-btn-block" ng-click="close()">
+            {{(footerLabel||'MODAL.ALERT.OK')|cmTranslate}}
+            <i ng-if="footerIcon" class="fa {{footerIcon}} cm-lg-icon"></i>
         </button>
     </footer>
 </article>

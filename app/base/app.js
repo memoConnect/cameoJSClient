@@ -48,7 +48,7 @@ define([
                 .commitInterval( cameo_config.commitInterval )
                 .useEvents( cameo_config.useEvents )
                 .eventsPath( cameo_config.eventsPath )
-                .eventsInterval( 5000 )//cameo_config.eventsInterval )
+                .eventsInterval( 0 )//cameo_config.eventsInterval )
 
             cmLanguageProvider
                 .cacheLangFiles(cameo_config.cache_lang_files)
@@ -161,7 +161,7 @@ define([
                     if (!path_regex.test(path)) {
                         $location.path("/login");
                     }
-                } else if (path == "/login" || path == "/registration") {
+                } else if ((path == "/login" || path == "/registration") && cmUserModel.isGuest() !== true) {
                     $location.path("/talks");
                 } else if (path == "/logout"){
                     cmUserModel.doLogout();

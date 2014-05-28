@@ -150,6 +150,10 @@
         }
     },
 
+    "PURL": {
+        "SIGN_IN": "sign in"
+    },
+
     "RECIPIENTS": {
         "HEADING": "add recipients",
         "LABEL": {
@@ -327,6 +331,11 @@
     "MODAL": {
         "ALERT": {
             "OK": "OK"
+        },
+        "WEBREADER": {
+            "NOTICE": "For this function, please register!",
+            "REGISTRATION": "register now",
+            "LATER": "later"
         }
     },
 

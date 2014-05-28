@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmUi').service('cmFileTypes',[
+angular.module('cmFiles').service('cmFileTypes',[
     function(){
         /**
          * e: extension
@@ -28,6 +28,7 @@ angular.module('cmUi').service('cmFileTypes',[
             {e:['aif','aiff','aifc'],m:'audio/x-aiff'},
             {e:'ogg',m:'audio/ogg'},
             {e:'3gpp',m:'video/3gpp'},
+            {e:'aac',m:'audio/x-aac'},
             // docs
             {e:'pdf',m:'application/pdf'},
             {e:'txt',m:'text/plain'},

@@ -150,6 +150,10 @@
         }
     },
 
+    "PURL": {
+        "SIGN_IN": "registrieren"
+    },
+
     "RECIPIENTS": {
         "HEADING": "Empfänger hinzufügen",
         "LABEL": {
@@ -327,6 +331,11 @@
     "MODAL": {
         "ALERT": {
             "OK": "OK"
+        },
+        "WEBREADER": {
+            "NOTICE": "Zum nutzen dieser Funktion bitte registrieren!",
+            "REGISTRATION": "Jetzt registrieren",
+            "LATER": "später"
         }
     },
 
