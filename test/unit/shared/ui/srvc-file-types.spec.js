@@ -1,6 +1,6 @@
 describe('cmFileTypes', function(){
     var cmFileTypes
-    beforeEach(module('cmUi'))
+    beforeEach(module('cmFiles'))
     beforeEach(inject(function (_cmFileTypes_) {
         cmFileTypes = _cmFileTypes_
     }))
