@@ -55,7 +55,11 @@ describe('Route: Purl - ', function () {
             expect($('[data-qa="attachments-btn"]').isPresent()).toBe(true)
         })
 
-        it('should have large answer container "'+moep+'"', function(){
+        /**
+         * old
+         * 28.05.2014
+         */
+        xit('should have large answer container "'+moep+'"', function(){
             expect($('[data-qa="answer-ctn"]').getAttribute('class')).toMatch('large')
         })
     }
