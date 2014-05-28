@@ -26,7 +26,8 @@ angular.module('cmCore')
                     data: chunk,
                     headers: {
                         "X-Index": index
-                    }
+                    },
+                    transformRequest: function(data){return data}
                 })
             },
 
@@ -467,6 +468,8 @@ angular.module('cmCore')
                     )
 
                     index++
+
+                    console.log('chunks',this.chunks)
                 }
 
                 return $q.all(promises)
@@ -556,8 +559,6 @@ angular.module('cmCore')
                 this.chunks.forEach(function(chunk){
                     data.push(chunk.blob)
                 })
-
-//                console.log('reassembleChunks',data);
 
                 this.blob = new Blob(data, {type: self.type})
 
