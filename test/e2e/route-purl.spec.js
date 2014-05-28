@@ -51,8 +51,8 @@ describe('Route: Purl - ', function () {
             expect($('cm-menu').isPresent()).toBe(false)
         })
 
-        it('should not have attachment button "'+moep+'"', function(){
-            expect($('[data-qa="attachments-btn"]').isPresent()).toBe(false)
+        it('should have attachment button "'+moep+'"', function(){
+            expect($('[data-qa="attachments-btn"]').isPresent()).toBe(true)
         })
 
         it('should have large answer container "'+moep+'"', function(){
