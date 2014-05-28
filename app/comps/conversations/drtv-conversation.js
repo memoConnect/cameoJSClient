@@ -29,29 +29,6 @@ angular.module('cmConversations').directive('cmConversation', [
                 $scope.conversation = {};
 
                 /**
-                 * modal for fast registration
-                 */
-                $scope.openFastRegister = function(){
-                    cmModal.create({
-                        id: 'fast-registration',
-                        'class': 'webreader',
-                        type: 'alert',
-                        nose: 'top-right',
-                        'cm-close-btn': false,
-                        'cm-footer-label': 'MODAL.WEBREADER.LATER',
-                        'cm-footer-icon': 'cm-close'
-                    },'' +
-                        '<div class="attention">' +
-                            '<i class="fa cm-attention cm-lg-icon"></i> {{\'MODAL.WEBREADER.NOTICE\'|cmTranslate}}' +
-                        '</div>'+
-                        '<a href="#/registration" class="redirect">' +
-                            '<i class="fa cm-key cm-lg-icon"></i> {{\'MODAL.WEBREADER.REGISTRATION\'|cmTranslate}}' +
-                        '</a>'
-                    );
-                    cmModal.open('fast-registration')
-                };
-
-                /**
                  * check if is new
                  * @returns {boolean|*|$scope.new_conversation}
                  */

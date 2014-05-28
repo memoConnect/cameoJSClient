@@ -1,11 +1,15 @@
-<header class="menu">
-    <cm-back back-to="/talks" class="overlap-identity" cm-user-rights></cm-back>
-    <cm-identity cm-user-rights></cm-identity>
-    <cm-logo></cm-logo>
-    <cm-reload></cm-reload>
-    <cm-menu cm-user-rights></cm-menu>
-</header>
-
 <div ng-controller="PurlCtrl">
+    <cm-header cm-rubber-space>
+        <cm-back cm-weight="1" back-to="/talks" class="overlap-identity" cm-user-rights></cm-back>
+        <cm-identity cm-weight="10" cm-user-rights></cm-identity>
+        <div cm-weight="10" class="fast-sign-in" cm-user-rights="showForGuest" ng-click="goToRegister()">
+            <i class="fa cm-register"></i>
+            <span>{{'PURL.SIGN_IN'|cmTranslate}}</span>
+        </div>
+        <cm-logo cm-weight="8"></cm-logo>
+        <cm-reload cm-weight="6"></cm-reload>
+        <cm-menu cm-user-rights cm-weight="4"></cm-menu>
+    </cm-header>
+
     <cm-conversation conversation-id="conversationId" ng-if="showConversation"></cm-conversation>
 </div>
