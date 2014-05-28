@@ -10,6 +10,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmUserModel',
     'cmRecipientModel',
     'cmFactory',
+    'cmStateManagement',
     'cmNotify',
     'cmObject',
     'cmLogger',
@@ -17,15 +18,61 @@ angular.module('cmConversations').factory('cmConversationModel',[
     '$q',
     '$rootScope',
 
-    function (cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmFactory, cmNotify, cmObject, cmLogger, cmSecurityAspectsConversation,$q, $rootScope){
+    function (cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmSecurityAspectsConversation,$q, $rootScope){
+
+
+        /**
+         * Outsourced security handling for conversations
+         * @param {cmConversationModel} conversation to be managed
+         */
+        function SecurityManagement(conversation){
+            this.conversation               = conversation
+
+            this.passphrase                 = ''
+            this.encryptedPassphraseList    = []
+            this.keyTransmission            = undefined //symmetric, asymmetric
+            this.password                   = ''
+
+            self = this
+
+            this.generatePassphrase = function(){
+                if(this.conversation.is('new')){
+                    cmLogger.error('cmConversation: unable to generate passphrase; passphrase may only be generated before the conversation has not been submitted.')
+                    return false
+                }else{
+                    if(this.passphrase) cmLogger.warn('cmConversation: passphrase already present, generated new one.')
+                    this.passphrase = cmCrypt.generatePassphrase() //TODO: Passphrase generation crappy!!
+                }
+            }
+
+            //Todo: do we need this?
+            this.tryPassphrase = function(passphrase){
+                return this.conversation.decrypt(passphrase) && (this.passphrase = passphrase) && true
+            }
+
+
+            //TODO:
+            this.decryptPassphrase = function(){
+                this.passphrase =   this.encryptedPassphraseList.reduce(function(passphrase, item){
+                                        console.log(passphrase)
+                                        return      passphrase
+                                                ||  item.keyId == "_passwd"
+                                                    ?   cmCrypt.decrypt(self.password, cmCrypt.base64Decode(item.encryptedPassphrase)) || ''
+                                                    :   cmUserModel.decryptPassphrase(item.encryptedPassphrase, item.keyId) || ''
+                                    },'')
+
+                console.log('PW:'+this.password)
+                console.log(this.passphrase)
+            }
+        }
 
         /**
         * Represents a Conversation.
         * @constructor
-        * @param {Object} [data] - The conversation data as received from the backend.
+        * @param {Object} [fdata] - The conversation data as received from the backend.
         */
        
-        var ConversationModel = function(data){
+        function ConversationModel(data){
 
             this.id                 = undefined
 
@@ -54,19 +101,16 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                                         }
 
-            this.encryption         =   {           //encryption handling
+            this.security           = new SecurityManagement(this)    //encryption handling, see above
 
-                                        }
+            this.state              = new cmStateManagement(['new'])
 
 
             var self = this
 
-
-            // Add event and chain handling to the Conversation:
-
-            cmObject
-            .addEventHandlingTo(this)
-            .addChainHandlingTo(this)
+            /*maybe REFACTOR TODO*/
+            this.passCaptcha = undefined;
+            this.tmpPassCaptcha = '';
 
 
             /**
@@ -75,7 +119,16 @@ angular.module('cmConversations').factory('cmConversationModel',[
              */
 
             this._init = function(data){
+                // Add event and chain handling to the Conversation:
+
+                cmObject
+                .addEventHandlingTo(this)
+                .addChainHandlingTo(this)
+                
+                this.state.set('new')
                 this.importData(data)
+
+
 
                 /*
                 cmConversationsAdapter
@@ -85,7 +138,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 //Todo: fire event on factory and delegate to conversation or something
                 self.on('message:new', function(event, message_data){
-                    self.addMessage(cmMessageFactory.get(message_data))
+                    self.messages.create( message_data )
                 })
 
                 /*
@@ -105,7 +158,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @param {Object} data -  The conversation data as recieved from the backend.
              */
 
-
             this.importData = function(data){
 
                 if(!data) return this
@@ -116,7 +168,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.timeOfLastUpdate        = data.lastUpdated  || this.timeOfLastUpdate
                 this.subject                 = data.subject      || this.subject
 
-                this.encryptedPassphraseList = this.encryptedPassphraseList.concat(data.encryptedPassphraseList || [])
+                //Todo, maybe move to setup?
+                this.security.encryptedPassphraseList = this.encryptedPassphraseList.concat(data.encryptedPassphraseList || [])
                 /**
                  * muss bleiben, aktuelle falsche stelle, sollte in die init
                  */
@@ -134,15 +187,16 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 )
             }
 
+            //TODO: this.exportData() !
+
             /**
              * Function to add a message to a conversation. Will not update the backend.
              * @param {MessageModel} message.
              */  
             this.addMessage = function(message){
+                cmLogger.warn('cmConversation: .addMessage() is deprecated.')
                 if(this.messages.indexOf(message) == -1){
-                    this.messages.push( message )
-                    this.lastMessage = message
-                    this.trigger('message:added', message) 
+                    this.messages.register( message )
                 } else {
                     cmLogger.warn('conversationModel: unable to add message; duplicate detected. (id:'+message.id+')')
                 }
@@ -176,24 +230,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
 
 
-            //Todo: Ist als Filter gelöst: cmTagline
-            this.updateTagLine = function(){
-                cmLogger('cmConversationModel: .updateTagline() is deprecated.')
-                return this
-            }
-
-            
             /* COVERSATION REFACTORING todo:
-
-            CONVERSATION REFACTORING */
-            this.getSubjectLine = function(){
-                var lastMessage = this.getLastMessage();
-                return this.subject
-                        || (lastMessage && lastMessage.from ? lastMessage.from.getDisplayName() : false)
-                        || this.getRecipientList()
-
-            }
-
             //Mock;
     
             this.update = function(){ cmLogger.warn('cmModel: .update() is deprecated.'); return this}
@@ -307,6 +344,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                                 .saveEncryptedPassphraseList()
                                 //self.passphrase
                             }
+
+                            self.state.unset('new')
 
                             deferred.resolve();
                         },
@@ -622,44 +661,35 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
 
             this.decryptPassphrase = function(){
-                this.passphrase = '';
-                this.encryptedPassphraseList.forEach(function(item){
-                    if(!self.passphrase){
-                        self.passphrase = cmUserModel.decryptPassphrase(item.encryptedPassphrase, item.keyId) || '';
-                        if(item.keyId == "_passwd"){
-                            self.passphrase = cmCrypt.decrypt(self.password, cmCrypt.base64Decode(item.encryptedPassphrase)) || '';
-                        }
-                    }
-                });
-
+                cmLogger.warn('cmConversation: .decryptPassphrase() is deprecated; use security.decryptPassphrase instead.')
+                this.security.decryptPassphrase()
+                this.passphrase = this.security.passphrase
                 return this;
             };
 
             this.setPassphrase = function (passphrase) {
+                cmLogger.warn('cmConversation: .setPassphrase() is deprecated. Try conversation.security.tryPassphrase() or conversation.security.generatePassphrase() instead.')
                 if(passphrase == undefined){
+                    //this.security.generatePassphrase()
                     this.passphrase = this.passphrase || cmCrypt.generatePassphrase()
                 }else{
+                    //this.securityTryPassphrase(passphrase)
                     this.passphrase = passphrase
                 }
                 return this;
             }
 
             this.decrypt = function (feedback) {
-                this.decryptPassphrase()
-                var success = true
-                if (this.passphrase != '') {
-                    this.messages.forEach(function (message) {
-                        if(typeof self.passphrase !== "undefined"){
-                            success = success && message.decrypt(self.passphrase); //@TODO
-                        } else {
-                            success = false
-                        }
-                    })
-                } else {
-                    success = false
-                }
+                //Todo:
+                if(!this.security.passphrase) cmLogger.error('cmConversation: unable to decrypt, passphrase missing, try conversation.security.decryptPassphrase() first.')
 
-                if(success !== false){
+                var success =   this.security.passphrase
+                                &&
+                                this.messages.reduce(function (success, message) {
+                                        return success && message.decrypt(self.passphrase); //@TODO
+                                }, true)
+
+                if(success){
                     this.trigger('decrypt:ok');
                 } else {
                     if(typeof feedback === 'boolean' && feedback !== false){

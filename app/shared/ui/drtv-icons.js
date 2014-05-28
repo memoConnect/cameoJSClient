@@ -8,7 +8,7 @@ angular.module('cmUi').directive('cmIcons',[
             scope:      {},
 
             link: function(scope, element, attrs){
-
+                scope.count = attrs.count
                 scope.icons = attrs.icons
 
                 function draw(){
@@ -24,7 +24,7 @@ angular.module('cmUi').directive('cmIcons',[
                     }
                 }
 
-                scope.$watch(attrs.count, function(count) {
+                attrs.$observe('count', function(count) {
                     scope.count = attrs.count
                     draw()
                 })
