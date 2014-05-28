@@ -45,6 +45,15 @@ angular.module('cmUi').directive('cmAvatar',[
                         } else if(file.state == 'cached') {
                             showBlobAsImage(file);
                         }
+
+                        // show identity name
+                        if(attrs.cmWithName){
+                            if(!element.hasClass('with-name')){
+                                element.addClass('with-name');
+                                element.append('<div class="name" data-qa="avatar-display-name">'+identity.getDisplayName()+'</div>');
+                                element.attr('title',identity.getDisplayName());
+                            }
+                        }
                     }
                 }
 
@@ -59,20 +68,11 @@ angular.module('cmUi').directive('cmAvatar',[
                         refresh(identity);
 
                         identity.on('init:finish',function(event, identity){
-                            // show identity name
-                            if(attrs.cmWithName){
-                                element.addClass('with-name');
-                                element.append('<div class="name" data-qa="avatar-display-name">'+identity.getDisplayName()+'</div>');
-                                element.attr('title',identity.getDisplayName());
-                            }
                             // refresh Avatar
                             refresh(identity);
                         });
                     }
 
-                    element.on('click',function(){
-                        refresh(identity)
-                    })
                 }
             }
         }
