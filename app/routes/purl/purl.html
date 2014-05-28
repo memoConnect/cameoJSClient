@@ -1,5 +1,5 @@
 <div ng-controller="PurlCtrl">
-    <cm-header cm-rubber-space>
+    <cm-header cm-rubber-space ng-hide="isModalVisible">
         <cm-back cm-weight="1" back-to="/talks" class="overlap-identity" cm-user-rights></cm-back>
         <cm-identity cm-weight="10" cm-user-rights></cm-identity>
         <div cm-weight="10" class="fast-sign-in" cm-user-rights="showForGuest" ng-click="goToRegister()">
