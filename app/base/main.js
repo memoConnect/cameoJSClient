@@ -48,7 +48,7 @@ require.config({
         'pckUi': 'shared/ui/package',
         'pckConversations': 'comps/conversations/package',
         'pckFiles': 'comps/files/package',
-        'pckSecurityAspects': 'comps/security-aspects/package'
+        'pckSecurityAspects': 'comps/security_aspects/package'
     },
 
     // Add angular modules that does not support AMD out of the box, put it in a shim
