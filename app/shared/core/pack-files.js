@@ -302,6 +302,7 @@ angular.module('cmCore')
                 this.raw
                     ?   this.blob = cmFilesAdapter.base64ToBlob(this.raw)
                     :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.')
+
                 return this
             }
         }
