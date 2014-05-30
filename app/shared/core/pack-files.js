@@ -449,9 +449,8 @@ angular.module('cmCore')
             this.importFile = function(){
                 var self = this;
 
-                return (
-                    cmFilesAdapter.getFileInfo(this.id)
-                        .then(function(details){
+                return cmFilesAdapter.getFileInfo(this.id).then(
+                        function(details){
                             self.encryptedName = details.fileName;
                             self.type          = details.fileType;
                             self.size          = details.fileSize;
@@ -459,10 +458,12 @@ angular.module('cmCore')
                             self.maxChunks     = details.maxChunks;
 
                             self.trigger('importFile:finish');
-                        })
-                )
+                        },
+                        function(){
+                            self.trigger('file:crashed');
+                        }
+                    )
 
-                return this;
             };
 
             this.chopIntoChunks = function(chunkSize){
