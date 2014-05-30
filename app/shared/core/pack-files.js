@@ -452,24 +452,21 @@ angular.module('cmCore')
             this.importFile = function(){
                 var self = this;
 
-                return (
-                    cmFilesAdapter.getFileInfo(this.id).then(
-                        function(details){
-                            self.encryptedName = details.fileName;
-                            self.type          = details.fileType;
-                            self.size          = details.fileSize;
-                            self.chunkIndices  = details.chunks;
-                            self.maxChunks     = details.maxChunks;
+                return cmFilesAdapter.getFileInfo(this.id).then(
+                    function(details){
+                        self.encryptedName = details.fileName;
+                        self.type          = details.fileType;
+                        self.size          = details.fileSize;
+                        self.chunkIndices  = details.chunks;
+                        self.maxChunks     = details.maxChunks;
 
-                            self.trigger('importFile:finish');
-                        }),
-                        function(){
-                            self.trigger('file:crashed');
-                            self.setState('crashed');
-                        }
-                )
-
-                return this;
+                        self.trigger('importFile:finish');
+                    },
+                    function(){
+                        self.trigger('file:crashed');
+                        self.setState('crashed');
+                    }
+                );
             };
 
             this.chopIntoChunks = function(chunkSize){
