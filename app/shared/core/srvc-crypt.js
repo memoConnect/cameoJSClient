@@ -99,7 +99,7 @@ angular.module('cmCore').service('cmCrypt',[
                     secretString = JSON.stringify(secretString)
                 }
 
-                if(secretKey == ''){
+                if(secretKey == '' || secretKey == undefined){
                     return secretString;
                 }
 

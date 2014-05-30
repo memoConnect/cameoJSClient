@@ -284,8 +284,7 @@ angular.module('cmCore')
             this.decrypt = function(passphrase){
                 this.encryptedRaw
                     ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw)
-                    :   cmLogger.error('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.')
-
+                    :   cmLogger.error('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.');
 
                 return this
             }
@@ -296,7 +295,6 @@ angular.module('cmCore')
                     :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.')
                 return this
             }
-
 
             this.base64ToBlob = function(){
                 this.raw
@@ -541,7 +539,6 @@ angular.module('cmCore')
                 if(this.chunks){
                     this._encryptChunk(0);
                 } else {
-//                    console.log(this.chunks)
                     cmLogger.error('Unable to encrypt chunks; cmFile.chunks missing. Try calling cmFile.chopIntoChunks() first.');
                 }
 
@@ -553,9 +550,9 @@ angular.module('cmCore')
 
                 chunk
                     .decrypt(this.passphrase)
-                    .base64ToBlob();
+                    .base64ToBlob()
 
-                this.encryptedSize += chunk.encryptedRaw.length
+                this.encryptedSize += chunk.encryptedRaw.length;
                 this.size += chunk.blob.size;
 
                 if(index == (this.chunkIndices.length - 1)){
@@ -582,7 +579,7 @@ angular.module('cmCore')
 
             this.reassembleChunks = function(){
                 var self = this,
-                    data = []
+                    data = [];
 
                 if(!this.chunks) cmLogger.error('Unable reassemble chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.')
 
