@@ -26,7 +26,8 @@ angular.module('cmCore')
                     data: chunk,
                     headers: {
                         "X-Index": index
-                    }
+                    },
+                    transformRequest: function(data){return data}
                 })
             },
 
@@ -46,6 +47,31 @@ angular.module('cmCore')
                 return cmApi.getBinary({
                     path: '/file/'+fileId+'/'+chunkId
                 })
+            },
+
+            base64ToBlob: function (b64Data, contentType, sliceSize){
+                b64Data = b64Data.replace(new RegExp('^(data:(.*);base64,)','i'),'');
+                contentType = contentType || '';
+                sliceSize = sliceSize || 512;
+
+                var byteCharacters = atob(b64Data);
+                var byteArrays = [];
+
+                for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                    var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+                    var byteNumbers = new Array(slice.length);
+                    for (var i = 0; i < slice.length; i++) {
+                        byteNumbers[i] = slice.charCodeAt(i);
+                    }
+
+                    var byteArray = new Uint8Array(byteNumbers);
+
+                    byteArrays.push(byteArray);
+                }
+
+                var blob = new Blob(byteArrays, {type: contentType});
+                return blob;
             }
         }
     }
@@ -89,6 +115,9 @@ angular.module('cmCore')
                 file.downloadChunks();
 
                 file.on('file:cached', function(){
+                    self.run(self.stack.shift());
+                });
+                file.on('file:crashed', function(){
                     self.run(self.stack.shift());
                 });
             } else {
@@ -184,6 +213,24 @@ angular.module('cmCore')
                 return this
             }
 
+            this.blobToBase64 = function(){
+                var self = this,
+                    reader = new window.FileReader(),
+                    deferred = $q.defer();
+
+                reader.onload = function(e) {
+                    self.raw = e.target.result;
+                    deferred.resolve(self.raw)
+                }
+
+                this.blob
+                    ?   reader.readAsDataURL(this.blob)
+                    :   cmLogger.error('Unable ro convert to file; this.blob is empty.')
+
+
+                return deferred.promise;
+            }
+
             this.blobToBinaryString = function(){
                 var self     = this,
                     reader   = new FileReader(),
@@ -224,8 +271,8 @@ angular.module('cmCore')
                 this.raw = undefined
                 this.blob  = undefined
 
-                return cmFilesAdapter.getChunk(id, index)
-                    .then(function(data){
+                return cmFilesAdapter.getChunk(id, index).then(
+                    function(data){
                         return self.encryptedRaw = data
                     })
             }
@@ -246,6 +293,14 @@ angular.module('cmCore')
             this.binaryStringToBlob = function(){
                 this.raw
                     ?   this.blob = binaryStringtoBlob(this.raw)
+                    :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.')
+                return this
+            }
+
+
+            this.base64ToBlob = function(){
+                this.raw
+                    ?   this.blob = cmFilesAdapter.base64ToBlob(this.raw)
                     :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.')
                 return this
             }
@@ -353,6 +408,8 @@ angular.module('cmCore')
             this.encryptedSize = 0;
             this.size = 0;
 
+            this.base64 = '';
+
             this.setPassphrase = function(passphrase){
                 this.passphrase = passphrase;// TODO: || null;
 
@@ -360,7 +417,7 @@ angular.module('cmCore')
             };
 
             this.setState = function(state){
-                var arr_states = ['new','exists','cached'];
+                var arr_states = ['new','exists','cached','crashed'];
                 if(arr_states.indexOf(state) != -1)
                     this.state = state;
 
@@ -369,36 +426,11 @@ angular.module('cmCore')
 
             // upload for state = new
 
-            function base64toBlob(b64Data, contentType, sliceSize) {
-                b64Data = b64Data.replace(new RegExp('^(data:(.*);base64,)','i'),'');
-                contentType = contentType || '';
-                sliceSize = sliceSize || 512;
-
-                var byteCharacters = atob(b64Data);
-                var byteArrays = [];
-
-                for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-                    var slice = byteCharacters.slice(offset, offset + sliceSize);
-
-                    var byteNumbers = new Array(slice.length);
-                    for (var i = 0; i < slice.length; i++) {
-                        byteNumbers[i] = slice.charCodeAt(i);
-                    }
-
-                    var byteArray = new Uint8Array(byteNumbers);
-
-                    byteArrays.push(byteArray);
-                }
-
-                var blob = new Blob(byteArrays, {type: contentType});
-                return blob;
-            }
-
             this.importBase64 = function(base64){
                 if(typeof base64 !== 'undefined'){
                     this.type = base64.replace(new RegExp('^(data:(.*);base64,.*)','i'),'$2');
 
-                    this.blob = base64toBlob(base64,this.type);
+                    this.blob = cmFilesAdapter.base64ToBlob(base64,this.type);
 
                     this.chopIntoChunks(128);
                 }
@@ -420,18 +452,21 @@ angular.module('cmCore')
             this.importFile = function(){
                 var self = this;
 
-                return (
-                    cmFilesAdapter.getFileInfo(this.id)
-                        .then(function(details){
-                            self.encryptedName = details.fileName;
-                            self.type          = details.fileType;
-                            self.size          = details.fileSize;
-                            self.chunkIndices  = details.chunks;
-                            self.maxChunks     = details.maxChunks;
+                return  cmFilesAdapter.getFileInfo(this.id).then(
+                            function(details){
+                                self.encryptedName = details.fileName;
+                                self.type          = details.fileType;
+                                self.size          = details.fileSize;
+                                self.chunkIndices  = details.chunks;
+                                self.maxChunks     = details.maxChunks;
 
-                            self.trigger('importFile:finish');
-                        })
-                )
+                                self.trigger('importFile:finish');
+                            },
+                            function(){
+                                self.trigger('file:crashed');
+                                self.setState('crashed');
+                            }
+                        )
 
                 return this;
             };
@@ -444,7 +479,7 @@ angular.module('cmCore')
                     promises    = []
 
                 if(!this.blob) {
-                    cmLogger.error('Unable to chop file into Chunks; cmFile.file missing. Try calling cmFile.importFile() first.')
+                    cmLogger.error('Unable to chop file into Chunks; cmFile.blob missing.')
                     return null
                 }
 
@@ -463,7 +498,7 @@ angular.module('cmCore')
                     promises.push(
                         chunk
                             .importFileSlice(self.blob, startByte, endByte)
-                            .blobToBinaryString()
+                            .blobToBase64()
                     )
 
                     index++
@@ -520,7 +555,7 @@ angular.module('cmCore')
 
                 chunk
                     .decrypt(this.passphrase)
-                    .binaryStringToBlob();
+                    .base64ToBlob();
 
                 this.encryptedSize += chunk.encryptedRaw.length
                 this.size += chunk.blob.size;
@@ -556,8 +591,6 @@ angular.module('cmCore')
                 this.chunks.forEach(function(chunk){
                     data.push(chunk.blob)
                 })
-
-//                console.log('reassembleChunks',data);
 
                 this.blob = new Blob(data, {type: self.type})
 
@@ -723,6 +756,8 @@ angular.module('cmCore')
              * @returns {FileModel}
              */
             this.init = function(fileData, chunkSize){
+                var self = this;
+
                 if(typeof fileData !== 'undefined'){
                     // existing file via fileId
                     if(typeof fileData == 'string'){
@@ -730,16 +765,16 @@ angular.module('cmCore')
                             .setState('exists')
                             .id = fileData;
                     // fileApi blob prepare upload
-                    } else if(typeof fileData == 'object'){
+                    } else if(typeof fileData == 'object') {
                         this
                             .setState('new')
                             .importBlob(fileData);
 
-                        if(!chunkSize){
+                        if (!chunkSize) {
                             chunkSize = 128;
                         }
 
-                        this.chopIntoChunks(chunkSize);
+                        self.chopIntoChunks(chunkSize);
                     }
                 }
 

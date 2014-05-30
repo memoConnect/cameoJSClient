@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('cmSecurityAspects',[])
+angular.module('cmSecurityAspects',[]);

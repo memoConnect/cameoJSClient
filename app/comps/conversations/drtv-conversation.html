@@ -10,13 +10,16 @@
 <div id="conversation-bottom"></div>
 
 <div class="answer clearfix" id="files-droparea">
-    <cm-files ng-model="files" cm-user-rights data-qa="attachments-btn">
+    <cm-files ng-model="files" data-qa="attachments-btn">
         <i class="fa cm-plus"></i>
-        <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
-        <cm-files-preview></cm-files-preview>
+        <div cm-user-rights>
+            <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
+            <cm-files-preview></cm-files-preview>
+        </div>
+        <div class="webreader-uploading" cm-user-rights="showForGuest" ng-click="openFastRegister()"></div>
     </cm-files>
 
-    <div class="message" cm-answer-area data-qa="answer-ctn">
+    <div class="message" data-qa="answer-ctn">
         <textarea data-qa="input-answer" cm-resize-textarea cm-max-rows="4" ng-model="my_message_text"></textarea>
         <i class="fa cm-smile-negative with-cursor"></i>
         <div class="inputter"></div>

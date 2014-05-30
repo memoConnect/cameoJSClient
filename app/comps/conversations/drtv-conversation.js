@@ -8,9 +8,10 @@ angular.module('cmConversations').directive('cmConversation', [
     'cmCrypt',
     'cmLogger',
     'cmNotify',
+    'cmModal',
     '$location',
     '$rootScope',
-    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, $location, $rootScope) {
+    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope) {
         return {
             restrict: 'AE',
             templateUrl: 'comps/conversations/drtv-conversation.html',
@@ -26,7 +27,6 @@ angular.module('cmConversations').directive('cmConversation', [
 
                 $scope.isSending = false;
                 $scope.conversation = {};
-
 
                 /**
                  * check if is new
@@ -114,13 +114,10 @@ angular.module('cmConversations').directive('cmConversation', [
                         recipients_missing  = $scope.conversation.recipients.length < 1 //@todo mocked
                     // is everything valid? 
                     
-                    console.log('send Message.')
 
                     if(message_valid && passphrase_valid && !recipients_missing){
-                        console.log('everything valid')
                         // create new conversation
                         if($scope.conversation.state.is('new')){
-                            console.log('save')
                             $scope.conversation.save().then(
                                 function(){
                                     sendMessage();
@@ -131,7 +128,6 @@ angular.module('cmConversations').directive('cmConversation', [
                             )
                         // add to existing conversation
                         } else {
-                            console.log('add Message.')
                             cmMessageFactory.create()
                                 .addFiles(files)
                                 .setText($scope.my_message_text)

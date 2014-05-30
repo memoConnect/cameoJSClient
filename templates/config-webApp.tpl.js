@@ -39,7 +39,8 @@ cameo_config = {
             hasCtrl:true
         },
         'registration': {
-            hasCtrl: true
+            hasCtrl: true,
+            guests: true
         },
         'purl': {
             routes:['/purl/:idPurl?'],

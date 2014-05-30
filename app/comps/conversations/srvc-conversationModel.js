@@ -70,8 +70,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.decryptPassphrase = function(encryptedPassphraseList, password){
                 passphrase  =   encryptedPassphraseList.reduce(function(passphrase, item){
-                                    console.log('pw: '+password)
-                                    console.log('keyId'+item.keyId)
                                     return      passphrase
                                             ||  (item.keyId == "_passwd" && password)
                                                 //TODO check return value when password == ''
@@ -397,11 +395,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 if(this.state.is('new')){
                     if(!security.checkConsistency()){
                         deferred.reject()
-                        console.log('bleh')
                         return deferred.promise
                     }
-
-                    console.log('Sdfsdfse33')
 
                     cmConversationsAdapter.newConversation((this.subject || '')).then(
                         function (conversation_data) {
@@ -677,10 +672,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              }
 
             this.saveEncryptedPassphraseList = function(){
-                console.log('seps')
-                this.encryptedPassphraseList = security.getEncryptedPassphraseList(self.password)
-                console.log(this.encryptedPassphraseList)
-                if(
+                this.encryptedPassphraseList = security.getEncryptedPassphraseList(self.password)                if(
                        this.encryptedPassphraseList
                     && this.encryptedPassphraseList.length !=0
                 ){
@@ -695,7 +687,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 //Todo:
                 security.decryptPassphrase(this.encryptedPassphraseList, this.password)
-                console.log(this.password)
 
                 var passphrase = security.getPassphrase()
                 
