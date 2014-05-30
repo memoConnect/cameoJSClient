@@ -285,7 +285,6 @@ angular.module('cmCore')
                 this.encryptedRaw
                     ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw)
                     :   cmLogger.error('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.');
-
                 return this
             }
 
