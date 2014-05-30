@@ -672,7 +672,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
              }
 
             this.saveEncryptedPassphraseList = function(){
-                this.encryptedPassphraseList = security.getEncryptedPassphraseList(self.password)                if(
+                this.encryptedPassphraseList = security.getEncryptedPassphraseList(self.password)                
+                if(
                        this.encryptedPassphraseList
                     && this.encryptedPassphraseList.length !=0
                 ){
