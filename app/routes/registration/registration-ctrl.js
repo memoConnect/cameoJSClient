@@ -1,12 +1,7 @@
 define([
     'app',
-//    'ngload!cmAuth',
-//    'ngload!cmUserModel',
-//    'ngload!cmNotify',
-//    'ngload!cmLogger',
     'ngload!pckValidate',
     'ngload!pckUi'
-//    'ngload!cmUtil'
 ], function (app) {
     'use strict';
 
@@ -18,9 +13,12 @@ define([
     'cmAuth',
     'cmUserModel',
     'cmUtil',
+    'cmLogger',
     '$timeout',
-    function ($scope, $rootScope, $location, $q, cmAuth, cmUserModel, cmUtil, $timeout) {
+    function ($scope, $rootScope, $location, $q, cmAuth, cmUserModel, cmUtil, cmLogger, $timeout) {
         var reservationSecrets = {};
+
+        $scope.handleGuest = false;
 
         $scope.showError = {
             LoginNameExists: false,
@@ -232,14 +230,18 @@ define([
                             cmUserModel.doLogin($scope.formData.loginName, $scope.formData.password).then(
                                 function(){
                                     cmUserModel.setIdentity(userData.identities[0]);
-                                    cmUserModel.comesFromRegistration = true;
-                                    $location.path("/talks");
+                                    if($scope.handleGuest !== false){
+                                        $location.path($rootScope.urlHistory[($rootScope.urlHistory.length - 2)]);
+                                    } else {
+                                        cmUserModel.comesFromRegistration = true;
+                                        $location.path("/talks");
+                                    }
                                 }
                             )
                             return true;
                         },
                         function(response){
-                            console.log(response);
+//                            console.log(response);
                         }
                     );
                 }
@@ -247,5 +249,13 @@ define([
 
             return false;
         };
+
+        /**
+         * Guest Handling
+         */
+        if(cmUserModel.isGuest() !== false){
+            $scope.handleGuest = true;
+        }
+
     }]);
 });

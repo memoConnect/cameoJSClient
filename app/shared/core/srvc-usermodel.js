@@ -37,13 +37,19 @@ angular.module('cmCore')
 
         cmObject.addEventHandlingTo(this);
 
+        this.data = angular.extend({}, dataModel);
+
         this.comesFromRegistration = false;
 
         this.init = function(identity_data){
             cmLogger.debug('cmUserModel:init');
             this.loadIdentity(identity_data).then(
                 function(identity){
-                    angular.extend(self.data, identity);
+                    if(typeof identity_data == 'object'){
+                        identity.init(identity_data);
+                    }
+
+                    self.data = angular.extend(self.data,identity);
 
                     self.data.identity = identity;
                     self.data.identity.isAppOwner = true;
@@ -71,7 +77,7 @@ angular.module('cmCore')
             var deferred = $q.defer();
 
             if(typeof identity_data !== 'undefined'){
-                deferred.resolve(cmIdentityFactory.create(identity_data));
+                deferred.resolve(cmIdentityFactory.get(identity_data));
             } else {
                 if(this.getToken() !== false){
                     cmAuth.getIdentity().then(
@@ -105,8 +111,6 @@ angular.module('cmCore')
             cmLogger.debug('cmUserModel:setIdentity');
             this.init(identity_data);
         };
-
-        this.data = angular.extend({}, dataModel);
 
         /**
          * @todo more better logic pls^^
@@ -174,7 +178,6 @@ angular.module('cmCore')
         /**
          * Key Handling
          */
-
 
         /**
          * @todo in die identität
