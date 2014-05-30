@@ -17,8 +17,8 @@ angular.module('cmConversations').directive('cmConversationControls', [
             link: function(scope, element, attrs, cmConversation){
                 var levels = ['unsafe', 'safe', 'safer'];
 
-                scope.bodyVisible   = cmConversation.isNew();
-                scope.isNew         = cmConversation.isNew();
+                scope.bodyVisible   = cmConversation.isNew()
+                scope.isNew         = cmConversation.isNew()
 
                 //Todo: get rid of this! :
                 scope.$watch('conversation', function(conversation){
@@ -60,18 +60,18 @@ angular.module('cmConversations').directive('cmConversationControls', [
 
                 $scope._setLevel = function(level){
                     if(level == 'unsafe'){
-                        $scope.conversation.setPassphrase('');
-                        $scope.conversation.setKeyTransmission('symmetric');
+                        $scope.conversation.preferences.encryption = false
+                        $scope.conversation.preferences.keyTransmission = 'symmetric'
                     }
 
                     if(level == 'safe'){
-                        $scope.conversation.setPassphrase();
-                        $scope.conversation.setKeyTransmission('symmetric');
+                        $scope.conversation.preferences.encryption = true
+                        $scope.conversation.preferences.keyTransmission = 'symmetric'
                     }
 
                     if(level == 'safer'){
-                        $scope.conversation.setPassphrase();
-                        $scope.conversation.setKeyTransmission('asymmetric');
+                        $scope.conversation.preferences.encryption = true
+                        $scope.conversation.preferences.keyTransmission = 'asymmetric'
                     }
 
                     $scope.safetyLevel = level;

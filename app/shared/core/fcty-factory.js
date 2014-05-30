@@ -33,7 +33,7 @@ angular.module('cmCore')
                                     ?   args.id
                                     :   args
 
-                return self.find(id) || self.new(args)
+                return self.find(id) || self.new(args) //Todo: self.find(id).importData(args)?
             }
 
             /**
