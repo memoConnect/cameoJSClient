@@ -85,6 +85,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 //TODO: refactor
                 var result = true
 
+//                console.log('moep' ,conversation.preferences.encryption
+//                && conversation.preferences.keyTransmission == 'asymmetric'
+//                && this.getWeakestKeySize() == 0)
+
                 if(  
                        conversation.preferences.encryption
                     && conversation.preferences.keyTransmission == 'asymmetric'
@@ -117,9 +121,14 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
 
 
+            /**
+             * @TODO mit AP klären, BS
+             * @returns {*|number}
+             */
              this.getWeakestKeySize = function(){
                 return  conversation.recipients.reduce(function(size, recipient){
-                            return size != undefined ? Math.min(recipient.getWeakestKeySize(), size) : recipient.getWeakestKeySize()
+//                            return size != undefined ? Math.min(recipient.getWeakestKeySize(), size) : recipient.getWeakestKeySize()
+                            return size != undefined ? Math.min(recipient.getWeakestKeySize(), size.getWeakestKeySize()) : recipient.getWeakestKeySize()
                         }) || 0
             }
         }
@@ -200,7 +209,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 //Todo: fire event on factory and delegate to conversation or something
                 self.on('message:new', function(event, message_data){
-                    self.messages.create( message_data )
+                    self.messages.create( message_data).decrypt(self.getPassphrase())
                 })
 
                 /*
@@ -686,7 +695,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 var passphrase = security.getPassphrase()
                 
-                if(!passphrase) cmLogger.error('cmConversation: unable to decrypt, passphrase missing.')
+//                if(!passphrase) cmLogger.error('cmConversation: unable to decrypt, passphrase missing.')
+                if(!passphrase) cmLogger.debug('cmConversation: unable to decrypt, passphrase missing.')
 
                 var success =   passphrase
                                 &&

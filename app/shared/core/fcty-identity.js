@@ -104,7 +104,7 @@ angular.module('cmCore').factory('cmIdentityModel',[
             this.getWeakestKeySize = function(){
                 var size = undefined
                 this.keys.forEach(function(key){
-                    size = size !=undefined ? Math.min(size, key.getSize()) : key.getSize()
+                    size = size != undefined ? Math.min(size, key.getSize()) : key.getSize()
                 })
                 size = size || 0
                 return size
