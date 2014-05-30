@@ -19,10 +19,10 @@ angular.module('cmCore')
             var self        = new Array()
 
             cmObject
-            .addEventHandlingTo(this)
+            .addEventHandlingTo(self)
 
             self.set = function(state){
-                if(self.indexOf(state) != -1){
+                if(self.indexOf(state) == -1){
                     self.push(state)
                     self.trigger('change')
                 }
@@ -30,9 +30,13 @@ angular.module('cmCore')
 
             self.unset = function(state){
                 if(self.indexOf(state) != -1){
-                    self.slice(self.indexOf(state),1)
+                    self.splice(self.indexOf(state),1)
                     self.trigger('change')
                 }
+            }
+
+            self.is = function(state){
+                return self.indexOf(state) != -1
             }
 
             return self
