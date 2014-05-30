@@ -13,7 +13,7 @@ angular.module('cmConversations').directive('cmLastMessage', [
                     var i = $scope.conversation.messages.length;
                     while(i > 0){
                         $scope.conversation.messages[(i-1)]
-                            .decryptFiles($scope.conversation.passphrase);
+                            .decryptFiles($scope.conversation.getPassphrase());
                         i--;
                     }
                 }
