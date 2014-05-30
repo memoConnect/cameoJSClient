@@ -5,24 +5,19 @@
         {{conversation | cmTagline}}
     </div>
     <cm-message
-        ng-if     = "conversation.lastMessage"
-        cm-data   = "conversation.lastMessage"
+        cm-data   = "conversation.getLastMessage()"
         text-only = "true"
         data-qa   = "conversation-last-message"
     ></cm-message>
 </div>
 
-<div class="meta" cm-weight = "1">
+<div class="meta" cm-weight="1">
     <div class="top">
-
         <cm-safety-level cm-level="conversation.getSafetyLevel()"></cm-safety-level>
-
         <span class="last-updated small">
             {{conversation.timeOfLastUpdate | date:'HH:mm'}}
         </span>
-
     </div>
-    
     <div class="bottom">
         <cm-recipient-counter>{{conversation.recipients.length||0}}</cm-recipient-counter>
         <span class="message-count" ng-class="{'cm-unread' : conversation.messages.length > 0}"> ({{conversation.messages.length||0}}) </span>

@@ -521,11 +521,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
                          * Message Handling
                          */
                         if(typeof clearMessages !== 'undefined' && clearMessages !== false){
-                            self.messages = [];
+                            self.messages.reset();
                         }
 
                         data.messages.forEach(function(message_data) {
-                            self.addMessage(cmMessageFactory.create(message_data));
+                            self.messages.create(message_data);
                         });
                     }
                 )
@@ -603,28 +603,23 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     return this.messages[(this.messages.length - 1)];
                 }
                 return null
-            }
-
+            };
 
             /**
              * Recipient Handling
              */
-
-            
             this.getRecipientList = function(){
                 cmLogger.debug('cmConversationModel: .getRecipientList() is deprecated.')
-  
-
-                return this.recipients.map(function(recipient){ 
-                                                return recipient.displayName || 'CONTACT.ERROR.MISSING_DISPLAYNAME' 
-                                            }).join(', ')
-            }
+                return this.recipients.map(function(recipient){
+                    return recipient.displayName || 'CONTACT.ERROR.MISSING_DISPLAYNAME'
+                }).join(', ');
+            };
 
             this.hasRecipient = function(identity){
                 var check = false;
 
                 this.recipients.forEach(function(recipient){
-                    check = check || (identity.id == recipient.id)
+                    check = check || (identity.id == recipient.id);
                 });
 
                 return check;
