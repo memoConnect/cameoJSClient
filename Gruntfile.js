@@ -792,5 +792,5 @@ module.exports = function (grunt) {
         'copy:cockpit',
         'uglify:cockpit']);
 
-    grunt.registerTask('node webserver', ['shell:node-webserver']);
+    grunt.registerTask('node-webserver', ['shell:node-webserver']);
 };

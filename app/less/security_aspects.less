@@ -1,16 +1,17 @@
 cm-security-indicator{
     display:block;
+    height: 1.6em;
+    > * {
+        display:inline-block;
+        white-space:nowrap;
+        line-height:1em;
+        font-size:1.6em;
+    }
     .positive{
         color: @cm-color-positive;
-        float:left;
+        float:right;
     }
     .negative{
         color: @cm-color-negative;
-        float:right;
-    }
-    &:after{
-        content:'';
-        clear:both;
-        float:none;
     }
 }

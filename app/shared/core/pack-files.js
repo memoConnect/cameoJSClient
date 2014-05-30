@@ -117,6 +117,9 @@ angular.module('cmCore')
                 file.on('file:cached', function(){
                     self.run(self.stack.shift());
                 });
+                file.on('file:crashed', function(){
+                    self.run(self.stack.shift());
+                });
             } else {
                 if(this.stack.length == 0) {
                     this.atWork = false;
@@ -268,8 +271,8 @@ angular.module('cmCore')
                 this.raw = undefined
                 this.blob  = undefined
 
-                return cmFilesAdapter.getChunk(id, index)
-                    .then(function(data){
+                return cmFilesAdapter.getChunk(id, index).then(
+                    function(data){
                         return self.encryptedRaw = data
                     })
             }
@@ -299,6 +302,7 @@ angular.module('cmCore')
                 this.raw
                     ?   this.blob = cmFilesAdapter.base64ToBlob(this.raw)
                     :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.')
+
                 return this
             }
         }
@@ -414,7 +418,7 @@ angular.module('cmCore')
             };
 
             this.setState = function(state){
-                var arr_states = ['new','exists','cached'];
+                var arr_states = ['new','exists','cached','crashed'];
                 if(arr_states.indexOf(state) != -1)
                     this.state = state;
 
@@ -450,20 +454,20 @@ angular.module('cmCore')
                 var self = this;
 
                 return cmFilesAdapter.getFileInfo(this.id).then(
-                        function(details){
-                            self.encryptedName = details.fileName;
-                            self.type          = details.fileType;
-                            self.size          = details.fileSize;
-                            self.chunkIndices  = details.chunks;
-                            self.maxChunks     = details.maxChunks;
+                    function(details){
+                        self.encryptedName = details.fileName;
+                        self.type          = details.fileType;
+                        self.size          = details.fileSize;
+                        self.chunkIndices  = details.chunks;
+                        self.maxChunks     = details.maxChunks;
 
-                            self.trigger('importFile:finish');
-                        },
-                        function(){
-                            self.trigger('file:crashed');
-                        }
-                    )
-
+                        self.trigger('importFile:finish');
+                    },
+                    function(){
+                        self.trigger('file:crashed');
+                        self.setState('crashed');
+                    }
+                );
             };
 
             this.chopIntoChunks = function(chunkSize){

@@ -3,7 +3,6 @@
 angular.module('cmConversations').directive('cmConversationTag',[
     function (){
         return {
-
             restrict : 'AE',
             scope: {
                 conversation : "=cmData"

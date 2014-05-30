@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('cmSecurityAspects')
-.service('cmSecurityAspectsConversation',[
+.factory('cmSecurityAspectsConversation',[
 
     'cmSecurityAspects',
 
     function(cmSecurityAspects){
+        
         var securityAspectsConversation = new cmSecurityAspects()
 
         securityAspectsConversation
