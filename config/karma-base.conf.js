@@ -26,8 +26,8 @@ module.exports = function(config) {
             'app/vendor/crypto/jsencrypt/jsencrypt.min.js',
 
             // packages
-            'app/shared/core/package.js',
-            'app/shared/ui/package.js',
+            'app/comps/core/package.js',
+            'app/comps/ui/package.js',
             'app/comps/contacts/package.js',
             'app/comps/user/package.js',
             'app/comps/validate/package.js',

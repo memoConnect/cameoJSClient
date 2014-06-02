@@ -40,9 +40,9 @@ angular.module('cmUi').directive('cmModal', [
             templateUrl: function(tElement, tAttrs){
                 var type = tAttrs.type || 'plain',
                     templateUrl = {
-                        plain: 'shared/ui/drtv-modal-plain.html',
-                        fullscreen: 'shared/ui/drtv-modal-fullscreen.html',
-                        alert: 'shared/ui/drtv-modal-alert.html'
+                        plain: 'comps/ui/drtv-modal-plain.html',
+                        fullscreen: 'comps/ui/drtv-modal-fullscreen.html',
+                        alert: 'comps/ui/drtv-modal-alert.html'
                     };
 
                 return templateUrl[type];

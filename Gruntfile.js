@@ -242,9 +242,9 @@ module.exports = function (grunt) {
                     process: concatConvertCmFiles
                 },
                 files: concatCreateCmPackages({
-                    'core': 'app/shared/core',
+                    'core': 'app/comps/core',
                     'core-cockpit': {
-                        packagePath:'app/shared/core',
+                        packagePath:'app/comps/core',
                         moduleName:'core-cockpit',
 //                        include:'*(*api|*auth|*crypt|*logger)',
                         exclude:'!(module|package|*identity|*language|*notify|*cron|*job|*localstorage|*object|*usermodel|*util)',
@@ -256,7 +256,7 @@ module.exports = function (grunt) {
                     'validate': 'app/comps/validate',
                     'files': 'app/comps/files',
                     'security_aspects': 'app/comps/security_aspects',
-                    'ui': 'app/shared/ui'
+                    'ui': 'app/comps/ui'
                 })
             }
         },
@@ -681,8 +681,8 @@ module.exports = function (grunt) {
             files: [
                 'app/less/*.less',
                 'templates/*.tpl.*',
-                'app/comps/**/!(package)*',
-                'app/shared/**/!(package)*'],
+                'app/comps/**/!(package)*'
+            ],
             tasks: ['genAllTemplates','packages']
         },
         less: {

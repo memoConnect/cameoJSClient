@@ -49,7 +49,7 @@ angular.module('cmUi').directive('cmMenu',[
         return {
             restrict: 'AE',
             scope: true,
-            templateUrl: 'shared/ui/drtv-menu.html',
+            templateUrl: 'comps/ui/drtv-menu.html',
 
             controller: function($scope, $element, $rootScope){
                 $scope.cmVersion = cmVersion;

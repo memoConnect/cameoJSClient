@@ -30,7 +30,7 @@ require.config({
         // global provider without AMD
         'cmProfile': 'comps/cmProfile',
 
-        // shared
+        // vendor
         'util-spin': 'vendor/util/spin',
         'util-base64': 'vendor/util/base64',
         'util-base64_decode': 'vendor/util/base64_decode',
@@ -41,11 +41,11 @@ require.config({
         'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt.min',
 
         // packages generated via grunt task 'packages'
-        'pckCore': 'shared/core/package',
+        'pckCore': 'comps/core/package',
         'pckContacts': 'comps/contacts/package',
         'pckUser': 'comps/user/package',
         'pckValidate': 'comps/validate/package',
-        'pckUi': 'shared/ui/package',
+        'pckUi': 'comps/ui/package',
         'pckConversations': 'comps/conversations/package',
         'pckFiles': 'comps/files/package',
         'pckSecurityAspects': 'comps/security_aspects/package'
