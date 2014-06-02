@@ -59,7 +59,8 @@ angular.module('cmCore')
                     self.syncLocalKeys();
 
                     cmLogger.debug('cmUserModel:init:ready');
-                    self.trigger('init');
+                    self.trigger('init');// deprecated
+                    self.trigger('init:finish');
                 },
                 function(response){
                     cmLogger.debug('cmUserModel:init:reject');

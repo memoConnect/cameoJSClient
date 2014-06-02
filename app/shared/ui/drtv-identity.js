@@ -9,6 +9,10 @@ angular.module('cmUi').directive('cmIdentity',[
             scope: true,
             controller: function($scope){
                 $scope.identity = cmUserModel.data.identity;
+
+                cmUserModel.on('init:finish',function(){
+                    $scope.identity = cmUserModel.data.identity;
+                });
             }
         }
     }
