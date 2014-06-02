@@ -203,6 +203,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 this.importData(data)
 
+                // getting local saved pw for conversation
+                this.password = this.localPWHandler.get(this.id);
+
                 /*
                 cmConversationsAdapter
                 .on('message:new', function(event, message_data){ self.addMessage(cmMessageFactory.get(message_data)) })
@@ -692,7 +695,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.decrypt = function (feedback) {
                 if(!this.preferences.encryption) return null
 
-                //Todo:
                 security.decryptPassphrase(this.encryptedPassphraseList, this.password)
 
                 var passphrase = security.getPassphrase()
@@ -700,14 +702,17 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 if(!passphrase)
                     cmLogger.debug('cmConversation: unable to decrypt, passphrase missing.')
 
-                var success = passphrase
-                                &&
-                                this.messages.reduce(function (success, message) {
-                                        return success && message.decrypt(passphrase); //@TODO
-                                }, true)
+                var success = passphrase && this.messages.reduce(function (success, message) {
+                    return success && message.decrypt(passphrase);
+                }, true);
 
                 if(success){
                     this.trigger('decrypt:ok');
+
+                    // save password to localstorage
+                    if(this.password && passphrase){
+                        this.localPWHandler.set(this.id, this.password);
+                    }
                 } else {
                     if(typeof feedback === 'boolean' && feedback !== false){
                         this.trigger('feedback:decrypt:fail');
@@ -746,6 +751,30 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     case 2: className = 'safer'; break;
                 }
                 return 'safetylevel-'+className+addon;
+            };
+
+            this.localPWHandler = {
+                localKey: 'pw',
+                set: function(id_conversation, password){
+                    var pw_list = this.getAll();
+
+                    pw_list[id_conversation] = password;
+
+                    cmUserModel.storageSave(this.localKey, pw_list);
+                },
+                get: function(id_conversation){
+                    var pw_list = this.getAll(),
+                        password = undefined;
+
+                    if(typeof pw_list == 'object' && Object.keys(pw_list).indexOf(id_conversation)!= -1){
+                        password = pw_list[id_conversation];
+                    }
+
+                    return password;
+                },
+                getAll: function(){
+                    return cmUserModel.storageGet(this.localKey) || {};
+                }
             };
 
             //this.init(data);
