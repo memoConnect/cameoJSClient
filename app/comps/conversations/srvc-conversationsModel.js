@@ -104,7 +104,6 @@ angular.module('cmConversations').service('cmConversationsModel', [
 
                             deferred.resolve(conversation)
                         },
-
                         function () {
                             deferred.reject();
                         }

@@ -4,11 +4,7 @@
     <div class="subject" data-qa="conversation-subject">
         {{conversation | cmTagline}}
     </div>
-    <cm-message
-        cm-data   = "conversation.getLastMessage()"
-        text-only = "true"
-        data-qa   = "conversation-last-message"
-    ></cm-message>
+    <cm-message cm-data="conversation.getLastMessage()" text-only="true" data-qa ="conversation-last-message"></cm-message>
 </div>
 
 <div class="meta" cm-weight="1">

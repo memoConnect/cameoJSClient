@@ -198,21 +198,19 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 .addEventHandlingTo(this)
                 .addChainHandlingTo(this)
                 
-                if(!data || !data.id) self.state.set('new') 
+                if(!data || !data.id)
+                    self.state.set('new')
 
                 this.importData(data)
-
-
 
                 /*
                 cmConversationsAdapter
                 .on('message:new', function(event, message_data){ self.addMessage(cmMessageFactory.get(message_data)) })
                 */
-               
 
                 //Todo: fire event on factory and delegate to conversation or something
                 self.on('message:new', function(event, message_data){
-                    self.messages.create( message_data).decrypt(self.getPassphrase())
+                    self.messages.create(message_data).decrypt(self.getPassphrase())
                 })
 
                 /*
@@ -254,12 +252,16 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 var messages = data.messages || []
                 messages.forEach(
-                    function(message_data) { self.messages.create(message_data) }
+                    function(message_data) {
+                        self.messages.create(message_data).decrypt(self.getPassphrase())
+                    }
                 )
 
                 var recipients = data.recipients || []
                 recipients.forEach(
-                    function(recipient_data){ self.addRecipient(cmRecipientModel(cmIdentityFactory.get(recipient_data.identity))) }
+                    function(recipient_data){
+                        self.addRecipient(cmRecipientModel(cmIdentityFactory.get(recipient_data.identity)))
+                    }
                 )
 
                 return this
@@ -537,7 +539,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         }
 
                         data.messages.forEach(function(message_data) {
-                            self.messages.create(message_data);
+                            self.messages.create(message_data).decrypt(self.getPassphrase());
                         });
                     }
                 )

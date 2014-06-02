@@ -196,7 +196,6 @@ angular.module('cmConversations').directive('cmConversation', [
                             })
                 // pending conversation
                 } else if($rootScope.pendingConversation){
-
                     $rootScope.pendingConversation.id
                     ?   $location.path('conversation/'+$rootScope.pendingConversation.id)
                     :   $scope.init($rootScope.pendingConversation)
