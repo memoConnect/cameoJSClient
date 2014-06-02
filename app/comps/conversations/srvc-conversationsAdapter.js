@@ -53,9 +53,9 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                 })
             },
 
-            addRecipient: function(id_converation, id_identity_recipient){
+            addRecipient: function(id_conversation, id_identity_recipient){
                 return	cmApi.post({
-                            path:	'/conversation/%1/recipient'.replace(/%1/, id_converation),
+                            path:	'/conversation/%1/recipient'.replace(/%1/, id_conversation),
                             data:	{
                                         recipients: [id_identity_recipient]
                                     }
@@ -109,8 +109,9 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
 
         cmObject.addEventHandlingTo(adapter)
        
-        cmApi.on('conversation:new-message', function(event, data){ adapter.trigger('message:new', data) })
-           
+        cmApi.on('conversation:new-message', function(event, data){
+            adapter.trigger('message:new', data)
+        })
 
         return adapter
     }

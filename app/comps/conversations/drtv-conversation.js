@@ -34,7 +34,7 @@ angular.module('cmConversations').directive('cmConversation', [
                  */
                 this.isNew = function(){
                     return !conversation_id
-                }
+                };
 
                 /**
                  * start sending process
@@ -88,7 +88,7 @@ angular.module('cmConversations').directive('cmConversation', [
                         return true;
                     }
                     return false;
-                }
+                };
 
                 /**
                  * validator helper
@@ -113,8 +113,6 @@ angular.module('cmConversations').directive('cmConversation', [
                         message_valid       = isMessageValid() ,
                         recipients_missing  = $scope.conversation.recipients.length < 1 //@todo mocked
                     // is everything valid? 
-                    
-
                     if(message_valid && passphrase_valid && !recipients_missing){
                         // create new conversation
                         if($scope.conversation.state.is('new')){
@@ -188,19 +186,21 @@ angular.module('cmConversations').directive('cmConversation', [
                     $scope.show_contacts    = false;
                 };
 
+                // existing conversation
                 if(conversation_id){
                     cmConversationsModel
                         .getConversation(conversation_id)
-                            .then(function (conversation) {
-                                    $scope.init(conversation)
-                                    $scope.conversation.decrypt()
+                            .then(function (conversation){
+                                $scope.init(conversation)
+                                $scope.conversation.decrypt()
                             })
+                // pending conversation
                 } else if($rootScope.pendingConversation){
 
                     $rootScope.pendingConversation.id
                     ?   $location.path('conversation/'+$rootScope.pendingConversation.id)
                     :   $scope.init($rootScope.pendingConversation)
-
+                // new conversation
                 } else {
                     cmConversationsModel.createNewConversation().then(
                         function(newConversation){

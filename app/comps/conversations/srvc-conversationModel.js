@@ -27,13 +27,13 @@ angular.module('cmConversations').factory('cmConversationModel',[
          */
         function SecurityManagement(conversation){
             var conversation               = conversation,
-                passphrase                 = ''
+                passphrase                 = '';
 
-            var self = this
+            var self = this;
 
             this.getPassphrase = function(){
-                return passphrase 
-            }
+                return passphrase;
+            };
 
             this.generatePassphrase = function(){
                 if(!conversation.state.is('new')){
@@ -49,13 +49,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.getEncryptedPassphraseList = function(password){
                 var eps = [] //encrypted passphrase list
 
-                if(!this.checkConsistency()) return []
-
-                if(conversation.preferences.keyTransmission == 'asymmetric'){
-                    eps =   conversation.recipients.reduce(function(list, recipient){
-                                return list.concat(recipient.encryptPassphrase(passphrase))
-                            }, [])
-                }
+                if(!this.checkConsistency()) return [];
 
                 if(conversation.preferences.keyTransmission == 'symmetric' && password){
                     eps =   [{
@@ -64,32 +58,41 @@ angular.module('cmConversations').factory('cmConversationModel',[
                             }]
                 }
 
-                return eps
-            }
-
+                if(conversation.preferences.keyTransmission == 'asymmetric'){
+                    eps = conversation.recipients.reduce(function(list, recipient){
+                        return list.concat(recipient.encryptPassphrase(passphrase))
+                    }, [])
+                }
+                return eps;
+            };
 
             this.decryptPassphrase = function(encryptedPassphraseList, password){
-                passphrase  =   encryptedPassphraseList.reduce(function(passphrase, item){
-                                    return      passphrase
-                                            ||  (item.keyId == "_passwd" && password)
-                                                //TODO check return value when password == ''
-                                                ?   cmCrypt.decrypt(password, cmCrypt.base64Decode(item.encryptedPassphrase)) || ''
-                                                :   cmUserModel.decryptPassphrase(item.encryptedPassphrase, item.keyId) || ''
-                                },'')
+                passphrase = encryptedPassphraseList.reduce(function(passphrase, item){
+                    var returnSchmu;
+
+                    if(passphrase) {
+                        returnSchmu = passphrase;
+                    } else if((item.keyId == "_passwd" && password)) {
+                        returnSchmu = cmCrypt.decrypt(password, cmCrypt.base64Decode(item.encryptedPassphrase)) || ''
+                    } else {
+                        returnSchmu = cmUserModel.decryptPassphrase(item.encryptedPassphrase, item.keyId) || ''
+                    }
+
+                    return returnSchmu;
+
+                    },'');
                 return this
-            }
-
-
+            };
 
             this.checkConsistency = function(){
                 //TODO: refactor
-                var result = true
+                var result = true;
 
 //                console.log('moep' ,conversation.preferences.encryption
 //                && conversation.preferences.keyTransmission == 'asymmetric'
 //                && this.getWeakestKeySize() == 0)
 
-                if(  
+                if(
                        conversation.preferences.encryption
                     && conversation.preferences.keyTransmission == 'asymmetric'
                     && this.getWeakestKeySize() == 0
@@ -122,7 +125,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
 
             /**
-             * @TODO mit AP klären, BS
+             * @TODO mit AP klären, BS!!!
              * @returns {*|number}
              */
              this.getWeakestKeySize = function(){
@@ -669,23 +672,20 @@ angular.module('cmConversations').factory('cmConversationModel',[
             /**
              * Crypt Handling
              */
-
             this.setKeyTransmission = function(mode){
-                this.preferences.keyTransmission(mode)
-                security.checkConsistency()             
-             }
+                this.preferences.keyTransmission(mode);
+                security.checkConsistency();
+            };
 
             this.saveEncryptedPassphraseList = function(){
-                this.encryptedPassphraseList = security.getEncryptedPassphraseList(self.password)                
-                if(
-                       this.encryptedPassphraseList
-                    && this.encryptedPassphraseList.length !=0
-                ){
+                this.encryptedPassphraseList = security.getEncryptedPassphraseList(this.password)
+
+                if(this.encryptedPassphraseList && this.encryptedPassphraseList.length !=0){
                     return cmConversationsAdapter.updateEncryptedPassphraseList(this.id, this.encryptedPassphraseList)
-                }else{
+                } else {
                     return $q.when(true)
                 }
-            }
+            };
 
             this.decrypt = function (feedback) {
                 if(!this.preferences.encryption) return null
@@ -694,11 +694,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 security.decryptPassphrase(this.encryptedPassphraseList, this.password)
 
                 var passphrase = security.getPassphrase()
-                
 //                if(!passphrase) cmLogger.error('cmConversation: unable to decrypt, passphrase missing.')
-                if(!passphrase) cmLogger.debug('cmConversation: unable to decrypt, passphrase missing.')
+                if(!passphrase)
+                    cmLogger.debug('cmConversation: unable to decrypt, passphrase missing.')
 
-                var success =   passphrase
+                var success = passphrase
                                 &&
                                 this.messages.reduce(function (success, message) {
                                         return success && message.decrypt(passphrase); //@TODO
@@ -718,7 +718,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.passphraseValid = function () {
                 return !this.preferences.encryption || !this.messages[0] || (security.getPassphrase() && this.messages[0].decrypt(security.getPassphrase()))
             };
-
 
             this.getSafetyLevel = function(){
                 var level = 0; 
