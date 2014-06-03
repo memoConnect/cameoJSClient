@@ -20,18 +20,16 @@ angular.module('cmCore').factory('cmPassphraseList',[
 
             this.items = [];
 
-
-
             /**
              * @name init
              * @description
              * Initialize cmPassphraseList
              *
-             * @param {object} data
+             * @param {array} data
              * @return {cmPassphraseList}
              */
             function init(data){
-                if(typeof data === 'object'){
+                if(typeof data === 'array'){
                     self.importData(data);
                 }
 
@@ -69,12 +67,14 @@ angular.module('cmCore').factory('cmPassphraseList',[
              * @description
              * imports Data from List
              *
-             * @param list
+             * @param {Array} list
              * @returns {cmPassphraseList}
              */
             this.importData = function(list){
-                var check = false,
-                    list = list || []
+                var check = false;
+
+                if(typeof list !== 'array')
+                    list = [];
 
                 list.forEach(function(item){
                     check = self.items.reduce(function(found, current){
@@ -98,7 +98,9 @@ angular.module('cmCore').factory('cmPassphraseList',[
              * @returns {*}
              */
             this.getPassphrase = function(password){
-                if(typeof passphrase != "string" || passphrase.length > 0) decryptPassphrase(password)
+                if(typeof passphrase != "string" || passphrase.length > 0)
+                    decryptPassphrase(password)
+
                 return passphrase;
             };
 
