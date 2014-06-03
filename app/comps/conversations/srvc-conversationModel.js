@@ -175,7 +175,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.password           = undefined
 
-            this.state              = new cmStateManagement(['new'])
+            this.state              = new cmStateManagement(['new','loading'])
 
             var self        = this,
                 security    = new SecurityManagement(this)
@@ -251,8 +251,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 /**
                  * muss bleiben, aktuelle falsche stelle, sollte in die init
                  */
-                this.setEncryptionType();
-                this.initPassCaptcha(data);
+                this.setEncryptionType(); // IN PASSPHRASELIST
+                this.initPassCaptcha(data); // kann in die init
 
                 var messages = data.messages || []
                 messages.forEach(
@@ -457,7 +457,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 if(typeof conversation_data.passCaptcha !== 'undefined' && conversation_data.passCaptcha != '' && this.passCaptcha == undefined){
                     this.passCaptcha = cmFileFactory.create(conversation_data.passCaptcha);
                     this.passCaptcha
-                        .setPassphrase('')
+//                        .setPassphrase()
                         .downloadStart();
                 }
             };
