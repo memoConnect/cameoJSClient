@@ -2,6 +2,14 @@ cameo_config = {
     restApi: '<%= currentApiUrl %>',
     version: '<%= currentVersion %>',
 
+    commitSize: 50,
+    commitInterval: 500,
+    useCallStack: true,
+    callStackPath: '/callStack',
+    useEvents: true,
+    eventsPath: '/eventSubscription',
+    eventsInterval: '2000',
+
     token: null,
     supported_languages: ['de_DE', 'en_US'],
     path_to_languages: 'i18n',
@@ -31,7 +39,8 @@ cameo_config = {
             hasCtrl:true
         },
         'registration': {
-            hasCtrl: true
+            hasCtrl: true,
+            guests: true
         },
         'purl': {
             routes:['/purl/:idPurl?'],
@@ -73,6 +82,8 @@ cameo_config = {
     },
 
     env: {
-        autoLogin: ('<%= autoLogin %>' == 'true')
+        autoLogin: ('<%= autoLogin %>' == 'true'),
+        loadingBar: ('<%= loadingBar %>' == 'true'),
+        isiOS: ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false )
     }
 };

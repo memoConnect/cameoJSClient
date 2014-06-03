@@ -52,6 +52,7 @@
     "grunt-file-creator": "~0.1.1",
     "grunt-protractor-runner": "~0.2.4",
     "jasmine-reporters": "~0.4.0",
+    "grunt-shell": "~0.7.0",
     "grunt-ngdocs": "~0.2.2"
   },
   "engines": {

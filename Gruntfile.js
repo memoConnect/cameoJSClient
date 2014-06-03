@@ -18,6 +18,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-protractor-runner');
+    grunt.loadNpmTasks('grunt-shell');
 
     grunt.loadNpmTasks('grunt-ngdocs');
 
@@ -163,7 +164,7 @@ module.exports = function (grunt) {
                 "}]);";
         // module banger
         } else if(filepath.search(/.*\/module-.*/g) != -1) {
-            // add founded templates to package module
+            // add found templates to package module
             if(concatCmTemplatesFound.length > 0) {
                 var templateNames = "'"+concatCmTemplatesFound.join("','")+"'";
                 concatCmTemplatesFound = [];
@@ -190,12 +191,27 @@ module.exports = function (grunt) {
             packagesObject = packagesObject||{};
 
         Object.keys(packagesObject).forEach(function(packageName){
-            var packagePath = packagesObject[packageName];
+            var settings,
+                moduleName = packageName;
+                exclude = '!(module-'+moduleName+'|package)',
+                include = '*',
+                packagePath = packagesObject[packageName],
+                file = 'package.js';
 
-            packages[packagePath+'/package.js'] = [
+            if(typeof packagePath == "object"){
+                settings = packagePath;
+                // override
+                moduleName = settings.moduleName||moduleName;
+                include = settings.include||include;
+                exclude = settings.exclude||exclude;
+                packagePath = settings.packagePath||packagePath;
+                file = settings.file||file;
+            }
+
+            packages[packagePath+'/'+file] = [
                 packagePath+'/*.html', // at last all templates
-                packagePath+'/module-'+packageName+'.js', // at first module
-                packagePath+'/!(module-'+packageName+'|package)*.js' // all directives / services / factorys etc
+                packagePath+'/module-'+moduleName+'.js', // at first module
+                packagePath+'/'+exclude+include+'.js' // all directives / services / factorys etc
             ];
         });
 
@@ -228,13 +244,21 @@ module.exports = function (grunt) {
                     process: concatConvertCmFiles
                 },
                 files: concatCreateCmPackages({
-                    'core': 'app/shared/core',
+                    'core': 'app/comps/core',
+                    'core-cockpit': {
+                        packagePath:'app/comps/core',
+                        moduleName:'core-cockpit',
+//                        include:'*(*api|*auth|*crypt|*logger)',
+                        exclude:'!(module|package|*identity|*language|*notify|*cron|*job|*localstorage|*object|*usermodel|*util)',
+                        file:'package-cockpit.js'
+                    },
                     'conversations': 'app/comps/conversations',
                     'contacts': 'app/comps/contacts',
                     'user': 'app/comps/user',
                     'validate': 'app/comps/validate',
                     'files': 'app/comps/files',
-                    'ui': 'app/shared/ui'
+                    'security_aspects': 'app/comps/security_aspects',
+                    'ui': 'app/comps/ui'
                 })
             }
         },
@@ -548,7 +572,8 @@ module.exports = function (grunt) {
                     'data': {
                         'currentApiUrl': globalCameoBuildConfig.config.apiUrl,
                         'currentVersion': globalCameoBuildConfig.config.version,
-                        'autoLogin': globalCameoBuildConfig.config.autoLogin
+                        'autoLogin': globalCameoBuildConfig.config.autoLogin,
+                        'loadingBar': globalCameoBuildConfig.config.loadingBar
                     }
                 },
                 'files': {
@@ -594,7 +619,18 @@ module.exports = function (grunt) {
                 'options': {
                     'data': {
                         'chromeDriverPath': globalCameoTestConfig.config.chromeDriverPath,
-                        'browserName': 'chrome'
+                        'capabilities' : "capabilities:{'browserName':'chrome'}"
+                    }
+                },
+                'files': {
+                    'config/ptor.e2e.conf.js': ['templates/ptor.e2e.conf.tpl.js']
+                }
+            },
+            'config-protractor-multi': {
+                'options': {
+                    'data': {
+                        'chromeDriverPath': globalCameoTestConfig.config.chromeDriverPath,
+                        'capabilities' : "multiCapabilities:[{'browserName': 'chrome'}, {'browserName': 'firefox'}]"
                     }
                 },
                 'files': {
@@ -648,8 +684,8 @@ module.exports = function (grunt) {
             files: [
                 'app/less/*.less',
                 'templates/*.tpl.*',
-                'app/comps/**/!(package)*',
-                'app/shared/**/!(package)*'],
+                'app/comps/**/!(package)*'
+            ],
             tasks: ['genAllTemplates','packages']
         },
         less: {
@@ -691,6 +727,9 @@ module.exports = function (grunt) {
             shared: {
                 src: ['app/shared/**/*.js'],
                 title: 'Shared Resources'
+        shell: {
+            'node-webserver': {
+                command: 'node ./scripts/web-server.js'
             }
         }
     });
@@ -710,9 +749,15 @@ module.exports = function (grunt) {
         'tests-unit',
         'tests-e2e'
     ]);
+    grunt.registerTask('tests-multi', [
+        // we only need to generate templates for tests
+        'template:config-tests',
+        'template:config-protractor-multi',
+        'protractor:default'
+    ])
+
     // shortcuts
     grunt.registerTask('tests-2e2', ['tests-e2e']);
-
     // phonegap to device
     grunt.registerTask('phonegap-local', [
         'template:local-config-phonegap',
@@ -772,4 +817,6 @@ module.exports = function (grunt) {
         'uglify:cockpit']);
 
     grunt.registerTask('create-docs', ['clean:docs', 'ngdocs:shared']);
+
+    grunt.registerTask('node-webserver', ['shell:node-webserver']);
 };

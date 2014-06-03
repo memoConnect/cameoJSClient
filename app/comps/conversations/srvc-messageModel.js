@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('cmConversations').factory('cmMessageModel',[
+
     'cmConversationsAdapter',
     'cmCrypt',
     'cmIdentityFactory',
@@ -9,6 +10,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
     'cmObject',
     'cmLogger',
     '$rootScope',
+    
     function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, cmObject, cmLogger, $rootScope){
 
         var Message = function(data){
@@ -73,6 +75,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                 var secret_JSON = JSON.stringify(secret_data);
 
+                //this.encryptedData = cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(passphrase, secret_JSON));
                 this.encryptedData = cmCrypt.encryptWithShortKey(passphrase, secret_JSON);
                 //@ TODO!!!!
 
@@ -80,7 +83,16 @@ angular.module('cmConversations').factory('cmMessageModel',[
             };
 
             this.decrypt = function (passphrase) {
-                var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase, this.encryptedData));
+//                var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase, cmCrypt.base64Decode(this.encryptedData)));
+
+                /**
+                 * @TODO Workaround for old Messages in dev and stage
+                 */
+                if(typeof this.encryptedData == 'string' && this.encryptedData != '' && this.encryptedData.charAt(0) != '{'){
+                    this.encryptedData = cmCrypt.base64Decode(this.encryptedData);
+                }
+
+                var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase,this.encryptedData));
 
                 // expose data on message Object
                 angular.extend(self, decrypted_data);
@@ -250,7 +262,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                     this.from = cmIdentityFactory.createDummy();
                 } else {
                     this.id         = message_data.id;
-                    this.from       = (!message_data.fromIdentity) ? cmUserModel.data.identity : cmIdentityFactory.create(message_data.fromIdentity);
+                    this.from       = (!message_data.fromIdentity) ? cmUserModel.data.identity : cmIdentityFactory.get(message_data.fromIdentity);
                     this.created    = message_data.created;
 
                     this.plainData      = message_data.plain;

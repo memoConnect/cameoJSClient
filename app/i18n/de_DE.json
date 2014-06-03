@@ -141,12 +141,17 @@
             "NO_SUBJECT": "Betreff eingeben",
             "ADD_RECIPIENTS": "Empfänger hinzufügen",
             "INFO": "Info",
-            "PASSWORD": "Passwort"
+            "PASSWORD": "Passwort",
+            "PASSCAPTCHA": "Passcaptcha"
         },
         "CONTROL": {
             "SAVE": "speichern",
             "CLOSE": "schließen"
         }
+    },
+
+    "PURL": {
+        "SIGN_IN": "registrieren"
     },
 
     "RECIPIENTS": {
@@ -314,9 +319,23 @@
         "LOGOUT": "Logout"
     },
 
-    "NOTIFY": {
+    "NOTIFY":{
         "KEYS":{
             "STORE_NEW": "Schlüssel erfolgreich gespeichert!"
+        },
+        "SAVE_AS":{
+            "IOS_NOT_SUPPORT": "Leider unterstützt iOS das herunterladen von Dateien nicht. Öffnen Sie diesen Talk auf einem nicht iOS Gerät um diese Datei downloaden zukönnen. Unterstütze Formate gehen trotzdem: .pdf"
+        }
+    },
+
+    "MODAL": {
+        "ALERT": {
+            "OK": "OK"
+        },
+        "WEBREADER": {
+            "NOTICE": "Zum nutzen dieser Funktion bitte registrieren!",
+            "REGISTRATION": "Jetzt registrieren",
+            "LATER": "später"
         }
     },
 

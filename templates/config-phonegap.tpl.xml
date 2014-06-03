@@ -47,8 +47,8 @@
     <preference name="SplashScreenDelay" value="5000" />
 
     <gap:platform name="android" />
-    <!--<gap:platform name="winphone" />
-    <gap:platform name="ios" />-->
+    <gap:platform name="winphone" />
+    <gap:platform name="ios" />
 
     <gap:plugin name="org.apache.cordova.console" />
     <gap:plugin name="org.apache.cordova.contacts" />

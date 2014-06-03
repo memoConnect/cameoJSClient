@@ -38,7 +38,7 @@ cm-message-file{
   margin-bottom: 0.5em;
   text-align: center;
 
-  .file-image{
+  .file-image, .file-html5{
     min-height:@cm-unit;
     position:relative;
     div[cm-spinner]{
@@ -48,18 +48,28 @@ cm-message-file{
       top:50%;
     }
     img{
+      .with-cursor;
       display:block;
       max-width:@cm-message-min-width;
       min-height:@cm-unit * 2;
       margin:0 auto;
     }
+    video, audio{
+      width:100%;
+    }
   }
   .file{
     margin:0 auto;
+    font-size:@cm-unit*1.5;
   }
   &:last-child{
     margin-bottom:0;
   }
+}
+
+.answer.files-dragged{
+  opacity:0.8;
+  background-color:@cm-black;
 }
 
 cm-files{
@@ -70,7 +80,7 @@ cm-files{
 
   cm-file-choose{
     height:100%;
-//    overflow:hidden;
+    overflow:hidden;
     position:absolute;
     right:0;
     top:0;
@@ -97,9 +107,19 @@ cm-files-preview{
   width:@cm-app-width;
   background-color:rgba(255,255,255,0.9);
 
-  .files-list{
+  .file-wrap{
+    position: relative;
     text-align:center;
     padding:@cm-vertical-padding;
+    i.cm-close{
+      position: absolute;
+      right: 1em;
+      top: 35%;
+      .with-cursor;
+    }
+    .file{
+      font-size:@cm-unit*1.5;
+    }
   }
 
   .file-image{
@@ -114,6 +134,7 @@ cm-files-preview{
       top:50%;
     }
     img{
+      .with-cursor;
       display:block;
       max-width:@cm-app-width - 1;
       max-height:@cm-unit * 2;
@@ -125,20 +146,64 @@ cm-files-preview{
   }
 }
 
+cm-modal.modal-image-fullscreen{
+  .content{
+    display:table;
+    width:100%;
+    height:100%;
+    z-index:2;
+    position:relative;
+    cm-spinner{
+      position: absolute;
+    }
+    ng-transclude{
+      display:table-cell;
+      vertical-align:middle;
+      text-align:center;
+      figure{
+        display:inline-block;
+        img{
+          max-width:90%;
+          max-height:50%;
+        }
+        figcaption{
+          text-align: right;
+        }
+        &.is-landscape{
+          figcaption{
+            padding-right:5%;
+          }
+        }
+      }
+      cm-footer{
+        text-align:right;
+        color:@cm-white;
+        i.cm-grid{
+          margin:@cm-unit - 3;
+        }
+      }
+    }
+  }
+  .backdrop{
+    z-index:1;
+  }
+}
+
 .file {
   display: inline-block;
-  background:url(../gfx/filetype_map_small.png) transparent 0 -39em;
-  background-size: 1em;
+  background:~"url(../gfx/filetype_map_small.png) transparent 0 -@{unknown-default}em";
+  background-size:~"1em @{filesnum}em";
   height:1em !important;
   width:1em !important;
   border:0;
   cursor:pointer;
   padding:0;
   vertical-align:text-bottom;
-  font-size:@cm-unit;
+  font-size:1em;
 }
-@files:dir dir-download dir-safe dir-public pdf txt xlsx doc php css xls zip rar sit jpg gif bmp tif eps png mov mpg mp4 flv avi xml html chm ttf exe dmg mp3 wav wma aif ogg '\33ggp' ppt pps unknown;
+@files:dir dir-download dir-safe dir-public pdf txt xlsx doc php css xls zip rar sit jpg gif bmp tif eps png mov mpg mp4 flv avi xml html chm ttf exe dmg mp3 wav wma aif ogg '\33gpp' aac ppt pps unknown;
 @filesnum:length(@files);
+@unknown-default:@filesnum - 1;
 .spriteFiles(@index:0) when (@index < @filesnum){
   @name: extract(@files, @index + 1);
   @selector: ~".file.@{name}";

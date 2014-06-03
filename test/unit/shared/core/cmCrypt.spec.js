@@ -13,6 +13,14 @@ describe('cmCrypt', function () {
             expect(typeof cmCrypt.hash).toBe('function')
         })
 
+        it('base64Encode',function(){
+            expect(typeof cmCrypt.base64Encode).toBe('function')
+        })
+
+        it('base64Decode',function(){
+            expect(typeof cmCrypt.base64Decode).toBe('function')
+        })
+
         it('encryptWithShortKey',function(){
             expect(typeof cmCrypt.hash).toBe('function')
         })

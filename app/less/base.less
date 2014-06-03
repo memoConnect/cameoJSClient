@@ -25,6 +25,8 @@ exp.:
 @cm-overlay-dark:rgba(0,0,0,0.7);
 @cm-overlay-light:rgba(255,255,255,1);
 @cm-overlay-light-transparent:rgba(255,255,255,0.4);
+@cm-color-positive: #66CC00;
+@cm-color-negative: #CC0000;
 
 @cm-form-alert-red: #F4DFDF;
 
@@ -56,6 +58,9 @@ exp.:
 @cm-message-min-width: 20rem;
 
 // General page layout
+
+::selection {color:@cm-white;background:@cm-ci-color;}
+::-moz-selection {color:@cm-white;background:@cm-ci-color;}
 
 html, body {
     height:100%;
@@ -117,26 +122,29 @@ li {
 textarea{background-image:none;border:solid @cm-border-width @cm-border-grey !important;}
 input{background-image:none;}
 
-textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
+textarea:focus, button:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
   border: 0;
   box-shadow: 0 0 0 rgba(0, 0, 0, 0.075) inset, 0 0 0 rgba(126, 239, 104, 0.6);
   outline: 0 none;
 }
 
 #cm-app, #cm-app-wrapper{
-    display:block;
-    position:relative;
-    min-height: 100%; /* Mindesthöhe für moderne Browser */
-    height: auto !important; /* Für moderne Browser */
-    height: 100%; /* "Mindesthöhe" für IE <7 */
-    padding:0;
-    //max-width is set via javascript in screen.js
-    margin:0 auto;
+  display:block;
+  position:relative;
+  min-height: 100%; /* Mindesthöhe für moderne Browser */
+  height: auto !important; /* Für moderne Browser */
+  height: 100%; /* "Mindesthöhe" für IE <7 */
+  padding:0;
+  //max-width is set via javascript in screen.js
+  margin:0 auto;
 }
 
 #cm-app {
   background: transparent;
   z-index: 2;
+}
+#cm-app.full-height {
+  .full-height;
 }
 
 #cm-app-wrapper {
@@ -152,32 +160,32 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 }
 
 .cm-content {
-    position:relative;
-    padding-top: @cm-header-height;
-    padding-bottom: @cm-footer-height;
-    min-height: 100%; /* Mindesthöhe für moderne Browser */
-    height: auto !important; /* Für moderne Browser */
-    height: 100%; /* "Mindesthöhe" für IE <7 */
-    box-sizing:border-box;
+  position:relative;
+  padding-top: @cm-header-height;
+  padding-bottom: @cm-footer-height;
+  min-height: 100%; /* Mindesthöhe für moderne Browser */
+  height: auto !important; /* Für moderne Browser */
+  height: 100%; /* "Mindesthöhe" für IE <7 */
+  box-sizing:border-box;
 
-    section{
-        header.cm-list-header {
-            position:relative;
-            padding-top:1rem;
-            padding-bottom:1.5rem;
-            background:rgba(255,255,255,0.5);
-            h1 {
-                display:block;            
-                margin:0;
-                line-height:1.2em;
-                font-size: 1.2em;
-                text-align:center;
-                font-weight:bold;            
-            }
-        }
+  section{
+    header.cm-list-header {
+      position:relative;
+      padding-top:1rem;
+      padding-bottom:1.5rem;
+      background:rgba(255,255,255,0.5);
+      h1 {
+        display:block;
+        margin:0;
+        line-height:1.2em;
+        font-size: 1.2em;
+        text-align:center;
+        font-weight:bold;
+      }
     }
-    &.no-header{padding-top:0px}
-    &.no-footer{padding-bottom:0px}
+  }
+  &.no-header{padding-top:0px}
+  &.no-footer{padding-bottom:0px}
 }
 
 .cm-page-body{
@@ -268,7 +276,7 @@ html[xmlns] .clearfix{display:block}
 .cm-fr{float:right}
 
 .full-height{
-  height:100%;
+  height:100% !important;
 }
 
 .empty-list{

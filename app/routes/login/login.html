@@ -1,27 +1,30 @@
 <div ng-controller="LoginCtrl" class="cm-center full-height">
-
     <cm-modal id="login" class="with-title no-padding" cm-close-btn="false">
         <div cm-login></div>
     </cm-modal>
 
-    <i class="fa cm-rhino-bubble cm-login-rhino" ng-hide="isModalVisible"></i>
+    <div class="cm-table">
+        <div class="cm-row">
+            <div class="cm-cell cm-middle">
+                <i class="fa cm-rhino-bubble cm-login-rhino" ng-hide="isModalVisible"></i>
+            </div>
+        </div>
+        <div class="cm-row login-screen-start">
+            <div class="cm-login-container" ng-hide="isModalVisible">
+                <cm-logo class="fa-3x cm-ci-color mt30 mb30"></cm-logo><br />
 
-    <div class="login-screen-start" ng-hide="isModalVisible">
-        <div class="cm-login-container">
+                <button class="btn cm-btn-black mr30" ng-click="openModal('login')" data-qa="login-btn">{{'LOGIN.LINK'|cmTranslate}}</button>
+                <button class="btn cm-btn-white" ng-click="goToReg()" data-qa="register-btn">{{'REGISTER.LINK'|cmTranslate}} <i class="fa cm-right cm-lg-icon"></i></button>
 
-            <cm-logo class="fa-3x cm-ci-color mt30 mb30"></cm-logo><br />
+                <p class="cm-login-text">
+                    {{'CAMEO.DESCRIBE'|cmTranslate}}
+                </p>
 
-            <button class="btn cm-btn-black mr30" ng-click="openModal('login')" data-qa="login-btn">{{'LOGIN.LINK'|cmTranslate}}</button>
-            <button class="btn cm-btn-white" ng-click="goToReg()" data-qa="register-btn">{{'REGISTER.LINK'|cmTranslate}} <i class="fa cm-right cm-lg-icon"></i></button>
-
-            <p class="cm-login-text">
-                {{'CAMEO.DESCRIBE'|cmTranslate}}
-            </p>
-
-            <p class="cm-ci-color">
-                {{'CAMEO.VERSION'|cmTranslate}}: {{cmVersion.version}}<br />
-                {{size}}
-            </p>
+                <p class="cm-ci-color">
+                    {{'CAMEO.VERSION'|cmTranslate}}: {{cmVersion.version}}<br />
+                    {{size}}
+                </p>
+            </div>
         </div>
     </div>
 </div>

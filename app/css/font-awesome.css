@@ -249,7 +249,9 @@
 .cm-logo-o:before{content:'\f04a'}
 .cm-logo-net:before{content:'\f04b'}
 .cm-logout:before{content:'\f01d'}
-.cm-menu:before{content:'\f01e'}
+.cm-menu:before{content:'\f056'}
+.cm-menu-right-close:before{content:'\f01e'}
+.cm-menu-right-open:before{content:'\f057'}
 .cm-post:before{content:'\f020'}
 .cm-post-attention:before{content:'\f038'}
 .cm-search:before{content:'\f021'}
@@ -284,3 +286,4 @@
 .cm-search-cl:before{content:'\f052'}
 .cm-reject:before{content:'\f053'}
 .cm-ignore:before{content:'\f054'}
+.cm-register:before{content:'\f055'}

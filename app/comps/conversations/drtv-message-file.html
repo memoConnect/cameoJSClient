@@ -2,10 +2,18 @@
     <cm-progressbar cm-percent="progress" ng-if="file.state != 'cached'"></cm-progressbar>
 
     <div ng-if="file.state == 'cached'">
-        <div class="file-image" ng-if="isImage(file.type)">
+        <div class="file-image" ng-if="isEmbed(file.type,'image')">
             <div cm-spinner cm-color="#02BED2" ng-hide="file.loaded"></div>
-            <img cm-blob-view="file" cm-scroll-to-target="#conversation-bottom" />
+            <img cm-blob-image="file" cm-scroll-to-target="#conversation-bottom" ng-click="showFullscreen()" />
         </div>
-        <div ng-if="!isImage(file.type)" class="file {{cmFileTypes.find(file.type, file.name)}}" ng-click="file.promptSaveAs()"></div>
+        <div class="file-html5" ng-if="isEmbed(file.type,'video')">
+            <div cm-spinner cm-color="#02BED2" ng-hide="file.loaded"></div>
+            <video controls="true" cm-blob-video-audio="file"></video>
+        </div>
+        <div class="file-html5" ng-if="isEmbed(file.type,'audio')">
+            <div cm-spinner cm-color="#02BED2" ng-hide="file.loaded"></div>
+            <audio controls="true" cm-blob-video-audio="file"></audio>
+        </div>
+        <div ng-if="!isEmbed(file.type)" class="file {{cmFileTypes.find(file.type, file.name)}}" ng-click="file.promptSaveAs()"></div>
     </div>
 </div>

@@ -141,12 +141,17 @@
             "NO_SUBJECT": "add subject",
             "ADD_RECIPIENTS": "add recipients",
             "INFO": "info",
-            "PASSWORD": "password"
+            "PASSWORD": "password",
+            "PASSCAPTCHA": "passcaptcha"
         },
         "CONTROL": {
             "SAVE": "save",
             "CLOSE": "close"
         }
+    },
+
+    "PURL": {
+        "SIGN_IN": "sign in"
     },
 
     "RECIPIENTS": {
@@ -317,6 +322,20 @@
     "NOTIFY": {
         "KEYS":{
             "STORE_NEW": "Key saved!"
+        },
+        "SAVE_AS":{
+            "IOS_NOT_SUPPORT": "Unfortunately iOS does not support to download files. Open this talk on a non-iOS device to download this file. Supported formats go anyway: .pdf"
+        }
+    },
+
+    "MODAL": {
+        "ALERT": {
+            "OK": "OK"
+        },
+        "WEBREADER": {
+            "NOTICE": "For this function, please register!",
+            "REGISTRATION": "register now",
+            "LATER": "later"
         }
     },
 

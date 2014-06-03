@@ -13,6 +13,7 @@ module.exports = function(config) {
             'app/base/config.js',
 
             'app/vendor/angular/angular.js',
+            'app/vendor/angular/angular-sanitize.js',
 
             'app/vendor/angular-translate/angular-translate.js',
 
@@ -25,13 +26,14 @@ module.exports = function(config) {
             'app/vendor/crypto/jsencrypt/jsencrypt.min.js',
 
             // packages
-            'app/shared/core/package.js',
-            'app/shared/ui/package.js',
+            'app/comps/core/package.js',
+            'app/comps/ui/package.js',
             'app/comps/contacts/package.js',
             'app/comps/user/package.js',
             'app/comps/validate/package.js',
             'app/comps/conversations/package.js',
             'app/comps/files/package.js',
+            'app/comps/security_aspects/package.js',
 
             'test/lib/angular/angular-mocks.js',
 

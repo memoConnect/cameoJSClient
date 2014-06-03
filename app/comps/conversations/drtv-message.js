@@ -26,7 +26,7 @@ angular.module('cmConversations').directive('cmMessage', [
                 scope.message.on('init:files', function(){
                     if (scope.message.files.length > 0) {
                         setFileView();
-                        scope.message.decryptFiles(scope.conversation.passphrase);
+                        scope.message.decryptFiles(scope.conversation.getPassphrase());
                     }
                 });
             },

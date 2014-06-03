@@ -1,37 +1,44 @@
 'use strict';
 
 angular.module('cmConversations').service('cmConversationsModel', [
+
     'cmConversationsAdapter',
-    'cmConversationFactory',
+    'cmConversationFactory',    
+    'cmObject',
     '$q',
     '$rootScope',
-    function(cmConversationsAdapter, cmConversationFactory, $q, $rootScope) {
+
+    function(cmConversationsAdapter, cmConversationFactory, cmObject, $q, $rootScope) {
         var self = this,
             events = {};
 
-        this.isLoading = false;
-        this.conversations = [];
-        this.quantity = 0;
-        this.limit = 10; // 5
-        this.offset = 0; //13
+        this.isLoading      = false;
+        this.conversations  = [];
+        this.quantity       = 0;
+        this.limit          = 10; // 5
+        this.offset         = 0; //13
+
 
         $rootScope.$on('logout', function(){
             self.conversations = [];
         });
 
-        this.on = function(event, callback){
-            events[event] = events[event] || [];
-            events[event].push(callback);
-        }
 
-        this.trigger = function(event, data){
-            events[event] = events[event] || [];
-            events[event].forEach(function(callback){
-                callback(data);
-            });
-        }
+        cmObject.addEventHandlingTo(this)
+
+
 
         //Methods:
+        
+        this._init = function(){
+            cmConversationsAdapter
+            .on('message:new', function(event, data){
+                self.getConversation(data.conversationId).then(function(conversation){
+                    conversation.trigger('message:new', data.message) 
+                })
+            })
+        }
+
         this.addConversation = function(conversation, firstItem){
             var i = 0,
                 checkConversation = null;
@@ -75,9 +82,10 @@ angular.module('cmConversations').service('cmConversationsModel', [
             var i = 0,
                 check = false,
                 conversation = null,
-                deferred = $q.defer();
+                deferred = $q.defer()
 
-            if(typeof id !== 'undefined'){
+            if(id){
+
                 while(i < this.conversations.length){
                     if(id == this.conversations[i].id){
                         check = true;
@@ -87,15 +95,15 @@ angular.module('cmConversations').service('cmConversationsModel', [
                     i++;
                 }
 
+
                 if(check !== true){
                     cmConversationsAdapter.getConversation(id).then(
                         function (conversation_data) {
                             conversation = cmConversationFactory.create(conversation_data);
-                            self.addConversation(conversation);
+                            self.addConversation(conversation)
 
-                            deferred.resolve(conversation);
+                            deferred.resolve(conversation)
                         },
-
                         function () {
                             deferred.reject();
                         }
@@ -135,12 +143,13 @@ angular.module('cmConversations').service('cmConversationsModel', [
                     self.quantity = data.numberOfConversations;
 
                     data.conversations.forEach(function (conversation_data) {
-                        self.addConversation(cmConversationFactory.create(conversation_data).update(conversation_data))
+                        self.addConversation(cmConversationFactory.create(conversation_data))//.importData(conversation_data)
                     })
                 }
             ).finally (function(){
                 self.trigger('finish:load');
             })
         }
+        this._init()
     }
 ])

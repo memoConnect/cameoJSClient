@@ -7,6 +7,12 @@ describe('cmIdentityModel', function(){
         return new cmIdentityModel;
     }
 
+    beforeEach(function(){
+        module(function($provide){
+            $provide.constant('cmEnv',{});
+        })
+    })
+
     beforeEach(module('cmCore'))
 
     beforeEach(inject(function(_cmIdentityModel_){
@@ -64,6 +70,12 @@ describe('cmIdentityModel', function(){
 describe('cmIdentityFactory', function(){
     var cmIdentityFactory, cmIdentityModel;
 
+    beforeEach(function(){
+        module(function($provide){
+            $provide.constant('cmEnv',{});
+        })
+    })
+
     beforeEach(module('cmCore'))
 
     beforeEach(inject(function(_cmIdentityFactory_){
@@ -88,14 +100,14 @@ describe('cmIdentityFactory', function(){
         var tmpInstanceId_2 = {id:'blub'};
         var cmIdentityModelMock;
 
-        it('there should be one instance after create one', function(){
-            var instance = cmIdentityFactory.create(tmpInstanceId_1);
+        it('there should be one instance after first creation.', function(){
+            var instance = cmIdentityFactory.create({ id:tmpInstanceId_1 });
             expect(cmIdentityFactory.getQty()).toBe(1);
         })
 
-        it('there should be two instances after create two', function(){
-            var instance1 = cmIdentityFactory.create(tmpInstanceId_1);
-            var instance2 = cmIdentityFactory.create(tmpInstanceId_2);
+        it('there should be two instances after second creation.', function(){
+            var instance1 = cmIdentityFactory.create({ id:tmpInstanceId_1 });
+            var instance2 = cmIdentityFactory.create({ id:tmpInstanceId_2 });
             expect(cmIdentityFactory.getQty()).toBe(2);
         })
 

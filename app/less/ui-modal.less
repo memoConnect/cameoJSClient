@@ -133,8 +133,31 @@ cm-modal {
     }
 
     footer {
-      background: @cm-black;
-      margin-top: 1rem;
+      background-color:@cm-bg-color;
+      padding:0;
+      font-size:@cm-large-font;
+      line-height:@cm-footer-height;
+
+      button, a {
+        display:inline-block;
+        height:100%;
+        text-align:center;
+        border-radius: 0;
+        background: transparent;
+        border:none;
+        padding:0;
+        .cm-ci-color;
+        overflow: hidden;
+        text-decoration:none;
+        line-height: @cm-footer-height;
+      }
+    }
+
+    &.cm-modal-plain {}
+    &.cm-modal-alert {
+      header {
+        height: @cm-unit*0.66;
+      }
     }
   }
 
@@ -210,4 +233,18 @@ cm-modal {
     }
   }
 
+  &.webreader{
+    font-size:@cm-large-font;
+    text-align:center;
+    .attention{
+      .cm-orange;
+    }
+    .redirect{
+      .cm-grey;
+      text-align:center;
+      i{
+        .cm-grey;
+      }
+    }
+  }
 }

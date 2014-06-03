@@ -4,8 +4,12 @@ define([
     'angular-cookies',
     'angular-swipe',
     'angular-moment-wrap',
+
+    'angular-loading-bar',
+
     // cameo files
     'pckCore',
+    'pckUi',
     'base/config'
 ], function (angularAMD) {
     'use strict';
@@ -15,7 +19,9 @@ define([
         'ngCookies',
         'swipe',
         'angularMoment',
-        'cmCore'
+        'angular-loading-bar',
+        'cmCore',
+        'cmUi'
     ]);
 
     app.constant('cmEnv',cameo_config.env);
@@ -25,15 +31,24 @@ define([
 
     // cameo configuration for our providers
     app.config([
+
         'cmLanguageProvider',
         'cmLoggerProvider',
         'cmApiProvider',
+
         function (cmLanguageProvider, cmLoggerProvider, cmApiProvider){
             cmLoggerProvider
                 .debugEnabled(true)
 
             cmApiProvider
-                .restApiUrl( cameo_config.restApi );
+                .restApiUrl( cameo_config.restApi )
+                .callStackPath( cameo_config.callStackPath )
+                .useCallStack( false )//cameo_config.useCallStack)
+                .commitSize( cameo_config.commitSize )
+                .commitInterval( cameo_config.commitInterval )
+                .useEvents( cameo_config.useEvents )
+                .eventsPath( cameo_config.eventsPath )
+                .eventsInterval( 5000 )//cameo_config.eventsInterval )
 
             cmLanguageProvider
                 .cacheLangFiles(cameo_config.cache_lang_files)
@@ -125,8 +140,8 @@ define([
 
     // app run handling
     app.run([
-        '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmLanguage', 'cmLogger',
-        function ($rootScope, $location, $window, $route, cmUserModel, cmLanguage, cmLogger) {
+        '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmLanguage', 'cmLogger','cfpLoadingBar','cmEnv', 'cmApi',
+        function ($rootScope, $location, $window, $route, cmUserModel, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi) {
 
             //prep $rootScope with useful tools
             $rootScope.console = console
@@ -146,7 +161,7 @@ define([
                     if (!path_regex.test(path)) {
                         $location.path("/login");
                     }
-                } else if (path == "/login" || path == "/registration") {
+                } else if ((path == "/login" || path == "/registration") && cmUserModel.isGuest() !== true) {
                     $location.path("/talks");
                 } else if (path == "/logout"){
                     cmUserModel.doLogout();
@@ -231,6 +246,24 @@ define([
 //            window.onresize = function() { initScreenWidth(32) }
 
 
+            /**
+             * Loading Bar on RouteChange
+             */
+            $rootScope.$on('$routeChangeStart', function(){
+                if(cmEnv.loadingBar !== false){
+                    cfpLoadingBar.start();
+                }
+            });
+
+            $rootScope.$on('$routeChangeSuccess', function(){
+                if(cmEnv.loadingBar !== false){
+                    cfpLoadingBar.complete();
+                }
+            })
+
+            //Todo:
+            
+            if(cmUserModel.getToken()) cmApi.listenToEvents()
         }
     ]);
 

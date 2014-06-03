@@ -30,7 +30,10 @@
   .cm-ci-color;
   box-shadow: 0 0 0.3em 0.3em rgba(255, 255, 255, 0.15);
   &:hover{
-      color:@cm-white
+    color:@cm-white;
+  }
+  &.inactive{
+    color:@cm-grey;
   }
 }
 .cm-orange {
@@ -129,4 +132,19 @@ div[cm-transparent-bg]{
 
 .cm-bg-transparent{
   background-color: @cm-overlay-light-transparent;
+}
+
+.cm-table{
+  display:table;
+  width:100%;
+  height:100%;
+  .cm-row{
+    display:table-row;
+    .cm-cell {
+      display:table-cell;
+      &.cm-middle {
+        vertical-align: middle;
+      }
+    }
+  }
 }

@@ -38,7 +38,7 @@ this.logout = function () {
 
     $$("cm-menu").then(function (elements) {
         if (elements.length > 0) {
-            $("cm-menu").click()
+            $("cm-menu .cm-handler").click()
             self.waitForElement(".cm-menu-list")
             $("[data-qa='logout-btn']").click()
         } else {
@@ -83,7 +83,7 @@ this.waitForPageLoad = function (expectedRoute) {
             }
         })
 
-    }, config.routeTimeout, 'waitForPage ' + expectedRoute + ' timeout reached')
+    }, config.routeTimeout, 'waitForPage ' + (expectedRoute || 'any page') + ' timeout reached')
     return this
 }
 

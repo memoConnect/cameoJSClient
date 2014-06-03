@@ -69,7 +69,7 @@ cm-edge, [cm-edge] {
     color: @cm-ci-color;
     position:absolute;
     right:0;
-    top:0;
+    top:-0.03em;
   }
   .foreground{
     color:@cm-white;
@@ -91,6 +91,10 @@ cm-avatar {
   background-size:cover;
   &.with-name{
     margin-bottom:2em;
+  }
+  img{
+    display:block;
+    width:100%;
   }
   .name{
     position:absolute;
@@ -217,4 +221,10 @@ header.inScreen{
     margin-right:1em;
     vertical-align:text-bottom;
   }
+}
+
+cm-icons,
+cm-safety-level {
+  word-spacing:0;
+  letter-spacing:-0.3em;
 }

@@ -15,7 +15,7 @@ function testFile(file, extension, index){
 
     chooseFileAndUpload(file, selector, index);
 
-    it(file+' in message displayed', function(){
+    it(getFilename(file)+' in message displayed', function(){
         util.waitForProgressbar(10000)
 
         var elements = $$('cm-message cm-message-file')
@@ -29,7 +29,7 @@ function testImage(file, extension, index){
 
     chooseFileAndUpload(file, selector, index);
 
-    it(file+' in message displayed', function(){
+    it(getFilename(file)+' in message displayed', function(){
         util.waitForProgressbar(10000)
 
         var elements = $$('cm-message cm-message-file')
@@ -38,8 +38,22 @@ function testImage(file, extension, index){
     })
 }
 
+function testHTML5(file, extension, index){
+    var selector = '.file'
+
+    chooseFileAndUpload(file, selector, index);
+
+    it(getFilename(file)+' in message displayed', function(){
+        util.waitForProgressbar(10000)
+
+        var elements = $$('cm-message cm-message-file')
+
+        expect(elements.last().$(selector+'-html5').isDisplayed()).toBeTruthy()
+    })
+}
+
 function chooseFileAndUpload(file, selector, index){
-    it(file+' choose and check preview',function(){
+    it(getFilename(file)+' choose and check preview',function(){
         $("[data-qa='btn-file-choose']").sendKeys(file)
 
         // preview should be show image
@@ -60,6 +74,10 @@ function chooseFileAndUpload(file, selector, index){
     })
 }
 
+function getFilename(file){
+    return file.replace(/^.*(\\|\/|\:)/, '');
+}
+
 // start init tests
 describe('FileUpload unsafe', function () {
     it('login create & new conversation',function(){
@@ -74,20 +92,25 @@ describe('FileUpload unsafe', function () {
     })
     // test files
     var files = [
-        {file: smallFileMP3},
+        {html5: smallFileMP3},
         {image: smallImageJPG},
         {image: largeImageJPG}
+//        {file: smallFileAAC},
     ]
     // testFile or testImage called for every entry
     for(index in files){
         // prepare file
         var file = files[index],
-            pathToFile = file[(file['image'] != undefined ? 'image' : 'file')],
+            pathToFile = file[Object.keys(file)[0]],
             extension = util.getFileExtension(pathToFile),
             testIndex = parseInt(index)+1
-        // create expects
+        // test image
         if(file['image'] != undefined)
             testImage(pathToFile, extension, testIndex)
+        // test html5 element
+        else if(file['html5'] != undefined)
+            testHTML5(pathToFile, extension, testIndex)
+        //test file element
         else
             testFile(pathToFile, extension, testIndex)
 
