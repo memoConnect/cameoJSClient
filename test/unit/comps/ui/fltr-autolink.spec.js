@@ -55,6 +55,7 @@ describe('Filter cmAutolink', function () {
         createDrtv(linkWww)
         expect(element.find('a').length).toBe(1)
         expect(element.text()).toBe(linkWww)
+        expect(element.find('a').attr('href')).toBe('http://'+linkWww)
     })
 
     it('long links should be truncated default at 50 letters', function(){
