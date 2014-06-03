@@ -1,5 +1,15 @@
 'use strict';
 
+/**
+ * @ngdoc cmCore
+ * @name cmPassphraseList
+ * @description
+ * Handle Passprhase Lists in Conversation
+ *
+ * @requires cmFactory
+ * @requires cmKey
+ * @requires cmUserModel
+ */
 angular.module('cmCore').factory('cmPassphraseList',[
     'cmFactory',
     'cmKey',
@@ -7,12 +17,10 @@ angular.module('cmCore').factory('cmPassphraseList',[
     function(cmFactory, cmKey, cmUserModel){
 
         /**
-         * @ngdoc cmCore
+         * @ngdoc method
          * @name cmPassphraseList
-         * @description
-         * Handle Passprhase Lists in Conversation
          *
-         * @param {object} [data]
+         * @param {Object} [data] Data from API CAll
          */
         function cmPassphraseList(data){
             var self = this,
@@ -24,8 +32,8 @@ angular.module('cmCore').factory('cmPassphraseList',[
              * @description
              * Initialize cmPassphraseList
              *
-             * @param {array} data
-             * @return {cmPassphraseList}
+             * @param {Array} data
+             * @return {cmPassphraseList} this cmPassphraseList
              */
             function init(data){
                 if(typeof data === 'array'){
@@ -40,9 +48,7 @@ angular.module('cmCore').factory('cmPassphraseList',[
              * @description
              * Decrypts the encrypted passphrase list into a passphrase ready to be delivered by .getPassphrase()
              *
-             * @param encryptedPassphraseList
-             * @param [password]
-             * @returns {cmPassphraseList}
+             * @param {String} [password] password
              */
             function decryptPassphrase(password) {
                 passphrase = items.reduce(function (passphrase, item) {
@@ -65,9 +71,8 @@ angular.module('cmCore').factory('cmPassphraseList',[
              * @name encryptPassphrase
              * @description
              *
-             * @param {Array} [recipients]
-             * @param {String} [password]
-             * @returns {Array}
+             * @param {Array} [recipients] array of recipients
+             * @param {String} [password] password
              */
             function encryptPassphrase(recipients, password){
                 var eps = []; //encrypted passphrase list
@@ -93,8 +98,8 @@ angular.module('cmCore').factory('cmPassphraseList',[
              * @description
              * imports Data from List
              *
-             * @param {Array} list
-             * @returns {cmPassphraseList}
+             * @param {Array} list Data from API Request
+             * @returns {cmPassphraseList} this cmPassphraseList
              */
             this.importData = function(list){
                 var check = false;
@@ -120,7 +125,7 @@ angular.module('cmCore').factory('cmPassphraseList',[
              * @description
              * generates a passhrase
              *
-             * @returns {cmPassphraseList}
+             * @returns {cmPassphraseList} this cmPassphraseList
              */
             this.generatePassphrase = function(){
                 if(typeof passphrase != "string" || passphrase.length > 0)
@@ -136,8 +141,8 @@ angular.module('cmCore').factory('cmPassphraseList',[
              * @description
              * returns passphrase
              *
-             * @param password
-             * @returns {string}
+             * @param {String} password password
+             * @returns {String} passphrase passphrase
              */
             this.getPassphrase = function(password){
                 if(typeof passphrase != "string" || passphrase.length > 0)
@@ -147,15 +152,15 @@ angular.module('cmCore').factory('cmPassphraseList',[
             };
 
             /**
-             * @name get
+             * @name exportData
              * @description
              * return encrypted passphrase list
              *
-             * @param {Array|String} [param1]
-             * @param {Array|String} [param2]
-             * @returns {Array}
+             * @param {Array|String} [param1] recipient or password
+             * @param {Array|String} [param2] recipient or password
+             * @returns {Array} items encrypted passphrase list
              */
-            this.get = function(param1, param2){
+            this.exportData = function(param1, param2){
                 if(items.length == 0){
                     var recipients = typeof param1 == 'array' ? param1 : param2,
                         password = typeof param1 == 'string' ? param1 : param2;

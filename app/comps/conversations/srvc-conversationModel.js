@@ -21,6 +21,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
         /**
          * @TODO Auslagern?!??! - Keylist Handling & Passphrase Handling
+         * @deprecated
          *
          * Outsourced security handling for conversations
          * @param {cmConversationModel} conversation to be managed
@@ -245,7 +246,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 this.encryptedPassphraseList.importData(data.encryptedPassphraseList);
 
-                security.decryptPassphrase(this.encryptedPassphraseList, this.password)
+//                security.decryptPassphrase(this.encryptedPassphraseList, this.password) // decprecated
 
                 /**
                  * muss bleiben, aktuelle falsche stelle, sollte in die init
