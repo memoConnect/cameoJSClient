@@ -710,23 +710,23 @@ module.exports = function (grunt) {
         ngdocs: {
             options: {
                 dest: 'docs',
-                scripts: ['app/vendor/requirejs/require.js', 'app/vendor/angular/angular.js', 'https://code.angularjs.org/1.2.16/angular-animate.min.js'],
+                scripts: [
+                    'app/vendor/requirejs/require.js',
+                    'app/vendor/angular/angular.js',
+                    'https://code.angularjs.org/1.2.16/angular-animate.min.js'
+                ],
                 deferLoad: false,
-                html5Mode: true,
+                html5Mode: false,
                 startPage: '/app',
                 title: 'CameoNET JS Client',
                 image: '',
                 imageLink: '',
                 titleLink: '/app',
-                bestMatch: false
+                bestMatch: true
             },
             app: {
-                src: ['app/**/*.js'],
+                src: ['app/comps/**/*.js'],
                 title: 'APP Documentation'
-            },
-            shared: {
-                src: ['app/shared/**/*.js'],
-                title: 'Shared Resources'
             }
         },
 
@@ -819,7 +819,7 @@ module.exports = function (grunt) {
         'copy:cockpit',
         'uglify:cockpit']);
 
-    grunt.registerTask('create-docs', ['clean:docs', 'ngdocs:shared']);
+    grunt.registerTask('create-docs', ['clean:docs', 'ngdocs:app']);
 
     grunt.registerTask('node-webserver', ['shell:node-webserver']);
 };
