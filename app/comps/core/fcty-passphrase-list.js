@@ -16,9 +16,8 @@ angular.module('cmCore').factory('cmPassphraseList',[
          */
         function cmPassphraseList(data){
             var self = this,
-                passphrase
-
-            this.items = [];
+                passphrase,
+                items = [];
 
             /**
              * @name init
@@ -46,7 +45,7 @@ angular.module('cmCore').factory('cmPassphraseList',[
              * @returns {cmPassphraseList}
              */
             function decryptPassphrase(password) {
-                passphrase = self.items.reduce(function (passphrase, item) {
+                passphrase = items.reduce(function (passphrase, item) {
                     var result;
 
                     if (passphrase) {
@@ -60,6 +59,33 @@ angular.module('cmCore').factory('cmPassphraseList',[
                     return result;
 
                 }, '');
+            }
+
+            /**
+             * @name encryptPassphrase
+             * @description
+             *
+             * @param {Array} [recipients]
+             * @param {String} [password]
+             * @returns {Array}
+             */
+            function encryptPassphrase(recipients, password){
+                var eps = []; //encrypted passphrase list
+
+                if(typeof password === 'string' && password.length > 0){
+                    eps =   [{
+                        keyId: '_passwd',
+                        encryptedPassphrase: cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(password, passphrase))
+                    }]
+                }
+
+                if(typeof recipients == 'array' && recipients.length > 0){
+                    eps = recipients.reduce(function(list, recipient){
+                        return list.concat(recipient.encryptPassphrase(passphrase))
+                    }, [])
+                }
+
+                self.importData(eps);
             }
 
             /**
@@ -77,12 +103,12 @@ angular.module('cmCore').factory('cmPassphraseList',[
                     list = [];
 
                 list.forEach(function(item){
-                    check = self.items.reduce(function(found, current){
+                    check = items.reduce(function(found, current){
                         return found || (item.keyId == current.keyId);
                     },false);
 
                     if(check === false){
-                        self.items.push(item);
+                        items.push(item);
                     }
                 });
 
@@ -118,6 +144,26 @@ angular.module('cmCore').factory('cmPassphraseList',[
                     decryptPassphrase(password);
 
                 return passphrase || false;
+            };
+
+            /**
+             * @name get
+             * @description
+             * return encrypted passphrase list
+             *
+             * @param {Array|String} [param1]
+             * @param {Array|String} [param2]
+             * @returns {Array}
+             */
+            this.get = function(param1, param2){
+                if(items.length == 0){
+                    var recipients = typeof param1 == 'array' ? param1 : param2,
+                        password = typeof param1 == 'string' ? param1 : param2;
+
+                    encryptPassphrase(recipients, password);
+                }
+
+                return items;
             };
 
             init(data);
