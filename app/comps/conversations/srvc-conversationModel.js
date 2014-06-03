@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('cmConversations').factory('cmConversationModel',[
-
     'cmConversationsAdapter',
     'cmMessageModel',
     'cmIdentityFactory',
@@ -14,14 +13,15 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmNotify',
     'cmObject',
     'cmLogger',
+    'cmPassphraseList',
     'cmSecurityAspectsConversation',
     '$q',
     '$rootScope',
-
-    function (cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmSecurityAspectsConversation,$q, $rootScope){
-
+    function (cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphraseList, cmSecurityAspectsConversation,$q, $rootScope){
 
         /**
+         * @TODO Auslagern?!??! - Keylist Handling & Passphrase Handling
+         *
          * Outsourced security handling for conversations
          * @param {cmConversationModel} conversation to be managed
          */
@@ -67,6 +67,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             this.decryptPassphrase = function(encryptedPassphraseList, password){
+                return this
                 passphrase = encryptedPassphraseList.reduce(function(passphrase, item){
                     var returnSchmu;
 
@@ -136,9 +137,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
         }
 
-
-
-
         /**
         * Represents a Conversation.
         * @constructor
@@ -161,7 +159,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.subject            = ''            //subject
 
-            this.encryptedPassphraseList = []
+            this.encryptedPassphraseList = new cmPassphraseList();
 
             this.securityAspects    = cmSecurityAspectsConversation.setTarget(this)
 
@@ -197,9 +195,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this._init = function(data){
                 // Add event and chain handling to the Conversation:
-                console.log('ConversationModel:init', data);
-                return false;
-
 
                 if(!data || !data.id)
                     self.state.set('new')
@@ -227,6 +222,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 //Todo:
                 self.on('message-added', function(){ self.numberOfMessages++ })
 
+                console.log(this)
+
                 this.trigger('init', data)
             }
 
@@ -246,7 +243,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.timeOfLastUpdate        = data.lastUpdated  || this.timeOfLastUpdate
                 this.subject                 = data.subject      || this.subject
 
-                Array.prototype.push.apply(this.encryptedPassphraseList, data.encryptedPassphraseList || [] )
+                this.encryptedPassphraseList.importData(data.encryptedPassphraseList);
 
                 security.decryptPassphrase(this.encryptedPassphraseList, this.password)
 
