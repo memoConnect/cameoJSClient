@@ -115,7 +115,7 @@ angular.module('cmCore').factory('cmIdentityModel',[
              */
             this.init = function(identity_data){
                 if(typeof identity_data === 'object'){
-                    this.id = identity_data.id;
+                    this.id                     = identity_data.id;
                     this.displayName            = identity_data.displayName
                     this.userKey                = identity_data.userKey
                     this.cameoId                = identity_data.cameoId

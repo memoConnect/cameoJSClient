@@ -164,8 +164,13 @@ angular.module('cmCore')
                 return seconds + 's' + numberEnding(seconds);
             }
             return '< s'; //'just now' //or other string you like;
-        }
+        };
 
+        /**
+         * return type of given variable especially for array and objects
+         * @param x
+         * @returns {String}
+         */
         this.getType = function(x){
             if(typeof x == "string") return("String")
 
@@ -173,6 +178,28 @@ angular.module('cmCore')
                 results = regex.exec(x.toString())
 
             return (results && results.length > 1) ? results[1] : "";
-        }
+        };
+
+        /**
+         * check if string starts with needle
+         * @param haystack
+         * @param needle
+         * @returns {boolean}
+         */
+        this.startsWith = function(haystack, needle){
+            if(haystack == undefined || haystack == '' || needle == undefined) return false;
+            return haystack.slice(0, needle.length) == needle;
+        };
+
+        /**
+         * check if string ends with needle
+         * @param haystack
+         * @param needle
+         * @returns {boolean}
+         */
+        this.endsWith = function (haystack, needle){
+            if(haystack == undefined || haystack == '' || needle == undefined) return false;
+            return haystack.slice(-needle.length) == needle;
+        };
     }
 ]);

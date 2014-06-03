@@ -12,29 +12,36 @@ define([
         '$scope',
         '$rootScope',
         'cmUserModel',
-        'cmConversationsModel',
+        'cmConversationFactory',
         'cmUtil',
         'cmModal',
         '$location',
 
-        function($scope, $rootScope, cmUserModel, cmConversationsModel, cmUtil, cmModal, $location) {
+        function($scope, $rootScope, cmUserModel, cmConversationFactory, cmUtil, cmModal, $location) {
             $scope.loading = true;
-            cmConversationsModel.on('finish:load',function(){
-                $scope.loading = false;
+
+            $scope.conversations = cmConversationFactory;
+
+            $scope.conversations.state.on('change',function(){
+                $scope.loading = $scope.conversations.state.get('loading');
             });
 
-            if(cmUserModel.isAuth() !== false){
-                cmConversationsModel.getConversations();
+            if(cmUserModel.isAuth() === true){
+//                cmConversationsModel.getConversations();
             }
 
-            $scope.conversations = cmConversationsModel.conversations;
+
+            /**
+             * erster Aufruf
+             */
+            $scope.conversations.getList();
 
             /**
              * load more Conversations
              */
             $scope.loadMore = function(){
-                if(cmUserModel.isAuth() !== false){
-                    cmConversationsModel.getConversations(cmConversationsModel.limit, cmConversationsModel.conversations.length);
+                if(cmUserModel.isAuth() === true){
+                    $scope.conversations.getList();
                 }
             }
 
@@ -43,13 +50,13 @@ define([
              * @returns {boolean}
              */
             $scope.showMore = function(){
-                if(cmConversationsModel.conversations.length == 0){
-                    return false;
-                }
-
-                if(cmConversationsModel.conversations.length == cmConversationsModel.quantity){
-                    return false;
-                }
+//                if(cmConversationsModel.conversations.length == 0){
+//                    return false;
+//                }
+//
+//                if(cmConversationsModel.conversations.length == cmConversationsModel.quantity){
+//                    return false;
+//                }
 
                 return true;
             }

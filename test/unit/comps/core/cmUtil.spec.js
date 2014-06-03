@@ -14,7 +14,7 @@ describe('cmUtil', function(){
         expect(cmUtil).toBeDefined()
     })
 
-    describe('function "checkKeyExists"', function(){
+    describe('checkKeyExists', function(){
         it('should be defined', function(){
             expect(cmUtil.checkKeyExists).toBeDefined()
         })
@@ -300,6 +300,66 @@ describe('cmUtil', function(){
             it('1y', function(){
                 expect(cmUtil.millisecondsToStr(1000*86400*365)).toBe('1y')
             })
+        })
+    })
+
+    describe('getType', function(){
+        it('should be defined', function(){
+            expect(cmUtil.getType).toBeDefined()
+        })
+
+        it('String', function(){
+            expect(cmUtil.getType('meop')).toBe('String')
+        })
+
+        it('Array isnt a real Object', function(){
+            var array = ['moep'];
+            expect(cmUtil.getType(array)).toBe('')
+        })
+
+        it('Object', function(){
+            expect(cmUtil.getType({meop:'meop'})).toBe('Object')
+        })
+
+        it('Function Object', function(){
+            function moep(){
+                this.moep = true;
+            }
+            expect(cmUtil.getType(new moep())).toBe('Object')
+        })
+    })
+
+    describe('startsWith', function(){
+        it('should be defined', function(){
+            expect(cmUtil.startsWith).toBeDefined()
+        })
+
+        it('check boolean', function(){
+            expect(cmUtil.startsWith()).toBeFalsy()
+            expect(cmUtil.startsWith(undefined,'me')).toBeFalsy()
+            expect(cmUtil.startsWith('meop',undefined)).toBeFalsy()
+
+            expect(cmUtil.startsWith('meop','me')).toBeTruthy()
+            expect(cmUtil.startsWith('meopmeop','meop')).toBeTruthy()
+
+            expect(cmUtil.startsWith('meopmeop','poem')).toBeFalsy()
+        })
+    })
+
+    describe('endsWith', function(){
+        it('should be defined', function(){
+            expect(cmUtil.endsWith).toBeDefined()
+        })
+
+        it('check boolean', function(){
+            expect(cmUtil.endsWith()).toBeFalsy()
+            expect(cmUtil.endsWith(undefined,'me')).toBeFalsy()
+            expect(cmUtil.endsWith('meop',undefined)).toBeFalsy()
+
+            expect(cmUtil.endsWith('meop','op')).toBeTruthy()
+            expect(cmUtil.endsWith('meopmeop','meop')).toBeTruthy()
+
+            expect(cmUtil.endsWith('meopmeop','poem')).toBeFalsy()
         })
     })
 })
