@@ -114,9 +114,6 @@ angular.module('cmCore').factory('cmIdentityModel',[
              * @param identity_data
              */
             this.init = function(identity_data){
-                console.log('ConversationModel:init', identity_data);
-                return false;
-
                 if(typeof identity_data === 'object'){
                     this.id                     = identity_data.id;
                     this.displayName            = identity_data.displayName
