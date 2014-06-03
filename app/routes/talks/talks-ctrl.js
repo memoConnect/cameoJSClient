@@ -12,22 +12,23 @@ define([
         '$scope',
         '$rootScope',
         'cmUserModel',
-        'cmConversationsModel',
+        'cmConversationFactory',
         'cmUtil',
         'cmModal',
         '$location',
 
-        function($scope, $rootScope, cmUserModel, cmConversationsModel, cmUtil, cmModal, $location) {
+        function($scope, $rootScope, cmUserModel, cmConversationFactory, cmUtil, cmModal, $location) {
             $scope.loading = true;
             cmConversationsModel.on('finish:load',function(){
                 $scope.loading = false;
             });
 
             if(cmUserModel.isAuth() !== false){
-                cmConversationsModel.getConversations();
+//                cmConversationsModel.getConversations();
             }
 
-            $scope.conversations = cmConversationsModel.conversations;
+            $scope.conversations = cmConversationFactory;
+            $scope.conversations.getList();
 
             /**
              * load more Conversations
