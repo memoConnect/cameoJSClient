@@ -710,7 +710,7 @@ module.exports = function (grunt) {
         ngdocs: {
             options: {
                 dest: 'docs',
-                scripts: ['app/vendor/requirejs/require.js','app/vendor/angular/angular.js','https://code.angularjs.org/1.2.16/angular-animate.min.js'],
+                scripts: ['app/vendor/requirejs/require.js', 'app/vendor/angular/angular.js', 'https://code.angularjs.org/1.2.16/angular-animate.min.js'],
                 deferLoad: false,
                 html5Mode: true,
                 startPage: '/app',
@@ -727,6 +727,9 @@ module.exports = function (grunt) {
             shared: {
                 src: ['app/shared/**/*.js'],
                 title: 'Shared Resources'
+            }
+        },
+
         shell: {
             'node-webserver': {
                 command: 'node ./scripts/web-server.js'
