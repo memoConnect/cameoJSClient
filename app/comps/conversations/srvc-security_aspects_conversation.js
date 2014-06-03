@@ -2,11 +2,8 @@
 
 angular.module('cmSecurityAspects')
 .factory('cmSecurityAspectsConversation',[
-
     'cmSecurityAspects',
-
     function(cmSecurityAspects){
-        
         var securityAspectsConversation = new cmSecurityAspects()
 
         securityAspectsConversation
