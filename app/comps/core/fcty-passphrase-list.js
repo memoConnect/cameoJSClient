@@ -90,18 +90,34 @@ angular.module('cmCore').factory('cmPassphraseList',[
             };
 
             /**
+             * @name generatePassphrase
+             * @description
+             * generates a passhrase
+             *
+             * @returns {cmPassphraseList}
+             */
+            this.generatePassphrase = function(){
+                if(typeof passphrase != "string" || passphrase.length > 0)
+                    cmLogger.debug('cmConversation: passphrase already present, generated new one.');
+
+                passphrase = cmCrypt.generatePassphrase() //TODO: Passphrase generation crappy!!
+
+                return this;
+            }
+
+            /**
              * @name getPasshrase
              * @description
              * returns passphrase
              *
              * @param password
-             * @returns {*}
+             * @returns {string}
              */
             this.getPassphrase = function(password){
                 if(typeof passphrase != "string" || passphrase.length > 0)
-                    decryptPassphrase(password)
+                    decryptPassphrase(password);
 
-                return passphrase;
+                return passphrase || false;
             };
 
             init(data);
