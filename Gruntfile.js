@@ -155,6 +155,7 @@ module.exports = function (grunt) {
             // add to template array for module schmusi
             concatCmTemplatesFound.push(filepath);
 
+
             return  "angular.module('"+filepath+"', []).run([\n" +
                 "'$templateCache', function($templateCache) {\n"+
                 "$templateCache.put('"+filepath+"'," +
