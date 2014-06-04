@@ -28,7 +28,6 @@ angular.module('cmConversations').service('cmConversationFactory', [
 
             cmConversationsAdapter.getConversations(limit, offset).then(
                 function (data) {
-                    console.log(data)
                     _quantity = data.numberOfConversations;
 
                     data.conversations.forEach(function (conversation_data) {
