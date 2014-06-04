@@ -1,5 +1,64 @@
 'use strict';
 
+/**
+ * @ngdoc directive
+ * @name cmUi.directive:cmSpinner
+ * @description
+ * Creates a spinner with spin.js
+ *
+ * @example
+ <example module="cmDemo">
+     <file name="style.css">
+         .wrapper{
+            height:100px;
+         }
+         cm-spinner {
+          display: block;
+          position: relative;
+          top: 50%;
+          left: 50%;
+          width: 1px;
+          height: 1px;
+        }
+     </file>
+     <file name="script.js">
+        angular.module('cmDemo', ['cmUi'])
+        .controller('Ctrl', function ($scope) {
+            $scope.showSpinner = true;
+            $scope.event = function(name){
+                $scope.$broadcast(name);
+            }
+        });
+     </file>
+     <file name="index.html">
+         <div ng-controller="Ctrl">
+            Scope variable:
+            <button ng-click="showSpinner=false">hide</button>
+            <button ng-click="showSpinner=true">show</button>
+            Eventhandling:
+            <button ng-click="event('cmSpinner:stop')">trigger stop</button>
+            <button ng-click="event('cmSpinner:start')">trigger start</button>
+
+            <div class="wrapper">
+                <cm-spinner ng-show="showSpinner"></cm-spinner>
+            </div>
+            <div class="wrapper">
+                <cm-spinner ng-show="showSpinner" cm-color="#ff0000"></cm-spinner>
+            </div>
+            <div class="wrapper">
+                <cm-spinner ng-show="showSpinner" cm-length="2"></cm-spinner>
+            </div>
+            <div class="wrapper">
+                <cm-spinner ng-show="showSpinner" cm-radius="5"></cm-spinner>
+            </div>
+            <div class="wrapper">
+                <cm-spinner ng-show="showSpinner" cm-width="2"></cm-spinner>
+            </div>
+         </div>
+     </file>
+ </example>
+ */
+
 angular.module('cmUi').directive('cmSpinner',[
     function (){
         return {
@@ -20,7 +79,6 @@ angular.module('cmUi').directive('cmSpinner',[
 
                 var spinner = new Spinner(opts);
                 var loadingContainer = angular.element($element[0].querySelector('.spinner'))[0];
-
 
                 $scope.$watch($attrs.ngShow, function(bool){
                     if(bool != false){

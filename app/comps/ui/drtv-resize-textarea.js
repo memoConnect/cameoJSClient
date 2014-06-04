@@ -1,5 +1,48 @@
 'use strict';
 
+/**
+ * @ngdoc directive
+ * @name cmUi.directive:cmResizeTextarea
+ * @description
+ * Max col controleld textarea that resize on user input
+ *
+ * @restrict A
+ * @element textarea
+ * @requires $timeout
+ *
+ * @example
+ <example module="cmDemo">
+    <file name="style.css">
+     textarea[cm-resize-textarea] {
+      resize: none;
+      word-wrap: break-word;
+      transition: 0.05s;
+      -moz-transition: 0.05s;
+      -webkit-transition: 0.05s;
+      -o-transition: 0.05s;
+      background-image: none;
+      border: solid 0.1rem #cccccc !important;
+    }
+    </file>
+     <file name="script.js">
+        angular.module('cmDemo', ['cmUi'])
+        .controller('Ctrl', function ($scope) {
+            $scope.model = 'moep moep';
+            $scope.modelLong = 'moep moep mopeppppppppppppppppppppppppppppppefpepfp ppfepfpepfpefpp dp sdpfpsdpfpsd fpspdfp';
+        });
+     </file>
+     <file name="index.html">
+         <div ng-controller="Ctrl">
+            default:<br />
+            <textarea cm-resize-textarea ng-model="model"></textarea>
+            <br />
+            max rows 4:<br />
+            <textarea cm-resize-textarea ng-model="modelLong" cm-max-rows="4"></textarea>
+         </div>
+     </file>
+ </example>
+ */
+
 angular.module('cmUi').directive('cmResizeTextarea',[
     '$timeout',
     function ($timeout) {
