@@ -215,6 +215,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @param {Object} [data] The conversation data as required by .importData(), see below.
              */
             function init(data){
+                cmLogger.debug('cmConversationModel:init');
                 if(typeof data == 'string' && data.length > 0){
                     self.id = data;
                     self.load();
@@ -241,11 +242,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @param {Object} data The conversation data as recieved from the backend.
              */
             this.importData = function(data){
-                if(typeof data !== 'object' ){
+//                cmLogger.debug('cmConversationModel:importData');
+                if(typeof data !== 'object'){
                     cmLogger.debug('cmConversationModel:import:failed - no Data!');
                     return this;
                 }
-
                 //There is no invalid data, importData looks for everything useable in data; if it finds nothing it wont update anything
                 this.id                      = data.id           || this.id;
                 this.timeOfCreation          = data.created      || this.timeOfCreation;
@@ -257,7 +258,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     data.aePassphraseList.push({keyId: '_passwd', 'encryptedPassphrase': data.sePassphrase});
                 }
 
-                encryptedPassphraseList.importData(data.encryptedPassphraseList);
+                encryptedPassphraseList.importData(data.sePassphraseList);
 
                 this.initPassCaptcha(data);
 
@@ -274,7 +275,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         /**
                          * @todo maybe refactor?
                          */
-                        self.addRecipient(cmRecipientModel(cmIdentityFactory.get(recipient_data.identity)))
+                        self.addRecipient(cmRecipientModel(cmIdentityFactory.get(recipient_data.identityId)))
                     }
                 );
 
@@ -329,6 +330,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
+//                cmLogger.debug('cmConversationModel:decrypt');
                 if(encryptedPassphraseList.getEncryptionType() == 'none')
                     return true;
 
@@ -425,13 +427,12 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @description
              * return safety level
              *
+             * @deprecated
+             *
              * @returns {number} level Safety Level
              */
             this.getSafetyLevel = function(){
                 var level = 0;
-
-//                console.log('encryptedPassphraseList.isEncrypted',encryptedPassphraseList.isEncrypted())
-//                console.log('encryptedPassphraseList.getEncryptionType()',encryptedPassphraseList.getEncryptionType())
 
                 if(encryptedPassphraseList.isEncrypted() == true){
                     switch(encryptedPassphraseList.getEncryptionType()){
@@ -439,7 +440,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                                 level = 2;
                             break;
                         case "symmetric":
-                                level = 1
+                                level = 1;
                             break;
                         case "mixed":
                                 level = 1;
@@ -459,6 +460,27 @@ angular.module('cmConversations').factory('cmConversationModel',[
 //                }
 
                 return level;
+            };
+
+            /**
+             * @name getSafetyLevelClass
+             * @description
+             * returns String
+             *
+             * @deprecated
+             *
+             * @param {String} addon String
+             * @returns {string} String String
+             */
+            this.getSafetyLevelClass = function(addon){
+                var level = this.getSafetyLevel();
+                var className = '';
+                switch(level){
+                    case 0: className = 'unsafe'; break;
+                    case 1: className = 'safe'; break;
+                    case 2: className = 'safer'; break;
+                }
+                return 'safetylevel-'+className+addon;
             };
 
             //TODO: this.exportData() !
@@ -914,17 +936,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.passphraseValid = function () {
                 return !this.preferences.encryption || !this.messages[0] || (security.getPassphrase() && this.messages[0].decrypt(security.getPassphrase()))
-            };
-
-            this.getSafetyLevelClass = function(addon){
-                var level = this.getSafetyLevel();
-                var className = '';
-                switch(level){
-                    case 0: className = 'unsafe'; break;
-                    case 1: className = 'safe'; break;
-                    case 2: className = 'safer'; break;
-                }
-                return 'safetylevel-'+className+addon;
             };
         }
 

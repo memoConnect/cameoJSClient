@@ -192,7 +192,7 @@ angular.module('cmConversations').directive('cmConversation', [
                         .getConversation(conversation_id)
                             .then(function (conversation){
                                 $scope.init(conversation)
-                                $scope.conversation.decrypt()
+//                                $scope.conversation.decrypt()
                             })
                 // pending conversation
                 } else if($rootScope.pendingConversation){

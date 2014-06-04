@@ -58,7 +58,6 @@
             </div>
 
             <div ng-if="safetyLevel == 'safe'">
-
                 <div cm-rubber-space ng-if="isNew">
                     <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':hasCaptcha}" ng-click="toggleCaptcha('password');" data-qa="btn-toogle-password">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</button>
                     <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':!hasCaptcha}" ng-click="toggleCaptcha('captcha');" data-qa="btn-toogle-passcaptcha">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA'|cmTranslate}}</button>

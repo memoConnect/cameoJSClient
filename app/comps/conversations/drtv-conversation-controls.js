@@ -81,7 +81,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
 //                        $scope.conversation.preferences.keyTransmission = 'asymmetric'
 //                    }
 //
-//                    $scope.safetyLevel = level;
+                    $scope.safetyLevel = level;
                 };
 
                 $scope.setLevel = function(level){
@@ -101,11 +101,11 @@ angular.module('cmConversations').directive('cmConversationControls', [
                     $location.path('/recipients')
                 }
 
-                $scope.decrypt =function(){
+                $scope.decrypt = function(){
                     $scope.conversation.one('decrypt:failed', function(){
                         cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG',{ttl:2000})
                     })
-                    $scope.conversation.decrypt()
+                    $scope.conversation.decrypt();
                 }
 
             }
