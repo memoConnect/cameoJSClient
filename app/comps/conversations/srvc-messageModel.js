@@ -1,23 +1,42 @@
 'use strict';
 
 angular.module('cmConversations').factory('cmMessageModel',[
-
     'cmConversationsAdapter',
     'cmCrypt',
     'cmIdentityFactory',
     'cmFileFactory',
     'cmUserModel',
     'cmObject',
+    'cmStateManagement',
     'cmLogger',
     '$rootScope',
-    
-    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, cmObject, cmLogger, $rootScope){
+    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, cmObject, cmStateManagement, cmLogger, $rootScope){
 
+        /**
+         * @constructor
+         * @description
+         * Represents a Message.
+         * Events
+         *  - init:finished
+         *  - update:finished
+         *  - load:failed
+         * Stats
+         *  - new
+         *  - loading
+         *  - decrypted
+         *
+         *
+         * @param {Object} [data] - The conversation data as received from the backend.
+         */
         var Message = function(data){
             // attributes
             var self = this;
 
             cmObject.addEventHandlingTo(this);
+
+            this.id = undefined;
+            this.created = undefined;
+            this.from = undefined;
 
             // secret data
             this.secret = ['text','fileIds'];
@@ -29,10 +48,41 @@ angular.module('cmConversations').factory('cmMessageModel',[
             this.files = [];
             this.fileIds = [];
 
-            $rootScope.$on('logout', function(){
-                self.files = [];
-                self.fileIds = [];
-            });
+            this.state = new cmStateManagement(['new','decrypted','loading']);
+
+            /**
+             * Initialize Message Object
+             * @param message_data
+             * @returns {Message}
+             */
+            function init(data){
+                if(typeof data == 'object') {
+                    self.importData(data)
+                }else{
+                    self.state.set('new')
+                }
+            }
+
+            /**
+             * @name importData
+             * @description import data
+             */
+            this.importData = function(data){
+                this.id         = data.id;
+                this.from       = data.fromIdentity ? cmIdentityFactory.get(data.fromIdentity) : cmUserModel.data.identity;
+                this.created    = data.created;
+
+                this.plainData      = data.plain;
+                this.encryptedData  = data.encrypted;
+
+                this.initFiles();
+
+                this.trigger('update:finished');
+
+                this.state.unset('new');
+
+                return this;
+            };
 
             // sets which data should not be encrypted
             this.setPublicData = function(data){
@@ -223,6 +273,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
             /**
              * initialize Files from Message Data (fileIds)
              * @returns {Message}
+             * @todo  file factory?
              */
             this.initFiles = function(){
                 if(this.fileIds.length > 0){
@@ -247,40 +298,16 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 return this;
             };
 
-            /**
-             * Initialize Message Object
-             * @param message_data
-             * @returns {Message}
-             */
-            this.init = function (message_data) {
-                if(!message_data) return this;
-
-                this.secretData = undefined;
-                this.publicData = undefined;
-
-                if(message_data.dummy && message_data.dummy !== false){
-                    this.from = cmIdentityFactory.createDummy();
-                } else {
-                    this.id         = message_data.id;
-                    this.from       = (!message_data.fromIdentity) ? cmUserModel.data.identity : cmIdentityFactory.get(message_data.fromIdentity);
-                    this.created    = message_data.created;
-
-                    this.plainData      = message_data.plain;
-                    this.encryptedData  = message_data.encrypted;
-                }
-                // compare plain to this
-                for(var key in this.plainData){
-                    this[key] = message_data.plain[key] || this[key];
-                }
-
-                this.initFiles();
-            };
-
-            this.init(data);
+            init(data);
 
             /**
              * Event Handling
              */
+            $rootScope.$on('logout', function(){
+                self.files = [];
+                self.fileIds = [];
+            });
+
             this.on('message:send', function(){
                 self.uploadFiles();
             });
