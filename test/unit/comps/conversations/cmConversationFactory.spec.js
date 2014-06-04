@@ -1,7 +1,9 @@
-'use strict';
+ 'use strict';
 
 describe('cmConversationFactory', function(){
     var cmConversationFactory,
+        $q, 
+        $httpBackend,
         tmpInstance_1 = {id:'moep_1',data:{}},
         tmpInstance_2 = {id:'moep_2',data:{}};
 
@@ -11,41 +13,34 @@ describe('cmConversationFactory', function(){
         })
     })
     beforeEach(module('cmConversations'));
-
-    beforeEach(inject(function(_cmConversationFactory_){
-        cmConversationFactory = _cmConversationFactory_
+    beforeEach(inject(function(_cmConversationFactory_, _$q_, _$httpBackend_){
+        cmConversationFactory   = _cmConversationFactory_
+        $q                      = _$q_
+        $httpBackend            = _$httpBackend_
     }))
 
     it('should exist', function(){
         expect(cmConversationFactory).toBeDefined()
     })
 
-    it('should provide a function .create() to create new conversations.', function(){
-        expect(cmConversationFactory.create).toBeDefined()
+    it('should provide a function to retrive a limited set of conversations', function(){
+        var result   = []
+
+        for(var i = 0; i< 7; i++){
+            result.push({id: 'id'+i})
+        }
+
+        $httpBackend.whenGET('/identity').respond({})
+        $httpBackend.expectGET('/conversations?limit=5&offset=7').respond(200, {
+            res: 'OK',
+            data: { numberOfConversations: 7, conversations:result }
+        })
+
+
+        cmConversationFactory.getList(5, 7)
+
+        $httpBackend.flush()
+        console.log(cmConversationFactory.length)
     })
 
-    it('should have stored one instance after first call of .create().', function(){        
-        cmConversationFactory.create(tmpInstance_1)
-        expect(cmConversationFactory.length).toBe(1)
-    })
-
-    it('should have stored two instances after next call of .create(). with another id.', function(){        
-        cmConversationFactory.create(tmpInstance_1)
-        cmConversationFactory.create(tmpInstance_2)
-        expect(cmConversationFactory.length).toBe(2)
-    })
-
-    it('should still have stored only one instance when .create() gets called again with the same data.', function(){
-        cmConversationFactory.create(tmpInstance_1)
-        expect(cmConversationFactory.length).toBe(1)       
-        cmConversationFactory.create(tmpInstance_2)
-        expect(cmConversationFactory.length).toBe(2)              
-        cmConversationFactory.create(tmpInstance_1)
-        expect(cmConversationFactory.length).toBe(2)
-    })
-
-    it('should have no instances stroed after call of .reset().', function(){
-        cmConversationFactory.reset()
-        expect(cmConversationFactory.length).toBe(0)
-    })
 })

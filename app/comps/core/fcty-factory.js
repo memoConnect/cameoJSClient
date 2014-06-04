@@ -24,8 +24,8 @@ angular.module('cmCore')
 
             /**
              * Function to create an instance of this.model. If an instance with the same id as provided already exist, fetch it instead off creating a new one.
-             * @param {string|object}   args        instance id, data set including an instance id or data set without an id
-             * @return {model}                      allways returns an instance of model. If an id is present in args and an instance with that id already exists, 
+             * @param   {string|object}   args        instance id, data set including an instance id or data set without an id
+             * @returns {model}                      allways returns an instance of model. If an id is present in args and an instance with that id already exists, 
              *                                      this instance will be returned – otherwise a new one will be created and if possible populated with data from the backend.
              */
             self.create = function(args){
@@ -38,8 +38,8 @@ angular.module('cmCore')
 
             /**
              * Function to find and instance by its id.
-             * @param  {string}         id          The id of the instance to find.
-             * @return {model|null}                 returns the first instance to match the id or null if none is found 
+             * @param   {string}         id          The id of the instance to find.
+             * @returns {model|null}                 returns the first instance to match the id or null if none is found 
              */
             self.find = function(id){
                 if(!id) return null
@@ -52,8 +52,8 @@ angular.module('cmCore')
 
             /**
              * Function to create a new model instance. 
-             * @param {string|object}   args        instance id, data set including an instance id or data set without an id
-             * @return {cmModel}                    returns a new model instance populated with the provided data
+             * @param   {string|object}   args        instance id, data set including an instance id or data set without an id
+             * @return  {cmModel}                    returns a new model instance populated with the provided data
              */
 
             self.new = function(args){
@@ -71,7 +71,10 @@ angular.module('cmCore')
              */
 
             self.register = function(instance){
-                if(self.indexOf(instance) == -1){
+                if(
+                       self.indexOf(instance) == -1
+                    && instance instanceof this.model
+                ){
                     self.push(instance)
                     self.trigger('register', instance)
 
@@ -81,6 +84,10 @@ angular.module('cmCore')
                 return false
             }
 
+            /**
+             * Function to remove all instances from the factory.
+             * @returns @this    for chaining
+             */
             self.reset = function(){
                 while(self.length > 0) self.pop()
                 return self
