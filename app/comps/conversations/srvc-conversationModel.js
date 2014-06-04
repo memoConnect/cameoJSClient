@@ -139,7 +139,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
         }
 
-
         /**
          * @constructor
          * @description
@@ -155,7 +154,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
          *  - loading
          *
          *
-         * @param {Object} [data] - The conversation data as received from the backend.
+         * @param {Object} [data] The conversation data as received from the backend.
          */
         function ConversationModel(data){
             var self = this,
@@ -171,7 +170,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
             //--> meta
             this.timeOfLastUpdate   = 0;          //timestamp of the conversations's last Update
             this.subject            = '';            //subject
-            this.
             this.securityAspects    = cmSecurityAspectsConversation.setTarget(this);
             this.meta               = {};          //stores meta data, not yet implemented, TODO
             this.password           = undefined;
@@ -214,7 +212,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @description
              * Function to initialize the conversation. Should never be called from the outside.
              *
-             * @param {Object} [data] - The conversation data as required by .importData(), see below.
+             * @param {Object} [data] The conversation data as required by .importData(), see below.
              */
             function init(data){
                 if(typeof data == 'string' && data.length > 0){
@@ -240,7 +238,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @description
              * Function to import data as received from the backend.
              *
-             * @param {Object} data -  The conversation data as recieved from the backend.
+             * @param {Object} data The conversation data as recieved from the backend.
              */
             this.importData = function(data){
                 if(typeof data !== 'object' ){
@@ -261,12 +259,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 encryptedPassphraseList.importData(data.encryptedPassphraseList);
 
-//                security.decryptPassphrase(this.encryptedPassphraseList, this.password) // decprecated
-
-                /**
-                 * muss bleiben, aktuelle falsche stelle, sollte in die init
-                 */
-                this.initPassCaptcha(data); // kann in die init
+                this.initPassCaptcha(data);
 
                 var messages = data.messages || [];
                 messages.forEach(
@@ -278,6 +271,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 var recipients = data.recipients || [];
                 recipients.forEach(
                     function(recipient_data){
+                        /**
+                         * @todo maybe refactor?
+                         */
                         self.addRecipient(cmRecipientModel(cmIdentityFactory.get(recipient_data.identity)))
                     }
                 );
@@ -296,7 +292,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @description
              * get Conversation Data from API
              *
-             * @returns {ConversationModel} this - returns ConversationModel
+             * @returns {ConversationModel} this Returns ConversationModel
              */
             this.load = function(){
                 if(typeof this.id == 'string'
@@ -325,6 +321,13 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return this;
             };
 
+            /**
+             * @name decrypt
+             * @description
+             * starts decrypting oh messages
+             *
+             * @returns {Boolean} succees Returns Boolean
+             */
             this.decrypt = function () {
                 if(encryptedPassphraseList.getEncryptionType() == 'none')
                     return true;
@@ -351,15 +354,112 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             /**
+             * @name getEncryptionType
+             * @description
+             * return encryption type from conversation
+             *
+             * @returns {String} encryptionType look at encryptedPassphraseList
+             */
+            this.getEncryptionType = function(){
+                return encryptedPassphraseList.getEncryptionType();
+            };
+
+            /**
              * @name getPassphrase
              * @description
              * Function get the passphrase of the conversation, in order to use it for e.g. file encryption before upload.
              *
-             * @return {String} Returns the passphrase
+             * @returns {String} passphrase Returns the passphrase
              */
             this.getPassphrase = function(){
                 return encryptedPassphraseList.getPassphrase();
             }
+
+            /**
+             * @name initPassCaptcha
+             * @description
+             * Initialize PassCaptcha Handling in Conversation
+             * creates a cmFile Object
+             *
+             *
+             * @param {Object} conversation_data Data from API Call
+             * @returns {ConversationModel} this returns ConversationModel
+             */
+            this.initPassCaptcha = function(conversation_data){
+                if(typeof conversation_data.passCaptcha !== 'undefined' && conversation_data.passCaptcha != '' && this.passCaptcha == undefined){
+                    this.passCaptcha = cmFileFactory.create(conversation_data.passCaptcha);
+                    this.passCaptcha
+//                        .setPassphrase()
+                        .downloadStart();
+                }
+
+                return this;
+            };
+
+            /**
+             * @name addRecipient
+             * @description
+             * Function to add a recipient to a conversation. Will not update the backend.
+             *
+             * @param {Object} recipient RecipientModel
+             * @returns {cmConversationModel} this returns cmConversationModel
+             */
+            this.addRecipient = function(recipient){
+                if(this.recipients.indexOf(recipient) == -1){
+                    this.recipients.push(recipient)
+
+                    //self.recipients.create(cmRecipientModel(recipient))
+
+                    recipient.on('update', function(){
+                        self.trigger('recipient:update') //Todo: noch nicht gelöst =/
+                    })
+                    this.trigger('recipient-added')
+                } else {
+                    cmLogger.error('conversationModel: unable to add recipient; duplicate detected. (id:'+recipient.id+')')
+                }
+                return this;
+            }
+
+            /**
+             * @name getSafetyLeve
+             * @description
+             * return safety level
+             *
+             * @returns {number} level Safety Level
+             */
+            this.getSafetyLevel = function(){
+                var level = 0;
+
+//                console.log('encryptedPassphraseList.isEncrypted',encryptedPassphraseList.isEncrypted())
+//                console.log('encryptedPassphraseList.getEncryptionType()',encryptedPassphraseList.getEncryptionType())
+
+                if(encryptedPassphraseList.isEncrypted() == true){
+                    switch(encryptedPassphraseList.getEncryptionType()){
+                        case "asymmetric":
+                                level = 2;
+                            break;
+                        case "symmetric":
+                                level = 1
+                            break;
+                        case "mixed":
+                                level = 1;
+                            break;
+
+                    }
+                }
+
+//                if(this.encryptedPassphraseList.length >= 1 && this.encryptedPassphraseList[0].keyId != "_passwd"){
+//                    level = 2
+//                }else{
+//                    if(this.encryptedPassphraseList.length == 1 && this.encryptedPassphraseList[0].keyId == "_passwd"){
+//                        level = 1
+//                    }else{
+//                        level = 0
+//                    }
+//                }
+
+                return level;
+            };
 
             //TODO: this.exportData() !
 
@@ -437,31 +537,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return this;
             }
 
-
-
-            /**
-             * @name addRecipient
-             * @description
-             * Function to add a recipient to a conversation. Will not update the backend.
-             *
-             * @param {RecipientModel} recipient
-             * @returns {cmConversationModel} this returns cmConversationModel
-             */
-            this.addRecipient = function(recipient){
-                if(this.recipients.indexOf(recipient) == -1){
-                    this.recipients.push( recipient )
-
-                    //self.recipients.create(cmRecipientModel(recipient))
-
-                    recipient.on('update', function(){
-                        self.trigger('recipient:update') //Todo: noch nicht gelöst =/
-                    })
-                    this.trigger('recipient-added')
-                } else {
-                    cmLogger.error('conversationModel: unable to add recipient; duplicate detected. (id:'+recipient.id+')')
-                }
-                return this;
-            }
 
             /* COVERSATION REFACTORING todo:
             //Mock;
@@ -602,15 +677,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 }
 
                 return deferred.promise;
-            };
-
-            this.initPassCaptcha = function(conversation_data){
-                if(typeof conversation_data.passCaptcha !== 'undefined' && conversation_data.passCaptcha != '' && this.passCaptcha == undefined){
-                    this.passCaptcha = cmFileFactory.create(conversation_data.passCaptcha);
-                    this.passCaptcha
-//                        .setPassphrase()
-                        .downloadStart();
-                }
             };
 
             this.savePassCaptcha = function(){
@@ -848,22 +914,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.passphraseValid = function () {
                 return !this.preferences.encryption || !this.messages[0] || (security.getPassphrase() && this.messages[0].decrypt(security.getPassphrase()))
-            };
-
-            this.getSafetyLevel = function(){
-                var level = 0; 
-
-                if(this.encryptedPassphraseList.length >= 1 && this.encryptedPassphraseList[0].keyId != "_passwd"){
-                    level = 2
-                }else{
-                    if(this.encryptedPassphraseList.length == 1 && this.encryptedPassphraseList[0].keyId == "_passwd"){
-                        level = 1
-                    }else{
-                        level = 0
-                    }
-                }
-
-                return level
             };
 
             this.getSafetyLevelClass = function(addon){

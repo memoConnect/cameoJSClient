@@ -113,7 +113,7 @@ angular.module('cmCore').factory('cmPassphraseList',[
             this.importData = function(list){
                 var check = false;
 
-                if(typeof list !== 'array')
+                if(typeof list !== 'object' && typeof list !== 'array')
                     list = [];
 
                 list.forEach(function(item){
@@ -180,6 +180,13 @@ angular.module('cmCore').factory('cmPassphraseList',[
                 return passphrase || false;
             };
 
+            /**
+             * @name isEncrypted
+             * @description
+             * Returns true if list is not empty.
+             *
+             * @returns {boolean} bool Boolean
+             */
             this.isEncrypted = function(){
                   return (items.length > 0);
             };
