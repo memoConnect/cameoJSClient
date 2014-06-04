@@ -414,7 +414,7 @@ module.exports = function (grunt) {
             'dalek-report': ['report'],
             'dev-deploy': ['dist/app/less'],
             'dist-app': ['dist/app'],
-            'dist': ['dist','app/**/package.js'],
+            'dist': ['dist'],
             'docs': ['docs'],
             'phonegap-target': ['phonegap-target'],
             'phonegap-build': ['phonegap-build']
