@@ -35,7 +35,7 @@ angular.module('cmCore')
                 }
             }
 
-            self.get = function(state){
+            self.is = function(state){
                 return self.indexOf(state) != -1
             }
 

@@ -23,6 +23,11 @@ describe('cmConversationFactory', function(){
         expect(cmConversationFactory).toBeDefined()
     })
 
+
+    it('should have a state.', function(){
+        expect(cmConversationFactory.state).toBeDefined()
+    })
+
     it('should provide a function to retrive a limited set of conversations', function(){
         var result   = []
 
@@ -38,7 +43,11 @@ describe('cmConversationFactory', function(){
 
 
         cmConversationFactory.getList(7, 0)
+        expect(cmConversationFactory.state.is('loading')).toBe(true)
+
         $httpBackend.flush()
+
+        expect(cmConversationFactory.state.is('loading')).toBe(false)
         expect(cmConversationFactory.length).toBe(7)
 
         result = []
@@ -53,9 +62,12 @@ describe('cmConversationFactory', function(){
         })
 
         cmConversationFactory.getList(7, 5)
+
         $httpBackend.flush()
+        
         expect(cmConversationFactory.length).toBe(12)
 
     })
+
 
 })
