@@ -1,7 +1,26 @@
 'use strict';
 
-angular.module('cmCore')
-.service('cmUserModel',[
+/**
+ * @ngdoc service
+ * @name cmUserModel
+ * @description
+ * MOEP Description
+ *
+ * @requires cmAuth
+ * @requires cmLocalStorage
+ * @requires cmIdentityFactory
+ * @requires cmCrypt
+ * @requires cmObject
+ * @requires cmNotify
+ * @requires cmLogger
+ * @requires $rootScope
+ * @requires $q
+ * @requires $location
+ *
+ * @type {{isActive: boolean, id: string, userKey: string, displayName: string, cameoId: string, email: {}, phoneNumber: {}, preferredMessageType: string, created: string, lastUpdated: string, userType: string, storage: {}, identity: {}}}
+ */
+
+angular.module('cmCore').service('cmUserModel',[
 
     'cmAuth',
     'cmLocalStorage', 
@@ -19,15 +38,7 @@ angular.module('cmCore')
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
 
-        /**
-         * @ngdoc service
-         * @name cmUserModel
-         * @module cmCore.cmUserModel
-         * @description MOEP Description
-         * @requires cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmObject, cmNotify, cmLogger, $rootScope, $q, $location
-         *
-         * @type {{isActive: boolean, id: string, userKey: string, displayName: string, cameoId: string, email: {}, phoneNumber: {}, preferredMessageType: string, created: string, lastUpdated: string, userType: string, storage: {}, identity: {}}}
-         */
+
         var dataModel = {
             isActive: false,
             id: '',
@@ -51,11 +62,14 @@ angular.module('cmCore')
         this.comesFromRegistration = false;
 
         /**
+         * @ngdoc method
          * @name init
-         * @description initialize cmUserModel
+         * @methodOf cmUserModel
+         * @description
+         * initialize the model with loading the identity
          *
-         * @param identity_data
-         * @return this
+         * @param {Object} identity_data JSON of an Identity
+         * @returns {Object} this cmUserModel
          */
         this.init = function(identity_data){
             cmLogger.debug('cmUserModel:init');

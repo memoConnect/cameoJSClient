@@ -720,12 +720,16 @@ module.exports = function (grunt) {
                 title: 'CameoNET JS Client',
                 image: '',
                 imageLink: '',
-                titleLink: '/app',
+                titleLink: '/core',
                 bestMatch: true
             },
-            app: {
-                src: ['app/comps/**/*.js'],
-                title: 'APP Documentation'
+            core: {
+                src: ['app/comps/core/*.js'],
+                title: 'cmCore'
+            },
+            ui: {
+                src: ['app/comps/ui/*.js'],
+                title: 'cmUi'
             }
         },
 
@@ -825,8 +829,7 @@ module.exports = function (grunt) {
         'copy:cockpit',
         'uglify:cockpit']);
 
-    grunt.registerTask('create-docs', ['clean:docs', 'ngdocs:app']);
-
+    grunt.registerTask('create-docs', ['clean:docs', 'ngdocs']);
     grunt.registerTask('node-webserver', ['shell:node-webserver']);
     grunt.registerTask('code-coverage', ['sloc:code-coverage']);
 };
