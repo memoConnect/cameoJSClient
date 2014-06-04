@@ -223,14 +223,10 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         // misc
         concat: {
-            options: {
+            'options': {
                 separator: '\n'
             },
-            js: {
-                src: ['app/js/controller/login.js', 'app/js/controller/start.js', 'app/js/controller/talks.js'],
-                dest: 'app/js/controller/built.raw.js'
-            },
-            less: {
+            'less': {
                 src:    [   
                             'app/less/base.less', 
                             'app/less/bootstrap.less', 
@@ -238,7 +234,7 @@ module.exports = function (grunt) {
                         ],
                 dest: 'app/css/app.less'
             },
-            packages: {
+            'packages': {
                 options: {
                     banner: "'use strict';\n\n",
                     process: concatConvertCmFiles
@@ -260,6 +256,20 @@ module.exports = function (grunt) {
                     'security_aspects': 'app/comps/security_aspects',
                     'ui': 'app/comps/ui'
                 })
+            },
+            'docs': {
+                src: [
+                    'app/vendor/requirejs/require.js',
+                    'app/vendor/angular/angular.js',
+                    'app/vendor/angular/angular-route.js',
+                    'app/vendor/angular/angular-animate.js',
+                    'app/vendor/angular/angular-sanitize.js',
+                    'app/vendor/angular-growl/angular-growl.js',
+                    'app/vendor/angular-translate/angular-translate.js',
+                    'app/vendor/util/spin.js',
+                    'app/packages/**/package.js'
+                ],
+                dest: 'docs/grunt-scripts/cameo-package.js'
             }
         },
         coffee: {
@@ -711,16 +721,14 @@ module.exports = function (grunt) {
             options: {
                 dest: 'docs',
                 scripts: [
-                    'app/vendor/requirejs/require.js',
-                    'app/vendor/angular/angular.js',
-                    'https://code.angularjs.org/1.2.16/angular-animate.min.js'
+                    'docs/grunt-scripts/cameo-package.js'
                 ],
                 deferLoad: false,
                 html5Mode: false,
-                startPage: '/app',
+                startPage: '/core',
                 title: 'CameoNET JS Client',
-                image: '',
-                imageLink: '',
+                image: 'app/favicon.ico',
+                imageLink: 'https://www.cameo.io',
                 titleLink: '/core',
                 bestMatch: true
             },
@@ -731,6 +739,10 @@ module.exports = function (grunt) {
             ui: {
                 src: ['app/comps/ui/*.js'],
                 title: 'cmUi'
+            },
+            api: {
+                src: ['api.ngdoc'],
+                title: 'api'
             }
         },
 
@@ -830,7 +842,7 @@ module.exports = function (grunt) {
         'copy:cockpit',
         'uglify:cockpit']);
 
-    grunt.registerTask('create-docs', ['clean:docs', 'ngdocs']);
+    grunt.registerTask('create-docs', ['clean:docs', 'packages', 'concat:docs', 'ngdocs']);
     grunt.registerTask('node-webserver', ['shell:node-webserver']);
     grunt.registerTask('code-coverage', ['sloc:code-coverage']);
 };
