@@ -143,40 +143,27 @@ angular.module('cmConversations').factory('cmConversationModel',[
         * @constructor
         * @param {Object} [fdata] - The conversation data as received from the backend.
         */
-       
         function ConversationModel(data){
 
-            this.id                 = undefined
-
+            this.id                 = undefined;
             //--> factory
-            this.recipients         = []            //list of RecipientModel objects
+            this.recipients         = [];          //list of RecipientModel objects
             //--> factory
-            this.messages           = new cmFactory(cmMessageModel)            //list of MessageModel objects
-
+            this.messages           = new cmFactory(cmMessageModel);           //list of MessageModel objects
             //--> meta
-            this.timeOfCreation     = 0             //timestamp of the conversation's creation
+            this.timeOfCreation     = 0;          //timestamp of the conversation's creation
             //--> meta
-            this.timeOfLastUpdate   = 0             //timestamp of the conversations's last Update
-
-            this.subject            = ''            //subject
-
+            this.timeOfLastUpdate   = 0;          //timestamp of the conversations's last Update
+            this.subject            = '';            //subject
             this.encryptedPassphraseList = new cmPassphraseList();
-
-            this.securityAspects    = cmSecurityAspectsConversation.setTarget(this)
-
-            this.meta               =   {           //stores meta data, not yet implemented, TODO
-                                        }
-
-            this.preferences        =   {           //settings the user can change
-                                            keyTransmission:    'symmetric',
-                                            encryption:         true
-
-                                        }
-
-            this.password           = undefined
-
-            this.state              = new cmStateManagement(['new','loading'])
-
+            this.securityAspects    = cmSecurityAspectsConversation.setTarget(this);
+            this.meta               = {};          //stores meta data, not yet implemented, TODO
+            this.preferences        = {           //settings the user can change
+                                        keyTransmission:    'symmetric',
+                                        encryption:         true
+                                        };
+            this.password           = undefined;
+            this.state              = new cmStateManagement(['new','loading']);
             var self        = this,
                 security    = new SecurityManagement(this)
 
@@ -184,16 +171,17 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.passCaptcha = undefined;
             this.tmpPassCaptcha = '';
 
-
             cmObject
                 .addEventHandlingTo(this)
                 .addChainHandlingTo(this)
 
             /**
+             * @name _init
+             * @description
              * Function to initialize the conversation. Should never be called from the outside.
+             *
              * @param {Object} [data] - The conversation data as required by .importData(), see below.
              */
-
             this._init = function(data){
                 // Add event and chain handling to the Conversation:
 
@@ -230,10 +218,12 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
 
             /**
+             * @name importData
+             * @description
              * Function to import data as received from the backend.
+             *
              * @param {Object} data -  The conversation data as recieved from the backend.
              */
-
             this.importData = function(data){
 
                 if(!data) return this
@@ -274,8 +264,14 @@ angular.module('cmConversations').factory('cmConversationModel',[
             //TODO: this.exportData() !
 
             /**
+             * @name addMessage
+             * @description
              * Function to add a message to a conversation. Will not update the backend.
-             * @param {MessageModel} message.
+             *
+             * @deprecated
+             *
+             * @param {MessageModel} message
+             * @returns {cmConversationModel} this returns cmConversationModel
              */  
             this.addMessage = function(message){
                 cmLogger.warn('cmConversation: .addMessage() is deprecated.')
@@ -286,17 +282,19 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     cmLogger.warn('conversationModel: unable to add message; duplicate detected. (id:'+message.id+')')
                 }
 
-                return this
+                return this;
             }
 
 
 
             /**
+             * @name addRecipient
+             * @description
              * Function to add a recipient to a conversation. Will not update the backend.
-             * @param {RecipientModel} recipient.
+             *
+             * @param {RecipientModel} recipient
+             * @returns {cmConversationModel} this returns cmConversationModel
              */
-            
-
             this.addRecipient = function(recipient){
                 if(this.recipients.indexOf(recipient) == -1){
                     this.recipients.push( recipient )
@@ -310,11 +308,14 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 } else {
                     cmLogger.error('conversationModel: unable to add recipient; duplicate detected. (id:'+recipient.id+')')
                 }
-                return this
+                return this;
             }
 
             /**
+             * @name getPassphrase
+             * @description
              * Function get the passphrase of the conversation, in order to use it for e.g. file encryption before upload.
+             *
              * @return {String} Returns the passphrase
              */
             this.getPassphrase = function(){
@@ -355,6 +356,16 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * Conversation Handling
              */
 
+            /**
+             * @name init
+             * @description
+             * initialize ConversationModel
+             *
+             * @deprecated
+             *
+             * @param {Object} conversation_data Date from API Call
+             * @returns {ConversationModel} this returns cmConversationModel
+             */
             this.init = function (conversation_data) {
 
                 cmLogger.warn('conversationModel: .init() is deprecated, please use .importData().')
