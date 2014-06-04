@@ -26,14 +26,14 @@ module.exports = function(config) {
             'app/vendor/crypto/jsencrypt/jsencrypt.min.js',
 
             // packages
-            'app/comps/core/package.js',
-            'app/comps/ui/package.js',
-            'app/comps/contacts/package.js',
-            'app/comps/user/package.js',
-            'app/comps/validate/package.js',
-            'app/comps/conversations/package.js',
-            'app/comps/files/package.js',
-            'app/comps/security_aspects/package.js',
+            'app/packages/comps/core/package.js',
+            'app/packages/comps/ui/package.js',
+            'app/packages/comps/contacts/package.js',
+            'app/packages/comps/user/package.js',
+            'app/packages/comps/validate/package.js',
+            'app/packages/comps/conversations/package.js',
+            'app/packages/comps/files/package.js',
+            'app/packages/comps/security_aspects/package.js',
 
             'test/lib/angular/angular-mocks.js',
 

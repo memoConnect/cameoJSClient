@@ -1,7 +1,26 @@
 'use strict';
 
-angular.module('cmCore')
-.service('cmUserModel',[
+/**
+ * @ngdoc service
+ * @name cmUserModel
+ * @description
+ * MOEP Description
+ *
+ * @requires cmAuth
+ * @requires cmLocalStorage
+ * @requires cmIdentityFactory
+ * @requires cmCrypt
+ * @requires cmObject
+ * @requires cmNotify
+ * @requires cmLogger
+ * @requires $rootScope
+ * @requires $q
+ * @requires $location
+ *
+ * @type {{isActive: boolean, id: string, userKey: string, displayName: string, cameoId: string, email: {}, phoneNumber: {}, preferredMessageType: string, created: string, lastUpdated: string, userType: string, storage: {}, identity: {}}}
+ */
+
+angular.module('cmCore').service('cmUserModel',[
 
     'cmAuth',
     'cmLocalStorage', 
@@ -18,6 +37,7 @@ angular.module('cmCore')
         var self = this,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
+
 
         var dataModel = {
             isActive: false,
@@ -41,6 +61,16 @@ angular.module('cmCore')
 
         this.comesFromRegistration = false;
 
+        /**
+         * @ngdoc method
+         * @name init
+         * @methodOf cmUserModel
+         * @description
+         * initialize the model with loading the identity
+         *
+         * @param {Object} identity_data JSON of an Identity
+         * @returns {Object} this cmUserModel
+         */
         this.init = function(identity_data){
             cmLogger.debug('cmUserModel:init');
             this.loadIdentity(identity_data).then(
@@ -74,6 +104,12 @@ angular.module('cmCore')
             return this;
         };
 
+        /**
+         * @name loadIdentity
+         * @description create Identiy for cmUserModel
+         * @param {Object|undefined} identity_data
+         * @returns {*}
+         */
         this.loadIdentity = function(identity_data){
             var deferred = $q.defer();
 
@@ -185,32 +221,9 @@ angular.module('cmCore')
          * @param key
          */
         this.addKey = function(key){
-            key.updateKeyList(this.data.identity.keys)
-            /*
-            var i = 0,
-                check = false;
-
-            while(i < this.data.keys.length){
-                if(key.id == this.data.keys[i].id){
-                    check = true;
-                    angular.extend(this.data.keys[i], key);
-                    break;
-                }
-                i++;
-            }
-
-            if(check !== true){
-                this.data.keys.push({
-                    id: key.id,
-                    keySize: key.keySize,
-                    name: key.name,
-                    key: key.pubKey, // @todo pubKey
-                    privKey: key.privKey
-                });
-            }
-            */
-            return this
-        }
+            key.updateKeyList(this.data.identity.keys);
+            return this;
+        };
 
         /**
          * @todo check ob Key schon vorhanden ist?!?
@@ -224,7 +237,7 @@ angular.module('cmCore')
                 check = false;
             */
             var key_list      =  this.loadLocalKeys() || [],
-                key_data_list = []
+                key_data_list = [];
 
             key_list.forEach(function(local_key){
                 var data = local_key.exportData()
@@ -236,44 +249,7 @@ angular.module('cmCore')
             this.storageSave('rsa', key_data_list)
 
             cmNotify.info('NOTIFY.KEYS.STORE_NEW',{ttl:1000}); //TODO
-            /*
-            if(
-                   typeof tmpKeys !== undefined 
-                && typeof tmpKeys !== 'undefined' 
-                && typeof tmpKeys !== 'string'
-                && tmpKeys != null
-            ){                
-                if(tmpKeys.length > 0){
-                    while(i < tmpKeys.length){
-                        if(key_data.pubKey&& (key_data.pubKey == tmpKeys[i].pubKey)){
-                            check = true;
-                            angular.extend(tmpKeys[i],key_data);
-                            break;
-                        }
-                        i++;
-                    }
 
-                    if(check !== true){
-                        tmpKeys.push(key_data);
-                    }
-
-                    this.storageSave('rsa',tmpKeys);
-
-                    deferred.resolve();
-                } else {
-                    this.storageSave('rsa',[key_data]);
-
-                    deferred.resolve();
-                }
-            } else {
-                this.storageSave('rsa',[key_data]);
-
-                deferred.resolve();
-            }
-            
-
-            return deferred.promise;
-            */
             return this
         };
 
@@ -284,10 +260,10 @@ angular.module('cmCore')
             stored_keys.forEach(function(stored_key){                
                 var data = (new cmCrypt.Key()).importData(stored_key)
                 keys.push( data )                
-            })
+            });
             
             return keys;
-        }
+        };
 
         this.hasPrivateKey = function(){
             var keys = this.loadLocalKeys(),
@@ -295,14 +271,14 @@ angular.module('cmCore')
 
             keys.forEach(function(key){         
                 result = result || !!key.getPrivateKey()
-            })
+            });
 
             return result
-        }
+        };
 
         this.clearLocalKeys = function(){
             this.storageSave('rsa', [])
-        }
+        };
 
         this.syncLocalKeys = function(){
 

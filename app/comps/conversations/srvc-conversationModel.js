@@ -186,6 +186,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.tmpPassCaptcha = '';
 
 
+            cmObject
+                .addEventHandlingTo(this)
+                .addChainHandlingTo(this)
+
             /**
              * Function to initialize the conversation. Should never be called from the outside.
              * @param {Object} [data] - The conversation data as required by .importData(), see below.
@@ -193,11 +197,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this._init = function(data){
                 // Add event and chain handling to the Conversation:
+                console.log('ConversationModel:init', data);
+                return false;
 
-                cmObject
-                .addEventHandlingTo(this)
-                .addChainHandlingTo(this)
-                
+
                 if(!data || !data.id)
                     self.state.set('new')
 

@@ -1,5 +1,33 @@
 'use strict';
 
+/**
+ * @ngdoc directive
+ * @name cmAvatar
+ * @description
+ * Shows the avatar of an identity.
+ * It can also be used for an identity avatar placeholder.
+ *
+ * @restrict E
+ * @requires cmIdentityModel
+ *
+ * @example
+ <doc:example>
+    <doc:source >
+        <script>
+            function Ctrl1($scope) {
+                $scope.identity = new cmIdentityModel(...);
+            }
+        </script>
+        <div ng-controller="Ctrl1">
+            <cm-avatar cm-data="identity"></cm-avatar>
+            <cm-avatar cm-data="identity" cm-view="hide-owner"></cm-avatar>
+            <cm-avatar cm-view="unknown"></cm-avatar>
+            <cm-avatar cm-data="identity" cm-with-name="true"></cm-avatar>
+        </div>
+    </doc:source>
+ </doc:example>
+ */
+
 angular.module('cmUi').directive('cmAvatar',[
     function (){
 
@@ -8,7 +36,7 @@ angular.module('cmUi').directive('cmAvatar',[
         };
 
         return {
-            restrict: 'AE',
+            restrict: 'E',
             template: '<img >',
 
             link: function(scope, element, attrs){
@@ -18,7 +46,7 @@ angular.module('cmUi').directive('cmAvatar',[
                         var reader = new FileReader();
                         reader.onload = function (e) {
                             file.base64Url = e.target.result;
-                            //                      element.css({'background-image': 'url('+ e.target.result +')'});
+                            //element.css({'background-image': 'url('+ e.target.result +')'});
                             element.find('img').attr('src', e.target.result);
                         };
                         reader.readAsDataURL(file.blob);
@@ -74,4 +102,4 @@ angular.module('cmUi').directive('cmAvatar',[
             }
         }
     }
-])
+]);
