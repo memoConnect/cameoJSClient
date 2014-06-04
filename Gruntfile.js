@@ -741,7 +741,7 @@ module.exports = function (grunt) {
                 title: 'cmUi'
             },
             api: {
-                src: ['api.ngdoc'],
+                src: ['resource/docs/api.ngdoc'],
                 title: 'api'
             }
         },
