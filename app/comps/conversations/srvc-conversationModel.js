@@ -303,7 +303,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 );
 
                 // getting local saved pw for conversation
-                this.password = this.localPWHandler.get(this.id);
+                if(this.password == undefined)
+                    this.password = this.localPWHandler.get(this.id);
 
                 this.state.unset('new');
                 this.trigger('update:finished');
@@ -471,7 +472,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {String} passphrase Returns the passphrase
              */
             this.getPassphrase = function(){
-                return encryptedPassphraseList.getPassphrase();
+                return encryptedPassphraseList.getPassphrase(this.password);
             }
 
             /**
