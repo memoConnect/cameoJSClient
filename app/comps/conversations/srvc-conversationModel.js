@@ -149,6 +149,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
          *  - load:failed
          *  - message:new
          *  - message:added
+         *  - save:failed
+         *  - save:finished
          * Stats
          *  - new
          *  - loading
@@ -358,7 +360,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {*}
              */
             this.save = function(){
-                var deferred = $q.defer();
+                var promises = [];
 
                 if(this.state.is('new')){
                     /**
@@ -378,12 +380,14 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                             var i = 0;
                             while(i < self.recipients.length){
-                                cmConversationsAdapter.addRecipient(self.id, self.recipients[i].id);
+                                if(self.recipients[i].id != cmUserModel.data.identity.id){
+                                    promises.push(cmConversationsAdapter.addRecipient(self.id, self.recipients[i].id));
+                                }
                                 i++;
                             }
 
                             /**
-                             * @todo
+                             * @todo - neu verschlüsselung - anders!
                              */
                             if(encryptedPassphraseList.isEncrypted()){
                                 encryptedPassphraseList.generatePassphrase();
@@ -391,20 +395,19 @@ angular.module('cmConversations').factory('cmConversationModel',[
                                 self.saveEncryptedPassphraseList(); //todo
                             }
 
-                            self.state.unset('new');
-
-                            deferred.resolve();
+                            $q.all(promises).then(function(){
+                                self.state.unset('new');
+                                self.trigger('save:finished');
+                            });
+                             // -> add recipeints -> message verschicken
                         },
-
                         function(){
-                            deferred.reject();
+                            self.trigger('save:failed');
                         }
                     )
-                } else {
-                    deferred.resolve();
                 }
 
-                return deferred.promise;
+                return this;
             };
 
             /**

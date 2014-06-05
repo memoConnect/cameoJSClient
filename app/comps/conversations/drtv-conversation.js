@@ -43,14 +43,15 @@ angular.module('cmConversations').directive('cmConversation', [
                 $scope.send = function(){
                     if($scope.isSending !== true){
                         $scope.isSending = true;
+
                         /**
                          * Nested functions in comps/files/drtv-files.js
                          * check if files exists
                          * after success resolve step again in here without files
                          */
                         if($scope.hasFiles()) {
-                            $scope.prepareFilesForUpload($scope.conversation.getPassphrase())
-                                .then(function(){
+                            $scope.prepareFilesForUpload($scope.conversation.getPassphrase()).then(
+                                function(){
                                     angular.forEach($scope.files, function(file){
                                         if(file.id != undefined){
                                             files.push(file);
@@ -64,7 +65,6 @@ angular.module('cmConversations').directive('cmConversation', [
 
                                     sendMessage();
                                 });
-                            return false;
                         } else {
                             sendMessage();
                         }
@@ -116,14 +116,10 @@ angular.module('cmConversations').directive('cmConversation', [
                     if(message_valid && passphrase_valid && !recipients_missing){
                         // create new conversation
                         if($scope.conversation.state.is('new')){
-                            $scope.conversation.save().then(
-                                function(){
-                                    sendMessage();
-                                },
-                                function(){
-                                    $scope.isSending = false;
-                                }
-                            )
+                            $scope.conversation.save();
+                            $scope.conversation.on('save:finished', function(){
+                               sendMessage();
+                            });
                         // add to existing conversation
                         } else {
                             $scope.conversation.messages.create({conversation:$scope.conversation})
