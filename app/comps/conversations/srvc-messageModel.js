@@ -247,7 +247,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 })
                 .then(function (message_data) {
                     self.importData(message_data);
-                    self.trigger('message:send');
+                    self.trigger('message:saved');
                 });
             };
 

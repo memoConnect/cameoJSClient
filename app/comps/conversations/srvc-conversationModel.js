@@ -181,9 +181,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.passCaptcha = undefined;
             this.tmpPassCaptcha = '';
 
-            cmObject
-                .addEventHandlingTo(this)
-                .addChainHandlingTo(this);
+            cmObject.addEventHandlingTo(this);
 
             this.localPWHandler = {
                 localKey: 'pw',
@@ -270,6 +268,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     cmLogger.debug('cmConversationModel:import:failed - no Data!');
                     return this;
                 }
+
                 //There is no invalid data, importData looks for everything useable in data; if it finds nothing it wont update anything
                 this.id                      = data.id           || this.id;
                 this.timeOfCreation          = data.created      || this.timeOfCreation;
@@ -421,14 +420,15 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
-//                cmLogger.debug('cmConversationModel:decrypt');
+                cmLogger.debug('cmConversationModel:decrypt');
+
                 if(encryptedPassphraseList.getEncryptionType() == 'none')
                     return true;
 
                 var passphrase = this.getPassphrase(),
                     passphrase_valid_form = (typeof passphrase == 'string' && passphrase.length > 0);
 
-                var success = passphrase_valid_form && this.messages.reduce(function (success, message) {
+                var success = passphrase_valid_form && this.messages.reduce(function (success, message){
                         return success && message.decrypt(passphrase);
                     }, true);
 
@@ -660,6 +660,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             });
 
             this.on('update:finished', function(){
+                console.log('update:finished');
                 self.decrypt();
             });
 
@@ -668,14 +669,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             });
 
             this.on('message:added', function(event, message){
-                if(self.security.passphrase != ''){
                     message.decrypt(self.security.passphrase);
-                }
-            });
-
-            this.messages.on('message:save', function(event, message){
-                console.log('message:save - event', event)
-                console.log('message:save - message', message)
             });
 
             //Todo: fire event on factory and delegate to conversation or something
