@@ -23,9 +23,9 @@ define([
             $scope.conversations = cmConversationFactory;
             $scope.conversations.getList();
 
-            if(cmUserModel.isAuth() === true){
-
-            }
+//            if(cmUserModel.isAuth() === true){
+//                $scope.conversations.getList();
+//            }
 
             /**
              * load more Conversations
@@ -45,7 +45,7 @@ define([
                     return false;
                 }
 
-                if($scope.conversations.length == $scope.conversations._quantity){
+                if($scope.conversations.length == $scope.conversations.getQuantity()){
                     return false;
                 }
 

@@ -186,7 +186,7 @@ angular.module('cmCore').factory('cmPassphraseList',[
              * returns passphrase
              *
              * @param {String} password password
-             * @returns {String} passphrase passphrase
+             * @returns {String|Boolean} passphrase passphrase
              */
             this.getPassphrase = function(password){
                 if(typeof passphrase != "string" || passphrase.length > 0)

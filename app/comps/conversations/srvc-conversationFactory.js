@@ -56,6 +56,21 @@ angular.module('cmConversations').service('cmConversationFactory', [
         };
 
         /**
+         * @ngdoc method
+         * @methodOf cmConversationFactory
+         *
+         * @name getQuantity
+         * @description
+         * Returns Number of all Conversations
+         * Quantity is first set in getList()
+         *
+         * @returns {Number} quantity Number of all Conversations
+         */
+        self.getQuantity = function(){
+            return _quantity;
+        }
+
+        /**
          * EventHandling
          */
         $rootScope.$on('logout', function(){ self.reset() });

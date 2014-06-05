@@ -208,6 +208,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
              * @name init
              * @description
              * Function to initialize the conversation. Should never be called from the outside.
@@ -215,7 +218,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @param {Object} [data] The conversation data as required by .importData(), see below.
              */
             function init(data){
-                cmLogger.debug('cmConversationModel:init');
+//                cmLogger.debug('cmConversationModel:init');
                 if(typeof data == 'string' && data.length > 0){
                     self.id = data;
                     self.load();
@@ -235,6 +238,24 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
 
             /**
+             * @todo !!!!
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name checkConsistency
+             * @description
+             * Checks Conversation Settings and User Opinions
+             *
+             * @param {Boolean} bool Return true or false
+             */
+            function checkConsistency(){
+                return false;
+            }
+
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
              * @name importData
              * @description
              * Function to import data as received from the backend.
@@ -289,6 +310,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
              * @name load
              * @description
              * get Conversation Data from API
@@ -323,6 +347,69 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name save
+             * @description
+             * send conversation to api
+             *
+             * @returns {*}
+             */
+            this.save = function(){
+                var deferred = $q.defer();
+
+                if(this.state.is('new')){
+                    /**
+                     * @todo
+                     * 02.06.2014 current mock bs
+                     */
+                    if(checkConsistency()){
+                        deferred.reject();
+                        return deferred.promise;
+                    }
+
+                    cmConversationsAdapter.newConversation((this.subject || '')).then(
+                        function (conversation_data) {
+                            self
+                                .importData(conversation_data)
+                                .savePassCaptcha();
+
+                            var i = 0;
+                            while(i < self.recipients.length){
+                                cmConversationsAdapter.addRecipient(self.id, self.recipients[i].id);
+                                i++;
+                            }
+
+                            /**
+                             * @todo
+                             */
+                            if(encryptedPassphraseList.isEncrypted()){
+                                encryptedPassphraseList.generatePassphrase();
+
+                                self.saveEncryptedPassphraseList(); //todo
+                            }
+
+                            self.state.unset('new');
+
+                            deferred.resolve();
+                        },
+
+                        function(){
+                            deferred.reject();
+                        }
+                    )
+                } else {
+                    deferred.resolve();
+                }
+
+                return deferred.promise;
+            };
+
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
              * @name decrypt
              * @description
              * starts decrypting oh messages
@@ -356,6 +443,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
              * @name getEncryptionType
              * @description
              * return encryption type from conversation
@@ -367,6 +457,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
              * @name getPassphrase
              * @description
              * Function get the passphrase of the conversation, in order to use it for e.g. file encryption before upload.
@@ -378,6 +471,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
 
             /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
              * @name initPassCaptcha
              * @description
              * Initialize PassCaptcha Handling in Conversation
@@ -399,6 +495,40 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name savePassCaptcha
+             * @description
+             *
+             * @returns {ConversationModel} this returns ConversationModel
+             */
+            this.savePassCaptcha = function(){
+                if(this.tmpPassCaptcha != ''){
+                    this.passCaptcha = cmFileFactory.create();
+                    this.passCaptcha.name = this.passCaptcha.encryptedName = 'captcha';
+
+                    this.passCaptcha
+                        .setPassphrase('')
+                        .importBase64(this.tmpPassCaptcha)
+                        .prepareForUpload().then(
+                        function(){
+                            self.passCaptcha.uploadChunks();
+                        }
+                    );
+
+                    this.passCaptcha.on('upload:finish', function(){
+                        cmConversationsAdapter.updateCaptcha(self.id, self.passCaptcha.id);
+                    });
+                }
+
+                return this;
+            };
+
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
              * @name addRecipient
              * @description
              * Function to add a recipient to a conversation. Will not update the backend.
@@ -417,13 +547,18 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     })
                     this.trigger('recipient-added')
                 } else {
-                    cmLogger.error('conversationModel: unable to add recipient; duplicate detected. (id:'+recipient.id+')')
+                    if(cmUserModel.data.id != recipient.id){
+                        cmLogger.debug('conversationModel: unable to add recipient; duplicate detected. (id:'+recipient.id+')')
+                    }
                 }
                 return this;
             }
 
             /**
-             * @name getSafetyLeve
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name getSafetyLevel
              * @description
              * return safety level
              *
@@ -463,6 +598,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
              * @name getSafetyLevelClass
              * @description
              * returns String
@@ -483,7 +621,29 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return 'safetylevel-'+className+addon;
             };
 
-            //TODO: this.exportData() !
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name passphraseValid
+             * @description
+             *
+             * @returns {boolean}
+             */
+            this.passphraseValid = function () {
+//                return !this.preferences.encryption || !this.messages[0] || (security.getPassphrase() && this.messages[0].decrypt(security.getPassphrase()));
+                return !this.messages[0] || (encryptedPassphraseList.getPassphrase(this.password) && this.messages[0].decrypt(encryptedPassphraseList.getPassphrase(this.password)));
+            };
+
+            this.saveEncryptedPassphraseList = function(){
+//                this.encryptedPassphraseList = security.getEncryptedPassphraseList(this.password)
+//
+//                if(this.encryptedPassphraseList && this.encryptedPassphraseList.length !=0){
+//                    return cmConversationsAdapter.updateEncryptedPassphraseList(this.id, this.encryptedPassphraseList)
+//                } else {
+//                    return $q.when(true)
+//                }
+            };
 
             init(data);
 
@@ -509,10 +669,16 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 }
             });
 
+            this.on('message:save', function(event, message){
+               console.log('message:save - event', event)
+               console.log('message:save - message', message)
+            });
+
             //Todo: fire event on factory and delegate to conversation or something
             this.on('message:new', function(event, message_data){
                 self.messages.create(message_data).decrypt(self.getPassphrase())
             });
+
             /*
              cmConversationsAdapter
              .on('message:new', function(event, message_data){ self.addMessage(cmMessageFactory.get(message_data)) })
@@ -533,7 +699,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
 
             /*** Alt Lasten ***/
-
 
 
 
@@ -654,75 +819,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 //cmConversationsAdapter.addRecipient(this.id, identity.id)
             };
 
-            this.save = function(){
-                var deferred = $q.defer();
-
-
-                if(this.state.is('new')){
-                    if(!security.checkConsistency()){
-                        deferred.reject()
-                        return deferred.promise
-                    }
-
-                    cmConversationsAdapter.newConversation((this.subject || '')).then(
-                        function (conversation_data) {
-                            self
-                            .importData(conversation_data)
-                            .savePassCaptcha()
-
-                            var i = 0;
-                            while(i < self.recipients.length){
-                                cmConversationsAdapter.addRecipient(self.id, self.recipients[i].id);
-                                i++;
-                            }
-
-                            if(self.preferences.encryption){
-                                security
-                                .generatePassphrase()
-
-                                self
-                                .saveEncryptedPassphraseList() //todo
-
-                            }
-
-                            self.state.unset('new')
-
-                            deferred.resolve();
-                        },
-
-                        function(){
-                            deferred.reject();
-                        }
-                    )
-                } else {
-                    deferred.resolve();
-                }
-
-                return deferred.promise;
-            };
-
-            this.savePassCaptcha = function(){
-                if(this.tmpPassCaptcha != ''){
-                    this.passCaptcha = cmFileFactory.create();
-                    this.passCaptcha.name = this.passCaptcha.encryptedName = 'captcha';
-
-                    this.passCaptcha
-                        .setPassphrase('')
-                        .importBase64(this.tmpPassCaptcha)
-                        .prepareForUpload().then(
-                            function(){
-                                self.passCaptcha.uploadChunks();
-                            }
-                        );
-
-                    this.passCaptcha.on('upload:finish', function(){
-                        cmConversationsAdapter.updateCaptcha(self.id, self.passCaptcha.id);
-                    });
-                }
-
-                return this;
-            };
-
             this.update = function(conversation_data){
                 var offset = 0;
                 var clearAllMessages = true;
@@ -829,33 +925,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {cmConversationModel.ConversationModel}
              */
             
-            /*
-            this.addMessage = function (message, encrypt_passphrase) {
-
-                if(this.messages.length == 0){
-                    this.messages.push(message); // kunstgriff, eine neue conversation, hat erstmal nur eine message, da is der id abgleich egal
-                }else {
-                    var i = 0;
-                    var check = false;
-                    while(i < this.messages.length){
-                        if(message.id == this.messages[i].id){
-                            check = true;
-                            break;
-                        }
-                        i++;
-                    }
-
-                    if(check !== true){
-                        this.messages.push(message);
-                    }
-                }
-
-                message.decrypt(this.passphrase);
-
-                return this
-            };
-            */
-
             this.getLastMessage = function(){
 //                cmLogger.debug('cmConversationModel: getLastMessage is deprecated.')
                 if(this.messages.length > 0){
@@ -923,22 +992,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.preferences.keyTransmission(mode);
                 security.checkConsistency();
             };
-
-            this.saveEncryptedPassphraseList = function(){
-                this.encryptedPassphraseList = security.getEncryptedPassphraseList(this.password)
-
-                if(this.encryptedPassphraseList && this.encryptedPassphraseList.length !=0){
-                    return cmConversationsAdapter.updateEncryptedPassphraseList(this.id, this.encryptedPassphraseList)
-                } else {
-                    return $q.when(true)
-                }
-            };
-
-            this.passphraseValid = function () {
-                return !this.preferences.encryption || !this.messages[0] || (security.getPassphrase() && this.messages[0].decrypt(security.getPassphrase()))
-            };
         }
 
         return ConversationModel;
     }
-])
+]);

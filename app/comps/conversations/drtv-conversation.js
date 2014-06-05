@@ -44,7 +44,6 @@ angular.module('cmConversations').directive('cmConversation', [
                 $scope.send = function(){
                     if($scope.isSending !== true){
                         $scope.isSending = true;
-
                         /**
                          * Nested functions in comps/files/drtv-files.js
                          * check if files exists
@@ -105,6 +104,7 @@ angular.module('cmConversations').directive('cmConversation', [
                  * send message to api
                  */
                 function sendMessage() {
+
                     /**
                      * validate answer form
                      * @type {boolean}
@@ -112,7 +112,8 @@ angular.module('cmConversations').directive('cmConversation', [
                     var passphrase_valid    = !!$scope.conversation.passphraseValid(),
                         message_valid       = isMessageValid() ,
                         recipients_missing  = $scope.conversation.recipients.length < 1 //@todo mocked
-                    // is everything valid? 
+
+                    // is everything valid?
                     if(message_valid && passphrase_valid && !recipients_missing){
                         // create new conversation
                         if($scope.conversation.state.is('new')){
@@ -126,17 +127,21 @@ angular.module('cmConversations').directive('cmConversation', [
                             )
                         // add to existing conversation
                         } else {
-                            cmMessageFactory.create()
+
+
+                            var message = $scope.conversation.messages.create();
+                            console.log(message)
+
+                            message
                                 .addFiles(files)
                                 .setText($scope.my_message_text)
                                 .setPublicData($scope.conversation.getPassphrase() ? [] : ['text','fileIds'])
                                 .encrypt($scope.conversation.getPassphrase())
-                                .addTo($scope.conversation)
+                                .save()
                                 .sendTo($scope.conversation.id)
                                 .then(function(){
                                     //@ TODO: solve rekeying another way:
-                                    $scope.conversation
-                                    .saveEncryptedPassphraseList()
+//                                    $scope.conversation.saveEncryptedPassphraseList();
 
                                     $scope.conversation.numberOfMessages++;
                                     $scope.my_message_text = "";

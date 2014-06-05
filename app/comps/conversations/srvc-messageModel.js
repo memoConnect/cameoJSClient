@@ -58,7 +58,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
             function init(data){
                 if(typeof data == 'object') {
                     self.importData(data)
-                }else{
+                } else {
                     self.state.set('new')
                 }
             }
@@ -158,17 +158,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
             };
 
             /**
-             * add to local conversation object
-             * @param conversation
-             * @returns {cmMessageModel.Message}
-             */
-            this.addTo = function(conversation){
-                conversation.addMessage(self);
-
-                return this;
-            };
-
-            /**
              * add cmFile Object to Message Object
              * checks if cmFile Object still added or not
              * @param file
@@ -228,6 +217,15 @@ angular.module('cmConversations').factory('cmMessageModel',[
             };
 
             /**
+             *
+             */
+            this.save = function(){
+                this.trigger('message:save', this);
+
+                return this;
+            };
+
+            /**
              * send message to backend object
              * @param conversation
              * @returns {*|Promise|!Promise.<RESULT>}
@@ -247,7 +245,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                     plain: this.publicData
                 })
                 .then(function (message_data) {
-                    self.init(message_data);
+                    self.importData(message_data);
                     self.trigger('message:send');
                 });
             };
