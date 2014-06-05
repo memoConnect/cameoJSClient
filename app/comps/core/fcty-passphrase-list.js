@@ -1,10 +1,10 @@
 'use strict';
 
 /**
- * @ngdoc cmCore
+ * @ngdoc service
  * @name cmPassphraseList
  * @description
- * Handle Passprhase Lists in Conversation
+ * Handle Passphrase Lists in Conversation
  *
  * @requires cmFactory
  * @requires cmKey
@@ -17,12 +17,6 @@ angular.module('cmCore').factory('cmPassphraseList',[
     'cmObject',
     function(cmFactory, cmKey, cmUserModel,cmObject){
 
-        /**
-         * @ngdoc method
-         * @name cmPassphraseList
-         *
-         * @param {Object} [data] Data from API CAll
-         */
         function cmPassphraseList(data){
             var self = this,
                 passphrase = '',
@@ -31,11 +25,14 @@ angular.module('cmCore').factory('cmPassphraseList',[
             cmObject.addEventHandlingTo(this);
 
             /**
+             * @ngdoc method
+             * @methodOf cmPassphraseList
+             *
              * @name init
              * @description
              * Initialize cmPassphraseList
              *
-             * @param {Array} data
+             * @param {Array} data Init Data
              * @return {cmPassphraseList} this cmPassphraseList
              */
             function init(data){
@@ -47,11 +44,14 @@ angular.module('cmCore').factory('cmPassphraseList',[
             }
 
             /**
+             * @ngdoc method
+             * @methodOf cmPassphraseList
+             *
              * @name decryptPassphrase
              * @description
              * Decrypts the encrypted passphrase list into a passphrase ready to be delivered by .getPassphrase()
              *
-             * @param {String} [password] password
+             * @param {String} password] optional
              */
             function decryptPassphrase(password) {
                 var oldPassphrase = passphrase;
@@ -77,6 +77,9 @@ angular.module('cmCore').factory('cmPassphraseList',[
             }
 
             /**
+             * @ngdoc method
+             * @methodOf cmPassphraseList
+             *
              * @name encryptPassphrase
              * @description
              *
@@ -103,6 +106,9 @@ angular.module('cmCore').factory('cmPassphraseList',[
             }
 
             /**
+             * @ngdoc method
+             * @methodOf cmPassphraseList
+             *
              * @name importData
              * @description
              * imports Data from List
@@ -130,6 +136,9 @@ angular.module('cmCore').factory('cmPassphraseList',[
             };
 
             /**
+             * @ngdoc method
+             * @methodOf cmPassphraseList
+             *
              * @name generatePassphrase
              * @description
              * generates a passhrase
@@ -146,6 +155,9 @@ angular.module('cmCore').factory('cmPassphraseList',[
             }
 
             /**
+             * @ngdoc method
+             * @methodOf cmPassphraseList
+             *
              * @name getEncryptionType
              * @description
              * return encryption type
@@ -166,7 +178,10 @@ angular.module('cmCore').factory('cmPassphraseList',[
             };
 
             /**
-             * @name getPasshrase
+             * @ngdoc method
+             * @methodOf cmPassphraseList
+             *
+             * @name getPassphrase
              * @description
              * returns passphrase
              *
@@ -181,6 +196,9 @@ angular.module('cmCore').factory('cmPassphraseList',[
             };
 
             /**
+             * @ngdoc method
+             * @methodOf cmPassphraseList
+             *
              * @name isEncrypted
              * @description
              * Returns true if list is not empty.
@@ -192,6 +210,9 @@ angular.module('cmCore').factory('cmPassphraseList',[
             };
 
             /**
+             * @ngdoc method
+             * @methodOf cmPassphraseList
+             *
              * @name exportData
              * @description
              * return encrypted passphrase list
