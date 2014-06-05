@@ -631,12 +631,29 @@ angular.module('cmConversations').factory('cmConversationModel',[
              *
              * @name passphraseValid
              * @description
+             * #1 true = for none encryption
+             * #2 true = none messages
+             * #3 true = decryption on first message succeed
+             * #4 false = decryption on first message failed
              *
              * @returns {boolean}
              */
             this.passphraseValid = function () {
-//                return !this.preferences.encryption || !this.messages[0] || (security.getPassphrase() && this.messages[0].decrypt(security.getPassphrase()));
-                return !this.messages[0] || (encryptedPassphraseList.getPassphrase(this.password) && this.messages[0].decrypt(encryptedPassphraseList.getPassphrase(this.password)));
+                //!this.preferences.encryption || !this.messages[0] || (security.getPassphrase() && this.messages[0].decrypt(security.getPassphrase()));
+                //(encryptedPassphraseList.getPassphrase(this.password) && this.messages[0].decrypt(encryptedPassphraseList.getPassphrase(this.password))
+
+                var boolean = true;
+
+                if( this.messages.length > 0 &&
+                    encryptedPassphraseList.isEncrypted() &&
+                    !this.messages[0].decrypt())
+                {
+                    boolean = false;
+                }
+
+                console.log('passphraseValid', 'return '+boolean)
+
+                return boolean;
             };
 
             this.saveEncryptedPassphraseList = function(){
@@ -658,7 +675,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
             });
 
             this.on('update:finished', function(){
-                console.log('on|update:finished');
                 self.decrypt();
             });
 
@@ -667,7 +683,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             });
 
             this.on('message:added', function(event, message){
-                    message.decrypt(self.security.passphrase);
+                message.decrypt(self.security.passphrase);
             });
 
             //Todo: fire event on factory and delegate to conversation or something
