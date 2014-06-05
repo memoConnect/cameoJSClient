@@ -654,7 +654,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              */
 
             encryptedPassphraseList.on('passphrase:changed', function(){
-                self.decrypt();
+//                self.decrypt();
             });
 
             this.on('update:finished', function(){
@@ -687,8 +687,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             //Todo:
             this.on('message-added', function(){ self.numberOfMessages++ });
-
-
 
             // after events!!!
             init(data);
