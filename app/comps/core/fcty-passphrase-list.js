@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @ngdoc service
+ * @ngdoc object
  * @name cmPassphraseList
  * @description
  * Handle Passphrase Lists in Conversation
@@ -51,7 +51,7 @@ angular.module('cmCore').factory('cmPassphraseList',[
              * @description
              * Decrypts the encrypted passphrase list into a passphrase ready to be delivered by .getPassphrase()
              *
-             * @param {String} password] optional
+             * @param {String} password optional
              */
             function decryptPassphrase(password) {
                 var oldPassphrase = passphrase;
