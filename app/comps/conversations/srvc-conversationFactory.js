@@ -1,5 +1,19 @@
 'use strict';
 
+/**
+ * @ngdoc object
+ * @name cmConversationFactory
+ * @description
+ * Handles Conversation Instances<br />
+ * create new instances and check if instances still exists
+ *
+ * @requires cmConversationsAdapter
+ * @requires cmFactory
+ * @requires cmStateManagement
+ * @requires cmConversationModel
+ * @requires $rootScope
+ *
+ */
 angular.module('cmConversations').service('cmConversationFactory', [
     'cmConversationsAdapter',
     'cmFactory',

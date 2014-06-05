@@ -740,6 +740,10 @@ module.exports = function (grunt) {
                 src: ['app/comps/ui/*.js'],
                 title: 'cmUi'
             },
+            conversations: {
+                src: ['app/comps/conversations/*.js'],
+                title: 'cmConversations'
+            },
             api: {
                 src: ['resource/docs/api.ngdoc'],
                 title: 'api'
