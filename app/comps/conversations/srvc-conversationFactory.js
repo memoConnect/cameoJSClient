@@ -36,6 +36,7 @@ angular.module('cmConversations').service('cmConversationFactory', [
                 }
             ).finally(
                 function(){
+                    console.log('hier')
                     self.state.unset('loading');
                 }
             )

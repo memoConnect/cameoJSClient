@@ -21,20 +21,11 @@ define([
             $scope.loading = true;
 
             $scope.conversations = cmConversationFactory;
-
-            $scope.conversations.state.on('change',function(){
-                $scope.loading = $scope.conversations.state.get('loading');
-            });
+            $scope.conversations.getList();
 
             if(cmUserModel.isAuth() === true){
 //                cmConversationsModel.getConversations();
             }
-
-
-            /**
-             * erster Aufruf
-             */
-            $scope.conversations.getList();
 
             /**
              * load more Conversations
@@ -88,6 +79,14 @@ define([
                 $location.path('/conversation/')
             }
 
+
+            /**
+             * Event Handling
+             */
+            console.log($scope.conversations.state)
+            $scope.conversations.state.on('change',function(){
+                $scope.loading = $scope.conversations.state.get('loading');
+            });
         }
     ]);
 });
