@@ -45,7 +45,9 @@ angular.module('cmCore').factory('cmStateManagement',[
                 if(typeof state == 'string' && state.length > 0){
                     if(self.indexOf(state) == -1){
                         self.push(state);
+
                         self.trigger('change');
+//                        self.trigger('set:' + state);
                     }
                 }
             };
@@ -64,7 +66,9 @@ angular.module('cmCore').factory('cmStateManagement',[
                 if(typeof state == 'string' && state.length > 0) {
                     if (self.indexOf(state) != -1) {
                         self.splice(self.indexOf(state), 1);
+
                         self.trigger('change');
+//                        self.trigger('unset:' + state);
                     }
                 }
             };

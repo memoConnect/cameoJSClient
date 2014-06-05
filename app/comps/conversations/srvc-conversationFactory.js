@@ -50,7 +50,6 @@ angular.module('cmConversations').service('cmConversationFactory', [
                 }
             ).finally(
                 function(){
-                    console.log('hier')
                     self.state.unset('loading');
                 }
             )
@@ -59,7 +58,7 @@ angular.module('cmConversations').service('cmConversationFactory', [
         /**
          * EventHandling
          */
-        $rootScope.$on('logout', function(){ self.reset() })
+        $rootScope.$on('logout', function(){ self.reset() });
 
         return self;
     }

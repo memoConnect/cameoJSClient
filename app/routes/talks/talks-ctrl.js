@@ -24,7 +24,7 @@ define([
             $scope.conversations.getList();
 
             if(cmUserModel.isAuth() === true){
-//                cmConversationsModel.getConversations();
+
             }
 
             /**
@@ -41,13 +41,13 @@ define([
              * @returns {boolean}
              */
             $scope.showMore = function(){
-//                if(cmConversationsModel.conversations.length == 0){
-//                    return false;
-//                }
-//
-//                if(cmConversationsModel.conversations.length == cmConversationsModel.quantity){
-//                    return false;
-//                }
+                if($scope.conversations.length == 0){
+                    return false;
+                }
+
+                if($scope.conversations.length == $scope.conversations._quantity){
+                    return false;
+                }
 
                 return true;
             }
@@ -83,9 +83,8 @@ define([
             /**
              * Event Handling
              */
-            console.log($scope.conversations.state)
             $scope.conversations.state.on('change',function(){
-                $scope.loading = $scope.conversations.state.get('loading');
+                $scope.loading = $scope.conversations.state.is('loading');
             });
         }
     ]);
