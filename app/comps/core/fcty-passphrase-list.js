@@ -185,8 +185,8 @@ angular.module('cmCore').factory('cmPassphraseList',[
              * @description
              * returns passphrase
              *
-             * @param {String} password password
-             * @returns {String|Boolean} passphrase passphrase
+             * @param {String} password password for encryption
+             * @returns {String|Boolean} passphrase Description :p
              */
             this.getPassphrase = function(password){
                 if(typeof passphrase != "string" || passphrase.length > 0)
@@ -194,6 +194,26 @@ angular.module('cmCore').factory('cmPassphraseList',[
 
                 return passphrase || false;
             };
+
+            /**
+             * @ngdoc method
+             * @methodOf cmPassphraseList
+             *
+             * @name setPassphrase
+             * @description
+             * set sePassphrase
+             *
+             * @param {String} sePassphrase encrypted passphrase
+             * @returns {Boolean} bool If sePassphrase is correct, returns true
+             */
+            this.setPassphrase = function(sePassphrase){
+                if(typeof sePassphrase != "string" || sePassphrase.length > 0){
+                    passphrase = sePassphrase;
+                    return true;
+                }
+
+                return false;
+            }
 
             /**
              * @ngdoc method

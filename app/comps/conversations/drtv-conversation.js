@@ -112,7 +112,7 @@ angular.module('cmConversations').directive('cmConversation', [
                         passphrase_valid    = $scope.conversation.passphraseValid(),
                         recipients_missing  = $scope.conversation.recipients.length < 1 //@todo mocked
 
-                    console.log('sendMessage','message_valid '+message_valid, 'passphrase_valid ' +passphrase_valid, '!recipients_missing '+!recipients_missing)
+//                    console.log('sendMessage','message_valid '+message_valid, 'passphrase_valid ' +passphrase_valid, '!recipients_missing '+!recipients_missing)
 
                     // is everything valid?
                     if(message_valid && passphrase_valid && !recipients_missing){

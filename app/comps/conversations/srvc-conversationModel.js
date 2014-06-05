@@ -315,6 +315,29 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @ngdoc method
              * @methodOf cmConversationModel
              *
+             * @name exportData
+             * @description
+             * Function to export conversation data for api call
+             *
+             * @param {Object} data Object with conversation data
+             */
+            this.exportData = function(){
+                var data = {};
+
+                if(this.subject != '')
+                    data.subject = this.subject;
+
+//                if(this.password != ''){
+//                    data.sePassphrase = encryptedPassphraseList.getPassphrase();
+//                }
+
+                return data;
+            };
+
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
              * @name load
              * @description
              * get Conversation Data from API
@@ -359,7 +382,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {*}
              */
             this.save = function(){
-                var promises = [];
+                var promises = [],
+                    data = {};
 
                 if(this.state.is('new')){
                     /**
@@ -371,7 +395,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         return deferred.promise;
                     }
 
-                    cmConversationsAdapter.newConversation((this.subject || '')).then(
+                    cmConversationsAdapter.newConversation(this.exportData()).then(
                         function (conversation_data) {
                             self
                                 .importData(conversation_data)
@@ -429,7 +453,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     passphrase_valid_form = (typeof passphrase == 'string' && passphrase.length > 0);
 
                 var success = passphrase_valid_form && this.messages.reduce(function (success, message){
-                        return success && message.decrypt(passphrase);
+                        return success && message.decrypt();
                     }, true);
 
                 if (success) {
