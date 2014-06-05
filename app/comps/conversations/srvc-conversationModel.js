@@ -649,8 +649,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 //                }
             };
 
-            init(data);
-
             /**
              * Event Handling
              */
@@ -660,7 +658,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             });
 
             this.on('update:finished', function(){
-                console.log('update:finished');
+                console.log('on|update:finished');
                 self.decrypt();
             });
 
@@ -692,6 +690,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
 
 
+            // after events!!!
+            init(data);
 
 
 
