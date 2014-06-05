@@ -56,7 +56,7 @@
             <br />
 
             percentHundretTimes: {{percentHundretTimes}}
-            <cm-progressbar cm-percent="percentHundretTimes" cm-hundret-times="false"></cm-progressbar>
+            <cm-progressbar cm-percent="percentHundretTimes" cm-hundret-times="true"></cm-progressbar>
 
             percent: {{percent}}
             <cm-progressbar cm-percent="percent"></cm-progressbar>
@@ -69,10 +69,10 @@ angular.module('cmUi').directive('cmProgressbar',[
     function (){
         return {
             restrict: 'E',
-            template: '<div class="percent">{{percent}}<span>%</span></div>' +
-                      '<div class="progressbar" style="width:{{percent}}%"></div>',
+            template: '<div class="percent">{{cmPercent}}<span>%</span></div>' +
+                      '<div class="progressbar" style="width:{{cmPercent}}%"></div>',
             controller: function($scope, $element, $attrs) {
-                $scope.percent = 0;
+                $scope.cmPercent = 0;
 
                 if($attrs.cmPercent){
                     $scope.$watch($attrs.cmPercent, function (newPercent) {
@@ -86,7 +86,7 @@ angular.module('cmUi').directive('cmProgressbar',[
                             newPercent = 100;
                         }
 
-                        $scope.percent = Math.round(newPercent);
+                        $scope.cmPercent = Math.round(newPercent);
                     })
                 }
             }
