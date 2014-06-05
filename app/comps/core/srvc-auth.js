@@ -17,10 +17,10 @@ angular.module('cmCore').service('cmAuth', [
             /**
              * @ngdoc method
              * @methodOf cmAuth
-             * @name cmAuth#requestToken
+             *
+             * @name requestToken
              * @description
              * Ask the api for a new authentication token
-             *
              *
              * @param {String} login Loginname of user
              * @param {String} pass Password of user
@@ -38,7 +38,8 @@ angular.module('cmCore').service('cmAuth', [
             /**
              * @ngdoc method
              * @methodOf cmAuth
-             * @name cmAuth#removeToken
+             *
+             * @name removeToken
              * @description
              * Delete token from localstorage
              *
@@ -50,7 +51,8 @@ angular.module('cmCore').service('cmAuth', [
             /**
              * @ngdoc method
              * @methodOf cmAuth
-             * @name cmAuth#storeToken
+             *
+             * @name storeToken
              * @description
              * Store the token in localstorage
              *
@@ -63,7 +65,8 @@ angular.module('cmCore').service('cmAuth', [
             /**
              * @ngdoc method
              * @methodOf cmAuth
-             * @name cmAuth#getToken
+             *
+             * @name getToken
              * @description
              * Retrieve the token from localstorage
              *
@@ -75,7 +78,8 @@ angular.module('cmCore').service('cmAuth', [
             /**
              * @ngdoc method
              * @methodOf cmAuth
-             * @name cmAuth#createUser
+             *
+             * @name createUser
              * @description
              * Create a user in database. Used by registration.
              *
@@ -91,7 +95,8 @@ angular.module('cmCore').service('cmAuth', [
             /**
              * @ngdoc method
              * @methodOf cmAuth
-             * @name cmAuth#checkAccountName
+             *
+             * @name checkAccountName
              * @description
              * Check in registration if the Username still not exists.
              *
@@ -113,7 +118,8 @@ angular.module('cmCore').service('cmAuth', [
             /**
              * @ngdoc method
              * @methodOf cmAuth
-             * @name cmAuth#checkPhoneNumber
+             *
+             * @name checkPhoneNumber
              * @description
              * Check if the given phonenumber is a valid one.
              *
@@ -130,7 +136,8 @@ angular.module('cmCore').service('cmAuth', [
             /**
              * @ngdoc method
              * @methodOf cmAuth
-             * @name cmAuth#getIdentity
+             *
+             * @name getIdentity
              * @description
              * Get an identity from api
              *
@@ -145,7 +152,8 @@ angular.module('cmCore').service('cmAuth', [
             /**
              * @ngdoc method
              * @methodOf cmAuth
-             * @name cmAuth#savePublicKey
+             *
+             * @name savePublicKey
              * @description
              * Save the identity publickey
              *
@@ -165,7 +173,8 @@ angular.module('cmCore').service('cmAuth', [
             /**
              * @ngdoc method
              * @methodOf cmAuth
-             * @name cmAuth#requestTwoFactorKey
+             *
+             * @name requestTwoFactorKey
              * @description
              * Two factor authentication
              *
@@ -179,7 +188,8 @@ angular.module('cmCore').service('cmAuth', [
             /**
              * @ngdoc method
              * @methodOf cmAuth
-             * @name cmAuth#requestTwoFactorToken
+             *
+             * @name requestTwoFactorToken
              * @description
              * Ask the api for a new authentication token
              *
@@ -196,7 +206,8 @@ angular.module('cmCore').service('cmAuth', [
             /**
              * @ngdoc method
              * @methodOf cmAuth
-             * @name cmAuth#removeTwoFactorToken
+             *
+             * @name removeTwoFactorToken
              * @description
              * Delete two factor token from localstorage
              *
@@ -208,7 +219,8 @@ angular.module('cmCore').service('cmAuth', [
             /**
              * @ngdoc method
              * @methodOf cmAuth
-             * @name cmAuth#storeTwoFactorToken
+             *
+             * @name storeTwoFactorToken
              * @description
              * Store the token in localstorage
              *
@@ -221,7 +233,8 @@ angular.module('cmCore').service('cmAuth', [
             /**
              * @ngdoc method
              * @methodOf cmAuth
-             * @name cmAuth#getTwoFactorToken
+             *
+             * @name getTwoFactorToken
              * @description
              * Retrieve thr token from localstorage
              *
