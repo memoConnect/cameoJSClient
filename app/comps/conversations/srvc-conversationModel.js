@@ -280,7 +280,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     data.aePassphraseList.push({keyId: '_passwd', 'encryptedPassphrase': data.sePassphrase});
                 }
 
-                encryptedPassphraseList.importData(data.sePassphraseList);
+                encryptedPassphraseList.importData(data.aePassphraseList);
 
                 this.initPassCaptcha(data);
 

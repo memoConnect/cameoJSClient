@@ -77,19 +77,19 @@ angular.module('cmConversations').factory('cmMessageModel',[
              * @description import data
              */
             this.importData = function(data){
-                this.id         = data.id;
+                this.id         = data.id || this.id;
 
                 this.from       = data.fromIdentity ? cmIdentityFactory.get(data.fromIdentity) : cmUserModel.data.identity;
-                this.created    = data.created;
+                this.created    = data.created || this.created;
 
-                this.plainData      = data.plain;
+                this.plainData  = data.plain || this.plainData;
 
                 // compare plain to this
                 for(var key in this.plainData){
                     this[key] = data.plain[key] || this[key];
                 }
 
-                this.encryptedData  = data.encrypted;
+                this.encryptedData  = data.encrypted || this.encryptedData;
 
                 this.initFiles();
 
@@ -148,29 +148,31 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 return this;
             };
 
-            this.decrypt = function (passphrase) {
-//                var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase, cmCrypt.base64Decode(this.encryptedData)));
+            this.decrypt = function () {
+                if(this.state.is('decrypted') !== true){
+                    /**
+                     * @deprecated
+                     * Workaround for old Messages in dev and stage
+                     */
+                    if(typeof this.encryptedData == 'string' && this.encryptedData != '' && this.encryptedData.charAt(0) != '{'){
+                        this.encryptedData = cmCrypt.base64Decode(this.encryptedData);
+                    }
 
-                /**
-                 * @TODO Workaround for old Messages in dev and stage
-                 */
-                if(typeof this.encryptedData == 'string' && this.encryptedData != '' && this.encryptedData.charAt(0) != '{'){
-                    this.encryptedData = cmCrypt.base64Decode(this.encryptedData);
+                    var decrypted_data = JSON.parse(cmCrypt.decrypt(converstation.getPassphrase(),this.encryptedData));
+
+                    this.importData(decrypted_data);
+
+                    this.initFiles();
+
+                    if(!!decrypted_data){
+                        this.state.set('decrypted');
+                        this.trigger('decrypt:success');
+                    }
+
+                    return !!decrypted_data
                 }
 
-                var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase,this.encryptedData));
-
-                // expose data on message Object
-                angular.extend(self, decrypted_data);
-                // watch out: this only works for simple properties, "from" will break
-
-                this.initFiles();
-
-                if(!!decrypted_data){
-                    this.trigger('decrypt:success');
-                }
-
-                return !!decrypted_data
+                return true;
             };
 
             /**
