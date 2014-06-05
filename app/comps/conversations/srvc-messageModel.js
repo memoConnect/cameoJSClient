@@ -83,6 +83,12 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 this.created    = data.created;
 
                 this.plainData      = data.plain;
+
+                // compare plain to this
+                for(var key in this.plainData){
+                    this[key] = data.plain[key] || this[key];
+                }
+
                 this.encryptedData  = data.encrypted;
 
                 this.initFiles();
