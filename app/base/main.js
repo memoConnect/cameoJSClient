@@ -41,14 +41,14 @@ require.config({
         'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt.min',
 
         // packages generated via grunt task 'packages'
-        'pckCore': 'comps/core/package',
-        'pckContacts': 'comps/contacts/package',
-        'pckUser': 'comps/user/package',
-        'pckValidate': 'comps/validate/package',
-        'pckUi': 'comps/ui/package',
-        'pckConversations': 'comps/conversations/package',
-        'pckFiles': 'comps/files/package',
-        'pckSecurityAspects': 'comps/security_aspects/package'
+        'pckCore': 'packages/comps/core/package',
+        'pckContacts': 'packages/comps/contacts/package',
+        'pckUser': 'packages/comps/user/package',
+        'pckValidate': 'packages/comps/validate/package',
+        'pckUi': 'packages/comps/ui/package',
+        'pckConversations': 'packages/comps/conversations/package',
+        'pckFiles': 'packages/comps/files/package',
+        'pckSecurityAspects': 'packages/comps/security_aspects/package'
     },
 
     // Add angular modules that does not support AMD out of the box, put it in a shim

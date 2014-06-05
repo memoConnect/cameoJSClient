@@ -1,5 +1,23 @@
 'use strict';
 
+/**
+ * @ngdoc directive
+ * @name cmUi.directive:cmLogo
+ * @description
+ * Our logo with glyphs
+ *
+ * @example
+ <example module="cmUi">
+     <file name="style.css">
+        cm-logo{display:block;font-size:40px}
+     </file>
+     <file name="index.html">
+        <link type="text/css" rel="stylesheet" href="../app/css/font-awesome.css"></link>
+         <cm-logo></cm-logo>
+     </file>
+ </example>
+ */
+
 angular.module('cmUi').directive('cmLogo',[
     function (){
         return {

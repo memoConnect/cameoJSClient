@@ -1,14 +1,31 @@
 'use strict';
 
-angular.module('cmCore')
-.service('cmAuth', [
+/**
+ * @ngdoc service
+ * @name cmAuth
+ * @description
+ * beschreibung cmAuth
+ *
+ * @requires cmApi
+ * @requires localStorage TODO: implement ServiceLocalStorage
+ */
 
+angular.module('cmCore').service('cmAuth', [
     'cmApi',
-    
     function(cmApi){
         return {
-
-            // ask the api for a new authentication token:
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             * @name cmAuth#requestToken
+             * @description
+             * Ask the api for a new authentication token
+             *
+             *
+             * @param {String} login Loginname of user
+             * @param {String} pass Password of user
+             * @returns {Promise} for async handling
+             */
             requestToken: function(login, pass){
                 var auth = _Base64.encode(login + ":" + pass);
 
@@ -18,29 +35,70 @@ angular.module('cmCore')
                     exp_ok: 'token'
                 }, true)
             },
-
-            // delete Token
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             * @name cmAuth#removeToken
+             * @description
+             * Delete token from localstorage
+             *
+             * @returns {Boolean} for removing succeed
+             */
             removeToken: function(){
                 return localStorage.removeItem('token');
             },
-
-            // store the token in a cookie:
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             * @name cmAuth#storeToken
+             * @description
+             * Store the token in localstorage
+             *
+             * @param {String} token From Api given token
+             * @returns {Boolean} for setting succeed
+             */
             storeToken: function(token){
                 return localStorage.setItem('token', token);
             },
-
-            // retrieve thr token from a cookie
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             * @name cmAuth#getToken
+             * @description
+             * Retrieve the token from localstorage
+             *
+             * @returns {String} Token
+             */
             getToken: function(){
                 return localStorage.getItem('token');
             },
-
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             * @name cmAuth#createUser
+             * @description
+             * Create a user in database. Used by registration.
+             *
+             * @param {Object} data Compared object with userdata
+             * @returns {Promise} for async handling
+             */
             createUser: function(data){
                 return cmApi.post({
                     path: '/account',
                     data: data
                 })
             },
-
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             * @name cmAuth#checkAccountName
+             * @description
+             * Check in registration if the Username still not exists.
+             *
+             * @param {String} name Given username to check
+             * @param {String} reservationSecret From api given token for Username
+             * @returns {Promise} for async handling
+             */
             checkAccountName: function(name, reservationSecret){
                 return cmApi.post({
                     path: '/account/check',
@@ -52,7 +110,16 @@ angular.module('cmCore')
     //                exp_ko: 'alternative'
                 })
             },
-
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             * @name cmAuth#checkPhoneNumber
+             * @description
+             * Check if the given phonenumber is a valid one.
+             *
+             * @param {String} number Given phonenumber for validation
+             * @returns {Promise} for async handling
+             */
             checkPhoneNumber: function(number){
                 return cmApi.post({
                     path: '/services/checkPhoneNumber',
@@ -60,13 +127,31 @@ angular.module('cmCore')
                     exp_ok: 'phoneNumber'
                 })
             },
-
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             * @name cmAuth#getIdentity
+             * @description
+             * Get an identity from api
+             *
+             * @param {String} id Identity id for cmIdentityModel
+             * @returns {Promise} async handling
+             */
             getIdentity: function(id){
                 return cmApi.get({
                     path: '/identity'+ (id ? '/'+id : '')
                 })
             },
-
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             * @name cmAuth#savePublicKey
+             * @description
+             * Save the identity publickey
+             *
+             * @param {Object} data Object with name, key & keySize
+             * @returns {Promise} for async handling
+             */
             savePublicKey: function(data){
                 return cmApi.post({
                     path: '/identity/publicKey',
@@ -77,15 +162,30 @@ angular.module('cmCore')
                     }
                 })
             },
-
-            // two factor authentication
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             * @name cmAuth#requestTwoFactorKey
+             * @description
+             * Two factor authentication
+             *
+             * @returns {Promise} for async handling
+             */
             requestTwoFactorKey: function() {
                 return cmApi.get({
                     path: '/twoFactorAuth'
                 }, true)
             },
-
-            // ask the api for a new authentication token:
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             * @name cmAuth#requestTwoFactorToken
+             * @description
+             * Ask the api for a new authentication token
+             *
+             * @param {String} key Token for authentication
+             * @returns {Promise} for async handling
+             */
             requestTwoFactorToken: function(key){
                 return cmApi.post({
                     path: '/twoFactorAuth/confirm',
@@ -93,21 +193,43 @@ angular.module('cmCore')
                     exp_ok: "token"
                 }, true)
             },
-
-            // delete Token
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             * @name cmAuth#removeTwoFactorToken
+             * @description
+             * Delete two factor token from localstorage
+             *
+             * @returns {Boolean} for removing succeed
+             */
             removeTwoFactorToken: function(){
                 return localStorage.removeItem('twoFactorToken');
             },
-
-            // store the token in a cookie:
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             * @name cmAuth#storeTwoFactorToken
+             * @description
+             * Store the token in localstorage
+             *
+             * @param {String} twoFactorToken Token to store
+             * @returns {Boolean} for setting succeed
+             */
             storeTwoFactorToken: function(twoFactorToken){
                 return localStorage.setItem('twoFactorToken', twoFactorToken);
             },
-
-            // retrieve thr token from a cookie
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             * @name cmAuth#getTwoFactorToken
+             * @description
+             * Retrieve thr token from localstorage
+             *
+             * @returns {String} twoFactorToken
+             */
             getTwoFactorToken: function(){
                 return localStorage.getItem('twoFactorToken');
             }
-
         }
-    }]);
+    }
+]);

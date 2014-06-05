@@ -19,6 +19,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-sloc');
+    grunt.loadNpmTasks('grunt-ngdocs');
 
     // cameo secrets
     var globalCameoSecrets = (function () {
@@ -138,7 +140,6 @@ module.exports = function (grunt) {
         return testConfig;
     })();
 
-
     // create packages
     var concatCmTemplatesFound = [];
 
@@ -154,6 +155,7 @@ module.exports = function (grunt) {
             // add to template array for module schmusi
             concatCmTemplatesFound.push(filepath);
 
+
             return  "angular.module('"+filepath+"', []).run([\n" +
                 "'$templateCache', function($templateCache) {\n"+
                 "$templateCache.put('"+filepath+"'," +
@@ -161,7 +163,7 @@ module.exports = function (grunt) {
                 ");\n"+
                 "}]);";
         // module banger
-        } else if(filepath.search(/.*\/module-.*/g) != -1) {
+        } else if(filepath.search(/.*\/-module-.*/g) != -1) {
             // add found templates to package module
             if(concatCmTemplatesFound.length > 0) {
                 var templateNames = "'"+concatCmTemplatesFound.join("','")+"'";
@@ -191,7 +193,7 @@ module.exports = function (grunt) {
         Object.keys(packagesObject).forEach(function(packageName){
             var settings,
                 moduleName = packageName;
-                exclude = '!(module-'+moduleName+'|package)',
+                exclude = '!(-module-'+moduleName+')',
                 include = '*',
                 packagePath = packagesObject[packageName],
                 file = 'package.js';
@@ -206,9 +208,9 @@ module.exports = function (grunt) {
                 file = settings.file||file;
             }
 
-            packages[packagePath+'/'+file] = [
+            packages[packagePath.replace('app/','app/packages/')+'/'+file] = [
                 packagePath+'/*.html', // at last all templates
-                packagePath+'/module-'+moduleName+'.js', // at first module
+                packagePath+'/-module-'+moduleName+'.js', // at first module
                 packagePath+'/'+exclude+include+'.js' // all directives / services / factorys etc
             ];
         });
@@ -221,14 +223,10 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         // misc
         concat: {
-            options: {
+            'options': {
                 separator: '\n'
             },
-            js: {
-                src: ['app/js/controller/login.js', 'app/js/controller/start.js', 'app/js/controller/talks.js'],
-                dest: 'app/js/controller/built.raw.js'
-            },
-            less: {
+            'less': {
                 src:    [   
                             'app/less/base.less', 
                             'app/less/bootstrap.less', 
@@ -236,7 +234,7 @@ module.exports = function (grunt) {
                         ],
                 dest: 'app/css/app.less'
             },
-            packages: {
+            'packages': {
                 options: {
                     banner: "'use strict';\n\n",
                     process: concatConvertCmFiles
@@ -247,7 +245,7 @@ module.exports = function (grunt) {
                         packagePath:'app/comps/core',
                         moduleName:'core-cockpit',
 //                        include:'*(*api|*auth|*crypt|*logger)',
-                        exclude:'!(module|package|*identity|*language|*notify|*cron|*job|*localstorage|*object|*usermodel|*util)',
+                        exclude:'!(-module|*identity|*language|*notify|*cron|*job|*localstorage|*object|*usermodel|*util)',
                         file:'package-cockpit.js'
                     },
                     'conversations': 'app/comps/conversations',
@@ -258,6 +256,20 @@ module.exports = function (grunt) {
                     'security_aspects': 'app/comps/security_aspects',
                     'ui': 'app/comps/ui'
                 })
+            },
+            'docs': {
+                src: [
+                    'app/vendor/requirejs/require.js',
+                    'app/vendor/angular/angular.js',
+                    'app/vendor/angular/angular-route.js',
+                    'app/vendor/angular/angular-animate.js',
+                    'app/vendor/angular/angular-sanitize.js',
+                    'app/vendor/angular-growl/angular-growl.js',
+                    'app/vendor/angular-translate/angular-translate.js',
+                    'app/vendor/util/spin.js',
+                    'app/packages/**/package.js'
+                ],
+                dest: 'docs/grunt-scripts/cameo-package.js'
             }
         },
         coffee: {
@@ -413,6 +425,7 @@ module.exports = function (grunt) {
             'dev-deploy': ['dist/app/less'],
             'dist-app': ['dist/app'],
             'dist': ['dist'],
+            'docs': ['docs'],
             'phonegap-target': ['phonegap-target'],
             'phonegap-build': ['phonegap-build']
         },
@@ -703,9 +716,47 @@ module.exports = function (grunt) {
                 }
             }
         },
+
+        ngdocs: {
+            options: {
+                dest: 'docs',
+                scripts: [
+                    'docs/grunt-scripts/cameo-package.js'
+                ],
+                deferLoad: false,
+                html5Mode: false,
+                startPage: '/core',
+                title: 'CameoNET JS Client',
+                image: 'app/favicon.ico',
+                imageLink: 'https://www.cameo.io',
+                titleLink: '/core',
+                bestMatch: true
+            },
+            core: {
+                src: ['app/comps/core/*.js'],
+                title: 'cmCore'
+            },
+            ui: {
+                src: ['app/comps/ui/*.js'],
+                title: 'cmUi'
+            },
+            api: {
+                src: ['resource/docs/api.ngdoc'],
+                title: 'api'
+            }
+        },
+
+        // utils
         shell: {
             'node-webserver': {
                 command: 'node ./scripts/web-server.js'
+            }
+        },
+        sloc: {
+            'code-coverage': {
+                files: {
+                    './app':['base/*.js','comps/**/*.js','css/*.css','routes/**/*.js']
+                }
             }
         }
     });
@@ -762,7 +813,6 @@ module.exports = function (grunt) {
         'phonegapsplash:build'
     ]);
 
-
     // deploy www without phonegap
     grunt.registerTask('www', [
         'template:index-www'
@@ -792,5 +842,7 @@ module.exports = function (grunt) {
         'copy:cockpit',
         'uglify:cockpit']);
 
+    grunt.registerTask('create-docs', ['clean:docs', 'packages', 'concat:docs', 'ngdocs']);
     grunt.registerTask('node-webserver', ['shell:node-webserver']);
+    grunt.registerTask('code-coverage', ['sloc:code-coverage']);
 };

@@ -7,12 +7,14 @@
 /target/
 /project/
 /dist/
+/docs/
+/app/index.html
 /app/css/app.less
 /app/css/app.css
+/app/packages/
+/app/gfx/avatar
 *.iml
 *.log
 *.fcp
-/grunt
-/app/gfx/avatar
 *.sublime-workspace
 *.sublime-project

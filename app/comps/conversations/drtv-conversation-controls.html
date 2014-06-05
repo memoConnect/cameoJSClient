@@ -20,11 +20,11 @@
                 <div ng-click ="manageRecipients()" ng-if="conversation.recipients.length == 1" class="add-new-recipients" cm-user-rights>
                     <cm-avatar cm-view="unknown"></cm-avatar>
                     {{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS'|cmTranslate}}
-                    <cm-edge><i class="fa cm-edge-add"></i></cm-edge>
+                    <cm-edge></cm-edge>
                 </div>
 
                 <div ng-click="manageRecipients()" ng-if="conversation.recipients.length > 1" class="add-recipients" cm-user-rights>
-                    <cm-edge ><i class="fa cm-edge-add"></i></cm-edge>
+                    <cm-edge></cm-edge>
                 </div>
             </div>
         </div>

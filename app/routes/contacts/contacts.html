@@ -14,9 +14,7 @@
             <header class="cm-list-header">
                 <h1>{{'CONTACTS.HEADING.LIST'|cmTranslate}}</h1>
 
-                <button ng-click="openModal('add-contact')" cm-edge data-qa="add-contact-btn">
-                    <i class="fa cm-edge-add"></i>
-                </button>
+                <cm-edge ng-click="openModal('add-contact')" data-qa="add-contact-btn"></cm-edge>
 
                 <cm-modal
                         id            = "add-contact"

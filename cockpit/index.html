@@ -1,43 +1,40 @@
 <!DOCTYPE html>
 <html ng-app="cockpit">
-<head>
-    <title>Cockpit</title>
+    <head>
+        <title>Cockpit</title>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/m/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/c/css/cockpit.css">
-    <script src="/m/vendor/angular/angular.js"></script>
-    <script src="/m/vendor/angular/angular-route.js"></script>
-    <script src="/c/js/jquery/jquery-2.1.0.js"></script>
-    <script src="/c/js/bootstrap.min.js"></script>
-    <script src="/c/js/ui-bootstrap/ui-bootstrap-0.10.0.min.js"></script>
-    <script src="/c/js/ui-bootstrap/ui-bootstrap-tpls-0.10.0.min.js"></script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/m/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/c/css/cockpit.css">
 
-    <script src="/m/comps/core/package-cockpit.js"></script>
+        <script src="/m/vendor/angular/angular.js"></script>
+        <script src="/m/vendor/angular/angular-route.js"></script>
+        <script src="/c/js/jquery/jquery-2.1.0.js"></script>
+        <script src="/c/js/bootstrap.min.js"></script>
+        <script src="/c/js/ui-bootstrap/ui-bootstrap-0.10.0.min.js"></script>
+        <script src="/c/js/ui-bootstrap/ui-bootstrap-tpls-0.10.0.min.js"></script>
 
-    <script src="/m/base/config.js"></script>
-    <script src="/c/js/cockpitList.js"></script>
-    <script src="/c/js/cockpitEdit.js"></script>
-    <script src="/c/js/cockpitMain.js"></script>
-    <script src="/c/js/twoFactorModal.js"></script>
-    <script src="/c/js/app.js"></script>
+        <script src="/m/packages/comps/core/package-cockpit.js"></script>
 
-</head>
-<body style="background-image: url(/cockpit/images/cockpit.jpg); background-size: cover">
+        <script src="/m/base/config.js"></script>
+        <script src="/c/js/cockpitList.js"></script>
+        <script src="/c/js/cockpitEdit.js"></script>
+        <script src="/c/js/cockpitMain.js"></script>
+        <script src="/c/js/twoFactorModal.js"></script>
+        <script src="/c/js/app.js"></script>
 
-<a href="/c/">
-<div class="page-header">
-    <h1>Cockpit
-        <small>Welcome on board captain</small>
-    </h1>
-</div>
-</a>
+    </head>
+    <body style="background-image: url(/cockpit/images/cockpit.jpg); background-size: cover">
+        <a href="/c/">
+            <div class="page-header">
+                <h1>Cockpit
+                    <small>Welcome on board captain</small>
+                </h1>
+            </div>
+        </a>
 
-<div ng-view >
-
-
-</div>
-</body>
+        <div ng-view ></div>
+    </body>
 </html>
