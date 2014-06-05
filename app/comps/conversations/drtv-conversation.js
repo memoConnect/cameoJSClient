@@ -108,9 +108,11 @@ angular.module('cmConversations').directive('cmConversation', [
                      * validate answer form
                      * @type {boolean}
                      */
-                    var passphrase_valid    = !!$scope.conversation.passphraseValid(),
-                        message_valid       = isMessageValid() ,
+                    var message_valid       = isMessageValid(),
+                        passphrase_valid    = $scope.conversation.passphraseValid(),
                         recipients_missing  = $scope.conversation.recipients.length < 1 //@todo mocked
+
+                    console.log('sendMessage','message_valid '+message_valid, 'passphrase_valid ' +passphrase_valid, '!recipients_missing '+!recipients_missing)
 
                     // is everything valid?
                     if(message_valid && passphrase_valid && !recipients_missing){
