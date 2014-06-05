@@ -286,6 +286,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 var messages = data.messages || [];
                 messages.forEach(
                     function(message_data) {
+                        message_data.conversation = self;
                         self.messages.create(message_data);
                     }
                 );
@@ -669,9 +670,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 }
             });
 
-            this.on('message:save', function(event, message){
-               console.log('message:save - event', event)
-               console.log('message:save - message', message)
+            this.messages.on('message:save', function(event, message){
+                console.log('message:save - event', event)
+                console.log('message:save - message', message)
             });
 
             //Todo: fire event on factory and delegate to conversation or something

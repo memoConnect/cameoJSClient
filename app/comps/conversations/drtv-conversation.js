@@ -2,7 +2,6 @@
 
 angular.module('cmConversations').directive('cmConversation', [
     'cmConversationsModel',
-    'cmMessageFactory',
     'cmUserModel',
     'cmRecipientModel',
     'cmCrypt',
@@ -11,7 +10,7 @@ angular.module('cmConversations').directive('cmConversation', [
     'cmModal',
     '$location',
     '$rootScope',
-    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope) {
+    function (cmConversationsModel, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope) {
         return {
             restrict: 'AE',
             templateUrl: 'comps/conversations/drtv-conversation.html',
@@ -127,18 +126,12 @@ angular.module('cmConversations').directive('cmConversation', [
                             )
                         // add to existing conversation
                         } else {
-
-
-                            var message = $scope.conversation.messages.create();
-                            console.log(message)
-
-                            message
+                            $scope.conversation.messages.create({conversation:$scope.conversation})
                                 .addFiles(files)
                                 .setText($scope.my_message_text)
                                 .setPublicData($scope.conversation.getPassphrase() ? [] : ['text','fileIds'])
                                 .encrypt($scope.conversation.getPassphrase())
                                 .save()
-                                .sendTo($scope.conversation.id)
                                 .then(function(){
                                     //@ TODO: solve rekeying another way:
 //                                    $scope.conversation.saveEncryptedPassphraseList();

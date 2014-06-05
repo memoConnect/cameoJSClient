@@ -8,9 +8,10 @@ angular.module('cmConversations').factory('cmMessageModel',[
     'cmUserModel',
     'cmObject',
     'cmStateManagement',
+    'cmUtil',
     'cmLogger',
     '$rootScope',
-    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, cmObject, cmStateManagement, cmLogger, $rootScope){
+    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, cmObject, cmStateManagement, cmUtil, cmLogger, $rootScope){
 
         /**
          * @constructor
@@ -30,7 +31,8 @@ angular.module('cmConversations').factory('cmMessageModel',[
          */
         var Message = function(data){
             // attributes
-            var self = this;
+            var self = this,
+                conversation = undefined;
 
             cmObject.addEventHandlingTo(this);
 
@@ -56,10 +58,17 @@ angular.module('cmConversations').factory('cmMessageModel',[
              * @returns {Message}
              */
             function init(data){
-                if(typeof data == 'object') {
-                    self.importData(data)
+                if(typeof data == 'object' && ('conversation' in data)){
+                    conversation = data.conversation;
+
+                    if(cmUtil.objLen(data) > 1){
+                        self.importData(data);
+                    } else {
+                        self.state.set('new');
+                    }
                 } else {
-                    self.state.set('new')
+                    // fail ??
+                    self.state.set('new');
                 }
             }
 
@@ -69,6 +78,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
              */
             this.importData = function(data){
                 this.id         = data.id;
+
                 this.from       = data.fromIdentity ? cmIdentityFactory.get(data.fromIdentity) : cmUserModel.data.identity;
                 this.created    = data.created;
 
@@ -217,20 +227,11 @@ angular.module('cmConversations').factory('cmMessageModel',[
             };
 
             /**
-             *
-             */
-            this.save = function(){
-                this.trigger('message:save', this);
-
-                return this;
-            };
-
-            /**
              * send message to backend object
              * @param conversation
              * @returns {*|Promise|!Promise.<RESULT>}
              */
-            this.sendTo = function (conversationId){
+            this.save = function (){
                 var public_data = {};
 
                 this.public.forEach(function(key){
@@ -240,7 +241,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                 this.publicData = public_data;
 
-                return cmConversationsAdapter.sendMessage(conversationId, {
+                return cmConversationsAdapter.sendMessage(conversation.id, {
                     encrypted: this.encryptedData,
                     plain: this.publicData
                 })
