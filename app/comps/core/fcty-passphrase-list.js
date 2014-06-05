@@ -226,7 +226,7 @@ angular.module('cmCore').factory('cmPassphraseList',[
              * @returns {boolean} bool Boolean
              */
             this.isEncrypted = function(){
-                  return (items.length > 0);
+                return (items.length > 0);
             };
 
             /**
