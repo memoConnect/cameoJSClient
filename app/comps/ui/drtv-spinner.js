@@ -92,11 +92,26 @@ angular.module('cmUi').directive('cmSpinner',[
                     }
                 });
 
+                /**
+                 * @ngdoc event
+                 * @name start
+                 * @eventOf cmUi.directive:cmSpinner
+                 * @description
+                 * $scope.$on('cmSpinner:start',...)
+                 */
                 $scope.$on('cmSpinner:start', function(){
                     spinner = spinner.spin();
                     loadingContainer.appendChild(spinner.el);
                     $scope.loading = true
                 });
+
+                /**
+                 * @ngdoc event
+                 * @name stop
+                 * @eventOf cmUi.directive:cmSpinner
+                 * @description
+                 * $scope.$on('cmSpinner:stop',...)
+                 */
                 $scope.$on('cmSpinner:stop', function(){
                     spinner.stop();
                     loadingContainer.innerHTML = '';
