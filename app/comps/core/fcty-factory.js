@@ -25,7 +25,7 @@ angular.module('cmCore').factory('cmFactory',[
              * @returns {model}                      allways returns an instance of model. If an id is present in args and an instance with that id already exists, 
              *                                      this instance will be returned – otherwise a new one will be created and if possible populated with data from the backend.
              */
-            self.create = function(args){
+            self.create = function(args, withNewImport){
                 var id          =   typeof args == 'object' 
                                     ?   args.id
                                     :   args

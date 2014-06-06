@@ -304,7 +304,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 var recipients = data.recipients || [];
                 recipients.forEach(
                     function(recipient_data){
-                        self.addRecipient(cmIdentityFactory.create(recipient_data.identityId));
+                        self.addRecipient(cmIdentityFactory.create(recipient_data.identityId,true));
                     }
                 );
 

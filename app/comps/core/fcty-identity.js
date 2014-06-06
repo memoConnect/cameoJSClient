@@ -28,28 +28,28 @@ angular.module('cmCore').factory('cmIdentityModel',[
 
             var self = this;
 
-            cmObject.addEventHandlingTo(this)
+            cmObject.addEventHandlingTo(this);
 
             //Encrypt passphrase with all available public keys
             //Identities cannot decrypt, Users can
             this.encryptPassphrase = function(passphrase){
-                var encrypted_key_list = []
+                var encrypted_key_list = [];
 
                 this.keys.forEach(function(key){
 
-                    var key_2 = new cmCrypt.Key()
+                    var key_2 = new cmCrypt.Key();
 
-                    key_2.setKey(key.getPrivateKey())
+                    key_2.setKey(key.getPrivateKey());
 
                     var encrypted_passphrase = key.encrypt(passphrase)
 
                     encrypted_key_list.push({
                         keyId:                 key.id,
                         encryptedPassphrase:   encrypted_passphrase
-                    })
-                })
-                return encrypted_key_list
-            }
+                    });
+                });
+                return encrypted_key_list;
+            };
 
             this.getDisplayName = function(){
                 return this.displayName || this.cameoId || this.id;
@@ -91,25 +91,27 @@ angular.module('cmCore').factory('cmIdentityModel',[
                     is_string  = (typeof key_data == 'string'),
                     can_update = is_object && "updateKeyList" in key_data
 
-                if( can_update )                key = key_data  //already a Key object
-                if( is_object && !can_update)   key = (new cmCrypt.Key()).importData(key_data) //from backend or localstorgae
-                if( is_string)                  key = new cmCrypt.Key(key_data) //plain text public or private key
+                if( can_update )                key = key_data;  //already a Key object
+                if( is_object && !can_update)   key = (new cmCrypt.Key()).importData(key_data); //from backend or localstorgae
+                if( is_string)                  key = new cmCrypt.Key(key_data); //plain text public or private key
 
                 key
                 ?   key.updateKeyList(self.keys)
-                :   cmLogger.error('uanable to add key, unknown format: '+key_data)
+                :   cmLogger.error('uanable to add key, unknown format: '+key_data);
 
-                return this
-            }
+                return this;
+            };
 
             this.getWeakestKeySize = function(){
-                var size = undefined
+                var size = undefined;
                 this.keys.forEach(function(key){
-                    size = size != undefined ? Math.min(size, key.getSize()) : key.getSize()
-                })
-                size = size || 0
-                return size
-            }
+                    size = size != undefined ? Math.min(size, key.getSize()) : key.getSize();
+                });
+                size = size || 0;
+                return size;
+            };
+
+            //TODO: init to private / importData for identity update
 
             /**
              * @param identity_data
@@ -117,44 +119,45 @@ angular.module('cmCore').factory('cmIdentityModel',[
             this.init = function(identity_data){
                 if(typeof identity_data === 'object'){
                     this.id                     = identity_data.id;
-                    this.displayName            = identity_data.displayName
-                    this.userKey                = identity_data.userKey
-                    this.cameoId                = identity_data.cameoId
-                    this.avatarId               = identity_data.avatar
-                    this.email                  = identity_data.email
-                    this.phoneNumber            = identity_data.phoneNumber
-                    this.preferredMessageType   = identity_data.preferredMessageType
-                    this.userType               = identity_data.userType
-                    this.created                = identity_data.created
-                    this.lastUpdated            = identity_data.lastUpdated
-                    this.keys                   = []
+                    this.displayName            = identity_data.displayName;
+                    this.userKey                = identity_data.userKey;
+                    this.cameoId                = identity_data.cameoId;
+                    this.avatarId               = identity_data.avatar;
+                    this.email                  = identity_data.email;
+                    this.phoneNumber            = identity_data.phoneNumber;
+                    this.preferredMessageType   = identity_data.preferredMessageType;
+                    this.userType               = identity_data.userType;
+                    this.created                = identity_data.created;
+                    this.lastUpdated            = identity_data.lastUpdated;
+                    this.keys                   = [];
 
-                    identity_data.publicKeys = identity_data.publicKeys || []
+                    identity_data.publicKeys = identity_data.publicKeys || [];
                     identity_data.publicKeys.forEach(function(publicKey_data){
-                        self.addKey(publicKey_data)
-                    })
+                        self.addKey(publicKey_data);
+                    });
 
+                    console.log('cmIdentity:init:finish', this.id, this.avatarId)
                     this.trigger('init:finish', this);
 
                 } else if(typeof identity_data === 'string'){
                     this.id = identity_data;
 
-                    this.trigger('before-load')
+                    this.trigger('before-load');
                     cmAuth.getIdentity(identity_data).then(
                         function(data){
-                            self.trigger('load', data)
+                            self.trigger('load', data);
                             if(typeof data =='string'){
                                 cmLogger('cmAuth.getIdentity() should forward an object, got string instead. ')
-                            }else{
-                                self.init(data)
+                            } else {
+                                self.init(data);
                             }
-                            self.trigger('after-load', data)
+                            self.trigger('after-load', data);
                         }
                     )
                 }
 
                 return this;
-            }
+            };
 
             this.init(identity_data);
         }
@@ -170,9 +173,11 @@ angular.module('cmCore').factory('cmIdentityModel',[
 
     function($rootScope, cmFactory, cmIdentityModel){
 
-        var self = new cmFactory(cmIdentityModel) 
+        var self = new cmFactory(cmIdentityModel)
 
-        $rootScope.$on('logout', function(){ self.reset() });
+        $rootScope.$on('logout', function(){
+            self.reset()
+        });
 
         return self;
 
