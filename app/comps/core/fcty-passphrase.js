@@ -9,20 +9,44 @@
  * @requires cmFactory
  * @requires cmKey
  * @requires cmUserModel
+ * @requires cmCrypt
+ * @requires cmObject
+ * @requires cmLogger
  */
 angular.module('cmCore').factory('cmPassphrase',[
     'cmFactory',
     'cmKey',
     'cmUserModel',
+    'cmCrypt',
     'cmObject',
-    function(cmFactory, cmKey, cmUserModel,cmObject){
+    'cmLogger',
+    function(cmFactory, cmKey, cmUserModel, cmCrypt, cmObject, cmLogger){
 
         function cmPassphrase(){
             var self = this,
-                passphrase = '',
+                passphrase = undefined,
+                password = undefined,
                 items = [];
 
             cmObject.addEventHandlingTo(this);
+
+            /**
+             * @ngdoc method
+             * @methodOf cmPassphrase
+             *
+             * @name init
+             * @description
+             * Initialize cmPassphrase
+             *
+             * @return {Object} this cmPassphrase
+             */
+            function init(data){
+                generatePassphrase();
+
+                if(typeof data === 'array'){
+                    self.importData(data);
+                }
+            }
 
             /**
              * @ngdoc method
@@ -92,6 +116,71 @@ angular.module('cmCore').factory('cmPassphrase',[
 
             /**
              * @ngdoc method
+             * @methodOf cmPassphrase
+             *
+             * @name generatePassphrase
+             * @description
+             * generates a passphrase
+             *
+             * @todo Passphrase generation crappy!!
+             */
+            function generatePassphrase(){
+                if(typeof passphrase == "string" && passphrase.length > 0)
+                    cmLogger.debug('cmPassphrase:generatePassphrase  - passphrase already present, generated new one.');
+
+                passphrase = cmCrypt.generatePassphrase();
+            }
+
+            /**
+             * @ngdoc method
+             * @methodOf cmPassphrase
+             *
+             * @name setPassword
+             * @description
+             * set Password to Object
+             *
+             * @returns {Object} this Returns cmPassphrase Object
+             */
+            this.setPassword = function(pw){
+                if(typeof pw === 'string' && pw.length > 0){
+                    password = pw;
+
+                    this.trigger('password:changed');
+                }
+
+                return this;
+            };
+
+            /**
+             * @ngdoc method
+             * @methodOf cmPassphrase
+             *
+             * @name setPassword
+             * @description
+             * generates encrypted passphrase on every call!
+             *
+             * @returns {String|Boolean} param Return encrypted passphrase on error return false
+             */
+            this.getEncryptedPassphrase = function(pw){
+                this.setPassword(pw);
+
+                if(passphrase == undefined){
+                    generatePassphrase();
+                }
+
+                if(password !== undefined && passphrase !== undefined){
+                    return cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(password, passphrase));
+                } else {
+                    cmLogger.debug('cmPassphrase:getEncryptedPassphrase - set a password and generate a passphrase before encrypt passphrase!');
+                }
+
+                return false;
+            };
+
+
+
+            /**
+             * @ngdoc method
              * @methodOf cmPassphraseList
              *
              * @name importData
@@ -121,27 +210,6 @@ angular.module('cmCore').factory('cmPassphrase',[
 
                 return this;
             };
-
-            /**
-             * @ngdoc method
-             * @methodOf cmPassphraseList
-             *
-             * @name generatePassphrase
-             * @description
-             * generates a passhrase
-             *
-             * @deprecated
-             *
-             * @returns {cmPassphraseList} this cmPassphraseList
-             */
-            this.generatePassphrase = function(){
-                if(typeof passphrase != "string" || passphrase.length > 0)
-                    cmLogger.debug('cmConversation: passphrase already present, generated new one.');
-
-                passphrase = cmCrypt.generatePassphrase() //TODO: Passphrase generation crappy!!
-
-                return this;
-            }
 
             /**
              * @ngdoc method
@@ -208,7 +276,7 @@ angular.module('cmCore').factory('cmPassphrase',[
                 }
 
                 return false;
-            }
+            };
 
             /**
              * @ngdoc method

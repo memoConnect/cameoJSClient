@@ -162,7 +162,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
         function ConversationModel(data){
             var self = this,
                 encryptedPassphraseList = new cmPassphraseList(),
-                passphrase = new cmPassphrase();
+                passphraseHandler = new cmPassphrase();
 
             this.id                 = undefined;
             //--> factory
@@ -327,9 +327,17 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 if(this.subject != '')
                     data.subject = this.subject;
 
-//                if(this.password != ''){
-//                    data.sePassphrase = encryptedPassphraseList.getPassphrase();
-//                }
+                if(typeof this.password == 'string' && this.password.length > 0){
+                    data.sePassphrase = passphraseHandler.getEncryptedPassphrase(this.password);
+                }
+
+                if(this.recipients.length > 0){
+                    data.recipients = [];
+
+                    this.recipients.forEach(function(recipient){
+                       data.recipients.push(recipient.id)
+                    });
+                }
 
                 return data;
             };
@@ -394,6 +402,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         deferred.reject();
                         return deferred.promise;
                     }
+
+                    console.log(this.exportData());
+                    return false;
 
                     cmConversationsAdapter.newConversation(this.exportData()).then(
                         function (conversation_data) {
