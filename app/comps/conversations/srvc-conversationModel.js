@@ -92,10 +92,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 //TODO: refactor
                 var result = true;
 
-//                console.log('moep' ,conversation.preferences.encryption
-//                && conversation.preferences.keyTransmission == 'asymmetric'
-//                && this.getWeakestKeySize() == 0)
-
                 if(
                        conversation.preferences.encryption
                     && conversation.preferences.keyTransmission == 'asymmetric'

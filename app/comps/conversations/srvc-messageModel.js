@@ -77,7 +77,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
              * @description import data
              */
             this.importData = function(data){
-                console.log('import', data)
                 this.id         = data.id || this.id;
 
                 this.from       = data.fromIdentity ? cmIdentityFactory.create(data.fromIdentity) : cmUserModel.data.identity;
