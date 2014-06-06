@@ -140,7 +140,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                     // route to detailpage of conversation
                                     if(!conversation_id){
                                         cmConversationsModel.addConversation($scope.conversation, true);
-                                        $location.path('/conversation/' + $scope.conversation.id);
+                                        //$location.path('/conversation/' + $scope.conversation.id);
                                     }
                                     cmLogger.debug('message:sent')
                                 });

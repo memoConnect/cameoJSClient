@@ -673,8 +673,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     boolean = false;
                 }
 
-                console.log('passphraseValid', 'return '+boolean)
-
                 return boolean;
             };
 
