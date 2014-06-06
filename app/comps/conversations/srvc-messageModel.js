@@ -132,9 +132,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
             };
 
             this.encrypt = function (passphrase) {
-
-                console.log('messageModel.encrypt',passphrase)
-
                 // merge secret_data into json string:
                 var secret_data = {};
 
@@ -316,7 +313,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 self.fileIds = [];
             });
 
-            this.on('message:send', function(){
+            this.on('message:saved', function(){
                 self.uploadFiles();
             });
 
