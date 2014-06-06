@@ -20,6 +20,24 @@ define([
         function($scope, $rootScope, cmUserModel, cmConversationFactory, cmUtil, cmModal, $location) {
             $scope.loading = true;
 
+            /**
+             * Welcome modal shown for new user
+             */
+            if(cmUserModel.comesFromRegistration !== false){
+                cmUserModel.comesFromRegistration = false;
+
+                cmModal
+                    .create({
+                        id: 'welcome',
+                        'cm-title': 'CAMEO.WELCOME'
+                    })
+
+                cmModal.open('welcome')
+            }
+
+            /**
+             * init conversations to scope
+             */
             $scope.conversations = cmConversationFactory;
             $scope.conversations.getList();
 
@@ -50,21 +68,7 @@ define([
                 }
 
                 return true;
-            }
-
-            if(cmUserModel.comesFromRegistration !== false){
-                cmUserModel.comesFromRegistration = false;
-
-                cmModal
-                .create({
-                    id: 'welcome',
-                    'cm-title': 'CAMEO.WELCOME'
-                })
-                
-                cmModal.open('welcome')
-            }
-
-            
+            };
 
             $scope.goToConversation = function(id){
                 if(typeof id != 'undefined'){
@@ -72,12 +76,12 @@ define([
                 }
 
                 return false;
-            }
+            };
 
             $scope.createNewConversation = function(){
                 delete($rootScope.pendingConversation);
                 $location.path('/conversation/')
-            }
+            };
 
 
             /**
