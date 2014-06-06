@@ -8,7 +8,7 @@ angular.module('cmConversations').factory('cmRecipientModel',[
     function (cmConversationsAdapter, cmUserModel, cmIdentityFactory){
 
         function RecipientModel(identity){
-            var self = cmIdentityFactory(identity);
+            var self = cmIdentityFactory.create(identity);
 
             self.addTo = function(conversation){
                 conversation.addRecipient(self);
@@ -31,7 +31,7 @@ angular.module('cmConversations').factory('cmRecipientModel',[
                 return self;
             }
 
-            return identity
+            return self
         }
 
         return RecipientModel;

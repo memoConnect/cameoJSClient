@@ -4,10 +4,6 @@ describe('cmRecipientModel', function(){
     var cmRecipientModel,
         recipient;
 
-    function createRecipient(){
-        return new cmRecipientModel({});
-    }
-
     beforeEach(function(){
         module(function($provide){
             $provide.constant('cmEnv',{});
@@ -26,7 +22,7 @@ describe('cmRecipientModel', function(){
 
     describe('public API', function(){
         beforeEach(function(){
-            recipient = createRecipient();
+            recipient = cmRecipientModel({});
         })
 
         
