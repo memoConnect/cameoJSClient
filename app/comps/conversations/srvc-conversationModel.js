@@ -390,9 +390,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {*}
              */
             this.save = function(){
-                var promises = [],
-                    data = {};
-
                 if(this.state.is('new')){
                     /**
                      * @todo
@@ -403,37 +400,34 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         return deferred.promise;
                     }
 
-                    console.log(this.exportData());
-                    return false;
-
                     cmConversationsAdapter.newConversation(this.exportData()).then(
                         function (conversation_data) {
                             self
                                 .importData(conversation_data)
                                 .savePassCaptcha();
 
-                            var i = 0;
+                            /**
+                             * @deprecated becaus of exportData
+                             */
+                            /*var i = 0;
                             while(i < self.recipients.length){
                                 if(self.recipients[i].id != cmUserModel.data.identity.id){
                                     promises.push(cmConversationsAdapter.addRecipient(self.id, self.recipients[i].id));
                                 }
                                 i++;
-                            }
+                            }*/
 
                             /**
                              * @todo - neu verschlüsselung - anders!
                              */
-                            if(encryptedPassphraseList.isEncrypted()){
+                            /*if(encryptedPassphraseList.isEncrypted()){
                                 encryptedPassphraseList.generatePassphrase();
 
                                 self.saveEncryptedPassphraseList(); //todo
-                            }
+                            }*/
 
-                            $q.all(promises).then(function(){
-                                self.state.unset('new');
-                                self.trigger('save:finished');
-                            });
-                             // -> add recipeints -> message verschicken
+                            self.state.unset('new');
+                            self.trigger('save:finished');
                         },
                         function(){
                             self.trigger('save:failed');
