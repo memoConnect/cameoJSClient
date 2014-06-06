@@ -272,9 +272,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     return this;
                 }
 
-                if(data.id == 'ME6c1uf3dsxDz12p2Crw'){
-                    console.log(data);
-                }
+//                if(data.id == 'ME6c1uf3dsxDz12p2Crw'){
+//                    console.log(data);
+//                }
 
                 //There is no invalid data, importData looks for everything useable in data; if it finds nothing it wont update anything
                 this.id                      = data.id           || this.id;
