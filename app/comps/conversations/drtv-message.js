@@ -54,12 +54,15 @@ angular.module('cmConversations').directive('cmMessage', [
 
                 $scope.is_my_own_message = $scope.message.isOwn();
 
-                $scope.isType = function(type){
-                    if(type == 'image' && $scope.message.files.length > 0 && $scope.message.files[0].type.search('^image') != -1){
-                        return true;
-                    } else if(type == 'file' && $scope.message.files.length > 0 && $scope.message.files[0].type.search('^image') == -1){
-                        return true;
-                    } else if(type == 'text')
+                $scope.isType = function(expectType){
+                    if($scope.message.files.length > 0 && typeof $scope.message.files[0].type == 'string'){
+                        var mimeType = $scope.message.files[0].type;
+                        if(expectType == 'image' && mimeType.search('^image') != -1){
+                            return true;
+                        } else if(expectType == 'file' && mimeType.search('^image') == -1){
+                            return true;
+                        }
+                    } else if(expectType == 'text')
                         return true;
                 };
 
