@@ -59,6 +59,14 @@ angular.module('cmCore').factory('cmPassphrase',[
                 return false;
             }
 
+            function decryptSEPassphrase(pw){
+                if(typeof pw === 'string' && pw.length > 0){
+                    passphrase = cmCrypt.decrypt(pw, cmCrypt.base64Decode(sePassphrase)) || '';
+                }
+
+                return false;
+            }
+
             /**
              * @ngdoc method
              * @methodOf cmPassphraseList
@@ -172,8 +180,8 @@ angular.module('cmCore').factory('cmPassphrase',[
              *
              * @returns {String|Boolean} param Return encrypted passphrase on error return false
              */
-            this.getEncryptedPassphrase = function(pw){
-                this.setPassword(pw);
+            this.getEncryptedPassphrase = function(password){
+                this.setPassword(password);
 
                 if(passphrase == undefined){
                     generatePassphrase();
@@ -182,7 +190,48 @@ angular.module('cmCore').factory('cmPassphrase',[
                 return createEncryptedPassphrase();
             };
 
+            this.setEncryptedPassphrase = function(p){
+                if(typeof p === 'string' && p.length > 0){
+                    sePassphrase = p;
+                }
 
+                return this;
+            };
+
+            /**
+             * @ngdoc method
+             * @methodOf cmPassphraseList
+             *
+             * @name getEncryptionType
+             * @description
+             * return encryption type
+             *
+             * @returns {String} encryption type - 'none' || 'symmetric' || 'asymmetric' || 'mixed'
+             */
+            this.getEncryptionType = function(){
+                var type = 'none'
+
+                if(typeof sePassphrase == 'string' && sePassphrase.length > 0 && items.length > 0){
+                    type = 'mixed';
+                } else if(typeof sePassphrase == 'string' && sePassphrase.length > 0 && items.length == 0){
+                    type = 'symmetric';
+                } else if(typeof sePassphrase != 'string' && items.length > 0){
+                    type = 'asymmetric';
+                }
+
+                return type;
+
+//                return items.reduce(function(type, item){
+//                    if (! 'keyId' in item )
+//                        return type;
+//
+//                    if(item.keyId == '_passwd')
+//                        return 'symmetric';
+//
+//                    return type == 'symmetric' ? 'mixed' : 'asymmetric'
+//
+//                }, 'none');
+            };
 
             /**
              * @ngdoc method
@@ -220,43 +269,16 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @ngdoc method
              * @methodOf cmPassphraseList
              *
-             * @name getEncryptionType
-             * @description
-             * return encryption type
-             *
-             * @deprecated
-             *
-             * @returns {String} encryption type - 'none' || 'symmetric' || 'asymmetric' || 'mixed'
-             */
-            this.getEncryptionType = function(){
-                return items.reduce(function(type, item){
-                    if (! 'keyId' in item )
-                        return type;
-
-                    if(item.keyId == '_passwd')
-                        return 'symmetric';
-
-                    return type == 'symmetric' ? 'mixed' : 'asymmetric'
-
-                }, 'none');
-            };
-
-            /**
-             * @ngdoc method
-             * @methodOf cmPassphraseList
-             *
              * @name getPassphrase
              * @description
              * returns passphrase
              *
-             * @deprecated
-             *
              * @param {String} password password for encryption
              * @returns {String|Boolean} passphrase Description :p
              */
-            this.getPassphrase = function(){
-//                if(typeof passphrase != "string" || passphrase.length > 0)
-//                    decryptPassphrase(password);
+            this.getPassphrase = function(password){
+                if(typeof passphrase != "string" || passphrase.length > 0)
+                    decryptSEPassphrase(password);
 
                 return passphrase || false;
             };
@@ -269,7 +291,6 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @description
              * set sePassphrase
              *
-             * @deprecated
              *
              * @param {String} sePassphrase encrypted passphrase
              * @returns {Boolean} bool If sePassphrase is correct, returns true
@@ -291,12 +312,10 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @description
              * Returns true if list is not empty.
              *
-             * @deprecated
-             *
              * @returns {boolean} bool Boolean
              */
             this.isEncrypted = function(){
-                return (items.length > 0);
+                return (items.length > 0 || (typeof sePassphrase == 'string' && sePassphrase.length > 0));
             };
 
             /**

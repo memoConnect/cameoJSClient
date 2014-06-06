@@ -77,6 +77,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
              * @description import data
              */
             this.importData = function(data){
+                console.log('import', data)
                 this.id         = data.id || this.id;
 
                 this.from       = data.fromIdentity ? cmIdentityFactory.create(data.fromIdentity) : cmUserModel.data.identity;
@@ -86,8 +87,11 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                 // compare plain to this
                 for(var key in this.plainData){
-                    this[key] = data.plain[key] || this[key];
+                    this[key] = this.plainData[key] || this[key];
                 }
+
+                this.text       = data.text || this.text;
+                this.fileIds    = data.fileIds || this.fileIds;
 
                 this.encryptedData  = data.encrypted || this.encryptedData;
 
@@ -149,7 +153,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
             };
 
             this.decrypt = function () {
-                if(this.state.is('decrypted') !== true){
+//                if(this.state.is('decrypted') !== true){
                     /**
                      * @deprecated
                      * Workaround for old Messages in dev and stage
@@ -162,17 +166,44 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                     this.importData(decrypted_data);
 
-                    this.initFiles();
-
                     if(!!decrypted_data){
                         this.state.set('decrypted');
                         this.trigger('decrypt:success');
                     }
 
                     return !!decrypted_data
-                }
+//                }
 
                 return true;
+            };
+
+            /**
+             * send message to backend object
+             * @param conversation
+             * @returns {*|Promise|!Promise.<RESULT>}
+             */
+            this.save = function (){
+                var public_data = {};
+
+                this.public.forEach(function(key){
+                    if(self[key])
+                        public_data[key] = self[key]
+                });
+
+                this.publicData = public_data;
+
+                return cmConversationsAdapter.sendMessage(conversation.id, {
+                    encrypted: this.encryptedData,
+                    plain: this.publicData
+                })
+                    .then(function (message_data) {
+                        self.importData(message_data);
+                        self.trigger('message:saved');
+                    });
+            };
+
+            this.isOwn = function(){
+                return (!this.from || cmUserModel.data.id == this.from.id);
             };
 
             /**
@@ -232,35 +263,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 }
 
                 return this;
-            };
-
-            /**
-             * send message to backend object
-             * @param conversation
-             * @returns {*|Promise|!Promise.<RESULT>}
-             */
-            this.save = function (){
-                var public_data = {};
-
-                this.public.forEach(function(key){
-                    if(self[key])
-                        public_data[key] = self[key]
-                });
-
-                this.publicData = public_data;
-
-                return cmConversationsAdapter.sendMessage(conversation.id, {
-                    encrypted: this.encryptedData,
-                    plain: this.publicData
-                })
-                .then(function (message_data) {
-                    self.importData(message_data);
-                    self.trigger('message:saved');
-                });
-            };
-
-            this.isOwn = function(){
-                return (!this.from || cmUserModel.data.id == this.from.id);
             };
 
             /**

@@ -279,11 +279,13 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.subject                 = data.subject      || this.subject;
 
                 if('sePassphrase' in data) {
-                    data.aePassphraseList = data.aePassphraseList || []
-                    data.aePassphraseList.push({keyId: '_passwd', 'encryptedPassphrase': data.sePassphrase});
+                    passphraseHandler.setEncryptedPassphrase(data.sePassphrase);
+
+//                    data.aePassphraseList = data.aePassphraseList || []
+//                    data.aePassphraseList.push({keyId: '_passwd', 'encryptedPassphrase': data.sePassphrase});
                 }
 
-                encryptedPassphraseList.importData(data.aePassphraseList);
+//                encryptedPassphraseList.importData(data.aePassphraseList);
 
                 this.initPassCaptcha(data);
 
@@ -451,7 +453,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.decrypt = function () {
                 cmLogger.debug('cmConversationModel:decrypt');
 
-                if(encryptedPassphraseList.getEncryptionType() == 'none')
+                if(passphraseHandler.getEncryptionType() == 'none')
                     return true;
 
                 var passphrase = this.getPassphrase(),
@@ -500,7 +502,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {String} passphrase Returns the passphrase
              */
             this.getPassphrase = function(){
-                return passphraseHandler.getPassphrase();
+                return passphraseHandler.getPassphrase(this.password);
             }
 
             /**
@@ -631,8 +633,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.getSafetyLevel = function(){
                 var level = 0;
 
-                if(encryptedPassphraseList.isEncrypted() == true){
-                    switch(encryptedPassphraseList.getEncryptionType()){
+                if(passphraseHandler.isEncrypted() == true){
+                    switch(passphraseHandler.getEncryptionType()){
                         case "asymmetric":
                                 level = 2;
                             break;
@@ -762,8 +764,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             // after events!!!
             init(data);
-
-
 
 
             /*** Alt Lasten ***/
