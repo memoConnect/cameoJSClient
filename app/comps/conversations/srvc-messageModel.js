@@ -77,7 +77,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
              * @description import data
              */
             this.importData = function(data){
-                console.log('import', data)
                 this.id         = data.id || this.id;
 
                 this.from       = data.fromIdentity ? cmIdentityFactory.create(data.fromIdentity) : cmUserModel.data.identity;
@@ -153,7 +152,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
             };
 
             this.decrypt = function () {
-//                if(this.state.is('decrypted') !== true){
+                if(this.state.is('decrypted') !== true){
                     /**
                      * @deprecated
                      * Workaround for old Messages in dev and stage
@@ -172,7 +171,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                     }
 
                     return !!decrypted_data
-//                }
+                }
 
                 return true;
             };
