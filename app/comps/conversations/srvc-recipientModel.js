@@ -1,12 +1,18 @@
 'use strict';
 
+/**
+ * @deprecated
+ */
 angular.module('cmConversations').factory('cmRecipientModel',[
     'cmConversationsAdapter',
     'cmUserModel',
     'cmIdentityFactory',
-    function (cmConversationsAdapter, cmUserModel, cmIdentityFactory){
+    'cmLogger',
+    function (cmConversationsAdapter, cmUserModel, cmIdentityFactory, cmLogger){
 
         function RecipientModel(identity){
+            cmLogger.debug('RecipientModel deprecated!!!!');
+
             var self = cmIdentityFactory.create(identity);
 
             self.addTo = function(conversation){
