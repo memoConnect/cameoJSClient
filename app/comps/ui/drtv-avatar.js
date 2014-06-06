@@ -93,6 +93,7 @@ angular.module('cmUi').directive('cmAvatar',[
                 }
 
                 function refresh(identity){
+
                     // hide the complete avatar
                     if(attrs.cmView == 'hide-owner' && identity.isAppOwner){
                         element.css('display','none');
@@ -127,6 +128,7 @@ angular.module('cmUi').directive('cmAvatar',[
                     scope.$watch(attrs.cmData, function(identity){
                         if(identity && identity['getAvatar'] != undefined){
 
+                            console.log('cmAvatar',identity)
                             refresh(identity);
 
                             identity.on('init:finish',function(event, identity){

@@ -140,9 +140,9 @@ angular.module('cmConversations').directive('cmConversation', [
                                     // route to detailpage of conversation
                                     if(!conversation_id){
                                         cmConversationsModel.addConversation($scope.conversation, true);
-                                        //$location.path('/conversation/' + $scope.conversation.id);
+                                        $location.path('/conversation/' + $scope.conversation.id);
                                     }
-                                    cmLogger.debug('message:sent')
+                                    cmLogger.debug('message:sent');
                                 });
                         }
                     } else {
@@ -185,14 +185,14 @@ angular.module('cmConversations').directive('cmConversation', [
                     cmConversationsModel
                         .getConversation(conversation_id)
                             .then(function (conversation){
-                                $scope.init(conversation)
+                                $scope.init(conversation);
 //                                $scope.conversation.decrypt()
-                            })
+                            });
                 // pending conversation
                 } else if($rootScope.pendingConversation){
                     $rootScope.pendingConversation.id
                     ?   $location.path('conversation/'+$rootScope.pendingConversation.id)
-                    :   $scope.init($rootScope.pendingConversation)
+                    :   $scope.init($rootScope.pendingConversation);
                 // new conversation
                 } else {
                     cmConversationsModel.createNewConversation().then(

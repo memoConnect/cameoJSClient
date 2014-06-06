@@ -166,7 +166,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.id                 = undefined;
             //--> factory
-            this.recipients         = new cmFactory(cmRecipientModel);      //list of RecipientModel objects
+//            this.recipients         = new cmFactory(cmRecipientModel);      //list of RecipientModel objects
+            this.recipients         = [];
             //--> factory
             this.messages           = new cmFactory(cmMessageModel);        //list of MessageModel objects
             //--> meta
@@ -297,7 +298,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 var recipients = data.recipients || [];
                 recipients.forEach(
                     function(recipient_data){
-                        self.recipients.create(cmIdentityFactory.create(recipient_data.identityId));
+                        self.addRecipient(cmIdentityFactory.create(recipient_data.identityId));
                     }
                 );
 
@@ -566,26 +567,32 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @description
              * Function to add a recipient to a conversation. Will not update the backend.
              *
-             * @param {Object} recipient RecipientModel
+             * @param {Object} identityModel identityModel
              * @returns {cmConversationModel} this returns cmConversationModel
              */
-            this.addRecipient = function(recipient){
-                if(this.recipients.indexOf(recipient) == -1){
-                    this.recipients.push(recipient)
+            this.addRecipient = function(identityModel){
+                if(this.recipients.indexOf(identityModel) == -1){
+                    this.recipients.push(identityModel);
 
                     //self.recipients.create(cmRecipientModel(recipient))
 
-                    recipient.on('update', function(){
-                        self.trigger('recipient:update') //Todo: noch nicht gelöst =/
-                    })
-                    this.trigger('recipient-added')
+                    identityModel.on('update', function(){
+                        self.trigger('recipient:update'); //Todo: noch nicht gelöst =/
+                    });
+                    this.trigger('recipient-added');
                 } else {
-                    if(cmUserModel.data.id != recipient.id){
-                        cmLogger.debug('conversationModel: unable to add recipient; duplicate detected. (id:'+recipient.id+')')
+                    if(cmUserModel.data.id != identityModel.id){
+                        cmLogger.debug('conversationModel: unable to add recipient; duplicate detected. (id:'+identityModel.id+')');
                     }
                 }
                 return this;
-            }
+            };
+
+            this.removeRecipient = function(identityModel){
+                if(this.recipients.indexOf(identityModel) !== -1){
+                    this.recipients.slice(this.recipients.indexOf(identityModel),1);
+                }
+            };
 
             /**
              * @ngdoc method
