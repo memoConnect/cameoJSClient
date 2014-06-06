@@ -272,11 +272,19 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     return this;
                 }
 
+                if(data.id == 'ME6c1uf3dsxDz12p2Crw'){
+                    console.log(data);
+                }
+
                 //There is no invalid data, importData looks for everything useable in data; if it finds nothing it wont update anything
                 this.id                      = data.id           || this.id;
                 this.timeOfCreation          = data.created      || this.timeOfCreation;
                 this.timeOfLastUpdate        = data.lastUpdated  || this.timeOfLastUpdate;
                 this.subject                 = data.subject      || this.subject;
+
+                // getting local saved pw for conversation
+                if(this.password == undefined)
+                    this.password = this.localPWHandler.get(this.id);
 
                 if('sePassphrase' in data) {
                     passphraseHandler.setEncryptedPassphrase(data.sePassphrase);
@@ -303,10 +311,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         self.addRecipient(cmIdentityFactory.create(recipient_data.identityId));
                     }
                 );
-
-                // getting local saved pw for conversation
-                if(this.password == undefined)
-                    this.password = this.localPWHandler.get(this.id);
 
                 this.state.unset('new');
                 this.trigger('update:finished');
@@ -438,6 +442,61 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 }
 
                 return this;
+            };
+
+            this.update = function(conversation_data){
+                var offset = 0;
+                var clearAllMessages = true;
+
+                if(this.id){
+                    if(typeof conversation_data !== 'undefined'){
+                        if(this.messages.length < conversation_data.numberOfMessages) {
+                            if (this.messages.length > 1) {
+                                offset = this.messages.length;
+                                clearAllMessages = false;
+                            }
+                            var limit = conversation_data.numberOfMessages - offset;
+                            this._updateConversation(limit, offset, clearAllMessages);
+                        }
+                    } else {
+                        cmConversationsAdapter.getConversationSummary(this.id).then(
+                            function(data){
+                                if(self.messages.length < data.numberOfMessages){
+                                    if(self.messages.length > 1){
+                                        offset = self.messages.length;
+                                        clearAllMessages = false;
+                                    }
+                                    var limit = data.numberOfMessages - offset;
+
+                                    self._updateConversation(limit, offset, clearAllMessages);
+                                }
+                            }
+                        )
+                    }
+                }
+
+                return this;
+            };
+
+            /**
+             * @param limit
+             * @param offset
+             * @param clearMessages
+             */
+            this._updateConversation = function(limit, offset, clearMessages){
+                cmConversationsAdapter.getConversation(this.id, limit, offset).then(
+                    function(data){
+
+                        /**
+                         * Message Handling
+                         */
+                        if(typeof clearMessages !== 'undefined' && clearMessages !== false){
+                            self.messages.reset();
+                        }
+
+                        self.importData(data);
+                    }
+                )
             };
 
             /**
@@ -885,72 +944,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.sync = function(){
                 //cmConversationsAdapter.addRecipient(this.id, identity.id)
-            };
-
-            this.update = function(conversation_data){
-                var offset = 0;
-                var clearAllMessages = true;
-
-                if(this.id){
-                    if(typeof conversation_data !== 'undefined'){
-                        if(this.messages.length < conversation_data.numberOfMessages) {
-                            if (this.messages.length > 1) {
-                                offset = this.messages.length;
-                                clearAllMessages = false;
-                            }
-                            var limit = conversation_data.numberOfMessages - offset;
-                            this._updateConversation(limit, offset, clearAllMessages);
-                        }
-
-                        this.initPassCaptcha(conversation_data);
-                    } else {
-                        cmConversationsAdapter.getConversationSummary(this.id).then(
-                            function(data){
-                                if(self.messages.length < data.numberOfMessages){
-                                    if(self.messages.length > 1){
-                                        offset = self.messages.length;
-                                        clearAllMessages = false;
-                                    }
-                                    var limit = data.numberOfMessages - offset;
-
-                                    self._updateConversation(limit, offset, clearAllMessages);
-
-                                    self.initPassCaptcha(data);
-                                }
-                            }
-                        )
-                    }
-                }
-
-                return this;
-            };
-
-            /**
-             * @param limit
-             * @param offset
-             * @param clearMessages
-             */
-            this._updateConversation = function(limit, offset, clearMessages){
-                cmConversationsAdapter.getConversation(this.id, limit, offset).then(
-                    function(data){
-                        /**
-                         * passCaptcha Handling
-                         */
-                        self.initPassCaptcha(data);
-
-                        /**
-                         * Message Handling
-                         */
-                        if(typeof clearMessages !== 'undefined' && clearMessages !== false){
-                            self.messages.reset();
-                        }
-
-                        data.messages.forEach(function(message_data) {
-                            message_data.conversation = self;
-                            self.messages.create(message_data).decrypt(self.getPassphrase());
-                        });
-                    }
-                )
             };
 
             /*

@@ -60,7 +60,7 @@ angular.module('cmCore').factory('cmPassphrase',[
             }
 
             function decryptSEPassphrase(pw){
-                if(typeof pw === 'string' && pw.length > 0){
+                if((typeof pw == 'string' && pw.length > 0) && (typeof sePassphrase == 'string' && sePassphrase.length > 0)){
                     passphrase = cmCrypt.decrypt(pw, cmCrypt.base64Decode(sePassphrase)) || '';
                 }
 
