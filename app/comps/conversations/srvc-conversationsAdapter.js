@@ -28,6 +28,8 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
 
                 if(queryString == ''){
                     queryString += '?' + cmUserModel.getLocalKeyIdsForRequest();
+                } else {
+                    queryString += cmUserModel.getLocalKeyIdsForRequest();
                 }
 
                 return	cmApi.get({
