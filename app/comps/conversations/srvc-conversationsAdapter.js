@@ -10,12 +10,10 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
     function (cmApi, cmObject, cmUtil, cmLogger){
         var adapter = {
 
-            newConversation: function(subject) {
+            newConversation: function(data) {
                 return	cmApi.post({
                     path: 	'/conversation',
-                    data:	{
-                                subject: subject
-                            }
+                    data:	data
                 })
             },
 
