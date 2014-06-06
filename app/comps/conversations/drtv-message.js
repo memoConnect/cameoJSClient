@@ -54,6 +54,18 @@ angular.module('cmConversations').directive('cmMessage', [
 
                 $scope.is_my_own_message = $scope.message.isOwn();
 
+                $scope.isType = function(expectType){
+                    if($scope.message.files.length > 0 && typeof $scope.message.files[0].type == 'string'){
+                        var mimeType = $scope.message.files[0].type;
+                        if(expectType == 'image' && mimeType.search('^image') != -1){
+                            return true;
+                        } else if(expectType == 'file' && mimeType.search('^image') == -1){
+                            return true;
+                        }
+                    } else if(expectType == 'text')
+                        return true;
+                };
+
                 $scope.displayEncrypted = function(){
                     if($scope.message.text != undefined || $scope.message.text == undefined && $scope.message.files.length > 0){
                         return false;
