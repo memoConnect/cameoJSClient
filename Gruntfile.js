@@ -245,7 +245,7 @@ module.exports = function (grunt) {
                         packagePath:'app/comps/core',
                         moduleName:'core-cockpit',
 //                        include:'*(*api|*auth|*crypt|*logger)',
-                        exclude:'!(-module|*identity|*language|*notify|*cron|*job|*localstorage|*object|*usermodel|*util)',
+                        exclude:'!(fcty-|pack-|-module|*identity|*language|*notify|*cron|*job|*localstorage|*object|*usermodel|*util)',
                         file:'package-cockpit.js'
                     },
                     'conversations': 'app/comps/conversations',
@@ -726,10 +726,10 @@ module.exports = function (grunt) {
                 deferLoad: false,
                 html5Mode: false,
                 startPage: '/core',
-                title: 'CameoNET QS',
+                title: 'CameoNET JS Client',
                 image: 'app/favicon.ico',
                 imageLink: 'https://www.cameo.io',
-                titleLink: '/docs/index.html',
+                titleLink: '/core',
                 bestMatch: true
             },
             core: {
@@ -740,17 +740,9 @@ module.exports = function (grunt) {
                 src: ['app/comps/ui/*.js'],
                 title: 'cmUi'
             },
-            '1-api': {
-                src: ['resource/docs/api/*.ngdoc'],
+            api: {
+                src: ['resource/docs/api.ngdoc'],
                 title: 'api'
-            },
-            '2-help': {
-                src: ['resource/docs/help/*.ngdoc'],
-                title: 'help'
-            },
-            '3-icons': {
-                src: ['resource/docs/misc/*.ngdoc'],
-                title: 'icons'
             }
         },
 
