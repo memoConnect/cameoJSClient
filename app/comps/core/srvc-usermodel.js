@@ -225,8 +225,24 @@ angular.module('cmCore').service('cmUserModel',[
             return this;
         };
 
+        this.getLocalKeyIdsForRequest = function(){
+            if(this.isAuth !== false){
+                var keys = this.loadLocalKeys(),
+                    queryString = '';
+
+                if(keys.length > 0){
+                    keys.forEach(function(key){
+                        queryString += '&keyId=' + key.id;
+                    });
+                }
+
+                return queryString;
+            }
+
+            return '';
+        };
+
         /**
-         * @todo check ob Key schon vorhanden ist?!?
          * @param key
          * @returns {*}
          */

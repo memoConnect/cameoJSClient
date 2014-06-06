@@ -157,7 +157,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
          */
         function ConversationModel(data){
             var self = this,
-                encryptedPassphraseList = new cmPassphraseList(),
+                encryptedPassphraseList = new cmPassphraseList(), // deprecated
                 passphraseHandler = new cmPassphrase();
 
             this.id                 = undefined;
