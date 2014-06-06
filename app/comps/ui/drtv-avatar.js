@@ -127,7 +127,6 @@ angular.module('cmUi').directive('cmAvatar',[
                 } else {
                     scope.$watch(attrs.cmData, function(identity){
                         if(identity && identity['getAvatar'] != undefined){
-
                             refresh(identity);
 
                             identity.on('init:finish',function(event, identity){
