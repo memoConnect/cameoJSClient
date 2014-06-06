@@ -126,7 +126,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                 .addFiles(files)
                                 .setText($scope.my_message_text)
                                 .setPublicData($scope.conversation.getPassphrase() ? [] : ['text','fileIds'])
-                                .encrypt($scope.conversation.getPassphrase())
+                                .encrypt()
                                 .save()
                                 .then(function(){
                                     //@ TODO: solve rekeying another way:
@@ -197,7 +197,7 @@ angular.module('cmConversations').directive('cmConversation', [
                 } else {
                     cmConversationsModel.createNewConversation().then(
                         function(newConversation){
-                            newConversation.addRecipient(cmUserModel.data.identity);
+                            newConversation.addRecipient(cmUserModel.data.identity); // muss nicht
                             $scope.init(newConversation);
                             //$scope.conversation.setPassphrase();
                         }

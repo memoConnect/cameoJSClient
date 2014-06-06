@@ -397,8 +397,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                      * 02.06.2014 current mock bs
                      */
                     if(checkConsistency()){
-                        deferred.reject();
-                        return deferred.promise;
+                        // do something
                     }
 
                     cmConversationsAdapter.newConversation(this.exportData()).then(
@@ -501,7 +500,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {String} passphrase Returns the passphrase
              */
             this.getPassphrase = function(){
-                return encryptedPassphraseList.getPassphrase(this.password);
+                return passphraseHandler.getPassphrase();
             }
 
             /**
@@ -574,8 +573,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 if(this.recipients.indexOf(identityModel) == -1){
                     this.recipients.push(identityModel);
 
-                    //self.recipients.create(cmRecipientModel(recipient))
-
                     identityModel.on('update', function(){
                         self.trigger('recipient:update'); //Todo: noch nicht gelöst =/
                     });
@@ -588,10 +585,35 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return this;
             };
 
-            this.removeRecipient = function(identityModel){
-                if(this.recipients.indexOf(identityModel) !== -1){
-                    this.recipients.slice(this.recipients.indexOf(identityModel),1);
+            this.hasRecipient = function(identity){
+                var check = false;
+
+                this.recipients.forEach(function(recipient){
+                    check = check || (identity.id == recipient.id);
+                });
+
+                return check;
+            };
+
+            this.saveRecipient = function(){
+                // @ todo save new recipients to api
+            }
+
+            this.removeRecipient = function (identity) {
+                this.trigger('before-remove-recipient', identity)
+
+                var i = this.recipients.length;
+
+                while (i) {
+                    i--;
+                    if (this.recipients[i] == identity){
+                        this.recipients.splice(i, 1);
+                        //identity.removeFrom ... that's the api call
+                    }
                 }
+
+                this.trigger('after-remove-recipient', identity)
+                return this;
             };
 
             /**
@@ -924,6 +946,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         }
 
                         data.messages.forEach(function(message_data) {
+                            message_data.conversation = self;
                             self.messages.create(message_data).decrypt(self.getPassphrase());
                         });
                     }
@@ -987,33 +1010,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return this.recipients.map(function(recipient){
                     return recipient.displayName || 'CONTACT.ERROR.MISSING_DISPLAYNAME'
                 }).join(', ');
-            };
-
-            this.hasRecipient = function(identity){
-                var check = false;
-
-                this.recipients.forEach(function(recipient){
-                    check = check || (identity.id == recipient.id);
-                });
-
-                return check;
-            };
-
-            this.removeRecipient = function (identity) {
-                this.trigger('before-remove-recipient', identity)
-
-                var i = this.recipients.length;
-
-                while (i) {
-                    i--;
-                    if (this.recipients[i] == identity){
-                        this.recipients.splice(i, 1);
-                        //identity.removeFrom ... that's the api call
-                    }
-                }
-
-                this.trigger('after-remove-recipient', identity)
-                return this;
             };
 
             /**

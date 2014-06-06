@@ -52,7 +52,7 @@ angular.module('cmCore').service('cmCrypt',[
             encryptWithShortKey: function (secretKey, secretString) {
                 var parameters = { cipher: "aes", ks: 256, iter: 4096 };
 
-                if(secretKey == '' || secretKey == undefined ){
+                if(secretKey == '' || secretKey == undefined || secretKey == false){
                     return secretString;
                 }
 

@@ -25,6 +25,7 @@ angular.module('cmCore').factory('cmPassphrase',[
         function cmPassphrase(){
             var self = this,
                 passphrase = undefined,
+                sePassphrase = undefined,
                 password = undefined,
                 items = [];
 
@@ -46,6 +47,16 @@ angular.module('cmCore').factory('cmPassphrase',[
                 if(typeof data === 'array'){
                     self.importData(data);
                 }
+            }
+
+            function createEncryptedPassphrase(){
+                if(password !== undefined && passphrase !== undefined){
+                    return cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(password, passphrase));
+                } else {
+                    cmLogger.debug('cmPassphrase:getEncryptedPassphrase - set a password and generate a passphrase before encrypt passphrase!');
+                }
+
+                return false;
             }
 
             /**
@@ -168,13 +179,7 @@ angular.module('cmCore').factory('cmPassphrase',[
                     generatePassphrase();
                 }
 
-                if(password !== undefined && passphrase !== undefined){
-                    return cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(password, passphrase));
-                } else {
-                    cmLogger.debug('cmPassphrase:getEncryptedPassphrase - set a password and generate a passphrase before encrypt passphrase!');
-                }
-
-                return false;
+                return createEncryptedPassphrase();
             };
 
 
@@ -249,9 +254,9 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @param {String} password password for encryption
              * @returns {String|Boolean} passphrase Description :p
              */
-            this.getPassphrase = function(password){
-                if(typeof passphrase != "string" || passphrase.length > 0)
-                    decryptPassphrase(password);
+            this.getPassphrase = function(){
+//                if(typeof passphrase != "string" || passphrase.length > 0)
+//                    decryptPassphrase(password);
 
                 return passphrase || false;
             };
