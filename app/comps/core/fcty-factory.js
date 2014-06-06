@@ -2,11 +2,8 @@
 
 //This factory provides a generic Factory
 
-angular.module('cmCore')
-.factory('cmFactory',[
-
+angular.module('cmCore').factory('cmFactory',[
     'cmObject',
-
     function(cmObject) {
 
         /**

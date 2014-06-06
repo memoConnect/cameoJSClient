@@ -13,12 +13,13 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmNotify',
     'cmObject',
     'cmLogger',
+    'cmPassphrase',
     'cmPassphraseList',
     'cmSecurityAspectsConversation',
     'cmUtil',
     '$q',
     '$rootScope',
-    function (cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphraseList, cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
+    function (cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase, cmPassphraseList, cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
 
         /**
          * @TODO Auslagern?!??! - Keylist Handling & Passphrase Handling
@@ -160,7 +161,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
          */
         function ConversationModel(data){
             var self = this,
-                encryptedPassphraseList = new cmPassphraseList();
+                encryptedPassphraseList = new cmPassphraseList(),
+                passphrase = new cmPassphrase();
 
             this.id                 = undefined;
             //--> factory
@@ -295,7 +297,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 var recipients = data.recipients || [];
                 recipients.forEach(
                     function(recipient_data){
-                        self.recipients.create(cmRecipientModel(cmIdentityFactory.create(recipient_data.identityId)))
+                        self.recipients.create(cmIdentityFactory.create(recipient_data.identityId));
                     }
                 );
 

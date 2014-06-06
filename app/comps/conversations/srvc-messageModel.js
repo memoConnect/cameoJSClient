@@ -29,7 +29,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
          *
          * @param {Object} [data] - The conversation data as received from the backend.
          */
-        var Message = function(data){
+        function Message(data){
             // attributes
             var self = this,
                 conversation = undefined;
@@ -308,8 +308,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 return this;
             };
 
-            init(data);
-
             /**
              * Event Handling
              */
@@ -321,7 +319,9 @@ angular.module('cmConversations').factory('cmMessageModel',[
             this.on('message:send', function(){
                 self.uploadFiles();
             });
-        };
+
+            init(data);
+        }
 
         return Message;
     }

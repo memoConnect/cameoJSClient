@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('cmConversations').factory('cmRecipientModel',[
-
     'cmConversationsAdapter',
     'cmUserModel',
     'cmIdentityFactory',
@@ -13,7 +12,7 @@ angular.module('cmConversations').factory('cmRecipientModel',[
             self.addTo = function(conversation){
                 conversation.addRecipient(self);
                 return self;
-            }
+            };
 
             self.sendTo = function(conversationId){
                 if(conversationId != ''){
@@ -21,7 +20,7 @@ angular.module('cmConversations').factory('cmRecipientModel',[
                 }
 
                 return self;
-            }
+            };
 
             self.removeFrom = function(conversationId){
                 if(conversationId != ''){
@@ -29,11 +28,11 @@ angular.module('cmConversations').factory('cmRecipientModel',[
                 }
 
                 return self;
-            }
+            };
 
-            return self
+            return self;
         }
 
         return RecipientModel;
     }
-])
+]);
