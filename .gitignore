@@ -18,3 +18,4 @@
 *.fcp
 *.sublime-workspace
 *.sublime-project
+/grunt

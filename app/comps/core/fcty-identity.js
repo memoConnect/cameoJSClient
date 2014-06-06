@@ -9,7 +9,8 @@ angular.module('cmCore').factory('cmIdentityModel',[
     'cmFileFactory',
     '$q',
     function(cmAuth, cmCrypt, cmObject, cmLogger, cmApi, cmFileFactory, $q){
-        var Identity = function(identity_data){
+
+        function Identity(identity_data){
 
             this.id,
             this.displayName,
@@ -164,9 +165,18 @@ angular.module('cmCore').factory('cmIdentityModel',[
 .factory('cmIdentityFactory',[
 
     '$rootScope',
+    'cmFactory',
     'cmIdentityModel',
 
-    function($rootScope, cmIdentityModel){
+    function($rootScope, cmFactory, cmIdentityModel){
+
+        var self = new cmFactory(cmIdentityModel) 
+
+        $rootScope.$on('logout', function(){ self.reset() });
+
+        return self;
+
+        /* Alt:
         var instances = [];
 
         $rootScope.$on('logout', function(){
@@ -179,7 +189,7 @@ angular.module('cmCore').factory('cmIdentityModel',[
              * @param data id or object
              * @returns {*}
              */
-
+        /*
             get: function(data){
                 var identity = null,
                     id       = data.id || data
@@ -225,5 +235,6 @@ angular.module('cmCore').factory('cmIdentityModel',[
                 return instances.length;
             }
         }
+        */
     }
 ]);

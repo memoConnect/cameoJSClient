@@ -1,11 +1,14 @@
 'use strict';
 
 angular.module('cmConversations').factory('cmRecipientModel',[
+
     'cmConversationsAdapter',
     'cmUserModel',
-    function (cmConversationsAdapter, cmUserModel){
-        var RecipientModel = function(identity){
-            var self = identity;
+    'cmIdentityFactory',
+    function (cmConversationsAdapter, cmUserModel, cmIdentityFactory){
+
+        function RecipientModel(identity){
+            var self = cmIdentityFactory(identity);
 
             self.addTo = function(conversation){
                 conversation.addRecipient(self);

@@ -295,10 +295,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 var recipients = data.recipients || [];
                 recipients.forEach(
                     function(recipient_data){
-                        /**
-                         * @todo maybe refactor?
-                         */
-                        self.addRecipient(cmRecipientModel(cmIdentityFactory.get(recipient_data.identityId)))
+                        self.recipients.create(cmRecipientModel(cmIdentityFactory.create(recipient_data.identityId)))
                     }
                 );
 

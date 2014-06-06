@@ -114,7 +114,7 @@ angular.module('cmCore').service('cmUserModel',[
             var deferred = $q.defer();
 
             if(typeof identity_data !== 'undefined'){
-                deferred.resolve(cmIdentityFactory.get(identity_data));
+                deferred.resolve(cmIdentityFactory.create(identity_data.id));
             } else {
                 if(this.getToken() !== false){
                     cmAuth.getIdentity().then(
