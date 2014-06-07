@@ -8,8 +8,13 @@
             </div>
         </div>
 
-        <div class="body-group">
+        <div class="body-group" ng-click="show_aspects = !show_aspects">
             <cm-security-indicator cm-data="conversation.securityAspects"/>
+        </div>
+
+        <div class="body-group" ng-if="show_aspects">
+            <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getNegativeAspects()" cm-data="aspect"></cm-security-aspect>
+            <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getPositiveAspects()" cm-data="aspect"></cm-security-aspect>
         </div>
 
         <div class="body-group">

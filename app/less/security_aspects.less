@@ -15,3 +15,50 @@ cm-security-indicator{
         color: @cm-color-negative;
     }
 }
+
+cm-security-aspect{
+    display: block;
+    line-height:1.4em;
+    margin-bottom:1em;
+
+    cm-icons{
+    }
+
+    .name{
+        font-weight:bold;
+        text-overflow: ellipsis;
+        overflow:hidden;
+        margin-right: @cm-unit;
+    }
+
+    &.positive{
+
+        .name{
+            margin-right: 3em;
+        }
+
+        cm-icons{
+            color:@cm-color-positive;
+            float:right;
+            text-align:left;
+            min-width: 3em;
+        }
+     }
+
+    &.negative{
+        .name{
+            margin-left: 3em;
+        }
+
+        cm-icons{
+            color:@cm-color-negative;
+            float:left;
+            text-align:right;
+            min-width: 3em;
+        }
+    }
+
+    
+
+
+}
