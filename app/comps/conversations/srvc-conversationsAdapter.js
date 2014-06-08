@@ -50,7 +50,7 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
             },
 
             getConversationSummary: function(id){
-                cmLogger.warn('cmConversationAdapter: .getConversationSummary is deprecated; use .getConversation(id, 1, 0) instead')
+                //cmLogger.warn('cmConversationAdapter: .getConversationSummary is deprecated; use .getConversation(id, 1, 0) instead')
                 //return this.getConversation(id, 1, 0)
 
                 return cmApi.get({

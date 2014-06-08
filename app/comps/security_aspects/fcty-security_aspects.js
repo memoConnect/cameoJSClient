@@ -3,9 +3,9 @@
 angular.module('cmSecurityAspects')
 .factory('cmSecurityAspects',[
     
-    //no dependencies
+    'cmObject',
 
-    function (){
+    function (cmObject){
 
         /**
          * Generic security aspect
@@ -14,6 +14,9 @@ angular.module('cmSecurityAspects')
          * An aspect only applies if all its dependencies apply. 
          */
         function SecurityAspect(config){
+
+            cmObject.addEventHandlingTo(this)
+
             //The id determines the message id for the translations of name and description.
             this.id             = config.id             ||'DEFAULT'
             //Name:         'SECURITY_ASPECT.CONVERSATION.DEFAULT.NAME'
@@ -30,6 +33,16 @@ angular.module('cmSecurityAspects')
             this.check = config.check || function(target){
                 return false
             }
+
+            this.toggleCheck = config.toggleCheck || function(target){
+                return false
+            }
+
+            this.toggleCall = config.toggleCall || function(target){
+                return false
+            }
+
+            this.toggle = function(){ this.trigger('toggle') }
         }
 
         /**
@@ -60,7 +73,14 @@ angular.module('cmSecurityAspects')
              * @return {self}   returns self for chaining
              */
             this.addAspect = function(config){
-                this.aspects.push(new SecurityAspect(config))
+                var aspect = new SecurityAspect(config)
+
+                aspect.on('toggle', function(){
+                    if(aspect.toggleCheck(self.target))
+                        aspect.toggleCall(self.target)
+                })
+
+                this.aspects.push(aspect)
                 return this
             }
 

@@ -126,7 +126,7 @@ angular.module('cmUi').directive('cmAvatar',[
                     //element.css({'background-image': 'url(' + avatarMocks.none +')'});
                 } else {
                     scope.$watch(attrs.cmData, function(identity){
-                        if(identity){
+                        if(typeof identity =='function'){
                             if(identity['avatarId'] != undefined) {
                                 refresh(identity);
                             } else {

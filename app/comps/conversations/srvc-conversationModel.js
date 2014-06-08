@@ -14,12 +14,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmObject',
     'cmLogger',
     'cmPassphrase',
-    'cmPassphraseList',
     'cmSecurityAspectsConversation',
     'cmUtil',
     '$q',
     '$rootScope',
-    function (cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase, cmPassphraseList, cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
+    function (cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase, cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
 
         /**
          * @TODO Auslagern?!??! - Keylist Handling & Passphrase Handling
@@ -156,15 +155,14 @@ angular.module('cmConversations').factory('cmConversationModel',[
          * @param {Object} [data] The conversation data as received from the backend.
          */
         function ConversationModel(data){
-            var self = this,
-                encryptedPassphraseList = new cmPassphraseList(), // deprecated
-                passphraseHandler = new cmPassphrase();
+            var self        = this,
+                passphrase  = new cmPassphrase();
 
             this.id                 = undefined;
             //--> factory
 //            this.recipients         = new cmFactory(cmRecipientModel);      //list of RecipientModel objects
             this.recipients         = [];
-            //--> factory
+            
             this.messages           = new cmFactory(cmMessageModel);        //list of MessageModel objects
             //--> meta
             this.timeOfCreation     = 0;          //timestamp of the conversation's creation
@@ -175,6 +173,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.meta               = {};          //stores meta data, not yet implemented, TODO
             this.password           = undefined;
             this.state              = new cmStateManagement(['new','loading']);
+
+            //rethink, mabye backend should deliver array of message ids
+            this.numberOfMessages   = 0
 
             /*maybe REFACTOR TODO*/
             this.passCaptcha = undefined;
@@ -273,21 +274,24 @@ angular.module('cmConversations').factory('cmConversationModel',[
 //                }
 
                 //There is no invalid data, importData looks for everything useable in data; if it finds nothing it wont update anything
-                this.id                      = data.id           || this.id;
-                this.timeOfCreation          = data.created      || this.timeOfCreation;
-                this.timeOfLastUpdate        = data.lastUpdated  || this.timeOfLastUpdate;
-                this.subject                 = data.subject      || this.subject;
-
-                // getting local saved pw for conversation
+                this.id                      = data.id                  || this.id;
+                this.timeOfCreation          = data.created             || this.timeOfCreation;
+                this.timeOfLastUpdate        = data.lastUpdated         || this.timeOfLastUpdate;
+                this.subject                 = data.subject             || this.subject;
+                this.numberOfMessages        = data.numberOfMessages    || this.numberOfMessages;
+                // getting locally saved pw for conversation
                 if(this.password == undefined)
                     this.password = this.localPWHandler.get(this.id);
 
-                if('sePassphrase' in data) {
-                    passphraseHandler.setEncryptedPassphrase(data.sePassphrase);
+                if('sePassphrase' in data)
+                    passphrase.importSymmetricallyEncryptedPassphrase(data.sePassphrase)
+
+                if('aePassphraseList' in data)
+                    passphrase.importSymmetricallyEncryptedPassphrase(data.aePassphraseList)
 
 //                    data.aePassphraseList = data.aePassphraseList || []
 //                    data.aePassphraseList.push({keyId: '_passwd', 'encryptedPassphrase': data.sePassphrase});
-                }
+                
 
 //                encryptedPassphraseList.importData(data.aePassphraseList);
 
@@ -314,6 +318,14 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return this;
             };
 
+
+            this.enableEncryption = function(){
+                if(this.state.is('new') && !passphrase.get())
+                    passphrase.generate()
+                
+                return this
+            }
+
             /**
              * @ngdoc method
              * @methodOf cmConversationModel
@@ -327,20 +339,15 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.exportData = function(){
                 var data = {};
 
-                if(this.subject != '')
+                if(typeof this.subject == 'string' &&  this.subject != '')
                     data.subject = this.subject;
 
-                if(typeof this.password == 'string' && this.password.length > 0){
-                    data.sePassphrase = passphraseHandler.getEncryptedPassphrase(this.password);
-                }
+                var passphrase_data = passphrase.setPassword(this.password).get()
+                
+                data.sePassphrase       =   passphrase_data.sePassphrase
+                data.aePassphraseList   =   passphrase_data.aePassphraseList
 
-                if(this.recipients.length > 0){
-                    data.recipients = [];
-
-                    this.recipients.forEach(function(recipient){
-                       data.recipients.push(recipient.id)
-                    });
-                }
+                data.recipients         =   this.recipients.map(function(recipient){ return recipient.id })
 
                 return data;
             };
@@ -508,15 +515,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.decrypt = function () {
                 cmLogger.debug('cmConversationModel:decrypt');
 
-                if(passphraseHandler.getEncryptionType() == 'none')
-                    return true;
-
-                var passphrase = this.getPassphrase(),
-                    passphrase_valid_form = (typeof passphrase == 'string' && passphrase.length > 0);
-
-                var success = passphrase_valid_form && this.messages.reduce(function (success, message){
-                        return success && message.decrypt();
-                    }, true);
+                var passphrase  =   this.getPassphrase(),
+                    success     =   passphrase && this.messages.reduce(function (success, message){
+                                        return success && message.decrypt();
+                                    }, true);
 
                 if (success) {
                     this.trigger('decrypt:ok');
@@ -543,7 +545,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {String} encryptionType look at encryptedPassphraseList
              */
             this.getEncryptionType = function(){
-                return encryptedPassphraseList.getEncryptionType();
+                return passphrase.getEncryptionType();
             };
 
             /**
@@ -557,8 +559,65 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {String} passphrase Returns the passphrase
              */
             this.getPassphrase = function(){
-                return passphraseHandler.getPassphrase(this.password);
+                return  passphrase
+                        .setPassword(this.password)
+                        .setIdentities(this.recipients)
+                        .get();
             }
+
+
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name passphraseValid
+             * @description
+             * #1 true if there is no  message.
+             * #2 true if provided passphrase decrypts the first message or that message is not encrypted at all.
+             * #4 false in any other case
+             *
+             * Passphrase data from the API is irrelevant for this check, because it might be corrupt. Corrupt passphrase data tough must never lead to valid check.
+             *
+             * @returns {boolean}
+             */
+            this.passphraseValid = function (passphrase) {
+                return      this.messages.length == 0 
+                        ||  this.messages[0].decrypt(passphrase)
+            };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             /**
              * @ngdoc method
@@ -686,34 +745,14 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {number} level Safety Level
              */
             this.getSafetyLevel = function(){
-                var level = 0;
+                var levels =    {
+                                'asymmetric'    : 2,
+                                'symmetric'     : 1,
+                                'mixed'         : 1,
+                                'none'          : 0  
+                            }
 
-                if(passphraseHandler.isEncrypted() == true){
-                    switch(passphraseHandler.getEncryptionType()){
-                        case "asymmetric":
-                                level = 2;
-                            break;
-                        case "symmetric":
-                                level = 1;
-                            break;
-                        case "mixed":
-                                level = 1;
-                            break;
-
-                    }
-                }
-
-//                if(this.encryptedPassphraseList.length >= 1 && this.encryptedPassphraseList[0].keyId != "_passwd"){
-//                    level = 2
-//                }else{
-//                    if(this.encryptedPassphraseList.length == 1 && this.encryptedPassphraseList[0].keyId == "_passwd"){
-//                        level = 1
-//                    }else{
-//                        level = 0
-//                    }
-//                }
-
-                return level;
+                return levels[passphrase.getEncryptionType()];
             };
 
             /**
@@ -740,34 +779,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return 'safetylevel-'+className+addon;
             };
 
-            /**
-             * @ngdoc method
-             * @methodOf cmConversationModel
-             *
-             * @name passphraseValid
-             * @description
-             * #1 true = for none encryption
-             * #2 true = none messages
-             * #3 true = decryption on first message succeed
-             * #4 false = decryption on first message failed
-             *
-             * @returns {boolean}
-             */
-            this.passphraseValid = function () {
-                //!this.preferences.encryption || !this.messages[0] || (security.getPassphrase() && this.messages[0].decrypt(security.getPassphrase()));
-                //(encryptedPassphraseList.getPassphrase(this.password) && this.messages[0].decrypt(encryptedPassphraseList.getPassphrase(this.password))
-
-                var boolean = true;
-
-                if( this.messages.length > 0 &&
-                    encryptedPassphraseList.isEncrypted() &&
-                    !this.messages[0].decrypt())
-                {
-                    boolean = false;
-                }
-
-                return boolean;
-            };
 
             this.saveEncryptedPassphraseList = function(){
 //                this.encryptedPassphraseList = security.getEncryptedPassphraseList(this.password)
@@ -783,7 +794,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * Event Handling
              */
 
-            encryptedPassphraseList.on('passphrase:changed', function(){
+            passphrase.on('passphrase:changed', function(){
 //                self.decrypt();
             });
 

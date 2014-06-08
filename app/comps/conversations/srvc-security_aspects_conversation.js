@@ -11,9 +11,21 @@ angular.module('cmSecurityAspects')
             id:             'NOT_ENCRYPTED',
             value:          -3,
             check:          function(conversation){
-                                return true
+                                return conversation.getEncryptionType() == 'none'
+                            },
+
+            toggleCheck:    function(conversation){
+                                return conversation.state.is('new')
+                            },
+
+            toggleCall:     function(conversation){
+                                console.log(conversation.getPassphrase())
+                                conversation.enableEncryption()
                             }
         })
+
+
+        /*
         .addAspect({
             id:             'ENCRYPTED',
             value:          1,
@@ -56,6 +68,7 @@ angular.module('cmSecurityAspects')
                                 return true
                             }
         })
+        */
 
         return securityAspectsConversation 
     }
