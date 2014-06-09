@@ -17,6 +17,8 @@ cockpitMain.controller("cockpitMainCtrl", [
 
         function getListing() {
 
+            console.log("get listing")
+
             cmApi.get({
                 path: '/lists',
                 exp_ok: 'lists'
