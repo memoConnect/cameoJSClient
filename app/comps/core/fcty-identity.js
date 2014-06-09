@@ -43,10 +43,14 @@ angular.module('cmCore').factory('cmIdentityModel',[
 
                     var encrypted_passphrase = key.encrypt(passphrase)
 
-                    encrypted_key_list.push({
-                        keyId:                 key.id,
-                        encryptedPassphrase:   encrypted_passphrase
-                    });
+                    if(encrypted_passphrase){
+                        encrypted_key_list.push({
+                            keyId:                 key.id,
+                            encryptedPassphrase:   encrypted_passphrase
+                        });
+                    }else{
+                        cmLogger.debug('cmIdentity: unable to encrypt passphrase.')
+                    }
                 });
                 return encrypted_key_list;
             };

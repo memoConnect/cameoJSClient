@@ -50,21 +50,26 @@ angular.module('cmCore').service('cmCrypt',[
              * @returns base64 encoded encrypted string
              */
             encryptWithShortKey: function (secretKey, secretString) {
+
                 var parameters = { cipher: "aes", ks: 256, iter: 4096 };
 
-                if(secretKey == '' || secretKey == undefined || secretKey == false){
-                    return secretString;
+                if(typeof secretKey != 'string' || secretKey.length < 7){ 
+                    cmLogger.warn('cmCrypt.encryptWithShortKey(): unable to encrypt, invalid key. '+secretKey)
+                    return "";                    
                 }
+                
 
                 if (null == secretString)
                     return "";
-                if (secretKey.length > 10)
+                if (secretKey.length > 12)
                     return "";
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
                 return encryptedSecretString;
             },
+
+
             /**
              * this method encrypts strings
              * @param secretKey a secret key with min len of 60 chars
@@ -72,17 +77,19 @@ angular.module('cmCore').service('cmCrypt',[
              * @returns base64 encoded encrypted string
              */
             encrypt: function (secretKey, secretString) {
-                var parameters = {cipher: "aes", ks: 256, iter: 500 };
+                var parameters = {cipher: "aes", ks: 256, iter: 500 }; 
 
-                if(secretKey == '' || secretKey == undefined){
-                    return secretString;
+                if(typeof secretKey != 'string' || secretKey.length < 1){ //Todo: längere Keys verlangen
+                    cmLogger.warn('cmCrypt.encrypt(): unable to encrypt, invalid key.'+secretKey)
+                    return "";                    
                 }
 
                 if (null == secretString)
                     return "";
-
+                
                 if (secretKey.length < 60)
                     return "";
+                
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
@@ -345,24 +352,26 @@ angular.module('cmCore').service('cmCrypt',[
                 return false;
             },
 
-            generatePassword: function(){
-                function step(x){
-                    var bad_random_passphrase = Math.random().toString(36).replace('0.','')
-                    return x ? bad_random_passphrase + step(x-1) : bad_random_passphrase
+            generatePassword: function(){                
+                var bad_random_passphrase =''
+
+                while(bad_random_passphrase.length < 10){
+                    bad_random_passphrase += Math.random().toString(36).replace('0.','')
                 }
 
                 
-                return step(1)
+                return bad_random_passphrase.slice(-10)
             },
 
-            generatePassphrase: function(){
-                function step(x){
-                    var bad_random_passphrase = Math.random().toString(36).replace('0.','')
-                    return x ? bad_random_passphrase + step(x-1) : bad_random_passphrase
+            generatePassphrase: function(){                
+                var bad_random_passphrase =''
+
+                while(bad_random_passphrase.length < 60){
+                    bad_random_passphrase += Math.random().toString(36).replace('0.','')
                 }
 
                 
-                return step(10)
+                return bad_random_passphrase
             }
         }
     }]

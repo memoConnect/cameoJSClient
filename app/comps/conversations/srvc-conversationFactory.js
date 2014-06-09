@@ -75,6 +75,12 @@ angular.module('cmConversations').service('cmConversationFactory', [
          */
         $rootScope.$on('logout', function(){ self.reset() });
 
+        cmConversationsAdapter.on('message:new', function(event,data){
+            self.create(data.conversationId)
+            .update() 
+            .trigger('message:new', data.message)
+        })
+
         return self;
     }
 ]);

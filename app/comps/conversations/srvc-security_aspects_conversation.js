@@ -7,6 +7,7 @@ angular.module('cmSecurityAspects')
         var securityAspectsConversation = new cmSecurityAspects()
 
         securityAspectsConversation
+        /*
         .addAspect({
             id:             'NOT_ENCRYPTED',
             value:          -3,
@@ -19,13 +20,12 @@ angular.module('cmSecurityAspects')
                             },
 
             toggleCall:     function(conversation){
-                                console.log(conversation.getPassphrase())
                                 conversation.enableEncryption()
                             }
         })
+        */
 
-
-        /*
+        
         .addAspect({
             id:             'ENCRYPTED',
             value:          1,
@@ -67,8 +67,7 @@ angular.module('cmSecurityAspects')
             check:          function(conversation){
                                 return true
                             }
-        })
-        */
+        })        
 
         return securityAspectsConversation 
     }
