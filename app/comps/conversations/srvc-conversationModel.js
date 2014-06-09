@@ -320,7 +320,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
 
             this.enableEncryption = function(){
-                if(this.state.is('new') && !passphrase.get()){
+                if(this.state.is('new') && !passphrase.get())
                     passphrase.generate()
 
                 return this
@@ -752,7 +752,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                                 'none'          : 0  
                             }
 
-                return levels[passphrase.getEncryptionType()];
+                return levels[passphrase.getKeyTransmission()];
             };
 
             /**
@@ -948,10 +948,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 }
 
             }*/
-
-            this.sync = function(){
-                //cmConversationsAdapter.addRecipient(this.id, identity.id)
-            };
 
             /*
             this.setEncryptionType = function(){
