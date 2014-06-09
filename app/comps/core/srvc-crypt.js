@@ -345,9 +345,24 @@ angular.module('cmCore').service('cmCrypt',[
                 return false;
             },
 
+            generatePassword: function(){
+                function step(x){
+                    var bad_random_passphrase = Math.random().toString(36).replace('0.','')
+                    return x ? bad_random_passphrase + step(x-1) : bad_random_passphrase
+                }
+
+                
+                return step(1)
+            },
+
             generatePassphrase: function(){
-                var bad_random_passphrase = _Base64.encode(String(Math.random()))
-                return bad_random_passphrase.replace('0.','')
+                function step(x){
+                    var bad_random_passphrase = Math.random().toString(36).replace('0.','')
+                    return x ? bad_random_passphrase + step(x-1) : bad_random_passphrase
+                }
+
+                
+                return step(10)
             }
         }
     }]

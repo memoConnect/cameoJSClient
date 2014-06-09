@@ -11,7 +11,7 @@ angular.module('cmSecurityAspects')
             id:             'NOT_ENCRYPTED',
             value:          -3,
             check:          function(conversation){
-                                return conversation.getEncryptionType() == 'none'
+                                return conversation.getKeyTransmission() == 'none'
                             },
 
             toggleCheck:    function(conversation){

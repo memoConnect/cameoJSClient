@@ -95,7 +95,7 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @name importSymmetricallyEncryptedPassphrase
              * @description
              * Imports a symmetrically encrypted passphrase as received from the API
-             *             *
+             * 
              * @param {Array} encrypted_passphrase_list A list of encrypted passphrase as received from the API
              * @returns {cmPassphrase} this cmPassphraseList
              */
@@ -116,10 +116,8 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @param {*} [password] Anything to be checked wether it could be a password.
              * @return {Boolean} Wheter the suggested password seems okay or not
              */
-            function couldBeAPassword(password){
-                var result = typeof password == "string" && password.length >= 6
-
-                if(!result) cmLogger.debug('cmPassphrase: couldBeAPassword(): nah, it is not a password: '+password)
+            function couldBeAPassword(pw){
+                var result = typeof pw == "string" && pw.length >= 6
 
                 return result
             }
@@ -133,8 +131,6 @@ angular.module('cmCore').factory('cmPassphrase',[
              */
             function couldBeAPassphrase(password){
                 var result = typeof password == "string" && password.length >= 80
-
-                if(!result) cmLogger.debug('cmPassphrase: couldBeAPassphrase(): nah, it is not a passphrase: '+password)
 
                 return result
             }
@@ -214,6 +210,8 @@ angular.module('cmCore').factory('cmPassphrase',[
                     cmLogger.debug('cmPassphrase:generatePassphrase  - passphrase already present, generated new one.');
 
                 passphrase = cmCrypt.generatePassphrase();
+                
+                return this
             }
 
 
@@ -370,17 +368,46 @@ angular.module('cmCore').factory('cmPassphrase',[
              *
              * @name encryptPassphrase
              * @description
+             * Encrypts the passphrase with all available means.
+             */
+            this.encrypt = function(){
+                symmetricallyEncryptPassphrase(password)
+                asymmetricallyEncryptPassphrase(identities)
+            }
+
+
+            /**
+             * @ngdoc method
+             * @methodOf cmPassphraseList
+             *
+             * @name exportData
+             * @description
              * Deliver an object with the passphrase encrypted with available means ready to be submitted to the API.
              *
              * Returns an encrypted passphrase list ready to be submitted to the API.
              */
-            function encryptPassphrase(){
+            this.exportData = function(){
+                this.encrypt()
                 return  {
-                            sePassphrase : symmetricallyEncryptedPassphrase(password),
-                            aePassphraselist: asymmetricallyEncryptedPassphrases(identities)
+                            sePassphrase        : symmetricallyEncryptedPassphrase,
+                            aePassphraselist    : asymmetricallyEncryptedPassphrases
                         }
             }
 
+
+            /**
+             * @ngdoc
+             * @methodOf cmPassphraseList
+             *
+             * @name  encryptionEnabled
+             * @description 
+             * Checks wether Encryption is enabled. encryption is considered to be enabled if this.passphrase is anything different from null.
+             * If this.passphrase is neither null nor a string of appropriate length something is incoherent. Messages schould not be sent in this case. 
+             * @return {Boolean}    Returns wether the encryption is enabled
+             */
+            this.encryptionEnabled = function(){
+                return this.passphrase !== null
+            }
 
 
             /**
@@ -393,7 +420,7 @@ angular.module('cmCore').factory('cmPassphrase',[
              *
              * @returns {String} encryption type - 'none' || 'symmetric' || 'asymmetric' || 'mixed'
              */
-            this.getEncryptionType = function(){
+            this.getKeyTransmission = function(){
                 if(symmetricallyEncryptedPassphrase && asymmetricallyEncryptedPassphrases.length > 0)
                     return 'mixed' 
 
@@ -406,105 +433,6 @@ angular.module('cmCore').factory('cmPassphrase',[
                 return 'none'
             };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-            /**
-             * @ngdoc method
-             * @methodOf cmPassphrase
-             *
-             * @name setPassword
-             * @description
-             * generates encrypted passphrase on every call!
-             *
-             * @returns {String|Boolean} param Return encrypted passphrase on error return false
-             */
-            this.getEncryptedPassphrase = function(password){
-                this.setPassword(password);
-
-                if(passphrase == undefined){
-                    generatePassphrase();
-                }
-
-                return createEncryptedPassphrase();
-            };
-
-
-            /**
-             * @ngdoc method
-             * @methodOf cmPassphraseList
-             *
-             * @name setPassphrase
-             * @description
-             * set sePassphrase
-             *
-             *
-             * @param {String} sePassphrase encrypted passphrase
-             * @returns {Boolean} bool If sePassphrase is correct, returns true
-             */
-            /*
-            this.setPassphrase = function(sePassphrase){
-                if(typeof sePassphrase != "string" || sePassphrase.length > 0){
-                    passphrase = sePassphrase;
-                    return true;
-                }
-
-                return false;
-            };
-            */
-
-            /**
-             * @ngdoc method
-             * @methodOf cmPassphraseList
-             *
-             * @name isEncrypted
-             * @description
-             * Returns true if list is not empty.
-             *
-             * @returns {boolean} bool Boolean
-             */
-            this.isEncrypted = function(){
-                return     asymmetricallyEncryptedPassphrases.length > 0 
-                        || (
-                               typeof symmetricallyEncryptedPassphrase == 'string' 
-                            && symmetricallyEncryptedPassphrase.length > 0
-                           );
-            };
-
-            /**
-             * @ngdoc method
-             * @methodOf cmPassphraseList
-             *
-             * @name exportData
-             * @description
-             * return encrypted passphrase list
-             *
-             * @deprecated
-             *
-             * @param {Array|String} [param1] recipient or password
-             * @param {Array|String} [param2] recipient or password
-             * @returns {Array} items encrypted passphrase list
-             */
-            this.exportData = function(param1, param2){
-                if(items.length == 0){
-                    var recipients = typeof param1 == 'object' && param1.length > 0 ? param1 : param2,
-                        password = typeof param1 == 'string' ? param1 : param2;
-
-                    encryptPassphrase(recipients, password);
-                }
-
-                return items;
-            };
         }
 
         return cmPassphrase;

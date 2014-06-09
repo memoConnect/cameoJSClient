@@ -320,9 +320,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
 
             this.enableEncryption = function(){
-                if(this.state.is('new') && !passphrase.get())
+                if(this.state.is('new') && !passphrase.get()){
                     passphrase.generate()
-                
+
                 return this
             }
 
@@ -544,8 +544,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
              *
              * @returns {String} encryptionType look at encryptedPassphraseList
              */
-            this.getEncryptionType = function(){
-                return passphrase.getEncryptionType();
+            this.getKeyTransmission = function(){
+                return passphrase.getKeyTransmission();
             };
 
             /**

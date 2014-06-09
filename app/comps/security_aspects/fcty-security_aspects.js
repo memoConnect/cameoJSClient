@@ -34,14 +34,27 @@ angular.module('cmSecurityAspects')
                 return false
             }
 
+            /**
+             * Function to check the requirements for toggleCall. (Meant to be overwritten!)
+             * When .toggle() is called, toggleCall() will only be called if .toggleCheck() retruns truthly.
+             * @param   {*}         target  The target the aspect should apply to.
+             * @returns {Boolean}           Returns wheter requirements are met.
+             */            
             this.toggleCheck = config.toggleCheck || function(target){
                 return false
             }
 
+
+            /**
+             * Function change the target in a way the aspect does nit longer apply.
+             * When .toggle() is called, toggleCall() will only be called if .toggleCheck() retruns truthly.
+             * @param   {*}         target  The target the aspect should apply to.
+             */            
             this.toggleCall = config.toggleCall || function(target){
                 return false
             }
 
+            //cmSecurityAspects is listening tô this event:
             this.toggle = function(){ this.trigger('toggle') }
         }
 
