@@ -221,8 +221,6 @@ angular.module('cmCore').factory('cmIdentityModel',[
 
         var self = new cmFactory(cmIdentityModel);
 
-        console.log('cmIdentityFactory',self)
-
         $rootScope.$on('logout', function(){
             self.reset()
         });

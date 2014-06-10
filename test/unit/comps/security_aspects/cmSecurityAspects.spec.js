@@ -4,6 +4,7 @@ describe('cmSecurityAspects', function(){
 
     var security_aspects
 
+    beforeEach(module('cmCore'))
     beforeEach(module('cmSecurityAspects'))
     beforeEach(inject(function(_cmSecurityAspects_){
         security_aspects = new _cmSecurityAspects_()
