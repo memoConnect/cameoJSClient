@@ -63,7 +63,7 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         this._clearContacts = function(){
             this.contacts = [];
-        }
+        };
 
         /**
          * Model Logic
