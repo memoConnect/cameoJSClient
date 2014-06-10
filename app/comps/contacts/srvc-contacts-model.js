@@ -297,8 +297,6 @@ angular.module('cmContacts').service('cmContactsModel',[
             resetContacts();
         });
 
-        init();
-
         this.on('friendRequests:updated', function(){
             this._clearContacts();
             init();
@@ -318,5 +316,7 @@ angular.module('cmContacts').service('cmContactsModel',[
         cmUserModel.on('init', function(){
             init();
         });
+
+        init();
     }
 ]);
