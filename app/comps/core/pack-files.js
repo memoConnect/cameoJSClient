@@ -251,7 +251,7 @@ angular.module('cmCore')
 
             this.encrypt = function(passphrase) {
                 this.raw
-                    ?   this.encryptedRaw = cmCrypt.encryptWithShortKey(passphrase, this.raw)  //Todo: long Key!
+                    ?   this.encryptedRaw = (passphrase == null) ? this.raw : cmCrypt.encryptWithShortKey(passphrase, this.raw)  //Todo: long Key!
                     :   cmLogger.error('Unable ro encrypt; chunk.raw is empty.  Try calling chunk.blobToBinaryString() first.')
 
                 return this
@@ -506,7 +506,7 @@ angular.module('cmCore')
 
             this.encryptName = function(){
                 if(this.name){
-                    this.encryptedName = cmCrypt.encryptWithShortKey(passphrase, this.name);
+                    this.encryptedName = (passphrase == null) ? this.name : cmCrypt.encryptWithShortKey(passphrase, this.name);
                 } else {
                     cmLogger.error('Unable to encrypt filename; cmFile.name missing. Try calling cmFile.importFile() first.');
                 }

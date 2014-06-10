@@ -466,7 +466,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
              */
             this.passphraseValid = function () {                                
                 return      passphrase.disabled()
-                        ||  this.messages.length == 0 
+                        ||  this.messages.length == 0
+                        ||  this.messages[0].isEncrypted()
                         ||  this.messages[0].decrypt(passphrase.get())
 
             };
