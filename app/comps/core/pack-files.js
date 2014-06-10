@@ -599,17 +599,17 @@ angular.module('cmCore')
                 var self = this;
 
                 return (
-                    self.encryptedName && self.chunks
-                        ?   cmFilesAdapter.prepareFile({
-                        name    : self.encryptedName,
+                    self.encryptedName && self.chunks || self.name && self.chunks
+                    ?   cmFilesAdapter.prepareFile({
+                        name    : self.encryptedName || self.name,
                         size    : self.blob.size,//self.encryptedSize,
                         type    : self.type,
                         chunks  : self.chunks.length
                     })
-                        .then(function(id){
-                            return self.id = id
-                        })
-                        :   cmLogger.error('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
+                    .then(function(id){
+                        return self.id = id
+                    })
+                    :   cmLogger.error('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
                 )
             };
 
