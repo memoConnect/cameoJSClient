@@ -256,7 +256,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 var passphrase_data =   passphrase
                                         .setPassword(this.password)
                                         .setIdentities(this.recipients)
-                                        .exportData()
+                                        .exportData()        
                 
                 data.sePassphrase       =   passphrase_data.sePassphrase
                 data.aePassphraseList   =   passphrase_data.aePassphraseList
