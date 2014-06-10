@@ -55,7 +55,7 @@ angular.module('cmContacts').service('cmContactsModel',[
                         id: contact.id,
                         contactType: contact.contactType,
                         groups: contact.groups,
-                        identity: cmIdentityFactory.create(contact.identity)
+                        identity: cmIdentityFactory.create(contact.identity, true)
                     });
                 }
             }

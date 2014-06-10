@@ -484,38 +484,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             /**
              * @ngdoc method
              * @methodOf cmConversationModel

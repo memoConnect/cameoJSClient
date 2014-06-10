@@ -111,7 +111,6 @@ angular.module('cmConversations').directive('cmConversation', [
                     var message_invalid         = !isMessageValid(),
                         passphrase_invalid      = !$scope.conversation.passphraseValid(),
                         recipients_missing      = !$scope.conversation.recipients.length > 0 //@todo mocked
-                        
 
 
                     //If anything is invalid, abort and notify the user:

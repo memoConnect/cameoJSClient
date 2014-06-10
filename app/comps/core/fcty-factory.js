@@ -28,9 +28,18 @@ angular.module('cmCore').factory('cmFactory',[
             self.create = function(args, withNewImport){
                 var id          =   typeof args == 'object' 
                                     ?   args.id
-                                    :   args
+                                    :   args;
 
-                return self.find(id) || self.new(args) //Todo: self.find(id).importData(args)?
+                var instance = self.find(id);
+
+                if(instance === null){
+                    instance = self.new(args);
+                } else if(typeof withNewImport === 'boolean' && withNewImport == true && typeof instance.importData == 'function'){
+                    instance.importData(args);
+                }
+
+//                return self.find(id) || self.new(args) //Todo: self.find(id).importData(args)?
+                return instance;
             }
 
             /**
