@@ -7,8 +7,9 @@ angular.module('cmCore').factory('cmIdentityModel',[
     'cmLogger',
     'cmApi',
     'cmFileFactory',
-    '$q',
-    function(cmAuth, cmCrypt, cmObject, cmLogger, cmApi, cmFileFactory, $q){
+    'cmStateManagement',
+    'cmUtil',
+    function(cmAuth, cmCrypt, cmObject, cmLogger, cmApi, cmFileFactory, cmStateManagement, cmUtil){
 
         function Identity(identity_data){
 
@@ -29,6 +30,69 @@ angular.module('cmCore').factory('cmIdentityModel',[
             var self = this;
 
             cmObject.addEventHandlingTo(this);
+
+            this.state = new cmStateManagement(['new','decrypted','loading']);
+
+            /**
+             * Initialize Identity
+             * @param {String|Object} data identity data for model
+             * @returns {Message}
+             */
+            function init(data){
+                if(typeof data == 'object'){
+                    if(cmUtil.objLen(data) > 1){
+                        self.importData(data);
+                    } else {
+                        self.state.set('new');
+                    }
+                } else {
+                    // fail ??
+                    self.state.set('new');
+
+                    this.id = identity_data;
+
+                    this.trigger('before-load');
+                    cmAuth.getIdentity(identity_data).then(
+                        function(data){
+                            self.trigger('load', data);
+                            if(typeof data =='string'){
+                                cmLogger('cmAuth.getIdentity() should forward an object, got string instead. ')
+                            } else {
+                                self.importData(data);
+                            }
+                            self.trigger('after-load', data);
+                        }
+                    )
+                }
+            }
+
+            /**
+             * @param identity_data
+             */
+            this.importData = function(identity_data){
+                this.id                     = identity_data.id;
+                this.displayName            = identity_data.displayName;
+                this.userKey                = identity_data.userKey;
+                this.cameoId                = identity_data.cameoId;
+                this.avatarId               = identity_data.avatar;
+                this.email                  = identity_data.email;
+                this.phoneNumber            = identity_data.phoneNumber;
+                this.preferredMessageType   = identity_data.preferredMessageType;
+                this.userType               = identity_data.userType;
+                this.created                = identity_data.created;
+                this.lastUpdated            = identity_data.lastUpdated;
+                this.keys                   = [];
+
+                identity_data.publicKeys = identity_data.publicKeys || [];
+                identity_data.publicKeys.forEach(function(publicKey_data){
+                    self.addKey(publicKey_data);
+                });
+
+                console.log('cmIdentity:init:finish', this.id, this.avatarId);
+                this.trigger('init:finish', this);
+
+                return this;
+            };
 
             //Encrypt passphrase with all available public keys
             //Identities cannot decrypt, Users can
@@ -115,55 +179,7 @@ angular.module('cmCore').factory('cmIdentityModel',[
                 return size;
             };
 
-            //TODO: init to private / importData for identity update
-
-            /**
-             * @param identity_data
-             */
-            this.init = function(identity_data){
-                if(typeof identity_data === 'object'){
-                    this.id                     = identity_data.id;
-                    this.displayName            = identity_data.displayName;
-                    this.userKey                = identity_data.userKey;
-                    this.cameoId                = identity_data.cameoId;
-                    this.avatarId               = identity_data.avatar;
-                    this.email                  = identity_data.email;
-                    this.phoneNumber            = identity_data.phoneNumber;
-                    this.preferredMessageType   = identity_data.preferredMessageType;
-                    this.userType               = identity_data.userType;
-                    this.created                = identity_data.created;
-                    this.lastUpdated            = identity_data.lastUpdated;
-                    this.keys                   = [];
-
-                    identity_data.publicKeys = identity_data.publicKeys || [];
-                    identity_data.publicKeys.forEach(function(publicKey_data){
-                        self.addKey(publicKey_data);
-                    });
-
-                    console.log('cmIdentity:init:finish', this.id, this.avatarId)
-                    this.trigger('init:finish', this);
-
-                } else if(typeof identity_data === 'string'){
-                    this.id = identity_data;
-
-                    this.trigger('before-load');
-                    cmAuth.getIdentity(identity_data).then(
-                        function(data){
-                            self.trigger('load', data);
-                            if(typeof data =='string'){
-                                cmLogger('cmAuth.getIdentity() should forward an object, got string instead. ')
-                            } else {
-                                self.init(data);
-                            }
-                            self.trigger('after-load', data);
-                        }
-                    )
-                }
-
-                return this;
-            };
-
-            this.init(identity_data);
+            init(identity_data);
         }
 
         return Identity;
