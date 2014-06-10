@@ -23,9 +23,16 @@ describe('cmIdentityModel', function(){
         expect(cmIdentityModel).toBeDefined()
     })
 
-    it('should have init function', function(){
+    // init is now private
+    xit('should have init function', function(){
         var obj = createIdentity();
         expect(obj.init).toBeDefined()
+    })
+
+    it('should have importData & load methods', function(){
+        var obj = createIdentity();
+        expect(obj.importData).toBeDefined()
+        expect(obj.load).toBeDefined()
     })
 
     describe('Encryption and Key Management', function(){        

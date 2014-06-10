@@ -92,8 +92,7 @@ angular.module('cmUi').directive('cmAvatar',[
                     }
                 }
 
-                function refresh(identity, eventRefresh){
-                    console.log('cmAvatar', identity.id, identity.avatarId, eventRefresh)
+                function refresh(identity){
                     // hide the complete avatar
                     if(attrs.cmView == 'hide-owner' && identity.isAppOwner){
                         element.css('display','none');
@@ -125,20 +124,17 @@ angular.module('cmUi').directive('cmAvatar',[
                     element.find('img').attr('src', avatarMocks.none );
                     //element.css({'background-image': 'url(' + avatarMocks.none +')'});
                 } else {
-                        scope.$watch(attrs.cmData, function(identity){
+                    var identity = scope.$eval(attrs.cmData);
 
-                        if(typeof identity =='object'){
-                            if(identity['avatarId'] != undefined) {
+                    if(typeof identity == 'object'){
+                        if(identity.state.is('new')) {
+                            identity.on('update:finished', function (event, identity) {
                                 refresh(identity);
-                            } else {
-                                console.log('identity->waitOfAvatarId',identity.id)
-                                identity.on('init:finish', function (event, identity) {
-                                    // refresh Avatar
-                                    refresh(identity, true);
-                                });
-                            }
+                            });
+                        } else {
+                            refresh(identity);
                         }
-                    });
+                    }
                 }
             }
         }

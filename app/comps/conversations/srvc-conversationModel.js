@@ -150,7 +150,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.importData = function(data){
 //                cmLogger.debug('cmConversationModel:importData');
                 if(typeof data !== 'object'){
-                    cmLogger.debug('cmConversationModel:import:failed - no Data!');
+                    cmLogger.debug('cmConversationModel:import:failed - no data!');
                     return this;
                 }
 

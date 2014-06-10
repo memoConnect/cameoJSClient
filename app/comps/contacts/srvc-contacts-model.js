@@ -177,7 +177,7 @@ angular.module('cmContacts').service('cmContactsModel',[
             }
 
             if(check !== true){
-                this.requests.push(new cmFriendRequestModel({identity: cmIdentityFactory.create(request_data.identity), message:request_data.message || '', created:request_data.created || ''}));
+                this.requests.push(new cmFriendRequestModel({identity: cmIdentityFactory.create(request_data.identity, true), message:request_data.message || '', created:request_data.created || ''}));
             }
         };
 
