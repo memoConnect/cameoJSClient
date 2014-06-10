@@ -13,19 +13,19 @@ angular.module('cmCore').factory('cmIdentityModel',[
 
         function Identity(identity_data){
 
-            this.id,
-            this.displayName,
-            this.userKey,
-            this.cameoId,
-            this.avatarId,
-            this.avatar,
-            this.email                   = { value: undefined, isVerified: undefined },
-            this.phoneNumber             = { value: undefined, isVerified: undefined },
-            this.preferredMessageType,
-            this.keys                    = [],
-            this.userType,
-            this.created,
-            this.lastUpdated;
+            this.id = undefined;
+            this.displayName = undefined;
+            this.userKey = undefined;
+            this.cameoId = undefined;
+            this.avatarId = undefined;
+            this.avatar = undefined;
+            this.email                   = { value: undefined, isVerified: undefined };
+            this.phoneNumber             = { value: undefined, isVerified: undefined };
+            this.preferredMessageType = undefined;
+            this.keys                    = [];
+            this.userType = undefined;
+            this.created = undefined;
+            this.lastUpdated = undefined;
 
             var self = this;
 
@@ -39,57 +39,83 @@ angular.module('cmCore').factory('cmIdentityModel',[
              * @returns {Message}
              */
             function init(data){
-                if(typeof data == 'object'){
-                    if(cmUtil.objLen(data) > 1){
-                        self.importData(data);
+                if(typeof data == 'string' && data.length > 0){
+                    self.id = data;
+                    self.load();
+                } else if(typeof data == 'object' && ('id' in data)){
+                    self.id = data.id;
+
+                    if(cmUtil.objLen(data) < 2){
+                        self.load();
                     } else {
-                        self.state.set('new');
+                        self.importData(data);
                     }
                 } else {
-                    // fail ??
                     self.state.set('new');
-
-                    this.id = identity_data;
-
-                    this.trigger('before-load');
-                    cmAuth.getIdentity(identity_data).then(
-                        function(data){
-                            self.trigger('load', data);
-                            if(typeof data =='string'){
-                                cmLogger('cmAuth.getIdentity() should forward an object, got string instead. ')
-                            } else {
-                                self.importData(data);
-                            }
-                            self.trigger('after-load', data);
-                        }
-                    )
                 }
+
+                self.trigger('init:finished');
             }
 
             /**
              * @param identity_data
              */
-            this.importData = function(identity_data){
-                this.id                     = identity_data.id;
-                this.displayName            = identity_data.displayName;
-                this.userKey                = identity_data.userKey;
-                this.cameoId                = identity_data.cameoId;
-                this.avatarId               = identity_data.avatar;
-                this.email                  = identity_data.email;
-                this.phoneNumber            = identity_data.phoneNumber;
-                this.preferredMessageType   = identity_data.preferredMessageType;
-                this.userType               = identity_data.userType;
-                this.created                = identity_data.created;
-                this.lastUpdated            = identity_data.lastUpdated;
+            this.importData = function(data){
+                if(typeof data !== 'object'){
+                    cmLogger.debug('cmIdentityModel:import:failed - no data!');
+                    return this;
+                }
+
+                this.id                     = data.id || this.id;
+                this.displayName            = data.displayName || this.displayName;
+                this.userKey                = data.userKey || this.userKey;
+                this.cameoId                = data.cameoId || this.cameoId;
+                this.avatarId               = data.avatar || this.avatarId;
+                this.email                  = data.email || this.email;
+                this.phoneNumber            = data.phoneNumber || this.phoneNumber;
+                this.preferredMessageType   = data.preferredMessageType || this.preferredMessageType;
+                this.userType               = data.userType || this.userType;
+                this.created                = data.created || this.created;
+                this.lastUpdated            = data.lastUpdated || this.lastUpdated;
                 this.keys                   = [];
 
-                identity_data.publicKeys = identity_data.publicKeys || [];
+                data.publicKeys = data.publicKeys || [];
 
-                identity_data.publicKeys.forEach(function(publicKey_data){
+                data.publicKeys.forEach(function(publicKey_data){
                     self.addKey(publicKey_data);
                 });
 
-                this.trigger('init:finish', this);
+                this.state.unset('new');
+                this.trigger('update:finished', this);
+
+                return this;
+            };
+
+            this.load = function(){
+                if(typeof this.id == 'string'
+                    && this.id.length > 0
+                    && this.state.is('loading') === false) {
+
+                    this.state.set('loading');
+
+                    cmAuth.getIdentity(this.id).then(
+                        function (import_data) {
+                            if (typeof import_data == 'string') {
+                                cmLogger('cmAuth.getIdentity() should forward an object, got string instead. ')
+                            } else {
+                                self.importData(import_data);
+                            }
+                            self.state.unset('loading');
+                        },
+                        function(){
+                            self.state.unset('loading');
+                            self.trigger('load:failed');
+                        }
+                    );
+                } else {
+                    cmLogger.debug('cmIdentityModel:load:failed - no identityId');
+                    this.trigger('load:failed');
+                }
 
                 return this;
             };
@@ -193,7 +219,9 @@ angular.module('cmCore').factory('cmIdentityModel',[
 
     function($rootScope, cmFactory, cmIdentityModel){
 
-        var self = new cmFactory(cmIdentityModel)
+        var self = new cmFactory(cmIdentityModel);
+
+        console.log('cmIdentityFactory',self)
 
         $rootScope.$on('logout', function(){
             self.reset()

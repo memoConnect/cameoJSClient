@@ -26,7 +26,7 @@ angular.module('cmCore').factory('cmFactory',[
              *                                      this instance will be returned – otherwise a new one will be created and if possible populated with data from the backend.
              */
             self.create = function(args, withNewImport){
-                var id          =   typeof args == 'object' 
+                var id          =   typeof args == 'object' && 'id' in args
                                     ?   args.id
                                     :   args;
 

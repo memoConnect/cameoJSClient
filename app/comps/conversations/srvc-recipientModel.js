@@ -13,7 +13,7 @@ angular.module('cmConversations').factory('cmRecipientModel',[
         function RecipientModel(identity){
             cmLogger.debug('RecipientModel deprecated!!!!');
 
-            var self = cmIdentityFactory.create(identity);
+            var self = cmIdentityFactory.create(identity,true);
 
             self.addTo = function(conversation){
                 conversation.addRecipient(self);
