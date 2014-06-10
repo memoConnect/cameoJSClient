@@ -107,7 +107,7 @@ angular.module('cmCore').service('cmCrypt',[
                     secretString = JSON.stringify(secretString)
                 }
 
-                if(secretKey == '' || secretKey == undefined){
+                if(typeof secretKey != 'string' || secretKey.length < 1){
                     return secretString;
                 }
 

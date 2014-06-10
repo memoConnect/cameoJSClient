@@ -46,8 +46,6 @@ angular.module('cmCore').factory('cmPassphrase',[
                 this.passphrase = cmCrypt.generatePassphrase()
             }
 
-
-
             /**
              * @ngdoc method
              * @methodOf cmPassphraseList

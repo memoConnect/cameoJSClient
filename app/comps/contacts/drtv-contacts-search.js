@@ -37,7 +37,7 @@ angular.module('cmContacts').directive('cmContactsSearch',[
                             function(data){
                                 var tmp = [];
                                 angular.forEach(data, function(value){
-                                    tmp.push(cmIdentityFactory.create(value.id));
+                                    tmp.push(cmIdentityFactory.create(value, true));
                                 });
                                 $scope.results = tmp;
                             }

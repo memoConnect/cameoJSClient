@@ -215,10 +215,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
              */
             this.disableEncryption = function(){
                 if(this.state.is('new'))
-                    passphrase.disable()
+                    passphrase.disable();
 
                 return this
-            }
+            };
 
             /**
              * @ngdoc method
@@ -232,10 +232,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
              */
             this.enableEncryption = function(){
                 if(this.state.is('new') && !passphrase.get())
-                    passphrase.generate()
+                    passphrase.generate();
 
                 return this
-            }
+            };
 
             /**
              * @ngdoc method
