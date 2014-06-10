@@ -117,12 +117,9 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @param {*} [password] Anything to be checked wether it could be a passphrase.
              * @return {Boolean} Wheter the suggested passphrase seems okay or not
              */
-            function couldBeAPassphrase(password){
-                var result = (typeof password == "string") && password.length >= 60
-
-                return result
+            function couldBeAPassphrase(pp){
+                return  ((typeof pp == "string") && (pp.length >= 60))
             }
-
 
             /**
              * @ngdoc method
@@ -204,7 +201,6 @@ angular.module('cmCore').factory('cmPassphrase',[
                 return this
             }
 
-
             /**
              * @ngdoc mehtod
              * @methodOf cmPassphrase
@@ -236,7 +232,6 @@ angular.module('cmCore').factory('cmPassphrase',[
                 return !!success
             }
 
-
             /**
              * @ngdoc method
              * @methodOf cmPassphraseList
@@ -267,7 +262,6 @@ angular.module('cmCore').factory('cmPassphrase',[
                 return !!success
             }
 
-
             /**
              * @ngdoc method
              * @methodOf cmPassPhrase
@@ -282,7 +276,6 @@ angular.module('cmCore').factory('cmPassphrase',[
                 return     decryptSymmetricallyEncryptedPassphrase(password)
                         || decryptAsymmetricallyEncryptedPassphrase(cmUserModel)
             }
-
 
             /**
              * @ngdoc method
@@ -304,8 +297,6 @@ angular.module('cmCore').factory('cmPassphrase',[
                 return this.decrypt() ? passphrase : false                
             }
 
-
-
             /**
              * @ngdoc method
              * @methodOf cmPassPhrase
@@ -326,9 +317,6 @@ angular.module('cmCore').factory('cmPassphrase',[
                 }
             }
 
-
-
-
             /**
              * @ngdoc method
              * @methodOf cmPassPhrase
@@ -346,15 +334,10 @@ angular.module('cmCore').factory('cmPassphrase',[
                                 return list.concat(identity.encryptPassphrase(passphrase))
                             }, [])
                 } else{
-                    console.log(passphrase)
-                    console.log(passphrase.length)
                     cmLogger.debug('cmPassphrase:asymmetricallyEncryptPassphrase - provide a list of identities and and passphrase before encrypting the passphrase!');
                     return false
                 }
             }
-
-
-
 
             /**
              * @ngdoc method
@@ -374,7 +357,6 @@ angular.module('cmCore').factory('cmPassphrase',[
                 return this
             }
 
-
             /**
              * @ngdoc method
              * @methodOf cmPassphraseList
@@ -386,7 +368,7 @@ angular.module('cmCore').factory('cmPassphrase',[
              * Returns an encrypted passphrase list ready to be submitted to the API.
              */
             this.exportData = function(){                
-                this.encrypt()                
+                this.encrypt();
                 return  {
                             sePassphrase        : symmetricallyEncryptedPassphrase,
                             aePassphraseList    : asymmetricallyEncryptedPassphrases
@@ -422,7 +404,6 @@ angular.module('cmCore').factory('cmPassphrase',[
                 passphrase = null
                 return this
             }
-
 
             /**
              * @ngdoc method

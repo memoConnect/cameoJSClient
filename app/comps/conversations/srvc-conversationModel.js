@@ -4,6 +4,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmConversationsAdapter',
     'cmMessageModel',
     'cmIdentityFactory',
+    'cmIdentityModel',
     'cmFileFactory',
     'cmCrypt',
     'cmUserModel',
@@ -18,7 +19,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmUtil',
     '$q',
     '$rootScope',
-    function (cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase, cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
+    function (cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase, cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
 
         /**
          * @constructor
@@ -45,11 +46,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.id                 = undefined;
             
-            this.recipients         = new cmFactory(cmRecipientModel);      //list of RecipientModel objects
-            this.recipients         = [];
-            
+            this.recipients         = new cmFactory(cmIdentityModel);      //list of RecipientModel objects
             this.messages           = new cmFactory(cmMessageModel);        //list of MessageModel objects
             //--> meta
+
             this.timeOfCreation     = 0;          //timestamp of the conversation's creation
             //--> meta
             this.timeOfLastUpdate   = 0;          //timestamp of the conversations's last Update
@@ -154,10 +154,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     return this;
                 }
 
-//                if(data.id == 'ME6c1uf3dsxDz12p2Crw'){
-//                    console.log(data);
-//                }
-
                 //There is no invalid data, importData looks for everything useable in data; if it finds nothing it wont update anything
                 this.id                      = data.id                  || this.id;
                 this.timeOfCreation          = data.created             || this.timeOfCreation;
@@ -173,12 +169,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 if('aePassphraseList' in data)
                     passphrase.importSymmetricallyEncryptedPassphrase(data.aePassphraseList)
-
-//                    data.aePassphraseList = data.aePassphraseList || []
-//                    data.aePassphraseList.push({keyId: '_passwd', 'encryptedPassphrase': data.sePassphrase});
-                
-
-//                encryptedPassphraseList.importData(data.aePassphraseList);
 
                 this.initPassCaptcha(data);
 
@@ -217,7 +207,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 if(this.state.is('new'))
                     passphrase.disable();
 
-                return this
+                return this;
             };
 
             /**
@@ -234,7 +224,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 if(this.state.is('new') && !passphrase.get())
                     passphrase.generate();
 
-                return this
+                return this;
             };
 
             /**
@@ -256,7 +246,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 var passphrase_data =   passphrase
                                         .setPassword(this.password)
                                         .setIdentities(this.recipients)
-                                        .exportData()        
+                                        .exportData();
                 
                 data.sePassphrase       =   passphrase_data.sePassphrase
                 data.aePassphraseList   =   passphrase_data.aePassphraseList
@@ -460,7 +450,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         .get();
             }
 
-
             /**
              * @ngdoc method
              * @methodOf cmConversationModel
@@ -481,8 +470,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         ||  this.messages[0].decrypt(passphrase.get())
 
             };
-
-
 
             /**
              * @ngdoc method
@@ -551,18 +538,13 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {cmConversationModel} this returns cmConversationModel
              */
             this.addRecipient = function(identityModel){
-                if(this.recipients.indexOf(identityModel) == -1){
-                    this.recipients.push(identityModel);
+                this.recipients.register(identityModel);
 
-                    identityModel.on('update', function(){
-                        self.trigger('recipient:update'); //Todo: noch nicht gelöst =/
-                    });
-                    this.trigger('recipient-added');
-                } else {
-                    if(cmUserModel.data.id != identityModel.id){
-                        cmLogger.debug('conversationModel: unable to add recipient; duplicate detected. (id:'+identityModel.id+')');
-                    }
-                }
+                identityModel.on('update', function(){
+                    self.trigger('recipient:update'); //Todo: noch nicht gelöst =/
+                });
+                this.trigger('recipient-added');
+
                 return this;
             };
 
@@ -644,7 +626,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return 'safetylevel-'+className+addon;
             };
 
-
             this.saveEncryptedPassphraseList = function(){
 //                this.encryptedPassphraseList = security.getEncryptedPassphraseList(this.password)
 //
@@ -671,10 +652,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG',{ttl:2000})
             });
 
-            this.on('message:added', function(event, message){
-                message.decrypt(self.security.passphrase);
-            });
-
             //Todo: fire event on factory and delegate to conversation or something
             this.on('message:new', function(event, message_data){
                 message_data.conversation = self //todo
@@ -682,18 +659,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 self.messages.create(message_data).decrypt()
             });
 
-            /*
-             cmConversationsAdapter
-             .on('message:new', function(event, message_data){ self.addMessage(cmMessageFactory.get(message_data)) })
-             */
-
-            /*
-             self
-             .on('message-added recipient-added subject-updated', function(event, data){ self.updateTagLine() })
-             */
-
-            //Todo:
-            this.on('message-added', function(){ self.numberOfMessages++ });
+            this.recipients.on('register', function(event, recipient){
+                // do something, if new recipient is added to conversation
+            });
 
             // after events!!!
             init(data);
