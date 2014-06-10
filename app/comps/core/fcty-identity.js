@@ -84,11 +84,11 @@ angular.module('cmCore').factory('cmIdentityModel',[
                 this.keys                   = [];
 
                 identity_data.publicKeys = identity_data.publicKeys || [];
+
                 identity_data.publicKeys.forEach(function(publicKey_data){
                     self.addKey(publicKey_data);
                 });
 
-                console.log('cmIdentity:init:finish', this.id, this.avatarId);
                 this.trigger('init:finish', this);
 
                 return this;

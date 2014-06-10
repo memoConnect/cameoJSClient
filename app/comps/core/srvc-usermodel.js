@@ -119,7 +119,7 @@ angular.module('cmCore').service('cmUserModel',[
                 if(this.getToken() !== false){
                     cmAuth.getIdentity().then(
                         function(data){
-                            deferred.resolve(cmIdentityFactory.create(data));
+                            deferred.resolve(cmIdentityFactory.create(data,true));
                         },
 
                         function(response){
