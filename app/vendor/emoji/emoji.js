@@ -180,6 +180,7 @@
             {matcher: [":\\'\\("], emoji:'cry'},
             {matcher: ['\\.!\\.'], emoji:'poop'}
         ],
+        blacklistForList = ['poop', 'shit', '-1', '\\+1', 'facepunch', 'collision', 'raised_hand', 'runner', 'telephone', 'shirt', 'black_square', 'white_square'],
         rEmojis = new RegExp(":(" + emojis.join("|") + "):", "g");
 
     angular.module('emoji',['cmCore'])
@@ -247,9 +248,13 @@
 
                 // create emojis
                 emojis.forEach(function(emoji){
-                    var icon = angular.element('<i class="emoji emoji_'+emoji+'" title=":'+emoji+':">'+emoji+'</i>');
-                        icon.on('click',function(){scope.insertEmoji(emoji)});
-                    element.children().append(icon);
+                    if(blacklistForList.indexOf(emoji) == -1) {
+                        var icon = angular.element('<i class="emoji emoji_' + emoji + '" title=":' + emoji + ':">' + emoji + '</i>');
+                        icon.on('click', function () {
+                            scope.insertEmoji(emoji)
+                        });
+                        element.children().append(icon);
+                    }
                 });
                 // visiblitity handler
                 if(attrs.cmHandler){
