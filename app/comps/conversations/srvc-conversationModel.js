@@ -47,7 +47,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.id                 = undefined;
             
-            this.recipients         = new cmFactory(cmIdentityModel);      //list of RecipientModel objects
+            this.recipients         = new cmFactory(cmIdentityModel);      //list of cmIdentityModel objects
             this.messages           = new cmFactory(cmMessageModel);        //list of MessageModel objects
             //--> meta
 
