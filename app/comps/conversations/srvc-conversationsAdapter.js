@@ -1,21 +1,18 @@
 'use strict';
 
 angular.module('cmConversations').service('cmConversationsAdapter', [
-
     'cmApi',
+    'cmUserModel',
     'cmObject',
     'cmUtil',
     'cmLogger',
-
-    function (cmApi, cmObject, cmUtil, cmLogger){
+    function (cmApi, cmUserModel, cmObject, cmUtil, cmLogger){
         var adapter = {
 
-            newConversation: function(subject) {
+            newConversation: function(data) {
                 return	cmApi.post({
                     path: 	'/conversation',
-                    data:	{
-                                subject: subject
-                            }
+                    data:	data
                 })
             },
 
@@ -26,30 +23,44 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                 });
             },
 
-            getConversations: function(limit, offset) {
+            getConversations: function(limit, offset){
+                var queryString = cmUtil.handleLimitOffset(limit,offset);
+
+                if(queryString == ''){
+                    queryString += '?' + cmUserModel.getLocalKeyIdsForRequest();
+                } else {
+                    queryString += cmUserModel.getLocalKeyIdsForRequest();
+                }
+
                 return	cmApi.get({
-                    path: '/conversations' + cmUtil.handleLimitOffset(limit,offset)
+                    path: '/conversations' + queryString
                 })
             },
 
             getConversation: function(id, limit, offset) {
+                var queryString = cmUtil.handleLimitOffset(limit,offset);
+
+                if(queryString == ''){
+                    queryString += '?' + cmUserModel.getLocalKeyIdsForRequest();
+                }
+
                 return 	cmApi.get({
-                    path: 	'/conversation/'+ id + cmUtil.handleLimitOffset(limit,offset)
+                    path: 	'/conversation/'+ id + queryString
                 })
             },
 
             getConversationSummary: function(id){
-                cmLogger.warn('cmConversationAdapter: .getConversationSummary is deprecated; use .getConversation(id, 1, 0) instead')
+                //cmLogger.warn('cmConversationAdapter: .getConversationSummary is deprecated; use .getConversation(id, 1, 0) instead')
                 //return this.getConversation(id, 1, 0)
 
                 return cmApi.get({
-                    path: '/conversation/' + id + '/summary'
+                    path: '/conversation/' + id + '/summary' + '?' +  cmUserModel.getLocalKeyIdsForRequest()
                 })
             },
 
             getPurl: function(id){
                 return cmApi.get({
-                    path:'/purl/' + id
+                    path:'/purl/' + id + '?' +  cmUserModel.getLocalKeyIdsForRequest()
                 })
             },
 
@@ -105,13 +116,13 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                             path:    "/conversation/%1/encryptedPassphraseList".replace(/%1/, id)
                         })
             }
-        }
+        };
 
-        cmObject.addEventHandlingTo(adapter)
+        cmObject.addEventHandlingTo(adapter);
        
         cmApi.on('conversation:new-message', function(event, data){
             adapter.trigger('message:new', data)
-        })
+        });
 
         return adapter
     }

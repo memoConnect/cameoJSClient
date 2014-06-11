@@ -7,48 +7,143 @@ angular.module('cmCore').factory('cmIdentityModel',[
     'cmLogger',
     'cmApi',
     'cmFileFactory',
-    '$q',
-    function(cmAuth, cmCrypt, cmObject, cmLogger, cmApi, cmFileFactory, $q){
-        var Identity = function(identity_data){
+    'cmStateManagement',
+    'cmUtil',
+    function(cmAuth, cmCrypt, cmObject, cmLogger, cmApi, cmFileFactory, cmStateManagement, cmUtil){
 
-            this.id,
-            this.displayName,
-            this.userKey,
-            this.cameoId,
-            this.avatarId,
-            this.avatar,
-            this.email                   = { value: undefined, isVerified: undefined },
-            this.phoneNumber             = { value: undefined, isVerified: undefined },
-            this.preferredMessageType,
-            this.keys                    = [],
-            this.userType,
-            this.created,
-            this.lastUpdated;
+        function Identity(identity_data){
+
+            this.id = undefined;
+            this.displayName = undefined;
+            this.userKey = undefined;
+            this.cameoId = undefined;
+            this.avatarId = undefined;
+            this.avatar = undefined;
+            this.email                   = { value: undefined, isVerified: undefined };
+            this.phoneNumber             = { value: undefined, isVerified: undefined };
+            this.preferredMessageType = undefined;
+            this.keys                    = [];
+            this.userType = undefined;
+            this.created = undefined;
+            this.lastUpdated = undefined;
 
             var self = this;
 
-            cmObject.addEventHandlingTo(this)
+            cmObject.addEventHandlingTo(this);
+
+            this.state = new cmStateManagement(['new','decrypted','loading']);
+
+            /**
+             * Initialize Identity
+             * @param {String|Object} data identity data for model
+             * @returns {Message}
+             */
+            function init(data){
+                if(typeof data == 'string' && data.length > 0){
+                    self.id = data;
+                    self.load();
+                } else if(typeof data == 'object' && ('id' in data)){
+                    self.id = data.id;
+
+                    if(cmUtil.objLen(data) < 2){
+                        self.load();
+                    } else {
+                        self.importData(data);
+                    }
+                } else {
+                    self.state.set('new');
+                }
+
+                self.trigger('init:finished');
+            }
+
+            /**
+             * @param identity_data
+             */
+            this.importData = function(data){
+                if(typeof data !== 'object'){
+                    cmLogger.debug('cmIdentityModel:import:failed - no data!');
+                    return this;
+                }
+
+                this.id                     = data.id || this.id;
+                this.displayName            = data.displayName || this.displayName;
+                this.userKey                = data.userKey || this.userKey;
+                this.cameoId                = data.cameoId || this.cameoId;
+                this.avatarId               = data.avatar || this.avatarId;
+                this.email                  = data.email || this.email;
+                this.phoneNumber            = data.phoneNumber || this.phoneNumber;
+                this.preferredMessageType   = data.preferredMessageType || this.preferredMessageType;
+                this.userType               = data.userType || this.userType;
+                this.created                = data.created || this.created;
+                this.lastUpdated            = data.lastUpdated || this.lastUpdated;
+                this.keys                   = [];
+
+                data.publicKeys = data.publicKeys || [];
+
+                data.publicKeys.forEach(function(publicKey_data){
+                    self.addKey(publicKey_data);
+                });
+
+                this.state.unset('new');
+                this.trigger('update:finished', this);
+
+                return this;
+            };
+
+            this.load = function(){
+                if(typeof this.id == 'string'
+                    && this.id.length > 0
+                    && this.state.is('loading') === false) {
+
+                    this.state.set('loading');
+
+                    cmAuth.getIdentity(this.id).then(
+                        function (import_data) {
+                            if (typeof import_data == 'string') {
+                                cmLogger('cmAuth.getIdentity() should forward an object, got string instead. ')
+                            } else {
+                                self.importData(import_data);
+                            }
+                            self.state.unset('loading');
+                        },
+                        function(){
+                            self.state.unset('loading');
+                            self.trigger('load:failed');
+                        }
+                    );
+                } else {
+                    cmLogger.debug('cmIdentityModel:load:failed - no identityId');
+                    this.trigger('load:failed');
+                }
+
+                return this;
+            };
 
             //Encrypt passphrase with all available public keys
             //Identities cannot decrypt, Users can
             this.encryptPassphrase = function(passphrase){
-                var encrypted_key_list = []
+                var encrypted_key_list = [];
 
                 this.keys.forEach(function(key){
 
-                    var key_2 = new cmCrypt.Key()
+                    var key_2 = new cmCrypt.Key();
 
-                    key_2.setKey(key.getPrivateKey())
+                    key_2.setKey(key.getPrivateKey());
 
                     var encrypted_passphrase = key.encrypt(passphrase)
 
-                    encrypted_key_list.push({
-                        keyId:                 key.id,
-                        encryptedPassphrase:   encrypted_passphrase
-                    })
-                })
-                return encrypted_key_list
-            }
+                    if(encrypted_passphrase){
+                        encrypted_key_list.push({
+                            keyId:                 key.id,
+                            encryptedPassphrase:   encrypted_passphrase
+                        });
+                    }else{
+                        cmLogger.debug('cmIdentity: unable to encrypt passphrase.')
+                    }
+                });
+                return encrypted_key_list;
+            };
 
             this.getDisplayName = function(){
                 return this.displayName || this.cameoId || this.id;
@@ -90,72 +185,27 @@ angular.module('cmCore').factory('cmIdentityModel',[
                     is_string  = (typeof key_data == 'string'),
                     can_update = is_object && "updateKeyList" in key_data
 
-                if( can_update )                key = key_data  //already a Key object
-                if( is_object && !can_update)   key = (new cmCrypt.Key()).importData(key_data) //from backend or localstorgae
-                if( is_string)                  key = new cmCrypt.Key(key_data) //plain text public or private key
+                if( can_update )                key = key_data;  //already a Key object
+                if( is_object && !can_update)   key = (new cmCrypt.Key()).importData(key_data); //from backend or localstorgae
+                if( is_string)                  key = new cmCrypt.Key(key_data); //plain text public or private key
 
                 key
                 ?   key.updateKeyList(self.keys)
-                :   cmLogger.error('uanable to add key, unknown format: '+key_data)
-
-                return this
-            }
-
-            this.getWeakestKeySize = function(){
-                var size = undefined
-                this.keys.forEach(function(key){
-                    size = size != undefined ? Math.min(size, key.getSize()) : key.getSize()
-                })
-                size = size || 0
-                return size
-            }
-
-            /**
-             * @param identity_data
-             */
-            this.init = function(identity_data){
-                if(typeof identity_data === 'object'){
-                    this.id                     = identity_data.id;
-                    this.displayName            = identity_data.displayName
-                    this.userKey                = identity_data.userKey
-                    this.cameoId                = identity_data.cameoId
-                    this.avatarId               = identity_data.avatar
-                    this.email                  = identity_data.email
-                    this.phoneNumber            = identity_data.phoneNumber
-                    this.preferredMessageType   = identity_data.preferredMessageType
-                    this.userType               = identity_data.userType
-                    this.created                = identity_data.created
-                    this.lastUpdated            = identity_data.lastUpdated
-                    this.keys                   = []
-
-                    identity_data.publicKeys = identity_data.publicKeys || []
-                    identity_data.publicKeys.forEach(function(publicKey_data){
-                        self.addKey(publicKey_data)
-                    })
-
-                    this.trigger('init:finish', this);
-
-                } else if(typeof identity_data === 'string'){
-                    this.id = identity_data;
-
-                    this.trigger('before-load')
-                    cmAuth.getIdentity(identity_data).then(
-                        function(data){
-                            self.trigger('load', data)
-                            if(typeof data =='string'){
-                                cmLogger('cmAuth.getIdentity() should forward an object, got string instead. ')
-                            }else{
-                                self.init(data)
-                            }
-                            self.trigger('after-load', data)
-                        }
-                    )
-                }
+                :   cmLogger.error('uanable to add key, unknown format: '+key_data);
 
                 return this;
-            }
+            };
 
-            this.init(identity_data);
+            this.getWeakestKeySize = function(){
+                var size = undefined;
+                this.keys.forEach(function(key){
+                    size = size != undefined ? Math.min(size, key.getSize()) : key.getSize();
+                });
+                size = size || 0;
+                return size;
+            };
+
+            init(identity_data);
         }
 
         return Identity;
@@ -164,9 +214,20 @@ angular.module('cmCore').factory('cmIdentityModel',[
 .factory('cmIdentityFactory',[
 
     '$rootScope',
+    'cmFactory',
     'cmIdentityModel',
 
-    function($rootScope, cmIdentityModel){
+    function($rootScope, cmFactory, cmIdentityModel){
+
+        var self = new cmFactory(cmIdentityModel);
+
+        $rootScope.$on('logout', function(){
+            self.reset()
+        });
+
+        return self;
+
+        /* Alt:
         var instances = [];
 
         $rootScope.$on('logout', function(){
@@ -179,7 +240,7 @@ angular.module('cmCore').factory('cmIdentityModel',[
              * @param data id or object
              * @returns {*}
              */
-
+        /*
             get: function(data){
                 var identity = null,
                     id       = data.id || data
@@ -225,5 +286,6 @@ angular.module('cmCore').factory('cmIdentityModel',[
                 return instances.length;
             }
         }
+        */
     }
 ]);

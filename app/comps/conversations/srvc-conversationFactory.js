@@ -1,5 +1,19 @@
 'use strict';
 
+/**
+ * @ngdoc object
+ * @name cmConversationFactory
+ * @description
+ * Handles Conversation Instances<br />
+ * create new instances and check if instances still exists
+ *
+ * @requires cmConversationsAdapter
+ * @requires cmFactory
+ * @requires cmStateManagement
+ * @requires cmConversationModel
+ * @requires $rootScope
+ *
+ */
 angular.module('cmConversations').service('cmConversationFactory', [
     'cmConversationsAdapter',
     'cmFactory',
@@ -42,9 +56,30 @@ angular.module('cmConversations').service('cmConversationFactory', [
         };
 
         /**
+         * @ngdoc method
+         * @methodOf cmConversationFactory
+         *
+         * @name getQuantity
+         * @description
+         * Returns Number of all Conversations
+         * Quantity is first set in getList()
+         *
+         * @returns {Number} quantity Number of all Conversations
+         */
+        self.getQuantity = function(){
+            return _quantity;
+        }
+
+        /**
          * EventHandling
          */
-        $rootScope.$on('logout', function(){ self.reset() })
+        $rootScope.$on('logout', function(){ self.reset() });
+
+        cmConversationsAdapter.on('message:new', function(event,data){
+            self.create(data.conversationId)
+            .update() 
+            .trigger('message:new', data.message)
+        })
 
         return self;
     }

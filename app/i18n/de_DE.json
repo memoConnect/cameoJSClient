@@ -126,7 +126,9 @@
             "RECIPIENTS": "Empfänger",
             "SUBJECT": "Betreff",            
             "PASSPHRASE": "Schlüssel",
-            "MESSAGES": "Nachrichten"
+            "MESSAGES": "Nachrichten",
+            "IMAGE": "Bild",
+            "FILE": "Datei"
         },
         "TEXT": {
             "REQUEST_CAPTCHA": "Bitte ein (neues) Captcha senden.",

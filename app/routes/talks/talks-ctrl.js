@@ -20,21 +20,30 @@ define([
         function($scope, $rootScope, cmUserModel, cmConversationFactory, cmUtil, cmModal, $location) {
             $scope.loading = true;
 
-            $scope.conversations = cmConversationFactory;
+            /**
+             * Welcome modal shown for new user
+             */
+            if(cmUserModel.comesFromRegistration !== false){
+                cmUserModel.comesFromRegistration = false;
 
-            $scope.conversations.state.on('change',function(){
-                $scope.loading = $scope.conversations.state.get('loading');
-            });
+                cmModal
+                    .create({
+                        id: 'welcome',
+                        'cm-title': 'CAMEO.WELCOME'
+                    })
 
-            if(cmUserModel.isAuth() === true){
-//                cmConversationsModel.getConversations();
+                cmModal.open('welcome')
             }
 
-
             /**
-             * erster Aufruf
+             * init conversations to scope
              */
+            $scope.conversations = cmConversationFactory;
             $scope.conversations.getList();
+
+//            if(cmUserModel.isAuth() === true){
+//                $scope.conversations.getList();
+//            }
 
             /**
              * load more Conversations
@@ -50,30 +59,16 @@ define([
              * @returns {boolean}
              */
             $scope.showMore = function(){
-//                if(cmConversationsModel.conversations.length == 0){
-//                    return false;
-//                }
-//
-//                if(cmConversationsModel.conversations.length == cmConversationsModel.quantity){
-//                    return false;
-//                }
+                if($scope.conversations.length == 0){
+                    return false;
+                }
+
+                if($scope.conversations.length == $scope.conversations.getQuantity()){
+                    return false;
+                }
 
                 return true;
-            }
-
-            if(cmUserModel.comesFromRegistration !== false){
-                cmUserModel.comesFromRegistration = false;
-
-                cmModal
-                .create({
-                    id: 'welcome',
-                    'cm-title': 'CAMEO.WELCOME'
-                })
-                
-                cmModal.open('welcome')
-            }
-
-            
+            };
 
             $scope.goToConversation = function(id){
                 if(typeof id != 'undefined'){
@@ -81,13 +76,20 @@ define([
                 }
 
                 return false;
-            }
+            };
 
             $scope.createNewConversation = function(){
                 delete($rootScope.pendingConversation);
                 $location.path('/conversation/')
-            }
+            };
 
+
+            /**
+             * Event Handling
+             */
+            $scope.conversations.state.on('change',function(){
+                $scope.loading = $scope.conversations.state.is('loading');
+            });
         }
     ]);
 });

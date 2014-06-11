@@ -24,6 +24,13 @@ angular.module('cmUi').directive('cmIcons',[
                     }
                 }
 
+
+
+                attrs.$observe('icons', function(icons) {
+                    scope.icons = attrs.icons
+                    draw()
+                })
+
                 attrs.$observe('count', function(count) {
                     scope.count = attrs.count
                     draw()

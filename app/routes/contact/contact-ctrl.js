@@ -36,7 +36,7 @@ define([
                         // set data froom api
                         $scope.contact = data;
                         // get identity model
-                        $scope.identity = cmIdentityFactory.create(data.identity);
+                        $scope.identity = cmIdentityFactory.create(data.identity,true);
 
                         //////////////////////
                         // TODO: mock workarround json in array

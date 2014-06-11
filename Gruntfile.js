@@ -726,10 +726,10 @@ module.exports = function (grunt) {
                 deferLoad: false,
                 html5Mode: false,
                 startPage: '/core',
-                title: 'CameoNET JS Client',
+                title: 'CameoNET QS',
                 image: 'app/favicon.ico',
                 imageLink: 'https://www.cameo.io',
-                titleLink: '/core',
+                titleLink: '/docs/index.html',
                 bestMatch: true
             },
             core: {
@@ -740,9 +740,21 @@ module.exports = function (grunt) {
                 src: ['app/comps/ui/*.js'],
                 title: 'cmUi'
             },
-            api: {
-                src: ['resource/docs/api.ngdoc'],
+            conversations: {
+                src: ['app/comps/conversations/*.js'],
+                title: 'cmConversations'
+            },
+            '1-api': {
+                src: ['resource/docs/api/*.ngdoc'],
                 title: 'api'
+            },
+            '2-help': {
+                src: ['resource/docs/help/*.ngdoc'],
+                title: 'help'
+            },
+            '3-icons': {
+                src: ['resource/docs/misc/*.ngdoc'],
+                title: 'icons'
             }
         },
 

@@ -23,9 +23,16 @@ describe('cmIdentityModel', function(){
         expect(cmIdentityModel).toBeDefined()
     })
 
-    it('should have init function', function(){
+    // init is now private
+    xit('should have init function', function(){
         var obj = createIdentity();
         expect(obj.init).toBeDefined()
+    })
+
+    it('should have importData & load methods', function(){
+        var obj = createIdentity();
+        expect(obj.importData).toBeDefined()
+        expect(obj.load).toBeDefined()
     })
 
     describe('Encryption and Key Management', function(){        
@@ -67,6 +74,10 @@ describe('cmIdentityModel', function(){
     })
 })
 
+/* No longer need, same tests at generic factory
+
+
+
 describe('cmIdentityFactory', function(){
     var cmIdentityFactory, cmIdentityModel;
 
@@ -86,15 +97,6 @@ describe('cmIdentityFactory', function(){
         expect(cmIdentityFactory).toBeDefined()
     })
 
-    it('should have create function', function(){
-        expect(cmIdentityFactory.create).toBeDefined()
-    })
-
-    it('should have getQty function', function(){
-        expect(cmIdentityFactory.getQty).toBeDefined()
-    })
-
-
     describe('create Instance(s) of cmIdentityModel', function(){
         var tmpInstanceId_1 = 'moep';
         var tmpInstanceId_2 = {id:'blub'};
@@ -102,13 +104,13 @@ describe('cmIdentityFactory', function(){
 
         it('there should be one instance after first creation.', function(){
             var instance = cmIdentityFactory.create({ id:tmpInstanceId_1 });
-            expect(cmIdentityFactory.getQty()).toBe(1);
+            expect(cmIdentityFactory.length).toBe(1);
         })
 
         it('there should be two instances after second creation.', function(){
             var instance1 = cmIdentityFactory.create({ id:tmpInstanceId_1 });
             var instance2 = cmIdentityFactory.create({ id:tmpInstanceId_2 });
-            expect(cmIdentityFactory.getQty()).toBe(2);
+            expect(cmIdentityFactory.length).toBe(2);
         })
 
         /**
@@ -122,5 +124,7 @@ describe('cmIdentityFactory', function(){
 //            var instance3 = cmIdentity.create(tmpInstanceId_1);
 //            expect(cmIdentity.getQty()).toBe(2);
 //        })
+/*        
     })
 });
+*/

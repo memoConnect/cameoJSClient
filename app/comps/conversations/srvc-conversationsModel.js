@@ -1,5 +1,8 @@
 'use strict';
 
+/****************** replaced by cmConversationsFactory ***********/
+
+
 angular.module('cmConversations').service('cmConversationsModel', [
 
     'cmConversationsAdapter',

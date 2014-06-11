@@ -1,16 +1,24 @@
 'use strict';
 
+/**
+ * @deprecated
+ */
 angular.module('cmConversations').factory('cmRecipientModel',[
     'cmConversationsAdapter',
     'cmUserModel',
-    function (cmConversationsAdapter, cmUserModel){
-        var RecipientModel = function(identity){
-            var self = identity;
+    'cmIdentityFactory',
+    'cmLogger',
+    function (cmConversationsAdapter, cmUserModel, cmIdentityFactory, cmLogger){
+
+        function RecipientModel(identity){
+            cmLogger.debug('RecipientModel deprecated!!!!');
+
+            var self = cmIdentityFactory.create(identity,true);
 
             self.addTo = function(conversation){
                 conversation.addRecipient(self);
                 return self;
-            }
+            };
 
             self.sendTo = function(conversationId){
                 if(conversationId != ''){
@@ -18,7 +26,7 @@ angular.module('cmConversations').factory('cmRecipientModel',[
                 }
 
                 return self;
-            }
+            };
 
             self.removeFrom = function(conversationId){
                 if(conversationId != ''){
@@ -26,11 +34,11 @@ angular.module('cmConversations').factory('cmRecipientModel',[
                 }
 
                 return self;
-            }
+            };
 
-            return identity
+            return self;
         }
 
         return RecipientModel;
     }
-])
+]);

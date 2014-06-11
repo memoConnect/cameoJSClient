@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmConversation', [
-    'cmConversationsModel',
-    'cmMessageFactory',
+    'cmConversationFactory',
     'cmUserModel',
     'cmRecipientModel',
     'cmCrypt',
@@ -11,7 +10,7 @@ angular.module('cmConversations').directive('cmConversation', [
     'cmModal',
     '$location',
     '$rootScope',
-    function (cmConversationsModel, cmMessageFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope) {
+    function (cmConversationFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope) {
         return {
             restrict: 'AE',
             templateUrl: 'comps/conversations/drtv-conversation.html',
@@ -30,7 +29,7 @@ angular.module('cmConversations').directive('cmConversation', [
 
                 /**
                  * check if is new
-                 * @returns {boolean|*|$scope.new_conversation}
+                 * @returns {boolean}
                  */
                 this.isNew = function(){
                     return !conversation_id
@@ -50,14 +49,17 @@ angular.module('cmConversations').directive('cmConversation', [
                          * check if files exists
                          * after success resolve step again in here without files
                          */
+                        console.log('send',$scope.hasFiles(),$scope.conversation.getPassphrase())
                         if($scope.hasFiles()) {
-                            $scope.prepareFilesForUpload($scope.conversation.getPassphrase())
-                                .then(function(){
+                            $scope.prepareFilesForUpload($scope.conversation.getPassphrase()).then(
+                                function(){
                                     angular.forEach($scope.files, function(file){
                                         if(file.id != undefined){
                                             files.push(file);
                                         }
                                     });
+
+                                    console.log('prepareFilesForUpload:resolved',$scope.files,files)
 
                                     /**
                                      * Nested Function in drtv-attachments
@@ -66,7 +68,6 @@ angular.module('cmConversations').directive('cmConversation', [
 
                                     sendMessage();
                                 });
-                            return false;
                         } else {
                             sendMessage();
                         }
@@ -95,6 +96,7 @@ angular.module('cmConversations').directive('cmConversation', [
                  * @returns {boolean}
                  */
                 function isMessageValid(){
+                    console.log('isMessageValid', $scope.my_message_text, files.length)
                     if($scope.my_message_text != '' || files.length > 0){
                         return true;
                     }
@@ -105,64 +107,75 @@ angular.module('cmConversations').directive('cmConversation', [
                  * send message to api
                  */
                 function sendMessage() {
+
                     /**
                      * validate answer form
                      * @type {boolean}
                      */
-                    var passphrase_valid    = !!$scope.conversation.passphraseValid(),
-                        message_valid       = isMessageValid() ,
-                        recipients_missing  = $scope.conversation.recipients.length < 1 //@todo mocked
-                    // is everything valid? 
-                    if(message_valid && passphrase_valid && !recipients_missing){
-                        // create new conversation
-                        if($scope.conversation.state.is('new')){
-                            $scope.conversation.save().then(
-                                function(){
-                                    sendMessage();
-                                },
-                                function(){
-                                    $scope.isSending = false;
-                                }
-                            )
-                        // add to existing conversation
-                        } else {
-                            cmMessageFactory.create()
-                                .addFiles(files)
-                                .setText($scope.my_message_text)
-                                .setPublicData($scope.conversation.getPassphrase() ? [] : ['text','fileIds'])
-                                .encrypt($scope.conversation.getPassphrase())
-                                .addTo($scope.conversation)
-                                .sendTo($scope.conversation.id)
-                                .then(function(){
-                                    //@ TODO: solve rekeying another way:
-                                    $scope.conversation
-                                    .saveEncryptedPassphraseList()
+                    var message_invalid         = !isMessageValid(),
+                        passphrase_invalid      = !$scope.conversation.passphraseValid(),
+                        recipients_missing      = !$scope.conversation.recipients.length > 0 //@todo mocked
 
-                                    $scope.conversation.numberOfMessages++;
-                                    $scope.my_message_text = "";
-                                    files = [];
-                                    $scope.isSending = false;
 
-                                    // route to detailpage of conversation
-                                    if(!conversation_id){
-                                        cmConversationsModel.addConversation($scope.conversation, true);
-                                        $location.path('/conversation/' + $scope.conversation.id);
-                                    }
-                                    cmLogger.debug('message:sent')
-                                });
-                        }
-                    } else {
-                        // notify handler
-                        if (!passphrase_valid)
-                            cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID', {ttl:5000});
-                        if (!message_valid)
+                    console.log('sendMessage','message_invalid '+message_invalid, 'passphrase_invalid '+passphrase_invalid, 'recipients_missing '+recipients_missing)
+
+                    //If anything is invalid, abort and notify the user:
+                    if(message_invalid || passphrase_invalid || recipients_missing){
+
+                        if (message_invalid)
                             cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY', {ttl:5000});
+
+                        if (passphrase_invalid)
+                            cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID', {ttl:5000});
+
                         if (recipients_missing)
                             cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING', {ttl:5000});
 
                         // enable send button
                         $scope.isSending = false;
+
+                        return false
                     }
+
+                    //If we got this far everything should be valid.
+                    //Is the conversation newly created and has not been saved to the backend yet?                  
+                    
+                    if($scope.conversation.state.is('new')){                        
+                        //The conversations has not been saved to the Backend, do it now:
+                        $scope.conversation.save();
+                        //When that is done try again to send the message:
+                        $scope.conversation.one('save:finished', function(){
+                           sendMessage();
+                        });
+                        return false                        
+                    }
+
+
+                    //If we got this far the conversation has been saved to the backend.
+                    //Create a new message:
+                    $scope.conversation.messages.create({conversation:$scope.conversation})
+                    .addFiles(files)
+                    .setText($scope.my_message_text)
+                    .setPublicData($scope.conversation.getPassphrase() === null ? ['text','fileIds'] : [])
+                    .encrypt()
+                    .save()
+                    .then(function(){
+                        //@ TODO: solve rekeying another way:
+//                                    $scope.conversation.saveEncryptedPassphraseList();
+
+                        $scope.conversation.numberOfMessages++;
+                        $scope.my_message_text = "";
+                        files = [];
+                        $scope.isSending = false;
+
+                        // route to detailpage of conversation
+                        if(!conversation_id){
+                            cmConversationFactory.register($scope.conversation);
+                            $location.path('/conversation/' + $scope.conversation.id);
+                        }
+                        cmLogger.debug('message:sent');
+                    });
+                    
                 }
 
                 this.addPendingRecipients = function(){
@@ -174,6 +187,11 @@ angular.module('cmConversations').directive('cmConversation', [
                 };
 
                 $scope.init = function (conversation) {
+                    if(!conversation){
+                        cmLogger.debug("Conversation not found.")
+                        return false
+                    }
+
                     $rootScope.pendingConversation = conversation;
 
                     // reload detail of conversation
@@ -182,36 +200,29 @@ angular.module('cmConversations').directive('cmConversation', [
                     self.addPendingRecipients();
 
                     $scope.my_message_text  = '';
-                    $scope.password         = '';
                     $scope.show_contacts    = false;
                 };
 
                 // existing conversation
-                if(conversation_id){
-                    cmConversationsModel
-                        .getConversation(conversation_id)
-                            .then(function (conversation){
-                                $scope.init(conversation)
-                                $scope.conversation.decrypt()
-                            })
-                // pending conversation
+                if(conversation_id){                                        
+                    $scope.init( cmConversationFactory.create(conversation_id) )
+
+                // pending conversation:
                 } else if($rootScope.pendingConversation){
-                    $rootScope.pendingConversation.id
+                        $rootScope.pendingConversation.id
                     ?   $location.path('conversation/'+$rootScope.pendingConversation.id)
-                    :   $scope.init($rootScope.pendingConversation)
-                // new conversation
+                    :   $scope.init($rootScope.pendingConversation);
+
+                // new conversation:
                 } else {
-                    cmConversationsModel.createNewConversation().then(
-                        function(newConversation){
-                            newConversation.addRecipient(cmUserModel.data.identity);
-                            $scope.init(newConversation);
-                            //$scope.conversation.setPassphrase();
-                        }
-                    );
+                    $scope.init(
+                        cmConversationFactory.create()
+                        .addRecipient(cmUserModel.data.identity) // muss nicht, macht die api auch von alleine (?)
+                    )
                 }
 
                 /**
-                 * Delete explicit pending Objects
+                 * Delete pending Objects
                  */
                 cmUserModel.on('cmUserModel:doLogout',function(){
                     $rootScope.pendingRecipients = [];

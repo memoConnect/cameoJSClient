@@ -26,7 +26,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
 
                         scope._setLevel(levels[conversation.getSafetyLevel()]);
 
-                        if(!cmConversation.isNew() && !conversation.password && conversation.getEncryptionType() == 'symmetric') {
+                        if(!cmConversation.isNew() && !conversation.password && conversation.getKeyTransmission() == 'symmetric') {
                             scope.bodyVisible = true;
                         }
 
@@ -58,27 +58,35 @@ angular.module('cmConversations').directive('cmConversationControls', [
                     $scope.$broadcast('captcha:refresh');
                 };
 
+                /**
+                 * @todo
+                 *
+                 * @deprecated
+                 * @param level
+                 * @private
+                 */
                 $scope._setLevel = function(level){
                     if(level == 'unsafe'){
-                        $scope.conversation.preferences.encryption = false
-                        $scope.conversation.preferences.keyTransmission = 'symmetric'
+                        $scope.conversation.disableEncryption()
                     }
 
-                    if(level == 'safe'){
-                        $scope.conversation.preferences.encryption = true
-                        $scope.conversation.preferences.keyTransmission = 'symmetric'
+                    if(level == 'safe'){                        
+                        $scope.conversation.enableEncryption()
+                        //$scope.conversation.preferences.encryption = true
+                        //$scope.conversation.preferences.keyTransmission = 'symmetric'
                     }
 
                     if(level == 'safer'){
-                        $scope.conversation.preferences.encryption = true
-                        $scope.conversation.preferences.keyTransmission = 'asymmetric'
+                        $scope.conversation.enableEncryption()
+                        //$scope.conversation.preferences.encryption = true
+                        //$scope.conversation.preferences.keyTransmission = 'asymmetric'
                     }
 
                     $scope.safetyLevel = level;
                 };
 
                 $scope.setLevel = function(level){
-                    if(cmUserModel.isGuest() !== true){
+                    if(cmUserModel.isGuest() !== true){                        
                         $scope._setLevel(level)
                     }
                 };
@@ -92,6 +100,13 @@ angular.module('cmConversations').directive('cmConversationControls', [
 
                 $scope.manageRecipients = function(){
                     $location.path('/recipients')
+                }
+
+                $scope.decrypt = function(){
+                    $scope.conversation.one('decrypt:failed', function(){
+                        cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG',{ttl:2000})
+                    })
+                    $scope.conversation.decrypt();
                 }
 
             }

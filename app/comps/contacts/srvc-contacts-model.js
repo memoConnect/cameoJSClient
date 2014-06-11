@@ -55,7 +55,7 @@ angular.module('cmContacts').service('cmContactsModel',[
                         id: contact.id,
                         contactType: contact.contactType,
                         groups: contact.groups,
-                        identity: cmIdentityFactory.create(contact.identity)
+                        identity: cmIdentityFactory.create(contact.identity, true)
                     });
                 }
             }
@@ -63,7 +63,7 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         this._clearContacts = function(){
             this.contacts = [];
-        }
+        };
 
         /**
          * Model Logic
@@ -177,7 +177,7 @@ angular.module('cmContacts').service('cmContactsModel',[
             }
 
             if(check !== true){
-                this.requests.push(new cmFriendRequestModel({identity: cmIdentityFactory.create(request_data.identity), message:request_data.message || '', created:request_data.created || ''}));
+                this.requests.push(new cmFriendRequestModel({identity: cmIdentityFactory.create(request_data.identity, true), message:request_data.message || '', created:request_data.created || ''}));
             }
         };
 
@@ -297,8 +297,6 @@ angular.module('cmContacts').service('cmContactsModel',[
             resetContacts();
         });
 
-        init();
-
         this.on('friendRequests:updated', function(){
             this._clearContacts();
             init();
@@ -318,5 +316,7 @@ angular.module('cmContacts').service('cmContactsModel',[
         cmUserModel.on('init', function(){
             init();
         });
+
+        init();
     }
 ]);

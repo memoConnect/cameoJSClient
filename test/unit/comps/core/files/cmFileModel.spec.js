@@ -54,13 +54,8 @@ describe('cmFileModel', function() {
     })
 
     describe('passphrase', function(){
-        it('should be undefined', function(){
+        it('should be undefined - because it is private', function(){
             expect(cmFileModel.passphrase).not.toBeDefined()
-        })
-
-        it('should be "moep"', function(){
-            cmFileModel.setPassphrase('moep')
-            expect(cmFileModel.passphrase).toBe('moep')
         })
     })
 
