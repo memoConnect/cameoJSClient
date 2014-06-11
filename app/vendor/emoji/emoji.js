@@ -209,8 +209,9 @@
                     scope.showList = false;
 
                     if(textareaModel != undefined) {
-                        textarea.val(strWithEmoticon);
+                        //textarea.val(strWithEmoticon);
                         scope[textareaModel] = strWithEmoticon;
+                        scope.$apply();
                     }
 
                     textarea[0].focus();
