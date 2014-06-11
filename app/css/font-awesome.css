@@ -230,6 +230,7 @@
 .cm-checkbox-right:before{content:'\f010'}
 .cm-checkbox-wrong:before{content:'\f02a'}
 .cm-checkbox-add:before{content:'\f04e'}
+.cm-checkbox-minus:before{content:'\f058'}
 .cm-lock:before{content:'\f011'}
 .cm-unlock:before{content:'\f012'}
 .cm-fix:before{content:'\f013'}

@@ -16,7 +16,7 @@ angular.module('cmSecurityAspects')
             link:       function(scope, element, attrs){
                             if(scope.aspect.value < 0){
                                 scope.class = 'negative'
-                                scope.icons = 'cm-checkbox-wrong'
+                                scope.icons = 'cm-checkbox-minus'
                             }
 
                             if(scope.aspect.value == 0)
