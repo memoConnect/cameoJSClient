@@ -49,7 +49,7 @@ angular.module('cmConversations').directive('cmConversation', [
                          * check if files exists
                          * after success resolve step again in here without files
                          */
-                        console.log('send',$scope.hasFiles(),$scope.conversation.getPassphrase())
+//                        console.log('send',$scope.hasFiles(),$scope.conversation.getPassphrase())
                         if($scope.hasFiles()) {
                             $scope.prepareFilesForUpload($scope.conversation.getPassphrase()).then(
                                 function(){
@@ -59,7 +59,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                         }
                                     });
 
-                                    console.log('prepareFilesForUpload:resolved',$scope.files,files)
+//                                    console.log('prepareFilesForUpload:resolved',$scope.files,files)
 
                                     /**
                                      * Nested Function in drtv-attachments
@@ -96,7 +96,7 @@ angular.module('cmConversations').directive('cmConversation', [
                  * @returns {boolean}
                  */
                 function isMessageValid(){
-                    console.log('isMessageValid', $scope.my_message_text, files.length)
+//                    console.log('isMessageValid', $scope.my_message_text, files.length)
                     if($scope.my_message_text != '' || files.length > 0){
                         return true;
                     }
@@ -117,7 +117,7 @@ angular.module('cmConversations').directive('cmConversation', [
                         recipients_missing      = !$scope.conversation.recipients.length > 0 //@todo mocked
 
 
-                    console.log('sendMessage','message_invalid '+message_invalid, 'passphrase_invalid '+passphrase_invalid, 'recipients_missing '+recipients_missing)
+//                    console.log('sendMessage','message_invalid '+message_invalid, 'passphrase_invalid '+passphrase_invalid, 'recipients_missing '+recipients_missing)
 
                     //If anything is invalid, abort and notify the user:
                     if(message_invalid || passphrase_invalid || recipients_missing){

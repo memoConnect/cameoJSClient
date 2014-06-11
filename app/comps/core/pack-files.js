@@ -250,14 +250,23 @@ angular.module('cmCore')
             }
 
             this.encrypt = function(passphrase) {
-                this.raw
-                    ?   this.encryptedRaw = (passphrase == null) ? this.raw : cmCrypt.encryptWithShortKey(passphrase, this.raw)  //Todo: long Key!
-                    :   cmLogger.error('Unable ro encrypt; chunk.raw is empty.  Try calling chunk.blobToBinaryString() first.')
+
+                if(passphrase == null){
+                    this.plain = this.raw;
+                } else {
+                    this.encryptedRaw = cmCrypt.encryptWithShortKey(passphrase, this.raw)  //Todo: long Key!
+                }
+//
+//                this.raw
+//                    ?   this.encryptedRaw = (passphrase == null) ? this.raw : cmCrypt.encryptWithShortKey(passphrase, this.raw)  //Todo: long Key!
+//                    :   cmLogger.error('Unable ro encrypt; chunk.raw is empty.  Try calling chunk.blobToBinaryString() first.')
 
                 return this
             }
 
             this.upload = function(id, index){
+
+
                 return(
                     this.encryptedRaw
                         ?   cmFilesAdapter.addChunk(id, index, this.encryptedRaw)
