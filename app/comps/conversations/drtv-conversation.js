@@ -3,14 +3,13 @@
 angular.module('cmConversations').directive('cmConversation', [
     'cmConversationFactory',
     'cmUserModel',
-    'cmRecipientModel',
     'cmCrypt',
     'cmLogger',
     'cmNotify',
     'cmModal',
     '$location',
     '$rootScope',
-    function (cmConversationFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope) {
+    function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope) {
         return {
             restrict: 'AE',
             templateUrl: 'comps/conversations/drtv-conversation.html',
