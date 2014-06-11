@@ -169,7 +169,7 @@
 
     angular.module("emoji", []).filter("emoji", function () {
         return function (input) {
-            return input.replace(rEmojis, function (match, text) {
+            return input.toString().replace(rEmojis, function (match, text) {
                 return "<i class='emoji emoji_" + text + "' title=':" + text + ":'>" + text + "</i>";
             });
         };

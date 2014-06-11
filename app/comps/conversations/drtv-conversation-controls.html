@@ -107,7 +107,7 @@
             <i class="fa cm-grip"></i>
         </div>
         <div cm-weight="8" class="cm-bar-infos">
-            {{conversation.subject||'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}
+            <span ng-bind-html="conversation.subject||'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmParse"></span>
             <cm-safety-level cm-level="conversation.getSafetyLevel()"></cm-safety-level>
             <cm-recipient-counter>{{conversation.recipients.length||0}}</cm-recipient-counter>
         </div>
