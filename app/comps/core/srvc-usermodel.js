@@ -114,12 +114,12 @@ angular.module('cmCore').service('cmUserModel',[
             var deferred = $q.defer();
 
             if(typeof identity_data !== 'undefined'){
-                deferred.resolve(cmIdentityFactory.get(identity_data));
+                deferred.resolve(cmIdentityFactory.create(identity_data.id));
             } else {
                 if(this.getToken() !== false){
                     cmAuth.getIdentity().then(
                         function(data){
-                            deferred.resolve(cmIdentityFactory.create(data));
+                            deferred.resolve(cmIdentityFactory.create(data,true));
                         },
 
                         function(response){
@@ -225,8 +225,24 @@ angular.module('cmCore').service('cmUserModel',[
             return this;
         };
 
+        this.getLocalKeyIdsForRequest = function(){
+            if(this.isAuth !== false){
+                var keys = this.loadLocalKeys(),
+                    queryString = '';
+
+                if(keys.length > 0){
+                    keys.forEach(function(key){
+                        queryString += '&keyId=' + key.id;
+                    });
+                }
+
+                return queryString;
+            }
+
+            return '';
+        };
+
         /**
-         * @todo check ob Key schon vorhanden ist?!?
          * @param key
          * @returns {*}
          */

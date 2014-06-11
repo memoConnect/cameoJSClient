@@ -22,4 +22,8 @@
     </div>
 </article>
 
-{{textOnly ? message.text  : ''}}
+<span ng-if="textOnly">
+    <span ng-if="isType('text')" ng-bind-html="message.text | cmParse"></span>
+    <span ng-if="isType('image')">{{'CONVERSATION.TAG.IMAGE'|cmTranslate}}</span>
+    <span ng-if="isType('file')">{{'CONVERSATION.TAG.FILE'|cmTranslate}}</span>
+</span>

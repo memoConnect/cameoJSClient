@@ -124,17 +124,17 @@ angular.module('cmUi').directive('cmAvatar',[
                     element.find('img').attr('src', avatarMocks.none );
                     //element.css({'background-image': 'url(' + avatarMocks.none +')'});
                 } else {
-                    scope.$watch(attrs.cmData, function(identity){
-                        if(identity && identity['getAvatar'] != undefined){
+                    var identity = scope.$eval(attrs.cmData);
 
-                            refresh(identity);
-
-                            identity.on('init:finish',function(event, identity){
-                                // refresh Avatar
+                    if(typeof identity == 'object'){
+                        if(identity.state.is('new')) {
+                            identity.on('update:finished', function (event, identity) {
                                 refresh(identity);
                             });
+                        } else {
+                            refresh(identity);
                         }
-                    });
+                    }
                 }
             }
         }

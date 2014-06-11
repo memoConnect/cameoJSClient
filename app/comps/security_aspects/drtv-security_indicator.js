@@ -8,7 +8,7 @@ angular.module('cmSecurityAspects').directive('cmSecurityIndicator',[
         return {
             restrict:   'AE',
             template:    '<cm-icons count="{{positive}}" icons="cm-checkbox-add"    class="positive"></cm-icons>'
-                        +'<cm-icons count="{{negative}}" icons="cm-checkbox-wrong"  class="negative"></cm-icons>'
+                        +'<cm-icons count="{{negative}}" icons="cm-checkbox-minus"  class="negative"></cm-icons>'
                         +'<span ng-if="missing_aspects">{{"SECURITY_ASPECTS.ERROR.MISSING_DATA" |cmTranslate}}</span>',
             scope:      true,
 

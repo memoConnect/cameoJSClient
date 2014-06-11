@@ -10,6 +10,7 @@ angular.module('cmUi').filter('cmParse', [
             text = $filter('cmInlineTranslate')(text)
             text = $filter('cmAutolink')(text, 40)
             text = $filter('nl2br')(text)
+            text = $filter('emoji')(text)
 
             return text
         }

@@ -52,7 +52,7 @@ angular.module('cmCore')
              * @return {Object}            returns the base object for chaining
              */
             
-            obj.trigger = function(event_name, data){         
+            obj.trigger = function(event_name, data){
                 var event = { target : obj }
 
                 obj._callbacks[event_name] = obj._callbacks[event_name] || []   //create the according callback array, if neccessary

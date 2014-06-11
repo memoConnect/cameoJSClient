@@ -22,6 +22,7 @@ require.config({
 
         'angular-moment-wrap': 'vendor/angular-moment/angular-moment',
         'moment': 'vendor/angular-moment/moment-with-langs',
+        'emoji': 'vendor/emoji/emoji',
 
         // requirejs stuff
         'angularAMD': 'vendor/requirejs/angularAMD',
@@ -65,6 +66,7 @@ require.config({
         'angular-moment-wrap': ['angular','moment'],
 
         'angular-loading-bar': ['angular', 'angular-animate'],
+        'emoji': ['angular'],
 
         // packages
         'pckCore': [
@@ -90,7 +92,8 @@ require.config({
         ],
         'pckUi': [
             'pckCore',
-            'util-spin'
+            'util-spin',
+            'emoji'
         ],
         'pckConversations': [
             'angular',

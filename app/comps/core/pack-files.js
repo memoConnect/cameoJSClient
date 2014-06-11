@@ -251,7 +251,7 @@ angular.module('cmCore')
 
             this.encrypt = function(passphrase) {
                 this.raw
-                    ?   this.encryptedRaw = cmCrypt.encryptWithShortKey(passphrase, this.raw)  //Todo: long Key!
+                    ?   this.encryptedRaw = (passphrase == null) ? this.raw : cmCrypt.encryptWithShortKey(passphrase, this.raw)  //Todo: long Key!
                     :   cmLogger.error('Unable ro encrypt; chunk.raw is empty.  Try calling chunk.blobToBinaryString() first.')
 
                 return this
@@ -393,7 +393,8 @@ angular.module('cmCore')
 
         var FileModel = function(fileData){
 
-            var self = this;
+            var self = this,
+                passphrase = undefined;
 
             cmObject.addEventHandlingTo(this);
 
@@ -408,8 +409,8 @@ angular.module('cmCore')
 
             this.base64 = '';
 
-            this.setPassphrase = function(passphrase){
-                this.passphrase = passphrase;// TODO: || null;
+            this.setPassphrase = function(p){
+                passphrase = p;// TODO: || null;
 
                 return this;
             };
@@ -505,7 +506,7 @@ angular.module('cmCore')
 
             this.encryptName = function(){
                 if(this.name){
-                    this.encryptedName = cmCrypt.encryptWithShortKey(this.passphrase, this.name);
+                    this.encryptedName = (passphrase == null) ? this.name : cmCrypt.encryptWithShortKey(passphrase, this.name);
                 } else {
                     cmLogger.error('Unable to encrypt filename; cmFile.name missing. Try calling cmFile.importFile() first.');
                 }
@@ -515,7 +516,7 @@ angular.module('cmCore')
 
             this.decryptName = function() {
                 if(this.encryptedName){
-                    this.name = cmCrypt.decrypt(this.passphrase, this.encryptedName);
+                    this.name = cmCrypt.decrypt(passphrase, this.encryptedName);
                 } else {
                     cmLogger.error('Unable to decrypt filename; cmFile.encryptedFileName missing. Try calling cmFile.imporByFile) first.');
                 }
@@ -525,7 +526,7 @@ angular.module('cmCore')
             this._encryptChunk = function(index){
                 var chunk = this.chunks[index];
 
-                chunk.encrypt(this.passphrase);
+                chunk.encrypt(passphrase);
                 this.encryptedSize += chunk.encryptedRaw.length;
 
                 if(index == (this.chunks.length - 1)){
@@ -549,7 +550,7 @@ angular.module('cmCore')
                 var chunk = this.chunks[index];
 
                 chunk
-                    .decrypt(this.passphrase)
+                    .decrypt(passphrase)
                     .base64ToBlob()
 
                 this.encryptedSize += chunk.encryptedRaw.length;
@@ -598,17 +599,17 @@ angular.module('cmCore')
                 var self = this;
 
                 return (
-                    self.encryptedName && self.chunks
-                        ?   cmFilesAdapter.prepareFile({
-                        name    : self.encryptedName,
+                    self.encryptedName && self.chunks || self.name && self.chunks
+                    ?   cmFilesAdapter.prepareFile({
+                        name    : self.encryptedName || self.name,
                         size    : self.blob.size,//self.encryptedSize,
                         type    : self.type,
                         chunks  : self.chunks.length
                     })
-                        .then(function(id){
-                            return self.id = id
-                        })
-                        :   cmLogger.error('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
+                    .then(function(id){
+                        return self.id = id
+                    })
+                    :   cmLogger.error('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
                 )
             };
 
@@ -616,7 +617,7 @@ angular.module('cmCore')
                 var chunk = this.chunks[index];
 
                 chunk
-                    .encrypt(this.passphrase)
+                    .encrypt(passphrase)
                     .upload(this.id, index)
                     .then(function(){
 
@@ -736,9 +737,9 @@ angular.module('cmCore')
             this.clearBuffer = function(){
                 if(this.state == 'cached') {
                     this.encryptedName = null;
-                    this.passphrase = null;
                     this.chunkIndices = null;
                     this.chunks = null;
+                    passphrase = undefined;
                 }
 
                 return this;

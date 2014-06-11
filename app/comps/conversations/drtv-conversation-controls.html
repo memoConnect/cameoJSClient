@@ -8,8 +8,13 @@
             </div>
         </div>
 
-        <div class="body-group">
+        <div class="body-group" ng-click="show_aspects = !show_aspects">
             <cm-security-indicator cm-data="conversation.securityAspects"/>
+        </div>
+
+        <div class="body-group" ng-if="show_aspects">
+            <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getNegativeAspects()" cm-data="aspect"></cm-security-aspect>
+            <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getPositiveAspects()" cm-data="aspect"></cm-security-aspect>
         </div>
 
         <div class="body-group">
@@ -17,7 +22,7 @@
             <div class="recipients-list">
                 <cm-avatar cm-data="recipient" cm-with-name="true" cm-view="hide-owner" ng-repeat="recipient in conversation.recipients"></cm-avatar>
 
-                <div ng-click ="manageRecipients()" ng-if="conversation.recipients.length == 1" class="add-new-recipients" cm-user-rights>
+                <div ng-click="manageRecipients()" ng-if="conversation.recipients.length == 1" class="add-new-recipients" cm-user-rights>
                     <cm-avatar cm-view="unknown"></cm-avatar>
                     {{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS'|cmTranslate}}
                     <cm-edge></cm-edge>
@@ -58,7 +63,6 @@
             </div>
 
             <div ng-if="safetyLevel == 'safe'">
-
                 <div cm-rubber-space ng-if="isNew">
                     <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':hasCaptcha}" ng-click="toggleCaptcha('password');" data-qa="btn-toogle-password">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</button>
                     <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':!hasCaptcha}" ng-click="toggleCaptcha('captcha');" data-qa="btn-toogle-passcaptcha">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA'|cmTranslate}}</button>
@@ -67,7 +71,7 @@
                 <div class="cm-form-group">
                     <div class="cm-form-control with-inputter" ng-class="{'with-inside-icon':!isNew}">
                         <input type="text" ng-model="conversation.password" placeholder="{{ 'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change/>
-                        <i class="fa cm-key fa-2x with-cursor" ng-click="conversation.decrypt(true);" ng-if="!isNew"></i>
+                        <i class="fa cm-key fa-2x with-cursor" ng-click="decrypt()" ng-if="!isNew"></i>
                     </div>
                 </div>
 
@@ -103,26 +107,10 @@
             <i class="fa cm-grip"></i>
         </div>
         <div cm-weight="8" class="cm-bar-infos">
-            {{conversation.subject||'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}
+            <span ng-bind-html="conversation.subject||'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmParse"></span>
             <cm-safety-level cm-level="conversation.getSafetyLevel()"></cm-safety-level>
             <cm-recipient-counter>{{conversation.recipients.length||0}}</cm-recipient-counter>
         </div>
         <div cm-weight="1"></div>
     </div>
 </div>
-
-<!--
-<cm-overlay id="add-recipients">
-    <div ng-click="$emit('cmOverlay:hide', 'add-recipients')">
-        <i class="fa cm-close fa-2x pull-right"></i>
-        <br />
-        <div class="clearfix"></div>
-    </div>
-    <cm-contacts-list contacts-as="contact">
-        <cm-contact-tag cm-data="contact" ng-click="selectContact(contact.identity); selected = true">
-            <span class="separator"></span>
-            <i class="fa fa-3x" ng-class="{'cm-checkbox': !selected, 'cm-checkbox-right': selected}" ng-click="editContact(contact.identity.id)"></i>
-        </cm-contact-tag>
-    </cm-contacts-list>
-</cm-overlay>
--->

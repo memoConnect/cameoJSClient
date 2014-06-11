@@ -18,6 +18,8 @@ angular.module('cmConversations').filter('cmTagline', [
                 }).join(', '));
             }
 
+            subject = $filter('cmParse')(subject)
+
             return subject;
         }
     }

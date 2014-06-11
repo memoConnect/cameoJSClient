@@ -5,7 +5,14 @@ describe('ConversationsAdapter', function(){
     var cmConversationsAdapter,
         $httpBackend
 
+    beforeEach(function(){
+        module(function($provide){
+            $provide.constant('cmEnv',{});
+        })
+    })
+
     beforeEach(module('cmConversations'))
+
     beforeEach(inject(function(_cmConversationsAdapter_){
         cmConversationsAdapter = _cmConversationsAdapter_
     }))

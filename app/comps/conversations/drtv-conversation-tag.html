@@ -1,9 +1,7 @@
 <cm-avatar cm-data="(conversation | cmLatestMessage).from"></cm-avatar>
 
 <div class="details" cm-weight="3">
-    <div class="subject" data-qa="conversation-subject">
-        {{conversation | cmTagline}}
-    </div>
+    <div class="subject" data-qa="conversation-subject" ng-bind-html="conversation | cmTagline"></div>
     <cm-message cm-data="conversation.getLastMessage()" text-only="true" data-qa ="conversation-last-message"></cm-message>
 </div>
 
@@ -16,7 +14,7 @@
     </div>
     <div class="bottom">
         <cm-recipient-counter>{{conversation.recipients.length||0}}</cm-recipient-counter>
-        <span class="message-count" ng-class="{'cm-unread' : conversation.messages.length > 0}"> ({{conversation.messages.length||0}}) </span>
+        <span class="message-count" ng-class="{'cm-unread' : conversation.messages.length > 0}"> ({{conversation.numberOfMessages || conversation.messages.length||0}}) </span>
     </div>
 </div>
 

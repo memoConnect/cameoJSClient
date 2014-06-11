@@ -2,21 +2,30 @@
 
 angular.module('cmSecurityAspects')
 .factory('cmSecurityAspectsConversation',[
-
     'cmSecurityAspects',
-
     function(cmSecurityAspects){
-        
         var securityAspectsConversation = new cmSecurityAspects()
 
         securityAspectsConversation
+        /*
         .addAspect({
             id:             'NOT_ENCRYPTED',
             value:          -3,
             check:          function(conversation){
-                                return true
+                                return conversation.getKeyTransmission() == 'none'
+                            },
+
+            toggleCheck:    function(conversation){
+                                return conversation.state.is('new')
+                            },
+
+            toggleCall:     function(conversation){
+                                conversation.enableEncryption()
                             }
         })
+        */
+
+        
         .addAspect({
             id:             'ENCRYPTED',
             value:          1,
@@ -58,7 +67,7 @@ angular.module('cmSecurityAspects')
             check:          function(conversation){
                                 return true
                             }
-        })
+        })        
 
         return securityAspectsConversation 
     }
