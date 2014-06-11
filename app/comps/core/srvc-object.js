@@ -6,8 +6,9 @@ angular.module('cmCore')
 .service('cmObject', [
 
     '$q',
+    'cmLogger',
 
-    function($q){
+    function($q, cmLogger){
         var self = this
 
         /**
@@ -17,6 +18,7 @@ angular.module('cmCore')
 
         this.addEventHandlingTo = function(obj){
             obj._callbacks = {}
+            obj._receptors = []
 
 
             /**
@@ -60,6 +62,10 @@ angular.module('cmCore')
                 obj._callbacks[event_name].forEach(function(callback_obj, index){
                     // call callback function and delete if need be, see ._call()
                     if(!_call(callback_obj, event, data)) delete obj._callbacks[event_name][index]
+                })
+
+                obj._receptors.forEach(function(receptor){
+                    receptor.trigger(event_name, data)
                 })
 
                 return obj
@@ -109,12 +115,62 @@ angular.module('cmCore')
                 return obj
             }
 
+            /**
+             * Function to bind a call back to event(s). Unbind after triggered once.
+             * @param  {String}   event_names Names of the events to bind to. Multiple event names should be separated by ' '.
+             * @param  {Function} callback    Function to call, when the event is triggered. Should return wether the call was successfull or not.
+             * @param  {number}   [limit]     Number of times the callback should be (succsessfully) called. If not provided, there is no limit to the number of calls.
+             * @return {Object}               returns the object for chaining.
+             */
             obj.one = function(event_names, callback){
                 obj.on(event_names, callback, 1)
             }
 
+            /**
+             * @ngdocs
+             * @name  brodcastEventsTo
+             *
+             * @description
+             * Function to brodacast event from on event to another.
+             * 
+             * @param  {object} receptor    Any object with event handling.
+             * @returns {*}     this        Returns itself for chaining.         
+             */
+            obj.broadcastEventsTo = function(receptor){
+                if(receptor && typeof receptor.trigger == 'function'){
+                    this._receptors.push(receptor)
+                }else{
+                    cmLogger.debug('cmObject: EventHandling: unable to add receptor.', obj)
+                }
+
+                return obj
+            }
+
+            /**
+             * @ngdocs
+             * @name echoEventsFrom
+             * @description 
+             * Retriggers every event of source object on itself.
+             *
+             * @param   {*}          source Source object.
+             * @returns {*}  this    Returns itself for chaining.
+             */
+            obj.echoEventsFrom = function(source){
+                if(source && typeof source.broadcastEventsTo == 'function'){
+                    source.broadcastEventsTo(obj)
+                }else{
+                    cmLogger.debug('cmObject: EventHandling: unable to echo Events.', obj)
+                }
+            }
+
+
             return this 
         }
+
+
+
+
+
 
 
         this.addChainHandlingTo = function(obj){

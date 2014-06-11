@@ -17,7 +17,7 @@ describe('cmObject', function(){
 
     describe('event handling', function(){
 
-        it('should privide functions to trigger an listen to events.', function(){
+        it('should provide functions to trigger an listen to events.', function(){
             var myObject = {}
 
             cmObject.addEventHandlingTo(myObject)
@@ -80,6 +80,42 @@ describe('cmObject', function(){
             expect(y).toBe(3)
             expect(z).toBe(4)
             expect(o).toBe(5)
+        })
+
+        it('should provide a function to broadcast events to another object.', function(){
+            var myObject        = {},
+                myOtherObject   = {},
+                x               = 0
+
+            cmObject.addEventHandlingTo(myObject)
+            cmObject.addEventHandlingTo(myOtherObject)
+
+            myObject.broadcastEventsTo(myOtherObject)
+            myOtherObject.on('hello_world', function(){
+                x = 1
+            })
+
+            myObject.trigger('hello_world')
+
+            expect(x).toBe(1)
+        })
+
+        it('should provide a function to echo events from another object.', function(){
+            var myObject        = {},
+                myOtherObject   = {},
+                x               = 0
+
+            cmObject.addEventHandlingTo(myObject)
+            cmObject.addEventHandlingTo(myOtherObject)
+
+            myObject.echoEventsFrom(myOtherObject)
+            myObject.on('hello_world', function(){
+                x = 1
+            })
+
+            myOtherObject.trigger('hello_world')
+
+            expect(x).toBe(1)
         })
 
     })
