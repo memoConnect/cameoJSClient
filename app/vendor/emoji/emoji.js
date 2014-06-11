@@ -165,14 +165,40 @@
             "small_blue_diamond", "small_orange_diamond", "small_red_triangle",
             "small_red_triangle_down", "shipit"
         ],
+        convertSmileyToEmoji = [
+            {matcher: [':\\)','\\(:'], emoji:'blush'},
+            {matcher: [';\\)','\\(;'], emoji:'wink'},
+            {matcher: [':D'], emoji:'smile'},
+            {matcher: [':\\*','\\*:'], emoji:'kissing_heart'},
+            {matcher: ['<3'], emoji:'heart_eyes'},
+            {matcher: ['-_-'], emoji:'expressionless'},
+            {matcher: ['B\\)'], emoji:'sunglasses'},
+            {matcher: [':P'], emoji:'stuck_out_tongue'},
+            {matcher: [';P'], emoji:'stuck_out_tongue_winking_eye'},
+            {matcher: [':\\('], emoji:'worried'},
+            {matcher: [':o'], emoji:'open_mouth'},
+            {matcher: [":\\'\\("], emoji:'cry'},
+            {matcher: ['\\.!\\.'], emoji:'poop'}
+        ],
         rEmojis = new RegExp(":(" + emojis.join("|") + "):", "g");
 
     angular.module('emoji',['cmCore'])
     .filter('emoji', function(){
         return function (input){
-            return input.toString().replace(rEmojis, function (match, text) {
+            var str = '';
+            // regular emojis
+            str = input.toString().replace(rEmojis, function (match, text) {
                 return '<i class="emoji emoji_'+text+'" title=":'+text+':">'+text+'</i>';
             });
+            // smiley to emoji
+            convertSmileyToEmoji.forEach(function(smiley){
+                var rSmiley = new RegExp(smiley.matcher.join("|"), "g");
+                str = str.toString().replace(rSmiley, function () {
+                    return '<i class="emoji emoji_'+smiley.emoji+'" title=":'+smiley.emoji+':">'+smiley.emoji+'</i>';
+                });
+            });
+
+            return str;
         };
     })
     .directive('cmEmojiList', function(cmUtil){
