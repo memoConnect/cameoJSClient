@@ -2,6 +2,12 @@
 
 //This service provides extra funcionality for core objects
 
+/**
+ * @ngdoc service
+ * @name cmObject
+ * @description
+ *  
+ */
 angular.module('cmCore')
 .service('cmObject', [
 
@@ -12,6 +18,10 @@ angular.module('cmCore')
         var self = this
 
         /**
+         * @ngdoc method
+         * @methodOf cmObject
+         * @name addEventHandlingTo
+         * @description
          * Function to add basic event handling to any object, to bubbling up or down provided
          * @param {Object} obj any objevct to extend with event ahndlung capabilities
          */
@@ -127,7 +137,7 @@ angular.module('cmCore')
             }
 
             /**
-             * @ngdocs
+             * @methodOf 
              * @name  brodcastEventsTo
              *
              * @description
@@ -147,7 +157,6 @@ angular.module('cmCore')
             }
 
             /**
-             * @ngdocs
              * @name echoEventsFrom
              * @description 
              * Retriggers every event of source object on itself.
