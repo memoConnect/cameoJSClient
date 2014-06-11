@@ -63,8 +63,9 @@ angular.module('cmCore').service('cmUserModel',[
 
         /**
          * @ngdoc method
-         * @name init
          * @methodOf cmUserModel
+         *
+         * @name init
          * @description
          * initialize the model with loading the identity
          *

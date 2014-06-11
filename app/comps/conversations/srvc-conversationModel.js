@@ -1,5 +1,26 @@
 'use strict';
 
+/**
+ * @ngdoc object
+ * @name cmConversationModel
+ * @constructor
+ * @description
+ * Represents a Conversation.
+ * # Events
+ *  - init:finished
+ *  - update:finished
+ *  - load:failed
+ *  - message:new
+ *  - message:added
+ *  - save:failed
+ *  - save:finished
+ * # States
+ *  - new
+ *  - loading
+ *
+ * @param {Object} [data] The conversation data as received from the backend.
+ */
+
 angular.module('cmConversations').factory('cmConversationModel',[
     'cmConversationsAdapter',
     'cmMessageModel',
@@ -21,25 +42,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
     '$rootScope',
     function (cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase, cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
 
-        /**
-         * @constructor
-         * @description
-         * Represents a Conversation.
-         * Events
-         *  - init:finished
-         *  - update:finished
-         *  - load:failed
-         *  - message:new
-         *  - message:added
-         *  - save:failed
-         *  - save:finished
-         * Stats
-         *  - new
-         *  - loading
-         *
-         *
-         * @param {Object} [data] The conversation data as received from the backend.
-         */
         function ConversationModel(data){
             var self        = this,
                 passphrase  = new cmPassphrase();
@@ -100,7 +102,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @description
              * Function to initialize the conversation. Should never be called from the outside.
              *
-             * @param {Object} [data] The conversation data as required by .importData(), see below.
+             * @param {Object} data The conversation data as required by .importData(), see below.
              */
             function init(data){
 //                cmLogger.debug('cmConversationModel:init');
@@ -301,7 +303,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @description
              * send conversation to api
              *
-             * @returns {*}
+             * @returns {Promise} for async handling
              */
             this.save = function(){
                 if(this.state.is('new')){
@@ -462,7 +464,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              *
              * Passphrase data from the API is irrelevant for this check, because it might be corrupt. Corrupt passphrase data tough must never lead to valid check.
              *
-             * @returns {boolean}
+             * @returns {boolean} for the passphrase validation
              */
             this.passphraseValid = function () {                                
                 return      passphrase.disabled()
@@ -503,7 +505,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @name savePassCaptcha
              * @description
              *
-             * @returns {ConversationModel} this returns ConversationModel
+             * @returns {ConversationModel} this ConversationModel
              */
             this.savePassCaptcha = function(){
                 if(this.tmpPassCaptcha != ''){
@@ -536,7 +538,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * Function to add a recipient to a conversation. Will not update the backend.
              *
              * @param {Object} identityModel identityModel
-             * @returns {cmConversationModel} this returns cmConversationModel
+             * @returns {cmConversationModel} this cmConversationModel
              */
             this.addRecipient = function(identityModel){
                 this.recipients.register(identityModel);
