@@ -20,10 +20,12 @@
     </cm-files>
 
     <div class="message" data-qa="answer-ctn" cm-handle-fixxed>
-        <textarea data-qa="input-answer" cm-resize-textarea cm-max-rows="4" ng-model="my_message_text"></textarea>
-        <i class="fa cm-smile-negative with-cursor"></i>
+        <textarea data-qa="input-answer" cm-resize-textarea cm-max-rows="4" ng-model="my_message_text" id="emoji-textarea"></textarea>
+        <i class="fa cm-smile-negative with-cursor" id="emoji-handler"></i>
         <div class="inputter"></div>
     </div>
+
+    <cm-emoji-list cm-handler="emoji-handler" cm-textarea="emoji-textarea"></cm-emoji-list>
 
     <i class="fa cm-post with-cursor {{conversation.getSafetyLevelClass('-wrap')}}" ng-class="{'is-disabled':isSending}" data-qa="btn-send-answer" ng-click="send()"></i>
 </div>
