@@ -65,7 +65,10 @@ angular.module('cmCore')
              */
             
             obj.trigger = function(event_name, data, original_source){
-                var event = { source : original_source || obj }
+                var event = {
+                                target : obj,  
+                                source : original_source || obj 
+                            }
 
                 obj._callbacks[event_name] = obj._callbacks[event_name] || []   //create the according callback array, if neccessary
 
