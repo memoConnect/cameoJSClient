@@ -23,7 +23,7 @@ angular.module('cmCore')
          * @name addEventHandlingTo
          * @description
          * Function to add basic event handling to any object, to bubbling up or down provided
-         * @param {Object} obj any objevct to extend with event ahndlung capabilities
+         * @param {Object} obj any object to extend with event ahndlung capabilities
          */
 
         this.addEventHandlingTo = function(obj){
@@ -178,10 +178,7 @@ angular.module('cmCore')
 
 
 
-
-
-
-
+ 
         this.addChainHandlingTo = function(obj){
             obj._chains = {}
 
