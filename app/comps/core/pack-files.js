@@ -149,8 +149,9 @@ angular.module('cmCore')
     'cmFilesAdapter',
     'cmLogger',
     'cmCrypt',
+    'cmObject',
     '$q',
-    function (cmFilesAdapter, cmLogger, cmCrypt, $q){
+    function (cmFilesAdapter, cmLogger, cmCrypt, cmObject, $q){
 
         function str2ab_blobreader(str, callback) {
 
@@ -192,14 +193,18 @@ angular.module('cmCore')
             return new Blob(byteArrays, {type: contentType});
         }
 
-        return  function Chunk(file, start, end){
+        return function Chunk(file, start, end){
+
+            cmObject.addEventHandlingTo(this);
+
+            this.raw = undefined;
+            this.blob = undefined;
+            this.plain = undefined;
+            this.encryptedRaw = undefined;
 
             this.importFileSlice = function (file, start, end){
                 var slicer  = file.webkitSlice || file.mozSlice || file.slice,
                     chunk   = slicer.call(file, start, end)
-
-                this.raw = undefined
-                this.blob = undefined
 
                 if (file.webkitSlice) { // android default browser in version 4.0.4 has webkitSlice instead of slice()
                     str2ab_blobreader(chunk, function(buf) { // we cannot send a blob, because body payload will be empty
@@ -207,11 +212,11 @@ angular.module('cmCore')
                     });
                 }
 
-                this.blob = chunk
-                this.size = end-start
+                this.blob = chunk;
+                this.size = end-start;
 
                 return this
-            }
+            };
 
             this.blobToBase64 = function(){
                 var self = this,
@@ -221,61 +226,66 @@ angular.module('cmCore')
                 reader.onload = function(e) {
                     self.raw = e.target.result;
                     deferred.resolve(self.raw)
-                }
+                };
 
                 this.blob
                     ?   reader.readAsDataURL(this.blob)
-                    :   cmLogger.error('Unable ro convert to file; this.blob is empty.')
+                    :   cmLogger.error('Unable ro convert to file; this.blob is empty.');
 
 
                 return deferred.promise;
-            }
+            };
 
             this.blobToBinaryString = function(){
                 var self     = this,
                     reader   = new FileReader(),
-                    deferred = $q.defer()
+                    deferred = $q.defer();
 
                 reader.onload = function(event){
-                    self.raw = event.target.result.replace('data:application/octet-stream;base64,', '')
+                    self.raw = event.target.result.replace('data:application/octet-stream;base64,', '');
                     deferred.resolve(self.raw)
-                }
+                };
 
                 this.blob
                     ?   reader.readAsBinaryString(this.blob)
-                    :   cmLogger.error('Unable ro convert to raw; chunk.blob is empty.  Try calling chunk.importFileSlice() first.')
+                    :   cmLogger.error('Unable ro convert to raw; chunk.blob is empty.  Try calling chunk.importFileSlice() first.');
 
-                return deferred.promise
+                return deferred.promise;
 
-            }
+            };
 
             this.encrypt = function(passphrase) {
-                this.raw
-                    ?   this.encryptedRaw = (passphrase == null) ? this.raw : cmCrypt.encryptWithShortKey(passphrase, this.raw)  //Todo: long Key!
-                    :   cmLogger.error('Unable ro encrypt; chunk.raw is empty.  Try calling chunk.blobToBinaryString() first.')
 
-                return this
-            }
+                if(passphrase == null){
+                    this.plain = this.raw;
+                } else {
+                    this.encryptedRaw = cmCrypt.encrypt(passphrase, this.raw);
+                }
+
+                return this;
+            };
 
             this.upload = function(id, index){
-                return(
-                    this.encryptedRaw
-                        ?   cmFilesAdapter.addChunk(id, index, this.encryptedRaw)
-                        :   cmLogger.error('Unable to upload; chunk.encryptedRaw is empty. Try calling chunk.encrypt() first.')
-                )
-            }
+                if(this.plain){
+                    return cmFilesAdapter.addChunk(id, index, this.plain)
+                } else if(this.encryptedRaw){
+                    return cmFilesAdapter.addChunk(id, index, this.encryptedRaw)
+                } else {
+                    cmLogger.error('Unable to upload; chunk.plain or chunk.encryptedRaw is empty. Try calling chunk.encrypt() first.')
+                }
+            };
 
             this.download = function(id, index){
-                var self = this
+                var self = this;
 
-                this.raw = undefined
-                this.blob  = undefined
+                this.raw = undefined;
+                this.blob  = undefined;
 
                 return cmFilesAdapter.getChunk(id, index).then(
                     function(data){
                         return self.encryptedRaw = data
                     })
-            }
+            };
 
             /**
              * @param passphrase
@@ -285,23 +295,23 @@ angular.module('cmCore')
                 this.encryptedRaw
                     ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw)
                     :   cmLogger.error('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.');
-                return this
-            }
+                return this;
+            };
 
             this.binaryStringToBlob = function(){
                 this.raw
                     ?   this.blob = binaryStringtoBlob(this.raw)
-                    :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.')
-                return this
-            }
+                    :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.');
+                return this;
+            };
 
             this.base64ToBlob = function(){
                 this.raw
                     ?   this.blob = cmFilesAdapter.base64ToBlob(this.raw)
-                    :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.')
+                    :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.');
 
-                return this
-            }
+                return this;
+            };
         }
     }
 ])

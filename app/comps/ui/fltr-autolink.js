@@ -6,7 +6,10 @@ angular.module('cmUi').filter('cmAutolink', [
     function($sce, cmUtil){
         return function(text, attrStrLen){
             var pattern = /(^|[\s\n]|<br\/?>)(((?:https?|ftp)(:\/\/)|(www|\/\/))[\-A-Z0-9+\u0026\u2019@#\/%?=()~_|!:,.;]*[\-A-Z0-9+\u0026@#\/%=~()_|])/gi;
-            var strLen = attrStrLen||50
+            var strLen = attrStrLen||50;
+
+            if(text == undefined)
+                return '';
 
             return text.replace(pattern, function(link){
                 var tag = '<a href="%href" target="_blank" title="%href">%link</a>';

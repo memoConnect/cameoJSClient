@@ -19,7 +19,7 @@ cameo_config = {
             hasCtrl: true,
             isOtherwise: true,
             css: 'no-header no-footer',
-            guests: true
+            guests: false
         },
         'settings': {
             hasCtrl: true,

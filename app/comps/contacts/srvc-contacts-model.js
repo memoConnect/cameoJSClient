@@ -73,7 +73,7 @@ angular.module('cmContacts').service('cmContactsModel',[
         };
 
         this.getAll = function(limit, offset){
-            cmLogger.debug('cmContactsModel:getAll');
+//            cmLogger.debug('cmContactsModel:getAll');
 
             var deferred = $q.defer(),
                 i = 0;
@@ -130,7 +130,7 @@ angular.module('cmContacts').service('cmContactsModel',[
         };
 
         this.getGroups = function(){
-            cmLogger.debug('cmContactsModel:getGroups');
+//            cmLogger.debug('cmContactsModel:getGroups');
 
             var deferred = $q.defer();
 
@@ -182,11 +182,11 @@ angular.module('cmContacts').service('cmContactsModel',[
         };
 
         this.getFriendRequests = function(){
-            cmLogger.debug('cmContactsModel:getFriendRequests');
+//            cmLogger.debug('cmContactsModel:getFriendRequests');
             if(cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
                 cmContactsAdapter.getFriendRequests().then(
                     function(data){
-                        cmLogger.debug('cmContactsModel:getFriendRequests:done');
+//                        cmLogger.debug('cmContactsModel:getFriendRequests:done');
                         var old_length = self.requests.length;
 
                         angular.forEach(data, function(value){
@@ -203,7 +203,7 @@ angular.module('cmContacts').service('cmContactsModel',[
         };
 
         this.removeFriendRequest = function(request){
-            cmLogger.debug('cmContactsModel:removeFriendRequest');
+//            cmLogger.debug('cmContactsModel:removeFriendRequest');
 
             var index = this.requests.indexOf(request);
             this.requests.splice(index,1);

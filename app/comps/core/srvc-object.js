@@ -2,21 +2,33 @@
 
 //This service provides extra funcionality for core objects
 
+/**
+ * @ngdoc service
+ * @name cmObject
+ * @description
+ *  
+ */
 angular.module('cmCore')
 .service('cmObject', [
 
     '$q',
+    'cmLogger',
 
-    function($q){
+    function($q, cmLogger){
         var self = this
 
         /**
+         * @ngdoc method
+         * @methodOf cmObject
+         * @name addEventHandlingTo
+         * @description
          * Function to add basic event handling to any object, to bubbling up or down provided
-         * @param {Object} obj any objevct to extend with event ahndlung capabilities
+         * @param {Object} obj any object to extend with event ahndlung capabilities
          */
 
         this.addEventHandlingTo = function(obj){
             obj._callbacks = {}
+            obj._receptors = []
 
 
             /**
@@ -52,8 +64,11 @@ angular.module('cmCore')
              * @return {Object}            returns the base object for chaining
              */
             
-            obj.trigger = function(event_name, data){
-                var event = { target : obj }
+            obj.trigger = function(event_name, data, original_source){
+                var event = {
+                                target : obj,  
+                                source : original_source || obj 
+                            }
 
                 obj._callbacks[event_name] = obj._callbacks[event_name] || []   //create the according callback array, if neccessary
 
@@ -62,10 +77,12 @@ angular.module('cmCore')
                     if(!_call(callback_obj, event, data)) delete obj._callbacks[event_name][index]
                 })
 
+                obj._receptors.forEach(function(receptor){
+                    receptor.trigger(event_name, data, event.source)
+                })
+
                 return obj
             }
-
-
 
             /**
              * Function to bind a call back to event(s).
@@ -109,14 +126,60 @@ angular.module('cmCore')
                 return obj
             }
 
+            /**
+             * Function to bind a call back to event(s). Unbind after triggered once.
+             * @param  {String}   event_names Names of the events to bind to. Multiple event names should be separated by ' '.
+             * @param  {Function} callback    Function to call, when the event is triggered. Should return wether the call was successfull or not.
+             * @param  {number}   [limit]     Number of times the callback should be (succsessfully) called. If not provided, there is no limit to the number of calls.
+             * @return {Object}               returns the object for chaining.
+             */
             obj.one = function(event_names, callback){
                 obj.on(event_names, callback, 1)
             }
+
+            /**
+             * @methodOf 
+             * @name  brodcastEventsTo
+             *
+             * @description
+             * Function to brodacast event from on event to another.
+             * 
+             * @param  {object} receptor    Any object with event handling.
+             * @returns {*}     this        Returns itself for chaining.         
+             */
+            obj.broadcastEventsTo = function(receptor){
+                if(receptor && typeof receptor.trigger == 'function'){
+                    this._receptors.push(receptor)
+                }else{
+                    cmLogger.debug('cmObject: EventHandling: unable to add receptor.', obj)
+                }
+
+                return obj
+            }
+
+            /**
+             * @name echoEventsFrom
+             * @description 
+             * Retriggers every event of source object on itself.
+             *
+             * @param   {*}          source Source object.
+             * @returns {*}  this    Returns itself for chaining.
+             */
+            obj.echoEventsFrom = function(source){
+                if(source && typeof source.broadcastEventsTo == 'function'){
+                    source.broadcastEventsTo(obj)
+                }else{
+                    cmLogger.debug('cmObject: EventHandling: unable to echo Events.', obj)
+                }
+            }
+
 
             return this 
         }
 
 
+
+ 
         this.addChainHandlingTo = function(obj){
             obj._chains = {}
 

@@ -3,14 +3,13 @@
 angular.module('cmConversations').directive('cmConversation', [
     'cmConversationFactory',
     'cmUserModel',
-    'cmRecipientModel',
     'cmCrypt',
     'cmLogger',
     'cmNotify',
     'cmModal',
     '$location',
     '$rootScope',
-    function (cmConversationFactory, cmUserModel, cmRecipientModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope) {
+    function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope) {
         return {
             restrict: 'AE',
             templateUrl: 'comps/conversations/drtv-conversation.html',
@@ -49,7 +48,7 @@ angular.module('cmConversations').directive('cmConversation', [
                          * check if files exists
                          * after success resolve step again in here without files
                          */
-                        console.log('send',$scope.hasFiles(),$scope.conversation.getPassphrase())
+//                        console.log('send',$scope.hasFiles(),$scope.conversation.getPassphrase())
                         if($scope.hasFiles()) {
                             $scope.prepareFilesForUpload($scope.conversation.getPassphrase()).then(
                                 function(){
@@ -59,7 +58,7 @@ angular.module('cmConversations').directive('cmConversation', [
                                         }
                                     });
 
-                                    console.log('prepareFilesForUpload:resolved',$scope.files,files)
+//                                    console.log('prepareFilesForUpload:resolved',$scope.files,files)
 
                                     /**
                                      * Nested Function in drtv-attachments
@@ -96,7 +95,7 @@ angular.module('cmConversations').directive('cmConversation', [
                  * @returns {boolean}
                  */
                 function isMessageValid(){
-                    console.log('isMessageValid', $scope.my_message_text, files.length)
+//                    console.log('isMessageValid', $scope.my_message_text, files.length)
                     if($scope.my_message_text != '' || files.length > 0){
                         return true;
                     }
@@ -117,7 +116,7 @@ angular.module('cmConversations').directive('cmConversation', [
                         recipients_missing      = !$scope.conversation.recipients.length > 0 //@todo mocked
 
 
-                    console.log('sendMessage','message_invalid '+message_invalid, 'passphrase_invalid '+passphrase_invalid, 'recipients_missing '+recipients_missing)
+//                    console.log('sendMessage','message_invalid '+message_invalid, 'passphrase_invalid '+passphrase_invalid, 'recipients_missing '+recipients_missing)
 
                     //If anything is invalid, abort and notify the user:
                     if(message_invalid || passphrase_invalid || recipients_missing){
@@ -150,6 +149,8 @@ angular.module('cmConversations').directive('cmConversation', [
                         return false                        
                     }
 
+                    console.log($scope.conversation.getPassphrase())
+                    console.log($scope.conversation.getPassphrase() === null )
 
                     //If we got this far the conversation has been saved to the backend.
                     //Create a new message:
@@ -161,7 +162,7 @@ angular.module('cmConversations').directive('cmConversation', [
                     .save()
                     .then(function(){
                         //@ TODO: solve rekeying another way:
-//                                    $scope.conversation.saveEncryptedPassphraseList();
+//                      $scope.conversation.saveEncryptedPassphraseList();
 
                         $scope.conversation.numberOfMessages++;
                         $scope.my_message_text = "";
@@ -215,8 +216,10 @@ angular.module('cmConversations').directive('cmConversation', [
 
                 // new conversation:
                 } else {
+                    // TODO: create at send message not on init!!!
                     $scope.init(
                         cmConversationFactory.create()
+                        .disableEncryption()// @todo muss wieder wech, wenn controls umbau
                         .addRecipient(cmUserModel.data.identity) // muss nicht, macht die api auch von alleine (?)
                     )
                 }

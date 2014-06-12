@@ -23,7 +23,7 @@ describe('cmUserModel', function(){
 //
         cmCrypt = _cmCrypt_
         cmUserModel.setAuth() //@todo
-        cmUserModel.init({
+        cmUserModel.importData({
             id : 'my_id_moep',
             userKey: 'my_user_key'
         })

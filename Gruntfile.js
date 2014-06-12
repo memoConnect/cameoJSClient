@@ -267,6 +267,7 @@ module.exports = function (grunt) {
                     'app/vendor/angular-growl/angular-growl.js',
                     'app/vendor/angular-translate/angular-translate.js',
                     'app/vendor/util/spin.js',
+                    'app/vendor/emoji/emoji.js',
                     'app/packages/**/package.js'
                 ],
                 dest: 'docs/grunt-scripts/cameo-package.js'

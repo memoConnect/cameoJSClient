@@ -7,7 +7,6 @@ angular.module('cmSecurityAspects')
         var securityAspectsConversation = new cmSecurityAspects()
 
         securityAspectsConversation
-        /*
         .addAspect({
             id:             'NOT_ENCRYPTED',
             value:          -3,
@@ -23,9 +22,7 @@ angular.module('cmSecurityAspects')
                                 conversation.enableEncryption()
                             }
         })
-        */
 
-        
         .addAspect({
             id:             'ENCRYPTED',
             value:          1,

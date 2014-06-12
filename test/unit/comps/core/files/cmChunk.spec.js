@@ -27,13 +27,13 @@ describe('A Chunk', function(){
     it('should have methods to encrypt and decrypt binaryDataStrings.', function(){
         chunk.raw = 'abc'
 
-        chunk.encrypt('123')
+        chunk.encrypt('123456789012345678901234567890123456789012345678901234567890')
 
         expect(chunk.encryptedRaw).toBeDefined()
         expect(chunk.encryptedRaw).not.toEqual('abc')
 
         chunk.raw = undefined
-        chunk.decrypt('123')
+        chunk.decrypt('123456789012345678901234567890123456789012345678901234567890')
 
         expect(chunk.raw).toBeDefined()
         expect(chunk.raw).toEqual('abc')

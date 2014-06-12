@@ -201,5 +201,9 @@ angular.module('cmCore')
             if(haystack == undefined || haystack == '' || needle == undefined) return false;
             return haystack.slice(-needle.length) == needle;
         };
+
+        this.isArray = function(value) {
+            return toString.call(value) === '[object Array]';
+        }
     }
 ]);

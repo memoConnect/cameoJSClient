@@ -1,9 +1,7 @@
 'use strict';
 
 angular.module('cmConversations').service('cmPurlModel',[
-
     'cmConversationsAdapter',
-    'cmConversationsModel',
     'cmConversationFactory',
     'cmUserModel',
     'cmAuth',
@@ -11,8 +9,7 @@ angular.module('cmConversations').service('cmPurlModel',[
     '$q',
     '$rootScope',
     '$route',
-    
-    function(cmConversationsAdapter, cmConversationsModel, cmConversationFactory, cmUserModel, cmAuth, cmLogger, $q, $rootScope, $route) {
+    function(cmConversationsAdapter, cmConversationFactory, cmUserModel, cmAuth, cmLogger, $q, $rootScope, $route) {
         var self = this;
 
         this.purls = [];
@@ -23,7 +20,6 @@ angular.module('cmConversations').service('cmPurlModel',[
 
         this.handleConversation = function(conversation_data){
             var conversation = cmConversationFactory.create(conversation_data);
-            cmConversationsModel.addConversation(conversation);
 
             return conversation.id;
         }
@@ -43,7 +39,7 @@ angular.module('cmConversations').service('cmPurlModel',[
 
             } else if(identity_data.id != currentIdentity.id){
                 cmLogger.debug('cmPurlModel:handleIdentity:internUser')
-                $route.reload();
+//                $route.reload();
             }
 
             return this;
