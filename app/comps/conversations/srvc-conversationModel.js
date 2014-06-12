@@ -169,7 +169,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     passphrase.importSymmetricallyEncryptedPassphrase(data.sePassphrase)
 
                 if('aePassphraseList' in data)
-                    passphrase.importSymmetricallyEncryptedPassphrase(data.aePassphraseList)
+                    passphrase.importAsymmetricallyEncryptedPassphrase(data.aePassphraseList)
 
                 this.initPassCaptcha(data);
 
@@ -190,6 +190,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 this.state.unset('new');
                 this.trigger('update:finished');
+
 
                 return this;
             };
