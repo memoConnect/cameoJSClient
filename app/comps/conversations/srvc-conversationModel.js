@@ -29,7 +29,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmFileFactory',
     'cmCrypt',
     'cmUserModel',
-    'cmRecipientModel',
     'cmFactory',
     'cmStateManagement',
     'cmNotify',
@@ -40,7 +39,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmUtil',
     '$q',
     '$rootScope',
-    function (cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory, cmCrypt, cmUserModel, cmRecipientModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase, cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
+    function (cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory, cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase, cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
 
         function ConversationModel(data){
             var self        = this,
@@ -48,7 +47,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.id                 = undefined;
             
-            this.recipients         = new cmFactory(cmIdentityModel);      //list of RecipientModel objects
+            this.recipients         = new cmFactory(cmIdentityModel);      //list of cmIdentityModel objects
             this.messages           = new cmFactory(cmMessageModel);        //list of MessageModel objects
             //--> meta
 

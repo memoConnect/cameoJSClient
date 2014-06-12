@@ -64,8 +64,11 @@ angular.module('cmCore')
              * @return {Object}            returns the base object for chaining
              */
             
-            obj.trigger = function(event_name, data){
-                var event = { target : obj }
+            obj.trigger = function(event_name, data, original_source){
+                var event = {
+                                target : obj,  
+                                source : original_source || obj 
+                            }
 
                 obj._callbacks[event_name] = obj._callbacks[event_name] || []   //create the according callback array, if neccessary
 
@@ -75,13 +78,11 @@ angular.module('cmCore')
                 })
 
                 obj._receptors.forEach(function(receptor){
-                    receptor.trigger(event_name, data)
+                    receptor.trigger(event_name, data, event.source)
                 })
 
                 return obj
             }
-
-
 
             /**
              * Function to bind a call back to event(s).

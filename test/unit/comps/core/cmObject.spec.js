@@ -85,35 +85,47 @@ describe('cmObject', function(){
         it('should provide a function to broadcast events to another object.', function(){
             var myObject        = {},
                 myOtherObject   = {},
-                x               = 0
+                x               = 0,
+                source          = undefined,
+                target          = undefined
 
             cmObject.addEventHandlingTo(myObject)
             cmObject.addEventHandlingTo(myOtherObject)
 
             myObject.broadcastEventsTo(myOtherObject)
-            myOtherObject.on('hello_world', function(){
+            myOtherObject.on('hello_world', function(event){
                 x = 1
+                source = event.source
+                target = event.target
             })
 
             myObject.trigger('hello_world')
 
             expect(x).toBe(1)
+            expect(source).toBe(myObject)
+            expect(target).toBe(myOtherObject)
         })
 
         it('should provide a function to echo events from another object.', function(){
             var myObject        = {},
                 myOtherObject   = {},
-                x               = 0
+                x               = 0,
+                source          = undefined,
+                target          = undefined
 
             cmObject.addEventHandlingTo(myObject)
             cmObject.addEventHandlingTo(myOtherObject)
 
             myObject.echoEventsFrom(myOtherObject)
-            myObject.on('hello_world', function(){
+            myObject.on('hello_world', function(event){
                 x = 1
+                source = event.source
+                target = event.target
             })
 
             myOtherObject.trigger('hello_world')
+            expect(source).toBe(myOtherObject)
+            expect(target).toBe(myObject)
 
             expect(x).toBe(1)
         })
