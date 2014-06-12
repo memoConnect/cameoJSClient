@@ -72,7 +72,7 @@ angular.module('cmCore').service('cmUserModel',[
          * @param {Object} identity_data JSON of an Identity
          * @returns {Object} this cmUserModel
          */
-        function init(identity_data){
+        function init(){
 //            cmLogger.debug('cmUserModel:init');
 
 //            self.importData(identity_data);
@@ -84,12 +84,6 @@ angular.module('cmCore').service('cmUserModel',[
         this.importData = function(identity){
             cmLogger.debug('cmUserModel:importData');
 
-//            this.loadIdentity(identity_data).then(
-//                function(identity){
-//                    if(typeof identity_data == 'object'){
-//                        self.importData(identity_data);
-//                    }
-
             this.data = angular.extend(this.data,identity);
 
             this.data.identity = identity;
@@ -99,7 +93,6 @@ angular.module('cmCore').service('cmUserModel',[
             this.initStorage();
             this.syncLocalKeys();
 
-//                    cmLogger.debug('cmUserModel:init:ready');
             this.trigger('update:finished');
 
             return this;
@@ -145,7 +138,7 @@ angular.module('cmCore').service('cmUserModel',[
         this.setIdentity = function(identity_data){
             cmLogger.debug('cmUserModel:setIdentity');
 
-            this.importData(identity_data);
+            this.importData(cmIdentityFactory.create(identity_data));
         };
 
         /**

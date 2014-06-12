@@ -39,7 +39,7 @@ angular.module('cmConversations').service('cmPurlModel',[
 
             } else if(identity_data.id != currentIdentity.id){
                 cmLogger.debug('cmPurlModel:handleIdentity:internUser')
-                $route.reload();
+//                $route.reload();
             }
 
             return this;
