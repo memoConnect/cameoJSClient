@@ -17,9 +17,11 @@ angular.module('cmUser').directive('cmUserRights', [
                     }
                 }
 
-                cmUserModel.on('init',function(){
+                cmUserModel.on('update:finished',function(){
                     removeElement();
                 });
+
+                console.log(cmUserModel.isGuest())
 
                 removeElement();
             }

@@ -72,14 +72,23 @@ angular.module('cmCore').service('cmUserModel',[
          * @param {Object} identity_data JSON of an Identity
          * @returns {Object} this cmUserModel
          */
-        this.init = function(identity_data){
+        function init(identity_data){
 //            cmLogger.debug('cmUserModel:init');
+
+            self.importData(identity_data);
+
+            self.trigger('init');// deprecated
+            self.trigger('init:finish');
+        }
+
+        this.importData = function(identity_data){
+            cmLogger.debug('cmUserModel:importData');
 
             this.loadIdentity(identity_data).then(
                 function(identity){
-                    if(typeof identity_data == 'object'){
-                        identity.init(identity_data);
-                    }
+//                    if(typeof identity_data == 'object'){
+//                        self.importData(identity_data);
+//                    }
 
                     self.data = angular.extend(self.data,identity);
 
@@ -91,11 +100,10 @@ angular.module('cmCore').service('cmUserModel',[
                     self.syncLocalKeys();
 
 //                    cmLogger.debug('cmUserModel:init:ready');
-                    self.trigger('init');// deprecated
-                    self.trigger('init:finish');
+                    self.trigger('update:finished');
                 },
                 function(response){
-                    cmLogger.debug('cmUserModel:init:reject');
+//                    cmLogger.debug('cmUserModel:init:reject');
                     if(typeof response == 'object' && response.status == 401){
                         cmLogger.debug('cmUserModel:init:reject:401');
                         self.doLogout();
@@ -121,7 +129,7 @@ angular.module('cmCore').service('cmUserModel',[
                 if(this.getToken() !== false){
                     cmAuth.getIdentity().then(
                         function(data){
-                            deferred.resolve(cmIdentityFactory.create(data,true));
+                            deferred.resolve(cmIdentityFactory.create(data));
                         },
 
                         function(response){
@@ -148,7 +156,8 @@ angular.module('cmCore').service('cmUserModel',[
 
         this.setIdentity = function(identity_data){
             cmLogger.debug('cmUserModel:setIdentity');
-            this.init(identity_data);
+
+            this.importData(identity_data);
         };
 
         /**
@@ -190,7 +199,7 @@ angular.module('cmCore').service('cmUserModel',[
                 function(token){
                     cmAuth.storeToken(token);
 
-                    self.init();
+                    init();
                     $rootScope.$broadcast('login');
                     deferred.resolve();
                 },
@@ -412,6 +421,6 @@ angular.module('cmCore').service('cmUserModel',[
             self.resetUser();
         });
 
-        this.init();
+        init();
     }
-])
+]);

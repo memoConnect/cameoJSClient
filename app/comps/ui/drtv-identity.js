@@ -10,7 +10,7 @@ angular.module('cmUi').directive('cmIdentity',[
             controller: function($scope){
                 $scope.identity = cmUserModel.data.identity;
 
-                cmUserModel.on('init:finish',function(){
+                cmUserModel.on('update:finished',function(){
                     $scope.identity = cmUserModel.data.identity;
                 });
             }
