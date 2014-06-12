@@ -27,11 +27,11 @@ angular.module('cmConversations').directive('cmConversationControls', [
                         scope._setLevel(levels[conversation.getSafetyLevel()]);
 
                         if(!cmConversation.isNew() && !conversation.password && conversation.getKeyTransmission() == 'symmetric') {
-                            scope.bodyVisible = true;
+                            scope.toggleControls('open');
                         }
 
                         conversation.on('decrypt:ok', function(){
-                            scope.toggleControls();
+                            scope.toggleControls('close');
                         })
                     }
                 });
@@ -91,11 +91,12 @@ angular.module('cmConversations').directive('cmConversationControls', [
                     }
                 };
 
-                $scope.toggleControls = function(){
-                    if($scope.bodyVisible)
+                $scope.toggleControls = function(action){
+                    if(action && action == 'close' || !action && $scope.bodyVisible)
                         $scope.bodyVisible = false;
                     else
                         $scope.bodyVisible = true;
+
                 };
 
                 $scope.manageRecipients = function(){

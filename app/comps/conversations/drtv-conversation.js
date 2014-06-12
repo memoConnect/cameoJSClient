@@ -31,6 +31,7 @@ angular.module('cmConversations').directive('cmConversation', [
                  * @returns {boolean}
                  */
                 this.isNew = function(){
+                    console.log('isNew',!conversation_id,conversation_id)
                     return !conversation_id
                 };
 
