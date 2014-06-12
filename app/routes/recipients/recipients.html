@@ -18,7 +18,7 @@
     </header>
 
     <cm-contacts-list contacts-as="contacts">
-        <cm-contact-tag ng-repeat="contact in contacts | filter: search" cm-rubber-space ng-class="{'disabled':contact.contactType == 'pending'}">
+        <cm-contact-tag ng-repeat="contact in contacts|cmSearch:'contacts':search" cm-rubber-space ng-class="{'disabled':contact.contactType == 'pending'}">
             <cm-avatar cm-data="contact.identity"></cm-avatar>
             <cm-key-level key-size="contact.identity.getWeakestKeySize()"></cm-key-level>
             <cm-contact-brief cm-data="contact" cm-weight="1"></cm-contact-brief>
