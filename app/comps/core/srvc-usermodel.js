@@ -76,6 +76,7 @@ angular.module('cmCore').service('cmUserModel',[
 //            cmLogger.debug('cmUserModel:init');
 
 //            self.importData(identity_data);
+            self.loadIdentity();
 
             self.trigger('init');// deprecated
             self.trigger('init:finish');
