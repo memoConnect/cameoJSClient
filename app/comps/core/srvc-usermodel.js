@@ -75,41 +75,32 @@ angular.module('cmCore').service('cmUserModel',[
         function init(identity_data){
 //            cmLogger.debug('cmUserModel:init');
 
-            self.importData(identity_data);
+//            self.importData(identity_data);
 
             self.trigger('init');// deprecated
             self.trigger('init:finish');
         }
 
-        this.importData = function(identity_data){
+        this.importData = function(identity){
             cmLogger.debug('cmUserModel:importData');
 
-            this.loadIdentity(identity_data).then(
-                function(identity){
+//            this.loadIdentity(identity_data).then(
+//                function(identity){
 //                    if(typeof identity_data == 'object'){
 //                        self.importData(identity_data);
 //                    }
 
-                    self.data = angular.extend(self.data,identity);
+            this.data = angular.extend(this.data,identity);
 
-                    self.data.identity = identity;
-                    self.data.identity.isAppOwner = true;
+            this.data.identity = identity;
+            this.data.identity.isAppOwner = true;
 
-                    isAuth = true;
-                    self.initStorage();
-                    self.syncLocalKeys();
+            isAuth = true;
+            this.initStorage();
+            this.syncLocalKeys();
 
 //                    cmLogger.debug('cmUserModel:init:ready');
-                    self.trigger('update:finished');
-                },
-                function(response){
-//                    cmLogger.debug('cmUserModel:init:reject');
-                    if(typeof response == 'object' && response.status == 401){
-                        cmLogger.debug('cmUserModel:init:reject:401');
-                        self.doLogout();
-                    }
-                }
-            )
+            this.trigger('update:finished');
 
             return this;
         };
@@ -121,29 +112,26 @@ angular.module('cmCore').service('cmUserModel',[
          * @returns {*}
          */
         this.loadIdentity = function(identity_data){
-            var deferred = $q.defer();
 
             if(typeof identity_data !== 'undefined'){
-                deferred.resolve(cmIdentityFactory.create(identity_data.id));
+                this.importData(cmIdentityFactory.create(identity_data.id));
             } else {
                 if(this.getToken() !== false){
                     cmAuth.getIdentity().then(
                         function(data){
-                            deferred.resolve(cmIdentityFactory.create(data));
+                            self.importData(cmIdentityFactory.create(data));
                         },
-
                         function(response){
                             var response = response || {};
 
-                            deferred.reject(response);
+                            if(typeof response == 'object' && response.status == 401){
+                                cmLogger.debug('cmUserModel:init:reject:401');
+                                self.doLogout();
+                            }
                         }
                     );
-                } else {
-                    deferred.reject();
                 }
             }
-
-            return deferred.promise;
         };
 
         /**
@@ -199,7 +187,7 @@ angular.module('cmCore').service('cmUserModel',[
                 function(token){
                     cmAuth.storeToken(token);
 
-                    init();
+                    self.loadIdentity();
                     $rootScope.$broadcast('login');
                     deferred.resolve();
                 },

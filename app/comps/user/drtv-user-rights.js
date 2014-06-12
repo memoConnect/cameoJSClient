@@ -21,8 +21,6 @@ angular.module('cmUser').directive('cmUserRights', [
                     removeElement();
                 });
 
-                console.log(cmUserModel.isGuest())
-
                 removeElement();
             }
         }
