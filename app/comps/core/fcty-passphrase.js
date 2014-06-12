@@ -104,9 +104,7 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @return {Boolean} result Wheter the suggested password seems okay or not
              */
             function couldBeAPassword(pw){
-                var result = (typeof pw == "string") && pw.length >= 1 //Todo, require better passwords.
-
-                return result;
+                return ((typeof pw == "string") && pw.length >= 1); //Todo, require better passwords.
             }
 
             /**
@@ -140,7 +138,7 @@ angular.module('cmCore').factory('cmPassphrase',[
 
                     this.trigger('password:changed');                    
                 }else{
-//                    cmLogger.debug('cmPassphrase: unable to set Password, requirements not met.')
+                    cmLogger.debug('cmPassphrase: unable to set Password, requirements not met.')
                 }
 
                 return this;
@@ -292,11 +290,11 @@ angular.module('cmCore').factory('cmPassphrase',[
             this.get = function(){
                 if(couldBeAPassphrase(passphrase))
                     return passphrase
-                 
+
                 if(passphrase === null) //encryption is disabled
                     return null
 
-                return this.decrypt() ? passphrase : false                
+                return this.decrypt() ? passphrase : false
             };
 
             /**

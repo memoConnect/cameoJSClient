@@ -168,8 +168,16 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 if('sePassphrase' in data)
                     passphrase.importSymmetricallyEncryptedPassphrase(data.sePassphrase)
 
-                if('aePassphraseList' in data)
+                if('aePassphraseList' in data && data.aePassphraseList.length > 0)
                     passphrase.importAsymmetricallyEncryptedPassphrase(data.aePassphraseList)
+
+                /**
+                 * @todo wech bei überarbeitung controls
+                 */
+                if(passphrase.getKeyTransmission() == 'none'){
+                    passphrase.disable();
+                }
+
 
                 this.initPassCaptcha(data);
 
@@ -190,7 +198,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 this.state.unset('new');
                 this.trigger('update:finished');
-
 
                 return this;
             };

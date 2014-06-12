@@ -149,6 +149,8 @@ angular.module('cmConversations').directive('cmConversation', [
                         return false                        
                     }
 
+                    console.log($scope.conversation.getPassphrase())
+                    console.log($scope.conversation.getPassphrase() === null )
 
                     //If we got this far the conversation has been saved to the backend.
                     //Create a new message:
@@ -216,6 +218,7 @@ angular.module('cmConversations').directive('cmConversation', [
                 } else {
                     $scope.init(
                         cmConversationFactory.create()
+                        .disableEncryption()// @todo muss wieder wech, wenn controls umbau
                         .addRecipient(cmUserModel.data.identity) // muss nicht, macht die api auch von alleine (?)
                     )
                 }
