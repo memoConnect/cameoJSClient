@@ -256,29 +256,16 @@ angular.module('cmCore')
 
             this.encrypt = function(passphrase) {
 
-                console.log('encrypt passphrase', passphrase)
-                console.log('encrypt raw', this.raw)
-
                 if(passphrase == null){
                     this.plain = this.raw;
                 } else {
-
-                    this.encryptedRaw = cmCrypt.encryptWithShortKey(passphrase, this.raw);  //Todo: long Key!
+                    this.encryptedRaw = cmCrypt.encrypt(passphrase, this.raw);
                 }
-
-                console.log('encrypt encryptedRaw', this.encryptedRaw)
-//
-//                this.raw
-//                    ?   this.encryptedRaw = (passphrase == null) ? this.raw : cmCrypt.encryptWithShortKey(passphrase, this.raw)  //Todo: long Key!
-//                    :   cmLogger.error('Unable ro encrypt; chunk.raw is empty.  Try calling chunk.blobToBinaryString() first.')
 
                 return this;
             };
 
             this.upload = function(id, index){
-
-                console.log('upload encryptedRaw', this.encryptedRaw)
-
                 if(this.plain){
                     return cmFilesAdapter.addChunk(id, index, this.plain)
                 } else if(this.encryptedRaw){
@@ -286,12 +273,6 @@ angular.module('cmCore')
                 } else {
                     cmLogger.error('Unable to upload; chunk.plain or chunk.encryptedRaw is empty. Try calling chunk.encrypt() first.')
                 }
-
-//                return(
-//                    this.encryptedRaw
-//                        ?   cmFilesAdapter.addChunk(id, index, this.encryptedRaw)
-//                        :   cmLogger.error('Unable to upload; chunk.encryptedRaw is empty. Try calling chunk.encrypt() first.')
-//                )
             };
 
             this.download = function(id, index){
