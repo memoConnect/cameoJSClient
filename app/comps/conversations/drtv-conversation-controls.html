@@ -68,13 +68,6 @@
                     <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':!hasCaptcha}" ng-click="toggleCaptcha('captcha');" data-qa="btn-toogle-passcaptcha">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA'|cmTranslate}}</button>
                 </div>
 
-                <div class="cm-form-group">
-                    <div class="cm-form-control with-inputter" ng-class="{'with-inside-icon':!isNew}">
-                        <input type="text" ng-model="conversation.password" placeholder="{{ 'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change/>
-                        <i class="fa cm-key fa-2x with-cursor" ng-click="decrypt()" ng-if="!isNew"></i>
-                    </div>
-                </div>
-
                 <div class="captcha" ng-if="hasCaptcha && isNew" data-qa="captcha-canvas">
                     <cm-captcha></cm-captcha>
                     <button class="refresh" ng-click="refreshCaptcha()" ng-if="isNew"><i class="fa cm-change"></i></button>
@@ -84,6 +77,13 @@
                     <p ng-if="!isNew">
                         <button ng-click="sendCaptcha()"><i class="fa cm-send"></i> {{"CONVERSATION.LABEL.SEND_CAPTCHA" | cmTranslate}}</button>
                     </p>
+                </div>
+
+                <div class="cm-form-group">
+                    <div class="cm-form-control with-inputter" ng-class="{'with-inside-icon':!isNew}">
+                        <input type="text" ng-model="conversation.password" placeholder="{{ 'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change/>
+                        <i class="fa cm-key fa-2x with-cursor" ng-click="decrypt()" ng-if="!isNew"></i>
+                    </div>
                 </div>
 
 				<div class="captcha" ng-if="!isNew" data-qa="captcha-image">
