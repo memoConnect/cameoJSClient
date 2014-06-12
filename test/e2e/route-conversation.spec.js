@@ -108,7 +108,12 @@ describe('Single Conversation: ', function () {
         })
     })
 
-    it('send reply', function() {
+    it('send reply | with old conversation control click', function() {
+        //TODO: workarround to don't encrypt
+        $("[data-qa='conversation-options-bar']").click()
+        $(".cm-safety-level.safetylevel-unsafe-btn").click()
+        $("[data-qa='btn-save-options']").click()
+
         $("[data-qa='input-answer']").sendKeys(messageText2)
         $("[data-qa='btn-send-answer']").click()
     })
@@ -140,8 +145,8 @@ describe('Single Conversation: ', function () {
             util.waitForElements("cm-message", 2)
             $$('cm-message').then(function (elements) {
                 expect(elements.length).toBe(2)
-                expect(elements[0].getText()).toContain(messageText)
-                expect(elements[1].getText()).toContain(messageText2)
+                expect(elements[0].$(".text").getText()).toContain(messageText)
+                expect(elements[1].$(".text").getText()).toContain(messageText2)
                 expect(elements[1].$("[data-qa='message-author']").getText()).toBe(config.contactUser1DisplayName)
             })
         })
