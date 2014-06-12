@@ -31,7 +31,7 @@ describe('Directive cmFooter', function () {
         })
 
         xit('talks setted toEqual 1 active',function(){
-            console.log($location.path())
+//            console.log($location.path())
             expect($el.find('.active').length).toEqual(1)
         })
     })

@@ -68,7 +68,9 @@ describe("cmLanguage", function() {
                     extendList(next_list, '', language_data)
                     last_diff = diffLists(list, next_list)
 
-                    if(last_diff) console.log('Missing or surplus message id in '+lang_key+': '+last_diff)
+                    if(last_diff) {
+                        //console.log('Missing or surplus message id in '+lang_key+': '+last_diff)
+                    }
 
                     all_the_same = all_the_same && !last_diff
                     list = next_list

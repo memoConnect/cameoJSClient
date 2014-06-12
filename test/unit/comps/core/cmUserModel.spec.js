@@ -116,7 +116,7 @@ describe('cmUserModel', function(){
         })
 
         it('should provide functions "saveKey" and "loadLocalKeys" to store and retrieve rsa keys.', function(){
-            console.log('start test')
+//            console.log('start test')
             expect(cmUserModel.saveKey).toBeDefined();
             expect(cmUserModel.loadLocalKeys).toBeDefined();
 
