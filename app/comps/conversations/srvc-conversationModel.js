@@ -666,6 +666,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 // do something, if new recipient is added to conversation
             });
 
+            this.message.on('moep', function(message, value){
+
+            });
+
             // after events!!!
             init(data);
 

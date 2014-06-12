@@ -82,6 +82,9 @@ angular.module('cmCore').factory('cmFactory',[
                     && instance instanceof this.model
                 ){
                     self.push(instance)
+
+                    self.echoEventsFrom(instance);
+
                     self.trigger('register', instance)
 
                     return self.length
