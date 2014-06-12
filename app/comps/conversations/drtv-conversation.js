@@ -162,7 +162,7 @@ angular.module('cmConversations').directive('cmConversation', [
                     .save()
                     .then(function(){
                         //@ TODO: solve rekeying another way:
-//                                    $scope.conversation.saveEncryptedPassphraseList();
+//                      $scope.conversation.saveEncryptedPassphraseList();
 
                         $scope.conversation.numberOfMessages++;
                         $scope.my_message_text = "";
@@ -216,6 +216,7 @@ angular.module('cmConversations').directive('cmConversation', [
 
                 // new conversation:
                 } else {
+                    // TODO: create at send message not on init!!!
                     $scope.init(
                         cmConversationFactory.create()
                         .disableEncryption()// @todo muss wieder wech, wenn controls umbau

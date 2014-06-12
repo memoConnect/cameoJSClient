@@ -140,8 +140,13 @@ describe('Single Conversation: ', function () {
             util.waitForElements("cm-message", 2)
             $$('cm-message').then(function (elements) {
                 expect(elements.length).toBe(2)
+<<<<<<< HEAD
                 expect(elements[0].$('.text').getText()).toContain(messageText)
                 expect(elements[1].$('.text').getText()).toContain(messageText2)
+=======
+                expect(elements[0].$(".text").getText()).toContain(messageText)
+                expect(elements[1].$(".text").getText()).toContain(messageText2)
+>>>>>>> origin/feature-conversation-refactor
                 expect(elements[1].$("[data-qa='message-author']").getText()).toBe(config.contactUser1DisplayName)
             })
         })
