@@ -59,7 +59,7 @@ describe('talks', function () {
         util.waitForSpinner()
         $("body").sendKeys(protractor.Key.HOME)
         // wait for browser to scroll, todo: find a better way to do this
-        $("[cm-edge]").click()
+        $("cm-edge").click()
         util.waitForPageLoad("/conversation/")
     })
 })
