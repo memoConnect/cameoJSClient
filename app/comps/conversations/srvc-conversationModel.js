@@ -399,7 +399,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
-                cmLogger.debug('cmConversationModel:decrypt');
+//                cmLogger.debug('cmConversationModel:decrypt');
                 
                 var passphrase  =   this.getPassphrase(),
                     success     =   passphrase && this.messages.reduce(function (success, message){
@@ -663,10 +663,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.recipients.on('register', function(event, recipient){
                 // do something, if new recipient is added to conversation
-            });
-
-            this.message.on('moep', function(message, value){
-
             });
 
             // after events!!!

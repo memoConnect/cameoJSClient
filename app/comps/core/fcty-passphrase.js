@@ -86,7 +86,7 @@ angular.module('cmCore').factory('cmPassphrase',[
                 if(typeof encrypted_passphrase == 'string' && encrypted_passphrase.length > 0){
                     symmetricallyEncryptedPassphrase = encrypted_passphrase
                 }else{
-                    cmLogger.debug('cmPassphrase: importSymmetricallyEncryptedPassphrase(): unable to read encrypted passphrase.')
+//                    cmLogger.debug('cmPassphrase: importSymmetricallyEncryptedPassphrase(): unable to read encrypted passphrase.')
                 }
                 return this;
             };
@@ -140,7 +140,7 @@ angular.module('cmCore').factory('cmPassphrase',[
 
                     this.trigger('password:changed');                    
                 }else{
-                    cmLogger.debug('cmPassphrase: unable to set Password, requirements not met.')
+//                    cmLogger.debug('cmPassphrase: unable to set Password, requirements not met.')
                 }
 
                 return this;
@@ -194,8 +194,9 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @todo Passphrase generation crappy!!
              */
             this.generate = function(){
-                if(couldBeAPassphrase(passphrase))
-                    cmLogger.debug('cmPassphrase:generatePassphrase  - passphrase already present, generated new one.');
+                if(couldBeAPassphrase(passphrase)){
+//                    cmLogger.debug('cmPassphrase:generatePassphrase  - passphrase already present, generated new one.');
+                }
 
                 passphrase = cmCrypt.generatePassphrase();
                 
@@ -313,7 +314,7 @@ angular.module('cmCore').factory('cmPassphrase',[
                 if(couldBeAPassword(pw) && couldBeAPassphrase(passphrase)){
                     return cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(password, passphrase));
                 } else {
-                    cmLogger.debug('cmPassphrase:symmetricallyEncryptPassphrase - provide a proper password and and passphrase before encrypting the passphrase!');
+//                    cmLogger.debug('cmPassphrase:symmetricallyEncryptPassphrase - provide a proper password and and passphrase before encrypting the passphrase!');
                     return false                   
                 }
             }
@@ -335,7 +336,7 @@ angular.module('cmCore').factory('cmPassphrase',[
                                 return list.concat(identity.encryptPassphrase(passphrase))
                             }, [])
                 } else{
-                    cmLogger.debug('cmPassphrase:asymmetricallyEncryptPassphrase - provide a list of identities and and passphrase before encrypting the passphrase!');
+//                    cmLogger.debug('cmPassphrase:asymmetricallyEncryptPassphrase - provide a list of identities and and passphrase before encrypting the passphrase!');
                     return false
                 }
             }

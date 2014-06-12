@@ -73,7 +73,8 @@ angular.module('cmCore').service('cmUserModel',[
          * @returns {Object} this cmUserModel
          */
         this.init = function(identity_data){
-            cmLogger.debug('cmUserModel:init');
+//            cmLogger.debug('cmUserModel:init');
+
             this.loadIdentity(identity_data).then(
                 function(identity){
                     if(typeof identity_data == 'object'){
@@ -89,7 +90,7 @@ angular.module('cmCore').service('cmUserModel',[
                     self.initStorage();
                     self.syncLocalKeys();
 
-                    cmLogger.debug('cmUserModel:init:ready');
+//                    cmLogger.debug('cmUserModel:init:ready');
                     self.trigger('init');// deprecated
                     self.trigger('init:finish');
                 },
