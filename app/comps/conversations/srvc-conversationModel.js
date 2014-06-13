@@ -422,7 +422,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         this.localPWHandler.set(this.id, this.password);
                     }
                 } else {
-                    this.trigger('decrypt:fail');
+                    this.trigger('decrypt:failed');
                 }
 
                 return success;
@@ -665,10 +665,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.on('update:finished', function(){
                 self.decrypt();
-            });
-
-            this.on('feedback:decrypt:fail', function(){
-                cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG',{ttl:2000})
             });
 
             //Todo: fire event on factory and delegate to conversation or something
