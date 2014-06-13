@@ -502,7 +502,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 if(typeof conversation_data.passCaptcha !== 'undefined' && conversation_data.passCaptcha != '' && this.passCaptcha == undefined){
                     this.passCaptcha = cmFileFactory.create(conversation_data.passCaptcha);
                     this.passCaptcha
-//                        .setPassphrase()
                         .downloadStart();
                 }
 
@@ -524,7 +523,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     this.passCaptcha.name = this.passCaptcha.encryptedName = 'captcha';
 
                     this.passCaptcha
-                        .setPassphrase('')
                         .importBase64(this.tmpPassCaptcha)
                         .prepareForUpload().then(
                         function(){
