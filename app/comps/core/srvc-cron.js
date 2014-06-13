@@ -74,7 +74,7 @@ angular.module('cmCore').service('cmCron', [
                 job.isRunning = true;
 
                 job.task(function(){
-                    console.log('hier')
+//                    console.log('hier')
 //                    job.callback(arguments[0]);
 
                     job.isRunning = false;

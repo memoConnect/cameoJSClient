@@ -149,8 +149,8 @@ angular.module('cmConversations').directive('cmConversation', [
                         return false                        
                     }
 
-                    console.log($scope.conversation.getPassphrase())
-                    console.log($scope.conversation.getPassphrase() === null )
+//                    console.log($scope.conversation.getPassphrase())
+//                    console.log($scope.conversation.getPassphrase() === null )
 
                     //If we got this far the conversation has been saved to the backend.
                     //Create a new message:
