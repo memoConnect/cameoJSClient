@@ -60,7 +60,6 @@ angular.module('cmCore').service('cmAuth', [
              * @returns {Boolean} for setting succeed
              */
             storeToken: function(token){
-                console.log('token', token)
                 return localStorage.setItem('token', token);
             },
             /**
