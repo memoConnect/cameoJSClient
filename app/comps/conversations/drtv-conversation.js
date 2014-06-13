@@ -113,7 +113,7 @@ angular.module('cmConversations').directive('cmConversation', [
                      */
                     var message_invalid         = !isMessageValid(),
                         passphrase_invalid      = !$scope.conversation.passphraseValid(),
-                        recipients_missing      = !$scope.conversation.recipients.length > 0 //@todo mocked
+                        recipients_missing      = !$scope.conversation.recipients.length > 0; //@todo mocked
 
 
 //                    console.log('sendMessage','message_invalid '+message_invalid, 'passphrase_invalid '+passphrase_invalid, 'recipients_missing '+recipients_missing)
@@ -146,7 +146,7 @@ angular.module('cmConversations').directive('cmConversation', [
                         $scope.conversation.one('save:finished', function(){
                            sendMessage();
                         });
-                        return false                        
+                        return false
                     }
 
 //                    console.log($scope.conversation.getPassphrase())

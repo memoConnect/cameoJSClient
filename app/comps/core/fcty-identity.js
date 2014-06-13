@@ -169,8 +169,7 @@ angular.module('cmCore').factory('cmIdentityModel',[
             this.getAvatar = function(){
                 if(this.avatarId){
                     var file = cmFileFactory.create(this.avatarId);
-                        file.setPassphrase('')
-                            .downloadStart();
+                        file.downloadStart();
 
                     return file;
                 }
@@ -212,11 +211,9 @@ angular.module('cmCore').factory('cmIdentityModel',[
     }
 ])
 .factory('cmIdentityFactory',[
-
     '$rootScope',
     'cmFactory',
     'cmIdentityModel',
-
     function($rootScope, cmFactory, cmIdentityModel){
 
         var self = new cmFactory(cmIdentityModel);
@@ -226,66 +223,5 @@ angular.module('cmCore').factory('cmIdentityModel',[
         });
 
         return self;
-
-        /* Alt:
-        var instances = [];
-
-        $rootScope.$on('logout', function(){
-            instances = [];
-        });
-
-        return {
-            /**
-             * returns instance of cmIdentityModel
-             * @param data id or object
-             * @returns {*}
-             */
-        /*
-            get: function(data){
-                var identity = null,
-                    id       = data.id || data
-
-                identity = this.getById(id) 
-
-                if(identity === null){
-                    identity = new cmIdentityModel(data);
-                    instances.push(identity);
-                }
-
-                return identity;
-            },
-
-            create: function(data){
-                if(typeof data != 'object'){
-                    return null  
-                } else {
-                    return this.get(data)
-                }
-            },
-
-
-            //get Message by id
-            getById: function(id){
-                var identity = null;
-
-                for(var i = 0; i < instances.length; i++){
-                    if(
-                        typeof instances[i] === 'object' &&
-                        instances[i].id == id
-                    ){
-                        identity = instances[i];
-                        break;
-                    }
-                }
-
-                return identity
-            },
-
-
-            getQty: function(){
-                return instances.length;
-            }
-        }
-        */
     }
 ]);
