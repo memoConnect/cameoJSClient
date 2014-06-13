@@ -64,11 +64,13 @@ angular.module('cmConversations').factory('cmMessageModel',[
                     if(cmUtil.objLen(data) > 1){
                         self.importData(data);
                     } else {
+                        self.from = cmUserModel.data.identity;
                         self.state.set('new');
                     }
                 } else {
                     // fail ??
                     self.state.set('new');
+                    self.from = cmUserModel.data.identity;
                 }
             }
 
