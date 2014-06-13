@@ -437,6 +437,16 @@ angular.module('cmCore').factory('cmPassphrase',[
                         }) || 0
             }
 
+            /**
+             * @ngdoc method
+             * @methodOf cmPassphrase
+             *
+             * @name isInPassphraseList
+             * @description
+             * checks if local user keys in passphraselist
+             *
+             * @returns {Boolean} boolean Returns a Boolean
+             */
             this.isInPassphraseList = function(){
                 var localKeys = cmUserModel.loadLocalKeys(),
                     check = false;
