@@ -26,6 +26,9 @@ angular.module('cmConversations').directive('cmConversationControls', [
 
                         scope._setLevel(levels[conversation.getSafetyLevel()]);
 
+                        /**
+                         * @todo control panel nur öffnen, wenn message neu, oder wenn vom user in der passphraselist zu finden ist aber keytransmission symmetric und oder mixed
+                         */
                         if(!cmConversation.isNew() && !conversation.password && (conversation.getKeyTransmission() == 'symmetric' || conversation.getKeyTransmission() == 'mixed')) {
                             scope.toggleControls('open');
                         }
