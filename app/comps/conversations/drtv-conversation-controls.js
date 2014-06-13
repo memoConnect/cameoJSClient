@@ -26,7 +26,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
 
                         scope._setLevel(levels[conversation.getSafetyLevel()]);
 
-                        if(!cmConversation.isNew() && !conversation.password && conversation.getKeyTransmission() == 'symmetric') {
+                        if(!cmConversation.isNew() && !conversation.password && (conversation.getKeyTransmission() == 'symmetric' || conversation.getKeyTransmission() == 'mixed')) {
                             scope.toggleControls('open');
                         }
 
