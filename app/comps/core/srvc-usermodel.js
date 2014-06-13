@@ -38,7 +38,6 @@ angular.module('cmCore').service('cmUserModel',[
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
 
-
         var dataModel = {
             isActive: false,
             id: '',
@@ -73,9 +72,6 @@ angular.module('cmCore').service('cmUserModel',[
          * @returns {Object} this cmUserModel
          */
         function init(){
-//            cmLogger.debug('cmUserModel:init');
-
-//            self.importData(identity_data);
             self.loadIdentity();
 
             self.trigger('init');// deprecated
@@ -83,7 +79,7 @@ angular.module('cmCore').service('cmUserModel',[
         }
 
         this.importData = function(identity){
-            cmLogger.debug('cmUserModel:importData');
+//            cmLogger.debug('cmUserModel:importData');
 
             this.data = angular.extend(this.data,identity);
 
@@ -115,10 +111,10 @@ angular.module('cmCore').service('cmUserModel',[
                         function(data){
                             self.importData(cmIdentityFactory.create(data));
                         },
-                        function(response){
-                            var response = response || {};
+                        function(r){
+                            var response = r || {};
 
-                            if(typeof response == 'object' && response.status == 401){
+                            if(typeof response == 'object' && (status in response) && response.status == 401){
                                 cmLogger.debug('cmUserModel:init:reject:401');
                                 self.doLogout();
                             }
@@ -134,7 +130,7 @@ angular.module('cmCore').service('cmUserModel',[
          */
         this.getIdentity = function(){
             return this.data.identity;
-        }
+        };
 
         this.setIdentity = function(identity_data){
             cmLogger.debug('cmUserModel:setIdentity');
@@ -162,7 +158,7 @@ angular.module('cmCore').service('cmUserModel',[
 
         this.setAuth = function(){
             isAuth = true
-        }
+        };
 
         this.isGuest = function(){
             if(this.data.userType == 'external'){
@@ -264,11 +260,11 @@ angular.module('cmCore').service('cmUserModel',[
 
         this.loadLocalKeys = function(){
             var stored_keys = this.storageGet('rsa') || [],
-                keys        = []            
+                keys        = [];
 
             stored_keys.forEach(function(stored_key){                
-                var data = (new cmCrypt.Key()).importData(stored_key)
-                keys.push( data )                
+                var data = (new cmCrypt.Key()).importData(stored_key);
+                keys.push(data)
             });
             
             return keys;
@@ -322,15 +318,15 @@ angular.module('cmCore').service('cmUserModel',[
 
         this.decryptPassphrase = function(encrypted_passphrase, keyId){
             var keys = this.loadLocalKeys() || [],
-                decrypted_passphrase
+                decrypted_passphrase;
 
             keys.forEach(function(key){ 
                 if(!decrypted_passphrase && (key.id == keyId || !keyId)){
                     decrypted_passphrase = key.decrypt(encrypted_passphrase)                    
                 }
-            })
-            return decrypted_passphrase
-        }
+            });
+            return decrypted_passphrase;
+        };
 
         /**
          * Token Functions
@@ -359,7 +355,7 @@ angular.module('cmCore').service('cmUserModel',[
          */
         this.initStorage = function(){
             this.data.storage = cmLocalStorage.create(this.data.id,this.data.userKey);
-        }
+        };
 
         /**
          * save to identity storage
@@ -371,6 +367,7 @@ angular.module('cmCore').service('cmUserModel',[
                 this.data.storage.save(key, value);
             }
         };
+
         /**
          *  get from identity storage
          * @param key
@@ -382,6 +379,7 @@ angular.module('cmCore').service('cmUserModel',[
 
             return null;
         };
+
         /**
          * remove from identity storage
          * @param key
@@ -391,14 +389,18 @@ angular.module('cmCore').service('cmUserModel',[
                 this.data.storage.remove(key);
             }
         };
+
         /**
          * clear identity storage
          */
         this.resetUser = function(){
-            cmLogger.debug('cmUserModel:resetUser');
+//            cmLogger.debug('cmUserModel:resetUser');
             this.data = angular.extend({}, dataModel);
-        }
+        };
 
+        /**
+         * Event Handling
+         */
         $rootScope.$on('logout', function(){
             self.resetUser();
         });

@@ -91,7 +91,6 @@ angular.module('cmCore').factory('cmPassphrase',[
                 return this;
             };
 
-
             /**
              * @ngdoc method
              * @methodOf cmPassphrase
@@ -431,11 +430,28 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @TODO mit AP klären, BS!!!
              * @returns {*|number}
              */
-             this.getWeakestKeySize = function(){
+            this.getWeakestKeySize = function(){
                 return  conversation.recipients.reduce(function(size, recipient){
 //                            return size != undefined ? Math.min(recipient.getWeakestKeySize(), size) : recipient.getWeakestKeySize()
                             return size != undefined ? Math.min(recipient.getWeakestKeySize(), size.getWeakestKeySize()) : recipient.getWeakestKeySize()
                         }) || 0
+            }
+
+            this.isInPassphraseList = function(){
+                var localKeys = cmUserModel.loadLocalKeys(),
+                    check = false;
+
+                if(asymmetricallyEncryptedPassphrases.length > 0 && typeof localKeys == 'array' && localKeys.length > 0){
+                    localKeys.forEach(function(value){
+                        asymmetricallyEncryptedPassphrases.forEach(function(key){
+                            if(key.keyId == value.keyId){
+                                check = true;
+                            }
+                        })
+                    });
+                }
+
+                return check;
             }
 
         }

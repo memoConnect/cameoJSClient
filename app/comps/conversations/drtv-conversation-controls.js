@@ -5,9 +5,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
     'cmNotify',
     'cmLogger',
     '$location',
-    '$timeout',
-
-    function(cmUserModel, cmNotify, cmLogger, $location, $timeout){
+    function(cmUserModel, cmNotify, cmLogger, $location){
         return{
             restrict : 'AE',
             templateUrl : 'comps/conversations/drtv-conversation-controls.html',
@@ -17,8 +15,8 @@ angular.module('cmConversations').directive('cmConversationControls', [
             link: function(scope, element, attrs, cmConversation){
                 var levels = ['unsafe', 'safe', 'safer'];
 
-                scope.bodyVisible   = cmConversation.isNew()
-                scope.isNew         = cmConversation.isNew()
+                scope.bodyVisible   = cmConversation.isNew();
+                scope.isNew         = cmConversation.isNew();
 
                 //Todo: get rid of this! :
                 scope.$watch('conversation', function(conversation){
@@ -26,10 +24,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
 
                         scope._setLevel(levels[conversation.getSafetyLevel()]);
 
-                        /**
-                         * @todo control panel nur öffnen, wenn message neu, oder wenn vom user in der passphraselist zu finden ist aber keytransmission symmetric und oder mixed
-                         */
-                        if(!cmConversation.isNew() && !conversation.password && (conversation.getKeyTransmission() == 'symmetric' || conversation.getKeyTransmission() == 'mixed')) {
+                        if(!cmConversation.isNew() && !conversation.password && (conversation.getKeyTransmission() == 'symmetric' || conversation.getKeyTransmission() == 'mixed') && !conversation.isUserInPassphraseList()) {
                             scope.toggleControls('open');
                         }
 

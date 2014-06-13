@@ -407,7 +407,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
-//                cmLogger.debug('cmConversationModel:decrypt');
+                cmLogger.debug('cmConversationModel:decrypt');
                 
                 var passphrase  =   this.getPassphrase(),
                     success     =   passphrase && this.messages.reduce(function (success, message){
@@ -457,7 +457,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         .setPassword(this.password)
                         .setIdentities(this.recipients)
                         .get();
-            }
+            };
+
+            this.isUserInPassphraseList = function(){
+                return passphrase.isInPassphraseList();
+            };
 
             /**
              * @ngdoc method
@@ -477,7 +481,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return      passphrase.disabled()
                         ||  this.messages.length == 0
                         ||  this.messages[0].isEncrypted()
-                        ||  this.messages[0].decrypt(passphrase.get())
+                        ||  this.messages[0].decrypt(passphrase.get());
 
             };
 
@@ -649,6 +653,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
             /**
              * Event Handling
              */
+
+            $rootScope.$on('logout', function(){
+                self.messages.reset();
+                self.recipients.reset();
+            });
 
             passphrase.on('passphrase:changed', function(){
 //                self.decrypt();
