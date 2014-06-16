@@ -1,5 +1,6 @@
 /.idea/
 /node_modules/
+/_node_modules_bak/
 /phonegap-build/
 /phonegap-src/
 /phonegap-target/
