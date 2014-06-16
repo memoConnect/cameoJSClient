@@ -178,7 +178,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 /**
                  * @todo wech bei überarbeitung controls
                  */
-                if(this.state.is('new') && passphrase.getKeyTransmission() == 'none'){
+                if(this.state.is('new') || passphrase.getKeyTransmission() == 'none'){
                     passphrase.disable();
                 }
 
