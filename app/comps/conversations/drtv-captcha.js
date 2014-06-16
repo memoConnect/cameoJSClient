@@ -20,7 +20,7 @@ angular.module('cmConversations').directive('cmCaptcha',[
                     captcha = new Captchagen({
                         width: dim[0]
                         ,height: dim[1]
-                        ,text: $scope.passphrase
+                        ,text: $scope.conversation.password || ''
                         ,font: $scope.captchaFont
                     });
                     captcha.generate();

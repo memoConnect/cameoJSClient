@@ -144,7 +144,8 @@
             "ADD_RECIPIENTS": "Empfänger hinzufügen",
             "INFO": "Info",
             "PASSWORD": "Passwort",
-            "PASSCAPTCHA": "Passcaptcha"
+            "PASSCAPTCHA": "Passcaptcha",
+            "ENCRYPTION": "verschlüsselt"
         },
         "CONTROL": {
             "SAVE": "speichern",

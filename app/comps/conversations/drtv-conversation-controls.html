@@ -18,7 +18,6 @@
         </div>
 
         <div class="body-group">
-
             <div class="recipients-list">
                 <cm-avatar cm-data="recipient" cm-with-name="true" cm-view="hide-owner" ng-repeat="recipient in conversation.recipients"></cm-avatar>
 
@@ -35,39 +34,17 @@
         </div>
 
         <div class="body-group">
-            <div class="safety-levels" cm-rubber-space>
-                <div cm-weight="3"></div>
-                <div cm-weight="2">
-                    <div class="cm-safety-level safetylevel-safer-btn" ng-class="{active:(safetyLevel=='safer')}" ng-click="setLevel('safer')">
-                        <i class="fa cm-lock"></i><i class="fa cm-lock"></i>
-                    </div>
-                </div>
-                <div cm-weight="1"></div>
-                <div cm-weight="2">
-                    <div class="cm-safety-level safetylevel-safe-btn" ng-class="{active:(safetyLevel=='safe')}" ng-click="setLevel('safe')" data-qa="btn-safetyLevel-save">
-                        <i class="fa cm-lock"></i>
-                    </div>
-                </div>
-                <div cm-weight="1"></div>
-                <div cm-weight="2">
-                    <div class="cm-safety-level safetylevel-unsafe-btn" ng-class="{active:(safetyLevel=='unsafe')}" ng-click="setLevel('unsafe')">
-                        <i class="fa cm-unlock"></i>
-                    </div>
-                </div>
-                <div cm-weight="3"></div>
+            <div>
+                <label>{{'CONVERSATION.PLACEHOLDER.ENCRYPTION' | cmTranslate}}</label>
+                <button ng-click="toggleConversationEncryption()"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!isEncrypted, 'cm-checkbox-right':isEncrypted}" data-qa="icon-checkbox-encryption"></i></button>
             </div>
 
-            <div class="cm-center">
-                <i class="fa cm-info"></i>
-                {{'CONVERSATION.PLACEHOLDER.INFO'|cmTranslate}}
+            <div ng-if="showPassword">
+                <label>{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA' | cmTranslate}}</label>
+                <button ng-click="toggleCaptcha()"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!hasCaptcha, 'cm-checkbox-right':hasCaptcha}" data-qa="icon-checkbox-passcaptcha"></i></button>
             </div>
 
-            <div ng-if="safetyLevel == 'safe'">
-                <div cm-rubber-space ng-if="isNew">
-                    <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':hasCaptcha}" ng-click="toggleCaptcha('password');" data-qa="btn-toogle-password">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</button>
-                    <button class="cm-btn-black" cm-weight="1" ng-class="{'inactive':!hasCaptcha}" ng-click="toggleCaptcha('captcha');" data-qa="btn-toogle-passcaptcha">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA'|cmTranslate}}</button>
-                </div>
-
+            <div ng-if="showPassword">
                 <div class="captcha" ng-if="hasCaptcha && isNew" data-qa="captcha-canvas">
                     <cm-captcha></cm-captcha>
                     <button class="refresh" ng-click="refreshCaptcha()" ng-if="isNew"><i class="fa cm-change"></i></button>
@@ -81,7 +58,7 @@
 
                 <div class="cm-form-group">
                     <div class="cm-form-control with-inputter" ng-class="{'with-inside-icon':!isNew}">
-                        <input type="text" ng-model="conversation.password" placeholder="{{ 'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change/>
+                        <input type="text" ng-model="conversation.password" placeholder="{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change/>
                         <i class="fa cm-key fa-2x with-cursor" ng-click="decrypt()" ng-if="!isNew"></i>
                     </div>
                 </div>
@@ -91,6 +68,12 @@
                 </div>
 
             </div>
+
+            <div class="cm-center">
+                <i class="fa cm-info"></i>
+                {{'CONVERSATION.PLACEHOLDER.INFO'|cmTranslate}}
+            </div>
+
             <div style="text-align:center; cursor:pointer" cm-user-rights>
                 <a href="#/settings">
                     {{'CONVERSATION.LABEL.KEY_GENERATION'|cmTranslate}}

@@ -121,7 +121,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     /**
                      * @todo wech bei controls überarbeitung
                      */
-                    passphrase.disable();
+                    //passphrase.disable();
                 }
 
                 self.trigger('init:finished');
@@ -182,7 +182,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     passphrase.disable();
                 }
 
-
                 this.initPassCaptcha(data);
 
                 var messages = data.messages || [];
@@ -217,6 +216,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {cmConversationModel} this  Returns itself for chaining.
              */
             this.disableEncryption = function(){
+                cmLogger.debug('cmConversationModel:disableEncryption');
+
                 if(this.state.is('new'))
                     passphrase.disable();
 
@@ -234,10 +235,15 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {cmConversationModel} this  Returns itself for chaining.
              */
             this.enableEncryption = function(){
+                cmLogger.debug('cmConversationModel:enableEncryption');
                 if(this.state.is('new') && !passphrase.get())
                     passphrase.generate();
 
                 return this;
+            };
+
+            this.isEncrypted = function(){
+                return passphrase.disabled();
             };
 
             /**
@@ -651,6 +657,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
 //                    return $q.when(true)
 //                }
             };
+
+            this.disableEncryption()
 
             /**
              * Event Handling
