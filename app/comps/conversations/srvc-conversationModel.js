@@ -556,9 +556,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.addRecipient = function(identityModel){
                 this.recipients.register(identityModel);
 
-                identityModel.on('update', function(){
-                    self.trigger('recipient:update'); //Todo: noch nicht gelöst =/
-                });
+//                identityModel.on('update', function(){
+//                    self.trigger('recipient:update'); //Todo: noch nicht gelöst =/ <- 16.06.2014 BS - wird der trigger benötigt?
+//                });
                 this.trigger('recipient-added');
 
                 return this;
