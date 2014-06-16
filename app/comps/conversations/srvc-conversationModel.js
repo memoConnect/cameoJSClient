@@ -118,6 +118,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     }
                 } else {
                     self.state.set('new');
+                    /**
+                     * @todo wech bei controls überarbeitung
+                     */
+                    passphrase.disable();
                 }
 
                 self.trigger('init:finished');
@@ -166,15 +170,15 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     this.password = this.localPWHandler.get(this.id);
 
                 if('sePassphrase' in data)
-                    passphrase.importSymmetricallyEncryptedPassphrase(data.sePassphrase)
+                    passphrase.importSymmetricallyEncryptedPassphrase(data.sePassphrase);
 
                 if('aePassphraseList' in data && data.aePassphraseList.length > 0)
-                    passphrase.importAsymmetricallyEncryptedPassphrase(data.aePassphraseList)
+                    passphrase.importAsymmetricallyEncryptedPassphrase(data.aePassphraseList);
 
                 /**
                  * @todo wech bei überarbeitung controls
                  */
-                if(passphrase.getKeyTransmission() == 'none'){
+                if(this.state.is('new') && passphrase.getKeyTransmission() == 'none'){
                     passphrase.disable();
                 }
 
