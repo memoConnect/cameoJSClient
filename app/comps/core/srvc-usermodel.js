@@ -114,7 +114,7 @@ angular.module('cmCore').service('cmUserModel',[
                         function(r){
                             var response = r || {};
 
-                            if(typeof response == 'object' && (status in response) && response.status == 401){
+                            if(typeof response == 'object' && ('status' in response) && response.status == 401){
                                 cmLogger.debug('cmUserModel:init:reject:401');
                                 self.doLogout();
                             }
