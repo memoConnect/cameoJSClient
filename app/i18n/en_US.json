@@ -140,8 +140,10 @@
             "PASSPHRASE_INVALID" : "Invalid passphrase"
         },
         "PLACEHOLDER": {
+            "SUBJECT": "Subject",
             "NO_SUBJECT": "add subject",
-            "ADD_RECIPIENTS": "add recipients",
+            "RECIPIENTS": "Recipients",
+            "ADD_RECIPIENTS": "add",
             "INFO": "info",
             "PASSWORD": "password",
             "PASSCAPTCHA": "passcaptcha",

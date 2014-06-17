@@ -140,8 +140,10 @@
             "PASSPHRASE_INVALID": "Ungültiger Schlüssel."
         },
         "PLACEHOLDER": {
+            "SUBJECT": "Betreff",
             "NO_SUBJECT": "Betreff eingeben",
-            "ADD_RECIPIENTS": "Empfänger hinzufügen",
+            "RECIPIENTS": "Empfänger",
+            "ADD_RECIPIENTS": "hinzufügen",
             "INFO": "Info",
             "PASSWORD": "Passwort",
             "PASSCAPTCHA": "Passcaptcha",

@@ -65,7 +65,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.options            = {
                 'hasCaptcha': false,
-                'showPassword': false,
+                'hasPassword': false,
                 'showKeyInfo': false
             };
 
@@ -572,7 +572,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                  * if Recipient has no Keys
                  */
                 if(identityModel.getWeakestKeySize() == 0){
-                    this.options.showPassword = true;
+                    this.options.hasPassword = true;
                     if(identityModel.id == cmUserModel.data.identity.id){
                         this.options.showKeyInfo = true;
                     }

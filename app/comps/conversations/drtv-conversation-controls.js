@@ -28,13 +28,6 @@ angular.module('cmConversations').directive('cmConversationControls', [
                         });
                     }
                 });
-
-                /**
-                 * Event Handling
-                 */
-                scope.conversation.on('show:password', function(){
-                    scope.conversation.options.showPassword = true;
-                });
             },
 
             controller: function($scope){
@@ -64,10 +57,8 @@ angular.module('cmConversations').directive('cmConversationControls', [
                 $scope.toggleConversationEncryption = function(){
                     if($scope.conversation.isEncrypted() !== false){
                         $scope.conversation.disableEncryption();
-                        $scope.conversation.options.showPassword = false;
                     } else {
                         $scope.conversation.enableEncryption();
-                        $scope.conversation.options.showPassword = true;
                     }
                 };
 
