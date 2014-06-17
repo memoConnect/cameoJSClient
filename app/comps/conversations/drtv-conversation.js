@@ -219,7 +219,6 @@ angular.module('cmConversations').directive('cmConversation', [
                     // TODO: create at send message not on init!!!
                     $scope.init(
                         cmConversationFactory.create()
-                        .disableEncryption()// @todo muss wieder wech, wenn controls umbau
                         .addRecipient(cmUserModel.data.identity) // muss nicht, macht die api auch von alleine (?)
                     )
                 }

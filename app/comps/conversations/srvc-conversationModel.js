@@ -118,10 +118,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     }
                 } else {
                     self.state.set('new');
-                    /**
-                     * @todo wech bei controls überarbeitung
-                     */
-                    //passphrase.disable();
+//                    self.disableEncryption();
                 }
 
                 self.trigger('init:finished');
@@ -174,13 +171,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 if('aePassphraseList' in data && data.aePassphraseList.length > 0)
                     passphrase.importAsymmetricallyEncryptedPassphrase(data.aePassphraseList);
-
-                /**
-                 * @todo wech bei überarbeitung controls
-                 */
-                if(this.state.is('new') || passphrase.getKeyTransmission() == 'none'){
-                    passphrase.disable();
-                }
 
                 this.initPassCaptcha(data);
 
@@ -243,7 +233,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             this.isEncrypted = function(){
-                return passphrase.disabled();
+                return !passphrase.disabled();
             };
 
             /**
@@ -657,8 +647,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 //                    return $q.when(true)
 //                }
             };
-
-            this.disableEncryption()
 
             /**
              * Event Handling
