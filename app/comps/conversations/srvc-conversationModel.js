@@ -232,6 +232,16 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return this;
             };
 
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name  isEncrypted
+             * @description
+             * Returns encryption state of passphrase object which is similar of the encryption state of the conversation
+             *
+             * @returns {boolean} bool Returns true if Conversation is encrypted.
+             */
             this.isEncrypted = function(){
                 return !passphrase.disabled();
             };
@@ -682,8 +692,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             /*** Alt Lasten ***/
 
-
-
             /**
              * @name addMessage
              * @description
@@ -706,96 +714,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return this;
             }
 
-
-            /* COVERSATION REFACTORING todo:
-            //Mock;
-    
-            this.update = function(){ cmLogger.warn('cmModel: .update() is deprecated.'); return this}
-            this.getEncryptionType = function(){return null}
-
-
-
-
-
-
-            //Attributes:
-            this.passphrase = '',
-            this.created = '',
-            this.lastUpdated = '',
-            this.numberOfMessages = 0,
-            this.encryptedPassphraseList = [];
-            this.encryptionType = 'none'; // 'none' || 'symmetric' || 'asymmetric'
-            this.keyTransmission = 'asymmetric' || 'symmetric';
-            this.passCaptcha = undefined;
-            this.tmpPassCaptcha = '';
-            var self = this;
-
-
-            $rootScope.$on('logout', function(){
-                self.messages = [];
-                self.recipients = [];
-            });
-
-            /**
-             * Conversation Handling
-             */
-
-            /**
-             * @name init
-             * @description
-             * initialize ConversationModel
-             *
-             * @deprecated
-             *
-             * @param {Object} conversation_data Date from API Call
-             * @returns {ConversationModel} this returns cmConversationModel
-             */
-            /*this.init = function (conversation_data) {
-
-                cmLogger.warn('conversationModel: .init() is deprecated, please use .importData().')
-
-                this.importData(conversation_data)
-                return this;
-
-
-                if(typeof conversation_data !== 'undefined'){
-                    this.id                 = conversation_data.id;
-                    this.subject            = conversation_data.subject;
-                    this.numberOfMessages   = conversation_data.numberOfMessages;
-                    this.lastUpdated        = conversation_data.lastUpdated;
-
-                    this.encryptedPassphraseList = this.encryptedPassphraseList.concat(conversation_data.encryptedPassphraseList || []);
-                    this.setEncryptionType();
-
-                    // register all recipients as Recipient objects
-                    if (conversation_data.recipients) {
-                        conversation_data.recipients.forEach(function (item) {
-    //                        new cmRecipientModel(cmIdentityFactory.create(item.identityId)).addTo(self);
-                            self.addRecipient(new cmRecipientModel(cmIdentityFactory.create(item.identity)));
-                        })
-                    }
-
-                    // register all messages as Message objects
-                    if (conversation_data.messages) {
-                        conversation_data.messages.forEach(function (message_data) {
-                            self.addMessage(cmMessageFactory.create(message_data));
-                        })
-                    }
-
-                    this.decrypt(); //Todo: maybe this is too much
-
-                    this.initPassCaptcha(conversation_data);
-
-                    this.on('after-add-recipient', function(){
-                        //@ TODO: solve rekeying another way:
-                        this.$chain()
-                        .encryptPassphrase()
-                        .saveEncryptedPassphraseList()
-
-                    })
-                }
-
-            }*/
 
             /*
             this.setEncryptionType = function(){
@@ -825,6 +743,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {string}
              */
             this.getLastUpdate = function(){
+                cmLogger.debug('cmConversationModel: getLastUpdate is deprecated.')
                 return this.lastUpdated;
             }
 
@@ -839,7 +758,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              */
             
             this.getLastMessage = function(){
-//                cmLogger.debug('cmConversationModel: getLastMessage is deprecated.')
+                cmLogger.debug('cmConversationModel: getLastMessage is deprecated.')
                 if(this.messages.length > 0){
                     return this.messages[(this.messages.length - 1)];
                 }
@@ -861,6 +780,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              */
 
             this.updateSubject = function (subject) {
+                cmLogger.debug('cmConversationModel: .updateSubject() is deprecated.')
                 if(this.id != ''){
                     cmConversationsAdapter.updateSubject(this.id, subject)
                         .then(function(){
