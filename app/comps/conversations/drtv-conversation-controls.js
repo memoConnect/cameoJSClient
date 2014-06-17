@@ -13,8 +13,6 @@ angular.module('cmConversations').directive('cmConversationControls', [
             require: '^cmConversation',
 
             link: function(scope, element, attrs, cmConversation){
-                var levels = ['unsafe', 'safe', 'safer'];
-
                 scope.bodyVisible   = cmConversation.isNew();
                 scope.isNew         = cmConversation.isNew();
 
@@ -27,16 +25,19 @@ angular.module('cmConversations').directive('cmConversationControls', [
 
                         conversation.on('decrypt:ok', function(){
                             scope.toggleControls('close');
-                        })
+                        });
                     }
+                });
+
+                /**
+                 * Event Handling
+                 */
+                scope.conversation.on('show:password', function(){
+                    scope.conversation.options.showPassword = true;
                 });
             },
 
             controller: function($scope){
-                $scope.hasCaptcha = false;
-                $scope.isEncrypted = $scope.conversation.isEncrypted();
-                $scope.showPassword = true;
-
                 $scope.refreshCaptcha = function(){
                     $scope.$broadcast('captcha:refresh');
                 };
@@ -61,25 +62,21 @@ angular.module('cmConversations').directive('cmConversationControls', [
                 };
 
                 $scope.toggleConversationEncryption = function(){
-                    if($scope.isEncrypted !== false){
-                        $scope.isEncrypted = false;
+                    if($scope.conversation.isEncrypted() !== false){
                         $scope.conversation.disableEncryption();
-
-                        $scope.showPassword = false;
+                        $scope.conversation.options.showPassword = false;
                     } else {
-                        $scope.isEncrypted = true;
                         $scope.conversation.enableEncryption();
-
-                        $scope.showPassword = true;
+                        $scope.conversation.options.showPassword = true;
                     }
                 };
 
                 $scope.toggleCaptcha = function(){
-                    if($scope.isEncrypted !== false){
-                        if($scope.hasCaptcha !== false){
-                            $scope.hasCaptcha = false;
+                    if($scope.conversation.isEncrypted() !== false){
+                        if($scope.conversation.options.hasCaptcha !== false){
+                            $scope.conversation.options.hasCaptcha = false;
                         } else {
-                            $scope.hasCaptcha = true;
+                            $scope.conversation.options.hasCaptcha = true;
                         }
                     }
                 };

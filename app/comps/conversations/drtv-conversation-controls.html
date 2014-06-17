@@ -2,22 +2,7 @@
     <div cm-transparent-bg ng-show="bodyVisible" ng-click="toggleControls()"></div>
     <div ng-show="bodyVisible" class="body" data-qa="conversation-options-menu">
 
-        <div class="cm-form-group" ng-show="isNew">
-            <div class="cm-form-control with-inputter">
-                <input type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" cm-adaptive-change data-qa="input-subject"/>
-            </div>
-        </div>
-
-        <div class="body-group" ng-click="show_aspects = !show_aspects">
-            <cm-security-indicator cm-data="conversation.securityAspects"/>
-        </div>
-
-        <div class="body-group" ng-if="show_aspects">
-            <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getNegativeAspects()" cm-data="aspect"></cm-security-aspect>
-            <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getPositiveAspects()" cm-data="aspect"></cm-security-aspect>
-        </div>
-
-        <div class="body-group">
+        <section class="body-group">
             <div class="recipients-list">
                 <cm-avatar cm-data="recipient" cm-with-name="true" cm-view="hide-owner" ng-repeat="recipient in conversation.recipients"></cm-avatar>
 
@@ -31,21 +16,30 @@
                     <cm-edge></cm-edge>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="body-group">
+        <section class="body-group" ng-click="show_aspects = !show_aspects">
+            <cm-security-indicator cm-data="conversation.securityAspects"/>
+        </section>
+
+        <section class="body-group" ng-if="show_aspects">
+            <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getNegativeAspects()" cm-data="aspect"></cm-security-aspect>
+            <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getPositiveAspects()" cm-data="aspect"></cm-security-aspect>
+        </section>
+
+        <section class="body-group">
             <div>
                 <label>{{'CONVERSATION.PLACEHOLDER.ENCRYPTION' | cmTranslate}}</label>
-                <button ng-click="toggleConversationEncryption()"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!isEncrypted, 'cm-checkbox-right':isEncrypted}" data-qa="icon-checkbox-encryption"></i></button>
+                <button ng-click="toggleConversationEncryption()"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.isEncrypted(), 'cm-checkbox-right':conversation.isEncrypted()}" data-qa="icon-checkbox-encryption"></i></button>
             </div>
 
-            <div ng-if="showPassword">
+            <div ng-if="conversation.options.showPassword && conversation.isEncrypted()">
                 <label>{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA' | cmTranslate}}</label>
-                <button ng-click="toggleCaptcha()"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!hasCaptcha, 'cm-checkbox-right':hasCaptcha}" data-qa="icon-checkbox-passcaptcha"></i></button>
+                <button ng-click="toggleCaptcha()"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.options.hasCaptcha, 'cm-checkbox-right':conversation.options.hasCaptcha}" data-qa="icon-checkbox-passcaptcha"></i></button>
             </div>
 
-            <div ng-if="showPassword">
-                <div class="captcha" ng-if="hasCaptcha && isNew" data-qa="captcha-canvas">
+            <div ng-if="conversation.options.showPassword && conversation.isEncrypted()">
+                <div class="captcha" ng-if="conversation.options.hasCaptcha && isNew" data-qa="captcha-canvas">
                     <cm-captcha></cm-captcha>
                     <button class="refresh" ng-click="refreshCaptcha()" ng-if="isNew"><i class="fa cm-change"></i></button>
                     <p ng-if="!isNew">
@@ -56,6 +50,7 @@
                     </p>
                 </div>
 
+                <label>{{'CONVERSATION.PLACEHOLDER.PASSWORD' | cmTranslate}}</label>
                 <div class="cm-form-group">
                     <div class="cm-form-control with-inputter" ng-class="{'with-inside-icon':!isNew}">
                         <input type="text" ng-model="conversation.password" placeholder="{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change/>
@@ -69,17 +64,18 @@
 
             </div>
 
-            <div class="cm-center">
-                <i class="fa cm-info"></i>
-                {{'CONVERSATION.PLACEHOLDER.INFO'|cmTranslate}}
-            </div>
-
-            <div style="text-align:center; cursor:pointer" cm-user-rights>
+            <div ng-if="conversation.options.showKeyInfo" style="text-align:center; cursor:pointer" cm-user-rights>
                 <a href="#/settings">
                     {{'CONVERSATION.LABEL.KEY_GENERATION'|cmTranslate}}
                 </a>
             </div>
-        </div>
+        </section>
+
+        <section class="cm-form-group" ng-show="isNew">
+            <div class="cm-form-control with-inputter">
+                <input type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" cm-adaptive-change data-qa="input-subject"/>
+            </div>
+        </section>
 
         <button ng-click="toggleControls()" class="cm-btn" ng-if="!isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
         <button ng-click="toggleControls()" class="cm-btn" ng-if="isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>

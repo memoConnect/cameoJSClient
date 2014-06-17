@@ -61,7 +61,13 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.state              = new cmStateManagement(['new','loading']);
 
             //rethink, mabye backend should deliver array of message ids
-            this.numberOfMessages   = 0
+            this.numberOfMessages   = 0;
+
+            this.options            = {
+                'hasCaptcha': false,
+                'showPassword': false,
+                'showKeyInfo': false
+            };
 
             /*maybe REFACTOR TODO*/
             this.passCaptcha = undefined;
@@ -562,10 +568,21 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.addRecipient = function(identityModel){
                 this.recipients.register(identityModel);
 
+                /**
+                 * if Recipient has no Keys
+                 */
+                if(identityModel.getWeakestKeySize() == 0){
+                    this.options.showPassword = true;
+                    if(identityModel.id == cmUserModel.data.identity.id){
+                        this.options.showKeyInfo = true;
+                    }
+                }
+
+
 //                identityModel.on('update', function(){
 //                    self.trigger('recipient:update'); //Todo: noch nicht gelöst =/ <- 16.06.2014 BS - wird der trigger benötigt?
 //                });
-                this.trigger('recipient-added');
+//                this.trigger('recipient:added');
 
                 return this;
             };
@@ -684,6 +701,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.recipients.on('register', function(event, recipient){
                 // do something, if new recipient is added to conversation
+//                console.log('recipient:register',recipient)
             });
 
             // after events!!!
@@ -713,7 +731,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 return this;
             }
-
 
             /*
             this.setEncryptionType = function(){
