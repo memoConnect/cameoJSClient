@@ -17,7 +17,7 @@ describe('cmFactory', function(){
     }))
 
     describe('.new()', function(){
-         it('should create and add new instances and trigger register event even if dublicates exist.', function(){
+         it('should create and add new instances and trigger register event even if doublicates exist.', function(){
 
             factory.on('register', function(instance){ instance_count++ })
 
@@ -35,6 +35,13 @@ describe('cmFactory', function(){
             expect(factory.length).toBe(2)
             expect(instance_count).toBe(2) 
 
+        })
+
+        it('should be return an instance but not add to factory, that count will be 0', function(){
+            var instance        = factory.new({id: 'my_id'}, true)
+
+            expect(instance instanceof TestModel).toBe(true)
+            expect(factory.length).toBe(0)
         })
     })
 
@@ -97,6 +104,8 @@ describe('cmFactory', function(){
 
         it('should add an instance if not yet present and trigger a register event.', function(){
 
+            var instance_count  = 0
+
             factory.on('register', function(instance){ instance_count++ })
 
             var instance = new TestModel({id: 'my_id'})
@@ -112,6 +121,8 @@ describe('cmFactory', function(){
 
         it('should not add alien instances.', function(){
 
+            var instance_count  = 0
+
             factory.on('register', function(instance){ instance_count++ })
 
             var instance = '123'
@@ -124,9 +135,32 @@ describe('cmFactory', function(){
 
     })
 
+    describe('.deregister()', function(){
+        it('should remove a given instance from factory', function(){
+
+            var instance_count  = 0
+
+            factory.on('register', function(instance){ instance_count++ })
+            factory.on('unregistered', function(instance){ instance_count-- })
+
+            var instance = new TestModel({id: 'my_id'})
+
+            factory.register( instance )
+            expect(instance_count).toBe(1)
+            expect(factory.length).toBe(1)
+
+            factory.deregister( instance )
+            expect(instance_count).toBe(0)
+            expect(factory.length).toBe(0)
+
+        });
+    })
+
     describe('.reset()', function(){
 
         it('should remove all instances.', function(){
+
+            var instance_count  = 0
 
             factory.on('register', function(instance){ instance_count++ })
 
