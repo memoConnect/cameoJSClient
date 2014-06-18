@@ -1,0 +1,21 @@
+{
+    "config": {
+        "wwwUrl": "http://localhost:9000/m/",
+        "autoLogin": false,
+        "loadingBar": false
+    },
+    "testData": [
+        "loginUser1 = 'BMeSfHXQ'",
+        "passwordUser1 = 'password'",
+        "cameoIdUser1 = 'bwyVeVnCvuO'",
+        "purlUser1 = 'V3Ml6hzqX8'",
+        "displayNameUser1 = 'Moeper2'",
+        "contactUser1DisplayName ='4EKozMkDyz7fvvTU3TI0'",
+        "contactUser1Login = 'fbgblqym'",
+        "contactUser1password = 'password'",
+        "purlExtern = 'MSaKlj4hJP'",
+        "loginUser2 = '2VqTftqh'",
+        "passwordUser2 = 'password'",
+        "cameoIdUser2 = 'KG5mSGTY8l3'"
+    ]
+}

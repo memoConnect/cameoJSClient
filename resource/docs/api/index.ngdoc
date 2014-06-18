@@ -1,0 +1,7 @@
+@ngdoc overview
+@name apiary.io
+@description
+
+<a href="https://dev.cameo.io/a/v1">Api Dev Link</a>
+
+<iframe width="1100px" height="1500px" src="http://docs.cameo.apiary.io/" frameborder="0"></iframe>

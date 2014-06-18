@@ -1,0 +1,111 @@
+cm-menu {
+  text-align:right;
+  .cm-handler{
+    cursor:pointer;
+    i.fa.cm-menu {
+      color:@cm-ci-color;
+      position:relative;
+    }
+  }
+  .cm-menu-layer {
+    position:fixed!important;
+    width:@cm-app-width;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:0 auto;
+    z-index: 2;
+    .cm-menu-list{
+      display:inline-block;
+      overflow-y:auto;
+      overflow-x:hidden;
+      height:100%;
+      width:60%;
+      i {
+        color:@cm-ci-color;
+        line-height: inherit;
+      }
+      ul.list-group {
+        position:relative;
+        z-index:1;
+        margin-bottom:0px;
+      }
+      .cm-nose-wrapper {
+        height:@cm-header-height;
+        line-height:1em;
+        position:relative;
+        i{
+          position: absolute;
+          bottom: 0.2em;
+          right: 0;
+          font-size: 2em;
+        }
+      }
+      .cm-list-group-item{
+        .with-cursor;
+        text-align:left;
+        background-color:@cm-white;
+        &.cm-menu-header {
+          cursor:default;
+          background-color:@cm-ci-color;
+          color:@cm-white;
+          -webkit-border-top-left-radius:@cm-border-radius;
+          -moz-border-radius-topleft:@cm-border-radius;
+          border-top-left-radius:@cm-border-radius;
+          border-top:0;
+          i {
+            color:@cm-white !important;
+          }
+        }
+        i{
+          width:@cm-unit - 0.5;
+          text-align:center;
+          font-size:@cm-unit/2;
+          &.icon-left {
+            float:left;
+          }
+          &.icon-right{
+            width:@cm-unit;
+            text-align:right;
+            padding-right:0.5rem;
+            position:absolute;
+            right:0;
+          }
+        }
+        a,span{
+          text-align:left;
+          float:left;
+        }
+        &.has-submenu{
+          padding-right:0 !important;
+          padding-left:0 !important;
+          padding-bottom:0 !important;
+        }
+        .cm-submenu{
+          padding-left:@cm-unit - 1.7;
+          background:@cm-light-grey;
+          border-top:@cm-border-width solid @cm-border-grey;
+          i{
+            color:@cm-grey !important;
+          }
+        }
+      }
+      .cm-menu-notify{
+        background-color:@cm-light-grey;
+      }
+      .bottom-filler{
+        width:100%;
+        background:@cm-white;
+        position: absolute;
+        z-index:0;
+        top:(@cm-header-height)+1em;
+        bottom:0;
+        right:0;
+      }
+      .info, .info i {
+        color: @cm-warning-color !important;
+      }
+    }
+  }
+}

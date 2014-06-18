@@ -1,0 +1,11 @@
+{
+    "config": {
+        "apiUrl": "http://localhost:9000/a/v1",
+        "autoLogin": false,
+        "loadingBar": false
+    },
+    "phonegap": {
+        "baseName" : "cameoNet-test" ,
+        "appId" : "io.cameo.cameonet.client.web.mobile.app.test"
+    }
+}

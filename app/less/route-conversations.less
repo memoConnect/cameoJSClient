@@ -1,0 +1,457 @@
+.cm-unread{ color:@cm-warning-color }
+
+cm-conversation{
+  padding-top:@cm-conversation-control-height+1em;
+}
+
+li:first-of-type cm-conversation-tag {
+    border-top: solid @cm-border-grey @cm-border-width;
+}
+
+cm-conversation-tag{
+    display: block;  
+    background: @cm-overlay-light;
+    color: @cm-dark-grey;
+    border-bottom: solid @cm-border-grey @cm-border-width;
+    height: @cm-unit + 2*@cm-vertical-padding;
+    line-hieght:@cm-unit;
+    padding: @cm-vertical-padding 0;
+    position:relative;
+
+    > * {
+        height: @cm-unit;
+        vertical-align:middle;
+        padding: 0 @cm-horizontal-padding;
+    }
+
+    .details{      
+        text-align:left;
+
+        .subject {
+            .single-line;
+            line-height:0.5*@cm-unit;
+            color: @cm-font-color;
+            font-weight:bold;
+        }
+
+        cm-message{
+            .single-line;        
+            line-height: 0.5*@cm-unit;
+            color: @cm-font-color-light;
+        }
+    }
+
+    .meta{
+        padding-right:@cm-horizontal-padding;
+
+        .top {
+            .single-line;        
+            font-size: @cm-small-font;
+            line-height:0.4*@cm-unit;
+            text-align:right;
+
+            .last-updated{
+                margin-left: 1em;
+            }
+        }
+
+        .bottom {
+            .single-line;        
+            font-size: @cm-base-font;
+            line-height: 0.6*@cm-unit;            
+            text-align:right;
+
+            > * {
+                vertical-align:middle;
+            }
+
+            .message-count {
+              font-weight:bold;
+            }
+
+            cm-recipient-counter{
+              font-size:1.8em;
+              .background {
+                color:@cm-ci-color;
+              }
+              .foreground {
+                color:@cm-white;
+              }
+            }
+        }
+    }
+}
+
+
+cm-safety-level {
+  word-spacing:0;
+  letter-spacing:-0.3em;
+}
+
+cm-recipient-counter{
+  display: inline-block;
+  position:relative;
+  line-height:1em;
+  .background {
+    color: #000;
+    position:relative;
+    vertical-align:bottom;
+  }
+  .foreground {
+    color:#fff;
+    position:absolute;
+    left:0;
+    bottom:0;
+    right:22%;
+    font-size:0.3em;
+    font-style:normal;
+    font-weight:bold;
+    line-height:2.3em;
+    text-align:center;
+    z-index:2;
+  }
+}
+
+@cm-conversation-control-height:2em;
+
+cm-conversation-controls{
+    display:block;
+    position:fixed;
+    height:@cm-conversation-control-height;
+    width:@cm-app-width;
+    top:@cm-header-height;
+    z-index:2;
+    .control{
+        line-height:2em;
+        white-space:nowrap;
+        font-size:1em;
+        overflow:hidden;
+        padding-bottom:1em;
+        .cm-bar{
+            .with-cursor;
+            text-align:center;
+            .border-radius-bottom;
+            background:@cm-white;
+            color:@cm-dark-grey;
+            *{
+            vertical-align:middle;
+            }
+            .grey-box-shadow;
+            .grip-left{
+            text-align:left;
+            i{
+              margin-left:0.5em;
+            }
+        }
+
+        cm-recipient-counter{
+            font-size:2em;
+                .background{
+                  color:@cm-dark-grey;
+                }
+                .foreground{
+                  color:@cm-white;
+                }
+            }
+            .cm-bar-infos{
+                cm-safety-level, cm-recipient-counter{
+                  margin-left:0.2em;
+                }
+            }
+        }
+
+        .body{
+            .body-group{
+                background:@cm-white;
+                padding:0.5em;
+                border-bottom:@cm-border-grey @cm-border-width solid;
+            }
+            &:last-child{
+                border-bottom:0;
+            }
+            .cm-btn{
+                color:@cm-ci-color;
+                .cm-btn-black;
+                .cm-btn-block;
+            }
+            .cm-form-group{
+                padding:0;
+            }
+        }
+
+        .recipients-list {
+            position: relative;
+            overflow: hidden;
+            .add-new-recipients, .add-recipients {
+                display: inline-block;
+                position: relative;
+                height: @cm-unit;
+            }
+            .add-new-recipients{
+                padding-right:@cm-unit;
+            }
+            .add-recipients{
+                width:@cm-unit;
+            }
+            cm-avatar{
+                vertical-align:top;
+                margin-right:0.5em;
+                &:last-child{
+                    margin-right:0;
+                }
+            }
+            cm-edge{
+                vertical-align:top;
+                font-size:@cm-unit+1;
+            }
+        }
+
+        .safety-levels{
+            [cm-weight]{
+                vertical-align: middle;
+            }
+            .cm-safety-level{
+                color:@cm-white;
+                width:4rem;
+                height:4rem;
+                font-size:2rem;
+                padding:0.4em;
+                .border-radius;
+                i:focus, i:hover{
+                  color:@cm-white;
+                }
+                &.active{
+                  font-size:3rem;
+                  width:5rem;
+                  height:5rem;
+                  padding:0.3em;
+                }
+                &.safetylevel-safer-btn{
+                    i{
+                        width: 0.65em;
+                        position: relative;
+                        left: -0.3em;
+                    }
+                }
+            }
+        }
+
+        .cm-center{
+            .cm-info{
+                color:@cm-ci-color;
+            }
+        }
+    }
+}
+cm-conversation {
+  cm-message {
+    margin: 0.5em 0;
+    word-wrap: break-word;
+    &.right {
+      text-align: right;
+    }
+    article {
+      div.avatar {
+        font-size: 1.5em;
+        width: 1.5em;
+        height: 1.5em;
+        margin-right: 0.7rem;
+        cm-avatar {
+          width: inherit !important;
+          height: inherit !important;
+        }
+      }
+      div.message {
+        min-height: @cm-unit/2;
+        position: relative;
+        padding: 0.5em;
+        min-width: @cm-message-min-width;
+        -webkit-border-radius: @cm-border-radius;
+        -moz-border-radius: @cm-border-radius;
+        border-radius: @cm-border-radius;
+        border: none;
+        text-align: left;
+        &.left {
+          background-color: @cm-msg-bg-color-other;
+          max-width: @cm-message-left-max-width;
+        }
+        &.right {
+          background-color: @cm-msg-bg-color-own;
+          margin-right: 0.7rem;
+          max-width: @cm-message-right-max-width;
+        }
+      }
+      cm-message-assets {
+        display: block;
+      }
+      .text{
+        span{
+          margin: 0.5rem 0;
+        }
+        &.own-message{
+          span {
+            margin: 0;
+            margin-bottom: 0.5rem;
+          }
+        }
+      }
+      span {
+        display: block;
+        &.nose {
+          position: absolute;
+          &.left {
+            top: 0.2em;
+            left: -0.4em;
+            i {
+              color: @cm-msg-bg-color-other
+            }
+          }
+          &.right {
+            top: 0.5em;
+            right: -0.39em;
+            i {
+              color: @cm-msg-bg-color-own
+            }
+          }
+          i {
+            font-size: 1.5em;
+          }
+        }
+      }
+      div.author {
+        position: absolute;
+        top: -0.3rem;
+        left: 0;
+        margin-left: 0.6rem;
+        span {
+          display: inline;
+          font-size: 0.6em;
+          color: @cm-grey;
+        }
+      }
+      div.assets {
+        position: absolute;
+        bottom: 0.2rem;
+        right: 1rem;
+        &.green {
+          span {
+            color: @cm-green;
+          }
+        }
+        span {
+          display: inline;
+          font-size: @cm-small-font;
+          &.date {
+            text-align: right;
+            overflow: hidden; //@todo temporär
+          }
+          &.security {
+            text-align: right;
+          }
+          &.envelope {
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+}
+
+div.answer{
+  width:@cm-app-width;
+  min-height:@cm-footer-height;
+  position:fixed;
+  bottom:0;
+  z-index:1;
+  background-color:rgba(255,255,255,0.9);
+  font-size:1.2em;
+  vertical-align: middle;
+  margin: 0 auto;
+  left:0;
+  right:0;
+
+  i.fa {
+    position: absolute;
+    font-size: 2em;
+    padding: 0;
+    top: 0.3em;
+  }
+  cm-files {
+    left: 0;
+    top: 0;
+    position: absolute;
+  }
+  i.cm-post {
+    right: 0;
+    &.is-disabled{
+      color:@cm-grey;
+    }
+  }
+
+
+  .message{
+    width: 22rem;
+    position: relative;
+    height: 100%;
+    bottom: 0;
+    margin: 0 auto;
+    text-align: left;
+    textarea{
+      width:82%;
+      border:none !important;
+      background:transparent;
+      margin-bottom:0.5em;
+      padding:2px;
+    }
+    textarea[rows='1']{
+      margin:1rem 0;
+    }
+    .inputter {
+      width: 100%;
+      position: absolute;
+      height: 0.3em;
+      bottom: 0.3em;
+
+      border-color: -moz-use-text-color #000000 #000000;
+      border-image: none;
+      border-right: @cm-border-width solid #000000;
+      border-left: @cm-border-width solid #000000;
+      border-style: none solid solid;
+      border-width: medium @cm-border-width @cm-border-width;
+    }
+  }
+  div.message.large {
+    width: 26rem;
+    margin-left: 0.5rem;
+  }
+}
+
+div.captcha {
+  cm-captcha {
+    display: inline-block;
+    width: 26rem;
+    height: 10rem;
+  }
+  position: relative;
+  text-align: left;
+  margin-top: 0.5rem;
+  button.refresh {
+    position: absolute;
+    top: 4rem;
+    right: 0.5rem;
+
+    color: @cm-grey;
+    font-size: 2.5em;
+  }
+  p {
+    margin:0 0 0.5rem 0;
+    text-align: center;
+  }
+}
+
+.webreader-uploading{
+  width:100%;
+  height:100%;
+  position: relative;
+  z-index: 1;
+}

@@ -1,0 +1,92 @@
+<div class="content">
+
+    <h2>Edit of {{elementName}}</h2>
+
+    <div class="well well-lg">
+        <div class="input-group" style="width: 100%">
+            <div ng-repeat="attribute in attributes">
+                <span class="label label-default">{{attribute['displayName']}}</span>
+
+                <div ng-switch on="attribute.type">
+
+                    <div ng-switch-when="string">
+                        <div ng-class="{'input-group':true}">
+
+                            <input name="{{attribute['name']}}"
+                                   type="text"
+                                   class="form-control"
+                                   ng-model="attribute['data']"
+                                   ng-disabled="!attribute.isEditable"
+                                    />
+
+
+                            <div ng-if="attribute.data == null" class="input-group-addon">
+                                <span>Empty</span>
+                            </div>
+                            <div ng-if="attribute.data != null" class="input-group-btn">
+                                <button
+                                        class="btn btn-default"
+                                        ng-click="setNull(attribute)"
+                                        ng-disabled="!attribute.isEditable">Delete</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div ng-switch-when="simpleList">
+                        <accordion>
+                            <accordion-group heading="Click to show">
+                                <div ng-repeat="item in attribute.data">
+                                    <pre>{{item}}</pre>
+                                </div>
+                            </accordion-group>
+                        </accordion>
+
+                    </div>
+                    <div ng-switch-when="filter">
+                        <div ng-if="attribute.data != null">
+                            <a class="btn btn-default"
+                               style="width: 100%; text-align: left"
+                               href="#/{{attribute.data.listName}}/filter/{{attribute.data.filterName}}/{{attribute.data.filterTerm}}">Go to list</a>
+                        </div>
+                        <div ng-if="attribute.data == null">
+                            <a class="btn btn-default"
+                               style="width: 100%; text-align: left"
+                               ng-disabled="true"
+                               href="#/">None</a>
+                        </div>
+                    </div>
+                    <div ng-switch-when="optionList">
+                        option list - not implemented yet
+                        <!--<button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown">-->
+                        <!--<span data-bind="label">Select One</span> <span class="caret"></span>-->
+                        <!--</button>-->
+                        <!--<a class="dropdown-toggle">-->
+                        <!--show-->
+                        <!--</a>-->
+                        <!--<ul class="dropdown-menu" role="menu">-->
+                        <!--<li ng-repeat="option in attribute.data.options">-->
+                        <!--<a >{{option}}</a>-->
+                        <!--</li>-->
+                        <!--</ul>-->
+                    </div>
+                    <div ng-switch-default>
+                        unsupported edit type
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <button ng-click="sendElement()" class="btn btn-default paddedButton">save changes</button>
+
+        <div ng-show="saveSuccess">
+            <div class="alert alert-success">Saved</div>
+        </div>
+        <div ng-show="saveFail">
+            <div class="alert alert-danger">{{saveFailText}}</div>
+        </div>
+    </div>
+</div>

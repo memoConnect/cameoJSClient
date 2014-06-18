@@ -1,0 +1,11 @@
+{
+    "config": {
+        "apiUrl": "https://stage.cameo.io/a/v1",
+        "autoLogin": false,
+        "loadingBar": true
+    },
+    "phonegap": {
+        "baseName" : "cameoNet-stage",
+        "appId" : "io.cameo.cameonet.client.web.mobile.app.stage"
+    }
+}

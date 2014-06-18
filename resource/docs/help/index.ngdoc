@@ -1,0 +1,123 @@
+@ngdoc overview
+@name help
+@description
+
+[ngdoc] https://github.com/bevacqua/grunt-ngdoc<br />
+[AngularJS ngdoc] https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation<br />
+[snippets] http://www.chirayuk.com/snippets/angularjs/ngdoc<br />
+
+## documentation tags
+```
+/**
+ * @ngdoc (service|method|property|event|directive)
+ * @methodOf (parent @name)
+ * @propertyOf (parent @name)
+ *
+ * @name (means name of it)
+ *
+ * @description
+ * begins in next line!
+ *
+ * @requires (name of module/dingsi)
+ * exp.: @requires cmApi
+ *
+ * @param {Type(String|Object|Array|*)} (NameOfParam) (Description of Param)
+ * exp.: @param {String} login Loginname of user
+ *
+ * @returns {Type(String|Object|Array|Promise|*)} (description of what returns)
+ * exp.: @returns {Promise} for async handling
+ *
+ * @restrict (for directive, E=element A=attribute)
+ * @element (for directive, if element same like directive name not specify)
+ *
+ * @example
+ * begins in next line
+< example module="cmDemo">
+   <file name="style.css">
+        cm-progressbar {
+          display: block;
+        }
+   </file>
+   <file name="script.js">
+        angular.module('cmDemo', ['cmUi'])
+        .controller('Ctrl', function ($scope) {
+            $scope.percent = 0;
+        });
+    </file>
+    <file name="index.html">
+        <div ng-controller="Ctrl">
+            percent: {{percent}}
+        </div>
+    </file>
+</example>
+```
+
+## factory=service / method / property / event / directive
+```
+/**
+ * @ngdoc service
+ * @name cmAuth
+ * @description
+ * description of cmAuth
+ *
+ * @requires cmApi
+ * @requires localStorage
+ */
+---------------
+/**
+ * @ngdoc method
+ * @methodOf cmAuth
+ *
+ * @name requestToken
+ * @description
+ * Ask the api for a new authentication token
+ *
+ * @param {String} login Loginname of user
+ * @returns {Promise} for async handling
+ */
+---------------
+/**
+ * @ngdoc property
+ * @propertyOf cmAuth
+ *
+ * @name self
+ * @description
+ * Object variable
+ */
+---------------
+/**
+ * @ngdoc event
+ * @name start
+ * @eventOf cmAuth
+ * @description
+ * $scope.$on('cmSpinner:start',...)
+ */
+---------------
+/**
+ * @ngdoc directive
+ * @name cmUi.directive:cmProgressbar
+ * @description
+ * Handle a percentage of anything.
+ *
+ * @restrict E
+ * @example
+< example module="cmDemo">
+    <file name="style.css">
+        cm-progressbar {
+          display: block;
+        }
+    </file>
+    <file name="script.js">
+        angular.module('cmDemo', ['cmUi'])
+        .controller('Ctrl', function ($scope) {
+            $scope.percent = 0;
+        });
+    </file>
+    <file name="index.html">
+        <div ng-controller="Ctrl">
+            percent: {{percent}}
+        </div>
+    </file>
+</example>
+ */
+```

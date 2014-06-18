@@ -1,0 +1,366 @@
+{
+    "CAMEO": {
+        "SLOGAN": "Safer Communication",
+        "DESCRIBE": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+        "MOEP": "moep",
+        "WELCOME": "Welcome to cameoNet",
+        "VERSION": "version"
+    },
+
+    "LOGIN": {
+        "HEADING": "Login",
+        "LABEL": {
+            "SUBMIT": "log in",
+            "REMEMBER_ME": "remember me.",
+            "AUTO": "auto login chooser"
+        },
+        "LINK": "login",
+        "PLACEHOLDER": {
+            "USERNAME": "Username",
+            "PASSWORD": "Password"
+        },
+        "INFO": {
+            "401": "Invalid Credentials!",
+            "404": "Login is impossible right now. 404",
+            "500": "Internal Server Error"
+        }
+    },
+
+    "REGISTER": {
+        "HEADING": "Registration",
+        "LINK": "or sign in",
+        "LABEL": {
+            "SUBMIT": "create User",
+            "USERNAME": "Username",
+            "NAME": "Name",
+            "TERMS": "terms of use",
+            "TERMS_ACCEPT": "I accpect"
+        },
+        "PLACEHOLDER": {
+            "USERNAME": "Username",
+            "DISPLAYNAME": "Display Name",
+            "EMAIL": "{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}",
+            "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}"
+        },
+        "INFO": {
+            "MIN_LETTER_COUNT": "Please use at least {{count}} letters.",
+            "TERMS": "You need to accept the terms of use!",
+            "EMPTY": {
+                "PASSWORD": "Please insert a Password."
+            },
+            "USERNAME": {
+                "EXISTS": "Username exists! Please choose an other.",
+                "EMPTY": "Please insert a username.",
+                "INVALID": "Invalid username. Avoid spaces and special character!"
+            },
+            "INVALID_EMAIL": "{{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}",
+            "INVALID_PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}"
+        },
+        "TITLE": {
+            "HEAD_LOGIN": "Login Information",
+            "HEAD_IDENTITY": "User Information"
+        }
+
+    },
+
+    "START": {
+        "WELCOME": "Welcome",
+        "YOUR_ID": "Your cameoId",
+        "LOGOUT": "logout"
+    },
+	
+	"VERIFICATION": {
+		"REQUEST": {
+			"LABEL": "Request verification"
+		}
+	},
+
+    "PROFILE": {
+        "E-MAIL": "E-mail",
+        "MOBILE": "mobile"
+    },
+
+    "LANG":	{
+        "DE_DE": "German",
+        "EN_US": "English",
+        "SWITCH": {
+            "SUCCESS": "Language switched to {{lang}}.",
+            "ERROR": "Unable to switch to {{lang}}.",
+            "LABEL": {
+                "DE_DE": "@:LANG.DE_DE",
+                "EN_US": "@:LANG.EN_US"
+            }
+        }
+    },
+
+    "TERMS": {
+        "HEADING": "General Business Conditions",
+        "HEADING_SHORT": "GBC",
+        "PARAGRAPH_1": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.",
+        "PARAGRAPH_2": "Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero."
+    },
+
+    "PASSWORD": {
+        "LABEL_PW": "Passwort",
+        "LABEL_CONFIRM": "Confirm password",
+        "ERROR": {
+            "EMPTY": "Please enter a password"
+        }
+    },
+
+    "TALKS": {
+        "HEADING": "Talks",
+        "MORE": "load more",
+        "LIST_EMPTY": "No talks yet!"
+    },
+
+    "CONVERSATION" : {
+        "HEADING": "Conversation",
+        "LABEL" : {
+            "SEND": "send",
+            "REQUEST_CAPTCHA": "ask for Captcha",
+            "SEND_CAPTCHA": "send Captcha",
+            "KEY_GENERATION": "for good encryption you can here generate a keypair"
+        },
+        "TAG" : {
+            "RECIPIENTS" : "Recipients",
+            "SUBJECT": "Subject",            
+            "PASSPHRASE": "Passphrase",
+            "MESSAGES" : "Messages",
+            "IMAGE": "Image",
+            "FILE": "File"
+        },
+        "TEXT" : {
+            "REQUEST_CAPTCHA" : "Please send a (new) captcha.",
+            "ENCRYPTED" : "- encrypted -"
+        },
+        "WARN" : {
+            "MESSAGE_EMPTY" : "The input field is empty.",
+            "RECIPIENTS_MISSING" : "Please add at least one recipient.",
+            "PASSPHRASE_INVALID" : "Invalid passphrase"
+        },
+        "PLACEHOLDER": {
+            "NO_SUBJECT": "add subject",
+            "ADD_RECIPIENTS": "add recipients",
+            "INFO": "info",
+            "PASSWORD": "password",
+            "PASSCAPTCHA": "passcaptcha"
+        },
+        "CONTROL": {
+            "SAVE": "save",
+            "CLOSE": "close"
+        }
+    },
+
+    "PURL": {
+        "SIGN_IN": "sign in"
+    },
+
+    "RECIPIENTS": {
+        "HEADING": "add recipients",
+        "LABEL": {
+            "DONE": "done"
+        }
+    },
+
+	"CONTACTS": {
+        "HEADING": {
+            "LIST": "Contacts",
+            "REQUESTS": "Contact requests",
+            "SEARCH": "Search",
+            "NEW_CONTACTS": "New contacts",
+            "SEND_REQUEST": "Request"
+        },
+        "LIST_EMPTY": "No contacts yet!",
+        "PLACEHOLDER": {
+            "ADD_NEW_CONTACT": "please insert a cameoId",
+            "REQUEST_MESSAGE": "here is place for a message for the request"
+        },
+        "INFO": {
+            "NO_RESULTS": "No cameo contacts found",
+            "MORE_CHARS_NEEDED": "Please type more letters",
+            "NO_REQUESTS": "No requests",
+            "REQUEST":{
+                "SENDED": "Request send",
+                "FAILED": "Could not send request",
+                "ACCEPT": "Request accepted",
+                "REJECT": "Request rejected",
+                "IGNORE": "User ignored"
+            }
+        },
+        "LABEL": {
+            "DISPLAYNAME": "Displayname",
+            "NAME": "Name",
+            "SURNAME": "Surname",
+            "SORT": "sort",
+            "FILTER": "filter",
+            "SEARCH_IDENTITY": "search Cameo indentity",
+            "ADD_EXTERN": "create new extern contact",
+            "SEND_REQUEST": "send"
+        },
+        "BUTTON": {
+            "RESET": "reset",
+            "SUBMIT": "save"
+        },
+        "TAG" : {
+            "FILTER": "Filter"
+        },
+        "REQUESTS":{
+            "ACCEPT": "accept",
+            "REJECT": "reject",
+            "IGNORE": "ignore"
+        }
+	},
+
+    "CONTACT": {
+        "WIDGET": "Talks",
+        "PLACEHOLDER": {
+            "DISPLAYNAME": "{{'CONTACTS.LABEL.DISPLAYNAME'|cmTranslate}}",
+            "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}",
+            "EMAIL": "{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}"
+        },
+        "INFO": {
+            "EMPTY": {
+                "DISPLAYNAME": "{{'DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}"
+            },
+            "INVALID": {
+                "EMAIL": "{{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}",
+                "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}"
+            },
+            "SUCCESS": {
+                "SAVE": "Contact created",
+                "EDIT": "Contact saved"
+            },
+            "ERROR": {
+                "SAVE": "Contact couldn't saved",
+                "EDIT": "Contact couldn't edit"
+            }
+        },
+        "FOOTER":{
+            "SAVE": "save"
+        }
+    },
+	
+	"SETTINGS": {
+		"WELCOME": "Settings",
+        "LABEL": "Settings",
+        "ACCOUNT_PROFILE": "Account & Profile",
+        "NOTIFY": "Notification",
+        "CONTACTS": "Contacts",
+        "VIEW": "View",
+        "ABOUT": "About us",
+        "CONTRACTS": "Contracts"
+	},
+	
+	"NAVIGATION": {
+		"TABS": {
+			"BACK": "back",
+			"ADD": "add",
+			"ALL": "Contacts",
+			"REQUESTS": "Requests",
+			"SPINNER": "Spinner",
+			"KEY": "Key-Pair",
+			"TALKS": "Talks"
+		}
+	},
+
+    "DRTV": {
+        "PASSWORD": {
+            "PASSWORD": "Password",
+            "PASSWORD_CONFIRM": "Confirm Password",
+            "ERROR": {
+                "EMPTY": "Please add a Password and confirm it"
+            }
+        },
+        "VALIDATE_EMAIL": {
+            "LABEL": "E-mail",
+            "PLACEHOLDER": "E-mail",
+            "INFO": {
+                "INVALID": "Invalid e-mail. Please check!",
+                "EMPTY": "The e-mail field is empty"
+            }
+        },
+        "VALIDATE_PHONE": {
+            "LABEL": "Phone",
+            "PLACEHOLDER": "Phone",
+            "INFO": {
+                "INVALID_PHONE_NUMBER": "The string supplied does not seem to be a phone number.",
+                "EMPTY": "The phone field is empty"
+            }
+        },
+        "EXTERN_CONTACT": {
+            "HEADER": "Add extern contact",
+            "INFO": {
+                "DISPLAYNAME_EXISTS": "The displayname already exists in your addressbook.",
+                "EMPTY":{
+                    "DISPLAYNAME": "The Displayname is empty.",
+                    "NAME": "Name is empty.",
+                    "SURNAME": "Surname is empty.",
+                    "PHONE_OR_EMAIL": "Please enter a phonenumber or a email address."
+                },
+                "SAVE_FAIL": "Saving contact failed."
+            }
+        },
+        "TYPE_CHOOSER": {
+            "PRIVATE": "private",
+            "BUSINESS": "business",
+            "OTHER": "other",
+            "MOBILE": "mobile",
+            "LANDLINE": "landline",
+            "IP": "ip",
+            "FAX": "fax"
+        },
+        "FOOTER": {
+            "TALKS": "Talks",
+            "CONTACTS": "Contacts",
+            "MEDIA": "Media"
+        }
+    },
+
+    "MENU": {
+        "HEADER": "Menu",
+        "NOTIFICATIONS": "Notifcations",
+        "CONTACTS": "Contacts",
+        "REQUESTS": "Contact requests",
+        "SETTINGS": "{{'SETTINGS.LABEL'|cmTranslate}}",
+        "MESSAGES": "Messages",
+        "HINTS": "Hints",
+        "ACTIVITY": "Activity",
+        "LOGOUT": "Logout"
+    },
+
+    "NOTIFY": {
+        "KEYS":{
+            "STORE_NEW": "Key saved!"
+        },
+        "SAVE_AS":{
+            "IOS_NOT_SUPPORT": "Unfortunately iOS does not support to download files. Open this talk on a non-iOS device to download this file. Supported formats go anyway: .pdf"
+        }
+    },
+
+    "MODAL": {
+        "ALERT": {
+            "OK": "OK"
+        },
+        "WEBREADER": {
+            "NOTICE": "For this function, please register!",
+            "REGISTRATION": "register now",
+            "LATER": "later"
+        }
+    },
+
+    "JOB": {
+        "IN_PROGRESS": "You have editet this site without saving. Do you would leave this page?",
+        "FILES_IN_UPLOAD_PROGRESS": "Files are in upload progress. Do you would leave this page?"
+    },
+
+    "SECURITY_ASPECT": {
+        "CONVERSATION": {
+            "NOT_ENCRYPTED": {
+                "NAME": "Conversation is not encrypted.",
+                "DESCRIPTION": "",
+                "TOGGLE": "Enable encryption."
+            }
+        }
+    }
+}

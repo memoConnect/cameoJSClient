@@ -1,0 +1,52 @@
+.page-header {
+    background: rgba(255,255,255,0.7);
+    padding-top: 2em;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.page-header h1 {
+    margin-top: 0;
+    padding-top: 0;
+    padding-left: 1em;
+}
+
+a {
+    color: inherit !important;
+    text-decoration: none !important;
+
+}
+
+.twoFactor {
+    background: rgba(255,255,255,0.7);
+}
+
+
+.content {
+    background: rgba(255,255,255,1);
+    padding: 2em;
+}
+
+.paddedButton{
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.content div.input-group > div {
+    margin-top: 1em;
+}
+
+
+.twoFactorModal h2 {
+    text-align: center;
+    margin-top: 1em;
+}
+
+.twoFactorModal input{
+    margin-bottom: 1em;
+}
+
+.btn {
+    padding: 5px 12px
+
+}

@@ -1,0 +1,170 @@
+cm-header{
+  display:block;
+  position:fixed;
+  top:0;
+  z-index:10;
+  padding: @cm-vertical-padding 0;
+  width:@cm-app-width;
+  color:@cm-white;
+  background:@cm-bg-color;
+  line-height:@cm-unit;
+  font-size:@cm-large-font;
+  white-space:nowrap;
+
+  > *{
+    vertical-align: middle;
+  }
+
+  cm-back{
+    .with-cursor;
+    text-align:left;
+    position:relative;
+    z-index:1;
+    .back-wrap{
+      text-overflow:ellipsis;
+      overflow:hidden;
+    }
+    i {
+      margin-left:0.2rem;
+      margin-right:0.5rem;
+      vertical-align:text-bottom;
+    }
+    span {
+      position: relative;
+      font-size:@cm-small-font;
+    }
+    &.overlap-identity{
+      .back-wrap{
+        position:relative;
+        width:@cm-unit+1;
+      }
+    }
+  }
+
+  cm-identity{
+    .with-cursor;
+    color:@cm-white;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+    text-align:left;
+    position:relative;
+    font-size:0.8em;
+  }
+
+  cm-logo{
+    color:@cm-ci-color;
+    text-align:center;
+  }
+
+  cm-reload{
+    text-align:center;
+  }
+
+  .purl-identity-wrap{
+    display:inline-block;
+  }
+
+  .fast-sign-in{
+    .with-cursor;
+    .cm-ci-color;
+    i{
+      font-size: @cm-unit / 2;
+      vertical-align: text-top;
+      margin-right: -(@cm-unit / 8);
+    }
+    span {
+      position: relative;
+      font-size:@cm-small-font;
+    }
+  }
+}
+
+/** Do Not Touch - Performance Alternative to JS Directive - used in PURLS **/
+header.menu{
+  display:block;
+  position:fixed;
+  top:0;
+  z-index:10;
+  padding: @cm-vertical-padding 0;
+  width:@cm-app-width;
+  color:@cm-white;
+  background:@cm-bg-color;
+  line-height:@cm-unit;
+  font-size:@cm-large-font;
+  white-space:nowrap;
+
+  > *{
+    vertical-align: middle;
+  }
+
+  cm-logo{
+    display: block;
+    width: 9rem;
+    margin: 0 auto;
+    color:@cm-ci-color;
+    text-align: center;
+  }
+
+  cm-back{
+    display: inline-block;
+    width: 1.1rem;
+    position: absolute;
+    left: 0;
+    top: @cm-vertical-padding;
+    text-align:left;
+    z-index:1;
+    .with-cursor;
+    .back-wrap{
+      text-overflow:ellipsis;
+      overflow:hidden;
+    }
+    i {
+      margin-left:0.2rem;
+      margin-right:0.5rem;
+      vertical-align:text-bottom;
+    }
+    span {
+      position: relative;
+      font-size:0.8em;
+    }
+    &.overblend-avatar{
+      .back-wrap{
+        position:relative;
+        width:3em;
+      }
+    }
+  }
+
+  cm-identity{
+    display: inline-block;
+    width: 10.5rem;
+    position: absolute;
+    left: 1.15rem;
+    top: @cm-vertical-padding;
+    color:@cm-white;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+    text-align:left;
+    font-size:0.8em;
+    .with-cursor;
+  }
+
+  cm-reload{
+    display: inline-block;
+    width: 6rem;
+    text-align:center;
+    position: absolute;
+    top: @cm-vertical-padding;
+    right: 3.1rem;
+  }
+
+  cm-menu{
+    display: inline-block;
+    width: 3rem;
+    position: absolute;
+    top: @cm-vertical-padding;
+    right: 0.01rem;
+  }
+}

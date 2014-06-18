@@ -1,0 +1,218 @@
+cm-message{
+  &.file-view{
+    article{
+      color:@cm-white;
+      .author span{
+        color:@cm-light-grey;
+      }
+      div.message{
+        padding-bottom:1.5em;
+        &.left, &.right{
+          background-color:@cm-overlay-dark;
+        }
+        &.left{
+          padding-top:1.5rem;
+          .text{
+            span {
+              margin-top: 0;
+            }
+          }
+        }
+      }
+      span.nose{
+        &.left, &.right{
+          i {
+            color: @cm-overlay-dark;
+          }
+        }
+      }
+    }
+  }
+}
+
+cm-message-file{
+  display:block;
+  position:relative;
+  min-height:@cm-unit;
+  margin:0 auto;
+  margin-bottom: 0.5em;
+  text-align: center;
+
+  .file-image, .file-html5{
+    min-height:@cm-unit;
+    position:relative;
+    div[cm-spinner]{
+      z-index:1;
+      position:absolute;
+      left:50%;
+      top:50%;
+    }
+    img{
+      .with-cursor;
+      display:block;
+      max-width:@cm-message-min-width;
+      min-height:@cm-unit * 2;
+      margin:0 auto;
+    }
+    video, audio{
+      width:100%;
+    }
+  }
+  .file{
+    margin:0 auto;
+    font-size:@cm-unit*1.5;
+  }
+  &:last-child{
+    margin-bottom:0;
+  }
+}
+
+.answer.files-dragged{
+  opacity:0.8;
+  background-color:@cm-black;
+}
+
+cm-files{
+  display:block;
+  position:relative;
+  width:@cm-unit;
+  height:@cm-unit;
+
+  cm-file-choose{
+    height:100%;
+    overflow:hidden;
+    position:absolute;
+    right:0;
+    top:0;
+    width:100%;
+
+    input{
+      .with-cursor;
+      bottom:0;
+      font-size:1000px !important;
+      height:300px;
+      margin:0;
+      opacity:0;
+      padding:0;
+      position:absolute;
+      right:0;
+    }
+  }
+}
+
+cm-files-preview{
+  display:block;
+  position:absolute;
+  bottom:@cm-footer-height;
+  width:@cm-app-width;
+  background-color:rgba(255,255,255,0.9);
+
+  .file-wrap{
+    position: relative;
+    text-align:center;
+    padding:@cm-vertical-padding;
+    i.cm-close{
+      position: absolute;
+      right: 1em;
+      top: 35%;
+      .with-cursor;
+    }
+    .file{
+      font-size:@cm-unit*1.5;
+    }
+  }
+
+  .file-image{
+    position:relative;
+    height:@cm-unit * 2;
+    margin:0 auto;
+
+    div[cm-spinner]{
+      z-index:1;
+      position:absolute;
+      left:50%;
+      top:50%;
+    }
+    img{
+      .with-cursor;
+      display:block;
+      max-width:@cm-app-width - 1;
+      max-height:@cm-unit * 2;
+      margin:0 auto;
+    }
+  }
+  .file{
+    margin:0 auto;
+  }
+}
+
+cm-modal.modal-image-fullscreen{
+  .content{
+    display:table;
+    width:100%;
+    height:100%;
+    z-index:2;
+    position:relative;
+    cm-spinner{
+      position: absolute;
+    }
+    ng-transclude{
+      display:table-cell;
+      vertical-align:middle;
+      text-align:center;
+      figure{
+        display:inline-block;
+        img{
+          max-width:90%;
+          max-height:50%;
+        }
+        figcaption{
+          text-align: right;
+        }
+        &.is-landscape{
+          figcaption{
+            padding-right:5%;
+          }
+        }
+      }
+      cm-footer{
+        text-align:right;
+        color:@cm-white;
+        i.cm-grid{
+          margin:@cm-unit - 3;
+        }
+      }
+    }
+  }
+  .backdrop{
+    z-index:1;
+  }
+}
+
+.file {
+  display: inline-block;
+  background:~"url(../gfx/filetype_map_small.png) transparent 0 -@{unknown-default}em";
+  background-size:~"1em @{filesnum}em";
+  height:1em !important;
+  width:1em !important;
+  border:0;
+  cursor:pointer;
+  padding:0;
+  vertical-align:text-bottom;
+  font-size:1em;
+}
+@files:dir dir-download dir-safe dir-public pdf txt xlsx doc php css xls zip rar sit jpg gif bmp tif eps png mov mpg mp4 flv avi xml html chm ttf exe dmg mp3 wav wma aif ogg '\33gpp' aac ppt pps unknown;
+@filesnum:length(@files);
+@unknown-default:@filesnum - 1;
+.spriteFiles(@index:0) when (@index < @filesnum){
+  @name: extract(@files, @index + 1);
+  @selector: ~".file.@{name}";
+
+  .bg-pos(@y) when (@y < 1){background-position:0 0;}
+  .bg-pos(@y) when (@y > 0){background-position:~`"0 -@{y}em"`;}
+
+  @{selector} {.bg-pos(@index)}
+  // next item
+  .spriteFiles(@index + 1);
+}
+.spriteFiles();

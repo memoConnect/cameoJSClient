@@ -1,0 +1,356 @@
+{
+    "CAMEO": {
+        "SLOGAN": "Safer Communication",
+        "DESCRIBE": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+        "MOEP": "moep",
+        "WELCOME": "Willkommen im cameoNet",
+        "VERSION": "Version"
+    },
+
+	"LOGIN": {
+        "HEADING": "Login",
+        "LABEL": {
+            "SUBMIT": "einloggen",
+            "REMEMBER_ME": "merken.",
+            "AUTO": "Automatisches Login auswählen"
+        },
+        "LINK": "login",
+        "PLACEHOLDER": {
+            "USERNAME": "Benutzername",
+            "PASSWORD": "Passwort"
+        },
+        "INFO": {
+            "401": "Der Loginname oder das Passwort sind falsch.",
+            "404": "Der Login ist zur Zeit nicht möglich. 404",
+            "500": "Server Error. 500"
+        }
+    },
+
+    "REGISTER": {
+        "HEADING": "Registrierung",
+        "LINK" : "registrieren",
+        "LABEL": {
+            "SUBMIT": "Benutzerkonto anlegen",
+            "USERNAME": "Nutzername",
+            "NAME": "Anzeigename",
+            "TERMS": " die AGB",
+            "TERMS_ACCEPT": "Ich akzeptiere"
+        },
+        "PLACEHOLDER": {
+            "USERNAME": "Nutzername",
+            "DISPLAYNAME": "Name",
+            "EMAIL": "{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}",
+            "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}"
+        },
+        "INFO": {
+            "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden.",
+            "TERMS": "Bitte AGB akzeptieren.",
+            "EMPTY": {
+                "PASSWORD": "Bitte geben Sie ein Passwort ein."
+            },
+            "USERNAME": {
+                "EXISTS": "Der Nutzername ist bereits vergeben. Bitte wählen Sie einen anderen.",
+                "EMPTY": "Bitte geben Sie einen Nutzername an.",
+                "INVALID": "Der Nutzername ist nicht valide. Vermeiden Sie Umlaute, Leer- und Sonderzeichen."
+            },
+            "INVALID_EMAIL": "{{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}",
+            "INVALID_PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}"
+        },
+        "TITLE": {
+            "HEAD_LOGIN": "Login Information",
+            "HEAD_IDENTITY": "User Information"
+        }
+
+    },
+
+	"START": {
+		"WELCOME": "Willkommen",
+		"YOUR_ID": "Deine cameoId",
+		"LOGOUT": "ausloggen"
+	},
+
+	"VERIFICATION": {
+		"REQUEST": {
+			"LABEL": "Verifizierung anfragen"
+		}
+	},
+
+	"PROFILE": {
+		"E-MAIL": "E-Mail",
+		"MOBILE": "Mobiltelfon"
+	},
+
+	"LANG":	{
+		"DE_DE": "Deutsch",
+		"EN_US": "Englisch",
+		"SWITCH": {
+			"SUCCESS": "Sprache auf {{lang}} gestellt.",
+			"ERROR": "Konnte Sprache nicht auf {{lang}} stellen.",
+			"LABEL": {
+				"DE_DE": "@:LANG.DE_DE",
+				"EN_US": "@:LANG.EN_US"
+			}
+		}
+	},
+
+    "TERMS": {
+        "HEADING": "Allgemeine Geschäftsbedingungen",
+        "HEADING_SHORT": "AGB",
+        "PARAGRAPH_1": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.",
+        "PARAGRAPH_2": "Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero."
+    },
+
+    "PASSWORD": {
+        "LABEL_PW": "Passwort",
+        "LABEL_CONFIRM": "Passwort bestätigen",
+        "ERROR": {
+            "EMPTY": "Bitte ein Passwort eingeben und bestätigen"
+        }
+    },
+
+    "TALKS": {
+        "HEADING": "Talks",
+        "MORE": "mehr laden",
+        "LIST_EMPTY": "Bisher keine Talks vorhanden"
+    },
+
+    "CONVERSATION": {
+        "HEADING": "Conversation",
+        "LABEL": {
+            "SEND": "abschicken",
+            "REQUEST_CAPTCHA": "Captcha anfordern",
+            "SEND_CAPTCHA": "Captcha senden",
+            "KEY_GENERATION": "Für gute Verschlüsselung hier ein Keypair erzeugen"
+        },
+        "TAG": {
+            "RECIPIENTS": "Empfänger",
+            "SUBJECT": "Betreff",            
+            "PASSPHRASE": "Schlüssel",
+            "MESSAGES": "Nachrichten",
+            "IMAGE": "Bild",
+            "FILE": "Datei"
+        },
+        "TEXT": {
+            "REQUEST_CAPTCHA": "Bitte ein (neues) Captcha senden.",
+            "ENCRYPTED" : "- verschlüsselt -"
+        },
+        "WARN": {
+            "MESSAGE_EMPTY": "Das Textfeld ist leer.",
+            "RECIPIENTS_MISSING": "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
+            "PASSPHRASE_INVALID": "Ungültiger Schlüssel."
+        },
+        "PLACEHOLDER": {
+            "NO_SUBJECT": "Betreff eingeben",
+            "ADD_RECIPIENTS": "Empfänger hinzufügen",
+            "INFO": "Info",
+            "PASSWORD": "Passwort",
+            "PASSCAPTCHA": "Passcaptcha"
+        },
+        "CONTROL": {
+            "SAVE": "speichern",
+            "CLOSE": "schließen"
+        }
+    },
+
+    "PURL": {
+        "SIGN_IN": "registrieren"
+    },
+
+    "RECIPIENTS": {
+        "HEADING": "Empfänger hinzufügen",
+        "LABEL": {
+            "DONE": "Fertig"
+        }
+    },
+	
+	"CONTACTS": {
+		"HEADING": {
+            "LIST": "Kontakte",
+            "REQUESTS": "Kontaktanfragen",
+            "SEARCH": "Suche",
+            "NEW_CONTACTS": "Neue Kontakte",
+            "SEND_REQUEST": "Freundschaftsanfrage"
+        },
+        "LIST_EMPTY": "Bisher keine Kontakte vorhanden",
+        "PLACEHOLDER": {
+            "ADD_NEW_CONTACT": "geben Sie hier eine cameoId ein",
+            "REQUEST_MESSAGE": "Hier ist Platz für eine Mitteilung für die Freunschaftsanfrage"
+        },
+        "INFO": {
+            "NO_RESULTS": "Keine cameo Kontakte gefunden",
+            "MORE_CHARS_NEEDED": "Bitte geben Sie mehr Buchstaben ein",
+            "NO_REQUESTS": "Keine Anfragen vorhanden",
+            "REQUEST":{
+                "SENDED": "Die Anfrage wurde verschickt.",
+                "FAILED": "Die Anfrage konnte nicht verschickt werden",
+                "ACCEPT": "Sie sind nun mit diesem Kontakt verbunden",
+                "REJECT": "Die Anfrage wurde zurückgewiesen",
+                "IGNORE": "Der User wird nun ignoriert"
+            }
+        },
+        "LABEL": {
+            "DISPLAYNAME": "Displayname",
+            "NAME": "Vorname",
+            "SURNAME": "Nachname",
+            "SORT": "sortieren",
+            "FILTER": "filtern",
+            "SEARCH_IDENTITY": "Cameo Indentität suchen",
+            "ADD_EXTERN": "neuen externen Kontakt anlegen",
+            "SEND_REQUEST": "senden"
+        },
+        "BUTTON": {
+            "RESET": "zurücksetzen",
+            "SUBMIT": "speichern"
+        },
+        "TAG":{
+            "FILTER" : "Filter"
+        },
+        "REQUESTS":{
+            "ACCEPT": "akzeptieren",
+            "REJECT": "zurückweisen",
+            "IGNORE": "ignorieren"
+        }
+	},
+
+    "CONTACT": {
+        "WIDGET": "Talks",
+        "PLACEHOLDER": {
+            "DISPLAYNAME": "{{'CONTACTS.LABEL.DISPLAYNAME'|cmTranslate}}",
+            "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}",
+            "EMAIL": "{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}"
+        },
+        "INFO": {
+            "EMPTY": {
+                "DISPLAYNAME": "{{'DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}"
+            },
+            "INVALID": {
+                "EMAIL": "{{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}",
+                "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}"
+            },
+            "SUCCESS": {
+                "SAVE": "Kontakt wurde erfolgreich angelegt",
+                "EDIT": "Kontakt wurde erfolgreich gespeichert"
+            },
+            "ERROR": {
+                "SAVE": "Kontakt konnte nicht angelegt werden",
+                "EDIT": "Kontakt konnte nicht gespeichert werden"
+            }
+        },
+        "FOOTER":{
+            "SAVE": "speichern"
+        }
+    },
+	
+	"SETTINGS": {
+		"WELCOME": "Einstellungen",
+        "LABEL": "Einstellungen",
+        "ACCOUNT_PROFILE": "Account & Profil",
+        "NOTIFY": "Benachrichtungen",
+        "CONTACTS": "Kontakte",
+        "VIEW": "Darstellung",
+        "ABOUT": "Über uns",
+        "CONTRACTS": "Verträge"
+	},
+	
+	"NAVIGATION": {
+		"TABS": {
+			"BACK": "zurück",
+            "ADD": "hinzufügen",
+            "ALL": "Kontakte",
+            "REQUESTS": "Anfragen",
+			"SPINNER": "Spinner",
+			"KEY": "Key-Pair",
+			"TALKS": "Talks"
+		}
+	},
+
+    "DRTV": {
+        "PASSWORD": {
+            "PASSWORD": "Passwort",
+            "PASSWORD_CONFIRM": "Passwort wiederholen",
+            "ERROR": {
+                "EMPTY": "Bitte ein Passwort eingeben und bestätigen"
+            }
+        },
+        "VALIDATE_EMAIL": {
+            "LABEL": "E-Mail",
+            "PLACEHOLDER": "E-Mail",
+            "INFO": {
+                "INVALID": "Bitte geben Sie eine richtige E-Mail Adresse an!",
+                "EMPTY": "Die E-Mail Adresse ist leer"
+            }
+        },
+        "VALIDATE_PHONE": {
+            "LABEL": "Mobil",
+            "PLACEHOLDER": "Mobil",
+            "INFO": {
+                "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
+                "EMPTY": "Das Telefonfeld ist leer"
+            }
+        },
+        "EXTERN_CONTACT": {
+            "HEADER": "Externen Kontakt hinzufügen",
+            "INFO": {
+                "DISPLAYNAME_EXISTS": "Der gewählte Displayname existiert bereits im Adressbuch.",
+                "EMPTY":{
+                    "DISPLAYNAME": "Bitte einen Displaynamen eingeben!",
+                    "NAME": "Bitte auch einen Vornamen eingeben.",
+                    "SURNAME": "Bitte den Hinternamen eingeben.",
+                    "PHONE_OR_EMAIL": "Bitte geben Sie eine Telefonnummer oder eine E-Mail-Adresse an"
+                },
+                "SAVE_FAIL": "Das Speichern des Kontaktes ist fehlgeschlagen."
+            }
+        },
+        "TYPE_CHOOSER": {
+            "PRIVATE": "privat",
+            "BUSINESS": "geschäftlich",
+            "OTHER": "sonstige",
+            "MOBILE": "Mobil",
+            "LANDLINE": "Festnetz",
+            "IP": "IP",
+            "FAX": "Fax"
+        },
+        "FOOTER": {
+            "TALKS": "Talks",
+            "CONTACTS": "Kontakte",
+            "MEDIA": "Media"
+        }
+    },
+
+    "MENU": {
+        "HEADER": "Menü",
+        "NOTIFICATIONS": "Notifikationen",
+        "CONTACTS": "Kontakte",
+        "REQUESTS": "Kontaktanfragen",
+        "SETTINGS": "{{'SETTINGS.LABEL'|cmTranslate}}",
+        "MESSAGES": "Nachrichten",
+        "HINTS": "Sonstige Hinweise",
+        "ACTIVITY": "Aktivity",
+        "LOGOUT": "Logout"
+    },
+
+    "NOTIFY":{
+        "KEYS":{
+            "STORE_NEW": "Schlüssel erfolgreich gespeichert!"
+        },
+        "SAVE_AS":{
+            "IOS_NOT_SUPPORT": "Leider unterstützt iOS das herunterladen von Dateien nicht. Öffnen Sie diesen Talk auf einem nicht iOS Gerät um diese Datei downloaden zukönnen. Unterstütze Formate gehen trotzdem: .pdf"
+        }
+    },
+
+    "MODAL": {
+        "ALERT": {
+            "OK": "OK"
+        },
+        "WEBREADER": {
+            "NOTICE": "Zum nutzen dieser Funktion bitte registrieren!",
+            "REGISTRATION": "Jetzt registrieren",
+            "LATER": "später"
+        }
+    },
+
+    "JOB": {
+        "IN_PROGRESS": "Sie haben diese Seite bearbeitet ohne zuspeichern. Wollen Sie diese wirklich verlassen?",
+        "FILES_IN_UPLOAD_PROGRESS": "Es sind Dateien gerade um hochlade Vorgang. Wollen Sie diese Seite wirklich verlassen?"
+    }
+}

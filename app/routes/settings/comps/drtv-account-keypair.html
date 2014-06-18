@@ -1,0 +1,65 @@
+<style type="text/css">
+    li.list-group-item{
+        color:#000;
+    }
+    li.private-key{
+        background:#428BCA;
+        color:#fff;
+    }
+</style>
+
+<div>
+    <button class="btn btn-default" ng-click="showOwnKeys()" ng-class="{'btn-primary': active == 'showOwnKeys'}">all</button>&nbsp;
+    <button class="btn btn-default" ng-click="showCreateKey()" ng-class="{'btn-primary': active == 'createNewKey'}">create</button>&nbsp;
+    <button class="btn btn-default" ng-click="showImportKeys()" ng-class="{'btn-primary': active == 'finishCreateKey'}">import</button>
+    <!--
+    &nbsp;
+    <button class="btn btn-default" ng-click="syncKeys()">sync</button>
+    -->
+</div>
+
+<br/>
+
+<div ng-if="active == 'showOwnKeys'" ng-init="showOwnKeys()">
+    Liste eigener PubKeys, zum verwalten
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="key in ownKeys" ng-class="{'private-key':key.privKey}">
+            {{key.name}} - {{key.size}}<!-- - {{key.id}}--><span ng-if="key.privKey"> - local</span>
+        </li>
+    </ul>
+</div>
+
+<div ng-if="active == 'createNewKey'">
+    KeySize:
+    <select class="form-control" ng-model="$parent.keySize">
+        <option ng-repeat="size in $parent.keySizes">{{size}}</option>
+    </select>
+
+    <button ng-click="generate()" class="btn btn-primary">generate</button>
+</div>
+
+<div ng-if="active == 'modalCreateKey'">
+    <h3>Key-Pair generating in Progress</h3>
+    <button ng-click="cancel()" class="btn btn-default">cancel</button>
+    <h3>state</h3>
+    <textarea class="form-control" ng-model="state" rows="2"></textarea>
+</div>
+
+<div ng-if="active == 'finishCreateKey'">
+    <h3>private key</h3>
+    <textarea class="form-control" ng-model="$parent.privKey"></textarea>
+    <h3>public key</h3>
+    <textarea class="form-control" ng-model="$parent.pubKey"></textarea>
+    <h3>name</h3>
+    <input class="form-control" ng-model="$parent.keyName" type="text" />
+    <br />
+    <button ng-click="store()" class="btn btn-primary">store</button>
+</div>
+
+<div ng-if="active == 'exportKeyPair'">
+    <h3>{{exportKeyName}} - {{exportKeySize}}</h3>
+    <h3>private key</h3>
+    <textarea class="form-control" ng-model="exportPrivKey"></textarea>
+    <h3>public key</h3>
+    <textarea class="form-control" ng-model="exportPubKey"></textarea>
+</div>

@@ -1,0 +1,45 @@
+<cm-modal id="modalSendRequest" class="no-padding" cm-data-as="contact" cm-title="CONTACTS.HEADING.SEND_REQUEST">
+    <div class="modal-row" cm-rubber-space>
+        <cm-avatar cm-data="contact"></cm-avatar>
+        <div class="cm-request-brief" cm-weight="1">
+            <strong>{{contact.getDisplayName()}}</strong>
+        </div>
+    </div>
+    <div class="modal-row">
+        <textarea placeholder="{{'CONTACTS.PLACEHOLDER.REQUEST_MESSAGE'|cmTranslate}}" ng-model="contact.message" data-qa="input-friendrequestMessage"></textarea>
+    </div>
+    <button class="cm-btn cm-btn-block cm-btn-primary" ng-click="sendRequest(contact)" data-qa="btn-sendRequest">
+        {{'CONTACTS.LABEL.SEND_REQUEST'|cmTranslate}}
+        <i class="fa cm-send"></i>
+    </button>
+</cm-modal>
+
+<header class="inScreen">
+    <i class="fa cm-search-cl cm-lg-icon"></i> {{'CONTACTS.HEADING.SEARCH'|cmTranslate}}
+</header>
+
+<section class="cm-bg-transparent">
+    <form name="searchCameoId" autocomplete="off">
+        <input cm-large-input type="text" ng-model="string" name="string" cm-icon="cm-search" placeholder="{{'CONTACTS.PLACEHOLDER.ADD_NEW_CONTACT'|cmTranslate}}" ng-minlength="4" ng-keyup="search()" />
+
+        <div class="cm-alert" ng-show="searchCameoId.string.$error.minlength">
+            <i class="fa cm-info"></i> {{'CONTACTS.INFO.MORE_CHARS_NEEDED'|cmTranslate}}
+        </div>
+    </form>
+</section>
+
+<section>
+    <div ng-show="searchCameoId.string.$valid && !pristine &&  results.length < 1" class="empty-list">
+        <i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_RESULTS'|cmTranslate}}
+    </div>
+
+    <cm-contact-tag cm-rubber-space ng-repeat="contact in results">
+        <cm-avatar cm-data="contact"></cm-avatar>
+        <div class="cm-request-brief" cm-weight="1">
+            <strong>{{contact.getDisplayName()}}</strong>
+        </div>
+        <button ng-click="openModal('modalSendRequest',contact)" data-qa="btn-openModal">
+            <i class="fa cm-contacts"></i>
+        </button>
+    </cm-contact-tag>
+</section>

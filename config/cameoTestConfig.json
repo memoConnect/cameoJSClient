@@ -1,0 +1,19 @@
+{
+    "config": {
+        "wwwUrl": "http://localhost:9000/m/"
+    },
+    "testData": [
+        "loginUser1 = 'prickly_yonath'",
+        "passwordUser1 = 'password'",
+        "cameoIdUser1 = 'prickly_yonath'",
+        "purlUser1 = '5FwynM6cti'",
+        "displayNameUser1 = 'Prickly Yonath'",
+        "contactUser1DisplayName ='Silly Bohr'",
+        "contactUser1Login = 'silly_bohr'",
+        "contactUser1password = 'password'",
+        "purlExtern = 'BS4PcRK3AP'",
+        "loginUser2 = 'lonely_pasteur'",
+        "passwordUser2 = 'password'",
+        "cameoIdUser2 = 'lonely_pasteur'"
+    ]
+}

@@ -1,0 +1,45 @@
+cm-security-indicator{
+    display:block;
+    height: 1.6em;
+    > * {
+        display:inline-block;
+        white-space:nowrap;
+        line-height:1em;
+        font-size:1.6em;
+    }
+    .positive{
+        color: @cm-color-positive;
+        float:right;
+    }
+    .negative{
+        color: @cm-color-negative;
+    }
+}
+
+cm-security-aspect{
+    display: block;
+    line-height:1.6em;
+    margin-bottom:1em;
+
+    .name{
+        font-weight:bold;
+        text-overflow: ellipsis;
+        overflow:hidden;
+
+        > * { vertical-align: middle; }
+
+        cm-icons{
+            text-align: left;
+            white-space: nowrap;
+            line-height:1em;
+            font-size:1.6em;
+            margin-right: 0.5em;
+
+            &.positive{ color: @cm-color-positive; }
+            &.negative{ color: @cm-color-negative; }
+
+            &>*{ vertical-align:top; }
+        }
+    }
+
+}

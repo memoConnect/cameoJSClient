@@ -1,0 +1,13 @@
+<div class="content">
+
+    <div ng-hide="authorized">
+        <div class="alert alert-danger">Not Authorized!</div>
+    </div>
+
+    <div ng-show="authorized">
+        <h2>List of Lists</h2>
+        <div class="list-group">
+            <a ng-repeat="list in lists" href="#/{{list}}" class="list-group-item">{{list}}</a>
+        </div>
+    </div>
+</div>

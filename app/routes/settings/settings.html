@@ -1,0 +1,14 @@
+<cm-header cm-rubber-space>
+    <cm-back cm-weight="3" page-title="'SETTINGS.WELCOME'|cmTranslate" back-to="/talks"></cm-back>
+    <cm-logo cm-weight="3"></cm-logo>
+    <cm-reload cm-weight="2"></cm-reload>
+    <cm-menu cm-weight="1"></cm-menu>
+</cm-header>
+
+<div cm-transparent-bg></div>
+
+<div class="cm-page-body" ng-controller="SettingsCtrl" ng-switch="mainPage+'/'+subPage">
+    <cm-overview-settings ng-switch-default></cm-overview-settings>
+    <cm-account-profile ng-switch-when="account-profile/"></cm-account-profile>
+    <cm-account-keypair ng-switch-when="account-profile/keypair"></cm-account-keypair>
+</div>

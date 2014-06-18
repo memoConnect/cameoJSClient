@@ -1,0 +1,12 @@
+{
+    "config": {
+        "apiUrl": "https://dev.cameo.io/a/v1",
+        "autoLogin": true,
+        "loadingBar": true
+    },
+    "phonegap": {
+        "baseName" : "cameoNet-default",
+        "appId" : "io.cameo.cameonet.client.web.mobile.app.local"
+
+    }
+}
