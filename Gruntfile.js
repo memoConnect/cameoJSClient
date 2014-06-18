@@ -697,7 +697,7 @@ module.exports = function (grunt) {
             files: [
                 'app/less/*.less',
                 'templates/*.tpl.*',
-                'app/comps/*',
+                'app/comps/**/*',
                 'app/routes/**/comps/*'
             ],
             tasks: ['genAllTemplates','packages']
