@@ -165,20 +165,25 @@
             "small_blue_diamond", "small_orange_diamond", "small_red_triangle",
             "small_red_triangle_down", "shipit"
         ],
+        // http://www.emoji-cheat-sheet.com/
+        // https://github.com/arvida/emoji-cheat-sheet.com/blob/master/public/index.html
+        groups = ['people', 'nature', 'objects', 'places', 'symbols'],
         convertSmileyToEmoji = [
-            {matcher: [':\\)','\\(:'], emoji:'blush'},
+            {matcher: [':\\)','\\(:','\\^\\^'], emoji:'blush'},
             {matcher: [';\\)','\\(;'], emoji:'wink'},
             {matcher: [':D'], emoji:'smile'},
             {matcher: [':\\*','\\*:'], emoji:'kissing_heart'},
             {matcher: ['<3'], emoji:'heart_eyes'},
-            {matcher: ['-_-'], emoji:'expressionless'},
             {matcher: ['B\\)'], emoji:'sunglasses'},
-            {matcher: [':P'], emoji:'stuck_out_tongue'},
-            {matcher: [';P'], emoji:'stuck_out_tongue_winking_eye'},
+            {matcher: [':P',':p'], emoji:'stuck_out_tongue'},
+            {matcher: [';P',';p'], emoji:'stuck_out_tongue_winking_eye'},
             {matcher: [':\\('], emoji:'worried'},
             {matcher: [':o'], emoji:'open_mouth'},
             {matcher: [":\\'\\("], emoji:'cry'},
-            {matcher: ['\\.!\\.'], emoji:'poop'}
+            {matcher: ['\\.!\\.'], emoji:'fu'},
+            {matcher: ['o_O','O_o','oO','Oo','o\\.O','O\\.o'], emoji:'flushed'},
+            {matcher: ['-_-'], emoji:'expressionless'},
+            {matcher: ['\\^_\\^'], emoji:'grin'}
         ],
         blacklistForList = ['poop', 'shit', '-1', '\\+1', 'facepunch', 'collision', 'raised_hand', 'runner', 'telephone', 'shirt', 'black_square', 'white_square'],
         rEmojis = new RegExp(":(" + emojis.join("|") + "):", "g");

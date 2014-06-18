@@ -127,7 +127,7 @@ angular.module('cmUi').directive('cmAvatar',[
                 } else {
                     var identity = scope.$eval(attrs.cmData);
                     if(typeof identity == 'object' && cmUtil.objLen(identity) > 0){
-                        if(identity.state.is('new')) {
+                        if(identity.state.is('new') || identity.avatarId == undefined) {
                             identity.on('update:finished', function (event, identity) {
                                 refresh(identity);
                             });
