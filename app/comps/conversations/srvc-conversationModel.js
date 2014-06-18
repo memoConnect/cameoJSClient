@@ -343,8 +343,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     /**
                      * test export
                      */
-                    console.log('export',this.exportData());
-                    return false;
+//                    console.log('export',this.exportData());
+//                    return false;
 
 
                     cmConversationsAdapter.newConversation( this.exportData() ).then(
