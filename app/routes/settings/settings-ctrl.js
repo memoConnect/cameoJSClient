@@ -10,6 +10,7 @@ define([
         '$scope',
         '$routeParams',
         function($scope, $routeParams) {
+            console.log($routeParams)
             $scope.mainPage = $routeParams.mainPage;
             $scope.subPage = $routeParams.subPage;
         }
