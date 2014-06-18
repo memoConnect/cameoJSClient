@@ -124,7 +124,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     }
                 } else {
                     self.state.set('new');
-//                    self.disableEncryption();
+                    self.enableEncryption(); // have to be there!!! BS klären mit AP 18.06.2014
                 }
 
                 self.trigger('init:finished');
@@ -275,10 +275,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                                         .setIdentities(this.recipients)
                                         .exportData();
                 
-                data.sePassphrase       =   passphrase_data.sePassphrase
-                data.aePassphraseList   =   passphrase_data.aePassphraseList
+                data.sePassphrase       =   passphrase_data.sePassphrase;
+                data.aePassphraseList   =   passphrase_data.aePassphraseList;
 
-                data.recipients         =   this.recipients.map(function(recipient){ return recipient.id })
+                data.recipients         =   this.recipients.map(function(recipient){ return recipient.id });
 
                 return data;
             };
@@ -339,6 +339,13 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     if(checkConsistency()){
                         // do something
                     }
+
+                    /**
+                     * test export
+                     */
+                    console.log('export',this.exportData());
+                    return false;
+
 
                     cmConversationsAdapter.newConversation( this.exportData() ).then(
                         function (conversation_data) {

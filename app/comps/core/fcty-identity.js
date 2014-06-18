@@ -125,13 +125,15 @@ angular.module('cmCore').factory('cmIdentityModel',[
             this.encryptPassphrase = function(passphrase){
                 var encrypted_key_list = [];
 
+                console.log('identity keys', this.keys);
+
                 this.keys.forEach(function(key){
 
                     var key_2 = new cmCrypt.Key();
 
                     key_2.setKey(key.getPrivateKey());
 
-                    var encrypted_passphrase = key.encrypt(passphrase)
+                    var encrypted_passphrase = key.encrypt(passphrase);
 
                     if(encrypted_passphrase){
                         encrypted_key_list.push({
@@ -142,25 +144,15 @@ angular.module('cmCore').factory('cmIdentityModel',[
                         cmLogger.debug('cmIdentity: unable to encrypt passphrase.')
                     }
                 });
+
+                console.log('identity encrypted_key_list', encrypted_key_list);
+
                 return encrypted_key_list;
             };
 
             this.getDisplayName = function(){
                 return this.displayName || this.cameoId || this.id;
             };
-
-            /* do we need this?
-            this.getKeyById = function(id){
-                var needle
-
-                this.keys.forEach(function(key){
-                    if(key.id == id) needle = key
-                })
-
-                return needle
-            }
-
-            */
 
             /**
              * get and cached avatar of identity

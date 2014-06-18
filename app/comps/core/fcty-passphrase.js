@@ -156,7 +156,7 @@ angular.module('cmCore').factory('cmPassphrase',[
              */
             this.setIdentities = function(idts){
                 if(typeof idts == 'object' && idts.length > 0){
-                    identities = idts
+                    identities = idts;
                 }
 
                 return this
@@ -173,7 +173,7 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @returns {Object} this Returns cmPassphrase Object
              */
             this.resetPassword = function(){
-                password = undefined
+                password = undefined;
 
                 this.trigger('password:changed');
 
@@ -212,7 +212,7 @@ angular.module('cmCore').factory('cmPassphrase',[
             function decryptSymmetricallyEncryptedPassphrase(pw){
 
                 var old_passphrase = passphrase,
-                    new_passphrase = undefined
+                    new_passphrase = undefined;
 
                 if(!couldBeAPassword(pw) || !symmetricallyEncryptedPassphrase) 
                     return false
@@ -244,7 +244,7 @@ angular.module('cmCore').factory('cmPassphrase',[
              */
             function decryptAsymmetricallyEncryptedPassphrase(user) {
                 var old_passphrase  = passphrase,
-                    new_passphrase  = undefined
+                    new_passphrase  = undefined;
 
                 new_passphrase = asymmetricallyEncryptedPassphrases.reduce(function (passphrase, item) {
                     return passphrase || user.decryptPassphrase(item.encryptedPassphrase, item.keyId) || undefined
@@ -328,8 +328,15 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @return {Array|Boolean}  Returns Array of encrypted passphrases if successfull or false if not.
              */
             function asymmetricallyEncryptPassphrase(identities){
+                console.log(couldBeAPassphrase(passphrase) && typeof identities == 'object' && identities.length > 0)
+
+                console.log('passphrase', passphrase)
+                console.log('typeof identities', typeof identities)
+                console.log('identities.length', identities.length)
+
                 if(couldBeAPassphrase(passphrase) && typeof identities == 'object' && identities.length > 0){
                     return  identities.reduce(function(list, identity){
+                                console.log('list',list);
                                 return list.concat(identity.encryptPassphrase(passphrase))
                             }, [])
                 } else{
@@ -350,8 +357,8 @@ angular.module('cmCore').factory('cmPassphrase',[
                 var sym     = symmetricallyEncryptPassphrase(password),
                     asym    = asymmetricallyEncryptPassphrase(identities);
 
-                self.importSymmetricallyEncryptedPassphrase(sym)
-                self.importAsymmetricallyEncryptedPassphrase(asym)
+                self.importSymmetricallyEncryptedPassphrase(sym);
+                self.importAsymmetricallyEncryptedPassphrase(asym);
 
                 return this;
             };
@@ -415,15 +422,15 @@ angular.module('cmCore').factory('cmPassphrase',[
              */
             this.getKeyTransmission = function(){
                 if(symmetricallyEncryptedPassphrase && asymmetricallyEncryptedPassphrases.length > 0)
-                    return 'mixed' 
+                    return 'mixed';
 
                 if(symmetricallyEncryptedPassphrase)                                        
-                    return 'symmetric'
+                    return 'symmetric';
 
                 if(asymmetricallyEncryptedPassphrases.length > 0 ) 
-                    return 'asymmetric'
+                    return 'asymmetric';
 
-                return 'none'
+                return 'none';
             };
 
             /**
