@@ -51,7 +51,7 @@ define([
                 .commitInterval( cameo_config.commitInterval )
                 .useEvents( cameo_config.useEvents )
                 .eventsPath( cameo_config.eventsPath )
-                .eventsInterval( 0 )//cameo_config.eventsInterval )
+                .eventsInterval( 4000 )//cameo_config.eventsInterval )
 
             cmLanguageProvider
                 .cacheLangFiles(cameo_config.cache_lang_files)
@@ -143,7 +143,7 @@ define([
 
     // app run handling
     /**
-     * @TODO cmcontactsmodel anders initialisieren
+     * @TODO cmContactsModel anders initialisieren
      */
     app.run([
         '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmContactsModel', 'cmLanguage', 'cmLogger','cfpLoadingBar','cmEnv', 'cmApi',
