@@ -1,0 +1,3 @@
+
+
+//$scope.identity = cmUserModel.data;

@@ -1,0 +1,15 @@
+<cm-header cm-rubber-space>
+    <cm-back cm-weight="3" page-title="'SETTINGS.WELCOME'|cmTranslate" back-to="/settings"></cm-back>
+    <cm-logo cm-weight="3"></cm-logo>
+    <cm-reload cm-weight="2"></cm-reload>
+    <cm-menu cm-weight="1"></cm-menu>
+</cm-header>
+
+<div cm-transparent-bg></div>
+
+<div class="cm-page-body" ng-controller="SettingsCtrl">
+    <button ng-click="showSpinner()" class="btn btn-default" ng-hide="true">show</button>
+    <button ng-click="hideSpinner()" class="btn btn-default" ng-hide="true">hide</button>
+
+    <div cm-key-pair></div>
+</div>
