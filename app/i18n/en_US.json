@@ -247,7 +247,8 @@
 	"SETTINGS": {
 		"WELCOME": "Settings",
         "LABEL": "Settings",
-        "ACCOUNT_PROFILE": "Account & Profile",
+        "ACCOUNT": "Account",
+        "IDENTITY": "Identity",
         "NOTIFY": "Notification",
         "CONTACTS": "Contacts",
         "VIEW": "View",
