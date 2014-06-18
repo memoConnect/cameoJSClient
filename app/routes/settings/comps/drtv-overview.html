@@ -1,8 +1,19 @@
+<header class="inScreen">
+    <i class="fa cm-settings cm-lg-icon"></i> {{'SETTINGS.LABEL' | cmTranslate}}
+</header>
+
 <ul>
     <li ng-repeat="page in Object.keys(overview)">
         <a href="#/settings/{{page}}">
             <i class="fa" ng-class="overview[page].icon"></i>
             <span>{{overview[page].i18n|cmTranslate}}</span>
+            <div class="clearer"></div>
+        </a>
+    </li>
+    <li>
+        <a ng-click="logout()">
+            <i class="fa cm-logout icon-left"></i>
+            <span>{{'MENU.LOGOUT'|cmTranslate}}</span>
             <div class="clearer"></div>
         </a>
     </li>

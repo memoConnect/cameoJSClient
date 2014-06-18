@@ -140,11 +140,14 @@
             "PASSPHRASE_INVALID": "Ungültiger Schlüssel."
         },
         "PLACEHOLDER": {
+            "SUBJECT": "Betreff",
             "NO_SUBJECT": "Betreff eingeben",
-            "ADD_RECIPIENTS": "Empfänger hinzufügen",
+            "RECIPIENTS": "Empfänger",
+            "ADD_RECIPIENTS": "hinzufügen",
             "INFO": "Info",
             "PASSWORD": "Passwort",
-            "PASSCAPTCHA": "Passcaptcha"
+            "PASSCAPTCHA": "Passcaptcha",
+            "ENCRYPTION": "verschlüsselt"
         },
         "CONTROL": {
             "SAVE": "speichern",
@@ -244,7 +247,8 @@
 	"SETTINGS": {
 		"WELCOME": "Einstellungen",
         "LABEL": "Einstellungen",
-        "ACCOUNT_PROFILE": "Account & Profil",
+        "ACCOUNT": "Account",
+        "IDENTITY": "Identität",
         "NOTIFY": "Benachrichtungen",
         "CONTACTS": "Kontakte",
         "VIEW": "Darstellung",

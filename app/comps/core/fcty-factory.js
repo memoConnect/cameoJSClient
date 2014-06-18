@@ -13,11 +13,11 @@ angular.module('cmCore').factory('cmFactory',[
 
         return function cmFactory(model){
 
-            var self        = new Array()
+            var self        = new Array();
 
-            self.model      = model
+            self.model      = model;
 
-            cmObject.addEventHandlingTo(self)
+            cmObject.addEventHandlingTo(self);
 
             /**
              * Function to create an instance of this.model. If an instance with the same id as provided already exist, fetch it instead off creating a new one.
@@ -38,9 +38,8 @@ angular.module('cmCore').factory('cmFactory',[
                     instance.importData(args);
                 }
 
-//                return self.find(id) || self.new(args) //Todo: self.find(id).importData(args)?
                 return instance;
-            }
+            };
 
             /**
              * Function to find and instance by its id.
@@ -48,12 +47,13 @@ angular.module('cmCore').factory('cmFactory',[
              * @returns {model|null}                 returns the first instance to match the id or null if none is found 
              */
             self.find = function(id){
-                if(!id) return null
+                if(!id)
+                    return null;
 
                 var matches = self.filter(function(instance){ return instance.id == id })
 
                 return matches.length ? matches[0] : null       
-            }
+            };
 
 
             /**
@@ -61,21 +61,21 @@ angular.module('cmCore').factory('cmFactory',[
              * @param   {string|object}   args        instance id, data set including an instance id or data set without an id
              * @return  {cmModel}                    returns a new model instance populated with the provided data
              */
-
-            self.new = function(args){
+            self.new = function(args, withoutRegister){
                 var data     = typeof args == 'string' ? {id:args} : args,
                     instance = new self.model(data)
 
-                self.register( instance )
-                
+                if(typeof withoutRegister !== 'boolean' || withoutRegister == false){
+                    self.register(instance)
+                }
+
                 return instance
-            }
+            };
 
             /**
              * Function to store a model instance for later use, retrievable by its id
-             * @param {model}           instance    an instance pof model
+             * @param {model}           instance    an instance of model
              */
-
             self.register = function(instance){
                 if(
                        self.indexOf(instance) == -1
@@ -91,7 +91,30 @@ angular.module('cmCore').factory('cmFactory',[
                 }
 
                 return false
-            }
+            };
+
+            /**
+             * Function to remove a model instance
+             * @param {model}           instance    an instance of model
+             */
+            self.deregister = function(instance){
+                if(
+                    self.indexOf(instance) != -1
+                    && instance instanceof this.model
+                ){
+                    var i = self.length;
+                    while(i){
+                        i--;
+                        if(self[i] == instance){
+                            self.splice(i, 1);
+
+                            self.trigger('unregistered');
+
+                            break;
+                        }
+                    }
+                }
+            };
 
             /**
              * Function to remove all instances from the factory.
@@ -100,7 +123,7 @@ angular.module('cmCore').factory('cmFactory',[
             self.reset = function(){
                 while(self.length > 0) self.pop()
                 return self
-            }
+            };
 
             return self
         }

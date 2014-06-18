@@ -64,7 +64,7 @@ angular.module('cmSecurityAspects')
             check:          function(conversation){
                                 return true
                             }
-        })        
+        })
 
         return securityAspectsConversation 
     }

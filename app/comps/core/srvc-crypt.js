@@ -281,7 +281,7 @@ angular.module('cmCore').service('cmCrypt',[
              * @returns {string[]}
              */
             getKeySizes: function(){
-                return ['512','1024','2048','4096'];
+                return ['1024','2048','4096'];
             },
 
             /**
@@ -353,25 +353,24 @@ angular.module('cmCore').service('cmCrypt',[
             },
 
             generatePassword: function(){                
-                var bad_random_passphrase =''
+                var bad_random_passphrase ='';
 
                 while(bad_random_passphrase.length < 10){
                     bad_random_passphrase += Math.random().toString(36).replace('0.','')
                 }
 
                 
-                return bad_random_passphrase.slice(-10)
+                return bad_random_passphrase.slice(-10);
             },
 
             generatePassphrase: function(){                
-                var bad_random_passphrase =''
+                var bad_random_passphrase ='';
 
                 while(bad_random_passphrase.length < 60){
                     bad_random_passphrase += Math.random().toString(36).replace('0.','')
                 }
 
-                
-                return bad_random_passphrase
+                return bad_random_passphrase;
             }
         }
     }]

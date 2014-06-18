@@ -140,11 +140,14 @@
             "PASSPHRASE_INVALID" : "Invalid passphrase"
         },
         "PLACEHOLDER": {
+            "SUBJECT": "Subject",
             "NO_SUBJECT": "add subject",
-            "ADD_RECIPIENTS": "add recipients",
+            "RECIPIENTS": "Recipients",
+            "ADD_RECIPIENTS": "add",
             "INFO": "info",
             "PASSWORD": "password",
-            "PASSCAPTCHA": "passcaptcha"
+            "PASSCAPTCHA": "passcaptcha",
+            "ENCRYPTION": "encrypted"
         },
         "CONTROL": {
             "SAVE": "save",
@@ -244,7 +247,8 @@
 	"SETTINGS": {
 		"WELCOME": "Settings",
         "LABEL": "Settings",
-        "ACCOUNT_PROFILE": "Account & Profile",
+        "ACCOUNT": "Account",
+        "IDENTITY": "Identity",
         "NOTIFY": "Notification",
         "CONTACTS": "Contacts",
         "VIEW": "View",

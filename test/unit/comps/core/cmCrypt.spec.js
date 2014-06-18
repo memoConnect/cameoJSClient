@@ -90,8 +90,8 @@ describe('cmCrypt', function () {
             decrypted_secret = undefined
 
 
-        it('should provide a function "getKeysizes" with 4 available key sizes', function(){
-            expect(cmCrypt.getKeySizes().length).toEqual(4)
+        it('should provide a function "getKeysizes" with 3 available key sizes', function(){
+            expect(cmCrypt.getKeySizes().length).toEqual(3)
         })
 
         it('should provide a function "generateAsyncKeypair"', function(){

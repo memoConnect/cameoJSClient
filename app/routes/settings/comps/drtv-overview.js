@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('cmRouteSettings').directive('cmOverviewSettings', [
+    'cmUserModel',
     'cmConfig',
-    function(cmConfig){
+    function(cmUserModel,cmConfig){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-overview.html',
@@ -10,6 +11,10 @@ angular.module('cmRouteSettings').directive('cmOverviewSettings', [
 
                 $scope.overview = cmConfig.routeSettings;
                 $scope.Object = Object;
+
+                $scope.logout = function(){
+                    cmUserModel.doLogout();
+                };
             }
         }
     }

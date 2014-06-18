@@ -87,6 +87,12 @@ describe('FileUpload unsafe', function () {
         util.get('/conversation/')
         util.waitForPageLoad('/conversation/')
 
+        /**
+         * @todo
+         * disable encryption in conversation
+         */
+        $("[data-qa='encryption-btn']").click()
+
         $("[data-qa='input-subject']").sendKeys(subjectUnsafe)
         $("[data-qa='btn-save-options']").click()
     })

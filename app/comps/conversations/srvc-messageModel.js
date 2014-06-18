@@ -145,7 +145,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 }
             };
 
-            this.encrypt = function (passphrase) {
+            this.encrypt = function () {
                 // merge secret_data into json string:
                 var secret_data = {};
 

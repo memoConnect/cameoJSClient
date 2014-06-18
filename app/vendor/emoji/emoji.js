@@ -169,7 +169,7 @@
         // https://github.com/arvida/emoji-cheat-sheet.com/blob/master/public/index.html
         groups = ['people', 'nature', 'objects', 'places', 'symbols'],
         convertSmileyToEmoji = [
-            {matcher: [':\\)','\\(:','^^'], emoji:'blush'},
+            {matcher: [':\\)','\\(:','\\^\\^'], emoji:'blush'},
             {matcher: [';\\)','\\(;'], emoji:'wink'},
             {matcher: [':D'], emoji:'smile'},
             {matcher: [':\\*','\\*:'], emoji:'kissing_heart'},
@@ -181,9 +181,9 @@
             {matcher: [':o'], emoji:'open_mouth'},
             {matcher: [":\\'\\("], emoji:'cry'},
             {matcher: ['\\.!\\.'], emoji:'fu'},
-            {matcher: ['o_O','O_o','oO','Oo','o.O','O.o'], emoji:'flushed'},
+            {matcher: ['o_O','O_o','oO','Oo','o\\.O','O\\.o'], emoji:'flushed'},
             {matcher: ['-_-'], emoji:'expressionless'},
-            {matcher: ['^_^'], emoji:'grin'}
+            {matcher: ['\\^_\\^'], emoji:'grin'}
         ],
         blacklistForList = ['poop', 'shit', '-1', '\\+1', 'facepunch', 'collision', 'raised_hand', 'runner', 'telephone', 'shirt', 'black_square', 'white_square'],
         rEmojis = new RegExp(":(" + emojis.join("|") + "):", "g");

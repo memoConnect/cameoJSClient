@@ -144,13 +144,15 @@ angular.module('cmConversations').directive('cmConversation', [
                         $scope.conversation.save();
                         //When that is done try again to send the message:
                         $scope.conversation.one('save:finished', function(){
-                           sendMessage();
+                            cmConversationFactory.register($scope.conversation);
+                            sendMessage();
                         });
                         return false
                     }
 
-//                    console.log($scope.conversation.getPassphrase())
-//                    console.log($scope.conversation.getPassphrase() === null )
+//                    console.log('$scope.conversation.isEncrypted()',$scope.conversation.isEncrypted())
+//                    console.log('$scope.conversation.getPassphrase()',$scope.conversation.getPassphrase())
+//                    console.log('$scope.conversation.getPassphrase() === null',$scope.conversation.getPassphrase() === null )
 
                     //If we got this far the conversation has been saved to the backend.
                     //Create a new message:
@@ -218,8 +220,8 @@ angular.module('cmConversations').directive('cmConversation', [
                 } else {
                     // TODO: create at send message not on init!!!
                     $scope.init(
-                        cmConversationFactory.create()
-                        .disableEncryption()// @todo muss wieder wech, wenn controls umbau
+//                        cmConversationFactory.create()
+                        cmConversationFactory.new(undefined, true)
                         .addRecipient(cmUserModel.data.identity) // muss nicht, macht die api auch von alleine (?)
                     )
                 }

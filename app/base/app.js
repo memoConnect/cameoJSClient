@@ -10,6 +10,7 @@ define([
     // cameo files
     'pckCore',
     'pckUi',
+    'pckContacts',
     'base/config'
 ], function (angularAMD) {
     'use strict';
@@ -21,7 +22,8 @@ define([
         'angularMoment',
         'angular-loading-bar',
         'cmCore',
-        'cmUi'
+        'cmUi',
+        'cmContacts'
     ]);
 
     app.constant('cmEnv',cameo_config.env);
@@ -140,17 +142,20 @@ define([
     ]);
 
     // app run handling
+    /**
+     * @TODO cmContactsModel anders initialisieren
+     */
     app.run([
-        '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmLanguage', 'cmLogger','cfpLoadingBar','cmEnv', 'cmApi',
-        function ($rootScope, $location, $window, $route, cmUserModel, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi) {
+        '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmContactsModel', 'cmLanguage', 'cmLogger','cfpLoadingBar','cmEnv', 'cmApi',
+        function ($rootScope, $location, $window, $route, cmUserModel, cmContactsModel, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi) {
 
             //prep $rootScope with useful tools
-            $rootScope.console = console
-            $rootScope.alert   = alert
+            $rootScope.console = console;
+            $rootScope.alert   = alert;
 
             //add Overlay handles:
-            $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) }
-            $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) }
+            $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };
+            $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) };
 
             // passing wrong route calls
             $rootScope.$on("$routeChangeStart", function(){
@@ -206,7 +211,7 @@ define([
             });
             
             //Make it easy for e2e-tests to monitor route changes:
-            window._route = {}
+            window._route = {};
 
             $rootScope.$on('$routeChangeStart', function(){
                 window._route.path   = $location.$$path

@@ -101,7 +101,8 @@ cameo_config = {
     },
 
     routeSettings: {
-        'account-profile': {i18n:'SETTINGS.ACCOUNT_PROFILE', icon:'cm-person'},
+        'account': {i18n:'SETTINGS.ACCOUNT', icon:'cm-person'},
+        'identity': {i18n:'SETTINGS.IDENTITY', icon:'cm-person'},
         'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell'},
         'contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-contacts'},
         'view': {i18n:'SETTINGS.VIEW', icon:'cm-fix'},

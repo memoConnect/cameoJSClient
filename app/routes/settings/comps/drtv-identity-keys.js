@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmAccountKeypair', [
+angular.module('cmRouteSettings').directive('cmIdentityKeys', [
     'cmUserModel',
     'cmCrypt',
     'cmUtil',
@@ -10,7 +10,7 @@ angular.module('cmRouteSettings').directive('cmAccountKeypair', [
     function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/drtv-account-keypair.html',
+            templateUrl: 'routes/settings/comps/drtv-identity-keys.html',
             controller: function ($scope) {
                 $scope.identity = cmUserModel.data;
 

@@ -8,10 +8,14 @@ angular.module('cmUi').directive('cmIdentity',[
             template: '<cm-avatar cm-data="identity"></cm-avatar> {{identity.getDisplayName()}}',
             scope: true,
             controller: function($scope){
-                $scope.identity = cmUserModel.data.identity;
+                function setIdentity(){
+                    $scope.identity = cmUserModel.data.identity;
+                }
+
+                setIdentity();
 
                 cmUserModel.on('update:finished',function(){
-                    $scope.identity = cmUserModel.data.identity;
+                    setIdentity();
                 });
             }
         }

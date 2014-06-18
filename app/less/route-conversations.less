@@ -166,6 +166,19 @@ cm-conversation-controls{
                 padding:0.5em;
                 border-bottom:@cm-border-grey @cm-border-width solid;
             }
+            .no-border{
+                border: none;
+            }
+            .no-padding{
+              padding:0
+            }
+            .label-with-checkbox{
+              label {
+                padding-left: 0.5rem;
+              }
+              button {
+              }
+            }
             &:last-child{
                 border-bottom:0;
             }
@@ -203,36 +216,6 @@ cm-conversation-controls{
             cm-edge{
                 vertical-align:top;
                 font-size:@cm-unit+1;
-            }
-        }
-
-        .safety-levels{
-            [cm-weight]{
-                vertical-align: middle;
-            }
-            .cm-safety-level{
-                color:@cm-white;
-                width:4rem;
-                height:4rem;
-                font-size:2rem;
-                padding:0.4em;
-                .border-radius;
-                i:focus, i:hover{
-                  color:@cm-white;
-                }
-                &.active{
-                  font-size:3rem;
-                  width:5rem;
-                  height:5rem;
-                  padding:0.3em;
-                }
-                &.safetylevel-safer-btn{
-                    i{
-                        width: 0.65em;
-                        position: relative;
-                        left: -0.3em;
-                    }
-                }
             }
         }
 
