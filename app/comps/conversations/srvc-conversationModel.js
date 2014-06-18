@@ -135,6 +135,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @ngdoc method
              * @methodOf cmConversationModel
              *
+             * @deprecated
+             *
              * @name checkConsistency
              * @description
              * Checks Conversation Settings and User Opinions
@@ -566,23 +568,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {cmConversationModel} this cmConversationModel
              */
             this.addRecipient = function(identityModel){
+//                cmLogger.debug('cmConversationModel:addRecipient');
                 this.recipients.register(identityModel);
-
-                /**
-                 * if Recipient has no Keys
-                 */
-                if(identityModel.getWeakestKeySize() == 0){
-                    this.options.hasPassword = true;
-                    if(identityModel.id == cmUserModel.data.identity.id){
-                        this.options.showKeyInfo = true;
-                    }
-                }
-
-
-//                identityModel.on('update', function(){
-//                    self.trigger('recipient:update'); //Todo: noch nicht gelöst =/ <- 16.06.2014 BS - wird der trigger benötigt?
-//                });
-//                this.trigger('recipient:added');
 
                 return this;
             };
@@ -601,20 +588,16 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 // @ todo save new recipients to api
             }
 
-            this.removeRecipient = function (identity) {
-                this.trigger('before-remove-recipient', identity)
+            /**
+             * @todo identity mit factory removen, preference neu überprüfen (extra funktion)
+             *
+             * @param identity
+             * @returns {cmConversationModel.ConversationModel}
+             */
+            this.removeRecipient = function (recipient) {
+//                cmLogger.debug('cmConversationModel:removeRecipient');
+                this.recipients.deregister(recipient);
 
-                var i = this.recipients.length;
-
-                while (i) {
-                    i--;
-                    if (this.recipients[i] == identity){
-                        this.recipients.splice(i, 1);
-                        //identity.removeFrom ... that's the api call
-                    }
-                }
-
-                this.trigger('after-remove-recipient', identity)
                 return this;
             };
 
@@ -666,6 +649,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             this.saveEncryptedPassphraseList = function(){
+                cmLogger.debug('cmConversationModel: .saveEncryptedPassphraseList() is deprecated.')
 //                this.encryptedPassphraseList = security.getEncryptedPassphraseList(this.password)
 //
 //                if(this.encryptedPassphraseList && this.encryptedPassphraseList.length !=0){
@@ -673,6 +657,37 @@ angular.module('cmConversations').factory('cmConversationModel',[
 //                } else {
 //                    return $q.when(true)
 //                }
+            };
+
+            this.checkPreferences = function(){
+                /**
+                 * set Default
+                 * has Captcha will be set at an other method
+                 */
+                this.options.hasPassword = false;
+                this.options.showKeyInfo = false;
+
+                /**
+                 * check recipients
+                 */
+                this.recipients.forEach(function(recipient){
+                    /**
+                     * if Recipient has no Keys
+                     */
+                    if(recipient.getWeakestKeySize() == 0){
+                        self.options.hasPassword = true;
+                        if(recipient.id == cmUserModel.data.identity.id){
+                            self.options.showKeyInfo = true;
+                        }
+                    }
+                });
+
+                /**
+                 * last check for captcha preference
+                 */
+                if(this.options.hasPassword == false){
+                    this.options.hasCaptcha = false;
+                }
             };
 
             /**
@@ -700,8 +715,13 @@ angular.module('cmConversations').factory('cmConversationModel',[
             });
 
             this.recipients.on('register', function(event, recipient){
-                // do something, if new recipient is added to conversation
-//                console.log('recipient:register',recipient)
+//                console.log('trigger:unregistered');
+                self.checkPreferences();
+            });
+
+            this.recipients.on('unregistered', function(){
+//                console.log('trigger:unregistered');
+                self.checkPreferences();
             });
 
             // after events!!!
