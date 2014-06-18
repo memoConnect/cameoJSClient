@@ -245,7 +245,7 @@ module.exports = function (grunt) {
                         packagePath:'app/comps/core',
                         moduleName:'core-cockpit',
 //                        include:'*(*api|*auth|*crypt|*logger)',
-                        exclude:'!(fcty-|pack-|-module|*identity|*language|*notify|*cron|*job|*localstorage|*object|*usermodel|*util)',
+                        exclude:'!(fcty-|pack-|-module|*identity|*language|*notify|*cron|*job|*localstorage|*usermodel|*util)',
                         file:'package-cockpit.js'
                     },
                     'conversations': 'app/comps/conversations',

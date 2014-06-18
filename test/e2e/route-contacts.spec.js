@@ -31,44 +31,34 @@ describe('Route: Contacts', function () {
     })
 
     describe('contact list', function(){
-        
         it('should have an avatar.', function(){
             util.waitForElement('cm-contacts-list cm-avatar')            
-            $('cm-contacts-list cm-avatar').click()
+            $$('cm-contacts-list cm-avatar').get(0).click()
             util.waitForPageLoad(/\/contact\/[a-zA-Z0-9]+$/)       
         })
-
 
         it('should have key security indicator.', function(){
             util.get('/contacts')
             util.waitForElement('cm-contacts-list cm-key-level')
         })
 
-
         it('should have brief contact details.', function(){
             util.waitForElement('cm-contacts-list cm-contact-brief')
-            $('cm-contacts-list cm-contact-brief').click()
+            $$('cm-contacts-list cm-contact-brief').get(0).click()
             util.waitForPageLoad(/\/contact\/[a-zA-Z0-9]+$/)
         })
-
 
         it('should have contact type indicator.', function(){
             util.get('/contacts') 
             util.waitForElement('cm-contacts-list cm-contact-type')
         })
 
-
         it('should have a seperator.', function(){
             util.waitForElement('cm-contacts-list .separator')           
         })
 
-
         it('should have a button to compose a new message.', function(){
             util.waitForElement('cm-contacts-list [data-qa="start-new-conversation-btn"]')  
         })
-
-
     })
-
-
 })
