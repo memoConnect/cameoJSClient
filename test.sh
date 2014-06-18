@@ -10,6 +10,10 @@ case "$1" in
    "test")
         target=--target="test"
       ;;
+   "prod")
+      echo "No prod tests yet!"
+      exit 1
+      ;;
 esac
 
 if [ ! -z $2 ]; then
