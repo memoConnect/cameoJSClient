@@ -30,7 +30,7 @@ angular.module('cmRouteSettings').directive('cmAccountKeypair', [
                 $scope.showOwnKeys = function(){
                     $scope.active = 'showOwnKeys';
 
-                    if(cmUserModel.data.identity.keys.length > 0){
+                    if(('keys' in cmUserModel.data.identity) && cmUserModel.data.identity.keys.length > 0){
                         $scope.ownKeys = [];
                         cmUserModel.data.identity.keys.forEach(function(key){
                             $scope.ownKeys.push(key.exportData());
@@ -152,6 +152,14 @@ angular.module('cmRouteSettings').directive('cmAccountKeypair', [
                 $scope.syncLocalKeys = function(){
                     cmUserModel.syncLocalKeys();
                 };
+
+                if(typeof cmUserModel.data.identity.on == 'function'){
+                    cmUserModel.data.identity.on('update:finished', function(){
+                        if($scope.active == 'showOwnKeys'){
+                            $scope.showOwnKeys();
+                        }
+                    });
+                }
             }
         }
     }
