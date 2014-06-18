@@ -170,6 +170,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.timeOfLastUpdate        = data.lastUpdated         || this.timeOfLastUpdate;
                 this.subject                 = data.subject             || this.subject;
                 this.numberOfMessages        = data.numberOfMessages    || this.numberOfMessages;
+
                 // getting locally saved pw for conversation
 //                if(this.password == undefined)
 //                    this.password = this.localPWHandler.get(this.id);
@@ -179,6 +180,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 if('aePassphraseList' in data && data.aePassphraseList.length > 0)
                     passphrase.importAsymmetricallyEncryptedPassphrase(data.aePassphraseList);
+
+                if(!this.state.is('new') && passphrase.getKeyTransmission() == 'none'){
+                    passphrase.disable();
+                }
 
                 this.initPassCaptcha(data);
 
@@ -438,6 +443,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     success     =   passphrase && this.messages.reduce(function (success, message){
                                         return success && message.decrypt();
                                     }, true);
+
+                console.log('success', success);
 
                 if (success) {
                     this.trigger('decrypt:ok');

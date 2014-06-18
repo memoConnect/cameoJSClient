@@ -59,6 +59,13 @@ describe('Single Conversation: ', function () {
     })
 
     it('should save options', function () {
+
+        /**
+         * @todo
+         * disable encryption in conversation
+         */
+        $("[data-qa='encryption-btn']").click()
+
         $("[data-qa='btn-save-options']").click()
         util.waitForElementHidden("[data-qa='conversation-options-menu']")
     })
@@ -126,6 +133,7 @@ describe('Single Conversation: ', function () {
 
     it('log in as original user, the created conversation should be listed first', function() {
         util.login()
+
         util.waitForElement("cm-conversation-tag")
         $$("cm-conversation-tag").then(function (elements) {
             expect(elements[0].$("[data-qa='conversation-subject']").getText()).toContain(newSubject.substring(0.10))
