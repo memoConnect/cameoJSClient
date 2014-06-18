@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('cmCore',['cmUi']);
+angular.module('cmCore',[]);

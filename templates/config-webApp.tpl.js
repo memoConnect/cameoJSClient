@@ -23,7 +23,11 @@ cameo_config = {
         },
         'settings': {
             hasCtrl: true,
-            css: 'no-footer'
+            css: 'no-footer',
+            routes: [
+                '/settings/:mainPage?',
+                '/settings/:mainPage/:subPage?'
+            ]
         },
         'talks': {
             hasCtrl: true
@@ -85,5 +89,25 @@ cameo_config = {
         autoLogin: ('<%= autoLogin %>' == 'true'),
         loadingBar: ('<%= loadingBar %>' == 'true'),
         isiOS: ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false )
+    },
+
+    menu: {
+        'menu': {i18n:'MENU.HEADER', icon:'cm-menu', css:'cm-menu-header', onlyLabel:true},
+        //'notfications': {i18n:'MENU.NOTIFICATIONS', icon:'cm-bell', css:'cm-menu-notify'},
+        'talks': {i18n:'MENU.MESSAGES', icon:'cm-envelope-closed', css:'cm-menu-notify'},
+        'contacts': {i18n:'MENU.CONTACTS', icon:'cm-group', css:'cm-menu-notify'},
+        'contacts/requests': {i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
+        'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings', subs:{}}
+    },
+
+    routeSettings: {
+        'account-profile': {i18n:'SETTINGS.ACCOUNT_PROFILE', icon:'cm-person'},
+        'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell'},
+        'contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-contacts'},
+        'view': {i18n:'SETTINGS.VIEW', icon:'cm-fix'},
+        'about': {i18n:'SETTINGS.ABOUT', icon:'cm-rhino-positive'},
+        'contracts': {i18n:'SETTINGS.CONTRACTS', icon:'cm-clipboard'}
     }
 };
+// settings config to menu subs
+cameo_config.menu.settings.subs = cameo_config.routeSettings;
