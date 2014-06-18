@@ -38,7 +38,6 @@ angular.module('cmCore').factory('cmFactory',[
                     instance.importData(args);
                 }
 
-//                return self.find(id) || self.new(args) //Todo: self.find(id).importData(args)?
                 return instance;
             }
 
@@ -48,7 +47,8 @@ angular.module('cmCore').factory('cmFactory',[
              * @returns {model|null}                 returns the first instance to match the id or null if none is found 
              */
             self.find = function(id){
-                if(!id) return null
+                if(!id)
+                    return null;
 
                 var matches = self.filter(function(instance){ return instance.id == id })
 
@@ -62,12 +62,14 @@ angular.module('cmCore').factory('cmFactory',[
              * @return  {cmModel}                    returns a new model instance populated with the provided data
              */
 
-            self.new = function(args){
+            self.new = function(args, withoutRegister){
                 var data     = typeof args == 'string' ? {id:args} : args,
                     instance = new self.model(data)
 
-                self.register( instance )
-                
+                if(typeof withoutRegister !== 'boolean' || withoutRegister == false){
+                    self.register(instance)
+                }
+
                 return instance
             }
 

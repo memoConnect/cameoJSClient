@@ -144,7 +144,8 @@ angular.module('cmConversations').directive('cmConversation', [
                         $scope.conversation.save();
                         //When that is done try again to send the message:
                         $scope.conversation.one('save:finished', function(){
-                           sendMessage();
+                            cmConversationFactory.register($scope.conversation);
+                            sendMessage();
                         });
                         return false
                     }
@@ -218,7 +219,8 @@ angular.module('cmConversations').directive('cmConversation', [
                 } else {
                     // TODO: create at send message not on init!!!
                     $scope.init(
-                        cmConversationFactory.create()
+//                        cmConversationFactory.create()
+                        cmConversationFactory.new(undefined, true)
                         .addRecipient(cmUserModel.data.identity) // muss nicht, macht die api auch von alleine (?)
                     )
                 }
