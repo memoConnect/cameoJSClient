@@ -11,7 +11,7 @@
             </li>
 
             <li class="cm-list-group-item {{menu[btn].css}}" ng-repeat="btn in Object.keys(menu)" ng-class="{'has-submenu':menu[btn].subs}">
-                <div ng-click="goTo(menu[btn], btn)">
+                <div class="cm-list-parent-label" ng-click="goTo(menu[btn], btn)">
                     <i class="fa icon-left" ng-if="menu[btn].icon != undefined" ng-class="menu[btn].icon"></i>
                     <span>
                         {{menu[btn].i18n|cmTranslate}}

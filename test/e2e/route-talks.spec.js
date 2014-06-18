@@ -7,7 +7,6 @@ describe('talks', function () {
 
     it('should be at "#/talks".', function () {
         util.login()
-        util.get('/talks')
         util.expectCurrentUrl('#/talks')
     })
 
