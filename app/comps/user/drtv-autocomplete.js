@@ -6,8 +6,6 @@ angular.module('cmUser').directive('cmAutocomplete', [
             restrict: 'A',
             link: function (scope, element, attrs) {
 
-
-
             }
         }
     }

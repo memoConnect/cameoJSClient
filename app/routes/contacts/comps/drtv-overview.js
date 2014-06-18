@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmContactList', [
+angular.module('cmRouteContacts').directive('cmOverviewContacts', [
     function(){
         return {
             restrict: 'E',
-            templateUrl: 'routes/contacts/comps/drtv-contact-list.html',
+            templateUrl: 'routes/contacts/comps/drtv-overview.html',
             controller: function ($scope) {
 
 

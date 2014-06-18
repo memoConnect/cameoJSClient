@@ -26,6 +26,7 @@ define([
 
     app.constant('cmEnv',cameo_config.env);
     app.constant('cmVersion',{version:cameo_config.version, last_build:'-'});
+    app.constant('cmConfig',cameo_config);
 
     //cameo_config = cameo_config
 

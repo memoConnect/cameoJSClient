@@ -1,0 +1,9 @@
+<ul>
+    <li ng-repeat="page in Object.keys(overview)">
+        <a href="#/settings/{{page}}">
+            <i class="fa" ng-class="overview[page].icon"></i>
+            <span>{{overview[page].i18n|cmTranslate}}</span>
+            <div class="clearer"></div>
+        </a>
+    </li>
+</ul>

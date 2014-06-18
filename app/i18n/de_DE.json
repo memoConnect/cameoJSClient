@@ -242,7 +242,14 @@
     },
 	
 	"SETTINGS": {
-		"WELCOME": "Einstellungen"
+		"WELCOME": "Einstellungen",
+        "LABEL": "Einstellungen",
+        "ACCOUNT_PROFILE": "Account & Profil",
+        "NOTIFY": "Benachrichtungen",
+        "CONTACTS": "Kontakte",
+        "VIEW": "Darstellung",
+        "ABOUT": "Über uns",
+        "CONTRACTS": "Verträge"
 	},
 	
 	"NAVIGATION": {
@@ -313,11 +320,12 @@
     "MENU": {
         "HEADER": "Menü",
         "NOTIFICATIONS": "Notifikationen",
+        "CONTACTS": "Kontakte",
         "REQUESTS": "Kontaktanfragen",
+        "SETTINGS": "{{'SETTINGS.LABEL'|cmTranslate}}",
         "MESSAGES": "Nachrichten",
         "HINTS": "Sonstige Hinweise",
         "ACTIVITY": "Aktivity",
-        "SETTINGS": "Einstellungen",
         "LOGOUT": "Logout"
     },
 

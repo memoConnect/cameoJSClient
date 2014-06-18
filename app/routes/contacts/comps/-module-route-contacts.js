@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('cmRouteSettings',['cmCore']);
+angular.module('cmRouteContacts',['cmCore','cmContacts']);
