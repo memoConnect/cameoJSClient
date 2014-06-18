@@ -32,7 +32,7 @@
             <div class="label-with-checkbox">
                 <label class="w20">{{'CONVERSATION.PLACEHOLDER.ENCRYPTION' | cmTranslate}}</label>
                 <div class="w80 tac dib">
-                    <button ng-click="toggleConversationEncryption()"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.isEncrypted(), 'cm-checkbox-right':conversation.isEncrypted()}" data-qa="icon-checkbox-encryption"></i></button>
+                    <button ng-click="toggleConversationEncryption()" data-qa="encryption-btn"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.isEncrypted(), 'cm-checkbox-right':conversation.isEncrypted()}" data-qa="icon-checkbox-encryption"></i></button>
                 </div>
             </div>
 
