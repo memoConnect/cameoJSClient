@@ -25,6 +25,7 @@ angular.module('cmContacts').service('cmContactsModel',[
          * Init Object
          */
         function init(){
+//            cmLogger.debug('cmContactsModel:init');
             self.getAll();
             self.getGroups();
             self.getFriendRequests();
@@ -313,10 +314,8 @@ angular.module('cmContacts').service('cmContactsModel',[
             init();
         });
 
-        cmUserModel.on('init', function(){
+        cmUserModel.on('update:finished', function(){
             init();
         });
-
-        init();
     }
 ]);

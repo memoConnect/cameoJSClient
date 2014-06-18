@@ -171,8 +171,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.subject                 = data.subject             || this.subject;
                 this.numberOfMessages        = data.numberOfMessages    || this.numberOfMessages;
                 // getting locally saved pw for conversation
-                if(this.password == undefined)
-                    this.password = this.localPWHandler.get(this.id);
+//                if(this.password == undefined)
+//                    this.password = this.localPWHandler.get(this.id);
 
                 if('sePassphrase' in data)
                     passphrase.importSymmetricallyEncryptedPassphrase(data.sePassphrase);
