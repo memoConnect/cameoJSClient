@@ -1,14 +1,14 @@
 'use strict';
 
-angular.module('cmContacts').directive('cmFriendRequestList',[
+angular.module('cmRouteContacts').directive('cmRequestList', [
     'cmContactsModel',
     'cmNotify',
     '$rootScope',
-    function (cmContactsModel, cmNotify, $rootScope){
+    function(cmContactsModel, cmNotify, $rootScope){
         return {
-            restrict: 'AE',
-            scope: true,
-            controller: function($scope){
+            restrict: 'E',
+            templateUrl: 'routes/contacts/comps/drtv-request-list.html',
+            controller: function ($scope) {
                 $scope.requests = cmContactsModel.requests;
                 $scope.isLoading = false;
 

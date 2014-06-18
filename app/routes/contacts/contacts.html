@@ -6,100 +6,10 @@
     <cm-menu     cm-weight="4"></cm-menu>
 </cm-header>
 
-<section ng-controller="ContactsCtrl">
-
-    <div ng-switch="activeSection">
-        <!-- contact list -->
-        <div ng-switch-when="list">
-            <header class="cm-list-header">
-                <h1>{{'CONTACTS.HEADING.LIST'|cmTranslate}}</h1>
-
-                <cm-edge ng-click="openModal('add-contact')" data-qa="add-contact-btn"></cm-edge>
-
-                <cm-modal
-                        id            = "add-contact"
-                        cm-title      = "CONTACTS.HEADING.NEW_CONTACTS"
-                        type          = "plain"
-                        nose          = "right-top"
-                        severity      = "info"
-                        nose-position = "0"
-                        class="no-padding">
-                        <div class="modal-row">
-                            <a href="#/contacts/search">
-                                <i class="fa cm-search-cl"></i>
-                                {{"CONTACTS.LABEL.SEARCH_IDENTITY"|cmTranslate}}
-                            </a>
-                        </div>
-                        <div class="modal-row">
-                            <a href="#/contact/new">
-                                <i class="fa cm-load-to-rhino"></i>
-                                {{"CONTACTS.LABEL.ADD_EXTERN"|cmTranslate}}
-                            </a>
-                        </div>
-                </cm-modal>
-
-                <input type="text" value="" ng-model="search" cm-icon="cm-search" cm-large-input />
-            </header>
-
-            <cm-contacts-filter-controls sort-by="" filter-by=""></cm-contacts-filter-controls>
-
-            <cm-contacts-list contacts-as="contacts">
-                <div ng-show="isLoading" class="empty-list">
-                    <cm-spinner ></cm-spinner>
-                </div>
-
-                <div ng-show="!contacts.length && !isLoading" class="empty-list">
-                    <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
-                </div>
-
-                <cm-contact-tag ng-repeat="contact in contacts | cmSearch:'contacts':search" cm-rubber-space ng-class="{'disabled':contact.contactType == 'pending'}">
-                    <cm-avatar cm-data="contact.identity" ng-click="editContact(contact)"></cm-avatar>
-                    <cm-key-level key-size="contact.identity.getWeakestKeySize()"></cm-key-level>
-                    <cm-contact-brief cm-data="contact" cm-weight="1" ng-click="editContact(contact)"></cm-contact-brief>
-                    <cm-contact-type cm-data="contact"></cm-contact-type>
-                    <span class="separator"></span>
-                    <button ng-click="startConversation(contact)" data-qa="start-new-conversation-btn">
-                        <i class="fa cm-write"></i>
-                    </button>
-                </cm-contact-tag>
-
-            </cm-contacts-list>
-        </div>
-        <!-- request list -->
-        <cm-friend-request-list ng-switch-when="requests">
-            <header class="inScreen">
-                <i class="fa cm-contacts cm-lg-icon"></i> {{'CONTACTS.HEADING.REQUESTS'|cmTranslate}}
-            </header>
-
-            <div ng-show="isLoading" class="empty-list">
-                <cm-spinner></cm-spinner>
-            </div>
-
-            <div ng-show="!requests.length && !isLoading" class="empty-list">
-                <i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_REQUESTS'|cmTranslate}}
-            </div>
-
-            <cm-contact-tag ng-repeat="request in requests" ng-class="{'is-new':request.state == undefined,'message-open':request.isOpen, 'show-bar':request.showBar}">
-                <section cm-rubber-space>
-                    <cm-avatar cm-data="request.identity"></cm-avatar>
-                    <div class="cm-request-brief" cm-weight="1" ng-click="toggleBrief(request)" ng-class="{'with-message':request.message != '','message-close':!request.isOpen}">
-                        <strong>{{request.identity.getDisplayName()}}</strong><br />
-                        {{request.message}}
-                    </div>
-                    <button ng-click="toggleBar(request)" data-qa="btn-toggleBar">
-                        <i class="fa cm-checkbox"></i>
-                    </button>
-                </section>
-                <section class="cm-request-bar" ng-show="request.showBar">
-                    <button ng-click="acceptRequest(request)" data-qa="btn-acceptRequest"><i class="fa cm-checkbox-right">{{'CONTACTS.REQUESTS.ACCEPT'|cmTranslate}}</i></button>
-                    <button ng-click="rejectRequest(request)" data-qa="btn-rejectRequest"><i class="fa cm-reject">{{'CONTACTS.REQUESTS.REJECT'|cmTranslate}}</i></button>
-                    <button ng-click="ignoreRequest(request)"><i class="fa cm-ignore">{{'CONTACTS.REQUESTS.IGNORE'|cmTranslate}}</i></button>
-                </section>
-            </cm-contact-tag>
-        </cm-friend-request-list>
-    	<!-- search identity -->
-        <cm-contacts-search ng-switch-when="search"></cm-contacts-search>
-    </div>
+<section ng-controller="ContactsCtrl" ng-switch="activeSection">
+    <cm-overview-contacts ng-switch-default></cm-overview-contacts>
+    <cm-request-list ng-switch-when="requests"></cm-request-list>
+    <cm-search ng-switch-when="search"></cm-search>
 </section>
 
 <cm-footer cm-rubber-space></cm-footer>

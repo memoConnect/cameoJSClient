@@ -1,0 +1,53 @@
+<header class="cm-list-header">
+    <h1>{{'CONTACTS.HEADING.LIST'|cmTranslate}}</h1>
+
+    <cm-edge ng-click="openModal('add-contact')" data-qa="add-contact-btn"></cm-edge>
+
+    <cm-modal
+            id            = "add-contact"
+            cm-title      = "CONTACTS.HEADING.NEW_CONTACTS"
+            type          = "plain"
+            nose          = "right-top"
+            severity      = "info"
+            nose-position = "0"
+            class="no-padding">
+        <div class="modal-row">
+            <a href="#/contacts/search">
+                <i class="fa cm-search-cl"></i>
+                {{"CONTACTS.LABEL.SEARCH_IDENTITY"|cmTranslate}}
+            </a>
+        </div>
+        <div class="modal-row">
+            <a href="#/contact/new">
+                <i class="fa cm-load-to-rhino"></i>
+                {{"CONTACTS.LABEL.ADD_EXTERN"|cmTranslate}}
+            </a>
+        </div>
+    </cm-modal>
+
+    <input type="text" value="" ng-model="search" cm-icon="cm-search" cm-large-input />
+</header>
+
+<cm-contacts-filter-controls sort-by="" filter-by=""></cm-contacts-filter-controls>
+
+<cm-contacts-list contacts-as="contacts">
+    <div ng-show="isLoading" class="empty-list">
+        <cm-spinner ></cm-spinner>
+    </div>
+
+    <div ng-show="!contacts.length && !isLoading" class="empty-list">
+        <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
+    </div>
+
+    <cm-contact-tag ng-repeat="contact in contacts | cmSearch:'contacts':search" cm-rubber-space ng-class="{'disabled':contact.contactType == 'pending'}">
+        <cm-avatar cm-data="contact.identity" ng-click="editContact(contact)"></cm-avatar>
+        <cm-key-level key-size="contact.identity.getWeakestKeySize()"></cm-key-level>
+        <cm-contact-brief cm-data="contact" cm-weight="1" ng-click="editContact(contact)"></cm-contact-brief>
+        <cm-contact-type cm-data="contact"></cm-contact-type>
+        <span class="separator"></span>
+        <button ng-click="startConversation(contact)" data-qa="start-new-conversation-btn">
+            <i class="fa cm-write"></i>
+        </button>
+    </cm-contact-tag>
+
+</cm-contacts-list>

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmContacts').directive('cmContactsSearch',[
+angular.module('cmRouteContacts').directive('cmSearch',[
     'cmContactsModel',
     'cmIdentityFactory',
     'cmNotify',
@@ -10,7 +10,7 @@ angular.module('cmContacts').directive('cmContactsSearch',[
         return {
             restrict: 'E',
             scope: false,
-            templateUrl: 'comps/contacts/drtv-contacts-search.html',
+            templateUrl: 'routes/contacts/comps/drtv-search.html',
             controller: function($scope){
                 $scope.pristine = true;
                 $scope.results = [];
