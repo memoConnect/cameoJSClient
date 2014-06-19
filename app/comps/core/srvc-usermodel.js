@@ -103,7 +103,6 @@ angular.module('cmCore').service('cmUserModel',[
          * @returns {*}
          */
         this.loadIdentity = function(identity_data){
-
             if(typeof identity_data !== 'undefined'){
                 this.importData(cmIdentityFactory.create(identity_data.id));
             } else {
@@ -406,10 +405,10 @@ angular.module('cmCore').service('cmUserModel',[
             self.resetUser();
         });
 
-        this.on('updated:finished', function(){
-           cmBoot.resolve();
+        console.log('cmUserModel before on ... for boot resolve')
+        this.on('update:finished', function(){
+            cmBoot.resolve();
         });
-
 
         init();
     }

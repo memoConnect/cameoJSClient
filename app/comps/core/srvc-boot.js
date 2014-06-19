@@ -1,32 +1,31 @@
 'use strict';
-
+// TODO: doku and tests
 angular.module('cmCore').provider('cmBoot', [
     function(){
+
+        var promise = undefined;
+
+        this.ready = function($q){
+            if (promise == undefined) {
+                promise = $q.defer();
+            }
+            return promise.promise;
+        };
+
         this.$get = [
             '$q',
-            'cmLogger',
-            function($q, cmLogger) {
-                var promise = undefined;
+            '$rootScope',
+            function($q, $rootScope) {
 
-//                var cmBoot = function(){
+                $rootScope.$on('logout', function(){
+                    promise = undefined
+                });
+
                 return {
-                    ready : function () {
-                        cmLogger.debug('cmBoot:ready');
-
-                        if (promise == undefined) {
-                            promise = $q.defer().promise;
-                        }
-
-                        return promise;
-                    },
-
-                    resolve : function (){
-                        cmLogger.debug('cmBoot:resolve');
-
+                    resolve: function(){
                         if(promise == undefined) {
-                            promise = $q.defer().promise;
+                            promise = $q.defer();
                         }
-
                         promise.resolve();
                     }
                 }

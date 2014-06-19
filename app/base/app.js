@@ -34,11 +34,9 @@ define([
 
     // cameo configuration for our providers
     app.config([
-
         'cmLanguageProvider',
         'cmLoggerProvider',
         'cmApiProvider',
-
         function (cmLanguageProvider, cmLoggerProvider, cmApiProvider){
             cmLoggerProvider
                 .debugEnabled(true)
@@ -93,35 +91,38 @@ define([
              *
              */
             function createRoutes(settings){
-                angular.forEach(settings,function(_settings_, routeKey){
+                angular.forEach(settings,function(_settings_, routeKey) {
                     var routes = [],
                         routeParams = {
                             templateUrl: '',
                             controllerUrl: '',
                             css: '',
                             guests: false,
-//                            resolve: {
-//                               boot: function(){
-//                                   return cmBoot.ready()
-//                               }
-//                            }
-
+                            resolve: {}
                         };
                     // create params for route
-                    if(angular.isDefined(_settings_['templateUrl'])){
+                    if (angular.isDefined(_settings_['templateUrl'])) {
                         routeParams.templateUrl = _settings_['templateUrl'];
                     } else {
-                        routeParams.templateUrl = 'routes/'+routeKey+'/'+routeKey+'.html';
+                        routeParams.templateUrl = 'routes/' + routeKey + '/' + routeKey + '.html';
                     }
                     // check if route has/need controller
-                    if(angular.isDefined(_settings_['hasCtrl']) && _settings_.hasCtrl === true)
-                        routeParams.controllerUrl = 'routes/'+routeKey+'/'+routeKey+'-ctrl';
+                    if (angular.isDefined(_settings_['hasCtrl']) && _settings_.hasCtrl === true)
+                        routeParams.controllerUrl = 'routes/' + routeKey + '/' + routeKey + '-ctrl';
 
-                    if(angular.isDefined(_settings_['css']))
+                    if (angular.isDefined(_settings_['css']))
                         routeParams.css = _settings_['css'];
 
-                    if(angular.isDefined(_settings_['guests']))
+                    if (angular.isDefined(_settings_['guests']))
                         routeParams.guests = _settings_['guests'];
+
+                    if (angular.isDefined(_settings_['resolveOnBoot'])){
+                        routeParams.resolve = {
+                            boot: function ($q) {
+                                return cmBootProvider.ready($q);
+                            }
+                        };
+                    }
 
                     // create route as defined or take simple route
                     if(angular.isDefined(_settings_['routes']))
