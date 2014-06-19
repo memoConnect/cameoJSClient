@@ -360,6 +360,11 @@
 
     "SECURITY_ASPECT": {
         "CONVERSATION": {
+            "ENCRYPTED": {
+                "NAME": "Conversation is encrypted.",
+                "DESCRIPTION": "",
+                "TOGGLE": ""
+            },
             "NOT_ENCRYPTED": {
                 "NAME": "Conversation is not encrypted.",
                 "DESCRIPTION": "",
@@ -374,6 +379,11 @@
                 "NAME": "{{count}} Recipient{{count!=1?'s have':' has'}} no keypair.",
                 "DESCRIPTION": "",
                 "TOGGLE": ""
+            },
+            "HAS_PASSCAPTCHA": {
+                "NAME": "Passcaptcha enabled!",
+                "DESCRIPTION": "",
+                "TOGGLE": "Disable passcaptcha!"
             }
         }
     }

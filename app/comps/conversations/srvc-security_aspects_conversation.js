@@ -11,7 +11,7 @@ angular.module('cmSecurityAspects')
             id: 'NOT_ENCRYPTED',
             value: -3,
             check: function(conversation){
-                return conversation.getKeyTransmission() == 'none';
+                return !conversation.isEncrypted();
             },
             toggleCheck: function(conversation){
                 return conversation.state.is('new');
@@ -24,7 +24,7 @@ angular.module('cmSecurityAspects')
             id: 'ENCRYPTED',
             value: 1,
             check: function(conversation){
-                return conversation.getKeyTransmission() != 'none';
+                return conversation.isEncrypted();
             }
         })
         .addAspect({
@@ -70,7 +70,7 @@ angular.module('cmSecurityAspects')
             }
         })
         .addAspect({
-            id: 'HAS_CAPTCHA',
+            id: 'HAS_PASSCAPTCHA',
             value: -2,
             check: function(conversation){
                 var bool = false;
@@ -79,8 +79,10 @@ angular.module('cmSecurityAspects')
                     bool = true
                 }
 
-
                 return bool;
+            },
+            toggleCall: function(conversation){
+                conversation.disablePassCaptcha();
             }
         })
 
