@@ -27,20 +27,24 @@ cameo_config = {
             routes: [
                 '/settings/:mainPage?',
                 '/settings/:mainPage/:subPage?'
-            ]
+            ],
+            resolveOnBoot: true
         },
         'talks': {
-            hasCtrl: true
+            hasCtrl: true,
+            resolveOnBoot: true
         },
         'mediawall': {
             hasCtrl: true
         },
         'conversation': {
             routes:['/conversation/:conversationId?'],
-            hasCtrl: true
+            hasCtrl: true,
+            resolveOnBoot: true
         },
         'recipients': {
-            hasCtrl:true
+            hasCtrl: true,
+            resolveOnBoot: true
         },
         'registration': {
             hasCtrl: true,
@@ -57,7 +61,8 @@ cameo_config = {
         },
         'contacts': {
             routes:['/contacts/:section?'],
-            hasCtrl: true
+            hasCtrl: true,
+            resolveOnBoot: true
         },
         'contact': {
             routes:['/contact/:id'],
