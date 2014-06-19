@@ -24,6 +24,8 @@ angular.module('cmSecurityAspects')
             this.value          = config.value          || 0
             this.dependencies   = config.dependencies   || []  //Array of aspect ids
 
+            this.stateVars      = {};
+
 
             /**
              * Function to check if the aspect applies to the target.
@@ -66,9 +68,16 @@ angular.module('cmSecurityAspects')
             var self = this
 
             // Array of SecurityAspect instances
-            this.aspects = []
+            this.aspects = [];
             // Object all aspects should apply to
-            this.target = undefined
+            this.target = undefined;
+
+            this.countForDigest = 0;
+
+
+            this.refresh = function(){
+                this.countForDigest++;
+            };
 
             /**
              * Function to set the target all aspects should evaluate against
@@ -78,7 +87,6 @@ angular.module('cmSecurityAspects')
                 this.target = target
                 return this
             }
-
 
             /**
              * Function to add a new SecurityAspect instance to the list

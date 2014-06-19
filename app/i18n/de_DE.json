@@ -356,5 +356,25 @@
     "JOB": {
         "IN_PROGRESS": "Sie haben diese Seite bearbeitet ohne zuspeichern. Wollen Sie diese wirklich verlassen?",
         "FILES_IN_UPLOAD_PROGRESS": "Es sind Dateien gerade um hochlade Vorgang. Wollen Sie diese Seite wirklich verlassen?"
+    },
+
+    "SECURITY_ASPECT": {
+        "CONVERSATION": {
+            "NOT_ENCRYPTED": {
+                "NAME": "Diese Conversation ist nicht verschlüsselt.",
+                "DESCRIPTION": "",
+                "TOGGLE": "Verschlüsselung aktivieren."
+            },
+            "RECIPIENTS_WITH_KEY": {
+                "NAME": "Alle Empfänger haben ein Schlüsselpaar.",
+                "DESCRIPTION": "",
+                "TOGGLE": ""
+            },
+            "RECIPIENTS_WITHOUT_KEY": {
+                "NAME": "{{count}} Empfänger {{count!=1?'hat':'haben'}} kein Schlüsselpaar.",
+                "DESCRIPTION": "",
+                "TOGGLE": ""
+            }
+        }
     }
 }

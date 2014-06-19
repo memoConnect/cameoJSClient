@@ -364,6 +364,16 @@
                 "NAME": "Conversation is not encrypted.",
                 "DESCRIPTION": "",
                 "TOGGLE": "Enable encryption."
+            },
+            "RECIPIENTS_WITH_KEY": {
+                "NAME": "All Recipients have a keypair.",
+                "DESCRIPTION": "",
+                "TOGGLE": ""
+            },
+            "RECIPIENTS_WITHOUT_KEY": {
+                "NAME": "{{count}} Recipient{{count!=1?'s have':' has'}} no keypair.",
+                "DESCRIPTION": "",
+                "TOGGLE": ""
             }
         }
     }

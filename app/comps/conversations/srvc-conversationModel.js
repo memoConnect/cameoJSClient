@@ -728,6 +728,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.recipients.on('register', function(event, recipient){
 //                console.log('trigger:unregistered');
+                self.securityAspects.refresh();
                 self.checkPreferences();
             });
 
