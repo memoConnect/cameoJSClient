@@ -83,8 +83,8 @@
             </div>
         </section>
 
-        <button ng-click="toggleControls()" class="cm-btn" ng-if="!isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
-        <button ng-click="toggleControls()" class="cm-btn" ng-if="isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
+        <button ng-click="toggleControls('close')" class="cm-btn" ng-if="!isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
+        <button ng-click="toggleControls('close',true)" class="cm-btn" ng-if="isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
     </div>
 
     <div class="cm-bar" cm-rubber-space ng-click="toggleControls()" data-qa="conversation-options-bar">
