@@ -17,6 +17,7 @@
  * # States
  *  - new
  *  - loading
+ *  - decrypted
  *
  * @param {Object} [data] The conversation data as received from the backend.
  */
@@ -757,6 +758,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             passphrase.on('passphrase:changed', function(){
 //                self.decrypt();
+            });
+
+            this.on('decrypt:ok', function(){
+                self.state.set('decrypted');
             });
 
             this.on('update:finished', function(){
