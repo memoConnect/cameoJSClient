@@ -129,8 +129,6 @@ angular.module('cmCore').factory('cmIdentityModel',[
 
                     var key_2 = new cmCrypt.Key();
 
-                    console.log(key_2.getSize())
-
                     key_2.setKey(key.getPrivateKey());
 
                     var encrypted_passphrase = key.encrypt(passphrase);
@@ -144,8 +142,6 @@ angular.module('cmCore').factory('cmIdentityModel',[
                         cmLogger.debug('cmIdentity: unable to encrypt passphrase.')
                     }
                 });
-
-                console.log('identity encrypted_key_list', encrypted_key_list);
 
                 return encrypted_key_list;
             };
