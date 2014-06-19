@@ -64,7 +64,8 @@ define([
     // app route config
     app.config([
         '$routeProvider',
-        function ($routeProvider) {
+        'cmBootProvider',
+        function ($routeProvider, cmBootProvider) {
             /**
              * this option makes location use without #-tag
              * @param settings
@@ -95,10 +96,16 @@ define([
                 angular.forEach(settings,function(_settings_, routeKey){
                     var routes = [],
                         routeParams = {
-                            templateUrl: "",
-                            controllerUrl: "",
-                            css: "",
-                            guests: false
+                            templateUrl: '',
+                            controllerUrl: '',
+                            css: '',
+                            guests: false,
+//                            resolve: {
+//                               boot: function(){
+//                                   return cmBoot.ready()
+//                               }
+//                            }
+
                         };
                     // create params for route
                     if(angular.isDefined(_settings_['templateUrl'])){

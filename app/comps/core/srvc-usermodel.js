@@ -22,6 +22,7 @@
 
 angular.module('cmCore').service('cmUserModel',[
 
+    'cmBoot',
     'cmAuth',
     'cmLocalStorage', 
     'cmIdentityFactory', 
@@ -33,7 +34,7 @@ angular.module('cmCore').service('cmUserModel',[
     '$q', 
     '$location',
 
-    function(cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmObject, cmNotify, cmLogger, $rootScope, $q, $location){
+    function(cmBoot,cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmObject, cmNotify, cmLogger, $rootScope, $q, $location){
         var self = this,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
@@ -404,6 +405,11 @@ angular.module('cmCore').service('cmUserModel',[
         $rootScope.$on('logout', function(){
             self.resetUser();
         });
+
+        this.on('updated:finished', function(){
+           cmBoot.resolve();
+        });
+
 
         init();
     }
