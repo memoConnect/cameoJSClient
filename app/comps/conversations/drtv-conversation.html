@@ -27,5 +27,5 @@
 
     <cm-emoji-list cm-handler="emoji-handler" cm-textarea="emoji-textarea"></cm-emoji-list>
 
-    <i class="fa cm-post with-cursor {{conversation.getLockStatusClass('-wrap')}}" ng-class="{'is-disabled':isSending}" data-qa="btn-send-answer" ng-click="send()"></i>
+    <i class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap" ng-class="{'is-disabled':isSending}" data-qa="btn-send-answer" ng-click="send()"></i>
 </div>

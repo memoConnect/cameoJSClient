@@ -93,7 +93,7 @@
         </div>
         <div cm-weight="8" class="cm-bar-infos">
             <span ng-bind-html="conversation.subject||'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmParse"></span>
-            <cm-safety-level cm-level="conversation.getLockStatus()"></cm-safety-level>
+            <cm-lock-level cm-level="conversation.lockStatus.level"></cm-lock-level>
             <cm-recipient-counter>{{conversation.recipients.length||0}}</cm-recipient-counter>
         </div>
         <div cm-weight="1"></div>
