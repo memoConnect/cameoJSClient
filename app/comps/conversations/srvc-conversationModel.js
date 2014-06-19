@@ -637,15 +637,15 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @ngdoc method
              * @methodOf cmConversationModel
              *
-             * @name getSafetyLevel
+             * @name getLockStatus
              * @description
-             * return safety level
+             * return lock level for gui
              *
              * @deprecated
              *
-             * @returns {number} level Safety Level
+             * @returns {number} level Lock Level
              */
-            this.getSafetyLevel = function(){
+            this.getLockStatus = function(){
                 var levels =    {
                                 'asymmetric'    : 2,
                                 'symmetric'     : 1,
@@ -660,17 +660,17 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @ngdoc method
              * @methodOf cmConversationModel
              *
-             * @name getSafetyLevelClass
+             * @name getLockStatusClass
              * @description
-             * returns String
+             * returns String for GUI
              *
              * @deprecated
              *
              * @param {String} addon String
              * @returns {string} String String
              */
-            this.getSafetyLevelClass = function(addon){
-                var level = this.getSafetyLevel();
+            this.getLockStatusClass = function(addon){
+                var level = this.getLockStatus();
                 var className = '';
                 switch(level){
                     case 0: className = 'unsafe'; break;

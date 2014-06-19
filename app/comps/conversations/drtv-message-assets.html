@@ -1,7 +1,7 @@
-<div class="assets clearfix {{conversation.getSafetyLevelClass('-wrap')}}">
+<div class="assets clearfix {{conversation.getLockStatusClass('-wrap')}}">
     <span class="date cm-fl">{{message.created | date:'HH:mm'}}</span>
     <span class="envelope cm-fl"><i class="fa cm-envelope-open"></i></span>
     <span class="security cm-fl">
-        <cm-safety-level cm-level="conversation.getSafetyLevel()"></cm-safety-level>
+        <cm-safety-level cm-level="conversation.getLockStatus()"></cm-safety-level>
     </span>
 </div>
