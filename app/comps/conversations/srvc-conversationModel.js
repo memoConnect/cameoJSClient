@@ -636,8 +636,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
 
             /**
-             * @todo identity mit factory removen, preference neu überprüfen (extra funktion)
-             *
              * @param identity
              * @returns {cmConversationModel.ConversationModel}
              */
