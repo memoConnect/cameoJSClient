@@ -16,7 +16,7 @@ angular.module('cmUi').directive('cmHandleFixxed',[
                 }
 
                 // Fix mobile floating toolbar when input is focused
-                if(true || cmEnv.isiOS){
+                if(cmEnv.isiOS){
 //                    var headerAndFooter = angular.element(document.querySelectorAll('cm-header, div.answer, cm-footer'));
 //
 //                    element

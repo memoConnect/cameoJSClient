@@ -23,9 +23,12 @@ angular.module('cmConversations').directive('cmConversationControls', [
                 scope.$watch('conversation', function(conversation){
                     if(conversation){
                         // open the controls for a new conversation and password isnt set in a symetric case || case mixed exists and user isnt in passphraselist
-                        if(!cmConversation.isNew() && !conversation.password && (conversation.getKeyTransmission() == 'symmetric' || conversation.getKeyTransmission() == 'mixed') && !conversation.isUserInPassphraseList()) {
-                            scope.toggleControls('open');
-                        }
+
+                        conversation.on('update:finished', function(){
+                            if(!cmConversation.isNew() && conversation.isEncrypted() &&  (conversation.getKeyTransmission() == 'symmetric' || conversation.getKeyTransmission() == 'mixed') && !conversation.isUserInPassphraseList()) {
+                                scope.toggleControls('open');
+                            }
+                        });
 
                         // close the controls if decryption was ok
                         conversation.on('decrypt:ok', function(){

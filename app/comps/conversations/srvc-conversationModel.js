@@ -17,6 +17,7 @@
  * # States
  *  - new
  *  - loading
+ *  - decrypted
  *
  * @param {Object} [data] The conversation data as received from the backend.
  */
@@ -231,7 +232,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {cmConversationModel} this  Returns itself for chaining.
              */
             this.disableEncryption = function(){
-                cmLogger.debug('cmConversationModel:disableEncryption');
+//                cmLogger.debug('cmConversationModel:disableEncryption');
 
                 if(this.state.is('new')){
                     passphrase.disable();
@@ -252,7 +253,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {cmConversationModel} this  Returns itself for chaining.
              */
             this.enableEncryption = function(){
-                cmLogger.debug('cmConversationModel:enableEncryption');
+//                cmLogger.debug('cmConversationModel:enableEncryption');
 
                 if(this.state.is('new') && !passphrase.get()){
                     passphrase.generate();
@@ -454,7 +455,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
-                cmLogger.debug('cmConversationModel:decrypt');
+//                cmLogger.debug('cmConversationModel:decrypt');
                 
                 var passphrase  =   this.getPassphrase(),
                     success     =   passphrase && this.messages.reduce(function (success, message){
@@ -635,8 +636,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
             }
 
             /**
-             * @todo identity mit factory removen, preference neu überprüfen (extra funktion)
-             *
              * @param identity
              * @returns {cmConversationModel.ConversationModel}
              */
@@ -757,6 +756,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             passphrase.on('passphrase:changed', function(){
 //                self.decrypt();
+            });
+
+            this.on('decrypt:ok', function(){
+                self.state.set('decrypted');
             });
 
             this.on('update:finished', function(){

@@ -23,16 +23,13 @@ angular.module('cmConversations').directive('cmLockLevel',[
 
                 // for conversation model
                 if(attrs.cmLevel) {
-                    console.log('attrs.cmLevel',attrs.cmLevel)
                     scope.$watch(attrs.cmLevel, function (level) {
-                        console.log(level)
                         drawLevel(level)
                     })
                 }
 
                 // for conversation controls
                 if(attrs.cmLevelState) {
-                    console.log('attrs.cmLevelState',attrs.cmLevelState)
                     scope.$watch(attrs.cmLevelState, function (state) {
                         var level = 0;
                         switch (state) {

@@ -137,7 +137,7 @@ angular.module('cmCore').factory('cmPassphrase',[
 
                     this.trigger('password:changed');                    
                 }else{
-                    cmLogger.debug('cmPassphrase: unable to set Password, requirements not met.')
+//                    cmLogger.debug('cmPassphrase: unable to set Password, requirements not met.')
                 }
 
                 return this;
