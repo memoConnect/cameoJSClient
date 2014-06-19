@@ -444,8 +444,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                                         return success && message.decrypt();
                                     }, true);
 
-                console.log('success', success);
-
                 if (success) {
                     this.trigger('decrypt:ok');
 
