@@ -405,7 +405,6 @@ angular.module('cmCore').service('cmUserModel',[
             self.resetUser();
         });
 
-        console.log('cmUserModel before on ... for boot resolve')
         this.on('update:finished', function(){
             cmBoot.resolve();
         });
