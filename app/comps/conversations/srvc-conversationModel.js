@@ -69,6 +69,15 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 'showKeyInfo': false
             };
 
+            /**
+             * GUI Variable
+             * @type {{level: string, class: string}}
+             */
+            this.lockStatus         = {
+                'level': 2,
+                'class': 'safer'
+            }
+
             /*maybe REFACTOR TODO*/
             this.passCaptcha = undefined;
             this.tmpPassCaptcha = '';
@@ -181,6 +190,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 if('aePassphraseList' in data && data.aePassphraseList.length > 0)
                     passphrase.importAsymmetricallyEncryptedPassphrase(data.aePassphraseList);
 
+                /**
+                 * Important for none encrypted Conversations
+                 */
                 if(!this.state.is('new') && passphrase.getKeyTransmission() == 'none'){
                     passphrase.disable();
                 }
@@ -221,8 +233,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.disableEncryption = function(){
                 cmLogger.debug('cmConversationModel:disableEncryption');
 
-                if(this.state.is('new'))
+                if(this.state.is('new')){
                     passphrase.disable();
+                    this.trigger('encryption:disabled');
+                }
 
                 return this;
             };
@@ -239,8 +253,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
              */
             this.enableEncryption = function(){
                 cmLogger.debug('cmConversationModel:enableEncryption');
-                if(this.state.is('new') && !passphrase.get())
+
+                if(this.state.is('new') && !passphrase.get()){
                     passphrase.generate();
+                    this.trigger('encryption:enabled');
+                }
 
                 return this;
             };
@@ -444,8 +461,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                                         return success && message.decrypt();
                                     }, true);
 
-                console.log('success', success);
-
                 if (success) {
                     this.trigger('decrypt:ok');
 
@@ -516,6 +531,23 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         ||  this.messages[0].decrypt(passphrase.get());
 
             };
+
+            this.enablePassCaptcha = function(){
+//                cmLogger.debug('cmConversationModel:enablePassCaptcha');
+                this.options.hasCaptcha = true;
+                this.trigger('captcha:enabled');
+
+                return this;
+            };
+
+            this.disablePassCaptcha = function(){
+//                cmLogger.debug('cmConversationModel:disablePassCaptcha');
+                this.options.hasCaptcha = false;
+                this.trigger('captcha:disabled');
+
+                return this;
+            };
+
 
             /**
              * @ngdoc method
@@ -615,53 +647,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 return this;
             };
 
-            /**
-             * @ngdoc method
-             * @methodOf cmConversationModel
-             *
-             * @name getSafetyLevel
-             * @description
-             * return safety level
-             *
-             * @deprecated
-             *
-             * @returns {number} level Safety Level
-             */
-            this.getSafetyLevel = function(){
-                var levels =    {
-                                'asymmetric'    : 2,
-                                'symmetric'     : 1,
-                                'mixed'         : 1,
-                                'none'          : 0  
-                            }
-
-                return levels[passphrase.getKeyTransmission()];
-            };
-
-            /**
-             * @ngdoc method
-             * @methodOf cmConversationModel
-             *
-             * @name getSafetyLevelClass
-             * @description
-             * returns String
-             *
-             * @deprecated
-             *
-             * @param {String} addon String
-             * @returns {string} String String
-             */
-            this.getSafetyLevelClass = function(addon){
-                var level = this.getSafetyLevel();
-                var className = '';
-                switch(level){
-                    case 0: className = 'unsafe'; break;
-                    case 1: className = 'safe'; break;
-                    case 2: className = 'safer'; break;
-                }
-                return 'safetylevel-'+className+addon;
-            };
-
             this.saveEncryptedPassphraseList = function(){
                 cmLogger.debug('cmConversationModel: .saveEncryptedPassphraseList() is deprecated.')
 //                this.encryptedPassphraseList = security.getEncryptedPassphraseList(this.password)
@@ -705,6 +690,63 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name updateLockStatus
+             * @description
+             * update lock status for gui
+             *
+             * @returns {cmConversationModel} this cmConversationModel
+             */
+            this.updateLockStatus = function(){
+//                cmLogger.debug('cmConversationModel:updateLockStatus');
+
+                var levels =    {
+                    'asymmetric'    : 2,
+                    'symmetric'     : 1,
+                    'mixed'         : 1,
+                    'none'          : 0
+                };
+                var className = '',
+                    allRecipientsHasKeys = true;
+
+
+                if(this.state.is('new')){
+
+                    if(this.isEncrypted() !== false){
+                        this.lockStatus.level = levels.mixed;
+
+                        this.recipients.forEach(function(recipient){
+                            if(recipient.getWeakestKeySize() == 0){
+                                allRecipientsHasKeys = false;
+                            }
+                        });
+
+                        if(allRecipientsHasKeys !== false && this.options.hasPassword !== true){
+                            this.lockStatus.level = levels.asymmetric;
+                        }
+                    } else {
+                        this.lockStatus.level = levels.none;
+                    }
+
+
+                } else {
+                    this.lockStatus.level = levels[passphrase.getKeyTransmission()];
+                }
+
+                switch(this.lockStatus.level){
+                    case 0: className = 'unsafe'; break;
+                    case 1: className = 'safe'; break;
+                    case 2: className = 'safer'; break;
+                }
+
+                this.lockStatus.class = 'safetylevel-'+className;
+
+                return this;
+            };
+
+            /**
              * Event Handling
              */
 
@@ -718,24 +760,53 @@ angular.module('cmConversations').factory('cmConversationModel',[
             });
 
             this.on('update:finished', function(){
+//                cmLogger.debug('cmConversationModel:on:update:finished');
+                self.updateLockStatus();
                 self.decrypt();
+            });
+
+            this.on('encryption:enabled', function(){
+//                cmLogger.debug('cmConversationModel:on:encryption:enabled');
+                self.securityAspects.refresh();
+                self.updateLockStatus();
+            });
+
+            this.on('encryption:disabled', function(){
+//                cmLogger.debug('cmConversationModel:on:encryption:disabled');
+                self.securityAspects.refresh();
+                self.updateLockStatus();
             });
 
             //Todo: fire event on factory and delegate to conversation or something
             this.on('message:new', function(event, message_data){
-                message_data.conversation = self //todo
-                
+                message_data.conversation = self; //todo
                 self.messages.create(message_data).decrypt()
             });
 
             this.recipients.on('register', function(event, recipient){
-//                console.log('trigger:unregistered');
+//                cmLogger.debug('cmConversationModel:on:recipient:register');
                 self.checkPreferences();
+                self.securityAspects.refresh();
+                self.updateLockStatus();
             });
 
             this.recipients.on('unregistered', function(){
-//                console.log('trigger:unregistered');
+//                cmLogger.debug('cmConversationModel:on:recipient:unregistered');
                 self.checkPreferences();
+                self.securityAspects.refresh();
+                self.updateLockStatus();
+            });
+
+            this.on('captcha:enabled', function(){
+                cmLogger.debug('cmConversationModel:on:captcha:enabled');
+                self.securityAspects.refresh();
+                self.updateLockStatus();
+            });
+
+            this.on('captcha:disabled', function(){
+                cmLogger.debug('cmConversationModel:on:captcha:disabled');
+                self.securityAspects.refresh();
+                self.updateLockStatus();
             });
 
             // after events!!!

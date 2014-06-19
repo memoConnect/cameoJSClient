@@ -328,11 +328,11 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @return {Array|Boolean}  Returns Array of encrypted passphrases if successfull or false if not.
              */
             function asymmetricallyEncryptPassphrase(identities){
-                console.log(couldBeAPassphrase(passphrase) && typeof identities == 'object' && identities.length > 0)
-
-                console.log('passphrase', passphrase)
-                console.log('typeof identities', typeof identities)
-                console.log('identities.length', identities.length)
+//                console.log(couldBeAPassphrase(passphrase) && typeof identities == 'object' && identities.length > 0)
+//
+//                console.log('passphrase', passphrase)
+//                console.log('typeof identities', typeof identities)
+//                console.log('identities.length', identities.length)
 
                 if(couldBeAPassphrase(passphrase) && typeof identities == 'object' && identities.length > 0){
                     return  identities.reduce(function(list, identity){

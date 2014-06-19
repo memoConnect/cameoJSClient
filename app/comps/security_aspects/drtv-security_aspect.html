@@ -1,7 +1,8 @@
-
-<div class="name">        
+<div class="name">
     <cm-icons count="{{count}}" icons="{{icons}}"    class="{{class}}"></cm-icons>
-    {{"SECURITY_ASPECT.CONVERSATION."+aspect.id+".NAME"|cmTranslate}}           
+    {{"SECURITY_ASPECT.CONVERSATION."+aspect.id+".NAME"|cmTranslate:aspect.stateVars}}
 </div>
-<div class="description"> {{"SECURITY_ASPECT.CONVERSATION."+aspect.id+".DESCRIPTION"|cmTranslate}}    </div>
-<a ng-click="aspect.toggle()">{{"SECURITY_ASPECT.CONVERSATION."+aspect.id+".TOGGLE"|cmTranslate}}</a>
+<div class="description">
+    {{"SECURITY_ASPECT.CONVERSATION."+aspect.id+".DESCRIPTION"|cmTranslate:aspect.stateVars}}
+</div>
+<a ng-click="aspect.toggle()" ng-if="aspect.isToggleAble">{{"SECURITY_ASPECT.CONVERSATION."+aspect.id+".TOGGLE"|cmTranslate}}</a>

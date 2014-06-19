@@ -7,7 +7,7 @@
 
 <div class="meta" cm-weight="1">
     <div class="top">
-        <cm-safety-level cm-level="conversation.getSafetyLevel()"></cm-safety-level>
+        <cm-lock-level cm-level="conversation.lockStatus.level"></cm-lock-level>
         <span class="last-updated small">
             {{conversation.timeOfLastUpdate | date:'HH:mm'}}
         </span>

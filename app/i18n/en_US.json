@@ -360,10 +360,27 @@
 
     "SECURITY_ASPECT": {
         "CONVERSATION": {
+            "ENCRYPTED": {
+                "NAME": "Conversation is encrypted.",
+                "DESCRIPTION": ""
+            },
             "NOT_ENCRYPTED": {
                 "NAME": "Conversation is not encrypted.",
                 "DESCRIPTION": "",
                 "TOGGLE": "Enable encryption."
+            },
+            "RECIPIENTS_WITH_KEY": {
+                "NAME": "All Recipients have a keypair.",
+                "DESCRIPTION": ""
+            },
+            "RECIPIENTS_WITHOUT_KEY": {
+                "NAME": "{{count}} Recipient{{count!=1?'s have':' has'}} no keypair.",
+                "DESCRIPTION": ""
+            },
+            "HAS_PASSCAPTCHA": {
+                "NAME": "Passcaptcha enabled!",
+                "DESCRIPTION": "",
+                "TOGGLE": "Disable passcaptcha!"
             }
         }
     }
