@@ -371,7 +371,7 @@
                 "TOGGLE": ""
             },
             "RECIPIENTS_WITHOUT_KEY": {
-                "NAME": "{{count}} Empfänger {{count!=1?'hat':'haben'}} kein Schlüsselpaar.",
+                "NAME": "{{count}} Empfänger {{count!=1?'haben':'hat'}} kein Schlüsselpaar.",
                 "DESCRIPTION": "",
                 "TOGGLE": ""
             }
