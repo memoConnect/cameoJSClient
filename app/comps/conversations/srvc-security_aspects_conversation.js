@@ -14,7 +14,7 @@ angular.module('cmSecurityAspects')
                 return !conversation.isEncrypted();
             },
             toggleCheck: function(conversation){
-                return conversation.state.is('new');
+                return !conversation.isEncrypted();
             },
             toggleCall: function(conversation){
                 conversation.enableEncryption();
@@ -80,6 +80,9 @@ angular.module('cmSecurityAspects')
                 }
 
                 return bool;
+            },
+            toggleCheck: function(conversation){
+                return conversation.options.hasCaptcha !== false
             },
             toggleCall: function(conversation){
                 conversation.disablePassCaptcha();
