@@ -65,9 +65,9 @@ angular.module('cmConversations').directive('cmConversationControls', [
                 $scope.toggleCaptcha = function(){
                     if($scope.conversation.isEncrypted() !== false){
                         if($scope.conversation.options.hasCaptcha !== false){
-                            $scope.conversation.options.hasCaptcha = false;
+                            $scope.conversation.disablePassCaptcha();
                         } else {
-                            $scope.conversation.options.hasCaptcha = true;
+                            $scope.conversation.enablePassCaptcha();
                         }
                     }
                 };

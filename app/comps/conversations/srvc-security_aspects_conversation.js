@@ -69,6 +69,20 @@ angular.module('cmSecurityAspects')
                 return bool;
             }
         })
+        .addAspect({
+            id: 'HAS_CAPTCHA',
+            value: -2,
+            check: function(conversation){
+                var bool = false;
+
+                if(conversation.options.hasCaptcha !== false){
+                    bool = true
+                }
+
+
+                return bool;
+            }
+        })
 
         return securityAspectsConversation 
     }

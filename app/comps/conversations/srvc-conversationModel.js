@@ -181,6 +181,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 if('aePassphraseList' in data && data.aePassphraseList.length > 0)
                     passphrase.importAsymmetricallyEncryptedPassphrase(data.aePassphraseList);
 
+                /**
+                 * Important for none encrypted Conversations
+                 */
                 if(!this.state.is('new') && passphrase.getKeyTransmission() == 'none'){
                     passphrase.disable();
                 }
@@ -515,6 +518,23 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             };
 
+            this.enablePassCaptcha = function(){
+//                cmLogger.debug('cmConversationModel:enablePassCaptcha');
+                this.options.hasCaptcha = true;
+                this.trigger('captcha:enabled');
+
+                return this;
+            };
+
+            this.disablePassCaptcha = function(){
+//                cmLogger.debug('cmConversationModel:disablePassCaptcha');
+                this.options.hasCaptcha = false;
+                this.trigger('captcha:disabled');
+
+                return this;
+            };
+
+
             /**
              * @ngdoc method
              * @methodOf cmConversationModel
@@ -727,14 +747,25 @@ angular.module('cmConversations').factory('cmConversationModel',[
             });
 
             this.recipients.on('register', function(event, recipient){
-//                console.log('trigger:unregistered');
-                self.securityAspects.refresh();
+//                cmLogger.debug('cmConversationModel:on:recipient:register');
                 self.checkPreferences();
+                self.securityAspects.refresh();
             });
 
             this.recipients.on('unregistered', function(){
-//                console.log('trigger:unregistered');
+//                cmLogger.debug('cmConversationModel:on:recipient:unregistered');
                 self.checkPreferences();
+                self.securityAspects.refresh();
+            });
+
+            this.on('captcha:enabled', function(){
+                cmLogger.debug('cmConversationModel:on:captcha:enabled');
+                self.securityAspects.refresh();
+            });
+
+            this.on('captcha:disabled', function(){
+                cmLogger.debug('cmConversationModel:on:captcha:disabled');
+                self.securityAspects.refresh();
             });
 
             // after events!!!
