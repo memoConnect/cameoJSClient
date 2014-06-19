@@ -231,7 +231,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {cmConversationModel} this  Returns itself for chaining.
              */
             this.disableEncryption = function(){
-                cmLogger.debug('cmConversationModel:disableEncryption');
+//                cmLogger.debug('cmConversationModel:disableEncryption');
 
                 if(this.state.is('new')){
                     passphrase.disable();
@@ -252,7 +252,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {cmConversationModel} this  Returns itself for chaining.
              */
             this.enableEncryption = function(){
-                cmLogger.debug('cmConversationModel:enableEncryption');
+//                cmLogger.debug('cmConversationModel:enableEncryption');
 
                 if(this.state.is('new') && !passphrase.get()){
                     passphrase.generate();
@@ -454,7 +454,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
-                cmLogger.debug('cmConversationModel:decrypt');
+//                cmLogger.debug('cmConversationModel:decrypt');
                 
                 var passphrase  =   this.getPassphrase(),
                     success     =   passphrase && this.messages.reduce(function (success, message){

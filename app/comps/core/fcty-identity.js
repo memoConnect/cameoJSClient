@@ -125,11 +125,11 @@ angular.module('cmCore').factory('cmIdentityModel',[
             this.encryptPassphrase = function(passphrase){
                 var encrypted_key_list = [];
 
-                console.log('identity keys', this.keys);
-
                 this.keys.forEach(function(key){
 
                     var key_2 = new cmCrypt.Key();
+
+                    console.log(key_2.getSize())
 
                     key_2.setKey(key.getPrivateKey());
 
