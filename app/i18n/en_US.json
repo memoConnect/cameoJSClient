@@ -362,8 +362,7 @@
         "CONVERSATION": {
             "ENCRYPTED": {
                 "NAME": "Conversation is encrypted.",
-                "DESCRIPTION": "",
-                "TOGGLE": ""
+                "DESCRIPTION": ""
             },
             "NOT_ENCRYPTED": {
                 "NAME": "Conversation is not encrypted.",
@@ -372,13 +371,11 @@
             },
             "RECIPIENTS_WITH_KEY": {
                 "NAME": "All Recipients have a keypair.",
-                "DESCRIPTION": "",
-                "TOGGLE": ""
+                "DESCRIPTION": ""
             },
             "RECIPIENTS_WITHOUT_KEY": {
                 "NAME": "{{count}} Recipient{{count!=1?'s have':' has'}} no keypair.",
-                "DESCRIPTION": "",
-                "TOGGLE": ""
+                "DESCRIPTION": ""
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha enabled!",
