@@ -175,7 +175,9 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                     var decrypted_data = JSON.parse(cmCrypt.decrypt(conversation.getPassphrase(),this.encryptedData));
 
-                    this.importData(decrypted_data);
+                    if(decrypted_data !== false){
+                        this.importData(decrypted_data);
+                    }
 
                     if(!!decrypted_data){
                         this.state.set('decrypted');
