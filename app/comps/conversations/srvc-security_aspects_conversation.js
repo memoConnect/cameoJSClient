@@ -29,7 +29,7 @@ angular.module('cmSecurityAspects')
         })
         .addAspect({
             id: 'RECIPIENTS_WITH_KEY',
-            value: 1,
+            value: 3,
             check: function(conversation){
                 var bool = true,
                     count = 0;
