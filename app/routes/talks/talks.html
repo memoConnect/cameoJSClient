@@ -7,18 +7,8 @@
 
 <section ng-controller="ConversationsCtrl">
 
-    <header class="cm-list-header">
-        <h1>{{'TALKS.HEADING'|cmTranslate}}</h1>
-
-        <cm-edge ng-click="createNewConversation()"></cm-edge>
-
-        <input 
-            type            = "text" 
-            value           = "" 
-            ng-model        = "search" 
-            cm-icon         = "cm-search"
-            cm-large-input
-        />  
+    <header class="cm-list-header with-add-btn">
+        <cm-search-input ng-model="search"></cm-search-input><cm-add-button ng-click="createNewConversation()" data-qa="new-conversation-btn" cm-icon="new-talk"></cm-add-button>
     </header>
 
     <ul>

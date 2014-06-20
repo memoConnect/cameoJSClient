@@ -3,19 +3,16 @@
     <div ng-show="bodyVisible" class="body" data-qa="conversation-options-menu">
 
         <section class="body-group">
-            <label>{{'CONVERSATION.PLACEHOLDER.RECIPIENTS' | cmTranslate}}</label>
+            <label>{{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}</label>
             <div class="recipients-list">
-                <cm-avatar cm-data="recipient" cm-with-name="true" cm-view="hide-owner" ng-repeat="recipient in conversation.recipients"></cm-avatar>
-
-                <div ng-click="manageRecipients()" ng-if="conversation.recipients.length == 1" class="add-new-recipients" cm-user-rights>
-                    <cm-avatar cm-view="unknown"></cm-avatar>
-                    {{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS' | cmTranslate}}
-                    <cm-edge></cm-edge>
+                <div class="scroller">
+                    <div ng-click="manageRecipients()" ng-if="conversation.recipients.length == 1" class="add-new-recipients">
+                        <cm-avatar cm-view="unknown"></cm-avatar>
+                        {{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS' | cmTranslate}}
+                    </div>
+                    <cm-avatar cm-data="recipient" cm-with-name="true" cm-view="hide-owner" ng-repeat="recipient in conversation.recipients"></cm-avatar>
                 </div>
-
-                <div ng-click="manageRecipients()" ng-if="conversation.recipients.length > 1" class="add-recipients" cm-user-rights>
-                    <cm-edge></cm-edge>
-                </div>
+                <cm-add-button cm-icon="add-recipient" ng-click="manageRecipients()" cm-user-rights></cm-add-button>
             </div>
         </section>
 

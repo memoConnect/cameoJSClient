@@ -9,7 +9,6 @@ angular.module('cmRouteContacts').directive('cmSearch',[
     function (cmContactsModel, cmIdentityFactory, cmNotify, cmModal, $timeout){
         return {
             restrict: 'E',
-            scope: false,
             templateUrl: 'routes/contacts/comps/drtv-search.html',
             controller: function($scope){
                 $scope.pristine = true;
@@ -20,7 +19,7 @@ angular.module('cmRouteContacts').directive('cmSearch',[
                  * @returns {boolean}
                  */
                 $scope.timeout = null;
-                $scope.search = function(){
+                $scope.sendSearch = function(){
                     if($scope.searchCameoId.string.$invalid || $scope.string == ''){
                         $scope.results = [];
                         $scope.pristine = true;
