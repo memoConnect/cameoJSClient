@@ -31,7 +31,7 @@ describe('Single Conversation: ', function () {
     })
 
     it('open modal to add recipient', function () {
-        $("cm-edge").click()
+        $("cm-add-button").click()
         util.waitForPageLoad("/recipients")
     })
 

@@ -115,116 +115,121 @@ cm-recipient-counter{
 @cm-conversation-control-height:2em;
 
 cm-conversation-controls{
-    display:block;
-    position:fixed;
-    height:@cm-conversation-control-height;
-    width:@cm-app-width;
-    top:@cm-header-height;
-    z-index:2;
-    .control{
-        line-height:2em;
-        white-space:nowrap;
-        font-size:1em;
-        overflow:hidden;
-        padding-bottom:1em;
-        .cm-bar{
-            .with-cursor;
-            text-align:center;
-            .border-radius-bottom;
-            background:@cm-white;
-            color:@cm-dark-grey;
-            *{
-            vertical-align:middle;
-            }
-            .grey-box-shadow;
-            .grip-left{
-            text-align:left;
-            i{
-              margin-left:0.5em;
-            }
-        }
+  display:block;
+  position:fixed;
+  height:@cm-conversation-control-height;
+  width:@cm-app-width;
+  top:@cm-header-height;
+  z-index:2;
 
-        cm-recipient-counter{
-            font-size:2em;
-                .background{
-                  color:@cm-dark-grey;
-                }
-                .foreground{
-                  color:@cm-white;
-                }
-            }
-            .cm-bar-infos{
-                cm-lock-level, cm-recipient-counter{
-                  margin-left:0.2em;
-                }
-            }
-        }
-
-        .body{
-            .body-group{
-                background:@cm-white;
-                padding:0.5em;
-                border-bottom:@cm-border-grey @cm-border-width solid;
-            }
-            .no-border{
-                border: none;
-            }
-            .no-padding{
-              padding:0
-            }
-            .label-with-checkbox{
-              label {
-                padding-left: 0.5rem;
-              }
-              button {
-              }
-            }
-            &:last-child{
-                border-bottom:0;
-            }
-            .cm-btn{
-                color:@cm-ci-color;
-                .cm-btn-black;
-                .cm-btn-block;
-            }
-            .cm-form-group{
-                padding:0;
-            }
-        }
-
-        .recipients-list {
-            position: relative;
-            overflow: hidden;
-            .add-new-recipients, .add-recipients {
-                display: inline-block;
-                position: relative;
-                height: @cm-unit;
-            }
-            .add-new-recipients{
-                padding-right:@cm-unit;
-            }
-            .add-recipients{
-                width:@cm-unit;
-            }
-            cm-avatar{
-                vertical-align:top;
-                margin-right:0.5em;
-                &:last-child{
-                    margin-right:0;
-                }
-            }
-            cm-edge{
-                vertical-align:top;
-                font-size:@cm-unit+1;
-            }
-        }
-
-        .cm-center{
-            .cm-info{
-                color:@cm-ci-color;
-            }
-        }
+  &.too-big{
+    .body{
+      overflow-y:scroll!important;
     }
+  }
+
+  .control{
+    line-height:2em;
+    white-space:nowrap;
+    font-size:1em;
+    overflow:hidden;
+    padding-bottom:1em;
+
+    .body{
+      overflow-y:hidden;
+      overflow-x:hidden;
+      .body-group{
+        background:@cm-white;
+        padding:0.5em;
+        border-bottom:@cm-border-grey @cm-border-width solid;
+        width:100%;
+      }
+      .no-border{
+        border: none;
+      }
+      .no-padding{
+        padding:0
+      }
+      .label-with-checkbox{
+        label {
+          padding-left: 0.5rem;
+        }
+        button {
+        }
+      }
+      &:last-child{
+        border-bottom:0;
+      }
+      .cm-btn{
+        color:@cm-ci-color;
+        .cm-btn-black;
+        .cm-btn-block;
+      }
+      .cm-form-group{
+        padding:0;
+      }
+    }
+
+    .recipients-list {
+      position:relative;
+      margin-right:@cm-unit;
+      .scroller{
+        overflow-y:hidden;
+        overflow-x:auto;
+      }
+      cm-avatar{
+        vertical-align:top;
+        margin-right:0.5rem;
+        &:last-child{
+            margin-right:0;
+        }
+      }
+      cm-add-button{
+        position:absolute;
+        right: -@cm-unit;
+        top: 0.5rem;
+      }
+    }
+
+    .cm-center{
+      .cm-info{
+          color:@cm-ci-color;
+      }
+    }
+
+    .cm-bar {
+      .with-cursor;
+      text-align: center;
+      .border-radius-bottom;
+      background: @cm-white;
+      color: @cm-dark-grey;
+      * {
+        vertical-align: middle;
+      }
+      .grey-box-shadow;
+      .grip-left {
+        text-align: left;
+        i {
+          margin-left: 0.5em;
+        }
+      }
+
+      cm-recipient-counter {
+        font-size: @cm-unit/2;
+        .background {
+          color: @cm-dark-grey;
+        }
+        .foreground {
+          color: @cm-white;
+        }
+        .cm-bar-infos {
+          cm-lock-level, cm-recipient-counter {
+            margin-left: 0.2em;
+          }
+        }
+      }
+    }
+  }
 }
 cm-conversation {
   cm-message {
@@ -347,53 +352,61 @@ div.answer{
   bottom:0;
   z-index:1;
   background-color:rgba(255,255,255,0.9);
-  font-size:1.2em;
   vertical-align: middle;
   margin: 0 auto;
   left:0;
   right:0;
+  font-size: @cm-unit - 1;
 
-  i.fa {
-    position: absolute;
-    font-size: 2em;
-    padding: 0;
-    top: 0.3em;
-  }
   cm-files {
-    left: 0;
-    top: 0;
     position: absolute;
+    top: 0.3rem;
+    left: 0;
+    text-align:center;
   }
-  i.cm-post {
+  .fa.cm-smile-negative{
+    position: absolute;
+    top: 0.8rem;
+  }
+  .post-wrap {
+    position: absolute;
+    top: 0.3rem;
     right: 0;
-    &.is-disabled{
-      color:@cm-grey;
+    width: @cm-unit;
+    height: @cm-unit;
+    text-align:center;
+    i.cm-post {
+      &.is-disabled {
+        color: @cm-grey;
+      }
     }
   }
 
-
   .message{
-    width: 22rem;
+    width: 24rem;
     position: relative;
     height: 100%;
     bottom: 0;
     margin: 0 auto;
     text-align: left;
     textarea{
-      width:82%;
+      width:88%;
       border:none !important;
       background:transparent;
       margin-bottom:0.5em;
       padding:2px;
+      &[rows='1']{
+        margin:1rem 0;
+      }
     }
-    textarea[rows='1']{
-      margin:1rem 0;
+    textarea, .textarea-shadow{
+      font-size: @cm-large-font;
     }
     .inputter {
       width: 100%;
       position: absolute;
-      height: 0.3em;
-      bottom: 0.3em;
+      height: 0.3rem;
+      bottom: 0.3rem;
 
       border-color: -moz-use-text-color #000000 #000000;
       border-image: none;
@@ -433,8 +446,11 @@ div.captcha {
 }
 
 .webreader-uploading{
+  .with-cursor;
   width:100%;
   height:100%;
-  position: relative;
-  z-index: 1;
+  position:absolute;
+  z-index:1;
+  left:0;
+  top:0;
 }

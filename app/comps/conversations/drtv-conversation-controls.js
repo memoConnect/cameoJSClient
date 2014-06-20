@@ -6,7 +6,8 @@ angular.module('cmConversations').directive('cmConversationControls', [
     'cmLogger',
     '$location',
     '$document',
-    function(cmUserModel, cmNotify, cmLogger, $location, $document){
+    '$window',
+    function(cmUserModel, cmNotify, cmLogger, $location, $document, $window){
         return{
             restrict : 'AE',
             templateUrl : 'comps/conversations/drtv-conversation-controls.html',
@@ -17,6 +18,17 @@ angular.module('cmConversations').directive('cmConversationControls', [
                 scope.bodyVisible   = cmConversation.isNew();
                 scope.isNew         = cmConversation.isNew();
 
+
+                function showControls(conversation){
+                    if(!conversation.state.is('new')
+                        && (conversation.getKeyTransmission() == 'symmetric' || conversation.getKeyTransmission() == 'mixed')
+                        && !conversation.password
+                        && !conversation.isUserInPassphraseList()
+                    ){
+                        scope.toggleControls('open');
+                    }
+                }
+
                 /**
                  * watch the conversation object on changes
                  */
@@ -24,11 +36,13 @@ angular.module('cmConversations').directive('cmConversationControls', [
                     if(conversation){
                         // open the controls for a new conversation and password isnt set in a symetric case || case mixed exists and user isnt in passphraselist
 
+                        conversation.securityAspects.refresh();
+
                         conversation.on('update:finished', function(){
-                            if(!cmConversation.isNew() && conversation.isEncrypted() &&  (conversation.getKeyTransmission() == 'symmetric' || conversation.getKeyTransmission() == 'mixed') && !conversation.isUserInPassphraseList()) {
-                                scope.toggleControls('open');
-                            }
+                            showControls(conversation);
                         });
+
+                        showControls(conversation);
 
                         // close the controls if decryption was ok
                         conversation.on('decrypt:ok', function(){
@@ -36,9 +50,37 @@ angular.module('cmConversations').directive('cmConversationControls', [
                         });
                     }
                 });
+
+
+                var w = angular.element($window);
+
+                function checkHeight(){
+                    var window = $window.innerHeight,
+                        control = element[0].scrollHeight + element[0].offsetTop,
+                        body = angular.element($document[0].querySelector(element[0].localName+' .body')),
+                        bar = body[0].nextSibling.scrollHeight;
+                    // set to min height
+                    if(window < control){
+                        element.addClass('too-big');
+                        body.css('height',(window-(element[0].offsetTop+bar))+'px');
+
+                        scope.scrollToPassword();
+                    // reset
+                    } else {
+                        element.removeClass('too-big');
+                        body.css({'height':'','width':'100%'});
+                    }
+                }
+
+                w.bind('resize', checkHeight);
+
+                scope.$watch( function() {
+                    checkHeight();
+                });
             },
 
-            controller: function($scope){
+            controller: function($scope, $element){
+
                 /**
                  * @name toggleControls
                  * @description
@@ -75,7 +117,8 @@ angular.module('cmConversations').directive('cmConversationControls', [
                  */
                 $scope.decrypt = function(){
                     $scope.conversation.one('decrypt:failed', function(){
-                        cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG',{ttl:2000})
+                        cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG',{ttl:2000});
+                        $scope.toggleControls('open');
                     });
                     $scope.conversation.decrypt();
                 };
@@ -86,10 +129,12 @@ angular.module('cmConversations').directive('cmConversationControls', [
                  * enable or disable encryption for a conversation
                  */
                 $scope.toggleConversationEncryption = function(){
-                    if($scope.conversation.isEncrypted() !== false){
-                        $scope.conversation.disableEncryption();
-                    } else {
-                        $scope.conversation.enableEncryption();
+                    if($scope.conversation.state.is('new')){
+                        if($scope.conversation.isEncrypted() !== false){
+                            $scope.conversation.disableEncryption();
+                        } else {
+                            $scope.conversation.enableEncryption();
+                        }
                     }
                 };
 
@@ -99,7 +144,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
                  * enable or disable passcaptcha creation
                  */
                 $scope.toggleCaptcha = function(){
-                    if($scope.conversation.isEncrypted() !== false){
+                    if($scope.conversation.state.is('new') && $scope.conversation.isEncrypted() !== false){
                         if($scope.conversation.options.hasCaptcha !== false){
                             $scope.conversation.disablePassCaptcha();
                         } else {
@@ -116,6 +161,13 @@ angular.module('cmConversations').directive('cmConversationControls', [
                 $scope.refreshCaptcha = function(){
                     $scope.$broadcast('captcha:refresh');
                 };
+
+                $scope.scrollToPassword = function(){
+                    // scroll to password
+                    var anchor = $document[0].querySelector('#passwordInput'),
+                        body = angular.element($document[0].querySelector($element[0].localName+' .body'));
+                        body[0].scrollTop = anchor.offsetTop;
+                }
             }
         }
     }

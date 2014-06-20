@@ -67,7 +67,7 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         if(width == 0)
                             width = parseInt(element.css('width'));
 
-                    $shadow = angular.element('<div></div>').css({
+                    $shadow = angular.element('<div class="textarea-shadow"></div>').css({
                         position: 'fixed',
                         top: -10000+unit,
                         left: -10000+unit,

@@ -1,3 +1,7 @@
+<header class="inScreen">
+    <i class="fa cm-search-cl cm-lg-icon"></i> {{'CONTACTS.HEADING.SEARCH'|cmTranslate}}
+</header>
+
 <cm-modal id="modalSendRequest" class="no-padding" cm-data-as="contact" cm-title="CONTACTS.HEADING.SEND_REQUEST">
     <div class="modal-row" cm-rubber-space>
         <cm-avatar cm-data="contact"></cm-avatar>
@@ -14,22 +18,20 @@
     </button>
 </cm-modal>
 
-<header class="inScreen">
-    <i class="fa cm-search-cl cm-lg-icon"></i> {{'CONTACTS.HEADING.SEARCH'|cmTranslate}}
-</header>
-
-<section class="cm-bg-transparent">
+<header class="cm-list-header">
     <form name="searchCameoId" autocomplete="off">
-        <input cm-large-input type="text" ng-model="string" name="string" cm-icon="cm-search" placeholder="{{'CONTACTS.PLACEHOLDER.ADD_NEW_CONTACT'|cmTranslate}}" ng-minlength="4" ng-keyup="search()" />
-
+        <div class="cm-search-input">
+            <input type="text" value="" ng-model="string" ng-keyup="sendSearch()" ng-minlength="4" placeholder="{{'CONTACTS.PLACEHOLDER.ADD_NEW_CONTACT'|cmTranslate}}" name="string" data-qa="input-search" />
+            <i class="fa cm-search-cl"></i>
+        </div>
         <div class="cm-alert" ng-show="searchCameoId.string.$error.minlength">
             <i class="fa cm-info"></i> {{'CONTACTS.INFO.MORE_CHARS_NEEDED'|cmTranslate}}
         </div>
     </form>
-</section>
+</header>
 
 <section>
-    <div ng-show="searchCameoId.string.$valid && !pristine &&  results.length < 1" class="empty-list">
+    <div ng-show="searchCameoId.string.$valid && !pristine && results.length < 1" class="empty-list">
         <i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_RESULTS'|cmTranslate}}
     </div>
 

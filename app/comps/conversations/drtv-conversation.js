@@ -9,7 +9,9 @@ angular.module('cmConversations').directive('cmConversation', [
     'cmModal',
     '$location',
     '$rootScope',
-    function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope) {
+    '$document',
+    'cmEnv',
+    function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope, $document, cmEnv) {
         return {
             restrict: 'AE',
             templateUrl: 'comps/conversations/drtv-conversation.html',
@@ -34,6 +36,11 @@ angular.module('cmConversations').directive('cmConversation', [
                     return !conversation_id
                 };
 
+                // first focus on message
+                if(!this.isNew() && cmEnv.isNotMobile){
+                    $document[0].querySelector('cm-conversation .answer textarea').focus();
+                }
+
                 /**
                  * start sending process
                  * with preparing files for upload
@@ -57,8 +64,6 @@ angular.module('cmConversations').directive('cmConversation', [
                                             files.push(file);
                                         }
                                     });
-
-//                                    console.log('prepareFilesForUpload:resolved',$scope.files,files)
 
                                     /**
                                      * Nested Function in drtv-attachments
@@ -115,9 +120,6 @@ angular.module('cmConversations').directive('cmConversation', [
                         passphrase_invalid      = !$scope.conversation.passphraseValid(),
                         recipients_missing      = !$scope.conversation.recipients.length > 0; //@todo mocked
 
-
-//                    console.log('sendMessage','message_invalid '+message_invalid, 'passphrase_invalid '+passphrase_invalid, 'recipients_missing '+recipients_missing)
-
                     //If anything is invalid, abort and notify the user:
                     if(message_invalid || passphrase_invalid || recipients_missing){
 
@@ -150,10 +152,6 @@ angular.module('cmConversations').directive('cmConversation', [
                         return false
                     }
 
-//                    console.log('$scope.conversation.isEncrypted()',$scope.conversation.isEncrypted())
-//                    console.log('$scope.conversation.getPassphrase()',$scope.conversation.getPassphrase())
-//                    console.log('$scope.conversation.getPassphrase() === null',$scope.conversation.getPassphrase() === null )
-
                     //If we got this far the conversation has been saved to the backend.
                     //Create a new message:
                     $scope.conversation.messages.create({conversation:$scope.conversation})
@@ -164,7 +162,6 @@ angular.module('cmConversations').directive('cmConversation', [
                     .save()
                     .then(function(){
                         //@ TODO: solve rekeying another way:
-//                      $scope.conversation.saveEncryptedPassphraseList();
 
                         $scope.conversation.numberOfMessages++;
                         $scope.my_message_text = "";
@@ -176,9 +173,8 @@ angular.module('cmConversations').directive('cmConversation', [
                             cmConversationFactory.register($scope.conversation);
                             $location.path('/conversation/' + $scope.conversation.id);
                         }
-                        cmLogger.debug('message:sent');
+//                        cmLogger.debug('message:sent');
                     });
-                    
                 }
 
                 this.addPendingRecipients = function(){
@@ -220,9 +216,8 @@ angular.module('cmConversations').directive('cmConversation', [
                 } else {
                     // TODO: create at send message not on init!!!
                     $scope.init(
-//                        cmConversationFactory.create()
                         cmConversationFactory.new(undefined, true)
-                        .addRecipient(cmUserModel.data.identity) // muss nicht, macht die api auch von alleine (?)
+                        .addRecipient(cmUserModel.data.identity)
                     )
                 }
 

@@ -63,7 +63,7 @@ describe('Textarea Resize', function () {
 
     it('check input without newlines', function(){
         var textarea = $("[data-qa='input-answer']"),
-            longText = 'mmmmmmmmeeeeeeeeoooooooooopppppppppppppppppp'
+            longText = 'mmmmmmmmeeeeeeeeooooooooooppppppppppppppppppppppppppppppppppppppp'
 
         textarea.sendKeys(longText)
         expect(textarea.getAttribute('value')).toBe(longText)

@@ -141,7 +141,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
             this.isEncrypted = function(){
                 if(!this.state.is('new')) {
-                    return (this.encryptedData != false)
+                    return (this.encryptedData == undefined) ? false : (this.encryptedData != false)
                 }
             };
 
