@@ -64,8 +64,6 @@ angular.module('cmConversations').directive('cmConversation', [
                                         }
                                     });
 
-//                                    console.log('prepareFilesForUpload:resolved',$scope.files,files)
-
                                     /**
                                      * Nested Function in drtv-attachments
                                      */
@@ -121,9 +119,6 @@ angular.module('cmConversations').directive('cmConversation', [
                         passphrase_invalid      = !$scope.conversation.passphraseValid(),
                         recipients_missing      = !$scope.conversation.recipients.length > 0; //@todo mocked
 
-
-//                    console.log('sendMessage','message_invalid '+message_invalid, 'passphrase_invalid '+passphrase_invalid, 'recipients_missing '+recipients_missing)
-
                     //If anything is invalid, abort and notify the user:
                     if(message_invalid || passphrase_invalid || recipients_missing){
 
@@ -156,10 +151,6 @@ angular.module('cmConversations').directive('cmConversation', [
                         return false
                     }
 
-//                    console.log('$scope.conversation.isEncrypted()',$scope.conversation.isEncrypted())
-//                    console.log('$scope.conversation.getPassphrase()',$scope.conversation.getPassphrase())
-//                    console.log('$scope.conversation.getPassphrase() === null',$scope.conversation.getPassphrase() === null )
-
                     //If we got this far the conversation has been saved to the backend.
                     //Create a new message:
                     $scope.conversation.messages.create({conversation:$scope.conversation})
@@ -183,7 +174,6 @@ angular.module('cmConversations').directive('cmConversation', [
                         }
 //                        cmLogger.debug('message:sent');
                     });
-                    
                 }
 
                 this.addPendingRecipients = function(){
@@ -225,9 +215,8 @@ angular.module('cmConversations').directive('cmConversation', [
                 } else {
                     // TODO: create at send message not on init!!!
                     $scope.init(
-//                        cmConversationFactory.create()
                         cmConversationFactory.new(undefined, true)
-                        .addRecipient(cmUserModel.data.identity) // muss nicht, macht die api auch von alleine (?)
+                        .addRecipient(cmUserModel.data.identity)
                     )
                 }
 
