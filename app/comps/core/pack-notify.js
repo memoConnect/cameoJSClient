@@ -105,7 +105,7 @@ angular.module('cmCore')
         'use strict';
         return {
             restrict: 'AE',
-            template: '<i class="fa" ng-class="{\'cm-bell-ring cm-orange\': unreadNotifications, \'cm-bell\' : !unreadNotifications}"></i>',
+            template: '<i class="fa" ng-class="{\'cm-notification-on cm-orange\': unreadNotifications, \'cm-notification\' : !unreadNotifications}"></i>',
             scope: true,
 
             controller: function ($scope, $element, $attrs) {

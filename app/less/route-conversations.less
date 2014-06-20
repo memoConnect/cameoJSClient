@@ -347,53 +347,61 @@ div.answer{
   bottom:0;
   z-index:1;
   background-color:rgba(255,255,255,0.9);
-  font-size:1.2em;
   vertical-align: middle;
   margin: 0 auto;
   left:0;
   right:0;
+  font-size: @cm-unit - 1;
 
-  i.fa {
-    position: absolute;
-    font-size: 2em;
-    padding: 0;
-    top: 0.3em;
-  }
   cm-files {
-    left: 0;
-    top: 0;
     position: absolute;
+    top: 0.3rem;
+    left: 0;
+    text-align:center;
   }
-  i.cm-post {
+  .fa.cm-smile-negative{
+    position: absolute;
+    top: 0.8rem;
+  }
+  .post-wrap {
+    position: absolute;
+    top: 0.3rem;
     right: 0;
-    &.is-disabled{
-      color:@cm-grey;
+    width: @cm-unit;
+    height: @cm-unit;
+    text-align:center;
+    i.cm-post {
+      &.is-disabled {
+        color: @cm-grey;
+      }
     }
   }
 
-
   .message{
-    width: 22rem;
+    width: 24rem;
     position: relative;
     height: 100%;
     bottom: 0;
     margin: 0 auto;
     text-align: left;
     textarea{
-      width:82%;
+      width:88%;
       border:none !important;
       background:transparent;
       margin-bottom:0.5em;
       padding:2px;
+      &[rows='1']{
+        margin:1rem 0;
+      }
     }
-    textarea[rows='1']{
-      margin:1rem 0;
+    textarea, .textarea-shadow{
+      font-size: @cm-large-font;
     }
     .inputter {
       width: 100%;
       position: absolute;
-      height: 0.3em;
-      bottom: 0.3em;
+      height: 0.3rem;
+      bottom: 0.3rem;
 
       border-color: -moz-use-text-color #000000 #000000;
       border-image: none;

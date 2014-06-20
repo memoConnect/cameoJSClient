@@ -288,3 +288,10 @@
 .cm-reject:before{content:'\f053'}
 .cm-ignore:before{content:'\f054'}
 .cm-register:before{content:'\f055'}
+.cm-write:before{content:'\f059'}
+.cm-attachment:before{content:'\f060'}
+.cm-new-contact:before{content:'\f061'}
+.cm-new-talk:before{content:'\f062'}
+.cm-notification:before{content:'\f063'}
+.cm-notification-on:before{content:'\f064'}
+.cm-add-recipient:before{content:'\f065'}
