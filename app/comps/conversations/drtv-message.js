@@ -4,7 +4,10 @@ angular.module('cmConversations').directive('cmMessage', [
     function () {
         return {
             restrict: 'AE',
-            scope: true,
+            scope: {
+                message: '=cmData',
+                conversation: '=cmDataConversation'
+            },
             templateUrl: 'comps/conversations/drtv-message.html',
 
             link: function(scope, element){
@@ -47,9 +50,6 @@ angular.module('cmConversations').directive('cmMessage', [
                     $scope.truncate = $attrs.truncate;
                  }
                  */
-
-                $scope.message = $scope.$eval($attrs.cmData) || $scope.$eval($attrs.cmMessage);
-
                 $scope.textOnly = !!$scope.$eval($attrs.textOnly);
 
                 $scope.is_my_own_message = $scope.message.isOwn();
