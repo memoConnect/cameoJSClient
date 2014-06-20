@@ -6,15 +6,9 @@
 
 <section ng-controller = "RecipientsCtrl">
     <header class="cm-list-header">
-        <h1>{{"RECIPIENTS.HEADING"|cmTranslate}}</h1>       
+        <h1>{{"RECIPIENTS.HEADING"|cmTranslate}}</h1>
 
-        <input 
-            type            = "text"
-            value           = ""
-            ng-model        = "search"
-            cm-icon         = "cm-search"
-            cm-large-input
-        />
+        <cm-search-input ng-model="search"></cm-search-input>
     </header>
 
     <cm-contacts-list contacts-as="contacts">

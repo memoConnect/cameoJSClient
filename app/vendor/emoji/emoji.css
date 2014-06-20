@@ -181,6 +181,3 @@
 .emoji.emoji_thought_balloon { background-position: -130px -312px; }
 .emoji.emoji_warning { background-position: -156px -312px; }
 .emoji.emoji_zzz { background-position: -182px -312px; }
-
-cm-emoji-list{display:block;max-height:12rem;overflow-y:auto}
-cm-emoji-list .emoji-wrapper{cursor:pointer;display:inline-block;padding:5px}

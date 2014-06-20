@@ -11,7 +11,7 @@
 
 <div class="answer clearfix" id="files-droparea">
     <cm-files ng-model="files" data-qa="attachments-btn">
-        <i class="fa cm-plus"></i>
+        <i class="fa cm-attachment"></i>
         <div cm-user-rights>
             <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
             <cm-files-preview></cm-files-preview>
@@ -27,5 +27,7 @@
 
     <cm-emoji-list cm-handler="emoji-handler" cm-textarea="emoji-textarea"></cm-emoji-list>
 
-    <i class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap" ng-class="{'is-disabled':isSending}" data-qa="btn-send-answer" ng-click="send()"></i>
+    <div class="post-wrap" data-qa="btn-send-answer" ng-click="send()">
+        <i class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap" ng-class="{'is-disabled':isSending}"></i>
+    </div>
 </div>

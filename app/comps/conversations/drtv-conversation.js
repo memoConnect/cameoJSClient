@@ -9,7 +9,8 @@ angular.module('cmConversations').directive('cmConversation', [
     'cmModal',
     '$location',
     '$rootScope',
-    function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope) {
+    '$document',
+    function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope, $document) {
         return {
             restrict: 'AE',
             templateUrl: 'comps/conversations/drtv-conversation.html',
@@ -33,6 +34,11 @@ angular.module('cmConversations').directive('cmConversation', [
                 this.isNew = function(){
                     return !conversation_id
                 };
+
+                // first focus on message
+                if(!this.isNew()){
+                    $document[0].querySelector('cm-conversation .answer textarea').focus();
+                }
 
                 /**
                  * start sending process
