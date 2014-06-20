@@ -164,7 +164,6 @@ angular.module('cmConversations').directive('cmConversation', [
                     .save()
                     .then(function(){
                         //@ TODO: solve rekeying another way:
-//                      $scope.conversation.saveEncryptedPassphraseList();
 
                         $scope.conversation.numberOfMessages++;
                         $scope.my_message_text = "";
@@ -176,7 +175,7 @@ angular.module('cmConversations').directive('cmConversation', [
                             cmConversationFactory.register($scope.conversation);
                             $location.path('/conversation/' + $scope.conversation.id);
                         }
-                        cmLogger.debug('message:sent');
+//                        cmLogger.debug('message:sent');
                     });
                     
                 }

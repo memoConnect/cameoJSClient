@@ -28,21 +28,9 @@ angular.module('cmCore').factory('cmPassphrase',[
                 password        = undefined,
                 identities      = undefined,
                 asymmetricallyEncryptedPassphrases  = [],
-                symmetricallyEncryptedPassphrase    = undefined
+                symmetricallyEncryptedPassphrase    = undefined;
 
             cmObject.addEventHandlingTo(this);
-
-            /**
-             * @ngdoc method
-             * @methodOf cmPassphrase
-             *
-             * @name init (private)
-             * @description
-             * Initialize cmPassphrase
-             */
-            function init(data){
-                this.passphrase = cmCrypt.generatePassphrase()
-            }
 
             /**
              * @ngdoc method
@@ -388,7 +376,7 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @name disabled
              * @description 
              * Checks wether Encryption is enabled. encryption is considered to be enabled if this.passphrase is anything different from null.
-             * If this.passphrase is neither null nor a string of appropriate length something is incoherent. Messages schould not be sent in this case. 
+             * If this.passphrase is neither null nor a string of appropriate length something is incoherent. Messages should not be sent in this case.
              * @return {Boolean} Returns whether the encryption is enabled
              */
             this.disabled = function(){

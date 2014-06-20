@@ -32,14 +32,14 @@
             <div class="label-with-checkbox">
                 <label class="w20">{{'CONVERSATION.PLACEHOLDER.ENCRYPTION' | cmTranslate}}</label>
                 <div class="w80 tac dib">
-                    <button ng-click="toggleConversationEncryption()" data-qa="encryption-btn"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.isEncrypted(), 'cm-checkbox-right':conversation.isEncrypted()}" data-qa="icon-checkbox-encryption"></i></button>
+                    <button ng-click="toggleConversationEncryption()" data-qa="encryption-btn"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.isEncrypted(), 'cm-checkbox-right':conversation.isEncrypted(), 'cm-grey':!isNew}" data-qa="icon-checkbox-encryption"></i></button>
                 </div>
             </div>
 
             <div class="label-with-checkbox" ng-if="conversation.options.hasPassword && conversation.isEncrypted()">
                 <label class="w20">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA' | cmTranslate}}</label>
                 <div class="w80 tac dib">
-                    <button ng-click="toggleCaptcha()"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.options.hasCaptcha, 'cm-checkbox-right':conversation.options.hasCaptcha}" data-qa="icon-checkbox-passcaptcha"></i></button>
+                    <button ng-click="toggleCaptcha()"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.options.hasCaptcha, 'cm-checkbox-right':conversation.options.hasCaptcha, 'cm-grey':!isNew}" data-qa="icon-checkbox-passcaptcha"></i></button>
                 </div>
             </div>
 
@@ -55,16 +55,16 @@
                     </p>
                 </div>
 
+                <div class="captcha" ng-if="!isNew" data-qa="captcha-image">
+                    <img cm-blob-image="conversation.passCaptcha" />
+                </div>
+
                 <div class="cm-form-group label-with-checkbox">
                     <label class="w20">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</label>
                     <div class="cm-form-control with-inputter w80" style="background-color:#fff" ng-class="{'with-inside-icon':!isNew}">
                         <input style="background-color:#fff" type="text" ng-model="conversation.password" placeholder="{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change/>
                         <i class="fa cm-key fa-2x with-cursor" ng-click="decrypt()" ng-if="!isNew"></i>
                     </div>
-                </div>
-
-				<div class="captcha" ng-if="!isNew" data-qa="captcha-image">
-                    <img cm-blob-image="conversation.passCaptcha" />
                 </div>
 
             </div>
@@ -83,7 +83,7 @@
             </div>
         </section>
 
-        <button ng-click="toggleControls('close')" class="cm-btn" ng-if="!isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
+        <button ng-click="toggleControls('close');decrypt()" class="cm-btn" ng-if="!isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
         <button ng-click="toggleControls('close',true)" class="cm-btn" ng-if="isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
     </div>
 
