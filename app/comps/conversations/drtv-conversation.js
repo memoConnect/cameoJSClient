@@ -10,7 +10,8 @@ angular.module('cmConversations').directive('cmConversation', [
     '$location',
     '$rootScope',
     '$document',
-    function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope, $document) {
+    'cmEnv',
+    function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope, $document, cmEnv) {
         return {
             restrict: 'AE',
             templateUrl: 'comps/conversations/drtv-conversation.html',
@@ -36,7 +37,7 @@ angular.module('cmConversations').directive('cmConversation', [
                 };
 
                 // first focus on message
-                if(!this.isNew()){
+                if(!this.isNew() && cmEnv.isNotMobile){
                     $document[0].querySelector('cm-conversation .answer textarea').focus();
                 }
 

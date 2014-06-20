@@ -6,7 +6,8 @@ angular.module('cmConversations').directive('cmConversationControls', [
     'cmLogger',
     '$location',
     '$document',
-    function(cmUserModel, cmNotify, cmLogger, $location, $document){
+    '$window',
+    function(cmUserModel, cmNotify, cmLogger, $location, $document, $window){
         return{
             restrict : 'AE',
             templateUrl : 'comps/conversations/drtv-conversation-controls.html',
@@ -49,9 +50,36 @@ angular.module('cmConversations').directive('cmConversationControls', [
                         });
                     }
                 });
+
+
+                var w = angular.element($window);
+
+                function checkHeight(){
+                    var window = $window.innerHeight,
+                        control = element[0].scrollHeight + element[0].offsetTop,
+                        body = angular.element($document[0].querySelector(element[0].localName+' .body')),
+                        bar = body[0].nextSibling.scrollHeight;
+                    // set to min height
+                    if(window < control){
+                        element.addClass('too-big');
+                        body.css('height',(window-(element[0].offsetTop+bar))+'px');
+
+                        scope.scrollToPassword();
+                    // reset
+                    } else {
+                        element.removeClass('too-big');
+                        body.css({'height':'','width':'100%'});
+                    }
+                }
+
+                w.bind('resize', checkHeight);
+
+                scope.$watch( function() {
+                    checkHeight();
+                });
             },
 
-            controller: function($scope){
+            controller: function($scope, $element){
 
                 /**
                  * @name toggleControls
@@ -133,6 +161,13 @@ angular.module('cmConversations').directive('cmConversationControls', [
                 $scope.refreshCaptcha = function(){
                     $scope.$broadcast('captcha:refresh');
                 };
+
+                $scope.scrollToPassword = function(){
+                    // scroll to password
+                    var anchor = $document[0].querySelector('#passwordInput'),
+                        body = angular.element($document[0].querySelector($element[0].localName+' .body'));
+                        body[0].scrollTop = anchor.offsetTop;
+                }
             }
         }
     }

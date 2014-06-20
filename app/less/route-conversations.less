@@ -121,6 +121,13 @@ cm-conversation-controls{
   width:@cm-app-width;
   top:@cm-header-height;
   z-index:2;
+
+  &.too-big{
+    .body{
+      overflow-y:scroll!important;
+    }
+  }
+
   .control{
     line-height:2em;
     white-space:nowrap;
@@ -129,10 +136,13 @@ cm-conversation-controls{
     padding-bottom:1em;
 
     .body{
+      overflow-y:hidden;
+      overflow-x:hidden;
       .body-group{
         background:@cm-white;
         padding:0.5em;
         border-bottom:@cm-border-grey @cm-border-width solid;
+        width:100%;
       }
       .no-border{
         border: none;
