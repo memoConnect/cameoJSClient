@@ -768,7 +768,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             });
 
             this.on('update:finished', function(){
-//                cmLogger.debug('cmConversationModel:on:update:finished');
+                cmLogger.debug('cmConversationModel:on:update:finished');
                 self.setLastMessage();
                 self.decrypt();
                 self.securityAspects.refresh();

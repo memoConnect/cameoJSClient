@@ -3,11 +3,11 @@
 angular.module('cmConversations').directive('cmConversationTag',[
     function (){
         return {
-            restrict : 'AE',
+            restrict: 'AE',
             scope: {
-                conversation : "=cmData"
+                conversation: "=cmData"
             },
-            templateUrl : 'comps/conversations/drtv-conversation-tag.html',
+            templateUrl: 'comps/conversations/drtv-conversation-tag.html',
             priority: 0
         }
     }
