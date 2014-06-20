@@ -56,7 +56,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             //--> meta
             this.timeOfLastUpdate   = 0;          //timestamp of the conversations's last Update
             this.subject            = '';         //subject
-            this.securityAspects    = cmSecurityAspectsConversation.setTarget(this);
+            this.securityAspects    = new cmSecurityAspectsConversation(this);
             this.meta               = {};         //stores meta data, not yet implemented, TODO
             this.password           = undefined;
             this.state              = new cmStateManagement(['new','loading']);
@@ -403,7 +403,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {cmConversationModel} this  Returns itself for chaining.
              */
             this.disableEncryption = function(){
-//                cmLogger.debug('cmConversationModel:disableEncryption');
+                cmLogger.debug('cmConversationModel:disableEncryption');
 
                 if(this.state.is('new')){
                     passphrase.disable();

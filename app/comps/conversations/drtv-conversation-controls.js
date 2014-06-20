@@ -35,6 +35,8 @@ angular.module('cmConversations').directive('cmConversationControls', [
                     if(conversation){
                         // open the controls for a new conversation and password isnt set in a symetric case || case mixed exists and user isnt in passphraselist
 
+                        conversation.securityAspects.refresh();
+
                         conversation.on('update:finished', function(){
                             showControls(conversation);
                         });
