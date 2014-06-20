@@ -748,7 +748,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
 //                cmLogger.debug('cmConversationModel: setLastMessage!');
 
                 if(this.messages.length > 0){
-                    this.lastMessage = this.messages[(this.messages.length - 1)];
+                    this.lastMessage = this.messages.reduce(function(value, message){
+                        return value != undefined ? ( (value.created > message.created) ? value : message) : message;
+                    });
                 }
 
                 return this;
