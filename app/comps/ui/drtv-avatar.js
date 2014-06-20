@@ -75,6 +75,9 @@ angular.module('cmUi').directive('cmAvatar',[
 
         return {
             restrict: 'E',
+            scope: {
+                identity: "=cmData"
+            },
             template: '<img >',
 
             link: function(scope, element, attrs){
@@ -93,13 +96,13 @@ angular.module('cmUi').directive('cmAvatar',[
                     }
                 }
 
-                function refresh(identity){
+                function refresh(){
                     // hide the complete avatar
-                    if(attrs.cmView == 'hide-owner' && identity.isAppOwner){
+                    if(attrs.cmView == 'hide-owner' && scope.identity.isAppOwner){
                         element.css('display','none');
                     } else {
                         // get avatar image from model
-                        var file = identity.getAvatar();
+                        var file = scope.identity.getAvatar();
 
                         if(typeof file.on == 'function' && file.state != 'cached'){
                             file.on('file:cached', function(){
@@ -113,8 +116,8 @@ angular.module('cmUi').directive('cmAvatar',[
                         if(attrs.cmWithName){
                             if(!element.hasClass('with-name')){
                                 element.addClass('with-name');
-                                element.append('<div class="name" data-qa="avatar-display-name">'+identity.getDisplayName()+'</div>');
-                                element.attr('title',identity.getDisplayName());
+                                element.append('<div class="name" data-qa="avatar-display-name">'+scope.identity.getDisplayName()+'</div>');
+                                element.attr('title',scope.identity.getDisplayName());
                             }
                         }
                     }
@@ -125,16 +128,17 @@ angular.module('cmUi').directive('cmAvatar',[
                     element.find('img').attr('src', avatarMocks.none );
                     //element.css({'background-image': 'url(' + avatarMocks.none +')'});
                 } else {
-                    var identity = scope.$eval(attrs.cmData);
-                    if(typeof identity == 'object' && cmUtil.objLen(identity) > 0){
-                        if(identity.state.is('new') || identity.avatarId == undefined) {
-                            identity.on('update:finished', function (event, identity) {
-                                refresh(identity);
-                            });
-                        } else {
-                            refresh(identity);
+                    scope.$watch('identity',function(){
+                        if(typeof scope.identity == 'object' && cmUtil.objLen(scope.identity) > 0){
+                            if(scope.identity.state.is('new') || scope.identity.avatarId == undefined) {
+                                scope.identity.on('update:finished',function() {
+                                    refresh();
+                                });
+                            } else {
+                                refresh();
+                            }
                         }
-                    }
+                    });
                 }
             }
         }
