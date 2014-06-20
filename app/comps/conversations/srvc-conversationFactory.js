@@ -77,7 +77,6 @@ angular.module('cmConversations').service('cmConversationFactory', [
 
         cmConversationsAdapter.on('message:new', function(event,data){
             self.create(data.conversationId)
-            .update() 
             .trigger('message:new', data.message)
         })
 
