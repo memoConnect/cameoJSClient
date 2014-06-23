@@ -3,7 +3,8 @@
 angular.module('cmRouteSettings').directive('cmOverviewSettings', [
     'cmUserModel',
     'cmConfig',
-    function(cmUserModel,cmConfig){
+    '$location',
+    function(cmUserModel,cmConfig,$location){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-overview.html',
@@ -15,6 +16,12 @@ angular.module('cmRouteSettings').directive('cmOverviewSettings', [
                 $scope.logout = function(){
                     cmUserModel.doLogout();
                 };
+
+                $scope.goToSettingsPage = function(page){
+                    if(typeof page !== 'undefined'){
+                        $location.path('/settings/'+page);
+                    }
+                }
             }
         }
     }
