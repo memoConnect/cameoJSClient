@@ -28,6 +28,6 @@
     <cm-emoji-list cm-handler="emoji-handler" cm-textarea="emoji-textarea"></cm-emoji-list>
 
     <div class="post-wrap" data-qa="btn-send-answer" ng-click="send()">
-        <i class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap" ng-class="{'is-disabled':isSending}"></i>
+        <i class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap" ng-class="{'cm-post-idle':isSending}"></i>
     </div>
 </div>
