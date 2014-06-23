@@ -4,25 +4,15 @@
             <cm-avatar cm-data="identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-if="identity"></cm-avatar>
         </div>
         <div cm-weight="1">
-            <div class="cm-contact-widget">
-                {{'CONTACT.WIDGET'|cmTranslate}}:
-                <cm-lock-level cm-level="2"></cm-lock-level>
-                12 (3)
-                <i class="fa cm-right"></i>
-            </div>
-            <div class="cm-contact-actions" cm-rubber-space ng-if="contact">
-                <cm-contact-type cm-data="contact" cm-weight="1"></cm-contact-type>
-                <button class="with-white-bg" ng-click="startConversation()" data-qa="start-new-conversation-btn" cm-weight="1">
-                    <i class="fa cm-write "></i>
-                </button>b
-            </div>
+            <button class="cm-btn-block cm-btn-grey btn-identity-keys" ng-click="goToKeys()">{{'IDENTITY.PLACEHOLDER.KEYMANAGEMENT'|cmTranslate}} <i class="fa cm-key"></i></button>
+            <button class="cm-btn-block cm-btn-grey btn-identity-trust">{{'IDENTITY.PLACEHOLDER.TRUST'|cmTranslate}} <i class="fa cm-checker"></i></button>
         </div>
     </div>
 
     <div class="cm-contact-inputs">
         <form name="cmForm" novalidate>
-            <div class="cm-input-ctn" ng-class="{'cm-input-disabled':disabled}">
-                <input type="text" name="displayName" ng-model="identity.displayName" placeholder="{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" ng-disabled="disabled" required tabindex="1" data-qa="input-displayname" />
+            <div class="cm-input-ctn">
+                <input type="text" name="displayName" ng-model="identity.displayName" placeholder="{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" required tabindex="1" data-qa="input-displayname" />
             </div>
 
             <div class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid">
@@ -31,12 +21,12 @@
                 </div>
             </div>
 
-            <cm-multi-input cm-collection="identity.phoneNumbers" cm-disabled="disabled">
+            <cm-multi-input cm-collection="identity.phoneNumbers">
                 <ng-form name="formPhone">
-                    <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
-                        <input type="text" name="phoneNumber" ng-model="item.value" placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" ng-disabled="disabled" cm-validate-phone tabindex="2" data-qa="input-phonenumber" />
+                    <div class="cm-input-ctn with-chooser">
+                        <input type="text" name="phoneNumber" ng-model="item.value" placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" cm-validate-phone tabindex="2" data-qa="input-phonenumber" />
                     </div>
-                    <div cm-type-chooser cm-choose-value-to="item" cm-disabled="disabled" ng-class="{'cm-input-disabled':disabled}"></div>
+                    <div cm-type-chooser cm-choose-value-to="item"></div>
                     <div class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
                         <div ng-show="formPhone.phoneNumber.$invalid">
                             <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
@@ -45,12 +35,12 @@
                 </ng-form>
             </cm-multi-input>
 
-            <cm-multi-input cm-collection="identity.emails" cm-disabled="disabled">
+            <cm-multi-input cm-collection="identity.emails">
                 <ng-form name="formEmail">
-                    <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
-                        <input name="email" ng-model="item.value" placeholder="{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}" ng-disabled="disabled" cm-validate-email tabindex="3" data-qa="input-email" />
+                    <div class="cm-input-ctn with-chooser">
+                        <input name="email" ng-model="item.value" placeholder="{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}" cm-validate-email tabindex="3" data-qa="input-email" />
                     </div>
-                    <div cm-type-chooser cm-choose-value-to="item" ng-class="{'cm-input-disabled':disabled}" cm-disabled="disabled"></div>
+                    <div cm-type-chooser cm-choose-value-to="item"></div>
                     <div class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
                         <div ng-show="formEmail.email.$invalid">
                             <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
@@ -58,6 +48,24 @@
                     </div>
                 </ng-form>
             </cm-multi-input>
+
+
+            <adress class="cm-address">
+                <div class="cm-input-ctn">
+                    <input type="text" class="street" name="street" ng-model="identity.address.street" placeholder="{{'CONTACT.PLACEHOLDER.STREET'|cmTranslate}}" required tabindex="4" data-qa="input-address-street" />
+                    <input type="text" class="streetnr" name="streetnr" ng-model="identity.address.streetnr" placeholder="{{'CONTACT.PLACEHOLDER.STREETNR'|cmTranslate}}" required tabindex="5" data-qa="input-address-streetnr" />
+                </div>
+
+                <div class="cm-input-ctn">
+                    <input type="text" class="zip" name="zip" ng-model="identity.address.zip" placeholder="{{'CONTACT.PLACEHOLDER.ZIP'|cmTranslate}}" required tabindex="6" data-qa="input-address-zip" maxlength="5"/>
+                    <input type="text" class="city" name="city" ng-model="identity.address.city" placeholder="{{'CONTACT.PLACEHOLDER.CITY'|cmTranslate}}" required tabindex="7" data-qa="input-address-city" />
+                </div>
+            </adress>
+
         </form>
     </div>
 </div>
+
+<cm-footer>
+    <button class="cm-btn-block cm-btn-grey" ng-click="saveUser()">{{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
+</cm-footer>

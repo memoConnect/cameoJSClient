@@ -220,7 +220,11 @@
         "PLACEHOLDER": {
             "DISPLAYNAME": "{{'CONTACTS.LABEL.DISPLAYNAME'|cmTranslate}}",
             "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}",
-            "EMAIL": "{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}"
+            "EMAIL": "{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}",
+            "STREET": "Street",
+            "STREETNR": "Nr",
+            "ZIP": "Zip",
+            "CITY": "City"
         },
         "INFO": {
             "EMPTY": {
@@ -241,6 +245,13 @@
         },
         "FOOTER":{
             "SAVE": "save"
+        }
+    },
+
+    "IDENTITY":{
+        "PLACEHOLDER":{
+            "KEYMANAGEMENT": "manage",
+            "TRUST": "trust"
         }
     },
 	
