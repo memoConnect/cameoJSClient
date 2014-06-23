@@ -36,12 +36,4 @@ describe('settings', function(){
         $("cm-menu li.has-submenu .cm-list-parent-label").click()
         util.expectCurrentUrl('#/settings')
     })
-
-    it('open one of overview goes to mainPage /settings/identity and click on subPage button / settings/identity/keys', function(){
-        $$("cm-overview-settings ul li").get(1).$("a").click()
-        util.expectCurrentUrl('#/settings/identity')
-        $$("cm-identity-settings ul li").get(0).$("a").click()
-        util.expectCurrentUrl('#/settings/identity/keys')
-    })
-
 })
