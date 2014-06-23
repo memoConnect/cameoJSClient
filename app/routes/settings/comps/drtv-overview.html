@@ -3,18 +3,16 @@
 </header>
 
 <ul>
-    <li ng-repeat="page in Object.keys(overview)">
-        <a href="#/settings/{{page}}">
+    <li ng-repeat="page in Object.keys(overview)" ng-click="goToSettingsPage(page)">
+        <span class="item clearfix">
             <i class="fa" ng-class="overview[page].icon"></i>
             <span>{{overview[page].i18n|cmTranslate}}</span>
-            <div class="clearer"></div>
-        </a>
+        </span>
     </li>
-    <li>
-        <a ng-click="logout()">
+    <li ng-click="logout()">
+        <span class="item clearfix">
             <i class="fa cm-logout icon-left"></i>
             <span>{{'MENU.LOGOUT'|cmTranslate}}</span>
-            <div class="clearer"></div>
-        </a>
+        </span>
     </li>
 </ul>
