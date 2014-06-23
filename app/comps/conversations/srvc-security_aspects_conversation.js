@@ -29,7 +29,6 @@ angular.module('cmSecurityAspects')
                     id: 'ENCRYPTED',
                     value: 1,
                     check: function(conversation){
-                        console.log('ENCRYPTED', conversation.id,  conversation.isEncrypted())
                         return conversation.isEncrypted();
                     }
                 })
