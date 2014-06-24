@@ -76,7 +76,9 @@ angular.module('cmCore')
             });
 
             // after events!!!
-            init(data);
+            this.on('init:ready', function(){
+                init(data);
+            });
         }
 
         return cmNotifyModel;
@@ -87,7 +89,7 @@ angular.module('cmCore')
    'cmNotifyModel',
    '$rootScope',
    function(cmFactory, cmNotifyModel, $rootScope){
-       var self = cmFactory(cmNotifyModel);
+       var self = new cmFactory(cmNotifyModel);
 
        $rootScope.$on('logout', function(){ self.reset() });
 
@@ -100,13 +102,12 @@ angular.module('cmCore')
     function ($rootScope, cmNotify) {
         return {
             restrict: 'E',
-            template: '<i class="fa" ng-class="{\'cm-notification-on cm-orange\': ring, \'cm-notification\' : !ring}"></i>',
+            template: '<i class="fa" ng-class="{\'cm-notification-on cm-orange\': ring, \'cm-notification\': !ring}"></i>',
             scope: true,
             controller: function ($scope, $element, $attrs) {
                 $scope.ring = false;
 
                 cmNotify.on('bell:ring', function(event, notifyModel){
-                    console.log('notfiy signal event');
                     $scope.ring = true;
                 });
             }
