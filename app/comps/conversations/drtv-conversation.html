@@ -21,11 +21,11 @@
 
     <div class="message" data-qa="answer-ctn">
         <textarea data-qa="input-answer" cm-resize-textarea cm-max-rows="4" ng-model="my_message_text" id="emoji-textarea" cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls'}"></textarea>
-        <i class="fa cm-smile-negative with-cursor" id="emoji-handler"></i>
+        <cm-emoji-handler></cm-emoji-handler>
         <div class="inputter"></div>
     </div>
 
-    <cm-emoji-list cm-handler="emoji-handler" cm-textarea="emoji-textarea"></cm-emoji-list>
+    <cm-emoji-list ng-model="my_message_text" cm-textarea="emoji-textarea"></cm-emoji-list>
 
     <div class="post-wrap" data-qa="btn-send-answer" ng-click="send()">
         <i class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap" ng-class="{'cm-post-idle':isSending}"></i>

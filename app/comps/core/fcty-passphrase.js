@@ -324,7 +324,6 @@ angular.module('cmCore').factory('cmPassphrase',[
 
                 if(couldBeAPassphrase(passphrase) && typeof identities == 'object' && identities.length > 0){
                     return  identities.reduce(function(list, identity){
-                                console.log('list',list);
                                 return list.concat(identity.encryptPassphrase(passphrase))
                             }, [])
                 } else{
