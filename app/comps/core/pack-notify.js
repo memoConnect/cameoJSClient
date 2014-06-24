@@ -7,7 +7,7 @@ angular.module('cmCore')
     'cmUtil',
     'cmLogger',
     function(cmStateManagement, cmObject, cmUtil, cmLogger){
-        function cmNotifyModel(){
+        function cmNotifyModel(data){
             var self = this;
 
             cmObject.addEventHandlingTo(this);
@@ -63,6 +63,13 @@ angular.module('cmCore')
             this.render = function(){
 
             };
+
+            this.on('update:finished', function(){
+                this.render();
+            });
+
+            // after events!!!
+            init(data);
         }
 
         return cmNotifyModel;
