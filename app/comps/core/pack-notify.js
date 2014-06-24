@@ -79,4 +79,24 @@ angular.module('cmCore')
 
        return self;
    }
+])
+.directive('cmNotifySignal', [
+    '$rootScope',
+    'cmNotify',
+    function ($rootScope, cmNotify) {
+        return {
+            restrict: 'E',
+            template: '<i class="fa" ng-class="{\'cm-notification-on cm-orange\': ring, \'cm-notification\' : !ring}"></i>',
+            scope: true,
+            controller: function ($scope, $element, $attrs) {
+                $scope.ring = false;
+
+                cmNotify.on('bell:ring', function(event, notifyModel){
+                    console.log('notfiy signal event');
+                    $scope.ring = true;
+                });
+
+            }
+        }
+    }
 ]);
