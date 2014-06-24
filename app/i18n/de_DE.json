@@ -243,7 +243,7 @@
                 "EDIT": "Kontakt konnte nicht gespeichert werden"
             }
         },
-        "FOOTER":{
+        "FOOTER": {
             "SAVE": "speichern"
         }
     },
@@ -264,7 +264,8 @@
         "CONTACTS": "Kontakte",
         "APP": "App Einstellung",
         "ABOUT": "Über uns",
-        "CONTRACTS": "Verträge"
+        "CONTRACTS": "Verträge",
+        "LANGUAGE": "Spracheinstellung"
 	},
 	
 	"NAVIGATION": {
@@ -396,10 +397,10 @@
         }
     },
 
-    "SYSTEM":{
-        "WELCOME" :{
-            "MESSAGE" : "Cameo ist Beste",
-            "SUBJECT" :"Hallo"
+    "SYSTEM": {
+        "WELCOME": {
+            "MESSAGE": "Cameo ist Beste",
+            "SUBJECT": "Hallo"
         }
     }
 
