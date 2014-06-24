@@ -8,6 +8,8 @@ angular.module('cmRouteSettings').directive('cmAppSettings', [
             templateUrl: 'routes/settings/comps/drtv-app-settings.html',
             controller: function ($scope) {
 
+                $scope.settings = {};
+
             }
         }
     }

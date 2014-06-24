@@ -7,7 +7,7 @@
         <span class="item clearfix">
             <span class="title">
                 <i class="fa cm-checkbox-bg"></i>
-                <span>{{'SETTINGS.LANGUAGE' | cmTranslate}}</span>
+                <span>{{'SETTINGS.PAGES.APP.LANGUAGE' | cmTranslate}}</span>
             </span>
 
             <div class="content" cm-language-select></div>
@@ -17,7 +17,19 @@
         <span class="item clearfix">
             <span class="title">
                 <i class="fa cm-checkbox-bg"></i>
-                <span>{{'SETTINGS.ENTER' | cmTranslate}}</span>
+                <span>{{'SETTINGS.PAGES.APP.EMOJI_CONVERT' | cmTranslate}}</span>
+            </span>
+
+            <div class="content">
+                <i class="fa" ng-class="{'cm-checkbox':!settings.emojiConvert,'cm-checkbox-right':settings.emojiConvert}"></i>
+            </div>
+        </span>
+    </li>
+    <li>
+        <span class="item clearfix">
+            <span class="title">
+                <i class="fa cm-checkbox-bg"></i>
+                <span>{{'SETTINGS.PAGES.APP.SEND_ON_RETURN' | cmTranslate}}</span>
             </span>
 
             <span class="content">
