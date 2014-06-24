@@ -262,7 +262,7 @@
         "IDENTITY": "Identity",
         "NOTIFY": "Notification",
         "CONTACTS": "Contacts",
-        "VIEW": "View",
+        "APP": "APP Settings",
         "ABOUT": "About us",
         "CONTRACTS": "Contracts"
 	},

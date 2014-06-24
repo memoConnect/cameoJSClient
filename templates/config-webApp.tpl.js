@@ -115,7 +115,7 @@ cameo_config = {
         'identity': {i18n:'SETTINGS.IDENTITY', icon:'cm-person'},
         'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell'},
         'contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-contacts'},
-        'view': {i18n:'SETTINGS.VIEW', icon:'cm-fix'},
+        'app': {i18n:'SETTINGS.APP', icon:'cm-fix'},
         'about': {i18n:'SETTINGS.ABOUT', icon:'cm-rhino-positive'},
         'contracts': {i18n:'SETTINGS.CONTRACTS', icon:'cm-clipboard'}
     }
