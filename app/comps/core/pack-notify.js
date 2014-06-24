@@ -6,7 +6,8 @@ angular.module('cmCore')
     'cmObject',
     'cmUtil',
     'cmLogger',
-    function(cmStateManagement, cmObject, cmUtil, cmLogger){
+    '$rootScope',
+    function(cmStateManagement, cmObject, cmUtil, cmLogger, $rootScope){
         function cmNotifyModel(data){
             var self = this;
 
@@ -68,6 +69,7 @@ angular.module('cmCore')
 
             this.on('bell:ring', function(){
                 cmLogger.debug('cmNotifyModel.on.bell:ring');
+                $rootScope.$broadcast('bell:ring');
             })
 
             this.on('update:finished', function(){
@@ -105,7 +107,7 @@ angular.module('cmCore')
             controller: function ($scope, $element, $attrs) {
                 $scope.ring = false;
 
-                cmNotify.on('bell:ring', function(event, notifyModel){
+                $rootScope.$on('bell:ring', function(event, notifyModel){
                     console.log('notfiy signal event');
                     $scope.ring = true;
                 });
