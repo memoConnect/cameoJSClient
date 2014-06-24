@@ -394,5 +394,11 @@
                 "TOGGLE": "Disable passcaptcha!"
             }
         }
+    },
+    "SYSTEM":{
+        "WELCOME" :{
+            "MESSAGE" : "Cameo rulez",
+            "SUBJECT" :"Hello"
+        }
     }
 }
