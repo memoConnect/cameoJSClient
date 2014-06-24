@@ -37,14 +37,20 @@ angular.module('cmCore')
     }
 ])
 .service('cmNotify', [
-   'cmFactory',
-   'cmNotifyModel',
-   '$rootScope',
-   function(cmFactory, cmNotifyModel, $rootScope){
-       var self = cmFactory(cmNotifyModel);
+    'cmFactory',
+    'cmNotifyModel',
+    '$rootScope',
+    function(cmFactory, cmNotifyModel, $rootScope){
+        var self = cmFactory(cmNotifyModel);
 
-       $rootScope.$on('logout', function(){ self.reset() });
+        $rootScope.$on('logout', function(){
+            self.reset();
+        });
 
-       return self;
-   }
+        $scope.$on('cmNotify:update', function(){
+            $scope.unreadNotifications = cmNotify.getNotifications().length > 0;
+        });
+
+    return self;
+    }
 ]);

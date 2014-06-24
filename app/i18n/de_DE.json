@@ -341,7 +341,7 @@
 
     "MENU": {
         "HEADER": "Menü",
-        "NOTIFICATIONS": "Notifikationen",
+        "NOTIFICATIONS": "{{'NOTIFICATIONS.HEADER'|cmTranslate}}",
         "CONTACTS": "Kontakte",
         "REQUESTS": "Kontaktanfragen",
         "SETTINGS": "{{'SETTINGS.LABEL'|cmTranslate}}",
@@ -351,12 +351,15 @@
         "LOGOUT": "Logout"
     },
 
-    "NOTIFY":{
-        "KEYS":{
-            "STORE_NEW": "Schlüssel erfolgreich gespeichert!"
-        },
-        "SAVE_AS":{
-            "IOS_NOT_SUPPORT": "Leider unterstützt iOS das herunterladen von Dateien nicht. Öffnen Sie diesen Talk auf einem nicht iOS Gerät um diese Datei downloaden zukönnen. Unterstütze Formate gehen trotzdem: .pdf"
+    "NOTIFICATIONS":{
+        "HEADER": "Notifikationen",
+        "TYPES": {
+            "KEYS":{
+                "STORE_NEW": "Schlüssel erfolgreich gespeichert!"
+            },
+            "SAVE_AS":{
+                "IOS_NOT_SUPPORT": "Leider unterstützt iOS das herunterladen von Dateien nicht. Öffnen Sie diesen Talk auf einem nicht iOS Gerät um diese Datei downloaden zukönnen. Unterstütze Formate gehen trotzdem: .pdf"
+            }
         }
     },
 
