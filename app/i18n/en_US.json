@@ -341,7 +341,7 @@
 
     "MENU": {
         "HEADER": "Menu",
-        "NOTIFICATIONS": "Notifcations",
+        "NOTIFICATIONS": "{{'NOTIFICATIONS.HEADER'|cmTranslate}}",
         "CONTACTS": "Contacts",
         "REQUESTS": "Contact requests",
         "SETTINGS": "{{'SETTINGS.LABEL'|cmTranslate}}",
@@ -351,12 +351,15 @@
         "LOGOUT": "Logout"
     },
 
-    "NOTIFY": {
-        "KEYS":{
-            "STORE_NEW": "Key saved!"
-        },
-        "SAVE_AS":{
-            "IOS_NOT_SUPPORT": "Unfortunately iOS does not support to download files. Open this talk on a non-iOS device to download this file. Supported formats go anyway: .pdf"
+    "NOTIFICATIONS":{
+        "HEADER": "Notifikationen",
+        "TYPES": {
+            "KEYS":{
+                "STORE_NEW": "Key saved!"
+            },
+            "SAVE_AS":{
+                "IOS_NOT_SUPPORT": "Unfortunately iOS does not support to download files. Open this talk on a non-iOS device to download this file. Supported formats go anyway: .pdf"
+            }
         }
     },
 

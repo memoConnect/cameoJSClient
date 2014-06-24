@@ -87,6 +87,9 @@ cameo_config = {
         'version': {
             hasCtrl: true,
             guests: true
+        },
+        'notifications': {
+            hasCtrl: true
         }
     },
 
@@ -103,7 +106,7 @@ cameo_config = {
 
     menu: {
         'menu': {i18n:'MENU.HEADER', icon:'cm-menu', css:'cm-menu-header', onlyLabel:true},
-        //'notfications': {i18n:'MENU.NOTIFICATIONS', icon:'cm-bell', css:'cm-menu-notify'},
+        'notfications': {i18n:'MENU.NOTIFICATIONS', icon:'cm-notification', css:'cm-menu-notify'},
         'talks': {i18n:'MENU.MESSAGES', icon:'cm-envelope-closed', css:'cm-menu-notify'},
         'contacts': {i18n:'MENU.CONTACTS', icon:'cm-group', css:'cm-menu-notify'},
         'contacts/requests': {i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},

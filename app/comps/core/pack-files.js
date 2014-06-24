@@ -720,7 +720,7 @@ angular.module('cmCore')
                     cmModal.create({
                         id:'saveas',
                         type: 'alert'
-                    },'<span>{{\'NOTIFY.SAVE_AS.IOS_NOT_SUPPORT\'|cmTranslate}}</span>');
+                    },'<span>{{\'NOTIFICATIONS.TYPES.SAVE_AS.IOS_NOT_SUPPORT\'|cmTranslate}}</span>');
                     cmModal.open('saveas');
                 } else {
                     if(this.name && this.blob){
