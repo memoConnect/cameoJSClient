@@ -30,7 +30,6 @@ angular.module('cmUi').directive('cmBack',[
                         // if is set an default path in route
                     } else if($scope.backTo != ''){
                         $location.path($scope.backTo);
-                        $scope.$apply();
                     }
                 }
             }
