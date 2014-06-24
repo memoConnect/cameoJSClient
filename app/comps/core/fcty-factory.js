@@ -63,7 +63,9 @@ angular.module('cmCore').factory('cmFactory',[
              */
             self.new = function(args, withoutRegister){
                 var data     = typeof args == 'string' ? {id:args} : args,
-                    instance = new self.model(data)
+                    instance = new self.model(data);
+
+                // TODO: before init:ready in instance factory.echoEventsFrom(self); for observing before triggering
 
                 if(typeof withoutRegister !== 'boolean' || withoutRegister == false){
                     self.register(instance)
@@ -78,14 +80,15 @@ angular.module('cmCore').factory('cmFactory',[
              */
             self.register = function(instance){
                 if(
-                       self.indexOf(instance) == -1
+                    self.indexOf(instance) == -1
                     && instance instanceof this.model
                 ){
-                    self.push(instance)
+                    self.push(instance);
 
                     self.echoEventsFrom(instance);
 
-                    self.trigger('register', instance)
+                    self.trigger('register', instance);
+                    instance.trigger('init:ready');
 
                     return self.length
                 }
