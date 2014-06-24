@@ -61,11 +61,13 @@ angular.module('cmCore')
             };
 
             this.render = function(){
-
+                console.log('render!!!')
+                this.trigger('bell:ring');
             };
 
             this.on('update:finished', function(){
-                this.render();
+                console.log('on update')
+                self.render();
             });
 
             // after events!!!
@@ -98,11 +100,12 @@ angular.module('cmCore')
             controller: function ($scope, $element, $attrs) {
                 $scope.ring = false;
 
+                console.log('notifysignal')
+
                 cmNotify.on('bell:ring', function(event, notifyModel){
                     console.log('notfiy signal event');
                     $scope.ring = true;
                 });
-
             }
         }
     }
