@@ -27,10 +27,5 @@ describe('Route: Settings - Identity', function(){
     it('should be exists a form with following elements', function(){
         util.waitForElement("[data-qa='input-displayname']");
         expect($("[data-qa='input-displayname']").isPresent()).toBe(true)
-
-        util.waitForElement("[data-qa='input-displayname']");
-        expect($("[data-qa='input-displayname']").isPresent()).toBe(true)
-
-
     })
 });
