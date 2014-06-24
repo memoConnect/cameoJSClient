@@ -79,7 +79,7 @@ angular.module('cmConversations').directive('cmConversation', [
                 };
 
                 $rootScope.$on('sendOnReturn',function(){
-                    $scope.send()
+                    $scope.send();
                 });
 
                 /**
