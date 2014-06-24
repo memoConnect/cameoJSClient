@@ -352,14 +352,15 @@
     },
 
     "NOTIFICATIONS":{
-        "HEADER": "Notifikationen",
+        "HEADER": "Notifications",
         "TYPES": {
             "KEYS":{
                 "STORE_NEW": "Key saved!"
             },
             "SAVE_AS":{
                 "IOS_NOT_SUPPORT": "Unfortunately iOS does not support to download files. Open this talk on a non-iOS device to download this file. Supported formats go anyway: .pdf"
-            }
+            },
+            "FRIEND_REQUEST": "New friendrequest"
         }
     },
 

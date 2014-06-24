@@ -10,7 +10,11 @@ define([
         '$scope',
         'cmNotify',
         function($scope, cmNotify){
-            $scope.notifications = cmNotify.notifications;
+            $scope.notifications = cmNotify;
+
+            cmNotify.create({
+                id:'FRIEND_REQUEST'
+            });
         }
     ]);
 });

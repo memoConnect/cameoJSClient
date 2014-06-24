@@ -9,11 +9,11 @@
     <i class="fa cm-fix cm-lg-icon"></i> {{'NOTIFICATIONS.HEADER' | cmTranslate}}
 </header>
 
-<ul>
+<ul ng-controller="NotificationsCtrl">
     <li ng-repeat="notify in notifications">
         <span class="item clearfix">
             <span class="title">
-                <span>{{notify.id | cmTranslate}}</span>
+                <span>{{'NOTIFICATIONS.TYPES.'+notify.id | cmTranslate}}</span>
             </span>
         </span>
     </li>

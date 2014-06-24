@@ -359,7 +359,8 @@
             },
             "SAVE_AS":{
                 "IOS_NOT_SUPPORT": "Leider unterstützt iOS das herunterladen von Dateien nicht. Öffnen Sie diesen Talk auf einem nicht iOS Gerät um diese Datei downloaden zukönnen. Unterstütze Formate gehen trotzdem: .pdf"
-            }
+            },
+            "FRIEND_REQUEST": "Neue Freundschaftsanfrage"
         }
     },
 
