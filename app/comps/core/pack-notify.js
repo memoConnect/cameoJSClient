@@ -33,14 +33,12 @@ angular.module('cmCore')
  * cmNotify.error('LOGIN.INFO.404', {ttl:5000, hideGlobal:true});
  */
 .service('cmNotify', [
-
     '$rootScope',
     'growl',
     '$document',
-
     function ($rootScope, growl, $document) {
 
-        var notifications = []
+        var notifications = [];
 
         /**
          * hide/show all cm-notify arround a modal
@@ -55,11 +53,14 @@ angular.module('cmCore')
             }
         }
 
-        $rootScope.$on('growlMessage', function(event, message){
-            notifications.push(message)
+        // watch push and delete
+        $rootScope.$on('growlMessage', function(event, message, isDeleteEvent){
+            if(isDeleteEvent != undefined)
+                notifications = message
+            else
+                notifications.push(message)
             $rootScope.$broadcast('cmNotify:update')
-        })
-
+        });
 
         return {
             warn: function (msg, options) {
@@ -102,20 +103,19 @@ angular.module('cmCore')
     '$rootScope',
     'cmNotify',
     function ($rootScope, cmNotify) {
-        'use strict';
         return {
-            restrict: 'AE',
-            template: '<i class="fa" ng-class="{\'cm-notification-on cm-orange\': unreadNotifications, \'cm-notification\' : !unreadNotifications}"></i>',
+            restrict: 'E',
+            template: '<i class="fa" ng-class="{\'cm-notification-on cm-orange\': unreadNotifications, \'cm-notification\' : !unreadNotifications}" ng-hide="!unreadNotifications"></i>',
             scope: true,
 
             controller: function ($scope, $element, $attrs) {
-                $scope.unreadNotifications = cmNotify.getNotifications().length > 0
+                $scope.unreadNotifications = cmNotify.getNotifications().length > 0;
 
                 $scope.$on('cmNotify:update', function(event){
-                    $scope.unreadNotifications = cmNotify.getNotifications().length > 0
-                })
+                    console.log('notfiy signal event');
+                    $scope.unreadNotifications = cmNotify.getNotifications().length > 0;
+                });
             }
-            
         }
     }
 ]);

@@ -7,7 +7,9 @@ angular.module('cmConversations').directive('cmConversationControls', [
     '$location',
     '$document',
     '$window',
-    function(cmUserModel, cmNotify, cmLogger, $location, $document, $window){
+    'cmEnv',
+    '$rootScope',
+    function(cmUserModel, cmNotify, cmLogger, $location, $document, $window, cmEnv, $rootScope){
         return{
             restrict : 'AE',
             templateUrl : 'comps/conversations/drtv-conversation-controls.html',
@@ -17,7 +19,8 @@ angular.module('cmConversations').directive('cmConversationControls', [
             link: function(scope, element, attrs, cmConversation){
                 scope.bodyVisible   = cmConversation.isNew();
                 scope.isNew         = cmConversation.isNew();
-
+                scope.inputFocus    = false;
+                var times = 0;
 
                 function showControls(conversation){
                     if(!conversation.state.is('new')
@@ -51,6 +54,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
                     }
                 });
 
+                // TODO: found what does ios with window height and control height
 
                 var w = angular.element($window);
 
@@ -59,12 +63,12 @@ angular.module('cmConversations').directive('cmConversationControls', [
                         control = element[0].scrollHeight + element[0].offsetTop,
                         body = angular.element($document[0].querySelector(element[0].localName+' .body')),
                         bar = body[0].nextSibling.scrollHeight;
+
                     // set to min height
                     if(window < control){
                         element.addClass('too-big');
                         body.css('height',(window-(element[0].offsetTop+bar))+'px');
-
-                        scope.scrollToPassword();
+                        //scope.scrollToPassword();
                     // reset
                     } else {
                         element.removeClass('too-big');
@@ -74,8 +78,19 @@ angular.module('cmConversations').directive('cmConversationControls', [
 
                 w.bind('resize', checkHeight);
 
-                scope.$watch( function() {
-                    checkHeight();
+                scope.$watch(function() {
+                    if(!scope.bodyVisible)
+                        return false;
+
+                    if(!scope.inputFocus)
+                        checkHeight();
+                });
+
+                $rootScope.$on('cmIosFocus:focus',function(){
+                    scope.inputFocus = true;
+                });
+                $rootScope.$on('cmIosFocus:blur',function(){
+                    scope.inputFocus = false;
                 });
             },
 
