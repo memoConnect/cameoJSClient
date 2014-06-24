@@ -55,6 +55,8 @@ angular.module('cmConversations').directive('cmConversationControls', [
 
                 // TODO: found what does ios with window height and control height
 
+                var w = angular.element($window);
+
                 function checkHeight(){
                     var window = $window.innerHeight,
                         control = element[0].scrollHeight + element[0].offsetTop,
@@ -72,6 +74,8 @@ angular.module('cmConversations').directive('cmConversationControls', [
                         body.css({'height':'','width':'100%'});
                     }
                 }
+
+                w.bind('resize', checkHeight);
 
                 scope.$watch(function() {
                     if(!scope.bodyVisible)
