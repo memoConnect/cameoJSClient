@@ -8,7 +8,6 @@
 <section ng-controller="SettingsCtrl" ng-switch="mainPage+'/'+subPage" class="settings">
     <cm-overview-settings ng-switch-default></cm-overview-settings>
     <cm-app-settings ng-switch-when="app/"></cm-app-settings>
-    <cm-account-settings ng-switch-when="account/"></cm-account-settings>
     <cm-identity-settings ng-switch-when="identity/"></cm-identity-settings>
     <cm-identity-keys ng-switch-when="identity/keys"></cm-identity-keys>
     <cm-identity-trust ng-switch-when="identity/trust"></cm-identity-trust>

@@ -45,7 +45,9 @@
 
 angular.module('cmUi').directive('cmResizeTextarea',[
     '$timeout',
-    function ($timeout) {
+    'cmSettings',
+    '$rootScope',
+    function ($timeout, cmSettings, $rootScope) {
         return {
             restrict: 'A',
             scope: {
@@ -174,9 +176,14 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                 element.on('keypress', update);
                 element.on('change', update);
                 element.on('keydown', function(event){
-                    if (event.which == 9) {
+                    // on tab
+                    if (event.keyCode == 9) {
                         insertTextAtCursor(this, '\t');
                         return(false)
+                    }
+                    // on return
+                    if(event.keyCode == 13 && cmSettings.is('sendOnReturn')){
+                        $rootScope.$broadcast('sendOnReturn');
                     }
                     return true;
                 });

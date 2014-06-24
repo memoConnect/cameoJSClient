@@ -78,6 +78,10 @@ angular.module('cmConversations').directive('cmConversation', [
                     }
                 };
 
+                $rootScope.$on('sendOnReturn',function(){
+                    $scope.send()
+                });
+
                 /**
                  * compare date for date-seperator
                  * @param currentDate

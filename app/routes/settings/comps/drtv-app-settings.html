@@ -21,7 +21,7 @@
             </span>
 
             <span class="content">
-                 <button ng-click="setEmojiSettings()"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!settings.convertEmoji,'cm-checkbox-right':settings.convertEmoji}"></i></button>
+                 <button ng-click="handleBooleans('convertEmoji')"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!settings.convertEmoji,'cm-checkbox-right':settings.convertEmoji}"></i></button>
             </span>
         </span>
     </li>
@@ -33,7 +33,7 @@
             </span>
 
             <span class="content">
-                <button ng-click="setEnterSettings()"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!settings.submitOnEnter, 'cm-checkbox-right':settings.submitOnEnter}"></i></button>
+                <button ng-click="handleBooleans('sendOnReturn')"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!settings.sendOnReturn, 'cm-checkbox-right':settings.sendOnReturn}"></i></button>
             </span>
         </span>
     </li>

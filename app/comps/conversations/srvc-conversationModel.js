@@ -94,7 +94,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                     pw_list[id_conversation] = password;
 
-                    cmUserModel.storageSave(this.localKey, pw_list);
+
                 },
                 get: function(id_conversation){
                     var pw_list = this.getAll(),

@@ -2,7 +2,8 @@
 
 angular.module('cmUi').filter('cmEmoji', [
     '$filter',
-    function($filter){
+    'cmSettings',
+    function($filter, cmSettings){
 
         var convertSmileyToEmoji = [
             {matcher: [':\\)','\\(:','\\^\\^'], emoji:'blush'},
@@ -29,12 +30,14 @@ angular.module('cmUi').filter('cmEmoji', [
             str = $filter('emoji')(input.toString());
 
             // smiley to emoji
-            convertSmileyToEmoji.forEach(function(smiley){
-                var rSmiley = new RegExp(smiley.matcher.join("|"), "g");
-                str = str.toString().replace(rSmiley, function () {
-                    return '<i class="emoji emoji_'+smiley.emoji+'" title=":'+smiley.emoji+':">'+smiley.emoji+'</i>';
+            if(cmSettings.is('convertEmoji')) {
+                convertSmileyToEmoji.forEach(function (smiley) {
+                    var rSmiley = new RegExp(smiley.matcher.join("|"), "g");
+                    str = str.toString().replace(rSmiley, function () {
+                        return '<i class="emoji emoji_' + smiley.emoji + '" title=":' + smiley.emoji + ':">' + smiley.emoji + '</i>';
+                    });
                 });
-            });
+            }
 
             return str;
         };

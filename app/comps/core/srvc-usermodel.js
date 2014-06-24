@@ -21,7 +21,6 @@
  */
 
 angular.module('cmCore').service('cmUserModel',[
-
     'cmBoot',
     'cmAuth',
     'cmLocalStorage', 
@@ -33,7 +32,6 @@ angular.module('cmCore').service('cmUserModel',[
     '$rootScope', 
     '$q', 
     '$location',
-
     function(cmBoot,cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmObject, cmNotify, cmLogger, $rootScope, $q, $location){
         var self = this,
             isAuth = false,

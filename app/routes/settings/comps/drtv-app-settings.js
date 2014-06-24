@@ -1,34 +1,20 @@
 'use strict';
 
 angular.module('cmRouteSettings').directive('cmAppSettings', [
-    'cmUserModel',
-    function(cmUserModel){
+    'cmSettings',
+    function(cmSettings){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-app-settings.html',
             controller: function ($scope) {
+                $scope.settings = cmSettings.properties;
 
-                $scope.settings = {
-                    convertEmoji: true,
-                    submitOnEnter: false
+                $scope.handleBooleans = function(key) {
+                    var newValue = $scope.settings[key] ? false : true;
+
+                    if(cmSettings.set(key, newValue))
+                        $scope.settings[key] = newValue;
                 };
-
-                $scope.setEmojiSettings = function(){
-                    if($scope.settings.convertEmoji !== false){
-                        $scope.settings.convertEmoji = false;
-                    } else {
-                        $scope.settings.convertEmoji = true;
-                    }
-                };
-
-                $scope.setEnterSettings = function(){
-                    if($scope.settings.submitOnEnter !== false){
-                        $scope.settings.submitOnEnter = false;
-                    } else {
-                        $scope.settings.submitOnEnter = true;
-                    }
-                };
-
             }
         }
     }
