@@ -106,11 +106,10 @@ angular.module('cmCore')
             restrict: 'E',
             template: '<i class="fa" ng-class="{\'cm-notification-on cm-orange\': ring, \'cm-notification\': !ring}"></i>',
             scope: true,
-            controller: function ($scope, $element, $attrs) {
+            controller: function ($scope) {
                 $scope.ring = false;
 
-                $rootScope.$on('bell:ring', function(event, notifyModel){
-                    console.log('notfiy signal event');
+                $rootScope.$on('bell:ring', function(){
                     $scope.ring = true;
                 });
             }
