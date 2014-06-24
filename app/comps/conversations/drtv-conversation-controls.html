@@ -28,14 +28,14 @@
         <section class="body-group no-padding">
             <div class="label-with-checkbox">
                 <label class="w20">{{'CONVERSATION.PLACEHOLDER.ENCRYPTION' | cmTranslate}}</label>
-                <div class="w80 tac dib">
+                <div class="w80 checkbox-of-label">
                     <button ng-click="toggleConversationEncryption()" data-qa="encryption-btn"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.isEncrypted(), 'cm-checkbox-right':conversation.isEncrypted(), 'cm-grey':!isNew}" data-qa="icon-checkbox-encryption"></i></button>
                 </div>
             </div>
 
             <div class="label-with-checkbox" ng-if="conversation.options.hasPassword && conversation.isEncrypted()">
                 <label class="w20">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA' | cmTranslate}}</label>
-                <div class="w80 tac dib">
+                <div class="w80 checkbox-of-label">
                     <button ng-click="toggleCaptcha()"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.options.hasCaptcha, 'cm-checkbox-right':conversation.options.hasCaptcha, 'cm-grey':!isNew}" data-qa="icon-checkbox-passcaptcha"></i></button>
                 </div>
             </div>
@@ -65,7 +65,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <div ng-if="conversation.options.showKeyInfo" style="text-align:center; cursor:pointer" cm-user-rights>
