@@ -394,5 +394,13 @@
                 "TOGGLE": "Passcaptcha deaktivieren"
             }
         }
+    },
+
+    "SYSTEM":{
+        "WELCOME" :{
+            "MESSAGE" : "Cameo ist Beste",
+            "SUBJECT" :"Hallo"
+        }
     }
+
 }
