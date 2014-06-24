@@ -8,7 +8,8 @@ angular.module('cmConversations').directive('cmConversationControls', [
     '$document',
     '$window',
     'cmEnv',
-    function(cmUserModel, cmNotify, cmLogger, $location, $document, $window, cmEnv){
+    '$rootScope',
+    function(cmUserModel, cmNotify, cmLogger, $location, $document, $window, cmEnv, $rootScope){
         return{
             restrict : 'AE',
             templateUrl : 'comps/conversations/drtv-conversation-controls.html',
@@ -18,7 +19,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
             link: function(scope, element, attrs, cmConversation){
                 scope.bodyVisible   = cmConversation.isNew();
                 scope.isNew         = cmConversation.isNew();
-                scope.heightState   = '';
+                scope.inputFocus    = false;
                 var times = 0;
 
                 function showControls(conversation){
@@ -81,8 +82,15 @@ angular.module('cmConversations').directive('cmConversationControls', [
                     if(!scope.bodyVisible)
                         return false;
 
-                    if(scope.passwordFocus == undefined || !scope.passwordFocus)
+                    if(!scope.inputFocus)
                         checkHeight();
+                });
+
+                $rootScope.$on('cmIosFocus:focus',function(){
+                    scope.inputFocus = true;
+                });
+                $rootScope.$on('cmIosFocus:blur',function(){
+                    scope.inputFocus = false;
                 });
             },
 

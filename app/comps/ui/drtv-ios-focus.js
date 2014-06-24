@@ -3,8 +3,8 @@
 angular.module('cmUi').directive('cmIosFocus',[
     'cmEnv',
     '$document',
-    '$timeout',
-    function (cmEnv, $document, $timeout) {
+    '$rootScope',
+    function (cmEnv, $document, $rootScope) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
@@ -31,6 +31,7 @@ angular.module('cmUi').directive('cmIosFocus',[
                     trigger = $document[0].querySelector('.post-wrap');
 
                     element.on('focus', function(event){
+                        $rootScope.$broadcast('cmIosFocus:focus');
                         view.on('touchstart',stopEvent);
                         fixedElements.css('position','absolute');
                         if('scrollTop' in settings && settings.scrollTop) {
@@ -41,6 +42,7 @@ angular.module('cmUi').directive('cmIosFocus',[
                     });
 
                     element.on('blur', function(event){
+                        $rootScope.$broadcast('cmIosFocus:blur');
                         fixedElements.css('position','fixed');
                         view.off('touchstart',stopEvent);
                     });
