@@ -175,15 +175,20 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                 element.on('undo', update);
                 element.on('keypress', update);
                 element.on('change', update);
-                element.on('keydown', function(event){
+                element.on('keydown', function(e){
                     // on tab
-                    if (event.keyCode == 9) {
+                    if (e.keyCode == 9) {
                         insertTextAtCursor(this, '\t');
-                        return(false)
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
                     }
                     // on return
-                    if(event.keyCode == 13 && cmSettings.is('sendOnReturn')){
+                    if(e.keyCode == 13 && cmSettings.is('sendOnReturn')){
                         $rootScope.$broadcast('sendOnReturn');
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
                     }
                     return true;
                 });
