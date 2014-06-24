@@ -11,9 +11,10 @@ angular.module('cmCore')
             var self = this;
 
             cmObject.addEventHandlingTo(this);
+
             this.state = new cmStateManagement(['new','read','error']);
 
-            this.id = undefined;
+            this.label = undefined;
             this.severity = undefined;
             this.displayType = undefined;
             this.callbackRoute = undefined;
@@ -29,7 +30,7 @@ angular.module('cmCore')
              * @param data
              */
             function init(data){
-                cmLogger.debug('cmNotifyModel.init');
+//                cmLogger.debug('cmNotifyModel.init');
 
                 self.state.set('new');
 
@@ -39,11 +40,11 @@ angular.module('cmCore')
             }
 
             this.importData = function(data){
-                cmLogger.debug('cmNotifyModel.importData');
-                console.log('importData', data);
+//                cmLogger.debug('cmNotifyModel.importData');
+//                console.log('importData', data);
 
                 if(typeof data == 'object' || typeof data == 'array'){
-                    this.id = data.id || this.id;
+                    this.label = data.label || this.label;
 
                     this.severity = data.severity || this.severity;
 
@@ -61,12 +62,16 @@ angular.module('cmCore')
             };
 
             this.render = function(){
-                console.log('render!!!')
+//                cmLogger.debug('cmNotifyModel.render');
                 this.trigger('bell:ring');
             };
 
+            this.on('bell:ring', function(){
+                cmLogger.debug('cmNotifyModel.on.bell:ring');
+            })
+
             this.on('update:finished', function(){
-                console.log('on update')
+//                cmLogger.debug('cmNotifyModel.on.update:finished');
                 self.render();
             });
 
@@ -99,8 +104,6 @@ angular.module('cmCore')
             scope: true,
             controller: function ($scope, $element, $attrs) {
                 $scope.ring = false;
-
-                console.log('notifysignal')
 
                 cmNotify.on('bell:ring', function(event, notifyModel){
                     console.log('notfiy signal event');

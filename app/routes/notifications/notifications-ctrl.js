@@ -12,9 +12,11 @@ define([
         function($scope, cmNotify){
             $scope.notifications = cmNotify;
 
-            cmNotify.create({
-                id:'FRIEND_REQUEST'
-            });
+            $scope.ring = function(){
+                cmNotify.new({
+                    label:'FRIEND_REQUEST'
+                });
+            }
         }
     ]);
 });

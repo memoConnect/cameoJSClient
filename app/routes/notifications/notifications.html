@@ -10,10 +10,11 @@
 </header>
 
 <ul ng-controller="NotificationsCtrl">
+    <button ng-click="ring();">ring!</button>
     <li ng-repeat="notify in notifications">
         <span class="item clearfix">
             <span class="title">
-                <span>{{'NOTIFICATIONS.TYPES.'+notify.id | cmTranslate}}</span>
+                <span>{{'NOTIFICATIONS.TYPES.'+notify.label | cmTranslate}}</span>
             </span>
         </span>
     </li>
