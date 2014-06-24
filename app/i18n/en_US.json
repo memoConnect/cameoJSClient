@@ -265,7 +265,13 @@
         "APP": "APP Settings",
         "ABOUT": "About us",
         "CONTRACTS": "Contracts",
-        "LANGUAGE": "Language Settings"
+        "PAGES": {
+            "APP": {
+                "LANGUAGE": "Language Settings",
+                "EMOJI_CONVERT": "Convert Smileys to Emojis",
+                "SEND_ON_RETURN": "Send on Return"
+            }
+        }
 	},
 	
 	"NAVIGATION": {

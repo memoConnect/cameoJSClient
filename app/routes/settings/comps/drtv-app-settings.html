@@ -7,7 +7,7 @@
         <span class="item clearfix">
             <span class="title">
                 <i class="fa cm-checkbox-bg"></i>
-                <span>{{'SETTINGS.LANGUAGE' | cmTranslate}}</span>
+                <span>{{'SETTINGS.PAGES.APP.LANGUAGE' | cmTranslate}}</span>
             </span>
 
             <div class="content" cm-language-select></div>
@@ -17,11 +17,23 @@
         <span class="item clearfix">
             <span class="title">
                 <i class="fa cm-checkbox-bg"></i>
-                <span>{{'SETTINGS.ENTER' | cmTranslate}}</span>
+                <span>{{'SETTINGS.PAGES.APP.EMOJI_CONVERT' | cmTranslate}}</span>
             </span>
 
             <span class="content">
-                <button><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':true, 'cm-checkbox-right':false}"></i></button>
+                 <button ng-click="handleBooleans('convertEmoji')"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!settings.convertEmoji,'cm-checkbox-right':settings.convertEmoji}"></i></button>
+            </span>
+        </span>
+    </li>
+    <li>
+        <span class="item clearfix">
+            <span class="title">
+                <i class="fa cm-checkbox-bg"></i>
+                <span>{{'SETTINGS.PAGES.APP.SEND_ON_RETURN' | cmTranslate}}</span>
+            </span>
+
+            <span class="content">
+                <button ng-click="handleBooleans('sendOnReturn')"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!settings.sendOnReturn, 'cm-checkbox-right':settings.sendOnReturn}"></i></button>
             </span>
         </span>
     </li>

@@ -4,12 +4,24 @@ describe('Directive cmResizeTextarea', function () {
     var area,
         shadow,
         scope,
-        oneLine = 'moep moepppp moeepp meopp meow'
+        oneLine = 'moep moepppp moeepp meopp meow',
+        $httpBackend
 
     // example:
     // <textarea cm-resize-textarea cm-max-rows="number" ng-model="any"></textarea>
 
+    beforeEach(function(){
+        module(function($provide){
+            $provide.constant('cmEnv',{});
+        })
+    })
+
     beforeEach(module('cmUi'))
+
+    beforeEach(inject(function(_$httpBackend_){
+        $httpBackend = _$httpBackend_;
+        $httpBackend.whenGET('/identity').respond({});
+    }))
 
     function createDrtv(html, _scope_){
         inject(function ($rootScope, $compile) {

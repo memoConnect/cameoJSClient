@@ -265,7 +265,13 @@
         "APP": "App Einstellung",
         "ABOUT": "Über uns",
         "CONTRACTS": "Verträge",
-        "LANGUAGE": "Spracheinstellung"
+        "PAGES":{
+            "APP": {
+                "LANGUAGE": "Spracheinstellung",
+                "EMOJI_CONVERT": "Smileys zu Emojis",
+                "SEND_ON_RETURN": "Senden bei Enter-Tasten druck"
+            }
+        }
 	},
 	
 	"NAVIGATION": {

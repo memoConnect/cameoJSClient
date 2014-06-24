@@ -177,9 +177,6 @@ angular.module('cmCore')
             return this 
         }
 
-
-
- 
         this.addChainHandlingTo = function(obj){
             obj._chains = {}
 
