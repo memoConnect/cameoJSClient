@@ -1,8 +1,8 @@
  <div class="control">
     <div cm-transparent-bg ng-show="bodyVisible" ng-click="toggleControls()"></div>
     <div ng-show="bodyVisible" class="body" data-qa="conversation-options-menu">
-
         <section class="body-group">
+            {{heightState}}
             <label>{{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}</label>
             <div class="recipients-list">
                 <div class="scroller">
@@ -60,7 +60,7 @@
                     <div class="cm-form-group label-with-checkbox">
                         <label class="w20">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</label>
                         <div class="cm-form-control with-inputter w80" style="background-color:#fff" ng-class="{'with-inside-icon':!isNew}">
-                            <input style="background-color:#fff" type="text" ng-model="conversation.password" placeholder="{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" ng-focus="scrollToPassword()" cm-adaptive-change />
+                            <input style="background-color:#fff" type="text" ng-model="conversation.password" placeholder="{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" ng-focus="scrollToPassword()" cm-adaptive-change cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls', scrollTop:true}" ng-focus="passwordFocus=true" ng-blur="passwordFocus=false" />
                             <i class="fa cm-key fa-2x with-cursor" ng-click="decrypt()" ng-if="!isNew"></i>
                         </div>
                     </div>

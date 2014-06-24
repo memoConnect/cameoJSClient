@@ -111,8 +111,6 @@ angular.module('cmCore')
             controller: function ($scope, $element, $attrs) {
                 $scope.unreadNotifications = cmNotify.getNotifications().length > 0;
 
-                console.log('controller')
-
                 $scope.$on('cmNotify:update', function(event){
                     console.log('notfiy signal event');
                     $scope.unreadNotifications = cmNotify.getNotifications().length > 0;

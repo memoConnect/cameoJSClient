@@ -26,8 +26,8 @@ angular.module('cmUi').directive('cmBack',[
                     $scope.backTo = $attrs.backTo;
                     $scope.isVisible = true;
                 }
-                // bind click event
-                $element.on('click', function(){
+
+                function goBack(){
                     // if history has more then one index
                     if($rootScope.urlHistory.length > 0 && ('plainBack' in $attrs) == false){
                         $window.history.back();
@@ -36,7 +36,10 @@ angular.module('cmUi').directive('cmBack',[
                         $location.path($scope.backTo);
                         $scope.$apply();
                     }
-                });
+                }
+
+                // bind click event
+                $element.on('click', goBack);
             }
         }
     }
