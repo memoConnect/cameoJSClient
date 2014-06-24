@@ -10,12 +10,23 @@ section.settings {
   ul {
     background-color: @cm-white;
     li {
-      height: 3rem;
+      min-height: 3rem;
       border-bottom: @cm-border-grey @cm-border-width solid;
       .item {
         color: @cm-grey;
         display: inline-block;
-        margin: 0.5rem 0 0 1rem;
+        padding: 0.5rem 0 0 1rem;
+        width: 100%;
+        position: relative;
+        .title, .content {
+          display: inline-block;
+          width: 50%;
+        }
+        .content {
+          position: relative;
+          text-align: right;
+          right: 0.5rem;
+        }
       }
       i {
         margin-right: 1rem;

@@ -48,6 +48,9 @@ angular.module('cmUi').directive('cmResizeTextarea',[
     function ($timeout) {
         return {
             restrict: 'A',
+            scope: {
+                text: '=ngModel'
+            },
             link: function (scope, element, attrs) {
                 // vars
                 var paddingLeft = element.css('paddingLeft'),
@@ -162,7 +165,14 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                     textAreaRowHeight = element[0].offsetHeight;
 
                 // event binding
-                element.on('keyup redo undo keypress change', update);
+                scope.$watch('text', function(newText){
+                    update(newText);
+                });
+                element.on('keyup', update);
+                element.on('redo', update);
+                element.on('undo', update);
+                element.on('keypress', update);
+                element.on('change', update);
                 element.on('keydown', function(event){
                     if (event.which == 9) {
                         insertTextAtCursor(this, '\t');

@@ -17,7 +17,20 @@
                         arrClear = arrClear.concat(self.items[mainCat][subCat]);
                     });
                 });
-                return arrClear.join(delimiter||',');
+                return arrClear.join(delimiter || ',');
+            },
+            getFromCategory: function(mainCat, subCat){
+                var arrReturn = [];
+                if(mainCat != undefined && subCat == undefined){
+                    if(Object.keys(this.items).indexOf(mainCat) > -1){
+                        arrReturn = this.items[mainCat];
+                    }
+                } else if(mainCat != undefined && subCat != undefined){
+                    if(Object.keys(this.items).indexOf(mainCat) > -1 && Object.keys(this.items[mainCat]).indexOf(subCat) > -1){
+                        arrReturn = this.items[mainCat][subCat];
+                    }
+                }
+                return arrReturn;
             }
         }
     })

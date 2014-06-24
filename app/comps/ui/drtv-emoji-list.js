@@ -3,23 +3,78 @@
 angular.module('cmUi').directive('cmEmojiList',[
     'emoji',
     'cmUtil',
-    function (emoji, cmUtil){
+    '$document',
+    '$rootScope',
+    function (emoji, cmUtil, $document, $rootScope) {
 
-        var blacklist = ['poop', 'shit', '\\-1', '\\+1', 'facepunch', 'shipit'];
+        var blacklist = ['poop', 'shit', '\\-1', '\\+1', 'facepunch', 'shipit'],
+            sortCategories = {
+                "people": ["smiley", "hands", "ape", "cat", "faces", "hearts", "specials", "woman", "unsorted"],
+                "symbols": ["lock", "unsorted"],
+                "nature": ["misc", "pet", "planets"]
+            };
 
         return{
             restrict: 'E',
-            template: '<div ng-show="showList"><div>',
+            template: '<div ng-show="showList">' +
+                        '<div ng-repeat="emoji in emojis" class="emoji-wrapper" ng-click="insertEmoji(emoji)">' +
+                            '<i class="emoji emoji_{{emoji}}" title=":{{emoji}}:">{{emoji}}</i>' +
+                        '</div>' +
+                      '<div>',
+            scope: {
+                ngModel: '=ngModel'
+            },
             link: function(scope, element, attrs){
 
                 var textarea = undefined,
-                    textareaModel = undefined;
+                    textareaModel = undefined,
+                    body = angular.element($document[0].querySelector('body'));
 
-                scope.showList = false;
+                /**
+                 * Function returns a reference of requested parent element.
+                 * @param {String} tag_name Tag name of requested parent element.
+                 * @param {HTMLElement} el Initial element (from which search begins).
+                 */
+                function findParent (tag_name, el) {
+                    // loop up until parent element is found
+                    while (el && el.nodeName !== tag_name) {
+                        el = el.parentNode;
+                    }
+                    // return found element
+                    return el;
+                }
 
-                scope.toggleList = function(){
-                    scope.showList = scope.showList ? false : true;
-                    scope.$apply();
+                function clickOutside(e){
+                    if(e.target != element[0] && // target not emojilist
+                       !findParent('CM-EMOJI-LIST',e.target) && // emojilist isnt parent
+                       !findParent('CM-EMOJI-HANDLER',e.target) // isnt handler
+                    ) {
+                        scope.toggleList('close',true);
+                    }
+                }
+
+                function createEmoji(emoji){
+                    if(blacklist.indexOf(emoji) == -1) {
+                        scope.emojis.push(emoji);
+                    }
+                }
+
+                scope.emojis = [];
+
+                scope.toggleList = function(action, withApply){
+                    scope.showList = action != undefined && action == 'close' || action == undefined && scope.showList ? false : true;
+
+                    if(scope.showList){
+                        body.on('click',clickOutside);
+                        body.on('touchstart',clickOutside);
+                    } else {
+                        body.off('click',clickOutside);
+                        body.off('touchstart',clickOutside);
+                    }
+
+                    if(withApply != undefined && withApply)
+                        scope.$apply();
+
                 };
 
                 scope.insertEmoji = function(emoji){
@@ -37,13 +92,10 @@ angular.module('cmUi').directive('cmEmojiList',[
                     strWithEmoticon+= cmUtil.endsWith(strWithEmoticon, ' ') ? insertSymbol : ' '+insertSymbol;
                     strWithEmoticon+= oldValue.substring(textEnd);
 
-                    scope.showList = false;
+                    scope.toggleList('close');
 
-                    if(textareaModel != undefined) {
-                        //textarea.val(strWithEmoticon);
-                        scope[textareaModel] = strWithEmoticon;
-                        scope.$apply();
-                    }
+                    //textarea.val(strWithEmoticon);
+                    scope.ngModel = strWithEmoticon;
 
                     textarea[0].focus();
                     textarea[0].selectionStart = textEnd+insertSymbol.length;
@@ -51,29 +103,45 @@ angular.module('cmUi').directive('cmEmojiList',[
                 };
 
                 // create emojis
-                emoji.getAllAsString().split(',').forEach(function(emoji){
-                    if(blacklist.indexOf(emoji) == -1) {
-                        var icon = angular.element('<div class="emoji-wrapper"><i class="emoji emoji_' + emoji + '" title=":' + emoji + ':">' + emoji + '</i></div>');
-                        icon.on('click', function () {
-                            scope.insertEmoji(emoji)
+                Object.keys(sortCategories).forEach(function(mainCat){
+                    sortCategories[mainCat].forEach(function(subCat){
+                        emoji.getFromCategory(mainCat, subCat).forEach(function(emoji){
+                            createEmoji(emoji);
                         });
-                        element.children().append(icon);
-                    }
+                    });
                 });
-                // visiblitity handler
-                if(attrs.cmHandler){
-                    var handler = angular.element(document.getElementById(attrs.cmHandler));
-                    handler.on('click',function(){scope.toggleList()});
-                }
+
+//                emoji.getAllAsString().split(',').forEach(function(emoji){
+//                    createEmoji(emoji);
+//                });
+
+                scope.toggleList('close');
+
+                // emoji-list-handler watcher
+                $rootScope.$on('cmEmojiList:toggle',function(){
+                    scope.toggleList();
+                });
+
                 // textarea for emoji insertion
                 if(attrs.cmTextarea){
                     textarea = angular.element(document.getElementById(attrs.cmTextarea));
-
-                    if(textarea.length > 0) {
-                        textareaModel = textarea.attr('ng-model');
-                    }
                 }
             }
         }
     }
+])
+.directive('cmEmojiHandler',[
+   '$rootScope',
+   function($rootScope){
+       return{
+           restrict: 'E',
+           template: '<i class="fa cm-smile-negative with-cursor" ng-click="toggleList()"></i>',
+           scope: true,
+           controller: function($scope){
+               $scope.toggleList = function(){
+                   $rootScope.$broadcast('cmEmojiList:toggle');
+               }
+           }
+       }
+   }
 ]);

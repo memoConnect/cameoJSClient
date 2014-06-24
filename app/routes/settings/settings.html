@@ -1,5 +1,5 @@
 <cm-header cm-rubber-space>
-    <cm-back cm-weight="3" page-title="'SETTINGS.WELCOME'|cmTranslate" back-to="/talks"></cm-back>
+    <cm-back cm-weight="3" page-title="SETTINGS.WELCOME" back-to="/talks"></cm-back>
     <cm-logo cm-weight="3"></cm-logo>
     <cm-reload cm-weight="2"></cm-reload>
     <cm-menu cm-weight="1"></cm-menu>
@@ -7,6 +7,7 @@
 
 <section ng-controller="SettingsCtrl" ng-switch="mainPage+'/'+subPage" class="settings">
     <cm-overview-settings ng-switch-default></cm-overview-settings>
+    <cm-app-settings ng-switch-when="app/"></cm-app-settings>
     <cm-account-settings ng-switch-when="account/"></cm-account-settings>
     <cm-identity-settings ng-switch-when="identity/"></cm-identity-settings>
     <cm-identity-keys ng-switch-when="identity/keys"></cm-identity-keys>

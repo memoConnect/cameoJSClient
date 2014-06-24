@@ -38,7 +38,10 @@ angular.module('angular-growl').directive('growl', [
                         }
                     }
 
-                    $rootScope.$on('growlMessage', function (event, message) {
+                    $rootScope.$on('growlMessage', function (event, message, isDeleteEvent) {
+                        if(isDeleteEvent != undefined)
+                            return false;
+
                         var found;
                         if (onlyUnique) {
                             angular.forEach($scope.messages, function (msg) {
@@ -53,10 +56,12 @@ angular.module('angular-growl').directive('growl', [
                             addMessage(message);
                         }
                     });
+
                     $scope.deleteMessage = function (message) {
                         var index = $scope.messages.indexOf(message);
                         if (index > -1) {
                             $scope.messages.splice(index, 1);
+                            $rootScope.$broadcast('growlMessage', $scope.messages, true);
                         }
                     };
                     $scope.computeClasses = function (message) {

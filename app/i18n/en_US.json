@@ -262,9 +262,10 @@
         "IDENTITY": "Identity",
         "NOTIFY": "Notification",
         "CONTACTS": "Contacts",
-        "VIEW": "View",
+        "APP": "APP Settings",
         "ABOUT": "About us",
-        "CONTRACTS": "Contracts"
+        "CONTRACTS": "Contracts",
+        "LANGUAGE": "Language Settings"
 	},
 	
 	"NAVIGATION": {
@@ -396,9 +397,9 @@
         }
     },
     "SYSTEM":{
-        "WELCOME" :{
-            "MESSAGE" : "Cameo rulez",
-            "SUBJECT" :"Hello"
+        "WELCOME": {
+            "MESSAGE": "Cameo rulez",
+            "SUBJECT": "Hello"
         }
     }
 }

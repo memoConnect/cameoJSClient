@@ -105,10 +105,10 @@ angular.module('cmCore')
                         return cmTranslate.uses(lang_key)
                         .then(
                             function(){
-                                cmNotify.info(cmTranslate('LANG.SWITCH.SUCCESS', { lang: self.getLanguageName(lang_key), ttl: 5000 }))
+                                cmNotify.info(cmTranslate('LANG.SWITCH.SUCCESS', { lang: self.getLanguageName(lang_key), ttl: 2000 }))
                             },
                             function(){
-                                cmNotify.error(cmTranslate('LANG.SWITCH.ERROR', { lang: self.getLanguageName(lang_key), ttl: 5000 }))
+                                cmNotify.error(cmTranslate('LANG.SWITCH.ERROR', { lang: self.getLanguageName(lang_key), ttl: 2000 }))
                             }
                         )
                     },
