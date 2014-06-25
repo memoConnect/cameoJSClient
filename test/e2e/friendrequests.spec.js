@@ -71,7 +71,10 @@ describe('Friendrequests', function () {
                 util.waitForPageLoad("/talks")
             })
 
-            it('check notification', function(){
+            /**
+             * @deprecated
+             */
+            xit('check notification', function(){
                 // close notify of new friendRequest (might remove this at some point)
                 util.waitAndCloseNotify()
                 // bell is orange
