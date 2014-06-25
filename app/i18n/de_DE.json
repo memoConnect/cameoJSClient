@@ -251,7 +251,7 @@
     },
 
     "IDENTITY":{
-        "PLACEHOLDER":{
+        "LABEL":{
             "KEYMANAGEMENT": "Key Verwaltung",
             "TRUST": "Trust Me"
         }
@@ -272,6 +272,9 @@
                 "LANGUAGE": "Spracheinstellung",
                 "EMOJI_CONVERT": "Smileys zu Emojis",
                 "SEND_ON_RETURN": "Senden bei Enter-Tasten druck"
+            },
+            "IDENTITY": {
+                "KEYS": "{{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}"
             }
         }
 	},

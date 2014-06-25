@@ -2,11 +2,14 @@
 
 angular.module('cmRouteSettings').directive('cmAppSettings', [
     'cmSettings',
-    function(cmSettings){
+    '$rootScope',
+    function(cmSettings, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-app-settings.html',
             controller: function ($scope) {
+                $rootScope.$broadcast('pageTitle:change','SETTINGS.APP');
+
                 $scope.settings = cmSettings.properties;
 
                 $scope.handleBooleans = function(key) {

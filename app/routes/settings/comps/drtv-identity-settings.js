@@ -3,14 +3,15 @@
 angular.module('cmRouteSettings').directive('cmIdentitySettings', [
     'cmUserModel',
     '$location',
-    function(cmUserModel, $location){
+    '$rootScope',
+    function(cmUserModel, $location, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-settings.html',
             controller: function ($scope) {
-                $scope.identity = cmUserModel.data.identity;
+                $rootScope.$broadcast('pageTitle:change','SETTINGS.IDENTITY')
 
-                console.log($scope.identity)
+                $scope.identity = cmUserModel.data.identity;
 
                 //////////////////////
                 // TODO: mock workarround json in array

@@ -7,11 +7,14 @@ angular.module('cmRouteSettings').directive('cmIdentityKeys', [
     'cmLogger',
     'cmNotify',
     '$location',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
+    '$rootScope',
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-keys.html',
             controller: function ($scope) {
+                $rootScope.$broadcast('pageTitle:change','SETTINGS.PAGES.IDENTITY.KEYS');
+
                 $scope.identity = cmUserModel.data;
 
                 $scope.ownKeys = [];
