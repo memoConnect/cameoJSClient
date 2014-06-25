@@ -69,7 +69,7 @@ define([
                         '<div class="attention">' +
                         '<i class="fa cm-attention cm-lg-icon"></i> {{\'MODAL.WEBREADER.NOTICE\'|cmTranslate}}' +
                         '</div>'+
-                        '<a href="#/registration" class="redirect">' +
+                        '<a href="#/registration" class="redirect" data-qa="btn-register-modal">' +
                         '<i class="fa cm-key cm-lg-icon"></i> {{\'MODAL.WEBREADER.REGISTRATION\'|cmTranslate}}' +
                         '</a>'
                 );

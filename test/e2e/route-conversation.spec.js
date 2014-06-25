@@ -37,7 +37,6 @@ describe('Single Conversation: ', function () {
 
     it('should filter contacts', function () {
         $("[data-qa='input-search']").sendKeys(config.contactUser1DisplayName)
-
         util.waitForElement("[data-qa='contact-display-name']")
     })
 
