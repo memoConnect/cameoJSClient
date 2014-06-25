@@ -28,6 +28,10 @@ define([
                 cmNotify.info('NOTIFICATIONS.TYPES.FRIEND_REQUEST',{ttl:0, displayType:'modal'});
             }
 
+            $scope.success = function(){
+                cmNotify.success('NOTIFICATIONS.TYPES.FRIEND_REQUEST',{ttl:0, displayType:'modal'});
+            }
+
             $scope.error = function(){
                 cmNotify.error('DRTV.EXTERN_CONTACT.INFO.SAVE_FAIL',{ttl:2000});
             }

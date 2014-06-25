@@ -5,15 +5,18 @@ angular.module('cmContacts').service('cmContactsModel',[
     'cmContactsAdapter',
     'cmIdentityFactory',
     'cmFriendRequestModel',
+    'cmStateManagement',
     'cmUtil',
     'cmObject',
     'cmLogger',
     'cmNotify',
     '$q',
     '$rootScope',
-    function (cmUserModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmUtil, cmObject, cmLogger, cmNotify, $q, $rootScope){
+    function (cmUserModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger, cmNotify, $q, $rootScope){
         var self = this,
             events = {};
+
+        this.state = new cmStateManagement(['loading-contacts','loading-groups','loading-requests']);
 
         this.contacts = [];
         this.groups = [];
@@ -75,55 +78,28 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         this.getAll = function(limit, offset){
 //            cmLogger.debug('cmContactsModel:getAll');
+            var i = 0;
 
-            var deferred = $q.defer(),
-                i = 0;
             if(cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
-                this.trigger('start:load-contacts');
-                this.loading = true;
+                if(!this.state.is('loading-contacts')){
+                    this.trigger('start:load-contacts');
+                    self.state.set('loading-contacts');
 
-                cmContactsAdapter.getAll().then(
-                    function(data){
-                        while(i < data.length){
-                            _add(data[i]);
-                            i++;
+                    cmContactsAdapter.getAll().then(
+                        function(data){
+                            while(i < data.length){
+                                _add(data[i]);
+                                i++;
+                            }
                         }
-
-                        deferred.resolve(self.contacts);
-                    },
-                    function(){
-                        deferred.reject();
-                    }
-                ).finally(function(){
+                    ).finally(function(){
                         self.trigger('finish:load-contacts');
+                        self.state.unset('loading-contacts');
                     })
-            } else {
-                deferred.resolve(self.contacts);
-                self.trigger('finish:load-contacts');
+                }
             }
 
-
-
-            return deferred.promise;
-        };
-
-        this.getQuantity = function(){
-            var deferred = $q.defer();
-
-            if(this.contacts.length < 1 && cmUserModel.isAuth() !== false){
-                this.getAll().then(
-                    function(data){
-                        deferred.resolve(data.length);
-                    },
-                    function(){
-                        deferred.reject();
-                    }
-                )
-            } else {
-                deferred.resolve(self.contacts.length);
-            }
-
-            return deferred.promise;
+            return this;
         };
 
         this.getOne = function(id){
@@ -133,23 +109,21 @@ angular.module('cmContacts').service('cmContactsModel',[
         this.getGroups = function(){
 //            cmLogger.debug('cmContactsModel:getGroups');
 
-            var deferred = $q.defer();
-
             if(this.groups.length < 1 && cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
-                cmContactsAdapter.getGroups().then(
-                    function(data){
-                        self.groups = data;
-                        deferred.resolve(self.groups);
-                    },
-                    function(){
-                        deferred.reject();
-                    }
-                );
-            } else {
-                deferred.resolve(self.groups);
+                if(!this.state.is('loading-groups')) {
+                    this.state.set('loading-groups');
+
+                    cmContactsAdapter.getGroups().then(
+                        function (data) {
+                            self.groups = data;
+                        }
+                    ).finally(function(){
+                        self.state.unset('loading-groups')
+                    });
+                }
             }
 
-            return deferred.promise;
+            return this;
         };
 
         this.getAllFromGroup = function(group,limit,offset){
@@ -185,21 +159,27 @@ angular.module('cmContacts').service('cmContactsModel',[
         this.getFriendRequests = function(){
 //            cmLogger.debug('cmContactsModel:getFriendRequests');
             if(cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
-                cmContactsAdapter.getFriendRequests().then(
-                    function(data){
+                if(!this.state.is('loading-requests')){
+                    this.state.set('loading-requests');
+
+                    cmContactsAdapter.getFriendRequests().then(
+                        function(data) {
 //                        cmLogger.debug('cmContactsModel:getFriendRequests:done');
-                        var old_length = self.requests.length;
+                            var old_length = self.requests.length;
 
-                        angular.forEach(data, function(value){
-                            self._addFriendRequest(value);
-                        });
+                            angular.forEach(data, function (value) {
+                                self._addFriendRequest(value);
+                            });
 
-                        if(old_length < self.requests.length){
-                            self.trigger('friendRequests:loaded');
-                            cmNotify.info('new Friend Requests', {ttl:1000})
+                            if (old_length < self.requests.length) {
+                                self.trigger('friendRequests:loaded');
+                                cmNotify.new({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell: true});
+                            }
                         }
-                    }
-                )
+                    ).finally(function(){
+                        self.state.unset('loading-requests');
+                    })
+                }
             }
         };
 
@@ -218,18 +198,6 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         this.answerFriendRequest = function(id, type){
             return cmContactsAdapter.answerFriendRequest(id, type);
-        };
-
-        this.checkDisplayName = function(displayName){
-            var defer = $q.defer();
-            // TODO: check displayName in local contacts
-            if(displayName != 'WummsBrumms'){
-                defer.resolve();
-            } else {
-                defer.reject();
-            }
-
-            return defer.promise;
         };
 
         this.addContact = function(data){

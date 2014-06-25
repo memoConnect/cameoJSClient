@@ -82,22 +82,26 @@ angular.module('cmCore')
             this.renderModal = function(){
 //                cmLogger.debug('cmNotifyModel.renderModal');
                 cmModal.create({
-                        id: 'notification-modal',
+                        id: 'modal-notification',
                         type: 'alert',
+                        'class': 'modal-notification modal-type-'+this.severity,
+                        //'nose': 'top-right',
                         'cm-close-btn': true,
                         'cm-footer-label': 'MODAL.LABEL.CLOSE',
                         'cm-footer-icon': 'cm-close'
-                    },'' +
-                    '<div class="attention">' +
-                    '<i class="fa cm-attention cm-lg-icon"></i> NOTIFACTION' +
+                    },
+                    '<div class="header">'+
+                        cmTranslate('NOTIFICATIONS.MODAL_HEADER.'+this.severity.toUpperCase())+
                     '</div>'+
-                    '' + cmTranslate(this.label)
+                    '<div class="body">'+
+                        '<i class="fa '+(this.severity!='success'?'cm-attention':'cm-checker')+' cm-lg-icon"></i> '+cmTranslate(this.label)+
+                    '</div>'
                 );
-                cmModal.open('notification-modal');
+                cmModal.open('modal-notification');
 
                 if(this.ttl > 0){
                     $timeout(function(){
-                        cmModal.close('notification-modal');
+                        cmModal.close('modal-notification');
                     }, this.ttl);
                 }
 
@@ -122,11 +126,11 @@ angular.module('cmCore')
     }
 ])
 .service('cmNotify', [
-   'cmFactory',
-   'cmNotifyModel',
-   '$rootScope',
-   function(cmFactory, cmNotifyModel, $rootScope){
-       var self = new cmFactory(cmNotifyModel),
+    'cmFactory',
+    'cmNotifyModel',
+    '$rootScope',
+    function(cmFactory, cmNotifyModel, $rootScope){
+        var self = new cmFactory(cmNotifyModel),
             notifyTpl = {
                 label: undefined,
                 severity: 'info',
@@ -136,86 +140,86 @@ angular.module('cmCore')
                 callbackRoute: undefined
             };
 
-       $rootScope.$on('logout', function(){ self.reset() });
+        $rootScope.$on('logout', function(){ self.reset() });
 
-       function handleAdapter(args){
-           var notify = notifyTpl;
+        function handleAdapter(args){
+            var notify = notifyTpl;
 
-           if(typeof args == 'object'){
-               notify = angular.extend(notify, args);
-           }
+            if(typeof args == 'object'){
+                notify = angular.extend(notify, args);
+            }
 
-           self.new(notify);
-       }
+            self.new(notify);
+        }
 
-       self.error = function(label, args){
-           var options = {};
+        self.error = function(label, args){
+            var options = {};
 
-           if(typeof label == 'string' && label.length > 0){
-               if(typeof args == 'object'){
-                   options = angular.extend(options, args);
-               }
+            if(typeof label == 'string' && label.length > 0){
+                if(typeof args == 'object'){
+                    options = angular.extend(options, args);
+                }
 
-               options.displayType = 'modal';
-               options.label = label;
-               options.severity = 'error';
+                options.displayType = 'modal';
+                options.label = label;
+                options.severity = 'error';
 
-               handleAdapter(options);
-           }
-       };
+                handleAdapter(options);
+            }
+        };
 
-       self.info = function(label, args){
-           var options = {};
+        self.info = function(label, args){
+            var options = {};
 
-           if(typeof label == 'string' && label.length > 0){
-               if(typeof args == 'object'){
-                   options = angular.extend(options, args);
-               }
+            if(typeof label == 'string' && label.length > 0){
+                if(typeof args == 'object'){
+                    options = angular.extend(options, args);
+                }
 
-               options.severity = 'info';
-               options.label = label;
+                options.severity = 'info';
+                options.label = label;
 
-               handleAdapter(options);
-           }
-       };
+                handleAdapter(options);
+            }
+        };
 
-       self.success = function(label, args){
-           var options = {};
+        self.success = function(label, args){
+            var options = {};
 
-           if(typeof label == 'string' && label.length > 0){
-               if(typeof args == 'object'){
-                   options = angular.extend(options, args);
-               }
+            if(typeof label == 'string' && label.length > 0){
+                if(typeof args == 'object'){
+                    options = angular.extend(options, args);
+                }
 
-               options.severity = 'success';
-               options.label = label;
+                options.severity = 'success';
+                options.label = label;
 
-               handleAdapter(options);
-           }
-       };
+                handleAdapter(options);
+            }
+        };
 
-       self.warn = function(label, args){
-           var options = {};
+        self.warn = function(label, args){
+            var options = {};
 
-           if(typeof label == 'string' && label.length > 0) {
-               if (typeof args == 'object') {
-                   options = angular.extend(options, args);
-               }
+            if(typeof label == 'string' && label.length > 0) {
+                if (typeof args == 'object') {
+                    options = angular.extend(options, args);
+                }
 
-               options.displayType = 'modal';
-               options.severity = 'warn';
-               options.label = label;
+                options.displayType = 'modal';
+                options.severity = 'warn';
+                options.label = label;
 
-               handleAdapter(options);
-           }
-       };
+                handleAdapter(options);
+            }
+        };
 
-       self.on('notify:remove', function(event){
-           self.deregister(event.source);
-       });
+        self.on('notify:remove', function(event){
+            self.deregister(event.source);
+        });
 
-       return self;
-   }
+        return self;
+    }
 ])
 .directive('cmNotifySignal', [
     'cmNotify',

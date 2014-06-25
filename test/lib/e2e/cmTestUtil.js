@@ -271,9 +271,9 @@ this.clearInput = function (qaValue) {
 }
 
 this.waitAndCloseNotify = function() {
-    self.waitForElement("[data-qa='cm-notify-close-btn']")
-    $("[data-qa='cm-notify-close-btn']").click()
-    self.waitForElements("[data-qa='cm-notify-close-btn']",0)
+    self.waitForElement("[data-qa='cm-modal-close-btn']")
+    $("[data-qa='cm-modal-close-btn']").click()
+    self.waitForElements("[data-qa='cm-modal-close-btn']",0)
 }
 
 this.getFileExtension = function(file){
