@@ -7,7 +7,6 @@ angular.module('cmUser').directive('cmUserRights', [
         return {
             restrict : 'AE',
             link: function(scope, element, attrs){
-                console.log((attrs['cmUserRights'] == 'showForGuest' && cmUserModel.isGuest() === false))
                 function removeElement(){
                     // remove for guest
                     if(cmUserModel.isGuest() !== false && attrs['cmUserRights'] == ''){

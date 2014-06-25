@@ -3,7 +3,7 @@
         <cm-back cm-weight="1" back-to="/talks" class="overlap-identity" cm-user-rights></cm-back>
         <div cm-weight="10" class="purl-identity-wrap">
             <cm-identity cm-user-rights></cm-identity>
-            <div class="fast-sign-in" ng-if="showSignIn">
+            <div class="fast-sign-in" ng-if="showSignIn" ng-click="goToRegister()" data-qa="btn-fast-sign-in">
                 <i class="fa cm-register"></i>
                 <span>{{'PURL.SIGN_IN'|cmTranslate}}</span>
             </div>
