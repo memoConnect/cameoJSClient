@@ -163,17 +163,18 @@ angular.module('cmContacts').service('cmContactsModel',[
                     this.state.set('loading-requests');
 
                     cmContactsAdapter.getFriendRequests().then(
-                        function(data){
+                        function(data) {
 //                        cmLogger.debug('cmContactsModel:getFriendRequests:done');
                             var old_length = self.requests.length;
 
-                            angular.forEach(data, function(value){
+                            angular.forEach(data, function (value) {
                                 self._addFriendRequest(value);
                             });
 
-                        if(old_length < self.requests.length){
-                            self.trigger('friendRequests:loaded');
-                            cmNotify.new({label:'NOTIFICATIONS.TYPES.FRIEND_REQUEST',bell:true});
+                            if (old_length < self.requests.length) {
+                                self.trigger('friendRequests:loaded');
+                                cmNotify.new({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell: true});
+                            }
                         }
                     ).finally(function(){
                         self.state.unset('loading-requests');
