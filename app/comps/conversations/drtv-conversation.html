@@ -20,7 +20,7 @@
     </cm-files>
 
     <div class="message" data-qa="answer-ctn">
-        <textarea data-qa="input-answer" cm-resize-textarea cm-max-rows="4" ng-model="my_message_text" id="emoji-textarea" cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls'}"></textarea>
+        <textarea data-qa="input-answer" cm-resize-textarea cm-max-rows="4" ng-model="my_message_text" id="emoji-textarea" cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls',handler:'.post-wrap'}"></textarea>
         <cm-emoji-handler></cm-emoji-handler>
         <div class="inputter"></div>
     </div>
