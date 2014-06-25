@@ -125,17 +125,17 @@ angular.module('cmRouteSettings').directive('cmIdentityKeys', [
 
                     if($scope.privKey == ''){
                         error = true;
-                        cmNotify.warn('check private Key',{ttl:1000});
+                        cmNotify.warn('check private Key');
                     }
 
                     if($scope.pubKey == ''){
                         error = true;
-                        cmNotify.warn('check public Key',{ttl:1000});
+                        cmNotify.warn('check public Key');
                     }
 
                     if($scope.keyName == ''){
                         error = true;
-                        cmNotify.warn('check keyName',{ttl:1000});
+                        cmNotify.warn('check keyName');
                     }
 
                     if(error !== true){

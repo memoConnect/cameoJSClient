@@ -253,7 +253,7 @@ angular.module('cmCore').service('cmUserModel',[
 
             this.storageSave('rsa', key_data_list)
 
-            cmNotify.info('NOTIFICATIONS.TYPES.KEYS.STORE_NEW',{ttl:1000});
+            cmNotify.info('NOTIFICATIONS.TYPES.KEYS.STORE_NEW',{displayType:'modal'});
 
             return this
         };

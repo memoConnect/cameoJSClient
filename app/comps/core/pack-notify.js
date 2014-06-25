@@ -19,6 +19,7 @@ angular.module('cmCore')
 
             this.label = undefined;
             this.severity = undefined;
+            this.icon = undefined;
             this.displayType = undefined;
             this.callbackRoute = undefined;
             this.bell = false;
@@ -28,6 +29,7 @@ angular.module('cmCore')
              * {
                     label: undefined,
                     severity: 'info',
+                    icon: 'cm-attention',
                     displayType: 'modal',
                     ttl: 3000,
                     callbackRoute: undefined
@@ -51,6 +53,8 @@ angular.module('cmCore')
                     this.label = data.label || this.label;
 
                     this.severity = data.severity || this.severity;
+
+                    this.icon = data.icon || this.icon;
 
                     this.displayType = data.displayType || this.displayType;
 
@@ -91,21 +95,24 @@ angular.module('cmCore')
                         'cm-footer-icon': 'cm-close'
                     },
                     '<div class="header">'+
-                        cmTranslate('NOTIFICATIONS.MODAL_HEADER.'+this.severity.toUpperCase())+
+                        '<i class="fa '+this.icon+' cm-lg-icon"></i> '+cmTranslate('NOTIFICATIONS.MODAL_HEADER.'+this.severity.toUpperCase())+
                     '</div>'+
                     '<div class="body">'+
-                        '<i class="fa '+(this.severity!='success'?'cm-attention':'cm-checker')+' cm-lg-icon"></i> '+cmTranslate(this.label)+
+                        cmTranslate(this.label)+
                     '</div>'
                 );
                 cmModal.open('modal-notification');
 
                 if(this.ttl > 0){
-                    $timeout(function(){
+                    this.ttlTimeout = $timeout(function(){
                         cmModal.close('modal-notification');
                     }, this.ttl);
                 }
 
                 cmModal.on('instance:closed', function(){
+                    if(self.ttlTimeout){
+                        $timeout.cancel(self.ttlTimeout);
+                    }
                     self.trigger('notify:remove', this);
                 });
             };
@@ -134,6 +141,7 @@ angular.module('cmCore')
             notifyTpl = {
                 label: undefined,
                 severity: 'info',
+                icon: 'cm-attention',
                 displayType: undefined,
                 ttl: 3000,
                 bell: false,
@@ -152,6 +160,11 @@ angular.module('cmCore')
             self.new(notify);
         }
 
+        self.bellCounter = 0;
+        self.on('bell:ring', function(event, instance){
+            self.bellCounter++;
+        });
+
         self.error = function(label, args){
             var options = {};
 
@@ -163,6 +176,7 @@ angular.module('cmCore')
                 options.displayType = 'modal';
                 options.label = label;
                 options.severity = 'error';
+                options.icon = 'cm-reject';
 
                 handleAdapter(options);
             }
@@ -178,6 +192,7 @@ angular.module('cmCore')
 
                 options.severity = 'info';
                 options.label = label;
+                options.icon = 'cm-info';
 
                 handleAdapter(options);
             }
@@ -193,6 +208,7 @@ angular.module('cmCore')
 
                 options.severity = 'success';
                 options.label = label;
+                options.icon = 'cm-checker';
 
                 handleAdapter(options);
             }
@@ -209,6 +225,7 @@ angular.module('cmCore')
                 options.displayType = 'modal';
                 options.severity = 'warn';
                 options.label = label;
+                options.icon = 'cm-attention';
 
                 handleAdapter(options);
             }
@@ -231,9 +248,22 @@ angular.module('cmCore')
             controller: function ($scope) {
                 $scope.ring = false;
 
-                cmNotify.on('bell:ring', function(event, instance){
+                function init(){
+                    if(cmNotify.bellCounter > 0){
+                        $scope.ring = true;
+                        cmNotify.bellCounter = 0;
+                    }
+                }
+
+                cmNotify.on('bell:ring', function(){
                     $scope.ring = true;
                 });
+
+                cmNotify.on('bell:unring', function(){
+                    $scope.ring = false;
+                });
+
+                init();
             }
         }
     }
