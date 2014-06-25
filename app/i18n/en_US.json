@@ -140,7 +140,8 @@
             "MESSAGE_EMPTY": "The input field is empty.",
             "RECIPIENTS_MISSING": "Please add at least one recipient.",
             "PASSPHRASE_INVALID": "Invalid passphrase",
-            "PASSWORD_WRONG": "Password is wrong"
+            "PASSWORD_WRONG": "Password is wrong",
+            "NO_PASSWORD": "Password is empty"
         },
         "PLACEHOLDER": {
             "SUBJECT": "Subject",
