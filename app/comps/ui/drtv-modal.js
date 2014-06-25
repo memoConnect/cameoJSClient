@@ -1,7 +1,11 @@
 'use strict';
 
-angular.module('cmUi').directive('cmModal', [
-    'cmModal', 'cmTranslate', '$rootScope', '$timeout',
+angular.module('cmUi')
+.directive('cmModal', [
+    'cmModal',
+    'cmTranslate',
+    '$rootScope',
+    '$timeout',
     function (cmModal, cmTranslate, $rootScope, $timeout){
 
         // handle nose position

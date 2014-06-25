@@ -3,7 +3,6 @@
         "SLOGAN": "Safer Communication - Made in Germany!",
         "DESCRIBE": "Registrieren Sie sich kostenlos und unverbindlich für cameoNet.\nWirklich sicher kommunizieren. Mobil und Desktop. Mit allen Kontakten. Und tollen Zusatzfunktionen.\nSichern Sie sich Ihren Nutzernamen noch heute und testen Sie uns!",
         "MOEP": "moep",
-        "WELCOME": "Willkommen im cameoNet",
         "VERSION": "Version"
     },
 
@@ -64,7 +63,10 @@
     },
 
 	"START": {
-		"WELCOME": "Willkommen bei cameoNet, dem Ende-zu-Ende verschlüsselten OpenSource Messenger für sichere private und geschäftliche Kommunikation!\nUm Ihnen den Einstieg zu erleichtern, hat Ihnen unser Support-Mitarbeiter eine Nachricht geschickt, in der er Ihnen die ersten Schritte erläutert. Zum Öffnen müssen Sie die Nachricht in ihren Talks anklicken.\nWir wünschen Ihnen viel Freude bei ihrer neuen Kommunikation mit Sicherheit,\ndas cameoNet-Team.",
+        "MODAL": {
+            "TITLE": "Willkommen bei cameoNet",
+            "TEXT": "Dem Ende-zu-Ende verschlüsselten OpenSource Messenger für sichere private und geschäftliche Kommunikation!\nUm Ihnen den Einstieg zu erleichtern, hat Ihnen unser Support-Mitarbeiter eine Nachricht geschickt, in der er Ihnen die ersten Schritte erläutert. Zum Öffnen müssen Sie die Nachricht in ihren Talks anklicken.\nWir wünschen Ihnen viel Freude bei ihrer neuen Kommunikation mit Sicherheit,\ndas cameoNet-Team."
+        },
 		"YOUR_ID": "Deine cameoId",
 		"LOGOUT": "ausloggen"
 	},

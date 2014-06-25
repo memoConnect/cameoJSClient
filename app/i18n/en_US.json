@@ -3,7 +3,6 @@
         "SLOGAN": "Safer Communication - Made in Germany!",
         "DESCRIBE": "Register for free.\nWithout obligation.\nEasy and secure communication. Mobile and desktop\nConnect with all your contacts.\nExplore our smart features.\nGet registered today!",
         "MOEP": "moep",
-        "WELCOME": "Welcome to cameoNet",
         "VERSION": "version"
     },
 
@@ -64,7 +63,10 @@
     },
 
     "START": {
-        "WELCOME": "Welcome to cameoNet, the end2end encrypted OpenSouce Messenger for safety private and commercial Communication!\nTo introduce you our support sent you a message explaining the first steps to use cameoNet. To open the message you just need to click on it in the talks overview.\nEnjoy your safer communication,\nthe cameoNet team.",
+        "MODAL": {
+            "TITLE": "Welcome to cameoNet",
+            "TEXT": "The end2end encrypted OpenSouce Messenger for safety private and commercial Communication!\nTo introduce you our support sent you a message explaining the first steps to use cameoNet. To open the message you just need to click on it in the talks overview.\nEnjoy your safer communication,\nthe cameoNet team."
+        },
         "YOUR_ID": "Your cameoId",
         "LOGOUT": "logout"
     },
