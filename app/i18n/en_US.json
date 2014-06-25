@@ -358,6 +358,12 @@
 
     "NOTIFICATIONS":{
         "HEADER": "Notifications",
+        "MODAL_HEADER": {
+            "INFO": "Notification",
+            "WARN": "Warning",
+            "ERROR": "Error",
+            "SUCCESS": "Success"
+        },
         "TYPES": {
             "KEYS":{
                 "STORE_NEW": "Key saved!"

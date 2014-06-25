@@ -82,22 +82,26 @@ angular.module('cmCore')
             this.renderModal = function(){
 //                cmLogger.debug('cmNotifyModel.renderModal');
                 cmModal.create({
-                        id: 'notification-modal',
+                        id: 'modal-notification',
                         type: 'alert',
+                        'class': 'modal-notification modal-type-'+this.severity,
+                        //'nose': 'top-right',
                         'cm-close-btn': true,
                         'cm-footer-label': 'MODAL.LABEL.CLOSE',
                         'cm-footer-icon': 'cm-close'
-                    },'' +
-                    '<div class="attention">' +
-                    '<i class="fa cm-attention cm-lg-icon"></i> NOTIFACTION' +
+                    },
+                    '<div class="header">'+
+                        cmTranslate('NOTIFICATIONS.MODAL_HEADER.'+this.severity.toUpperCase())+
                     '</div>'+
-                    '' + cmTranslate(this.label)
+                    '<div class="body">'+
+                        '<i class="fa '+(this.severity!='success'?'cm-attention':'cm-checker')+' cm-lg-icon"></i> '+cmTranslate(this.label)+
+                    '</div>'
                 );
-                cmModal.open('notification-modal');
+                cmModal.open('modal-notification');
 
                 if(this.ttl > 0){
                     $timeout(function(){
-                        cmModal.close('notification-modal');
+                        cmModal.close('modal-notification');
                     }, this.ttl);
                 }
 

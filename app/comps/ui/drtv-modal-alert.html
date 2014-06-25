@@ -5,7 +5,7 @@
     <ng-transclude class="content"></ng-transclude>
     <footer>
         <button class="cm-btn-block" ng-click="close()">
-            {{(footerLabel||'MODAL.ALERT.OK')|cmTranslate}}
+            {{(footerLabel||'MODAL.ALERT.OK') | cmTranslate}}
             <i ng-if="footerIcon" class="fa {{footerIcon}} cm-lg-icon"></i>
         </button>
     </footer>
