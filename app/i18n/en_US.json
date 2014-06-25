@@ -118,28 +118,29 @@
 
     "CONVERSATION" : {
         "HEADING": "Conversation",
-        "LABEL" : {
+        "LABEL": {
             "SEND": "send",
             "REQUEST_CAPTCHA": "ask for Captcha",
             "SEND_CAPTCHA": "send Captcha",
             "KEY_GENERATION": "for good encryption you can here generate a keypair"
         },
-        "TAG" : {
-            "RECIPIENTS" : "Recipients",
+        "TAG": {
+            "RECIPIENTS": "Recipients",
             "SUBJECT": "Subject",            
             "PASSPHRASE": "Passphrase",
-            "MESSAGES" : "Messages",
+            "MESSAGES": "Messages",
             "IMAGE": "Image",
             "FILE": "File"
         },
-        "TEXT" : {
-            "REQUEST_CAPTCHA" : "Please send a (new) captcha.",
-            "ENCRYPTED" : "- encrypted -"
+        "TEXT": {
+            "REQUEST_CAPTCHA": "Please send a (new) captcha.",
+            "ENCRYPTED": "- encrypted -"
         },
-        "WARN" : {
-            "MESSAGE_EMPTY" : "The input field is empty.",
-            "RECIPIENTS_MISSING" : "Please add at least one recipient.",
-            "PASSPHRASE_INVALID" : "Invalid passphrase"
+        "WARN": {
+            "MESSAGE_EMPTY": "The input field is empty.",
+            "RECIPIENTS_MISSING": "Please add at least one recipient.",
+            "PASSPHRASE_INVALID": "Invalid passphrase",
+            "PASSWORD_WRONG": "Password is wrong"
         },
         "PLACEHOLDER": {
             "SUBJECT": "Subject",

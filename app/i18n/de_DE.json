@@ -139,7 +139,8 @@
         "WARN": {
             "MESSAGE_EMPTY": "Das Textfeld ist leer.",
             "RECIPIENTS_MISSING": "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
-            "PASSPHRASE_INVALID": "Ungültiger Schlüssel."
+            "PASSPHRASE_INVALID": "Ungültiger Schlüssel.",
+            "PASSWORD_WRONG": "Das eingegebene Passwort ist falsch."
         },
         "PLACEHOLDER": {
             "SUBJECT": "Betreff",
