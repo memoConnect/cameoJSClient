@@ -64,7 +64,7 @@
     },
 
     "START": {
-        "WELCOME": "Welcome to cameoNet, the end2end encrypted OpenSouce Messenger for safety private and commercial Communication!\nTo introduce you our support sent you a message explaining the first steps to use cameoNet. To open the message you just need to click on it in the talks overview.\nEnjoy your safer communication,\nthe cameoNet team.",
+        "WELCOME": "Welcome to cameoNet, the open source messenger that provides end-to-end encryption for safe, private and commercial Communication!\nOur support sent you a message explaining the first steps to use cameoNet. You can open it by clicking on it in the talks overview.\nEnjoy your safe communication,\nthe cameoNet team.",
         "YOUR_ID": "Your cameoId",
         "LOGOUT": "logout"
     },
