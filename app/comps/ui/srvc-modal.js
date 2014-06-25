@@ -1,15 +1,12 @@
 'use strict';
 
 angular.module('cmUi').service('cmModal',[
-
     '$rootScope',
     'cmObject',
     'cmLogger',
     '$compile',
     '$document',
-
     function($rootScope, cmObject, cmLogger, $compile, $document){
-
         var self = {}
 
         cmObject.addEventHandlingTo(self)
