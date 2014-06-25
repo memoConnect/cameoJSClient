@@ -127,7 +127,7 @@ angular.module('cmCore')
             notifyTpl = {
                 label: undefined,
                 severity: 'info',
-                displayType: 'modal',
+                displayType: undefined,
                 ttl: 3000,
                 bell: false,
                 callbackRoute: undefined
@@ -153,6 +153,7 @@ angular.module('cmCore')
                    options = angular.extend(options, args);
                }
 
+               options.displayType = 'modal';
                options.label = label;
                options.severity = 'error';
 
@@ -198,6 +199,7 @@ angular.module('cmCore')
                    options = angular.extend(options, args);
                }
 
+               options.displayType = 'modal';
                options.severity = 'warn';
                options.label = label;
 
