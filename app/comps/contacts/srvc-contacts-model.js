@@ -196,7 +196,7 @@ angular.module('cmContacts').service('cmContactsModel',[
 
                         if(old_length < self.requests.length){
                             self.trigger('friendRequests:loaded');
-                            cmNotify.info('new Friend Requests', {ttl:1000})
+                            cmNotify.new({label:'NOTIFICATIONS.TYPES.FRIEND_REQUEST',bell:true});
                         }
                     }
                 )
