@@ -16,7 +16,7 @@ describe('Purl registration', function () {
     var msgText2 = "wooooopDieMoepDieMoepMoep"
 
     var prefix = 'testUser23_'
-    var id = Math.random().toString(36).substring(2,9)
+    var id = Math.random().toString(36).substring(2, 9)
     var externalLogin = prefix + id
 
 
@@ -89,29 +89,29 @@ describe('Purl registration', function () {
         util.waitForPageLoad('/registration')
     })
 
-    it('directly click on register button', function(){
+    it('directly click on register button', function () {
         util.get("/purl/" + purl)
         $('[data-qa="btn-fast-sign-in"]').click()
         util.waitForPageLoad('/registration')
     })
 
-    it('register as external user', function(){
+    it('register as external user', function () {
 
         $("[data-qa='input-loginName']").sendKeys(externalLogin)
         $("[data-qa='input-password']").sendKeys(password)
         $("[data-qa='input-passwordConfirm']").sendKeys(password)
 
+        $("[data-qa='input-displayName']").sendKeys(externalLogin)
         $("[data-qa='link-terms']").sendKeys(protractor.Key.END)
         $("[data-qa='icon-checkbox-agb']").click()
 
-        ptor.sleep(1000).then(function(){
+        $("[data-qa='btn-createUser']").click()
 
-            $("[data-qa='btn-createUser']").click()
-            util.waitForPageLoad("/conversation/.*")
-        })
+        util.waitForPageLoad("/conversation/.*")
+
     })
 
-    it('conversation with the right message should be loaded', function(){
+    it('conversation with the right message should be loaded', function () {
 
         util.waitForElements("cm-message", 2)
         $$('cm-message').then(function (elements) {
