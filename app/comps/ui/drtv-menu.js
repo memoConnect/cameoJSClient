@@ -4,7 +4,8 @@ angular.module('cmUi').directive('cmMenu',[
     '$location',
     'cmUserModel',
     'cmConfig',
-    function ($location, cmUserModel, cmConfig){
+    'cmNotify',
+    function ($location, cmUserModel, cmConfig, cmNotify){
         return {
             restrict: 'AE',
             scope: true,
@@ -19,6 +20,9 @@ angular.module('cmUi').directive('cmMenu',[
 
                 $scope.handleMenu = function(){
                     $scope.menuVisible = $scope.menuVisible ? false : true;
+
+                    if($scope.menuVisible)
+                        cmNotify.trigger('bell:unring');
                 };
 
                 $scope.toggleSubs = function(parent){

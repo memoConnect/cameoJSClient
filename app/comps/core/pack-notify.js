@@ -100,12 +100,15 @@ angular.module('cmCore')
                 cmModal.open('modal-notification');
 
                 if(this.ttl > 0){
-                    $timeout(function(){
+                    this.ttlTimeout = $timeout(function(){
                         cmModal.close('modal-notification');
                     }, this.ttl);
                 }
 
                 cmModal.on('instance:closed', function(){
+                    if(self.ttlTimeout){
+                        $timeout.cancel(self.ttlTimeout);
+                    }
                     self.trigger('notify:remove', this);
                 });
             };
@@ -151,6 +154,11 @@ angular.module('cmCore')
 
             self.new(notify);
         }
+
+        self.bellCounter = 0;
+        self.on('bell:ring', function(event, instance){
+            self.bellCounter++;
+        });
 
         self.error = function(label, args){
             var options = {};
@@ -231,9 +239,22 @@ angular.module('cmCore')
             controller: function ($scope) {
                 $scope.ring = false;
 
-                cmNotify.on('bell:ring', function(event, instance){
+                function init(){
+                    if(cmNotify.bellCounter > 0){
+                        $scope.ring = true;
+                        cmNotify.bellCounter = 0;
+                    }
+                }
+
+                cmNotify.on('bell:ring', function(){
                     $scope.ring = true;
                 });
+
+                cmNotify.on('bell:unring', function(){
+                    $scope.ring = false;
+                });
+
+                init();
             }
         }
     }
