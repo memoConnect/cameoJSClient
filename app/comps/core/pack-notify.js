@@ -251,7 +251,6 @@ angular.module('cmCore')
                 function init(){
                     if(cmNotify.bellCounter > 0){
                         $scope.ring = true;
-                        cmNotify.bellCounter = 0;
                     }
                 }
 
@@ -260,6 +259,7 @@ angular.module('cmCore')
                 });
 
                 cmNotify.on('bell:unring', function(){
+                    cmNotify.bellCounter = 0;
                     $scope.ring = false;
                 });
 
