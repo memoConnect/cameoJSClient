@@ -10,20 +10,20 @@ angular.module('cmUi').service('cmModal',[
 
     function($rootScope, cmObject, cmLogger, $compile, $document){
 
-        var self = {}
+        var self = {};
 
-        cmObject.addEventHandlingTo(self)
+        cmObject.addEventHandlingTo(self);
 
-        self.instances = {}
+        self.instances = {};
 
         self.register = function(id, scope){
 
             if(!scope){
-                cmLogger.error('cmModal: unable to register modal without id or scope.')
+                cmLogger.error('cmModal: unable to register modal without id or scope.');
                 return null
             }
 
-            var old_scope = self.instances[id]
+            var old_scope = self.instances[id];
 
             if(old_scope != scope){
                 self.instances[id] = scope
@@ -32,7 +32,7 @@ angular.module('cmUi').service('cmModal',[
 
             return self
             
-        }
+        };
 
         self.open = function(id, data){
             if(self.instances[id]){
@@ -45,19 +45,19 @@ angular.module('cmUi').service('cmModal',[
                 })
             }
             return self
-        }
+        };
 
         self.close = function(id){
-            self.instances[id].close()
+            self.instances[id].close();
             return self
-        }
+        };
 
         self.closeAll = function(){
             angular.forEach(self.instances, function(modal_instance, key){
                 modal_instance.close()
-            })
+            });
             return self
-        }
+        };
 
         self.create = function(config, template, target, scope){
             // clear existing instance
@@ -72,7 +72,7 @@ angular.module('cmUi').service('cmModal',[
 
             // create new element
             var attrs = '',
-                scope = scope || $rootScope.$new()
+                scope = scope || $rootScope.$new();
 
             //Todo: könnte man schöner machen:
             angular.forEach(config, function(value, key){ attrs += key+'="'+value+'"' });
@@ -84,11 +84,11 @@ angular.module('cmUi').service('cmModal',[
             // the modal directive (<cm-modal>) will register itself on next digest
 
             return modal
-        }
+        };
 
-        $rootScope.openModal    = self.open
-        $rootScope.closeModal   = self.close
-        $rootScope.isModalVisible = false
+        $rootScope.openModal    = self.open;
+        $rootScope.closeModal   = self.close;
+        $rootScope.isModalVisible = false;
 //        $rootScope.$watch('isModalVisible' ,function(newValue){
 //            console.log('watch modal '+newValue)
 //            $rootScope.isModalVisible = newValue;
@@ -97,7 +97,7 @@ angular.module('cmUi').service('cmModal',[
         //close all modals on route change:
         $rootScope.$on('$routeChangeStart', function(){
             self.closeAll();
-        })
+        });
 
         $document.bind('keydown', function (evt) {
             if (evt.which === 27) {
