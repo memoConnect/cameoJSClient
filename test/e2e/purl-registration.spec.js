@@ -9,7 +9,7 @@ describe('Purl registration', function () {
 
     var ptor = util.getPtorInstance();
 
-    var internalLogin = util.createTestUser()
+    var internalLogin = ""
     var password = 'password'
 
     var msgText = "wooooopDieMoep"
@@ -21,6 +21,11 @@ describe('Purl registration', function () {
 
 
     var purl = ""
+
+    it('create new test user', function(){
+        util.logout()
+        internalLogin = util.createTestUser()
+    })
 
     it('add external contact to test user', function () {
 
