@@ -133,7 +133,7 @@ angular.module('cmCore').factory('cmFactory',[
              */
             self.on('register', function(event, instance){
                 if(typeof instance.trigger == 'function'){
-                    instance.trigger('bell:ring');
+                    instance.trigger('init:ready');
                 }
             });
 

@@ -2,7 +2,8 @@ define([
     'app',
     'ngload!pckCore',
     'ngload!pckUser',
-    'ngload!pckContacts'
+    'ngload!pckContacts',
+    'ngload!pckUi'
 ], function (app) {
     'use strict';
 
@@ -20,7 +21,7 @@ define([
             }
 
             $scope.warn = function(){
-                cmNotify.warn('DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME',{ttl:2000, bell:true});
+                cmNotify.warn('DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME',{ttl:2000});
             }
 
             $scope.info = function(){

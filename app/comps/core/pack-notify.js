@@ -4,10 +4,10 @@ angular.module('cmCore')
 .factory('cmNotifyModel', [
     'cmStateManagement',
     'cmObject',
+    'cmModal',
     'cmUtil',
     'cmLogger',
-    '$rootScope',
-    function(cmStateManagement, cmObject, cmUtil, cmLogger, $rootScope){
+    function(cmStateManagement, cmObject, cmModal, cmUtil, cmLogger){
         function cmNotifyModel(data){
             var self = this;
 
@@ -24,10 +24,11 @@ angular.module('cmCore')
 
             /**
              * {
-                "id": TRANSLATION.KEY
-                "severity: "info || warn || error || ..."
-                "displayType: "modal || banner || none"
-                "callbackRoute": "/conversation/id"
+                    label: undefined,
+                    severity: 'info',
+                    displayType: 'modal',
+                    ttl: 3000,
+                    callbackRoute: undefined
                 }
              * @param data
              */
@@ -43,7 +44,6 @@ angular.module('cmCore')
 
             this.importData = function(data){
 //                cmLogger.debug('cmNotifyModel.importData');
-//                console.log('importData', data);
 
                 if(typeof data == 'object' || typeof data == 'array'){
                     this.label = data.label || this.label;
@@ -71,6 +71,31 @@ angular.module('cmCore')
                 if(this.bell !== false){
                     this.trigger('bell:ring');
                 }
+
+                if(this.displayType == 'modal'){
+                    this.renderModal();
+                }
+            };
+
+            this.renderModal = function(){
+//                cmLogger.debug('cmNotifyModel.renderModal');
+                cmModal.create({
+                        id: 'fast-registration',
+                        'class': 'webreader',
+                        type: 'alert',
+                        nose: 'top-right',
+                        'cm-close-btn': false,
+                        'cm-footer-label': 'MODAL.WEBREADER.LATER',
+                        'cm-footer-icon': 'cm-close'
+                    },'' +
+                    '<div class="attention">' +
+                    '<i class="fa cm-attention cm-lg-icon"></i> {{\'MODAL.WEBREADER.NOTICE\'|cmTranslate}}' +
+                    '</div>'+
+                    '<a href="#/registration" class="redirect">' +
+                    '<i class="fa cm-key cm-lg-icon"></i> {{\'MODAL.WEBREADER.REGISTRATION\'|cmTranslate}}' +
+                    '</a>'
+                );
+                cmModal.open('fast-registration');
             };
 
             this.on('update:finished', function(){
@@ -80,6 +105,7 @@ angular.module('cmCore')
 
             // after events!!!
             this.on('init:ready', function(){
+//                cmLogger.debug('cmNotifyModel.on.init:ready');
                 init(data);
             });
         }
@@ -98,6 +124,7 @@ angular.module('cmCore')
                 severity: 'info',
                 displayType: 'modal',
                 ttl: 3000,
+                bell: false,
                 callbackRoute: undefined
             };
 
@@ -177,9 +204,8 @@ angular.module('cmCore')
    }
 ])
 .directive('cmNotifySignal', [
-    '$rootScope',
     'cmNotify',
-    function ($rootScope, cmNotify) {
+    function (cmNotify) {
         return {
             restrict: 'E',
             template: '<i class="fa" ng-class="{\'cm-notification-on cm-orange\': ring, \'cm-notification\': !ring}"></i>',
@@ -187,7 +213,7 @@ angular.module('cmCore')
             controller: function ($scope) {
                 $scope.ring = false;
 
-                cmNotify.on('bell:ring', function(){
+                cmNotify.on('bell:ring', function(event, instance){
                     $scope.ring = true;
                 });
             }
