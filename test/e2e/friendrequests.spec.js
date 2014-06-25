@@ -38,7 +38,6 @@ describe('Friendrequests', function () {
                 $("cm-modal [data-qa='input-friendrequestMessage']").sendKeys(requestMessage)
                 // send request
                 $("cm-modal [data-qa='btn-sendRequest']").click()
-                util.waitAndCloseNotify()
             })
 
             it('check request is removed', function(){
