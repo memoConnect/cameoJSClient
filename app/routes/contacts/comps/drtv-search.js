@@ -60,12 +60,12 @@ angular.module('cmRouteContacts').directive('cmSearch',[
                                 var index = $scope.results.indexOf(contact);
                                 $scope.results.splice(index,1);
                                 // notify
-                                cmNotify.success('CONTACTS.INFO.REQUEST.SENDED', {ttl:2000});
+                                cmNotify.success('CONTACTS.INFO.REQUEST.SENDED', {displayType:'modal'});
                                 cmContactsModel.trigger('friendRequest:send');
                                 cmModal.closeAll();
                             },
                             function(){
-                                cmNotify.error('CONTACTS.INFO.REQUEST.FAILED', {ttl:2000});
+                                cmNotify.error('CONTACTS.INFO.REQUEST.FAILED', {displayType:'modal'});
                             }
                         )
                     }

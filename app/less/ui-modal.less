@@ -248,3 +248,39 @@ cm-modal {
     }
   }
 }
+
+cm-modal.modal-notification{
+  header {
+    height:0 !important;
+  }
+  .header {
+    padding:@cm-vertical-padding @cm-horizontal-padding;
+    font-size:@cm-mega-font;
+    font-weight:bold;
+    .cm-lg-icon{
+      font-size:@cm-mega-font + 1;
+    }
+  }
+  .body{
+    font-size:@cm-large-font;
+  }
+
+  &.modal-type-{
+    &success{
+      .header{color: @cm-notify-success}
+      .body{ i.fa {color: @cm-notify-success} }
+    }
+    &info{
+      .header{color: @cm-notify-info}
+      .body{ i.fa {color: @cm-notify-info} }
+    }
+    &warn{
+      .header{color: @cm-notify-warn}
+      .body{ i.fa {color: @cm-notify-warn} }
+    }
+    &error{
+      .header{color: @cm-notify-error}
+      .body{ i.fa {color: @cm-notify-error} }
+    }
+  }
+}

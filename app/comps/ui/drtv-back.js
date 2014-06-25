@@ -7,7 +7,9 @@ angular.module('cmUi').directive('cmBack',[
     function ($rootScope, $window, $location){
         return {
             restrict: 'AE',
-            scope: true,
+            scope: {
+                pageTitle: '=pageTitle'
+            },
             template: '<div class="back-wrap" ng-click="goBack()">'+
                         '<i class="fa cm-left" ng-show="isVisible"></i>'+
                         '<span ng-if="pageTitle">{{pageTitle | cmTranslate}}</span>'+
@@ -15,7 +17,7 @@ angular.module('cmUi').directive('cmBack',[
             controller: function($scope, $element, $attrs){
                 // vars
                 $scope.isVisible = $rootScope.urlHistory.length > 1 ? true : false;
-                $scope.pageTitle = $attrs.pageTitle;
+                //$scope.pageTitle = $attrs.pageTitle;
                 $scope.fakeBack = '';
                 // check default back-to attribute
                 if('backTo' in $attrs){

@@ -3,7 +3,6 @@
         "SLOGAN": "Safer Communication - Made in Germany!",
         "DESCRIBE": "Register for free.\nWithout obligation.\nEasy and secure communication. Mobile and desktop\nConnect with all your contacts.\nExplore our smart features.\nGet registered today!",
         "MOEP": "moep",
-        "WELCOME": "Welcome to cameoNet",
         "VERSION": "version"
     },
 
@@ -64,7 +63,10 @@
     },
 
     "START": {
-        "WELCOME": "Welcome to cameoNet, the open source messenger that provides end-to-end encryption for safe, private and commercial Communication!\nOur support sent you a message explaining the first steps to use cameoNet. You can open it by clicking on it in the talks overview.\nEnjoy your safe communication,\nthe cameoNet team.",
+        "MODAL": {
+            "TITLE": "Welcome to cameoNet",
+            "TEXT": "The end2end encrypted OpenSouce Messenger for safety private and commercial Communication!\nTo introduce you our support sent you a message explaining the first steps to use cameoNet. To open the message you just need to click on it in the talks overview.\nEnjoy your safer communication,\nthe cameoNet team."
+        },
         "YOUR_ID": "Your cameoId",
         "LOGOUT": "logout"
     },
@@ -116,28 +118,30 @@
 
     "CONVERSATION" : {
         "HEADING": "Conversation",
-        "LABEL" : {
+        "LABEL": {
             "SEND": "send",
             "REQUEST_CAPTCHA": "ask for Captcha",
             "SEND_CAPTCHA": "send Captcha",
             "KEY_GENERATION": "for good encryption you can here generate a keypair"
         },
-        "TAG" : {
-            "RECIPIENTS" : "Recipients",
+        "TAG": {
+            "RECIPIENTS": "Recipients",
             "SUBJECT": "Subject",            
             "PASSPHRASE": "Passphrase",
-            "MESSAGES" : "Messages",
+            "MESSAGES": "Messages",
             "IMAGE": "Image",
             "FILE": "File"
         },
-        "TEXT" : {
-            "REQUEST_CAPTCHA" : "Please send a (new) captcha.",
-            "ENCRYPTED" : "- encrypted -"
+        "TEXT": {
+            "REQUEST_CAPTCHA": "Please send a (new) captcha.",
+            "ENCRYPTED": "- encrypted -"
         },
-        "WARN" : {
-            "MESSAGE_EMPTY" : "The input field is empty.",
-            "RECIPIENTS_MISSING" : "Please add at least one recipient.",
-            "PASSPHRASE_INVALID" : "Invalid passphrase"
+        "WARN": {
+            "MESSAGE_EMPTY": "The input field is empty.",
+            "RECIPIENTS_MISSING": "Please add at least one recipient.",
+            "PASSPHRASE_INVALID": "Invalid passphrase",
+            "PASSWORD_WRONG": "Password is wrong",
+            "NO_PASSWORD": "Password is empty"
         },
         "PLACEHOLDER": {
             "SUBJECT": "Subject",
@@ -249,8 +253,8 @@
     },
 
     "IDENTITY":{
-        "PLACEHOLDER":{
-            "KEYMANAGEMENT": "manage",
+        "LABEL":{
+            "KEYMANAGEMENT": "manage keys",
             "TRUST": "trust"
         }
     },
@@ -270,6 +274,9 @@
                 "LANGUAGE": "Language Settings",
                 "EMOJI_CONVERT": "Convert Smileys to Emojis",
                 "SEND_ON_RETURN": "Send on Return"
+            },
+            "IDENTITY": {
+                "KEYS": "{{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}"
             }
         }
 	},
@@ -341,7 +348,7 @@
 
     "MENU": {
         "HEADER": "Menu",
-        "NOTIFICATIONS": "Notifcations",
+        "NOTIFICATIONS": "{{'NOTIFICATIONS.HEADER'|cmTranslate}}",
         "CONTACTS": "Contacts",
         "REQUESTS": "Contact requests",
         "SETTINGS": "{{'SETTINGS.LABEL'|cmTranslate}}",
@@ -351,12 +358,22 @@
         "LOGOUT": "Logout"
     },
 
-    "NOTIFY": {
-        "KEYS":{
-            "STORE_NEW": "Key saved!"
+    "NOTIFICATIONS":{
+        "HEADER": "Notifications",
+        "MODAL_HEADER": {
+            "INFO": "Notification",
+            "WARN": "Warning",
+            "ERROR": "Error",
+            "SUCCESS": "Success"
         },
-        "SAVE_AS":{
-            "IOS_NOT_SUPPORT": "Unfortunately iOS does not support to download files. Open this talk on a non-iOS device to download this file. Supported formats go anyway: .pdf"
+        "TYPES": {
+            "KEYS":{
+                "STORE_NEW": "Key saved!"
+            },
+            "SAVE_AS":{
+                "IOS_NOT_SUPPORT": "Unfortunately iOS does not support to download files. Open this talk on a non-iOS device to download this file. Supported formats go anyway: .pdf"
+            },
+            "FRIEND_REQUEST": "New friendrequest"
         }
     },
 
@@ -368,6 +385,9 @@
             "NOTICE": "For this function, please register!",
             "REGISTRATION": "register now",
             "LATER": "later"
+        },
+        "LABEL": {
+            "CLOSE": "close"
         }
     },
 

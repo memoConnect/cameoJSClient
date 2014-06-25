@@ -1,0 +1,28 @@
+<cm-header cm-rubber-space>
+    <cm-back cm-weight="3" page-title="'NOTIFICATIONS.HEADER'" back-to="/talks"></cm-back>
+    <cm-logo cm-weight="3"></cm-logo>
+    <cm-reload cm-weight="2"></cm-reload>
+    <cm-menu cm-weight="1"></cm-menu>
+</cm-header>
+
+<section class="notification" ng-controller="NotificationsCtrl">
+    <header class="inScreen">
+        <i class="fa cm-fix cm-lg-icon"></i> {{'NOTIFICATIONS.HEADER' | cmTranslate}}
+
+        <button ng-click="ring();">ring!</button>
+        <button ng-click="warn();">warn!</button>
+        <button ng-click="info();">info!</button>
+        <button ng-click="success();">success!</button>
+        <button ng-click="error();">error!</button>
+    </header>
+
+    <ul>
+        <li ng-repeat="notify in notifications">
+            <span class="item clearfix">
+                <span class="title">
+                    <span>{{notify.label | cmTranslate}}</span>
+                </span>
+            </span>
+        </li>
+    </ul>
+</section>

@@ -134,6 +134,8 @@ angular.module('cmCore').service('cmUserModel',[
             cmLogger.debug('cmUserModel:setIdentity');
 
             this.importData(cmIdentityFactory.create(identity_data, true));
+
+            return this;
         };
 
         /**
@@ -251,7 +253,7 @@ angular.module('cmCore').service('cmUserModel',[
 
             this.storageSave('rsa', key_data_list)
 
-            cmNotify.info('NOTIFY.KEYS.STORE_NEW',{ttl:1000}); //TODO
+            cmNotify.info('NOTIFICATIONS.TYPES.KEYS.STORE_NEW',{displayType:'modal'});
 
             return this
         };

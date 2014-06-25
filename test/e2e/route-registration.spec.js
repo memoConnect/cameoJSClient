@@ -104,18 +104,8 @@ describe('registration', function () {
     })
 
     it('should create account with valid credentials', function() {
-        util.get("/registration");
 
-        $("[data-qa='input-loginName']").sendKeys(loginName)
-        $("[data-qa='input-password']").sendKeys(password)
-        $("[data-qa='input-passwordConfirm']").sendKeys(password)
-
-        $("[data-qa='link-terms']").sendKeys(protractor.Key.END)
-        $("[data-qa='icon-checkbox-agb']").click()
-
-        $("[data-qa='btn-createUser']").click()
-
-        util.waitForPageLoad("/talks")
+        var loginName = util.createTestUser()
 
         // todo better test of welcome screen
         util.waitForElement("cm-modal")
@@ -130,6 +120,6 @@ describe('registration', function () {
             expect(elements.length).toBe(0)
         })
 
-
+        util.deleteTestUser(loginName)
     })
 })

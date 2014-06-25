@@ -1,15 +1,12 @@
 'use strict';
 
 angular.module('cmUi').service('cmModal',[
-
     '$rootScope',
     'cmObject',
     'cmLogger',
     '$compile',
     '$document',
-
     function($rootScope, cmObject, cmLogger, $compile, $document){
-
         var self = {}
 
         cmObject.addEventHandlingTo(self)
@@ -49,6 +46,9 @@ angular.module('cmUi').service('cmModal',[
 
         self.close = function(id){
             self.instances[id].close()
+
+            self.trigger('instance:closed');
+
             return self
         }
 

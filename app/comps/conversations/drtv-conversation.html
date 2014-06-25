@@ -16,11 +16,11 @@
             <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
             <cm-files-preview></cm-files-preview>
         </div>
-        <div class="webreader-uploading" cm-user-rights="showForGuest" ng-click="openFastRegister()" data-qa="btn-fast-registation"></div>
+        <div class="webreader-uploading" cm-user-rights="showForGuest" ng-click="openFastRegister()" data-qa="btn-fast-registration"></div>
     </cm-files>
 
     <div class="message" data-qa="answer-ctn">
-        <textarea data-qa="input-answer" cm-resize-textarea cm-max-rows="4" ng-model="my_message_text" id="emoji-textarea" cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls'}"></textarea>
+        <textarea data-qa="input-answer" cm-resize-textarea cm-max-rows="4" ng-model="my_message_text" id="emoji-textarea" cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls',handler:'.post-wrap'}"></textarea>
         <cm-emoji-handler></cm-emoji-handler>
         <div class="inputter"></div>
     </div>
@@ -28,6 +28,6 @@
     <cm-emoji-list ng-model="my_message_text" cm-textarea="emoji-textarea"></cm-emoji-list>
 
     <div class="post-wrap" data-qa="btn-send-answer" ng-click="send()">
-        <i class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap" ng-class="{'cm-post-idle':isSending}"></i>
+        <i class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap" ng-class="{'cm-post-idle':isSending, 'cm-post-attention':isSendingAbort}"></i>
     </div>
 </div>

@@ -28,10 +28,6 @@ describe('cmContactsModel', function(){
            expect(model.getAll).toBeDefined();
        })
 
-       it('should defined getQuantity',function(){
-           expect(model.getQuantity).toBeDefined();
-       })
-
        it('should defined getOne',function(){
            expect(model.getOne).toBeDefined();
        })

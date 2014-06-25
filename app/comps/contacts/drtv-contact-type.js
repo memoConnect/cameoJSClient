@@ -13,7 +13,7 @@ angular.module('cmContacts').directive('cmContactType',[
                 icon = (type == 'internal')  ? 'cm-rhino-positive'   : icon
                 icon = (type == 'external')  ? 'cm-address-book'     : icon
                 icon = (type == 'local')     ? 'cm-mobile'           : icon
-                icon = (type == 'pending')   ? 'cm-contacts'         : icon
+                icon = (type == 'pending')   ? 'cm-rhino-positive'   : icon
 
                 element.append(
                     angular.element('<i></i>')

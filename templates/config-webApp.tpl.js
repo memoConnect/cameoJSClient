@@ -87,6 +87,9 @@ cameo_config = {
         'version': {
             hasCtrl: true,
             guests: true
+        },
+        'notifications': {
+            hasCtrl: true
         }
     },
 
@@ -103,7 +106,7 @@ cameo_config = {
 
     menu: {
         'menu': {i18n:'MENU.HEADER', icon:'cm-menu', css:'cm-menu-header', onlyLabel:true},
-        //'notfications': {i18n:'MENU.NOTIFICATIONS', icon:'cm-bell', css:'cm-menu-notify'},
+//        'notifications': {i18n:'MENU.NOTIFICATIONS', icon:'cm-notification', css:'cm-menu-notify'},
         'talks': {i18n:'MENU.MESSAGES', icon:'cm-envelope-closed', css:'cm-menu-notify'},
         'contacts': {i18n:'MENU.CONTACTS', icon:'cm-group', css:'cm-menu-notify'},
         'contacts/requests': {i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
@@ -111,13 +114,13 @@ cameo_config = {
     },
 
     routeSettings: {
-        'account': {i18n:'SETTINGS.ACCOUNT', icon:'cm-person'},
+        'account': {i18n:'SETTINGS.ACCOUNT', icon:'cm-person', disabled:true},
         'identity': {i18n:'SETTINGS.IDENTITY', icon:'cm-person'},
-        'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell'},
-        'contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-contacts'},
+        'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell', disabled:true},
+        'contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-contacts', disabled:true},
         'app': {i18n:'SETTINGS.APP', icon:'cm-fix'},
-        'about': {i18n:'SETTINGS.ABOUT', icon:'cm-rhino-positive'},
-        'contracts': {i18n:'SETTINGS.CONTRACTS', icon:'cm-clipboard'}
+        'about': {i18n:'SETTINGS.ABOUT', icon:'cm-rhino-positive', disabled:true},
+        'contracts': {i18n:'SETTINGS.CONTRACTS', icon:'cm-clipboard', disabled:true}
     }
 };
 // settings config to menu subs

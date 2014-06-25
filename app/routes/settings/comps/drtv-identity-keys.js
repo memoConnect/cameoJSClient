@@ -7,11 +7,14 @@ angular.module('cmRouteSettings').directive('cmIdentityKeys', [
     'cmLogger',
     'cmNotify',
     '$location',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location){
+    '$rootScope',
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-keys.html',
             controller: function ($scope) {
+                $rootScope.$broadcast('pageTitle:change','SETTINGS.PAGES.IDENTITY.KEYS');
+
                 $scope.identity = cmUserModel.data;
 
                 $scope.ownKeys = [];
@@ -122,17 +125,17 @@ angular.module('cmRouteSettings').directive('cmIdentityKeys', [
 
                     if($scope.privKey == ''){
                         error = true;
-                        cmNotify.warn('check private Key',{ttl:1000});
+                        cmNotify.warn('check private Key');
                     }
 
                     if($scope.pubKey == ''){
                         error = true;
-                        cmNotify.warn('check public Key',{ttl:1000});
+                        cmNotify.warn('check public Key');
                     }
 
                     if($scope.keyName == ''){
                         error = true;
-                        cmNotify.warn('check keyName',{ttl:1000});
+                        cmNotify.warn('check keyName');
                     }
 
                     if(error !== true){

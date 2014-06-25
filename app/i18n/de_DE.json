@@ -3,7 +3,6 @@
         "SLOGAN": "Safer Communication - Made in Germany!",
         "DESCRIBE": "Registrieren Sie sich kostenlos und unverbindlich für cameoNet.\nWirklich sicher kommunizieren. Mobil und Desktop. Mit allen Kontakten. Und tollen Zusatzfunktionen.\nSichern Sie sich Ihren Nutzernamen noch heute und testen Sie uns!",
         "MOEP": "moep",
-        "WELCOME": "Willkommen im cameoNet",
         "VERSION": "Version"
     },
 
@@ -64,7 +63,10 @@
     },
 
 	"START": {
-		"WELCOME": "Willkommen bei cameoNet, dem Ende-zu-Ende verschlüsselten OpenSource Messenger für sichere private und geschäftliche Kommunikation!\nUm Ihnen den Einstieg zu erleichtern, hat Ihnen unser Support-Mitarbeiter eine Nachricht geschickt, in der er Ihnen die ersten Schritte erläutert. Zum Öffnen müssen Sie die Nachricht in ihren Talks anklicken.\nWir wünschen Ihnen viel Freude bei ihrer neuen Kommunikation mit Sicherheit,\ndas cameoNet-Team.",
+        "MODAL": {
+            "TITLE": "Willkommen bei cameoNet",
+            "TEXT": "Dem Ende-zu-Ende verschlüsselten OpenSource Messenger für sichere private und geschäftliche Kommunikation!\nUm Ihnen den Einstieg zu erleichtern, hat Ihnen unser Support-Mitarbeiter eine Nachricht geschickt, in der er Ihnen die ersten Schritte erläutert. Zum Öffnen müssen Sie die Nachricht in ihren Talks anklicken.\nWir wünschen Ihnen viel Freude bei ihrer neuen Kommunikation mit Sicherheit,\ndas cameoNet-Team."
+        },
 		"YOUR_ID": "Deine cameoId",
 		"LOGOUT": "ausloggen"
 	},
@@ -137,7 +139,9 @@
         "WARN": {
             "MESSAGE_EMPTY": "Das Textfeld ist leer.",
             "RECIPIENTS_MISSING": "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
-            "PASSPHRASE_INVALID": "Ungültiger Schlüssel."
+            "PASSPHRASE_INVALID": "Ungültiger Schlüssel.",
+            "PASSWORD_WRONG": "Das eingegebene Passwort ist falsch.",
+            "NO_PASSWORD": "Es fehlt ein Passwort."
         },
         "PLACEHOLDER": {
             "SUBJECT": "Betreff",
@@ -249,7 +253,7 @@
     },
 
     "IDENTITY":{
-        "PLACEHOLDER":{
+        "LABEL":{
             "KEYMANAGEMENT": "Key Verwaltung",
             "TRUST": "Trust Me"
         }
@@ -270,6 +274,9 @@
                 "LANGUAGE": "Spracheinstellung",
                 "EMOJI_CONVERT": "Smileys zu Emojis",
                 "SEND_ON_RETURN": "Senden bei Enter-Tasten druck"
+            },
+            "IDENTITY": {
+                "KEYS": "{{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}"
             }
         }
 	},
@@ -341,7 +348,7 @@
 
     "MENU": {
         "HEADER": "Menü",
-        "NOTIFICATIONS": "Notifikationen",
+        "NOTIFICATIONS": "{{'NOTIFICATIONS.HEADER'|cmTranslate}}",
         "CONTACTS": "Kontakte",
         "REQUESTS": "Kontaktanfragen",
         "SETTINGS": "{{'SETTINGS.LABEL'|cmTranslate}}",
@@ -351,12 +358,22 @@
         "LOGOUT": "Logout"
     },
 
-    "NOTIFY":{
-        "KEYS":{
-            "STORE_NEW": "Schlüssel erfolgreich gespeichert!"
+    "NOTIFICATIONS":{
+        "HEADER": "Notifikationen",
+        "MODAL_HEADER": {
+            "INFO": "Hinweis",
+            "WARN": "Achtung",
+            "ERROR": "Fehler",
+            "SUCCESS": "Erfolgreich"
         },
-        "SAVE_AS":{
-            "IOS_NOT_SUPPORT": "Leider unterstützt iOS das herunterladen von Dateien nicht. Öffnen Sie diesen Talk auf einem nicht iOS Gerät um diese Datei downloaden zukönnen. Unterstütze Formate gehen trotzdem: .pdf"
+        "TYPES": {
+            "KEYS":{
+                "STORE_NEW": "Schlüssel erfolgreich gespeichert!"
+            },
+            "SAVE_AS":{
+                "IOS_NOT_SUPPORT": "Leider unterstützt iOS das herunterladen von Dateien nicht. Öffnen Sie diesen Talk auf einem nicht iOS Gerät um diese Datei downloaden zukönnen. Unterstütze Formate gehen trotzdem: .pdf"
+            },
+            "FRIEND_REQUEST": "Neue Freundschaftsanfrage"
         }
     },
 
@@ -368,7 +385,11 @@
             "NOTICE": "Zum nutzen dieser Funktion bitte registrieren!",
             "REGISTRATION": "Jetzt registrieren",
             "LATER": "später"
+        },
+        "LABEL": {
+            "CLOSE": "schließen"
         }
+
     },
 
     "JOB": {

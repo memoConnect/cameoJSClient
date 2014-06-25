@@ -55,8 +55,8 @@ angular.module('cmConversations').directive('cmConversationControls', [
                 });
 
                 // TODO: found what does ios with window height and control height
-
-                var w = angular.element($window);
+                var w = angular.element($window),
+                    inputFocus = undefined;
 
                 function checkHeight(){
                     var window = $window.innerHeight,
@@ -68,7 +68,9 @@ angular.module('cmConversations').directive('cmConversationControls', [
                     if(window < control){
                         element.addClass('too-big');
                         body.css('height',(window-(element[0].offsetTop+bar))+'px');
-                        //scope.scrollToPassword();
+                        if(inputFocus != undefined){
+                            scope.scrollToPasswordArea();
+                        }
                     // reset
                     } else {
                         element.removeClass('too-big');
@@ -86,11 +88,15 @@ angular.module('cmConversations').directive('cmConversationControls', [
                         checkHeight();
                 });
 
-                $rootScope.$on('cmIosFocus:focus',function(){
+                $rootScope.$on('cmIosFocus:focus',function(event,input){
                     scope.inputFocus = true;
+                    if(input.attr('data-qa') == 'input-password'){
+                        inputFocus = input;
+                    }
                 });
                 $rootScope.$on('cmIosFocus:blur',function(){
                     scope.inputFocus = false;
+                    inputFocus = undefined;
                 });
             },
 
@@ -177,9 +183,9 @@ angular.module('cmConversations').directive('cmConversationControls', [
                     $scope.$broadcast('captcha:refresh');
                 };
 
-                $scope.scrollToPassword = function(){
+                $scope.scrollToPasswordArea = function(){
                     // scroll to password
-                    var anchor = $document[0].querySelector('#passwordInput'),
+                    var anchor = $document[0].querySelector('#password-area'),
                         body = angular.element($document[0].querySelector($element[0].localName+' .body'));
                         body[0].scrollTop = anchor.offsetTop;
                 }

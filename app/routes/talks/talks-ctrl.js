@@ -26,13 +26,12 @@ define([
             if(cmUserModel.comesFromRegistration !== false){
                 cmUserModel.comesFromRegistration = false;
 
-                cmModal
-                    .create({
-                        id: 'welcome',
-                        'cm-title': 'CAMEO.WELCOME'
-                    })
+                cmModal.create({
+                    id: 'welcome',
+                    'cm-title': 'START.MODAL.TITLE'
+                },'<div ng-bind-html="\'START.MODAL.TEXT\' | cmParse"></div>');
 
-                cmModal.open('welcome')
+                cmModal.open('welcome');
             }
 
             /**

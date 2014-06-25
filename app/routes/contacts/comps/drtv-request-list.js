@@ -61,9 +61,7 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                             function(){
                                 cmContactsModel.removeFriendRequest(item);
 
-                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT',{ttl:2000});
-
-                                $rootScope.$broadcast('cmNotify:update');
+                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT',{displayType:'modal'});
 
                                 cmContactsModel.trigger('friendRequests:updated');
                             },
@@ -87,9 +85,7 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                             function(){
                                 cmContactsModel.removeFriendRequest(item);
 
-                                cmNotify.success('CONTACTS.INFO.REQUEST.REJECT',{ttl:2000});
-
-                                $rootScope.$broadcast('cmNotify:update');
+                                cmNotify.success('CONTACTS.INFO.REQUEST.REJECT',{displayType:'modal'});
 
                                 cmContactsModel.trigger('friendRequests:updated');
                             },
@@ -109,9 +105,7 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                             function(){
                                 cmContactsModel.removeFriendRequest(item);
 
-                                cmNotify.success('CONTACTS.INFO.REQUEST.IGNORE',{ttl:2000});
-
-                                $rootScope.$broadcast('cmNotify:update');
+                                cmNotify.success('CONTACTS.INFO.REQUEST.IGNORE',{displayType:'modal'});
 
                                 cmContactsModel.trigger('friendRequests:updated');
                             },

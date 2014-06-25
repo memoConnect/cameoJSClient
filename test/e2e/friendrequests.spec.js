@@ -3,35 +3,14 @@ var util = require("../lib/e2e/cmTestUtil.js")
 
 describe('Friendrequests', function () {
 
-    var ptor = util.getPtorInstance(),
-        user1ToAccept = 'cmMoep_'+Date.now(),
-        password = 'password',
-        requestMessage = 'moep moep mooooeeeppp?'
-
-    it('user1 to accept do registration and logout', function () {
-        util.logout();
-        util.get('/registration')
-
-        $("[data-qa='input-loginName']").sendKeys(user1ToAccept)
-        $("[data-qa='input-password']").sendKeys(password)
-        $("[data-qa='input-passwordConfirm']").sendKeys(password)
-
-        $("[data-qa='input-displayName']").sendKeys(user1ToAccept)
-
-        $("[data-qa='link-terms']").sendKeys(protractor.Key.END)
-        $("[data-qa='icon-checkbox-agb']").click()
-
-        $("[data-qa='btn-createUser']").click()
-
-        util.waitForPageLoad('/talks')
-        util.expectCurrentUrl('/talks')
-
-        // close modal
-        $("body").sendKeys(protractor.Key.ESCAPE);
-        util.logout()
-    })
+    var ptor = util.getPtorInstance()
+    var user1ToAccept = util.createTestUser()
+    var password = 'password'
+    var requestMessage = 'moep moep mooooeeeppp?'
 
     it('user2', function(){
+
+        util.logout()
 
         describe('user2 login and search for user1', function(){
             util.login(config.loginUser1,config.passwordUser1)
@@ -59,7 +38,6 @@ describe('Friendrequests', function () {
                 $("cm-modal [data-qa='input-friendrequestMessage']").sendKeys(requestMessage)
                 // send request
                 $("cm-modal [data-qa='btn-sendRequest']").click()
-                util.waitAndCloseNotify()
             })
 
             it('check request is removed', function(){
@@ -86,13 +64,16 @@ describe('Friendrequests', function () {
     })
 
     it('user1 accept request', function(){
-        describe('again "'+user1ToAccept+"'", function(){
+        describe('again "'+ user1ToAccept + "'", function(){
             it('login and accept', function() {
                 util.login(user1ToAccept, password)
                 util.waitForPageLoad("/talks")
             })
 
-            it('check notification', function(){
+            /**
+             * @deprecated
+             */
+            xit('check notification', function(){
                 // close notify of new friendRequest (might remove this at some point)
                 util.waitAndCloseNotify()
                 // bell is orange
@@ -137,6 +118,12 @@ describe('Friendrequests', function () {
                 expect($("[data-qa='contact-display-name']").getText()).toBe(config.displayNameUser1)
                 util.logout()
             })
+
+            it('delete test user', function(){
+                util.deleteTestUser(user1ToAccept)
+            })
         })
     })
+
+
 })

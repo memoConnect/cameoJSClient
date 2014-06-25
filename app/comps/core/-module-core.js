@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('cmCore',['pascalprecht.translate','angular-growl','cmUi']);
+angular.module('cmCore',['pascalprecht.translate','cmUi']);
