@@ -192,6 +192,10 @@ angular.module('cmCore').factory('cmIdentityModel',[
                 return size;
             };
 
+            this.hasKeys = function(){
+                return (this.keys.length > 0);
+            };
+
             init(identity_data);
         }
 

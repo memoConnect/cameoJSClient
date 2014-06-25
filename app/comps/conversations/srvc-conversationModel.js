@@ -147,16 +147,32 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @ngdoc method
              * @methodOf cmConversationModel
              *
-             * @deprecated
-             *
              * @name checkConsistency
              * @description
              * Checks Conversation Settings and User Opinions
              *
              * @param {Boolean} bool Return true or false
              */
-            function checkConsistency(){
-                return false;
+            this.checkConsistency = function (){
+                /**
+                 * checkt ob alle recipienten keys haben, wenn nicht, wird überprüft ob ein passwort vergeben wurde
+                 */
+                if(self.isEncrypted() !== false){
+                    var key_check = false;
+                    self.recipients.forEach(function(recipient){
+                        if(recipient.hasKeys() !== true){
+                            key_check = true;
+                        }
+                    });
+
+                    if(key_check === true && (self.password == undefined || (typeof self.password != 'string') || (self.password.length == 0))){
+                        cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD');
+                        return false;
+                    }
+                }
+
+
+                return true;
             }
 
             /**
@@ -304,19 +320,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.save = function(){
                 if(this.state.is('new')){
                     /**
-                     * @todo
-                     * 02.06.2014 current mock bs
-                     */
-                    if(checkConsistency()){
-                        // do something
-                    }
-
-                    /**
                      * test export
                      */
 //                    console.log('export',this.exportData());
 //                    return false;
-
 
                     cmConversationsAdapter.newConversation( this.exportData() ).then(
                         function (conversation_data) {

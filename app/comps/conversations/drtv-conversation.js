@@ -26,6 +26,7 @@ angular.module('cmConversations').directive('cmConversation', [
                     files                = [];
 
                 $scope.isSending = false;
+                $scope.isSendingAbort = false;
                 $scope.conversation = {};
 
                 /**
@@ -49,6 +50,13 @@ angular.module('cmConversations').directive('cmConversation', [
                 $scope.send = function(){
                     if($scope.isSending !== true){
                         $scope.isSending = true;
+                        $scope.isSendingAbort = false;
+
+                        if($scope.conversation.checkConsistency() !== true){
+                            $scope.conversation.trigger('save:aborted');
+                            $scope.isSendingAbort = true;
+                            return false;
+                        }
 
                         /**
                          * Nested functions in comps/files/drtv-files.js
@@ -204,6 +212,11 @@ angular.module('cmConversations').directive('cmConversation', [
 
                     $scope.my_message_text  = '';
                     $scope.show_contacts    = false;
+
+
+                    $scope.conversation.on('save:aborted', function(){
+                       $scope.isSending = false;
+                    });
                 };
 
                 // existing conversation
