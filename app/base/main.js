@@ -16,7 +16,7 @@ require.config({
         'angular-sanitize': 'vendor/angular/angular-sanitize',
 
         'angular-translate': 'vendor/angular-translate/angular-translate',
-        'angular-growl': 'vendor/angular-growl/angular-growl',
+//        'angular-growl': 'vendor/angular-growl/angular-growl',
 
         'angular-loading-bar': 'vendor/util/loading-bar',
 
@@ -65,7 +65,7 @@ require.config({
         'angular-swipe': ['angular'],
         'angular-translate': ['angular'],
         'angular-sanitize': ['angular'],
-        'angular-growl': ['angular'],
+//        'angular-growl': ['angular'],
         'angular-moment-wrap': ['angular','moment'],
 
         'angular-loading-bar': ['angular', 'angular-animate'],
@@ -74,7 +74,7 @@ require.config({
         // packages
         'pckCore': [
             'angular',
-            'angular-growl',
+//            'angular-growl',
             'angular-translate',
             'angular-sanitize',
             'util-base64',
