@@ -1,6 +1,6 @@
 'use strict';
 
-describe("cmNotify", function() {
+xdescribe("cmNotify", function() {
     var el,
         scope,
         cmNotify,

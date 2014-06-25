@@ -73,11 +73,6 @@ angular.module('cmCore')
                 }
             };
 
-            this.on('bell:ring', function(){
-//                cmLogger.debug('cmNotifyModel.on.bell:ring');
-                $rootScope.$broadcast('bell:ring');
-            })
-
             this.on('update:finished', function(){
 //                cmLogger.debug('cmNotifyModel.on.update:finished');
                 self.render();
@@ -192,7 +187,7 @@ angular.module('cmCore')
             controller: function ($scope) {
                 $scope.ring = false;
 
-                $rootScope.$on('bell:ring', function(){
+                cmNotify.on('bell:ring', function(){
                     $scope.ring = true;
                 });
             }

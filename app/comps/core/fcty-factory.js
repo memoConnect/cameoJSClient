@@ -88,7 +88,6 @@ angular.module('cmCore').factory('cmFactory',[
                     self.echoEventsFrom(instance);
 
                     self.trigger('register', instance);
-                    instance.trigger('init:ready');
 
                     return self.length
                 }
@@ -127,6 +126,16 @@ angular.module('cmCore').factory('cmFactory',[
                 while(self.length > 0) self.pop()
                 return self
             };
+
+
+            /**
+             * Event Handling
+             */
+            self.on('register', function(event, instance){
+                if(typeof instance.trigger == 'function'){
+                    instance.trigger('bell:ring');
+                }
+            });
 
             return self
         }
