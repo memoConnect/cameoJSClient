@@ -8,8 +8,7 @@ angular.module('cmConversations').service('cmPurlModel',[
     'cmLogger',
     '$q',
     '$rootScope',
-    '$route',
-    function(cmConversationsAdapter, cmConversationFactory, cmUserModel, cmAuth, cmLogger, $q, $rootScope, $route) {
+    function(cmConversationsAdapter, cmConversationFactory, cmUserModel, cmAuth, cmLogger, $q, $rootScope) {
         var self = this;
 
         this.purls = [];
@@ -37,9 +36,9 @@ angular.module('cmConversations').service('cmPurlModel',[
 
                 cmUserModel.setIdentity(identity_data);
 
+                $rootScope.$broadcast('login');
             } else if(identity_data.id != currentIdentity.id){
                 cmLogger.debug('cmPurlModel:handleIdentity:internUser')
-//                $route.reload();
             }
 
             return this;

@@ -134,6 +134,8 @@ angular.module('cmCore').service('cmUserModel',[
             cmLogger.debug('cmUserModel:setIdentity');
 
             this.importData(cmIdentityFactory.create(identity_data, true));
+
+            return this;
         };
 
         /**

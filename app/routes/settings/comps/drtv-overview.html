@@ -3,7 +3,7 @@
 </header>
 
 <ul>
-    <li ng-repeat="page in Object.keys(overview)" ng-click="goToSettingsPage(page)">
+    <li ng-repeat="page in Object.keys(overview)" ng-click="goToSettingsPage(page)" ng-class="{'is-disabled':overview[page].disabled}">
         <span class="item clearfix">
             <i class="fa" ng-class="overview[page].icon"></i>
             <span>{{overview[page].i18n|cmTranslate}}</span>

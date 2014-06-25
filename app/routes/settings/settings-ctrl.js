@@ -8,9 +8,14 @@ define([
 
     app.register.controller('SettingsCtrl', [
         '$scope',
+        '$rootScope',
         '$routeParams',
-        function($scope, $routeParams) {
-            $scope.title = 'SETTINGS.WELCOME';
+        function($scope, $rootScope, $routeParams) {
+            $scope.pageTitle = 'SETTINGS.WELCOME';
+
+            $rootScope.$on('pageTitle:change',function(event, newTitle){
+                $scope.pageTitle = newTitle;
+            });
 
             $scope.mainPage = $routeParams.mainPage;
             $scope.subPage = $routeParams.subPage;

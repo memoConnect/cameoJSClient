@@ -10,6 +10,7 @@ section.settings {
   ul {
     background-color: @cm-white;
     li {
+      .with-cursor;
       min-height: 3rem;
       border-bottom: @cm-border-grey @cm-border-width solid;
       .item {
@@ -31,6 +32,9 @@ section.settings {
       }
       i {
         margin-right: 1rem;
+      }
+      &.is-disabled{
+        opacity: 0.5;
       }
     }
   }
