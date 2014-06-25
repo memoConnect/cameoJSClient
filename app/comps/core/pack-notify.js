@@ -20,6 +20,7 @@ angular.module('cmCore')
             this.displayType = undefined;
             this.callbackRoute = undefined;
             this.bell = false;
+            this.ttl = -1;
 
             /**
              * {
@@ -54,6 +55,8 @@ angular.module('cmCore')
                     this.callbackRoute = data.callbackRoute || this.callbackRoute;
 
                     this.bell = data.bell || this.bell;
+
+                    this.ttl = data.ttl || this.ttl;
                 } else {
                     this.state.set('error');
                 }
@@ -64,11 +67,14 @@ angular.module('cmCore')
 
             this.render = function(){
 //                cmLogger.debug('cmNotifyModel.render');
-                this.trigger('bell:ring');
+
+                if(this.bell !== false){
+                    this.trigger('bell:ring');
+                }
             };
 
             this.on('bell:ring', function(){
-                cmLogger.debug('cmNotifyModel.on.bell:ring');
+//                cmLogger.debug('cmNotifyModel.on.bell:ring');
                 $rootScope.$broadcast('bell:ring');
             })
 
@@ -91,9 +97,86 @@ angular.module('cmCore')
    'cmNotifyModel',
    '$rootScope',
    function(cmFactory, cmNotifyModel, $rootScope){
-       var self = new cmFactory(cmNotifyModel);
+       var self = new cmFactory(cmNotifyModel),
+            notifyTpl = {
+                label: undefined,
+                severity: 'info',
+                displayType: 'modal',
+                ttl: 3000,
+                callbackRoute: undefined
+            };
 
        $rootScope.$on('logout', function(){ self.reset() });
+
+       function handleAdapter(args){
+           var notify = notifyTpl;
+
+           if(typeof args == 'object'){
+               notify = angular.extend(notify, args);
+           }
+
+           self.new(notify);
+       }
+
+       self.error = function(label, args){
+           var options = {};
+
+           if(typeof label == 'string' && label.length > 0){
+               if(typeof args == 'object'){
+                   options = angular.extend(options, args);
+               }
+
+               options.label = label;
+               options.severity = 'error';
+
+               handleAdapter(options);
+           }
+       };
+
+       self.info = function(label, args){
+           var options = {};
+
+           if(typeof label == 'string' && label.length > 0){
+               if(typeof args == 'object'){
+                   options = angular.extend(options, args);
+               }
+
+               options.severity = 'info';
+               options.label = label;
+
+               handleAdapter(options);
+           }
+       };
+
+       self.success = function(label, args){
+           var options = {};
+
+           if(typeof label == 'string' && label.length > 0){
+               if(typeof args == 'object'){
+                   options = angular.extend(options, args);
+               }
+
+               options.severity = 'success';
+               options.label = label;
+
+               handleAdapter(options);
+           }
+       };
+
+       self.warn = function(label, args){
+           var options = {};
+
+           if(typeof label == 'string' && label.length > 0) {
+               if (typeof args == 'object') {
+                   options = angular.extend(options, args);
+               }
+
+               options.severity = 'warn';
+               options.label = label;
+
+               handleAdapter(options);
+           }
+       };
 
        return self;
    }

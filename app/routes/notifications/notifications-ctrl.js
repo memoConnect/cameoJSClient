@@ -14,8 +14,21 @@ define([
 
             $scope.ring = function(){
                 cmNotify.new({
-                    label:'FRIEND_REQUEST'
+                    label:'NOTIFICATIONS.TYPES.FRIEND_REQUEST',
+                    bell: true
                 });
+            }
+
+            $scope.warn = function(){
+                cmNotify.warn('DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME',{ttl:2000, bell:true});
+            }
+
+            $scope.info = function(){
+                cmNotify.info('NOTIFICATIONS.TYPES.FRIEND_REQUEST',{ttl:2000});
+            }
+
+            $scope.error = function(){
+                cmNotify.error('DRTV.EXTERN_CONTACT.INFO.SAVE_FAIL',{ttl:2000});
             }
         }
     ]);
