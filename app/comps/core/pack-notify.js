@@ -6,8 +6,10 @@ angular.module('cmCore')
     'cmObject',
     'cmModal',
     'cmUtil',
+    'cmTranslate',
     'cmLogger',
-    function(cmStateManagement, cmObject, cmModal, cmUtil, cmLogger){
+    '$timeout',
+    function(cmStateManagement, cmObject, cmModal, cmUtil, cmTranslate, cmLogger, $timeout){
         function cmNotifyModel(data){
             var self = this;
 
@@ -83,19 +85,22 @@ angular.module('cmCore')
                         id: 'fast-registration',
                         'class': 'webreader',
                         type: 'alert',
-                        nose: 'top-right',
-                        'cm-close-btn': false,
-                        'cm-footer-label': 'MODAL.WEBREADER.LATER',
-                        'cm-footer-icon': 'cm-close'
+//                        nose: 'top-right',
+                        'cm-close-btn': true,
                     },'' +
                     '<div class="attention">' +
-                    '<i class="fa cm-attention cm-lg-icon"></i> {{\'MODAL.WEBREADER.NOTICE\'|cmTranslate}}' +
+                    '<i class="fa cm-attention cm-lg-icon"></i> NOTIFACTION' +
                     '</div>'+
-                    '<a href="#/registration" class="redirect">' +
-                    '<i class="fa cm-key cm-lg-icon"></i> {{\'MODAL.WEBREADER.REGISTRATION\'|cmTranslate}}' +
-                    '</a>'
+                    '' + cmTranslate(this.label)
                 );
                 cmModal.open('fast-registration');
+
+                if(this.ttl > 0){
+                    $timeout(function(){
+                        //cmModal.close('fast-registration');
+                        cmModal.closeAll();
+                    }, this.ttl);
+                }
             };
 
             this.on('update:finished', function(){

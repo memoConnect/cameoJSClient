@@ -372,7 +372,11 @@
             "NOTICE": "Zum nutzen dieser Funktion bitte registrieren!",
             "REGISTRATION": "Jetzt registrieren",
             "LATER": "später"
+        },
+        "LABEL": {
+            "CLOSE": "schließen"
         }
+
     },
 
     "JOB": {

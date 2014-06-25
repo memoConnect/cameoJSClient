@@ -372,8 +372,11 @@
             "NOTICE": "For this function, please register!",
             "REGISTRATION": "register now",
             "LATER": "later"
+        },
+        "LABEL": {
+            "CLOSE": "close"
         }
-    },
+    }
 
     "JOB": {
         "IN_PROGRESS": "You have editet this site without saving. Do you would leave this page?",
