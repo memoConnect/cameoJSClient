@@ -82,25 +82,28 @@ angular.module('cmCore')
             this.renderModal = function(){
 //                cmLogger.debug('cmNotifyModel.renderModal');
                 cmModal.create({
-                        id: 'fast-registration',
-                        'class': 'webreader',
+                        id: 'notification-modal',
                         type: 'alert',
-//                        nose: 'top-right',
                         'cm-close-btn': true,
+                        'cm-footer-label': 'MODAL.LABEL.CLOSE',
+                        'cm-footer-icon': 'cm-close'
                     },'' +
                     '<div class="attention">' +
                     '<i class="fa cm-attention cm-lg-icon"></i> NOTIFACTION' +
                     '</div>'+
                     '' + cmTranslate(this.label)
                 );
-                cmModal.open('fast-registration');
+                cmModal.open('notification-modal');
 
                 if(this.ttl > 0){
                     $timeout(function(){
-                        //cmModal.close('fast-registration');
-                        cmModal.closeAll();
+                        cmModal.close('notification-modal');
                     }, this.ttl);
                 }
+
+                cmModal.on('instance:closed', function(){
+                    self.trigger('notify:remove', this);
+                });
             };
 
             this.on('update:finished', function(){
@@ -206,6 +209,10 @@ angular.module('cmCore')
                handleAdapter(options);
            }
        };
+
+       self.on('notify:remove', function(event){
+           self.deregister(event.source);
+       });
 
        return self;
    }

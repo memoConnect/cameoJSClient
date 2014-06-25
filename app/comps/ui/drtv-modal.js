@@ -104,6 +104,7 @@ angular.module('cmUi').directive('cmModal', [
                 // close modal
                 scope.close = function(){
                     this.toggle(false);
+                    cmModal.trigger('instance:closed');
 
                     return this
                 };

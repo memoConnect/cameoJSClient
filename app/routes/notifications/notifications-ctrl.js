@@ -25,7 +25,7 @@ define([
             }
 
             $scope.info = function(){
-                cmNotify.info('NOTIFICATIONS.TYPES.FRIEND_REQUEST',{ttl:0});
+                cmNotify.info('NOTIFICATIONS.TYPES.FRIEND_REQUEST',{ttl:0, displayType:'modal'});
             }
 
             $scope.error = function(){
