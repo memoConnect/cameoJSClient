@@ -378,7 +378,7 @@
         "LABEL": {
             "CLOSE": "close"
         }
-    }
+    },
 
     "JOB": {
         "IN_PROGRESS": "You have editet this site without saving. Do you would leave this page?",
