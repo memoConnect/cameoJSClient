@@ -248,3 +248,35 @@ cm-modal {
     }
   }
 }
+
+cm-modal.modal-notification{
+  header {
+    height:0 !important;
+  }
+  .header {
+    color:@cm-warning-color;
+    padding:@cm-vertical-padding @cm-horizontal-padding;
+    font-size:@cm-mega-font;
+    font-weight:bold;
+  }
+  .body{
+    font-size:@cm-large-font;
+  }
+
+  &.modal-type-{
+    &info, &warn, &error{
+      .body {
+        i.fa {
+          color: @cm-warning-color
+        }
+      }
+    }
+    &success{
+      .body {
+        i.fa {
+          color: @cm-ci-color
+        }
+      }
+    }
+  }
+}

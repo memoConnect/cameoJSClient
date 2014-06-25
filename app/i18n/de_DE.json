@@ -358,6 +358,12 @@
 
     "NOTIFICATIONS":{
         "HEADER": "Notifikationen",
+        "MODAL_HEADER": {
+            "INFO": "Hinweis",
+            "WARN": "Achtung",
+            "ERROR": "Fehler",
+            "SUCCESS": "Erfolgreich"
+        },
         "TYPES": {
             "KEYS":{
                 "STORE_NEW": "Schlüssel erfolgreich gespeichert!"
