@@ -70,6 +70,72 @@ this.login = function (username, password) {
     return this
 }
 
+this.createTestUser = function() {
+
+    this.logout()
+
+    var prefix = 'testUser23_'
+    var id = Math.random().toString(36).substring(2,9)
+    var loginName = prefix + id
+    var password = 'password'
+
+    this.get("/registration");
+
+    $("[data-qa='input-loginName']").sendKeys(loginName)
+    $("[data-qa='input-password']").sendKeys(password)
+    $("[data-qa='input-passwordConfirm']").sendKeys(password)
+
+    $("[data-qa='input-displayName']").sendKeys(loginName)
+
+    $("[data-qa='link-terms']").sendKeys(protractor.Key.END)
+    $("[data-qa='icon-checkbox-agb']").click()
+
+    $("[data-qa='btn-createUser']").click()
+
+    this.waitForPageLoad("/talks")
+
+    return loginName
+}
+
+this.deleteTestUser = function(loginName) {
+
+    var testUserId = loginName.split("_")[1]
+
+    ptor.executeAsyncScript( function(testUserId) {
+        var callback = arguments[arguments.length - 1];
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("DELETE", "/a/v1/testUser/" + testUserId, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                callback(xhr.responseText);
+            }
+        }
+        xhr.send('');
+
+    }, testUserId)
+}
+
+
+this.getTestUserNotifications = function(loginName) {
+
+    var testUserId = loginName.split("_")[1]
+
+    return ptor.executeAsyncScript( function(testUserId) {
+
+        var callback = arguments[arguments.length - 1];
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/a/v1/testUser/" + testUserId, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                callback(JSON.parse(xhr.responseText))
+            }
+        }
+        xhr.send('');
+    }, testUserId)
+}
+
 this.waitForPageLoad = function (expectedRoute) {
     ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route').then(function (route) {
