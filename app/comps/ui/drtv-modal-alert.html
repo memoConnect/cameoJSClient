@@ -4,10 +4,10 @@
     </header>
     <ng-transclude class="content"></ng-transclude>
     <footer>
-        <button class="cm-btn-block" ng-click="close()">
+        <button class="cm-btn-block" ng-click="close()" data-qa="cm-modal-close-btn">
             {{(footerLabel||'MODAL.ALERT.OK')|cmTranslate}}
             <i ng-if="footerIcon" class="fa {{footerIcon}} cm-lg-icon"></i>
         </button>
     </footer>
 </article>
-<div class="backdrop"></div>
+<div class="backdrop"></div>2

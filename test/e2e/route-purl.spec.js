@@ -26,7 +26,7 @@ describe('Route: Purl - ', function () {
 
         it('should have attachment button "'+moep+'"', function(){
             expect($('[data-qa="attachments-btn"]').isPresent()).toBe(true)
-            expect($('[data-qa="btn-fast-registation"]').isPresent()).toBe(false)
+            expect($('[data-qa="btn-fast-registration"]').isPresent()).toBe(false)
         })
 
         it('should have normal answer container "'+moep+'"', function(){
@@ -54,11 +54,11 @@ describe('Route: Purl - ', function () {
 
         it('should have attachment button "'+moep+'"', function(){
             expect($('[data-qa="attachments-btn"]').isPresent()).toBe(true)
-            expect($('[data-qa="btn-fast-registation"]').isPresent()).toBe(true)
+            expect($('[data-qa="btn-fast-registration"]').isPresent()).toBe(true)
         })
 
         it('should show fast registration model, when click on uploading button "'+moep+'"', function(){
-            $('[data-qa="btn-fast-registation"]').click()
+            $('[data-qa="btn-fast-registration"]').click()
             util.waitForModalOpen('fast-registration')
         })
     }
