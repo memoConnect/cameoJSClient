@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            <div ng-if="conversation.options.hasPassword && conversation.isEncrypted()">
+            <div ng-if="conversation.options.hasPassword && conversation.isEncrypted()" id="password-area">
                 <div class="captcha" ng-if="conversation.options.hasCaptcha && isNew" data-qa="captcha-canvas">
                     <cm-captcha></cm-captcha>
                     <button class="refresh" ng-click="refreshCaptcha()" ng-if="isNew"><i class="fa cm-change"></i></button>
@@ -52,17 +52,15 @@
                     </p>
                 </div>
 
-                <div id="passwordInput">
-                    <div class="captcha" ng-if="!isNew" data-qa="captcha-image">
-                        <img cm-blob-image="conversation.passCaptcha" />
-                    </div>
+                <div class="captcha" ng-if="!isNew" data-qa="captcha-image">
+                    <img cm-blob-image="conversation.passCaptcha" />
+                </div>
 
-                    <div class="cm-form-group label-with-checkbox">
-                        <label class="w20">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</label>
-                        <div class="cm-form-control with-inputter w80" style="background-color:#fff" ng-class="{'with-inside-icon':!isNew}">
-                            <input style="background-color:#fff" type="text" ng-model="conversation.password" placeholder="{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls', scrollTop:true}" ng-focus="scrollToPassword()" />
-                            <i class="fa cm-key fa-2x with-cursor" ng-click="decrypt()" ng-if="!isNew"></i>
-                        </div>
+                <div class="cm-form-group label-with-checkbox">
+                    <label class="w20">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</label>
+                    <div class="cm-form-control with-inputter w80" style="background-color:#fff" ng-class="{'with-inside-icon':!isNew}">
+                        <input style="background-color:#fff" type="text" ng-model="conversation.password" placeholder="{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls', scrollTop:true,handler:'#captcha-anchor'}" data-qa="input-password" />
+                        <i class="fa cm-key fa-2x with-cursor" ng-click="decrypt()" ng-if="!isNew"></i>
                     </div>
                 </div>
             </div>
