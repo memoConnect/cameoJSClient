@@ -18,12 +18,17 @@ define([
         function($scope, $rootScope, $routeParams, $location, cmModal, cmPurlModel, cmUserModel, cmUtil){
             $scope.data = null;
             $scope.showConversation = false;
+            $scope.showSignIn = false;
 
             if(cmUtil.checkKeyExists($routeParams,'idPurl') && cmUtil.validateString($routeParams.idPurl)){
                 cmPurlModel.getPurl($routeParams.idPurl).then(
                     function(data){
                         // identity check internal || external user
                         cmPurlModel.handleIdentity(data.identity);
+                        if(data.identity.userType == 'external'){
+                            $scope.showSignIn = true;
+                        }
+
 
                         if(typeof data.token !== 'undefined'){
                             cmPurlModel.handleToken(data.token)
