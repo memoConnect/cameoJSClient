@@ -53,7 +53,6 @@ angular.module('cmUi').service('cmModal',[
         }
 
         self.closeAll = function(){
-            console.log('hier close')
             angular.forEach(self.instances, function(modal_instance, key){
                 modal_instance.close()
             })

@@ -21,7 +21,7 @@
                 <i class="fa icon-right" ng-if="menu[btn].subs" ng-class="{'cm-down':!menu[btn].subsVisible,'cm-up':menu[btn].subsVisible}" ng-click="toggleSubs(menu[btn])"></i>
                 <div class="clearfix"></div>
                 <ul class="cm-submenu" ng-if="menu[btn].subs" ng-show="menu[btn].subsVisible">
-                    <li ng-repeat="subBtn in Object.keys(menu[btn].subs)" ng-click="goTo(menu[btn], btn+'/'+subBtn, true)">
+                    <li ng-repeat="subBtn in Object.keys(menu[btn].subs)" ng-click="goTo(menu[btn], btn+'/'+subBtn, true)" ng-class="{'is-disabled':menu[btn].subs[subBtn].disabled}">
                         <i class="fa icon-left" ng-if="menu[btn].subs[subBtn].icon != undefined" ng-class="menu[btn].subs[subBtn].icon"></i>
                         <span>{{menu[btn].subs[subBtn].i18n|cmTranslate}}</span>
                         <div class="clearfix"></div>
