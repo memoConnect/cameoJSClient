@@ -5,7 +5,7 @@ angular.module('cmUi').directive('cmIdentity',[
     function (cmUserModel){
         return {
             restrict: 'AE',
-            template: '<cm-avatar cm-data="identity"></cm-avatar> {{identity.getDisplayName()}}',
+            template: '<cm-avatar cm-data="identity"></cm-avatar> <a href="#/settings/identity">{{identity.getDisplayName()}}</a>',
             scope: true,
             controller: function($scope){
                 function setIdentity(){
