@@ -165,26 +165,29 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
             this.decrypt = function () {
                 if(this.state.is('decrypted') !== true){
-                    /**
-                     * @deprecated
-                     * Workaround for old Messages in dev and stage
-                     */
-                    if(typeof this.encryptedData == 'string' && this.encryptedData != '' && this.encryptedData.charAt(0) != '{'){
-                        this.encryptedData = cmCrypt.base64Decode(this.encryptedData);
+
+                    if(typeof this.encryptedData == 'string' && this.encryptedData.length > 0){
+                        /**
+                         * @deprecated
+                         * Workaround for old Messages in dev and stage
+                         */
+                        if(this.encryptedData.charAt(0) != '{'){
+                            this.encryptedData = cmCrypt.base64Decode(this.encryptedData);
+                        }
+
+                        var decrypted_data = JSON.parse(cmCrypt.decrypt(conversation.getPassphrase(),this.encryptedData));
+
+                        if(decrypted_data !== false){
+                            this.importData(decrypted_data);
+                        }
+
+                        if(!!decrypted_data){
+                            this.state.set('decrypted');
+                            this.trigger('decrypt:success');
+                        }
+
+                        return !!decrypted_data
                     }
-
-                    var decrypted_data = JSON.parse(cmCrypt.decrypt(conversation.getPassphrase(),this.encryptedData));
-
-                    if(decrypted_data !== false){
-                        this.importData(decrypted_data);
-                    }
-
-                    if(!!decrypted_data){
-                        this.state.set('decrypted');
-                        this.trigger('decrypt:success');
-                    }
-
-                    return !!decrypted_data
                 }
 
                 return true;
