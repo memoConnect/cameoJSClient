@@ -154,8 +154,8 @@ define([
      * @TODO cmContactsModel anders initialisieren
      */
     app.run([
-        '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmContactsModel', 'cmLanguage', 'cmLogger','cfpLoadingBar','cmEnv', 'cmApi',
-        function ($rootScope, $location, $window, $route, cmUserModel, cmContactsModel, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi) {
+        '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmContactsModel', 'cmSettings', 'cmLanguage', 'cmLogger','cfpLoadingBar','cmEnv', 'cmApi',
+        function ($rootScope, $location, $window, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi) {
 
             //prep $rootScope with useful tools
             $rootScope.console = console;

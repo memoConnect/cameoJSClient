@@ -10,14 +10,22 @@ angular.module('cmCore')
 .service('cmSettings', [
     'cmUserModel',
     'cmUtil',
-    function(cmUserModel, cmUtil) {
+    'cmLogger',
+    '$rootScope',
+    function(cmUserModel, cmUtil, cmLogger, $rootScope) {
         var self = this,
-            localStorageKey = 'appSettings';
+            localStorageKey = 'appSettings',
+            defaultProperties = {
+                convertEmoji: true,
+                sendOnReturn: false
+            };
+
 
         this.properties = {};
 
         function init(){
-            self.properties = cmUserModel.storageGet(localStorageKey) || {};
+//            cmLogger.debug('cmSettings.init');
+            self.properties = angular.extend({}, defaultProperties, (cmUserModel.storageGet(localStorageKey) || {}));
         }
 
         /**
@@ -68,6 +76,13 @@ angular.module('cmCore')
             return false;
         };
 
-        init();
+        $rootScope.$on('logout', function(){
+//            cmLogger.debug('cmSettings.on.logout');
+            self.properties = {};
+        });
+
+        cmUserModel.on('update:finished', function(){
+            init();
+        });
     }
 ]);
