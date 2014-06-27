@@ -231,6 +231,15 @@ angular.module('cmCore').service('cmUserModel',[
             return '';
         };
 
+        this.hasLocalKeys = function(){
+            var keys = this.loadLocalKeys();
+
+            if(keys.length > 0)
+                return true;
+
+            return false;
+        };
+
         /**
          * @param key
          * @returns {*}
@@ -253,7 +262,7 @@ angular.module('cmCore').service('cmUserModel',[
 
             this.storageSave('rsa', key_data_list)
 
-            cmNotify.info('NOTIFICATIONS.TYPES.KEYS.STORE_NEW',{displayType:'modal'});
+            cmNotify.info('NOTIFICATIONS.TYPES.KEYS.STORE_NEW',{displayType:'modal',ttl:3000});
 
             return this
         };

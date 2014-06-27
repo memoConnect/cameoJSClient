@@ -364,7 +364,8 @@ angular.module('cmCore').factory('cmPassphrase',[
                 this.encrypt();
                 return  {
                             sePassphrase        : symmetricallyEncryptedPassphrase,
-                            aePassphraseList    : asymmetricallyEncryptedPassphrases
+                            aePassphraseList    : asymmetricallyEncryptedPassphrases,
+                            keyTransmission     : this.getKeyTransmission()
                         }
             };
 

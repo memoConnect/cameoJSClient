@@ -122,7 +122,8 @@
             "SEND": "abschicken",
             "REQUEST_CAPTCHA": "Captcha anfordern",
             "SEND_CAPTCHA": "Captcha senden",
-            "KEY_GENERATION": "Für gute Verschlüsselung hier ein Keypair erzeugen"
+            "KEY_GENERATION": "Für gute Verschlüsselung hier ein Keypair erzeugen",
+            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "Password wird angezeigt, da kein lokaler Key existiert"
         },
         "TAG": {
             "RECIPIENTS": "Empfänger",
@@ -373,7 +374,11 @@
             "SAVE_AS":{
                 "IOS_NOT_SUPPORT": "Leider unterstützt iOS das herunterladen von Dateien nicht. Öffnen Sie diesen Talk auf einem nicht iOS Gerät um diese Datei downloaden zukönnen. Unterstütze Formate gehen trotzdem: .pdf"
             },
-            "FRIEND_REQUEST": "Neue Freundschaftsanfrage"
+            "FRIEND_REQUEST": "Neue Freundschaftsanfrage",
+            "CONVERSATION":{
+                "ASYMMETRIC_DECRYPT_ERROR": "ASYMMETRIC_DECRYPT_ERROR"
+            }
+
         }
     },
 
@@ -420,6 +425,11 @@
                 "NAME": "Passcaptcha wird verwendet!",
                 "DESCRIPTION": "",
                 "TOGGLE": "Passcaptcha deaktivieren"
+            },
+            "HAS_PASSWORD": {
+                "NAME": "Passwort wird verwendet!",
+                "DESCRIPTION": "",
+                "TOGGLE": ""
             }
         }
     },
