@@ -3,7 +3,8 @@
 angular.module('cmSecurityAspects')
 .factory('cmSecurityAspectsConversation',[
     'cmSecurityAspects',
-    function(cmSecurityAspects){
+    'cmUserModel',
+    function(cmSecurityAspects, cmUserModel){
 //        var securityAspectsConversation = new cmSecurityAspects()
 
         function securityAspectsConversation(target){
@@ -91,6 +92,19 @@ angular.module('cmSecurityAspects')
                     },
                     toggleCall: function(conversation){
                         conversation.disablePassCaptcha();
+                    }
+                })
+                .addAspect({
+                    id: 'HAS_PASSWORD',
+                    value: -1,
+                    check: function(conversation){
+                        var bool = false;
+
+                        if(conversation.options.hasPassword !== false){
+                            bool = true
+                        }
+
+                        return bool;
                     }
                 })
 

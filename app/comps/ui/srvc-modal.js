@@ -45,7 +45,7 @@ angular.module('cmUi').service('cmModal',[
         }
 
         self.close = function(id){
-            self.instances[id].close()
+            self.instances[id].close();
 
             self.trigger('instance:closed');
 

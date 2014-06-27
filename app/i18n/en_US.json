@@ -122,7 +122,8 @@
             "SEND": "send",
             "REQUEST_CAPTCHA": "ask for Captcha",
             "SEND_CAPTCHA": "send Captcha",
-            "KEY_GENERATION": "for good encryption you can here generate a keypair"
+            "KEY_GENERATION": "for good encryption you can here generate a keypair",
+            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "password shown, because no local keypar exists"
         },
         "TAG": {
             "RECIPIENTS": "Recipients",
@@ -373,7 +374,10 @@
             "SAVE_AS":{
                 "IOS_NOT_SUPPORT": "Unfortunately iOS does not support to download files. Open this talk on a non-iOS device to download this file. Supported formats go anyway: .pdf"
             },
-            "FRIEND_REQUEST": "New friendrequest"
+            "FRIEND_REQUEST": "New friendrequest",
+            "CONVERSATION":{
+                "ASYMMETRIC_DECRYPT_ERROR": "ASYMMETRIC_DECRYPT_ERROR"
+            }
         }
     },
 
@@ -419,6 +423,11 @@
                 "NAME": "Passcaptcha enabled!",
                 "DESCRIPTION": "",
                 "TOGGLE": "Disable passcaptcha!"
+            },
+            "HAS_PASSWORD": {
+                "NAME": "Password enabled!",
+                "DESCRIPTION": "",
+                "TOGGLE": ""
             }
         }
     },

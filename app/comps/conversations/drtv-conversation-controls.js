@@ -101,6 +101,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
             },
 
             controller: function($scope, $element){
+                $scope.showPasswordLocalKeyInfo = false;
 
                 /**
                  * @name toggleControls
@@ -128,7 +129,9 @@ angular.module('cmConversations').directive('cmConversationControls', [
                  * redirect to route /recipients
                  */
                 $scope.manageRecipients = function(){
-                    $location.path('/recipients')
+                    if($scope.conversation.state.is('new')){
+                        $location.path('/recipients')
+                    }
                 };
 
                 /**
@@ -137,11 +140,15 @@ angular.module('cmConversations').directive('cmConversationControls', [
                  * try to decrypt the conversation
                  */
                 $scope.decrypt = function(){
-                    $scope.conversation.one('decrypt:failed', function(){
-                        cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG');
-                        $scope.toggleControls('open');
-                    });
-                    $scope.conversation.decrypt();
+                    if(!($scope.conversation.keyTransmission == 'asymmetric'
+                        && cmUserModel.hasLocalKeys() == false)) {
+
+                        $scope.conversation.one('decrypt:failed', function () {
+                            cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG');
+                            $scope.toggleControls('open');
+                        });
+                        $scope.conversation.decrypt();
+                    }
                 };
 
                 /**
@@ -188,6 +195,10 @@ angular.module('cmConversations').directive('cmConversationControls', [
                     var anchor = $document[0].querySelector('#password-area'),
                         body = angular.element($document[0].querySelector($element[0].localName+' .body'));
                         body[0].scrollTop = anchor.offsetTop;
+                }
+
+                if($scope.conversation.state.is('new') && cmUserModel.hasLocalKeys() == false){
+                    $scope.showPasswordLocalKeyInfo = true;
                 }
             }
         }

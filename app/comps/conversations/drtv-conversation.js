@@ -23,7 +23,8 @@ angular.module('cmConversations').directive('cmConversation', [
                     conversation_subject = $scope.$eval($attrs.cmSubject),
                     conversation_offset  = $attrs.offset,
                     conversation_limit   = $attrs.limit,
-                    files                = [];
+                    files                = [],
+                    showedAsymmetricKeyError = false;
 
                 $scope.isSending = false;
                 $scope.isSendingAbort = false;
@@ -106,6 +107,18 @@ angular.module('cmConversations').directive('cmConversation', [
                     }
                     return false;
                 };
+
+                function showAsymmetricKeyError(){
+                    cmLogger.debug('cmConversationDRTV.showAsymmetricKeyError')
+
+                    if(!$scope.conversation.state.is('new')
+                        && $scope.conversation.keyTransmission == 'asymmetric'
+                        && cmUserModel.hasLocalKeys() == false
+                        && showedAsymmetricKeyError == false){
+                        showedAsymmetricKeyError = true;
+                        cmNotify.warn('NOTIFICATIONS.TYPES.CONVERSATION.ASYMMETRIC_DECRYPT_ERROR');
+                    }
+                }
 
                 /**
                  * validator helper
@@ -190,14 +203,17 @@ angular.module('cmConversations').directive('cmConversation', [
                 }
 
                 this.addPendingRecipients = function(){
-                    $rootScope.pendingRecipients = $rootScope.pendingRecipients || [];
-                    $rootScope.pendingRecipients.forEach(function(pendingRecipient){
-                        $scope.conversation.addRecipient(pendingRecipient);
-                    });
-                    $rootScope.pendingRecipients = []
+                    if($scope.conversation.state.is('new')){
+                        $rootScope.pendingRecipients = $rootScope.pendingRecipients || [];
+                        $rootScope.pendingRecipients.forEach(function(pendingRecipient){
+                            $scope.conversation.addRecipient(pendingRecipient);
+                        });
+                        $rootScope.pendingRecipients = []
+                    }
                 };
 
                 $scope.init = function (conversation) {
+                    cmLogger.debug('cmConversationDRTV.init')
                     if(!conversation){
                         cmLogger.debug("Conversation not found.")
                         return false
@@ -217,6 +233,8 @@ angular.module('cmConversations').directive('cmConversation', [
                     $scope.conversation.on('save:aborted', function(){
                        $scope.isSending = false;
                     });
+
+                    showAsymmetricKeyError();
                 };
 
                 // existing conversation
@@ -237,6 +255,10 @@ angular.module('cmConversations').directive('cmConversation', [
                         .addRecipient(cmUserModel.data.identity)
                     )
                 }
+
+                $scope.conversation.on('update:finished',function(){
+                    showAsymmetricKeyError();
+                });
 
                 /**
                  * Delete pending Objects

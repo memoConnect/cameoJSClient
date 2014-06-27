@@ -85,8 +85,9 @@ angular.module('cmCore')
 
             this.renderModal = function(){
 //                cmLogger.debug('cmNotifyModel.renderModal');
+                var modalId = 'modal-notification-' + new Date().getTime();
                 cmModal.create({
-                        id: 'modal-notification' + new Date(),
+                        id: modalId,
                         type: 'alert',
                         'class': 'modal-notification modal-type-'+this.severity,
                         //'nose': 'top-right',
@@ -101,11 +102,11 @@ angular.module('cmCore')
                         cmTranslate(this.label)+
                     '</div>'
                 );
-                cmModal.open('modal-notification');
+                cmModal.open(modalId);
 
                 if(this.ttl > 0){
                     this.ttlTimeout = $timeout(function(){
-                        cmModal.close('modal-notification');
+                        cmModal.close(modalId);
                     }, this.ttl);
                 }
 

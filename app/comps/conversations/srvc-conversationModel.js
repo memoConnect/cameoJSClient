@@ -208,16 +208,22 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     passphrase.importAsymmetricallyEncryptedPassphrase(data.aePassphraseList);
 
                 if('keyTransmission' in data){
+                    this.keyTransmission = data.keyTransmission;
+
                     /* wenn gleich alles nice!
                      - wenn passphrase fehlt
                      ->
                      - wenn passphraselist fehlt
                      -> */
-//                    if(passphrase.keyTransmission !== data.keyTransmission){
-//
-//                    }
+                    if(passphrase.keyTransmission !== this.keyTransmission){
+                        if(this.keyTransmission == 'asymmetric' && (!('aePassphraseList' in data) || data.aePassphraseList.length == 0)){
+//                            if(cmUserModel.data.identity.hasKeys() == false){
+//                                console.log('hier')
+//                                this.options.showKeyInfo = true;
+//                            }
+                        }
+                    }
 
-                    this.keyTransmission = data.keyTransmission;
                 } else {
                     /**
                      * @TODO
@@ -254,6 +260,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         self.addRecipient(cmIdentityFactory.create(recipient_data.identityId));
                     }
                 );
+
+                if(cmUserModel.hasLocalKeys() == false){
+                    this.options.showKeyInfo = true;
+                }
 
                 this.state.unset('new');
                 this.trigger('update:finished');
@@ -712,6 +722,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.options.hasPassword = false;
                 this.options.showKeyInfo = false;
 
+                if(this.state.is('new') && cmUserModel.hasLocalKeys() == false){
+                    this.options.hasPassword = true;
+                    this.options.showKeyInfo = true;
+                }
+
                 /**
                  * check recipients
                  */
@@ -721,9 +736,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                      */
                     if(recipient.getWeakestKeySize() == 0){
                         self.options.hasPassword = true;
-                        if(recipient.id == cmUserModel.data.identity.id){
-                            self.options.showKeyInfo = true;
-                        }
                     }
                 });
 
@@ -778,7 +790,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
 
                 } else {
-                    this.lockStatus.level = levels[passphrase.getKeyTransmission()];
+                    this.lockStatus.level = levels[this.keyTransmission];
                 }
 
                 switch(this.lockStatus.level){
