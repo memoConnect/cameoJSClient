@@ -49,6 +49,18 @@ angular.module('cmCore')
                 })
             },
 
+            blobWrap: function(byteArrays, contentType, method){
+                console.log('blobWrap '+method,Blob)
+                var blob = new Blob(byteArrays, {type: contentType});
+                return blob
+            },
+
+            blobBuilderWrap: function(){
+                console.log('blobBuilderWrap',BlobBuilder)
+                var blobBuilder = new BlobBuilder();
+                return blobBuilder;
+            },
+
             base64ToBlob: function (b64Data, contentType, sliceSize){
                 b64Data = b64Data.replace(new RegExp('^(data:(.*);base64,)','i'),'');
                 contentType = contentType || '';
@@ -70,7 +82,7 @@ angular.module('cmCore')
                     byteArrays.push(byteArray);
                 }
 
-                var blob = new Blob(byteArrays, {type: contentType});
+                var blob = this.blobWrap(byteArrays, contentType, 'base64ToBlob');
                 return blob;
             }
         }
@@ -158,11 +170,11 @@ angular.module('cmCore')
             var blob;
             var BlobBuilder = window.MozBlobBuilder || window.WebKitBlobBuilder || window.BlobBuilder;
             if (typeof(BlobBuilder) !== 'undefined') {
-                var bb = new BlobBuilder();
+                var bb = cmFilesAdapter.blobBuilderWrap();
                 bb.append(str);
                 blob = bb.getBlob();
             } else {
-                blob = new Blob([str]);
+                blob = cmFilesAdapter.blobWrap([str], undefined, 'str2ab_blobreader');
             }
             var f = new FileReader();
             f.onload = function(e) {
@@ -190,7 +202,7 @@ angular.module('cmCore')
                 byteArrays.push(byteArray);
             }
 
-            return new Blob(byteArrays, {type: contentType});
+            return cmFilesAdapter.blobWrap(byteArrays, contentType, 'binaryStringtoBlob');
         }
 
         return function Chunk(file, start, end){
@@ -284,7 +296,8 @@ angular.module('cmCore')
                 return cmFilesAdapter.getChunk(id, index).then(
                     function(data){
                         return self.encryptedRaw = data
-                    })
+                    }
+                )
             };
 
             /**
@@ -592,13 +605,14 @@ angular.module('cmCore')
                 var self = this,
                     data = [];
 
-                if(!this.chunks) cmLogger.error('Unable reassemble chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.')
+                if(!this.chunks)
+                    cmLogger.error('Unable reassemble chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.');
 
                 this.chunks.forEach(function(chunk){
-                    data.push(chunk.blob)
-                })
+                    data.push(chunk.blob);
+                });
 
-                this.blob = new Blob(data, {type: self.type})
+                this.blob = cmFilesAdapter.blobWrap(data, self.type, 'reassembleChunks');
 
                 self.trigger('file:cached', this);
 
