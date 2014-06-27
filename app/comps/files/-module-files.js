@@ -1,5 +1,6 @@
 'use strict';
 
 angular.module('cmFiles',[
-    'cmCore', 'cmUi'
+    'cmCore',
+    'cmUi'
 ]);

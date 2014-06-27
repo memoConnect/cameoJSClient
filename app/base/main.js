@@ -77,7 +77,7 @@ require.config({
             'util-base64',
             'crypto-sjcl',
             'crypto-jsencrypt',
-            'vendor/filesaver/blob'
+//            'vendor/filesaver/blob'
         ],
         'pckContacts': [
             'pckCore'

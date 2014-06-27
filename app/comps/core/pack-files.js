@@ -3,7 +3,8 @@
 angular.module('cmCore')
 .service('cmFilesAdapter', [
     'cmApi',
-    function (cmApi){
+    'cmLogger',
+    function (cmApi, cmLogger){
         return {
             prepareFile: function(config){
                 return cmApi.post({
@@ -49,28 +50,49 @@ angular.module('cmCore')
                 })
             },
 
-            blobWrap: function(byteArrays, contentType, method){
-                console.log('blobWrap '+method,Blob)
-                var blob = new Blob(byteArrays, {type: contentType});
-                return blob
+            blobWrap: function(data, contentType, method){
+                var blob = undefined;
+
+                try {
+                    blob = new Blob([data[0].buffer], {type: contentType});
+                } catch(e){
+                    // TypeError old chrome and FF
+                    window.BlobBuilder =    window.BlobBuilder ||
+                                            window.WebKitBlobBuilder ||
+                                            window.MozBlobBuilder ||
+                                            window.MSBlobBuilder;
+
+                    // is already a blob!
+                    if(data.toString() == '[object Blob]'){
+                        blob = data;
+                    } else if(e.name == 'TypeError' && window.BlobBuilder){
+                        var bb = new BlobBuilder();
+                        bb.append(data[0].buffer);
+                        blob = bb.getBlob(contentType);
+                    } else if(e.name == "InvalidStateError"){
+                        // InvalidStateError (tested on FF13 WinXP)
+                        blob = new Blob( data, {type : contentType});
+                    } else {
+                        cmLogger.error('We\'re screwed, blob constructor unsupported entirely');
+                        console.log(e)
+                    }
+                }
+                return blob;
             },
 
             blobBuilderWrap: function(){
-                console.log('blobBuilderWrap',BlobBuilder)
                 var blobBuilder = new BlobBuilder();
                 return blobBuilder;
             },
 
-            base64ToBlob: function (b64Data, contentType, sliceSize){
-                b64Data = b64Data.replace(new RegExp('^(data:(.*);base64,)','i'),'');
-                contentType = contentType || '';
-                sliceSize = sliceSize || 512;
+            binaryToBlob: function (binary, contentType, sliceSize){
+                var byteArrays = [],
+                    binary = binary || '',
+                    contentType = contentType || '',
+                    sliceSize = sliceSize || 512;
 
-                var byteCharacters = atob(b64Data);
-                var byteArrays = [];
-
-                for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-                    var slice = byteCharacters.slice(offset, offset + sliceSize);
+                for (var offset = 0; offset < binary.length; offset += sliceSize) {
+                    var slice = binary.slice(offset, offset + sliceSize);
 
                     var byteNumbers = new Array(slice.length);
                     for (var i = 0; i < slice.length; i++) {
@@ -82,8 +104,25 @@ angular.module('cmCore')
                     byteArrays.push(byteArray);
                 }
 
-                var blob = this.blobWrap(byteArrays, contentType, 'base64ToBlob');
+                var blob = this.blobWrap(byteArrays, contentType, 'binaryToBlob');
                 return blob;
+            },
+
+            clearBase64: function(b64Data){
+                return b64Data.replace(new RegExp('^(data:([a-z/;]{0,50})base64,)(.*)$','i'),function(){
+                    return arguments[3];
+                });
+            },
+
+            getBlobUrl: function(blob){
+                var URL = window.URL || window.webkitURL;
+                var urlObj = {
+                    url: URL.createObjectURL(blob),
+                    revoke: function(){
+                        URL.revokeObjectURL(imageUrl);
+                    }
+                };
+                return urlObj;
             }
         }
     }
@@ -159,7 +198,8 @@ angular.module('cmCore')
 ])
 .factory('cmChunk', [
     'cmFilesAdapter',
-    'cmLogger',
+    'cmLogger'
+        ,
     'cmCrypt',
     'cmObject',
     '$q',
@@ -315,14 +355,6 @@ angular.module('cmCore')
                 this.raw
                     ?   this.blob = binaryStringtoBlob(this.raw)
                     :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.');
-                return this;
-            };
-
-            this.base64ToBlob = function(){
-                this.raw
-                    ?   this.blob = cmFilesAdapter.base64ToBlob(this.raw)
-                    :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.');
-
                 return this;
             };
         }
@@ -574,10 +606,9 @@ angular.module('cmCore')
 
                 chunk
                     .decrypt(passphrase)
-                    .base64ToBlob()
 
                 this.encryptedSize += chunk.encryptedRaw.length;
-                this.size += chunk.blob.size;
+                //this.size += chunk.blob.size;
 
                 if(index == (this.chunkIndices.length - 1)){
                     this.trigger('decrypt:finish');
@@ -603,16 +634,22 @@ angular.module('cmCore')
 
             this.reassembleChunks = function(){
                 var self = this,
-                    data = [];
+                    binary = '',
+                    byteArray = [];
 
                 if(!this.chunks)
                     cmLogger.error('Unable reassemble chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.');
 
                 this.chunks.forEach(function(chunk){
-                    data.push(chunk.blob);
+                    try{
+                        binary+= atob(cmFilesAdapter.clearBase64(chunk.raw));
+                    } catch(e){
+                        cmLogger.error(e);
+                        console.log(chunk.raw)
+                    }
                 });
 
-                this.blob = cmFilesAdapter.blobWrap(data, self.type, 'reassembleChunks');
+                this.blob = cmFilesAdapter.binaryToBlob(binary, self.type, binary.length);
 
                 self.trigger('file:cached', this);
 
