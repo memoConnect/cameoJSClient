@@ -138,7 +138,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
                  */
                 $scope.decrypt = function(){
                     $scope.conversation.one('decrypt:failed', function(){
-                        cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG',{ttl:2000});
+                        cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG');
                         $scope.toggleControls('open');
                     });
                     $scope.conversation.decrypt();

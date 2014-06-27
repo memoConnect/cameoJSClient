@@ -18,7 +18,7 @@ angular.module('cmCore')
             this.state = new cmStateManagement(['new','read','error']);
 
             this.label = undefined;
-            this.severity = undefined;
+            this.severity = 'none';
             this.icon = undefined;
             this.displayType = undefined;
             this.callbackRoute = undefined;
@@ -86,7 +86,7 @@ angular.module('cmCore')
             this.renderModal = function(){
 //                cmLogger.debug('cmNotifyModel.renderModal');
                 cmModal.create({
-                        id: 'modal-notification',
+                        id: 'modal-notification' + new Date(),
                         type: 'alert',
                         'class': 'modal-notification modal-type-'+this.severity,
                         //'nose': 'top-right',
@@ -155,9 +155,8 @@ angular.module('cmCore')
 
             if(typeof args == 'object'){
                 notify = angular.extend(notify, args);
+                self.new(notify);
             }
-
-            self.new(notify);
         }
 
         self.bellCounter = 0;
