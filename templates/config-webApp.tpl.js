@@ -17,7 +17,7 @@ cameo_config = {
     routes: {
         'login': {
             hasCtrl: true,
-            isOtherwise: true,
+            isDefault: true,
             css: 'no-header no-footer',
             guests: false
         },

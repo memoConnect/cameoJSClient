@@ -7,7 +7,6 @@ unicode number table for css selectors
 exp.:
 .\33ggp -> .3ggp
 */
-
 @cm-ci-color: #02BED2;
 @cm-light-grey: #EDEDED;
 @cm-readed-grey: #B5B5B5;
@@ -38,7 +37,6 @@ exp.:
 
 // new color!!!
 @cm-grey-btn: #555555;
-
 
 @cm-unit: 4rem;
 @cm-vertical-padding: 0.3rem;
@@ -138,7 +136,7 @@ textarea:focus, button:focus, input[type="text"]:focus, input[type="password"]:f
   outline: 0 none;
 }
 
-#cm-app, #cm-app-wrapper{
+#cm-app, #cm-bg-wrapper{
   display:block;
   position:relative;
   min-height: 100%; /* Mindesthöhe für moderne Browser */
@@ -157,12 +155,15 @@ textarea:focus, button:focus, input[type="text"]:focus, input[type="password"]:f
   .full-height;
 }
 
-#cm-app-wrapper {
+#cm-bg-wrapper {
   width: 100%;
   position: fixed !important;
   z-index: 1;
-  background-size:cover;
-  background-image: url('../gfx/backgroundStart.jpg');
+  //background-size:cover;
+  background-image: url('../gfx/background/app.jpg');
+  &.start-page{
+    background-image: url('../gfx/background/start.jpg');
+  }
 }
 
 #cm-app.landscape {
