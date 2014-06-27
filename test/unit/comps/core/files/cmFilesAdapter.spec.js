@@ -25,7 +25,7 @@ describe('cmFilesAdapter', function(){
         expect(cmFilesAdapter.getFileInfo).toBeDefined()
         expect(cmFilesAdapter.getFile).toBeDefined()
         expect(cmFilesAdapter.getChunk).toBeDefined()
-        expect(cmFilesAdapter.base64ToBlob).toBeDefined()
+        expect(cmFilesAdapter.binaryToBlob).toBeDefined()
     })
 
     it('test method prepareFile',function(){

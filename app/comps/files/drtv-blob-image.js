@@ -2,7 +2,8 @@
 
 angular.module('cmFiles').directive('cmBlobImage',[
     '$rootScope',
-    function ($rootScope) {
+    'cmFilesAdapter',
+    function ($rootScope, cmFilesAdapter) {
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
@@ -10,24 +11,18 @@ angular.module('cmFiles').directive('cmBlobImage',[
 
                 function showFile(file){
                     if(typeof file.blob == 'object'){
-                        // get for img tag base64 url
-                        var reader = new FileReader();
-                        // promise when base64 loaded
-                        reader.onload = function(e){
-                            // set attribute
-                            element.attr('src',e.target.result);
-                            element.on('load', function(){
-                                // hide spinner
-                                scope.$apply(function(){
-                                    file.loaded = true;
-                                });
-
-                                if(attrs.cmScrollToTarget) {
-                                    $rootScope.$broadcast('scroll:to',attrs.cmScrollToTarget)
-                                }
+                        file.base64 = cmFilesAdapter.getBlobUrl(file.blob);
+                        element.attr('src', file.base64.url);
+                        element.on('load', function(){
+                            // hide spinner
+                            scope.$apply(function(){
+                                file.loaded = true;
                             });
-                        };
-                        reader.readAsDataURL(file.blob)
+
+                            if(attrs.cmScrollToTarget) {
+                                $rootScope.$broadcast('scroll:to',attrs.cmScrollToTarget)
+                            }
+                        });
                     } else {
                         // hide spinner
                         file.loaded = true;
