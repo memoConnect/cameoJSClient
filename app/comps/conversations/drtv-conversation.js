@@ -59,6 +59,15 @@ angular.module('cmConversations').directive('cmConversation', [
                             return false;
                         }
 
+                        if(!$scope.conversation.state.is('new')
+                            && $scope.conversation.keyTransmission == 'asymmetric'
+                            && cmUserModel.hasLocalKeys() == false){
+
+                            $scope.isSending = false;
+
+                            return false;
+                        }
+
                         /**
                          * Nested functions in comps/files/drtv-files.js
                          * check if files exists
@@ -109,7 +118,7 @@ angular.module('cmConversations').directive('cmConversation', [
                 };
 
                 function showAsymmetricKeyError(){
-                    cmLogger.debug('cmConversationDRTV.showAsymmetricKeyError')
+//                    cmLogger.debug('cmConversationDRTV.showAsymmetricKeyError')
 
                     if(!$scope.conversation.state.is('new')
                         && $scope.conversation.keyTransmission == 'asymmetric'
@@ -213,7 +222,7 @@ angular.module('cmConversations').directive('cmConversation', [
                 };
 
                 $scope.init = function (conversation) {
-                    cmLogger.debug('cmConversationDRTV.init')
+//                    cmLogger.debug('cmConversationDRTV.init')
                     if(!conversation){
                         cmLogger.debug("Conversation not found.")
                         return false

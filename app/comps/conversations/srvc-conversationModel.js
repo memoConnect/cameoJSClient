@@ -216,14 +216,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                      - wenn passphraselist fehlt
                      -> */
                     if(passphrase.keyTransmission !== this.keyTransmission){
-                        if(this.keyTransmission == 'asymmetric' && (!('aePassphraseList' in data) || data.aePassphraseList.length == 0)){
-//                            if(cmUserModel.data.identity.hasKeys() == false){
-//                                console.log('hier')
-//                                this.options.showKeyInfo = true;
-//                            }
-                        }
+                        /**
+                         * @TODO
+                         */
                     }
-
                 } else {
                     /**
                      * @TODO
@@ -234,7 +230,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 /**
                  * Important for none encrypted Conversations
                  */
-                if(!this.state.is('new') && passphrase.keyTransmission == 'none'){
+                if(!this.state.is('new') && this.keyTransmission == 'none'){
                     passphrase.disable();
                 }
 
@@ -445,6 +441,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 if(this.state.is('new')){
                     passphrase.disable();
+                    this.password = '';
                     this.trigger('encryption:disabled');
                 }
 
@@ -483,7 +480,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {boolean} bool Returns true if Conversation is encrypted.
              */
             this.isEncrypted = function(){
-                cmLogger.debug('cmConversationModel:isEncrypted');
+//                cmLogger.debug('cmConversationModel:isEncrypted');
 
                 var bool = false;
 
@@ -499,8 +496,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 if(this.state.is('new')){
                     bool = !passphrase.disabled();
                 } else {
-                    if(this.messages.length > 0)
+                    if(this.messages.length > 0){
                         bool = this.messages[0].isEncrypted();
+                    }
                 }
 
                 return bool;
@@ -549,7 +547,12 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {String} encryptionType look at encryptedPassphraseList
              */
             this.getKeyTransmission = function(){
-                return passphrase.getKeyTransmission();
+                if(this.state.is('new')){
+                    return passphrase.getKeyTransmission();
+                } else {
+                    return this.keyTransmission;
+                }
+
             };
 
             /**
@@ -722,22 +725,24 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 this.options.hasPassword = false;
                 this.options.showKeyInfo = false;
 
-                if(this.state.is('new') && cmUserModel.hasLocalKeys() == false){
-                    this.options.hasPassword = true;
-                    this.options.showKeyInfo = true;
-                }
-
-                /**
-                 * check recipients
-                 */
-                this.recipients.forEach(function(recipient){
-                    /**
-                     * if Recipient has no Keys
-                     */
-                    if(recipient.getWeakestKeySize() == 0){
-                        self.options.hasPassword = true;
+                if(this.isEncrypted()){
+                    if(this.state.is('new') && cmUserModel.hasLocalKeys() == false){
+                        this.options.hasPassword = true;
+                        this.options.showKeyInfo = true;
                     }
-                });
+
+                    /**
+                     * check recipients
+                     */
+                    this.recipients.forEach(function(recipient){
+                        /**
+                         * if Recipient has no Keys
+                         */
+                        if(recipient.getWeakestKeySize() == 0){
+                            self.options.hasPassword = true;
+                        }
+                    });
+                }
 
                 /**
                  * last check for captcha preference
@@ -841,12 +846,14 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.on('encryption:enabled', function(){
 //                cmLogger.debug('cmConversationModel:on:encryption:enabled');
+                self.checkPreferences();
                 self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
             this.on('encryption:disabled', function(){
 //                cmLogger.debug('cmConversationModel:on:encryption:disabled');
+                self.checkPreferences();
                 self.securityAspects.refresh();
                 self.updateLockStatus();
             });

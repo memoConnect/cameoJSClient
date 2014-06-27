@@ -110,6 +110,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
             // sets which data should not be encrypted
             this.setPublicData = function(data){
+                console.log('setPublicData', data)
                 // data may be a string or an array
                 data = typeof data == 'string' ? [data] : data;
 
@@ -152,6 +153,10 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 this.secret.forEach(function(key){
                     if(self[key]) secret_data[key] = self[key]
                 });
+
+                console.log('secret_data', secret_data)
+                console.log('conversation.getPassphrase()', conversation.getPassphrase())
+
 
                 var secret_JSON = JSON.stringify(secret_data);
 

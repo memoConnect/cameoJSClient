@@ -20,6 +20,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
                 scope.bodyVisible   = cmConversation.isNew();
                 scope.isNew         = cmConversation.isNew();
                 scope.inputFocus    = false;
+                scope.showPasswordLocalKeyInfo = false;
                 var times = 0;
 
                 function showControls(conversation){
@@ -32,6 +33,14 @@ angular.module('cmConversations').directive('cmConversationControls', [
                     }
                 }
 
+                function showPasswordInfo(conversation){
+                    if(conversation.state.is('new') && conversation.isEncrypted() && cmUserModel.hasLocalKeys() == false){
+                        scope.showPasswordLocalKeyInfo = true;
+                    } else {
+                        scope.showPasswordLocalKeyInfo = false;
+                    }
+                }
+
                 /**
                  * watch the conversation object on changes
                  */
@@ -39,17 +48,25 @@ angular.module('cmConversations').directive('cmConversationControls', [
                     if(conversation){
                         // open the controls for a new conversation and password isnt set in a symetric case || case mixed exists and user isnt in passphraselist
 
-                        conversation.securityAspects.refresh();
+                        showControls(conversation);
 
                         conversation.on('update:finished', function(){
                             showControls(conversation);
                         });
 
-                        showControls(conversation);
-
                         // close the controls if decryption was ok
                         conversation.on('decrypt:ok', function(){
                             scope.toggleControls('close');
+                        });
+
+                        showPasswordInfo(conversation);
+
+                        conversation.on('encryption:enabled', function(){
+                            showPasswordInfo(conversation);
+                        });
+
+                        conversation.on('encryption:disabled', function(){
+                            showPasswordInfo(conversation);
                         });
                     }
                 });
@@ -101,8 +118,6 @@ angular.module('cmConversations').directive('cmConversationControls', [
             },
 
             controller: function($scope, $element){
-                $scope.showPasswordLocalKeyInfo = false;
-
                 /**
                  * @name toggleControls
                  * @description
@@ -195,10 +210,6 @@ angular.module('cmConversations').directive('cmConversationControls', [
                     var anchor = $document[0].querySelector('#password-area'),
                         body = angular.element($document[0].querySelector($element[0].localName+' .body'));
                         body[0].scrollTop = anchor.offsetTop;
-                }
-
-                if($scope.conversation.state.is('new') && cmUserModel.hasLocalKeys() == false){
-                    $scope.showPasswordLocalKeyInfo = true;
                 }
             }
         }
