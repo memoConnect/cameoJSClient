@@ -70,6 +70,9 @@
                     {{'CONVERSATION.LABEL.KEY_GENERATION'|cmTranslate}}
                 </a>
             </div>
+            <div ng-if="showPasswordLocalKeyInfo && isNew" class="tac cm-orange" cm-user-rights>
+                    <i class="fa cm-attention"></i>{{'CONVERSATION.LABEL.SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS'|cmTranslate}}
+            </div>
         </section>
 
         <section class="cm-form-group body-group label-with-checkbox" ng-show="isNew">
