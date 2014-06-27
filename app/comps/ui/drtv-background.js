@@ -8,7 +8,7 @@ angular.module('cmUi')
             restrict: 'A',
             controller: function($scope, $element){
                 $scope.$on('$locationChangeSuccess', function() {
-                    if($route.current != undefined){
+                    if($route.current != undefined && $route.current.$$route != undefined){
                         if($route.current.$$route.isDefault){
                             $element.addClass('start-page');
                         } else {
