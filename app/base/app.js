@@ -98,7 +98,8 @@ define([
                             controllerUrl: '',
                             css: '',
                             guests: false,
-                            resolve: {}
+                            resolve: {},
+                            isDefault: false
                         };
                     // create params for route
                     if (angular.isDefined(_settings_['templateUrl'])) {
@@ -123,6 +124,9 @@ define([
                             }
                         };
                     }
+                    if(angular.isDefined(_settings_['isDefault'])){
+                        routeParams.isDefault = _settings_['isDefault'];
+                    }
 
                     // create route as defined or take simple route
                     if(angular.isDefined(_settings_['routes']))
@@ -136,7 +140,7 @@ define([
                             when(route, angularAMD.route(routeParams));
                     });
                     // check otherwise
-                    if(angular.isDefined(_settings_['isOtherwise'])){
+                    if(angular.isDefined(_settings_['isDefault'])){
                         $routeProvider.otherwise({
                             redirectTo: '/'+routeKey
                         });

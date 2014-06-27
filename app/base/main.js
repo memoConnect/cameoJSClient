@@ -2,7 +2,7 @@ require.config({
     baseUrl: "",
     // alias libraries paths
     urlArgs: "bust=" + (new Date()).getTime(),
-    waitTimeout: 0,
+    waitTimeout: 50000,
     paths: {
         'app': 'base/app',
         'screen': 'base/screen',
@@ -76,7 +76,8 @@ require.config({
             'angular-sanitize',
             'util-base64',
             'crypto-sjcl',
-            'crypto-jsencrypt'
+            'crypto-jsencrypt',
+            'vendor/filesaver/blob'
         ],
         'pckContacts': [
             'pckCore'
