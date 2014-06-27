@@ -140,7 +140,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
                  * try to decrypt the conversation
                  */
                 $scope.decrypt = function(){
-                    if(!($scope.conversation.keyTransmission == 'asymmetric'
+                    if($scope.conversation.isEncrypted() && !($scope.conversation.keyTransmission == 'asymmetric'
                         && cmUserModel.hasLocalKeys() == false)) {
 
                         $scope.conversation.one('decrypt:failed', function () {
