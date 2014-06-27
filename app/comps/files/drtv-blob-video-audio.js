@@ -4,7 +4,8 @@ angular.module('cmFiles').directive('cmBlobVideoAudio',[
     '$rootScope',
     'cmFileTypes',
     'cmEnv',
-    function ($rootScope, cmFileTypes, cmEnv) {
+    'cmFilesAdapter',
+    function ($rootScope, cmFileTypes, cmEnv, cmFilesAdapter) {
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
@@ -13,16 +14,11 @@ angular.module('cmFiles').directive('cmBlobVideoAudio',[
                         var canPlay = element[0].canPlayType(file.type);
                         // browser supports file
                         if(!cmEnv.isiOS && canPlay) {
-                            // get for img tag base64 url
-                            var reader = new FileReader();
-                            // promise when base64 loaded
-                            reader.onload = function (e) {
-                                // set attribute
-                                element.attr('src', e.target.result);
-
+                            file.base64 = cmFilesAdapter.getBlobUrl(file.blob);
+                            element.attr('src', file.base64.url);
+                            element.on('load', function() {
                                 fileReady(file);
-                            };
-                            reader.readAsDataURL(file.blob);
+                            });
                         // file can't play via html5 video
                         } else {
                             file.loaded = true;
