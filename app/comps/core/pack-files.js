@@ -4,7 +4,8 @@ angular.module('cmCore')
 .service('cmFilesAdapter', [
     'cmApi',
     'cmLogger',
-    function (cmApi, cmLogger){
+    '$q',
+    function (cmApi, cmLogger, $q){
         return {
             prepareFile: function(config){
                 return cmApi.post({
@@ -74,7 +75,6 @@ angular.module('cmCore')
                         blob = new Blob( data, {type : contentType});
                     } else {
                         cmLogger.error('We\'re screwed, blob constructor unsupported entirely');
-                        console.log(e)
                     }
                 }
                 return blob;
@@ -85,11 +85,11 @@ angular.module('cmCore')
                 return blobBuilder;
             },
 
-            binaryToBlob: function (binary, contentType, sliceSize){
+            binaryToBlob: function (binary, contentType){
                 var byteArrays = [],
                     binary = binary || '',
                     contentType = contentType || '',
-                    sliceSize = sliceSize || 512;
+                    sliceSize = binary.length;
 
                 for (var offset = 0; offset < binary.length; offset += sliceSize) {
                     var slice = binary.slice(offset, offset + sliceSize);
@@ -114,15 +114,41 @@ angular.module('cmCore')
                 });
             },
 
+            base64ToBinary: function(base64){
+                return atob(this.clearBase64(base64));
+            },
+
             getBlobUrl: function(blob){
-                var URL = window.URL || window.webkitURL;
-                var urlObj = {
-                    url: URL.createObjectURL(blob),
+                var useFileReader = true,
+                    deferred = $q.defer(),
+                    objUrl = {
+                    src: '',
                     revoke: function(){
-                        URL.revokeObjectURL(imageUrl);
+                        return true;
                     }
                 };
-                return urlObj;
+
+                if(useFileReader){
+                    // filereader
+                    var filereader = new FileReader();
+                    filereader.onload = function(e){
+                        objUrl.src = e.target.result;
+                        deferred.resolve(objUrl);
+                    };
+                    filereader.readAsDataURL(blob);
+                } else {
+                    // URL type
+                    var URL = window.URL || window.webkitURL;
+                    objUrl = {
+                        src: URL.createObjectURL(blob),
+                        revoke: function(){
+                            URL.revokeObjectURL(this.url);
+                        }
+                    };
+                    deferred.resolve(objUrl);
+                }
+
+                return deferred.promise;
             }
         }
     }
@@ -272,20 +298,16 @@ angular.module('cmCore')
 
             this.blobToBase64 = function(){
                 var self = this,
-                    reader = new window.FileReader(),
-                    deferred = $q.defer();
-
-                reader.onload = function(e) {
-                    self.raw = e.target.result;
-                    deferred.resolve(self.raw)
-                };
+                    promise = null;
 
                 this.blob
-                    ?   reader.readAsDataURL(this.blob)
+                    ?   promise = cmFilesAdapter.getBlobUrl(this.blob).then(
+                            function(objUrl){
+                                self.raw = objUrl.src;
+                            }
+                        )
                     :   cmLogger.error('Unable ro convert to file; this.blob is empty.');
-
-
-                return deferred.promise;
+                return promise;
             };
 
             this.blobToBinaryString = function(){
@@ -484,7 +506,7 @@ angular.module('cmCore')
                 if(typeof base64 !== 'undefined'){
                     this.type = base64.replace(new RegExp('^(data:(.*);base64,.*)','i'),'$2');
 
-                    this.blob = cmFilesAdapter.base64ToBlob(base64,this.type);
+                    this.blob = cmFilesAdapter.binaryToBlob(cmFilesAdapter.base64ToBinary(base64),this.type);
 
                     this.chopIntoChunks(128);
                 }
@@ -528,35 +550,35 @@ angular.module('cmCore')
                     startByte   = 0,
                     endByte     = 0,
                     index       = 0,
-                    promises    = []
+                    promises    = [];
 
                 if(!this.blob) {
-                    cmLogger.error('Unable to chop file into Chunks; cmFile.blob missing.')
-                    return null
+                    cmLogger.error('Unable to chop file into Chunks; cmFile.blob missing.');
+                    return null;
                 }
 
-                self.chunks   = []
+                self.chunks   = [];
 
-                while(endByte < this.blob.size){
+                while(endByte < this.blob.size) {
 
-                    startByte   = index*1024*chunkSize
-                    endByte     = startByte + 1024*chunkSize
+                    startByte = index * 1024 * chunkSize;
+                    endByte = startByte + 1024 * chunkSize;
 
-                    endByte  = (endByte > this.blob.size) ? this.blob.size : endByte;
+                    endByte = (endByte > this.blob.size) ? this.blob.size : endByte;
 
-                    var chunk = new cmChunk()
-                    self.chunks.push(chunk)
+                    var chunk = new cmChunk();
+                    self.chunks.push(chunk);
 
                     promises.push(
                         chunk
                             .importFileSlice(self.blob, startByte, endByte)
                             .blobToBase64()
-                    )
+                    );
 
-                    index++
+                    index++;
                 }
 
-                return $q.all(promises)
+                return $q.all(promises);
             };
 
             this.encryptName = function(){
@@ -642,14 +664,13 @@ angular.module('cmCore')
 
                 this.chunks.forEach(function(chunk){
                     try{
-                        binary+= atob(cmFilesAdapter.clearBase64(chunk.raw));
+                        binary+= cmFilesAdapter.base64ToBinary(chunk.raw);
                     } catch(e){
                         cmLogger.error(e);
-                        console.log(chunk.raw)
                     }
                 });
 
-                this.blob = cmFilesAdapter.binaryToBlob(binary, self.type, binary.length);
+                this.blob = cmFilesAdapter.binaryToBlob(binary, self.type);
 
                 self.trigger('file:cached', this);
 
