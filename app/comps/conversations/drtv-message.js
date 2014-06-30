@@ -52,7 +52,7 @@ angular.module('cmConversations').directive('cmMessage', [
                  */
                 $scope.textOnly = !!$scope.$eval($attrs.textOnly);
 
-                $scope.is_my_own_message = $scope.message.isOwn();
+                $scope.is_my_own_message = ('isOwn' in $scope.message) ? $scope.message.isOwn() : false;
 
                 $scope.isType = function(expectType){
                     if($scope.message.files.length > 0 && typeof $scope.message.files[0].type == 'string'){

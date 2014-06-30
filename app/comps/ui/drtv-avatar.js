@@ -84,18 +84,11 @@ angular.module('cmUi').directive('cmAvatar',[
             link: function(scope, element, attrs){
 
                 function showBlobAsImage(file){
-                    if(file['base64Url'] == undefined) {
-//                        var reader = new FileReader();
-//                        reader.onload = function (e) {
-//                            file.base64 = e.target.result;
-//                            //element.css({'background-image': 'url('+ e.target.result +')'});
-//                            element.find('img').attr('src', e.target.result);
-//
-//                            console.log('cmAvatar '+file.base64)
-//                        };
-//                        reader.readAsDataURL(file.blob);
-                        file.base64 = cmFilesAdapter.getBlobUrl(file.blob);
-                        element.find('img').attr('src', file.base64.url);
+                    if(file['base64'] == undefined) {
+                        cmFilesAdapter.getBlobUrl(file.blob).then(function(objUrl){
+                            file.base64 = objUrl;
+                            element.find('img').attr('src', file.base64.url);
+                        });
                     } else {
                         element.find('img').attr('src', file.base64.url);
                     }
