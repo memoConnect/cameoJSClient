@@ -261,6 +261,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     this.options.showKeyInfo = true;
                 }
 
+                if(!this.state.is('new') && this.keyTransmission == 'mixed' && this.isUserInPassphraseList() == false){
+                    this.options.hasPassword = true;
+                }
+
                 this.state.unset('new');
                 this.trigger('update:finished');
 
@@ -722,8 +726,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                  * set Default
                  * has Captcha will be set at an other method
                  */
-                this.options.hasPassword = false;
-                this.options.showKeyInfo = false;
+//                this.options.hasPassword = false;
+//                this.options.showKeyInfo = false;
 
                 if(this.isEncrypted()){
                     if(this.state.is('new') && cmUserModel.hasLocalKeys() == false){
