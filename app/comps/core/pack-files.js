@@ -109,13 +109,16 @@ angular.module('cmCore')
             },
 
             clearBase64: function(b64Data){
-                return b64Data.replace(new RegExp('^(data:([a-z/;]{0,50})base64,)(.*)$','i'),function(){
+                return b64Data
+                    .replace(/\r?\n|\r/g,'')
+                    .replace(new RegExp('^(data:([a-z/;]{0,50})base64,)(.*)$','i'),function(){
                     return arguments[3];
                 });
             },
 
             base64ToBinary: function(base64){
-                return atob(this.clearBase64(base64));
+                var clearBase64 = this.clearBase64(base64);
+                return atob(clearBase64);
             },
 
             getBlobUrl: function(blob){
