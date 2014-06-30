@@ -25,7 +25,13 @@ describe('cmFilesAdapter', function(){
         expect(cmFilesAdapter.getFileInfo).toBeDefined()
         expect(cmFilesAdapter.getFile).toBeDefined()
         expect(cmFilesAdapter.getChunk).toBeDefined()
+        expect(cmFilesAdapter.blobWrap).toBeDefined()
+        expect(cmFilesAdapter.blobBuilderWrap).toBeDefined()
         expect(cmFilesAdapter.binaryToBlob).toBeDefined()
+        expect(cmFilesAdapter.binaryToBlob).toBeDefined()
+        expect(cmFilesAdapter.clearBase64).toBeDefined()
+        expect(cmFilesAdapter.base64ToBinary).toBeDefined()
+        expect(cmFilesAdapter.getBlobUrl).toBeDefined()
     })
 
     it('test method prepareFile',function(){

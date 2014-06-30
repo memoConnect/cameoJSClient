@@ -15,8 +15,8 @@ angular.module('cmFiles').directive('cmBlobVideoAudio',[
                         // browser supports file
                         if(!cmEnv.isiOS && canPlay) {
                             cmFilesAdapter.getBlobUrl(file.blob).then(function(objUrl){
-                                file.base64 = objUrl;
-                                element.attr('src', file.base64.url);
+                                file.url = objUrl;
+                                element.attr('src', file.url.src);
                                 element.on('load', function() {
                                     fileReady(file);
                                 });

@@ -84,13 +84,13 @@ angular.module('cmUi').directive('cmAvatar',[
             link: function(scope, element, attrs){
 
                 function showBlobAsImage(file){
-                    if(file['base64'] == undefined) {
+                    if(file['url'] == undefined) {
                         cmFilesAdapter.getBlobUrl(file.blob).then(function(objUrl){
-                            file.base64 = objUrl;
-                            element.find('img').attr('src', file.base64.url);
+                            file.url = objUrl;
+                            element.find('img').attr('src', file.url.src);
                         });
                     } else {
-                        element.find('img').attr('src', file.base64.url);
+                        element.find('img').attr('src', file.url.src);
                     }
                 }
 
@@ -101,7 +101,6 @@ angular.module('cmUi').directive('cmAvatar',[
                     } else {
                         // get avatar image from model
                         var file = scope.identity.getAvatar();
-
                         if(typeof file.on == 'function' && file.state != 'cached'){
                             file.on('file:cached', function(){
                                 showBlobAsImage(file);

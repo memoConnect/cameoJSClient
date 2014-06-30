@@ -85,11 +85,11 @@ angular.module('cmCore')
                 return blobBuilder;
             },
 
-            binaryToBlob: function (binary, contentType, sliceSize){
+            binaryToBlob: function (binary, contentType){
                 var byteArrays = [],
                     binary = binary || '',
                     contentType = contentType || '',
-                    sliceSize = sliceSize || 512;
+                    sliceSize = binary.length;
 
                 for (var offset = 0; offset < binary.length; offset += sliceSize) {
                     var slice = binary.slice(offset, offset + sliceSize);
@@ -121,8 +121,8 @@ angular.module('cmCore')
             getBlobUrl: function(blob){
                 var useFileReader = true,
                     deferred = $q.defer(),
-                    urlObj = {
-                    url: '',
+                    objUrl = {
+                    src: '',
                     revoke: function(){
                         return true;
                     }
@@ -132,19 +132,20 @@ angular.module('cmCore')
                     // filereader
                     var filereader = new FileReader();
                     filereader.onload = function(e){
-                        deferred.resolve(e.target.result);
+                        objUrl.src = e.target.result;
+                        deferred.resolve(objUrl);
                     };
                     filereader.readAsDataURL(blob);
                 } else {
                     // URL type
                     var URL = window.URL || window.webkitURL;
-                    urlObj = {
-                        url: URL.createObjectURL(blob),
+                    objUrl = {
+                        src: URL.createObjectURL(blob),
                         revoke: function(){
                             URL.revokeObjectURL(this.url);
                         }
                     };
-                    deferred.resolve(urlObj);
+                    deferred.resolve(objUrl);
                 }
 
                 return deferred.promise;
@@ -280,8 +281,6 @@ angular.module('cmCore')
             this.encryptedRaw = undefined;
 
             this.importFileSlice = function (file, start, end){
-                console.log('importFileSlice', start, end)
-
                 var slicer  = file.webkitSlice || file.mozSlice || file.slice,
                     chunk   = slicer.call(file, start, end)
 
@@ -298,13 +297,17 @@ angular.module('cmCore')
             };
 
             this.blobToBase64 = function(){
+                var self = this,
+                    promise = null;
+
                 this.blob
-                    ?   cmFilesAdapter.getBlobUrl(this.blob).then(function(objUrl){
-                            self.raw = objUrl.url;
-                            console.log('blobToBase64',self.raw, self.blob.size)
-                        })
+                    ?   promise = cmFilesAdapter.getBlobUrl(this.blob).then(
+                            function(objUrl){
+                                self.raw = objUrl.src;
+                            }
+                        )
                     :   cmLogger.error('Unable ro convert to file; this.blob is empty.');
-                return this;
+                return promise;
             };
 
             this.blobToBinaryString = function(){
@@ -505,8 +508,6 @@ angular.module('cmCore')
 
                     this.blob = cmFilesAdapter.binaryToBlob(cmFilesAdapter.base64ToBinary(base64),this.type);
 
-                    console.log('right', this.blob, base64);
-
                     this.chopIntoChunks(128);
                 }
 
@@ -558,8 +559,6 @@ angular.module('cmCore')
 
                 self.chunks   = [];
 
-                console.log('chopIntoChunks',this.blob.size)
-
                 while(endByte < this.blob.size) {
 
                     startByte = index * 1024 * chunkSize;
@@ -570,8 +569,6 @@ angular.module('cmCore')
                     var chunk = new cmChunk();
                     self.chunks.push(chunk);
 
-                    console.log('chunk', startByte, endByte)
-
                     promises.push(
                         chunk
                             .importFileSlice(self.blob, startByte, endByte)
@@ -580,8 +577,6 @@ angular.module('cmCore')
 
                     index++;
                 }
-
-                console.log(promises.length)
 
                 return $q.all(promises);
             };
@@ -675,7 +670,7 @@ angular.module('cmCore')
                     }
                 });
 
-                this.blob = cmFilesAdapter.binaryToBlob(binary, self.type, binary.length);
+                this.blob = cmFilesAdapter.binaryToBlob(binary, self.type);
 
                 self.trigger('file:cached', this);
 
