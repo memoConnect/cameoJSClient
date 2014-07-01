@@ -80,6 +80,10 @@ angular.module('cmConversations').service('cmConversationFactory', [
             .trigger('message:new', data.message)
         });
 
+        cmConversationsAdapter.on('conversation:new', function(event,data){
+            self.create(data)
+        });
+
         return self;
     }
 ]);
