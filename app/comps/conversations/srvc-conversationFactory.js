@@ -68,7 +68,7 @@ angular.module('cmConversations').service('cmConversationFactory', [
          */
         self.getQuantity = function(){
             return _quantity;
-        }
+        };
 
         /**
          * EventHandling
@@ -78,7 +78,7 @@ angular.module('cmConversations').service('cmConversationFactory', [
         cmConversationsAdapter.on('message:new', function(event,data){
             self.create(data.conversationId)
             .trigger('message:new', data.message)
-        })
+        });
 
         return self;
     }
