@@ -11,18 +11,21 @@ angular.module('cmFiles').directive('cmBlobImage',[
 
                 function showFile(file){
                     if(typeof file.blob == 'object'){
-                        file.base64 = cmFilesAdapter.getBlobUrl(file.blob);
-                        element.attr('src', file.base64.url);
-                        element.on('load', function(){
-                            // hide spinner
-                            scope.$apply(function(){
-                                file.loaded = true;
-                            });
+                        cmFilesAdapter.getBlobUrl(file.blob).then(function(objUrl){
+                            file.url = objUrl;
+                            element.attr('src', file.url.src);
+                            element.on('load', function(){
+                                // hide spinner
+                                scope.$apply(function(){
+                                    file.loaded = true;
+                                });
 
-                            if(attrs.cmScrollToTarget) {
-                                $rootScope.$broadcast('scroll:to',attrs.cmScrollToTarget)
-                            }
+                                if(attrs.cmScrollToTarget) {
+                                    $rootScope.$broadcast('scroll:to',attrs.cmScrollToTarget)
+                                }
+                            });
                         });
+
                     } else {
                         // hide spinner
                         file.loaded = true;
