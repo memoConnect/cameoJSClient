@@ -12,7 +12,7 @@ describe('Friendrequests', function () {
 
         util.logout()
 
-        describe('user2 login and search for user1', function(){
+        describe('Friendrequests user2 login and search for user1', function(){
             util.login(config.loginUser1,config.passwordUser1)
             util.waitForPageLoad('/talks')
 
@@ -64,7 +64,7 @@ describe('Friendrequests', function () {
     })
 
     it('user1 accept request', function(){
-        describe('again "'+ user1ToAccept + "'", function(){
+        describe('Friendrequests again "'+ user1ToAccept + '"', function(){
             it('login and accept', function() {
                 util.login(user1ToAccept, password)
                 util.waitForPageLoad("/talks")

@@ -11,13 +11,13 @@
 </div>
 
 <cm-contact-tag ng-repeat="request in requests" ng-class="{'is-new':request.state == undefined,'message-open':request.isOpen, 'show-bar':request.showBar}" ng-click="toggleBar(request)">
-    <section>
+    <section ng-click="toggleBrief(request)">
         <cm-avatar cm-data="request.identity"></cm-avatar>
-        <div class="cm-request-brief w75" ng-click="toggleBrief(request)" ng-class="{'with-message':request.message != '','message-close':!request.isOpen}">
+        <div class="cm-request-brief w75" ng-class="{'with-message':request.message != '','message-close':!request.isOpen}">
             <strong>{{request.identity.getDisplayName()}}</strong><br />
             {{request.message}}
         </div>
-        <button ng-click="toggleBar(request)" data-qa="btn-toggleBar">
+        <button data-qa="btn-toggleBar">
             <i class="fa" ng-class="{'cm-checkbox':!request.showBar,'cm-checkbox-right':request.showBar}"></i>
         </button>
     </section>

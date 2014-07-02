@@ -6,6 +6,18 @@ describe('Directive cmFooter', function () {
         $rootScope,
         $location
 
+    beforeEach(function(){
+        module(function($provide){
+            $provide.constant('cmConfig',{
+                footer: {
+                    'hoop': {i18n:'ABC',icon:'moep'},
+                    'hopp': {i18n:'DEF',icon:'moep2'},
+                    'hppp': {i18n:'GHI',icon:'moep3'}
+                }
+            })
+        })
+    })
+
     beforeEach(module('cmUi'))
 
     beforeEach(inject(function (_$rootScope_, $compile, _$location_) {
@@ -22,7 +34,7 @@ describe('Directive cmFooter', function () {
     })
 
     it('have 3 default btns',function(){
-        expect($scope.btns.length).toEqual(3)
+        expect(Object.keys($scope.btns).length).toEqual(3)
     })
 
     describe('check location',function(){
@@ -31,7 +43,6 @@ describe('Directive cmFooter', function () {
         })
 
         xit('talks setted toEqual 1 active',function(){
-//            console.log($location.path())
             expect($el.find('.active').length).toEqual(1)
         })
     })
