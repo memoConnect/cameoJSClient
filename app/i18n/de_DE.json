@@ -353,6 +353,7 @@
         "NOTIFICATIONS": "{{'NOTIFICATIONS.HEADER'|cmTranslate}}",
         "CONTACTS": "Kontakte",
         "REQUESTS": "Kontaktanfragen",
+        "TALKS": "Talks",
         "SETTINGS": "{{'SETTINGS.LABEL'|cmTranslate}}",
         "MESSAGES": "Nachrichten",
         "HINTS": "Sonstige Hinweise",

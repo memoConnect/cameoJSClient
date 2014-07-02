@@ -106,9 +106,10 @@ cameo_config = {
     menu: {
         'menu': {i18n:'MENU.HEADER', icon:'cm-menu', css:'cm-menu-header', onlyLabel:true},
 //        'notifications': {i18n:'MENU.NOTIFICATIONS', icon:'cm-notification', css:'cm-menu-notify'},
-        'talks': {i18n:'MENU.MESSAGE', icon:'cm-envelope-closed', css:'cm-menu-notify'},
-        'contacts': {i18n:'MENU.CONTACTS', icon:'cm-address-book', css:'cm-menu-notify'},
+        'talks/': {i18n:'MENU.MESSAGES', icon:'cm-envelope-closed', css:'cm-menu-notify'},
         'contacts/requests': {i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
+        'talks': {i18n:'MENU.TALKS', icon:'cm-envelope-closed'},
+        'contacts': {i18n:'MENU.CONTACTS', icon:'cm-address-book'},
         'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings', subs:{}}
     },
 
