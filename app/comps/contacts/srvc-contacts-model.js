@@ -269,6 +269,13 @@ angular.module('cmContacts').service('cmContactsModel',[
                 self.requests.create(data.friendRequest);
         });
 
+        cmContactsAdapter.on('friendRequest:accepted', function(event, data){
+            if(data.to == cmUserModel.data.identity.id){
+                self._clearContacts();
+                init();
+            }
+        });
+
 
         this.requests.on('register', function(){
             cmNotify.new({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell: true});

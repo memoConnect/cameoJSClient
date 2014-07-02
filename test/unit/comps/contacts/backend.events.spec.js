@@ -28,7 +28,7 @@ describe('Event chain for Contacts', function(){
         $httpBackend        = _$httpBackend_
     }))
 
-    describe('backend event friendRequest:new', function(){
+    describe('backend event friendRequest:new.', function(){
 
         it('should add a new friend request', function(){
             var adapter_triggered  = 0,
@@ -55,6 +55,38 @@ describe('Event chain for Contacts', function(){
 
             expect(adapter_triggered).toBe(2)
             expect(cmContactsModel.requests.length).toBe(number_of_requests + 1)
+        })
+    })
+
+    describe('backend event friendRequest:accepted', function(){
+
+        it('should update a contact corresponding to a friend request.', function(){
+            var adapter_triggered  = 0
+            
+            $httpBackend.expectGET('/identity').respond(200, {})
+
+            // :(
+            $httpBackend.expectGET('/contacts').respond(200, {})
+            $httpBackend.expectGET('/contact-groups').respond(200, {})
+            $httpBackend.expectGET('/friendRequests').respond(200, {})
+
+            cmContactsAdapter.on('friendRequest:accepted', function(){ adapter_triggered++ })
+
+            cmApi.trigger('friendRequest:accepted', {
+                to              : cmUserModel.data.identity.id,
+                from            : '123'
+            })
+
+            cmApi.trigger('friendRequest:accepted', {
+                to              : 'non-existing-id-jgfjdsgfjg',
+                from            : '123'
+            })
+
+            $rootScope.$apply()
+
+            expect(adapter_triggered).toBe(2)
+            //expect(cmContactsModel.requests.length).toBe(number_of_requests + 1)
+            console.log('test missing!')
         })
     })
 })

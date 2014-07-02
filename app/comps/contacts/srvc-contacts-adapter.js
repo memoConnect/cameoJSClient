@@ -107,6 +107,10 @@ angular.module('cmContacts').service('cmContactsAdapter',[
             adapter.trigger('friendRequest:new', data)
         })
 
+        cmApi.on('friendRequest:accepted', function(event, data){
+            adapter.trigger('friendRequest:accepted', data)
+        })
+
         return adapter
 
     }

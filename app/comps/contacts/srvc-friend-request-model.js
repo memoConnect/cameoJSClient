@@ -3,8 +3,9 @@
 angular.module('cmContacts').factory('cmFriendRequestModel',[
     'cmContactsAdapter',
     'cmIdentityFactory',
+    'cmObject',
     'cmLogger',
-    function (cmContactsAdapter, cmIdentityFactory, cmLogger){
+    function (cmContactsAdapter, cmIdentityFactory, cmObject, cmLogger){
         var FriendRequestModel = function(data){
 
             this.message        = ''
@@ -37,6 +38,7 @@ angular.module('cmContacts').factory('cmFriendRequestModel',[
                 this.id             = this.identity && this.identity.id
             }
 
+            cmObject.addEventHandlingTo(this)
             this.importData(data)
         }
 
