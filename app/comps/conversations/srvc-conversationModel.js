@@ -65,6 +65,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.lastMessage        = {};
 
+            this.missingAePassphrases = {}
+
+
             //rethink, mabye backend should deliver array of message ids
             this.numberOfMessages   = 0;
 
@@ -206,6 +209,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 if('aePassphraseList' in data && data.aePassphraseList.length > 0)
                     passphrase.importAsymmetricallyEncryptedPassphrase(data.aePassphraseList);
+
+                if('missingAePassphrase' in data){
+//                    passphrase.importMissingKeys(data.missingAePassphrase);
+                    this.missingAePassphrases = data.missingAePassphrase;
+                }
 
                 if('keyTransmission' in data){
                     this.keyTransmission = data.keyTransmission;
@@ -519,7 +527,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
-//                cmLogger.debug('cmConversationModel:decrypt');
+//                cmLogger.debug('cmConversationModel.decrypt');
                 
                 var passphrase  =   this.getPassphrase(),
                     success     =   passphrase && this.messages.reduce(function (success, message){
@@ -527,7 +535,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                                     }, true);
 
                 if (success) {
-                    this.trigger('decrypt:ok');
+                    this.trigger('decrypt:success');
 
                     // save password to localstorage
                     if (this.password && !this.isUserInPassphraseList()){
@@ -603,7 +611,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             this.enablePassCaptcha = function(){
-//                cmLogger.debug('cmConversationModel:enablePassCaptcha');
+//                cmLogger.debug('cmConversationModel.enablePassCaptcha');
                 this.options.hasCaptcha = true;
                 this.trigger('captcha:enabled');
 
@@ -611,7 +619,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             this.disablePassCaptcha = function(){
-//                cmLogger.debug('cmConversationModel:disablePassCaptcha');
+//                cmLogger.debug('cmConversationModel.disablePassCaptcha');
                 this.options.hasCaptcha = false;
                 this.trigger('captcha:disabled');
 
@@ -690,7 +698,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {cmConversationModel} this cmConversationModel
              */
             this.addRecipient = function(identityModel){
-//                cmLogger.debug('cmConversationModel:addRecipient');
+//                cmLogger.debug('cmConversationModel.addRecipient');
                 this.recipients.register(identityModel);
 
                 return this;
@@ -715,7 +723,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {cmConversationModel.ConversationModel}
              */
             this.removeRecipient = function (recipient) {
-//                cmLogger.debug('cmConversationModel:removeRecipient');
+//                cmLogger.debug('cmConversationModel.removeRecipient');
                 this.recipients.deregister(recipient);
 
                 return this;
@@ -767,7 +775,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {cmConversationModel} this cmConversationModel
              */
             this.updateLockStatus = function(){
-//                cmLogger.debug('cmConversationModel:updateLockStatus');
+//                cmLogger.debug('cmConversationModel.updateLockStatus');
 
                 var levels =    {
                     'asymmetric'    : 2,
@@ -814,7 +822,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             this.setLastMessage = function(){
-//                cmLogger.debug('cmConversationModel: setLastMessage!');
+//                cmLogger.debug('cmConversationModel.setLastMessage!');
 
                 if(this.messages.length > 0){
                     this.lastMessage = this.messages.reduce(function(value, message){
@@ -824,6 +832,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 return this;
             };
+
+            this.handleMissingAePassphrases = function(){
+                cmLogger.debug('cmConversationModel.handleMissingAePassphrases');
+                console.log(this.missingAePassphrases);
+            }
 
             /**
              * Event Handling
@@ -895,11 +908,12 @@ angular.module('cmConversations').factory('cmConversationModel',[
             });
 
             this.messages.on('message:saved', function(){
-               self.setLastMessage();
+                self.setLastMessage();
             });
 
             this.messages.on('decrypt:success', function(){
-               self.setLastMessage();
+                self.setLastMessage();
+                self.handleMissingAePassphrases();
             });
 
             // after events!!!
