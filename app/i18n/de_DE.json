@@ -343,7 +343,8 @@
         "FOOTER": {
             "TALKS": "Talks",
             "CONTACTS": "Kontakte",
-            "MEDIA": "Media"
+            "MEDIA": "Media",
+            "SETTINGS": "Settings"
         }
     },
 
