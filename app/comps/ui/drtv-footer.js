@@ -72,35 +72,51 @@
 
 angular.module('cmUi').directive('cmFooter',[
     '$location',
+    '$document',
     'cmTranslate',
-    function ($location, cmTranslate){
+    'cmConfig',
+    function ($location, $document, cmTranslate, cmConfig){
         return {
             restrict: 'AE',
-            priority: '0',
 
-            link : function(scope, element){
+            link : function(scope, element, attrs){
                 //if element has no children add default elements:
                 if(element.children().length == 0 ) {
-                    scope.btns.forEach(function(btn){
-                        var el = angular.element('<a cm-weight="1">'+cmTranslate(btn.i18n)+'</a>');
+                    angular.forEach(Object.keys(scope.btns),function(btnHref){
+                        var btn = scope.btns[btnHref],
+                            el = angular.element('<a cm-weight="1">'+cmTranslate(btn.i18n)+'</a>');
+                        // set active
                         el.toggleClass('active', btn.isActive ? true : false);
-                        if(btn.href != '')
-                            el.attr('href', '#'+btn.href);
+                        // set href
+                        if(btnHref != '')
+                            el.attr('href', '#'+btnHref);
                         else
                             el.addClass('deactivated');
+                        // append icon
+                        if('icon' in btn){
+                            el.prepend('<i class="fa '+btn.icon+' cm-lg-icon"></i>')
+                        }
+                        // add to footer
                         element.append(el);
+                    });
+                }
+
+                // hide all other cm-footer
+                if('cmHideOtherFooter' in attrs && attrs.cmHideOtherFooter){
+                    var allFooters = $document[0].querySelectorAll('cm-footer');
+                    angular.forEach(allFooters,function(footer){
+                        if(footer != element[0]){
+                            angular.element(footer).addClass('ng-hide');
+                        }
                     });
                 }
             },
             controller: function($scope){
-                $scope.btns = [
-                    {i18n:'DRTV.FOOTER.TALKS',    href:'/talks'},
-                    {i18n:'DRTV.FOOTER.CONTACTS', href:'/contacts'},
-                    {i18n:'DRTV.FOOTER.MEDIA',    href:''}
-                ];
+                $scope.btns = cmConfig.footer;
 
-                angular.forEach($scope.btns,function(btn){
-                    btn.isActive = btn.href != '' && $location.$$path.search(btn.href) != -1;
+                angular.forEach(Object.keys($scope.btns),function(btnHref){
+                    var btn = $scope.btns[btnHref];
+                        btn.isActive = btnHref != '' && $location.$$path.search(btnHref) != -1;
                 });
             }
         }
