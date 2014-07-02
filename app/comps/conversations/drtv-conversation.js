@@ -231,7 +231,7 @@ angular.module('cmConversations').directive('cmConversation', [
                     $rootScope.pendingConversation = conversation;
 
                     // reload detail of conversation
-                    $scope.conversation = conversation.update();
+                    $scope.conversation = conversation.load();
 
                     self.addPendingRecipients();
 
@@ -248,7 +248,7 @@ angular.module('cmConversations').directive('cmConversation', [
 
                 // existing conversation
                 if(conversation_id){                                        
-                    $scope.init( cmConversationFactory.create(conversation_id) )
+                    $scope.init( cmConversationFactory.create(conversation_id));
 
                 // pending conversation:
                 } else if($rootScope.pendingConversation){

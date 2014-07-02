@@ -55,7 +55,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
                         });
 
                         // close the controls if decryption was ok
-                        conversation.on('decrypt:ok', function(){
+                        conversation.on('decrypt:success', function(){
                             scope.toggleControls('close');
                         });
 
