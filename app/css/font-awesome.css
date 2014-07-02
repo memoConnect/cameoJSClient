@@ -253,6 +253,8 @@
 .cm-menu:before{content:'\f056'}
 .cm-menu-right-close:before{content:'\f01e'}
 .cm-menu-right-open:before{content:'\f057'}
+.cm-menu-weight:before{content:'\f021'}
+.cm-menu-weight-bell:before{content:'\f067'}
 .cm-post:before{content:'\f020'}
 .cm-post-attention:before{content:'\f038'}
 .cm-search:before{content:'\f021'}

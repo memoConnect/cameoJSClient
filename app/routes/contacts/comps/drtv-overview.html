@@ -1,7 +1,3 @@
-<header class="cm-list-header with-add-btn">
-    <cm-search-input ng-model="search"></cm-search-input><cm-add-button ng-click="openModal('add-contact')" data-qa="add-contact-btn" cm-icon="new-contact"></cm-add-button>
-</header>
-
 <cm-modal id="add-contact" cm-title="CONTACTS.HEADING.NEW_CONTACTS" type="plain" nose="right-top" severity="info" nose-position="0" class="no-padding">
     <div class="modal-row">
         <a href="#/contacts/search">
@@ -16,8 +12,6 @@
         </a>
     </div>
 </cm-modal>
-
-<cm-contacts-filter-controls sort-by="" filter-by=""></cm-contacts-filter-controls>
 
 <cm-contacts-list contacts-as="contacts">
     <div ng-show="isLoading" class="empty-list">
