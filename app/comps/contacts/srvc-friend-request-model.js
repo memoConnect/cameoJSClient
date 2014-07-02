@@ -34,7 +34,7 @@ angular.module('cmContacts').factory('cmFriendRequestModel',[
                 this.identity       = 'identity' in data ? cmIdentityFactory.create(data.identity) : this.identity 
                 this.message        = data.message || this.message
                 this.timeOfCreation = data.created || this.timeOfCreation
-                this.id             = this.identity.id
+                this.id             = this.identity && this.identity.id
             }
 
             this.importData(data)

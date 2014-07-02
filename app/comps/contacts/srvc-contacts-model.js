@@ -148,7 +148,7 @@ angular.module('cmContacts').service('cmContactsModel',[
                             var old_length = self.requests.length;
 
                             angular.forEach(data, function (request_data) {
-                                this.requests.create(request_data)
+                                self.requests.create(request_data)
                             });
 
                             if (old_length < self.requests.length) {
@@ -264,8 +264,9 @@ angular.module('cmContacts').service('cmContactsModel',[
             init();
         });
 
-        this.on('friendRequest:new', function(event, data){
-            this.requests.create(data);
+        cmContactsAdapter.on('friendRequest:new', function(event, data){
+            if(data.to == cmUserModel.data.identity.id)
+                self.requests.create(data.friendRequest);
         });
 
 

@@ -23,15 +23,7 @@ angular.module('cmCore').factory('cmFactory',[
             uniqueKey = uniqueKey || 'id'
 
             function evalPath(object, path){
-                var path_arr = path.split('.'),
-                    result = object
-
-                path_arr.forEach(function(key){
-                    result = result[key] || null
-                })
-
-                return result
-
+                return path.split('.').reduce(function(result,key){ return typeof result == 'object' ? result[key] : null }, object || {})
             }
 
             /**

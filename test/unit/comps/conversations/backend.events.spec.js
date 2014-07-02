@@ -49,7 +49,7 @@ describe('Event chain for Conversations', function(){
 
     describe('backend event conversation:new', function(){
 
-        it('should create a new conversation', function(){
+        it('should add a new conversation', function(){
             var adapter_triggered,
                 number_of_conversations = cmConversationFactory.length
 
@@ -71,7 +71,7 @@ describe('Event chain for Conversations', function(){
 
     describe('backend event conversation:new-message', function(){
 
-        it('should create a new message', function(){
+        it('should add a new message', function(){
             var adapter_triggered,
                 conversation_triggered,
                 conversation        = cmConversationFactory.create(conversation_data),
