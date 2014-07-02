@@ -135,32 +135,6 @@ angular.module('cmContacts').service('cmContactsModel',[
          * Friend Request Handling
          */
 
-        /**
-         * add Friend Request to Model
-         * @param identity_data
-         * @private
-         */
-        this._addFriendRequest = function(request_data){
-
-            this.requests.create(request_data)
-
-            /*
-            var i = 0,
-                check = false;
-
-            while(i < this.requests.length){
-                if(this.requests[i].identity.id == request_data.identityId){
-                    check = true;
-                    break;
-                }
-                i++;
-            }
-
-            if(check !== true){
-                this.requests.push(new cmFriendRequestModel({identity: cmIdentityFactory.create(request_data.identity, true), message:request_data.message || '', created:request_data.created || ''}));
-            }
-            */
-        };
 
         this.getFriendRequests = function(){
 //            cmLogger.debug('cmContactsModel:getFriendRequests');
@@ -173,13 +147,12 @@ angular.module('cmContacts').service('cmContactsModel',[
 //                        cmLogger.debug('cmContactsModel:getFriendRequests:done');
                             var old_length = self.requests.length;
 
-                            angular.forEach(data, function (value) {
-                                self._addFriendRequest(value);
+                            angular.forEach(data, function (request_data) {
+                                this.requests.create(request_data)
                             });
 
                             if (old_length < self.requests.length) {
                                 self.trigger('friendRequests:loaded');
-                                cmNotify.new({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell: true});
                             }
                         }
                     ).finally(function(){
@@ -289,6 +262,15 @@ angular.module('cmContacts').service('cmContactsModel',[
             console.log('after-add-contact');
             this._clearContacts();
             init();
+        });
+
+        this.on('friendRequest:new', function(event, data){
+            this.requests.create(data);
+        });
+
+
+        this.requests.on('register', function(){
+            cmNotify.new({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell: true});
         });
 
         cmUserModel.on('update:finished', function(){
