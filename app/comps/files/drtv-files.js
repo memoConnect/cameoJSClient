@@ -22,6 +22,8 @@ angular.module('cmFiles').directive('cmFiles',[
                         }
                     });
 
+                    console.log('setFile', blob, bool);
+
                     if(!bool){
                         return false;
                     }
@@ -34,6 +36,7 @@ angular.module('cmFiles').directive('cmFiles',[
                     if(cmFileFactory.remove(file)){
                         var index = $scope.files.indexOf(file);
                         $scope.files.splice(index,1);
+                        $scope.$broadcast('reset:files');
                     }
                 };
                 /**

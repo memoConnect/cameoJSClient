@@ -17,13 +17,11 @@ angular.module('cmFiles').directive('cmBlobVideoAudio',[
                             cmFilesAdapter.getBlobUrl(file.blob).then(function(objUrl){
                                 file.url = objUrl;
                                 element.attr('src', file.url.src);
-                                element.on('load', function() {
-                                    fileReady(file);
-                                });
+                                fileReady(file);
                             });
                         // file can't play via html5 video
                         } else {
-                            file.loaded = true;
+                            fileReady(file);
 
                             var fileEl = angular
                                 .element('<div class="file '+cmFileTypes.find(file.type, file.name)+'" ></div>')
@@ -59,9 +57,7 @@ angular.module('cmFiles').directive('cmBlobVideoAudio',[
 
                 function fileReady(file){
                     // hide spinner
-                    scope.$apply(function () {
-                        file.loaded = true;
-                    });
+                    file.loaded = true;
 
                     if (attrs.cmScrollToTarget) {
                         $rootScope.$broadcast('scroll:to', attrs.cmScrollToTarget)
