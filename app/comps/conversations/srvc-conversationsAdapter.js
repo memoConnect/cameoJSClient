@@ -106,16 +106,10 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                         })
             },
 
-            updateEncryptedPassphraseList: function(id, encryptedPassphraseList){
+            updateEncryptedPassphraseList: function(id, aePassphraseList){
                 return  cmApi.post({
-                            path:    "/conversation/%1/encryptedPassphraseList".replace(/%1/, id),
-                            data:   {encryptedPassphraseList : encryptedPassphraseList}
-                        })
-            },
-
-            getEncryptedPassphraseList: function(id){
-                return  cmApi.get({
-                            path:    "/conversation/%1/encryptedPassphraseList".replace(/%1/, id)
+                            path:    "/conversation/%1/aePassphrases".replace(/%1/, id),
+                            data:   {aePassphraseList : aePassphraseList}
                         })
             }
         };

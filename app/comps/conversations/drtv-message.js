@@ -35,21 +35,6 @@ angular.module('cmConversations').directive('cmMessage', [
             },
 
             controller: function ($scope, $element, $attrs) {
-                /*
-                 $scope.message.decrypt($scope.passphrase);
-
-                 $scope.truncateLength = $scope.$eval($attrs.truncate);
-
-                 if ($scope.message.text.match(/^data:image/)) {
-                    $scope.hasCaptcha = true;
-                 }
-                 if ($scope.message.text.match(/:requestCaptcha/)) {
-                    $scope.captchaRequest = true;
-                 }
-                 if($attrs.truncate !== undefined){
-                    $scope.truncate = $attrs.truncate;
-                 }
-                 */
                 $scope.textOnly = !!$scope.$eval($attrs.textOnly);
 
                 $scope.is_my_own_message = ('isOwn' in $scope.message) ? $scope.message.isOwn() : false;

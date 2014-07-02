@@ -315,7 +315,7 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @param {Array} identities Array of identities to encrypt the passphrase for.
              * @return {Array|Boolean}  Returns Array of encrypted passphrases if successfull or false if not.
              */
-            function asymmetricallyEncryptPassphrase(identities){
+            function asymmetricallyEncryptPassphrase(identities, keyList){
 //                console.log(couldBeAPassphrase(passphrase) && typeof identities == 'object' && identities.length > 0)
 //
 //                console.log('passphrase', passphrase)
@@ -324,7 +324,7 @@ angular.module('cmCore').factory('cmPassphrase',[
 
                 if(couldBeAPassphrase(passphrase) && typeof identities == 'object' && identities.length > 0){
                     return  identities.reduce(function(list, identity){
-                                return list.concat(identity.encryptPassphrase(passphrase))
+                                return list.concat(identity.encryptPassphrase(passphrase, keyList))
                             }, [])
                 } else{
 //                    cmLogger.debug('cmPassphrase:asymmetricallyEncryptPassphrase - provide a list of identities and and passphrase before encrypting the passphrase!');
@@ -367,6 +367,20 @@ angular.module('cmCore').factory('cmPassphrase',[
                             aePassphraseList    : asymmetricallyEncryptedPassphrases,
                             keyTransmission     : this.getKeyTransmission()
                         }
+            };
+
+            /**
+             * @ngdoc method
+             * @methodOf cmPassphrase
+             *
+             * @name exportMissingPassphraseList
+             * @description
+             * Deliver an object with the encrypted passphrases ready to be submitted to the API.
+             *
+             * @return {Object} returns an encrypted passphrase list ready to be submitted to the API.
+             */
+            this.exportMissingPassphraseList = function(keyList){
+                return asymmetricallyEncryptPassphrase(identities, keyList);
             };
 
             /**

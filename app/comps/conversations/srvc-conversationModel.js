@@ -65,7 +65,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.lastMessage        = {};
 
-            this.missingAePassphrases = {}
+            this.missingAePassphrases = {};
 
 
             //rethink, mabye backend should deliver array of message ids
@@ -178,7 +178,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
 
                 return true;
-            }
+            };
 
             /**
              * @ngdoc method
@@ -834,10 +834,29 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.handleMissingAePassphrases = function(){
                 cmLogger.debug('cmConversationModel.handleMissingAePassphrases');
-//                passphrase.setIdentities()
-//                console.log(this.missingAePassphrases);
 
-            }
+                if(this.state.is('decrypted') && !this.state.is('handle-missing-keys') && this.missingAePassphrases.length > 0){
+                    var aeList = {};
+
+                    this.state.set('handle-missing-keys');
+
+                    aeList = passphrase.setIdentities(this.recipients).exportMissingPassphraseList(this.missingAePassphrases);
+
+                    if(aeList.length == this.missingAePassphrases.length){
+                        cmConversationsAdapter.updateEncryptedPassphraseList(this.id, aeList)
+                            .finally(function(){
+                                self.missingAePassphrases = {};
+                                self.state.unset('handle-missing-keys');
+                            });
+                    } else {
+                        //@todo
+                        cmLogger.debug('cmConversationModel.handleMissingAePassphrases Error Line 856');
+                        this.state.unset('handle-missing-keys');
+                    }
+                }
+
+                return this;
+            };
 
             /**
              * Event Handling
@@ -860,6 +879,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 self.decrypt();
                 self.securityAspects.refresh();
                 self.updateLockStatus();
+                self.handleMissingAePassphrases();
             });
 
             this.on('encryption:enabled', function(){
@@ -913,6 +933,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             });
 
             this.messages.on('decrypt:success', function(){
+                self.state.set('decrypted');
                 self.setLastMessage();
                 self.handleMissingAePassphrases();
             });
