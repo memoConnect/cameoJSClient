@@ -343,7 +343,8 @@
         "FOOTER": {
             "TALKS": "Talks",
             "CONTACTS": "Kontakte",
-            "MEDIA": "Media"
+            "MEDIA": "Media",
+            "SETTINGS": "Settings"
         }
     },
 
@@ -352,6 +353,7 @@
         "NOTIFICATIONS": "{{'NOTIFICATIONS.HEADER'|cmTranslate}}",
         "CONTACTS": "Kontakte",
         "REQUESTS": "Kontaktanfragen",
+        "TALKS": "Talks",
         "SETTINGS": "{{'SETTINGS.LABEL'|cmTranslate}}",
         "MESSAGES": "Nachrichten",
         "HINTS": "Sonstige Hinweise",
