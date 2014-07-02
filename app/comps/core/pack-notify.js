@@ -149,7 +149,8 @@ angular.module('cmCore')
                 callbackRoute: undefined
             };
 
-        $rootScope.$on('logout', function(){ self.reset() });
+        self.bellCounter = 0;
+
 
         function handleAdapter(args){
             var notify = notifyTpl;
@@ -159,11 +160,6 @@ angular.module('cmCore')
                 self.new(notify);
             }
         }
-
-        self.bellCounter = 0;
-        self.on('bell:ring', function(event, instance){
-            self.bellCounter++;
-        });
 
         self.error = function(label, args){
             var options = {};
@@ -230,6 +226,16 @@ angular.module('cmCore')
                 handleAdapter(options);
             }
         };
+
+
+        /**
+         * Event Handling
+         */
+        $rootScope.$on('logout', function(){ self.reset() });
+
+        self.on('bell:ring', function(event, instance){
+            self.bellCounter++;
+        });
 
         self.on('notify:remove', function(event){
             self.deregister(event.source);

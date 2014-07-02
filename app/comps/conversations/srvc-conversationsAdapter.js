@@ -126,6 +126,10 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
             adapter.trigger('message:new', data)
         });
 
+        cmApi.on('conversation:new', function(event, data){
+            adapter.trigger('conversation:new', data)
+        });
+
         return adapter
     }
 ])

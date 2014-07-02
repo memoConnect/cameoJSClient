@@ -96,7 +96,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                     pw_list[id_conversation] = password;
 
-
+                    cmUserModel.storageSave(this.localKey, pw_list);
                 },
                 get: function(id_conversation){
                     var pw_list = this.getAll(),
@@ -259,6 +259,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
                 if(cmUserModel.hasLocalKeys() == false){
                     this.options.showKeyInfo = true;
+                }
+
+                if(!this.state.is('new') && this.keyTransmission == 'mixed' && this.isUserInPassphraseList() == false){
+                    this.options.hasPassword = true;
                 }
 
                 this.state.unset('new');
@@ -437,7 +441,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {cmConversationModel} this  Returns itself for chaining.
              */
             this.disableEncryption = function(){
-                cmLogger.debug('cmConversationModel:disableEncryption');
+//                cmLogger.debug('cmConversationModel:disableEncryption');
 
                 if(this.state.is('new')){
                     passphrase.disable();
@@ -526,7 +530,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     this.trigger('decrypt:ok');
 
                     // save password to localstorage
-                    if (this.password && passphrase && !this.isUserInPassphraseList()){
+                    if (this.password && !this.isUserInPassphraseList()){
                         this.localPWHandler.set(this.id, this.password);
                     }
                 } else {
@@ -722,8 +726,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                  * set Default
                  * has Captcha will be set at an other method
                  */
-                this.options.hasPassword = false;
-                this.options.showKeyInfo = false;
+//                this.options.hasPassword = false;
+//                this.options.showKeyInfo = false;
 
                 if(this.isEncrypted()){
                     if(this.state.is('new') && cmUserModel.hasLocalKeys() == false){

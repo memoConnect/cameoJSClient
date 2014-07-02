@@ -14,14 +14,14 @@ angular.module('cmFiles').directive('cmBlobVideoAudio',[
                         var canPlay = element[0].canPlayType(file.type);
                         // browser supports file
                         if(!cmEnv.isiOS && canPlay) {
-                            file.base64 = cmFilesAdapter.getBlobUrl(file.blob);
-                            element.attr('src', file.base64.url);
-                            element.on('load', function() {
+                            cmFilesAdapter.getBlobUrl(file.blob).then(function(objUrl){
+                                file.url = objUrl;
+                                element.attr('src', file.url.src);
                                 fileReady(file);
                             });
                         // file can't play via html5 video
                         } else {
-                            file.loaded = true;
+                            fileReady(file);
 
                             var fileEl = angular
                                 .element('<div class="file '+cmFileTypes.find(file.type, file.name)+'" ></div>')
@@ -57,9 +57,7 @@ angular.module('cmFiles').directive('cmBlobVideoAudio',[
 
                 function fileReady(file){
                     // hide spinner
-                    scope.$apply(function () {
-                        file.loaded = true;
-                    });
+                    file.loaded = true;
 
                     if (attrs.cmScrollToTarget) {
                         $rootScope.$broadcast('scroll:to', attrs.cmScrollToTarget)

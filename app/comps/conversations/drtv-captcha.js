@@ -25,7 +25,6 @@ angular.module('cmConversations').directive('cmCaptcha',[
                     });
                     captcha.generate();
 
-
                     $scope.conversation.password = captcha.text();
                     $scope.conversation.tmpPassCaptcha = captcha.uri();
                 };
@@ -39,8 +38,6 @@ angular.module('cmConversations').directive('cmCaptcha',[
 
                 $scope.$watch('conversation.password', $scope.refreshCaptcha);
                 $scope.$on('captcha:refresh',$scope.refreshCaptcha);
-
-
             }
         }
     }

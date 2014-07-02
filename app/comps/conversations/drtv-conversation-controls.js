@@ -34,7 +34,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
                 }
 
                 function showPasswordInfo(conversation){
-                    if(conversation.state.is('new') && conversation.isEncrypted() && cmUserModel.hasLocalKeys() == false){
+                    if(conversation.isEncrypted() && cmUserModel.hasLocalKeys() == false){
                         scope.showPasswordLocalKeyInfo = true;
                     } else {
                         scope.showPasswordLocalKeyInfo = false;
