@@ -211,7 +211,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                     passphrase.importAsymmetricallyEncryptedPassphrase(data.aePassphraseList);
 
                 if('missingAePassphrase' in data){
-//                    passphrase.importMissingKeys(data.missingAePassphrase);
                     this.missingAePassphrases = data.missingAePassphrase;
                 }
 
@@ -835,7 +834,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.handleMissingAePassphrases = function(){
                 cmLogger.debug('cmConversationModel.handleMissingAePassphrases');
-                console.log(this.missingAePassphrases);
+//                passphrase.setIdentities()
+//                console.log(this.missingAePassphrases);
+
             }
 
             /**
