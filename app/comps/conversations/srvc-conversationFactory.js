@@ -24,9 +24,9 @@ angular.module('cmConversations').service('cmConversationFactory', [
     function(cmConversationsAdapter, cmFactory, cmStateManagement, cmConversationModel, cmLogger, $rootScope) {
         var self = cmFactory(cmConversationModel);
 
-        var _quantity = 0,
-            _limit = 10,
-            _offset = 0;
+        var _quantity   = 0,
+            _limit      = 10,
+            _offset     = 0;
 
         self.state = new cmStateManagement(['loading']);
 

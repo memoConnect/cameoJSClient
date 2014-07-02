@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('cmContacts').service('cmContactsModel',[
+    'cmFactory',
     'cmUserModel',
     'cmContactsAdapter',
     'cmIdentityFactory',
@@ -12,15 +13,15 @@ angular.module('cmContacts').service('cmContactsModel',[
     'cmNotify',
     '$q',
     '$rootScope',
-    function (cmUserModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger, cmNotify, $q, $rootScope){
+    function (cmFactory, cmUserModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger, cmNotify, $q, $rootScope){
         var self = this,
             events = {};
 
         this.state = new cmStateManagement(['loading-contacts','loading-groups','loading-requests']);
 
-        this.contacts = [];
-        this.groups = [];
-        this.requests = [];
+        this.contacts   = [];
+        this.groups     = [];
+        this.requests   = new cmFactory(cmFriendRequestModel, 'identity.id');
 
         cmObject.addEventHandlingTo(this);
 
@@ -140,6 +141,10 @@ angular.module('cmContacts').service('cmContactsModel',[
          * @private
          */
         this._addFriendRequest = function(request_data){
+
+            this.requests.create(request_data)
+
+            /*
             var i = 0,
                 check = false;
 
@@ -154,6 +159,7 @@ angular.module('cmContacts').service('cmContactsModel',[
             if(check !== true){
                 this.requests.push(new cmFriendRequestModel({identity: cmIdentityFactory.create(request_data.identity, true), message:request_data.message || '', created:request_data.created || ''}));
             }
+            */
         };
 
         this.getFriendRequests = function(){
@@ -184,11 +190,16 @@ angular.module('cmContacts').service('cmContactsModel',[
         };
 
         this.removeFriendRequest = function(request){
+
+            this.requests.deregister(request)
+
+            /*
 //            cmLogger.debug('cmContactsModel:removeFriendRequest');
 
             var index = this.requests.indexOf(request);
             this.requests.splice(index,1);
-
+            */
+           
             return this;
         }
 
@@ -196,9 +207,7 @@ angular.module('cmContacts').service('cmContactsModel',[
             return cmContactsAdapter.sendFriendRequest(id, message);
         };
 
-        this.answerFriendRequest = function(id, type){
-            return cmContactsAdapter.answerFriendRequest(id, type);
-        };
+
 
         this.addContact = function(data){
             var defer = $q.defer();
