@@ -1,5 +1,5 @@
 <header class="inScreen">
-    <i class="fa cm-search-cl cm-lg-icon"></i> {{'CONTACTS.HEADING.SEARCH'|cmTranslate}}
+    <i class="fa cm-search cm-lg-icon"></i> {{'CONTACTS.HEADING.SEARCH'|cmTranslate}}
 </header>
 
 <cm-modal id="modalSendRequest" class="no-padding" cm-data-as="contact" cm-title="CONTACTS.HEADING.SEND_REQUEST">
@@ -22,7 +22,7 @@
     <form name="searchCameoId" autocomplete="off">
         <div class="cm-search-input">
             <input type="text" value="" ng-model="string" ng-keyup="sendSearch()" ng-minlength="4" placeholder="{{'CONTACTS.PLACEHOLDER.ADD_NEW_CONTACT'|cmTranslate}}" name="string" data-qa="input-search" />
-            <i class="fa cm-search-cl"></i>
+            <i class="fa cm-search"></i>
         </div>
         <div class="cm-alert" ng-show="searchCameoId.string.$error.minlength">
             <i class="fa cm-info"></i> {{'CONTACTS.INFO.MORE_CHARS_NEEDED'|cmTranslate}}

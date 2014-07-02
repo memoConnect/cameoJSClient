@@ -1,15 +1,22 @@
-<section ng-controller="ContactsCtrl" ng-switch="activeSection">
-    <cm-header cm-rubber-space>
-        <cm-back cm-weight="1" back-to="/talks"></cm-back>
-        <cm-identity cm-weight="4"></cm-identity>
+<div ng-controller="ContactsCtrl">
+    <cm-header cm-rubber-space ng-if="route == ''">
+        <cm-identity cm-weight="5"></cm-identity>
         <cm-header-list-search cm-weight="1" ng-model="search"></cm-header-list-search>
         <cm-add-button cm-weight="1" ng-click="openModal('add-contact')" data-qa="add-contact-btn" cm-icon="new-contact"></cm-add-button>
         <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
 
-    <cm-overview-contacts ng-switch-default></cm-overview-contacts>
-    <cm-request-list ng-switch-when="requests"></cm-request-list>
-    <cm-search ng-switch-when="search"></cm-search>
+    <cm-header cm-rubber-space ng-if="route != ''">
+        <cm-back cm-weight="1" back-to="/contacts"></cm-back>
+        <cm-identity cm-weight="6"></cm-identity>
+        <cm-menu cm-weight="1"></cm-menu>
+    </cm-header>
+
+    <section ng-switch="route">
+        <cm-overview-contacts ng-switch-default></cm-overview-contacts>
+        <cm-request-list ng-switch-when="requests"></cm-request-list>
+        <cm-search ng-switch-when="search"></cm-search>
+    </section>
 
     <cm-footer cm-rubber-space></cm-footer>
-</section>
+</div>

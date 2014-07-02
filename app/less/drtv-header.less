@@ -32,12 +32,6 @@ cm-header{
       position: relative;
       font-size:@cm-small-font;
     }
-    &.overlap-identity{
-      .back-wrap{
-        position:relative;
-        width:@cm-unit+1;
-      }
-    }
   }
 
   cm-identity{
@@ -47,6 +41,9 @@ cm-header{
     white-space:nowrap;
     position:relative;
     padding-left:@cm-horizontal-padding;
+    cm-avatar{
+      top:-0.1rem;
+    }
     a{
       text-align:left;
       display:block;
@@ -78,13 +75,42 @@ cm-header{
     .with-cursor;
     .cm-ci-color;
     i{
-      font-size: @cm-unit / 2;
-      vertical-align: text-top;
-      margin-right: -(@cm-unit / 8);
+      font-size:@cm-unit / 2;
+      vertical-align:text-top;
+      margin-right:-(@cm-unit / 8);
     }
     span {
-      position: relative;
+      position:relative;
       font-size:@cm-small-font;
+    }
+  }
+
+  cm-header-list-search{
+    display:inline-block;
+    position:relative;
+    cm-search-input{
+      color:@cm-black;
+      position:absolute;
+      z-index:1;
+      width:20rem - @cm-horizontal-padding;
+      right:@cm-unit;
+      top:0;
+      padding:1rem 0.4rem;
+      font-size:@cm-large-font;
+      line-height:@cm-mega-font;
+      text-align:left;
+      input{
+
+      }
+      i{
+        position: absolute;
+        right:0;
+        top:0;
+        width:@cm-unit;
+        height:@cm-unit;
+        line-height:@cm-unit!important;
+        text-align:center;
+      }
     }
   }
 }
