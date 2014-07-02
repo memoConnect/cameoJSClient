@@ -75,6 +75,7 @@ angular.module('cmCore')
                         blob = new Blob( data, {type : contentType});
                     } else {
                         cmLogger.error('We\'re screwed, blob constructor unsupported entirely');
+                        console.log(e, data, 'from method: '+method);
                     }
                 }
                 return blob;
@@ -108,12 +109,20 @@ angular.module('cmCore')
                 return blob;
             },
 
+            /**
+             * return clear base64 for atob function
+             * replace newlines & return
+             * replace the "data:;base64," mimetype
+             * @param b64Data
+             * @returns {String} clearBase64
+             */
             clearBase64: function(b64Data){
-                return b64Data
+                var clearBase64 = b64Data
                     .replace(/\r?\n|\r/g,'')
-                    .replace(new RegExp('^(data:([a-z/;]{0,50})base64,)(.*)$','i'),function(){
-                    return arguments[3];
-                });
+                    .replace(new RegExp('^(data:.{0,100};base64,)(.*)$','i'),function(){
+                        return arguments[2];// return the cleared base64
+                    });
+                return clearBase64;
             },
 
             base64ToBinary: function(base64){
@@ -227,8 +236,7 @@ angular.module('cmCore')
 ])
 .factory('cmChunk', [
     'cmFilesAdapter',
-    'cmLogger'
-        ,
+    'cmLogger',
     'cmCrypt',
     'cmObject',
     '$q',
@@ -332,7 +340,6 @@ angular.module('cmCore')
             };
 
             this.encrypt = function(passphrase) {
-
                 if(passphrase == null){
                     this.plain = this.raw;
                 } else {

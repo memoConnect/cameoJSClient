@@ -22,8 +22,6 @@ angular.module('cmFiles').directive('cmFiles',[
                         }
                     });
 
-                    console.log('setFile', blob, bool);
-
                     if(!bool){
                         return false;
                     }
@@ -47,8 +45,7 @@ angular.module('cmFiles').directive('cmFiles',[
                  * @returns {*}
                  */
                 $scope.prepareFilesForUpload = function(passphrase){
-                    var defered = $q.defer(),
-                        promises = [];
+                    var promises = [];
 
                     // create all files and get fileIds
                     angular.forEach($scope.files, function(file){
