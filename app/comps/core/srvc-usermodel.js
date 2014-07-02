@@ -245,7 +245,7 @@ angular.module('cmCore').service('cmUserModel',[
          * @returns {*}
          */
         this.saveKey = function(key){
-            cmLogger.debug('cmUserModel.saveKey');
+//            cmLogger.debug('cmUserModel.saveKey');
             /*
             var deferred = $q.defer(),
                 i = 0,
@@ -298,7 +298,7 @@ angular.module('cmCore').service('cmUserModel',[
         };
 
         this.syncLocalKeys = function(){
-            cmLogger.debug('cmUserModel.hasPrivateKey');
+//            cmLogger.debug('cmUserModel.hasPrivateKey');
             /**
              * check local Keys from Storage
              */
