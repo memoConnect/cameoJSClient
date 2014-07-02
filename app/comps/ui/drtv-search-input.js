@@ -7,7 +7,7 @@ angular.module('cmUi').directive('cmSearchInput',[
             scope: {
                 search: '=ngModel'
             },
-            template: '<input type="text" value="" ng-model="search" placeholder="{{placeholder}}" data-qa="input-search">' +
+            template: '<input data-qa="inp-list-search" type="text" value="" ng-model="search" placeholder="{{placeholder}}">' +
                       '<i class="fa" ng-click="clear()" ng-class="{\'cm-search\':showDefaultIcon && counterKeydown == 0,\'cm-checkbox-wrong\':counterKeydown > 0}"></i>',
             link: function(scope, element, attrs){
                 scope.placeholder = attrs.placeholder || '';

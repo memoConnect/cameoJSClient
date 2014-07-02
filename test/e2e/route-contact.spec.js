@@ -27,7 +27,7 @@ describe('Route: Contact', function () {
 
     describe('open internal contact', function(){
         it('search and click to detail',function(){
-            $("[data-qa='input-search']").sendKeys('internal')
+            util.headerSearchInList('internal')
 
             $$('cm-contacts-list cm-contact-tag cm-avatar').first().click()
             util.expectCurrentUrl('#/contact/.*')
@@ -91,7 +91,7 @@ describe('Route: Contact', function () {
             util.expectCurrentUrl('/contacts')
             util.waitForElement('cm-contact-tag')
 
-            $("[data-qa='input-search']").sendKeys(userName)
+            util.headerSearchInList(userName)
 
             expect($$('cm-contacts-list cm-contact-tag cm-avatar').count()).toBe(1)
         })

@@ -46,7 +46,8 @@ describe('Purl registration', function () {
         // add recipient
         $("cm-add-button").click()
         util.waitForPageLoad("/recipients")
-        $("[data-qa='input-search']").sendKeys(externalLogin)
+        util.searchInList(externalLogin)
+
         util.waitForElement("[data-qa='contact-display-name']")
         $("[data-qa='btn-select-contact']").click()
 

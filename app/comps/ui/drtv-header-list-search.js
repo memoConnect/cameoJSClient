@@ -10,7 +10,7 @@ angular.module('cmUi')
             scope: {
                 ngModel: '=ngModel'
             },
-            template: '<i class="fa cm-search" ng-click="toggleInput()"></i>' +
+            template: '<i class="fa cm-search" ng-click="toggleInput()" data-qa="btn-header-list-search"></i>' +
                       '<div ng-show="visible">' +
                         '<cm-search-input ng-model="ngModel" cm-without-search-icon="true"></cm-search-input>' +
                       '</div>',
