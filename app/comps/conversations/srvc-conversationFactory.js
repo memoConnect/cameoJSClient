@@ -19,8 +19,9 @@ angular.module('cmConversations').service('cmConversationFactory', [
     'cmFactory',
     'cmStateManagement',
     'cmConversationModel',
+    'cmLogger',
     '$rootScope',
-    function(cmConversationsAdapter, cmFactory, cmStateManagement, cmConversationModel, $rootScope) {
+    function(cmConversationsAdapter, cmFactory, cmStateManagement, cmConversationModel, cmLogger, $rootScope) {
         var self = cmFactory(cmConversationModel);
 
         var _quantity = 0,
@@ -30,6 +31,8 @@ angular.module('cmConversations').service('cmConversationFactory', [
         self.state = new cmStateManagement(['loading']);
 
         self.getList = function(limit, offset){
+//            cmLogger.debug('cmConversationFactory.getList');
+
             self.state.set('loading');
 
             if(typeof limit === 'undefined'){
@@ -54,6 +57,10 @@ angular.module('cmConversations').service('cmConversationFactory', [
                 }
             )
         };
+
+        self.getLimit = function(){
+            return _limit;
+        }
 
         /**
          * @ngdoc method

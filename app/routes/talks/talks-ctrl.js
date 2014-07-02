@@ -48,8 +48,8 @@ define([
              * load more Conversations
              */
             $scope.loadMore = function(){
-                if(cmUserModel.isAuth() === true){
-                    $scope.conversations.getList();
+                if(cmUserModel.isAuth() != false){
+                    $scope.conversations.getList($scope.conversations.getLimit(), $scope.conversations.length);
                 }
             }
 
