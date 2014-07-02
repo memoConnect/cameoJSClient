@@ -245,6 +245,7 @@ angular.module('cmCore').service('cmUserModel',[
          * @returns {*}
          */
         this.saveKey = function(key){
+            cmLogger.debug('cmUserModel.saveKey');
             /*
             var deferred = $q.defer(),
                 i = 0,
@@ -262,12 +263,13 @@ angular.module('cmCore').service('cmUserModel',[
 
             this.storageSave('rsa', key_data_list)
 
-            cmNotify.info('NOTIFICATIONS.TYPES.KEYS.STORE_NEW',{displayType:'modal',ttl:3000});
+//            cmNotify.info('NOTIFICATIONS.TYPES.KEYS.STORE_NEW',{displayType:'modal',ttl:3000});
 
             return this
         };
 
         this.loadLocalKeys = function(){
+//            cmLogger.debug('cmUserModel.loadLocalKeys');
             var stored_keys = this.storageGet('rsa') || [],
                 keys        = [];
 
@@ -280,6 +282,7 @@ angular.module('cmCore').service('cmUserModel',[
         };
 
         this.hasPrivateKey = function(){
+//            cmLogger.debug('cmUserModel.hasPrivateKey');
             var keys = this.loadLocalKeys(),
                 result = false
 
@@ -295,7 +298,7 @@ angular.module('cmCore').service('cmUserModel',[
         };
 
         this.syncLocalKeys = function(){
-
+            cmLogger.debug('cmUserModel.hasPrivateKey');
             /**
              * check local Keys from Storage
              */
