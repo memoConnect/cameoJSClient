@@ -506,7 +506,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                         bool = (this.keyTransmission == 'asymmetric' || this.keyTransmission == 'symmetric' || this.keyTransmission == 'mixed')
                     } else {
                         cmLogger.debug('cmConversationModel.isEncrypted Error Line 505');
-                        cmNotfiy.warn('NOTIFICATIONS.TYPES.CONVERSATION.CHECK_ENCRYPTION_ERROR');
                     }
                 }
 

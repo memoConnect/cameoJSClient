@@ -54,6 +54,13 @@ angular.module('cmConversations').directive('cmMessage', [
                 };
 
                 $scope.displayEncrypted = function(){
+                    if($scope.message.id == undefined){
+                        /**
+                         * hack for empty messages
+                         */
+                        return false;
+                    }
+
                     if($scope.message.text != undefined || ($scope.message.text == undefined && typeof $scope.message.files !== 'undefined' && $scope.message.files.length > 0)){
                         return false;
                     }
