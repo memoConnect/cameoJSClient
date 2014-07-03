@@ -16,6 +16,10 @@
                 <input type="text" name="cameoId" ng-model="identity.cameoId" placeholder="{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}" required tabindex="1" data-qa="input-cameoId" />
             </div>
 
+            <div class="cm-input-ctn">
+                <input type="text" name="displayName" ng-model="identity.displayName" placeholder="{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" required tabindex="1" data-qa="input-displayname" />
+            </div>
+
             <div class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid">
                 <div ng-show="cmForm.displayName.$error.required">
                     <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
