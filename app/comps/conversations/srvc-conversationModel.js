@@ -730,8 +730,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                  * set Default
                  * has Captcha will be set at an other method
                  */
-//                this.options.hasPassword = false;
-//                this.options.showKeyInfo = false;
+                this.options.hasPassword = false;
+                this.options.showKeyInfo = false;
 
                 if(this.isEncrypted()){
                     if(this.state.is('new') && cmUserModel.hasLocalKeys() == false){
@@ -899,12 +899,16 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 self.messages.create(message_data).decrypt();
             });
 
-            this.recipients.on('register', function(event, recipient){
-//                cmLogger.debug('cmConversationModel:on:recipient:register');
+            this.recipients.on(['register', 'update:finished'], function(event, recipient){
+                cmLogger.debug('cmConversationModel:on:recipient:register');
                 self.checkPreferences();
                 self.securityAspects.refresh();
                 self.updateLockStatus();
             });
+
+//            this.recipients.on('update:finished', function(){
+//
+//            });
 
             this.recipients.on('unregistered', function(){
 //                cmLogger.debug('cmConversationModel:on:recipient:unregistered');

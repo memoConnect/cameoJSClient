@@ -77,7 +77,6 @@ angular.module('cmCore').factory('cmIdentityModel',[
                 this.userType               = data.userType || this.userType;
                 this.created                = data.created || this.created;
                 this.lastUpdated            = data.lastUpdated || this.lastUpdated;
-                this.keys                   = [];
 
                 data.publicKeys = data.publicKeys || [];
 
