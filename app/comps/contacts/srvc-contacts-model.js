@@ -283,6 +283,18 @@ angular.module('cmContacts').service('cmContactsModel',[
             cmNotify.new({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell: true});
         });
 
+        cmContactsAdapter.on('identity:updated', function(event, data){
+            if(typeof data.id != 'undefined') {
+                var contact = self.contacts.filter(function (contact) {
+                    return contact.identity.id == data.id
+                })[0];
+
+                if (typeof contact == 'object' && 'identity' in contact && typeof contact.identity.importData == 'function') {
+                    contact.identity.importData(data);
+                }
+            }
+        });
+
         cmUserModel.on('update:finished', function(){
             init();
         });
