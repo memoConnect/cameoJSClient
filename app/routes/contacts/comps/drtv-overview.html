@@ -17,8 +17,6 @@
     </div>
 </cm-modal>
 
-<cm-contacts-filter-controls sort-by="" filter-by=""></cm-contacts-filter-controls>
-
 <cm-contacts-list contacts-as="contacts">
     <div ng-show="isLoading" class="empty-list">
         <cm-spinner ></cm-spinner>
@@ -35,7 +33,7 @@
         <cm-contact-type cm-data="contact"></cm-contact-type>
         <span class="separator"></span>
         <button ng-click="startConversation(contact)" data-qa="start-new-conversation-btn">
-            <i class="fa cm-write"></i>
+            <i class="fa cm-new-talk"></i>
         </button>
     </cm-contact-tag>
 

@@ -12,7 +12,7 @@ define([
         '$routeParams',
         function($scope, $routeParams){
             // set active setion
-            $scope.activeSection = $routeParams.section;
+            $scope.route = $routeParams.section || '';
         }
     ]);
 });
