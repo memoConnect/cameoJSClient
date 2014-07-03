@@ -26,12 +26,14 @@ angular.module('cmConversations').directive('cmMessage', [
                     }
                 }
 
-                scope.message.on('init:files', function(){
-                    if (scope.message.files.length > 0) {
-                        setFileView();
-                        scope.message.decryptFiles(scope.conversation.getPassphrase());
-                    }
-                });
+                if(typeof scope.message == 'object'){
+                    scope.message.on('init:files', function(){
+                        if (scope.message.files.length > 0) {
+                            setFileView();
+                            scope.message.decryptFiles(scope.conversation.getPassphrase());
+                        }
+                    });
+                }
             },
 
             controller: function ($scope, $element, $attrs) {
@@ -40,7 +42,7 @@ angular.module('cmConversations').directive('cmMessage', [
                 $scope.is_my_own_message = ('isOwn' in $scope.message) ? $scope.message.isOwn() : false;
 
                 $scope.isType = function(expectType){
-                    if($scope.message.files.length > 0 && typeof $scope.message.files[0].type == 'string'){
+                    if(typeof $scope.message.files !== 'undefined' && $scope.message.files.length > 0 && typeof $scope.message.files[0].type == 'string'){
                         var mimeType = $scope.message.files[0].type;
                         if(expectType == 'image' && mimeType.search('^image') != -1){
                             return true;
