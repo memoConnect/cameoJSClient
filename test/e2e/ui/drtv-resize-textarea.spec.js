@@ -23,12 +23,12 @@ describe('Textarea Resize', function () {
         expect(textarea.getCssValue('overflow')).toBe('hidden')
     })
 
-    it('check rows calculation max 4 text with newlines', function(){
+    it('check rows calculation max 8 text with newlines', function(){
         var textarea = $("[data-qa='input-answer']"),
             oneRow = 'moep moep moep',
-            twoRows = 'moep moep moep \nsecond row'
-            fourRows = 'moep moep moep \nsecond row \nthird row \nfourth row'
-            moreThanMaxRows = 'moep moep moep \nsecond row \nthird row \nfourth row \nsixth row \nseventh row \neigth row'
+            twoRows = 'moep moep moep \nsecond row',
+            fourRows = 'moep moep moep \nsecond row \nthird row \nfourth row',
+            moreThanMaxRows = 'moep moep moep \nsecond \nthird \nfourth \nfifth \nsixth \nseventh \neigth \nninth'
 
         textarea.sendKeys(oneRow)
 
@@ -51,7 +51,7 @@ describe('Textarea Resize', function () {
         textarea.sendKeys(moreThanMaxRows)
 
         expect(textarea.getAttribute('value')).toBe(moreThanMaxRows)
-        expect(textarea.getAttribute('rows')).toBe('4')
+        expect(textarea.getAttribute('rows')).toBe('8')
         expect(textarea.getCssValue('overflow')).toBe('auto')
 
         util.clearInput('input-answer')
