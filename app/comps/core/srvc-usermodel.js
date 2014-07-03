@@ -102,12 +102,24 @@ angular.module('cmCore').service('cmUserModel',[
          */
         this.loadIdentity = function(identity_data){
             if(typeof identity_data !== 'undefined'){
-                this.importData(cmIdentityFactory.create(identity_data.id));
+                var identity = cmIdentityFactory.create(identity_data.id);
+
+                identity.on('update:finished', function(event, data){
+                    self.trigger('update:finished');
+                });
+
+                this.importData(identity);
             } else {
                 if(this.getToken() !== false){
                     cmAuth.getIdentity().then(
                         function(data){
-                            self.importData(cmIdentityFactory.create(data));
+                            var identity = cmIdentityFactory.create(data)
+
+                            identity.on('update:finished', function(event, data){
+                                self.trigger('update:finished');
+                            });
+
+                            self.importData(identity);
                         },
                         function(r){
                             var response = r || {};

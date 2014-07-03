@@ -906,10 +906,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 self.updateLockStatus();
             });
 
-//            this.recipients.on('update:finished', function(){
-//
-//            });
-
             this.recipients.on('unregistered', function(){
 //                cmLogger.debug('cmConversationModel:on:recipient:unregistered');
                 self.checkPreferences();
@@ -939,8 +935,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 self.handleMissingAePassphrases();
             });
 
-            this.recipients.on('update:finished',function(){
-                self.decrypt();
+            cmUserModel.on('update:finished', function(){
+               self.decrypt();
             });
 
             // after events!!!
