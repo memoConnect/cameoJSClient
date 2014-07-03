@@ -831,7 +831,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             };
 
             this.handleMissingAePassphrases = function(){
-                cmLogger.debug('cmConversationModel.handleMissingAePassphrases');
+//                cmLogger.debug('cmConversationModel.handleMissingAePassphrases');
 
                 if(this.state.is('decrypted') && !this.state.is('handle-missing-keys') && this.missingAePassphrases.length > 0){
                     var aeList = {};
