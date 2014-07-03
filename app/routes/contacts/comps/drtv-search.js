@@ -60,7 +60,7 @@ angular.module('cmRouteContacts').directive('cmSearch',[
                                 var index = $scope.results.indexOf(contact);
                                 $scope.results.splice(index,1);
                                 // notify
-                                cmNotify.success('CONTACTS.INFO.REQUEST.SENDED', {displayType:'modal', ttl:3000});
+//                                cmNotify.success('CONTACTS.INFO.REQUEST.SENDED', {displayType:'modal', ttl:3000});
                                 cmContactsModel.trigger('friendRequest:send');
                                 cmModal.closeAll();
                             },
