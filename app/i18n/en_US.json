@@ -378,7 +378,8 @@
             },
             "FRIEND_REQUEST": "New friendrequest",
             "CONVERSATION":{
-                "ASYMMETRIC_DECRYPT_ERROR": "ASYMMETRIC_DECRYPT_ERROR"
+                "ASYMMETRIC_DECRYPT_ERROR": "ASYMMETRIC_DECRYPT_ERROR",
+                "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR"
             }
         }
     },

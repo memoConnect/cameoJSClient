@@ -491,24 +491,22 @@ angular.module('cmConversations').factory('cmConversationModel',[
              * @returns {boolean} bool Returns true if Conversation is encrypted.
              */
             this.isEncrypted = function(){
-//                cmLogger.debug('cmConversationModel:isEncrypted');
-
+//                cmLogger.debug('cmConversationModel.isEncrypted');
                 var bool = false;
-
-                /*if(this.state.is('new')){
-                    bool = !passphrase.disabled();
-                } else if(this.messages.length > 0){
-                    bool = this.messages[0].isEncrypted();
-                } else {
-                    cmNotify.warn('CONVERSATION.WARN.BROKEN',{displayType:'modal',callbackRoute:'talks'})
-                }*/
-
 
                 if(this.state.is('new')){
                     bool = !passphrase.disabled();
                 } else {
                     if(this.messages.length > 0){
                         bool = this.messages[0].isEncrypted();
+                    } else if(this.keyTransmission != ''){
+                        /**
+                         * if no messages exists
+                         */
+                        bool = (this.keyTransmission == 'asymmetric' || this.keyTransmission == 'symmetric' || this.keyTransmission == 'mixed')
+                    } else {
+                        cmLogger.debug('cmConversationModel.isEncrypted Error Line 505');
+                        cmNotfiy.warn('NOTIFICATIONS.TYPES.CONVERSATION.CHECK_ENCRYPTION_ERROR');
                     }
                 }
 
