@@ -361,43 +361,43 @@ div.answer{
   bottom:0;
   z-index:1;
   background-color:rgba(255,255,255,0.9);
-  vertical-align: middle;
-  margin: 0 auto;
+  vertical-align:middle;
+  margin:0 auto;
   left:0;
   right:0;
-  font-size: @cm-unit - 1;
+  font-size:@cm-unit - 1;
 
   cm-files {
-    position: absolute;
-    top: 0.3rem;
-    left: 0;
+    position:absolute;
+    bottom:0.3rem;
+    left:0;
     text-align:center;
   }
   .fa.cm-smile-negative{
-    position: absolute;
-    top: 0.8rem;
+    position:absolute;
+    bottom:0.8rem;
   }
   .post-wrap {
-    position: absolute;
-    top: 0.3rem;
-    right: 0;
-    width: @cm-unit;
-    height: @cm-unit;
+    position:absolute;
+    bottom:0.3rem;
+    right:0;
+    width:@cm-unit;
+    height:@cm-unit;
     text-align:center;
     i.cm-post {
       &.is-disabled {
-        color: @cm-grey;
+        color:@cm-grey;
       }
     }
   }
 
   .message{
-    width: 24rem;
-    position: relative;
-    height: 100%;
-    bottom: 0;
-    margin: 0 auto;
-    text-align: left;
+    width:24rem;
+    position:relative;
+    height:100%;
+    bottom:0;
+    margin:0 auto;
+    text-align:left;
     textarea{
       width:88%;
       border:none !important;
@@ -409,13 +409,13 @@ div.answer{
       }
     }
     textarea, .textarea-shadow{
-      font-size: @cm-large-font;
+      font-size:@cm-large-font;
     }
     .inputter {
-      width: 100%;
-      position: absolute;
-      height: 0.3rem;
-      bottom: 0.3rem;
+      width:100%;
+      position:absolute;
+      height:0.3rem;
+      bottom:0.3rem;
 
       border-color: -moz-use-text-color #000000 #000000;
       border-image: none;
@@ -426,25 +426,25 @@ div.answer{
     }
   }
   div.message.large {
-    width: 26rem;
-    margin-left: 0.5rem;
+    width:26rem;
+    margin-left:0.5rem;
   }
 }
 
 div.captcha {
   padding:0 0.5rem;
   cm-captcha {
-    display: inline-block;
-    width: 26rem;
-    height: 10rem;
+    display:inline-block;
+    width:26rem;
+    height:10rem;
   }
   position: relative;
   text-align: left;
   margin-top: 0.5rem;
   button.refresh {
     position: absolute;
-    top: 4rem;
-    right: 0.5rem;
+    top:4rem;
+    right:0.5rem;
 
     color: @cm-grey;
     font-size: 2.5em;
