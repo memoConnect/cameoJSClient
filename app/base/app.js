@@ -213,10 +213,10 @@ define([
                               ? $rootScope.urlHistory[$rootScope.urlHistory.length - 1]
                               : '';
                 // clear if same route
-                if(currentRoute.indexOf('/login') != -1 || currentRoute == prevRoute)
+                if(currentRoute.indexOf('/login') != -1 || currentRoute == prevRoute) {
                     $rootScope.urlHistory = [];
-                // push new route
-                else if(currentRoute !== prevRoute) {
+                    // push new route
+                } else if(currentRoute !== prevRoute) {
                     $rootScope.urlHistory.push($location.$$path);
                 }
                 

@@ -71,7 +71,7 @@ define([
 
             $scope.goToConversation = function(id){
                 if(typeof id != 'undefined'){
-                    $location.path('/conversation/' + id)
+                    $location.path('/conversation/' + id);
                 }
 
                 return false;
@@ -79,7 +79,7 @@ define([
 
             $scope.createNewConversation = function(){
                 delete($rootScope.pendingConversation);
-                $location.path('/conversation/')
+                $location.path('/conversation/');
             };
 
 
