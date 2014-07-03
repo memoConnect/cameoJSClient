@@ -939,6 +939,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 self.handleMissingAePassphrases();
             });
 
+            this.recipients.on('update:finished',function(){
+                self.decrypt();
+            });
+
             // after events!!!
             init(data);
         }
