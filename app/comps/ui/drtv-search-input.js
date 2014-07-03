@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('cmUi').directive('cmSearchInput',[
-    function(){
+    '$document',
+    function($document){
         return {
             restrict: 'E',
             scope: {
@@ -11,7 +12,7 @@ angular.module('cmUi').directive('cmSearchInput',[
                       '<i class="fa" ng-click="clear()" ng-class="{\'cm-search\':showDefaultIcon && counterKeydown == 0,\'cm-checkbox-wrong\':counterKeydown > 0}"></i>',
             link: function(scope, element, attrs){
                 scope.placeholder = attrs.placeholder || '';
-
+                // wrapper events
                 element
                 .on('focus', function(){
                     scope.counterKeydown = 0;
@@ -25,6 +26,19 @@ angular.module('cmUi').directive('cmSearchInput',[
                         scope.$apply();
                     }
                 });
+
+                if('cmHideElements' in attrs){
+                    var input = angular.element(element[0].querySelector('input')),
+                        elementsToHide = angular.element($document[0].querySelectorAll(attrs.cmHideElements));
+
+                    input
+                    .on('focus', function(){
+                        elementsToHide.addClass('ng-hide');
+                    })
+                    .on('blur', function(){
+                        elementsToHide.removeClass('ng-hide');
+                    })
+                }
             },
             controller: function($scope, $element, $attrs){
                 $scope.counterKeydown = 0;
