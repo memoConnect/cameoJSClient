@@ -138,8 +138,6 @@ angular.module('cmContacts').service('cmContactsModel',[
         /**
          * Friend Request Handling
          */
-
-
         this.getFriendRequests = function(){
 //            cmLogger.debug('cmContactsModel:getFriendRequests');
             if(cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
@@ -167,7 +165,6 @@ angular.module('cmContacts').service('cmContactsModel',[
         };
 
         this.removeFriendRequest = function(request){
-
             this.requests.deregister(request)
 
             /*
@@ -183,8 +180,6 @@ angular.module('cmContacts').service('cmContactsModel',[
         this.sendFriendRequest = function(id, message){
             return cmContactsAdapter.sendFriendRequest(id, message);
         };
-
-
 
         this.addContact = function(data){
             var defer = $q.defer();
@@ -263,7 +258,6 @@ angular.module('cmContacts').service('cmContactsModel',[
         });
 
         this.on('after-add-contact', function(){
-            console.log('after-add-contact');
             this._clearContacts();
             init();
         });
@@ -274,21 +268,14 @@ angular.module('cmContacts').service('cmContactsModel',[
         });
 
         cmContactsAdapter.on('friendRequest:accepted', function(event, data){
-            console.dir(data)
-            console.log(cmUserModel.data.identity.id)
             if(data.from == cmUserModel.data.identity.id){
-                console.log('event angekommen')
                 var contact = self.contacts.filter(function(contact){ return contact.identity.id == data.to })[0]
 
-                console.log(typeof contact.setContactType)
-
                 if(typeof contact.setContactType == 'function'){
-                    console.log(contact)
                     contact.setContactType('internal')
                 }
             }
         });
-
 
         this.requests.on('register', function(){
             cmNotify.new({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell: true});
