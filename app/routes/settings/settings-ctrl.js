@@ -17,8 +17,10 @@ define([
                 $scope.pageTitle = newTitle;
             });
 
-            $scope.mainPage = $routeParams.mainPage;
-            $scope.subPage = $routeParams.subPage;
+            $scope.mainPage = $routeParams.mainPage || '';
+            $scope.subPage = $routeParams.subPage || '';
+
+            $scope.route = $scope.mainPage+'/'+$scope.subPage;
         }
     ]);
 });
