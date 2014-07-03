@@ -72,8 +72,8 @@ angular.module('cmCore')
 
                 obj._callbacks[event_name] = obj._callbacks[event_name] || []   //create the according callback array, if neccessary
 
-                if(obj._callbacks[event_name].length == 0)
-                    cmLogger.debug('Event "'+event_name+'" triggered, but no callbacks registered.')
+                //if(obj._callbacks[event_name].length == 0)
+                    //cmLogger.debug('Event "'+event_name+'" triggered, but no callbacks registered.')
 
                 obj._callbacks[event_name].forEach(function(callback_obj, index){
                     // call callback function and delete if need be, see ._call()
@@ -153,8 +153,8 @@ angular.module('cmCore')
             obj.broadcastEventsTo = function(receptor){
                 if(receptor && typeof receptor.trigger == 'function'){
                     this._receptors.push(receptor)
-                }else{
-                    cmLogger.debug('cmObject: EventHandling: unable to add receptor.', obj)
+                } else {
+                    //cmLogger.debug('cmObject: EventHandling: unable to add receptor.', obj)
                 }
 
                 return obj
@@ -171,8 +171,8 @@ angular.module('cmCore')
             obj.echoEventsFrom = function(source){
                 if(source && typeof source.broadcastEventsTo == 'function'){
                     source.broadcastEventsTo(obj)
-                }else{
-//                    cmLogger.debug('cmObject: EventHandling: unable to echo Events.', obj)
+                } else {
+                    //cmLogger.debug('cmObject: EventHandling: unable to echo Events.', obj)
                 }
             }
 

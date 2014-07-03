@@ -234,8 +234,9 @@ define([
 
                 case 'cache':
                     $scope.validateForm().then(
-                        function () {
-                            console.log('resolve', arguments)
+                        function (data) {
+                            $rootScope.pendingFormData = data;
+                            $rootScope.pendingFormData.password = null;
                         },
                         function (data) {
                             $rootScope.pendingFormData = data;
