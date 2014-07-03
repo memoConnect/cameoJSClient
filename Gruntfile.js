@@ -801,6 +801,7 @@ module.exports = function (grunt) {
 
     // shortcuts
     grunt.registerTask('tests-2e2', ['tests-e2e']);
+    grunt.registerTask('count-lines', ['sloc']);
     // phonegap to device
     grunt.registerTask('phonegap-local', [
         'template:local-config-phonegap',

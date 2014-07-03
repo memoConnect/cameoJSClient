@@ -108,8 +108,8 @@ cameo_config = {
             user: '2VqTftqh',
             pass: 'password'
         },
-        'TrustingBrown': {
-            user: 'elegant_davinci',
+        'SillySammet': {
+            user: 'silly_sammet',
             pass: 'password'
         }
     },
