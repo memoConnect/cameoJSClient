@@ -263,7 +263,7 @@ angular.module('cmContacts').service('cmContactsModel',[
         });
 
         this.on('after-add-contact', function(){
-            console.log('after-add-contact');
+//            console.log('after-add-contact');
             this._clearContacts();
             init();
         });
@@ -274,16 +274,14 @@ angular.module('cmContacts').service('cmContactsModel',[
         });
 
         cmContactsAdapter.on('friendRequest:accepted', function(event, data){
-            console.dir(data)
-            console.log(cmUserModel.data.identity.id)
+//            console.dir(data)
+//            console.log(cmUserModel.data.identity.id)
             if(data.from == cmUserModel.data.identity.id){
-                console.log('event angekommen')
+//                console.log('event angekommen')
                 var contact = self.contacts.filter(function(contact){ return contact.identity.id == data.to })[0]
-
-                console.log(typeof contact.setContactType)
-
+//                console.log(typeof contact.setContactType)
                 if(typeof contact.setContactType == 'function'){
-                    console.log(contact)
+//                    console.log(contact)
                     contact.setContactType('internal')
                 }
             }

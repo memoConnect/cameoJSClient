@@ -172,7 +172,7 @@ angular.module('cmCore')
                 if(source && typeof source.broadcastEventsTo == 'function'){
                     source.broadcastEventsTo(obj)
                 }else{
-                    cmLogger.debug('cmObject: EventHandling: unable to echo Events.', obj)
+//                    cmLogger.debug('cmObject: EventHandling: unable to echo Events.', obj)
                 }
             }
 

@@ -108,7 +108,7 @@ angular.module('cmContacts').service('cmContactsAdapter',[
         })
 
         cmApi.on('friendRequest:accepted', function(event, data){
-            console.log('ping')
+//            console.log('ping')
             adapter.trigger('friendRequest:accepted', data)
         })
 

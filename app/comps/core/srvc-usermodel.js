@@ -169,7 +169,7 @@ angular.module('cmCore').service('cmUserModel',[
         };
 
         this.doLogin = function(user, pass){
-            cmLogger.debug('cmUserModel:doLogin');
+//            cmLogger.debug('cmUserModel:doLogin');
 
             var deferred = $q.defer();
 
@@ -190,7 +190,7 @@ angular.module('cmCore').service('cmUserModel',[
         };
 
         this.doLogout = function(goToLogin){
-            cmLogger.debug('cmUserModel:doLogout');
+//            cmLogger.debug('cmUserModel:doLogout');
 
             isAuth = false;
             this.removeToken();
