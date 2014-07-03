@@ -419,7 +419,7 @@
             },
             "RECIPIENTS_WITHOUT_KEY": {
                 "NAME": "{{count}} Recipient{{count!=1?'s have':' has'}} no keypair.",
-                "DESCRIPTION": ""
+                "DESCRIPTION": "Affected Recipients: {{recipients}}"
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha enabled!",

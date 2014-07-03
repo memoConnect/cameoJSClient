@@ -59,16 +59,19 @@ angular.module('cmSecurityAspects')
                     value: -1,
                     check: function(conversation){
                         var bool = false,
-                            count = 0;
+                            count = 0,
+                            recipients = [];
                         angular.forEach(conversation.recipients, function(recipient){
                             if(recipient.getWeakestKeySize() == 0) {
                                 bool = true;
+                                recipients.push(recipient.getDisplayName());
                                 count++;
                             }
                         });
 
                         if(count>0){
                             this.stateVars.count = count;
+                            this.stateVars.recipients = recipients.join(', ');
                         } else {
                             this.stateVars = {};
                         }

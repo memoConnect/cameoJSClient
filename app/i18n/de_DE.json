@@ -421,7 +421,7 @@
             },
             "RECIPIENTS_WITHOUT_KEY": {
                 "NAME": "{{count}} Empfänger {{count!=1?'haben':'hat'}} kein Schlüsselpaar.",
-                "DESCRIPTION": ""
+                "DESCRIPTION": "Betroffene Empfänger: {{recipients}}"
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha wird verwendet!",
