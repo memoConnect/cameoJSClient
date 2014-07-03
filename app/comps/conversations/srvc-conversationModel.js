@@ -730,8 +730,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                  * set Default
                  * has Captcha will be set at an other method
                  */
-//                this.options.hasPassword = false;
-//                this.options.showKeyInfo = false;
+                this.options.hasPassword = false;
+                this.options.showKeyInfo = false;
 
                 if(this.isEncrypted()){
                     if(this.state.is('new') && cmUserModel.hasLocalKeys() == false){
