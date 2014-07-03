@@ -59,7 +59,7 @@
             </div>
 
             <div class="cm-input-ctn cm-clear-bg" data-qa="form-input">
-                {{'REGISTER.LABEL.TERMS_ACCEPT' |cmTranslate}} <a href="#/terms" data-qa="link-terms"><strong><em>{{'REGISTER.LABEL.TERMS' |cmTranslate}}</em></strong></a>
+                {{'REGISTER.LABEL.TERMS_ACCEPT'|cmTranslate}} <a href="#/terms" data-qa="link-terms" class="link-terms" ng-click="handleFormDataCache('cache')">{{'REGISTER.LABEL.TERMS'|cmTranslate}}</a>
                 <input id="agbCheckboxInput" name="agb" type="checkbox" ng-model="formData.agb" required style="display:none" data-qa="checkbox-agb" />
                 <i id="agbCheckbox" class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':registrationForm.agb.$invalid, 'cm-checkbox-right':!registrationForm.agb.$invalid}" ng-click="acceptTerms()" data-qa="icon-checkbox-agb"></i>
             </div>

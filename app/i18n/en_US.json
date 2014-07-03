@@ -268,7 +268,6 @@
         "NOTIFY": "Notification",
         "CONTACTS": "Contacts",
         "APP": "APP Settings",
-        "ABOUT": "About us",
         "CONTRACTS": "Contracts",
         "PAGES": {
             "APP": {
@@ -278,6 +277,10 @@
             },
             "IDENTITY": {
                 "KEYS": "{{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}"
+            },
+            "ABOUT_US": {
+                "TITLE": "About us",
+                "TEXT": "cameoNet 2014"
             }
         }
 	},

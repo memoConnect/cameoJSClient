@@ -10,7 +10,8 @@ define([
         '$scope',
         '$rootScope',
         '$routeParams',
-        function($scope, $rootScope, $routeParams) {
+        '$location',
+        function($scope, $rootScope, $routeParams, $location) {
             $scope.pageTitle = 'SETTINGS.WELCOME';
 
             $rootScope.$on('pageTitle:change',function(event, newTitle){
@@ -21,6 +22,11 @@ define([
             $scope.subPage = $routeParams.subPage || '';
 
             $scope.route = $scope.mainPage+'/'+$scope.subPage;
+
+            $scope.createNewConversation = function(){
+                delete($rootScope.pendingConversation);
+                $location.path('/conversation/');
+            };
         }
     ]);
 });

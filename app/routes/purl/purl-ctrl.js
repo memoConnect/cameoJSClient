@@ -19,6 +19,7 @@ define([
             $scope.data = null;
             $scope.showConversation = false;
             $scope.showSignIn = false;
+            $rootScope.pendingPurl = null;
 
             if(cmUtil.checkKeyExists($routeParams,'idPurl') && cmUtil.validateString($routeParams.idPurl)){
                 cmPurlModel.getPurl($routeParams.idPurl).then(
@@ -27,8 +28,8 @@ define([
                         cmPurlModel.handleIdentity(data.identity);
                         if(data.identity.userType == 'external'){
                             $scope.showSignIn = true;
+                            $rootScope.pendingPurl = $routeParams.idPurl;
                         }
-
 
                         if(typeof data.token !== 'undefined'){
                             cmPurlModel.handleToken(data.token)

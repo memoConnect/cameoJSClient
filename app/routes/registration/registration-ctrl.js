@@ -205,23 +205,58 @@ define([
                     data.reservationSecret = reservationSecrets[data.loginName];
                 }
             } else {
-                deferred.reject();
+                deferred.reject(data);
             }
 
 
             if($scope.registrationForm.$valid !== false){
                 deferred.resolve(data);
             } else {
-                deferred.reject();
+                deferred.reject(data);
             }
 
             return deferred.promise;
         };
 
+        $scope.handleFormDataCache = function(action){
+            switch(action){
+                case 'init':
+                    if($rootScope.pendingFormData != undefined){
+                        Object.keys($rootScope.pendingFormData).forEach(function(key){
+                            if(key == "reservationSecret" && $rootScope.pendingFormData[key] != null){
+                                reservationSecrets[$rootScope.pendingFormData.loginName] = $rootScope.pendingFormData[key];
+                            } else if($rootScope.pendingFormData[key] != null){
+                                $scope.formData[key] = $rootScope.pendingFormData[key];
+                            }
+                        })
+                    }
+                break;
+
+                case 'cache':
+                    $scope.validateForm().then(
+                        function () {
+                            console.log('resolve', arguments)
+                        },
+                        function (data) {
+                            $rootScope.pendingFormData = data;
+                            $rootScope.pendingFormData.password = null;
+                        }
+                    );
+                break;
+
+                case 'clear':
+                    $rootScope.pendingFormData = {};
+                break;
+            }
+        };
+
+        $scope.handleFormDataCache('init');
+
         /**
          * Form Validation and Apicall to create user
          */
-        $scope.createUser = function () {
+        $scope.createUser = function(){
+            $scope.handleFormDataCache('clear');
 
             $scope.validateForm().then(
                 function(data){
@@ -231,7 +266,7 @@ define([
                                 function(){
                                     cmUserModel.setIdentity(userData.identities[0]);
                                     if($scope.handleGuest !== false){
-                                        $location.path($rootScope.urlHistory[($rootScope.urlHistory.length - 2)]);
+                                        $location.path('/purl/'+$rootScope.pendingPurl);
                                     } else {
                                         cmUserModel.comesFromRegistration = true;
                                         $location.path("/talks");
@@ -256,6 +291,5 @@ define([
         if(cmUserModel.isGuest() !== false){
             $scope.handleGuest = true;
         }
-
     }]);
 });
