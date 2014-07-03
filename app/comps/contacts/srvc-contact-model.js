@@ -4,13 +4,27 @@ angular.module('cmContacts').factory('cmContactModel', [
 
     'cmIdentityFactory',
 
-    function(){
+    function(cmIdentityFactory){
 
         function ContactModel(data){
              this.id            = undefined
              this.contactType   = undefined
              this.group         = []
-             identity           = cmIdentityFactory.create()
+             this.identity      = cmIdentityFactory.new()
+
+             this.importData = function(data){
+                this.id             = data.id || this.id
+                this.contactType    = data.contactType || this.contact.type
+                this.groups         = data.groups || this.groups
+                this.identity       = data.identity ? cmIdentityFactory.create(data.identity, true) : this.identity
+             }
+
+             this.setContactType = function(type){
+                this.contactType = type
+                return this
+             }
+
+             this.importData(data)
         }
 
         return ContactModel

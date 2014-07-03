@@ -6,20 +6,26 @@ angular.module('cmContacts').directive('cmContactType',[
             restrict: 'AE',
 
             link: function(scope, element, attrs){
-                var contact = scope.$eval(attrs.cmData),
-                    type    = contact.contactType,
-                    icon    = ''
 
-                icon = (type == 'internal')  ? 'cm-rhino-positive'   : icon
-                icon = (type == 'external')  ? 'cm-address-book'     : icon
-                icon = (type == 'local')     ? 'cm-mobile'           : icon
-                icon = (type == 'pending')   ? 'cm-rhino-positive'   : icon
+                function refresh(contact){
+                    var type    = contact.contactType,
+                        icon    = ''
 
-                element.append(
-                    angular.element('<i></i>')
-                    .addClass('fa')
-                    .addClass(icon)
-                ).addClass(type)
+                    icon = (type == 'internal')  ? 'cm-rhino-positive'   : icon
+                    icon = (type == 'external')  ? 'cm-address-book'     : icon
+                    icon = (type == 'local')     ? 'cm-mobile'           : icon
+                    icon = (type == 'pending')   ? 'cm-rhino-positive'   : icon
+
+                    element.children().remove()
+
+                    element.append(
+                        angular.element('<i></i>')
+                        .addClass('fa')
+                        .addClass(icon)
+                    ).addClass(type)
+                }
+
+                scope.$watchCollection(attrs.cmData, refresh)
             }
         }
     }

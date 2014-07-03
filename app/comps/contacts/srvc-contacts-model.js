@@ -3,6 +3,7 @@
 angular.module('cmContacts').service('cmContactsModel',[
     'cmFactory',
     'cmUserModel',
+    'cmContactModel',
     'cmContactsAdapter',
     'cmIdentityFactory',
     'cmFriendRequestModel',
@@ -13,13 +14,13 @@ angular.module('cmContacts').service('cmContactsModel',[
     'cmNotify',
     '$q',
     '$rootScope',
-    function (cmFactory, cmUserModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger, cmNotify, $q, $rootScope){
+    function (cmFactory, cmUserModel, cmContactModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger, cmNotify, $q, $rootScope){
         var self = this,
             events = {};
 
         this.state = new cmStateManagement(['loading-contacts','loading-groups','loading-requests']);
 
-        this.contacts   = [];
+        this.contacts   = new cmFactory(cmContactModel)
         this.groups     = [];
         this.requests   = new cmFactory(cmFriendRequestModel, 'identity.id');
 
@@ -42,6 +43,8 @@ angular.module('cmContacts').service('cmContactsModel',[
          */
 
         function _add(contact){
+            self.contacts.create(contact)
+            /*
             var check = false,
                 i = 0;
 
@@ -64,10 +67,11 @@ angular.module('cmContacts').service('cmContactsModel',[
                     });
                 }
             }
+            */
         }
 
         this._clearContacts = function(){
-            this.contacts = [];
+            this.contacts.reset()
         };
 
         /**
@@ -270,9 +274,18 @@ angular.module('cmContacts').service('cmContactsModel',[
         });
 
         cmContactsAdapter.on('friendRequest:accepted', function(event, data){
-            if(data.to == cmUserModel.data.identity.id){
-                self._clearContacts();
-                init();
+            console.dir(data)
+            console.log(cmUserModel.data.identity.id)
+            if(data.from == cmUserModel.data.identity.id){
+                console.log('event angekommen')
+                var contact = self.contacts.filter(function(contact){ return contact.identity.id == data.to })[0]
+
+                console.log(typeof contact.setContactType)
+
+                if(typeof contact.setContactType == 'function'){
+                    console.log(contact)
+                    contact.setContactType('internal')
+                }
             }
         });
 
