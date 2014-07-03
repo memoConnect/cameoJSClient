@@ -1,15 +1,10 @@
-<cm-header cm-rubber-space>    
-    <cm-identity cm-weight="2"></cm-identity>
-    <cm-logo     cm-weight="4"></cm-logo>
-    <cm-reload   cm-weight="1"></cm-reload>
-    <cm-menu     cm-weight="1"></cm-menu>
-</cm-header>
-
 <section ng-controller="ConversationsCtrl">
-
-    <header class="cm-list-header with-add-btn">
-        <cm-search-input ng-model="search"></cm-search-input><cm-add-button ng-click="createNewConversation()" data-qa="new-conversation-btn" cm-icon="new-talk"></cm-add-button>
-    </header>
+    <cm-header cm-rubber-space>
+        <cm-identity cm-weight="5"></cm-identity>
+        <cm-header-list-search cm-weight="1" ng-model="search"></cm-header-list-search>
+        <cm-add-button cm-weight="1" ng-click="createNewConversation()" data-qa="new-conversation-btn" cm-icon="new-talk"></cm-add-button>
+        <cm-menu cm-weight="1"></cm-menu>
+    </cm-header>
 
     <ul>
         <li ng-show="loading" class="empty-list">
@@ -27,6 +22,6 @@
     <div ng-if="showMore()">
         <button class="full" ng-click="loadMore()" data-qa="load-more-btn">{{"TALKS.MORE"|cmTranslate}}</button>
     </div>
-</section>
 
-<cm-footer cm-rubber-space></cm-footer>
+    <cm-footer cm-rubber-space></cm-footer>
+</section>

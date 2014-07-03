@@ -279,3 +279,13 @@ this.waitAndCloseNotify = function() {
 this.getFileExtension = function(file){
     return file.split('.').pop()
 }
+
+this.headerSearchInList = function(searchString){
+    $("[data-qa='btn-header-list-search']").click()
+    this.searchInList(searchString)
+}
+
+this.searchInList = function(searchString){
+    $("[data-qa='inp-list-search']").sendKeys(searchString)
+}
+

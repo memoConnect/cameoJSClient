@@ -1,11 +1,7 @@
-<header class="cm-list-header with-add-btn">
-    <cm-search-input ng-model="search"></cm-search-input><cm-add-button ng-click="openModal('add-contact')" data-qa="add-contact-btn" cm-icon="new-contact"></cm-add-button>
-</header>
-
-<cm-modal id="add-contact" cm-title="CONTACTS.HEADING.NEW_CONTACTS" type="plain" nose="right-top" severity="info" nose-position="0" class="no-padding">
+<cm-modal id="add-contact" cm-title="CONTACTS.HEADING.NEW_CONTACTS" type="plain" nose="top-right" severity="info" nose-position="0" class="no-padding">
     <div class="modal-row">
         <a href="#/contacts/search">
-            <i class="fa cm-search-cl"></i>
+            <i class="fa cm-search"></i>
             {{"CONTACTS.LABEL.SEARCH_IDENTITY"|cmTranslate}}
         </a>
     </div>
@@ -36,5 +32,4 @@
             <i class="fa cm-new-talk"></i>
         </button>
     </cm-contact-tag>
-
 </cm-contacts-list>

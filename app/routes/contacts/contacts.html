@@ -1,17 +1,15 @@
 <div ng-controller="ContactsCtrl">
     <cm-header cm-rubber-space ng-show="route == ''">
-        <cm-identity cm-weight="2"></cm-identity>
-        <cm-logo     cm-weight="4"></cm-logo>
-        <cm-reload   cm-weight="1"></cm-reload>
-        <cm-menu     cm-weight="1"></cm-menu>
+        <cm-identity cm-weight="5"></cm-identity>
+        <cm-header-list-search cm-weight="1" ng-model="search"></cm-header-list-search>
+        <cm-add-button cm-weight="1" ng-click="openModal('add-contact')" data-qa="add-contact-btn" cm-icon="new-contact"></cm-add-button>
+        <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
 
     <cm-header cm-rubber-space ng-show="route != ''">
-        <cm-back cm-weight="1" back-to="/contacts" class="overlap_identity"></cm-back>
-        <cm-identity cm-weight="2"></cm-identity>
-        <cm-logo     cm-weight="3"></cm-logo>
-        <cm-reload   cm-weight="1"></cm-reload>
-        <cm-menu     cm-weight="1"></cm-menu>
+        <cm-back cm-weight="1" back-to="/contacts"></cm-back>
+        <cm-identity cm-weight="6"></cm-identity>
+        <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
 
     <section ng-switch="route">

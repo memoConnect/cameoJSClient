@@ -12,7 +12,7 @@ describe('Friendrequests', function () {
 
         util.logout()
 
-        describe('Friendrequests user2 (' + config.loginUser1 + ') login and search for user1', function(){
+        describe('Friendrequests user2 "'+config.loginUser1+'" login and search for user1 "'+user1ToAccept+'"', function(){
             util.login(config.loginUser1,config.passwordUser1)
             util.waitForPageLoad('/talks')
 
@@ -20,7 +20,7 @@ describe('Friendrequests', function () {
                 util.get('/contacts/search')
                 util.waitForPageLoad('/contacts/search')
 
-                $("[data-qa='input-search']").sendKeys(user1ToAccept)
+                $("[data-qa='inp-search-cameo-ids']").sendKeys(user1ToAccept)
 
                 // find user 1
                 util.waitForElement('cm-contact-tag')
@@ -50,7 +50,7 @@ describe('Friendrequests', function () {
                 util.get('/contacts')
                 util.waitForElement('cm-contact-tag')
 
-                $("[data-qa='input-search']").sendKeys('pending')
+                util.headerSearchInList('pending');
 
                 $$('cm-contact-tag').then(function(elements){
                     expect(elements.length).not.toEqual(0)
@@ -112,8 +112,10 @@ describe('Friendrequests', function () {
 
             it('check if request converted to contact', function(){
                 util.get('/contacts')
+
                 // search for user2
-                $("[data-qa='input-search']").sendKeys(config.displayNameUser1)
+                util.headerSearchInList(config.displayNameUser1)
+
                 util.waitForElements('cm-contact-tag', 1)
                 expect($("[data-qa='contact-display-name']").getText()).toBe(config.displayNameUser1)
                 util.logout()

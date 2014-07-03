@@ -249,7 +249,7 @@ angular.module('cmCore')
     function (cmNotify) {
         return {
             restrict: 'E',
-            template: '<i class="fa" ng-class="{\'cm-notification-on cm-orange\': ring, \'cm-notification\': !ring}"></i>',
+            template: '<i class="fa" ng-class="{\'cm-menu-weight-bell cm-orange\': ring, \'cm-menu-weight\': !ring}"></i>',
             scope: true,
             controller: function ($scope) {
                 $scope.ring = false;

@@ -7,7 +7,6 @@ angular.module('cmRouteContacts').directive('cmOverviewContacts', [
             templateUrl: 'routes/contacts/comps/drtv-overview.html',
             controller: function ($scope) {
 
-
             }
         }
     }
