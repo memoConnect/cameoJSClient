@@ -113,7 +113,7 @@ describe('Purl registration', function () {
 
         $("[data-qa='btn-createUser']").click()
 
-        util.waitForPageLoad("/conversation/.*")
+        util.waitForPageLoad("/purl/.*")
 
     })
 
