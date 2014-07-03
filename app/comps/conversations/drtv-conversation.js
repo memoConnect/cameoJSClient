@@ -125,7 +125,7 @@ angular.module('cmConversations').directive('cmConversation', [
                         && cmUserModel.hasLocalKeys() == false
                         && showedAsymmetricKeyError == false){
                         showedAsymmetricKeyError = true;
-                        cmNotify.warn('NOTIFICATIONS.TYPES.CONVERSATION.ASYMMETRIC_DECRYPT_ERROR');
+                        cmNotify.warn('NOTIFICATIONS.TYPES.CONVERSATION.ASYMMETRIC_DECRYPT_ERROR',{ttl:0});
                     }
                 }
 
