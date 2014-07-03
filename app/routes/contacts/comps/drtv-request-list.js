@@ -22,6 +22,11 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                 });
                 */
 
+                if($scope.requests.length > 0){
+                    cmNotify.trigger('bell:unring');
+                }
+
+
                 /**
                  * reset
                  */
@@ -105,7 +110,7 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                     if(typeof item == 'object'){
                         item.ignore().then(
                             function(){
-                                cmContactsModel.removeFriendRequest(item);
+                                cmNotify.trigger('bell:unring');
 
 //                                cmNotify.success('CONTACTS.INFO.REQUEST.IGNORE',{displayType:'modal',ttl:3000});
 
