@@ -1,0 +1,11 @@
+{
+    "config": {
+        "apiUrl": "http://192.168.178.77:9000/a/v1",
+        "autoLogin": true
+    },
+    "phonegap": {
+        "baseName" : "cameoNet-default",
+        "appId" : "io.cameo.cameonet.client.web.mobile.app.local"
+
+    }
+}

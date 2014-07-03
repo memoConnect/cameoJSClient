@@ -44,4 +44,6 @@ describe('ConversationsAdapter', function(){
     it('should provide a method "sendMessage"".', function(){
         expect(typeof cmConversationsAdapter.sendMessage).toBe('function')
     })
+
+
 })

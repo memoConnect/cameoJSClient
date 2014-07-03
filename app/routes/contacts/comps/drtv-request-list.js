@@ -12,6 +12,7 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                 $scope.requests = cmContactsModel.requests;
                 $scope.isLoading = false;
 
+                /*
                 cmContactsModel.on('friendRequests:loaded', function(){
                     $scope.requests = cmContactsModel.requests;
                 });
@@ -19,6 +20,7 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                 cmContactsModel.on('friendRequests:updated', function(){
                     $scope.requests = cmContactsModel.requests;
                 });
+                */
 
                 /**
                  * reset

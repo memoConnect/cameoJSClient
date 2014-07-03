@@ -37,7 +37,7 @@ describe('cmFactory', function(){
 
         })
 
-        it('should be return an instance but not add to factory, that count will be 0', function(){
+        it('should return an instance but not register it to the factory, so that count will still be 0', function(){
             var instance        = factory.new({id: 'my_id'}, true)
 
             expect(instance instanceof TestModel).toBe(true)

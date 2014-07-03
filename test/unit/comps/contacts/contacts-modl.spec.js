@@ -47,9 +47,5 @@ describe('cmContactsModel', function(){
        it('should defined sendFriendRequest',function(){
            expect(model.sendFriendRequest).toBeDefined();
        })
-
-       it('should defined answerFriendRequest',function(){
-           expect(model.answerFriendRequest).toBeDefined();
-       })
     })
 })
