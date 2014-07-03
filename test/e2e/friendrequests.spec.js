@@ -12,7 +12,7 @@ describe('Friendrequests', function () {
 
         util.logout()
 
-        describe('Friendrequests user2 login and search for user1', function(){
+        describe('Friendrequests user2 (' + config.loginUser1 + ') login and search for user1', function(){
             util.login(config.loginUser1,config.passwordUser1)
             util.waitForPageLoad('/talks')
 
