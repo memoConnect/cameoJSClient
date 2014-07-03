@@ -353,7 +353,7 @@
         "NOTIFICATIONS": "{{'NOTIFICATIONS.HEADER'|cmTranslate}}",
         "CONTACTS": "Contacts",
         "REQUESTS": "Contact requests",
-        "Talks": "Talks",
+        "TALKS": "Talks",
         "SETTINGS": "{{'SETTINGS.LABEL'|cmTranslate}}",
         "MESSAGES": "Messages",
         "HINTS": "Hints",
@@ -378,7 +378,8 @@
             },
             "FRIEND_REQUEST": "New friendrequest",
             "CONVERSATION":{
-                "ASYMMETRIC_DECRYPT_ERROR": "ASYMMETRIC_DECRYPT_ERROR"
+                "ASYMMETRIC_DECRYPT_ERROR": "ASYMMETRIC_DECRYPT_ERROR",
+                "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR"
             }
         }
     },
@@ -419,7 +420,7 @@
             },
             "RECIPIENTS_WITHOUT_KEY": {
                 "NAME": "{{count}} Recipient{{count!=1?'s have':' has'}} no keypair.",
-                "DESCRIPTION": ""
+                "DESCRIPTION": "Affected Recipients: {{recipients}}"
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha enabled!",
