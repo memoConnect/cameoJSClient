@@ -26,7 +26,7 @@ angular.module('cmConversations').directive('cmMessage', [
                     }
                 }
 
-                if(typeof scope.message == 'object'){
+                if(typeof scope.message == 'object' && typeof scope.message.on == 'function'){
                     scope.message.on('init:files', function(){
                         if (scope.message.files.length > 0) {
                             setFileView();
