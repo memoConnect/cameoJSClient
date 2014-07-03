@@ -74,7 +74,7 @@ angular.module('cmCore')
                         // InvalidStateError (tested on FF13 WinXP)
                         blob = new Blob( data, {type : contentType});
                     } else {
-                        cmLogger.error('We\'re screwed, blob constructor unsupported entirely');
+                        cmLogger.debug('We\'re screwed, blob constructor unsupported entirely');
                         console.log(e, data, 'from method: '+method);
                     }
                 }
@@ -317,7 +317,7 @@ angular.module('cmCore')
                                 self.raw = objUrl.src;
                             }
                         )
-                    :   cmLogger.error('Unable ro convert to file; this.blob is empty.');
+                    :   cmLogger.debug('Unable ro convert to file; this.blob is empty.');
                 return promise;
             };
 
@@ -333,7 +333,7 @@ angular.module('cmCore')
 
                 this.blob
                     ?   reader.readAsBinaryString(this.blob)
-                    :   cmLogger.error('Unable ro convert to raw; chunk.blob is empty.  Try calling chunk.importFileSlice() first.');
+                    :   cmLogger.debug('Unable ro convert to raw; chunk.blob is empty.  Try calling chunk.importFileSlice() first.');
 
                 return deferred.promise;
 
@@ -355,7 +355,7 @@ angular.module('cmCore')
                 } else if(this.encryptedRaw){
                     return cmFilesAdapter.addChunk(id, index, this.encryptedRaw)
                 } else {
-                    cmLogger.error('Unable to upload; chunk.plain or chunk.encryptedRaw is empty. Try calling chunk.encrypt() first.')
+                    cmLogger.debug('Unable to upload; chunk.plain or chunk.encryptedRaw is empty. Try calling chunk.encrypt() first.')
                 }
             };
 
@@ -379,14 +379,14 @@ angular.module('cmCore')
             this.decrypt = function(passphrase){
                 this.encryptedRaw
                     ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw)
-                    :   cmLogger.error('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.');
+                    :   cmLogger.debug('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.');
                 return this;
             };
 
             this.binaryStringToBlob = function(){
                 this.raw
                     ?   this.blob = binaryStringtoBlob(this.raw)
-                    :   cmLogger.error('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.');
+                    :   cmLogger.debug('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.');
                 return this;
             };
         }
@@ -563,7 +563,7 @@ angular.module('cmCore')
                     promises    = [];
 
                 if(!this.blob) {
-                    cmLogger.error('Unable to chop file into Chunks; cmFile.blob missing.');
+                    cmLogger.debug('Unable to chop file into Chunks; cmFile.blob missing.');
                     return null;
                 }
 
@@ -595,7 +595,7 @@ angular.module('cmCore')
                 if(this.name){
                     this.encryptedName = (passphrase == null) ? this.name : cmCrypt.encryptWithShortKey(passphrase, this.name);
                 } else {
-                    cmLogger.error('Unable to encrypt filename; cmFile.name missing. Try calling cmFile.importFile() first.');
+                    cmLogger.debug('Unable to encrypt filename; cmFile.name missing. Try calling cmFile.importFile() first.');
                 }
 
                 return this;
@@ -605,7 +605,7 @@ angular.module('cmCore')
                 if(this.encryptedName){
                     this.name = cmCrypt.decrypt(passphrase, this.encryptedName);
                 } else {
-                    cmLogger.error('Unable to decrypt filename; cmFile.encryptedFileName missing. Try calling cmFile.imporByFile) first.');
+                    cmLogger.debug('Unable to decrypt filename; cmFile.encryptedFileName missing. Try calling cmFile.imporByFile) first.');
                 }
                 return this;
             };
@@ -627,7 +627,7 @@ angular.module('cmCore')
                 if(this.chunks){
                     this._encryptChunk(0);
                 } else {
-                    cmLogger.error('Unable to encrypt chunks; cmFile.chunks missing. Try calling cmFile.chopIntoChunks() first.');
+                    cmLogger.debug('Unable to encrypt chunks; cmFile.chunks missing. Try calling cmFile.chopIntoChunks() first.');
                 }
 
                 return this;
@@ -651,7 +651,7 @@ angular.module('cmCore')
 
             this.decryptChunks = function(){
                 if(!this.chunks){
-                    cmLogger.error('Unable to decrypt chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.');
+                    cmLogger.debug('Unable to decrypt chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.');
                     return null
                 }
 
@@ -670,13 +670,13 @@ angular.module('cmCore')
                     byteArray = [];
 
                 if(!this.chunks)
-                    cmLogger.error('Unable reassemble chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.');
+                    cmLogger.debug('Unable reassemble chunks; cmFile.chunks missing. Try calling cmFile.downloadChunks() first.');
 
                 this.chunks.forEach(function(chunk){
                     try{
                         binary+= cmFilesAdapter.base64ToBinary(chunk.raw);
                     } catch(e){
-                        cmLogger.error(e);
+                        cmLogger.debug(e);
                     }
                 });
 
@@ -701,7 +701,7 @@ angular.module('cmCore')
                     .then(function(id){
                         return self.id = id
                     })
-                    :   cmLogger.error('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
+                    :   cmLogger.debug('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
                 )
             };
 
@@ -725,7 +725,7 @@ angular.module('cmCore')
 
             this.uploadChunks = function() {
                 if(!this.id){
-                    cmLogger.error('Unable to upload chunks; cmFile.id missing. Try calling cmFile.prepareForDownload() first.')
+                    cmLogger.debug('Unable to upload chunks; cmFile.id missing. Try calling cmFile.prepareForDownload() first.')
                     return null;
                 }
 
@@ -765,7 +765,7 @@ angular.module('cmCore')
             this.downloadChunks = function(){
 //                cmLogger.debug('cmFileModel:downloadChunks');
                 if(!this.id && this.state == 'exists'){
-                    cmLogger.error('cmFile.downloadChunks();')
+                    cmLogger.debug('cmFile.downloadChunks();')
                     return null;
                 }
 
@@ -808,7 +808,7 @@ angular.module('cmCore')
                     if(this.name && this.blob){
                         saveAs(this.blob, this.name);
                     } else {
-                        cmLogger.error('Unable to prompt saveAs; cmFile.blob is missing, try cmFile.importByFile().');
+                        cmLogger.debug('Unable to prompt saveAs; cmFile.blob is missing, try cmFile.importByFile().');
                     }
                 }
                 return this;
@@ -885,7 +885,7 @@ angular.module('cmCore')
                     self._decryptChunk(index);
                     // error on download
                 } else if(index.error) {
-                    cmLogger.error('chunk not found');
+                    cmLogger.debug('chunk not found');
                     self.setState('cached');
                 }
             });
