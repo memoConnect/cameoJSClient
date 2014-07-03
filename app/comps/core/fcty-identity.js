@@ -120,6 +120,23 @@ angular.module('cmCore').factory('cmIdentityModel',[
                 return this;
             };
 
+            this.clear = function(){
+                cmLogger.debug('cmIdentityModel.clear');
+                this.id = undefined;
+                this.displayName = undefined;
+                this.userKey = undefined;
+                this.cameoId = undefined;
+                this.avatarId = undefined;
+                this.avatar = undefined;
+                this.email                   = { value: undefined, isVerified: undefined };
+                this.phoneNumber             = { value: undefined, isVerified: undefined };
+                this.preferredMessageType = undefined;
+                this.keys                    = [];
+                this.userType = undefined;
+                this.created = undefined;
+                this.lastUpdated = undefined;
+            };
+
             //Encrypt passphrase with all available public keys
             //Identities cannot decrypt, Users can
             this.encryptPassphrase = function(passphrase, whiteList){
@@ -210,6 +227,20 @@ angular.module('cmCore').factory('cmIdentityModel',[
     function($rootScope, cmFactory, cmIdentityModel){
 
         var self = new cmFactory(cmIdentityModel);
+
+        self.clear = function(args){
+            var id = typeof args == 'object' && 'id' in args
+                ?   args.id
+                :   args;
+
+            var instance = self.find(id);
+
+            if(instance !== null && typeof instance.clear == 'function'){
+                instance.clear();
+            }
+
+            return self;
+        };
 
         $rootScope.$on('logout', function(){
             self.reset()
