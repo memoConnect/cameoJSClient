@@ -103,6 +103,17 @@ cameo_config = {
         })()
     },
 
+    autologin: {
+        'DumpuserLocal': {
+            user: '2VqTftqh',
+            pass: 'password'
+        },
+        'TrustingBrown': {
+            user: 'elegant_davinci',
+            pass: 'password'
+        }
+    },
+
     menu: {
         'menu': {i18n:'MENU.HEADER', icon:'cm-menu-weight', css:'cm-menu-header', onlyLabel:true},
 //        'notifications': {i18n:'MENU.NOTIFICATIONS', icon:'cm-notification', css:'cm-menu-notify'},

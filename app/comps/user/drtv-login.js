@@ -5,28 +5,18 @@ angular.module('cmUser').directive('cmLogin', [
     'cmNotify',
     'cmUserModel',
     'cmCrypt',
-    'cmEnv',
-    function ($location, cmNotify, cmUserModel, cmCrypt, cmEnv) {
+    'cmConfig',
+    function ($location, cmNotify, cmUserModel, cmCrypt, cmConfig) {
         return  {
             restrict    :   'A',
             templateUrl :   'comps/user/drtv-login.html',
             scope       :   {},
-
             controller  :   function ($scope, $rootScope) {
-                $scope.cmEnv = cmEnv;
+                $scope.cmEnv = cmConfig.env;
                 $scope.showSpinner = false;
                 $scope.alertState = '';
                 $scope.passwordType = 'password';
-                $scope.loginData = {
-                    'DumpuserLocal': {
-                        user: '2VqTftqh',
-                        pass: 'password'
-                    },
-                    'TrustingBrown': {
-                        user: 'trusting_brown',
-                        pass: 'password'
-                    }
-                };
+                $scope.loginData = cmConfig.autologin;
 
                 $scope.formData = {
                     autologin:'none'
