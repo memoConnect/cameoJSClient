@@ -9,20 +9,34 @@
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/font-awesome.css">
     <script src="vendor/angular/angular.js"></script>
+    <script src="vendor/emoji/emoji.js"></script>
+    <link rel="stylesheet" href="vendor/emoji/emoji.css">
     <style>
-        body{font-size:5em;font-family:verdana;width:auto;padding:10px}
-        h1{font-size:24px;color:#02BED2}
+        header{height:1em;}
+        body{font-size:3em;font-family:verdana;width:auto;padding:1em}
+        a{font-size:40px;color:#02BED2}
+        h1{font-size:30px;color:#02BED2}
         h3{font-size:20px;margin:2px 0;border-bottom:solid 1px #02BED2;color:#02BED2}
-        figure{margin:5px;position:relative;display:inline-block;text-align:center}
-        figure i{border:solid 1px #02BED2}
-        figure figcaption{font-size:15px;padding:2px 0}
+        figure{margin:5px;width:1em;height:2em;position:relative;display:inline-block;text-align:center}
+        figure i{background:#f8f8f8}
+        figure figcaption{font-size:1em;display:none;position:absolute;white-space:nowrap}
+        figure:hover figcaption{display:block;position:absolute}
+        .maincat{padding-left:0.25em}
+        .subcat{padding-left:0.5em}
+        .emoji{border:0}
     </style>
 </head>
-<body ng-app ng-controller="iconsCtrl">
+<body ng-app="icons" ng-controller="ctrl">
 
-    <h1>cameoawesome</h1>
+    <header>
+        <a href="#icons">icons</a>
+        <a href="#filetypes">filetypes</a>
+        <a href="#emojis">emojis</a>
+    </header>
 
-    <div ng-repeat="bundle in icons">
+    <h1 id="icons">cameoawesome</h1>
+
+    <div ng-repeat="bundle in icons" class="maincat">
         <h3 ng-if="bundle.title">{{bundle.title}}</h3>
         <figure ng-repeat="css in bundle.css.split(' ')">
             <i class="fa {{css}}"></i>
@@ -30,9 +44,9 @@
         </figure>
     </div>
 
-    <h1>filetypes</h1>
+    <h1 id="filetypes">filetypes</h1>
 
-    <div ng-repeat="bundle in types">
+    <div ng-repeat="bundle in types" class="maincat">
         <h3 ng-if="bundle.title">{{bundle.title}}</h3>
         <figure ng-repeat="css in bundle.css.split(' ')">
             <div class="file {{css}}"></div>
@@ -40,8 +54,24 @@
         </figure>
     </div>
 
+    <h1 id="emojis">emojis</h1>
+
+    <div ng-repeat="(index,mainCat) in Object.keys(emojis)" class="maincat">
+        <h3 ng-if="mainCat">{{mainCat}}</h3>
+        <div ng-repeat="(index,subCat) in Object.keys(emojis[mainCat])" class="subcat">
+            <h3 ng-if="subCat">{{subCat}}</h3>
+            <figure ng-repeat="icon in emojis[mainCat][subCat]" class="emoji-figure">
+                <i class="emoji emoji_{{icon | clearClassName}}"></i>
+                <figcaption>{{icon | clearClassName}}</figcaption>
+            </figure>
+        </div>
+    </div>
+
     <script>
-        function iconsCtrl($scope){
+        angular
+        .module('icons',['emoji'])
+        .controller('ctrl',function ($scope, emoji){
+            $scope.Object = Object;
             $scope.icons = [
                 {title:'ci icons',css:'cm-logo cm-logo-c cm-logo-a cm-logo-m cm-logo-e cm-logo-o cm-logo-net cm-rhino-bubble-glyph cm-rhino-positive'},
                 {title:'specials',css:'cm-edge cm-edge-add cm-scroll-pane cm-grip'},
@@ -65,8 +95,13 @@
                 {title:'audio',css:'mp3 wav wma aif ogg 3gpp aac'},
                 {title:'misc',css:'xml html chm ttf exe dmg'}
             ];
-        }
 
+            $scope.emojis = emoji.items;
+        }).filter('clearClassName', function(){
+            return function(className) {
+                return className.replace('\\','');
+            }
+        });
     </script>
 </body>
 </html>

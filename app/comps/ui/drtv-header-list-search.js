@@ -4,7 +4,8 @@ angular.module('cmUi')
 .directive('cmHeaderListSearch',[
     '$rootScope',
     '$timeout',
-    function ($rootScope, $timeout){
+    'cmConfig',
+    function ($rootScope, $timeout, cmConfig){
         return {
             restrict: 'E',
             scope: {
@@ -19,11 +20,11 @@ angular.module('cmUi')
                 $scope.toggleInput = function(){
                     $scope.visible = $scope.visible ? false : true;
                     // set focus to input
-//                    if($scope.visible){
-//                        $timeout(function(){
-//                            $element[0].querySelector('input').focus();
-//                        },500);
-//                    }
+                    if($scope.visible && cmConfig.env.isNotMobile){
+                        $timeout(function(){
+                            $element[0].querySelector('input').focus();
+                        },500);
+                    }
                 }
             }
         }
