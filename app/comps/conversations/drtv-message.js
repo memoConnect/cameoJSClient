@@ -26,36 +26,23 @@ angular.module('cmConversations').directive('cmMessage', [
                     }
                 }
 
-                scope.message.on('init:files', function(){
-                    if (scope.message.files.length > 0) {
-                        setFileView();
-                        scope.message.decryptFiles(scope.conversation.getPassphrase());
-                    }
-                });
+                if(typeof scope.message == 'object' && typeof scope.message.on == 'function'){
+                    scope.message.on('init:files', function(){
+                        if (scope.message.files.length > 0) {
+                            setFileView();
+                            scope.message.decryptFiles(scope.conversation.getPassphrase());
+                        }
+                    });
+                }
             },
 
             controller: function ($scope, $element, $attrs) {
-                /*
-                 $scope.message.decrypt($scope.passphrase);
-
-                 $scope.truncateLength = $scope.$eval($attrs.truncate);
-
-                 if ($scope.message.text.match(/^data:image/)) {
-                    $scope.hasCaptcha = true;
-                 }
-                 if ($scope.message.text.match(/:requestCaptcha/)) {
-                    $scope.captchaRequest = true;
-                 }
-                 if($attrs.truncate !== undefined){
-                    $scope.truncate = $attrs.truncate;
-                 }
-                 */
                 $scope.textOnly = !!$scope.$eval($attrs.textOnly);
 
                 $scope.is_my_own_message = ('isOwn' in $scope.message) ? $scope.message.isOwn() : false;
 
                 $scope.isType = function(expectType){
-                    if($scope.message.files.length > 0 && typeof $scope.message.files[0].type == 'string'){
+                    if(typeof $scope.message.files !== 'undefined' && $scope.message.files.length > 0 && typeof $scope.message.files[0].type == 'string'){
                         var mimeType = $scope.message.files[0].type;
                         if(expectType == 'image' && mimeType.search('^image') != -1){
                             return true;
@@ -67,7 +54,14 @@ angular.module('cmConversations').directive('cmMessage', [
                 };
 
                 $scope.displayEncrypted = function(){
-                    if($scope.message.text != undefined || ($scope.message.text == undefined && $scope.message.files.length > 0)){
+                    if($scope.message.id == undefined){
+                        /**
+                         * hack for empty messages
+                         */
+                        return false;
+                    }
+
+                    if($scope.message.text != undefined || ($scope.message.text == undefined && typeof $scope.message.files !== 'undefined' && $scope.message.files.length > 0)){
                         return false;
                     }
                     return true;

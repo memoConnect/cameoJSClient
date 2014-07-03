@@ -343,7 +343,8 @@
         "FOOTER": {
             "TALKS": "Talks",
             "CONTACTS": "Kontakte",
-            "MEDIA": "Media"
+            "MEDIA": "Media",
+            "SETTINGS": "Settings"
         }
     },
 
@@ -352,6 +353,7 @@
         "NOTIFICATIONS": "{{'NOTIFICATIONS.HEADER'|cmTranslate}}",
         "CONTACTS": "Kontakte",
         "REQUESTS": "Kontaktanfragen",
+        "TALKS": "Talks",
         "SETTINGS": "{{'SETTINGS.LABEL'|cmTranslate}}",
         "MESSAGES": "Nachrichten",
         "HINTS": "Sonstige Hinweise",
@@ -376,7 +378,8 @@
             },
             "FRIEND_REQUEST": "Neue Freundschaftsanfrage",
             "CONVERSATION":{
-                "ASYMMETRIC_DECRYPT_ERROR": "ASYMMETRIC_DECRYPT_ERROR"
+                "ASYMMETRIC_DECRYPT_ERROR": "ASYMMETRIC_DECRYPT_ERROR",
+                "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR"
             }
 
         }
@@ -419,7 +422,7 @@
             },
             "RECIPIENTS_WITHOUT_KEY": {
                 "NAME": "{{count}} Empfänger {{count!=1?'haben':'hat'}} kein Schlüsselpaar.",
-                "DESCRIPTION": ""
+                "DESCRIPTION": "Betroffene Empfänger: {{recipients}}"
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha wird verwendet!",

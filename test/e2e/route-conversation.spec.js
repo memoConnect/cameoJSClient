@@ -1,7 +1,7 @@
 var config = require("./config-e2e-tests.js")
 var util = require("../lib/e2e/cmTestUtil.js")
 
-describe('Single Conversation: ', function () {
+describe('Single Conversation:', function () {
 
     var ptor = util.getPtorInstance()
     var newSubject = "wicked_test_subject_" + Date.now();
@@ -36,7 +36,7 @@ describe('Single Conversation: ', function () {
     })
 
     it('should filter contacts', function () {
-        $("[data-qa='input-search']").sendKeys(config.contactUser1DisplayName)
+        util.searchInList(config.contactUser1DisplayName)
         util.waitForElement("[data-qa='contact-display-name']")
     })
 
@@ -140,7 +140,7 @@ describe('Single Conversation: ', function () {
         })
     })
 
-    it('the conversation should contain both messages', function () {
+    it('the conversation should contain both messages and check sort by date', function () {
         $$("cm-conversation-tag").then(function (elements) {
             elements[0].click()
             util.waitForPageLoad("/conversation/.*")

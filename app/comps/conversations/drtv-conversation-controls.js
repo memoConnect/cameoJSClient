@@ -55,7 +55,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
                         });
 
                         // close the controls if decryption was ok
-                        conversation.on('decrypt:ok', function(){
+                        conversation.on('decrypt:success', function(){
                             scope.toggleControls('close');
                         });
 
@@ -79,7 +79,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
                     var window = $window.innerHeight,
                         control = element[0].scrollHeight + element[0].offsetTop,
                         body = angular.element($document[0].querySelector(element[0].localName+' .body')),
-                        bar = body[0].nextSibling.scrollHeight;
+                        bar = body[0].nextSibling ? body[0].nextSibling.scrollHeight : 0;
 
                     // set to min height
                     if(window < control){
@@ -96,6 +96,9 @@ angular.module('cmConversations').directive('cmConversationControls', [
                 }
 
                 w.bind('resize', checkHeight);
+                scope.$on('$destroy', function() {
+                    w.unbind('resize', checkHeight);
+                });
 
                 scope.$watch(function() {
                     if(!scope.bodyVisible)
@@ -155,8 +158,9 @@ angular.module('cmConversations').directive('cmConversationControls', [
                  * try to decrypt the conversation
                  */
                 $scope.decrypt = function(){
-                    if($scope.conversation.isEncrypted() && !($scope.conversation.keyTransmission == 'asymmetric'
-                        && cmUserModel.hasLocalKeys() == false)) {
+                    if($scope.conversation.isEncrypted()
+                        && !($scope.conversation.keyTransmission == 'asymmetric' && cmUserModel.hasLocalKeys() == false)
+                    ) {
 
                         $scope.conversation.one('decrypt:failed', function () {
                             cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG');

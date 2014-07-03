@@ -122,24 +122,25 @@ angular.module('cmCore').factory('cmIdentityModel',[
 
             //Encrypt passphrase with all available public keys
             //Identities cannot decrypt, Users can
-            this.encryptPassphrase = function(passphrase){
+            this.encryptPassphrase = function(passphrase, whiteList){
                 var encrypted_key_list = [];
 
                 this.keys.forEach(function(key){
+                    if(typeof whiteList != 'object' || whiteList.indexOf(key.id) != -1){
+                        var key_2 = new cmCrypt.Key();
 
-                    var key_2 = new cmCrypt.Key();
+                        key_2.setKey(key.getPrivateKey());
 
-                    key_2.setKey(key.getPrivateKey());
+                        var encrypted_passphrase = key.encrypt(passphrase);
 
-                    var encrypted_passphrase = key.encrypt(passphrase);
-
-                    if(encrypted_passphrase){
-                        encrypted_key_list.push({
-                            keyId:                 key.id,
-                            encryptedPassphrase:   encrypted_passphrase
-                        });
-                    }else{
-                        cmLogger.debug('cmIdentity: unable to encrypt passphrase.')
+                        if(encrypted_passphrase){
+                            encrypted_key_list.push({
+                                keyId:                 key.id,
+                                encryptedPassphrase:   encrypted_passphrase
+                            });
+                        }else{
+                            cmLogger.debug('cmIdentity: unable to encrypt passphrase.')
+                        }
                     }
                 });
 

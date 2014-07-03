@@ -1,13 +1,16 @@
 <div ng-controller="SettingsCtrl">
-
-    <cm-header cm-rubber-space>
-        <cm-back cm-weight="3" page-title="pageTitle" back-to="/talks"></cm-back>
-        <cm-logo cm-weight="3"></cm-logo>
-        <cm-reload cm-weight="2"></cm-reload>
+    <cm-header cm-rubber-space ng-show="route == '/'">
+        <div cm-weight="7"></div>
         <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
 
-    <section ng-switch="mainPage+'/'+subPage" class="settings">
+    <cm-header cm-rubber-space ng-show="route != '/'">
+        <cm-back cm-weight="1" back-to="/settings"></cm-back>
+        <div cm-weight="6"></div>
+        <cm-menu cm-weight="1"></cm-menu>
+    </cm-header>
+
+    <section ng-switch="route" class="settings">
         <cm-overview-settings ng-switch-default></cm-overview-settings>
         <cm-app-settings ng-switch-when="app/"></cm-app-settings>
         <cm-identity-settings ng-switch-when="identity/"></cm-identity-settings>
@@ -15,4 +18,5 @@
         <cm-identity-trust ng-switch-when="identity/trust"></cm-identity-trust>
     </section>
 
+    <cm-footer cm-rubber-space></cm-footer>
 </div>

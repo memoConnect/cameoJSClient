@@ -1,11 +1,8 @@
 cm-menu {
   text-align:right;
   .cm-handler{
-    cursor:pointer;
-    i.fa.cm-menu {
-      color:@cm-ci-color;
-      position:relative;
-    }
+    .with-cursor;
+    text-align: center;
   }
   .cm-menu-layer {
     position:fixed!important;
@@ -27,19 +24,20 @@ cm-menu {
         line-height: inherit;
       }
       ul.list-group {
+        font-size:@cm-large-font;
         position:relative;
         z-index:1;
-        margin-bottom:0px;
+        margin-bottom:0;
       }
       .cm-nose-wrapper {
         height:@cm-header-height;
-        line-height:1em;
+        line-height:@cm-mega-font;
         position:relative;
         i{
-          position: absolute;
-          bottom: 0.2em;
-          right: 0;
-          font-size: 2em;
+          position:absolute;
+          bottom:0.5rem;
+          right:0;
+          font-size:@cm-mega-font+1;
         }
       }
       .cm-list-group-item{

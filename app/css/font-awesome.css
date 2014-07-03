@@ -253,9 +253,10 @@
 .cm-menu:before{content:'\f056'}
 .cm-menu-right-close:before{content:'\f01e'}
 .cm-menu-right-open:before{content:'\f057'}
+.cm-menu-weight:before{content:'\f021'}
+.cm-menu-weight-bell:before{content:'\f067'}
 .cm-post:before{content:'\f020'}
 .cm-post-attention:before{content:'\f038'}
-.cm-search:before{content:'\f021'}
 .cm-settings:before{content:'\f022'}
 .cm-smile-negative:before{content:'\f023'}
 .cm-smile-positive:before{content:'\f024'}
@@ -284,7 +285,7 @@
 .cm-visible:before{content:'\f04c'}
 .cm-hidden:before{content:'\f04d'}
 .cm-clipboard:before{content:'\f051'}
-.cm-search-cl:before{content:'\f052'}
+.cm-search:before{content:'\f052'}
 .cm-reject:before{content:'\f053'}
 .cm-ignore:before{content:'\f054'}
 .cm-register:before{content:'\f055'}

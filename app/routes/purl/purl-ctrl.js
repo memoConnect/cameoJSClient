@@ -66,7 +66,7 @@ define([
                         id: 'fast-registration',
                         'class': 'webreader',
                         type: 'alert',
-                        nose: 'top-right',
+                        //nose: 'bottom-left',
                         'cm-close-btn': false,
                         'cm-footer-label': 'MODAL.WEBREADER.LATER',
                         'cm-footer-icon': 'cm-close'
