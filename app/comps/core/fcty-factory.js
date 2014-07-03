@@ -8,16 +8,23 @@ angular.module('cmCore').factory('cmFactory',[
 
         /**
          * generic Factory, has to be setup with a model to create instances from. A model is expected to have .refresh() method, to get data from the backend.
-         * @param {object} [config] 
+         * @param {function}    model           Constructor function. If instances.id exists dublicates will be prevented. 
+         * @param {string}      [uniqueKey]     Key in raw data to check for dublicates with. (i.e. "instances.id")    
          */
 
-        return function cmFactory(model){
+        return function cmFactory(model, uniqueKey){
 
             var self        = new Array();
 
             self.model      = model;
 
             cmObject.addEventHandlingTo(self);
+
+            uniqueKey = uniqueKey || 'id'
+
+            function evalPath(object, path){
+                return path.split('.').reduce(function(result,key){ return typeof result == 'object' ? result[key] : null }, object || {})
+            }
 
             /**
              * Function to create an instance of this.model. If an instance with the same id as provided already exist, fetch it instead off creating a new one.
@@ -26,9 +33,7 @@ angular.module('cmCore').factory('cmFactory',[
              *                                      this instance will be returned – otherwise a new one will be created and if possible populated with data from the backend.
              */
             self.create = function(args, withNewImport){
-                var id          =   typeof args == 'object' && 'id' in args
-                                    ?   args.id
-                                    :   args;
+                var id          =   evalPath(args, uniqueKey) || args;
 
                 var instance = self.find(id);
 
@@ -133,7 +138,7 @@ angular.module('cmCore').factory('cmFactory',[
              */
             self.on('register', function(event, instance){
                 if(typeof instance.trigger == 'function'){
-                    instance.trigger('init:ready');
+                    instance.trigger('init:ready'); // Todo: ieses event sollte die instance eher selber triggern oder?
                 }
             });
 

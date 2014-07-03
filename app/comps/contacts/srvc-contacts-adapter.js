@@ -2,10 +2,12 @@
 
 angular.module('cmContacts').service('cmContactsAdapter',[
     'cmApi',
+    'cmObject',
     'cmLogger',
     'cmUtil',
-    function (cmApi, cmLogger, cmUtil){
-        return {
+    function (cmApi, cmObject, cmLogger, cmUtil){
+
+        var adapter =  {
             /**
              * Search for cameoId Users
              * @param string
@@ -98,5 +100,18 @@ angular.module('cmContacts').service('cmContactsAdapter',[
                 })
             }
         }
+
+        cmObject.addEventHandlingTo(adapter)
+
+        cmApi.on('friendRequest:new', function(event, data){
+            adapter.trigger('friendRequest:new', data)
+        })
+
+        cmApi.on('friendRequest:accepted', function(event, data){
+            adapter.trigger('friendRequest:accepted', data)
+        })
+
+        return adapter
+
     }
 ]);
