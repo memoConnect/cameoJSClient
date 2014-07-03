@@ -75,7 +75,7 @@ describe('Friendrequests', function () {
              */
             xit('check notification', function(){
                 // close notify of new friendRequest (might remove this at some point)
-                util.waitAndCloseNotify()
+//                util.waitAndCloseNotify()
                 // bell is orange
 //                util.waitForElement("i.cm-bell-ring .cm-orange")
 //                ptor.sleep(5000)
@@ -99,7 +99,7 @@ describe('Friendrequests', function () {
                     // click accept
                     $("cm-contact-tag [data-qa='btn-acceptRequest']").click()
                     // close notify
-                    util.waitAndCloseNotify()
+//                    util.waitAndCloseNotify()
                     // list shouldn't have this request anymore
 
                     ptor.wait(function () {
