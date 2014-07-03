@@ -1,16 +1,16 @@
 <div ng-controller="PurlCtrl">
-    <cm-header cm-rubber-space ng-hide="isModalVisible">
-        <cm-back cm-weight="1" back-to="/talks" class="overlap-identity" cm-user-rights></cm-back>
-        <div cm-weight="10" class="purl-identity-wrap">
-            <cm-identity cm-user-rights></cm-identity>
-            <div class="fast-sign-in" ng-if="showSignIn" ng-click="goToRegister()" data-qa="btn-fast-sign-in">
-                <i class="fa cm-register"></i>
-                <span>{{'PURL.SIGN_IN'|cmTranslate}}</span>
-            </div>
+    <cm-header cm-rubber-space ng-hide="isModalVisible" cm-user-rights>
+        <cm-back cm-weight="1" back-to="/talks"></cm-back>
+        <cm-identity cm-weight="6"></cm-identity>
+        <cm-menu cm-weight="1"></cm-menu>
+    </cm-header>
+
+    <cm-header cm-rubber-space ng-hide="isModalVisible" ng-if="showSignIn">
+        <div class="fast-sign-in" ng-click="goToRegister()" data-qa="btn-fast-sign-in" cm-weight="2">
+            <i class="fa cm-register"></i>
+            <span>{{'PURL.SIGN_IN'|cmTranslate}}</span>
         </div>
-        <cm-logo cm-weight="8"></cm-logo>
-        <cm-reload cm-weight="6"></cm-reload>
-        <cm-menu cm-user-rights cm-weight="4"></cm-menu>
+        <div cm-weight="6"></div>
     </cm-header>
 
     <cm-conversation conversation-id="conversationId" ng-if="showConversation"></cm-conversation>
