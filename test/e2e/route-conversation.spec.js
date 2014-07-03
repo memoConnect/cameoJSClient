@@ -87,11 +87,8 @@ describe('Single Conversation:', function () {
     })
 
     it('there should be only one message, and it should contain the message text', function () {
-        ptor.wait(function () {
-            return util.waitForElements('cm-message',1)
-        }, 1000, "cm-message count timeout");
-
-        expect($('cm-message').getText()).toContain(messageText)
+       util.waitForElements('cm-message',1)
+       expect($('cm-message').getText()).toContain(messageText)
     })
 
     it('log in as contact, the created conversation should be listed first', function () {
