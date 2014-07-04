@@ -32,7 +32,7 @@ angular.module('cmCore').service('cmUserModel',[
     '$rootScope', 
     '$q', 
     '$location',
-    function(cmBoot,cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmObject, cmNotify, cmLogger, $rootScope, $q, $location){
+    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmObject, cmNotify, cmLogger, $rootScope, $q, $location){
         var self = this,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
@@ -431,6 +431,13 @@ angular.module('cmCore').service('cmUserModel',[
 
         this.on('update:finished', function(){
             cmBoot.resolve();
+        })
+
+        cmAuth.on('identity:updated', function(event, data){
+//            cmLogger.debug('cmUserModel.on:identity:updated');
+            if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
+                self.data.identity.importData(data);
+            }
         });
 
         init();
