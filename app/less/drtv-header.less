@@ -36,11 +36,13 @@ cm-header{
 
   cm-identity{
     .with-cursor;
+    height:@cm-unit;
     text-overflow:ellipsis;
     overflow:hidden;
     white-space:nowrap;
     position:relative;
     padding-left:@cm-horizontal-padding;
+    background:@cm-black;
     cm-avatar{
       top:-0.1rem;
     }
@@ -91,16 +93,26 @@ cm-header{
     cm-search-input{
       color:@cm-black;
       position:absolute;
-      z-index:1;
-      width:20rem - @cm-horizontal-padding;
+      z-index:-1;
+      height:@cm-unit;
+      width:(@cm-unit * 5) - @cm-horizontal-padding;
       right:@cm-unit;
       top:0;
       padding:1rem 0.4rem;
       font-size:@cm-large-font;
       line-height:@cm-mega-font;
       text-align:left;
+      &.visible{
+        z-index:1;
+      }
       input{
 
+      }
+      textarea{
+        border:0!important;
+        resize:none;
+        white-space:nowrap;
+        overflow:hidden;
       }
       i{
         position: absolute;
