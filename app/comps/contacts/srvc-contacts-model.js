@@ -240,9 +240,9 @@ angular.module('cmContacts').service('cmContactsModel',[
         };
 
         function resetContacts(){
-            self.contacts = [];
-            self.groups = [];
-            self.requests = [];
+            self.contacts.reset();
+            self.groups.reset();
+            self.requests.reset();
         }
 
         $rootScope.$on('logout', function(){
