@@ -184,7 +184,7 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         return false;
                     }
                     // on return
-                    if(e.keyCode == 13 && cmSettings.is('sendOnReturn')){
+                    if(e.keyCode == 13 && e.shiftKey == false && cmSettings.is('sendOnReturn')){
                         $rootScope.$broadcast('sendOnReturn');
                         e.preventDefault();
                         e.stopPropagation();

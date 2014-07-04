@@ -4,26 +4,25 @@ angular.module('cmUi')
 .directive('cmHeaderListSearch',[
     '$rootScope',
     '$timeout',
-    'cmConfig',
-    function ($rootScope, $timeout, cmConfig){
+    '$document',
+    function ($rootScope, $timeout, $document){
         return {
             restrict: 'E',
             scope: {
                 ngModel: '=ngModel'
             },
-            template: '<i class="fa cm-search" ng-click="toggleInput()" data-qa="btn-header-list-search"></i>' +
-                      '<div ng-show="visible">' +
-                        '<cm-search-input ng-model="ngModel" cm-without-search-icon="true" cm-hide-elements="cm-footer"></cm-search-input>' +
-                      '</div>',
-            controller: function($scope, $element, $attrs){
+            template: '<i class="fa cm-search" ng-click="toggleInput($event)" data-qa="btn-header-list-search"></i>' +
+                      '<cm-search-input ng-model="ngModel" cm-without-search-icon="true" cm-hide-elements="cm-footer" ng-class="{visible:visible}"></cm-search-input>',
+            controller: function($scope){
                 $scope.visible = false;
-                $scope.toggleInput = function(){
+                $scope.toggleInput = function(e){
+                    e.stopPropagation();
+                    e.preventDefault();
                     $scope.visible = $scope.visible ? false : true;
                     // set focus to input
-                    if($scope.visible && cmConfig.env.isNotMobile){
-                        $timeout(function(){
-                            $element[0].querySelector('input').focus();
-                        },500);
+                    if($scope.visible) {
+                        var input = $document[0].querySelector('#inp-list-search');
+                        input.focus();
                     }
                 }
             }
