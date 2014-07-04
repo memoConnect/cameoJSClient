@@ -241,7 +241,7 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         function resetContacts(){
             self.contacts.reset();
-            self.groups.reset();
+            self.groups = [];
             self.requests.reset();
         }
 
