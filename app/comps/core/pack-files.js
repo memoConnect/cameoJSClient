@@ -805,8 +805,8 @@ angular.module('cmCore')
                     },'<span>{{\'NOTIFICATIONS.TYPES.SAVE_AS.IOS_NOT_SUPPORT\'|cmTranslate}}</span>');
                     cmModal.open('saveas');
                 } else {
-                    if(this.name && this.blob){
-                        saveAs(this.blob, this.name);
+                    if(this.blob){
+                        saveAs(this.blob, this.name != false ? this.name : 'download');
                     } else {
                         cmLogger.debug('Unable to prompt saveAs; cmFile.blob is missing, try cmFile.importByFile().');
                     }
