@@ -596,6 +596,7 @@ module.exports = function (grunt) {
             'config-tests': {
                 'options': {
                     'data': {
+                        'currentApiUrl': globalCameoBuildConfig.config.apiUrl,
                         'currentWwwUrl': globalCameoTestConfig.config.wwwUrl,
                         'testData': "this." + globalCameoTestConfig.testData.join(";\nthis.") + ";"
                     }
