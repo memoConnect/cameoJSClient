@@ -19,7 +19,7 @@ define([
         'ngRoute',
         'ngCookies',
         'swipe',
-        'angularMoment',
+        //'angularMoment',
         'angular-loading-bar',
         'cmCore',
         'cmUi',
@@ -158,8 +158,20 @@ define([
      * @TODO cmContactsModel anders initialisieren
      */
     app.run([
-        '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmContactsModel', 'cmSettings', 'cmLanguage', 'cmLogger','cfpLoadingBar','cmEnv', 'cmApi',
-        function ($rootScope, $location, $window, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi) {
+        '$rootScope',
+        '$location',
+        '$window',
+        '$document',
+        '$route',
+        'cmUserModel',
+        'cmContactsModel',
+        'cmSettings',
+        'cmLanguage',
+        'cmLogger',
+        'cfpLoadingBar',
+        'cmEnv',
+        'cmApi',
+        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi) {
 
             //prep $rootScope with useful tools
             $rootScope.console = console;
@@ -196,11 +208,10 @@ define([
             $rootScope.$on('$routeChangeSuccess', function(){
 
                 // hide app spinner
-                angular.element($window.document.getElementsByClassName('app-spinner')[0])
-                    .css('display','none');
+                angular.element($document[0].querySelector('.app-spinner')).css('display','none');
 
                 // momentjs
-                $window.moment.lang(cmLanguage.getCurrentLanguage());
+                //$window.moment.lang(cmLanguage.getCurrentLanguage());
 
                 // important for HTML Manipulation to switch classes etc.
                 $rootScope.cmIsGuest = cmUserModel.isGuest();
@@ -212,55 +223,57 @@ define([
                     prevRoute = $rootScope.urlHistory.length > 0
                               ? $rootScope.urlHistory[$rootScope.urlHistory.length - 1]
                               : '';
-                // clear if same route
-                if(currentRoute.indexOf('/login') != -1 || currentRoute == prevRoute) {
+
+                // clear history in some cases
+                if(
+                    currentRoute.indexOf('/login') != -1 // when login route
+                 //|| currentRoute == prevRoute // current is the same then is startPage
+                ) {
                     $rootScope.urlHistory = [];
-                    // push new route
+                // push new route
                 } else if(currentRoute !== prevRoute) {
                     $rootScope.urlHistory.push($location.$$path);
                 }
-                
             });
             
-            //Make it easy for e2e-tests to monitor route changes:
+            // Make it easy for e2e-tests to monitor route changes:
             window._route = {};
 
             $rootScope.$on('$routeChangeStart', function(){
-                window._route.path   = $location.$$path
-                window._route.status = 'loading'
-            })
+                window._route.path   = $location.$$path;
+                window._route.status = 'loading';
+            });
 
             $rootScope.$on('$routeChangeSuccess', function(){
-                window._route.status = 'success'
-            })
+                window._route.status = 'success';
+            });
 
             $rootScope.$on('$routeChangeError', function(){
-                window._route.status = 'error'
-            })
+                window._route.status = 'error';
+            });
 
-
-            //Set view width e.g. 32rem
+            // Set view width e.g. 32rem
             function initScreenWidth(rem){
-                var html    = document.getElementsByTagName('html')[0],
-                    app     = document.getElementById('cm-app');
+                var html    = $document[0].querySelector('html'),
+                    app     = $document[0].querySelector('#cm-app');
 
                 //prevent screen size to change when content overflows
-                html.style.overflowY = 'scroll'                    
+                html.style.overflowY = 'scroll';
 
                 var height          = window.innerHeight,
-                    width           = html.offsetWidth,                      
+                    width           = html.offsetWidth,
                     landscape       = width > height,
-                    effective_width = landscape ? Math.min(height, 420) : width
+                    effective_width = landscape ? Math.min(height, 420) : width;
 
-                html.style.fontSize  = (effective_width/rem) +'px'
-                app.style.maxWidth   = rem+'rem'
-                angular.element(app).toggleClass('landscape', landscape)
+                html.style.fontSize  = (effective_width/rem) +'px';
+                app.style.maxWidth   = rem+'rem';
+                angular.element(app).toggleClass('landscape', landscape);
             }
 
-            //Actually set view width to 32 rem
-            initScreenWidth(32)
+            // Actually set view width to 32 rem
+            initScreenWidth(32);
 
-            //For dev purposes only:
+            // For dev purposes only:
 //            window.onresize = function() { initScreenWidth(32) }
 
 

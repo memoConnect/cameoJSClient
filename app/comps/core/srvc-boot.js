@@ -2,7 +2,6 @@
 // TODO: doku and tests
 angular.module('cmCore').provider('cmBoot', [
     function(){
-
         var promise = undefined;
 
         this.ready = function($q){
@@ -15,7 +14,8 @@ angular.module('cmCore').provider('cmBoot', [
         this.$get = [
             '$q',
             '$rootScope',
-            function($q, $rootScope) {
+            '$window',
+            function($q, $rootScope, $window) {
 
                 $rootScope.$on('logout', function(){
                     promise = undefined
@@ -26,6 +26,7 @@ angular.module('cmCore').provider('cmBoot', [
                         if(promise == undefined) {
                             promise = $q.defer();
                         }
+
                         promise.resolve();
                     }
                 }
