@@ -2,7 +2,7 @@ require.config({
     baseUrl: "",
     // alias libraries paths
     urlArgs: "bust=" + (new Date()).getTime(),
-    waitTimeout: 50000,
+    waitTimeout: 0,
     paths: {
         'app': 'base/app',
         'screen': 'base/screen',
