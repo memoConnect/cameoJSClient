@@ -953,9 +953,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 self.handleMissingAePassphrases();
             });
 
-            cmUserModel.data.identity.on('update:finished', function(){
-                self.decrypt();
-            });
+//            cmUserModel.data.identity.on('update:finished', function(){
+//                self.decrypt();
+//            });
 
             // after events!!!
             init(data);
