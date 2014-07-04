@@ -60,7 +60,7 @@ angular.module('cmConversations').directive('cmConversation', [
                         }
 
                         if(!$scope.conversation.state.is('new')
-                            && $scope.conversation.keyTransmission == 'asymmetric'
+                            && $scope.conversation.getKeyTransmission() == 'asymmetric'
                             && cmUserModel.hasLocalKeys() == false){
 
                             $scope.isSending = false;
@@ -121,7 +121,7 @@ angular.module('cmConversations').directive('cmConversation', [
 //                    cmLogger.debug('cmConversationDRTV.showAsymmetricKeyError')
 
                     if(!$scope.conversation.state.is('new')
-                        && $scope.conversation.keyTransmission == 'asymmetric'
+                        && $scope.conversation.getKeyTransmission() == 'asymmetric'
                         && cmUserModel.hasLocalKeys() == false
                         && showedAsymmetricKeyError == false){
                         showedAsymmetricKeyError = true;

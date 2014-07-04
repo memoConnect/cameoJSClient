@@ -97,19 +97,6 @@ angular.module('cmSecurityAspects')
                         conversation.disablePassCaptcha();
                     }
                 })
-                .addAspect({
-                    id: 'HAS_PASSWORD',
-                    value: -1,
-                    check: function(conversation){
-                        var bool = false;
-
-                        if(conversation.options.hasPassword !== false){
-                            bool = true
-                        }
-
-                        return bool;
-                    }
-                })
 
             return self;
         }

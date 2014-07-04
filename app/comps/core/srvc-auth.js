@@ -12,8 +12,9 @@
 
 angular.module('cmCore').service('cmAuth', [
     'cmApi',
-    function(cmApi){
-        return {
+    'cmObject',
+    function(cmApi, cmObject){
+        var auth = {
             /**
              * @ngdoc method
              * @methodOf cmAuth
@@ -243,6 +244,15 @@ angular.module('cmCore').service('cmAuth', [
             getTwoFactorToken: function(){
                 return localStorage.getItem('twoFactorToken');
             }
-        }
+        };
+
+        cmObject.addEventHandlingTo(auth);
+
+        cmApi.on('identity:update', function (event, data){
+//            console.log('cmAuth.on:identity:update')
+            auth.trigger('identity:updated', data)
+        });
+
+        return auth;
     }
 ]);

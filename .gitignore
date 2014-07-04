@@ -9,6 +9,7 @@
 /project/
 /dist/
 /docs/
+/test-require/
 /app/index.html
 /app/css/app.less
 /app/css/app.css

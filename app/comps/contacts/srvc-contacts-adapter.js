@@ -104,7 +104,7 @@ angular.module('cmContacts').service('cmContactsAdapter',[
         cmObject.addEventHandlingTo(adapter)
 
         cmApi.on('identity:update', function (event, data){
-            console.log('cmContactsAdapter.on:identity:update')
+//            console.log('cmContactsAdapter.on:identity:update')
             adapter.trigger('identity:updated', data)
         })
 
