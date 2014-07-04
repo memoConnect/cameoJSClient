@@ -101,11 +101,11 @@ this.deleteTestUser = function(loginName) {
 
     var testUserId = loginName.split("_")[1]
 
-    ptor.executeAsyncScript( function(testUserId) {
+    ptor.executeAsyncScript( function(testUserId, apiUrl) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("DELETE", "/a/v1/testUser/" + testUserId, true);
+        xhr.open("DELETE", apiUrl + "/testUser/" + testUserId, true);
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
                 callback(xhr.responseText);
@@ -113,7 +113,7 @@ this.deleteTestUser = function(loginName) {
         }
         xhr.send('');
 
-    }, testUserId)
+    }, testUserId, config.apiUrl)
 }
 
 
@@ -121,19 +121,19 @@ this.getTestUserNotifications = function(loginName) {
 
     var testUserId = loginName.split("_")[1]
 
-    return ptor.executeAsyncScript( function(testUserId) {
+    return ptor.executeAsyncScript( function(testUserId, apiUrl) {
 
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/a/v1/testUser/" + testUserId, true);
+        xhr.open("GET", apiUrl + "/testUser/" + testUserId, true);
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
                 callback(JSON.parse(xhr.responseText))
             }
         }
         xhr.send('');
-    }, testUserId)
+    }, testUserId, config.apiUrl)
 }
 
 this.waitForPageLoad = function (expectedRoute) {
