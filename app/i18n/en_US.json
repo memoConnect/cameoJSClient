@@ -27,13 +27,13 @@
 
     "REGISTER": {
         "HEADING": "Registration",
-        "LINK": "or sign in",
+        "LINK": "or register",
         "LABEL": {
             "SUBMIT": "create User",
             "USERNAME": "Username",
             "NAME": "Name",
             "TERMS": "terms of use",
-            "TERMS_ACCEPT": "I accpect"
+            "TERMS_ACCEPT": "I accept"
         },
         "PLACEHOLDER": {
             "USERNAME": "Username",
