@@ -38,8 +38,8 @@
         "PLACEHOLDER": {
             "USERNAME": "Username",
             "DISPLAYNAME": "Display Name",
-            "EMAIL": "{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}",
-            "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}"
+            "EMAIL": "@:DRTV.VALIDATE_EMAIL.PLACEHOLDER",
+            "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER"
         },
         "INFO": {
             "MIN_LETTER_COUNT": "Please use at least {{count}} letters.",
@@ -52,8 +52,8 @@
                 "EMPTY": "Please insert a username.",
                 "INVALID": "Invalid username. Avoid spaces and special character!"
             },
-            "INVALID_EMAIL": "{{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}",
-            "INVALID_PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}"
+            "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
+            "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
         },
         "TITLE": {
             "HEAD_LOGIN": "Login Information",
@@ -223,9 +223,9 @@
     "CONTACT": {
         "WIDGET": "Talks",
         "PLACEHOLDER": {
-            "DISPLAYNAME": "{{'CONTACTS.LABEL.DISPLAYNAME'|cmTranslate}}",
-            "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}",
-            "EMAIL": "{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}",
+            "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
+            "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER",
+            "EMAIL": "@:DRTV.VALIDATE_EMAIL.PLACEHOLDER",
             "STREET": "Street",
             "STREETNR": "Nr",
             "ZIP": "Zip",
@@ -233,11 +233,11 @@
         },
         "INFO": {
             "EMPTY": {
-                "DISPLAYNAME": "{{'DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}"
+                "DISPLAYNAME": "@:DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME"
             },
             "INVALID": {
-                "EMAIL": "{{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}",
-                "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}"
+                "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
+                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
             },
             "SUCCESS": {
                 "SAVE": "Contact created",
@@ -276,7 +276,7 @@
                 "SEND_ON_RETURN": "Send on Return"
             },
             "IDENTITY": {
-                "KEYS": "{{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}"
+                "KEYS": "@:IDENTITY.LABEL.KEYMANAGEMENT"
             },
             "ABOUT_US": {
                 "TITLE": "About us",
@@ -353,11 +353,11 @@
 
     "MENU": {
         "HEADER": "Menu",
-        "NOTIFICATIONS": "{{'NOTIFICATIONS.HEADER'|cmTranslate}}",
+        "NOTIFICATIONS": "@:NOTIFICATIONS.HEADER",
         "CONTACTS": "Contacts",
         "REQUESTS": "Contact requests",
         "TALKS": "Talks",
-        "SETTINGS": "{{'SETTINGS.LABEL'|cmTranslate}}",
+        "SETTINGS": "@:SETTINGS.LABEL",
         "MESSAGES": "Messages",
         "HINTS": "Hints",
         "ACTIVITY": "Activity",
@@ -382,7 +382,8 @@
             "FRIEND_REQUEST": "New friendrequest",
             "CONVERSATION":{
                 "ASYMMETRIC_DECRYPT_ERROR": "ASYMMETRIC_DECRYPT_ERROR",
-                "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR"
+                "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
+                "FILESIZE_REACHED": "The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file '<strong>{{fileName}}</strong>' is <strong>{{fileSize | cmBytesHumanReadable}}</strong> big."
             }
         }
     },

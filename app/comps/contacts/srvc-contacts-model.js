@@ -20,8 +20,9 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         this.state = new cmStateManagement(['loading-contacts','loading-groups','loading-requests']);
 
-        this.contacts   = new cmFactory(cmContactModel)
-        this.groups     = [];
+        this.contacts   = new cmFactory(cmContactModel);
+        // TODO: groups must be in factory style with models
+        this.groups     = [];//new cmFactory(function(){return this;});
         this.requests   = new cmFactory(cmFriendRequestModel, 'identity.id');
 
         cmObject.addEventHandlingTo(this);
@@ -239,27 +240,17 @@ angular.module('cmContacts').service('cmContactsModel',[
             return defer.promise;
         };
 
-        function resetContacts(){
-            self.contacts.reset();
-            self.groups.reset();
-            self.requests.reset();
-        }
+        /**
+         * event handling
+         */
 
         $rootScope.$on('logout', function(){
-            resetContacts();
+            self.contacts.reset();
+            self.groups = [];//self.groups.reset();
+            self.requests.reset();
         });
 
-        this.on('friendRequests:updated', function(){
-            this._clearContacts();
-            init();
-        });
-
-        this.on('friendRequest:send', function(){
-            this._clearContacts();
-            init();
-        });
-
-        this.on('after-add-contact', function(){
+        this.on('friendRequests:updated friendRequest:send after-add-contact', function(){
             this._clearContacts();
             init();
         });

@@ -93,15 +93,11 @@ describe('Friendrequests', function () {
                 $$('cm-contact-tag').then(function(elements){
                     requestLen = elements.length
                     expect(requestLen).not.toEqual(0)
-
-                    // open bar
-                    $("cm-contact-tag [data-qa='btn-toggleBar']").click()
                     // click accept
                     $("cm-contact-tag [data-qa='btn-acceptRequest']").click()
                     // close notify
 //                    util.waitAndCloseNotify()
                     // list shouldn't have this request anymore
-
                     ptor.wait(function () {
                         return $$('cm-contact-tag').then(function(elements) {
                             return elements.length != requestLen
