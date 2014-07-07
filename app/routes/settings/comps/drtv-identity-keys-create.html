@@ -1,0 +1,30 @@
+<header class="inScreen">
+    <i class="fa cm-checkbox-add cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE' | cmTranslate}}
+</header>
+
+<div ng-if="active == 'choose'">
+    KeySize:
+    <select class="form-control" ng-model="$parent.keySize">
+        <option ng-repeat="size in $parent.keySizes">{{size}}</option>
+    </select>
+
+    <button ng-click="generate()" class="btn btn-primary">generate</button>
+</div>
+
+<div ng-if="active == 'create'">
+    <h3>Key-Pair generating in Progress</h3>
+    <button ng-click="cancel()" class="btn btn-default">cancel</button>
+    <h3>state</h3>
+    <textarea class="form-control" ng-model="state" rows="2"></textarea>
+</div>
+
+<div ng-if="active == 'store'">
+    <h3>private key</h3>
+    <textarea class="form-control" ng-model="$parent.privKey"></textarea>
+    <h3>public key</h3>
+    <textarea class="form-control" ng-model="$parent.pubKey"></textarea>
+    <h3>name</h3>
+    <input class="form-control" ng-model="$parent.keyName" type="text" />
+    <br />
+    <button ng-click="store()" class="btn btn-primary">store</button>
+</div>

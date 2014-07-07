@@ -24,8 +24,9 @@ cameo_config = {
         'settings': {
             hasCtrl: true,
             routes: [
-                '/settings/:mainPage?',
-                '/settings/:mainPage/:subPage?'
+                '/settings/:pageParent?',
+                '/settings/:pageParent/:pageChild1?',
+                '/settings/:pageParent/:pageChild1/:pageChild2?'
             ],
             resolveOnBoot: true
         },
@@ -132,7 +133,14 @@ cameo_config = {
 
     routeSettings: {
         'account': {i18n:'SETTINGS.ACCOUNT', icon:'cm-person', disabled:true},
-        'identity': {i18n:'SETTINGS.IDENTITY', icon:'cm-person'},
+        'identity': {
+            i18n:'SETTINGS.IDENTITY',
+            icon:'cm-person',
+            shortLinks:{
+                'keys': {icon:'cm-key'}
+                //,'trust': {icon:'cm-trust'}
+            }
+        },
         'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell', disabled:true},
         'contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-contacts', disabled:true},
         'app': {i18n:'SETTINGS.APP', icon:'cm-fix'},

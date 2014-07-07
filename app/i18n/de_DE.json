@@ -276,7 +276,11 @@
                 "SEND_ON_RETURN": "Senden bei Enter-Tasten druck"
             },
             "IDENTITY": {
-                "KEYS": "@:IDENTITY.LABEL.KEYMANAGEMENT"
+                "KEYS": {
+                    "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
+                    "CREATE": "erstellen",
+                    "IMPORT": "importieren"
+                }
             },
             "ABOUT_US":{
                 "TITLE": "Über uns",

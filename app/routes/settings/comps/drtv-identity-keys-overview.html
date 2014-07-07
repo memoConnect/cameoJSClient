@@ -1,0 +1,32 @@
+<header class="inScreen">
+    <i class="fa cm-key cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.HEADER' | cmTranslate}}
+</header>
+
+<ul>
+    <li>
+        <a href="#/settings/identity/keys/create" class="item w50">
+            <i class="fa cm-checkbox-add icon-left cm-lg-icon"></i>
+            <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE'|cmTranslate}}</span>
+        </a>
+        <a href="#/settings/identity/keys/import" class="item w50">
+            <i class="fa cm-fix icon-left cm-lg-icon"></i>
+            <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT'|cmTranslate}}</span>
+        </a>
+    </li>
+    <li ng-repeat="key in ownKeys"  ng-class="{'isLocal':key.privKey}">
+        <span class="item clearfix">
+            <span>
+                {{key.name}} - {{key.size}}<!-- - {{key.id}}-->
+                <span ng-if="key.privKey"> - local</span>
+            </span>
+        </span>
+    </li>
+</ul>
+
+<div ng-if="false">
+    <h3>{{exportKeyName}} - {{exportKeySize}}</h3>
+    <h3>private key</h3>
+    <textarea class="form-control" ng-model="exportPrivKey"></textarea>
+    <h3>public key</h3>
+    <textarea class="form-control" ng-model="exportPubKey"></textarea>
+</div>

@@ -276,7 +276,11 @@
                 "SEND_ON_RETURN": "Send on Return"
             },
             "IDENTITY": {
-                "KEYS": "@:IDENTITY.LABEL.KEYMANAGEMENT"
+                "KEYS": {
+                    "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
+                    "CREATE": "create",
+                    "IMPORT": "import"
+                }
             },
             "ABOUT_US": {
                 "TITLE": "About us",

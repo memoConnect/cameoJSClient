@@ -9,7 +9,6 @@ angular.module('cmRouteSettings').directive('cmOverviewSettings', [
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-overview.html',
             controller: function ($scope) {
-
                 $scope.overview = cmConfig.routeSettings;
                 $scope.Object = Object;
 
@@ -17,9 +16,11 @@ angular.module('cmRouteSettings').directive('cmOverviewSettings', [
                     cmUserModel.doLogout();
                 };
 
-                $scope.goToSettingsPage = function(page){
-                    if(typeof page !== 'undefined'){
-                        $location.path('/settings/'+page);
+                $scope.goToSettingsPage = function($event, pageUrl, isDisabled){
+                    if(typeof pageUrl !== 'undefined' && isDisabled == undefined){
+                        $event.stopPropagation();
+                        $event.preventDefault();
+                        $location.path('/settings/'+pageUrl);
                     }
                 }
             }
