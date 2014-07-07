@@ -108,6 +108,16 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 return this;
             };
 
+            this.isProper = function(){                    
+                var text_available  =       typeof this.text == 'string'
+                                        &&  this.text.length > 0,
+                    files_available =       typeof this.fileIds == 'object'
+                                        &&  this.fileIds.length > 0,
+                    encrypted       =       this.isEncrypted()
+                
+                return text_available || files_available || encrypted
+            }
+
             // sets which data should not be encrypted
             this.setPublicData = function(data){
                 // data may be a string or an array

@@ -1,4 +1,4 @@
-<article class="clearfix" ng-if="!textOnly">
+<article class="clearfix" ng-if="!textOnly && message.isProper()">
     <div ng-if="!is_my_own_message" class="avatar cm-fl">
         <cm-avatar cm-data="message.from"></cm-avatar>
     </div>
@@ -22,7 +22,7 @@
     </div>
 </article>
 
-<span ng-if="textOnly">
+<span ng-if="textOnly && message.isProper()">
     <span ng-if="isType('text') && !displayEncrypted()" ng-bind-html="message.text | cmParse"></span>
     <span ng-if="isType('text') && displayEncrypted()">{{'CONVERSATION.TEXT.ENCRYPTED'|cmTranslate}}</span>
     <span ng-if="isType('image')">{{'CONVERSATION.TAG.IMAGE'|cmTranslate}}</span>
