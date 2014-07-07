@@ -24,6 +24,7 @@ angular.module('cmCore')
             this.callbackRoute = undefined;
             this.bell = false;
             this.ttl = -1;
+            this.i18n = {};
 
             /**
              * {
@@ -63,6 +64,8 @@ angular.module('cmCore')
                     this.bell = data.bell || this.bell;
 
                     this.ttl = data.ttl || this.ttl;
+
+                    this.i18n = data.i18n || this.i18n;
                 } else {
                     this.state.set('error');
                 }
@@ -99,7 +102,7 @@ angular.module('cmCore')
                         '<i class="fa '+this.icon+' cm-lg-icon"></i> '+cmTranslate('NOTIFICATIONS.MODAL_HEADER.'+this.severity.toUpperCase())+
                     '</div>'+
                     '<div class="body">'+
-                        cmTranslate(this.label)+
+                        cmTranslate(this.label, this.i18n)+
                     '</div>'
                 );
                 cmModal.open(modalId);
@@ -150,7 +153,6 @@ angular.module('cmCore')
             };
 
         self.bellCounter = 0;
-
 
         function handleAdapter(args){
             var notify = notifyTpl;

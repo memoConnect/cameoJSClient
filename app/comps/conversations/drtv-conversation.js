@@ -89,6 +89,17 @@ angular.module('cmConversations').directive('cmConversation', [
                                     $scope.resetFiles();
 
                                     sendMessage();
+                                },function(r){
+                                    $scope.isSending = false;
+                                    $scope.isSendingAbort = true;
+                                    cmNotify.warn('NOTIFICATIONS.TYPES.CONVERSATION.FILESIZE_REACHED',{
+                                        ttl:0,
+                                        i18n: {
+                                            maxFileSize: r.data.error.maxFileSize,
+                                            fileSize: r.config.headers['X-File-Size'],
+                                            fileName: r.config.headers['X-File-Name']
+                                        }
+                                    });
                                 });
                         } else {
                             sendMessage();
@@ -119,7 +130,6 @@ angular.module('cmConversations').directive('cmConversation', [
 
                 function showAsymmetricKeyError(){
 //                    cmLogger.debug('cmConversationDRTV.showAsymmetricKeyError')
-
                     if(!$scope.conversation.state.is('new')
                         && $scope.conversation.getKeyTransmission() == 'asymmetric'
                         && cmUserModel.hasLocalKeys() == false

@@ -1,11 +1,9 @@
 'use strict';
 
-angular.module('cmContacts').factory('cmContactModel', [
-
+angular.module('cmContacts')
+.factory('cmContactModel', [
     'cmIdentityFactory',
-
     function(cmIdentityFactory){
-
         function ContactModel(data){
              this.id            = undefined
              this.contactType   = undefined
@@ -26,7 +24,6 @@ angular.module('cmContacts').factory('cmContactModel', [
 
              this.importData(data)
         }
-
         return ContactModel
     }
-])
+]);

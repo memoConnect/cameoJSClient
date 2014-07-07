@@ -38,8 +38,8 @@
         "PLACEHOLDER": {
             "USERNAME": "Nutzername",
             "DISPLAYNAME": "Name",
-            "EMAIL": "{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}",
-            "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}"
+            "EMAIL": "@:DRTV.VALIDATE_EMAIL.PLACEHOLDER",
+            "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER"
         },
         "INFO": {
             "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden.",
@@ -52,8 +52,8 @@
                 "EMPTY": "Bitte geben Sie einen Nutzername an.",
                 "INVALID": "Der Nutzername ist nicht valide. Vermeiden Sie Umlaute, Leer- und Sonderzeichen."
             },
-            "INVALID_EMAIL": "{{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}",
-            "INVALID_PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}"
+            "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
+            "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
         },
         "TITLE": {
             "HEAD_LOGIN": "Login Information",
@@ -211,7 +211,7 @@
             "SUBMIT": "speichern"
         },
         "TAG":{
-            "FILTER" : "Filter"
+            "FILTER": "Filter"
         },
         "REQUESTS":{
             "ACCEPT": "akzeptieren",
@@ -223,9 +223,9 @@
     "CONTACT": {
         "WIDGET": "Talks",
         "PLACEHOLDER": {
-            "DISPLAYNAME": "{{'CONTACTS.LABEL.DISPLAYNAME'|cmTranslate}}",
-            "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}",
-            "EMAIL": "{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}",
+            "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
+            "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER",
+            "EMAIL": "@:DRTV.VALIDATE_EMAIL.PLACEHOLDER",
             "STREET": "Straße",
             "STREETNR": "Nr",
             "ZIP": "PLZ",
@@ -233,11 +233,11 @@
         },
         "INFO": {
             "EMPTY": {
-                "DISPLAYNAME": "{{'DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}"
+                "DISPLAYNAME": "@:DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME"
             },
             "INVALID": {
-                "EMAIL": "{{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}",
-                "PHONENUMBER": "{{'DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER'|cmTranslate}}"
+                "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
+                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
             },
             "SUCCESS": {
                 "SAVE": "Kontakt wurde erfolgreich angelegt",
@@ -276,7 +276,7 @@
                 "SEND_ON_RETURN": "Senden bei Enter-Tasten druck"
             },
             "IDENTITY": {
-                "KEYS": "{{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}"
+                "KEYS": "@:IDENTITY.LABEL.KEYMANAGEMENT"
             },
             "ABOUT_US":{
                 "TITLE": "Über uns",
@@ -353,11 +353,11 @@
 
     "MENU": {
         "HEADER": "Menü",
-        "NOTIFICATIONS": "{{'NOTIFICATIONS.HEADER'|cmTranslate}}",
+        "NOTIFICATIONS": "@:NOTIFICATIONS.HEADER",
         "CONTACTS": "Kontakte",
         "REQUESTS": "Kontaktanfragen",
         "TALKS": "Talks",
-        "SETTINGS": "{{'SETTINGS.LABEL'|cmTranslate}}",
+        "SETTINGS": "@:SETTINGS.LABEL",
         "MESSAGES": "Nachrichten",
         "HINTS": "Sonstige Hinweise",
         "ACTIVITY": "Aktivity",
@@ -381,10 +381,10 @@
             },
             "FRIEND_REQUEST": "Neue Freundschaftsanfrage",
             "CONVERSATION":{
-                "ASYMMETRIC_DECRYPT_ERROR": "ASYMMETRIC_DECRYPT_ERROR",
-                "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR"
+                "ASYMMETRIC_DECRYPT_ERROR": "Der Privateschlüssel fehlt.",
+                "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
+                "FILESIZE_REACHED": "Die maximale Dateigröße von <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> wurde überschritten. Ihre Datei '<strong>{{fileName}}</strong>' ist <strong>{{fileSize | cmBytesHumanReadable}}</strong> groß."
             }
-
         }
     },
 
@@ -446,5 +446,4 @@
             "SUBJECT": "Hallo"
         }
     }
-
 }

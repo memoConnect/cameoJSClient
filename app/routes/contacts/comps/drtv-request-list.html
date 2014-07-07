@@ -11,17 +11,14 @@
 </div>
 
 <cm-contact-tag ng-repeat="request in requests" ng-class="{'is-new':request.state == undefined,'message-open':request.isOpen, 'show-bar':request.showBar}">
-    <section ng-click="toggleBar(request)">
+    <section>
         <cm-avatar cm-data="request.identity"></cm-avatar>
         <div class="cm-request-brief w75" ng-class="{'with-message':request.message != '','message-close':!request.isOpen}">
             <strong>{{request.identity.getDisplayName()}}</strong><br />
             {{request.message}}
         </div>
-        <button data-qa="btn-toggleBar">
-            <i class="fa" ng-class="{'cm-checkbox':!request.showBar,'cm-checkbox-right':request.showBar}"></i>
-        </button>
     </section>
-    <section class="cm-request-bar" ng-show="request.showBar">
+    <section class="cm-request-bar">
         <button ng-click="acceptRequest(request)" data-qa="btn-acceptRequest">
             <i class="fa cm-checkbox-right"></i>{{'CONTACTS.REQUESTS.ACCEPT'|cmTranslate}}
         </button>
@@ -29,9 +26,9 @@
             <i class="fa cm-reject"></i>
             {{'CONTACTS.REQUESTS.REJECT'|cmTranslate}}
         </button>
-        <button ng-click="ignoreRequest(request)">
+        <!--<button ng-click="ignoreRequest(request)" ng-if="false">
             <i class="fa cm-ignore"></i>
             {{'CONTACTS.REQUESTS.IGNORE'|cmTranslate}}
-        </button>
+        </button>-->
     </section>
 </cm-contact-tag>

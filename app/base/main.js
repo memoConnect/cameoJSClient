@@ -22,6 +22,7 @@ require.config({
         'angular-moment-wrap': 'vendor/angular-moment/angular-moment',
         'moment': 'vendor/angular-moment/moment-with-langs',
         'emoji': 'vendor/emoji/emoji',
+        'fastclick': 'vendor/util/fastclick',
 
         // requirejs stuff
         'angularAMD': 'vendor/requirejs/angularAMD',

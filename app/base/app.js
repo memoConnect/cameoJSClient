@@ -4,8 +4,8 @@ define([
     'angular-cookies',
     'angular-swipe',
     'angular-moment-wrap',
-
     'angular-loading-bar',
+    'fastclick',
 
     // cameo files
     'pckCore',
@@ -24,16 +24,14 @@ define([
         'cmCore',
         'cmUi',
         'cmContacts'
-    ]);
+    ])
 
-    app.constant('cmEnv',cameo_config.env);
-    app.constant('cmVersion',{version:cameo_config.version, last_build:'-'});
-    app.constant('cmConfig',cameo_config);
-
-    //cameo_config = cameo_config
+    .constant('cmEnv',cameo_config.env)
+    .constant('cmVersion',{version:cameo_config.version, last_build:'-'})
+    .constant('cmConfig',cameo_config)
 
     // cameo configuration for our providers
-    app.config([
+    .config([
         'cmLanguageProvider',
         'cmLoggerProvider',
         'cmApiProvider',
@@ -58,9 +56,9 @@ define([
                 .preferredLanguage('en_US')   //for now
                 .useLocalStorage()
         }
-    ]);
+    ])
     // app route config
-    app.config([
+    .config([
         '$routeProvider',
         'cmBootProvider',
         function ($routeProvider, cmBootProvider) {
@@ -151,13 +149,12 @@ define([
             // start creation of routes
             createRoutes(cameo_config.routes);
         }
-    ]);
-
+    ])
     // app run handling
     /**
      * @TODO cmContactsModel anders initialisieren
      */
-    app.run([
+    .run([
         '$rootScope',
         '$location',
         '$window',
@@ -296,7 +293,11 @@ define([
             
             if(cmUserModel.getToken()) cmApi.listenToEvents()
         }
-    ]);
+    ])
+
+    .run(function() {
+        FastClick.attach(document.body);
+    });
 
     // bootstrap app and all things after here use app.register.{ng-type}
     angularAMD.bootstrap(app);
