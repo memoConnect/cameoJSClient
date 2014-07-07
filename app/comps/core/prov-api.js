@@ -415,8 +415,11 @@ angular.module('cmCore').provider('cmApi',[
                 //API EVENTS:
                 
                 cmObject.addEventHandlingTo(api)
-
                 api.subscriptionId = undefined
+
+                api.resetSubscriptionId = function(){
+                    api.subscriptionId = undefined
+                }
 
                 api.subscribeToEventStream = function(){
                     return  api.post({
@@ -443,11 +446,17 @@ angular.module('cmCore').provider('cmApi',[
                             path: events_path + '/' + api.subscriptionId,
                             exp_ok: 'events'
                         }, force)
-                        .then(function(events){
-                            events.forEach(function(event){
-                                api.trigger(event.name, event.data)
-                            })
-                        })
+                        .then(
+                            function(events){
+                                events.forEach(function(event){
+                                 api.trigger(event.name, event.data)
+                                })
+                            },
+                            function(){
+                                api.resetSubscriptionId()
+                                cmLogger.debug('cmApi.getEvents() reset invalid subscriptionId.')
+                            }
+                        )
                     }
                 }
 
@@ -460,11 +469,19 @@ angular.module('cmCore').provider('cmApi',[
 
                 api.stopListeningToEvents = function(){
                     if(api._events_promise) $interval.cancel(api._events_promise)
-                }                 
+                }      
+
 
                 if(!events_disabled && events_interval){
-                    $rootScope.$on('login',     function(){ api.listenToEvents() })
-                    $rootScope.$on('logout',    function(){ api.stopListeningToEvents() })
+                    $rootScope.$on('login',     function(){ 
+                                                    api.resetSubscriptionId()
+                                                    api.listenToEvents() 
+
+                                                })
+                    $rootScope.$on('logout',    function(){
+                                                    api.stopListeningToEvents() 
+                                                    api.resetSubscriptionId()
+                                                })
                 }
 
                 return api

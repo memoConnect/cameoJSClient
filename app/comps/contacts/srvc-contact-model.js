@@ -11,9 +11,9 @@ angular.module('cmContacts')
              this.identity      = cmIdentityFactory.new()
 
              this.importData = function(data){
-                this.id             = data.id || this.id
-                this.contactType    = data.contactType || this.contact.type
-                this.groups         = data.groups || this.groups
+                this.id             = data.id           || this.id
+                this.contactType    = data.contactType  || this.contactType
+                this.groups         = data.groups       || this.groups
                 this.identity       = data.identity ? cmIdentityFactory.create(data.identity, true) : this.identity
              }
 
