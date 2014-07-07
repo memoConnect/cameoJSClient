@@ -6,9 +6,10 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
     'cmUtil',
     'cmLogger',
     'cmNotify',
+    'cmTranslate',
     '$location',
     '$rootScope',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, $location, $rootScope){
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmTranslate, $location, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-keys-create.html',
@@ -19,19 +20,19 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                  * scope vars for keypair generation
                  * @type {string[]}
                  */
+                $scope.active = 'choose';
+                $scope.i18n = cmUtil.detectOSAndBrowser();
+                $scope.i18n.date = new Date();
                 $scope.keySizes = cmCrypt.getKeySizes();
                 $scope.keySize = '2048';
-
-                $scope.active = 'choose';
+                $scope.keyName = '';
 
                 /**
                  * generate keypair
                  */
                 $scope.generate = function(){
-                    $scope.active = 'modalCreateKey';
-                    $scope.$emit('SHOW-SPINNER');
+                    $scope.active = 'generate';
 
-                    $scope.state = '';
                     $scope.privKey = '';
                     $scope.pubKey = '';
 
@@ -42,31 +43,26 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                      */
                     cmCrypt.generateAsyncKeypair(parseInt($scope.keySize),
                         function(counts, timeElapsed){
-                            $scope.state =
-                                'counts: '+counts+'\n'+
-                                'time elapsed: '+cmUtil.millisecondsToStr(timeElapsed);
+                            $scope.i18n.time = cmUtil.millisecondsToStr(timeElapsed);
                             $scope.$apply();
                         }
                     ).then(
                         function(result){
-                            $scope.state =
-                                'Elapsed Time '+ cmUtil.millisecondsToStr(result.timeElapsed)+'\n'+
-                                'Step Count '+result.counts+'\n';
+                            $scope.i18n.time = cmUtil.millisecondsToStr(result.timeElapsed);
+                            $scope.i18n.date = new Date();
 
                             $scope.privKey  = result.key.getPrivateKey();
                             $scope.pubKey   = result.key.getPublicKey();
 
-                            $scope.$emit('HIDE-SPINNER');
-                            $scope.active = 'finishCreateKey';
+                            $scope.keyName = cmTranslate('SETTINGS.PAGES.IDENTITY.KEYS.KEY_NAME_VALUE',$scope.i18n);
+
+                            $scope.active = 'store';
                         },
                         function(){
-                            $scope.state    = 'generation canceled';
-                            $scope.key      = undefined;
                             $scope.privKey  = '';
                             $scope.pubKey   = '';
 
-                            $scope.$emit('HIDE-SPINNER');
-                            $scope.active = 'showOwnKeys';
+                            $scope.active = 'choose';
                         }
                     );
                 };
@@ -75,7 +71,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                  */
                 $scope.cancel = function(){
                     cmCrypt.cancelGeneration();
-                    $scope.$emit('HIDE-SPINNER');
                     $scope.active = 'choose';
                 };
                 /**

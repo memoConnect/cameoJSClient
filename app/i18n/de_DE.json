@@ -279,7 +279,19 @@
                 "KEYS": {
                     "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
                     "CREATE": "erstellen",
-                    "IMPORT": "importieren"
+                    "IMPORT": "importieren",
+                    "CHOOSE_SIZE": "Schlüsselstärke wählen",
+                    "GENERATE": "generieren",
+                    "GENERATION_IN_PROGRESS": "Generierung läuft",
+                    "GENERATION_TIME_PROGRESS": "verbrauchte Zeit: {{time}}",
+                    "CANCEL": "Generiung abbrechen",
+                    "STORE_KEYPAIR": "Schlüsselpaar speichern",
+                    "GENERATION_TIME": "Die Generierung hat {{time}} gedauert.",
+                    "PRIVATE_KEY": "Privaterschlüssel",
+                    "PUBLIC_KEY": "Öffentlicherschlüssel",
+                    "KEY_NAME": "Schlüsselname",
+                    "KEY_NAME_VALUE": "{{browser}} / {{date | date:'dd.mm.yy - HH:mm'}}",
+                    "STORE": "speichern"
                 }
             },
             "ABOUT_US":{

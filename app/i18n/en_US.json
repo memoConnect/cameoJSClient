@@ -279,7 +279,19 @@
                 "KEYS": {
                     "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
                     "CREATE": "create",
-                    "IMPORT": "import"
+                    "IMPORT": "import",
+                    "CHOOSE_SIZE": "Choose keysize",
+                    "GENERATE": "generate",
+                    "GENERATION_IN_PROGRESS": "generation in progress",
+                    "GENERATION_TIME_PROGRESS": "time elapsed: {{time}}",
+                    "CANCEL": "cancel",
+                    "STORE_KEYPAIR": "Store Keypair",
+                    "GENERATION_TIME": "The generation lasted {{time}}.",
+                    "PRIVATE_KEY": "Privatekey",
+                    "PUBLIC_KEY": "Publickey",
+                    "KEY_NAME": "Keyname",
+                    "KEY_NAME_VALUE": "{{browser}} / {{date | date:'dd.mm.yy - HH:mm'}}",
+                    "STORE": "store"
                 }
             },
             "ABOUT_US": {
