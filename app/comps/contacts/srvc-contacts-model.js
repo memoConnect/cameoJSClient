@@ -270,13 +270,23 @@ angular.module('cmContacts').service('cmContactsModel',[
         });
 
         cmContactsAdapter.on('friendRequest:accepted', function(event, data){
+            //Friend request sent by the current user was accepted:
             if(data.from == cmUserModel.data.identity.id){
                 var contact = self.contacts.filter(function(contact){ return contact.identity.id == data.to })[0]
 
-                if(typeof contact.setContactType == 'function'){
+                if(contact && typeof contact.setContactType == 'function'){
                     contact.setContactType('internal')
                 }
             }
+
+            //Friend request accepted by the current user (on a different device):
+            if(data.to == cmUserModel.data.identity.id){
+                self.requests.forEach(function(request){
+                    if(request.identity.id == data.from)
+                        self.requests.deregister(request)
+                });
+            }
+
         });
 
         this.requests.on('register', function(){
