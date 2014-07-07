@@ -21,8 +21,6 @@ angular.module('cmSecurityAspects')
             this.value          = config.value          || 0;
             this.dependencies   = config.dependencies   || [];  //Array of aspect ids
 
-            this.stateVars      = {};
-
             /**
              * Function to check if the aspect applies to the target.
              * @param  {*}      target to evaluate against.

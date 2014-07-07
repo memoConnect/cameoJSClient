@@ -419,13 +419,13 @@
                 "DESCRIPTION": "",
                 "TOGGLE": "Verschlüsselung aktivieren."
             },
-            "RECIPIENTS_WITH_KEY": {
-                "NAME": "Alle Empfänger haben ein Schlüsselpaar.",
+            "RECIPIENTS_WITH_PROPER_KEY": {
+                "NAME": "Alle Empfänger haben gutes Schlüsselpaar.",
                 "DESCRIPTION": ""
             },
-            "RECIPIENTS_WITHOUT_KEY": {
-                "NAME": "{{count}} Empfänger {{count!=1?'haben':'hat'}} kein Schlüsselpaar.",
-                "DESCRIPTION": "Betroffene Empfänger: {{recipients}}"
+            "RECIPIENTS_WITHOUT_PROPER_KEY": {
+                "NAME": "{{count}} Empfänger {{count!=1?'haben':'hat'}} kein gutes Schlüsselpaar.",
+                "DESCRIPTION": "Betroffene Empfänger: {{typeof bad_recipients_list}}"
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha wird verwendet!",

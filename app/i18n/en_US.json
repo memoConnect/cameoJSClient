@@ -418,13 +418,13 @@
                 "DESCRIPTION": "",
                 "TOGGLE": "Enable encryption."
             },
-            "RECIPIENTS_WITH_KEY": {
-                "NAME": "All Recipients have a keypair.",
+            "RECIPIENTS_WITH_PROPER_KEYS": {
+                "NAME": "All Recipients have a proper keypair.",
                 "DESCRIPTION": ""
             },
-            "RECIPIENTS_WITHOUT_KEY": {
+            "RECIPIENTS_WITHOUT_PROPER_KEYS": {
                 "NAME": "{{count}} Recipient{{count!=1?'s have':' has'}} no keypair.",
-                "DESCRIPTION": "Affected Recipients: {{recipients}}"
+                "DESCRIPTION": "Affected Recipients: {{bad_recipients_list}}"
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha enabled!",

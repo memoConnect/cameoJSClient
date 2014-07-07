@@ -34,11 +34,17 @@ angular.module('cmSecurityAspects')
                     }
                 })
                 .addAspect({
-                    id: 'RECIPIENTS_WITH_KEY',
+                    id: 'RECIPIENTS_WITH_PROPER_KEYS',
                     value: 3,
                     check: function(conversation){
+                        return conversation.recipients.every(function(recipient){
+                            return recipient.getWeakestKeySize() > 2000
+                        })
+
+                        /*
                         var bool = true,
                             count = 0;
+
                         angular.forEach(conversation.recipients, function(recipient){
                             if(recipient.getWeakestKeySize() < 1000) {
                                 bool = false;
@@ -52,12 +58,21 @@ angular.module('cmSecurityAspects')
                             this.stateVars = {};
                         }
                         return bool;
+                        */
                     }
                 })
                 .addAspect({
-                    id: 'RECIPIENTS_WITHOUT_KEY',
+                    id: 'RECIPIENTS_WITHOUT_PROPER_KEYS',
                     value: -1,
                     check: function(conversation){
+                        this.bad_recipients = conversation.recipients.filter(function(recipient){
+                            return recipient.getWeakestKeySize() <= 2000
+                        })
+
+                        this.bad_recipients_list = this.bad_recipients.map(function(recipient){ return recipient.getDisplayName() }).join(', ')
+
+                        return this.bad_recipients.length != 0
+                        /*
                         var bool = false,
                             count = 0,
                             recipients = [];
@@ -76,6 +91,7 @@ angular.module('cmSecurityAspects')
                             this.stateVars = {};
                         }
                         return bool;
+                        */
                     }
                 })
                 .addAspect({
