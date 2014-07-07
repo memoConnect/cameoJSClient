@@ -381,7 +381,7 @@
             },
             "FRIEND_REQUEST": "Neue Freundschaftsanfrage",
             "CONVERSATION":{
-                "ASYMMETRIC_DECRYPT_ERROR": "ASYMMETRIC_DECRYPT_ERROR",
+                "ASYMMETRIC_DECRYPT_ERROR": "Der Privateschlüssel fehlt.",
                 "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
                 "FILESIZE_REACHED": "Die maximale Dateigröße von <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> wurde überschritten. Ihre Datei '<strong>{{fileName}}</strong>' ist <strong>{{fileSize | cmBytesHumanReadable}}</strong> groß."
             }
