@@ -23,7 +23,7 @@ module.exports = function(config) {
             'app/vendor/!(require*)/*.js',
 
             'app/vendor/crypto/sjcl/sjcl.min.js',
-            'app/vendor/crypto/jsencrypt/jsencrypt.min.js',
+            'app/vendor/crypto/jsencrypt/jsencrypt.js',
 
             // packages
             'app/packages/comps/core/package.js',

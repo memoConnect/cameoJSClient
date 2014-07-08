@@ -18,10 +18,13 @@ define([
                 $scope.pageTitle = newTitle;
             });
 
-            $scope.mainPage = $routeParams.mainPage || '';
-            $scope.subPage = $routeParams.subPage || '';
+            $scope.pageParent = $routeParams.pageParent || '';
+            $scope.pageChild1 = $routeParams.pageChild1 || '';
+            $scope.pageChild2 = $routeParams.pageChild2 || '';
 
-            $scope.route = $scope.mainPage+'/'+$scope.subPage;
+            $scope.route = $scope.pageParent +
+                           ($scope.pageChild1 ? '/' + $scope.pageChild1 : '') +
+                           ($scope.pageChild2 ? '/' + $scope.pageChild2 : '');
 
             $scope.createNewConversation = function(){
                 delete($rootScope.pendingConversation);

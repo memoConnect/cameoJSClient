@@ -3,13 +3,14 @@
 angular.module('cmCore').factory('cmIdentityModel',[
     'cmAuth',
     'cmCrypt',
+    'cmKey',
     'cmObject',
     'cmLogger',
     'cmApi',
     'cmFileFactory',
     'cmStateManagement',
     'cmUtil',
-    function(cmAuth, cmCrypt, cmObject, cmLogger, cmApi, cmFileFactory, cmStateManagement, cmUtil){
+    function(cmAuth, cmCrypt, cmKey, cmObject, cmLogger, cmApi, cmFileFactory, cmStateManagement, cmUtil){
 
         function Identity(identity_data){
 
@@ -78,9 +79,9 @@ angular.module('cmCore').factory('cmIdentityModel',[
                 this.created                = data.created || this.created;
                 this.lastUpdated            = data.lastUpdated || this.lastUpdated;
 
-                data.publicKeys = data.publicKeys || [];
+                data.publicKeys             = data.publicKeys || [];
 
-                data.publicKeys.forEach(function(publicKey_data){
+                data.publicKeys.forEach(function (publicKey_data) {
                     self.addKey(publicKey_data);
                 });
 
@@ -182,21 +183,25 @@ angular.module('cmCore').factory('cmIdentityModel',[
             };
 
             this.addKey = function(key_data){
-                //key_data maybe a string containing a public or Private key, or a key Object (cmCrypt.Key)
-
+                // key_data maybe a string containing a public or Private key, or a key Object (cmCrypt.Key)
                 var key,
                     is_object  = (typeof key_data == 'object'),
                     is_string  = (typeof key_data == 'string'),
-                    can_update = is_object && "updateKeyList" in key_data
+                    can_update = is_object && 'updateKeyList' in key_data
 
-                if( can_update )                key = key_data;  //already a Key object
-                if( is_object && !can_update)   key = (new cmCrypt.Key()).importData(key_data); //from backend or localstorgae
-                if( is_string)                  key = new cmCrypt.Key(key_data); //plain text public or private key
+                if( can_update )                key = key_data; //already a Key object
+                if( is_object && !can_update)   key = (new cmKey()).importData(key_data); //from backend or localstorgae
+                if( is_string)                  key = new cmKey(key_data); //plain text public or private key
 
                 key
                 ?   key.updateKeyList(self.keys)
-                :   cmLogger.error('uanable to add key, unknown format: '+key_data);
+                :   cmLogger.error('unable to add key, unknown format: '+key_data);
 
+                return this;
+            };
+
+            this.removeKey = function(key){
+                key.removeFromKeyList(self.keys);
                 return this;
             };
 

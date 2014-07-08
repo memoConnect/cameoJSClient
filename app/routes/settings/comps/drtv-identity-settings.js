@@ -9,8 +9,6 @@ angular.module('cmRouteSettings').directive('cmIdentitySettings', [
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-settings.html',
             controller: function ($scope) {
-                $rootScope.$broadcast('pageTitle:change','SETTINGS.IDENTITY')
-
                 $scope.identity = cmUserModel.data.identity;
 
                 //////////////////////

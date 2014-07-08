@@ -243,7 +243,7 @@ describe('cmCrypt', function () {
                 expect(list.length).toBe(2)
             })
 
-            it('should provide a function "updateKeyDataList" to add iteself to a list of key_data, preventing duplicates', function(){
+            it('should provide a function "updateKeyDataList" to add itself to a list of key_data, preventing duplicates', function(){
                 var list    = [],
                     new_key = new cmCrypt.Key()
 
@@ -261,11 +261,6 @@ describe('cmCrypt', function () {
                 expect(list.length).toBe(2)
 
             })
-
-
         })
-
     })
-
-
 })

@@ -1,40 +1,56 @@
 section.settings {
-  header.inScreen {
-    width: 100%;
-    color: @cm-grey;
-    padding-left: 0.8rem;
-    i {
-      margin-right: 0;
-    }
-  }
   ul {
     background-color: @cm-white;
     li {
       .with-cursor;
       min-height: 4rem;
       border-bottom: @cm-border-grey @cm-border-width solid;
+      position: relative;
       .item {
         color: @cm-grey;
         display: inline-block;
-        padding: 1rem 0 0 1rem;
+        padding: 1rem;
         width: 100%;
         position: relative;
         .title, .content {
           display: inline-block;
           width: 70%;
         }
-        .content {
+        .content{
           position: relative;
           text-align: right;
           right: 0.5rem;
           width: 30% !important;
         }
+        i {
+          margin-right: 1rem;
+        }
       }
-      i {
-        margin-right: 1rem;
+      .shortLinks{
+        position:absolute;
+        right:0;
+        top:0;
+        i {
+          text-align:center;
+          width:@cm-unit;
+          height:@cm-unit;
+          line-height:@cm-unit;
+          font-size:@cm-mega-font;
+        }
       }
       &.is-disabled{
-        opacity: 0.5;
+        .item, .shortLinks {
+          .cm-disabled
+        }
+      }
+      .page {
+        padding: 1rem;
+        h2{
+          font-size:@cm-mega-font;
+        }
+        h3{
+          font-size:@cm-large-font;
+        }
       }
     }
   }
@@ -45,4 +61,8 @@ section.settings {
   .cm-rhino-bubble-glyph{
     font-size:10rem;
   }
+}
+
+.isInLocalstorage{
+  color:@cm-ci-color;
 }

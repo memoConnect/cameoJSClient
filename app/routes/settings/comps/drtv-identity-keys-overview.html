@@ -1,0 +1,40 @@
+<header class="inScreen">
+    <i class="fa cm-key cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.HEADER' | cmTranslate}}
+</header>
+
+<ul>
+    <li>
+        <a href="#/settings/identity/keys/create" class="item w50">
+            <i class="fa cm-checkbox-add icon-left cm-lg-icon"></i>
+            <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE'|cmTranslate}}</span>
+        </a>
+        <a cm-href="#/settings/identity/keys/import" class="item w50 cm-disabled">
+            <i class="fa cm-fix icon-left cm-lg-icon"></i>
+            <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT'|cmTranslate}}</span>
+        </a>
+    </li>
+    <li ng-repeat="key in ownKeys | orderBy:'getPrivateKey()':false">
+        <span class="item clearfix">
+            <strong>{{key.getSize()}}</strong>
+            <strong class="isInLocalstorage" ng-if="key.getPrivateKey()"> {{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_ON_THIS_DEVICE'|cmTranslate}}</strong>
+            {{key.name}}<br />
+            {{key.created | date:'dd.MM.yy - HH:mm'}}
+        </span>
+        <div class="shortLinks">
+            <i class="fa cm-clipboard" ng-click="openModal('modalExportKeyPair',key)"></i>
+            <i class="fa cm-checkbox-wrong" ng-click="remove(key)"></i>
+        </div>
+    </li>
+</ul>
+
+<cm-modal id="modalExportKeyPair" class="no-padding" cm-data-as="key" cm-title="SETTINGS.PAGES.IDENTITY.KEYS.EXPORT_KEY">
+    <div class="modal-row">
+        <h2>{{key.name}} - {{key.getSize()}}</h2>
+        <div ng-if="key.getPrivateKey()">
+            <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
+            <textarea class="form-control" cm-clipboard>{{key.getPrivateKey()}}</textarea>
+        </div>
+        <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PUBLIC_KEY'|cmTranslate}}</h3>
+        <textarea class="form-control" cm-clipboard>{{key.getPublicKey()}}</textarea>
+    </div>
+</cm-modal>

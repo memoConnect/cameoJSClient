@@ -39,7 +39,7 @@ require.config({
 
         // crypto
         'crypto-sjcl': 'vendor/crypto/sjcl/sjcl.min',
-        'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt.min',
+        'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt',
 
         // packages generated via grunt task 'packages'
         'pckCore': 'packages/comps/core/package',

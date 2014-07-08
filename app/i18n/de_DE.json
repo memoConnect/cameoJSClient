@@ -276,7 +276,24 @@
                 "SEND_ON_RETURN": "Senden bei Enter-Tasten druck"
             },
             "IDENTITY": {
-                "KEYS": "@:IDENTITY.LABEL.KEYMANAGEMENT"
+                "KEYS": {
+                    "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
+                    "CREATE": "erstellen",
+                    "IMPORT": "importieren",
+                    "KEY_ON_THIS_DEVICE": "lokal",
+                    "EXPORT_KEY": "Schlüsselpaar exportieren",
+                    "CHOOSE_SIZE": "Schlüsselstärke wählen",
+                    "GENERATE": "generieren",
+                    "GENERATION_IN_PROGRESS": "Generierung läuft",
+                    "GENERATION_TIME_PROGRESS": "verbrauchte Zeit: {{time}}",
+                    "CANCEL": "Generiung abbrechen",
+                    "STORE_KEYPAIR": "Schlüsselpaar speichern",
+                    "GENERATION_TIME": "Die Generierung hat {{time}} gedauert.",
+                    "PRIVATE_KEY": "Privaterschlüssel",
+                    "PUBLIC_KEY": "Öffentlicherschlüssel",
+                    "KEY_NAME": "Schlüsselname",
+                    "STORE": "speichern"
+                }
             },
             "ABOUT_US":{
                 "TITLE": "Über uns",
