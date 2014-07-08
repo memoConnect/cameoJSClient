@@ -7,7 +7,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
     'cmLogger',
     'cmNotify',
     'cmKey',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey){
+    '$interval',
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey, $interval){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-keys-create.html',

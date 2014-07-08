@@ -289,8 +289,16 @@ describe('cmUtil', function(){
                 expect(cmUtil.millisecondsToStr(1000*60)).toBe('1m')
             })
 
+            it('1m 10s', function(){
+                expect(cmUtil.millisecondsToStr(1000*70)).toBe('1m 10s')
+            })
+
             it('1h', function(){
                 expect(cmUtil.millisecondsToStr(1000*60*60)).toBe('1h')
+            })
+
+            it('1h 21m 40s', function(){
+                expect(cmUtil.millisecondsToStr(1000*70*70)).toBe('1h')
             })
 
             it('1d', function(){
