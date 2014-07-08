@@ -11,8 +11,8 @@ angular.module('cmConversations').factory('cmMessageModel',[
     'cmUtil',
     'cmLogger',
     '$rootScope',
-    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, cmObject, cmStateManagement, cmUtil, cmLogger, $rootScope){
-
+    '$q',
+    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, cmObject, cmStateManagement, cmUtil, cmLogger, $rootScope, $q){
         /**
          * @constructor
          * @description
@@ -210,29 +210,29 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                 this.publicData = public_data;
 
-                //Check if the message is allright to be send to the backend:
+                // Check if the message is allright to be send to the backend:
 
                 var proper_public_data      =       (typeof this.publicData == 'object')
                                                 &&  Object.keys(this.publicData).length > 0,
-                    proper_encrypted_data   =       (typeof this.encryptedData == 'object')
-                                                &&  Object.keys(this.encryptedData).length > 0
+                    proper_encrypted_data   =       (typeof this.encryptedData == 'string')
+                                                &&  this.encryptedData.length > 0
 
-                
                 if(!proper_public_data && !proper_encrypted_data) {
-                    cmLogger.error('cmMessageModel: Message improper; saving aborted.')
-                    return null
+                    var defer = $q.defer();
+                    cmLogger.error('cmMessageModel: Message improper; saving aborted.');
+                    defer.reject();
+                    return defer.promise;
                 }
-                
 
-                //If we got this far evrything seems allright; send the message to the backend:
+                // If we got this far evrything seems allright; send the message to the backend:
                 return cmConversationsAdapter.sendMessage(conversation.id, {
                     encrypted:  this.encryptedData,
                     plain:      this.publicData
                 })
-                    .then(function (message_data) {
-                        self.importData(message_data);
-                        self.trigger('message:saved');
-                    });
+                .then(function (message_data) {
+                    self.importData(message_data);
+                    self.trigger('message:saved');
+                });
             };
 
             this.isOwn = function(){
@@ -316,7 +316,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
             /**
              * initialize Files from Message Data (fileIds)
              * @returns {Message}
-             * @todo  file factory?
              */
             this.initFiles = function(){
                 if(this.fileIds.length > 0){

@@ -21,37 +21,37 @@ angular.module('cmCore')
                         "X-File-Type": config.type,
                         "X-Max-Chunks": config.chunks
                     }
-                })
+                });
             },
 
             addChunk: function(fileId, index, chunk) {
                 return cmApi.postBinary({
                     path: '/file/'+fileId,
-//                    data: {chunk: chunk},
                     data: chunk,
                     headers: {
                         "X-Index": index
                     },
                     transformRequest: function(data){return data}
-                })
+                });
             },
 
-            getFileInfo: function(fileId){
-                return cmApi.get({
-                    path: '/file/'+fileId
-                })
+            complete: function(fileId, conversationId){
+                return cmApi.post({
+                    path: '/file/'+fileId+'/completed',
+                    data: conversationId
+                });
             },
-            // TODO: duplicated? see above!
+
             getFile: function(fileId){
                 return cmApi.get({
                     path: '/file/'+fileId
-                })
+                });
             },
 
             getChunk: function(fileId, chunkId){
                 return cmApi.getBinary({
                     path: '/file/'+fileId+'/'+chunkId
-                })
+                });
             },
 
             blobWrap: function(data, contentType, method){

@@ -11,7 +11,8 @@ angular.module('cmCore')
     '$q',
     'cmModal',
     'cmEnv',
-    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, $q, cmModal, cmEnv){
+    '$routeParams',
+    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, $q, cmModal, cmEnv, $routeParams){
 
         function roundToTwo(num) {
             return +(Math.round(num + 'e+2') + 'e-2');
@@ -77,15 +78,17 @@ angular.module('cmCore')
             this.importFile = function(){
                 var self = this;
 
-                return cmFilesAdapter.getFileInfo(this.id).then(
+                return cmFilesAdapter.getFile(this.id).then(
                     function(details){
                         self.encryptedName = details.fileName;
                         self.type          = details.fileType;
                         self.size          = details.fileSize;
                         self.chunkIndices  = details.chunks;
                         self.maxChunks     = details.maxChunks;
-
-                        self.trigger('importFile:finish');
+                        // start download when flag is true
+                        if(details.isCompleted !== false) {
+                            self.trigger('importFile:finish');
+                        }
                     },
                     function(){
                         self.trigger('file:crashed');
@@ -256,7 +259,9 @@ angular.module('cmCore')
                         self.trigger('progress:chunk', (index/self.chunks.length));
 
                         if(index == (self.chunks.length - 1)){
-                            self.trigger('upload:finish');
+                            cmFilesAdapter.complete(self.id, $routeParams.conversationId).then(function(){
+                                self.trigger('upload:finish');
+                            });
                         } else {
                             self.trigger('upload:chunk', index);
                         }
@@ -309,18 +314,19 @@ angular.module('cmCore')
                     return null;
                 }
 
-                this.importFile().then(
-                    function(){
-                        self
-                            .setState('exists')
-                            .trigger('import:finish');
+                this.importFile();
 
-                        /**
-                         * start download with first chunk in array
-                         */
-                        self._downloadChunk(0);
-                    }
-                );
+                this.on('importFile:finish',function(){
+                    console.log('start downloding')
+                    self
+                        .setState('exists')
+                        .trigger('import:finish');
+
+                    /**
+                     * start download with first chunk in array
+                     */
+                    self._downloadChunk(0);
+                });
 
                 return this;
             };
