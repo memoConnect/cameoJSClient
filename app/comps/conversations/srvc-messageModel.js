@@ -108,15 +108,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 return this;
             };
 
-            this.isProper = function(){                    
-                var text_available  =       typeof this.text == 'string'
-                                        &&  this.text.length > 0,
-                    files_available =       typeof this.fileIds == 'object'
-                                        &&  this.fileIds.length > 0,
-                    encrypted       =       this.isEncrypted()
-                
-                return text_available || files_available || encrypted
-            }
 
             // sets which data should not be encrypted
             this.setPublicData = function(data){
@@ -203,6 +194,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 return true;
             };
 
+
             /**
              * send message to backend object
              * @param conversation
@@ -218,9 +210,24 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                 this.publicData = public_data;
 
+                //Check if the message is allright to be send to the backend:
+
+                var proper_public_data      =       (typeof this.publicData == 'object')
+                                                &&  Object.keys(this.publicData).length > 0,
+                    proper_encrypted_data   =       (typeof this.encryptedData == 'object')
+                                                &&  Object.keys(this.encryptedData).length > 0
+
+                
+                if(!proper_public_data && !proper_encrypted_data) {
+                    cmLogger.error('cmMessageModel: Message improper; saving aborted.')
+                    return null
+                }
+                
+
+                //If we got this far evrything seems allright; send the message to the backend:
                 return cmConversationsAdapter.sendMessage(conversation.id, {
-                    encrypted: this.encryptedData,
-                    plain: this.publicData
+                    encrypted:  this.encryptedData,
+                    plain:      this.publicData
                 })
                     .then(function (message_data) {
                         self.importData(message_data);

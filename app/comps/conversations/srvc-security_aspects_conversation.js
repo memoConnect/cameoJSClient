@@ -35,6 +35,7 @@ angular.module('cmSecurityAspects')
                 })
                 .addAspect({
                     id: 'RECIPIENTS_WITH_PROPER_KEYS',
+                    dependencies: ['ENCRYPTED'],
                     value: 3,
                     check: function(conversation){
                         return conversation.recipients.every(function(recipient){
@@ -64,6 +65,7 @@ angular.module('cmSecurityAspects')
                 .addAspect({
                     id: 'RECIPIENTS_WITHOUT_PROPER_KEYS',
                     value: -1,
+                    dependencies: ['ENCRYPTED'],
                     check: function(conversation){
                         this.bad_recipients = conversation.recipients.filter(function(recipient){
                             return recipient.getWeakestKeySize() <= 2000

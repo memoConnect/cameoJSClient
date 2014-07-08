@@ -453,6 +453,7 @@ angular.module('cmCore').provider('cmApi',[
                                 })
                             },
                             function(){
+                                //Todo: Alle Daten updaten// reload ?
                                 api.resetSubscriptionId()
                                 cmLogger.debug('cmApi.getEvents() reset invalid subscriptionId.')
                             }
