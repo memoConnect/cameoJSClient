@@ -4,8 +4,8 @@ var cmUserModel,
     cmCrypt
 
 describe('cmUserModel', function(){
-    var cmUserModel;
-        cmCrypt;
+    var cmUserModel,
+        cmKey;
 
     beforeEach(function(){
         module(function($provide){
@@ -13,16 +13,14 @@ describe('cmUserModel', function(){
         })
     })
 
-    beforeEach(module("cmCore"))
+    beforeEach(module('cmCore'))
 
-    beforeEach(inject(function(_cmUserModel_, _cmCrypt_) {
-
+    beforeEach(inject(function(_cmUserModel_, _cmKey_) {
         //@TODO: UserModel initiert sich beim inject und ruft die api auf, promises werden erst mit flush oder $apply aufgelöst, überlegen wir wir das anders organisieren
-
         cmUserModel = _cmUserModel_
 //
-        cmCrypt = _cmCrypt_
-        cmUserModel.setAuth() //@todo
+        cmKey = _cmKey_
+        cmUserModel.setAuth() //@todo ???
         cmUserModel.importData({
             id : 'my_id_moep',
             userKey: 'my_user_key'
@@ -110,8 +108,8 @@ describe('cmUserModel', function(){
         var good_key, bad_key, encrypted_secret
 
         beforeEach(function(){
-            good_key = new cmCrypt.Key('-----BEGIN RSA PRIVATE KEY-----MGACAQACEFhXgxfNAzZJ8Q3YpU4x9hsCAwEAAQIQDF99aej56TF5zFs6LBBveQIJAKDFUfKmtsZXAgkAjKtWvZtVC90CCBjUAEDSAD4HAghfDTfjjx58kQIIUHBhrwvxsKw=-----END RSA PRIVATE KEY-----'),
-            bad_key  = new cmCrypt.Key(''),
+            good_key = new cmKey('-----BEGIN RSA PRIVATE KEY-----MGACAQACEFhXgxfNAzZJ8Q3YpU4x9hsCAwEAAQIQDF99aej56TF5zFs6LBBveQIJAKDFUfKmtsZXAgkAjKtWvZtVC90CCBjUAEDSAD4HAghfDTfjjx58kQIIUHBhrwvxsKw=-----END RSA PRIVATE KEY-----'),
+            bad_key  = new cmKey(''),
             encrypted_secret = 'GGddYb0ZAZizKuN3zCikcg==' //contains 'priv'
         })
 

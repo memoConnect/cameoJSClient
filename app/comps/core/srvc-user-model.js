@@ -296,8 +296,9 @@ angular.module('cmCore')
             /**
              * check local Keys from Storage
              */
+
             var localKeys = this.loadLocalKeys() || [],
-                publicKeysEmpty = this.data.identity.keys.length == 0;
+                publicKeysEmpty = this.data.identity.keys ? this.data.identity.keys.length == 0 : false;
 
             localKeys.forEach(function(local_key){
                 if(publicKeysEmpty || typeof local_key.id === 'undefined' || local_key.id == ''){

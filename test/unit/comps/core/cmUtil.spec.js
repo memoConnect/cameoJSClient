@@ -298,7 +298,7 @@ describe('cmUtil', function(){
             })
 
             it('1h 21m 40s', function(){
-                expect(cmUtil.millisecondsToStr(1000*70*70)).toBe('1h')
+                expect(cmUtil.millisecondsToStr(1000*70*70)).toBe('1h 21m 40s')
             })
 
             it('1d', function(){

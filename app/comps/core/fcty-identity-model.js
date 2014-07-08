@@ -187,14 +187,14 @@ angular.module('cmCore').factory('cmIdentityModel',[
                 var key,
                     is_object  = (typeof key_data == 'object'),
                     is_string  = (typeof key_data == 'string'),
-                    can_update = is_object && 'addToKeyList' in key_data
+                    can_update = is_object && 'updateKeyList' in key_data
 
                 if( can_update )                key = key_data; //already a Key object
                 if( is_object && !can_update)   key = (new cmKey()).importData(key_data); //from backend or localstorgae
                 if( is_string)                  key = new cmKey(key_data); //plain text public or private key
 
                 key
-                ?   key.addToKeyList(self.keys)
+                ?   key.updateKeyList(self.keys)
                 :   cmLogger.error('unable to add key, unknown format: '+key_data);
 
                 return this;

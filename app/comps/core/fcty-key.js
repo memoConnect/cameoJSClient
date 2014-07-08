@@ -13,15 +13,15 @@ angular.module('cmCore')
             var self = this,
                 crypt;
 
-            if(typeof data == "object" && "addToKeyList" in data)
+            if(typeof data == 'object' && 'updateKeyList' in data)
                 return data //data is already a Key object
 
             if(
-                typeof data == "object"
-                && "getPublicKey"   in data
-                && "getPrivateKey"  in data
-                && "encrypt"        in data
-                && "decrypt"        in data
+                typeof data == 'object'
+                && 'getPublicKey'   in data
+                && 'getPrivateKey'  in data
+                && 'encrypt'        in data
+                && 'decrypt'        in data
             ){
                 crypt = data;    //data is already a JSEncrypt object
             } else {
@@ -120,7 +120,7 @@ angular.module('cmCore')
                 return data;
             };
 
-            this.addToKeyList = function(key_list){
+            this.updateKeyList = function(key_list){
                 var check = false;
 
                 key_list.forEach(function(key){
