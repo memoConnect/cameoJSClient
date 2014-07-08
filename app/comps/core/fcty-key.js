@@ -84,23 +84,18 @@ angular.module('cmCore')
             };
 
             this.importData = function(data){
-                var public_key = this.getPublicKey();
-
-                data.pubKey = data.pubKey   ? data.pubKey.replace(/\n/g,'') : undefined;
-                public_key  = public_key    ? public_key.replace(/\n/g,'')  : undefined;
+                var key =       data.privKey
+                            ||  this.getPrivateKey()                  
+                            ||  data.key
+                            ||  data.pubKey
+                            ||  undefined 
 
                 if(data.name)   this.setName(data.name);
                 if(data.id)     this.setId(data.id);
                 if(data.created) this.created = data.created;
 
-                if(data.pubKey && (data.pubKey != public_key))
-                    this.setKey(data.pubKey);
 
-                if(data.key && (data.key != public_key))
-                    this.setKey(data.key);
-
-                if(data.privKey)
-                    this.setKey(data.privKey);
+                if(key) this.setKey(key);
 
                 return this;
             };
