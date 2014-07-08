@@ -23,7 +23,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                 $scope.active = 'choose';
                 $scope.keySizes = cmCrypt.getKeySizes();
                 $scope.keySize = '2048';
-                $scope.keyName = detect.os+' / '+detect.browser;
+                $scope.keyName = '';
                 $scope.i18n = {time:''};
 
                 /**
@@ -31,9 +31,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                  */
                 $scope.generate = function(){
                     $scope.active = 'generate';
-
-                    $scope.privKey = '';
-                    $scope.pubKey = '';
 
                     /**
                      * call cmCrypt to generate KeyPair
@@ -51,6 +48,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
 
                             $scope.privKey  = result.key.getPrivateKey();
                             $scope.pubKey   = result.key.getPublicKey();
+                            $scope.keyName  = detect.os+' / '+detect.browser;
 
                             $scope.active = 'store';
                         },

@@ -133,37 +133,40 @@ angular.module('cmCore')
             // TIP: to find current time in milliseconds, use:
             // var current_time_milliseconds = new Date().getTime();
 
-            // This function does not deal with leap years, however,
-            // it should not be an issue because the output is aproximated.
-            function numberEnding (number) {
-                return ""//(number > 1) ? '\'s' : '';
+            function addToString(newStr){//addWhiteSpace
+                str+= (str != '' ? ' ': '')+newStr
             }
 
             if(typeof milliseconds != 'number')
                 return 'n/a';
 
-            var temp = milliseconds / 1000;
-            var years = Math.floor(temp / 31536000);
-            if (years) {
-                return years + 'y' + numberEnding(years);
-            }
+            var str = '',
+                temp = milliseconds / 1000,
+                years = Math.floor(temp / 31536000);
+
+            if (years)
+                addToString(years + 'y');
+
             var days = Math.floor((temp %= 31536000) / 86400);
-            if (days) {
-                return days + 'd' + numberEnding(days);
-            }
+            if (days)
+                addToString(days + 'd');
+
             var hours = Math.floor((temp %= 86400) / 3600);
-            if (hours) {
-                return hours + 'h' + numberEnding(hours);
-            }
+            if (hours)
+                addToString(hours + 'h');
+
             var minutes = Math.floor((temp %= 3600) / 60);
-            if (minutes) {
-                return minutes + 'm' + numberEnding(minutes);
-            }
+            if (minutes)
+                addToString(minutes + 'm');
+
             var seconds = temp % 60;
-            if (seconds) {
-                return seconds + 's' + numberEnding(seconds);
-            }
-            return '< s'; //'just now' //or other string you like;
+            if (seconds)
+                addToString(seconds + 's');
+
+            if(str == '')
+                addToString('< s');
+
+            return str;
         };
 
         /**

@@ -229,25 +229,25 @@ describe('cmCrypt', function () {
                 var list    = [],
                     new_key = new cmCrypt.Key()
 
-                expect(key.updateKeyList).toBeDefined()
+                expect(key.addToKeyList).toBeDefined()
 
                 key
                 .setId('my_id')
                 .setKey(publicKey)
 
-                key.updateKeyList(list)
+                key.addToKeyList(list)
                 expect(list.length).toBe(1)
-                key.updateKeyList(list)
+                key.addToKeyList(list)
                 expect(list.length).toBe(1)
-                new_key.updateKeyList(list)
+                new_key.addToKeyList(list)
                 expect(list.length).toBe(2)
             })
 
-            it('should provide a function "updateKeyDataList" to add iteself to a list of key_data, preventing duplicates', function(){
+            it('should provide a function "updateKeyDataList" to add itself to a list of key_data, preventing duplicates', function(){
                 var list    = [],
                     new_key = new cmCrypt.Key()
 
-                expect(key.updateKeyList).toBeDefined()
+                expect(key.addToKeyList).toBeDefined()
 
                 key
                 .setId('my_id')
@@ -261,11 +261,6 @@ describe('cmCrypt', function () {
                 expect(list.length).toBe(2)
 
             })
-
-
         })
-
     })
-
-
 })

@@ -2,36 +2,36 @@
     <i class="fa cm-checkbox-add cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE' | cmTranslate}}
 </header>
 
-<ul>
-    <li ng-if="active == 'choose'">
+<ul style="z-index:10;position:relative;">
+    <li ng-show="active == 'choose'">
         <div class="page">
             <h2>{{'SETTINGS.PAGES.IDENTITY.KEYS.CHOOSE_SIZE'|cmTranslate}}</h2>
-            <select ng-model="$parent.keySize">
-                <option ng-repeat="size in $parent.keySizes">{{size}}</option>
+            <select ng-model="keySize">
+                <option ng-repeat="size in keySizes">{{size}}</option>
             </select>
         </div>
 
-        <cm-footer cm-hide-other-footer="true">
+        <cm-footer>
             <button ng-click="generate()" class="cm-btn-block cm-btn-grey">
                 <i class="fa cm-checkbox-add cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATE'|cmTranslate}}
             </button>
         </cm-footer>
     </li>
 
-    <li ng-if="active == 'generate'">
+    <li ng-show="active == 'generate'">
         <div class="page">
             <h2>{{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATION_IN_PROGRESS'|cmTranslate}}</h2>
             {{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATION_TIME_PROGRESS'|cmTranslate:i18n}}
         </div>
 
-        <cm-footer cm-hide-other-footer="true">
+        <cm-footer>
             <button ng-click="cancel()" class="cm-btn-block cm-btn-grey">
                 <i class="fa cm-checkbox-wrong cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.CANCEL'|cmTranslate}}
             </button>
         </cm-footer>
     </li>
 
-    <li ng-if="active == 'store'">
+    <li ng-show="active == 'store'">
         <div class="page">
             <h2>{{'SETTINGS.PAGES.IDENTITY.KEYS.STORE_KEYPAIR'|cmTranslate}}</h2>
 
@@ -44,11 +44,9 @@
             <textarea class="form-control" ng-model="pubKey"></textarea>
             <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_NAME'|cmTranslate}}</h3>
             <input class="form-control" ng-model="keyName" type="text" />
-
-            {{keyName}}
         </div>
 
-        <cm-footer cm-hide-other-footer="true">
+        <cm-footer>
             <button ng-click="store()" class="cm-btn-block cm-btn-grey">
                 <i class="fa cm-checkbox-right cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.STORE'|cmTranslate}}
             </button>

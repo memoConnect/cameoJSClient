@@ -322,7 +322,6 @@ angular.module('cmCore')
             /**
              * check local Keys from Storage
              */
-            console.log('syncLocalKeys')
             var localKeys = this.loadLocalKeys() || [];
 
             localKeys.forEach(function(local_key){
@@ -336,8 +335,6 @@ angular.module('cmCore')
 //                        var key = new cmKey();
 //
 //                        angular.extend(data,local_key.exportData());
-
-                        console.log('saveNewKey',data)
 
                         local_key.importData(data);
 
