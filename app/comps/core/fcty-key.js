@@ -90,9 +90,9 @@ angular.module('cmCore')
                             ||  data.pubKey
                             ||  undefined 
 
-                if(data.name)   this.setName(data.name);
-                if(data.id)     this.setId(data.id);
-                if(data.created) this.created = data.created;
+                if(data.name)       this.setName(data.name);
+                if(data.id)         this.setId(data.id);
+                if(data.created)    this.created = data.created;
 
 
                 if(key) this.setKey(key);

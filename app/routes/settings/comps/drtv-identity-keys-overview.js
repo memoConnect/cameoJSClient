@@ -8,25 +8,17 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
             templateUrl: 'routes/settings/comps/drtv-identity-keys-overview.html',
             controller: function ($scope) {
                 $scope.identity = cmUserModel.data;
-                $scope.ownKeys = [];
+                $scope.ownKeys = (cmUserModel.data.identity.keys && cmUserModel.data.identity.keys) || [];
 
                 /**
                  * Navigation
                  */
-                $scope.showKeys = function(){
-                    if(('keys' in cmUserModel.data.identity) && cmUserModel.data.identity.keys.length > 0){
-                        $scope.ownKeys = [];
-                        cmUserModel.data.identity.keys.forEach(function(key){
-                            $scope.ownKeys.push(key.exportData());
-                        });
-                    }
-                };
 
                 $scope.showExportKey = function(key){
-                    $scope.exportPrivKey = key.privKey;
-                    $scope.exportPubKey = key.pubKey;
+                    $scope.exportPrivKey = key.getPrivateKey();
+                    $scope.exportPubKey  = key.getPublicKey();
                     $scope.exportKeyName = key.name;
-                    $scope.exportKeySize = key.keySize;
+                    $scope.exportKeySize = key.kgetSize();
                 };
 
                 $scope.removeKey = function(key){
@@ -37,13 +29,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
 //                    console.log('update:finished')
 //                    $scope.showKeys();
 //                });
+//                
 
-                cmUserModel.on('key:removed',function(){
-                    console.log('usermodel changes');
-                    $scope.showKeys();
-                });
-
-                $scope.showKeys();
             }
         }
     }
