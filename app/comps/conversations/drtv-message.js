@@ -66,6 +66,16 @@ angular.module('cmConversations').directive('cmMessage', [
                     }
                     return true;
                 };
+
+                $scope.messageProper = function(){                    
+                    var text_available  =       typeof $scope.message.text == 'string'
+                                            &&  $scope.message.text.length > 0,
+                        files_available =       typeof $scope.message.fileIds == 'object'
+                                            &&  $scope.message.fileIds.length > 0,
+                        encrypted       =       $scope.message.isEncrypted()
+                    
+                    return text_available || files_available || encrypted
+                }
             }
         }
     }
