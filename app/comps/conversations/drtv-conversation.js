@@ -75,7 +75,7 @@ angular.module('cmConversations').directive('cmConversation', [
                          */
 //                        console.log('send',$scope.hasFiles(),$scope.conversation.getPassphrase())
                         if($scope.hasFiles()) {
-                            $scope.prepareFilesForUpload($scope.conversation.getPassphrase()).then(
+                            $scope.prepareFilesForUpload($scope.conversation.getPassphrase(), $scope.conversation.id).then(
                                 function(){
                                     angular.forEach($scope.files, function(file){
                                         if(file.id != undefined){
