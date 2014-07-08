@@ -78,9 +78,7 @@ angular.module('cmCore')
         }
 
         this.importData = function(identity){
-//            cmLogger.debug('cmUserModel:importData');
-
-            this.data = angular.extend(this.data,identity);
+            angular.extend(this.data, identity);
 
             this.data.identity = identity;
             this.data.identity.isAppOwner = true;
@@ -113,7 +111,7 @@ angular.module('cmCore')
                 if(this.getToken() !== false){
                     cmAuth.getIdentity().then(
                         function(data){
-                            var identity = cmIdentityFactory.create(data)
+                            var identity = cmIdentityFactory.create(data);
 
                             identity.on('update:finished', function(event, data){
                                 self.trigger('update:finished');
@@ -151,7 +149,7 @@ angular.module('cmCore')
         };
 
         /**
-         * @todo more better logic pls^^
+         * @todo more better logic
          * @returns {*}
          */
         this.isAuth = function(){
@@ -294,6 +292,35 @@ angular.module('cmCore')
             return result;
         };
 
+        this.syncLocalKeys = function(keySize){
+            /**
+             * check local Keys from Storage
+             */
+            var localKeys = this.loadLocalKeys() || [],
+                publicKeysEmpty = this.data.identity.keys.length == 0;
+
+            localKeys.forEach(function(local_key){
+                if(publicKeysEmpty || typeof local_key.id === 'undefined' || local_key.id == ''){
+                    cmAuth.savePublicKey({
+                        name:    local_key.name, 
+                        key:     local_key.getPublicKey(),
+                        keySize: keySize || 0 //TODO: local_key.size == Nan ???
+                    })
+                    .then(function(data){
+                        local_key.importData(data);
+
+                        self
+                        .saveKey(local_key)
+                        .addKey(local_key);
+                    })
+                } else {
+                    self.addKey(local_key);
+                }
+            });
+
+            return this;
+        };
+
         this.removeKey = function(keyToRemoved){
             var self = this,
                 keys = this.loadLocalKeys(),
@@ -305,57 +332,21 @@ angular.module('cmCore')
                     foundInLocalKeys = index;
             });
 
-            console.log(keys, keyToRemoved.id, foundInLocalKeys)
-            return false
-
             // clear in backend
             cmAuth.removePublicKey(keyToRemoved.id)
-            .then(function(){
-                // renew ls
-                if(foundInLocalKeys > -1) {
-                    keys.splice(foundInLocalKeys, 1);
-                    self.storageSave('rsa', keys);
-                }
-                // clear identity
-                self.data.identity.removeKey(keyToRemoved);
-            });
+                .then(function(){
+                    // renew ls
+                    if(foundInLocalKeys > -1) {
+                        keys.splice(foundInLocalKeys, 1);
+                        self.storageSave('rsa', keys);
+                    }
+                    // clear identity
+                    self.data.identity.removeKey(keyToRemoved);
+                });
         };
 
         this.clearLocalKeys = function(){
             this.storageSave('rsa', []);
-        };
-
-        this.syncLocalKeys = function(){
-            /**
-             * check local Keys from Storage
-             */
-            var localKeys = this.loadLocalKeys() || [];
-
-            localKeys.forEach(function(local_key){
-                if(typeof local_key.id === 'undefined' || local_key.id == ''){
-                    cmAuth.savePublicKey({
-                        name:    local_key.name, 
-                        key:     local_key.getPublicKey(),
-                        keySize: 0 //TODO: local_key.size == Nan ???
-                    })
-                    .then(function(data){
-//                        var key = new cmKey();
-//
-//                        angular.extend(data,local_key.exportData());
-
-                        
-                        local_key.importData(data);
-
-                        self
-                        //.saveKey(local_key)
-                        .addKey(local_key);
-                    })
-                } else {
-                    self.addKey(local_key);
-                }
-            });
-
-            return this;
         };
 
         this.decryptPassphrase = function(encrypted_passphrase, keyId){
@@ -396,7 +387,7 @@ angular.module('cmCore')
          * LocalStorage Functions
          */
         this.initStorage = function(){
-            this.data.storage = cmLocalStorage.create(this.data.id,this.data.userKey);
+            this.data.storage = cmLocalStorage.create(this.data.id, this.data.userKey);
         };
 
         /**

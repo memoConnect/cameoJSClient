@@ -77,8 +77,13 @@ angular.module('cmCore')
                 var size;
 
                 try{
-                    size = crypt.key.n.bitLength()
-                }catch(e){}
+                    size = crypt.key.n.bitLength();
+                } catch(e){
+
+                }
+
+                if(size == 1023 || size == 2047 || size == 4095)
+                    size = size+1;
 
                 return size;
             };
@@ -88,12 +93,11 @@ angular.module('cmCore')
                             ||  this.getPrivateKey()                  
                             ||  data.key
                             ||  data.pubKey
-                            ||  undefined 
+                            ||  undefined;
 
                 if(data.name)       this.setName(data.name);
                 if(data.id)         this.setId(data.id);
                 if(data.created)    this.created = data.created;
-
 
                 if(key) this.setKey(key);
 
@@ -112,10 +116,6 @@ angular.module('cmCore')
                 if(public_key)  data.pubKey     = public_key;
                 if(private_key) data.privKey    = private_key;
                 if(size)        data.size       = size;
-
-                // TODO: buggy library find the needle!
-                if(data.size == 1023 || data.size == 2047 || data.size == 4095)
-                    data.size = data.size+1;
 
                 return data;
             };
@@ -157,7 +157,7 @@ angular.module('cmCore')
                 });
 
                 if(!check)
-                    key_data_list.push(this.exportData());
+                    key_data_list.push(self.exportData());
             };
         };
 

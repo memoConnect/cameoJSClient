@@ -7,12 +7,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-keys-overview.html',
             controller: function ($scope) {
-                $scope.identity = cmUserModel.data;
                 $scope.ownKeys = (cmUserModel.data.identity.keys && cmUserModel.data.identity.keys) || [];
-
-                /**
-                 * Navigation
-                 */
 
                 $scope.showExportKey = function(key){
                     $scope.exportPrivKey = key.getPrivateKey();

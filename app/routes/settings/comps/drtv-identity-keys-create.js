@@ -7,8 +7,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
     'cmLogger',
     'cmNotify',
     'cmKey',
-    '$interval',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey, $interval){
+    '$location',
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey, $location){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-keys-create.html',
@@ -90,19 +90,16 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                     }
 
                     if(error !== true){
-                        var key = new cmKey();
-                        key
+                        var key = (new cmKey())
                             .setName($scope.keyName)
                             .setKey($scope.privKey);
 
-
                         cmUserModel
                             .saveKey(key)
-                            .syncLocalKeys()
+                            .syncLocalKeys($scope.keySize);
 
-                        
-
-                        cmNotify.info('NOTIFICATIONS.TYPES.KEYS.STORE_NEW',{displayType:'modal',ttl:3000});
+                        $location.path('/settings/identity/keys');
+                        //cmNotify.info('NOTIFICATIONS.TYPES.KEYS.STORE_NEW',{displayType:'modal',ttl:3000});
                     }
                 };
             }

@@ -15,7 +15,7 @@
     </li>
     <li ng-repeat="key in ownKeys | orderBy:'getPrivateKey()':false">
         <span class="item clearfix">
-            <strong>{{key.size}}</strong>
+            <strong>{{key.getSize()}}</strong>
             <strong class="isInLocalstorage" ng-if="key.getPrivateKey()"> {{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_ON_THIS_DEVICE'|cmTranslate}}</strong>
             {{key.name}}<br />
             {{key.created | date:'dd.MM.yy - HH:mm'}}

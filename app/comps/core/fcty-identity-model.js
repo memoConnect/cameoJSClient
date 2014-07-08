@@ -79,9 +79,9 @@ angular.module('cmCore').factory('cmIdentityModel',[
                 this.created                = data.created || this.created;
                 this.lastUpdated            = data.lastUpdated || this.lastUpdated;
 
-                data.publicKeys = data.publicKeys || [];
+                data.publicKeys             = data.publicKeys || [];
 
-                data.publicKeys.forEach(function(publicKey_data){
+                data.publicKeys.forEach(function (publicKey_data) {
                     self.addKey(publicKey_data);
                 });
 
