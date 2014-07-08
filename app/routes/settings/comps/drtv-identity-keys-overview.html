@@ -19,7 +19,6 @@
             <strong class="isInLocalstorage" ng-if="key.getPrivateKey()"> {{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_ON_THIS_DEVICE'|cmTranslate}}</strong>
             {{key.name}}<br />
             {{key.created | date:'dd.MM.yy - HH:mm'}}
-            {{key.getPrivateKey()}}
         </span>
         <div class="shortLinks">
             <i class="fa cm-checkbox-wrong" ng-click="removeKey(key)"></i>
