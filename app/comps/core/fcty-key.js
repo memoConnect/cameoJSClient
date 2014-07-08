@@ -128,7 +128,8 @@ angular.module('cmCore')
                         (key.id && (key.id == self.id))
                         || key.getPublicKey() == self.getPublicKey()
                     ){
-                        angular.extend(key, self);
+                        //angular.extend(key, self);
+                        key.importData(self.exportData())
                         check = true;
                     }
                 });

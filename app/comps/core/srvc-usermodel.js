@@ -336,14 +336,12 @@ angular.module('cmCore')
 //
 //                        angular.extend(data,local_key.exportData());
 
+                        
                         local_key.importData(data);
 
                         self
-                        .saveKey(local_key)
+                        //.saveKey(local_key)
                         .addKey(local_key);
-
-                        //Todo: build factory for keys:
-                        self.trigger('key:updated')
                     })
                 } else {
                     self.addKey(local_key);

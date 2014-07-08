@@ -18,7 +18,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                     $scope.exportPrivKey = key.getPrivateKey();
                     $scope.exportPubKey  = key.getPublicKey();
                     $scope.exportKeyName = key.name;
-                    $scope.exportKeySize = key.kgetSize();
+                    $scope.exportKeySize = key.getSize();
                 };
 
                 $scope.removeKey = function(key){

@@ -95,9 +95,12 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                             .setName($scope.keyName)
                             .setKey($scope.privKey);
 
+
                         cmUserModel
                             .saveKey(key)
-                            .syncLocalKeys();
+                            .syncLocalKeys()
+
+                        
 
                         cmNotify.info('NOTIFICATIONS.TYPES.KEYS.STORE_NEW',{displayType:'modal',ttl:3000});
                     }
