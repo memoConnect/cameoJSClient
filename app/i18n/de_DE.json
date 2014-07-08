@@ -281,6 +281,7 @@
                     "CREATE": "erstellen",
                     "IMPORT": "importieren",
                     "KEY_ON_THIS_DEVICE": "lokal",
+                    "EXPORT_KEY": "Schlüsselpaar exportieren",
                     "CHOOSE_SIZE": "Schlüsselstärke wählen",
                     "GENERATE": "generieren",
                     "GENERATION_IN_PROGRESS": "Generierung läuft",

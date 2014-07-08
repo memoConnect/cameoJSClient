@@ -8,7 +8,7 @@
             <i class="fa cm-checkbox-add icon-left cm-lg-icon"></i>
             <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE'|cmTranslate}}</span>
         </a>
-        <a href="#/settings/identity/keys/import" class="item w50">
+        <a cm-href="#/settings/identity/keys/import" class="item w50 cm-disabled">
             <i class="fa cm-fix icon-left cm-lg-icon"></i>
             <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT'|cmTranslate}}</span>
         </a>
@@ -21,15 +21,20 @@
             {{key.created | date:'dd.MM.yy - HH:mm'}}
         </span>
         <div class="shortLinks">
-            <i class="fa cm-checkbox-wrong" ng-click="removeKey(key)"></i>
+            <i class="fa cm-clipboard" ng-click="openModal('modalExportKeyPair',key)"></i>
+            <i class="fa cm-checkbox-wrong" ng-click="remove(key)"></i>
         </div>
     </li>
 </ul>
 
-<div ng-if="false">
-    <h3>{{exportKeyName}} - {{exportKeySize}}</h3>
-    <h3>private key</h3>
-    <textarea class="form-control" ng-model="exportPrivKey"></textarea>
-    <h3>public key</h3>
-    <textarea class="form-control" ng-model="exportPubKey"></textarea>
-</div>
+<cm-modal id="modalExportKeyPair" class="no-padding" cm-data-as="key" cm-title="SETTINGS.PAGES.IDENTITY.KEYS.EXPORT_KEY">
+    <div class="modal-row">
+        <h2>{{key.name}} - {{key.getSize()}}</h2>
+        <div ng-if="key.getPrivateKey()">
+            <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
+            <textarea class="form-control" cm-clipboard>{{key.getPrivateKey()}}</textarea>
+        </div>
+        <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PUBLIC_KEY'|cmTranslate}}</h3>
+        <textarea class="form-control" cm-clipboard>{{key.getPublicKey()}}</textarea>
+    </div>
+</cm-modal>
