@@ -3,13 +3,14 @@
 angular.module('cmCore').factory('cmIdentityModel',[
     'cmAuth',
     'cmCrypt',
+    'cmKey',
     'cmObject',
     'cmLogger',
     'cmApi',
     'cmFileFactory',
     'cmStateManagement',
     'cmUtil',
-    function(cmAuth, cmCrypt, cmObject, cmLogger, cmApi, cmFileFactory, cmStateManagement, cmUtil){
+    function(cmAuth, cmCrypt, cmKey, cmObject, cmLogger, cmApi, cmFileFactory, cmStateManagement, cmUtil){
 
         function Identity(identity_data){
 
@@ -188,9 +189,9 @@ angular.module('cmCore').factory('cmIdentityModel',[
                     is_string  = (typeof key_data == 'string'),
                     can_update = is_object && 'addToKeyList' in key_data
 
-                if( can_update )                key = key_data;  //already a Key object
-                if( is_object && !can_update)   key = (new cmCrypt.Key()).importData(key_data); //from backend or localstorgae
-                if( is_string)                  key = new cmCrypt.Key(key_data); //plain text public or private key
+                if( can_update )                key = key_data; //already a Key object
+                if( is_object && !can_update)   key = (new cmKey()).importData(key_data); //from backend or localstorgae
+                if( is_string)                  key = new cmKey(key_data); //plain text public or private key
 
                 key
                 ?   key.addToKeyList(self.keys)

@@ -272,10 +272,10 @@ angular.module('cmCore')
         };
 
         this.loadLocalKeys = function(){
-            var stored_keys = this.storageGet('rsa') || [],
+            var storedKeys = this.storageGet('rsa') || [],
                 keys        = [];
 
-            stored_keys.forEach(function(stored_key){
+            storedKeys.forEach(function(stored_key){
                 var data = (new cmKey()).importData(stored_key);
                 keys.push(data)
             });
@@ -296,21 +296,28 @@ angular.module('cmCore')
 
         this.removeKey = function(keyToRemoved){
             var self = this,
-                keys = this.loadLocalKeys();
+                keys = this.loadLocalKeys(),
+                foundInLocalKeys = -1;
 
+            // search in ls
             keys.forEach(function(key, index){
-                if(key.id == keyToRemoved.id){
-                    cmAuth.removePublicKey(key.id)
-                    .then(function(){
-                        keys.splice(index,1);
+                if(key.id == keyToRemoved.id)
+                    foundInLocalKeys = index;
+            });
 
-                        self.storageSave('rsa', keys);
+            console.log(keys, keyToRemoved.id, foundInLocalKeys)
+            return false
 
-                        self.data.identity.removeKey(key);
-
-                        self.trigger('key:removed');
-                    });
+            // clear in backend
+            cmAuth.removePublicKey(keyToRemoved.id)
+            .then(function(){
+                // renew ls
+                if(foundInLocalKeys > -1) {
+                    keys.splice(foundInLocalKeys, 1);
+                    self.storageSave('rsa', keys);
                 }
+                // clear identity
+                self.data.identity.removeKey(keyToRemoved);
             });
         };
 

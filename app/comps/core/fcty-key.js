@@ -114,7 +114,7 @@ angular.module('cmCore')
                 if(size)        data.size       = size;
 
                 // TODO: buggy library find the needle!
-                if(data.size == 2047)
+                if(data.size == 1023 || data.size == 2047 || data.size == 4095)
                     data.size = data.size+1;
 
                 return data;
