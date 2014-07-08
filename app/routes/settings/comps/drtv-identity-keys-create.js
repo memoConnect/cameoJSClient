@@ -6,10 +6,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
     'cmUtil',
     'cmLogger',
     'cmNotify',
-    'cmTranslate',
-    '$location',
-    '$rootScope',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmTranslate, $location, $rootScope){
+    'cmKey',
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-keys-create.html',
@@ -20,12 +18,13 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                  * scope vars for keypair generation
                  * @type {string[]}
                  */
+                var detect = cmUtil.detectOSAndBrowser();
+
                 $scope.active = 'choose';
-                $scope.i18n = cmUtil.detectOSAndBrowser();
-                $scope.i18n.date = new Date();
                 $scope.keySizes = cmCrypt.getKeySizes();
                 $scope.keySize = '2048';
-                $scope.keyName = '';
+                $scope.keyName = detect.os+' / '+detect.browser;
+                $scope.i18n = {time:''};
 
                 /**
                  * generate keypair
@@ -49,12 +48,9 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                     ).then(
                         function(result){
                             $scope.i18n.time = cmUtil.millisecondsToStr(result.timeElapsed);
-                            $scope.i18n.date = new Date();
 
                             $scope.privKey  = result.key.getPrivateKey();
                             $scope.pubKey   = result.key.getPublicKey();
-
-                            $scope.keyName = cmTranslate('SETTINGS.PAGES.IDENTITY.KEYS.KEY_NAME_VALUE',$scope.i18n);
 
                             $scope.active = 'store';
                         },
@@ -95,7 +91,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                     }
 
                     if(error !== true){
-                        var key = new cmCrypt.Key();
+                        var key = new cmKey();
                         key
                             .setName($scope.keyName)
                             .setKey($scope.privKey);

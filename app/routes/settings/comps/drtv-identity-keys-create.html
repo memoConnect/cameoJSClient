@@ -3,44 +3,55 @@
 </header>
 
 <ul>
-    <li ng-if="active == 'choose'" class="page">
-        <h2>{{'SETTINGS.PAGES.IDENTITY.KEYS.CHOOSE_SIZE'|cmTranslate}}</h2>
-        <select ng-model="$parent.keySize">
-            <option ng-repeat="size in $parent.keySizes">{{size}}</option>
-        </select>
-        <br />
-        <button ng-click="generate()" class="btn w50">
-            <i class="fa cm-checkbox-add cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATE'|cmTranslate}}
-        </button>
+    <li ng-if="active == 'choose'">
+        <div class="page">
+            <h2>{{'SETTINGS.PAGES.IDENTITY.KEYS.CHOOSE_SIZE'|cmTranslate}}</h2>
+            <select ng-model="$parent.keySize">
+                <option ng-repeat="size in $parent.keySizes">{{size}}</option>
+            </select>
+        </div>
+
+        <cm-footer cm-hide-other-footer="true">
+            <button ng-click="generate()" class="cm-btn-block cm-btn-grey">
+                <i class="fa cm-checkbox-add cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATE'|cmTranslate}}
+            </button>
+        </cm-footer>
     </li>
 
-    <li ng-if="active == 'generate'" class="page">
-        <h2>{{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATION_IN_PROGRESS'|cmTranslate}}</h2>
+    <li ng-if="active == 'generate'">
+        <div class="page">
+            <h2>{{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATION_IN_PROGRESS'|cmTranslate}}</h2>
+            {{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATION_TIME_PROGRESS'|cmTranslate:i18n}}
+        </div>
 
-        {{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATION_TIME_PROGRESS'|cmTranslate:i18n}}
-        <br />
-
-        <button ng-click="cancel()" class="btn w50">
-            <i class="fa cm-checkbox-wrong cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.CANCEL'|cmTranslate}}
-        </button>
+        <cm-footer cm-hide-other-footer="true">
+            <button ng-click="cancel()" class="cm-btn-block cm-btn-grey">
+                <i class="fa cm-checkbox-wrong cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.CANCEL'|cmTranslate}}
+            </button>
+        </cm-footer>
     </li>
 
-    <li ng-if="active == 'store'" class="page">
-        <h2>{{'SETTINGS.PAGES.IDENTITY.KEYS.STORE_KEYPAIR'|cmTranslate}}</h2>
+    <li ng-if="active == 'store'">
+        <div class="page">
+            <h2>{{'SETTINGS.PAGES.IDENTITY.KEYS.STORE_KEYPAIR'|cmTranslate}}</h2>
 
-        {{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATION_TIME'|cmTranslate:i18n}}
-        <br />
+            {{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATION_TIME'|cmTranslate:i18n}}
+            <br />
 
-        <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
-        <textarea class="form-control" ng-model="privKey"></textarea>
-        <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PUBLIC_KEY'|cmTranslate}}</h3>
-        <textarea class="form-control" ng-model="pubKey"></textarea>
-        <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_NAME'|cmTranslate}}</h3>
-        <input class="form-control" ng-model="keyName" type="text" value="{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_NAME_VALUE'|cmTranslate:i18n}}" />
-        <br />
+            <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
+            <textarea class="form-control" ng-model="privKey"></textarea>
+            <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PUBLIC_KEY'|cmTranslate}}</h3>
+            <textarea class="form-control" ng-model="pubKey"></textarea>
+            <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_NAME'|cmTranslate}}</h3>
+            <input class="form-control" ng-model="keyName" type="text" />
 
-        <button ng-click="store()" class="btn w50">
-            <i class="fa cm-checkbox-right cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.STORE'|cmTranslate}}
-        </button>
+            {{keyName}}
+        </div>
+
+        <cm-footer cm-hide-other-footer="true">
+            <button ng-click="store()" class="cm-btn-block cm-btn-grey">
+                <i class="fa cm-checkbox-right cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.STORE'|cmTranslate}}
+            </button>
+        </cm-footer>
     </li>
 </ul>

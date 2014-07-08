@@ -3,8 +3,7 @@
 angular.module('cmRouteContacts').directive('cmRequestList', [
     'cmContactsModel',
     'cmNotify',
-    '$rootScope',
-    function(cmContactsModel, cmNotify, $rootScope){
+    function(cmContactsModel, cmNotify){
         return {
             restrict: 'E',
             templateUrl: 'routes/contacts/comps/drtv-request-list.html',
@@ -24,38 +23,6 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
 
                 if($scope.requests.length > 0){
                     cmNotify.trigger('bell:unring');
-                }
-
-
-                /**
-                 * reset
-                 */
-                $rootScope.$on('$routeChangeSuccess', function(){
-                    angular.forEach(cmContactsModel.requests, function(value){
-                        value.isOpen = false;
-                        value.showBar = false;
-                    });
-                });
-
-                $scope.toggleBrief = function(request){
-                    if((request.isOpen == undefined || request.isOpen == false ) && request.message != ''){
-                        request.state = 'new';
-                        request.isOpen = true;
-                    } else {
-                        request.isOpen = false;
-                    }
-                };
-
-                $scope.toggleBar = function(request){
-                    if(request.showBar !== 'undefined'){
-                        if(request.showBar){
-                            request.showBar = false;
-                        } else {
-                            request.showBar = true;
-                        }
-                    } else {
-                        request.showBar = true;
-                    }
                 }
 
                 /**

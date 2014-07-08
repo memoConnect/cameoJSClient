@@ -156,7 +156,7 @@ angular.module('cmCore').service('cmAuth', [
              *
              * @name savePublicKey
              * @description
-             * Save the identity publickey
+             * saved a identity public key
              *
              * @param {Object} data Object with name, key & keySize
              * @returns {Promise} for async handling
@@ -169,6 +169,22 @@ angular.module('cmCore').service('cmAuth', [
                         key: data.key,
                         keySize: parseInt(data.keySize)
                     }
+                })
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name removePublicKey
+             * @description
+             * removed a identity public key
+             *
+             * @param {String} keyId id of public key
+             * @returns {Promise} for async handling
+             */
+            removePublicKey: function(keyId){
+                return cmApi.delete({
+                    path: '/identity/publicKey/'+keyId
                 })
             },
             /**

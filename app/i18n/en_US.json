@@ -280,6 +280,7 @@
                     "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
                     "CREATE": "create",
                     "IMPORT": "import",
+                    "KEY_ON_THIS_DEVICE": "local",
                     "CHOOSE_SIZE": "Choose keysize",
                     "GENERATE": "generate",
                     "GENERATION_IN_PROGRESS": "generation in progress",
@@ -290,7 +291,6 @@
                     "PRIVATE_KEY": "Privatekey",
                     "PUBLIC_KEY": "Publickey",
                     "KEY_NAME": "Keyname",
-                    "KEY_NAME_VALUE": "{{browser}} / {{date | date:'dd.mm.yy - HH:mm'}}",
                     "STORE": "store"
                 }
             },

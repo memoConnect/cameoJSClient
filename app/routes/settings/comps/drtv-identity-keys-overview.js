@@ -29,13 +29,21 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                     $scope.exportKeySize = key.keySize;
                 };
 
-                if(typeof cmUserModel.data.identity.on == 'function'){
-                    cmUserModel.data.identity.on('update:finished', function(){
-                        $scope.showKeys();
-                    });
+                $scope.removeKey = function(key){
+                    cmUserModel.removeKey(key);
+                };
 
+//                cmUserModel.data.identity.on('update:finished', function(){
+//                    console.log('update:finished')
+//                    $scope.showKeys();
+//                });
+
+                cmUserModel.on('key:removed',function(){
+                    console.log('usermodel changes');
                     $scope.showKeys();
-                }
+                });
+
+                $scope.showKeys();
             }
         }
     }

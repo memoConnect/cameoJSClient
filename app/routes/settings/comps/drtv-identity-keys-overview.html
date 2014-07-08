@@ -13,13 +13,16 @@
             <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT'|cmTranslate}}</span>
         </a>
     </li>
-    <li ng-repeat="key in ownKeys"  ng-class="{'isLocal':key.privKey}">
+    <li ng-repeat="key in ownKeys | orderBy:'privKey':false">
         <span class="item clearfix">
-            <span>
-                {{key.name}} - {{key.size}}<!-- - {{key.id}}-->
-                <span ng-if="key.privKey"> - local</span>
-            </span>
+            <strong>{{key.size}}</strong>
+            <strong class="isInLocalstorage" ng-if="key.privKey"> {{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_ON_THIS_DEVICE'|cmTranslate}}</strong>
+            {{key.name}}<br />
+            {{key.created | date:'dd.MM.yy - HH:mm'}}
         </span>
+        <div class="shortLinks">
+            <i class="fa cm-checkbox-wrong" ng-click="removeKey(key)"></i>
+        </div>
     </li>
 </ul>
 

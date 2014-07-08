@@ -280,6 +280,7 @@
                     "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
                     "CREATE": "erstellen",
                     "IMPORT": "importieren",
+                    "KEY_ON_THIS_DEVICE": "lokal",
                     "CHOOSE_SIZE": "Schlüsselstärke wählen",
                     "GENERATE": "generieren",
                     "GENERATION_IN_PROGRESS": "Generierung läuft",
@@ -290,7 +291,6 @@
                     "PRIVATE_KEY": "Privaterschlüssel",
                     "PUBLIC_KEY": "Öffentlicherschlüssel",
                     "KEY_NAME": "Schlüsselname",
-                    "KEY_NAME_VALUE": "{{browser}} / {{date | date:'dd.mm.yy - HH:mm'}}",
                     "STORE": "speichern"
                 }
             },
