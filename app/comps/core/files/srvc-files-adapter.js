@@ -38,7 +38,9 @@ angular.module('cmCore')
             complete: function(fileId, conversationId){
                 return cmApi.post({
                     path: '/file/'+fileId+'/completed',
-                    data: conversationId
+                    data: {
+                        conversationId: conversationId
+                    }
                 });
             },
 
