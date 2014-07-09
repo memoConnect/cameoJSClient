@@ -86,7 +86,9 @@ angular.module('cmCore')
                         self.maxChunks     = details.maxChunks;
                         // start download when flag is true
                         if(details.isCompleted !== false) {
-                            self.trigger('importFile:finish');
+                            self.trigger('importFile:finish',self);
+                        } else {
+                            self.trigger('importFile:inComplete',self);
                         }
                     },
                     function(){
@@ -254,11 +256,12 @@ angular.module('cmCore')
                     .encrypt(passphrase)
                     .upload(this.id, index)
                     .then(function(){
-
                         self.trigger('progress:chunk', (index/self.chunks.length));
 
                         if(index == (self.chunks.length - 1)){
-                            cmFilesAdapter.complete(self.id).then(function(){
+                            self.trigger('upload:complete',{ fileId:self.id });
+
+                            self.on('file:complete', function(){
                                 self.trigger('upload:finish');
                             });
                         } else {
@@ -307,7 +310,7 @@ angular.module('cmCore')
             };
 
             this.downloadChunks = function(){
-//                cmLogger.debug('cmFileModel:downloadChunks');
+                cmLogger.debug('cmFileModel:downloadChunks');
                 if(!this.id && this.state == 'exists'){
                     cmLogger.debug('cmFile.downloadChunks();')
                     return null;
@@ -316,7 +319,6 @@ angular.module('cmCore')
                 this.importFile();
 
                 this.on('importFile:finish',function(){
-                    console.log('start downloding')
                     self
                         .setState('exists')
                         .trigger('import:finish');

@@ -5,6 +5,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
     'cmCrypt',
     'cmIdentityFactory',
     'cmFileFactory',
+    'cmFilesAdapter',
     'cmUserModel',
     'cmObject',
     'cmStateManagement',
@@ -12,7 +13,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
     'cmLogger',
     '$rootScope',
     '$q',
-    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, cmObject, cmStateManagement, cmUtil, cmLogger, $rootScope, $q){
+    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmFilesAdapter, cmUserModel, cmObject, cmStateManagement, cmUtil, cmLogger, $rootScope, $q){
         /**
          * @constructor
          * @description
@@ -241,6 +242,40 @@ angular.module('cmConversations').factory('cmMessageModel',[
             };
 
             /**
+             * Handle Upload from new Files
+             * @returns {cmMessageModel.Message}
+             */
+            this.uploadFiles = function(){
+                if(this.files.length > 0){
+                    angular.forEach(this.files, function(file){
+                        file.uploadChunks();
+                        file.on('upload:complete',function(event, data){
+                            cmFilesAdapter.complete(data.fileId, self.id).then(function(){
+                                file.trigger('file:complete');
+                            });
+                        })
+                    });
+                }
+
+                return this;
+            };
+
+            /**
+             * initialize Files from Message Data (fileIds)
+             * @returns {Message}
+             */
+            this.initFiles = function(){
+                if(this.fileIds.length > 0){
+                    angular.forEach(this.fileIds, function(id){
+                        self._addFile(cmFileFactory.create(id));
+                    });
+                    this.trigger('init:files');
+                }
+
+                return this;
+            };
+
+            /**
              * add cmFile Object to Message Object
              * checks if cmFile Object still added or not
              * @param file
@@ -299,34 +334,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 return this;
             };
 
-            /**
-             * Handle Upload from new Files
-             * @returns {cmMessageModel.Message}
-             */
-            this.uploadFiles = function(){
-                if(this.files.length > 0){
-                    angular.forEach(this.files, function(file){
-                        file.uploadChunks();
-                    });
-                }
-
-                return this;
-            };
-
-            /**
-             * initialize Files from Message Data (fileIds)
-             * @returns {Message}
-             */
-            this.initFiles = function(){
-                if(this.fileIds.length > 0){
-                    angular.forEach(this.fileIds, function(id){
-                        self._addFile(cmFileFactory.create(id));
-                    });
-                    this.trigger('init:files');
-                }
-
-                return this;
-            };
+            this.inCompleteFiles = [];
 
             this.decryptFiles = function(passphrase){
                 angular.forEach(this.files, function(file){
@@ -334,6 +342,20 @@ angular.module('cmConversations').factory('cmMessageModel',[
                         file
                             .setPassphrase(passphrase)
                             .downloadStart();
+
+                        file.on('importFile:inComplete',function(event, file){
+                            console.log('setInComplete state');
+                            self.state.set('inComplete');
+                            // add to queue
+                            self.inCompleteFiles.push(file);
+                        });
+
+                        file.on('importFile:finish', function(event, file){
+                            self.state.unset('inComplete');
+                            // clear from queue
+                            var index = self.inCompleteFiles.indexOf(file);
+                            self.inCompleteFiles.splice(index,1);
+                        });
                     }
                 });
 
@@ -350,6 +372,14 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
             this.on('message:saved', function(){
                 self.uploadFiles();
+            });
+
+            data.conversation.on('message:reinitFiles', function(){
+                if(self.state.is('inComplete')){
+                   self.inCompleteFiles.forEach(function(file){
+                       file.importFile();
+                   });
+                }
             });
 
             init(data);

@@ -10,9 +10,6 @@ angular.module('cmCore')
             prepareFile: function(config){
                 return cmApi.post({
                     path: '/file',
-                    data: {
-                        conversationId: config.conversationId
-                    },
                     exp_ok: 'id',
                     headers: {
                         "X-File-Name": config.name,
@@ -34,9 +31,12 @@ angular.module('cmCore')
                 });
             },
 
-            complete: function(fileId){
+            complete: function(fileId, messageId){
                 return cmApi.post({
-                    path: '/file/'+fileId+'/completed'
+                    path: '/file/'+fileId+'/completed',
+                    data: {
+                        messageId: messageId
+                    }
                 });
             },
 

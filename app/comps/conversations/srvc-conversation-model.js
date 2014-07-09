@@ -522,7 +522,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                          */
                         bool = (this.keyTransmission == 'asymmetric' || this.keyTransmission == 'symmetric' || this.keyTransmission == 'mixed')
                     } else {
-                        cmLogger.debug('cmConversationModel.isEncrypted Error Line 525');
+                        //cmLogger.debug('cmConversationModel.isEncrypted Error Line 525');
                     }
                 }
 
@@ -888,7 +888,6 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.on('update:finished', function(){
 //                cmLogger.debug('cmConversationModel:on:update:finished');
 //                cmBoot.resolve();
-
                 self.setLastMessage();
                 self.decrypt();
                 self.securityAspects.refresh();
@@ -912,9 +911,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             //Todo: fire event on factory and delegate to conversation or something
             this.on('message:new', function(event, message_data){
-                console.log('new message biatsch',message_data)
-                message_data.conversation = self; //todo
+                message_data.conversation = self;
                 self.messages.create(message_data).decrypt();
+                self.trigger('message:reinitFiles');
             });
 
             this.recipients.on(['register', 'update:finished'], function(event, recipient){
