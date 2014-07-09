@@ -38,7 +38,10 @@ cameo_config = {
             hasCtrl: true
         },
         'conversation': {
-            routes:['/conversation/:conversationId?'],
+            routes:[
+                '/conversation/:conversationId?',
+                '/conversation/:conversationId/:pageChild1?'
+            ],
             hasCtrl: true,
             resolveOnBoot: true
         },

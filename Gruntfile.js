@@ -255,6 +255,7 @@ module.exports = function (grunt) {
                     'files': 'app/comps/files',
                     'security_aspects': 'app/comps/security_aspects',
                     'ui': 'app/comps/ui',
+                    'route-conversation': 'app/routes/conversation/comps',
                     'route-settings': 'app/routes/settings/comps',
                     'route-contacts': 'app/routes/contacts/comps'
                 })

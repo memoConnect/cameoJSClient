@@ -1,10 +1,4 @@
-<cm-header cm-rubber-space>
-    <cm-back cm-weight="1" back-to="conversation" plain-back="true"></cm-back>
-    <div cm-weight="6"></div>
-    <cm-menu cm-weight="1"></cm-menu>
-</cm-header>
-
-<section ng-controller = "RecipientsCtrl">
+<section>
     <header class="cm-list-header">
         <h1>{{"RECIPIENTS.HEADING"|cmTranslate}}</h1>
 
@@ -23,8 +17,8 @@
             </button>
         </cm-contact-tag>
     </cm-contacts-list>
-
 </section>
-<cm-footer cm-rubber-space>
-    <a href="#/conversation" cm-weight = "1" data-qa="btn-done">{{'RECIPIENTS.LABEL.DONE' | cmTranslate}}</a>
+
+<cm-footer cm-rubber-space cm-hide-other-footer>
+    <a href="#/conversation/{{conversationId}}" data-qa="btn-done" cm-weight="1">{{'RECIPIENTS.LABEL.DONE'|cmTranslate}}</a>
 </cm-footer>

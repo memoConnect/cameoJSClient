@@ -14,10 +14,6 @@ define([
         function($scope, $rootScope, $routeParams, $location) {
             $scope.pageTitle = 'SETTINGS.WELCOME';
 
-            $rootScope.$on('pageTitle:change',function(event, newTitle){
-                $scope.pageTitle = newTitle;
-            });
-
             $scope.pageParent = $routeParams.pageParent || '';
             $scope.pageChild1 = $routeParams.pageChild1 || '';
             $scope.pageChild2 = $routeParams.pageChild2 || '';
