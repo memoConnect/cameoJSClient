@@ -46,11 +46,16 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                         function(result){
                             $scope.i18n.time = cmUtil.millisecondsToStr(result.timeElapsed);
 
-                            $scope.privKey  = result.key.getPrivateKey();
-                            $scope.pubKey   = result.key.getPublicKey();
+                            var privKey = result.key.getPrivateKey(),
+                                pubKey  = result.key.getPublicKey();
+
+                            $scope.privKey  = privKey;
+                            $scope.pubKey   = pubKey;
                             $scope.keyName  = detect.os+' / '+detect.browser;
 
                             $scope.active = 'store';
+
+                            console.log('resolve',$scope);
                         },
                         function(){
                             $scope.active = 'choose';
