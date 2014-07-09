@@ -3,37 +3,37 @@
 </header>
 
 <ul style="z-index:10;position:relative;">
-    <li ng-show="active == 'choose'">
+    <li ng-show="active == 'choose'" data-qa="page-chose-keysize">
         <div class="page">
             <h2>{{'SETTINGS.PAGES.IDENTITY.KEYS.CHOOSE_SIZE'|cmTranslate}}</h2>
-            <select ng-model="keySize">
-                <option ng-repeat="size in keySizes">{{size}}</option>
+            <select ng-model="keySize" >
+                <option ng-repeat="size in keySizes" data-qa="key-size-option">{{size}}</option>
             </select>
         </div>
 
         {{testCmUtil}}
 
         <cm-footer>
-            <button ng-click="generate()" class="cm-btn-block cm-btn-grey">
+            <button ng-click="generate()" class="cm-btn-block cm-btn-grey" data-qa="btn-generate-key">
                 <i class="fa cm-checkbox-add cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATE'|cmTranslate}}
             </button>
         </cm-footer>
     </li>
 
-    <li ng-show="active == 'generate'">
+    <li ng-show="active == 'generate'" data-qa="page-generating-key">
         <div class="page">
             <h2>{{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATION_IN_PROGRESS'|cmTranslate}}</h2>
             {{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATION_TIME_PROGRESS'|cmTranslate:i18n}}
         </div>
 
         <cm-footer>
-            <button ng-click="cancel()" class="cm-btn-block cm-btn-grey">
+            <button ng-click="cancel()" class="cm-btn-block cm-btn-grey" data-qa="btn-cancel-key-generation">
                 <i class="fa cm-checkbox-wrong cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.CANCEL'|cmTranslate}}
             </button>
         </cm-footer>
     </li>
 
-    <li ng-show="active == 'store'">
+    <li ng-show="active == 'store'" data-qa="page-save-key">
         <div class="page">
             <h2>{{'SETTINGS.PAGES.IDENTITY.KEYS.STORE_KEYPAIR'|cmTranslate}}</h2>
 
@@ -41,15 +41,15 @@
             <br />
 
             <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
-            <textarea class="form-control" ng-model="privKey" readonly="readonly"></textarea>
+            <textarea class="form-control" ng-model="privKey" readonly="readonly" data-qa="display-private-key"></textarea>
             <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PUBLIC_KEY'|cmTranslate}}</h3>
-            <textarea class="form-control" ng-model="pubKey" readonly="readonly"></textarea>
+            <textarea class="form-control" ng-model="pubKey" readonly="readonly" data-qa="display-public-key"></textarea>
             <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_NAME'|cmTranslate}}</h3>
-            <input class="form-control" ng-model="keyName" type="text" />
+            <input class="form-control" ng-model="keyName" type="text" data-qa="input-key-name"/>
         </div>
 
         <cm-footer>
-            <button ng-click="store()" class="cm-btn-block cm-btn-grey">
+            <button ng-click="store()" class="cm-btn-block cm-btn-grey" data-qa="btn-save-key">
                 <i class="fa cm-checkbox-right cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.STORE'|cmTranslate}}
             </button>
         </cm-footer>

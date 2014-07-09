@@ -4,7 +4,7 @@
 
 <ul>
     <li>
-        <a href="#/settings/identity/keys/create" class="item w50">
+        <a href="#/settings/identity/keys/create" class="item w50" data-qa="btn-create-key">
             <i class="fa cm-checkbox-add icon-left cm-lg-icon"></i>
             <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE'|cmTranslate}}</span>
         </a>
@@ -13,16 +13,16 @@
             <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT'|cmTranslate}}</span>
         </a>
     </li>
-    <li ng-repeat="key in ownKeys | orderBy:'getPrivateKey()':false">
+    <li ng-repeat="key in ownKeys | orderBy:'getPrivateKey()':false" data-qa="key-list-item">
         <span class="item clearfix">
             <strong>{{key.getSize()}}</strong>
-            <strong class="isInLocalstorage" ng-if="key.getPrivateKey()"> {{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_ON_THIS_DEVICE'|cmTranslate}}</strong>
+            <strong class="isInLocalstorage" ng-if="key.getPrivateKey()" data-qa="key-is-local"> {{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_ON_THIS_DEVICE'|cmTranslate}}</strong>
             {{key.name}}<br />
             {{key.created | date:'dd.MM.yy - HH:mm'}}
         </span>
         <div class="shortLinks">
             <i class="fa cm-clipboard" ng-click="openModal('modalExportKeyPair',key)"></i>
-            <i class="fa cm-checkbox-wrong" ng-click="remove(key)"></i>
+            <i class="fa cm-checkbox-wrong" ng-click="remove(key)" data-qa="btn-remove-key"></i>
         </div>
     </li>
 </ul>

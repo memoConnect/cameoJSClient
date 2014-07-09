@@ -53,11 +53,11 @@ angular.module('cmCore')
             encryptWithShortKey: function (secretKey, secretString) {
                 var parameters = { cipher: "aes", ks: 256, iter: 4096 };
 
-                if(typeof secretKey != 'string' || secretKey.length < 3){ //Todo! key sollte länger sein 
+                if(typeof secretKey != 'string' || secretKey.length < 3){ //Todo! key sollte länger sein
                     cmLogger.warn('cmCrypt.encryptWithShortKey(): unable to encrypt, invalid key. '+secretKey)
-                    return "";                    
+                    return "";
                 }
-                
+
 
                 if (null == secretString)
                     return "";
@@ -77,19 +77,19 @@ angular.module('cmCore')
              * @returns base64 encoded encrypted string
              */
             encrypt: function (secretKey, secretString) {
-                var parameters = {cipher: "aes", ks: 256, iter: 500 }; 
+                var parameters = {cipher: "aes", ks: 256, iter: 500 };
 
                 if(typeof secretKey != 'string' || secretKey.length < 1){ //Todo: längere Keys verlangen
                     cmLogger.warn('cmCrypt.encrypt(): unable to encrypt, invalid key.'+secretKey)
-                    return "";                    
+                    return "";
                 }
 
                 if (null == secretString)
                     return "";
-                
+
                 if (secretKey.length < 60)
                     return "";
-                
+
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
@@ -119,8 +119,8 @@ angular.module('cmCore')
                 try {
                     decryptedString = sjcl.decrypt(secretKey, secretString)
                 } catch (e) {
-//                    cmLogger.warn('Unable to decrypt.', e)
-//                    console.warn(e)
+    //                    cmLogger.warn('Unable to decrypt.', e)
+    //                    console.warn(e)
                 }
 
                 return decryptedString || false
@@ -136,7 +136,7 @@ angular.module('cmCore')
              * @returns {string[]}
              */
             getKeySizes: function(){
-                return ['1024','2048','4096'];
+                return ['2048','4096'];
             },
 
             /**
@@ -179,7 +179,7 @@ angular.module('cmCore')
                         //pubKey: async.crypt.getPublicKey()
                     })
 
-                    $rootScope.$apply() 
+                    $rootScope.$apply()
                 });
 
                 return async.promise.promise;
@@ -207,18 +207,18 @@ angular.module('cmCore')
                 return false;
             },
 
-            generatePassword: function(){                
+            generatePassword: function(){
                 var bad_random_passphrase ='';
 
                 while(bad_random_passphrase.length < 10){
                     bad_random_passphrase += Math.random().toString(36).replace('0.','')
                 }
 
-                
+
                 return bad_random_passphrase.slice(-10);
             },
 
-            generatePassphrase: function(){                
+            generatePassphrase: function(){
                 var bad_random_passphrase ='';
 
                 while(bad_random_passphrase.length < 60){
@@ -228,5 +228,5 @@ angular.module('cmCore')
                 return bad_random_passphrase;
             }
         }
-    }]
-);
+    }
+]);
