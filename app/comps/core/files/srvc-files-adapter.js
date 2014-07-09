@@ -34,12 +34,9 @@ angular.module('cmCore')
                 });
             },
 
-            complete: function(fileId, conversationId){
+            complete: function(fileId){
                 return cmApi.post({
-                    path: '/file/'+fileId+'/completed',
-                    data: {
-                        conversationId: conversationId
-                    }
+                    path: '/file/'+fileId+'/completed'
                 });
             },
 

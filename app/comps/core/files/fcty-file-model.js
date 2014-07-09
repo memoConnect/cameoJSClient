@@ -11,8 +11,7 @@ angular.module('cmCore')
     '$q',
     'cmModal',
     'cmEnv',
-    '$routeParams',
-    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, $q, cmModal, cmEnv, $routeParams){
+    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, $q, cmModal, cmEnv){
 
         function roundToTwo(num) {
             return +(Math.round(num + 'e+2') + 'e-2');
@@ -259,7 +258,7 @@ angular.module('cmCore')
                         self.trigger('progress:chunk', (index/self.chunks.length));
 
                         if(index == (self.chunks.length - 1)){
-                            cmFilesAdapter.complete(self.id, $routeParams.conversationId).then(function(){
+                            cmFilesAdapter.complete(self.id).then(function(){
                                 self.trigger('upload:finish');
                             });
                         } else {
