@@ -8,7 +8,6 @@ angular.module('cmCore')
     function (cmApi, cmLogger, $q){
         return {
             prepareFile: function(config){
-                console.log('prepareFile',config)
                 return cmApi.post({
                     path: '/file',
                     data: {
