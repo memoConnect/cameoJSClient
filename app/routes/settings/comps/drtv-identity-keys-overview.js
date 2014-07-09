@@ -2,7 +2,8 @@
 
 angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
     'cmUserModel',
-    function(cmUserModel){
+    'cmModal',
+    function(cmUserModel, cmModal){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-keys-overview.html',
@@ -11,6 +12,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
 
                 $scope.remove = function(key){
                     cmUserModel.removeKey(key);
+                    cmModal.closeAll();
                 };
             }
         }

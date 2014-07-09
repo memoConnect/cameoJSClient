@@ -282,6 +282,8 @@
                     "IMPORT": "importieren",
                     "KEY_ON_THIS_DEVICE": "lokal",
                     "EXPORT_KEY": "Schlüsselpaar exportieren",
+                    "REMOVE_KEY": "Schlüsselpaar löschen",
+                    "REMOVE_KEY_REALLY": "wirklich löschen?",
                     "CHOOSE_SIZE": "Schlüsselstärke wählen",
                     "GENERATE": "generieren",
                     "GENERATION_IN_PROGRESS": "Generierung läuft",

@@ -118,6 +118,7 @@ describe('identity key settings', function(){
     })
 
     it('delete key', function(){
+        $("[data-qa='btn-remove-modal']").click()
         $("[data-qa='btn-remove-key']").click()
         $$("[data-qa='key-list-item']").then(function (elements) {
             expect(elements.length).toBe(0)

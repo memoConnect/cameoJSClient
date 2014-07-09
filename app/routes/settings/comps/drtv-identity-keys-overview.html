@@ -22,7 +22,7 @@
         </span>
         <div class="shortLinks">
             <i class="fa cm-clipboard" ng-click="openModal('modalExportKeyPair',key)"></i>
-            <i class="fa cm-checkbox-wrong" ng-click="remove(key)" data-qa="btn-remove-key"></i>
+            <i class="fa cm-checkbox-wrong" ng-click="openModal('modalRemoveKeypair',key)" data-qa="btn-remove-modal"></i>
         </div>
     </li>
 </ul>
@@ -37,4 +37,14 @@
         <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PUBLIC_KEY'|cmTranslate}}</h3>
         <textarea class="form-control" cm-clipboard>{{key.getPublicKey()}}</textarea>
     </div>
+</cm-modal>
+
+<cm-modal id="modalRemoveKeypair" class="no-padding" cm-data-as="key" cm-title="SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY">
+    <div class="modal-row">
+        <h2>{{key.name}} - {{key.getSize()}} - {{key.created | date:'dd.MM.yy - HH:mm'}}</h2>
+    </div>
+    <button class="cm-btn cm-btn-block cm-btn-primary" ng-click="remove(key)" data-qa="btn-remove-key">
+        {{'SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY_REALLY'|cmTranslate}}
+        <i class="fa cm-checkbox-wrong"></i>
+    </button>
 </cm-modal>
