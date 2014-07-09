@@ -277,8 +277,12 @@ describe('cmUtil', function(){
         })
 
         describe('should return', function(){
-            it('0.001s', function(){
-                expect(cmUtil.millisecondsToStr(1)).toBe('0.001s')
+            it('< 1s', function(){
+                expect(cmUtil.millisecondsToStr(0.1)).toBe('0s')
+            })
+
+            it('0s', function(){
+                expect(cmUtil.millisecondsToStr(1)).toBe('0s')
             })
 
             it('1s', function(){

@@ -75,7 +75,7 @@ angular.module('cmConversations').directive('cmConversation', [
                          */
 //                        console.log('send',$scope.hasFiles(),$scope.conversation.getPassphrase())
                         if($scope.hasFiles()) {
-                            $scope.prepareFilesForUpload($scope.conversation.getPassphrase()).then(
+                            $scope.prepareFilesForUpload($scope.conversation.getPassphrase(), $scope.conversation.id).then(
                                 function(){
                                     angular.forEach($scope.files, function(file){
                                         if(file.id != undefined){
@@ -198,10 +198,16 @@ angular.module('cmConversations').directive('cmConversation', [
 
                     //If we got this far the conversation has been saved to the backend.
                     //Create a new message:
-                    $scope.conversation.messages.create({conversation:$scope.conversation})
+
+                    $scope.conversation.messages
+                    .create({conversation:$scope.conversation})
                     .addFiles(files)
                     .setText($scope.my_message_text)
-                    .setPublicData($scope.conversation.getPassphrase() === null ? ['text','fileIds'] : [])
+                    .setPublicData(
+                        $scope.conversation.getPassphrase() === null
+                            ? ['text','fileIds']
+                            : []
+                    )
                     .encrypt()
                     .save()
                     .then(function(){
@@ -218,6 +224,8 @@ angular.module('cmConversations').directive('cmConversation', [
                             $location.path('/conversation/' + $scope.conversation.id);
                         }
 //                        cmLogger.debug('message:sent');
+                    }, function(){
+                        $scope.isSending = false;
                     });
                 }
 

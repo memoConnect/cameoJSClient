@@ -5,8 +5,8 @@ angular.module('cmCore')
     'cmLogger',
     'cmKey',
     '$q',
-    '$rootScope',
-    function (cmLogger, cmKey, $q, $rootScope) {
+    '$interval',
+    function (cmLogger, cmKey, $q, $interval) {
         // private vars
         var async = {
             interval: null,
@@ -53,11 +53,11 @@ angular.module('cmCore')
             encryptWithShortKey: function (secretKey, secretString) {
                 var parameters = { cipher: "aes", ks: 256, iter: 4096 };
 
-                if(typeof secretKey != 'string' || secretKey.length < 3){ //Todo! key sollte länger sein 
+                if(typeof secretKey != 'string' || secretKey.length < 3){ //Todo! key sollte länger sein
                     cmLogger.warn('cmCrypt.encryptWithShortKey(): unable to encrypt, invalid key. '+secretKey)
-                    return "";                    
+                    return "";
                 }
-                
+
 
                 if (null == secretString)
                     return "";
@@ -77,19 +77,19 @@ angular.module('cmCore')
              * @returns base64 encoded encrypted string
              */
             encrypt: function (secretKey, secretString) {
-                var parameters = {cipher: "aes", ks: 256, iter: 500 }; 
+                var parameters = {cipher: "aes", ks: 256, iter: 500 };
 
                 if(typeof secretKey != 'string' || secretKey.length < 1){ //Todo: längere Keys verlangen
                     cmLogger.warn('cmCrypt.encrypt(): unable to encrypt, invalid key.'+secretKey)
-                    return "";                    
+                    return "";
                 }
 
                 if (null == secretString)
                     return "";
-                
+
                 if (secretKey.length < 60)
                     return "";
-                
+
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
@@ -119,8 +119,8 @@ angular.module('cmCore')
                 try {
                     decryptedString = sjcl.decrypt(secretKey, secretString)
                 } catch (e) {
-//                    cmLogger.warn('Unable to decrypt.', e)
-//                    console.warn(e)
+    //                    cmLogger.warn('Unable to decrypt.', e)
+    //                    console.warn(e)
                 }
 
                 return decryptedString || false
@@ -158,28 +158,28 @@ angular.module('cmCore')
                 var self = this,
                     time = -((new Date()).getTime()),
                     counts = 0;
+
                 // init vars
                 async.crypt = new JSEncrypt({default_key_size: keySize}),
                 async.promise = $q.defer();
-                async.interval = setInterval(function () {
+                async.interval = $interval(function(){
                     counts++;
                     if(typeof onGeneration == "function"){
                         onGeneration(counts, (time + ((new Date()).getTime())))
                     }
                 }, 500);
+
                 // start keypair generation
-                async.crypt.getKey(function () {
+                async.crypt.getKey(function(){
                     self.cancelGeneration(true);
 
-                    async.promise.resolve({
-                        timeElapsed: (time + ((new Date()).getTime())),
-                        counts: counts,
-                        key : new self.Key(async.crypt)
-                        //privKey: async.crypt.getPrivateKey(),
-                        //pubKey: async.crypt.getPublicKey()
-                    })
-
-                    $rootScope.$apply() 
+                    if(async.promise != null) {
+                        async.promise.resolve({
+                            timeElapsed: (time + ((new Date()).getTime())),
+                            counts: counts,
+                            key: new self.Key(async.crypt)
+                        });
+                    }
                 });
 
                 return async.promise.promise;
@@ -193,11 +193,10 @@ angular.module('cmCore')
                 if ( async.interval != null ) {
                     cmLogger.debug('jsencrypt cancelGeneration');
                     // clear interval
-                    var id = async.interval;
+                    $interval.cancel(async.interval);
                     async.interval = null;
-                    clearInterval( id );
                     // clear promise and library vars if param withReject is true
-                    if(withReject == undefined && async.promise != undefined){
+                    if(withReject == undefined && async.promise != null){
                         async.promise.reject();
                         async.promise = null;
                         async.crypt = null;
@@ -207,18 +206,18 @@ angular.module('cmCore')
                 return false;
             },
 
-            generatePassword: function(){                
+            generatePassword: function(){
                 var bad_random_passphrase ='';
 
                 while(bad_random_passphrase.length < 10){
                     bad_random_passphrase += Math.random().toString(36).replace('0.','')
                 }
 
-                
+
                 return bad_random_passphrase.slice(-10);
             },
 
-            generatePassphrase: function(){                
+            generatePassphrase: function(){
                 var bad_random_passphrase ='';
 
                 while(bad_random_passphrase.length < 60){
@@ -228,5 +227,5 @@ angular.module('cmCore')
                 return bad_random_passphrase;
             }
         }
-    }]
-);
+    }
+]);

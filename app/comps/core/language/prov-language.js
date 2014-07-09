@@ -1,38 +1,6 @@
 'use strict';
 
-// Provides:
-// filter 'translate', usage: {{'MESSAGE_ID' | translate}}
-// controller 'languageCtrl' for language switch
-// Example:
-// <div ng-controller="LanguageCtrl">
-//		<a href="" ng-click="switchLang('en_US')">Englisch</a></li>
-//		<a href="" ng-click="switchLang('de_DE')">German</li>
-// </div>
-// language files: /languages/lang-$langKey.json
-// language file format:
-//		{
-//			"MESSAGE_ID": "Text",
-//			"NAMESPACE"	: {
-//				"MESSAGE_ID": "Hello {{username}}"
-//			}
-//		}
-// language keys: $LANG_$CULTURE, en_US
-// last language is stored in local storage (fallback cookie)
-// Todo: new logger, add notify
-
 angular.module('cmCore')
-.service('cmTranslate', [
-    '$translate', function($translate){ return $translate }
-])
-.filter('cmTranslate', [
-    'translateFilter', function(translateFilter){ return translateFilter }
-])
-
-//Does not work as intended <div cm-translate="LANG.DE_DE"></div> stays empty
-.directive('cmTranslate', [
-    'translateDirective', function(translateDirective){ return translateDirective[0] }
-])
-
 .provider('cmLanguage', [
     '$translateProvider',
     function($translateProvider){
@@ -103,7 +71,7 @@ angular.module('cmCore')
                         var self = this;
 
                         return cmTranslate.uses(lang_key)
-                        .then(
+                            .then(
                             function(){
                                 cmNotify.info(cmTranslate('LANG.SWITCH.SUCCESS', { lang: self.getLanguageName(lang_key) }), {ttl: 2000})
                             },
@@ -119,30 +87,5 @@ angular.module('cmCore')
                 }
             }
         ]
-    }
-])
-
-.directive('cmLanguageSelect', [
-    'cmLanguage',
-    function(cmLanguage){
-        return {
-            restrict: 'AE',
-            transclude: true,
-            template: '<select ng-model="language" ng-options="getLanguageName(lang_key) for lang_key in languages">'+
-                      '<a ng-repeat="key in languages">{{languages}}</a>'+
-                      '</select>',
-
-            link: function(scope, element){
-                element.find('select').on('change', function(){
-                    cmLanguage.switchLanguage(scope.language)
-                })
-            },
-
-            controller: function($scope){
-                $scope.languages = cmLanguage.getSupportedLanguages()
-                $scope.getLanguageName = cmLanguage.getLanguageName
-                $scope.language = cmLanguage.getCurrentLanguage()
-            }
-        }
     }
 ]);

@@ -8,11 +8,11 @@ angular.module('cmUi').filter('cmEmoji', [
         var convertSmileyToEmoji = [
             {matcher: [':\\)','\\(:','\\^\\^'], emoji:'blush'},
             {matcher: [';\\)','\\(;'], emoji:'wink'},
-            {matcher: [':D '], emoji:'smile'},
+            {matcher: [':D'], emoji:'smile'},
             {matcher: [':\\*','\\*:'], emoji:'kissing_heart'},
             {matcher: ['<3'], emoji:'heart_eyes'},
             {matcher: ['B\\)'], emoji:'sunglasses'},
-            {matcher: [':P ',':p '], emoji:'stuck_out_tongue'},
+            {matcher: [':P',':p'], emoji:'stuck_out_tongue'},
             {matcher: [';P',';p'], emoji:'stuck_out_tongue_winking_eye'},
             {matcher: [':\\('], emoji:'worried'},
             {matcher: [':o '], emoji:'open_mouth'},

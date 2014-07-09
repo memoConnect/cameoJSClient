@@ -5,14 +5,15 @@ angular.module('cmConversations').factory('cmMessageModel',[
     'cmCrypt',
     'cmIdentityFactory',
     'cmFileFactory',
+    'cmFilesAdapter',
     'cmUserModel',
     'cmObject',
     'cmStateManagement',
     'cmUtil',
     'cmLogger',
     '$rootScope',
-    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmUserModel, cmObject, cmStateManagement, cmUtil, cmLogger, $rootScope){
-
+    '$q',
+    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmFilesAdapter, cmUserModel, cmObject, cmStateManagement, cmUtil, cmLogger, $rootScope, $q){
         /**
          * @constructor
          * @description
@@ -210,34 +211,68 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                 this.publicData = public_data;
 
-                //Check if the message is allright to be send to the backend:
+                // Check if the message is allright to be send to the backend:
 
                 var proper_public_data      =       (typeof this.publicData == 'object')
                                                 &&  Object.keys(this.publicData).length > 0,
-                    proper_encrypted_data   =       (typeof this.encryptedData == 'object')
-                                                &&  Object.keys(this.encryptedData).length > 0
+                    proper_encrypted_data   =       (typeof this.encryptedData == 'string')
+                                                &&  this.encryptedData.length > 0
 
-                
                 if(!proper_public_data && !proper_encrypted_data) {
-                    cmLogger.error('cmMessageModel: Message improper; saving aborted.')
-                    return null
+                    var defer = $q.defer();
+                    cmLogger.error('cmMessageModel: Message improper; saving aborted.');
+                    defer.reject();
+                    return defer.promise;
                 }
-                
 
-                //If we got this far evrything seems allright; send the message to the backend:
+                // If we got this far evrything seems allright; send the message to the backend:
                 return cmConversationsAdapter.sendMessage(conversation.id, {
                     encrypted:  this.encryptedData,
                     plain:      this.publicData
                 })
-                    .then(function (message_data) {
-                        self.importData(message_data);
-                        self.trigger('message:saved');
-                    });
+                .then(function (message_data) {
+                    self.importData(message_data);
+                    self.trigger('message:saved');
+                });
             };
 
             this.isOwn = function(){
 //                return (!this.from || cmUserModel.data.id == this.from.id);
                 return (cmUserModel.data.id == this.from.id);
+            };
+
+            /**
+             * Handle Upload from new Files
+             * @returns {cmMessageModel.Message}
+             */
+            this.uploadFiles = function(){
+                if(this.files.length > 0){
+                    angular.forEach(this.files, function(file){
+                        file.uploadChunks();
+                        file.on('upload:complete',function(event, data){
+                            cmFilesAdapter.complete(data.fileId, self.id).then(function(){
+                                file.trigger('file:complete');
+                            });
+                        })
+                    });
+                }
+
+                return this;
+            };
+
+            /**
+             * initialize Files from Message Data (fileIds)
+             * @returns {Message}
+             */
+            this.initFiles = function(){
+                if(this.fileIds.length > 0){
+                    angular.forEach(this.fileIds, function(id){
+                        self._addFile(cmFileFactory.create(id));
+                    });
+                    this.trigger('init:files');
+                }
+
+                return this;
             };
 
             /**
@@ -299,47 +334,33 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 return this;
             };
 
-            /**
-             * Handle Upload from new Files
-             * @returns {cmMessageModel.Message}
-             */
-            this.uploadFiles = function(){
-                if(this.files.length > 0){
-                    angular.forEach(this.files, function(file){
-                        file.uploadChunks();
-                    });
-                }
-
-                return this;
-            };
-
-            /**
-             * initialize Files from Message Data (fileIds)
-             * @returns {Message}
-             * @todo  file factory?
-             */
-            this.initFiles = function(){
-                if(this.fileIds.length > 0){
-                    angular.forEach(this.fileIds, function(id){
-                        self._addFile(cmFileFactory.create(id));
-                    });
-                    this.trigger('init:files');
-                }
-
-                return this;
-            };
-
             this.decryptFiles = function(passphrase){
                 angular.forEach(this.files, function(file){
                     if(file.state == 'exists') {
                         file
                             .setPassphrase(passphrase)
                             .downloadStart();
+
+                        file.on('importFile:inComplete',function(event, file){
+                            console.log('setInComplete state');
+                            self.state.set('inComplete');
+                            // add to queue
+                            self.inCompleteFiles.push(file);
+                        });
+
+                        file.on('importFile:finish', function(event, file){
+                            self.state.unset('inComplete');
+                            // clear from queue
+                            var index = self.inCompleteFiles.indexOf(file);
+                            self.inCompleteFiles.splice(index,1);
+                        });
                     }
                 });
 
                 return this;
             };
+
+            init(data);
 
             /**
              * Event Handling
@@ -353,7 +374,17 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 self.uploadFiles();
             });
 
-            init(data);
+            // if files are incomplete wait for message:new backend event to reinit
+            this.inCompleteFiles = [];
+            if(conversation != undefined && ('on' in conversation)) {
+                conversation.on('message:reinitFiles', function () {
+                    if (self.state.is('inComplete')) {
+                        self.inCompleteFiles.forEach(function (file) {
+                            file.importFile();
+                        });
+                    }
+                });
+            }
         }
 
         return Message;
