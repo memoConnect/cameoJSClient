@@ -102,34 +102,28 @@ describe('cmCrypt', function () {
             expect(typeof cmCrypt.cancelGeneration).toBe('function')
         })
 
-        
-        it('should asynchronously generate a working 128-bit key pair within a second.', inject(function(){
+        it('should asynchronously generate a working 128-bit key par within a second.', function(){
             runs(function(){
-                var moep = cmCrypt
-                .generateAsyncKeypair(128)
-
-                console.log(moep)
-
-                moep.then(
-                    function(result){
-                        console.log('resolve', result)
-                        key        = result.key
-                        publicKey  = key.getPublicKey()
-                        privateKey = key.getPrivateKey()
-                    },
-                    function(){
-                        console.log('reject', arguments)
-                    }
-                )
+                inject(function($rootScope){
+                    cmCrypt
+                    .generateAsyncKeypair(128)
+                    .then(
+                        function(result){
+                            key        = result.key
+                            publicKey  = key.getPublicKey()
+                            privateKey = key.getPrivateKey()
+                        }
+                    )
+                })
             })
 
             waitsFor(function() {                    
                 return publicKey && privateKey
-            }, "public and private key to be defined", 100000000);
-        }))
+            }, 'public and private key to be defined', 10000);
+        })
 
         it('should not generate a key pair without a given proper key size', function(){
-            expect(cmCrypt.generateAsyncKeypair()).toBeFalsy()        
+            expect(cmCrypt.generateAsyncKeypair()).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair('huhu')).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair({test:1})).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair(['pups'])).toBeFalsy()
@@ -140,7 +134,7 @@ describe('cmCrypt', function () {
         })
 
         it('should have a constructor for "Key"', function(){
-                expect(typeof cmCrypt.Key).toBe('function')
+            expect(typeof cmCrypt.Key).toBe('function')
         })
 
         describe('Key', function(){

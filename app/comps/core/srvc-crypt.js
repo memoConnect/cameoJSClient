@@ -5,8 +5,9 @@ angular.module('cmCore')
     'cmLogger',
     'cmKey',
     '$q',
+    '$interval',
     '$rootScope',
-    function (cmLogger,cmKey, $q, $rootScope) {
+    function (cmLogger,cmKey, $q, $interval, $rootScope) {
         // private vars
         var async = {
             interval: null,
@@ -160,7 +161,7 @@ angular.module('cmCore')
                 // init vars
                 async.crypt = new JSEncrypt({default_key_size: keySize}),
                 async.promise = $q.defer();
-                async.interval = setInterval(function(){
+                async.interval = $interval(function(){
                     counts++;
                     if(typeof onGeneration == "function"){
                         onGeneration(counts, (time + ((new Date()).getTime())))
@@ -171,14 +172,13 @@ angular.module('cmCore')
                 async.crypt.getKey(function(){
                     self.cancelGeneration(true);
                     if(async.promise != null) {
-                        console.log('resolve promise',async.promise);
                         async.promise.resolve({
                             timeElapsed: (time + ((new Date()).getTime())),
                             counts: counts,
                             key: new self.Key(async.crypt)
                         });
-
-                        async.promise.resolve()
+                        // !!! important for unit test, don't remove !!!
+                        $rootScope.$apply();
                     }
                 });
 
@@ -192,12 +192,10 @@ angular.module('cmCore')
             cancelGeneration: function(withoutReject){
                 if(async.interval != null){
                     // clear interval
-                    var id = async.interval;
+                    $interval.cancel(async.interval);
                     async.interval = null;
-                    clearInterval(id);
                     // clear promise and library vars if param withReject is true
                     if(withoutReject == undefined && async.promise != undefined){
-                        console.log('### reject')
                         async.promise.reject();
                         async.promise = null;
                         async.crypt = null;
