@@ -44,7 +44,7 @@ angular.module('cmFiles').directive('cmFiles',[
                  * @param passphrase
                  * @returns {*}
                  */
-                $scope.prepareFilesForUpload = function(passphrase){
+                $scope.prepareFilesForUpload = function(passphrase, conversationId){
                     var promises = [];
 
                     // create all files and get fileIds
@@ -53,7 +53,7 @@ angular.module('cmFiles').directive('cmFiles',[
                             file
                             .setPassphrase(passphrase)
                             .encryptName()
-                            .prepareForUpload()
+                            .prepareForUpload(conversationId)
                         )
                     });
 

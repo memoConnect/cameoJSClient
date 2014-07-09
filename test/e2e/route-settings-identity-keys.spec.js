@@ -77,7 +77,7 @@ describe('identity key settings', function(){
         $$("[data-qa='key-list-item']").then(function (elements) {
             expect(elements.length).toBe(1)
             // key is local
-            expect(elements[0].isElementPresent("[data-qa='key-is-local']")).toBe(true)
+            expect(elements[0].isElementPresent(by.css("[data-qa='key-is-local']"))).toBe(true)
             // check name
             expect(elements[0].getText()).toContain(keyName)
             // should contain date
@@ -93,7 +93,7 @@ describe('identity key settings', function(){
         $$("[data-qa='key-list-item']").then(function (elements) {
             expect(elements.length).toBe(1)
             // key is local
-            expect(elements[0].isElementPresent("[data-qa='key-is-local']")).toBe(true)
+            expect(elements[0].isElementPresent(by.css("[data-qa='key-is-local']"))).toBe(true)
             // check name
             expect(elements[0].getText()).toContain(keyName)
             // should contain date

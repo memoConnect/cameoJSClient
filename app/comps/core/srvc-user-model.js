@@ -296,12 +296,19 @@ angular.module('cmCore')
             /**
              * check local Keys from Storage
              */
-
-            var localKeys = this.loadLocalKeys() || [],
-                publicKeysEmpty = this.data.identity.keys ? this.data.identity.keys.length == 0 : false;
+            var localKeys = this.loadLocalKeys() || [];
 
             localKeys.forEach(function(local_key){
-                if(publicKeysEmpty || typeof local_key.id === 'undefined' || local_key.id == ''){
+                var isNotInPublicKeys = self.data.identity.keys
+                    ? self.data.identity.keys.filter(function(public_key){
+                        if(typeof local_key.id !== 'undefined' && local_key.id == public_key.id) {
+                            return true;
+                        }
+                        return false;
+                      }).length == 0
+                    : false;
+
+                if(isNotInPublicKeys || typeof local_key.id === 'undefined' || local_key.id == ''){
                     cmAuth.savePublicKey({
                         name:    local_key.name, 
                         key:     local_key.getPublicKey(),

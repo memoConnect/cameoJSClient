@@ -41,7 +41,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                     cmCrypt.generateAsyncKeypair(parseInt($scope.keySize),
                         function(counts, timeElapsed){
                             $scope.i18n.time = cmUtil.millisecondsToStr(timeElapsed);
-                            $scope.$apply();
                         }
                     ).then(
                         function(result){
@@ -54,9 +53,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                             $scope.active = 'store';
                         },
                         function(){
-                            $scope.privKey  = '';
-                            $scope.pubKey   = '';
-
                             $scope.active = 'choose';
                         }
                     );
@@ -67,6 +63,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                 $scope.cancel = function(){
                     cmCrypt.cancelGeneration();
                     $scope.active = 'choose';
+                    $location.path('/settings/identity/keys');
                 };
                 /**
                  * store key pair

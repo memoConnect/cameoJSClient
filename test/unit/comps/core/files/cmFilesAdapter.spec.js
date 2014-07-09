@@ -22,7 +22,7 @@ describe('cmFilesAdapter', function(){
     it('should have methods',function(){
         expect(cmFilesAdapter.prepareFile).toBeDefined()
         expect(cmFilesAdapter.addChunk).toBeDefined()
-        expect(cmFilesAdapter.getFileInfo).toBeDefined()
+        expect(cmFilesAdapter.complete).toBeDefined()
         expect(cmFilesAdapter.getFile).toBeDefined()
         expect(cmFilesAdapter.getChunk).toBeDefined()
         expect(cmFilesAdapter.blobWrap).toBeDefined()
@@ -55,14 +55,6 @@ describe('cmFilesAdapter', function(){
         $httpBackend.expect('POST', apiUrl+'/file/1').respond(200, {res:'OK'} )
 
         cmFilesAdapter.addChunk(1, 0, 'data:image/png,base64;123456789')
-
-        $httpBackend.flush()
-    })
-
-    it('test method getFileInfo',function(){
-        $httpBackend.expect('GET', apiUrl+'/file/1').respond(200, {res:'OK'} )
-
-        cmFilesAdapter.getFileInfo(1)
 
         $httpBackend.flush()
     })
