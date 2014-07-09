@@ -91,7 +91,7 @@ describe('cmCrypt', function () {
 
 
         it('should provide a function "getKeysizes" with 3 available key sizes', function(){
-            expect(cmCrypt.getKeySizes().length).toEqual(3)
+            expect(cmCrypt.getKeySizes().length).toEqual(2)
         })
 
         it('should provide a function "generateAsyncKeypair"', function(){
@@ -102,28 +102,28 @@ describe('cmCrypt', function () {
             expect(typeof cmCrypt.cancelGeneration).toBe('function')
         })
 
-        
-        it('should asynchronously generate a working 128-bit key pair within a second.', inject(function(){
-                     
+        it('should asynchronously generate a working 128-bit key par within a second.', function(){
             runs(function(){
-                cmCrypt
-                .generateAsyncKeypair(128)
-                .then(function(result){
-                    key        = result.key
-                    publicKey  = key.getPublicKey()
-                    privateKey = key.getPrivateKey()                        
-                })             
+                inject(function($rootScope){
+                    cmCrypt
+                    .generateAsyncKeypair(128)
+                    .then(
+                        function(result){
+                            key        = result.key
+                            publicKey  = key.getPublicKey()
+                            privateKey = key.getPrivateKey()
+                        }
+                    )
+                })
             })
 
             waitsFor(function() {                    
                 return publicKey && privateKey
-            }, "public and private key to be defined", 10000);   
-
-            
-        }))
+            }, 'public and private key to be defined', 10000);
+        })
 
         it('should not generate a key pair without a given proper key size', function(){
-            expect(cmCrypt.generateAsyncKeypair()).toBeFalsy()        
+            expect(cmCrypt.generateAsyncKeypair()).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair('huhu')).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair({test:1})).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair(['pups'])).toBeFalsy()
@@ -134,7 +134,7 @@ describe('cmCrypt', function () {
         })
 
         it('should have a constructor for "Key"', function(){
-                expect(typeof cmCrypt.Key).toBe('function')
+            expect(typeof cmCrypt.Key).toBe('function')
         })
 
         describe('Key', function(){
@@ -243,7 +243,7 @@ describe('cmCrypt', function () {
                 expect(list.length).toBe(2)
             })
 
-            it('should provide a function "updateKeyDataList" to add itself to a list of key_data, preventing duplicates', function(){
+            it('should provide a function "updateKeyDataList" to add iteself to a list of key_data, preventing duplicates', function(){
                 var list    = [],
                     new_key = new cmCrypt.Key()
 
@@ -261,6 +261,11 @@ describe('cmCrypt', function () {
                 expect(list.length).toBe(2)
 
             })
+
+
         })
+
     })
+
+
 })

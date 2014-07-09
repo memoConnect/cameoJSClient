@@ -10,7 +10,7 @@
         </div>
 
         <div class="text" ng-class="{'own-message':is_my_own_message}">
-            <span ng-if="!displayEncrypted() && message.text" ng-bind-html="message.text | cmParse"></span>
+            <span ng-if="!displayEncrypted() && message.text" ng-bind-html="message.text|cmParse"></span>
             <span ng-if="displayEncrypted()">{{'CONVERSATION.TEXT.ENCRYPTED'|cmTranslate}}</span>
         </div>
 
@@ -23,7 +23,7 @@
 </article>
 
 <span ng-if="textOnly && messageProper()">
-    <span ng-if="isType('text') && !displayEncrypted()" ng-bind-html="message.text | cmParse"></span>
+    <span ng-if="isType('text') && !displayEncrypted()" ng-bind-html="message.text|cmParse"></span>
     <span ng-if="isType('text') && displayEncrypted()">{{'CONVERSATION.TEXT.ENCRYPTED'|cmTranslate}}</span>
     <span ng-if="isType('image')">{{'CONVERSATION.TAG.IMAGE'|cmTranslate}}</span>
     <span ng-if="isType('file')">{{'CONVERSATION.TAG.FILE'|cmTranslate}}</span>

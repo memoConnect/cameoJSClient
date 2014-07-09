@@ -4,15 +4,16 @@ angular.module('cmUi')
 .filter('cmParse', [
     '$filter',
     function($filter){
-        return function(text){
+        return function(html){
 
-            text = $filter('cmTranslate')(text);
-            text = $filter('cmInlineTranslate')(text);
-            text = $filter('cmAutolink')(text, 40);// $sce
-            text = $filter('cmEmoji')(text);
-            text = $filter('nl2br')(text);//$sce
+            html = $filter('cmEscape')(html);
+            html = $filter('cmTranslate')(html);
+            html = $filter('cmInlineTranslate')(html);
+            html = $filter('cmAutolink')(html, 40);// $sce
+            html = $filter('cmEmoji')(html);
+            html = $filter('nl2br')(html);//$sce
 
-            return text;
+            return html;
         }
     }
 ]);

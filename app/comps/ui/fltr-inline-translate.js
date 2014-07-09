@@ -1,12 +1,10 @@
 'use strict';
 
-angular.module('cmUi').filter('cmInlineTranslate', [
-
+angular.module('cmUi')
+.filter('cmInlineTranslate', [
     '$filter',
-
     function($filter){
         return function(text){
-
             if(text == undefined)
                 return '';
 
