@@ -310,9 +310,9 @@ angular.module('cmCore')
             };
 
             this.downloadChunks = function(){
-                cmLogger.debug('cmFileModel:downloadChunks');
+//                cmLogger.debug('cmFileModel:downloadChunks');
                 if(!this.id && this.state == 'exists'){
-                    cmLogger.debug('cmFile.downloadChunks();')
+//                    cmLogger.debug('cmFile.downloadChunks();')
                     return null;
                 }
 

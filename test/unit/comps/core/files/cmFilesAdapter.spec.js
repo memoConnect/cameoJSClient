@@ -59,14 +59,6 @@ describe('cmFilesAdapter', function(){
         $httpBackend.flush()
     })
 
-    it('test method getFileInfo',function(){
-        $httpBackend.expect('GET', apiUrl+'/file/1').respond(200, {res:'OK'} )
-
-        cmFilesAdapter.getFileInfo(1)
-
-        $httpBackend.flush()
-    })
-
     it('test method getFile',function(){
         $httpBackend.expect('GET', apiUrl+'/file/1').respond(200, {res:'OK'} )
 

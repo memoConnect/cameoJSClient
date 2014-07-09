@@ -334,8 +334,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 return this;
             };
 
-            this.inCompleteFiles = [];
-
             this.decryptFiles = function(passphrase){
                 angular.forEach(this.files, function(file){
                     if(file.state == 'exists') {
@@ -362,6 +360,8 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 return this;
             };
 
+            init(data);
+
             /**
              * Event Handling
              */
@@ -374,15 +374,17 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 self.uploadFiles();
             });
 
-            data.conversation.on('message:reinitFiles', function(){
-                if(self.state.is('inComplete')){
-                   self.inCompleteFiles.forEach(function(file){
-                       file.importFile();
-                   });
-                }
-            });
-
-            init(data);
+            // if files are incomplete wait for message:new backend event to reinit
+            this.inCompleteFiles = [];
+            if(conversation != undefined && ('on' in conversation)) {
+                conversation.on('message:reinitFiles', function () {
+                    if (self.state.is('inComplete')) {
+                        self.inCompleteFiles.forEach(function (file) {
+                            file.importFile();
+                        });
+                    }
+                });
+            }
         }
 
         return Message;

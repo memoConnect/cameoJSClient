@@ -25,7 +25,7 @@ describe('cmMessageModel', function(){
     /** more Tests needed *//
 
     it('should not save when improper.', function(){
-        var message = new cmMessageModel({conversation:'sdf'})
+        var message = new cmMessageModel({conversation:{any:'moep'}})
 
         $httpBackend.expectGET('/identity').respond(200,{})
         message.save()

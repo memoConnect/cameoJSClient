@@ -5,8 +5,8 @@ angular.module('cmCore')
     'cmLogger',
     'cmKey',
     '$q',
-    '$rootScope',
-    function (cmLogger, cmKey, $q, $rootScope) {
+    '$interval',
+    function (cmLogger, cmKey, $q, $interval) {
         // private vars
         var async = {
             interval: null,
@@ -158,28 +158,28 @@ angular.module('cmCore')
                 var self = this,
                     time = -((new Date()).getTime()),
                     counts = 0;
+
                 // init vars
                 async.crypt = new JSEncrypt({default_key_size: keySize}),
                 async.promise = $q.defer();
-                async.interval = setInterval(function () {
+                async.interval = $interval(function(){
                     counts++;
                     if(typeof onGeneration == "function"){
                         onGeneration(counts, (time + ((new Date()).getTime())))
                     }
                 }, 500);
+
                 // start keypair generation
-                async.crypt.getKey(function () {
+                async.crypt.getKey(function(){
                     self.cancelGeneration(true);
 
-                    async.promise.resolve({
-                        timeElapsed: (time + ((new Date()).getTime())),
-                        counts: counts,
-                        key : new self.Key(async.crypt)
-                        //privKey: async.crypt.getPrivateKey(),
-                        //pubKey: async.crypt.getPublicKey()
-                    })
-
-                    $rootScope.$apply()
+                    if(async.promise != null) {
+                        async.promise.resolve({
+                            timeElapsed: (time + ((new Date()).getTime())),
+                            counts: counts,
+                            key: new self.Key(async.crypt)
+                        });
+                    }
                 });
 
                 return async.promise.promise;
@@ -193,11 +193,10 @@ angular.module('cmCore')
                 if ( async.interval != null ) {
                     cmLogger.debug('jsencrypt cancelGeneration');
                     // clear interval
-                    var id = async.interval;
+                    $interval.cancel(async.interval);
                     async.interval = null;
-                    clearInterval( id );
                     // clear promise and library vars if param withReject is true
-                    if(withReject == undefined && async.promise != undefined){
+                    if(withReject == undefined && async.promise != null){
                         async.promise.reject();
                         async.promise = null;
                         async.crypt = null;
