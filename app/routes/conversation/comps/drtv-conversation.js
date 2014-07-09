@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('cmRouteConversation').directive('cmConversation', [
+
     'cmConversationFactory',
     'cmUserModel',
     'cmCrypt',
@@ -9,10 +10,10 @@ angular.module('cmRouteConversation').directive('cmConversation', [
     'cmModal',
     '$location',
     '$rootScope',
-    '$routeParams',
     '$document',
     'cmEnv',
-    function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope, $routeParams, $document, cmEnv) {
+
+    function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope, $document, cmEnv) {
         return {
             restrict: 'AE',
             templateUrl: 'routes/conversation/comps/drtv-conversation.html',
@@ -20,29 +21,28 @@ angular.module('cmRouteConversation').directive('cmConversation', [
 
             controller: function ($scope, $element, $attrs) {
                 var self                 = this,
-                    conversation_id      = $routeParams.conversationId,
                     conversation_subject = $scope.$eval($attrs.cmSubject),
                     conversation_offset  = $attrs.offset,
                     conversation_limit   = $attrs.limit,
                     files                = [],
                     showedAsymmetricKeyError = false;
 
-                $scope.isSending = false;
-                $scope.isSendingAbort = false;
-                $scope.conversation = {};
-
+                $scope.isSending        = false;
+                $scope.isSendingAbort   = false;
+                
                 /**
                  * check if is new
                  * @returns {boolean}
                  */
                 this.isNew = function(){
-                    return !conversation_id || conversation_id == 'new';
+                    return $scope.conversation.state.is('new')
                 };
 
                 // first focus on message
                 if(!this.isNew() && cmEnv.isNotMobile){
                     $document[0].querySelector('cm-conversation .answer textarea').focus();
                 }
+
 
                 /**
                  * start sending process
@@ -220,10 +220,8 @@ angular.module('cmRouteConversation').directive('cmConversation', [
                         $scope.isSending = false;
 
                         // route to detailpage of conversation
-                        if(!conversation_id){
-                            cmConversationFactory.register($scope.conversation);
+                        if(!$scope.calledWithId) //calledWithId is set by route Ctrl
                             $location.path('/conversation/' + $scope.conversation.id);
-                        }
 //                        cmLogger.debug('message:sent');
                     }, function(){
                         $scope.isSending = false;
@@ -265,24 +263,7 @@ angular.module('cmRouteConversation').directive('cmConversation', [
                     showAsymmetricKeyError();
                 };
 
-                // existing conversation
-                if(conversation_id && conversation_id != 'new'){
-                    $scope.init( cmConversationFactory.create(conversation_id));
-
-                // pending conversation:
-                } else if($rootScope.pendingConversation){
-                        $rootScope.pendingConversation.id
-                    ?   $location.path('conversation/'+$rootScope.pendingConversation.id)
-                    :   $scope.init($rootScope.pendingConversation);
-
-                // new conversation:
-                } else {
-                    // TODO: create at send message not on init!!!
-                    $scope.init(
-                        cmConversationFactory.new(undefined, true)
-                        .addRecipient(cmUserModel.data.identity)
-                    )
-                }
+                $scope.init($scope.$eval($attrs.cmData))
 
                 $scope.conversation.on('update:finished',function(){
                     showAsymmetricKeyError();

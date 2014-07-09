@@ -38,7 +38,10 @@ angular.module('cmCore').factory('cmFactory',[
                 var instance = self.find(id);
 
                 if(instance === null){
-                    instance = self.new(args);
+                    
+                    instance = self.new(args)
+                    self.register(instance)
+
                 } else if(typeof withNewImport === 'boolean' && withNewImport == true && typeof instance.importData == 'function'){
                     instance.importData(args);
                 }
@@ -66,15 +69,12 @@ angular.module('cmCore').factory('cmFactory',[
              * @param   {string|object}   args        instance id, data set including an instance id or data set without an id
              * @return  {cmModel}                    returns a new model instance populated with the provided data
              */
-            self.new = function(args, withoutRegister){
+            self.new = function(args){
                 var data     = typeof args == 'string' ? {id:args} : args,
                     instance = new self.model(data);
 
                 // TODO: before init:ready in instance factory.echoEventsFrom(self); for observing before triggering
-
-                if(typeof withoutRegister !== 'boolean' || withoutRegister == false){
-                    self.register(instance)
-                }
+                //  - removed register and added it above in create()
 
                 return instance
             };

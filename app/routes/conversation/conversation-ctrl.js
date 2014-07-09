@@ -9,12 +9,39 @@ define([
     'use strict';
 
     app.register.controller('ConversationCtrl', [
+
         '$scope',
         '$rootScope',
         '$element',
         '$routeParams',
-        function($scope, $rootScope, $element, $routeParams){
-            $scope.conversationId = $routeParams.conversationId;
+        'cmConversationFactory',
+        'cmUserModel',
+
+        function($scope, $rootScope, $element, $routeParams, cmConversationFactory, cmUserModel){
+            $scope.conversationId   = $routeParams.conversationId;
+            $scope.calledWithId  = $scope.conversationId && $scope.conversationId != 'new'
+
+            // existing conversation
+            if($scope.calledWithId){
+                $scope.conversation = cmConversationFactory.create($scope.conversationId)   
+
+            // pending conversation:
+            } else if($rootScope.pendingConversation){
+
+                if($rootScope.pendingConversation.id) //todo: state new?
+                   $location.path('conversation/'+$rootScope.pendingConversation.id)
+                else
+                    $scope.conversation = $rootScope.pendingConversation;
+
+            // new conversation:
+            } else {
+                // TODO: create at send message not on init!!! Factories should not automatically register new instance.
+                $scope.conversation =   cmConversationFactory.new()
+                                        .addRecipient(cmUserModel.data.identity)
+                
+            }
+
+
 
             $scope.pageChild1 = $routeParams.pageChild1 || '';
         }
