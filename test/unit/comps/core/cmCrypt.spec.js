@@ -91,7 +91,7 @@ describe('cmCrypt', function () {
 
 
         it('should provide a function "getKeysizes" with 3 available key sizes', function(){
-            expect(cmCrypt.getKeySizes().length).toEqual(3)
+            expect(cmCrypt.getKeySizes().length).toEqual(2)
         })
 
         it('should provide a function "generateAsyncKeypair"', function(){
@@ -104,22 +104,28 @@ describe('cmCrypt', function () {
 
         
         it('should asynchronously generate a working 128-bit key pair within a second.', inject(function(){
-                     
             runs(function(){
-                cmCrypt
+                var moep = cmCrypt
                 .generateAsyncKeypair(128)
-                .then(function(result){
-                    key        = result.key
-                    publicKey  = key.getPublicKey()
-                    privateKey = key.getPrivateKey()                        
-                })             
+
+                console.log(moep)
+
+                moep.then(
+                    function(result){
+                        console.log('resolve', result)
+                        key        = result.key
+                        publicKey  = key.getPublicKey()
+                        privateKey = key.getPrivateKey()
+                    },
+                    function(){
+                        console.log('reject', arguments)
+                    }
+                )
             })
 
             waitsFor(function() {                    
                 return publicKey && privateKey
-            }, "public and private key to be defined", 10000);   
-
-            
+            }, "public and private key to be defined", 100000000);
         }))
 
         it('should not generate a key pair without a given proper key size', function(){
@@ -243,7 +249,7 @@ describe('cmCrypt', function () {
                 expect(list.length).toBe(2)
             })
 
-            it('should provide a function "updateKeyDataList" to add itself to a list of key_data, preventing duplicates', function(){
+            it('should provide a function "updateKeyDataList" to add iteself to a list of key_data, preventing duplicates', function(){
                 var list    = [],
                     new_key = new cmCrypt.Key()
 
@@ -261,6 +267,11 @@ describe('cmCrypt', function () {
                 expect(list.length).toBe(2)
 
             })
+
+
         })
+
     })
+
+
 })
