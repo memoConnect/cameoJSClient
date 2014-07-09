@@ -46,10 +46,16 @@ describe('identity key settings', function(){
         expect($("[data-qa='btn-cancel-key-generation']").isDisplayed()).toBe(true)
     })
 
-    //todo: requires bugfix
-//    it('cancel generation', function(){
-//        $("[data-qa='btn-cancel-key-generation']").click()
-//    })
+    it('cancel generation', function(){
+        $("[data-qa='btn-cancel-key-generation']").click()
+        util.waitForPageLoad("/settings/identity/keys")
+    })
+
+    it('start generation again', function(){
+        $("[data-qa='btn-create-key']").click()
+        util.waitForPageLoad('/settings/identity/keys/create')
+        $("[data-qa='btn-generate-key']").click()
+    })
 
     it('wait for key generation and display key', function(){
         util.waitForElementVisible("[data-qa='page-save-key']", 50000)
@@ -71,7 +77,7 @@ describe('identity key settings', function(){
         $$("[data-qa='key-list-item']").then(function (elements) {
             expect(elements.length).toBe(1)
             // key is local
-            expect(elements[0].findElement(by.css("[data-qa='key-is-local']")).isDisplayed()).toBe(true)
+            expect(elements[0].isElementPresent("[data-qa='key-is-local']")).toBe(true)
             // check name
             expect(elements[0].getText()).toContain(keyName)
             // should contain date
@@ -87,7 +93,7 @@ describe('identity key settings', function(){
         $$("[data-qa='key-list-item']").then(function (elements) {
             expect(elements.length).toBe(1)
             // key is local
-            expect(elements[0].findElement(by.css("[data-qa='key-is-local']")).isDisplayed()).toBe(true)
+            expect(elements[0].isElementPresent("[data-qa='key-is-local']")).toBe(true)
             // check name
             expect(elements[0].getText()).toContain(keyName)
             // should contain date
