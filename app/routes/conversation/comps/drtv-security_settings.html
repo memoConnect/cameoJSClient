@@ -1,6 +1,6 @@
 <section class="body-group no-border">
-    <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getNegativeAspects()" cm-data="aspect"></cm-security-aspect>
     <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getPositiveAspects()" cm-data="aspect"></cm-security-aspect>
+    <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getNegativeAspects()" cm-data="aspect"></cm-security-aspect>
 </section>
 
 <section class="body-group no-padding">
@@ -59,3 +59,9 @@
         <input data-qa="input-subject" style="background-color:#fff" type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" cm-adaptive-change  cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls', scrollTop:true}" />
     </div>
 </section>
+
+<cm-footer cm-rubber-space>
+    <button cm-weight="1" ng-click="goto('conversation/'+(conversation.id||'new'))" class="cm-btn-grey">
+        {{'CONVERSATION.SETTINGS.OKAY'|cmTranslate}}
+    </button>
+</cm-footer>

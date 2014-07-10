@@ -41,8 +41,4 @@
         <cm-recipients          cm-data ="conversation" ng-switch-when  = "recipients"></cm-recipients>
         <cm-security-settings   cm-data ="conversation" ng-switch-when  = "security-settings"></cm-security-settings>
     </section>
-
-    <cm-footer ng-if = "pageChild1 == 'security-settings'" cm-rubber-space>
-        <button cm-weight="1" ng-click = "goto('conversation/'+(conversation.id||'new'))"> {{'CONVERSATION.SETTINGS.OKAY'|cmTranslate}}</button>
-    </cm-footer>
 </div>

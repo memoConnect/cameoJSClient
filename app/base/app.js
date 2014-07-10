@@ -173,7 +173,6 @@ define([
             //prep $rootScope with useful tools
             $rootScope.console  =   console;
             $rootScope.alert    =   alert;
-            $rootScope.back     =   $window.history.back;
             $rootScope.goto     =   function(path){
                                         path = path[0] == '/' ? path : '/'+path;
                                         $location.path(path);
