@@ -85,7 +85,7 @@ angular.module('cmCore')
                         self.chunkIndices  = details.chunks;
                         self.maxChunks     = details.maxChunks;
                         // start download when flag is true
-                        if(details.isCompleted !== false) {
+                        if(details.isCompleted) {
                             self.trigger('importFile:finish',self);
                         } else {
                             self.trigger('importFile:incomplete',self);
