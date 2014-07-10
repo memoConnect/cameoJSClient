@@ -128,6 +128,10 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                     $window.history.back();
                 };
 
+                $scope.isNew = function(){
+                    return $scope.conversation.state.is('new');
+                };
+
                 /**
                  * @name decrypt
                  * @description

@@ -462,6 +462,10 @@
             "NO_SE_PASSPHRASE_PRESENT":{
                 "NAME": "Keine Symetrische Passphrase vorhanden",
                 "DESCRIPTION": ""
+            },
+            "SE_PASSPHRASE_PRESENT":{
+                "NAME": "Symetrische Passphrase vorhanden",
+                "DESCRIPTION": ""
             }
         }
     },

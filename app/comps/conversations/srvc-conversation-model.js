@@ -22,7 +22,8 @@
  * @param {Object} [data] The conversation data as received from the backend.
  */
 
-angular.module('cmConversations').factory('cmConversationModel',[
+angular.module('cmConversations')
+.factory('cmConversationModel',[
     'cmBoot',
     'cmConversationsAdapter',
     'cmMessageModel',
@@ -41,7 +42,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmUtil',
     '$q',
     '$rootScope',
-    function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory, cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase, cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
+    function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
+              cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase,
+              cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
 
         function ConversationModel(data){
             var self        = this,
@@ -191,10 +194,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                             return false;
                         }
                     }
-
                 }
-
-
                 return true;
             };
 

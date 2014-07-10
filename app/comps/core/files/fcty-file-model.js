@@ -37,7 +37,6 @@ angular.module('cmCore')
 
             this.setPassphrase = function(p){
                 passphrase = p;// TODO: || null;
-
                 return this;
             };
 
@@ -45,7 +44,6 @@ angular.module('cmCore')
                 var arr_states = ['new','exists','cached','crashed'];
                 if(arr_states.indexOf(state) != -1)
                     this.state = state;
-
                 return this;
             };
 

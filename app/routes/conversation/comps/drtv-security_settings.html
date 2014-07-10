@@ -51,14 +51,7 @@
         </a>
     </div>
     <div ng-if="showPasswordLocalKeyInfo && isNew" class="tac cm-orange" cm-user-rights>
-            <i class="fa cm-attention"></i>{{'CONVERSATION.LABEL.SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS'|cmTranslate}}
-    </div>
-</section>
-
-<section class="cm-form-group body-group label-with-checkbox" ng-show="isNew">
-    <label class="w20">{{'CONVERSATION.PLACEHOLDER.SUBJECT' | cmTranslate}}</label>
-    <div class="cm-form-control with-inputter w80" style="background-color:#fff">
-        <input data-qa="input-subject" style="background-color:#fff" type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" cm-adaptive-change  cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls', scrollTop:true}" />
+        <i class="fa cm-attention"></i>{{'CONVERSATION.LABEL.SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS'|cmTranslate}}
     </div>
 </section>
 
