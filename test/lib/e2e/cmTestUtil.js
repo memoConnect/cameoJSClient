@@ -177,6 +177,18 @@ this.waitForElements = function (selector, count) {
     return this
 }
 
+this.waitForElementVisible = function (selector, timeout) {
+
+    ptor.wait(function () {
+        return $(selector).isDisplayed().then(function (isDisplayed) {
+            return isDisplayed
+        })
+    }, timeout || config.waitForTimeout, 'waitForElementVisible ' + selector + ' timeout is reached')
+
+    return this
+}
+
+
 this.waitForElementHidden = function (selector, timeout) {
 
     ptor.wait(function () {
@@ -287,5 +299,21 @@ this.headerSearchInList = function(searchString){
 
 this.searchInList = function(searchString){
     $("[data-qa='inp-list-search']").sendKeys(searchString)
+}
+
+this.clearLocalStorage = function() {
+    ptor.executeScript('localStorage.clear()')
+}
+
+this.generateKey = function() {
+
+    self.get('/settings/identity/keys/create')
+
+    $("[data-qa='btn-generate-key']").click()
+
+    self.waitForElementVisible("[data-qa='page-save-key']", 50000)
+
+    $("[data-qa='btn-save-key']").click()
+
 }
 

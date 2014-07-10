@@ -282,6 +282,8 @@
                     "IMPORT": "import",
                     "KEY_ON_THIS_DEVICE": "local",
                     "EXPORT_KEY": "Keypair export",
+                    "REMOVE_KEY": "Keypair remove",
+                    "REMOVE_KEY_REALLY": "really remove?",
                     "CHOOSE_SIZE": "Choose keysize",
                     "GENERATE": "generate",
                     "GENERATION_IN_PROGRESS": "generation in progress",

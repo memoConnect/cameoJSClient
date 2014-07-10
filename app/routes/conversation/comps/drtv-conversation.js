@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmConversations').directive('cmConversation', [
+angular.module('cmRouteConversation').directive('cmConversation', [
     'cmConversationFactory',
     'cmUserModel',
     'cmCrypt',
@@ -9,17 +9,18 @@ angular.module('cmConversations').directive('cmConversation', [
     'cmModal',
     '$location',
     '$rootScope',
+    '$routeParams',
     '$document',
     'cmEnv',
-    function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope, $document, cmEnv) {
+    function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope, $routeParams, $document, cmEnv) {
         return {
             restrict: 'AE',
-            templateUrl: 'comps/conversations/drtv-conversation.html',
+            templateUrl: 'routes/conversation/comps/drtv-conversation.html',
             scope: true,
 
             controller: function ($scope, $element, $attrs) {
                 var self                 = this,
-                    conversation_id      = $scope.$eval($attrs.cmConversations) || $scope.$eval($attrs.conversationId),
+                    conversation_id      = $routeParams.conversationId,
                     conversation_subject = $scope.$eval($attrs.cmSubject),
                     conversation_offset  = $attrs.offset,
                     conversation_limit   = $attrs.limit,
@@ -35,7 +36,7 @@ angular.module('cmConversations').directive('cmConversation', [
                  * @returns {boolean}
                  */
                 this.isNew = function(){
-                    return !conversation_id
+                    return !conversation_id || conversation_id == 'new';
                 };
 
                 // first focus on message
@@ -265,7 +266,7 @@ angular.module('cmConversations').directive('cmConversation', [
                 };
 
                 // existing conversation
-                if(conversation_id){                                        
+                if(conversation_id && conversation_id != 'new'){
                     $scope.init( cmConversationFactory.create(conversation_id));
 
                 // pending conversation:
@@ -297,4 +298,4 @@ angular.module('cmConversations').directive('cmConversation', [
             }
         }
     }
-])
+]);

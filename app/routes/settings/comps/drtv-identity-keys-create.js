@@ -7,8 +7,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
     'cmLogger',
     'cmNotify',
     'cmKey',
-    '$location',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey, $location){
+    '$window',
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey, $window){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-keys-create.html',
@@ -46,8 +46,11 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                         function(result){
                             $scope.i18n.time = cmUtil.millisecondsToStr(result.timeElapsed);
 
-                            $scope.privKey  = result.key.getPrivateKey();
-                            $scope.pubKey   = result.key.getPublicKey();
+                            var privKey = result.key.getPrivateKey(),
+                                pubKey  = result.key.getPublicKey();
+
+                            $scope.privKey  = privKey;
+                            $scope.pubKey   = pubKey;
                             $scope.keyName  = detect.os+' / '+detect.browser;
 
                             $scope.active = 'store';
@@ -63,7 +66,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                 $scope.cancel = function(){
                     cmCrypt.cancelGeneration();
                     $scope.active = 'choose';
-                    $location.path('/settings/identity/keys');
+                    $window.history.back();
                 };
                 /**
                  * store key pair
@@ -95,7 +98,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                             .saveKey(key)
                             .syncLocalKeys($scope.keySize);
 
-                        $location.path('/settings/identity/keys');
+                        $window.history.back();
                         //cmNotify.info('NOTIFICATIONS.TYPES.KEYS.STORE_NEW',{displayType:'modal',ttl:3000});
                     }
                 };

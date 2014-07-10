@@ -1,11 +1,10 @@
 define([
     'app',
-//    'ngload!pckCore',
-//    'util-base64',
     'ngload!pckFiles',
     'ngload!pckUser',
     'ngload!pckContacts',
-    'ngload!pckConversations'
+    'ngload!pckConversations',
+    'ngload!pckRouteConversation'
 ], function (app) {
     'use strict';
 
@@ -16,6 +15,8 @@ define([
         '$routeParams',
         function($scope, $rootScope, $element, $routeParams){
             $scope.conversationId = $routeParams.conversationId;
+
+            $scope.pageChild1 = $routeParams.pageChild1 || '';
         }
     ]);
 });

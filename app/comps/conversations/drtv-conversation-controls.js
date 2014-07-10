@@ -148,7 +148,7 @@ angular.module('cmConversations').directive('cmConversationControls', [
                  */
                 $scope.manageRecipients = function(){
                     if($scope.conversation.state.is('new')){
-                        $location.path('/recipients')
+                        $location.path('conversation/'+($scope.conversation.id||'new')+'/recipients');
                     }
                 };
 

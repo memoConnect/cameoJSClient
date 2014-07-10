@@ -1,9 +1,20 @@
-<cm-header cm-rubber-space>
-    <cm-back cm-weight="1" back-to="/talks" plain-back="true"></cm-back>
-    <cm-identity cm-weight="6"></cm-identity>
-    <cm-menu cm-weight="1"></cm-menu>
-</cm-header>
+<div ng-controller="ConversationCtrl">
+    <cm-header cm-rubber-space ng-show="pageChild1 == ''">
+        <cm-back cm-weight="1" back-to="/talks" plain-back="true"></cm-back>
+        <cm-identity cm-weight="6"></cm-identity>
+        <cm-menu cm-weight="1"></cm-menu>
+    </cm-header>
 
-<section ng-controller="ConversationCtrl" class="with-header">
-    <cm-conversation conversation-id="conversationId"></cm-conversation>
-</section>
+    <cm-header cm-rubber-space ng-show="pageChild1 == 'recipients'">
+        <cm-back cm-weight="1" back-to="conversation/{{conversationId}}"></cm-back>
+        <cm-identity cm-weight="5"></cm-identity>
+        <cm-header-list-search cm-weight="1" ng-model="search"></cm-header-list-search>
+        <cm-menu cm-weight="1"></cm-menu>
+    </cm-header>
+
+    <section ng-switch="pageChild1">
+        <cm-conversation ng-switch-default></cm-conversation>
+        <cm-recipients ng-switch-when="recipients"></cm-recipients>
+        <cm-security-settings ng-switch-when="security-settings"></cm-security-settings>
+    </section>
+</div>

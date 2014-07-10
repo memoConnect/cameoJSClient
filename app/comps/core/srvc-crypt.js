@@ -195,7 +195,7 @@ angular.module('cmCore')
                     $interval.cancel(async.interval);
                     async.interval = null;
                     // clear promise and library vars if param withReject is true
-                    if(withoutReject == undefined && async.promise != undefined){
+                    if(withoutReject == undefined && async.promise != null){
                         async.promise.reject();
                         async.promise = null;
                         async.crypt = null;

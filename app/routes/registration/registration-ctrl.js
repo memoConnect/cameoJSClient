@@ -5,7 +5,7 @@ define([
 ], function (app) {
     'use strict';
 
-    app.register.controller('RegistrationCtrl', [
+app.register.controller('RegistrationCtrl', [
     '$scope',
     '$rootScope',
     '$location',
@@ -19,6 +19,7 @@ define([
         var reservationSecrets = {};
 
         $scope.handleGuest = false;
+        $scope.showSpinner = false;
 
         $scope.showError = {
             LoginNameExists: false,
@@ -26,7 +27,7 @@ define([
             LoginNameInvalid: false
         };
 
-        $scope.pendingAccountCheck = $q.when(true)
+        $scope.pendingAccountCheck = $q.when(true);
 
         /**
          * getLoginNameError for GUI
@@ -37,7 +38,7 @@ define([
                 return true;
             }
             return false;
-        }
+        };
 
         $scope.formData = {loginName: '', password: '', email: '', phoneNumber: '', name: ''};
         $scope.userNameAlternatives = [];
@@ -258,35 +259,55 @@ define([
         /**
          * Form Validation and Apicall to create user
          */
+        $scope.spinner = function(action){
+            if(action == 'isIdle'){
+                return $scope.showSpinner;
+            }
+
+            $scope.showSpinner = action == 'stop' ? false : true;
+        };
+
         $scope.createUser = function(){
+            if($scope.spinner('isIdle'))
+                return false;
+
+            $scope.spinner('start');
+
             //wait for the accpount check to finish
             $scope.pendingAccountCheck.then( function(){
                 //actually create the user:
                 $scope.handleFormDataCache('clear');
 
-                $scope.validateForm().then(
-                    function(data){
-                        cmAuth.createUser(data).then(
-                            function (userData) {
-                                cmUserModel.doLogin($scope.formData.loginName, $scope.formData.password).then(
-                                    function(){
-                                        cmUserModel.setIdentity(userData.identities[0]);
-                                        if($scope.handleGuest !== false){
-                                            $location.path('/purl/'+$rootScope.pendingPurl);
-                                        } else {
-                                            cmUserModel.comesFromRegistration = true;
-                                            $location.path("/talks");
-                                        }
-                                    }
-                                )
-                                return true;
+                $scope
+                .validateForm()
+                .then(function(data){
+                    cmAuth
+                    .createUser(data)
+                    .then(function(userData){
+                        cmUserModel.doLogin($scope.formData.loginName, $scope.formData.password).then(
+                            function(){
+                                $scope.spinner('stop');
+                                cmUserModel.setIdentity(userData.identities[0]);
+                                if($scope.handleGuest !== false){
+                                    $location.path('/purl/'+$rootScope.pendingPurl);
+                                } else {
+                                    cmUserModel.comesFromRegistration = true;
+                                    $location.path("/talks");
+                                }
                             },
-                            function(response){
-    //                            console.log(response);
+                            function(){
+                                $scope.spinner('stop');
                             }
                         );
-                    }
-                );
+                        return true;
+                    },
+                    function(response){
+                        $scope.spinner('stop');
+                    });
+                },
+                function(){
+                    $scope.spinner('stop');
+                });
             })
         };
 
