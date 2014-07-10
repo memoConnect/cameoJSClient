@@ -63,7 +63,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
             this.state              = new cmStateManagement(['new','loading']);
             this.keyTransmission    = '';
 
-            this.lastMessage        = {};
+            this.lastMessage        = this.messages.new() //fallback
 
             this.missingAePassphrases = {};
 

@@ -88,7 +88,7 @@ angular.module('cmCore')
                         if(details.isCompleted !== false) {
                             self.trigger('importFile:finish',self);
                         } else {
-                            self.trigger('importFile:inComplete',self);
+                            self.trigger('importFile:incomplete',self);
                         }
                     },
                     function(){
