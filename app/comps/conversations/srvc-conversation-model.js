@@ -179,10 +179,9 @@ angular.module('cmConversations')
                      * wenn nicht, wird überprüft ob ein passwort vergeben wurde
                      */
                     if(key_check == true && (self.password == undefined || (typeof self.password != 'string') || (self.password.length == 0))){
-                        cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD');
+                        cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD', {ttl:0, i18n: {conversationId:self.id||'new'}});
                         return false;
                     }
-
 
                     /**
                      * checkt ob alle User einen Key habe und ob der lokale User einen Key local hat,

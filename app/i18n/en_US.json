@@ -142,7 +142,7 @@
             "RECIPIENTS_MISSING": "Please add at least one recipient.",
             "PASSPHRASE_INVALID": "Invalid passphrase",
             "PASSWORD_WRONG": "Password is wrong",
-            "NO_PASSWORD": "Password is empty"
+            "NO_PASSWORD": "Password is empty.<br /> <a href=\"#/conversation/{{conversationId}}/security-settings\">here you can insert one</a>"
         },
         "PLACEHOLDER": {
             "SUBJECT": "Subject",
