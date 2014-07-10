@@ -68,7 +68,7 @@ angular.module('cmConversations').directive('cmMessage', [
                 };
 
                 $scope.messageProper = function(){                    
-                    var isInComplete   =    $scope.message.state.is('inComplete'),
+                    var isInComplete   =    $scope.message.state.is('incomplete'),
                         textAvailable  =    typeof $scope.message.text == 'string'
                                             &&  $scope.message.text.length > 0,
                         encrypted      =    $scope.message.isEncrypted(),

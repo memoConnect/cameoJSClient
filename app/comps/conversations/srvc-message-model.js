@@ -341,18 +341,18 @@ angular.module('cmConversations').factory('cmMessageModel',[
                             .setPassphrase(passphrase)
                             .downloadStart();
 
-                        file.on('importFile:inComplete',function(event, file){
-                            console.log('setInComplete state');
-                            self.state.set('inComplete');
+                        file.on('importFile:incomplete',function(event, file){
+                            console.log('setIncomplete state');
+                            self.state.set('incomplete');
                             // add to queue
-                            self.inCompleteFiles.push(file);
+                            self.incompleteFiles.push(file);
                         });
 
                         file.on('importFile:finish', function(event, file){
-                            self.state.unset('inComplete');
+                            self.state.unset('incomplete');
                             // clear from queue
-                            var index = self.inCompleteFiles.indexOf(file);
-                            self.inCompleteFiles.splice(index,1);
+                            var index = self.incompleteFiles.indexOf(file);
+                            self.incompleteFiles.splice(index,1);
                         });
                     }
                 });
@@ -375,11 +375,11 @@ angular.module('cmConversations').factory('cmMessageModel',[
             });
 
             // if files are incomplete wait for message:new backend event to reinit
-            this.inCompleteFiles = [];
+            this.incompleteFiles = [];
             if(conversation != undefined && ('on' in conversation)) {
                 conversation.on('message:reinitFiles', function () {
-                    if (self.state.is('inComplete')) {
-                        self.inCompleteFiles.forEach(function (file) {
+                    if (self.state.is('incomplete')) {
+                        self.incompleteFiles.forEach(function (file) {
                             file.importFile();
                         });
                     }
