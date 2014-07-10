@@ -7,7 +7,8 @@
 
     <cm-header cm-rubber-space ng-show="pageChild1 == 'recipients'">
         <cm-back cm-weight="1" back-to="conversation/{{conversationId}}"></cm-back>
-        <div cm-weight="6"></div>
+        <cm-identity cm-weight="5"></cm-identity>
+        <cm-header-list-search cm-weight="1" ng-model="search"></cm-header-list-search>
         <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
 

@@ -1,10 +1,4 @@
 <section>
-    <header class="cm-list-header">
-        <h1>{{"RECIPIENTS.HEADING"|cmTranslate}}</h1>
-
-        <cm-search-input ng-model="search"></cm-search-input>
-    </header>
-
     <cm-contacts-list contacts-as="contacts">
         <cm-contact-tag ng-repeat="contact in contacts|cmSearch:'contacts':search" cm-rubber-space ng-class="{'disabled':contact.contactType == 'pending'}">
             <cm-avatar cm-data="contact.identity"></cm-avatar>
@@ -20,5 +14,5 @@
 </section>
 
 <cm-footer cm-rubber-space cm-hide-other-footer>
-    <a href="#/conversation/{{conversationId}}" data-qa="btn-done" cm-weight="1">{{'RECIPIENTS.LABEL.DONE'|cmTranslate}}</a>
+    <a href="#/conversation/{{conversationId}}" class="cm-btn-grey" data-qa="btn-done" cm-weight="1">{{'RECIPIENTS.LABEL.DONE'|cmTranslate}}</a>
 </cm-footer>
