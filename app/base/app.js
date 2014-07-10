@@ -177,6 +177,7 @@ define([
             $rootScope.goto     =   function(path){
                                         path = path[0] == '/' ? path : '/'+path
                                         $location.path(path)
+                                        console.log(path)
                                     }
 
             //add Overlay handles:

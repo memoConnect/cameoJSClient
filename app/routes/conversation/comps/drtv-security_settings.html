@@ -1,22 +1,4 @@
-<section class="body-group">
-    <label>{{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}</label>
-    <div class="recipients-list">
-        <div class="scroller">
-            <div ng-click="manageRecipients()" ng-if="conversation.recipients.length == 1" class="add-new-recipients">
-                <cm-avatar cm-view="unknown"></cm-avatar>
-                {{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS' | cmTranslate}}
-            </div>
-            <cm-avatar cm-data="recipient" cm-with-name="true" cm-view="hide-owner" ng-repeat="recipient in conversation.recipients"></cm-avatar>
-        </div>
-        <cm-add-button cm-icon="add-recipient" ng-click="manageRecipients()" cm-user-rights></cm-add-button>
-    </div>
-</section>
-
-<section class="body-group no-border" ng-click="show_aspects = !show_aspects">
-    <cm-security-indicator cm-data="conversation.securityAspects"/>
-</section>
-
-<section class="body-group no-border" ng-if="show_aspects">
+<section class="body-group no-border">
     <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getNegativeAspects()" cm-data="aspect"></cm-security-aspect>
     <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getPositiveAspects()" cm-data="aspect"></cm-security-aspect>
 </section>

@@ -1,5 +1,25 @@
+<section class="body-group recipients">
+    <label>{{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}</label>
+    <div class="recipients-list">
+        <div class="scroller">
+            <div 
+                ng-click    = "goto('conversation/'+(conversation.id||'new')+'/recipients')" 
+                ng-if       = "conversation.recipients.length == 1" 
+                class       = "add-new-recipients">
+                <cm-avatar cm-view="unknown"></cm-avatar>
+                {{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS' | cmTranslate}}
+            </div>
+            <cm-avatar cm-data="recipient" cm-with-name="true" cm-view="hide-owner" ng-repeat="recipient in conversation.recipients"></cm-avatar>
+        </div>
+        <cm-add-button 
+            cm-icon =   "add-recipient" 
+            ng-click=   "goto('conversation/'+(conversation.id||'new')+'/recipients')" 
+            cm-user-rights
+        ></cm-add-button>
+    </div>
+</section>
 
-<div class="subject">
+<div class="body-group subject">
     <div ng-if = "!conversation.state.is('new') && conversation.subject" data-qa="text-subject">
         {{conversation.subject}}
     </div>

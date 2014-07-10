@@ -120,18 +120,6 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
             controller: function($scope, $element, $attrs){
                 $scope.conversation = $scope.$eval($attrs.cmData)
 
-                
-                /**
-                 * @name manageRecipients
-                 * @description
-                 * redirect to route /recipients
-                 */
-                $scope.manageRecipients = function(){
-                    if($scope.conversation.state.is('new')){
-                        $location.path('conversation/'+($scope.conversation.id||'new')+'/recipients');
-                    }
-                };
-
                 /**
                  * @name decrypt
                  * @description

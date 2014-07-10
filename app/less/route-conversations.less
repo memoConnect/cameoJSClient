@@ -2,7 +2,6 @@
 
 cm-conversation {
     .subject {
-        background-color: @cm-white;
         margin-bottom:0.5*@cm-unit;
         text-align:center;
     }
@@ -172,9 +171,23 @@ cm-security-settings {
         }
     }
 
+    .cm-center{
+        .cm-info{
+            color:@cm-ci-color;
+        }
+    }
+}
+
+
+cm-conversation {
+    .body-group {
+        background-color: @cm-white;
+    }
+
     .recipients-list {
         position:relative;
         margin-right:@cm-unit;
+
         .scroller{
             overflow-y:hidden;
             overflow-x:auto;
@@ -195,15 +208,6 @@ cm-security-settings {
         }
     }
 
-    .cm-center{
-        .cm-info{
-            color:@cm-ci-color;
-        }
-    }
-}
-
-
-cm-conversation {
   cm-message {
     margin: 0.5em 0;
     word-wrap: break-word;
