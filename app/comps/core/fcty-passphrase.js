@@ -344,6 +344,8 @@ angular.module('cmCore').factory('cmPassphrase',[
                 var sym     = symmetricallyEncryptPassphrase(password),
                     asym    = asymmetricallyEncryptPassphrase(identities);
 
+                console.log(sym)
+
                 self.importSymmetricallyEncryptedPassphrase(sym);
                 self.importAsymmetricallyEncryptedPassphrase(asym);
 

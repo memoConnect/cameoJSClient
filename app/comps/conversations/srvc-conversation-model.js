@@ -918,13 +918,20 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.recipients.on(['register', 'update:finished'], function(event, recipient){
 //                cmLogger.debug('cmConversationModel:on:recipient:register');
+                console.log('register!')
+                passphrase
+                .setIdentities(self.recipients)
+                .encrypt()
                 self.checkPreferences();
                 self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
-            this.recipients.on('unregistered', function(){
+            this.recipients.on('deregister', function(){
 //                cmLogger.debug('cmConversationModel:on:recipient:unregistered');
+                passphrase
+                .setIdentities(self.recipients)
+                .encrypt()
                 self.checkPreferences();
                 self.securityAspects.refresh();
                 self.updateLockStatus();

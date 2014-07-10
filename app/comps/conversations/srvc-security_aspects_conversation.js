@@ -44,7 +44,7 @@ angular.module('cmSecurityAspects')
 
                         this.bad_recipients_list = this.bad_recipients.map(function(recipient){ return recipient.getDisplayName() }).join(', ')
 
-                        return ['symmetrical', 'mixed'].indexOf(conversation.exportData().keyTransmission) != -1;
+                        return ['symmetrical', 'mixed'].indexOf(conversation.getKeyTransmission()) != -1;
                     },
                 })                
                 .addAspect({
@@ -70,9 +70,10 @@ angular.module('cmSecurityAspects')
                 .addAspect({
                     id: 'NO_SE_PASSPHRASE_PRESENT',
                     dependencies: ['ENCRYPTED'],
-                    value: +1,
+                    value: 1,
                     check: function(conversation){
-                        return !['symmetrical', 'mixed'].indexOf(conversation.exportData().keyTransmission) != -1;
+                        console.log(conversation.getKeyTransmission())
+                        return !['symmetrical', 'mixed'].indexOf(conversation.getKeyTransmission()) != -1;
                     },
                 })   
 
