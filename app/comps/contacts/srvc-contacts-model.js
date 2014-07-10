@@ -281,7 +281,7 @@ angular.module('cmContacts').service('cmContactsModel',[
         });
 
         this.requests.on('register', function(){
-            cmNotify.new({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell: true});
+            cmNotify.create({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell:true});
         });
 
         cmContactsAdapter.on('identity:updated', function(event, data){

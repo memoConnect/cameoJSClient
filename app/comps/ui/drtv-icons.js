@@ -10,6 +10,7 @@ angular.module('cmUi').directive('cmIcons',[
             link: function(scope, element, attrs){
                 scope.count = attrs.count
                 scope.icons = attrs.icons
+                scope.alt   = attrs.alt
 
                 function draw(){
                     // clear all

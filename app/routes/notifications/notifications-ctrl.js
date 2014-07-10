@@ -14,7 +14,7 @@ define([
             $scope.notifications = cmNotify;
 
             $scope.ring = function(){
-                cmNotify.new({
+                cmNotify.create({
                     label:'NOTIFICATIONS.TYPES.FRIEND_REQUEST',
                     bell: true
                 });

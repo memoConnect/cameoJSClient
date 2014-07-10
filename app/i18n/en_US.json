@@ -157,6 +157,9 @@
         "CONTROL": {
             "SAVE": "save",
             "CLOSE": "close"
+        },
+        "SETTINGS": {
+            "OKAY": "done"
         }
     },
 

@@ -1,7 +1,10 @@
-.cm-unread{ color:@cm-warning-color }
+.cm-unread{ color:@cm-warning-color; }
 
-cm-conversation{
-  padding-top:@cm-conversation-control-height+1em;
+cm-conversation {
+    .subject {
+        margin-bottom:0.5*@cm-unit;
+        text-align:center;
+    }
 }
 
 li:first-of-type cm-conversation-tag {
@@ -115,133 +118,92 @@ cm-recipient-counter{
 
 @cm-conversation-control-height:2em;
 
-cm-conversation-controls{
-  display:block;
-  position:fixed;
-  height:@cm-conversation-control-height;
-  width:@cm-app-width;
-  top:@cm-header-height;
-  z-index:2;
 
-  &.too-big{
-    .body{
-      overflow-y:scroll!important;
-    }
+cm-security-settings {
+  display: block;
+  background-color: @cm-white;
+
+  .body-group{
+    background:@cm-white;
+    padding:0.5rem;
+    border-bottom:@cm-border-grey @cm-border-width solid;
+    width:100%;
   }
 
-  .control{
-    line-height:2em;
-    white-space:nowrap;
-    font-size:1em;
-    overflow:hidden;
-    padding-bottom:1em;
+  .no-border{
+      border: none;
+  }
 
-    .body{
-      overflow-y:hidden;
-      overflow-x:hidden;
-      .body-group{
-        background:@cm-white;
-        padding:0.5em;
-        border-bottom:@cm-border-grey @cm-border-width solid;
-        width:100%;
-      }
-      .no-border{
-        border: none;
-      }
-      .no-padding{
-        padding:0
-      }
-      .label-with-checkbox{
-        label {
+  .no-padding{
+      padding:0
+  }
+
+  .label-with-checkbox{
+      label {
           padding-left: 0.5rem;
-        }
-        button {
+      }
+      button {
 
-        }
-        .checkbox-of-label{
-          .tar;
-          .dib;
-          padding-right: 0.5rem;
-        }
       }
-      &:last-child{
-        border-bottom:0;
+      .checkbox-of-label{
+        .tar;
+        .dib;
+        padding-right: 0.5rem;
       }
-      .cm-btn{
-        color:@cm-ci-color;
-        .cm-btn-black;
-        .cm-btn-block;
-      }
-      .cm-form-group{
-        padding:0;
-      }
-    }
+  }
 
-    .recipients-list {
-      position:relative;
-      margin-right:@cm-unit;
-      .scroller{
-        overflow-y:hidden;
-        overflow-x:auto;
-      }
-      cm-avatar{
-        vertical-align:top;
-        margin-right:0.5rem;
-        &:last-child{
-            margin-right:0;
-        }
-      }
-      cm-add-button{
-        font-size:@cm-mega-font + 1;
-        position:absolute;
-        right: -@cm-unit;
-        top: 0.5rem;
-        color:@cm-grey-btn;
-      }
-    }
+  &:last-child{
+      border-bottom:0;
+  }
 
-    .cm-center{
+  .cm-btn{
+      color:@cm-ci-color;
+      .cm-btn-black;
+      .cm-btn-block;
+  }
+
+  .cm-form-group{
+      padding:0;
+  }
+
+  .cm-center{
       .cm-info{
           color:@cm-ci-color;
       }
-    }
-
-    .cm-bar {
-      .with-cursor;
-      text-align: center;
-      .border-radius-bottom;
-      background: @cm-white;
-      color: @cm-dark-grey;
-      * {
-        vertical-align: middle;
-      }
-      .grey-box-shadow;
-      .grip-left {
-        text-align: left;
-        i {
-          margin-left: 0.5em;
-        }
-      }
-
-      cm-recipient-counter {
-        font-size: @cm-unit/2;
-        .background {
-          color: @cm-dark-grey;
-        }
-        .foreground {
-          color: @cm-white;
-        }
-      }
-
-      .cm-bar-infos {
-        cm-lock-level, cm-recipient-counter {
-          margin-left:0.5rem;
-        }
-      }
-    }
   }
 }
+
+
 cm-conversation {
+    .body-group {
+      background-color:@cm-white;
+      padding:0.5rem;
+    }
+
+    .recipients-list {
+        position:relative;
+        margin-right:@cm-unit;
+
+        .scroller{
+            overflow-y:hidden;
+            overflow-x:auto;
+        }
+        cm-avatar{
+            vertical-align:top;
+            margin-right:0.5rem;
+            &:last-child{
+                margin-right:0;
+            }
+        }
+        cm-add-button{
+            font-size:@cm-mega-font + 1;
+            position:absolute;
+            right: -@cm-unit;
+            top: 0.5rem;
+            color:@cm-grey-btn;
+        }
+    }
+
   cm-message {
     margin: 0.5em 0;
     word-wrap: break-word;

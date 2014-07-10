@@ -51,7 +51,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
             this.files = [];
             this.fileIds = [];
 
-            this.state = new cmStateManagement(['new','decrypted','loading']);
+            this.state = new cmStateManagement(['new','decrypted','loading', 'incomplete']);
 
             /**
              * Initialize Message Object
@@ -72,7 +72,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
                     // fail ??
                     self.state.set('new');
                     self.from = cmUserModel.data.identity;
-                }
+                }                
             }
 
             /**
@@ -100,6 +100,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                 this.encryptedData  = data.encrypted || this.encryptedData;
 
+                this.state.set('incomplete')
                 this.initFiles();
 
                 this.trigger('update:finished');
@@ -270,6 +271,8 @@ angular.module('cmConversations').factory('cmMessageModel',[
                         self._addFile(cmFileFactory.create(id));
                     });
                     this.trigger('init:files');
+                }else{
+                    this.state.unset('incomplete')
                 }
 
                 return this;
@@ -342,7 +345,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
                             .downloadStart();
 
                         file.on('importFile:incomplete',function(event, file){
-                            console.log('setIncomplete state');
                             self.state.set('incomplete');
                             // add to queue
                             self.incompleteFiles.push(file);
