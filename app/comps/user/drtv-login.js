@@ -38,30 +38,28 @@ angular.module('cmUser').directive('cmLogin', [
                     }
                 };
 
-                var isIdle = false;
-
                 $scope.doLogin = function(){
-                    if(isIdle)
+                    if($scope.spinner('isIdle'))
                         return false;
 
-                    isIdle = true;
                     $scope.alertState = '';
-                    $scope.startSpinner();
+                    $scope.spinner('start');
 
-                    cmUserModel.doLogin($scope.formData.user, cmCrypt.hash($scope.formData.pass))
-                        .then(
+                    cmUserModel.doLogin(
+                        $scope.formData.user,
+                        cmCrypt.hash($scope.formData.pass)
+                    )
+                    .then(
                         function(){
-                            isIdle = false;
-                            $scope.stopSpinner();
+                            $scope.spinner('stop');
                             if(!$location.$$path.match(/\/purl\/.*/)){
                                 $location.path("/talks");
                             }
                             $rootScope.$broadcast('cmLogin:success');
                         },
                         function(error){
-                            isIdle = false;
+                            $scope.spinner('stop');
                             $rootScope.$broadcast('cmLogin:error');
-                            $scope.stopSpinner();
                             $scope.alertState = error.status;
                         }
                     );
@@ -69,12 +67,12 @@ angular.module('cmUser').directive('cmLogin', [
                     return true;
                 };
 
-                $scope.startSpinner = function(){
-                    $scope.showSpinner = true;
-                };
+                $scope.spinner = function(action){
+                    if(action == 'isIdle'){
+                        return $scope.showSpinner;
+                    }
 
-                $scope.stopSpinner = function(){
-                    $scope.showSpinner = false;
+                    $scope.showSpinner = action == 'stop' ? false : true;
                 };
             }
         }

@@ -96,7 +96,12 @@ cm-menu {
             margin-left:@cm-unit - 1.7;
             border-bottom:@cm-border-width solid @cm-border-lightgrey;
             &.is-disabled{
-              .cm-disabled
+              i{
+                .cm-disabled
+              }
+              span{
+                .cm-disabled
+              }
             }
             &.is-last{
               border-bottom:0;
@@ -129,7 +134,7 @@ cm-menu {
         }
       }
       .cm-menu-notify{
-        background-color:@cm-light-grey;
+        //background-color:@cm-light-grey;
       }
       .bottom-filler{
         width:100%;

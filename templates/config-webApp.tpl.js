@@ -145,7 +145,7 @@ cameo_config = {
             }
         },
         'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell', disabled:true},
-        'contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-contacts', disabled:true},
+        'contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-address-book', disabled:true},
         'app': {i18n:'SETTINGS.APP', icon:'cm-fix'},
         'about-us': {i18n:'SETTINGS.PAGES.ABOUT_US.TITLE', icon:'cm-rhino-positive'},
         'contracts': {i18n:'SETTINGS.CONTRACTS', icon:'cm-clipboard', disabled:true}

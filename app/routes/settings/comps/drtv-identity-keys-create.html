@@ -11,11 +11,10 @@
             </select>
         </div>
 
-        {{testCmUtil}}
-
         <cm-footer>
             <button ng-click="generate()" class="cm-btn-block cm-btn-grey" data-qa="btn-generate-key">
-                <i class="fa cm-checkbox-add cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATE'|cmTranslate}}
+                {{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATE'|cmTranslate}}
+                <i class="fa cm-checkbox-right cm-lg-icon"></i>
             </button>
         </cm-footer>
     </li>
@@ -28,7 +27,8 @@
 
         <cm-footer>
             <button ng-click="cancel()" class="cm-btn-block cm-btn-grey" data-qa="btn-cancel-key-generation">
-                <i class="fa cm-checkbox-wrong cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.CANCEL'|cmTranslate}}
+                {{'SETTINGS.PAGES.IDENTITY.KEYS.CANCEL'|cmTranslate}}
+                <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
             </button>
         </cm-footer>
     </li>
@@ -50,7 +50,8 @@
 
         <cm-footer>
             <button ng-click="store()" class="cm-btn-block cm-btn-grey" data-qa="btn-save-key">
-                <i class="fa cm-checkbox-right cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.STORE'|cmTranslate}}
+                {{'SETTINGS.PAGES.IDENTITY.KEYS.STORE'|cmTranslate}}
+                <i class="fa cm-checkbox-right cm-lg-icon"></i>
             </button>
         </cm-footer>
     </li>

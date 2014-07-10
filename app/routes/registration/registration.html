@@ -69,12 +69,15 @@
                     <i class="fa cm-info"></i>{{'REGISTER.INFO.TERMS'|cmTranslate}}
                 </div>
             </div>
-
         </form>
     </div>
 
-
     <cm-footer>
-        <button id="registerUserButton" class="cm-btn-block" ng-click="createUser()" data-qa="btn-createUser">{{'REGISTER.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i></button>
+        <button id="registerUserButton" class="cm-btn-block" ng-click="createUser()" data-qa="btn-createUser">
+            <span ng-show="!showSpinner">
+                {{'REGISTER.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i>
+            </span>
+            <cm-spinner ng-show="showSpinner" cm-color="#02BED2"></cm-spinner>
+        </button>
     </cm-footer>
 </div>
