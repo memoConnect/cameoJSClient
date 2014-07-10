@@ -29,7 +29,7 @@
 
 <cm-modal id="modalExportKeyPair" class="no-padding" cm-data-as="key" cm-title="SETTINGS.PAGES.IDENTITY.KEYS.EXPORT_KEY">
     <div class="modal-row">
-        <h2>{{key.name}} - {{key.getSize()}}</h2>
+        <h3>{{key.name}} - {{key.getSize()}}</h3>
         <div ng-if="key.getPrivateKey()">
             <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
             <textarea class="form-control" cm-clipboard>{{key.getPrivateKey()}}</textarea>
@@ -41,10 +41,10 @@
 
 <cm-modal id="modalRemoveKeypair" class="no-padding" cm-data-as="key" cm-title="SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY">
     <div class="modal-row">
-        <h2>{{key.name}} - {{key.getSize()}} - {{key.created | date:'dd.MM.yy - HH:mm'}}</h2>
+        <h3>{{key.name}} - {{key.getSize()}} - {{key.created | date:'dd.MM.yy - HH:mm'}}</h3>
     </div>
-    <button class="cm-btn cm-btn-block cm-btn-primary" ng-click="remove(key)" data-qa="btn-remove-key">
+    <button class="cm-btn-block cm-btn-grey" ng-click="remove(key)" data-qa="btn-remove-key">
         {{'SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY_REALLY'|cmTranslate}}
-        <i class="fa cm-checkbox-wrong"></i>
+        <i class="fa cm-checker cm-lg-icon"></i>
     </button>
 </cm-modal>

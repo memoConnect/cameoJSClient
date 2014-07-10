@@ -1,8 +1,10 @@
 define([
     'app',
-//    'cmUtil',
+    'ngload!pckFiles',
     'ngload!pckUser',
-    'ngload!pckConversations'
+    'ngload!pckContacts',
+    'ngload!pckConversations',
+    'ngload!pckRouteConversation'
 ], function(app){
     'use strict';
 
@@ -83,8 +85,6 @@ define([
             };
 
             $scope.showLogin = function () {
-                $scope.hideHeader();
-
                 cmModal.create({
                     id: 'login',
                     'class': 'with-title no-padding',
@@ -97,10 +97,6 @@ define([
                     location.reload();
                 });
             };
-
-            $scope.hideHeader = function(){
-                angular.element(document.querySelector('header')).addClass('ng-hide');
-            }
         }
     ]);
 });

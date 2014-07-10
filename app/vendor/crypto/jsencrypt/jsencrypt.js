@@ -1594,6 +1594,9 @@ var JSEncryptExports = {};
             this.e = parseInt(E, 16);
             var ee = new BigInteger(E, 16);
             var rsa = this;
+
+            RSAKey.prototype.cancelAsync();
+
             // These functions have non-descript names because they were originally for(;;) loops.
             // I don't know about cryptography to give them better names than loop1-4.
             var loop1 = function() {
@@ -1612,9 +1615,12 @@ var JSEncryptExports = {};
                         rsa.dmp1 = rsa.d.mod(p1);
                         rsa.dmq1 = rsa.d.mod(q1);
                         rsa.coeff = rsa.q.modInverse(rsa.p);
-                        setTimeout(function(){callback()},0); // escape
+                        RSAKey.prototype.asyncTimeouts.push(setTimeout(function(){
+                            RSAKey.prototype.cancelAsync();
+                            callback();
+                        },0)); // escape
                     } else {
-                        setTimeout(loop1,0);
+                        RSAKey.prototype.asyncTimeouts.push(setTimeout(loop1,0));
                     }
                 };
                 var loop3 = function() {
@@ -1622,9 +1628,9 @@ var JSEncryptExports = {};
                     rsa.q.fromNumberAsync(qs, 1, rng, function(){
                         rsa.q.subtract(BigInteger.ONE).gcda(ee, function(r){
                             if (r.compareTo(BigInteger.ONE) == 0 && rsa.q.isProbablePrime(10)) {
-                                setTimeout(loop4,0);
+                                RSAKey.prototype.asyncTimeouts.push(setTimeout(loop4,0));
                             } else {
-                                setTimeout(loop3,0);
+                                RSAKey.prototype.asyncTimeouts.push(setTimeout(loop3,0));
                             }
                         });
                     });
@@ -1634,18 +1640,29 @@ var JSEncryptExports = {};
                     rsa.p.fromNumberAsync(B - qs, 1, rng, function(){
                         rsa.p.subtract(BigInteger.ONE).gcda(ee, function(r){
                             if (r.compareTo(BigInteger.ONE) == 0 && rsa.p.isProbablePrime(10)) {
-                                setTimeout(loop3,0);
+                                RSAKey.prototype.asyncTimeouts.push(setTimeout(loop3,0));
                             } else {
-                                setTimeout(loop2,0);
+                                RSAKey.prototype.asyncTimeouts.push(setTimeout(loop2,0));
                             }
                         });
                     });
                 };
-                setTimeout(loop2,0);
+                RSAKey.prototype.asyncTimeouts.push(setTimeout(loop2,0));
             };
-            setTimeout(loop1,0);
+            RSAKey.prototype.asyncTimeouts.push(setTimeout(loop1,0));
         };
         RSAKey.prototype.generateAsync = RSAGenerateAsync;
+
+        RSAKey.prototype.asyncTimeouts = [];
+        RSAKey.prototype.cancelAsync = function(where){
+            if(RSAKey.prototype.asyncTimeouts.length > 0){
+                RSAKey.prototype.asyncTimeouts.forEach(function(timeout){
+                    clearTimeout(timeout);
+                });
+            }
+            RSAKey.prototype.asyncTimeouts = [];
+        };
+
 
 // Public API method
         var bnGCDAsync = function (a, callback) {
@@ -4271,6 +4288,12 @@ var JSEncryptExports = {};
             this.key.generate(this.default_key_size, this.default_public_exponent);
         }
         return this.key;
+    };
+
+    JSEncrypt.prototype.cancelAsync = function(){
+        if (this.key) {
+            this.key.cancelAsync();
+        }
     };
 
     /**

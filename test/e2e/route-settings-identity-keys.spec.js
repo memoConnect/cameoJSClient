@@ -126,7 +126,6 @@ describe('identity key settings', function(){
     })
 
     it('generate another local key', function(){
-
         util.generateKey()
         util.waitForPageLoad('/settings/identity/keys')
 
@@ -136,7 +135,7 @@ describe('identity key settings', function(){
     })
 
     it('delete it and confirm that it is deleted after logout/login', function(){
-
+        $("[data-qa='btn-remove-modal']").click()
         $("[data-qa='btn-remove-key']").click()
 
         util.logout()
@@ -150,6 +149,4 @@ describe('identity key settings', function(){
     it('delete test user', function(){
         util.deleteTestUser(login)
     })
-
-
 })

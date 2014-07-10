@@ -170,12 +170,18 @@ angular.module('cmCore')
 
                 // start keypair generation
                 async.crypt.getKey(function(){
+                    var key = new self.Key(async.crypt);
+
+                    // only resolve if keypair exists
+                    if(key.getPrivateKey() == undefined)
+                        return false;
+
                     self.cancelGeneration(true);
                     if(async.promise != null) {
                         async.promise.resolve({
                             timeElapsed: (time + ((new Date()).getTime())),
                             counts: counts,
-                            key: new self.Key(async.crypt)
+                            key: key
                         });
                         // !!! important for unit test, don't remove !!!
                         $rootScope.$apply();
@@ -195,10 +201,9 @@ angular.module('cmCore')
                     $interval.cancel(async.interval);
                     async.interval = null;
                     // clear promise and library vars if param withReject is true
-                    if(withoutReject == undefined && async.promise != null){
+                    if(withoutReject == undefined) {
+                        async.crypt.cancelAsync();
                         async.promise.reject();
-                        async.promise = null;
-                        async.crypt = null;
                     }
                     return true;
                 }

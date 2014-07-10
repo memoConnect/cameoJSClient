@@ -20,7 +20,7 @@ angular.module('cmRouteConversation').directive('cmConversation', [
 
             controller: function ($scope, $element, $attrs) {
                 var self                 = this,
-                    conversation_id      = $routeParams.conversationId,
+                    conversation_id      = $routeParams.conversationId || $scope.$eval($attrs.conversationId),
                     conversation_subject = $scope.$eval($attrs.cmSubject),
                     conversation_offset  = $attrs.offset,
                     conversation_limit   = $attrs.limit,
@@ -284,9 +284,11 @@ angular.module('cmRouteConversation').directive('cmConversation', [
                     )
                 }
 
-                $scope.conversation.on('update:finished',function(){
-                    showAsymmetricKeyError();
-                });
+                if('on' in $scope.conversation) {
+                    $scope.conversation.on('update:finished', function () {
+                        showAsymmetricKeyError();
+                    });
+                }
 
                 /**
                  * Delete pending Objects
