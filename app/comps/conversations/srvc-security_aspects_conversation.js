@@ -35,7 +35,7 @@ angular.module('cmSecurityAspects')
                 })                
                 .addAspect({
                     id: 'SE_PASSPHRASE_PRESENT',
-                    dependencies = ['ENCRYPTED']
+                    dependencies: ['ENCRYPTED'],
                     value: -1,
                     check: function(conversation){
                         this.bad_recipients = conversation.recipients.filter(function(recipient){
@@ -49,7 +49,7 @@ angular.module('cmSecurityAspects')
                 })                
                 .addAspect({
                     id: 'HAS_PASSCAPTCHA',
-                    dpendencies: ['SE_PASSPHRASE_PRESENT']
+                    dependencies: ['SE_PASSPHRASE_PRESENT'],
                     value: -2,
                     check: function(conversation){
                         var bool = false;
@@ -69,7 +69,7 @@ angular.module('cmSecurityAspects')
                 })                             
                 .addAspect({
                     id: 'NO_SE_PASSPHRASE_PRESENT',
-                    dependencies = ['ENCRYPTED']
+                    dependencies: ['ENCRYPTED'],
                     value: +1,
                     check: function(conversation){
                         return !['symmetrical', 'mixed'].indexOf(conversation.exportData().keyTransmission) != -1;
