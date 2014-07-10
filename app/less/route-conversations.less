@@ -119,132 +119,90 @@ cm-recipient-counter{
 
 @cm-conversation-control-height:2em;
 
-cm-conversation-controls{
-  display:block;
-  position:fixed;
-  height:@cm-conversation-control-height;
-  width:@cm-app-width;
-  top:@cm-header-height;
-  z-index:2;
 
-  &.too-big{
-    .body{
-      overflow-y:scroll!important;
-    }
-  }
-
-  .control{
-    line-height:2em;
-    white-space:nowrap;
-    font-size:1em;
-    overflow:hidden;
-    padding-bottom:1em;
+cm-security-settings {
+    display: block;
+    background-color: @cm-white;
 
     .body{
-      overflow-y:hidden;
-      overflow-x:hidden;
-      .body-group{
-        background:@cm-white;
-        padding:0.5em;
-        border-bottom:@cm-border-grey @cm-border-width solid;
-        width:100%;
-      }
-      .no-border{
-        border: none;
-      }
-      .no-padding{
-        padding:0
-      }
-      .label-with-checkbox{
-        label {
-          padding-left: 0.5rem;
+        overflow-y:hidden;
+        overflow-x:hidden;
+        
+        .body-group{
+            background:@cm-white;
+            padding:0.5em;
+            border-bottom:@cm-border-grey @cm-border-width solid;
+            width:100%;
         }
-        button {
 
+        .no-border{
+            border: none;
         }
-        .checkbox-of-label{
-          .tar;
-          .dib;
-          padding-right: 0.5rem;
+
+        .no-padding{
+            padding:0
         }
-      }
-      &:last-child{
-        border-bottom:0;
-      }
-      .cm-btn{
-        color:@cm-ci-color;
-        .cm-btn-black;
-        .cm-btn-block;
-      }
-      .cm-form-group{
-        padding:0;
-      }
+
+        .label-with-checkbox{
+            label {
+                padding-left: 0.5rem;
+            }
+            button {
+
+            }
+            .checkbox-of-label{
+              .tar;
+              .dib;
+              padding-right: 0.5rem;
+            }
+        }
+
+        &:last-child{
+            border-bottom:0;
+        }
+
+        .cm-btn{
+            color:@cm-ci-color;
+            .cm-btn-black;
+            .cm-btn-block;
+        }
+
+        .cm-form-group{
+            padding:0;
+        }
     }
 
     .recipients-list {
-      position:relative;
-      margin-right:@cm-unit;
-      .scroller{
-        overflow-y:hidden;
-        overflow-x:auto;
-      }
-      cm-avatar{
-        vertical-align:top;
-        margin-right:0.5rem;
-        &:last-child{
-            margin-right:0;
+        position:relative;
+        margin-right:@cm-unit;
+        .scroller{
+            overflow-y:hidden;
+            overflow-x:auto;
         }
-      }
-      cm-add-button{
-        font-size:@cm-mega-font + 1;
-        position:absolute;
-        right: -@cm-unit;
-        top: 0.5rem;
-        color:@cm-grey-btn;
-      }
+        cm-avatar{
+            vertical-align:top;
+            margin-right:0.5rem;
+            &:last-child{
+                margin-right:0;
+            }
+        }
+        cm-add-button{
+            font-size:@cm-mega-font + 1;
+            position:absolute;
+            right: -@cm-unit;
+            top: 0.5rem;
+            color:@cm-grey-btn;
+        }
     }
 
     .cm-center{
-      .cm-info{
-          color:@cm-ci-color;
-      }
+        .cm-info{
+            color:@cm-ci-color;
+        }
     }
-
-    .cm-bar {
-      .with-cursor;
-      text-align: center;
-      .border-radius-bottom;
-      background: @cm-white;
-      color: @cm-dark-grey;
-      * {
-        vertical-align: middle;
-      }
-      .grey-box-shadow;
-      .grip-left {
-        text-align: left;
-        i {
-          margin-left: 0.5em;
-        }
-      }
-
-      cm-recipient-counter {
-        font-size: @cm-unit/2;
-        .background {
-          color: @cm-dark-grey;
-        }
-        .foreground {
-          color: @cm-white;
-        }
-      }
-
-      .cm-bar-infos {
-        cm-lock-level, cm-recipient-counter {
-          margin-left:0.5rem;
-        }
-      }
-    }
-  }
 }
+
+
 cm-conversation {
   cm-message {
     margin: 0.5em 0;
