@@ -24,7 +24,7 @@ angular.module('cmCore')
 
             if(typeof args == 'object'){
                 notify = angular.extend(notify, args);
-                self.new(notify);
+                self.create(notify);
             }
         }
 
@@ -93,7 +93,6 @@ angular.module('cmCore')
                 handleAdapter(options);
             }
         };
-
 
         /**
          * Event Handling

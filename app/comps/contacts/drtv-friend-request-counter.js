@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmContacts').directive('cmFriendRequestCounter', [
+angular.module('cmContacts')
+.directive('cmFriendRequestCounter', [
     'cmContactsModel',
     function (cmContactsModel) {
         return {

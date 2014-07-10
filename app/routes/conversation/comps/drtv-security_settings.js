@@ -26,7 +26,8 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                         && !conversation.password
                         && !conversation.isUserInPassphraseList()
                     ){
-                        scope.toggleControls('open');
+                        //scope.toggleControls('open');
+                        //TODO go to settings page??
                     }
                 }
 
@@ -49,11 +50,6 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
 
                         conversation.on('update:finished', function(){
                             showControls(conversation);
-                        });
-
-                        // close the controls if decryption was ok
-                        conversation.on('decrypt:success', function(){
-                            scope.toggleControls('close');
                         });
 
                         showPasswordInfo(conversation);
@@ -132,7 +128,8 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
 
                         $scope.conversation.one('decrypt:failed', function () {
                             cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG');
-                            $scope.toggleControls('open');
+                            //$scope.toggleControls('open');
+                            //TODO go to settings page??
                         });
                         $scope.conversation.decrypt();
                     }

@@ -39,7 +39,6 @@ angular.module('cmCore')
              */
             function init(data){
 //                cmLogger.debug('cmNotifyModel.init');
-
                 self.state.set('new');
 
                 if(typeof data !== 'undefined'){
@@ -76,7 +75,6 @@ angular.module('cmCore')
 
             this.render = function(){
 //                cmLogger.debug('cmNotifyModel.render');
-
                 if(this.bell !== false){
                     this.trigger('bell:ring');
                 }
