@@ -117,27 +117,10 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                 });
             },
 
-            controller: function($scope, $element){
-                /**
-                 * @name toggleControls
-                 * @description
-                 * toggle (show and hide) the controls of a conversation
-                 *
-                 * @param {String} action close | open
-                 * @param {Boolean} withFocusOnMessage after click on save the first focus is on message textarea
-                 */
-                $scope.toggleControls = function(action, withFocusOnMessage){
-                    if(action && action == 'close' || !action && $scope.bodyVisible){
-                        $scope.bodyVisible = false;
-                    } else {
-                        $scope.bodyVisible = true;
-                    }
+            controller: function($scope, $element, $attrs){
+                $scope.conversation = $scope.$eval($attrs.cmData)
 
-                    if(withFocusOnMessage){
-                        $document[0].querySelector('cm-conversation .answer textarea').focus();
-                    }
-                };
-
+                
                 /**
                  * @name manageRecipients
                  * @description
