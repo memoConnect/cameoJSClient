@@ -19,7 +19,7 @@ angular.module('cmUi')
                 });
             }
 
-            var text = escapeHtml(canBeHtml);
+            var text = escapeHtml(canBeHtml||'');
 
             return text;
         }
