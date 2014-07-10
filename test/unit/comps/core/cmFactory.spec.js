@@ -17,7 +17,7 @@ describe('cmFactory', function(){
     }))
 
     describe('.new()', function(){
-         it('should create and add new instances and trigger register event even if doublicates exist.', function(){
+         it('should create a new instance but should not yet register it.', function(){
 
             factory.on('register', function(instance){ instance_count++ })
 
@@ -25,15 +25,15 @@ describe('cmFactory', function(){
             
             expect(instance instanceof TestModel).toBe(true)
             expect(instance.id).toBe('my_id')
-            expect(factory.length).toBe(1)
-            expect(instance_count).toBe(1)
+            expect(factory.length).toBe(0)
+            expect(instance_count).toBe(0)
 
             var instance2       = factory.new({id: 'my_id'})  
 
             expect(instance2 instanceof TestModel).toBe(true)
             expect(instance2.id).toBe('my_id')
-            expect(factory.length).toBe(2)
-            expect(instance_count).toBe(2) 
+            expect(factory.length).toBe(0)
+            expect(instance_count).toBe(0) 
 
         })
 
