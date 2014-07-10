@@ -1,7 +1,11 @@
-.cm-unread{ color:@cm-warning-color }
+.cm-unread{ color:@cm-warning-color; }
 
-cm-conversation{
-  padding-top:@cm-conversation-control-height+1em;
+cm-conversation {
+    .subject {
+        background-color: @cm-white;
+        margin-bottom:0.5*@cm-unit;
+        text-align:center;
+    }
 }
 
 li:first-of-type cm-conversation-tag {

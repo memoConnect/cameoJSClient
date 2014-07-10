@@ -1,7 +1,4 @@
- <div class="control">
-    <div cm-transparent-bg ng-show="bodyVisible" ng-click="toggleControls()"></div>
-    <div ng-show="bodyVisible" class="body" data-qa="conversation-options-menu">
-        <section class="body-group">
+<section class="body-group">
             <label>{{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}</label>
             <div class="recipients-list">
                 <div class="scroller">
@@ -83,17 +80,3 @@
 
         <button ng-click="toggleControls('close');decrypt()" class="cm-btn" ng-if="!isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.CLOSE'|cmTranslate}} <i class="fa cm-close cm-lg-icon"></i></button>
         <button ng-click="toggleControls('close',true)" class="cm-btn" ng-if="isNew" data-qa="btn-save-options">{{'CONVERSATION.CONTROL.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
-    </div>
-
-    <div class="cm-bar" cm-rubber-space ng-click="toggleControls()" data-qa="conversation-options-bar">
-        <div cm-weight="1" class="grip-left">
-            <i class="fa cm-grip"></i>
-        </div>
-        <div cm-weight="8" class="cm-bar-infos">
-            <span ng-bind-html="conversation.subject||'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmParse"></span>
-            <cm-lock-level cm-level="conversation.lockStatus.level"></cm-lock-level>
-            <cm-recipient-counter>{{conversation.recipients.length||0}}</cm-recipient-counter>
-        </div>
-        <div cm-weight="1"></div>
-    </div>
-</div>

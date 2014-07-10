@@ -7,13 +7,12 @@ angular.module('cmSecurityAspects').directive('cmSecurityIndicator',[
     function cmSecurityIndicator(){
         return {
             restrict:   'AE',
-            template:    '<cm-icons count="{{positive}}" icons="cm-checkbox-add"    class="positive"></cm-icons>'
-                        +'<cm-icons count="{{negative}}" icons="cm-checkbox-minus"  class="negative"></cm-icons>'
-                        +'<span ng-if="missing_aspects">{{"SECURITY_ASPECTS.ERROR.MISSING_DATA" |cmTranslate}}</span>',
+            templateUrl:'comps/security_aspects/drtv-security_indicator.html',    
             scope:      true,
 
             controller: function($scope, $element, $attrs){
-                $scope.missing_aspects = true
+                $scope.missing_aspects  = true
+                $scope.leading_icon     = $attrs.cmLeadingIcon
                 
                 $scope.$watchCollection($attrs.cmData, function(security_aspects){
                     if(security_aspects){

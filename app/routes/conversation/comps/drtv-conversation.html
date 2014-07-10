@@ -1,4 +1,15 @@
-<cm-conversation-controls></cm-conversation-controls>
+
+<div class="subject">
+    <div ng-if = "!conversation.state.is('new') && conversation.subject" data-qa="text-subject">
+        {{conversation.subject}}
+    </div>
+    <div class="cm-form-group body-group label-with-checkbox" ng-if = "conversation.state.is('new')">
+        <label class="w20">{{'CONVERSATION.PLACEHOLDER.SUBJECT' | cmTranslate}}</label>
+        <div class="cm-form-control with-inputter w80" style="background-color:#fff">
+            <input data-qa="input-subject" style="background-color:#fff" type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" cm-adaptive-change  cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls', scrollTop:true}" />
+        </div>
+    </div>
+</div>
 
 <div id="conversation-top"></div>
 

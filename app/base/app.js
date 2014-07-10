@@ -171,8 +171,12 @@ define([
         function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi) {
 
             //prep $rootScope with useful tools
-            $rootScope.console = console;
-            $rootScope.alert   = alert;
+            $rootScope.console  =   console;
+            $rootScope.alert    =   alert;
+            $rootScope.goto     =   function(path){
+                                        path = path[0] == '/' ? path : '/'+path
+                                        $location.path(path)
+                                    }
 
             //add Overlay handles:
             $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };
