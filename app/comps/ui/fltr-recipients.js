@@ -4,6 +4,7 @@ angular.module('cmUi')
 .filter('cmRecipients', [
     function(){
         return function(arrayToSearch, shouldBeRecipient, objectOfRecipients){
+            console.log(arguments)
             // filter array
             var arrayFiltered = [];
             // iterate all

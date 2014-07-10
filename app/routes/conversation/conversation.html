@@ -1,32 +1,38 @@
 <div ng-controller="ConversationCtrl">
     <cm-header cm-rubber-space ng-show="pageChild1 == ''">
         <cm-back                cm-weight="1" back-to="/talks" plain-back="true"/>      </cm-back>
-        <cm-identity            cm-weight="3"   />                                      </cm-identity>
+        <cm-identity            cm-weight="3" >                                      </cm-identity>
         <cm-security-indicator  
             cm-weight       = "3"
             cm-data         = "conversation.securityAspects"
             cm-leading-icon = "cm-lock" 
             ng-click        = "goto('conversation/'+(conversation.id||'new')+'/security-settings')"
         />  </cm-security-indicator>
-        <cm-menu                cm-weight="1"   />                                      </cm-menu>
+        <cm-menu                cm-weight="1"></cm-menu>
     </cm-header>
 
     <cm-header cm-rubber-space ng-show="pageChild1 == 'recipients'">
         <cm-back cm-weight="1" back-to="conversation/{{conversationId}}"></cm-back>
-        <cm-identity cm-weight="5"></cm-identity>
+        <cm-identity cm-weight="3"></cm-identity>
+        <cm-security-indicator
+            cm-weight       = "2"
+            cm-data         = "conversation.securityAspects"
+            cm-leading-icon = "cm-lock"
+            ng-click        = "goto('conversation/'+(conversation.id||'new')+'/security-settings')"
+        /></cm-security-indicator>
         <cm-header-list-search cm-weight="1" ng-model="search"></cm-header-list-search>
         <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
 
     <cm-header cm-rubber-space ng-show="pageChild1 == 'security-settings'">
         <cm-back        cm-weight="1" back-to="conversation/{{conversationId}}"></cm-back>
-        <cm-identity    cm-weight="6" />
+        <cm-identity    cm-weight="3"></cm-identity>
         <cm-security-indicator  
             cm-weight       = "3" 
             cm-data         = "conversation.securityAspects"
             cm-leading-icon = "cm-lock" 
             ng-click        = "goto('conversation/'+(conversation.id||'new')+'/security-settings')"
-        />  </cm-security-indicator>
+        /> </cm-security-indicator>
         <cm-menu        cm-weight="1"></cm-menu>
     </cm-header>
 
