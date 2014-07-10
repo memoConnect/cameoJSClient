@@ -6,7 +6,7 @@
             <cm-contact-brief cm-data="contact" cm-weight="1"></cm-contact-brief>
             <cm-contact-type cm-data="contact"></cm-contact-type>
             <span class="separator"></span>
-            <button ng-click="toggleRecipient(contact.identity)" ng-disabled="contact.contactType == 'pending' || selected[contact.identity.id] || disabled_remove" data-qa="btn-select-contact">
+            <button ng-click="toggleRecipient(contact.identity)" ng-disabled="disabled_remove" data-qa="btn-select-contact">
                 <i class="fa" ng-class="{'cm-checkbox':!selected[contact.identity.id], 'cm-checkbox-right':selected[contact.identity.id]}"></i>
             </button>
         </cm-contact-tag>
