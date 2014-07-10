@@ -116,6 +116,18 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
             controller: function($scope, $element, $attrs){
                 $scope.conversation = $scope.$eval($attrs.cmData)
 
+                // TODO: pending conversation generate in drtv not in route controller
+                var conversation = $rootScope.pendingConversation;
+                if(!conversation){
+                    $location.path('/conversation/new');
+                    return null;
+                }
+
+                $scope.goBack = function(){
+                    //goto('conversation/'+(conversation.id||'new'))
+                    $window.history.back();
+                };
+
                 /**
                  * @name decrypt
                  * @description

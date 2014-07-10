@@ -25,12 +25,12 @@ describe('Route: Purl - ', function () {
         })
 
         it('should have attachment button "'+moep+'"', function(){
-            expect($('[data-qa="attachments-btn"]').isPresent()).toBe(true)
-            expect($('[data-qa="btn-fast-registration"]').isPresent()).toBe(false)
+            expect($("[data-qa='attachments-btn']").isPresent()).toBe(true)
+            expect($("[data-qa='btn-fast-registration']").isPresent()).toBe(false)
         })
 
         it('should have normal answer container "'+moep+'"', function(){
-            expect($('[data-qa="answer-ctn"]').getAttribute('class')).not.toMatch('large')
+            expect($("[data-qa='answer-ctn']").getAttribute('class')).not.toMatch('large')
         })
     }
 
@@ -53,12 +53,12 @@ describe('Route: Purl - ', function () {
         })
 
         it('should have attachment button "'+moep+'"', function(){
-            expect($('[data-qa="attachments-btn"]').isPresent()).toBe(true)
-            expect($('[data-qa="btn-fast-registration"]').isPresent()).toBe(true)
+            expect($("[data-qa='attachments-btn']").isPresent()).toBe(true)
+            expect($("[data-qa='btn-fast-registration']").isPresent()).toBe(true)
         })
 
         it('should show fast registration model, when click on uploading button "'+moep+'"', function(){
-            $('[data-qa="btn-fast-registration"]').click()
+            $("[data-qa='btn-fast-registration']").click()
             util.waitForModalOpen('fast-registration')
         })
     }
@@ -196,8 +196,8 @@ describe('Route: Purl - ', function () {
             util.get('/purl/' + config.purlUser1)
             util.expectCurrentUrl('#/purl/' + config.purlUser1)
 
-            util.waitForElement('[data-qa="modal-login"]');
-            expect($('[data-qa="modal-login"]').isPresent()).toBe(true)
+            util.waitForElement("[data-qa='modal-login']");
+            expect($("[data-qa='modal-login']").isPresent()).toBe(true)
         })
 
         it('should login with correct credentials', function () {
@@ -243,8 +243,8 @@ describe('Route: Purl - ', function () {
 
 
         it('login modal should be visible, when Intern User1 open his Purl', function(){
-            util.waitForElement('[data-qa="modal-login"]');
-            expect($('[data-qa="modal-login"]').isPresent()).toBe(true)
+            util.waitForElement("[data-qa='modal-login']");
+            expect($("[data-qa='modal-login']").isPresent()).toBe(true)
         })
 
         it('should login with correct credentials', function () {

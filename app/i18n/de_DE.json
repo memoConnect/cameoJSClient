@@ -458,6 +458,10 @@
                 "NAME": "Passwort wird verwendet!",
                 "DESCRIPTION": "",
                 "TOGGLE": ""
+            },
+            "NO_SE_PASSPHRASE_PRESENT":{
+                "NAME": "Keine Symetrische Passphrase vorhanden",
+                "DESCRIPTION": ""
             }
         }
     },

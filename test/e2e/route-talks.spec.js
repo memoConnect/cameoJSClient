@@ -50,7 +50,7 @@ describe('talks', function () {
     })
 
     it('should go back to talks from conversation view', function () {
-        $("cm-back").click()
+        util.clickBackBtn()
         util.waitForPageLoad("/talks")
     })
 
@@ -59,6 +59,6 @@ describe('talks', function () {
         $("body").sendKeys(protractor.Key.HOME)
         // wait for browser to scroll, todo: find a better way to do this
         $("cm-add-button").click()
-        util.waitForPageLoad("/conversation/")
+        util.waitForPageLoad("/conversation/new")
     })
 })

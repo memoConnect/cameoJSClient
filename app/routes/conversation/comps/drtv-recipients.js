@@ -3,13 +3,14 @@
 angular.module('cmRouteConversation').directive('cmRecipients', [
     '$rootScope',
     '$location',
-    function($rootScope, $location){
+    '$window',
+    function($rootScope, $location, $window){
         return {
             restrict: 'E',
             templateUrl: 'routes/conversation/comps/drtv-recipients.html',
             controller: function ($scope) {
+                // TODO: pending conversation generate in drtv not in route controller
                 var conversation = $rootScope.pendingConversation;
-
                 if(!conversation){
                     $location.path('/conversation/new');
                     return null;
@@ -38,6 +39,11 @@ angular.module('cmRouteConversation').directive('cmRecipients', [
                     $scope.selected[recipient.id]
                         ?   $scope.removeRecipient(recipient)
                         :   $scope.addRecipient(recipient);
+                };
+
+                $scope.goBack = function(){
+                    //goto('conversation/'+(conversation.id||'new'))
+                    $window.history.back();
                 }
             }
         }

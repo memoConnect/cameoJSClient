@@ -248,6 +248,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
              */
             this.uploadFiles = function(){
                 if(this.files.length > 0){
+                    self.state.unset('incomplete');
                     angular.forEach(this.files, function(file){
                         file.uploadChunks();
                         file.on('upload:complete',function(event, data){

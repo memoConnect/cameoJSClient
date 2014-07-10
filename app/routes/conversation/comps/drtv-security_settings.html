@@ -7,14 +7,16 @@
     <div class="label-with-checkbox">
         <label class="w20">{{'CONVERSATION.PLACEHOLDER.ENCRYPTION' | cmTranslate}}</label>
         <div class="w80 checkbox-of-label">
-            <button ng-click="toggleConversationEncryption()" data-qa="encryption-btn"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.isEncrypted(), 'cm-checkbox-right':conversation.isEncrypted(), 'cm-grey':!isNew}" data-qa="icon-checkbox-encryption"></i></button>
+            <button ng-click="toggleConversationEncryption()" data-qa="btn-encryption">
+                <i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.isEncrypted(), 'cm-checkbox-right':conversation.isEncrypted(), 'cm-grey':!isNew}" data-qa="icon-checkbox-encryption"></i></button>
         </div>
     </div>
 
     <div class="label-with-checkbox" ng-if="conversation.options.hasPassword && conversation.isEncrypted()">
         <label class="w20">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA' | cmTranslate}}</label>
         <div class="w80 checkbox-of-label">
-            <button ng-click="toggleCaptcha()"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.options.hasCaptcha, 'cm-checkbox-right':conversation.options.hasCaptcha, 'cm-grey':!isNew}" data-qa="icon-checkbox-passcaptcha"></i></button>
+            <button ng-click="toggleCaptcha()">
+                <i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.options.hasCaptcha, 'cm-checkbox-right':conversation.options.hasCaptcha, 'cm-grey':!isNew}" data-qa="icon-checkbox-passcaptcha"></i></button>
         </div>
     </div>
 
@@ -61,7 +63,7 @@
 </section>
 
 <cm-footer cm-rubber-space>
-    <button cm-weight="1" ng-click="goto('conversation/'+(conversation.id||'new'))" class="cm-btn-grey">
+    <button cm-weight="1" ng-click="goBack()" class="cm-btn-grey" data-qa="btn-security-done">
         {{'CONVERSATION.SETTINGS.OKAY'|cmTranslate}}
     </button>
 </cm-footer>

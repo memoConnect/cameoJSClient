@@ -457,6 +457,10 @@
                 "NAME": "Password enabled!",
                 "DESCRIPTION": "",
                 "TOGGLE": ""
+            },
+            "NO_SE_PASSPHRASE_PRESENT":{
+                "NAME": "No symetric passphrase present",
+                "DESCRIPTION": ""
             }
         }
     },
