@@ -22,15 +22,16 @@ define([
             $scope.showConversation = false;
             $scope.showSignIn = false;
             $rootScope.pendingPurl = null;
+            $scope.pageChild1 = $routeParams.pageChild1 || '';
 
-            if(cmUtil.checkKeyExists($routeParams,'idPurl') && cmUtil.validateString($routeParams.idPurl)){
-                cmPurlModel.getPurl($routeParams.idPurl).then(
+            if(cmUtil.checkKeyExists($routeParams,'purlId') && cmUtil.validateString($routeParams.purlId)){
+                cmPurlModel.getPurl($routeParams.purlId).then(
                     function(data){
                         // identity check internal || external user
                         cmPurlModel.handleIdentity(data.identity);
                         if(data.identity.userType == 'external'){
                             $scope.showSignIn = true;
-                            $rootScope.pendingPurl = $routeParams.idPurl;
+                            $rootScope.pendingPurl = $routeParams.purlId;
                         }
 
                         if(typeof data.token !== 'undefined'){

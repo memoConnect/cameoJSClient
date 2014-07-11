@@ -1,19 +1,20 @@
 'use strict';
 
-angular.module('cmRouteConversation').directive('cmConversation', [
-
+angular.module('cmRouteConversation')
+.directive('cmConversation', [
     'cmConversationFactory',
     'cmUserModel',
     'cmCrypt',
     'cmLogger',
     'cmNotify',
     'cmModal',
+    'cmEnv',
     '$location',
     '$rootScope',
     '$document',
-    'cmEnv',
-
-    function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify, cmModal, $location, $rootScope, $document, cmEnv) {
+    '$routeParams',
+    function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify,
+              cmModal, cmEnv, $location, $rootScope, $document, $routeParams) {
         return {
             restrict: 'AE',
             templateUrl: 'routes/conversation/comps/drtv-conversation.html',
@@ -136,7 +137,26 @@ angular.module('cmRouteConversation').directive('cmConversation', [
                         && cmUserModel.hasLocalKeys() == false
                         && showedAsymmetricKeyError == false){
                         showedAsymmetricKeyError = true;
-                        cmNotify.warn('NOTIFICATIONS.TYPES.CONVERSATION.ASYMMETRIC_DECRYPT_ERROR',{ttl:0});
+                        cmNotify.warn('CONVERSATION.WARN.ASYMMETRIC_DECRYPT_ERROR',{ttl:0});
+                    }
+                }
+
+                function showGoToSettingsModal(){
+                    if(!$scope.conversation.state.is('new')
+                        && ($scope.conversation.getKeyTransmission() == 'symmetric' || $scope.conversation.getKeyTransmission() == 'mixed')
+                        && !$scope.conversation.password
+                        && !$scope.conversation.isUserInPassphraseList()
+                        ){
+                        // switcher for purl and conversation
+                        var settingsLinker = {type:'',typeId:''};
+                        if('purlId' in $routeParams){
+                            settingsLinker.type = 'purl';
+                            settingsLinker.typeId = $routeParams.purlId;
+                        } else {
+                            settingsLinker.type = 'converastion';
+                            settingsLinker.typeId = $routeParams.conversationId;
+                        }
+                        cmNotify.warn('CONVERSATION.WARN.PASSWORD_NEEDED',{ttl:0,i18n:settingsLinker});
                     }
                 }
 
@@ -156,7 +176,6 @@ angular.module('cmRouteConversation').directive('cmConversation', [
                  * send message to api
                  */
                 function sendMessage() {
-
                     /**
                      * validate answer form
                      * @type {boolean}
@@ -213,7 +232,6 @@ angular.module('cmRouteConversation').directive('cmConversation', [
                     .save()
                     .then(function(){
                         //@ TODO: solve rekeying another way:
-
                         $scope.conversation.numberOfMessages++;
                         $scope.my_message_text = "";
                         files = [];
@@ -261,6 +279,8 @@ angular.module('cmRouteConversation').directive('cmConversation', [
                     });
 
                     showAsymmetricKeyError();
+
+                    showGoToSettingsModal();
                 };
 
                 $scope.init($scope.$eval($attrs.cmData))
@@ -268,6 +288,19 @@ angular.module('cmRouteConversation').directive('cmConversation', [
                 if('on' in $scope.conversation) {
                     $scope.conversation.on('update:finished', function () {
                         showAsymmetricKeyError();
+                    });
+
+                    $scope.conversation.on('show:passwordModal', function(){
+                        // switcher for purl and conversation
+                        var settingsLinker = {type:'',typeId:''};
+                        if('purlId' in $routeParams){
+                            settingsLinker.type = 'purl';
+                            settingsLinker.typeId = $routeParams.purlId;
+                        } else {
+                            settingsLinker.type = 'converastion';
+                            settingsLinker.typeId = $routeParams.conversationId;
+                        }
+                        cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD', {ttl:0, i18n: settingsLinker});
                     });
                 }
 
