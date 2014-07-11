@@ -21,7 +21,7 @@ describe('Route: Contacts', function () {
 
     it('should have a button to add new a contact.', function(){
         //Todo: Funktionalität testen:
-        util.waitForElement('[data-qa="add-contact-btn"]')
+        util.waitForElement("[data-qa='add-contact-btn']")
     })
 
     //Todo:Filter
@@ -58,7 +58,7 @@ describe('Route: Contacts', function () {
         })
 
         it('should have a button to compose a new message.', function(){
-            util.waitForElement('cm-contacts-list [data-qa="start-new-conversation-btn"]')  
+            util.waitForElement("cm-contacts-list [data-qa='start-new-conversation-btn']")
         })
     })
 })

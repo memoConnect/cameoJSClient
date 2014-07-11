@@ -41,6 +41,7 @@ angular.module('cmFiles').service('cmFileTypes',[
             {e:'php',m:'text/php'},
             {e:'css',m:'text/css'},
             {e:'zip',m:'application/zip'},
+            {e:'zip',m:'application/x-zip-compressed'},
             {e:'rar',m:'application/x-rar-compressed'},
             {e:'sit',m:'application/x-stuffit'},
             {e:'eps',m:'application/postscript'},
@@ -49,6 +50,7 @@ angular.module('cmFiles').service('cmFileTypes',[
             {e:'chm',m:'application/vnd.ms-htmlhelp'},
             {e:'ttf',m:'application/x-font-ttf'},
             {e:'exe',m:'application/octet-stream'},
+            {e:'exe',m:'application/x-msdownload'},
             {e:'dmg',m:'application/x-apple-diskimage'}
         ];
 

@@ -248,10 +248,13 @@ angular.module('cmConversations').factory('cmMessageModel',[
              */
             this.uploadFiles = function(){
                 if(this.files.length > 0){
+                    self.state.unset('incomplete');
+                    self.state.set('uploading');
                     angular.forEach(this.files, function(file){
                         file.uploadChunks();
                         file.on('upload:complete',function(event, data){
                             cmFilesAdapter.complete(data.fileId, self.id).then(function(){
+                                file.state = 'complete';
                                 file.trigger('file:complete');
                             });
                         })
@@ -266,12 +269,17 @@ angular.module('cmConversations').factory('cmMessageModel',[
              * @returns {Message}
              */
             this.initFiles = function(){
+                if(self.state.is('uploading')){
+                    this.state.unset('incomplete');
+                    return this;
+                }
+
                 if(this.fileIds.length > 0){
                     angular.forEach(this.fileIds, function(id){
                         self._addFile(cmFileFactory.create(id));
                     });
                     this.trigger('init:files');
-                }else{
+                } else {
                     this.state.unset('incomplete')
                 }
 

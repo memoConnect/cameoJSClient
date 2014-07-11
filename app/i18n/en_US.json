@@ -142,10 +142,10 @@
             "RECIPIENTS_MISSING": "Please add at least one recipient.",
             "PASSPHRASE_INVALID": "Invalid passphrase",
             "PASSWORD_WRONG": "Password is wrong",
-            "NO_PASSWORD": "Password is empty",
             "ASYMMETRIC_DECRYPT_ERROR": "Privatekey missing",
             "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
             "FILESIZE_REACHED": "The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file '<strong>{{fileName}}</strong>' is <strong>{{fileSize | cmBytesHumanReadable}}</strong> big."
+            "NO_PASSWORD": "Password is empty.<br /> <a href=\"#/conversation/{{conversationId}}/security-settings\">here you can insert one</a>"
         },
         "PLACEHOLDER": {
             "SUBJECT": "Subject",
@@ -461,7 +461,7 @@
                 "DESCRIPTION": ""
             },
             "SE_PASSPHRASE_PRESENT":{
-                "NAME": "symetrische passphrase present",
+                "NAME": "Symetric passphrase present",
                 "DESCRIPTION": ""
             }
         }

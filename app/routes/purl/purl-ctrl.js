@@ -17,7 +17,8 @@ define([
         'cmPurlModel',
         'cmUserModel',
         'cmUtil',
-        function($scope, $rootScope, $routeParams, $location, cmModal, cmPurlModel, cmUserModel, cmUtil){
+        'cmConversationFactory',
+        function($scope, $rootScope, $routeParams, $location, cmModal, cmPurlModel, cmUserModel, cmUtil, cmConversationFactory){
             $scope.data = null;
             $scope.showConversation = false;
             $scope.showSignIn = false;
@@ -40,6 +41,8 @@ define([
 
                         $scope.conversationId = cmPurlModel.handleConversation(data.conversation);
                         $scope.showConversation = true;
+
+                        $scope.conversation = cmConversationFactory.create($scope.conversationId)
                     },
                     function(response){
                         if(typeof response !== 'undefined' && cmUtil.checkKeyExists(response, 'status')){

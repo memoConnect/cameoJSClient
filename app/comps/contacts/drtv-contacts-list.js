@@ -39,7 +39,7 @@ angular.module('cmContacts').directive('cmContactsList',[
                         } else {
                             cmLogger.error('Unable to find identity on contact. ' + contact)
                         }
-                        $location.path('/conversation');
+                        $location.path('/conversation/new');
                     }
                 };
                 /**

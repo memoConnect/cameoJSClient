@@ -43,8 +43,8 @@ angular.module('cmConversations')
     '$q',
     '$rootScope',
     function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
-    cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase,
-    cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
+              cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase,
+              cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
 
         function ConversationModel(data){
             var self        = this,
@@ -381,7 +381,6 @@ angular.module('cmConversations')
 
                     cmConversationsAdapter.newConversation( this.exportData() ).then(
                         function (conversation_data) {
-                            console.log('new conversation ready',conversation_data)
                             self
                             .importData(conversation_data)
                             .savePassCaptcha();                          
@@ -653,7 +652,6 @@ angular.module('cmConversations')
              * @returns {ConversationModel} this returns ConversationModel
              */
             this.initPassCaptcha = function(conversation_data){
-                console.log('initPassCaptcha',conversation_data);
                 if(typeof conversation_data.passCaptcha !== 'undefined' && conversation_data.passCaptcha != '' && this.passCaptcha == undefined){
 
                     /**
@@ -680,8 +678,6 @@ angular.module('cmConversations')
              * @returns {ConversationModel} this ConversationModel
              */
             this.savePassCaptcha = function(){
-                //cbkp1r
-                console.log('savePassCaptcha',this.tmpPassCaptcha)
                 if(this.tmpPassCaptcha != ''){
                     this.passCaptcha = cmFileFactory.create();
                     this.passCaptcha.name = this.passCaptcha.encryptedName = 'captcha';

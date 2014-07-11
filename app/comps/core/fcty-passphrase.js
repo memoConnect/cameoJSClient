@@ -48,11 +48,11 @@ angular.module('cmCore').factory('cmPassphrase',[
                 list = (typeof list == 'object' && list.length > 0) ? list : []
 
                 list.forEach(function(item){
-                    var dublicate =     asymmetricallyEncryptedPassphrases.filter(function(already_present_item){
-                                            return     already_present_item.keyId == item.keyId 
-                                                    && already_present_item.encryptedPassphrase == item.encryptedPassphrase 
+                    var duplicate =     asymmetricallyEncryptedPassphrases.filter(function(already_present_item){
+                                            return already_present_item.keyId == item.keyId
+                                                    //&& already_present_item.encryptedPassphrase == item.encryptedPassphrase
                                         }).length > 0
-                    if(!dublicate)
+                    if(!duplicate)
                         asymmetricallyEncryptedPassphrases.push(item)
                 })                
 

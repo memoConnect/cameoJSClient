@@ -16,7 +16,6 @@ define([
         '$location',
         'cmConversationFactory',
         'cmUserModel',
-
         function($scope, $rootScope, $element, $routeParams, $location,
                  cmConversationFactory, cmUserModel){
 
@@ -26,8 +25,8 @@ define([
 
             // existing conversation
             if($scope.calledWithId){
-                $scope.conversation = cmConversationFactory.create($scope.conversationId);
 
+                $scope.conversation = cmConversationFactory.create($scope.conversationId);
             // pending conversation:
             } else if($rootScope.pendingConversation){
 
