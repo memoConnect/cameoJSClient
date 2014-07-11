@@ -6,6 +6,8 @@ angular.module('cmUi')
     function($filter){
         return function(html){
 
+            console.log('cmParse')
+
             html = $filter('cmEscape')(html);
             html = $filter('cmTranslate')(html);
             html = $filter('cmInlineTranslate')(html);
