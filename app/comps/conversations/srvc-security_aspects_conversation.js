@@ -7,10 +7,14 @@ angular.module('cmSecurityAspects')
     function(cmSecurityAspects, cmUserModel){
 //        var securityAspectsConversation = new cmSecurityAspects()
 
-        function securityAspectsConversation(target){
+        function securityAspectsConversation(conversation){
             var self = new cmSecurityAspects();
 
-            self.setTarget(target);
+            self
+            .setTarget(conversation)
+            .on('refresh', function(){
+                this.data = conversation.exportData()
+            })
 
             self
                 .addAspect({
@@ -36,6 +40,14 @@ angular.module('cmSecurityAspects')
                 .addAspect({
                     id: 'SE_PASSPHRASE_PRESENT',
                     dependencies: ['ENCRYPTED'],
+                    value: 0,
+                    check: function(conversation){
+                        return typeof self.data.sePassphrase == 'string'
+                    },
+                }) 
+                .addAspect({                    
+                    id: 'SOME_RECIPIENTS_WITHOUT_PROPER_KEY',
+                    dependencies: ['SE_PASSPHRASE_PRESENT'],
                     value: -1,
                     check: function(conversation){
                         this.bad_recipients = conversation.recipients.filter(function(recipient){
@@ -43,10 +55,11 @@ angular.module('cmSecurityAspects')
                         })
 
                         this.bad_recipients_list = this.bad_recipients.map(function(recipient){ return recipient.getDisplayName() }).join(', ')
+                        this.count = this.bad_recipients.length
 
-                        return ['symmetrical', 'mixed'].indexOf(conversation.getKeyTransmission()) != -1;
-                    },
-                })                
+                        return this.bad_recipients.length != 0
+                    }
+                })                  
                 .addAspect({
                     id: 'HAS_PASSCAPTCHA',
                     dependencies: ['SE_PASSPHRASE_PRESENT'],
@@ -70,11 +83,37 @@ angular.module('cmSecurityAspects')
                 .addAspect({
                     id: 'NO_SE_PASSPHRASE_PRESENT',
                     dependencies: ['ENCRYPTED'],
+                    value: 0,
+                    check: function(conversation){
+                        return typeof self.data.sePassphrase != 'string'
+                    }
+                })
+                .addAspect({                    
+                    id: 'PASSWORD_MISSING',
+                    dependencies: ['NO_SE_PASSPHRASE_PRESENT'],
+                    value: -1,
+                    check: function(conversation){
+                        this.bad_recipients = conversation.recipients.filter(function(recipient){
+                            return recipient.getWeakestKeySize() <= 2000
+                        })
+
+                        this.bad_recipients_list = this.bad_recipients.map(function(recipient){ return recipient.getDisplayName() }).join(', ')
+                        this.count = this.bad_recipients.length
+
+                        return this.bad_recipients.length != 0
+                    }
+                })
+                .addAspect({                    
+                    id: 'ALL_RECIPIENTS_WITH_PROPER_KEY',
+                    dependencies: ['NO_SE_PASSPHRASE_PRESENT'],
                     value: 1,
                     check: function(conversation){
-                        console.log(conversation.getKeyTransmission())
-                        return !['symmetrical', 'mixed'].indexOf(conversation.getKeyTransmission()) != -1;
-                    },
+                        this.bad_recipients = conversation.recipients.filter(function(recipient){
+                            return recipient.getWeakestKeySize() <= 2000
+                        })                      
+
+                        return this.bad_recipients.length == 0
+                    }
                 })   
 
             return self;

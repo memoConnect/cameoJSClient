@@ -315,7 +315,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 var passphrase_data =   passphrase
                                         .setPassword(this.password)
                                         .setIdentities(this.recipients)
-                                        .exportData();
+                                        .exportData()
+
+                console.dir(passphrase_data)
                 
                 data.sePassphrase       =   passphrase_data.sePassphrase;
                 data.aePassphraseList   =   passphrase_data.aePassphraseList;
@@ -885,6 +887,10 @@ angular.module('cmConversations').factory('cmConversationModel',[
 //                self.decrypt();
             });
 
+            passphrase.on('password:reset', function(password){
+                this.password = password
+            })
+
             this.on('update:finished', function(){
 //                cmLogger.debug('cmConversationModel:on:update:finished');
 //                cmBoot.resolve();
@@ -918,20 +924,13 @@ angular.module('cmConversations').factory('cmConversationModel',[
 
             this.recipients.on(['register', 'update:finished'], function(event, recipient){
 //                cmLogger.debug('cmConversationModel:on:recipient:register');
-                console.log('register!')
-                passphrase
-                .setIdentities(self.recipients)
-                .encrypt()
                 self.checkPreferences();
                 self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
             this.recipients.on('deregister', function(){
-//                cmLogger.debug('cmConversationModel:on:recipient:unregistered');
-                passphrase
-                .setIdentities(self.recipients)
-                .encrypt()
+//                cmLogger.debug('cmConversationModel:on:recipient:unregistered');                
                 self.checkPreferences();
                 self.securityAspects.refresh();
                 self.updateLockStatus();

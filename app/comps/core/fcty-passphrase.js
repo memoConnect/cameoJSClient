@@ -71,11 +71,18 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @returns {cmPassphrase} this cmPassphrase
              */
             this.importSymmetricallyEncryptedPassphrase = function(encrypted_passphrase){
+                symmetricallyEncryptedPassphrase = encrypted_passphrase    
+
+                /*
+                TODO: rethink
+                
                 if(typeof encrypted_passphrase == 'string' && encrypted_passphrase.length > 0){
-                    symmetricallyEncryptedPassphrase = encrypted_passphrase
+                    
                 }else{
 //                    cmLogger.debug('cmPassphrase: importSymmetricallyEncryptedPassphrase(): unable to read encrypted passphrase.')
                 }
+                 */
+                
                 return this;
             };
 
@@ -122,11 +129,10 @@ angular.module('cmCore').factory('cmPassphrase',[
             this.setPassword = function(pw){
                 if(couldBeAPassword(pw)){
                     password = pw;
-
-                    this.trigger('password:changed');                    
+                    this.trigger('password:changed');
                 }else{
-//                    cmLogger.debug('cmPassphrase: unable to set Password, requirements not met.')
-                }
+                    this.trigger('password:reset', password);  
+                }              
 
                 return this;
             };
@@ -343,8 +349,6 @@ angular.module('cmCore').factory('cmPassphrase',[
             this.encrypt = function(){
                 var sym     = symmetricallyEncryptPassphrase(password),
                     asym    = asymmetricallyEncryptPassphrase(identities);
-
-                console.log(sym)
 
                 self.importSymmetricallyEncryptedPassphrase(sym);
                 self.importAsymmetricallyEncryptedPassphrase(asym);

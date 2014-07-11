@@ -64,16 +64,21 @@ angular.module('cmSecurityAspects')
         function cmSecurityAspects(){
             var self = this;
 
+            cmObject.addEventHandlingTo(this)
+
             // Array of SecurityAspect instances
             this.aspects = [];
             // Object all aspects should apply to
             this.target = undefined;
+            this.applyingAspects = []
 
             this.countForDigest = 0;
 
 
             this.refresh = function(){
                 this.countForDigest++;
+                this.trigger('refresh')
+                this.applyingAspects = this.getApplyingAspects()
             };
 
             /**
@@ -82,6 +87,7 @@ angular.module('cmSecurityAspects')
              */
             this.setTarget = function(target){
                 this.target = target;
+                this.applyingAspects = this.getApplyingAspects()
                 return this;
             }
 
@@ -123,7 +129,7 @@ angular.module('cmSecurityAspects')
             this.getApplyingAspects = function(applying_aspects){
                 applying_aspects = applying_aspects || [];
 
-                var additional_aspects =this.aspects.filter(function(aspect){
+                var additional_aspects = this.aspects.filter(function(aspect){
                     return (
                         // aspect already assumed to apply, do not add again:
                         applying_aspects.indexOf(aspect) == -1
@@ -148,7 +154,7 @@ angular.module('cmSecurityAspects')
              * @return {Array}              Array of aspects
              */
             this.getPositiveAspects = function(){
-                return this.getApplyingAspects().filter(function(aspect){ return aspect.value > 0 });
+                return this.applyingAspects.filter(function(aspect){ return aspect.value > 0 });
             };
 
             /**
@@ -156,7 +162,7 @@ angular.module('cmSecurityAspects')
              * @return {Array}              Array of aspects
              */           
             this.getNegativeAspects = function(){
-                return this.getApplyingAspects().filter(function(aspect){ return aspect.value < 0 });
+                return this.applyingAspects.filter(function(aspect){ return aspect.value < 0 });
             };
 
             /**
@@ -164,16 +170,15 @@ angular.module('cmSecurityAspects')
             * @return {Array}              Array of aspects
             */           
             this.getNeutralAspects = function(){
-                return this.getApplyingAspects().filter(function(aspect){ return aspect.value === 0 });
+                return this.applyingAspects.filter(function(aspect){ return aspect.value === 0 });
             };
 
             /**
              * Function to get all security aspects that do not apply to the target
              * @return {Array}              Array of aspects
              */
-            this.getNonApplyingAspects = function(){
-                var applying_aspects = this.getApplyingAspects();
-                return this.aspects.filter(function(aspect){ return applying_aspects.indexOf(aspect) == -1 });
+            this.getNonApplyingAspects = function(){                
+                return this.aspects.filter(function(aspect){ return this.applyingAspects.indexOf(aspect) == -1 });
             };
         }
 
