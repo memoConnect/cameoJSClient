@@ -440,11 +440,11 @@
                 "DESCRIPTION": "",
                 "TOGGLE": "Verschlüsselung aktivieren."
             },
-            "RECIPIENTS_WITH_PROPER_KEY": {
-                "NAME": "Alle Empfänger haben gutes Schlüsselpaar.",
+            "ALL_RECIPIENTS_WITH_PROPER_KEY": {
+                "NAME": "Alle Empfänger haben ein gutes Schlüsselpaar.",
                 "DESCRIPTION": ""
             },
-            "RECIPIENTS_WITHOUT_PROPER_KEYS": {
+            "SOME_RECIPIENTS_WITHOUT_PROPER_KEY": {
                 "NAME": "{{count}} Empfänger {{count!=1?'haben':'hat'}} kein gutes Schlüsselpaar.",
                 "DESCRIPTION": "Betroffene Empfänger: {{bad_recipients_list}}"
             },

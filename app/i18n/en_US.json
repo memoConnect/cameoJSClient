@@ -442,11 +442,14 @@
                 "NAME": "Passphrase was encrypted with a password.",
                 "DESCRIPTION": ""
             },
-
             "NO_SE_PASSPHRASE_PRESENT": {
                 "NAME": "Passphrase was not encrypted with a password.",
                 "DESCRIPTION": ""
-            },            
+            },
+            "ALL_RECIPIENTS_WITH_PROPER_KEY": {
+                "NAME": "All recipients have proper public keys.",
+                "DESCRIPTION": ""
+            },
             "SOME_RECIPIENTS_WITHOUT_PROPER_KEY": {
                 "NAME": "{{count}} Recipient {{count!=1?'s have':' has'}} no proper public key.",
                 "DESCRIPTION": "If not all recipients have a proper public key a password is used to encrypt the conversation. Affected Recipients: {{bad_recipients_list}}"
@@ -465,12 +468,7 @@
                 "NAME": "Password enabled!",
                 "DESCRIPTION": "",
                 "TOGGLE": ""
-            },
-            "ALL_RECIPIENTS_WITH_PROPER_KEY": {
-                "NAME": "All recipients have proper public keys.",
-                "DESCRIPTION": ""
-            }        
-            
+            }
         }
     },
     "SYSTEM":{
