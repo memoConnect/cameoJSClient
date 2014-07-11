@@ -930,7 +930,7 @@ angular.module('cmConversations')
             });
 
             this.recipients.on(['register', 'update:finished'], function(event, recipient){
-//                cmLogger.debug('cmConversationModel:on:recipient:register');
+//                cmLogger.debug('cmConversationModel:on:recipient:register');                
                 self.checkPreferences();
                 self.securityAspects.refresh();
                 self.updateLockStatus();

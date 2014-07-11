@@ -127,13 +127,7 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @returns {cmPassphrase|Boolean} this Returns cmPassphrase Object
              */
             this.setPassword = function(pw){
-                if(couldBeAPassword(pw)){
-                    password = pw;
-                    this.trigger('password:changed');
-                }else{                    
-                    this.trigger('password:reset', password);  
-                }              
-
+                password = pw;
                 return this;
             };
 
@@ -148,11 +142,9 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @param {Array} idts The identities to be stored
              * @returns {cmPassphrase} this Returns cmPassphrase Object
              */
-            this.setIdentities = function(idts){
-                if(typeof idts == 'object' && idts.length > 0){
-                    identities = idts;
-                }
-
+            this.setIdentities = function(idts){                
+                identities = idts;
+                
                 return this
             };
 
@@ -166,11 +158,8 @@ angular.module('cmCore').factory('cmPassphrase',[
              *
              * @returns {Object} this Returns cmPassphrase Object
              */
-            this.resetPassword = function(){
+            this.resetPassword = function(){                
                 password = undefined;
-
-                this.trigger('password:changed');
-
                 return this
             };
 
@@ -417,12 +406,6 @@ angular.module('cmCore').factory('cmPassphrase',[
                 passphrase = null;
                 return this;
             };
-
-            this.removeSymmetricallyEncryptedPassphrase = function(){
-                symmetricallyEncryptedPassphrase = undefined
-                password = undefined
-                return this
-            }
 
             /**
              * @ngdoc method
