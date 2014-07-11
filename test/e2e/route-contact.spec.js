@@ -49,7 +49,7 @@ describe('Route: Contact', function () {
         })
 
         it('click on back button',function(){
-            $('cm-back').click()
+            util.clickBackBtn()
             util.expectCurrentUrl('#/contacts')
         })
     })
@@ -60,7 +60,7 @@ describe('Route: Contact', function () {
         it('open modal and click create new contact',function(){
             util.expectCurrentUrl('#/contacts')
 
-            $('[data-qa="add-contact-btn"]').click()
+            $("[data-qa='add-contact-btn']").click()
 
             $$('cm-modal .content a').last().click()
 

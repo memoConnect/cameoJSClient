@@ -22,7 +22,8 @@
  * @param {Object} [data] The conversation data as received from the backend.
  */
 
-angular.module('cmConversations').factory('cmConversationModel',[
+angular.module('cmConversations')
+.factory('cmConversationModel',[
     'cmBoot',
     'cmConversationsAdapter',
     'cmMessageModel',
@@ -41,7 +42,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmUtil',
     '$q',
     '$rootScope',
-    function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory, cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase, cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
+    function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
+              cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase,
+              cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
 
         function ConversationModel(data){
             var self        = this,
@@ -176,10 +179,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                      * wenn nicht, wird überprüft ob ein passwort vergeben wurde
                      */
                     if(key_check == true && (self.password == undefined || (typeof self.password != 'string') || (self.password.length == 0))){
-                        cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD');
+                        cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD', {ttl:0, i18n: {conversationId:self.id||'new'}});
                         return false;
                     }
-
 
                     /**
                      * checkt ob alle User einen Key habe und ob der lokale User einen Key local hat,
@@ -191,10 +193,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                             return false;
                         }
                     }
-
                 }
-
-
                 return true;
             };
 
@@ -315,10 +314,12 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 var passphrase_data =   passphrase
                                         .setPassword(this.password)
                                         .setIdentities(this.recipients)
-                                        .exportData();
+                                        .exportData()
+
+                console.dir(passphrase_data)
                 
-                data.sePassphrase       =   passphrase_data.sePassphrase;
-                data.aePassphraseList   =   passphrase_data.aePassphraseList;
+                data.sePassphrase       =   passphrase_data.sePassphrase || undefined;
+                data.aePassphraseList   =   passphrase_data.aePassphraseList || undefined;
                 data.keyTransmission    =   passphrase_data.keyTransmission;
 
                 data.recipients         =   this.recipients.map(function(recipient){ return recipient.id });
@@ -573,7 +574,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
              */
             this.getKeyTransmission = function(){
                 if(this.state.is('new')){
-                    return passphrase.getKeyTransmission();
+                    return  passphrase
+                            .setPassword(this.password)
+                            .setIdentities(this.recipients)
+                            .encrypt()
+                            .getKeyTransmission();
                 } else {
                     return this.keyTransmission;
                 }
@@ -885,6 +890,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
 //                self.decrypt();
             });
 
+            passphrase.on('password:reset', function(password){
+                if(password)
+                    this.password = password
+            })
+
             this.on('update:finished', function(){
 //                cmLogger.debug('cmConversationModel:on:update:finished');
 //                cmBoot.resolve();
@@ -923,8 +933,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
                 self.updateLockStatus();
             });
 
-            this.recipients.on('unregistered', function(){
-//                cmLogger.debug('cmConversationModel:on:recipient:unregistered');
+            this.recipients.on('deregister', function(){
+//                cmLogger.debug('cmConversationModel:on:recipient:unregistered');                
                 self.checkPreferences();
                 self.securityAspects.refresh();
                 self.updateLockStatus();

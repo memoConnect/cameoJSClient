@@ -142,7 +142,7 @@
             "RECIPIENTS_MISSING": "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
             "PASSPHRASE_INVALID": "Ungültiger Schlüssel.",
             "PASSWORD_WRONG": "Das eingegebene Passwort ist falsch.",
-            "NO_PASSWORD": "Es fehlt ein Passwort."
+            "NO_PASSWORD": "Es fehlt ein Passwort.<br /> <a href=\"#/conversation/{{conversationId}}/security-settings\">jetzt eins eingeben!</a>"
         },
         "PLACEHOLDER": {
             "SUBJECT": "Betreff",
@@ -458,6 +458,14 @@
                 "NAME": "Passwort wird verwendet!",
                 "DESCRIPTION": "",
                 "TOGGLE": ""
+            },
+            "NO_SE_PASSPHRASE_PRESENT":{
+                "NAME": "Keine Symetrische Passphrase vorhanden",
+                "DESCRIPTION": ""
+            },
+            "SE_PASSPHRASE_PRESENT":{
+                "NAME": "Symetrische Passphrase vorhanden",
+                "DESCRIPTION": ""
             }
         }
     },

@@ -7,10 +7,11 @@ angular.module('cmSecurityAspects')
     function(cmSecurityAspects, cmUserModel){
 //        var securityAspectsConversation = new cmSecurityAspects()
 
-        function securityAspectsConversation(target){
+        function securityAspectsConversation(conversation){
             var self = new cmSecurityAspects();
 
-            self.setTarget(target);
+            self
+            .setTarget(conversation)
 
             self
                 .addAspect({
@@ -32,72 +33,33 @@ angular.module('cmSecurityAspects')
                     check: function(conversation){
                         return conversation.isEncrypted();
                     }
-                })
+                })                
                 .addAspect({
-                    id: 'RECIPIENTS_WITH_PROPER_KEYS',
+                    id: 'SE_PASSPHRASE_PRESENT',
                     dependencies: ['ENCRYPTED'],
-                    value: 3,
+                    value: 0,
                     check: function(conversation){
-                        return conversation.recipients.every(function(recipient){
-                            return recipient.getWeakestKeySize() > 2000
-                        })
-
-                        /*
-                        var bool = true,
-                            count = 0;
-
-                        angular.forEach(conversation.recipients, function(recipient){
-                            if(recipient.getWeakestKeySize() < 1000) {
-                                bool = false;
-                                count++;
-                            }
-                        });
-
-                        if(count>0){
-                            this.stateVars.count = count;
-                        } else {
-                            this.stateVars = {};
-                        }
-                        return bool;
-                        */
-                    }
-                })
-                .addAspect({
-                    id: 'RECIPIENTS_WITHOUT_PROPER_KEYS',
+                        return ['symmetric', 'mixed'].indexOf(conversation.getKeyTransmission()) != -1
+                    },
+                }) 
+                .addAspect({                    
+                    id: 'SOME_RECIPIENTS_WITHOUT_PROPER_KEY',
+                    dependencies: ['SE_PASSPHRASE_PRESENT'],
                     value: -1,
-                    dependencies: ['ENCRYPTED'],
                     check: function(conversation){
                         this.bad_recipients = conversation.recipients.filter(function(recipient){
                             return recipient.getWeakestKeySize() <= 2000
                         })
 
                         this.bad_recipients_list = this.bad_recipients.map(function(recipient){ return recipient.getDisplayName() }).join(', ')
+                        this.count = this.bad_recipients.length
 
                         return this.bad_recipients.length != 0
-                        /*
-                        var bool = false,
-                            count = 0,
-                            recipients = [];
-                        angular.forEach(conversation.recipients, function(recipient){
-                            if(recipient.getWeakestKeySize() == 0) {
-                                bool = true;
-                                recipients.push(recipient.getDisplayName());
-                                count++;
-                            }
-                        });
-
-                        if(count>0){
-                            this.stateVars.count = count;
-                            this.stateVars.recipients = recipients.join(', ');
-                        } else {
-                            this.stateVars = {};
-                        }
-                        return bool;
-                        */
                     }
-                })
+                })                  
                 .addAspect({
                     id: 'HAS_PASSCAPTCHA',
+                    dependencies: ['SE_PASSPHRASE_PRESENT'],
                     value: -2,
                     check: function(conversation){
                         var bool = false;
@@ -114,7 +76,42 @@ angular.module('cmSecurityAspects')
                     toggleCall: function(conversation){
                         conversation.disablePassCaptcha();
                     }
+                })                             
+                .addAspect({
+                    id: 'NO_SE_PASSPHRASE_PRESENT',
+                    dependencies: ['ENCRYPTED'],
+                    value: 0,
+                    check: function(conversation){
+                        return ['symmetric', 'mixed'].indexOf(conversation.getKeyTransmission()) == -1
+                    }
                 })
+                .addAspect({                    
+                    id: 'PASSWORD_MISSING',
+                    dependencies: ['NO_SE_PASSPHRASE_PRESENT'],
+                    value: -1,
+                    check: function(conversation){
+                        this.bad_recipients = conversation.recipients.filter(function(recipient){
+                            return recipient.getWeakestKeySize() <= 2000
+                        })
+
+                        this.bad_recipients_list = this.bad_recipients.map(function(recipient){ return recipient.getDisplayName() }).join(', ')
+                        this.count = this.bad_recipients.length
+
+                        return this.bad_recipients.length != 0
+                    }
+                })
+                .addAspect({                    
+                    id: 'ALL_RECIPIENTS_WITH_PROPER_KEY',
+                    dependencies: ['NO_SE_PASSPHRASE_PRESENT'],
+                    value: 1,
+                    check: function(conversation){
+                        this.bad_recipients = conversation.recipients.filter(function(recipient){
+                            return recipient.getWeakestKeySize() <= 2000
+                        })                      
+
+                        return this.bad_recipients.length == 0
+                    }
+                })   
 
             return self;
         }

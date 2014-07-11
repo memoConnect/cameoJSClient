@@ -440,24 +440,39 @@
                 "DESCRIPTION": "",
                 "TOGGLE": "Enable encryption."
             },
-            "RECIPIENTS_WITH_PROPER_KEYS": {
-                "NAME": "All Recipients have a proper keypair.",
+            "SE_PASSPHRASE_PRESENT": {
+                "NAME": "Passphrase was encrypted with a password.",
                 "DESCRIPTION": ""
             },
-            "RECIPIENTS_WITHOUT_PROPER_KEYS": {
-                "NAME": "{{count}} Recipient{{count!=1?'s have':' has'}} no keypair.",
-                "DESCRIPTION": "Affected Recipients: {{bad_recipients_list}}"
+
+            "NO_SE_PASSPHRASE_PRESENT": {
+                "NAME": "Passphrase was not encrypted with a password.",
+                "DESCRIPTION": ""
+            },            
+            "SOME_RECIPIENTS_WITHOUT_PROPER_KEY": {
+                "NAME": "{{count}} Recipient {{count!=1?'s have':' has'}} no proper public key.",
+                "DESCRIPTION": "If not all recipients have a proper public key a password is used to encrypt the conversation. Affected Recipients: {{bad_recipients_list}}"
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha enabled!",
-                "DESCRIPTION": "",
+                "DESCRIPTION": "Using the passcaptcha method makes it harder to automatically decrypt your messages on a large scale, but it is not actually save.",
                 "TOGGLE": "Disable passcaptcha!"
             },
+            "PASSWORD_MISSING": {
+                "NAME": "Password missing.",
+                "DESCRIPTION": "If not all recipients have a proper public key a password is used to encrypt the conversation. Affected Recipients: {{bad_recipients_list}}",
+                "TOGGLE": ""
+            },            
             "HAS_PASSWORD": {
                 "NAME": "Password enabled!",
                 "DESCRIPTION": "",
                 "TOGGLE": ""
-            }
+            },
+            "ALL_RECIPIENTS_WITH_PROPER_KEY": {
+                "NAME": "All recipients have proper public keys.",
+                "DESCRIPTION": ""
+            }        
+            
         }
     },
     "SYSTEM":{

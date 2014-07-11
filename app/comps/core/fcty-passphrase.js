@@ -48,11 +48,11 @@ angular.module('cmCore').factory('cmPassphrase',[
                 list = (typeof list == 'object' && list.length > 0) ? list : []
 
                 list.forEach(function(item){
-                    var dublicate =     asymmetricallyEncryptedPassphrases.filter(function(already_present_item){
-                                            return     already_present_item.keyId == item.keyId 
-                                                    && already_present_item.encryptedPassphrase == item.encryptedPassphrase 
+                    var duplicate =     asymmetricallyEncryptedPassphrases.filter(function(already_present_item){
+                                            return already_present_item.keyId == item.keyId
+                                                    //&& already_present_item.encryptedPassphrase == item.encryptedPassphrase
                                         }).length > 0
-                    if(!dublicate)
+                    if(!duplicate)
                         asymmetricallyEncryptedPassphrases.push(item)
                 })                
 
@@ -71,11 +71,18 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @returns {cmPassphrase} this cmPassphrase
              */
             this.importSymmetricallyEncryptedPassphrase = function(encrypted_passphrase){
+                symmetricallyEncryptedPassphrase = encrypted_passphrase    
+
+                /*
+                TODO: rethink
+                
                 if(typeof encrypted_passphrase == 'string' && encrypted_passphrase.length > 0){
-                    symmetricallyEncryptedPassphrase = encrypted_passphrase
+                    
                 }else{
 //                    cmLogger.debug('cmPassphrase: importSymmetricallyEncryptedPassphrase(): unable to read encrypted passphrase.')
                 }
+                 */
+                
                 return this;
             };
 
@@ -122,11 +129,10 @@ angular.module('cmCore').factory('cmPassphrase',[
             this.setPassword = function(pw){
                 if(couldBeAPassword(pw)){
                     password = pw;
-
-                    this.trigger('password:changed');                    
-                }else{
-//                    cmLogger.debug('cmPassphrase: unable to set Password, requirements not met.')
-                }
+                    this.trigger('password:changed');
+                }else{                    
+                    this.trigger('password:reset', password);  
+                }              
 
                 return this;
             };

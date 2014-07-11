@@ -115,7 +115,7 @@ angular.module('cmCore').factory('cmFactory',[
                         if(self[i] == instance){
                             self.splice(i, 1);
 
-                            self.trigger('unregistered');
+                            self.trigger('deregister');
 
                             break;
                         }

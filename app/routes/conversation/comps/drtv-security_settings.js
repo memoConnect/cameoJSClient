@@ -68,39 +68,6 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                 var w = angular.element($window),
                     inputFocus = undefined;
 
-                function checkHeight(){
-                    var window = $window.innerHeight,
-                        control = element[0].scrollHeight + element[0].offsetTop,
-                        body = angular.element($document[0].querySelector(element[0].localName+' .body')),
-                        bar = body[0].nextSibling ? body[0].nextSibling.scrollHeight : 0;
-
-                    // set to min height
-                    if(window < control){
-                        element.addClass('too-big');
-                        body.css('height',(window-(element[0].offsetTop+bar))+'px');
-                        if(inputFocus != undefined){
-                            scope.scrollToPasswordArea();
-                        }
-                    // reset
-                    } else {
-                        element.removeClass('too-big');
-                        body.css({'height':'','width':'100%'});
-                    }
-                }
-
-                w.bind('resize', checkHeight);
-                scope.$on('$destroy', function() {
-                    w.unbind('resize', checkHeight);
-                });
-
-                scope.$watch(function() {
-                    if(!scope.bodyVisible)
-                        return false;
-
-                    if(!scope.inputFocus)
-                        checkHeight();
-                });
-
                 $rootScope.$on('cmIosFocus:focus',function(event,input){
                     scope.inputFocus = true;
                     if(input.attr('data-qa') == 'input-password'){
@@ -111,10 +78,31 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                     scope.inputFocus = false;
                     inputFocus = undefined;
                 });
+
+                scope.$watch('conversation.password', function(password){
+                    if(scope.conversation.state.is('new'))
+                        scope.conversation.securityAspects.refresh()
+                })
             },
 
             controller: function($scope, $element, $attrs){
                 $scope.conversation = $scope.$eval($attrs.cmData)
+
+                // TODO: pending conversation generate in drtv not in route controller
+                var conversation = $rootScope.pendingConversation;
+                if(!conversation){
+                    $location.path('/conversation/new');
+                    return null;
+                }
+
+                $scope.goBack = function(){
+                    //goto('conversation/'+(conversation.id||'new'))
+                    $window.history.back();
+                };
+
+                $scope.isNew = function(){
+                    return $scope.conversation.state.is('new');
+                };
 
                 /**
                  * @name decrypt
