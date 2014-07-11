@@ -309,6 +309,12 @@ angular.module('cmCore')
                     : false;
 
                 if(isNotInPublicKeys || typeof local_key.id === 'undefined' || local_key.id == ''){
+
+                    if(local_key.getPublicKey() == undefined){
+                        cmLogger.error('broken pubkey in localstorage! that can\'t be synced.');
+                        return false;
+                    }
+
                     cmAuth.savePublicKey({
                         name:    local_key.name, 
                         key:     local_key.getPublicKey(),

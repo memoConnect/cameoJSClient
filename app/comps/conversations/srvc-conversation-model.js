@@ -40,11 +40,13 @@ angular.module('cmConversations')
     'cmPassphrase',
     'cmSecurityAspectsConversation',
     'cmUtil',
+    'cmFilesAdapter',
     '$q',
     '$rootScope',
     function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
               cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase,
-              cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
+              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter,
+              $q, $rootScope){
 
         function ConversationModel(data){
             var self        = this,
