@@ -112,8 +112,9 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                     inputFocus = undefined;
                 });
 
-                scope.$watch('conversation.password', function(){
-                    scope.conversation.securityAspects.refresh()
+                scope.$watch('conversation.password', function(password){
+                    if(scope.conversation.state.is('new'))
+                        scope.conversation.securityAspects.refresh()
                 })
             },
 

@@ -575,7 +575,11 @@ angular.module('cmConversations').factory('cmConversationModel',[
              */
             this.getKeyTransmission = function(){
                 if(this.state.is('new')){
-                    return passphrase.getKeyTransmission();
+                    return  passphrase
+                            .setPassword(this.password)
+                            .setIdentities(this.recipients)
+                            .encrypt()
+                            .getKeyTransmission();
                 } else {
                     return this.keyTransmission;
                 }
@@ -888,7 +892,8 @@ angular.module('cmConversations').factory('cmConversationModel',[
             });
 
             passphrase.on('password:reset', function(password){
-                this.password = password
+                if(password)
+                    this.password = password
             })
 
             this.on('update:finished', function(){

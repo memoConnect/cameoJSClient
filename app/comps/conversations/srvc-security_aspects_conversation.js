@@ -13,7 +13,7 @@ angular.module('cmSecurityAspects')
             self
             .setTarget(conversation)
             .on('refresh', function(){
-                this.data = conversation.exportData()
+                //this.data = conversation.exportData()
             })
 
             self
@@ -42,7 +42,7 @@ angular.module('cmSecurityAspects')
                     dependencies: ['ENCRYPTED'],
                     value: 0,
                     check: function(conversation){
-                        return typeof self.data.sePassphrase == 'string'
+                        return ['symmetric', 'mixed'].indexOf(conversation.getKeyTransmission()) != -1
                     },
                 }) 
                 .addAspect({                    
@@ -85,7 +85,7 @@ angular.module('cmSecurityAspects')
                     dependencies: ['ENCRYPTED'],
                     value: 0,
                     check: function(conversation){
-                        return typeof self.data.sePassphrase != 'string'
+                        return ['symmetric', 'mixed'].indexOf(conversation.getKeyTransmission()) == -1
                     }
                 })
                 .addAspect({                    

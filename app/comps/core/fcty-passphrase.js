@@ -130,7 +130,7 @@ angular.module('cmCore').factory('cmPassphrase',[
                 if(couldBeAPassword(pw)){
                     password = pw;
                     this.trigger('password:changed');
-                }else{
+                }else{                    
                     this.trigger('password:reset', password);  
                 }              
 
