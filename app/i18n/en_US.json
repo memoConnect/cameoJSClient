@@ -142,7 +142,11 @@
             "RECIPIENTS_MISSING": "Please add at least one recipient.",
             "PASSPHRASE_INVALID": "Invalid passphrase",
             "PASSWORD_WRONG": "Password is wrong",
-            "NO_PASSWORD": "Password is empty.<br /> <a href=\"#/conversation/{{conversationId}}/security-settings\">here you can insert one</a>"
+            "NO_PASSWORD": "Password is empty.<br /> <a href=\"#/conversation/{{conversationId}}/security-settings\">here you can insert one</a>",
+            "PASSWORD_NEEDED": "A password is required.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">enter here!</a>",
+            "ASYMMETRIC_DECRYPT_ERROR": "Privatekey missing",
+            "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
+            "FILESIZE_REACHED": "The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file '<strong>{{fileName}}</strong>' is <strong>{{fileSize | cmBytesHumanReadable}}</strong> big."
         },
         "PLACEHOLDER": {
             "SUBJECT": "Subject",
@@ -401,12 +405,7 @@
             "SAVE_AS":{
                 "IOS_NOT_SUPPORT": "Unfortunately iOS does not support to download files. Open this talk on a non-iOS device to download this file. Supported formats go anyway: .pdf"
             },
-            "FRIEND_REQUEST": "New friendrequest",
-            "CONVERSATION":{
-                "ASYMMETRIC_DECRYPT_ERROR": "Privatekey missing",
-                "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
-                "FILESIZE_REACHED": "The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file '<strong>{{fileName}}</strong>' is <strong>{{fileSize | cmBytesHumanReadable}}</strong> big."
-            }
+            "FRIEND_REQUEST": "New friendrequest"
         }
     },
 
@@ -440,32 +439,38 @@
                 "DESCRIPTION": "",
                 "TOGGLE": "Enable encryption."
             },
-            "RECIPIENTS_WITH_PROPER_KEYS": {
-                "NAME": "All Recipients have a proper keypair.",
+            "SE_PASSPHRASE_PRESENT": {
+                "NAME": "Passphrase was encrypted with a password.",
                 "DESCRIPTION": ""
             },
-            "RECIPIENTS_WITHOUT_PROPER_KEYS": {
-                "NAME": "{{count}} Recipient{{count!=1?'s have':' has'}} no keypair.",
-                "DESCRIPTION": "Affected Recipients: {{bad_recipients_list}}"
+            "NO_SE_PASSPHRASE_PRESENT": {
+                "NAME": "Passphrase was not encrypted with a password.",
+                "DESCRIPTION": ""
+            },
+            "ALL_RECIPIENTS_WITH_PROPER_KEY": {
+                "NAME": "All recipients have proper public keys.",
+                "DESCRIPTION": ""
+            },
+            "SOME_RECIPIENTS_WITHOUT_PROPER_KEY": {
+                "NAME": "{{count}} Recipient {{count!=1?'s have':' has'}} no proper public key.",
+                "DESCRIPTION": "If not all recipients have a proper public key a password is used to encrypt the conversation. Affected Recipients: {{bad_recipients_list}}"
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha enabled!",
-                "DESCRIPTION": "",
+                "DESCRIPTION": "Using the passcaptcha method makes it harder to automatically decrypt your messages on a large scale, but it is not actually save.",
                 "TOGGLE": "Disable passcaptcha!"
             },
+            "PASSWORD_MISSING": {
+                "NAME": "Password missing.",
+                "DESCRIPTION": "If not all recipients have a proper public key a password is used to encrypt the conversation. Affected Recipients: {{bad_recipients_list}}",
+                "TOGGLE": ""
+            },            
             "HAS_PASSWORD": {
                 "NAME": "Password enabled!",
                 "DESCRIPTION": "",
                 "TOGGLE": ""
             },
-            "NO_SE_PASSPHRASE_PRESENT":{
-                "NAME": "No symetric passphrase present",
-                "DESCRIPTION": ""
-            },
-            "SE_PASSPHRASE_PRESENT":{
-                "NAME": "Symetric passphrase present",
-                "DESCRIPTION": ""
-            }
+            "MISSING_DATA": "Securityapsects missing"
         }
     },
     "SYSTEM":{

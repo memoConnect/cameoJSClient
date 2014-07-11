@@ -13,23 +13,25 @@ define([
         '$rootScope',
         '$element',
         '$routeParams',
+        '$location',
         'cmConversationFactory',
         'cmUserModel',
-        '$location',
-        function($scope, $rootScope, $element, $routeParams, cmConversationFactory, cmUserModel, $location){
+        function($scope, $rootScope, $element, $routeParams, $location,
+                 cmConversationFactory, cmUserModel){
+
             $scope.conversationId   = $routeParams.conversationId;
-            $scope.calledWithId     = $scope.conversationId && $scope.conversationId != 'new'
+            $scope.calledWithId     = $scope.conversationId && $scope.conversationId != 'new';
             $scope.pageChild1       = $routeParams.pageChild1 || '';
 
             // existing conversation
             if($scope.calledWithId){
-                $scope.conversation = cmConversationFactory.create($scope.conversationId)
 
+                $scope.conversation = cmConversationFactory.create($scope.conversationId);
             // pending conversation:
             } else if($rootScope.pendingConversation){
 
                 if($rootScope.pendingConversation.id) //todo: state new?
-                   $location.path('conversation/'+$rootScope.pendingConversation.id+($scope.pageChild1 ? '/'+$scope.pageChild1 : '') )
+                   $location.path('conversation/'+$rootScope.pendingConversation.id+($scope.pageChild1 ? '/'+$scope.pageChild1 : '') );
                 else
                     $scope.conversation = $rootScope.pendingConversation;
 

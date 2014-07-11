@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmConversations').factory('cmMessageModel',[
+angular.module('cmConversations')
+    .factory('cmMessageModel',[
     'cmConversationsAdapter',
     'cmCrypt',
     'cmIdentityFactory',
@@ -13,7 +14,10 @@ angular.module('cmConversations').factory('cmMessageModel',[
     'cmLogger',
     '$rootScope',
     '$q',
-    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory, cmFilesAdapter, cmUserModel, cmObject, cmStateManagement, cmUtil, cmLogger, $rootScope, $q){
+    function (cmConversationsAdapter, cmCrypt, cmIdentityFactory, cmFileFactory,
+              cmFilesAdapter, cmUserModel, cmObject, cmStateManagement, cmUtil, cmLogger,
+              $rootScope, $q){
+
         /**
          * @constructor
          * @description
@@ -110,7 +114,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 return this;
             };
 
-
             // sets which data should not be encrypted
             this.setPublicData = function(data){
                 // data may be a string or an array
@@ -196,7 +199,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 return true;
             };
 
-
             /**
              * send message to backend object
              * @param conversation
@@ -212,8 +214,7 @@ angular.module('cmConversations').factory('cmMessageModel',[
 
                 this.publicData = public_data;
 
-                // Check if the message is allright to be send to the backend:
-
+                // Check if the message is alright to be send to the backend:
                 var proper_public_data      =       (typeof this.publicData == 'object')
                                                 &&  Object.keys(this.publicData).length > 0,
                     proper_encrypted_data   =       (typeof this.encryptedData == 'string')
@@ -226,10 +227,10 @@ angular.module('cmConversations').factory('cmMessageModel',[
                     return defer.promise;
                 }
 
-                // If we got this far evrything seems allright; send the message to the backend:
+                // If we got this far evrything seems alright; send the message to the backend:
                 return cmConversationsAdapter.sendMessage(conversation.id, {
-                    encrypted:  this.encryptedData,
-                    plain:      this.publicData
+                    encrypted: this.encryptedData,
+                    plain: this.publicData
                 })
                 .then(function (message_data) {
                     self.importData(message_data);
@@ -251,13 +252,9 @@ angular.module('cmConversations').factory('cmMessageModel',[
                     self.state.unset('incomplete');
                     self.state.set('uploading');
                     angular.forEach(this.files, function(file){
-                        file.uploadChunks();
-                        file.on('upload:complete',function(event, data){
-                            cmFilesAdapter.complete(data.fileId, self.id).then(function(){
-                                file.state = 'complete';
-                                file.trigger('file:complete');
-                            });
-                        })
+                        file
+                            .setOnCompleteId(self.id)
+                            .uploadChunks();
                     });
                 }
 
@@ -370,8 +367,6 @@ angular.module('cmConversations').factory('cmMessageModel',[
                 return this;
             };
 
-            init(data);
-
             /**
              * Event Handling
              */
@@ -383,6 +378,8 @@ angular.module('cmConversations').factory('cmMessageModel',[
             this.on('message:saved', function(){
                 self.uploadFiles();
             });
+
+            init(data);
 
             // if files are incomplete wait for message:new backend event to reinit
             this.incompleteFiles = [];

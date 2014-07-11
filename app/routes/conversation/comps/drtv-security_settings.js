@@ -20,17 +20,6 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                 scope.showPasswordLocalKeyInfo = false;
                 var times = 0;
 
-                function showControls(conversation){
-                    if(!conversation.state.is('new')
-                        && (conversation.getKeyTransmission() == 'symmetric' || conversation.getKeyTransmission() == 'mixed')
-                        && !conversation.password
-                        && !conversation.isUserInPassphraseList()
-                    ){
-                        //scope.toggleControls('open');
-                        //TODO go to settings page??
-                    }
-                }
-
                 function showPasswordInfo(conversation){
                     if(conversation.isEncrypted() && cmUserModel.hasLocalKeys() == false){
                         scope.showPasswordLocalKeyInfo = true;
@@ -46,12 +35,6 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                     if(conversation){
                         // open the controls for a new conversation and password isnt set in a symetric case || case mixed exists and user isnt in passphraselist
 
-                        showControls(conversation);
-
-                        conversation.on('update:finished', function(){
-                            showControls(conversation);
-                        });
-
                         showPasswordInfo(conversation);
 
                         conversation.on('encryption:enabled', function(){
@@ -64,9 +47,7 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                     }
                 });
 
-                // TODO: found what does ios with window height and control height
-                var w = angular.element($window),
-                    inputFocus = undefined;
+                var inputFocus = undefined;
 
                 $rootScope.$on('cmIosFocus:focus',function(event,input){
                     scope.inputFocus = true;
@@ -78,6 +59,11 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                     scope.inputFocus = false;
                     inputFocus = undefined;
                 });
+
+                scope.$watch('conversation.password', function(password){
+                    if(scope.conversation.state.is('new'))
+                        scope.conversation.securityAspects.refresh()
+                })
             },
 
             controller: function($scope, $element, $attrs){
@@ -85,10 +71,10 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
 
                 // TODO: pending conversation generate in drtv not in route controller
                 var conversation = $rootScope.pendingConversation;
-                if(!conversation){
+                /*if(!conversation){
                     $location.path('/conversation/new');
                     return null;
-                }
+                }*/
 
                 $scope.goBack = function(){
                     //goto('conversation/'+(conversation.id||'new'))

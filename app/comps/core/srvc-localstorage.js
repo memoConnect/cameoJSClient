@@ -133,7 +133,7 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt','$rootScope', fu
                 this.instanceId = data.id;
                 this.instanceKey = data.key;
             }
-        }
+        };
         /**
          * adapter function for check local storage
          * @returns {boolean}

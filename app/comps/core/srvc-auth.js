@@ -46,7 +46,8 @@ angular.module('cmCore').service('cmAuth', [
              *
              * @returns {Boolean} for removing succeed
              */
-            removeToken: function(){
+            removeToken: function(where){
+                console.log('removeToken',where)
                 return localStorage.removeItem('token');
             },
             /**
@@ -74,7 +75,9 @@ angular.module('cmCore').service('cmAuth', [
              * @returns {String} Token
              */
             getToken: function(){
-                return localStorage.getItem('token');
+                var token = localStorage.getItem('token');
+                    console.log('getToken',token)
+                return token;
             },
             /**
              * @ngdoc method

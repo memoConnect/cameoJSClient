@@ -71,11 +71,18 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @returns {cmPassphrase} this cmPassphrase
              */
             this.importSymmetricallyEncryptedPassphrase = function(encrypted_passphrase){
+                symmetricallyEncryptedPassphrase = encrypted_passphrase    
+
+                /*
+                TODO: rethink
+                
                 if(typeof encrypted_passphrase == 'string' && encrypted_passphrase.length > 0){
-                    symmetricallyEncryptedPassphrase = encrypted_passphrase
+                    
                 }else{
 //                    cmLogger.debug('cmPassphrase: importSymmetricallyEncryptedPassphrase(): unable to read encrypted passphrase.')
                 }
+                 */
+                
                 return this;
             };
 
@@ -120,14 +127,7 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @returns {cmPassphrase|Boolean} this Returns cmPassphrase Object
              */
             this.setPassword = function(pw){
-                if(couldBeAPassword(pw)){
-                    password = pw;
-
-                    this.trigger('password:changed');                    
-                }else{
-//                    cmLogger.debug('cmPassphrase: unable to set Password, requirements not met.')
-                }
-
+                password = pw;
                 return this;
             };
 
@@ -142,11 +142,9 @@ angular.module('cmCore').factory('cmPassphrase',[
              * @param {Array} idts The identities to be stored
              * @returns {cmPassphrase} this Returns cmPassphrase Object
              */
-            this.setIdentities = function(idts){
-                if(typeof idts == 'object' && idts.length > 0){
-                    identities = idts;
-                }
-
+            this.setIdentities = function(idts){                
+                identities = idts;
+                
                 return this
             };
 
@@ -160,11 +158,8 @@ angular.module('cmCore').factory('cmPassphrase',[
              *
              * @returns {Object} this Returns cmPassphrase Object
              */
-            this.resetPassword = function(){
+            this.resetPassword = function(){                
                 password = undefined;
-
-                this.trigger('password:changed');
-
                 return this
             };
 

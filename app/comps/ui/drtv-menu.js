@@ -53,7 +53,7 @@ angular.module('cmUi').directive('cmMenu',[
                 };
 
                 $scope.logout = function(){
-                    cmUserModel.doLogout();
+                    cmUserModel.doLogout(true,'drtv-menu logout');
                 };
             }
         }

@@ -213,7 +213,7 @@ angular.module('cmCore').provider('cmApi',[
                     ?   //response valid, check if OK:
                         //if a certain key was expected, resolve promise resp. reject the promise with the according values
                         //if nothing was expected, just resolve or reject with value of 'data' in the response body if present or all the data
-                        //reponse should now look similar to this:
+                        //response should now look similar to this:
                         /*
                             "res":  "OK",
                             "data": {
@@ -248,7 +248,6 @@ angular.module('cmCore').provider('cmApi',[
                     config.method   =   method || config.method 
                     config.headers  =   angular.extend(token           ? {'Authorization': token} : {}, config.headers || {})   //add authorization token to the header
                     config.headers  =   angular.extend(twoFactorToken  ? {'X-TwoFactorToken': twoFactorToken} : {}, config.headers || {})   //add two factor authorization token to the header
-
                 }
 
 

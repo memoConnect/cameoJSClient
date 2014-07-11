@@ -66,7 +66,9 @@ describe('cmSecurityAspects', function(){
                             }
         })
 
-        var applying    = security_aspects.getApplyingAspects(),
+        security_aspects.refresh()
+
+        var applying    = security_aspects.applyingAspects,
             positives   = security_aspects.getPositiveAspects(),
             negatives   = security_aspects.getNegativeAspects(),
             neutrals    = security_aspects.getNeutralAspects(),
@@ -82,6 +84,8 @@ describe('cmSecurityAspects', function(){
         // change method
         test_object.my_method = function() { return 'ping' }
 
+        security_aspects.refresh()
+
         applying    = security_aspects.getApplyingAspects(),
         positives   = security_aspects.getPositiveAspects(),
         negatives   = security_aspects.getNegativeAspects(),
@@ -96,6 +100,8 @@ describe('cmSecurityAspects', function(){
 
         // change value
         test_object.my_attribute = 4
+
+        security_aspects.refresh()
 
         applying    = security_aspects.getApplyingAspects(),
         positives   = security_aspects.getPositiveAspects(),
