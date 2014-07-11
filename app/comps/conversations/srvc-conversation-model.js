@@ -694,12 +694,10 @@ angular.module('cmConversations')
                         .importBase64(this.tmpPassCaptcha)
                         .prepareForUpload()
                         .then(function(){
-                            console.log('upload passcaptcha chunks');
                             self.passCaptcha.uploadChunks();
                          });
 
                     this.passCaptcha.on('upload:finish', function(){
-                        console.log('updateCaptcha')
                         cmConversationsAdapter.updateCaptcha(self.id, self.passCaptcha.id);
                     });
                 }

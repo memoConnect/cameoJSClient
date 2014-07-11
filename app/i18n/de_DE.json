@@ -465,6 +465,10 @@
             "SE_PASSPHRASE_PRESENT":{
                 "NAME": "Symetrische Passphrase vorhanden",
                 "DESCRIPTION": ""
+            },
+            "PASSWORD_MISSING": {
+                "NAME": "Bitte geben Sie ein Passwort",
+                "DESCRIPTION": "Für symetrische Verschlüsselung wird ein Passwort benötigt."
             }
         }
     },
