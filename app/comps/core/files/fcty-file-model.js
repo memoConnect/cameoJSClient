@@ -52,6 +52,8 @@ angular.module('cmCore')
             // message id for backend event message:new
             this.setOnCompleteId = function(id){
                 this.onCompleteId = id;
+
+                return this;
             };
 
             // upload for state = new

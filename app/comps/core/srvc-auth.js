@@ -76,7 +76,7 @@ angular.module('cmCore').service('cmAuth', [
              */
             getToken: function(){
                 var token = localStorage.getItem('token');
-                    console.log('getToken',token)
+                    //console.log('getToken',token)
                 return token;
             },
             /**
