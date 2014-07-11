@@ -381,6 +381,7 @@ angular.module('cmConversations')
 
                     cmConversationsAdapter.newConversation( this.exportData() ).then(
                         function (conversation_data) {
+                            console.log('new conversation ready',conversation_data)
                             self
                             .importData(conversation_data)
                             .savePassCaptcha();                          
@@ -679,19 +680,22 @@ angular.module('cmConversations')
              * @returns {ConversationModel} this ConversationModel
              */
             this.savePassCaptcha = function(){
+                //cbkp1r
+                console.log('savePassCaptcha',this.tmpPassCaptcha)
                 if(this.tmpPassCaptcha != ''){
                     this.passCaptcha = cmFileFactory.create();
                     this.passCaptcha.name = this.passCaptcha.encryptedName = 'captcha';
 
                     this.passCaptcha
                         .importBase64(this.tmpPassCaptcha)
-                        .prepareForUpload().then(
-                        function(){
+                        .prepareForUpload()
+                        .then(function(){
+                            console.log('upload passcaptcha chunks');
                             self.passCaptcha.uploadChunks();
-                        }
-                    );
+                         });
 
                     this.passCaptcha.on('upload:finish', function(){
+                        console.log('updateCaptcha')
                         cmConversationsAdapter.updateCaptcha(self.id, self.passCaptcha.id);
                     });
                 }

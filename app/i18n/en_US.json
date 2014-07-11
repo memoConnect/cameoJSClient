@@ -142,7 +142,10 @@
             "RECIPIENTS_MISSING": "Please add at least one recipient.",
             "PASSPHRASE_INVALID": "Invalid passphrase",
             "PASSWORD_WRONG": "Password is wrong",
-            "NO_PASSWORD": "Password is empty"
+            "NO_PASSWORD": "Password is empty",
+            "ASYMMETRIC_DECRYPT_ERROR": "Privatekey missing",
+            "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
+            "FILESIZE_REACHED": "The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file '<strong>{{fileName}}</strong>' is <strong>{{fileSize | cmBytesHumanReadable}}</strong> big."
         },
         "PLACEHOLDER": {
             "SUBJECT": "Subject",
@@ -401,12 +404,7 @@
             "SAVE_AS":{
                 "IOS_NOT_SUPPORT": "Unfortunately iOS does not support to download files. Open this talk on a non-iOS device to download this file. Supported formats go anyway: .pdf"
             },
-            "FRIEND_REQUEST": "New friendrequest",
-            "CONVERSATION":{
-                "ASYMMETRIC_DECRYPT_ERROR": "Privatekey missing",
-                "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
-                "FILESIZE_REACHED": "The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file '<strong>{{fileName}}</strong>' is <strong>{{fileSize | cmBytesHumanReadable}}</strong> big."
-            }
+            "FRIEND_REQUEST": "New friendrequest"
         }
     },
 
@@ -457,6 +455,14 @@
                 "NAME": "Password enabled!",
                 "DESCRIPTION": "",
                 "TOGGLE": ""
+            },
+            "NO_SE_PASSPHRASE_PRESENT":{
+                "NAME": "No symetric passphrase present",
+                "DESCRIPTION": ""
+            },
+            "SE_PASSPHRASE_PRESENT":{
+                "NAME": "symetrische passphrase present",
+                "DESCRIPTION": ""
             }
         }
     },

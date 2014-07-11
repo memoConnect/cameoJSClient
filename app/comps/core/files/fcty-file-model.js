@@ -57,6 +57,8 @@ angular.module('cmCore')
 
                     this.blob = cmFilesAdapter.binaryToBlob(cmFilesAdapter.base64ToBinary(base64),this.type);
 
+                    console.log('importBase64',this.type, this.blob)
+
                     this.chopIntoChunks(128);
                 }
 
