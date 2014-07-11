@@ -318,8 +318,8 @@ angular.module('cmConversations')
 
                 console.dir(passphrase_data)
                 
-                data.sePassphrase       =   passphrase_data.sePassphrase;
-                data.aePassphraseList   =   passphrase_data.aePassphraseList;
+                data.sePassphrase       =   passphrase_data.sePassphrase || undefined;
+                data.aePassphraseList   =   passphrase_data.aePassphraseList || undefined;
                 data.keyTransmission    =   passphrase_data.keyTransmission;
 
                 data.recipients         =   this.recipients.map(function(recipient){ return recipient.id });

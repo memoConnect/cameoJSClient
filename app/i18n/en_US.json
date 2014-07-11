@@ -451,7 +451,7 @@
             },            
             "SOME_RECIPIENTS_WITHOUT_PROPER_KEY": {
                 "NAME": "{{count}} Recipient {{count!=1?'s have':' has'}} no proper public key.",
-                "DESCRIPTION": "Without all recipients having a proper public key you will have to encrypt your conversation with a password or cannot encrypt it at all. Affected Recipients: {{bad_recipients_list}}"
+                "DESCRIPTION": "If not all recipients have a proper public key a password is used to encrypt the conversation. Affected Recipients: {{bad_recipients_list}}"
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha enabled!",
@@ -460,7 +460,7 @@
             },
             "PASSWORD_MISSING": {
                 "NAME": "Password missing.",
-                "DESCRIPTION": "Without all recipients having a proper public key you will have to encrypt your conversation with a password or cannot encrypt it at all. Affected Recipients: {{bad_recipients_list}}",
+                "DESCRIPTION": "If not all recipients have a proper public key a password is used to encrypt the conversation. Affected Recipients: {{bad_recipients_list}}",
                 "TOGGLE": ""
             },            
             "HAS_PASSWORD": {
