@@ -317,8 +317,6 @@ angular.module('cmConversations')
                                         .setIdentities(this.recipients)
                                         .exportData()
 
-                console.dir(passphrase_data)
-                
                 data.sePassphrase       =   passphrase_data.sePassphrase || undefined;
                 data.aePassphraseList   =   passphrase_data.aePassphraseList || undefined;
                 data.keyTransmission    =   passphrase_data.keyTransmission;

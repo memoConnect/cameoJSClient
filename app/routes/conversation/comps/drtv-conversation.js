@@ -94,7 +94,7 @@ angular.module('cmRouteConversation')
                                 },function(r){
                                     $scope.isSending = false;
                                     $scope.isSendingAbort = true;
-                                    cmNotify.warn('NOTIFICATIONS.TYPES.CONVERSATION.FILESIZE_REACHED',{
+                                    cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED',{
                                         ttl:0,
                                         i18n: {
                                             maxFileSize: r.data.error.maxFileSize,
@@ -237,10 +237,11 @@ angular.module('cmRouteConversation')
                         files = [];
                         $scope.isSending = false;
 
-                        // route to detailpage of conversation
-                        if(!$scope.calledWithId) //calledWithId is set by route Ctrl
+                        // route to detailpage of conversation $scope.calledWithId = false
+                        // in purl case stay on purl page $scope.calledWithId = true
+                        if($scope.calledWithId == false){ //calledWithId is set by route Ctrl
                             $location.path('/conversation/' + $scope.conversation.id);
-//                        cmLogger.debug('message:sent');
+                        }
                     }, function(){
                         $scope.isSending = false;
                     });
