@@ -1,8 +1,8 @@
-<div class="name">
+<div class="name" ng-click ="show = !show">
     <cm-icons count="{{count}}" icons="{{icons}}"    class="{{class}}"></cm-icons>
     {{"SECURITY_ASPECT.CONVERSATION."+aspect.id+".NAME"|cmTranslate:aspect}}
 </div>
-<div class="description">
+<div class="description" ng-if = "show">
     {{"SECURITY_ASPECT.CONVERSATION."+aspect.id+".DESCRIPTION"|cmTranslate:aspect}}
 </div>
 <a ng-click="aspect.toggle()" ng-if="aspect.isToggleAble">{{"SECURITY_ASPECT.CONVERSATION."+aspect.id+".TOGGLE"|cmTranslate}}</a>

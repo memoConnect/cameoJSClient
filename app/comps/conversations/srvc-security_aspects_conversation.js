@@ -60,7 +60,7 @@ angular.module('cmSecurityAspects')
                 .addAspect({
                     id: 'HAS_PASSCAPTCHA',
                     dependencies: ['SE_PASSPHRASE_PRESENT'],
-                    value: -2,
+                    value: -1,
                     check: function(conversation){
                         var bool = false;
 

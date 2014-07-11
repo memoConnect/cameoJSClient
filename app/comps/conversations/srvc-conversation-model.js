@@ -639,6 +639,9 @@ angular.module('cmConversations')
 
             this.disablePassCaptcha = function(){
 //                cmLogger.debug('cmConversationModel.disablePassCaptcha');
+                
+                if(!this.state.is('new')) return this
+
                 this.options.hasCaptcha = false;
                 this.trigger('captcha:disabled');
 
