@@ -142,7 +142,11 @@
             "RECIPIENTS_MISSING": "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
             "PASSPHRASE_INVALID": "Ungültiger Schlüssel.",
             "PASSWORD_WRONG": "Das eingegebene Passwort ist falsch.",
-            "NO_PASSWORD": "Es fehlt ein Passwort.<br /> <a href=\"#/conversation/{{conversationId}}/security-settings\">jetzt eins eingeben!</a>"
+            "NO_PASSWORD": "Es fehlt ein Passwort.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">jetzt eins eingeben!</a>",
+            "PASSWORD_NEEDED": "Zum Entschlüssel geben Sie bitte ein Passwort ein.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">jetzt eins eingeben!</a>",
+            "ASYMMETRIC_DECRYPT_ERROR": "Der Privateschlüssel fehlt.",
+            "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
+            "FILESIZE_REACHED": "Die maximale Dateigröße von <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> wurde überschritten. Ihre Datei '<strong>{{fileName}}</strong>' ist <strong>{{fileSize | cmBytesHumanReadable}}</strong> groß."
         },
         "PLACEHOLDER": {
             "SUBJECT": "Betreff",
@@ -401,12 +405,7 @@
             "SAVE_AS":{
                 "IOS_NOT_SUPPORT": "Leider unterstützt iOS das herunterladen von Dateien nicht. Öffnen Sie diesen Talk auf einem nicht iOS Gerät um diese Datei downloaden zukönnen. Unterstütze Formate gehen trotzdem: .pdf"
             },
-            "FRIEND_REQUEST": "Neue Freundschaftsanfrage",
-            "CONVERSATION":{
-                "ASYMMETRIC_DECRYPT_ERROR": "Der Privateschlüssel fehlt.",
-                "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
-                "FILESIZE_REACHED": "Die maximale Dateigröße von <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> wurde überschritten. Ihre Datei '<strong>{{fileName}}</strong>' ist <strong>{{fileSize | cmBytesHumanReadable}}</strong> groß."
-            }
+            "FRIEND_REQUEST": "Neue Freundschaftsanfrage"
         }
     },
 
@@ -445,9 +444,9 @@
                 "NAME": "Alle Empfänger haben gutes Schlüsselpaar.",
                 "DESCRIPTION": ""
             },
-            "RECIPIENTS_WITHOUT_PROPER_KEY": {
+            "RECIPIENTS_WITHOUT_PROPER_KEYS": {
                 "NAME": "{{count}} Empfänger {{count!=1?'haben':'hat'}} kein gutes Schlüsselpaar.",
-                "DESCRIPTION": "Betroffene Empfänger: {{typeof bad_recipients_list}}"
+                "DESCRIPTION": "Betroffene Empfänger: {{bad_recipients_list}}"
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha wird verwendet!",

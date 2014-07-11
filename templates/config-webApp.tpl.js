@@ -45,16 +45,19 @@ cameo_config = {
             hasCtrl: true,
             resolveOnBoot: true
         },
+        'purl': {
+            routes:[
+                '/purl/:purlId?',
+                '/purl/:purlId/:pageChild1?'
+            ],
+            hasCtrl: true,
+            guests: true
+        },
         'recipients': {
             hasCtrl: true,
             resolveOnBoot: true
         },
         'registration': {
-            hasCtrl: true,
-            guests: true
-        },
-        'purl': {
-            routes:['/purl/:idPurl?'],
             hasCtrl: true,
             guests: true
         },

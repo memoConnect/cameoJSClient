@@ -8,10 +8,11 @@ angular.module('cmCore')
     'cmChunk',
     'cmCrypt',
     'cmObject',
-    '$q',
     'cmModal',
     'cmEnv',
-    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, $q, cmModal, cmEnv){
+    '$q',
+    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, cmModal, cmEnv,
+              $q){
 
         function roundToTwo(num) {
             return +(Math.round(num + 'e+2') + 'e-2');
@@ -34,6 +35,7 @@ angular.module('cmCore')
             this.size = 0;
 
             this.base64 = '';
+            this.onCompleteId = undefined;
 
             this.setPassphrase = function(p){
                 passphrase = p;// TODO: || null;
@@ -47,6 +49,11 @@ angular.module('cmCore')
                 return this;
             };
 
+            // message id for backend event message:new
+            this.setOnCompleteId = function(id){
+                this.onCompleteId = id;
+            };
+
             // upload for state = new
 
             this.importBase64 = function(base64){
@@ -56,6 +63,8 @@ angular.module('cmCore')
                     this.blob = cmFilesAdapter.binaryToBlob(cmFilesAdapter.base64ToBinary(base64),this.type);
 
                     this.chopIntoChunks(128);
+
+                    console.log('importBase64',this.type, this.blob, this.chunks)
                 }
 
                 return this;
@@ -180,7 +189,7 @@ angular.module('cmCore')
                 chunk
                     .decrypt(passphrase)
 
-                this.encryptedSize += chunk.encryptedRaw.length;
+                this.encryptedSize += String(chunk.encryptedRaw).length;
                 //this.size += chunk.blob.size;
 
                 if(index == (this.chunkIndices.length - 1)){
@@ -257,9 +266,8 @@ angular.module('cmCore')
                         self.trigger('progress:chunk', (index/self.chunks.length));
 
                         if(index == (self.chunks.length - 1)){
-                            self.trigger('upload:complete',{ fileId:self.id });
-
-                            self.on('file:complete', function(){
+                            cmFilesAdapter.setFileComplete(self.id, self.onCompleteId).then(function(){
+                                self.setState('complete');
                                 self.trigger('upload:finish');
                             });
                         } else {
@@ -285,7 +293,15 @@ angular.module('cmCore')
             this._downloadChunk = function(index){
                 var chunk = new cmChunk();
 
-                this.chunks[index] = chunk;
+                if(self.chunks == null) {
+                    cmLogger.error('_downloadChunk:'+index+' download failed because of self.chunks = null');
+                    self.trigger('progress:chunk', 1);
+                    self.trigger('download:finish', {'error':true});
+                    self.trigger('file:cached');
+                    return false;
+                }
+
+                self.chunks[index] = chunk;
 
                 chunk
                     .download(self.id, index)

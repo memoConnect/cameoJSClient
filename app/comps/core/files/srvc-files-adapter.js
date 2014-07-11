@@ -31,12 +31,16 @@ angular.module('cmCore')
                 });
             },
 
-            complete: function(fileId, messageId){
-                return cmApi.post({
-                    path: '/file/'+fileId+'/completed',
-                    data: {
+            setFileComplete: function(fileId, messageId){
+                var data = 'null';
+                if(messageId != undefined){
+                    data = {
                         messageId: messageId
                     }
+                }
+                return cmApi.post({
+                    path: '/file/'+fileId+'/completed',
+                    data: data
                 });
             },
 

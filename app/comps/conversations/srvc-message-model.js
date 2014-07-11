@@ -251,13 +251,9 @@ angular.module('cmConversations').factory('cmMessageModel',[
                     self.state.unset('incomplete');
                     self.state.set('uploading');
                     angular.forEach(this.files, function(file){
-                        file.uploadChunks();
-                        file.on('upload:complete',function(event, data){
-                            cmFilesAdapter.complete(data.fileId, self.id).then(function(){
-                                file.state = 'complete';
-                                file.trigger('file:complete');
-                            });
-                        })
+                        file
+                            .setOnCompleteId(self.id)
+                            .uploadChunks();
                     });
                 }
 

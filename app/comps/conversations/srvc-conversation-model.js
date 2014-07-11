@@ -40,11 +40,13 @@ angular.module('cmConversations')
     'cmPassphrase',
     'cmSecurityAspectsConversation',
     'cmUtil',
+    'cmFilesAdapter',
     '$q',
     '$rootScope',
     function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
               cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase,
-              cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
+              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter,
+              $q, $rootScope){
 
         function ConversationModel(data){
             var self        = this,
@@ -179,7 +181,7 @@ angular.module('cmConversations')
                      * wenn nicht, wird überprüft ob ein passwort vergeben wurde
                      */
                     if(key_check == true && (self.password == undefined || (typeof self.password != 'string') || (self.password.length == 0))){
-                        cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD', {ttl:0, i18n: {conversationId:self.id||'new'}});
+                        self.trigger('show:passwordModal');
                         return false;
                     }
 
@@ -690,13 +692,14 @@ angular.module('cmConversations')
 
                     this.passCaptcha
                         .importBase64(this.tmpPassCaptcha)
-                        .prepareForUpload().then(
-                        function(){
+                        .prepareForUpload()
+                        .then(function(){
+                            console.log('upload passcaptcha chunks');
                             self.passCaptcha.uploadChunks();
-                        }
-                    );
+                         });
 
                     this.passCaptcha.on('upload:finish', function(){
+                        console.log('updateCaptcha')
                         cmConversationsAdapter.updateCaptcha(self.id, self.passCaptcha.id);
                     });
                 }

@@ -418,6 +418,12 @@ angular.module('cmCore').factory('cmPassphrase',[
                 return this;
             };
 
+            this.removeSymmetricallyEncryptedPassphrase = function(){
+                symmetricallyEncryptedPassphrase = undefined
+                password = undefined
+                return this
+            }
+
             /**
              * @ngdoc method
              * @methodOf cmPassphrase
