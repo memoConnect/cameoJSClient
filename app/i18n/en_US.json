@@ -144,7 +144,7 @@
             "PASSWORD_WRONG": "Password is wrong",
             "ASYMMETRIC_DECRYPT_ERROR": "Privatekey missing",
             "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
-            "FILESIZE_REACHED": "The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file '<strong>{{fileName}}</strong>' is <strong>{{fileSize | cmBytesHumanReadable}}</strong> big."
+            "FILESIZE_REACHED": "The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file '<strong>{{fileName}}</strong>' is <strong>{{fileSize | cmBytesHumanReadable}}</strong> big.",
             "NO_PASSWORD": "Password is empty.<br /> <a href=\"#/conversation/{{conversationId}}/security-settings\">here you can insert one</a>"
         },
         "PLACEHOLDER": {
