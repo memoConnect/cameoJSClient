@@ -12,9 +12,6 @@ angular.module('cmSecurityAspects')
 
             self
             .setTarget(conversation)
-            .on('refresh', function(){
-                //this.data = conversation.exportData()
-            })
 
             self
                 .addAspect({
