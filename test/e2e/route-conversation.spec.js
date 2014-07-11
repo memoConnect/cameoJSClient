@@ -10,8 +10,8 @@ describe('Single Conversation:', function () {
 
     it('should be at "#/talks"', function () {
         util.login()
-        util.get('/conversation')
-        util.expectCurrentUrl('#/conversation')
+        util.get('/conversation/new')
+        util.waitForPageLoad("/conversation/new")
     })
 
     it('should have a header', function () {
@@ -22,17 +22,13 @@ describe('Single Conversation:', function () {
         expect($('cm-footer').isPresent()).toBe(false)
     })
 
-    it('the conversation menu should be open', function () {
-        expect($("[data-qa='conversation-options-menu']").isDisplayed()).toBe(true)
-    })
-
     it('change the subject', function () {
         $("[data-qa='input-subject']").sendKeys(newSubject)
     })
 
     it('open modal to add recipient', function () {
         $("cm-add-button").click()
-        util.waitForPageLoad("/recipients")
+        util.waitForPageLoad("/conversation/new/recipients")
     })
 
     it('should filter contacts', function () {
@@ -44,10 +40,9 @@ describe('Single Conversation:', function () {
         $("[data-qa='btn-select-contact']").click()
     })
 
-
     it('go back to conversation on click on "done"', function () {
         $("[data-qa='btn-done']").click()
-        util.waitForPageLoad("/conversation")
+        util.waitForPageLoad("/conversation/new")
     })
 
     it('added recipient should be displayed', function () {
@@ -58,23 +53,7 @@ describe('Single Conversation:', function () {
     })
 
     it('should save options', function () {
-
-        /**
-         * @todo
-         * disable encryption in conversation
-         */
-        $("[data-qa='encryption-btn']").click()
-
-        $("[data-qa='btn-save-options']").click()
-        util.waitForElementHidden("[data-qa='conversation-options-menu']")
-    })
-
-    it('the bar should display the new subject', function () {
-        expect($("[data-qa='conversation-options-bar']").getText()).toContain(newSubject)
-    })
-
-    it('the bar should display the correct number of recipients', function () {
-        expect($("[data-qa='conversation-options-bar']").getText()).toMatch("2$")
+        util.disableEncryption();
     })
 
     it('should have an answer bar', function () {

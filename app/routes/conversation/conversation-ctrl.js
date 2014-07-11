@@ -9,22 +9,21 @@ define([
     'use strict';
 
     app.register.controller('ConversationCtrl', [
-
         '$scope',
         '$rootScope',
         '$element',
         '$routeParams',
         'cmConversationFactory',
         'cmUserModel',
-
-        function($scope, $rootScope, $element, $routeParams, cmConversationFactory, cmUserModel){
+        '$location',
+        function($scope, $rootScope, $element, $routeParams, cmConversationFactory, cmUserModel, $location){
             $scope.conversationId   = $routeParams.conversationId;
             $scope.calledWithId     = $scope.conversationId && $scope.conversationId != 'new'
             $scope.pageChild1       = $routeParams.pageChild1 || '';
 
             // existing conversation
             if($scope.calledWithId){
-                $scope.conversation = cmConversationFactory.create($scope.conversationId)   
+                $scope.conversation = cmConversationFactory.create($scope.conversationId)
 
             // pending conversation:
             } else if($rootScope.pendingConversation){
@@ -41,10 +40,6 @@ define([
                                         .addRecipient(cmUserModel.data.identity)
                 
             }
-
-
-
-            
         }
     ]);
 });

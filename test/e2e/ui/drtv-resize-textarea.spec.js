@@ -9,10 +9,8 @@ describe('Textarea Resize', function () {
         util.login()
         util.waitForPageLoad('/talks')
 
-        util.get('/conversation/')
-        util.waitForPageLoad('/conversation/')
-
-        $("[data-qa='btn-save-options']").click()
+        util.get('/conversation/new')
+        util.waitForPageLoad('/conversation/new')
     })
 
     it('default',function(){

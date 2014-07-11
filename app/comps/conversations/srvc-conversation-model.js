@@ -22,7 +22,8 @@
  * @param {Object} [data] The conversation data as received from the backend.
  */
 
-angular.module('cmConversations').factory('cmConversationModel',[
+angular.module('cmConversations')
+.factory('cmConversationModel',[
     'cmBoot',
     'cmConversationsAdapter',
     'cmMessageModel',
@@ -41,7 +42,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
     'cmUtil',
     '$q',
     '$rootScope',
-    function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory, cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase, cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
+    function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
+              cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase,
+              cmSecurityAspectsConversation, cmUtil, $q, $rootScope){
 
         function ConversationModel(data){
             var self        = this,
@@ -176,10 +179,9 @@ angular.module('cmConversations').factory('cmConversationModel',[
                      * wenn nicht, wird überprüft ob ein passwort vergeben wurde
                      */
                     if(key_check == true && (self.password == undefined || (typeof self.password != 'string') || (self.password.length == 0))){
-                        cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD');
+                        cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD', {ttl:0, i18n: {conversationId:self.id||'new'}});
                         return false;
                     }
-
 
                     /**
                      * checkt ob alle User einen Key habe und ob der lokale User einen Key local hat,
@@ -191,10 +193,7 @@ angular.module('cmConversations').factory('cmConversationModel',[
                             return false;
                         }
                     }
-
                 }
-
-
                 return true;
             };
 
