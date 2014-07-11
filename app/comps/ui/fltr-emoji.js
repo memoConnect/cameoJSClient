@@ -20,7 +20,8 @@ angular.module('cmUi').filter('cmEmoji', [
             {matcher: ['\\.!\\.'], emoji:'fu'},
             {matcher: ['o_O','O_o','oO','Oo','o\\.O','O\\.o'], emoji:'flushed'},
             {matcher: ['-_-'], emoji:'expressionless'},
-            {matcher: ['\\^_\\^'], emoji:'grin'}
+            {matcher: ['\\^_\\^'], emoji:'grin'},
+            {matcher: ['\\o\/'], emoji:'ghost'}
         ];
 
         return function (input) {
