@@ -24,6 +24,7 @@ define([
             $scope.showSignIn = false;
             $rootScope.pendingPurl = null;
             $scope.pageChild1 = $routeParams.pageChild1 || '';
+            $scope.purlId = $routeParams.purlId || '';
 
             if(cmUtil.checkKeyExists($routeParams,'purlId') && cmUtil.validateString($routeParams.purlId)){
                 cmPurlModel.getPurl($routeParams.purlId).then(

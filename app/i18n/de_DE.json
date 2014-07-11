@@ -453,11 +453,6 @@
                 "DESCRIPTION": "",
                 "TOGGLE": "Passcaptcha deaktivieren"
             },
-            "HAS_PASSWORD": {
-                "NAME": "Passwort wird verwendet!",
-                "DESCRIPTION": "",
-                "TOGGLE": ""
-            },
             "NO_SE_PASSPHRASE_PRESENT":{
                 "NAME": "Keine Symetrische Passphrase vorhanden",
                 "DESCRIPTION": ""
@@ -469,7 +464,13 @@
             "PASSWORD_MISSING": {
                 "NAME": "Bitte geben Sie ein Passwort",
                 "DESCRIPTION": "Für symetrische Verschlüsselung wird ein Passwort benötigt."
-            }
+            },
+            "HAS_PASSWORD": {
+                "NAME": "Passwort wird verwendet!",
+                "DESCRIPTION": "",
+                "TOGGLE": ""
+            },
+            "MISSING_DATA": "Sicherheitsaspekte fehlen"
         }
     },
 

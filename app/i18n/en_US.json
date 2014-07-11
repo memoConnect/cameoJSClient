@@ -470,10 +470,7 @@
                 "DESCRIPTION": "",
                 "TOGGLE": ""
             },
-            "PASSWORD_MISSING": {
-                "NAME": "Please enter a Password",
-                "DESCRIPTION": "Symetric encryption requires a password."
-            }
+            "MISSING_DATA": "Securityapsects missing"
         }
     },
     "SYSTEM":{
