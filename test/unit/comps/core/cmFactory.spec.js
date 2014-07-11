@@ -141,7 +141,7 @@ describe('cmFactory', function(){
             var instance_count  = 0
 
             factory.on('register', function(instance){ instance_count++ })
-            factory.on('unregistered', function(instance){ instance_count-- })
+            factory.on('deregister', function(instance){ instance_count-- })
 
             var instance = new TestModel({id: 'my_id'})
 

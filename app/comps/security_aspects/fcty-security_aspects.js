@@ -178,7 +178,7 @@ angular.module('cmSecurityAspects')
              * @return {Array}              Array of aspects
              */
             this.getNonApplyingAspects = function(){                
-                return this.aspects.filter(function(aspect){ return this.applyingAspects.indexOf(aspect) == -1 });
+                return this.aspects.filter(function(aspect){ return self.applyingAspects.indexOf(aspect) == -1 });
             };
         }
 
