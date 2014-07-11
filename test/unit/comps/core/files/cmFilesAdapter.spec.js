@@ -22,12 +22,11 @@ describe('cmFilesAdapter', function(){
     it('should have methods',function(){
         expect(cmFilesAdapter.prepareFile).toBeDefined()
         expect(cmFilesAdapter.addChunk).toBeDefined()
-        expect(cmFilesAdapter.complete).toBeDefined()
+        expect(cmFilesAdapter.setFileComplete).toBeDefined()
         expect(cmFilesAdapter.getFile).toBeDefined()
         expect(cmFilesAdapter.getChunk).toBeDefined()
         expect(cmFilesAdapter.blobWrap).toBeDefined()
         expect(cmFilesAdapter.blobBuilderWrap).toBeDefined()
-        expect(cmFilesAdapter.binaryToBlob).toBeDefined()
         expect(cmFilesAdapter.binaryToBlob).toBeDefined()
         expect(cmFilesAdapter.clearBase64).toBeDefined()
         expect(cmFilesAdapter.base64ToBinary).toBeDefined()
