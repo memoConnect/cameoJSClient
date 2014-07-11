@@ -10,7 +10,7 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
         var adapter = {
 
             newConversation: function(data) {
-                return	cmApi.post({
+                return cmApi.post({
                     path: 	'/conversation',
                     data:	data
                 })
@@ -32,7 +32,7 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                     queryString += cmUserModel.getLocalKeyIdsForRequest();
                 }
 
-                return	cmApi.get({
+                return cmApi.get({
                     path: '/conversations' + queryString
                 })
             },
@@ -46,8 +46,8 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                     queryString += cmUserModel.getLocalKeyIdsForRequest();
                 }
 
-                return 	cmApi.get({
-                    path: 	'/conversation/'+ id + queryString
+                return cmApi.get({
+                    path: '/conversation/'+ id + queryString
                 })
             },
 

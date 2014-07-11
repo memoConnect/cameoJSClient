@@ -48,7 +48,7 @@ define([
                     function(response){
                         if(typeof response !== 'undefined' && cmUtil.checkKeyExists(response, 'status')){
                             if(response.status == 401){
-                                cmUserModel.doLogout(false);
+                                cmUserModel.doLogout(false,'purl-ctrl getPurl reject');
                                 $scope.showLogin();
                             } else if(response.status == 404){
                                 $location.path('/404');

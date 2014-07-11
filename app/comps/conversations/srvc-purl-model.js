@@ -32,7 +32,7 @@ angular.module('cmConversations').service('cmPurlModel',[
 
             if(identity_data.userType == 'external'){
                 cmLogger.debug('cmPurlModel:handleIdentity:externUser')
-                cmUserModel.doLogout(false);
+                cmUserModel.doLogout(false,'purl-modl handleIdentity');
 
                 cmUserModel.setIdentity(identity_data);
 

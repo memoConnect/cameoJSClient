@@ -13,7 +13,7 @@ angular.module('cmRouteSettings').directive('cmOverviewSettings', [
                 $scope.Object = Object;
 
                 $scope.logout = function(){
-                    cmUserModel.doLogout();
+                    cmUserModel.doLogout(true,'settings overview logout');
                 };
 
                 $scope.goToSettingsPage = function($event, pageUrl, isDisabled){

@@ -72,7 +72,6 @@ angular.module('cmConversations')
 
             this.missingAePassphrases = {};
 
-
             //rethink, mabye backend should deliver array of message ids
             this.numberOfMessages   = 0;
 

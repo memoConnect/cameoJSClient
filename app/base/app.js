@@ -195,7 +195,7 @@ define([
                 } else if ((path == "/login" || path == "/registration") && cmUserModel.isGuest() !== true) {
                     $location.path("/talks");
                 } else if (path == "/logout"){
-                    cmUserModel.doLogout();
+                    cmUserModel.doLogout(true,'app.js logout-route');
                 }
             });
 

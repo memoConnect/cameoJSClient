@@ -124,7 +124,7 @@ angular.module('cmCore')
 
                             if(typeof response == 'object' && ('status' in response) && response.status == 401){
                                 cmLogger.debug('cmUserModel:init:reject:401');
-                                self.doLogout();
+                                self.doLogout(true,'usermodl loadidentity reject');
                             }
                         }
                     );
@@ -199,11 +199,11 @@ angular.module('cmCore')
             return deferred.promise;
         };
 
-        this.doLogout = function(goToLogin){
+        this.doLogout = function(goToLogin, where){
 //            cmLogger.debug('cmUserModel:doLogout');
 
             isAuth = false;
-            this.removeToken();
+            this.removeToken(where);
             $rootScope.$broadcast('logout');
 
             if(typeof goToLogin === 'undefined' || goToLogin !== false){
@@ -392,9 +392,9 @@ angular.module('cmCore')
             cmAuth.storeToken(t);
         };
 
-        this.removeToken = function(){
+        this.removeToken = function(where){
             cmLogger.debug('cmUserModel:removeToken');
-            cmAuth.removeToken();
+            cmAuth.removeToken(where);
         };
 
         /**
