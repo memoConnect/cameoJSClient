@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="label-with-checkbox" ng-if="conversation.options.hasPassword && conversation.isEncrypted()">
+    <div class="label-with-checkbox" ng-if="conversation.passwordRequired()">
         <label class="w20">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA' | cmTranslate}}</label>
         <div class="w80 checkbox-of-label">
             <button ng-click="toggleCaptcha()">
@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div ng-if="conversation.options.hasPassword && conversation.isEncrypted()" id="password-area">
+    <div ng-if="conversation.passwordRequired() && conversation.isEncrypted()" id="password-area">
         <div class="captcha" ng-if="conversation.options.hasCaptcha && isNew()" data-qa="captcha-canvas">
             <cm-captcha></cm-captcha>
             <button class="refresh" ng-click="refreshCaptcha()" ng-if="isNew()"><i class="fa cm-change"></i></button>

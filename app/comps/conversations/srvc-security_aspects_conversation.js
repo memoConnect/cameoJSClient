@@ -8,10 +8,13 @@ angular.module('cmSecurityAspects')
 //        var securityAspectsConversation = new cmSecurityAspects()
 
         function securityAspectsConversation(conversation){
-            var self = new cmSecurityAspects();
+            var self                = new cmSecurityAspects( {languagePrefix: 'SECURITY_ASPECT.CONVERSATION'} )
 
             self
             .setTarget(conversation)
+
+
+
 
             self
                 .addAspect({
@@ -33,83 +36,45 @@ angular.module('cmSecurityAspects')
                     check: function(conversation){
                         return conversation.isEncrypted();
                     }
-                })                
+                })    
                 .addAspect({
-                    id: 'SE_PASSPHRASE_PRESENT',
+                    id: 'KEY_TRANSMISSION_SYMMETRIC',
                     dependencies: ['ENCRYPTED'],
-                    value: 0,
-                    check: function(conversation){
-                        return ['symmetric', 'mixed'].indexOf(conversation.getKeyTransmission()) != -1
-                    },
-                }) 
-                .addAspect({                    
-                    id: 'SOME_RECIPIENTS_WITHOUT_PROPER_KEY',
-                    dependencies: ['SE_PASSPHRASE_PRESENT'],
                     value: -1,
+                    template: '     <div>{{aspect.description|cmTranslate}}</div>'
+                                +   '{{aspect.description+"_BAD_RECIPIENTS"|cmTranslate}}<div ng-if = "aspect.numberOfBadRecipients > 0">{{aspect.badRecipients.join(", ")}}</div>'
+                                +   '<div ng-if = "aspect.privateKeyMissing">{{aspect.description+"_PRIVATE_KEY_MISSING"|cmTranslate}}</div>',
                     check: function(conversation){
-                        this.bad_recipients = conversation.recipients.filter(function(recipient){
-                            return recipient.getWeakestKeySize() <= 2000
-                        })
 
-                        this.bad_recipients_list = this.bad_recipients.map(function(recipient){ return recipient.getDisplayName() }).join(', ')
-                        this.count = this.bad_recipients.length
+                        this.badRecipients          = conversation.getBadRecipients().map(function(recipient){
+                                                            return recipient.getDisplayName()
+                                                        })
+                        this.numberOfBadRecipients  = this.badRecipients.length
+                        this.privateKeyMissing      = !conversation.userHasPrivateKey()
 
-                        return this.bad_recipients.length != 0
-                    }
-                })                  
+                        return  conversation.passwordRequired()
+                    },
+                })
                 .addAspect({
                     id: 'HAS_PASSCAPTCHA',
-                    dependencies: ['SE_PASSPHRASE_PRESENT'],
+                    dependencies: ['KEY_TRANSMISSION_SYMMETRIC'],
                     value: -1,
                     check: function(conversation){
-                        var bool = false;
-
-                        if(conversation.options.hasCaptcha !== false){
-                            bool = true
-                        }
-
-                        return bool;
+                        return conversation.options.hasCaptcha;
                     },
                     toggleCheck: function(conversation){
-                        return conversation.options.hasCaptcha !== false
+                        return !conversation.options.hasCaptcha
                     },
                     toggleCall: function(conversation){
                         conversation.disablePassCaptcha();
                     }
-                })                             
-                .addAspect({
-                    id: 'NO_SE_PASSPHRASE_PRESENT',
+                }) 
+                .addAspect({                    
+                    id: 'ALL_RECIPIENTS_HAVE_PROPER_KEYS',
                     dependencies: ['ENCRYPTED'],
-                    value: 0,
-                    check: function(conversation){
-                        return ['symmetric', 'mixed'].indexOf(conversation.getKeyTransmission()) == -1
-                    }
-                })
-                .addAspect({                    
-                    id: 'PASSWORD_MISSING',
-                    dependencies: ['NO_SE_PASSPHRASE_PRESENT'],
-                    value: -1,
-                    check: function(conversation){
-                        this.bad_recipients = conversation.recipients.filter(function(recipient){
-                            return recipient.getWeakestKeySize() <= 2000
-                        })
-
-                        this.bad_recipients_list = this.bad_recipients.map(function(recipient){ return recipient.getDisplayName() }).join(', ')
-                        this.count = this.bad_recipients.length
-
-                        return this.bad_recipients.length != 0
-                    }
-                })
-                .addAspect({                    
-                    id: 'ALL_RECIPIENTS_WITH_PROPER_KEY',
-                    dependencies: ['NO_SE_PASSPHRASE_PRESENT'],
                     value: 1,
-                    check: function(conversation){
-                        this.bad_recipients = conversation.recipients.filter(function(recipient){
-                            return recipient.getWeakestKeySize() <= 2000
-                        })                      
-
-                        return this.bad_recipients.length == 0
+                    check: function(conversation){ 
+                        return !conversation.passwordRequired()
                     }
                 })   
 

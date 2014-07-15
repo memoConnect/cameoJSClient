@@ -151,6 +151,43 @@ angular.module('cmConversations')
                 self.trigger('init:finished');
             }
 
+            this.getBadRecipients = function(){
+                return  this.recipients.filter(function(recipient){
+                            return recipient.getWeakestKeySize() <= 2000
+                        })
+            }
+
+            this.userHasPrivateKey = function(){
+                return  cmUserModel.hasLocalKeys()
+            }
+
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             * 
+             * name passwordRequired 
+             * @description
+             * Checks if the conversation requires a password
+             * 
+             * @return {Boolean} returns true or false
+             */
+            this.passwordRequired = function(){
+                if(this.state.is('new')){
+
+                    return  this.isEncrypted()  
+                            &&  (
+                                        this.getBadRecipients().length != 0
+                                    ||  !this.userHasPrivateKey
+                                )
+
+                }else{
+
+                    return      ['symmetric', 'mixed'].indexOf(this.getKeyTransmission()) != -1  
+                            &&  !this.isUserInPassphraseList()
+
+                }
+            }
+
             /**
              * @todo !!!!
              * @ngdoc method
@@ -286,9 +323,11 @@ angular.module('cmConversations')
                     this.options.showKeyInfo = true;
                 }
 
+                /*
                 if(!this.state.is('new') && this.keyTransmission == 'mixed' && this.isUserInPassphraseList() == false){
                     this.options.hasPassword = true;
                 }
+                */
 
                 this.state.unset('new');
                 this.trigger('update:finished');
@@ -753,7 +792,7 @@ angular.module('cmConversations')
                  * set Default
                  * has Captcha will be set at an other method
                  */
-                this.options.hasPassword = false;
+                //this.options.hasPassword = false;
                 this.options.showKeyInfo = false;
 
                 if(this.isEncrypted()){
@@ -890,11 +929,6 @@ angular.module('cmConversations')
             passphrase.on('passphrase:changed', function(){
 //                self.decrypt();
             });
-
-            passphrase.on('password:reset', function(password){
-                if(password)
-                    this.password = password
-            })
 
             this.on('update:finished', function(){
 //                cmLogger.debug('cmConversationModel:on:update:finished');

@@ -3,9 +3,9 @@
 angular.module('cmSecurityAspects')
 .directive('cmSecurityAspect',[
 
-    //no dependencies
+    '$compile',
 
-    function cmSecurityAspect(){
+    function cmSecurityAspect($compile){
         return {
             restrict:       'AE',
             templateUrl:    'comps/security_aspects/drtv-security_aspect.html',
@@ -30,7 +30,6 @@ angular.module('cmSecurityAspects')
                             element.addClass(scope.class)
 
                             scope.count = Math.abs(scope.aspect.value)
-
                         }
         }
     }

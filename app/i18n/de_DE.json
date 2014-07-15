@@ -440,37 +440,22 @@
                 "DESCRIPTION": "",
                 "TOGGLE": "Verschlüsselung aktivieren."
             },
-            "ALL_RECIPIENTS_WITH_PROPER_KEY": {
-                "NAME": "Alle Empfänger haben ein gutes Schlüsselpaar.",
-                "DESCRIPTION": ""
+            "KEY_TRANSMISSION_SYMMETRIC": {
+                "NAME": "Einige Empfänger haben kein ausreichendes Schlüsselpaar.",
+                "DESCRIPTION": "Verschlüsselung ist gerade nur mit Passwort möglich, weil mindestens einer der Empfänger keinen aureichenden Schlüssel hat. Mit einem Passwort zu verschlüsseln ist an sich nicht schlecht, aber die Güte der Verschlüsselung hängt stark von dem vergebenen Passwort ab.",
+                "DESCRIPTION_BAD_RECIPIENTS": "Folgende Empfänger haben keinen ausreichenden öffentlichen Schlüssel:",
+                "DESCRIPTION_PRIVATE_KEY_MISSING": "Du hast auf diesem Gerät keinen privaten Schlüssel."
             },
-            "SOME_RECIPIENTS_WITHOUT_PROPER_KEY": {
-                "NAME": "{{count}} Empfänger {{count!=1?'haben':'hat'}} kein gutes Schlüsselpaar.",
-                "DESCRIPTION": "Betroffene Empfänger: {{bad_recipients_list}}"
+            "ALL_RECIPIENTS_HAVE_PROPER_KEYS": {
+                "NAME": "All recipients have proper keys.",
+                "DESCRIPTION": ""
             },
             "HAS_PASSCAPTCHA": {
-                "NAME": "Passcaptcha wird verwendet!",
-                "DESCRIPTION": "",
-                "TOGGLE": "Passcaptcha deaktivieren"
+                "NAME": "Passcaptcha aktiviert.",
+                "DESCRIPTION": "Die Passcaptcha.Method erschwert es, Nachrichten im großem Umfang automatisiert zu entschlsüeeln, aber wirklich sicher ist sie nicht.",
+                "TOGGLE": "Passcaptcha abschalten."
             },
-            "NO_SE_PASSPHRASE_PRESENT":{
-                "NAME": "Keine Symetrische Passphrase vorhanden",
-                "DESCRIPTION": ""
-            },
-            "SE_PASSPHRASE_PRESENT":{
-                "NAME": "Symetrische Passphrase vorhanden",
-                "DESCRIPTION": ""
-            },
-            "PASSWORD_MISSING": {
-                "NAME": "Bitte geben Sie ein Passwort",
-                "DESCRIPTION": "Für symetrische Verschlüsselung wird ein Passwort benötigt."
-            },
-            "HAS_PASSWORD": {
-                "NAME": "Passwort wird verwendet!",
-                "DESCRIPTION": "",
-                "TOGGLE": ""
-            },
-            "MISSING_DATA": "Sicherheitsaspekte fehlen"
+            "MISSING_DATA": "Sicherheitsaspekte fehlen."
         }
     },
 
