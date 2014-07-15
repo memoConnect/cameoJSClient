@@ -5,24 +5,25 @@ var util = require("../lib/e2e/cmTestUtil.js")
 describe('Conversation encryption', function () {
 
     var ptor = util.getPtorInstance()
+    var date = Date.now()
 
     /*
      Helper functions
      */
-
-
     var checkConversation = function (recipients, negativeAspects, positiveAspects, encryptionType) {
 
         var conversationId
-        var subject = "subject_" + Date.now()
         var messages = []
         var sender = recipients[0]
-        var password = Date.now()
 
         // use first recipient to create conversation
         it("create new conversation", function () {
             util.login(sender.login, "password")
             util.get("/conversation/new")
+        })
+
+        it("add subject", function () {
+            $("[data-qa='input-subject']").sendKeys(encryptionType + "_" + date)
         })
 
         it("add recipients to conversation", function () {
@@ -42,16 +43,7 @@ describe('Conversation encryption', function () {
             util.expectCurrentUrl('/conversation/new')
         })
 
-        it("the correct number of positive aspects should be displayed", function () {
-            $('cm-icons.positive').findElements(by.css("i")).then(function (icons) {
-                expect(icons.length).toBe(positiveAspects)
-            })
-        })
-        it("the correct number of negative aspects should be displayed", function () {
-            $('cm-icons.negative').findElements(by.css("i")).then(function (icons) {
-                expect(icons.length).toBe(negativeAspects)
-            })
-        })
+
 
         // todo check warnings
 
@@ -62,35 +54,59 @@ describe('Conversation encryption', function () {
                 case "asym" :
                     expect($("[data-qa='btn-encryption']").isDisplayed()).toBe(true)
                     expect($("[data-qa='btn-encryption']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
-
                     expect(ptor.isElementPresent(by.css("[data-qa='btn-toggle-captcha']"))).toBe(false)
                     expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(false)
-
                     break;
 
                 case "password" :
                     expect($("[data-qa='btn-encryption']").isDisplayed()).toBe(true)
-                    expect($("[data-qa='btn-encryption']").findElement(by.css(".cm-checkbox-right")).isDisplayed()).toBe(true)
-
+                    expect($("[data-qa='btn-encryption']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
                     expect($("[data-qa='btn-toggle-captcha']").isDisplayed()).toBe(true)
-                    expect($("[data-qa='btn-toggle-captcha']").findElement(by.css("cm-checkbox")).isDisplayed()).toBe(true)
-
-                    expect(ptor.isElementPresent("cm-captcha']")).toBe(false)
-
-                    expect($("[data-qa='input-password']").getText()).toBe("")
+                    expect($("[data-qa='btn-toggle-captcha']").isElementPresent(by.css(".cm-checkbox"))).toBe(true)
+                    expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(false)
+                    expect($("[data-qa='input-password']").getAttribute('value')).toBe("")
                     $("[data-qa='input-password']").sendKeys(password)
-
                     break;
-            }
 
+                case "passCaptcha" :
+                    expect($("[data-qa='btn-encryption']").isDisplayed()).toBe(true)
+                    expect($("[data-qa='btn-encryption']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
+                    $("[data-qa='btn-toggle-captcha']").click()
+                    expect($("[data-qa='btn-toggle-captcha']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
+                    expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(true)
+                    expect($("[data-qa='input-password']").getAttribute('value')).not.toBe("")
+                    util.clearInput('input-password')
+                    $("[data-qa='input-password']").sendKeys(password)
+                    break;
+
+                case "none" :
+                    expect($("[data-qa='btn-encryption']").isDisplayed()).toBe(true)
+                    expect($("[data-qa='btn-encryption']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
+                    $("[data-qa='btn-encryption']").click()
+                    expect(ptor.isElementPresent(by.css("[data-qa='btn-toggle-captcha']"))).toBe(false)
+                    expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(false)
+                    break;
+
+            }
+            $("[data-qa='btn-security-done']").click()
+        })
+
+        it("the correct number of positive aspects should be displayed", function () {
+            $('cm-icons.positive').findElements(by.css("i")).then(function (icons) {
+                expect(icons.length).toBe(positiveAspects)
+            })
+
+        })
+        it("the correct number of negative aspects should be displayed", function () {
+            $('cm-icons.negative').findElements(by.css("i")).then(function (icons) {
+                expect(icons.length).toBe(negativeAspects)
+            })
         })
 
         it("send initial message", function () {
-            util.get("/conversation/new")
+            util.expectCurrentUrl("/conversation/new")
 
-            $("[data-qa='input-subject']").sendKeys(subject)
-
-            var initialMessage = "starting_conversation_" + Date.now();
+            var initialMessage = "moep_message_" + Date.now();
             $("[data-qa='input-answer']").sendKeys(initialMessage)
             messages.push(initialMessage)
 
@@ -108,17 +124,33 @@ describe('Conversation encryption', function () {
 
         var checkMessages = function (recipient) {
 
-//            it("login recipient", function() {
-//                if(recipient.hasKey) {
-//                    util.login(recipient.login, "password")
-//                } else {
-//
-//                }
-//            })
+            it("login recipient", function () {
+                util.login(recipient.login, "password")
+                util.get("/conversation/" + conversationId)
+            })
+
+            it("enter password (if required)", function () {
+                if (!recipient.hasKey) {
+                    // expect password promt
+                    expect($(".cm-modal-alert").isDisplayed()).toBe(true)
+                    $("cm-modal").findElement(by.css(".body")).findElement(by.css("a")).click()
+                    util.expectCurrentUrl("/conversation/" + conversationId + "/security-settings")
+
+                    switch (encryptionType) {
+                        case "password" :
+                            break;
+                        case "passCaptcha" :
+                            expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(true)
+                            break;
+                    }
+
+                    $("[data-qa='input-password']").sendKeys(password)
+                    $("[data-qa='btn-security-done']").click()
+                }
+            })
 
             it("recipient read message(s)", function () {
-                util.get("/conversation/" + conversationId)
-
+                util.expectCurrentUrl("/conversation/" + conversationId)
                 util.waitForElements("cm-message", messages.length)
 
                 $$('cm-message').then(function (elements) {
@@ -130,7 +162,7 @@ describe('Conversation encryption', function () {
             })
 
             it("recipient send response", function () {
-                var message = "response_" + Date.now()
+                var message = "moep_message_" + Date.now()
                 $("[data-qa='input-answer']").sendKeys(message)
                 messages.push(message)
                 $("[data-qa='btn-send-answer']").click()
@@ -149,35 +181,80 @@ describe('Conversation encryption', function () {
         })
     }
 
+
     // generate key for both users
-    it("generate key for first recipient", function () {
-        util.login(config.loginUser1, "password")
-        util.generateKey()
-    })
+//    it("generate key for first recipient", function () {
+//        util.login(config.loginUser1, "password")
+//        util.generateKey()
+//    })
 
-    it("generate key for second recipient", function () {
-        util.login(config.contactUser1Login, "password")
-        util.generateKey()
-    })
+//    it("generate key for second recipient", function () {
+//        util.login(config.contactUser1Login, "password")
+//        util.generateKey()
+//    })
 
-    describe("asym key transmission:", function () {
+    var password = Date.now()
 
-        var recipients = [
-            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
-            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true}
-        ]
-        checkConversation(recipients, 0, 2, "asym")
-    })
-
-//    describe("passCaptcha transmission:", function () {
+//    describe("asym key transmission:", function () {
 //
 //        var recipients = [
 //            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
-//            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true},
-//            {login: config.contactUser2Login, displayName: config.contactUser2DisplayName, hasKey: false}
+//            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true}
+//        ]
+//        checkConversation(recipients, 0, 2, "asym")
+//    })
+
+//    describe("password transmission:", function () {
+//
+//        var recipients = [
+//            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
+////            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true},
+//            {login: config.contact2User1Login, displayName: config.contact2User1DisplayName, hasKey: false}
 //        ]
 //        checkConversation(recipients, 1, 1, "password")
 //    })
+
+//    describe("passCaptcha transmission:", function () {
+//        var recipients = [
+//            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
+////            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true},
+//            {login: config.contact2User1Login, displayName: config.contact2User1DisplayName, hasKey: false}
+//        ]
+//        checkConversation(recipients, 2, 1, "passCaptcha")
+//    })
+
+
+    describe("no encryption:", function () {
+        var recipients = [
+            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
+//            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true},
+            {login: config.contact2User1Login, displayName: config.contact2User1DisplayName, hasKey: false}
+        ]
+        checkConversation(recipients, 3, 0, "none")
+    })
+
+    describe("after key deletion", function () {
+
+        it("delete key and login", function () {
+            util.clearLocalStorage()
+            util.login(config.loginUser1, "password")
+        })
+
+        it("should not be able to open asym encrypted conversation", function () {
+
+            util.headerSearchInList("asym_" + date)
+            $("cm-conversation-tag").click()
+
+            util.waitForElement("cm-message")
+            expect($("cm-modal").isDisplayed()).toBe(true)
+            $("[data-qa='cm-modal-close-btn']").click()
+            $$('cm-message').then(function (elements) {
+                elements.forEach(function (element) {
+                    expect(element.getText()).not.toContain("moep")
+                })
+            })
+        })
+    })
 
 
 })
