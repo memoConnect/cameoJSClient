@@ -1,29 +1,52 @@
 <section>
     <cm-contacts-list contacts-as="contacts">
-        <cm-contact-tag ng-repeat="contact in contacts|cmRecipients:true:selected|cmSearch:'contacts':search" cm-rubber-space ng-class="{'disabled':contact.contactType == 'pending'}">
+        <cm-contact-tag
+            cm-rubber-space
+            ng-repeat="contact in contacts|cmRecipients:true:selected|cmSearch:'contacts':search"
+            ng-class="{'disabled':contact.contactType == 'pending'}">
             <cm-avatar cm-data="contact.identity"></cm-avatar>
             <cm-key-level cm-data="contact.identity.getWeakestKeySize()"></cm-key-level>
             <cm-contact-brief cm-data="contact" cm-weight="1"></cm-contact-brief>
             <cm-contact-type cm-data="contact"></cm-contact-type>
             <span class="separator"></span>
-            <button ng-click="toggleRecipient(contact.identity)" ng-disabled="disabled_remove" data-qa="btn-select-contact">
-                <i class="fa" ng-class="{'cm-checkbox':!selected[contact.identity.id], 'cm-checkbox-right':selected[contact.identity.id]}"></i>
+            <button
+                data-qa="btn-select-contact"
+                ng-click="toggleRecipient(contact.identity)"
+                ng-disabled="disabled_remove">
+                <i class="fa"
+                    ng-class="{
+                        'cm-checkbox':!selected[contact.identity.id],
+                        'cm-checkbox-right':selected[contact.identity.id]
+                    }"></i>
             </button>
         </cm-contact-tag>
     </cm-contacts-list>
-    <hr>
-    <cm-contacts-list contacts-as="contacts">
-        <cm-contact-tag ng-repeat="contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search" cm-rubber-space ng-class="{'disabled':contact.contactType == 'pending'}">
-            <cm-avatar cm-data="contact.identity"></cm-avatar>
-            <cm-key-level cm-data="contact.identity.getWeakestKeySize()"></cm-key-level>
-            <cm-contact-brief cm-data="contact" cm-weight="1"></cm-contact-brief>
-            <cm-contact-type cm-data="contact"></cm-contact-type>
-            <span class="separator"></span>
-            <button ng-click="toggleRecipient(contact.identity)" ng-disabled="contact.contactType == 'pending' || disabled_remove" data-qa="btn-select-contact">
-                <i class="fa" ng-class="{'cm-checkbox':!selected[contact.identity.id], 'cm-checkbox-right':selected[contact.identity.id]}"></i>
-            </button>
-        </cm-contact-tag>
-    </cm-contacts-list>
+    <section ng-if="conversation.state.is('new')">
+        <hr>
+        <cm-contacts-list contacts-as="contacts">
+            <cm-contact-tag
+                cm-rubber-space
+                ng-repeat="contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search"
+                ng-class="{'disabled':contact.contactType == 'pending'}">
+                <cm-avatar cm-data="contact.identity"></cm-avatar>
+                <cm-key-level cm-data="contact.identity.getWeakestKeySize()"></cm-key-level>
+                <cm-contact-brief cm-data="contact" cm-weight="1"></cm-contact-brief>
+                <cm-contact-type cm-data="contact"></cm-contact-type>
+                <span class="separator"></span>
+                <button
+                    data-qa="btn-select-contact"
+                    ng-click="toggleRecipient(contact.identity)"
+                    ng-disabled="contact.contactType == 'pending' || disabled_remove">
+                    <i
+                        class="fa"
+                        ng-class="{
+                            'cm-checkbox':!selected[contact.identity.id],
+                            'cm-checkbox-right':selected[contact.identity.id]
+                        }"></i>
+                </button>
+            </cm-contact-tag>
+        </cm-contacts-list>
+    </section>
 </section>
 
 <cm-footer cm-rubber-space cm-hide-other-footer>

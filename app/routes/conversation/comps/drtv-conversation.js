@@ -9,12 +9,14 @@ angular.module('cmRouteConversation')
     'cmNotify',
     'cmModal',
     'cmEnv',
+    'cmUtil',
     '$location',
     '$rootScope',
     '$document',
     '$routeParams',
     function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify,
-              cmModal, cmEnv, $location, $rootScope, $document, $routeParams) {
+              cmModal, cmEnv, cmUtil,
+              $location, $rootScope, $document, $routeParams) {
         return {
             restrict: 'AE',
             templateUrl: 'routes/conversation/comps/drtv-conversation.html',
@@ -30,7 +32,13 @@ angular.module('cmRouteConversation')
 
                 $scope.isSending        = false;
                 $scope.isSendingAbort   = false;
-                
+
+                // show name of incoming identity
+                $scope.showName = function(identity){
+                    if(identity && !('isAppOwner' in identity))
+                        $scope.recipientName = identity.getDisplayName();
+                };
+
                 /**
                  * check if is new
                  * @returns {boolean}
@@ -44,6 +52,18 @@ angular.module('cmRouteConversation')
                     $document[0].querySelector('cm-conversation .answer textarea').focus();
                 }
 
+                // transfer newMessageText
+                $rootScope.$on('$routeChangeStart', function(){
+                    if(cmUtil.endsWith($location.$$path,'/new') && $scope.newMessageText != ''){
+                        $rootScope.newMessageText = $scope.newMessageText
+                    }
+                });
+
+                $rootScope.$on('$routeChangeSuccess', function(){
+                    if(cmUtil.endsWith($location.$$path,'/new') && $rootScope.newMessage != undefined){
+                        $scope.newMessageText = $rootScope.newMessageText;
+                    }
+                });
 
                 /**
                  * start sending process
@@ -130,7 +150,7 @@ angular.module('cmRouteConversation')
                     return false;
                 };
 
-                function showAsymmetricKeyError(){
+                $scope.showAsymmetricKeyError = function(){
 //                    cmLogger.debug('cmConversationDRTV.showAsymmetricKeyError')
                     if(!$scope.conversation.state.is('new')
                         && $scope.conversation.getKeyTransmission() == 'asymmetric'
@@ -141,7 +161,7 @@ angular.module('cmRouteConversation')
                     }
                 }
 
-                function showGoToSettingsModal(){
+                $scope.showGoToSettingsModal = function(){
                     if(!$scope.conversation.state.is('new')
                         && ($scope.conversation.getKeyTransmission() == 'symmetric' || $scope.conversation.getKeyTransmission() == 'mixed')
                         && !$scope.conversation.password
@@ -153,7 +173,7 @@ angular.module('cmRouteConversation')
                             settingsLinker.type = 'purl';
                             settingsLinker.typeId = $routeParams.purlId;
                         } else {
-                            settingsLinker.type = 'converastion';
+                            settingsLinker.type = 'conversation';
                             settingsLinker.typeId = $routeParams.conversationId;
                         }
                         cmNotify.warn('CONVERSATION.WARN.PASSWORD_NEEDED',{ttl:0,i18n:settingsLinker});
@@ -165,8 +185,8 @@ angular.module('cmRouteConversation')
                  * @returns {boolean}
                  */
                 function isMessageValid(){
-//                    console.log('isMessageValid', $scope.my_message_text, files.length)
-                    if($scope.my_message_text != '' || files.length > 0){
+//                    console.log('isMessageValid', $scope.newMessageText, files.length)
+                    if($scope.newMessageText != '' || files.length > 0){
                         return true;
                     }
                     return false;
@@ -222,7 +242,7 @@ angular.module('cmRouteConversation')
                     $scope.conversation.messages
                     .create({conversation:$scope.conversation})
                     .addFiles(files)
-                    .setText($scope.my_message_text)
+                    .setText($scope.newMessageText)
                     .setPublicData(
                         $scope.conversation.getPassphrase() === null
                             ? ['text','fileIds']
@@ -233,7 +253,7 @@ angular.module('cmRouteConversation')
                     .then(function(){
                         //@ TODO: solve rekeying another way:
                         $scope.conversation.numberOfMessages++;
-                        $scope.my_message_text = "";
+                        $scope.newMessageText = '';
                         files = [];
                         $scope.isSending = false;
 
@@ -260,7 +280,7 @@ angular.module('cmRouteConversation')
                 $scope.init = function (conversation) {
 //                    cmLogger.debug('cmConversationDRTV.init')
                     if(!conversation){
-                        cmLogger.debug("Conversation not found.")
+                        cmLogger.debug("Conversation not found.");
                         return false
                     }
 
@@ -271,24 +291,24 @@ angular.module('cmRouteConversation')
 
                     self.addPendingRecipients();
 
-                    $scope.my_message_text  = '';
-                    $scope.show_contacts    = false;
-
+                    if(!$scope.newMessageText)
+                        $scope.newMessageText = '';
+                    $scope.show_contacts  = false;
 
                     $scope.conversation.on('save:aborted', function(){
                        $scope.isSending = false;
                     });
 
-                    showAsymmetricKeyError();
+                    $scope.showAsymmetricKeyError();
 
-                    showGoToSettingsModal();
+                    $scope.showGoToSettingsModal();
                 };
 
                 $scope.init($scope.$eval($attrs.cmData))
 
                 if('on' in $scope.conversation) {
-                    $scope.conversation.on('update:finished', function () {
-                        showAsymmetricKeyError();
+                    $scope.conversation.on('update:finished', function(){
+                        $scope.showAsymmetricKeyError();
                     });
 
                     $scope.conversation.on('show:passwordModal', function(){
@@ -298,7 +318,7 @@ angular.module('cmRouteConversation')
                             settingsLinker.type = 'purl';
                             settingsLinker.typeId = $routeParams.purlId;
                         } else {
-                            settingsLinker.type = 'converastion';
+                            settingsLinker.type = 'conversation';
                             settingsLinker.typeId = $routeParams.conversationId;
                         }
                         cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD', {ttl:0, i18n: settingsLinker});

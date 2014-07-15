@@ -17,8 +17,8 @@ angular.module('cmRouteConversation').directive('cmRecipients', [
                 }
 
                 $scope.selected = {};
-
                 $scope.disabled_remove = !!conversation.id;
+                $scope.conversation = conversation;
 
                 conversation.recipients.forEach(function(recipient){
                     $scope.selected[recipient.id] = true;
