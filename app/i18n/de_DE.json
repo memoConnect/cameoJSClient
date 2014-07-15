@@ -140,6 +140,7 @@
         "WARN": {
             "MESSAGE_EMPTY": "Das Textfeld ist leer.",
             "RECIPIENTS_MISSING": "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
+            "RECIPIENTS_MISSING_OKAY": "Ich möchte keinen weiteren Empfänger außer mir selbst hinzufügen.",
             "PASSPHRASE_INVALID": "Ungültiger Schlüssel.",
             "PASSWORD_WRONG": "Das eingegebene Passwort ist falsch.",
             "NO_PASSWORD": "Es fehlt ein Passwort.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">jetzt eins eingeben!</a>",
@@ -452,7 +453,7 @@
             },
             "NO_SYMMETRIC_KEY_TRANSMISSION": {
                 "NAME": "Diese Conversation ist ordentlich nur mit öffentlichen Schlüssel verschlüsselt.",
-                "DESCRIPTION": "Keiner der Empfänger hat ein Passwort zum entschlüsseln benutzt und das wäre auch nicht möglich."
+                "DESCRIPTION": "Keiner der Empfänger hat ein Passwort zum ver- oder entschlüsseln benutzt und das wäre auch nicht möglich."
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha aktiviert.",
