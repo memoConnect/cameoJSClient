@@ -131,21 +131,30 @@ describe('Conversation encryption', function () {
 
             it("enter password (if required)", function () {
                 if (!recipient.hasKey) {
-                    // expect password promt
-                    expect($(".cm-modal-alert").isDisplayed()).toBe(true)
-                    $("cm-modal").findElement(by.css(".body")).findElement(by.css("a")).click()
-                    util.expectCurrentUrl("/conversation/" + conversationId + "/security-settings")
-
                     switch (encryptionType) {
                         case "password" :
+                            // expect password promt
+                            expect($(".cm-modal-alert").isDisplayed()).toBe(true)
+                            $("cm-modal").findElement(by.css(".body")).findElement(by.css("a")).click()
+
+                            util.expectCurrentUrl("/conversation/" + conversationId + "/security-settings")
+                            $("[data-qa='input-password']").sendKeys(password)
+                            $("[data-qa='btn-security-done']").click()
+
                             break;
                         case "passCaptcha" :
+                            // expect password promt
+                            expect($(".cm-modal-alert").isDisplayed()).toBe(true)
+                            $("cm-modal").findElement(by.css(".body")).findElement(by.css("a")).click()
+
+                            util.expectCurrentUrl("/conversation/" + conversationId + "/security-settings")
                             expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(true)
+                            $("[data-qa='input-password']").sendKeys(password)
+                            $("[data-qa='btn-security-done']").click()
+
                             break;
                     }
 
-                    $("[data-qa='input-password']").sendKeys(password)
-                    $("[data-qa='btn-security-done']").click()
                 }
             })
 
@@ -183,10 +192,10 @@ describe('Conversation encryption', function () {
 
 
     // generate key for both users
-//    it("generate key for first recipient", function () {
-//        util.login(config.loginUser1, "password")
-//        util.generateKey()
-//    })
+    it("generate key for first recipient", function () {
+        util.login(config.loginUser1, "password")
+        util.generateKey()
+    })
 
 //    it("generate key for second recipient", function () {
 //        util.login(config.contactUser1Login, "password")
@@ -204,15 +213,15 @@ describe('Conversation encryption', function () {
 //        checkConversation(recipients, 0, 2, "asym")
 //    })
 
-//    describe("password transmission:", function () {
-//
-//        var recipients = [
-//            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
-////            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true},
-//            {login: config.contact2User1Login, displayName: config.contact2User1DisplayName, hasKey: false}
-//        ]
-//        checkConversation(recipients, 1, 1, "password")
-//    })
+    describe("password transmission:", function () {
+
+        var recipients = [
+            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
+//            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true},
+            {login: config.contact2User1Login, displayName: config.contact2User1DisplayName, hasKey: false}
+        ]
+        checkConversation(recipients, 1, 1, "password")
+    })
 
 //    describe("passCaptcha transmission:", function () {
 //        var recipients = [
@@ -224,14 +233,14 @@ describe('Conversation encryption', function () {
 //    })
 
 
-    describe("no encryption:", function () {
-        var recipients = [
-            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
-//            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true},
-            {login: config.contact2User1Login, displayName: config.contact2User1DisplayName, hasKey: false}
-        ]
-        checkConversation(recipients, 3, 0, "none")
-    })
+//    describe("no encryption:", function () {
+//        var recipients = [
+//            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
+////            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true},
+//            {login: config.contact2User1Login, displayName: config.contact2User1DisplayName, hasKey: false}
+//        ]
+//        checkConversation(recipients, 3, 0, "none")
+//    })
 
 //    describe("after key deletion", function () {
 //
