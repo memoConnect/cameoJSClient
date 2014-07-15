@@ -40,8 +40,6 @@
 
                  // simple cmIdentityModels
                  $scope.simple_cmIdentityModel_1 = angular.extend({}, simple_cmIdentityModel);
-                 $scope.simple_cmIdentityModel_2 = angular.extend({}, simple_cmIdentityModel, {isAppOwner:true});
-
              });
          </file>
          <file name="index.html">
@@ -52,14 +50,6 @@
                  <h2>cmIdentity avatar</h2>
                  <cm-avatar cm-data="simple_cmIdentityModel_1"></cm-avatar>
                  {{simple_cmIdentityModel_1}}
-
-                 <h2>cmIdentity avatar with displayname from identity</h2>
-                 <cm-avatar cm-data="simple_cmIdentityModel_1" cm-with-name="true"></cm-avatar>
-                 {{simple_cmIdentityModel_1}}
-
-                 <h2>cmIdentity appOwner hide attribute</h2>
-                 <cm-avatar cm-data="simple_cmIdentityModel_2" cm-view="hide-owner"></cm-avatar>
-                 {{simple_cmIdentityModel_2}}
              </div>
          </file>
      </example>
@@ -95,28 +85,14 @@ angular.module('cmUi').directive('cmAvatar',[
                 }
 
                 function refresh(){
-                    // hide the complete avatar
-                    if(attrs.cmView == 'hide-owner' && scope.identity.isAppOwner){
-                        element.css('display','none');
-                    } else {
-                        // get avatar image from model
-                        var file = scope.identity.getAvatar();
-                        if(typeof file.on == 'function' && file.state != 'cached'){
-                            file.on('file:cached', function(){
-                                showBlobAsImage(file);
-                            });
-                        } else if(file.state == 'cached') {
+                    // get avatar image from model
+                    var file = scope.identity.getAvatar();
+                    if(typeof file.on == 'function' && file.state != 'cached'){
+                        file.on('file:cached', function(){
                             showBlobAsImage(file);
-                        }
-
-                        // show identity name
-                        if(attrs.cmWithName){
-                            if(!element.hasClass('with-name')){
-                                element.addClass('with-name');
-                                element.append('<div class="name" data-qa="avatar-display-name">'+scope.identity.getDisplayName()+'</div>');
-                                element.attr('title',scope.identity.getDisplayName());
-                            }
-                        }
+                        });
+                    } else if(file.state == 'cached') {
+                        showBlobAsImage(file);
                     }
                 }
 

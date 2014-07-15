@@ -7,29 +7,28 @@
     <title>cameoAwesome</title>
 
     <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/cameo-awesome.css">
     <script src="vendor/angular/angular.js"></script>
     <script src="vendor/emoji/emoji.js"></script>
     <link rel="stylesheet" href="vendor/emoji/emoji.css">
     <style>
         header{height:3em;position:fixed;left:0;top:0;padding:0.5em 1em;background:#fff;z-index:2;box-sizing:border-box;;width:100%}
-        body{font-size:3em;font-family:verdana;width:auto;padding:1em;padding-top:4em;}
+        body{font-size:2rem;font-family:verdana;width:auto;padding:1em;padding-top:4em}
         a{font-size:40px;color:#02BED2}
-        h1{font-size:30px;color:#02BED2}
-        h3{font-size:20px;margin:2px 0;border-bottom:solid 1px #02BED2;color:#02BED2}
+        h1{font-size:2rem;color:#02BED2}
+        h3{font-size:1rem;margin:2px 0;border-bottom:solid 1px #02BED2;color:#02BED2,font-weight:normal}
         figure{margin:5px;position:relative;display:inline-block;text-align:center}
         figure i{background-color:#02BED2!important}
-        figure figcaption{font-size:0.5em;white-space:nowrap;background:#fff;z-index:0;padding:10px}
+        figure figcaption{display:none;white-space:nowrap;background:rgba(255,255,255,0.9);padding-right:10px}
         figure:hover i{background-color:transparent!important}
-        figure:hover figcaption{z-index:1;display:block!important}
-        label{font-size:0.5em;}
-        .captions-absolute figure:hover figcaption{position:absolute}
-        .maincat{padding-left:0.25em}
-        .subcat{padding-left:0.5em}
-        .anchor{top:-5em;left:0;position:relative;display: block;}
+        figure:hover figcaption, .captions-show figcaption{z-index:1;display:inline-block!important}
+        label{font-size:0.5em;cursor:pointer}
+        .maincat{padding-left:0.25rem}
+        .subcat{padding-left:0.5rem}
+        .anchor{top:-6rem;left:0;position:relative;display:block}
     </style>
 </head>
-<body ng-app="icons" ng-controller="ctrl" ng-class="{'captions-absolute':!withFigcaption}">
+<body ng-app="icons" ng-controller="ctrl" ng-class="{'captions-show':withFigcaption}">
 
     <header>
         <a href="#icons">icons</a>
@@ -46,8 +45,7 @@
     <div ng-repeat="bundle in icons" class="maincat">
         <h3 ng-if="bundle.title">{{bundle.title}}</h3>
         <figure ng-repeat="css in bundle.css.split(' ')">
-            <i class="fa {{css}}"></i>
-            <figcaption ng-show="withFigcaption">{{css}}</figcaption>
+            <i class="fa {{css}}"></i><figcaption ng-show="withFigcaption">{{css}}</figcaption>
         </figure>
     </div>
 
@@ -56,8 +54,7 @@
     <div ng-repeat="bundle in types" class="maincat">
         <h3 ng-if="bundle.title">{{bundle.title}}</h3>
         <figure ng-repeat="css in bundle.css.split(' ')">
-            <i class="file {{css}}"></i>
-            <figcaption ng-show="withFigcaption">{{css}}</figcaption>
+            <i class="file {{css}}"></i><figcaption ng-show="withFigcaption">{{css}}</figcaption>
         </figure>
     </div>
 
@@ -68,8 +65,7 @@
         <div ng-repeat="(index,subCat) in Object.keys(emojis[mainCat])" class="subcat">
             <h3 ng-if="subCat">{{subCat}}</h3>
             <figure ng-repeat="icon in emojis[mainCat][subCat]" class="emoji-figure">
-                <i class="emoji emoji_{{icon | clearClassName}}"></i>
-                <figcaption ng-show="withFigcaption">{{icon | clearClassName}}</figcaption>
+                <i class="emoji emoji_{{icon | clearClassName}}"></i><figcaption ng-show="withFigcaption">{{icon | clearClassName}}</figcaption>
             </figure>
         </div>
     </div>
@@ -78,6 +74,7 @@
         angular
         .module('icons',['emoji'])
         .controller('ctrl',function ($scope, emoji){
+			$scope.withFigcaption = false;
             $scope.Object = Object;
             $scope.icons = [
                 {title:'ci icons',css:'cm-logo cm-logo-c cm-logo-a cm-logo-m cm-logo-e cm-logo-o cm-logo-net cm-rhino-bubble-glyph cm-rhino-positive'},
@@ -88,7 +85,7 @@
                 {title:'directions',css:'cm-nose-left cm-nose-right cm-nose-up cm-nose-down cm-left cm-right cm-down cm-up'},
                 {title:'notifications',css:'cm-info cm-attention cm-reject cm-ignore cm-bell cm-bell-ring cm-notification cm-notification-on'},
                 {title:'message states',css:'cm-envelope-closed cm-envelope-open cm-send cm-lock cm-unlock'},
-                {title:'handler',css:'cm-write cm-contacts cm-key cm-visible cm-hidden cm-group cm-person cm-arrange cm-filter cm-anchor cm-clipboard cm-search cm-change cm-grid cm-close cm-fix cm-settings cm-in cm-out cm-logout cm-register cm-add-recipient cm-new-talk cm-new-contact'},
+                {title:'handler',css:'cm-write cm-contacts cm-key cm-visible cm-hidden cm-group cm-person cm-arrange cm-filter cm-anchor cm-clipboard cm-search cm-change cm-grid cm-close cm-fix cm-settings cm-in cm-out cm-logout cm-register cm-add-recipient cm-new-talk cm-new-contact cm-list'},
                 {title:'answer',css:'cm-plus cm-smile-negative cm-smile-positive cm-post cm-post-attention cm-post-idle cm-attachment'},
                 {title:'media',css:'cm-video cm-file cm-sound cm-location cm-pictures cm-camera cm-mobile'}
             ];

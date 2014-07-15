@@ -1,12 +1,5 @@
 .cm-unread{ color:@cm-warning-color; }
 
-cm-conversation {
-    .subject {
-        margin-bottom:0.5*@cm-unit;
-        text-align:center;
-    }
-}
-
 li:first-of-type cm-conversation-tag {
     border-top: solid @cm-border-grey @cm-border-width;
 }
@@ -173,36 +166,74 @@ cm-security-settings {
   }
 }
 
+cm-conversation{
+  .body-group{
+    background-color:@cm-white;
+    padding:0.5rem;
+  }
 
-cm-conversation {
-    .body-group {
-      background-color:@cm-white;
-      padding:0.5rem;
+  .recipients-counter{
+    padding:@cm-horizontal-padding;
+  }
+  @cm-active-recipient-color:@cm-border-grey;
+  .recipient-name{
+    color:@cm-active-recipient-color;
+    padding:@cm-horizontal-padding;
+  }
+
+  .recipients-list{
+    position:relative;
+    margin-right:@cm-unit;
+
+    .scroller{
+      overflow-y:hidden;
+      overflow-x:auto;
+      height: @cm-unit;
+      white-space: nowrap;
+      &.show-scrollbar{
+        height: @cm-unit+2;
+      }
     }
-
-    .recipients-list {
-        position:relative;
-        margin-right:@cm-unit;
-
-        .scroller{
-            overflow-y:hidden;
-            overflow-x:auto;
-        }
-        cm-avatar{
-            vertical-align:top;
-            margin-right:0.5rem;
-            &:last-child{
-                margin-right:0;
-            }
-        }
-        cm-add-button{
-            font-size:@cm-mega-font + 1;
-            position:absolute;
-            right: -@cm-unit;
-            top: 0.5rem;
-            color:@cm-grey-btn;
-        }
+    .add-new-recipients{
+      span{
+        height:@cm-unit;
+        line-height:@cm-unit;
+      }
     }
+    cm-avatar{
+      .with-cursor;
+      vertical-align:top;
+      margin-right:0.5rem;
+      border:@cm-border-width transparent solid;
+      padding:@cm-border-width;
+      &:last-child{
+        margin-right:0;
+      }
+      &.name-shown{
+        border-color:@cm-active-recipient-color;
+      }
+    }
+    .cm-add-button{
+      .with-cursor;
+      font-size:@cm-mega-font + 1;
+      position:absolute;
+      right:-(@cm-unit+0.2);
+      top:0;
+      color:@cm-grey-btn;
+      text-align:center;
+      i {
+        height:@cm-unit;
+        width:@cm-unit;
+        line-height:@cm-unit;
+      }
+    }
+  }
+
+  .subject{}
+
+  #conversation-top{
+    margin-bottom:0.5*@cm-unit;
+  }
 
   cm-message {
     margin: 0.5em 0;

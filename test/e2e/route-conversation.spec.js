@@ -26,8 +26,8 @@ describe('Single Conversation:', function () {
         $("[data-qa='input-subject']").sendKeys(newSubject)
     })
 
-    it('open modal to add recipient', function () {
-        $("cm-add-button").click()
+    it('add recipient', function () {
+        $(".cm-add-button").click()
         util.waitForPageLoad("/conversation/new/recipients")
     })
 
@@ -46,10 +46,8 @@ describe('Single Conversation:', function () {
     })
 
     it('added recipient should be displayed', function () {
-        $$("[data-qa='avatar-display-name']").then(function (elements) {
-            expect(elements.length).toBe(1)
-            expect(elements[0].getText()).toBe(config.contactUser1DisplayName)
-        })
+        expect($(".recipients-counter").getText()).toBe('(1)')
+        expect($(".recipient-name").getText()).toBe(config.contactUser1DisplayName)
     })
 
     it('should save options', function () {
