@@ -26,8 +26,6 @@ describe('Conversation encryption', function () {
             $("[data-qa='input-subject']").sendKeys(encryptionType + "_" + date)
         })
 
-
-
         it("add recipients to conversation", function () {
 
             util.get("/conversation/new/recipients")
@@ -47,10 +45,7 @@ describe('Conversation encryption', function () {
 
         })
 
-
-
         // todo check warnings
-
         it("set encryption settings", function () {
             util.get("/conversation/new/security-settings")
 
@@ -95,21 +90,17 @@ describe('Conversation encryption', function () {
             $("[data-qa='btn-security-done']").click()
         })
 
-        it("the correct number of positive aspects should be displayed", function () {
-            $('cm-icons.positive').findElements(by.css("i")).then(function (icons) {
+        it("check security aspects", function () {
+            util.expectCurrentUrl("/conversation/new")
+            $('cm-header:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
                 expect(icons.length).toBe(positiveAspects)
             })
-
-        })
-        it("the correct number of negative aspects should be displayed", function () {
-            $('cm-icons.negative').findElements(by.css("i")).then(function (icons) {
+            $('cm-header:not(.ng-hide)').$('cm-icons.negative').$$("i").then(function (icons) {
                 expect(icons.length).toBe(negativeAspects)
             })
         })
 
         it("send initial message", function () {
-            util.expectCurrentUrl("/conversation/new")
-
             var initialMessage = "moep_message_" + Date.now();
             $("[data-qa='input-answer']").sendKeys(initialMessage)
             messages.push(initialMessage)
@@ -139,27 +130,35 @@ describe('Conversation encryption', function () {
                         case "password" :
                             // expect password promt
                             expect($(".cm-modal-alert").isDisplayed()).toBe(true)
-                            $("cm-modal").findElement(by.css(".body")).findElement(by.css("a")).click()
+                            $("cm-modal").$(".body").findElement(by.css("a")).click()
 
                             util.expectCurrentUrl("/conversation/" + conversationId + "/security-settings")
                             $("[data-qa='input-password']").sendKeys(password)
                             $("[data-qa='btn-security-done']").click()
-
                             break;
+
                         case "passCaptcha" :
                             // expect password promt
                             expect($(".cm-modal-alert").isDisplayed()).toBe(true)
-                            $("cm-modal").findElement(by.css(".body")).findElement(by.css("a")).click()
+                            $("cm-modal").findElement(by.css(".body")).$("a").click()
 
                             util.expectCurrentUrl("/conversation/" + conversationId + "/security-settings")
                             expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(true)
                             $("[data-qa='input-password']").sendKeys(password)
                             $("[data-qa='btn-security-done']").click()
-
                             break;
                     }
 
                 }
+            })
+
+            it("check security aspects", function () {
+                $('cm-header:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
+                    expect(icons.length).toBe(positiveAspects)
+                })
+                $('cm-header:not(.ng-hide)').$('cm-icons.negative').$$("i").then(function (icons) {
+                    expect(icons.length).toBe(negativeAspects)
+                })
             })
 
             it("recipient read message(s)", function () {
@@ -218,7 +217,6 @@ describe('Conversation encryption', function () {
 //    })
 
     describe("password transmission:", function () {
-
         var recipients = [
             {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
 //            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true},
@@ -236,7 +234,6 @@ describe('Conversation encryption', function () {
 //        checkConversation(recipients, 2, 1, "passCaptcha")
 //    })
 
-
 //    describe("no encryption:", function () {
 //        var recipients = [
 //            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
@@ -245,6 +242,25 @@ describe('Conversation encryption', function () {
 //        ]
 //        checkConversation(recipients, 3, 0, "none")
 //    })
+
+//    it("delete keys", function () {
+//        util.clearLocalStorage()
+//    })
+//    it("generate key for second recipient", function () {
+//        util.login(config.contactUser1Login, "password")
+//        util.generateKey()
+//    })
+//
+//    describe("without local key:", function () {
+//        var recipients = [
+//            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: false},
+//            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true}
+////            {login: config.contact2User1Login, displayName: config.contact2User1DisplayName, hasKey: false}
+//        ]
+//        checkConversation(recipients, 1, 1, "password")
+//    })
+
+//    describe("")
 
 //    describe("after key deletion", function () {
 //
@@ -268,6 +284,5 @@ describe('Conversation encryption', function () {
 //            })
 //        })
 //    })
-
 
 })
