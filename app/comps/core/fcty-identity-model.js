@@ -129,7 +129,7 @@ angular.module('cmCore').factory('cmIdentityModel',[
                             self.importData(changes);
                         },
                         function(){
-                            cmNotify.warn('SAVE.ERROR',{ttl:0})
+                            cmNotify.warn('IDENTITY.NOTIFY.UPDATE.ERROR',{ttl:0})
                         }
                     )
                 }
