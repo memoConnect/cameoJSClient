@@ -130,7 +130,7 @@ describe('Route: Settings - Identity', function(){
         })
     });
 
-    describe('Test Form Errors in wrong Input', function(){
+    describe('Test4 - Form Errors on wrong Input', function(){
         it('should be load at "#/settings/identity" after login.', function(){
             util.login()
             util.expectCurrentUrl('#/talks')
