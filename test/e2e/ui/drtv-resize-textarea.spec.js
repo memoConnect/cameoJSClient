@@ -38,25 +38,23 @@ describe('Textarea Resize', function () {
 
         expect(textarea.getAttribute('value')).toBe(twoRows)
         expect(textarea.getAttribute('rows')).toBe('2')
-
         util.clearInput('input-answer')
+
         textarea.sendKeys(fourRows)
 
         expect(textarea.getAttribute('value')).toBe(fourRows)
         expect(textarea.getAttribute('rows')).toBe('4')
-
         util.clearInput('input-answer')
+
         textarea.sendKeys(moreThanMaxRows)
 
         expect(textarea.getAttribute('value')).toBe(moreThanMaxRows)
         expect(textarea.getAttribute('rows')).toBe('8')
         expect(textarea.getCssValue('overflow')).toBe('auto')
-
         util.clearInput('input-answer')
 
         expect(textarea.getAttribute('value')).toBe('')
         expect(textarea.getAttribute('rows')).toBe('1')
-        expect(textarea.getCssValue('overflow')).toBe('hidden')
     })
 
     it('check input without newlines', function(){

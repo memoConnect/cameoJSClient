@@ -1,8 +1,8 @@
 <section class="body-group recipients" ng-if="conversation.state.is('new') || !conversation.state.is('new') && conversation.recipients.length > 1">
     <label>
         {{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}
-        <span class="recipients-counter"> ({{conversation.recipients.length-1}})</span>
-        <span class="recipient-name" ng-if="recipientName"> {{recipientName}}</span>
+        <span class="recipients-counter">({{conversation.recipients.length-1}})</span>
+        <span class="recipient-name">{{recipientName}}</span>
     </label>
     <div class="recipients-list">
         <div
@@ -24,7 +24,8 @@
                 ng-class="{
                     'name-shown': recipientName == recipient.getDisplayName()
                 }"
-                ng-repeat="recipient in conversation.recipients|orderBy:'getDisplayName()':false"></cm-avatar>
+                ng-repeat="recipient in conversation.recipients|orderBy:'getDisplayName()':false"
+                cm-first-of-repeat="showName(recipient)"></cm-avatar>
         </div>
         <div
             class="cm-add-button"

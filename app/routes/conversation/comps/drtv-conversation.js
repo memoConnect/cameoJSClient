@@ -35,20 +35,10 @@ angular.module('cmRouteConversation')
 
                 // show name of incoming identity
                 $scope.showName = function(identity){
-                    if(identity)
+                    if(identity && !('isAppOwner' in identity))
                         $scope.recipientName = identity.getDisplayName();
                 };
-                // ignore appOwner and show name of first recipient in list
-                $scope.showFirstRecipientName = function(){
-                    var found = false;
-                    $scope.conversation.recipients.forEach(function(identity){
-                        if(!('isAppOwner' in identity) && found == false){
-                            $scope.showName(identity);
-                            found = true;
-                        }
-                    });
-                };
-                
+
                 /**
                  * check if is new
                  * @returns {boolean}
@@ -318,7 +308,6 @@ angular.module('cmRouteConversation')
 
                 if('on' in $scope.conversation) {
                     $scope.conversation.on('update:finished', function(){
-                        $scope.showFirstRecipientName();
                         $scope.showAsymmetricKeyError();
                     });
 

@@ -107,9 +107,8 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                     $shadow.html(val);
 
                     // on init get one row height
-                    var shadowHeight = $shadow[0].offsetHeight;
-
-                    var hasNewLines = scope.text.split(/\r\n|\r|\n/g);
+                    var shadowHeight = $shadow[0].offsetHeight,
+                        hasNewLines = scope.text ? scope.text.split(/\r\n|\r|\n/g) : [];
 
                     // on init get one row height
                     if(shadowHeight > 0 && shadowRowHeight == 0 && hasNewLines.length > 0){
