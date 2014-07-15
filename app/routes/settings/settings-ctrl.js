@@ -2,6 +2,7 @@ define([
     'app',
     'ngload!pckUi',
     'ngload!pckUser',
+    'ngload!pckValidate',
     'ngload!pckRouteSettings'
 ], function (app) {
     'use strict';

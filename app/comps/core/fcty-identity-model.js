@@ -10,7 +10,8 @@ angular.module('cmCore').factory('cmIdentityModel',[
     'cmFileFactory',
     'cmStateManagement',
     'cmUtil',
-    function(cmAuth, cmCrypt, cmKey, cmObject, cmLogger, cmApi, cmFileFactory, cmStateManagement, cmUtil){
+    'cmNotify',
+    function(cmAuth, cmCrypt, cmKey, cmObject, cmLogger, cmApi, cmFileFactory, cmStateManagement, cmUtil,cmNotify){
 
         function Identity(identity_data){
 
@@ -115,6 +116,22 @@ angular.module('cmCore').factory('cmIdentityModel',[
                 } else {
                     cmLogger.debug('cmIdentityModel:load:failed - no identityId');
                     this.trigger('load:failed');
+                }
+
+                return this;
+            };
+
+            this.update = function(changes){
+//                cmLogger.debug('cmIdentityModel.update');
+                if(typeof changes == 'object' && cmUtil.objLen(changes) > 0){
+                    cmAuth.updateIdentity(changes).then(
+                        function(){
+                            self.importData(changes);
+                        },
+                        function(){
+                            cmNotify.warn('IDENTITY.NOTIFY.UPDATE.ERROR',{ttl:0})
+                        }
+                    )
                 }
 
                 return this;
