@@ -32,7 +32,7 @@
                         <input type="text" name="phoneNumber" ng-model="item.value" placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" cm-validate-phone tabindex="3" data-qa="input-phonenumber" />
                     </div>
                     <div cm-type-chooser cm-choose-value-to="item"></div>
-                    <div class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
+                    <div class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid" data-qa="form-error-phoneNumber-invalid">
                         <div ng-show="formPhone.phoneNumber.$invalid">
                             <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
                         </div>
@@ -47,7 +47,7 @@
                     </div>
                     <div cm-type-chooser cm-choose-value-to="item"></div>
                     <div class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
-                        <div ng-show="formEmail.email.$invalid">
+                        <div ng-show="formEmail.email.$invalid" data-qa="form-error-email-invalid">
                             <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
                         </div>
                     </div>
@@ -72,5 +72,5 @@
 </div>
 
 <cm-footer cm-hide-other-footer="true">
-    <button class="cm-btn-block cm-btn-grey" ng-click="saveIdentity()">{{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
+    <button class="cm-btn-block cm-btn-grey" ng-click="saveIdentity()" data-qa="btn-saveIdentity">{{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
 </cm-footer>
