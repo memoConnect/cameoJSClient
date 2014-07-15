@@ -233,28 +233,28 @@ describe('Conversation encryption', function () {
         checkConversation(recipients, 3, 0, "none")
     })
 
-    describe("after key deletion", function () {
-
-        it("delete key and login", function () {
-            util.clearLocalStorage()
-            util.login(config.loginUser1, "password")
-        })
-
-        it("should not be able to open asym encrypted conversation", function () {
-
-            util.headerSearchInList("asym_" + date)
-            $("cm-conversation-tag").click()
-
-            util.waitForElement("cm-message")
-            expect($("cm-modal").isDisplayed()).toBe(true)
-            $("[data-qa='cm-modal-close-btn']").click()
-            $$('cm-message').then(function (elements) {
-                elements.forEach(function (element) {
-                    expect(element.getText()).not.toContain("moep")
-                })
-            })
-        })
-    })
+//    describe("after key deletion", function () {
+//
+//        it("delete key and login", function () {
+//            util.clearLocalStorage()
+//            util.login(config.loginUser1, "password")
+//        })
+//
+//        it("should not be able to open asym encrypted conversation", function () {
+//
+//            util.headerSearchInList("asym_" + date)
+//            $("cm-conversation-tag").click()
+//
+//            util.waitForElement("cm-message")
+//            expect($("cm-modal").isDisplayed()).toBe(true)
+//            $("[data-qa='cm-modal-close-btn']").click()
+//            $$('cm-message').then(function (elements) {
+//                elements.forEach(function (element) {
+//                    expect(element.getText()).not.toContain("moep")
+//                })
+//            })
+//        })
+//    })
 
 
 })
