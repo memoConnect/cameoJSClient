@@ -147,7 +147,8 @@ describe('Route: Settings - Identity', function(){
             $("[data-qa='input-email']").sendKeys('moep@moep')
             $("body").click()
 
-            expect($("[data-qa='form-error-email-invalid']").isDisplayed()).toBe(true)
+            util.waitForElement("[data-qa='form-error-email-invalid']");
+//            expect($("[data-qa='form-error-email-invalid']").isDisplayed()).toBe(true)
         })
 
         it('should not be shown an error, if email is okay', function(){
@@ -169,7 +170,8 @@ describe('Route: Settings - Identity', function(){
             $("[data-qa='input-phonenumber']").sendKeys('abcdefg')
             $("body").click()
 
-            expect($("[data-qa='form-error-phoneNumber-invalid']").isDisplayed()).toBe(true)
+            util.waitForElement("[data-qa='form-error-phoneNumber-invalid']");
+//            expect($("[data-qa='form-error-phoneNumber-invalid']").isDisplayed()).toBe(true)
         })
 
         it('should not be shown an error, if phonenumber is okay', function(){
