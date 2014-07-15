@@ -53,10 +53,6 @@
                  <cm-avatar cm-data="simple_cmIdentityModel_1"></cm-avatar>
                  {{simple_cmIdentityModel_1}}
 
-                 <h2>cmIdentity avatar with displayname from identity</h2>
-                 <cm-avatar cm-data="simple_cmIdentityModel_1" cm-with-name="true"></cm-avatar>
-                 {{simple_cmIdentityModel_1}}
-
                  <h2>cmIdentity appOwner hide attribute</h2>
                  <cm-avatar cm-data="simple_cmIdentityModel_2" cm-view="hide-owner"></cm-avatar>
                  {{simple_cmIdentityModel_2}}
@@ -107,15 +103,6 @@ angular.module('cmUi').directive('cmAvatar',[
                             });
                         } else if(file.state == 'cached') {
                             showBlobAsImage(file);
-                        }
-
-                        // show identity name
-                        if(attrs.cmWithName){
-                            if(!element.hasClass('with-name')){
-                                element.addClass('with-name');
-                                element.append('<div class="name" data-qa="avatar-display-name">'+scope.identity.getDisplayName()+'</div>');
-                                element.attr('title',scope.identity.getDisplayName());
-                            }
                         }
                     }
                 }

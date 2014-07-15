@@ -76,6 +76,8 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         position: 'fixed',
                         top: -10000+unit,
                         left: -10000+unit,
+//                        top: 0,
+//                        left: 0,
                         width: width - parseInt(paddingLeft || 0) - parseInt(paddingRight || 0)+unit,
                         'font-size': element.css('fontSize'),
                         'font-family': element.css('fontFamily'),
@@ -107,10 +109,14 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                     // on init get one row height
                     var shadowHeight = $shadow[0].offsetHeight;
 
+                    var hasNewLines = scope.text.split(/\r\n|\r|\n/g);
+
                     // on init get one row height
-                    if(shadowHeight > 0 && shadowRowHeight == 0){
-                        shadowRowHeight = shadowHeight
-                        diffRowHeight = textAreaRowHeight-shadowHeight
+                    if(shadowHeight > 0 && shadowRowHeight == 0 && hasNewLines.length > 0){
+                        shadowRowHeight = shadowHeight / hasNewLines.length;
+                    } else if(shadowHeight > 0 && shadowRowHeight == 0){
+                        shadowRowHeight = shadowHeight;
+                        diffRowHeight = textAreaRowHeight-shadowHeight;
                     }
                     // handle textarea height
                     if(shadowRowHeight > 0) {

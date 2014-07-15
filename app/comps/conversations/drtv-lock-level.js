@@ -27,25 +27,6 @@ angular.module('cmConversations').directive('cmLockLevel',[
                         drawLevel(level)
                     })
                 }
-
-                // for conversation controls
-                if(attrs.cmLevelState) {
-                    scope.$watch(attrs.cmLevelState, function (state) {
-                        var level = 0;
-                        switch (state) {
-                            case 'unsafe':
-                                level = 0;
-                                break;
-                            case 'safe':
-                                level = 1;
-                                break;
-                            case 'safer':
-                                level = 2;
-                                break;
-                        }
-                        drawLevel(level);
-                    })
-                }
             }
         }
     }

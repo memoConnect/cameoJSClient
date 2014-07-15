@@ -142,7 +142,7 @@
             "RECIPIENTS_MISSING": "Please add at least one recipient.",
             "PASSPHRASE_INVALID": "Invalid passphrase",
             "PASSWORD_WRONG": "Password is wrong",
-            "NO_PASSWORD": "Password is empty.<br /> <a href=\"#/conversation/{{conversationId}}/security-settings\">here you can insert one</a>",
+            "NO_PASSWORD": "Password is empty.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">here you can insert one</a>",
             "PASSWORD_NEEDED": "A password is required.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">enter here!</a>",
             "ASYMMETRIC_DECRYPT_ERROR": "Privatekey missing",
             "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",

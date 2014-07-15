@@ -183,18 +183,18 @@ define([
             $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) };
 
             // passing wrong route calls
-            $rootScope.$on("$routeChangeStart", function(){
+            $rootScope.$on('$routeChangeStart', function(){
                 // expections
                 var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
                 var path = $location.$$path;
                 // exists none token then otherwise to login
                 if (cmUserModel.isAuth() === false){
                     if (!path_regex.test(path)) {
-                        $location.path("/login");
+                        $location.path('/login');
                     }
-                } else if ((path == "/login" || path == "/registration") && cmUserModel.isGuest() !== true) {
-                    $location.path("/talks");
-                } else if (path == "/logout"){
+                } else if ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true) {
+                    $location.path('/talks');
+                } else if (path == '/logout'){
                     cmUserModel.doLogout(true,'app.js logout-route');
                 }
             });
@@ -291,11 +291,11 @@ define([
                 if(cmEnv.loadingBar !== false){
                     cfpLoadingBar.complete();
                 }
-            })
+            });
 
-            //Todo:
-            
-            if(cmUserModel.getToken()) cmApi.listenToEvents()
+            // Todo: whats is todo??
+            if(cmUserModel.getToken())
+                cmApi.listenToEvents()
         }
     ])
 
