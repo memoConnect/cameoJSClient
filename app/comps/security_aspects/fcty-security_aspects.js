@@ -70,6 +70,8 @@ angular.module('cmSecurityAspects')
          */
         
         function cmSecurityAspects(config){
+            config = config || {}
+
             var self = this;
 
             cmObject.addEventHandlingTo(this)
