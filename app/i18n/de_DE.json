@@ -450,9 +450,13 @@
                 "NAME": "All recipients have proper keys.",
                 "DESCRIPTION": ""
             },
+            "NO_SYMMETRIC_KEY_TRANSMISSION": {
+                "NAME": "Diese Conversation ist ordentlich nur mit öffentlichen Schlüssel verschlüsselt.",
+                "DESCRIPTION": "Keiner der Empfänger hat ein Passwort zum entschlüsseln benutzt und das wäre auch nicht möglich."
+            },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha aktiviert.",
-                "DESCRIPTION": "Die Passcaptcha.Method erschwert es, Nachrichten im großem Umfang automatisiert zu entschlsüeeln, aber wirklich sicher ist sie nicht.",
+                "DESCRIPTION": "Die Passcaptcha.Method erschwert es, Nachrichten im großem Umfang automatisiert zu entschlüsseln, aber wirklich sicher ist sie nicht.",
                 "TOGGLE": "Passcaptcha abschalten."
             },
             "MISSING_DATA": "Sicherheitsaspekte fehlen."

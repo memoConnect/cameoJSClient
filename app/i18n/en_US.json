@@ -449,6 +449,10 @@
                 "NAME": "All recipients have proper keys.",
                 "DESCRIPTION": ""
             },
+            "NO_SYMMETRIC_KEY_TRANSMISSION": {
+                "NAME": "Conversation savely encrypted with public keys only.",
+                "DESCRIPTION": "None of the recipients used a password to decrypt the conversation. Thats not even possible."
+            },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha enabled!",
                 "DESCRIPTION": "Using the passcaptcha method makes it harder to automatically decrypt your messages on a large scale, but it is not actually save.",
