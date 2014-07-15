@@ -323,6 +323,10 @@ angular.module('cmRouteConversation')
                         }
                         cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD', {ttl:0, i18n: settingsLinker});
                     });
+
+                    $scope.conversation.on('recipient:mising', function(){
+                        
+                    })
                 }
 
                 /**

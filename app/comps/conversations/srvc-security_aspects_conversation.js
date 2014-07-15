@@ -74,7 +74,8 @@ angular.module('cmSecurityAspects')
                     dependencies: ['ENCRYPTED'],
                     value: 1,
                     check: function(conversation){ 
-                        return !conversation.passwordRequired()
+                        return      conversation.getBadRecipients().length == 0
+                                &&  conversation.userHasPrivateKey()
                     }
                 })   
 
