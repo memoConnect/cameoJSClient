@@ -65,6 +65,10 @@ angular.module('cmCore')
                     this.ttl = data.ttl || this.ttl;
 
                     this.i18n = data.i18n || this.i18n;
+
+                    this.template = data.template || this.template
+
+                    this.templateScope  = data.templateScope || this.templateScope
                 } else {
                     this.state.set('error');
                 }
@@ -101,7 +105,10 @@ angular.module('cmCore')
                         '</div>'+
                         '<div class="body">'+
                         cmTranslate(this.label, this.i18n)+
-                        '</div>'
+                        (this.template || '')+
+                        '</div>',
+                    null,
+                    this.templateScope
                 );
                 cmModal.open(modalId);
 

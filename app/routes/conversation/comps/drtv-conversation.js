@@ -325,7 +325,7 @@ angular.module('cmRouteConversation')
                     });
 
                     $scope.conversation.on('recipient:mising', function(){
-                        
+                        cmNotify.warn('CONVERSATION.WARN.RECIPIENT_MISSING', {ttl:0, i18n: settingsLinker});
                     })
                 }
 
