@@ -124,6 +124,7 @@ describe('Conversation encryption', function () {
                 util.get("/conversation/" + conversationId)
             })
 
+
             it("enter password (if required)", function () {
                 if (!recipient.hasKey) {
                     switch (encryptionType) {

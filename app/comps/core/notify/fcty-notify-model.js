@@ -66,9 +66,9 @@ angular.module('cmCore')
 
                     this.i18n = data.i18n || this.i18n;
 
-                    this.template = data.template || this.template
+                    this.template = data.template 
 
-                    this.templateScope  = data.templateScope || this.templateScope
+                    this.templateScope  = data.templateScope 
                 } else {
                     this.state.set('error');
                 }
