@@ -200,38 +200,52 @@ angular.module('cmConversations')
              * @param {Boolean} bool Return true or false
              */
             this.checkConsistency = function (){
-                if(self.isEncrypted() === true){
+                if(this.passwordRequired() && !this.password){
+                    self.trigger('password:missing');
+                    return false
+                }
 
+                /*
+                if(self.isEncrypted() === true){
+                */
                     /**
                      * es wird überprüft on alle recipeinten 1-n keys haben
                      */
+                    /*
                     var key_check = false;
                     self.recipients.forEach(function(recipient){
                         if(recipient.hasKeys() === false){
                             key_check = true;
                         }
                     });
+                    */
 
                     /**
                      * checkt ob alle recipienten keys haben,
                      * wenn nicht, wird überprüft ob ein passwort vergeben wurde
                      */
+                    /*
                     if(key_check == true && (self.password == undefined || (typeof self.password != 'string') || (self.password.length == 0))){
                         self.trigger('show:passwordModal');
                         return false;
                     }
+                    */
 
                     /**
                      * checkt ob alle User einen Key habe und ob der lokale User einen Key local hat,
                      * wenn nicht, dann wird überprüpft ob das Passwort an ist und ob es gesetzt wurde
-1                     */
+                    */
+                    /*
                     if(key_check == false && cmUserModel.hasLocalKeys() === false){
                         if(self.password == undefined || (typeof self.password != 'string') || (self.password.length == 0)){
                             cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD');
                             return false;
                         }
                     }
-                }
+                    */
+                //}
+                   
+
                 return true;
             };
 

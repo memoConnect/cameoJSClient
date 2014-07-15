@@ -26,6 +26,8 @@ describe('Conversation encryption', function () {
             $("[data-qa='input-subject']").sendKeys(encryptionType + "_" + date)
         })
 
+
+
         it("add recipients to conversation", function () {
 
             util.get("/conversation/new/recipients")
@@ -35,12 +37,14 @@ describe('Conversation encryption', function () {
             for (var i = 1; i < recipients.length; i++) {
                 var recipient = recipients[i]
                 $("[data-qa='inp-list-search']").sendKeys(recipient.displayName)
+                util.waitForElement("[data-qa='btn-select-contact']")
                 $("[data-qa='btn-select-contact']").click()
                 $("[data-qa='btn-list-search-clear']").click()
             }
 
             $("[data-qa='btn-done']").click()
             util.expectCurrentUrl('/conversation/new')
+
         })
 
 

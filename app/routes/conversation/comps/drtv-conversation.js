@@ -311,7 +311,7 @@ angular.module('cmRouteConversation')
                         $scope.showAsymmetricKeyError();
                     });
 
-                    $scope.conversation.on('show:passwordModal', function(){
+                    $scope.conversation.on('password:missing', function(){
                         // switcher for purl and conversation
                         var settingsLinker = {type:'',typeId:''};
                         if('purlId' in $routeParams){
