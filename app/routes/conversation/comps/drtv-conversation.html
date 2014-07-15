@@ -1,38 +1,86 @@
-<section class="body-group recipients">
-    <label>{{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}</label>
+<section class="body-group recipients" ng-if="conversation.state.is('new') || !conversation.state.is('new') && conversation.recipients.length > 1">
+    <label>
+        {{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}
+        <span class="recipients-counter">({{conversation.recipients.length-1}})</span>
+        <span class="recipient-name">{{recipientName}}</span>
+    </label>
     <div class="recipients-list">
-        <div class="scroller">
-            <div 
-                ng-click    = "goto('conversation/'+(conversation.id||'new')+'/recipients')" 
-                ng-if       = "conversation.recipients.length == 1" 
-                class       = "add-new-recipients">
+        <div
+            class="scroller"
+            ng-class="{
+                'show-scrollbar': conversation.recipients.length > 7
+            }">
+            <div
+                class="add-new-recipients"
+                ng-click="goto('conversation/'+(conversation.id||'new')+'/recipients')"
+                ng-if="conversation.recipients.length == 1 && conversation.state.is('new')">
                 <cm-avatar cm-view="unknown"></cm-avatar>
-                {{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS' | cmTranslate}}
+                <span>{{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS'|cmTranslate}}</span>
             </div>
-            <cm-avatar cm-data="recipient" cm-with-name="true" cm-view="hide-owner" ng-repeat="recipient in conversation.recipients"></cm-avatar>
+            <cm-avatar
+                cm-data="recipient"
+                cm-view="hide-owner"
+                ng-click="showName(recipient)"
+                ng-class="{
+                    'name-shown': recipientName == recipient.getDisplayName()
+                }"
+                ng-repeat="recipient in conversation.recipients|orderBy:'getDisplayName()':false"
+                cm-first-of-repeat="showName(recipient)"></cm-avatar>
         </div>
-        <cm-add-button 
-            cm-icon =   "add-recipient" 
-            ng-click=   "goto('conversation/'+(conversation.id||'new')+'/recipients')" 
-            cm-user-rights
-        ></cm-add-button>
+        <div
+            class="cm-add-button"
+            ng-click="goto('conversation/'+(conversation.id||'new')+'/recipients')"
+            cm-user-rights>
+            <i
+                class="fa"
+                ng-class="{
+                    'cm-add-recipient':conversation.recipients.length == 1,
+                    'cm-list':conversation.recipients.length > 1
+                }"></i>
+        </div>
     </div>
 </section>
 
-<div class="body-group subject">
-    <div ng-if="!conversation.state.is('new') && conversation.subject" data-qa="text-subject" ng-bind-html="conversation.subject|cmParse"></div>
-    <div class="cm-form-group body-group label-with-checkbox" ng-if = "conversation.state.is('new')">
+<section
+    class="body-group subject"
+    ng-if="conversation.state.is('new') || !conversation.state.is('new') && conversation.subject">
+    <div
+        class="cm-form-group"
+        ng-if="!conversation.state.is('new') && conversation.subject">
         <label class="w20">{{'CONVERSATION.PLACEHOLDER.SUBJECT' | cmTranslate}}</label>
-        <div class="cm-form-control with-inputter w80" style="background-color:#fff">
-            <input data-qa="input-subject" style="background-color:#fff" type="text" ng-model="conversation.subject" placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}" cm-adaptive-change  cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls', scrollTop:true}" />
+        <div
+            data-qa="text-subject"
+            class="cm-form-control white-control w80"
+            ng-bind-html="conversation.subject|cmParse"></div>
+    </div>
+    <div
+        class="cm-form-group"
+        ng-if="conversation.state.is('new')">
+        <label class="w20">{{'CONVERSATION.PLACEHOLDER.SUBJECT' | cmTranslate}}</label>
+        <div class="cm-form-control white-control with-inputter w80">
+            <input
+                type="text"
+                data-qa="input-subject"
+                ng-model="conversation.subject"
+                placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}"
+                cm-adaptive-change
+                cm-ios-focus="{
+                    fixedElements:'cm-header',
+                    scrollTop:true
+                }" />
         </div>
     </div>
-</div>
+</section>
 
 <div id="conversation-top"></div>
 
-<div ng-repeat="message in conversation.messages | orderBy:'created':false " cm-scroll-to="#conversation-bottom" cm-last-message>
-    <cm-date-seperator ng-if="(compareDate(message.created,conversation.messages[$index - 1].created))">{{message.created | date:'dd.MM.yyyy'}}</cm-date-seperator>
+<div
+    ng-repeat="message in conversation.messages | orderBy:'created':false "
+    cm-scroll-to="#conversation-bottom"
+    cm-last-message>
+    <cm-date-seperator ng-if="(compareDate(message.created,conversation.messages[$index - 1].created))">
+        {{message.created | date:'dd.MM.yyyy'}}
+    </cm-date-seperator>
     <cm-message cm-data="message" cm-data-conversation="conversation"></cm-message>
 </div>
 
@@ -46,18 +94,36 @@
                 <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
                 <cm-files-preview></cm-files-preview>
             </div>
-            <div class="webreader-uploading" cm-user-rights="showForGuest" ng-click="openFastRegister()" data-qa="btn-fast-registration"></div>
+            <div
+                data-qa="btn-fast-registration"
+                class="webreader-uploading"
+                cm-user-rights="showForGuest"
+                ng-click="openFastRegister()"></div>
         </cm-files>
 
         <div class="message" data-qa="answer-ctn">
-            <textarea data-qa="input-answer" cm-resize-textarea cm-max-rows="8" ng-model="my_message_text" id="emoji-textarea" cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls',handler:'.post-wrap'}"></textarea>
+            <textarea
+                id="emoji-textarea"
+                data-qa="input-answer"
+                ng-model="newMessageText"
+                cm-resize-textarea
+                cm-max-rows="8"
+                cm-ios-focus="{
+                    fixedElements:'cm-header',
+                    handler:'.post-wrap'
+                }"></textarea>
             <cm-emoji-handler></cm-emoji-handler>
             <div class="inputter"></div>
         </div>
 
         <div class="post-wrap" data-qa="btn-send-answer" ng-click="send()">
-            <i class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap" ng-class="{'cm-post-idle':isSending, 'cm-post-attention':isSendingAbort}"></i>
+            <i
+                class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap"
+                ng-class="{
+                    'cm-post-idle':isSending,
+                    'cm-post-attention':isSendingAbort
+                }"></i>
         </div>
     </div>
-    <cm-emoji-list ng-model="my_message_text" cm-textarea="emoji-textarea"></cm-emoji-list>
+    <cm-emoji-list ng-model="newMessageText" cm-textarea="emoji-textarea"></cm-emoji-list>
 </div>

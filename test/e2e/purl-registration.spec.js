@@ -44,7 +44,7 @@ describe('Purl registration', function () {
         util.get("/conversation/new")
 
         // add recipient
-        $("cm-add-button").click()
+        $(".cm-add-button").click()
         util.waitForPageLoad("/conversation/new/recipients")
         util.searchInList(externalLogin)
 
