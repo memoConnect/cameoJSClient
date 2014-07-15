@@ -73,11 +73,20 @@ angular.module('cmSecurityAspects')
                     id: 'ALL_RECIPIENTS_HAVE_PROPER_KEYS',
                     dependencies: ['ENCRYPTED'],
                     value: 1,
-                    check: function(conversation){ 
-                        return      conversation.getBadRecipients().length == 0
-                                &&  conversation.userHasPrivateKey()
+                    check: function(conversation){
+                        return      conversation.state.is('new') 
+                                &&  !conversation.passwordRequired()            
                     }
                 })   
+                .addAspect({                    
+                    id: 'NO_SYMMETRIC_KEY_TRANSMISSION',
+                    dependencies: ['ENCRYPTED'],
+                    value: 1,
+                    check: function(conversation){
+                        return      !conversation.state.is('new') 
+                                &&  ['symmetric', 'mixed'].indexOf(conversation.getKeyTransmission()) == -1
+                    }
+                }) 
 
             return self;
         }

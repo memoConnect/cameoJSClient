@@ -96,6 +96,8 @@ describe('Conversation encryption', function () {
         })
 
         it("the correct number of positive aspects should be displayed", function () {
+            util.expectCurrentUrl("/conversation/new")
+            util.waitForElement('cm-icons.positive')
             $('cm-icons.positive').findElements(by.css("i")).then(function (icons) {
                 expect(icons.length).toBe(positiveAspects)
             })
@@ -108,7 +110,7 @@ describe('Conversation encryption', function () {
         })
 
         it("send initial message", function () {
-            util.expectCurrentUrl("/conversation/new")
+            
 
             var initialMessage = "moep_message_" + Date.now();
             $("[data-qa='input-answer']").sendKeys(initialMessage)
