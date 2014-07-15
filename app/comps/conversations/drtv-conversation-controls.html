@@ -35,7 +35,7 @@
             <div class="label-with-checkbox" ng-if="conversation.options.hasPassword && conversation.isEncrypted()">
                 <label class="w20">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA' | cmTranslate}}</label>
                 <div class="w80 checkbox-of-label">
-                    <button ng-click="toggleCaptcha()"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.options.hasCaptcha, 'cm-checkbox-right':conversation.options.hasCaptcha, 'cm-grey':!isNew}" data-qa="icon-checkbox-passcaptcha"></i></button>
+                    <button ng-click="toggleCaptcha()" data-qa="btn-toggle-captcha"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.options.hasCaptcha, 'cm-checkbox-right':conversation.options.hasCaptcha, 'cm-grey':!isNew}" data-qa="icon-checkbox-passcaptcha"></i></button>
                 </div>
             </div>
 

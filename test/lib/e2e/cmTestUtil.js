@@ -18,6 +18,11 @@ this.getPtorInstance = function () {
 }
 
 this.get = function (path) {
+
+    if(ptor == undefined) {
+        console.error("please set ptor = util.getPtorInstance()")
+    }
+
     var url = config.wwwUrl + '#' + path
     ptor.get(url)
     this.waitForPageLoad()
@@ -34,7 +39,7 @@ this.expectCurrentUrl = function (match) {
 }
 
 this.logout = function () {
-    this.get('/login')
+    self.get('/login')
 
     $$("cm-menu").then(function (elements) {
         if (elements.length > 0) {
@@ -48,8 +53,9 @@ this.logout = function () {
 }
 
 this.login = function (username, password) {
-    this.logout()
-    this.get('/login')
+
+    self.logout()
+    self.get('/login')
 
     $("body").sendKeys(protractor.Key.HOME)
     $("[data-qa='login-btn']").click();
@@ -65,7 +71,7 @@ this.login = function (username, password) {
 
     $("[data-qa='login-submit-btn']").click();
 
-    this.waitForPageLoad("/talks")
+    self.waitForPageLoad("/talks")
 
     return this
 }
@@ -301,6 +307,7 @@ this.searchInList = function(searchString){
     $("[data-qa='inp-list-search']").sendKeys(searchString)
 }
 
+
 this.clearLocalStorage = function() {
     ptor.executeScript('localStorage.clear()')
 }
@@ -317,14 +324,3 @@ this.generateKey = function() {
 
 }
 
-this.disableEncryption = function(){
-    $("cm-header:not(.ng-hide) cm-security-indicator").click()
-    self.waitForPageLoad("/conversation/new/security-settings")
-    $("[data-qa='btn-encryption']").click()
-    $("[data-qa='btn-security-done']").click()
-    self.waitForPageLoad("/conversation/new")
-}
-
-this.clickBackBtn = function(){
-    $("cm-header:not(.ng-hide) cm-back").click()
-}
