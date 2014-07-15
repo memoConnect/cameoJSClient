@@ -19,12 +19,11 @@
             </div>
             <cm-avatar
                 cm-data="recipient"
-                cm-view="hide-owner"
                 ng-click="showName(recipient)"
                 ng-class="{
                     'name-shown': recipientName == recipient.getDisplayName()
                 }"
-                ng-repeat="recipient in conversation.recipients|orderBy:'getDisplayName()':false"
+                ng-repeat="recipient in conversation.recipients|cmHideAppOwner|orderBy:'getDisplayName()':false"
                 cm-first-of-repeat="showName(recipient)"></cm-avatar>
         </div>
         <div

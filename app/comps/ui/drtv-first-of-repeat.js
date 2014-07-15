@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmUi').directive('cmFirstOfRepeat',[
+angular.module('cmUi')
+.directive('cmFirstOfRepeat',[
     function (){
         return {
             restrict: 'A',
