@@ -201,11 +201,10 @@ angular.module('cmRouteConversation')
                      * @type {boolean}
                      */
                     var message_invalid         = !isMessageValid(),
-                        passphrase_invalid      = !$scope.conversation.passphraseValid(),
-                        recipients_missing      = !$scope.conversation.recipients.length > 0; //@todo mocked
+                        passphrase_invalid      = !$scope.conversation.passphraseValid()
 
                     //If anything is invalid, abort and notify the user:
-                    if(message_invalid || passphrase_invalid || recipients_missing){
+                    if(message_invalid || passphrase_invalid){
 
                         if (message_invalid)
                             cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY', {ttl:5000});
@@ -213,8 +212,6 @@ angular.module('cmRouteConversation')
                         if (passphrase_invalid)
                             cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID', {ttl:5000});
 
-                        if (recipients_missing)
-                            cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING', {ttl:5000});
 
                         // enable send button
                         $scope.isSending = false;
@@ -306,35 +303,46 @@ angular.module('cmRouteConversation')
 
                 $scope.init($scope.$eval($attrs.cmData))
 
-                if('on' in $scope.conversation) {
-                    $scope.conversation.on('update:finished', function(){
-                        $scope.showAsymmetricKeyError();
-                    });
+                $scope.conversation.on('update:finished', function(){
+                    $scope.showAsymmetricKeyError();
+                });
 
-                    $scope.conversation.on('password:missing', function(){
-                        // switcher for purl and conversation
-                        var settingsLinker = {type:'',typeId:''};
-                        if('purlId' in $routeParams){
-                            settingsLinker.type = 'purl';
-                            settingsLinker.typeId = $routeParams.purlId;
-                        } else {
-                            settingsLinker.type = 'conversation';
-                            settingsLinker.typeId = $routeParams.conversationId;
+                $scope.conversation.on('password:missing', function(){
+                    // switcher for purl and conversation, @Todo: vereinheitlichen
+                    var settingsLinker = {type:'',typeId:''};
+                    if('purlId' in $routeParams){
+                        settingsLinker.type = 'purl';
+                        settingsLinker.typeId = $routeParams.purlId;
+                    } else {
+                        settingsLinker.type = 'conversation';
+                        settingsLinker.typeId = $routeParams.conversationId;
+                    }
+                    cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD', {ttl:0, i18n: settingsLinker});
+                });
+
+                $scope.conversation.on('recipients:missing', function(){
+                    // switcher for purl and conversation, @Todo: vereinheitlichen
+                    var settingsLinker = {type:'',typeId:''};
+                    if('purlId' in $routeParams){
+                        settingsLinker.type = 'purl';
+                        settingsLinker.typeId = $routeParams.purlId;
+                    } else {
+                        settingsLinker.type = 'conversation';
+                        settingsLinker.typeId = $routeParams.conversationId;
+                    }
+                    cmNotify.warn(
+                        'CONVERSATION.WARN.RECIPIENTS_MISSING', 
+                        {
+                            ttl:0, 
+                            i18n: settingsLinker,
+                            template:   '<small>{{"CONVERSATION.WARN.RECIPIENTS_MISSING_OKAY"|cmTranslate}}</small>'+
+                                        '<i ng-click="conversation.solitary = !conversation.solitary" ng-class="'+
+                                            "{'cm-checkbox':!conversation.solitary, 'cm-checkbox-right':conversation.solitary}"+
+                                        '" class="fa cm-lg-icon cm-ci-color ml15"></i>',
+                            templateScope: $scope
                         }
-                        cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD', {ttl:0, i18n: settingsLinker});
-                    });
-
-                    $scope.conversation.on('recipient:mising', function(){
-                        cmNotify.warn(
-                            'CONVERSATION.WARN.RECIPIENT_MISSING', 
-                            {
-                                ttl:0, 
-                                i18n: settingsLinker,
-                                template: '<span>xxx</span>',
-                                scope: $scope
-                            });
-                    })
-                }
+                    );
+                })
 
                 /**
                  * Delete pending Objects

@@ -140,6 +140,7 @@
         "WARN": {
             "MESSAGE_EMPTY": "The input field is empty.",
             "RECIPIENTS_MISSING": "Please add at least one recipient.",
+            "RECIPIENTS_MISSING_OKAY": "I dont want any other recipients than myself.",
             "PASSPHRASE_INVALID": "Invalid passphrase",
             "PASSWORD_WRONG": "Password is wrong",
             "NO_PASSWORD": "Password is empty.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">here you can insert one</a>",

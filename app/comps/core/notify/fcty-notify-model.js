@@ -104,7 +104,7 @@ angular.module('cmCore')
                         '<i class="fa '+this.icon+' cm-lg-icon"></i> '+cmTranslate('NOTIFICATIONS.MODAL_HEADER.'+this.severity.toUpperCase())+
                         '</div>'+
                         '<div class="body">'+
-                        cmTranslate(this.label, this.i18n)+
+                        '<div>'+cmTranslate(this.label, this.i18n)+'</div>'+
                         (this.template || '')+
                         '</div>',
                     null,

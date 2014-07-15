@@ -205,8 +205,10 @@ angular.module('cmConversations')
                     return false
                 }
 
-                if(this.recipients.length == 1 && !this.solitary){
+                console.log(this.solitary)
+                if((this.recipients.length == 1) && !this.solitary){
                     self.trigger('recipients:missing')
+                    return false
                 }
 
                 /*
