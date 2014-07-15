@@ -264,6 +264,11 @@
         "LABEL":{
             "KEYMANAGEMENT": "Key Verwaltung",
             "TRUST": "Trust Me"
+        },
+        "NOTIFY":{
+            "UPDATE": {
+                "ERROR": "Die Änderung konnte nicht gespeichert werden!"
+            }
         }
     },
 	

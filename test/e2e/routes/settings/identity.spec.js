@@ -61,7 +61,6 @@ describe('Route: Settings - Identity', function(){
         it('should be created', function(){
             util.logout()
             newTestUser = util.createTestUser()
-            console.log(newTestUser)
         })
 
         it('should be logged in', function(){
