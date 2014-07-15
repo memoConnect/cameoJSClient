@@ -130,7 +130,7 @@ describe('Conversation encryption', function () {
                         case "password" :
                             // expect password promt
                             expect($(".cm-modal-alert").isDisplayed()).toBe(true)
-                            $("cm-modal").$(".body").findElement(by.css("a")).click()
+                            $("cm-modal").$(".body").$("a").click()
 
                             util.expectCurrentUrl("/conversation/" + conversationId + "/security-settings")
                             $("[data-qa='input-password']").sendKeys(password)
@@ -140,7 +140,7 @@ describe('Conversation encryption', function () {
                         case "passCaptcha" :
                             // expect password promt
                             expect($(".cm-modal-alert").isDisplayed()).toBe(true)
-                            $("cm-modal").findElement(by.css(".body")).$("a").click()
+                            $("cm-modal").$(".body").$("a").click()
 
                             util.expectCurrentUrl("/conversation/" + conversationId + "/security-settings")
                             expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(true)
