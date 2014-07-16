@@ -1,9 +1,30 @@
 <header class="inScreen">
-<i class="fa cm-checkbox-add cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT' | cmTranslate}}
+    <i class="fa cm-checkbox-add cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT' | cmTranslate}}
 </header>
 
-<h3>{{exportKeyName}} - {{exportKeySize}}</h3>
-<h3>private key</h3>
-<textarea class="form-control" ng-model="exportPrivKey"></textarea>
-<h3>public key</h3>
-<textarea class="form-control" ng-model="exportPubKey"></textarea>
+<ul>
+    <li>
+        <div class="page">
+            <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
+            <textarea class="form-control" ng-model="privKey" ng-readonly="isValid" data-qa="display-private-key"></textarea>
+            <h4 ng-if="keySize">{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_SIZE'|cmTranslate}}: {{keySize}}</h4>
+            <div ng-if="isValid">
+                <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PUBLIC_KEY'|cmTranslate}}</h3>
+                <textarea class="form-control" ng-model="pubKey" readonly="readonly" data-qa="display-public-key"></textarea>
+                <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_NAME'|cmTranslate}}</h3>
+                <input class="form-control" ng-model="keyName" type="text" data-qa="input-key-name" />
+            </div>
+        </div>
+
+        <cm-footer cm-always-on-top>
+            <button ng-click="import()" class="cm-btn-block cm-btn-grey" data-qa="btn-import-key" ng-if="!isValid">
+                {{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT'|cmTranslate}}
+                <i class="fa cm-checkbox-right cm-lg-icon"></i>
+            </button>
+            <button ng-click="store()" class="cm-btn-block cm-btn-grey" data-qa="btn-save-key" ng-if="isValid">
+                {{'SETTINGS.PAGES.IDENTITY.KEYS.STORE_KEYPAIR'|cmTranslate}}
+                <i class="fa cm-checkbox-right cm-lg-icon"></i>
+            </button>
+        </cm-footer>
+    </li>
+</ul>
