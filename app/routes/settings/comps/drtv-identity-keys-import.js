@@ -12,12 +12,12 @@ angular.module('cmRouteSettings')
 
                 $scope.import = function(){
                     console.log($scope.importPrivKey)
+                    var key = new cmKey($scope.importPrivKey);
 
-
-                    var key = cmKey
-
+                    console.log(key.getPrivateKey())
+                    console.log(key.getPublicKey())
+                    console.log(key.getSize())
                 }
-
             }
         }
     }
