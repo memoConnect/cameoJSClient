@@ -264,6 +264,14 @@
         "LABEL":{
             "KEYMANAGEMENT": "manage keys",
             "TRUST": "trust"
+        },
+        "MODAL":{
+            "HEADER": "Identities"
+        },
+        "NOTIFY":{
+            "UPDATE": {
+                "ERROR": "Something went wrong, pls try again"
+            }
         }
     },
 	
