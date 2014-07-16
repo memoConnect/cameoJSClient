@@ -324,3 +324,16 @@ this.generateKey = function() {
 
 }
 
+this.disableEncryption = function(){
+    $("cm-header:not(.ng-hide) cm-security-indicator").click()
+    self.waitForPageLoad("/conversation/new/security-settings")
+    $("[data-qa='btn-encryption']").click()
+    $("[data-qa='btn-security-done']").click()
+    self.waitForPageLoad("/conversation/new")
+}
+
+this.clickBackBtn = function(){
+    $("cm-header:not(.ng-hide) cm-back").click()
+}
+
+

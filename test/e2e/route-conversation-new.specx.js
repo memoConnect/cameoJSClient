@@ -194,6 +194,27 @@ describe('Conversation encryption', function () {
         })
     }
 
+    var testUser
+
+    describe("prepare tests", function () {
+
+        it("create test user and generate key", function () {
+            var testUser = util.createTestUser()
+            util.generateKey()
+        })
+
+        it("make testUser friends with existing user", function () {
+            util.get("/contacts/search")
+            $("[data-qa='inp-search-cameo-ids']").sendKeys(config.displayNameUser1)
+            $("[data-qa='btn-openModal']").click()
+            $("[data-qa='btn-sendRequest']").click()
+
+            util.login(config.loginUser1, "password")
+            $("[data-qa='btn-open-menu']").click()
+
+        })
+    })
+
 
     // generate key for both users
     it("generate key for first recipient", function () {
@@ -217,14 +238,14 @@ describe('Conversation encryption', function () {
 //        checkConversation(recipients, 0, 2, "asym")
 //    })
 
-    describe("password transmission:", function () {
-        var recipients = [
-            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
-//            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true},
-            {login: config.contact2User1Login, displayName: config.contact2User1DisplayName, hasKey: false}
-        ]
-        checkConversation(recipients, 1, 1, "password")
-    })
+//    describe("password transmission:", function () {
+//        var recipients = [
+//            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
+////            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true},
+//            {login: config.contact2User1Login, displayName: config.contact2User1DisplayName, hasKey: false}
+//        ]
+//        checkConversation(recipients, 1, 1, "password")
+//    })
 
 //    describe("passCaptcha transmission:", function () {
 //        var recipients = [
