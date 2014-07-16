@@ -287,6 +287,7 @@
                     "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
                     "CREATE": "create",
                     "IMPORT": "import",
+                    "KEY_SIZE": "keysize",
                     "KEY_ON_THIS_DEVICE": "local",
                     "EXPORT_KEY": "Keypair export",
                     "REMOVE_KEY": "Keypair remove",
@@ -297,11 +298,17 @@
                     "GENERATION_TIME_PROGRESS": "time elapsed: {{time}}",
                     "CANCEL": "cancel",
                     "STORE_KEYPAIR": "Store keypair",
-                    "GENERATION_TIME": "The generation lasted {{time}}.",
+                    "GENERATION_TIME": "The generation lasted {{time}}",
                     "PRIVATE_KEY": "Privatekey",
                     "PUBLIC_KEY": "Publickey",
                     "KEY_NAME": "Keyname",
-                    "STORE": "store"
+                    "STORE": "store",
+                    "WARN": {
+                        "IMPORT_FAILED": "The given privatekey is not valid",
+                        "CHECK_PRIVKEY": "Check private key",
+                        "CHECK_PUBKEY": "Check public key",
+                        "CHECK_KEYNAME": "Check keyname"
+                    }
                 }
             },
             "ABOUT_US": {
