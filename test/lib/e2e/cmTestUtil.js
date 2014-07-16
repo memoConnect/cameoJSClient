@@ -116,7 +116,6 @@ this.deleteTestUser = function(loginName) {
     }, testUserId, config.apiUrl)
 }
 
-
 this.getTestUserNotifications = function(loginName) {
 
     var testUserId = loginName.split("_")[1]
@@ -187,7 +186,6 @@ this.waitForElementVisible = function (selector, timeout) {
 
     return this
 }
-
 
 this.waitForElementHidden = function (selector, timeout) {
 
@@ -327,4 +325,12 @@ this.disableEncryption = function(){
 
 this.clickBackBtn = function(){
     $("cm-header:not(.ng-hide) cm-back").click()
+}
+
+this.setVal = function(dataQa, text){
+    $("[data-qa='"+dataQa+"']").sendKeys(text)
+}
+
+this.getVal = function(dataQa){
+    return $("[data-qa='"+dataQa+"']").getAttribute('value')
 }
