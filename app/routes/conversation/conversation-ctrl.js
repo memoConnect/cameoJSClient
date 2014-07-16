@@ -22,8 +22,6 @@ define([
             $scope.calledWithId     = $scope.conversationId && $scope.conversationId != 'new';
             $scope.pageChild1       = $routeParams.pageChild1 || '';
 
-            $rootScope.pendingMessageText = $rootScope.pendingMessageText || {}
-
 
             // existing conversation
             if($scope.calledWithId){
@@ -36,7 +34,6 @@ define([
                 else
                     $scope.conversation = $rootScope.pendingConversation;
 
-                console.log('pending ' + $rootScope.pendingConversation.id)
 
             // new conversation:
             } else {
@@ -44,8 +41,6 @@ define([
                 $scope.conversation =   cmConversationFactory.new()
                                         .addRecipient(cmUserModel.data.identity)
 
-                $rootScope.pendingMessageText['new'] = ''
-                console.log('new')
             }
 
 

@@ -6,16 +6,10 @@ define([
     'use strict';
 
 app.register.controller('RegistrationCtrl', [
-    '$scope',
-    '$rootScope',
-    '$location',
-    '$q',
-    'cmAuth',
-    'cmUserModel',
-    'cmUtil',
-    'cmLogger',
-    '$timeout',
-    function ($scope, $rootScope, $location, $q, cmAuth, cmUserModel, cmUtil, cmLogger, $timeout) {
+    'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferFormData',
+    '$scope', '$rootScope', '$location', '$q', '$timeout',
+    function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferFormData,
+              $scope, $rootScope, $location, $q, $timeout) {
         var reservationSecrets = {};
 
         $scope.handleGuest = false;
@@ -40,7 +34,7 @@ app.register.controller('RegistrationCtrl', [
             return false;
         };
 
-        $scope.formData = {loginName: '', password: '', email: '', phoneNumber: '', name: ''};
+        $scope.formData = {loginName: '', password: '', email: '', phone: '', displayName: ''};
         $scope.userNameAlternatives = [];
         $scope.showUserNameAlternatives = false;
 
@@ -148,7 +142,7 @@ app.register.controller('RegistrationCtrl', [
                 loginName: null,
                 password: null,
                 email: null,
-                phoneNumber: null,
+                phone: null,
                 displayName: null,
                 reservationSecret: null
             };
@@ -166,7 +160,7 @@ app.register.controller('RegistrationCtrl', [
             }
 
             // check password
-            if ($scope.formData.password == '' || $scope.formData.password == 'none') {
+            if ($scope.formData.password == '' || $scope.formData.password == 'none' || $scope.formData.password == undefined) {
                 $rootScope.$broadcast('cm-empty-password');
             } else {
                 data.password = $scope.formData.password;
@@ -184,6 +178,7 @@ app.register.controller('RegistrationCtrl', [
             if ($scope.registrationForm.phone.$valid == false) {
             } else {
                 if ($scope.registrationForm.phone.$viewValue != '') {
+                    // 'phoneNumber' is for BE call
                     data.phoneNumber = $scope.registrationForm.phone.$viewValue;
                 }
             }
@@ -208,6 +203,7 @@ app.register.controller('RegistrationCtrl', [
                     data.reservationSecret = reservationSecrets[data.loginName];
                 }
             } else {
+                console.log('reject of reservationSecrets empty',reservationSecrets)
                 deferred.reject(data);
             }
 
@@ -215,46 +211,22 @@ app.register.controller('RegistrationCtrl', [
             if($scope.registrationForm.$valid !== false){
                 deferred.resolve(data);
             } else {
+                console.log('reject form is not valid',$scope.formData);
                 deferred.reject(data);
             }
 
             return deferred.promise;
         };
 
-        $scope.handleFormDataCache = function(action){
-            switch(action){
-                case 'init':
-                    if($rootScope.pendingFormData != undefined){
-                        Object.keys($rootScope.pendingFormData).forEach(function(key){
-                            if(key == "reservationSecret" && $rootScope.pendingFormData[key] != null){
-                                reservationSecrets[$rootScope.pendingFormData.loginName] = $rootScope.pendingFormData[key];
-                            } else if($rootScope.pendingFormData[key] != null){
-                                $scope.formData[key] = $rootScope.pendingFormData[key];
-                            }
-                        })
-                    }
-                break;
-
-                case 'cache':
-                    $scope.validateForm().then(
-                        function (data) {
-                            $rootScope.pendingFormData = data;
-                            $rootScope.pendingFormData.password = null;
-                        },
-                        function (data) {
-                            $rootScope.pendingFormData = data;
-                            $rootScope.pendingFormData.password = null;
-                        }
-                    );
-                break;
-
-                case 'clear':
-                    $rootScope.pendingFormData = {};
-                break;
+        // transfer data
+        new cmTransferFormData($scope,{
+            id:'registration',
+            ignoreVar:'password',
+            privateData:reservationSecrets,
+            onGet: function(formData, privateData){
+                reservationSecrets = privateData
             }
-        };
-
-        $scope.handleFormDataCache('init');
+        });
 
         /**
          * Form Validation and Apicall to create user
@@ -275,39 +247,38 @@ app.register.controller('RegistrationCtrl', [
 
             //wait for the accpount check to finish
             $scope.pendingAccountCheck.then( function(){
-                //actually create the user:
-                $scope.handleFormDataCache('clear');
-
                 $scope
                 .validateForm()
-                .then(function(data){
-                    cmAuth
-                    .createUser(data)
-                    .then(function(userData){
-                        cmUserModel.doLogin($scope.formData.loginName, $scope.formData.password).then(
-                            function(){
-                                $scope.spinner('stop');
-                                cmUserModel.setIdentity(userData.identities[0]);
-                                if($scope.handleGuest !== false){
-                                    $location.path('/purl/'+$rootScope.pendingPurl);
-                                } else {
-                                    cmUserModel.comesFromRegistration = true;
-                                    $location.path("/talks");
+                .then(
+                    function(data){
+                        cmAuth
+                        .createUser(data)
+                        .then(function(userData){
+                            cmUserModel.doLogin($scope.formData.loginName, $scope.formData.password).then(
+                                function(){
+                                    $scope.spinner('stop');
+                                    cmUserModel.setIdentity(userData.identities[0]);
+                                    if($scope.handleGuest !== false){
+                                        $location.path('/purl/'+$rootScope.pendingPurl);
+                                    } else {
+                                        cmUserModel.comesFromRegistration = true;
+                                        $location.path("/talks");
+                                    }
+                                },
+                                function(){
+                                    $scope.spinner('stop');
                                 }
-                            },
-                            function(){
-                                $scope.spinner('stop');
-                            }
-                        );
-                        return true;
+                            );
+                            return true;
+                        },
+                        function(response){
+                            $scope.spinner('stop');
+                        });
                     },
-                    function(response){
+                    function(data){
                         $scope.spinner('stop');
-                    });
-                },
-                function(){
-                    $scope.spinner('stop');
-                });
+                    }
+                );
             })
         };
 

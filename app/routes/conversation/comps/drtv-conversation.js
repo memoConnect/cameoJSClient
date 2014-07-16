@@ -2,20 +2,11 @@
 
 angular.module('cmRouteConversation')
 .directive('cmConversation', [
-    'cmConversationFactory',
-    'cmUserModel',
-    'cmCrypt',
-    'cmLogger',
-    'cmNotify',
-    'cmModal',
-    'cmEnv',
-    'cmUtil',
-    '$location',
-    '$rootScope',
-    '$document',
-    '$routeParams',
+    'cmConversationFactory', 'cmUserModel', 'cmCrypt', 'cmLogger', 'cmNotify',
+    'cmModal', 'cmEnv', 'cmUtil', 'cmTransferFormData',
+    '$location', '$rootScope', '$document', '$routeParams',
     function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify,
-              cmModal, cmEnv, cmUtil,
+              cmModal, cmEnv, cmUtil, cmTransferFormData,
               $location, $rootScope, $document, $routeParams) {
         return {
             restrict: 'AE',
@@ -38,6 +29,13 @@ angular.module('cmRouteConversation')
                     if(identity && !('isAppOwner' in identity))
                         $scope.recipientName = identity.getDisplayName();
                 };
+
+
+                // transfer newMessageText
+                new cmTransferFormData($scope,{
+                    id:'conversation-'+($scope.conversation.id||'new'),
+                    scopeVar:'newMessageText'
+                });
 
                 /**
                  * start sending process
@@ -265,9 +263,7 @@ angular.module('cmRouteConversation')
                 $scope.showAsymmetricKeyError();
 
                 $scope.showGoToSettingsModal();
-
-                $scope.newMessageText = $rootScope.pendingMessageText[$scope.conversation.id || 'new'] || ''
-
+                
                 // first focus on message
                 if($scope.conversation.state.is('new') && cmEnv.isNotMobile){
                     $document[0].querySelector('cm-conversation .answer textarea').focus();
@@ -276,11 +272,6 @@ angular.module('cmRouteConversation')
 
 
                 /** Watchers **/
-
-                $scope.$watch('newMessageText', function(message_text){
-                    $rootScope.pendingMessageText = $rootScope.pendingMessageText || {}
-                    $rootScope.pendingMessageText[$scope.conversation.id || 'new'] = message_text
-                })
 
 
 

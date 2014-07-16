@@ -122,8 +122,7 @@ this.deleteTestUser = function (loginName) {
     }, testUserId, config.apiUrl)
 }
 
-
-this.getTestUserNotifications = function (loginName) {
+this.getTestUserNotifications = function(loginName) {
 
     var testUserId = loginName.split("_")[1]
 
@@ -193,7 +192,6 @@ this.waitForElementVisible = function (selector, timeout) {
 
     return this
 }
-
 
 this.waitForElementHidden = function (selector, timeout) {
 
@@ -376,4 +374,10 @@ this.addExternalContact = function (displayName) {
 }
 
 
+this.setVal = function(dataQa, text){
+    $("[data-qa='"+dataQa+"']").sendKeys(text)
+}
 
+this.getVal = function(dataQa){
+    return $("[data-qa='"+dataQa+"']").getAttribute('value')
+}

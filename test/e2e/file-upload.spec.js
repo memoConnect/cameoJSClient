@@ -56,6 +56,7 @@ function chooseFileAndUpload(file, selector, index, exp_notify){
     it(getFilename(file)+' choose and check preview',function(){
         $("[data-qa='btn-file-choose']").sendKeys(file)
 
+        util.waitForElements('cm-files-preview '+selector)
         // preview should be show image
         $$('cm-files-preview '+selector).then(function(elements) {
             expect(elements.length).toEqual(1)
