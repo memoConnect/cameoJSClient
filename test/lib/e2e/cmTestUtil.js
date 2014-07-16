@@ -363,7 +363,7 @@ this.acceptFriendRequests = function() {
 this.addExternalContact = function(displayName) {
     self.get("/contact/new")
     $("[data-qa='input-displayname']").sendKeys(displayName)
-    $("[data-qa='input-email']").sendKeys("some@mail.foo")
+    $("[data-qa='input-phonenumber']").sendKeys("1233")
     $("[data-qa='btn-create-contact']").click()
     self.waitForPageLoad("/contacts")
 }
