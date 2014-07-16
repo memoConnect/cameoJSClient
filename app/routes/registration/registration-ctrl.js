@@ -6,9 +6,9 @@ define([
     'use strict';
 
 app.register.controller('RegistrationCtrl', [
-    'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferFormData',
+    'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferScopeData',
     '$scope', '$rootScope', '$location', '$q', '$timeout',
-    function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferFormData,
+    function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferScopeData,
               $scope, $rootScope, $location, $q, $timeout) {
         var reservationSecrets = {};
 
@@ -130,7 +130,6 @@ app.register.controller('RegistrationCtrl', [
             },500);
         };
 
-
         /**
          * validate Registration Form
          * @returns {*}
@@ -218,16 +217,6 @@ app.register.controller('RegistrationCtrl', [
             return deferred.promise;
         };
 
-        // transfer data
-        new cmTransferFormData($scope,{
-            id:'registration',
-            ignoreVar:'password',
-            privateData:reservationSecrets,
-            onGet: function(formData, privateData){
-                reservationSecrets = privateData
-            }
-        });
-
         /**
          * Form Validation and Apicall to create user
          */
@@ -288,5 +277,15 @@ app.register.controller('RegistrationCtrl', [
         if(cmUserModel.isGuest() !== false){
             $scope.handleGuest = true;
         }
+
+        // transfer data between routeChanges
+        new cmTransferScopeData($scope,{
+            id:'registration',
+            ignoreVar:'password',
+            privateData:reservationSecrets,
+            onGet: function(formData, privateData){
+                reservationSecrets = privateData
+            }
+        });
     }]);
 });

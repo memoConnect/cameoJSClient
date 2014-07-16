@@ -59,7 +59,7 @@ describe('Single Conversation:', function () {
     })
 
     it('send message', function () {
-        $("[data-qa='input-answer']").sendKeys(messageText)
+        util.setVal('input-answer',messageText)
         $("[data-qa='btn-send-answer']").click()
     })
 
@@ -89,7 +89,7 @@ describe('Single Conversation:', function () {
     })
 
     it('send reply', function() {
-        $("[data-qa='input-answer']").sendKeys(messageText2)
+        util.setVal('input-answer',messageText2)
         $("[data-qa='btn-send-answer']").click()
     })
 

@@ -1,16 +1,15 @@
 'use strict';
 
 angular.module('cmCore')
-.factory('cmTransferFormData',[
+.factory('cmTransferScopeData',[
     'cmUtil',
     '$location',
     '$rootScope',
-    '$timeout',
-    function(cmUtil, $location, $rootScope, $timeout){
+    function(cmUtil, $location, $rootScope){
         var formData = {},
             privateData = {};
 
-        function cmTransferFormData($scope, _options_){
+        function cmTransferScopeData($scope, _options_){
             var self = this,
                 defaultOptions = {
                     id:'',
@@ -20,8 +19,6 @@ angular.module('cmCore')
                     onGet:function(){}
                 },
                 options = angular.extend({}, defaultOptions, _options_ || {});
-
-            console.log('init!!',options.id)
 
             // private watch on route start and success
             function init(){
@@ -50,6 +47,7 @@ angular.module('cmCore')
             // get only on same route and if formData is full of data
             self.get = function(){
                 if((options.id in formData)){
+                    console.log('get!!',formData[options.id],options.scopeVar,$scope)
                     $scope[options.scopeVar] = formData[options.id];
                     options.onGet(formData[options.id], privateData[options.id]);
                     self.reset();
@@ -67,6 +65,6 @@ angular.module('cmCore')
             return self;
         }
 
-        return cmTransferFormData;
+        return cmTransferScopeData;
     }]
 );

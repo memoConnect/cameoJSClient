@@ -4,17 +4,9 @@ var ptor = util.getPtorInstance()
 
 describe('transfer formdata registration',function(){
     it('fill out registration',function() {
+        util.logout()
         util.get('/registration')
         util.expectCurrentUrl('/registration')
-
-        util.waitForElement('[data-qa="input-loginName')
-        util.waitForElement('[data-qa="input-password"]')
-        util.waitForElement('[data-qa="input-passwordConfirm"]')
-        util.waitForElement('[data-qa="input-displayName"]')
-        util.waitForElement('[data-qa="input-email"]')
-        util.waitForElement('[data-qa="input-phone"]')
-
-        util.waitForElement("[data-qa='icon-checkbox-agb']")
 
         util.setVal('input-loginName', 'moeper')
         util.setVal('input-password', 'moep12345')
@@ -23,12 +15,12 @@ describe('transfer formdata registration',function(){
         util.setVal('input-email', 'moep@moep.de')
         util.setVal('input-phone', '123456')
 
-
         $("body").sendKeys(protractor.Key.END) 
-
+        // wait for validation
         ptor.wait(function(){
-            console.log(util.getVal('input-phone'))
-            return util.getVal('input-phone') == '+49123456'
+            return util.getVal('input-phone').then(function(value){
+                return value == '+49123456'
+            })
         })
 
         $("[data-qa='icon-checkbox-agb']").click()

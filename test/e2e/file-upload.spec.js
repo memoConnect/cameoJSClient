@@ -7,13 +7,14 @@ var ptor = util.getPtorInstance(),
     subjectSafe = 'subjectSafe FileUpload',
     smallImageJPG = path.resolve(__dirname,'./data/file-upload-image-24KB.jpg'),
     largeImageJPG = path.resolve(__dirname,'./data/file-upload-image-1.4MB.jpg'),
-    smallFileMP3 = path.resolve(__dirname,'./data/file-upload-audio-23KB.mp3');
+    smallFileMP3 = path.resolve(__dirname,'./data/file-upload-audio-23KB.mp3'),
+    smallFilePDF = path.resolve(__dirname,'./data/file-upload-file-123KB.pdf');
 
 // expect functions
-function testFile(file, extension, index, exp_notify){
+function testFile(file, extension, index){
     var selector = '.file'
 
-    chooseFileAndUpload(file, selector, index, exp_notify);
+    chooseFileAndUpload(file, selector, index);
 
     it(getFilename(file)+' in message displayed', function(){
         util.waitForProgressbar(10000)
@@ -24,10 +25,10 @@ function testFile(file, extension, index, exp_notify){
     })
 }
 
-function testImage(file, extension, index, exp_notify){
+function testImage(file, extension, index){
     var selector = '.file-image img'
 
-    chooseFileAndUpload(file, selector, index, exp_notify);
+    chooseFileAndUpload(file, selector, index);
 
     it(getFilename(file)+' in message displayed', function(){
         util.waitForProgressbar(10000)
@@ -38,10 +39,10 @@ function testImage(file, extension, index, exp_notify){
     })
 }
 
-function testHTML5(file, extension, index, exp_notify){
+function testHTML5(file, extension, index){
     var selector = '.file'
 
-    chooseFileAndUpload(file, selector, index, exp_notify);
+    chooseFileAndUpload(file, selector, index);
 
     it(getFilename(file)+' in message displayed', function(){
         util.waitForProgressbar(10000)
@@ -52,7 +53,7 @@ function testHTML5(file, extension, index, exp_notify){
     })
 }
 
-function chooseFileAndUpload(file, selector, index, exp_notify){
+function chooseFileAndUpload(file, selector, index){
     it(getFilename(file)+' choose and check preview',function(){
         $("[data-qa='btn-file-choose']").sendKeys(file)
 
@@ -66,19 +67,12 @@ function chooseFileAndUpload(file, selector, index, exp_notify){
     it('fill message and send check preview',function(){
         $("[data-qa='btn-send-answer']").click()
 
-        if(exp_notify){
-            util.waitAndCloseNotify('checkbox-dont-ask-me-again')
-            $("[data-qa='btn-send-answer']").click()
-        }
-
         util.waitForElements('cm-message',index)
-
 
         // preview should be empty
         $$('cm-files-preview '+selector).then(function(elements) {
             expect(elements.length).toEqual(0)
         })
-        
     })
 }
 
@@ -95,16 +89,25 @@ describe('FileUpload unsafe', function () {
         util.get('/conversation/new')
         util.waitForPageLoad('/conversation/new')
 
-        util.disableEncryption();
+        util.disableEncryption()
 
-        $("[data-qa='input-subject']").sendKeys(subjectUnsafe)
+        util.setVal('input-subject',subjectUnsafe)
     })
+
+    it('click on send message for open modal',function(){
+        $("[data-qa='btn-send-answer']").click()
+    })
+
+    it('check checkbox and close modal',function(){
+        util.waitAndCloseNotify('checkbox-dont-ask-me-again')
+    })
+
     // test files
     var files = [
         {html5: smallFileMP3},
         {image: smallImageJPG},
-        {image: largeImageJPG}
-//        {file: smallFileAAC},
+        {image: largeImageJPG},
+        {file: smallFilePDF}
     ]
 
     // testFile or testImage called for every entry
@@ -116,13 +119,13 @@ describe('FileUpload unsafe', function () {
             testIndex = parseInt(index)+1
         // test image
         if(file['image'] != undefined)
-            testImage(pathToFile, extension, testIndex, index == 0)
+            testImage(pathToFile, extension, testIndex)
         // test html5 element
         else if(file['html5'] != undefined)
-            testHTML5(pathToFile, extension, testIndex, index == 0)
+            testHTML5(pathToFile, extension, testIndex)
         //test file element
         else
-            testFile(pathToFile, extension, testIndex, index == 0)
+            testFile(pathToFile, extension, testIndex)
 
     }
 })

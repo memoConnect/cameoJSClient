@@ -3,10 +3,10 @@
 angular.module('cmRouteConversation')
 .directive('cmConversation', [
     'cmConversationFactory', 'cmUserModel', 'cmCrypt', 'cmLogger', 'cmNotify',
-    'cmModal', 'cmEnv', 'cmUtil', 'cmTransferFormData',
+    'cmModal', 'cmEnv', 'cmUtil', 'cmTransferScopeData',
     '$location', '$rootScope', '$document', '$routeParams',
     function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify,
-              cmModal, cmEnv, cmUtil, cmTransferFormData,
+              cmModal, cmEnv, cmUtil, cmTransferScopeData,
               $location, $rootScope, $document, $routeParams) {
         return {
             restrict: 'AE',
@@ -29,13 +29,6 @@ angular.module('cmRouteConversation')
                     if(identity && !('isAppOwner' in identity))
                         $scope.recipientName = identity.getDisplayName();
                 };
-
-
-                // transfer newMessageText
-                new cmTransferFormData($scope,{
-                    id:'conversation-'+($scope.conversation.id||'new'),
-                    scopeVar:'newMessageText'
-                });
 
                 /**
                  * start sending process
@@ -246,7 +239,6 @@ angular.module('cmRouteConversation')
                     }
                 };
 
-
                 $scope.conversation = $scope.$eval($attrs.cmData)
 
                 if(!$scope.conversation) return false
@@ -269,14 +261,7 @@ angular.module('cmRouteConversation')
                     $document[0].querySelector('cm-conversation .answer textarea').focus();
                 }
 
-
-
-                /** Watchers **/
-
-
-
                 /** Event callbacks **/
-
                 function callback_update_finished(){
                     $scope.showAsymmetricKeyError();
                 }
@@ -304,8 +289,7 @@ angular.module('cmRouteConversation')
                         settingsLinker.type = 'conversation';
                         settingsLinker.typeId = $routeParams.conversationId;
                     }
-                    cmNotify.warn(
-                        'CONVERSATION.WARN.RECIPIENTS_MISSING', 
+                    cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING',
                         {
                             ttl:0, 
                             i18n: settingsLinker,
@@ -322,15 +306,11 @@ angular.module('cmRouteConversation')
                     $scope.isSending = false;
                 }
 
-                
-
-
                 $scope.conversation
                 .on('update:finished',       callback_update_finished)
                 .on('password:missing',      callback_password_missing)
                 .on('recipients:missing',    callback_recipients_missing)
                 .on('save:aborted',          callback_save_aborted)
-
 
                 var stop_listening_to_logout =  $rootScope.$on('logout', function(){
                             $rootScope.pendingRecipients = [];
@@ -344,7 +324,13 @@ angular.module('cmRouteConversation')
                     $scope.conversation.off('save:aborted',          callback_save_aborted)
 
                     stop_listening_to_logout()
-                })
+                });
+
+                // transfer data between routeChanges
+                new cmTransferScopeData($scope,{
+                    id:'conversation-'+($scope.conversation.id||'new'),
+                    scopeVar:'newMessageText'
+                });
             }
         }
     }

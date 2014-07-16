@@ -226,11 +226,8 @@ this.waitForModalOpen = function (id) {
 }
 
 this.waitForModalClose = function () {
-
     ptor.wait(function () {
-
         var allHidden = true
-
         $$("cm-modal").each(function (element) {
             if (element.isDisplayed()) {
                 allHidden = false
@@ -290,14 +287,14 @@ this.clearInput = function (qaValue) {
 }
 
 this.waitAndCloseNotify = function(check) {
-    self.waitForElement("[data-qa='cm-modal-close-btn']")
+    self.waitForElement("cm-modal.active [data-qa='cm-modal-close-btn']")
 
     //Click 'dont warn me again' checkbox:
-    var checkbox = $('[data-qa ="'+check+'"]')
+    var checkbox = $("cm-modal.active [data-qa='"+check+"']")
     if(check && checkbox.isPresent())
-        checkbox.click()    
+        checkbox.click()
 
-    $("[data-qa='cm-modal-close-btn']").click()
+    $("cm-modal.active [data-qa='cm-modal-close-btn']").click()
 }
 
 this.getFileExtension = function (file) {
