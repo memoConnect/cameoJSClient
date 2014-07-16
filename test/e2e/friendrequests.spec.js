@@ -112,6 +112,8 @@ describe('Friendrequests', function () {
                 // search for user2
                 util.headerSearchInList(config.displayNameUser1)
 
+                ptor.debugger()
+
                 util.waitForElements('cm-contact-tag', 1)
                 expect($("[data-qa='contact-display-name']").getText()).toBe(config.displayNameUser1)
                 util.logout()

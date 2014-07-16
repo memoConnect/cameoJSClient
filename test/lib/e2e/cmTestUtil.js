@@ -76,7 +76,7 @@ this.login = function (username, password) {
     return this
 }
 
-this.createTestUser = function() {
+this.createTestUser = function(testUserId) {
 
     this.logout()
 

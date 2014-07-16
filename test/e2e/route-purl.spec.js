@@ -77,6 +77,7 @@ describe('Route: Purl - ', function () {
              * for next test
              * cm-message describes that messages in purl are loaded and loading process is finish
              */
+            ptor.debugger()
             util.waitForElement('cm-message');
         })
 
