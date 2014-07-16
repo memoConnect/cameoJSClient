@@ -70,54 +70,43 @@
  </example>
  */
 
-angular.module('cmUi').directive('cmFooter',[
+angular.module('cmUi')
+.directive('cmFooter',[
+    'cmConfig',
     '$location',
     '$document',
-    'cmTranslate',
-    'cmConfig',
-    function ($location, $document, cmTranslate, cmConfig){
+    function (cmConfig, $location, $document){
         return {
-            restrict: 'AE',
+            restrict: 'E',
+            transclude: true,
+            scope: true,
+            template: '<div ng-transclude></div>' +
+                      '<a ng-repeat="btn in Object.keys(btns)" href="#/{{btn}}" ng-class="{active:btns[btn].isActive}" style="width:{{btns[btn].width}}%">' +
+                        '<i ng-if="btns[btn].icon" class="fa {{btns[btn].icon}} cm-lg-icon"></i>' +
+                        '{{btns[btn].i18n|cmTranslate}}' +
+                      '</a>',
 
-            link : function(scope, element, attrs){
-                //if element has no children add default elements:
-                if(element.children().length == 0 ) {
-                    angular.forEach(Object.keys(scope.btns),function(btnHref){
-                        var btn = scope.btns[btnHref],
-                            el = angular.element('<a cm-weight="1">'+cmTranslate(btn.i18n)+'</a>');
-                        // set active
-                        el.toggleClass('active', btn.isActive ? true : false);
-                        // set href
-                        if(btnHref != '')
-                            el.attr('href', '#'+btnHref);
-                        else
-                            el.addClass('deactivated');
-                        // append icon
-                        if('icon' in btn){
-                            el.prepend('<i class="fa '+btn.icon+' cm-lg-icon"></i>')
-                        }
-                        // add to footer
-                        element.append(el);
-                    });
-                }
+            link: function(scope, element, attrs){
+                scope.btns = {};
+                scope.Object = Object;
 
-                // hide all other cm-footer
-                if('cmHideOtherFooter' in attrs && attrs.cmHideOtherFooter){
-                    var allFooters = $document[0].querySelectorAll('cm-footer');
-                    angular.forEach(allFooters,function(footer){
-                        if(footer != element[0]){
-                            angular.element(footer).addClass('ng-hide');
-                        }
-                    });
-                }
-            },
-            controller: function($scope){
-                $scope.btns = cmConfig.footer;
-
-                angular.forEach(Object.keys($scope.btns),function(btnHref){
-                    var btn = $scope.btns[btnHref];
+                // set menu btns from config
+                if(element[0].querySelector('[ng-transclude]').innerHTML == '') {
+                    scope.btns = cmConfig.footer;
+                    // set active & width
+                    var btns = Object.keys(scope.btns);
+                    angular.forEach(btns, function (btnHref) {
+                        var btn = scope.btns[btnHref];
                         btn.isActive = btnHref != '' && $location.$$path.search(btnHref) != -1;
-                });
+                        btn.width = 100/btns.length;
+                    });
+                }
+
+                if('cmAlwaysOnTop' in attrs){
+                    element.css('z-index',10);
+                } else {
+                    element.css('z-index',9);
+                }
             }
         }
     }

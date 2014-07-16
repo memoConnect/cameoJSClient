@@ -266,6 +266,9 @@
             "KEYMANAGEMENT": "Key Verwaltung",
             "TRUST": "Trust Me"
         },
+        "MODAL":{
+            "HEADER": "Identitäten"
+        },
         "NOTIFY":{
             "UPDATE": {
                 "ERROR": "Die Änderung konnte nicht gespeichert werden!"
@@ -293,6 +296,7 @@
                     "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
                     "CREATE": "erstellen",
                     "IMPORT": "importieren",
+                    "KEY_SIZE": "Schlüsselänge",
                     "KEY_ON_THIS_DEVICE": "lokal",
                     "EXPORT_KEY": "Schlüsselpaar exportieren",
                     "REMOVE_KEY": "Schlüsselpaar löschen",
@@ -301,13 +305,19 @@
                     "GENERATE": "generieren",
                     "GENERATION_IN_PROGRESS": "Generierung läuft",
                     "GENERATION_TIME_PROGRESS": "verbrauchte Zeit: {{time}}",
-                    "CANCEL": "Generiung abbrechen",
+                    "CANCEL": "Generierung abbrechen",
                     "STORE_KEYPAIR": "Schlüsselpaar speichern",
-                    "GENERATION_TIME": "Die Generierung hat {{time}} gedauert.",
+                    "GENERATION_TIME": "Die Generierung hat {{time}} gedauert",
                     "PRIVATE_KEY": "Privaterschlüssel",
                     "PUBLIC_KEY": "Öffentlicherschlüssel",
                     "KEY_NAME": "Schlüsselname",
-                    "STORE": "speichern"
+                    "STORE": "speichern",
+                    "WARN": {
+                        "IMPORT_FAILED": "Der eingegebene Schlüssel ist nicht valide",
+                        "CHECK_PRIVKEY": "Überprüfe den Privateschlüssel",
+                        "CHECK_PUBKEY": "Überprüfe den Öffentlichenschlüssel",
+                        "CHECK_KEYNAME": "Überprüfe den Schlüsselnamen"
+                    }
                 }
             },
             "ABOUT_US":{

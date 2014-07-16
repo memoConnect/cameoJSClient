@@ -23,13 +23,21 @@ describe('Route: Settings - Identity', function(){
         })
 
         it('should be possible to go to identity settings, if clicking on name in header', function(){
+
             util.get('/talks');
             util.expectCurrentUrl('#/talks')
 
-            util.waitForElement("[data-qa='link-identity-settings']");
-            expect($("[data-qa='link-identity-settings']").isPresent()).toBe(true)
+            util.waitForElement("[data-qa='btn-open-identity-modal']");
+            expect($("[data-qa='btn-open-identity-modal']").isPresent()).toBe(true)
 
-            $("[data-qa='link-identity-settings']").click();
+            $("[data-qa='btn-open-identity-modal']").click();
+
+            util.waitForModalOpen('modal-identity');
+
+            expect($("[data-qa='btn-identity-settings']").isPresent()).toBe(true)
+
+            $("[data-qa='btn-identity-settings']").click();
+
             util.waitForPageLoad("/settings/identity")
         })
 

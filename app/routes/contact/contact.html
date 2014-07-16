@@ -5,8 +5,6 @@
 </cm-header>
 
 <section ng-controller="ContactCtrl">
-    <div cm-transparent-bg></div>
-
     <div class="cm-contact-body">
         <div class="cm-contact-details" cm-rubber-space>
             <div cm-weight="1">
@@ -72,7 +70,9 @@
     </div>
 
     <cm-footer ng-hide="disabled">
-        <button data-qa="btn-create-contact" class="cm-btn-block" id="registerUserButton" ng-click="saveUser()">{{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i></button>
+        <button class="cm-btn-block cm-btn-grey" id="registerUserButton" ng-click="saveUser()">
+            {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i>
+        </button>
     </cm-footer>
 
 </section>

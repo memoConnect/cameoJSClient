@@ -73,17 +73,17 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
 
                     if($scope.privKey == ''){
                         error = true;
-                        cmNotify.warn('check private Key');
+                        cmNotify.warn('SETTINGS.PAGES.IDENTITY.KEYS.WARN.CHECK_PRIVKEY');
                     }
 
                     if($scope.pubKey == ''){
                         error = true;
-                        cmNotify.warn('check public Key');
+                        cmNotify.warn('SETTINGS.PAGES.IDENTITY.KEYS.WARN.CHECK_PUBKEY');
                     }
 
                     if($scope.keyName == ''){
                         error = true;
-                        cmNotify.warn('check keyName');
+                        cmNotify.warn('SETTINGS.PAGES.IDENTITY.KEYS.WARN.CHECK_KEYNAME');
                     }
 
                     if(error !== true){
@@ -96,7 +96,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                             .syncLocalKeys($scope.keySize);
 
                         $window.history.back();
-                        //cmNotify.info('NOTIFICATIONS.TYPES.KEYS.STORE_NEW',{displayType:'modal',ttl:3000});
                     }
                 };
             }

@@ -1,0 +1,29 @@
+<a data-qa="btn-open-identity-modal" ng-click="openModal('modal-identity')">
+    <cm-avatar cm-data="identity"></cm-avatar>
+    <span>{{identity.getDisplayName()}}</span>
+</a>
+
+<cm-modal id="modal-identity" cm-title="IDENTITY.MODAL.HEADER" type="plain" severity="info" class="no-padding">
+    <div class="modal-row">
+        <span>{{'IDENTITY.LABEL.NEW' | cmTranslate}}</span>
+        <button class="cm-disabled">
+            <i class="fa cm-checkbox-add"></i>
+        </button>
+    </div>
+    <div class="modal-row">
+        <cm-avatar cm-data="identity"></cm-avatar>
+        <cm-key-level cm-data="identity.getWeakestKeySize()"></cm-key-level>
+        <span cm-weight="1">{{identity.getDisplayName()}}</span>
+        <button data-qa="btn-identity-settings" ng-click="goToIdentitySettings()">
+            <i class="fa cm-fix"></i>
+        </button>
+    </div>
+    <div class="modal-row">
+        <cm-avatar cm-view="unknown"></cm-avatar>
+        <cm-key-level cm-data="2"></cm-key-level>
+        <span cm-weight="1">Mockname</span>
+        <button class="cm-disabled">
+            <i class="fa cm-fix"></i>
+        </button>
+    </div>
+</cm-modal>
