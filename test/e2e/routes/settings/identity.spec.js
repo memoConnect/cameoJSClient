@@ -128,6 +128,10 @@ describe('Route: Settings - Identity', function(){
 
             expect($("[data-qa='input-email']").getAttribute('value')).toBe(newEmail)
         })
+
+        it('should be delete TestUser "' + newTestUser + '"', function(){
+            util.deleteTestUser(newTestUser)
+        })
     });
 
     describe('Test4 - Form Errors on wrong Input', function(){
@@ -184,7 +188,6 @@ describe('Route: Settings - Identity', function(){
 
             expect($("[data-qa='form-error-phoneNumber-invalid']").isDisplayed()).toBe(false)
         })
-
     })
 
 });
