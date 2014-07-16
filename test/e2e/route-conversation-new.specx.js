@@ -10,7 +10,7 @@ describe('Conversation encryption', function () {
     /*
      Helper functions
      */
-    var checkConversation = function (recipients, negativeAspects, positiveAspects, encryptionType, addExternalUser) {
+    var checkConversation = function (recipients, negativeAspects, positiveAspects, encryptionType) {
 
         var conversationId
         var messages = []
@@ -229,6 +229,10 @@ describe('Conversation encryption', function () {
         })
     }
 
+    /*
+        Tests start here
+     */
+
     // creates conversation
     var testUserId1 = Math.random().toString(36).substring(2, 9)
     var testUser1 = "testUser23_" + testUserId1
@@ -262,7 +266,7 @@ describe('Conversation encryption', function () {
             util.login(testUser1, "password")
             util.acceptFriendRequests()
             util.addExternalContact(externalUser)
-//            util.generateKey()
+            util.generateKey()
         })
     })
     var password = Date.now()
@@ -274,17 +278,18 @@ describe('Conversation encryption', function () {
 //            {login: testUser2, hasKey: true}
 //        ]
 //
-//        checkConversation(recipients, 0, 2, "asym", false)
+//        checkConversation(recipients, 0, 2, "asym")
 //    })
 
-//    describe("password transmission:", function () {
-//        var recipients = [
-//            {login: testUser1, hasKey: true},
-//            {login: testUser2, hasKey: true},
-//            {login: testUser3, hasKey: false}
-//        ]
-//        checkConversation(recipients, 1, 1, "password")
-//    })
+    describe("password transmission:", function () {
+        var recipients = [
+            {login: testUser1, hasKey: true},
+            {login: testUser2, hasKey: true},
+            {login: testUser3, hasKey: false},
+            {login: externalUser, external: true, hasKey: false}
+        ]
+        checkConversation(recipients, 1, 1, "password")
+    })
 
 //    describe("passCaptcha transmission:", function () {
 //        var recipients = [
@@ -295,15 +300,15 @@ describe('Conversation encryption', function () {
 //        checkConversation(recipients, 2, 1, "passCaptcha")
 //    })
 
-    describe("no encryption:", function () {
-        var recipients = [
-            {login: testUser1, hasKey: true},
-            {login: testUser2, hasKey: true},
-            {login: testUser3, hasKey: false},
-            {login: externalUser, external: true, hasKey: false}
-        ]
-        checkConversation(recipients, 3, 0, "none", true)
-    })
+//    describe("no encryption:", function () {
+//        var recipients = [
+//            {login: testUser1, hasKey: true},
+//            {login: testUser2, hasKey: true},
+//            {login: testUser3, hasKey: false},
+//            {login: externalUser, external: true, hasKey: false}
+//        ]
+//        checkConversation(recipients, 3, 0, "none")
+//    })
 
 //    it("delete keys", function () {
 //        util.clearLocalStorage()
@@ -324,11 +329,11 @@ describe('Conversation encryption', function () {
 
 //    describe("")
 
-//    describe("after key deletion", function () {
+//    describe("without local key", function () {
 //
 //        it("delete key and login", function () {
 //            util.clearLocalStorage()
-//            util.login(config.loginUser1, "password")
+//            util.login(testUser1, "password")
 //        })
 //
 //        it("should not be able to open asym encrypted conversation", function () {
@@ -337,8 +342,11 @@ describe('Conversation encryption', function () {
 //            $("cm-conversation-tag").click()
 //
 //            util.waitForElement("cm-message")
+//
+//            util.waitForModalOpen()
 //            expect($("cm-modal").isDisplayed()).toBe(true)
 //            $("[data-qa='cm-modal-close-btn']").click()
+//
 //            $$('cm-message').then(function (elements) {
 //                elements.forEach(function (element) {
 //                    expect(element.getText()).not.toContain("moep")

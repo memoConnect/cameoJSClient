@@ -19,7 +19,7 @@ this.getPtorInstance = function () {
 
 this.get = function (path) {
 
-    if(ptor == undefined) {
+    if (ptor == undefined) {
         console.error("please set ptor = util.getPtorInstance()")
     }
 
@@ -76,12 +76,12 @@ this.login = function (username, password) {
     return this
 }
 
-this.createTestUser = function(testUserId) {
+this.createTestUser = function (testUserId) {
 
     this.logout()
 
     var prefix = 'testUser23_'
-    var id = testUserId || Math.random().toString(36).substring(2,9)
+    var id = testUserId || Math.random().toString(36).substring(2, 9)
     var loginName = prefix + id
     var password = 'password'
 
@@ -103,16 +103,16 @@ this.createTestUser = function(testUserId) {
     return loginName
 }
 
-this.deleteTestUser = function(loginName) {
+this.deleteTestUser = function (loginName) {
 
     var testUserId = loginName.split("_")[1]
 
-    ptor.executeAsyncScript( function(testUserId, apiUrl) {
+    ptor.executeAsyncScript(function (testUserId, apiUrl) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
         xhr.open("DELETE", apiUrl + "/testUser/" + testUserId, true);
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 callback(xhr.responseText);
             }
@@ -123,17 +123,17 @@ this.deleteTestUser = function(loginName) {
 }
 
 
-this.getTestUserNotifications = function(loginName) {
+this.getTestUserNotifications = function (loginName) {
 
     var testUserId = loginName.split("_")[1]
 
-    return ptor.executeAsyncScript( function(testUserId, apiUrl) {
+    return ptor.executeAsyncScript(function (testUserId, apiUrl) {
 
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
         xhr.open("GET", apiUrl + "/testUser/" + testUserId, true);
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 callback(JSON.parse(xhr.responseText))
             }
@@ -172,7 +172,7 @@ this.waitForElement = function (selector) {
 
 this.waitForElements = function (selector, count) {
 
-    if(count) {
+    if (count) {
         ptor.wait(function () {
             return $$(selector).then(function (elements) {
                 return elements.length == count
@@ -206,7 +206,7 @@ this.waitForElementHidden = function (selector, timeout) {
     return this
 }
 
-this.waitForElementDisappear = function(selector, timeout){
+this.waitForElementDisappear = function (selector, timeout) {
     ptor.wait(function () {
         return $(selector).isElementPresent().then(function (isPresent) {
             return !isPresent
@@ -217,8 +217,11 @@ this.waitForElementDisappear = function(selector, timeout){
 }
 
 this.waitForModalOpen = function (id) {
+
     ptor.wait(function () {
-        return $("#" + id).isDisplayed()
+        return $("cm-modal").then(function (element) {
+            return element.isDisplayed()
+        })
     }, config.routeTimeout, "waitForModalOpen " + id + " timeout reached")
 
     return this
@@ -288,31 +291,31 @@ this.clearInput = function (qaValue) {
     return this
 }
 
-this.waitAndCloseNotify = function() {
+this.waitAndCloseNotify = function () {
     self.waitForElement("[data-qa='cm-modal-close-btn']")
     $("[data-qa='cm-modal-close-btn']").click()
-    self.waitForElements("[data-qa='cm-modal-close-btn']",0)
+    self.waitForElements("[data-qa='cm-modal-close-btn']", 0)
 }
 
-this.getFileExtension = function(file){
+this.getFileExtension = function (file) {
     return file.split('.').pop()
 }
 
-this.headerSearchInList = function(searchString){
+this.headerSearchInList = function (searchString) {
     $("[data-qa='btn-header-list-search']").click()
     this.searchInList(searchString)
 }
 
-this.searchInList = function(searchString){
+this.searchInList = function (searchString) {
     $("[data-qa='inp-list-search']").sendKeys(searchString)
 }
 
 
-this.clearLocalStorage = function() {
+this.clearLocalStorage = function () {
     ptor.executeScript('localStorage.clear()')
 }
 
-this.generateKey = function() {
+this.generateKey = function () {
 
     self.get('/settings/identity/keys/create')
     self.waitForElement("[data-qa='btn-generate-key']")
@@ -321,10 +324,9 @@ this.generateKey = function() {
     $("[data-qa='btn-save-key']").click()
 
 
-
 }
 
-this.disableEncryption = function(){
+this.disableEncryption = function () {
     $("cm-header:not(.ng-hide) cm-security-indicator").click()
     self.waitForPageLoad("/conversation/new/security-settings")
     $("[data-qa='btn-encryption']").click()
@@ -332,11 +334,11 @@ this.disableEncryption = function(){
     self.waitForPageLoad("/conversation/new")
 }
 
-this.clickBackBtn = function(){
+this.clickBackBtn = function () {
     $("cm-header:not(.ng-hide) cm-back").click()
 }
 
-this.sendFriendRequest = function(displayName) {
+this.sendFriendRequest = function (displayName) {
     self.get("/contacts/search")
     $("[data-qa='inp-search-cameo-ids']").sendKeys(displayName)
     self.waitForElement("[data-qa='btn-openModal']")
@@ -344,14 +346,14 @@ this.sendFriendRequest = function(displayName) {
     $("[data-qa='btn-sendRequest']").click()
 }
 
-this.acceptFriendRequests = function() {
+this.acceptFriendRequests = function () {
     $("[data-qa='btn-open-menu']").click()
     $("[data-qa='btn-menu-contact-requests']").click()
     self.waitForElement("cm-contact-tag")
 
-    var clickAccept = function(){
-        $$("[data-qa='btn-acceptRequest']").then(function(buttons) {
-            if(buttons.length > 0) {
+    var clickAccept = function () {
+        $$("[data-qa='btn-acceptRequest']").then(function (buttons) {
+            if (buttons.length > 0) {
                 buttons[0].click()
                 clickAccept()
             }
@@ -360,7 +362,7 @@ this.acceptFriendRequests = function() {
     clickAccept();
 }
 
-this.addExternalContact = function(displayName) {
+this.addExternalContact = function (displayName) {
     self.get("/contact/new")
     $("[data-qa='input-displayname']").sendKeys(displayName)
     $("[data-qa='input-phonenumber']").sendKeys("1233")
