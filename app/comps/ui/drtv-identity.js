@@ -2,13 +2,12 @@
 
 angular.module('cmUi').directive('cmIdentity',[
     'cmUserModel',
-    function (cmUserModel){
+    'cmModal',
+    '$location',
+    function (cmUserModel, cmModal, $location){
         return {
             restrict: 'AE',
-            template: '<a href="#/settings/identity" data-qa="link-identity-settings">' +
-                        '<cm-avatar cm-data="identity"></cm-avatar>' +
-                        '<span>{{identity.getDisplayName()}}</span>' +
-                      '</a>',
+            templateUrl: 'comps/ui/drtv-identity.html',
             scope: true,
             controller: function($scope){
                 function setIdentity(){
@@ -20,6 +19,13 @@ angular.module('cmUi').directive('cmIdentity',[
                 cmUserModel.on('update:finished',function(){
                     setIdentity();
                 });
+
+                $scope.goToIdentitySettings = function(){
+                    if($location.$$url == '/settings/identity'){
+                        cmModal.close('modal-identity');
+                    }
+                    $location.path('/settings/identity');
+                }
             }
         }
     }

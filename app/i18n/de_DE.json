@@ -265,6 +265,9 @@
             "KEYMANAGEMENT": "Key Verwaltung",
             "TRUST": "Trust Me"
         },
+        "MODAL":{
+            "HEADER": "Identitäten"
+        },
         "NOTIFY":{
             "UPDATE": {
                 "ERROR": "Die Änderung konnte nicht gespeichert werden!"
