@@ -76,12 +76,12 @@ this.login = function (username, password) {
     return this
 }
 
-this.createTestUser = function() {
+this.createTestUser = function(testUserId) {
 
     this.logout()
 
     var prefix = 'testUser23_'
-    var id = Math.random().toString(36).substring(2,9)
+    var id = testUserId || Math.random().toString(36).substring(2,9)
     var loginName = prefix + id
     var password = 'password'
 
@@ -315,12 +315,12 @@ this.clearLocalStorage = function() {
 this.generateKey = function() {
 
     self.get('/settings/identity/keys/create')
-
+    self.waitForElement("[data-qa='btn-generate-key']")
     $("[data-qa='btn-generate-key']").click()
-
     self.waitForElementVisible("[data-qa='page-save-key']", 50000)
-
     $("[data-qa='btn-save-key']").click()
+
+
 
 }
 
@@ -365,6 +365,7 @@ this.addExternalContact = function(displayName) {
     $("[data-qa='input-displayname']").sendKeys(displayName)
     $("[data-qa='input-email']").sendKeys("some@mail.foo")
     $("[data-qa='btn-create-contact']").click()
+    self.waitForPageLoad("/contacts")
 }
 
 

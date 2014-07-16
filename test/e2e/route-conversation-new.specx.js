@@ -34,7 +34,7 @@ describe('Conversation encryption', function () {
 
             for (var i = 1; i < recipients.length; i++) {
                 var recipient = recipients[i]
-                $("[data-qa='inp-list-search']").sendKeys(recipient.displayName)
+                $("[data-qa='inp-list-search']").sendKeys(recipient.login)
                 util.waitForElement("[data-qa='btn-select-contact']")
                 $("[data-qa='btn-select-contact']").click()
                 $("[data-qa='btn-list-search-clear']").click()
@@ -195,68 +195,61 @@ describe('Conversation encryption', function () {
     }
 
     // creates conversation
-    var testUser1
+    var testUserId1 = Math.random().toString(36).substring(2,9)
+    var testUser1 = "testUser23_" + testUserId1
     // recipient with key
-    var testUser2
+    var testUserId2 = Math.random().toString(36).substring(2,9)
+    var testUser2 = "testUser23_" + testUserId2
     // recipient without key
-    var testUser3
+    var testUserId3 = Math.random().toString(36).substring(2,9)
+    var testUser3 = "testUser23_" + testUserId3
     // external User
     var externalUser = "external_moep"
 
     describe("prepare tests", function () {
 
         it("create test user 1", function () {
-            testUser1 = util.createTestUser()
-            ptor.debugger();
+            util.createTestUser(testUserId1)
         })
 
-        it("create test user 2, generate key and send friend request", function(){
-            testUser2 = util.createTestUser()
-//            util.generteKey()
+        it("create test user 2, generate key and send friend request", function () {
+            util.createTestUser(testUserId2)
+            util.generateKey()
             util.sendFriendRequest(testUser1)
         })
 
-        it("create test user 3 and send friend request", function(){
-            testUser3 = util.createTestUser()
+        it("create test user 3 and send friend request", function () {
+            util.createTestUser(testUserId3)
             util.sendFriendRequest(testUser1)
         })
 
-        it(" user 1 accept friend request", function(){
+        it(" user 1 accept friend request", function () {
             util.login(testUser1, "password")
             util.acceptFriendRequests()
             util.addExternalContact(externalUser)
-
-//            util.generteKey()
+            util.generateKey()
         })
     })
-
-
-
-
-//    it("generate key for second recipient", function () {
-//        util.login(config.contactUser1Login, "password")
-//        util.generateKey()
-//    })
-
     var password = Date.now()
 
 //    describe("asym key transmission:", function () {
 //
 //        var recipients = [
-//            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
-//            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true}
+//            {login: testUser1, hasKey: true},
+//            {login: testUser2, hasKey: true}
 //        ]
+//
 //        checkConversation(recipients, 0, 2, "asym")
 //    })
 
-//    describe("password transmission:", function () {
-//        var recipients = [
-//            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
-////            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true},
-//            {login: config.contact2User1Login, displayName: config.contact2User1DisplayName, hasKey: false}
-//        ]
-//        checkConversation(recipients, 1, 1, "password")
-//    })
+    describe("password transmission:", function () {
+        var recipients = [
+            {login: testUser1, hasKey: true},
+            {login: testUser2, hasKey: true},
+            {login: testUser3, hasKey: false}
+        ]
+        checkConversation(recipients, 1, 1, "password")
+    })
 
 //    describe("passCaptcha transmission:", function () {
 //        var recipients = [
