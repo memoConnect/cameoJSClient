@@ -218,12 +218,9 @@ app.register.controller('RegistrationCtrl', [
             return deferred.promise;
         };
 
-        new cmTransferFormData({
-            $scope:$scope,
+        // transfer data
+        new cmTransferFormData($scope,{
             id:'registration',
-            isCurrentRoute: function($locationPath){
-                return cmUtil.endsWith($locationPath, this.id);
-            },
             ignoreVar:'password',
             privateData:reservationSecrets,
             onGet: function(formData, privateData){

@@ -44,25 +44,11 @@ angular.module('cmRouteConversation')
                 }
 
                 // transfer newMessageText
-                new cmTransferFormData({
-                    id: 'conversation',
-                    $scope: $scope,
-                    scopeVar:'newMessageText',
-                    isCurrentRoute: function($locationPath){
-                        var isConversation = cmUtil.startsWith($locationPath,'/conversation'),
-                            isPurl = cmUtil.startsWith($locationPath,'/purl'),
-                            isChildPage = ('pageChild1' in $routeParams);
-
-                        console.log($locationPath, isConversation, isPurl, isChildPage, $routeParams);
-
-                        console.log(
-                            'isConversationOverview: '+(isConversation && isChildPage == false),
-                            'isPurlOverview: '+(isPurl && !isChildPage)
-                        )
-
-                        return isConversation && !isChildPage || isPurl && !isChildPage;
-                    }
+                new cmTransferFormData($scope,{
+                    id:'conversation-'+($scope.conversation.id||'new'),
+                    scopeVar:'newMessageText'
                 });
+
                 /**
                  * start sending process
                  * with preparing files for upload
@@ -252,7 +238,7 @@ angular.module('cmRouteConversation')
                         //@ TODO: solve rekeying another way:
                         $scope.conversation.numberOfMessages++;
                         $scope.newMessageText = '';
-                        $rootScope.newMessageText = null;
+                        $rootScope.pendingConversation = null;
                         files = [];
                         $scope.isSending = false;
 

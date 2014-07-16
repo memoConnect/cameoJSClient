@@ -10,13 +10,9 @@ angular.module('cmCore')
         var formData = {},
             privateData = {};
 
-        function cmTransferFormData(_options_){
+        function cmTransferFormData($scope, _options_){
             var self = this,
                 defaultOptions = {
-                    isCurrentRoute: function($locationPath){
-                        return true;
-                    },
-                    $scope: null,
                     id:'',
                     scopeVar:'formData',
                     ignoreVar:'',
@@ -25,37 +21,22 @@ angular.module('cmCore')
                 },
                 options = angular.extend({}, defaultOptions, _options_ || {});
 
+            console.log('init!!',options.id)
+
             // private watch on route start and success
             function init(){
-                if(options.$scope != null) {
-                    options.$scope.$on('$routeChangeStart', function () {
-                        console.log('set??')
-                        if(!options.isCurrentRoute($location.$$path)) {
-                            self.set();
-                        }
+                if($scope != undefined) {
+                    $rootScope.$on('$routeChangeStart', function () {
+                        self.set();
                     });
-                    options.$scope.$on('$routeChangeSuccess', function(){
-                        console.log('get??')
-                        if(options.isCurrentRoute($location.$$path)){
-                            self.get();
-                        }
-                    });
-
-//                    $rootScope.$on('formData:set', function(){
-//
-//                    });
-//
-//                    $rootScope.$on('formData:get', function(){
-//
-//                    });
+                    self.get();
                 }
             }
 
             // set the formData of outfilled inputs
             self.set = function(){
                 self.reset();
-                console.log('set!!',options.scopeVar,JSON.stringify(options.$scope[options.scopeVar]))
-                formData[options.id] = options.$scope[options.scopeVar];
+                formData[options.id] = $scope[options.scopeVar];
 
                 if(options.privateData != undefined){
                     privateData[options.id] = options.privateData;
@@ -68,9 +49,8 @@ angular.module('cmCore')
 
             // get only on same route and if formData is full of data
             self.get = function(){
-                console.log('get!!',options.id,(options.id in formData),JSON.stringify(formData[options.id]))
                 if((options.id in formData)){
-                    options.$scope[options.scopeVar] = formData[options.id];
+                    $scope[options.scopeVar] = formData[options.id];
                     options.onGet(formData[options.id], privateData[options.id]);
                     self.reset();
                 }
