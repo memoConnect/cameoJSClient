@@ -157,6 +157,24 @@ angular.module('cmCore').service('cmAuth', [
              * @ngdoc method
              * @methodOf cmAuth
              *
+             * @name updateIdentity
+             * @description
+             * Update own Identity
+             *
+             * @param {Object} data Identity Parameter
+             * @returns {Promise} async handling
+             */
+            updateIdentity: function(data){
+                return cmApi.put({
+                    path: '/identity',
+                    data: data
+                })
+            },
+
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
              * @name savePublicKey
              * @description
              * saved a identity public key

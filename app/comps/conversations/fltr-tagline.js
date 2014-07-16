@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmConversations').filter('cmTagline', [
+angular.module('cmConversations')
+.filter('cmTagline', [
     '$filter',
     function($filter){
         return function(conversation) {

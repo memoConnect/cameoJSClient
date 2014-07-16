@@ -265,6 +265,11 @@
         "LABEL":{
             "KEYMANAGEMENT": "manage keys",
             "TRUST": "trust"
+        },
+        "NOTIFY":{
+            "UPDATE": {
+                "ERROR": "Something went wrong, pls try again"
+            }
         }
     },
 	
