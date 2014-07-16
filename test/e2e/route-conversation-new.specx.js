@@ -207,6 +207,7 @@ describe('Conversation encryption', function () {
 
         it("create test user 1", function () {
             testUser1 = util.createTestUser()
+            ptor.debugger();
         })
 
         it("create test user 2, generate key and send friend request", function(){

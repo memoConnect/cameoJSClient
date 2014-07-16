@@ -127,6 +127,11 @@ module.exports = function (grunt) {
             testConfig.config.wwwUrl = wwwUrl;
         }
 
+        var protractorDebug = grunt.option('debug');
+        if(protractorDebug){
+            testConfig.config.protractorDebug = true
+        }
+
         var platform = process.platform
         console.log("OS: " + platform)
         if (platform.match(/linux/)) {
@@ -219,6 +224,7 @@ module.exports = function (grunt) {
     };
 
     // write config
+    console.log("debug: " + globalCameoTestConfig.config.protractorDebug)
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         // misc
@@ -458,7 +464,8 @@ module.exports = function (grunt) {
                 noColor: false, // If true, protractor will not use colors in its output.
                 args: {
                     // Arguments passed to the command
-                }
+                },
+                debug: globalCameoTestConfig.config.protractorDebug
             },
             default: {
             }
