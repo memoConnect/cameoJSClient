@@ -299,8 +299,6 @@ this.waitAndCloseNotify = function(check) {
     if(check && checkbox.isPresent())
         checkbox.click()
 
-
-
     $("[data-qa='cm-modal-close-btn']").click()
     self.waitForElements("[data-qa='cm-modal-close-btn']", 0)
 }

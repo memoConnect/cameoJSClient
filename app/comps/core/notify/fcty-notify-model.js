@@ -49,7 +49,7 @@ angular.module('cmCore')
             this.importData = function(data){
 //                cmLogger.debug('cmNotifyModel.importData');
 
-                if(typeof data == 'object' || typeof data == 'array'){
+                if(typeof data == 'object') //typeof never equals 'array': || typeof data == 'array'){
                     this.label = data.label || this.label;
 
                     this.severity = data.severity || this.severity;
