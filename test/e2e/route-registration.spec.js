@@ -115,7 +115,8 @@ describe('registration', function () {
         expect($(".empty-list").isPresent()).toBe(true)
 
         // modal should only be displayed on first visit
-        util.get("/talks");
+//        util.get("/talks");
+        ptor.refresh();
         $$("cm-modal").then(function(elements) {
             expect(elements.length).toBe(0)
         })
