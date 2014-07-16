@@ -65,6 +65,10 @@ function chooseFileAndUpload(file, selector, index){
     it('fill message and send check preview',function(){
         $("[data-qa='btn-send-answer']").click()
 
+        util.waitAndCloseNotify('checkbox-dont-ask-me-again')
+
+        $("[data-qa='btn-send-answer']").click()
+
         util.waitForElements('cm-message',index)
 
         // preview should be empty

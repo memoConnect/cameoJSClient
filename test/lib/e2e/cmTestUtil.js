@@ -19,7 +19,7 @@ this.getPtorInstance = function () {
 
 this.get = function (path) {
 
-    if (ptor == undefined) {
+    if(ptor == undefined) {
         console.error("please set ptor = util.getPtorInstance()")
     }
 
@@ -76,7 +76,7 @@ this.login = function (username, password) {
     return this
 }
 
-this.createTestUser = function (testUserId) {
+this.createTestUser = function() {
 
     this.logout()
 
@@ -291,8 +291,16 @@ this.clearInput = function (qaValue) {
     return this
 }
 
-this.waitAndCloseNotify = function () {
+this.waitAndCloseNotify = function(check) {
     self.waitForElement("[data-qa='cm-modal-close-btn']")
+
+    //Click 'dont warn me again' checkbox:
+    var checkbox = $('[data-qa ="'+check+'"]')
+    if(check && checkbox.isPresent())
+        checkbox.click()
+
+
+
     $("[data-qa='cm-modal-close-btn']").click()
     self.waitForElements("[data-qa='cm-modal-close-btn']", 0)
 }
@@ -369,5 +377,6 @@ this.addExternalContact = function (displayName) {
     $("[data-qa='btn-create-contact']").click()
     self.waitForPageLoad("/contacts")
 }
+
 
 

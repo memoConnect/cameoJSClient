@@ -40,32 +40,6 @@ angular.module('cmRouteConversation')
                 };
 
                 /**
-                 * check if is new
-                 * @returns {boolean}
-                 */
-                this.isNew = function(){
-                    return $scope.conversation.state.is('new')
-                };
-
-                // first focus on message
-                if(!this.isNew() && cmEnv.isNotMobile){
-                    $document[0].querySelector('cm-conversation .answer textarea').focus();
-                }
-
-                // transfer newMessageText
-                $rootScope.$on('$routeChangeStart', function(){
-                    if(cmUtil.endsWith($location.$$path,'/new') && $scope.newMessageText != ''){
-                        $rootScope.newMessageText = $scope.newMessageText
-                    }
-                });
-
-                $rootScope.$on('$routeChangeSuccess', function(){
-                    if(cmUtil.endsWith($location.$$path,'/new') && $rootScope.newMessage != undefined){
-                        $scope.newMessageText = $rootScope.newMessageText;
-                    }
-                });
-
-                /**
                  * start sending process
                  * with preparing files for upload
                  * after preparation send message
@@ -274,40 +248,49 @@ angular.module('cmRouteConversation')
                     }
                 };
 
-                $scope.init = function (conversation) {
-//                    cmLogger.debug('cmConversationDRTV.init')
-                    if(!conversation){
-                        cmLogger.debug("Conversation not found.");
-                        return false
-                    }
 
-                    $rootScope.pendingConversation = conversation;
+                $scope.conversation = $scope.$eval($attrs.cmData)
 
-                    // reload detail of conversation
-                    $scope.conversation = conversation.load();
+                if(!$scope.conversation) return false
 
-                    self.addPendingRecipients();
+                $rootScope.pendingConversation = $scope.conversation;
 
-                    if(!$scope.newMessageText)
-                        $scope.newMessageText = '';
-                    $scope.show_contacts  = false;
+                // reload detail of conversation
+                $scope.conversation.load();
 
-                    $scope.conversation.on('save:aborted', function(){
-                       $scope.isSending = false;
-                    });
+                self.addPendingRecipients();
 
+                $scope.show_contacts  = false;
+
+                $scope.showAsymmetricKeyError();
+
+                $scope.showGoToSettingsModal();
+
+                $scope.newMessageText = $rootScope.pendingMessageText[$scope.conversation.id || 'new'] || ''
+
+                // first focus on message
+                if($scope.conversation.state.is('new') && cmEnv.isNotMobile){
+                    $document[0].querySelector('cm-conversation .answer textarea').focus();
+                }
+
+
+
+                /** Watchers **/
+
+                $scope.$watch('newMessageText', function(message_text){
+                    $rootScope.pendingMessageText = $rootScope.pendingMessageText || {}
+                    $rootScope.pendingMessageText[$scope.conversation.id || 'new'] = message_text
+                })
+
+
+
+                /** Event callbacks **/
+
+                function callback_update_finished(){
                     $scope.showAsymmetricKeyError();
+                }
 
-                    $scope.showGoToSettingsModal();
-                };
-
-                $scope.init($scope.$eval($attrs.cmData))
-
-                $scope.conversation.on('update:finished', function(){
-                    $scope.showAsymmetricKeyError();
-                });
-
-                $scope.conversation.on('password:missing', function(){
+                function callback_password_missing(){
                     // switcher for purl and conversation, @Todo: vereinheitlichen
                     var settingsLinker = {type:'',typeId:''};
                     if('purlId' in $routeParams){
@@ -318,9 +301,10 @@ angular.module('cmRouteConversation')
                         settingsLinker.typeId = $routeParams.conversationId;
                     }
                     cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD', {ttl:0, i18n: settingsLinker});
-                });
+                }
 
-                $scope.conversation.on('recipients:missing', function(){
+                function callback_recipients_missing(){
+                    console.log('recipient:missing!')
                     // switcher for purl and conversation, @Todo: vereinheitlichen
                     var settingsLinker = {type:'',typeId:''};
                     if('purlId' in $routeParams){
@@ -338,19 +322,39 @@ angular.module('cmRouteConversation')
                             template:   '<small>{{"CONVERSATION.WARN.RECIPIENTS_MISSING_OKAY"|cmTranslate}}</small>'+
                                         '<i ng-click="conversation.solitary = !conversation.solitary" ng-class="'+
                                             "{'cm-checkbox':!conversation.solitary, 'cm-checkbox-right':conversation.solitary}"+
-                                        '" class="fa cm-lg-icon cm-ci-color ml15"></i>',
+                                        '" class="fa cm-lg-icon cm-ci-color ml15" data-qa = "checkbox-dont-ask-me-again"></i>',
                             templateScope: $scope
                         }
                     );
-                })
+                }
 
-                /**
-                 * Delete pending Objects
-                 */
-                cmUserModel.on('cmUserModel:doLogout',function(){
-                    $rootScope.pendingRecipients = [];
-                    $rootScope.pendingConversation = null;
-                });
+                function callback_save_aborted(){
+                    $scope.isSending = false;
+                }
+
+                
+
+
+                $scope.conversation
+                .on('update:finished',       callback_update_finished)
+                .on('password:missing',      callback_password_missing)
+                .on('recipients:missing',    callback_recipients_missing)
+                .on('save:aborted',          callback_save_aborted)
+
+
+                var stop_listening_to_logout =  $rootScope.$on('logout', function(){
+                            $rootScope.pendingRecipients = [];
+                            $rootScope.pendingConversation = null;
+                    })
+
+                $scope.$on('$destroy', function(){
+                    $scope.conversation.off('update:finished',       callback_update_finished)
+                    $scope.conversation.off('password:missing',      callback_password_missing)
+                    $scope.conversation.off('recipients:missing',    callback_recipients_missing)
+                    $scope.conversation.off('save:aborted',          callback_save_aborted)
+
+                    stop_listening_to_logout()
+                })
             }
         }
     }
