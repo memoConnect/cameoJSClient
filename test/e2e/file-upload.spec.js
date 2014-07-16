@@ -10,10 +10,10 @@ var ptor = util.getPtorInstance(),
     smallFileMP3 = path.resolve(__dirname,'./data/file-upload-audio-23KB.mp3');
 
 // expect functions
-function testFile(file, extension, index){
+function testFile(file, extension, index, exp_notify){
     var selector = '.file'
 
-    chooseFileAndUpload(file, selector, index);
+    chooseFileAndUpload(file, selector, index, exp_notify);
 
     it(getFilename(file)+' in message displayed', function(){
         util.waitForProgressbar(10000)
@@ -24,10 +24,10 @@ function testFile(file, extension, index){
     })
 }
 
-function testImage(file, extension, index){
+function testImage(file, extension, index, exp_notify){
     var selector = '.file-image img'
 
-    chooseFileAndUpload(file, selector, index);
+    chooseFileAndUpload(file, selector, index, exp_notify);
 
     it(getFilename(file)+' in message displayed', function(){
         util.waitForProgressbar(10000)
@@ -38,10 +38,10 @@ function testImage(file, extension, index){
     })
 }
 
-function testHTML5(file, extension, index){
+function testHTML5(file, extension, index, exp_notify){
     var selector = '.file'
 
-    chooseFileAndUpload(file, selector, index);
+    chooseFileAndUpload(file, selector, index, exp_notify);
 
     it(getFilename(file)+' in message displayed', function(){
         util.waitForProgressbar(10000)
@@ -52,7 +52,7 @@ function testHTML5(file, extension, index){
     })
 }
 
-function chooseFileAndUpload(file, selector, index){
+function chooseFileAndUpload(file, selector, index, exp_notify){
     it(getFilename(file)+' choose and check preview',function(){
         $("[data-qa='btn-file-choose']").sendKeys(file)
 
@@ -65,18 +65,19 @@ function chooseFileAndUpload(file, selector, index){
     it('fill message and send check preview',function(){
         $("[data-qa='btn-send-answer']").click()
 
-        util.waitAndCloseNotify('checkbox-dont-ask-me-again')
-
-        $("[data-qa='btn-send-answer']").click()
-
-        util.waitAndCloseNotify('checkbox-dont-ask-me-again')
+        if(exp_notify){
+            util.waitAndCloseNotify('checkbox-dont-ask-me-again')
+            $("[data-qa='btn-send-answer']").click()
+        }
 
         util.waitForElements('cm-message',index)
+
 
         // preview should be empty
         $$('cm-files-preview '+selector).then(function(elements) {
             expect(elements.length).toEqual(0)
         })
+        
     })
 }
 
@@ -104,6 +105,7 @@ describe('FileUpload unsafe', function () {
         {image: largeImageJPG}
 //        {file: smallFileAAC},
     ]
+
     // testFile or testImage called for every entry
     for(index in files){
         // prepare file
@@ -113,13 +115,13 @@ describe('FileUpload unsafe', function () {
             testIndex = parseInt(index)+1
         // test image
         if(file['image'] != undefined)
-            testImage(pathToFile, extension, testIndex)
+            testImage(pathToFile, extension, testIndex, index == 0)
         // test html5 element
         else if(file['html5'] != undefined)
-            testHTML5(pathToFile, extension, testIndex)
+            testHTML5(pathToFile, extension, testIndex, index == 0)
         //test file element
         else
-            testFile(pathToFile, extension, testIndex)
+            testFile(pathToFile, extension, testIndex, index == 0)
 
     }
 })

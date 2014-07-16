@@ -304,7 +304,6 @@ angular.module('cmRouteConversation')
                 }
 
                 function callback_recipients_missing(){
-                    console.log('recipient:missing!')
                     // switcher for purl and conversation, @Todo: vereinheitlichen
                     var settingsLinker = {type:'',typeId:''};
                     if('purlId' in $routeParams){

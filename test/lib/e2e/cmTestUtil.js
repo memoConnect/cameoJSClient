@@ -297,10 +297,9 @@ this.waitAndCloseNotify = function(check) {
     //Click 'dont warn me again' checkbox:
     var checkbox = $('[data-qa ="'+check+'"]')
     if(check && checkbox.isPresent())
-        checkbox.click()
+        checkbox.click()    
 
     $("[data-qa='cm-modal-close-btn']").click()
-    self.waitForElements("[data-qa='cm-modal-close-btn']", 0)
 }
 
 this.getFileExtension = function (file) {

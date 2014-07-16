@@ -25,6 +25,8 @@ angular.module('cmCore')
             this.bell = false;
             this.ttl = -1;
             this.i18n = {};
+            this.template = undefined
+            this.templateScope = undefined
 
             /**
              * {
@@ -48,8 +50,10 @@ angular.module('cmCore')
 
             this.importData = function(data){
 //                cmLogger.debug('cmNotifyModel.importData');
+//                
+                console.dir(data)
 
-                if(typeof data == 'object') //typeof never equals 'array': || typeof data == 'array'){
+                if(typeof data == 'object') { //typeof never equals 'array': || typeof data == 'array'){
                     this.label = data.label || this.label;
 
                     this.severity = data.severity || this.severity;
@@ -66,9 +70,9 @@ angular.module('cmCore')
 
                     this.i18n = data.i18n || this.i18n;
 
-                    this.template = data.template 
+                    this.template = data.template || this.template
 
-                    this.templateScope  = data.templateScope 
+                    this.templateScope  = data.templateScope || this.templateScope
                 } else {
                     this.state.set('error');
                 }
