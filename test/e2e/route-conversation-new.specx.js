@@ -194,33 +194,43 @@ describe('Conversation encryption', function () {
         })
     }
 
-    var testUser
+    // creates conversation
+    var testUser1
+    // recipient with key
+    var testUser2
+    // recipient without key
+    var testUser3
+    // external User
+    var externalUser = "external_moep"
 
     describe("prepare tests", function () {
 
-        it("create test user and generate key", function () {
-            var testUser = util.createTestUser()
-            util.generateKey()
+        it("create test user 1", function () {
+            testUser1 = util.createTestUser()
         })
 
-        it("make testUser friends with existing user", function () {
-            util.get("/contacts/search")
-            $("[data-qa='inp-search-cameo-ids']").sendKeys(config.displayNameUser1)
-            $("[data-qa='btn-openModal']").click()
-            $("[data-qa='btn-sendRequest']").click()
+        it("create test user 2, generate key and send friend request", function(){
+            testUser2 = util.createTestUser()
+//            util.generteKey()
+            util.sendFriendRequest(testUser1)
+        })
 
-            util.login(config.loginUser1, "password")
-            $("[data-qa='btn-open-menu']").click()
+        it("create test user 3 and send friend request", function(){
+            testUser3 = util.createTestUser()
+            util.sendFriendRequest(testUser1)
+        })
 
+        it(" user 1 accept friend request", function(){
+            util.login(testUser1, "password")
+            util.acceptFriendRequests()
+            util.addExternalContact(externalUser)
+
+//            util.generteKey()
         })
     })
 
 
-    // generate key for both users
-    it("generate key for first recipient", function () {
-        util.login(config.loginUser1, "password")
-        util.generateKey()
-    })
+
 
 //    it("generate key for second recipient", function () {
 //        util.login(config.contactUser1Login, "password")
@@ -305,6 +315,12 @@ describe('Conversation encryption', function () {
 //                })
 //            })
 //        })
+//    })
+
+//    describe("delete test users", function(){
+//        util.deleteTestUser(testUser1)
+//        util.deleteTestUser(testUser2)
+//        util.deleteTestUser(testUser3)
 //    })
 
 })

@@ -336,4 +336,35 @@ this.clickBackBtn = function(){
     $("cm-header:not(.ng-hide) cm-back").click()
 }
 
+this.sendFriendRequest = function(displayName) {
+    self.get("/contacts/search")
+    $("[data-qa='inp-search-cameo-ids']").sendKeys(displayName)
+    self.waitForElement("[data-qa='btn-openModal']")
+    $("[data-qa='btn-openModal']").click()
+    $("[data-qa='btn-sendRequest']").click()
+}
+
+this.acceptFriendRequests = function() {
+    $("[data-qa='btn-open-menu']").click()
+    $("[data-qa='btn-menu-contact-requests']").click()
+    self.waitForElement("cm-contact-tag")
+
+    var clickAccept = function(){
+        $$("[data-qa='btn-acceptRequest']").then(function(buttons) {
+            if(buttons.length > 0) {
+                buttons[0].click()
+                clickAccept()
+            }
+        })
+    }
+    clickAccept();
+}
+
+this.addExternalContact = function(displayName) {
+    self.get("/contact/new")
+    $("[data-qa='input-displayname']").sendKeys(displayName)
+    $("[data-qa='input-email']").sendKeys("some@mail.foo")
+    $("[data-qa='btn-create-contact']").click()
+}
+
 
