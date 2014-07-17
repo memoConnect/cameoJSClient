@@ -310,7 +310,6 @@ this.searchInList = function (searchString) {
     $("[data-qa='inp-list-search']").sendKeys(searchString)
 }
 
-
 this.clearLocalStorage = function () {
     ptor.executeScript('localStorage.clear()')
 }
@@ -369,7 +368,6 @@ this.addExternalContact = function (displayName) {
     $("[data-qa='btn-create-contact']").click()
     self.waitForPageLoad("/contacts")
 }
-
 
 this.setVal = function(dataQa, text){
     $("[data-qa='"+dataQa+"']").sendKeys(text)

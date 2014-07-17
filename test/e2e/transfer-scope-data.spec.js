@@ -2,7 +2,7 @@ var config = require("./config-e2e-tests.js")
 var util = require("../lib/e2e/cmTestUtil.js")
 var ptor = util.getPtorInstance()
 
-describe('transfer formdata registration',function(){
+describe('transfer scope data registration',function(){
     it('fill out registration',function() {
         util.logout()
         util.get('/registration')
@@ -14,16 +14,17 @@ describe('transfer formdata registration',function(){
         util.setVal('input-displayName', 'moepDisp')
         util.setVal('input-email', 'moep@moep.de')
         util.setVal('input-phone', '123456')
+        $('cm-logo').click()
 
-        $("body").sendKeys(protractor.Key.END) 
+        $("body").sendKeys(protractor.Key.END)
+        $("[data-qa='icon-checkbox-agb']").click()
+
         // wait for validation
         ptor.wait(function(){
             return util.getVal('input-phone').then(function(value){
                 return value == '+49123456'
             })
         })
-
-        $("[data-qa='icon-checkbox-agb']").click()
     })
 
     it('goto terms (do the transfer)',function() {
@@ -48,7 +49,7 @@ describe('transfer formdata registration',function(){
     })
 })
 
-describe('transfer formdata conversation',function(){
+describe('transfer scope data conversation',function(){
     var msg = 'oida wird dit hier mitjenommen?',
         msg2 = 'juhu buhu'
 

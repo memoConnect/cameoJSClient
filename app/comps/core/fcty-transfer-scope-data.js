@@ -19,7 +19,6 @@ angular.module('cmCore')
 
         // set the formData of outfilled inputs
         function _set($scope, options){
-            console.log('set??', options.isDone)
             if(options.isDone)
                 return false;
 
@@ -27,7 +26,6 @@ angular.module('cmCore')
 
             options.onSet();
 
-            console.log('set!!', options.isDone)
             scopeData[options.id] = $scope[options.scopeVar];
 
             if (options.privateData != undefined) {
@@ -42,7 +40,6 @@ angular.module('cmCore')
         // get only on same route and if formData is full of data
         function _get($scope, options){
             if ((options.id in scopeData)) {
-                console.log('get!!',options.id,scopeData[options.id])
                 $scope[options.scopeVar] = scopeData[options.id];
                 options.onGet(scopeData[options.id], privateData[options.id]);
                 _reset(options);
@@ -55,8 +52,6 @@ angular.module('cmCore')
             scopeData[options.id] = null;
             delete privateData[options.id];
             privateData[options.id] = null;
-
-            console.log('reset',options.id,scopeData,privateData)
         }
 
         return {
@@ -76,8 +71,8 @@ angular.module('cmCore')
                     clearEvent();
                 });
 
+                // return clear function
                 return function(){
-                    console.log('reset on return fnc')
                     options.isDone = true;
                     clearEvent();
                     _reset(options);

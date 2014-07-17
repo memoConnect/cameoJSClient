@@ -62,7 +62,7 @@ describe('Route: Contact', function () {
 
             $("[data-qa='add-contact-btn']").click()
 
-            $$('cm-modal .content a').last().click()
+            $$('cm-modal.active .content a').last().click()
 
             util.expectCurrentUrl('#/contact/new')
         })

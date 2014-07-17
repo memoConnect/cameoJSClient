@@ -159,7 +159,7 @@ describe('Conversation encryption', function () {
                         case "password" :
                             // expect password promt
                             expect($(".cm-modal-alert").isDisplayed()).toBe(true)
-                            $("cm-modal").$(".body").$("a").click()
+                            $("cm-modal.active").$(".body").$("a").click()
 
                             util.expectCurrentUrl(conversationRoute + "/security-settings")
                             $("[data-qa='input-password']").sendKeys(password)
@@ -167,9 +167,9 @@ describe('Conversation encryption', function () {
                         break;
 
                         case "passCaptcha" :
-                            // expect password promt
+                            // expect password prompt
                             expect($(".cm-modal-alert").isDisplayed()).toBe(true)
-                            $("cm-modal").$(".body").$("a").click()
+                            $("cm-modal.active").$(".body").$("a").click()
 
                             util.expectCurrentUrl(conversationRoute + "/security-settings")
                             expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(true)
@@ -344,7 +344,7 @@ describe('Conversation encryption', function () {
 //            util.waitForElement("cm-message")
 //
 //            util.waitForModalOpen()
-//            expect($("cm-modal").isDisplayed()).toBe(true)
+//            expect($("cm-modal.active").isDisplayed()).toBe(true)
 //            $("[data-qa='cm-modal-close-btn']").click()
 //
 //            $$('cm-message').then(function (elements) {

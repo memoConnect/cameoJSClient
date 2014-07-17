@@ -1,5 +1,5 @@
 <div ng-controller="ConversationCtrl">
-    <cm-header cm-rubber-space ng-show="conversationId == 'new'">
+    <cm-header cm-rubber-space ng-show="conversationId == 'new' && pageChild1 == ''">
         <cm-back cm-weight="1" back-to="/talks"></cm-back>
         <cm-identity cm-weight="3"></cm-identity>
         <cm-security-indicator  
@@ -11,7 +11,7 @@
         <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
 
-    <cm-header cm-rubber-space ng-show="conversationId != 'new'">
+    <cm-header cm-rubber-space ng-show="conversationId != 'new' && pageChild1 == ''">
         <cm-back cm-weight="1" back-to="/talks" plain-back="true"></cm-back>
         <cm-identity cm-weight="3"></cm-identity>
         <cm-security-indicator
