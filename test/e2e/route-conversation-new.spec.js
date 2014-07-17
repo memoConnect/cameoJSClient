@@ -72,6 +72,7 @@ describe('Conversation encryption', function () {
                     expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(false)
                     expect($("[data-qa='input-password']").getAttribute('value')).toBe("")
                     $("[data-qa='input-password']").sendKeys(password)
+                    $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
                     break;
 
                 case "passCaptcha" :
@@ -83,6 +84,7 @@ describe('Conversation encryption', function () {
                     expect($("[data-qa='input-password']").getAttribute('value')).not.toBe("")
                     util.clearInput('input-password')
                     $("[data-qa='input-password']").sendKeys(password)
+                    $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)  
                     break;
 
                 case "none" :
@@ -105,6 +107,8 @@ describe('Conversation encryption', function () {
             $('cm-header:not(.ng-hide)').$('cm-icons.negative').$$("i").then(function (icons) {
                 expect(icons.length).toBe(negativeAspects)
             })
+
+            ptor.debugger()
         })
 
         it("send initial message", function () {
@@ -274,7 +278,7 @@ describe('Conversation encryption', function () {
     })
     var password = Date.now()
 
-    describe("asym key transmission:", function () {
+    xdescribe("asym key transmission:", function () {
 
         var recipients = [
             {login: testUser1, hasKey: true},
@@ -284,7 +288,7 @@ describe('Conversation encryption', function () {
         checkConversation(recipients, 0, 2, "asym")
     })
 
-    xdescribe("password transmission:", function () {
+    describe("password transmission:", function () {
         var recipients = [
             {login: testUser1, hasKey: true},
             {login: testUser2, hasKey: true},

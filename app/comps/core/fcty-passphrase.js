@@ -294,6 +294,7 @@ angular.module('cmCore').factory('cmPassphrase',[
                 if(couldBeAPassword(pw) && couldBeAPassphrase(passphrase)){
                     return cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(password, passphrase));
                 } else {
+                    console.log('falase!')
 //                    cmLogger.debug('cmPassphrase:symmetricallyEncryptPassphrase - provide a proper password and and passphrase before encrypting the passphrase!');
                     return false                   
                 }
@@ -336,9 +337,11 @@ angular.module('cmCore').factory('cmPassphrase',[
              * Encrypts the passphrase with all available means.
              */
             this.encrypt = function(){
+                console.log('pp encrypt: '+password)
                 var sym     = symmetricallyEncryptPassphrase(password),
                     asym    = asymmetricallyEncryptPassphrase(identities);
 
+                console.log('encrypt:sym '+sym)
                 self.importSymmetricallyEncryptedPassphrase(sym);
                 self.importAsymmetricallyEncryptedPassphrase(asym);
 
