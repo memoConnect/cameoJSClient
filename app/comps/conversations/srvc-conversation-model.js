@@ -205,7 +205,6 @@ angular.module('cmConversations')
                     return false
                 }
 
-                console.log(this.solitary)
                 if((this.recipients.length == 1) && !this.solitary){
                     self.trigger('recipients:missing')
                     return false
@@ -371,7 +370,6 @@ angular.module('cmConversations')
                 if(typeof this.subject == 'string' &&  this.subject != '')
                     data.subject = this.subject;
 
-                console.log('export data: '+this.password)
                 var passphrase_data =   passphrase
                                         .setPassword(this.password)
                                         .setIdentities(this.recipients)
@@ -437,8 +435,6 @@ angular.module('cmConversations')
                     /**
                      * test export
                      */
-                    console.log(this.password)
-                    console.log('export',this.exportData());
 //                    return false;
 
                     cmConversationsAdapter.newConversation( this.exportData() ).then(
@@ -632,17 +628,13 @@ angular.module('cmConversations')
              *
              * @returns {String} encryptionType look at encryptedPassphraseList
              */
-            this.getKeyTransmission = function(){
-                cmLogger.debug('cmConversationModel.getKeyTransmission');
-                console.log('keyTransmission state new?',this.state.is('new'))
+            this.getKeyTransmission = function(){                
                 if(this.state.is('new')){
                     var moep = passphrase
                             .setPassword(this.password)
                             .setIdentities(this.recipients)
                             .encrypt()
                             .getKeyTransmission();
-
-                    console.log('keyTransmission', moep);
                     return moep;
                 } else {
                     return this.keyTransmission;
