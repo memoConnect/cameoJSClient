@@ -127,11 +127,10 @@ angular.module('cmRouteConversation')
                 }
 
                 $scope.showGoToSettingsModal = function(){
-                    if(!$scope.conversation.state.is('new')
-                        && ($scope.conversation.getKeyTransmission() == 'symmetric' || $scope.conversation.getKeyTransmission() == 'mixed')
-                        && !$scope.conversation.password
-                        && !$scope.conversation.isUserInPassphraseList()
-                        ){
+                    if(     
+                            conversation.passwordRequired()
+                        &&  !$scope.conversation.password
+                    ){
                         // switcher for purl and conversation
                         var settingsLinker = {type:'',typeId:''};
                         if('purlId' in $routeParams){
