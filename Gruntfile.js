@@ -131,6 +131,7 @@ module.exports = function (grunt) {
         if(protractorDebug){
             testConfig.config.protractorDebug = true
         }
+        console.log("debug: " + testConfig.config.protractorDebug)
 
         var platform = process.platform
         console.log("OS: " + platform)
@@ -224,7 +225,6 @@ module.exports = function (grunt) {
     };
 
     // write config
-    console.log("debug: " + globalCameoTestConfig.config.protractorDebug)
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         // misc

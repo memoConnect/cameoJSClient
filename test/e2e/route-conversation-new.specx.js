@@ -161,7 +161,7 @@ describe('Conversation encryption', function () {
                     switch (encryptionType) {
                         case "password" :
                             // expect password promt
-                            expect($(".cm-modal-alert").isDisplayed()).toBe(true)
+                            expect($("cm-modal.active .cm-modal-alert").isDisplayed()).toBe(true)
                             $("cm-modal.active").$(".body").$("a").click()
 
                             util.expectCurrentUrl(conversationRoute + "/security-settings")
@@ -171,7 +171,7 @@ describe('Conversation encryption', function () {
 
                         case "passCaptcha" :
                             // expect password prompt
-                            expect($(".cm-modal-alert").isDisplayed()).toBe(true)
+                            expect($("cm-modal.active .cm-modal-alert").isDisplayed()).toBe(true)
                             $("cm-modal.active").$(".body").$("a").click()
 
                             util.expectCurrentUrl(conversationRoute + "/security-settings")
