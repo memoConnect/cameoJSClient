@@ -3,68 +3,61 @@
 angular.module('cmCore')
 .factory('cmTransferScopeData',[
     'cmUtil',
-    '$location',
-    '$rootScope',
-    function(cmUtil, $location, $rootScope){
-        var formData = {},
-            privateData = {};
+    '$location', '$rootScope',
+    function(cmUtil,
+             $location, $rootScope) {
+        var scopeData = {},
+            privateData = {},
+            defaultOptions = {
+                id: '',
+                scopeVar: 'formData',
+                ignoreVar: '',
+                privateData: undefined,
+                onGet: function(scopeData, privateData){}
+            };
 
-        function cmTransferScopeData($scope, _options_){
-            var self = this,
-                defaultOptions = {
-                    id:'',
-                    scopeVar:'formData',
-                    ignoreVar:'',
-                    privateData:undefined,
-                    onGet:function(){}
-                },
-                options = angular.extend({}, defaultOptions, _options_ || {});
+        // set the formData of outfilled inputs
+        function _set($scope, options){
+            _reset(options);
+            scopeData[options.id] = $scope[options.scopeVar];
 
-            // private watch on route start and success
-            function init(){
-                if($scope != undefined) {
-                    $rootScope.$on('$routeChangeStart', function () {
-                        self.set();
-                    });
-                    self.get();
-                }
+            if (options.privateData != undefined) {
+                privateData[options.id] = options.privateData;
             }
-
-            // set the formData of outfilled inputs
-            self.set = function(){
-                self.reset();
-                formData[options.id] = $scope[options.scopeVar];
-
-                if(options.privateData != undefined){
-                    privateData[options.id] = options.privateData;
-                }
-                // clear data exp.: password
-                if(options.ignoreVar != ''){
-                    delete formData[options.id][options.ignoreVar];
-                }
-            };
-
-            // get only on same route and if formData is full of data
-            self.get = function(){
-                if((options.id in formData)){
-                    console.log('get!!',formData[options.id],options.scopeVar,$scope)
-                    $scope[options.scopeVar] = formData[options.id];
-                    options.onGet(formData[options.id], privateData[options.id]);
-                    self.reset();
-                }
-            };
-
-            // reset persist data
-            self.reset = function(){
-                formData[options.id] = {};
-                privateData[options.id] = {};
-            };
-
-            init();
-
-            return self;
+            // clear data exp.: password
+            if (options.ignoreVar != '') {
+                delete scopeData[options.id][options.ignoreVar];
+            }
         }
 
-        return cmTransferScopeData;
+        // get only on same route and if formData is full of data
+        function _get($scope, options){
+            if ((options.id in scopeData)) {
+                $scope[options.scopeVar] = scopeData[options.id];
+                options.onGet(scopeData[options.id], privateData[options.id]);
+                _reset(options);
+            }
+        }
+
+        // reset persist data
+        function _reset(options){
+            scopeData[options.id] = {};
+            privateData[options.id] = {};
+        }
+
+        return {
+            create: function ($scope, _options_) {
+                if ($scope == undefined)
+                    return false;
+
+                var options = angular.extend({}, defaultOptions, _options_ || {});
+
+                // init
+                $rootScope.$on('$routeChangeStart', function () {
+                    _set($scope, options);
+                });
+                _get($scope, options);
+            }
+        }
     }]
 );

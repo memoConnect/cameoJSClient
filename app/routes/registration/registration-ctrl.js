@@ -202,7 +202,7 @@ app.register.controller('RegistrationCtrl', [
                     data.reservationSecret = reservationSecrets[data.loginName];
                 }
             } else {
-                console.log('reject of reservationSecrets empty',reservationSecrets)
+                //console.log('reject of reservationSecrets empty',reservationSecrets)
                 deferred.reject(data);
             }
 
@@ -210,7 +210,7 @@ app.register.controller('RegistrationCtrl', [
             if($scope.registrationForm.$valid !== false){
                 deferred.resolve(data);
             } else {
-                console.log('reject form is not valid',$scope.formData);
+                //console.log('reject form is not valid',$scope.formData);
                 deferred.reject(data);
             }
 
@@ -279,7 +279,7 @@ app.register.controller('RegistrationCtrl', [
         }
 
         // transfer data between routeChanges
-        new cmTransferScopeData($scope,{
+        cmTransferScopeData.create($scope,{
             id:'registration',
             ignoreVar:'password',
             privateData:reservationSecrets,

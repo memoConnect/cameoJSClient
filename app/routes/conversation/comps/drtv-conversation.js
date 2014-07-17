@@ -327,7 +327,7 @@ angular.module('cmRouteConversation')
                 });
 
                 // transfer data between routeChanges
-                new cmTransferScopeData($scope,{
+                cmTransferScopeData.create($scope,{
                     id:'conversation-'+($scope.conversation.id||'new'),
                     scopeVar:'newMessageText'
                 });
