@@ -128,6 +128,7 @@ angular.module('cmRouteConversation')
 
                 $scope.showGoToSettingsModal = function(){
                     if(     
+                            !$scope.conversation.state.is('new')
                             $scope.conversation.passwordRequired()
                         &&  !$scope.conversation.password
                     ){
