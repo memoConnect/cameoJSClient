@@ -274,7 +274,7 @@ describe('Conversation encryption', function () {
     })
     var password = Date.now()
 
-    describe("asym key transmission:", function () {
+    xdescribe("asym key transmission:", function () {
 
         var recipients = [
             {login: testUser1, hasKey: true},
@@ -284,7 +284,7 @@ describe('Conversation encryption', function () {
         checkConversation(recipients, 0, 2, "asym")
     })
 
-    xdescribe("password transmission:", function () {
+    describe("password transmission:", function () {
         var recipients = [
             {login: testUser1, hasKey: true},
             {login: testUser2, hasKey: true},

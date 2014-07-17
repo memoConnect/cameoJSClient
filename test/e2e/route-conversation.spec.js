@@ -26,6 +26,25 @@ describe('Single Conversation:', function () {
         $("[data-qa='input-subject']").sendKeys(newSubject)
     })
 
+    it('add message text', function(){
+        util.setVal('input-answer',messageText)
+    })
+
+    it('display warning when encryption settings are not ok', function(){
+        $("[data-qa='btn-send-answer']").click()
+        util.waitAndCloseNotify()
+    })
+
+    it('disable encryption', function () {
+        util.disableEncryption();
+    })
+
+    it('display warning when there is no recipient', function(){
+        $("[data-qa='btn-send-answer']").click()
+        util.waitForElement("[data-qa='checkbox-dont-ask-me-again']")
+        util.waitAndCloseNotify()
+    })
+
     it('add recipient', function () {
         $(".cm-add-button").click()
         util.waitForPageLoad("/conversation/new/recipients")
@@ -50,16 +69,11 @@ describe('Single Conversation:', function () {
         expect($(".recipient-name").getText()).toBe(config.contactUser1DisplayName)
     })
 
-    it('should save options', function () {
-        util.disableEncryption();
-    })
-
     it('should have an answer bar', function () {
         expect($('.answer').isPresent()).toBe(true)
     })
 
     it('send message', function () {
-        util.setVal('input-answer',messageText)
         $("[data-qa='btn-send-answer']").click()
     })
 
