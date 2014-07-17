@@ -19,7 +19,7 @@ this.getPtorInstance = function () {
 
 this.get = function (path) {
 
-    if(ptor == undefined) {
+    if (ptor == undefined) {
         console.error("please set ptor = util.getPtorInstance()")
     }
 
@@ -76,7 +76,7 @@ this.login = function (username, password) {
     return this
 }
 
-this.createTestUser = function(testUserId) {
+this.createTestUser = function (testUserId) {
 
     this.logout()
 
@@ -111,7 +111,7 @@ this.deleteTestUser = function (loginName) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("DELETE", apiUrl + "/testUser/" + testUserId, true);
+        xhr.open("DELETE", apiUrl + "/testUser/\n" + testUserId, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 callback(xhr.responseText);
@@ -122,7 +122,7 @@ this.deleteTestUser = function (loginName) {
     }, testUserId, config.apiUrl)
 }
 
-this.getTestUserNotifications = function(loginName) {
+this.getTestUserNotifications = function (loginName) {
 
     var testUserId = loginName.split("_")[1]
 
@@ -149,7 +149,7 @@ this.waitForPageLoad = function (expectedRoute) {
                 if (expectedRoute == undefined || route.path.search(expectedRoute) != -1) {
                     return route.status == "success"
                 } else {
-//                        console.log("unexpected route:" + route.path)
+//                        console.log("unexpected route:\n" + route.path)
                 }
             }
         })
@@ -286,12 +286,12 @@ this.clearInput = function (qaValue) {
     return this
 }
 
-this.waitAndCloseNotify = function(check) {
+this.waitAndCloseNotify = function (check) {
     self.waitForElement("cm-modal.active [data-qa='cm-modal-close-btn']")
 
     //Click 'dont warn me again' checkbox:
-    var checkbox = $("cm-modal.active [data-qa='"+check+"']")
-    if(check && checkbox.isPresent())
+    var checkbox = $("cm-modal.active [data-qa='" + check + "']")
+    if (check && checkbox.isPresent())
         checkbox.click()
 
     $("cm-modal.active [data-qa='cm-modal-close-btn']").click()
@@ -316,13 +316,41 @@ this.clearLocalStorage = function () {
 
 this.generateKey = function () {
 
-    self.get('/settings/identity/keys/create')
-    self.waitForElement("[data-qa='btn-generate-key']")
-    $("[data-qa='btn-generate-key']").click()
-    self.waitForElementVisible("[data-qa='page-save-key']", 50000)
-    $("[data-qa='btn-save-key']").click()
+    var privKey = "-----BEGIN RSA PRIVATE KEY-----\\n" +
+        "MIIEogIBAAKCAQBm4mr3cxC3YQbYM0BA9pCRlGOBy8JGCz5W9iTpeYpVCrIu/7wz\\n" +
+        "YiOz3Q5mTEukC5kGzeMKbK/8RK39LlfTH1E5gwSzG9YqkSlUI5HM4S9E7kM48zGi\\n" +
+        "qooCCszDMZ6Gq3XvRk3HYkqcHiliUrj+Pmv1wzLuFCp8QIPMN+pENrq4mak4079R\\n" +
+        "aVJ6VIc3Jw4vIS95SEmEiYrPz/wJUQsr1eciJ1J4Z/hrvji/nH+L9Rbx2rhxgSMK\\n" +
+        "s25ncUCB0uuZHoR0Pvk58ixEogmcdvj6TWDe//EE0GfzHaKyf2bf2FbtGZLK8YHL\\n" +
+        "zJt+2sVGySrAUNw1A7CvpmogLu6nRBZOptb7AgMBAAECggEAPdxTrpcr7ObVA7fF\\n" +
+        "IYpfIHlVX1yRYiYuhIEZbpxalYmJ24J+uXJ/vwziNJYZQPiMOTAgHEt/gTIWX023\\n" +
+        "FsUUxHzHnZ3WJuADNojwiHy5PDv6hUqMhJ7/vfyaY575D0YW8hiWeZTbAYWNIoZU\\n" +
+        "nuIPbcTBYa8UYIM1+9t+6ybxHD7c7vD00Xzxz7RUBXCOQ+ieJG13+6114WRNNKEp\\n" +
+        "zdmzQrKVso1e1yfVMtJMvfM54EOVxjMAR4rSmYLzhsoPC3bPmBCX7LB/65yFwX4s\\n" +
+        "cYdP0IzhPtuN/6kAx4SwY8URw1pHYntiNosm6SIOlOeSYsEksrQ6y7tLrqP1OaiD\\n" +
+        "B/5GaQKBgQCmEfhfIwbUD/bDOP+cjr+hkoFZdNQVsh8NCX42hD+Wj/0RzDo6F6vr\\n" +
+        "XWz0uu/pFxZ/gQ6g/x/YNN6dS93w9DqFVS7K/GoA6DrHCcx92K1XhTKyHLbc1Trj\\n" +
+        "Jci8Clz8YYgox0lDI4TQYT3e1To7AoPByhxuD71nlAMR4VI5wc7grQKBgQCemR0w\\n" +
+        "Ll+P131IVllDEY2iN1aCwSYKY+LZkT3syHafl+224m6BgozxiUx5gFa04KLu81BT\\n" +
+        "eUqC+MnC4jEm6lCKwR7gR2Qb7JmPph+zQfrgdJHjJLH5lzXer0XJ8X4L3JZab9jj\\n" +
+        "FnRdKIIJ1meXSZ5OEsblsm53ulG9GR3OikaDRwKBgDU/K8itPWI/IBqmKubyqiTP\\n" +
+        "CaQ6Hko6i1QtyAcIzi6jSjwrpDu+HURg9y9cxNGSsob9RUh/pKE5CmuayLWaSS05\\n" +
+        "C8DPv9k8nKP201dCYwndzkxngoY55CCym7MXC4tsZjDU/PuG5u29UA4jhgEnpEE9\\n" +
+        "YXI0n8EXJwjTmv6j0oYdAoGBAIQ8vm2R/PP+hONvu/WECUgcQ/G6AnHfXyJxS+TG\\n" +
+        "MMJY90fp/KHXrJUoGa+lJqaiNrht/6faFhqmPfRUjQ8ZiBZpd8khPYNa/58asIvS\\n" +
+        "k8/a4lk2G380aSJHmjULOkHBp0u4vmp6KoQSZnq1XqJyK6CFX3neEOWbYNP+wS+Z\\n" +
+        "c7m5AoGADULVNWSkHn0yoLB7QPq7iVWbXPYHiT8Myrsc7i6C8t0dxLFOyTVf2Y3B\\n" +
+        "aO75+8RJOoDAs63t/BxhRP2usszjarvTx9sP4H2c8r1ERmMu1vLNWMV0Dpq/Zl3D\\n" +
+        "b8stI0PXwZcu1IP8j4P3fv31IGXjnrKs81t9uCCTLdeM1eJrNsM=\\n" +
+        "    -----END RSA PRIVATE KEY-----"
 
-
+    self.get('/settings/identity/keys/import')
+    self.waitForElement("[data-qa='display-private-key']")
+    self.setValQuick("display-private-key", privKey)
+    self.setVal("display-private-key", " ")
+    self.click("btn-import-key")
+    self.waitForElement("[data-qa='btn-save-key']")
+    self.click("btn-save-key")
 }
 
 this.disableEncryption = function () {
@@ -369,14 +397,22 @@ this.addExternalContact = function (displayName) {
     self.waitForPageLoad("/contacts")
 }
 
-this.click = function(dataQa){
-    $("[data-qa='"+dataQa+"']").click(text)
+this.click = function (dataQa) {
+    $("[data-qa='" + dataQa + "']").click()
 }
 
-this.setVal = function(dataQa, text){
-    $("[data-qa='"+dataQa+"']").sendKeys(text)
+this.setVal = function (dataQa, text) {
+    $("[data-qa='" + dataQa + "']").sendKeys(text)
 }
 
-this.getVal = function(dataQa){
-    return $("[data-qa='"+dataQa+"']").getAttribute('value')
+this.getVal = function (dataQa) {
+    return $("[data-qa='" + dataQa + "']").getAttribute('value')
 }
+
+this.setValQuick = function (dataQa, text) {
+    ptor.executeScript("document.querySelector(\"[data-qa='" + dataQa + "']\").value = '" + text + "'")
+}
+
+
+
+

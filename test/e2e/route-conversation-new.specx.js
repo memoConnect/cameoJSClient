@@ -256,7 +256,7 @@ describe('Conversation encryption', function () {
 
         it("create test user 2, generate key and send friend request", function () {
             util.createTestUser(testUserId2)
-//            util.generateKey()
+            util.generateKey()
             util.sendFriendRequest(testUser1)
         })
 
@@ -274,17 +274,17 @@ describe('Conversation encryption', function () {
     })
     var password = Date.now()
 
-//    describe("asym key transmission:", function () {
-//
-//        var recipients = [
-//            {login: testUser1, hasKey: true},
-//            {login: testUser2, hasKey: true}
-//        ]
-//
-//        checkConversation(recipients, 0, 2, "asym")
-//    })
+    describe("asym key transmission:", function () {
 
-    describe("password transmission:", function () {
+        var recipients = [
+            {login: testUser1, hasKey: true},
+            {login: testUser2, hasKey: true}
+        ]
+
+        checkConversation(recipients, 0, 2, "asym")
+    })
+
+    xdescribe("password transmission:", function () {
         var recipients = [
             {login: testUser1, hasKey: true},
             {login: testUser2, hasKey: true},
@@ -303,15 +303,15 @@ describe('Conversation encryption', function () {
 //        checkConversation(recipients, 2, 1, "passCaptcha")
 //    })
 
-//    describe("no encryption:", function () {
-//        var recipients = [
-//            {login: testUser1, hasKey: true},
-//            {login: testUser2, hasKey: true},
-//            {login: testUser3, hasKey: false},
-//            {login: externalUser, external: true, hasKey: false}
-//        ]
-//        checkConversation(recipients, 3, 0, "none")
-//    })
+    xdescribe("no encryption:", function () {
+        var recipients = [
+            {login: testUser1, hasKey: true},
+            {login: testUser2, hasKey: true},
+            {login: testUser3, hasKey: false},
+            {login: externalUser, external: true, hasKey: false}
+        ]
+        checkConversation(recipients, 3, 0, "none")
+    })
 
 //    it("delete keys", function () {
 //        util.clearLocalStorage()
@@ -358,10 +358,10 @@ describe('Conversation encryption', function () {
 //        })
 //    })
 
-//    describe("delete test users", function(){
-//        util.deleteTestUser(testUser1)
-//        util.deleteTestUser(testUser2)
-//        util.deleteTestUser(testUser3)
-//    })
+    describe("delete test users", function(){
+        util.deleteTestUser(testUser1)
+        util.deleteTestUser(testUser2)
+        util.deleteTestUser(testUser3)
+    })
 
 })
