@@ -101,7 +101,7 @@ describe('Conversation encryption', function () {
                     expect($("[data-qa='input-password']").getAttribute('value')).not.toBe("")
                     util.clearInput('input-password')
                     $("[data-qa='input-password']").sendKeys(password)
-                    $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)  
+                    $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
                     break;
 
                 case "none" :
@@ -124,8 +124,6 @@ describe('Conversation encryption', function () {
             $('cm-header:not(.ng-hide)').$('cm-icons.negative').$$("i").then(function (icons) {
                 expect(icons.length).toBe(negativeAspects)
             })
-
-            ptor.debugger()
         })
 
         it("send initial message", function () {
@@ -168,13 +166,17 @@ describe('Conversation encryption', function () {
 
 
             it("enter password (if required)", function () {
-                if (!recipient.hasKey) {
+                if (recipient.hasKey) {
+                    $$("cm-modal.active").then(function (modals) {
+                        expect(modals.length).toBe(0)
+                    })
+                } else {
                     switch (encryptionType) {
+
                         case "password" :
-                            // expect password promt
+                            // expect password prompt
                             expect($("cm-modal.active .cm-modal-alert").isDisplayed()).toBe(true)
                             $("cm-modal.active").$(".body").$("a").click()
-
                             util.expectCurrentUrl(conversationRoute + "/security-settings")
                             $("[data-qa='input-password']").sendKeys(password)
                             $("[data-qa='btn-security-done']").click()
@@ -184,7 +186,6 @@ describe('Conversation encryption', function () {
                             // expect password prompt
                             expect($("cm-modal.active .cm-modal-alert").isDisplayed()).toBe(true)
                             $("cm-modal.active").$(".body").$("a").click()
-
                             util.expectCurrentUrl(conversationRoute + "/security-settings")
                             expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(true)
                             $("[data-qa='input-password']").sendKeys(password)
@@ -196,6 +197,7 @@ describe('Conversation encryption', function () {
             })
 
             it("check security aspects", function () {
+                util.waitForElement("cm-icons")
                 $('cm-header:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
                     expect(icons.length).toBe(positiveAspects)
                 })
@@ -240,6 +242,7 @@ describe('Conversation encryption', function () {
 
         describe("sender should be able to read all messages", function () {
             checkMessages(recipients[0], messages)
+
         })
     }
 
@@ -250,12 +253,15 @@ describe('Conversation encryption', function () {
     // creates conversation
     var testUserId1 = Math.random().toString(36).substring(2, 9)
     var testUser1 = "testUser23_" + testUserId1
+    console.log("user1: " + testUser1)
     // recipient with key
     var testUserId2 = Math.random().toString(36).substring(2, 9)
     var testUser2 = "testUser23_" + testUserId2
+    console.log("user2: " + testUser2)
     // recipient without key
     var testUserId3 = Math.random().toString(36).substring(2, 9)
     var testUser3 = "testUser23_" + testUserId3
+    console.log("user3: " + testUser3)
     // external User
     var externalUser = "external_moep"
 
@@ -303,6 +309,10 @@ describe('Conversation encryption', function () {
             {login: externalUser, external: true, hasKey: false}
         ]
         checkConversation(recipients, 1, 1, "password")
+        it("foo", function () {
+            ptor.debugger()
+        })
+
     })
 
 //    describe("passCaptcha transmission:", function () {
