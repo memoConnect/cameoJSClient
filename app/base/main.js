@@ -40,6 +40,7 @@ require.config({
         // crypto
         'crypto-sjcl': 'vendor/crypto/sjcl/sjcl.min',
         'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt',
+        'crypto-pgp': 'vendor/crypto/openpgp/openpgp',
 
         // packages generated via grunt task 'packages'
         'pckCore': 'packages/comps/core/package',
@@ -78,8 +79,8 @@ require.config({
             'angular-sanitize',
             'util-base64',
             'crypto-sjcl',
-            'crypto-jsencrypt',
-//            'vendor/filesaver/blob'
+            'crypto-jsencrypt'
+//           ,'vendor/filesaver/blob'
         ],
         'pckContacts': [
             'pckCore'
@@ -111,7 +112,6 @@ require.config({
         'pckFiles': [
             'pckCore',
             'vendor/filesaver/filesaver',
-//            'vendor/filesaver/saveAs',
             'angular-resource',
             'util-base64_decode'
         ],

@@ -2,12 +2,10 @@
 
 angular.module('cmCore')
 .service('cmCrypt',[
-    'cmLogger',
-    'cmKey',
-    '$q',
-    '$interval',
-    '$rootScope',
-    function (cmLogger,cmKey, $q, $interval, $rootScope) {
+    'cmLogger', 'cmKey',
+    '$q', '$interval', '$rootScope',
+    function (cmLogger, cmKey,
+              $q, $interval, $rootScope) {
         // private vars
         var async = {
             interval: null,
@@ -16,6 +14,11 @@ angular.module('cmCore')
         };
 
         return {
+            /**
+             * now cmKey
+             */
+            Key: cmKey,
+
             /**
              * this method calculates a secure hash
              * @param secretString String that should be hashed
@@ -69,7 +72,6 @@ angular.module('cmCore')
 
                 return encryptedSecretString;
             },
-
 
             /**
              * this method encrypts strings
@@ -126,11 +128,6 @@ angular.module('cmCore')
 
                 return decryptedString || false
             },
-
-            /**
-             * now cmKey
-             */
-            Key: cmKey,
 
             /**
              * return the bit size of possible keygeneration
