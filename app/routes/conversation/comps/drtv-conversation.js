@@ -128,7 +128,7 @@ angular.module('cmRouteConversation')
 
                 $scope.showGoToSettingsModal = function(){
                     if(     
-                            conversation.passwordRequired()
+                            $scope.conversation.passwordRequired()
                         &&  !$scope.conversation.password
                     ){
                         // switcher for purl and conversation
