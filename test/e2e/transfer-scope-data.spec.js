@@ -3,7 +3,7 @@ var util = require("../lib/e2e/cmTestUtil.js")
 var ptor = util.getPtorInstance()
 
 describe('transfer scope data registration',function(){
-    it('fill out registration',function() {
+    it('fill out registration with validation timeout',function() {
         util.logout()
         util.get('/registration')
         util.expectCurrentUrl('/registration')
@@ -13,18 +13,10 @@ describe('transfer scope data registration',function(){
         util.setVal('input-passwordConfirm', 'moep12345')
         util.setVal('input-displayName', 'moepDisp')
         util.setVal('input-email', 'moep@moep.de')
-        util.setVal('input-phone', '123456')
-        $('cm-logo').click()
+        util.setVal('input-phone', '+49123456')
 
         $("body").sendKeys(protractor.Key.END)
         $("[data-qa='icon-checkbox-agb']").click()
-
-        // wait for validation
-        ptor.wait(function(){
-            return util.getVal('input-phone').then(function(value){
-                return value == '+49123456'
-            })
-        })
     })
 
     it('goto terms (do the transfer)',function() {
