@@ -369,6 +369,10 @@ this.addExternalContact = function (displayName) {
     self.waitForPageLoad("/contacts")
 }
 
+this.click = function(dataQa){
+    $("[data-qa='"+dataQa+"']").click(text)
+}
+
 this.setVal = function(dataQa, text){
     $("[data-qa='"+dataQa+"']").sendKeys(text)
 }
