@@ -151,7 +151,8 @@ angular.module('cmRouteConversation')
                  */
                 function isMessageValid(){
 //                    console.log('isMessageValid', $scope.newMessageText, files.length)
-                    if($scope.newMessageText != '' || files.length > 0){
+                   
+                    if((typeof $scope.newMessageText == 'string' &&  $scope.newMessageText != '') || files.length > 0){
                         return true;
                     }
                     return false;

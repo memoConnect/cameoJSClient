@@ -284,11 +284,12 @@ app.register.controller('RegistrationCtrl', [
         var clearTransferScopeData = cmTransferScopeData.create($scope,{
             id:'registration',
             ignoreVar:'password',
+            scopeVar: 'formData',
+
             onSet: function(){
                 this.privateData = reservationSecrets;
             },
             onGet: function(formData, privateData){
-                console.log('onget',arguments)
                 if(privateData != null)
                     reservationSecrets = privateData
             }

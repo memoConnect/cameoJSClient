@@ -37,7 +37,7 @@ describe('transfer scope data registration',function(){
         // try to reg user but without password error message are shown
         $("[data-qa='btn-createUser']").click()
 
-        expect($("[data-qa='drtv-password-error-emtpy']").isDisplayed()).toBe(true)
+        expect($("[data-qa='drtv-password-error-empty']").isDisplayed()).toBe(true)
     })
 })
 

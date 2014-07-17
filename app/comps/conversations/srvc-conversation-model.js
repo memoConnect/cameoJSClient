@@ -371,6 +371,7 @@ angular.module('cmConversations')
                 if(typeof this.subject == 'string' &&  this.subject != '')
                     data.subject = this.subject;
 
+                console.log('export data: '+this.password)
                 var passphrase_data =   passphrase
                                         .setPassword(this.password)
                                         .setIdentities(this.recipients)
@@ -436,6 +437,7 @@ angular.module('cmConversations')
                     /**
                      * test export
                      */
+                    console.log(this.password)
                     console.log('export',this.exportData());
 //                    return false;
 

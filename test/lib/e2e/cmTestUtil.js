@@ -268,8 +268,12 @@ this.waitForProgressbar = function (timeout) {
 
 this.checkWarning = function (qaValue) {
     var css = "[data-qa='" + qaValue + "']"
+   
+    
+    this.waitForElement(css)
+ 
     var warn = $(css)
-    expect(warn.isDisplayed()).toBe(true)
+
     warn.getText().then(function (text) {
         expect(text).not.toBe("")
     })
