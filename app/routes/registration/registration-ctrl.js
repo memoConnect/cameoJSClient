@@ -240,6 +240,8 @@ app.register.controller('RegistrationCtrl', [
                 .validateForm()
                 .then(
                     function(data){
+                        clearTransferScopeData();
+
                         cmAuth
                         .createUser(data)
                         .then(function(userData){
@@ -279,12 +281,16 @@ app.register.controller('RegistrationCtrl', [
         }
 
         // transfer data between routeChanges
-        cmTransferScopeData.create($scope,{
+        var clearTransferScopeData = cmTransferScopeData.create($scope,{
             id:'registration',
             ignoreVar:'password',
-            privateData:reservationSecrets,
+            onSet: function(){
+                this.privateData = reservationSecrets;
+            },
             onGet: function(formData, privateData){
-                reservationSecrets = privateData
+                console.log('onget',arguments)
+                if(privateData != null)
+                    reservationSecrets = privateData
             }
         });
     }]);

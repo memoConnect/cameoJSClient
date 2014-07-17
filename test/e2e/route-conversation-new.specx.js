@@ -164,7 +164,7 @@ describe('Conversation encryption', function () {
                             util.expectCurrentUrl(conversationRoute + "/security-settings")
                             $("[data-qa='input-password']").sendKeys(password)
                             $("[data-qa='btn-security-done']").click()
-                            break;
+                        break;
 
                         case "passCaptcha" :
                             // expect password promt
@@ -175,7 +175,7 @@ describe('Conversation encryption', function () {
                             expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(true)
                             $("[data-qa='input-password']").sendKeys(password)
                             $("[data-qa='btn-security-done']").click()
-                            break;
+                        break;
                     }
 
                 }

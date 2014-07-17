@@ -12,13 +12,22 @@ angular.module('cmCore')
                 id: '',
                 scopeVar: 'formData',
                 ignoreVar: '',
-                privateData: undefined,
+                isDone: false,
+                onSet: function(){},
                 onGet: function(scopeData, privateData){}
             };
 
         // set the formData of outfilled inputs
         function _set($scope, options){
+            console.log('set??', options.isDone)
+            if(options.isDone)
+                return false;
+
             _reset(options);
+
+            options.onSet();
+
+            console.log('set!!', options.isDone)
             scopeData[options.id] = $scope[options.scopeVar];
 
             if (options.privateData != undefined) {
@@ -33,6 +42,7 @@ angular.module('cmCore')
         // get only on same route and if formData is full of data
         function _get($scope, options){
             if ((options.id in scopeData)) {
+                console.log('get!!',options.id,scopeData[options.id])
                 $scope[options.scopeVar] = scopeData[options.id];
                 options.onGet(scopeData[options.id], privateData[options.id]);
                 _reset(options);
@@ -41,8 +51,12 @@ angular.module('cmCore')
 
         // reset persist data
         function _reset(options){
-            scopeData[options.id] = {};
-            privateData[options.id] = {};
+            delete scopeData[options.id];
+            scopeData[options.id] = null;
+            delete privateData[options.id];
+            privateData[options.id] = null;
+
+            console.log('reset',options.id,scopeData,privateData)
         }
 
         return {
@@ -51,12 +65,23 @@ angular.module('cmCore')
                     return false;
 
                 var options = angular.extend({}, defaultOptions, _options_ || {});
-
                 // init
-                $rootScope.$on('$routeChangeStart', function () {
+                var clearEvent = $rootScope.$on('$routeChangeStart', function () {
                     _set($scope, options);
                 });
+
                 _get($scope, options);
+
+                $scope.$on('$destroy',function(){
+                    clearEvent();
+                });
+
+                return function(){
+                    console.log('reset on return fnc')
+                    options.isDone = true;
+                    clearEvent();
+                    _reset(options);
+                }
             }
         }
     }]

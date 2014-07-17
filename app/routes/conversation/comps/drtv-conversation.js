@@ -213,6 +213,7 @@ angular.module('cmRouteConversation')
                     .encrypt()
                     .save()
                     .then(function(){
+                        clearTransferScopeData();
                         //@ TODO: solve rekeying another way:
                         $scope.conversation.numberOfMessages++;
                         $scope.newMessageText = '';
@@ -327,7 +328,7 @@ angular.module('cmRouteConversation')
                 });
 
                 // transfer data between routeChanges
-                cmTransferScopeData.create($scope,{
+                var clearTransferScopeData = cmTransferScopeData.create($scope,{
                     id:'conversation-'+($scope.conversation.id||'new'),
                     scopeVar:'newMessageText'
                 });
