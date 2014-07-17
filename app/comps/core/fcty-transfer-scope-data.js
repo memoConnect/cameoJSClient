@@ -10,7 +10,7 @@ angular.module('cmCore')
             privateData = {},
             defaultOptions = {
                 id: '',
-                scopeVar: 'formData',
+                scopeVar: '',
                 ignoreVar: '',
                 isDone: false,
                 onSet: function(){},
@@ -39,8 +39,13 @@ angular.module('cmCore')
 
         // get only on same route and if formData is full of data
         function _get($scope, options){
-            if ((options.id in scopeData)) {
-                $scope[options.scopeVar] = scopeData[options.id];
+            if ((options.id in scopeData) && scopeData[options.id] != null) {
+                if(typeof $scope[options.scopeVar] == 'object'){
+                    $scope[options.scopeVar] = angular.extend({}, $scope[options.scopeVar], scopeData[options.id]);
+                }else{
+                    $scope[options.scopeVar] = scopeData[options.id]
+
+                }
                 options.onGet(scopeData[options.id], privateData[options.id]);
                 _reset(options);
             }
