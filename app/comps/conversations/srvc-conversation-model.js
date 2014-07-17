@@ -436,7 +436,7 @@ angular.module('cmConversations')
                     /**
                      * test export
                      */
-//                    console.log('export',this.exportData());
+                    console.log('export',this.exportData());
 //                    return false;
 
                     cmConversationsAdapter.newConversation( this.exportData() ).then(
@@ -631,12 +631,17 @@ angular.module('cmConversations')
              * @returns {String} encryptionType look at encryptedPassphraseList
              */
             this.getKeyTransmission = function(){
+                cmLogger.debug('cmConversationModel.getKeyTransmission');
+                console.log('keyTransmission state new?',this.state.is('new'))
                 if(this.state.is('new')){
-                    return  passphrase
+                    var moep = passphrase
                             .setPassword(this.password)
                             .setIdentities(this.recipients)
                             .encrypt()
                             .getKeyTransmission();
+
+                    console.log('keyTransmission', moep);
+                    return moep;
                 } else {
                     return this.keyTransmission;
                 }

@@ -108,6 +108,9 @@ describe('Conversation encryption', function () {
         })
 
         it("send initial message", function () {
+
+            ptor.debugger()
+
             var text = "moep_message_" + Date.now();
             $("[data-qa='input-answer']").sendKeys(text)
             var message = {
