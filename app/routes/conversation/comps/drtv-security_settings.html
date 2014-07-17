@@ -40,8 +40,7 @@
         <div class="cm-form-group label-with-checkbox">
             <label class="w20">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</label>
             <div class="cm-form-control with-inputter w80" style="background-color:#fff" ng-class="{'with-inside-icon':!isNew()}">
-                <input style="background-color:#fff" type="text" ng-model="conversation.password" placeholder="{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls', scrollTop:true,handler:'#captcha-anchor'}" data-qa="input-password" />
-                <i class="fa cm-key fa-2x with-cursor" ng-click="decrypt()" ng-if="!isNew()"></i>
+                <input style="background-color:#fff" type="text" ng-model="conversation.password" placeholder="{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls', scrollTop:true,handler:'#captcha-anchor'}" data-qa="input-password" ng-blur = "decrypt()"/>
             </div>
         </div>
     </div>
