@@ -52,7 +52,24 @@ describe('Conversation encryption', function () {
 
         })
 
-        // todo check warnings
+        it("add message text", function () {
+            var text = "moep_message_" + Date.now();
+            $("[data-qa='input-answer']").sendKeys(text)
+            var message = {
+                text: text,
+                author: sender.login
+            }
+            messages.push(message)
+        })
+
+        it("show modal when security settings need to be adjusted", function () {
+
+            if (encryptionType == "password" || encryptionType == "passCaptcha" || encryptionType == "none") {
+                $("[data-qa='btn-send-answer']").click()
+                util.waitAndCloseNotify()
+            }
+        })
+
         it("set encryption settings", function () {
             util.get("/conversation/new/security-settings")
 
@@ -109,16 +126,6 @@ describe('Conversation encryption', function () {
 
         it("send initial message", function () {
 
-            ptor.debugger()
-
-            var text = "moep_message_" + Date.now();
-            $("[data-qa='input-answer']").sendKeys(text)
-            var message = {
-                text: text,
-                author: sender.login
-            }
-            messages.push(message)
-
             $("[data-qa='btn-send-answer']").click()
 
             // get conversation Id
@@ -167,7 +174,7 @@ describe('Conversation encryption', function () {
                             util.expectCurrentUrl(conversationRoute + "/security-settings")
                             $("[data-qa='input-password']").sendKeys(password)
                             $("[data-qa='btn-security-done']").click()
-                        break;
+                            break;
 
                         case "passCaptcha" :
                             // expect password prompt
@@ -178,7 +185,7 @@ describe('Conversation encryption', function () {
                             expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(true)
                             $("[data-qa='input-password']").sendKeys(password)
                             $("[data-qa='btn-security-done']").click()
-                        break;
+                            break;
                     }
 
                 }
@@ -233,7 +240,7 @@ describe('Conversation encryption', function () {
     }
 
     /*
-        Tests start here
+     Tests start here
      */
 
     // creates conversation
@@ -332,33 +339,79 @@ describe('Conversation encryption', function () {
 
 //    describe("")
 
-//    describe("without local key", function () {
-//
-//        it("delete key and login", function () {
-//            util.clearLocalStorage()
-//            util.login(testUser1, "password")
-//        })
-//
-//        it("should not be able to open asym encrypted conversation", function () {
-//
-//            util.headerSearchInList("asym_" + date)
-//            $("cm-conversation-tag").click()
-//
-//            util.waitForElement("cm-message")
-//
-//            util.waitForModalOpen()
-//            expect($("cm-modal.active").isDisplayed()).toBe(true)
-//            $("[data-qa='cm-modal-close-btn']").click()
-//
-//            $$('cm-message').then(function (elements) {
-//                elements.forEach(function (element) {
-//                    expect(element.getText()).not.toContain("moep")
-//                })
-//            })
-//        })
-//    })
+    xdescribe("no local private key", function () {
 
-    describe("delete test users", function(){
+        it("delete key and create local key for user2", function () {
+            util.clearLocalStorage()
+            util.login(testUser2, "password")
+            util.generateKey()
+            util.login(testUser1, "password")
+        })
+
+        describe("conversation with user that has key", function () {
+            var recipients = [
+                {login: testUser1, hasKey: false},
+                {login: testUser2, hasKey: true}
+            ]
+            checkConversation(recipients, 1, 1, "password")
+        })
+
+        xdescribe("conversation with users without keys", function () {
+            var recipients = [
+                {login: testUser1, hasKey: false},
+                {login: testUser2, hasKey: true},
+                {login: testUser3, hasKey: false},
+                {login: externalUser, external: true, hasKey: false}
+            ]
+            checkConversation(recipients, 1, 1, "password")
+        })
+
+        xit("should not be able to open asym encrypted conversation", function () {
+
+            util.headerSearchInList("asym_" + date)
+            $("cm-conversation-tag").click()
+            util.waitForElement("cm-message")
+            util.waitAndCloseNotify()
+
+            $$('cm-message').then(function (elements) {
+                elements.forEach(function (element) {
+                    expect(element.getText()).not.toContain("moep")
+                })
+            })
+        })
+    })
+
+    xdescribe("no keys at all", function () {
+
+        it("login and delete key of user 1", function () {
+            util.login(testUser1, "password")
+            util.click("btn-remove-modal")
+            util.click("btn-remove-key")
+            $$("[data-qa='key-list-item']").then(function (items) {
+                expect(items.length).toBe(0)
+            })
+        })
+
+        describe("conversation with user that has key", function () {
+            var recipients = [
+                {login: testUser1, hasKey: false},
+                {login: testUser2, hasKey: true}
+            ]
+            checkConversation(recipients, 1, 1, "password")
+        })
+
+        describe("conversation with users without keys", function () {
+            var recipients = [
+                {login: testUser1, hasKey: false},
+                {login: testUser2, hasKey: true},
+                {login: testUser3, hasKey: false},
+                {login: externalUser, external: true, hasKey: false}
+            ]
+            checkConversation(recipients, 1, 1, "password")
+        })
+    })
+
+    describe("delete test users", function () {
         util.deleteTestUser(testUser1)
         util.deleteTestUser(testUser2)
         util.deleteTestUser(testUser3)
