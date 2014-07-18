@@ -1,0 +1,10 @@
+<header class="inScreen">
+    trust
+</header>
+
+<div ng-if="isSignatureValid" class="alert-success">Signatur korrekt</div>
+<div ng-if="!isSignatureValid" class="alert-warn">Signatur falsch</div>
+
+transactionSecret: {{transactionSecret}}
+
+<pre>{{cmUtil.prettify(schmu)}}</pre>
