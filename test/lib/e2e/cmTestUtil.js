@@ -206,7 +206,7 @@ this.waitForElementHidden = function (selector, timeout) {
 
 this.waitForElementDisappear = function (selector, timeout) {
     ptor.wait(function () {
-        return $(selector).isElementPresent().then(function (isPresent) {
+        return ptor.isElementPresent(by.css(selector)).then(function (isPresent) {
             return !isPresent
         })
     }, timeout || config.waitForTimeout, 'waitForElementDisappear ' + selector + ' timeout is reached')
@@ -268,12 +268,8 @@ this.waitForProgressbar = function (timeout) {
 
 this.checkWarning = function (qaValue) {
     var css = "[data-qa='" + qaValue + "']"
-   
-    
-    this.waitForElement(css)
- 
     var warn = $(css)
-
+    expect(warn.isDisplayed()).toBe(true)
     warn.getText().then(function (text) {
         expect(text).not.toBe("")
     })

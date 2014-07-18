@@ -301,7 +301,7 @@ describe('Conversation encryption', function () {
         checkConversation(recipients, 0, 2, "asym")
     })
 
-    describe("password transmission:", function () {
+    xdescribe("password transmission:", function () {
         var recipients = [
             {login: testUser1, hasKey: true},
             {login: testUser2, hasKey: true},
@@ -315,14 +315,15 @@ describe('Conversation encryption', function () {
 
     })
 
-//    describe("passCaptcha transmission:", function () {
-//        var recipients = [
-//            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: true},
-////            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true},
-//            {login: config.contact2User1Login, displayName: config.contact2User1DisplayName, hasKey: false}
-//        ]
-//        checkConversation(recipients, 2, 1, "passCaptcha")
-//    })
+    describe("passCaptcha transmission:", function () {
+        var recipients = [
+            {login: testUser1, hasKey: true},
+            {login: testUser2, hasKey: true},
+            {login: testUser3, hasKey: false},
+            {login: externalUser, external: true, hasKey: false}
+        ]
+        checkConversation(recipients, 2, 1, "passCaptcha")
+    })
 
     xdescribe("no encryption:", function () {
         var recipients = [
@@ -333,25 +334,6 @@ describe('Conversation encryption', function () {
         ]
         checkConversation(recipients, 3, 0, "none")
     })
-
-//    it("delete keys", function () {
-//        util.clearLocalStorage()
-//    })
-//    it("generate key for second recipient", function () {
-//        util.login(config.contactUser1Login, "password")
-//        util.generateKey()
-//    })
-//
-//    describe("without local key:", function () {
-//        var recipients = [
-//            {login: config.loginUser1, displayName: config.displayNameUser1, hasKey: false},
-//            {login: config.contactUser1Login, displayName: config.contactUser1DisplayName, hasKey: true}
-////            {login: config.contact2User1Login, displayName: config.contact2User1DisplayName, hasKey: false}
-//        ]
-//        checkConversation(recipients, 1, 1, "password")
-//    })
-
-//    describe("")
 
     xdescribe("no local private key", function () {
 
