@@ -172,6 +172,7 @@ angular.module('cmConversations')
              * @return {Boolean} returns true or false
              */
             this.passwordRequired = function(){
+//                cmLogger.debug('cmConversationModel:passwordRequired');
                 if(this.state.is('new')){
 
                     return  this.isEncrypted()  

@@ -19,8 +19,9 @@ angular.module('cmCore').factory('cmPassphrase',[
     'cmUserModel',
     'cmCrypt',
     'cmObject',
+    'cmUtil',
     'cmLogger',
-    function(cmFactory, cmKey, cmUserModel, cmCrypt, cmObject, cmLogger){
+    function(cmFactory, cmKey, cmUserModel, cmCrypt, cmObject, cmUtil, cmLogger){
 
         function cmPassphrase(){
             var self            = this,
@@ -458,10 +459,10 @@ angular.module('cmCore').factory('cmPassphrase',[
                 var localKeys = cmUserModel.loadLocalKeys(),
                     check = false;
 
-                if(asymmetricallyEncryptedPassphrases.length > 0 && typeof localKeys == 'array' && localKeys.length > 0){
+                if(asymmetricallyEncryptedPassphrases.length > 0 && cmUtil.isArray(localKeys) && localKeys.length > 0){
                     localKeys.forEach(function(value){
                         asymmetricallyEncryptedPassphrases.forEach(function(key){
-                            if(key.keyId == value.keyId){
+                            if(key.keyId == value.id){
                                 check = true;
                             }
                         })
