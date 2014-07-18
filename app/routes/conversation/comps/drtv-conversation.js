@@ -127,9 +127,7 @@ angular.module('cmRouteConversation')
                 }
 
                 $scope.showGoToSettingsModal = function(){
-                    cmLogger.debug('cmConversationDRTV.showGoToSettingsModal')
-                    console.log($scope.conversation.passwordRequired())
-
+//                    cmLogger.debug('cmConversationDRTV.showGoToSettingsModal')
                     if(
                             !$scope.conversation.state.is('new')
                         &&  $scope.conversation.passwordRequired()

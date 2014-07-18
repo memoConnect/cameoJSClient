@@ -714,7 +714,7 @@ angular.module('cmConversations')
             };
 
             this.enablePassCaptcha = function(){
-//                cmLogger.debug('cmConversationModel.enablePassCaptcha');
+                cmLogger.debug('cmConversationModel.enablePassCaptcha');
                 this.options.hasCaptcha = true;
                 this.trigger('captcha:enabled');
 
@@ -722,7 +722,7 @@ angular.module('cmConversations')
             };
 
             this.disablePassCaptcha = function(){
-//                cmLogger.debug('cmConversationModel.disablePassCaptcha');
+                cmLogger.debug('cmConversationModel.disablePassCaptcha');
                 
                 if(!this.state.is('new')) return this
 
@@ -746,8 +746,8 @@ angular.module('cmConversations')
              * @returns {ConversationModel} this returns ConversationModel
              */
             this.initPassCaptcha = function(conversation_data){
+//                cmLogger.debug('cmConversationModel.initPassCaptcha');
                 if(typeof conversation_data.passCaptcha !== 'undefined' && conversation_data.passCaptcha != '' && this.passCaptcha == undefined){
-
                     /**
                      * set Options
                      * @type {boolean}
@@ -864,7 +864,7 @@ angular.module('cmConversations')
                 /**
                  * last check for captcha preference
                  */
-                if(this.options.hasPassword == false){
+                if(this.hasPassword() == false){
                     this.options.hasCaptcha = false;
                 }
             };
@@ -903,7 +903,7 @@ angular.module('cmConversations')
                             }
                         });
 
-                        if(allRecipientsHasKeys !== false && this.options.hasPassword !== true){
+                        if(allRecipientsHasKeys !== false && this.hasPassword() !== true){
                             this.lockStatus.level = levels.asymmetric;
                         }
                     } else {
