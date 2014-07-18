@@ -660,6 +660,34 @@ angular.module('cmConversations')
                         .get();
             };
 
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name hasPassword
+             * @description
+             * Helper Function which checks if Conversation has as Password
+             *
+             * @returns {Boolean} boolean Returns a Boolean
+             */
+            this.hasPassword = function(){
+                if(this.state.is('new')){
+                    return (this.options.hasPassword == true)
+                } else {
+                    return ['symmetric', 'mixed'].indexOf(passphrase.getKeyTransmission()) != -1;
+                }
+            };
+
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name getPassphrase
+             * @description
+             * Function get the passphrase of the conversation, in order to use it for e.g. file encryption before upload.
+             *
+             * @returns {Boolean} boolean Returns a Boolean
+             */
             this.isUserInPassphraseList = function(){
                 return passphrase.isInPassphraseList();
             };

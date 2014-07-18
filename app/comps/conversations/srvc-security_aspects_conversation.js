@@ -52,8 +52,17 @@ angular.module('cmSecurityAspects')
                         this.numberOfBadRecipients  = this.badRecipients.length
                         this.privateKeyMissing      = !conversation.userHasPrivateKey()
 
-                        return  conversation.passwordRequired()
-                    },
+                        /**
+                         * @TODO
+                         * BS mit Andreas absprechen
+                         * passwordRequired hat unterschiedleiche Bedeutungen??!
+                         */
+                        if(conversation.state.is('new')){
+                            return  conversation.passwordRequired()
+                        } else {
+                            return conversation.hasPassword();
+                        }
+                    }
                 })
                 .addAspect({
                     id: 'HAS_PASSCAPTCHA',
