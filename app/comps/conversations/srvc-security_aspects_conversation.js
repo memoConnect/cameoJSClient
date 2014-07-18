@@ -58,7 +58,7 @@ angular.module('cmSecurityAspects')
                          * passwordRequired hat unterschiedleiche Bedeutungen??!
                          */
                         if(conversation.state.is('new')){
-                            return  conversation.passwordRequired()
+                            return conversation.passwordRequired()
                         } else {
                             return conversation.hasPassword();
                         }
