@@ -127,6 +127,9 @@ angular.module('cmRouteConversation')
                 }
 
                 $scope.showGoToSettingsModal = function(){
+                    cmLogger.debug('cmConversationDRTV.showGoToSettingsModal')
+                    console.log($scope.conversation.passwordRequired())
+
                     if(
                             !$scope.conversation.state.is('new')
                         &&  $scope.conversation.passwordRequired()
@@ -256,7 +259,7 @@ angular.module('cmRouteConversation')
 
                 $scope.showAsymmetricKeyError();
 
-                $scope.showGoToSettingsModal();
+//                $scope.showGoToSettingsModal(); 18.07.2014 BS can be removed because on updated:finished event do this check
                 
                 // first focus on message
                 if($scope.conversation.state.is('new') && cmEnv.isNotMobile){
@@ -266,6 +269,7 @@ angular.module('cmRouteConversation')
                 /** Event callbacks **/
                 function callback_update_finished(){
                     $scope.showAsymmetricKeyError();
+                    $scope.showGoToSettingsModal();
                 }
 
                 function callback_password_missing(){

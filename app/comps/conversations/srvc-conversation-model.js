@@ -173,16 +173,16 @@ angular.module('cmConversations')
              */
             this.passwordRequired = function(){
 //                cmLogger.debug('cmConversationModel:passwordRequired');
-                if(this.state.is('new')){
 
-                    return  this.isEncrypted()  
-                            &&  (
-                                        this.getBadRecipients().length != 0
-                                    ||  !this.userHasPrivateKey
-                                )
+                    if(this.state.is('new')){
 
-                }else{
+                        return  this.isEncrypted()
+                        &&  (
+                        this.getBadRecipients().length != 0
+                        ||  !this.userHasPrivateKey
+                        )
 
+                    }else{
                     return      ['symmetric', 'mixed'].indexOf(this.getKeyTransmission()) != -1  
                             &&  !this.isUserInPassphraseList()
 
