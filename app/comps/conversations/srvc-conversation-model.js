@@ -1066,6 +1066,7 @@ angular.module('cmConversations')
 
             this.messages.on('message:saved', function(){
                 self.setLastMessage();
+                self.handleMissingAePassphrases();
             });
 
             this.messages.on('decrypt:success', function(){
