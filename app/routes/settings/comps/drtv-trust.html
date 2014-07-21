@@ -8,4 +8,7 @@
 <div ng-if="!handshakeSucceed" class="alert-warn">Handshake falsch</div>
 
 transactionSecret: {{transactionSecret}}
-<input type="text" class="form-control" ng-model="transactionSecretUserInput" ng-keydown="checkHandshake()" />
+<input type="text"
+       class="form-control"
+       ng-model="transactionSecretUserInput"
+       ng-keydown="checkHandshake()" />
