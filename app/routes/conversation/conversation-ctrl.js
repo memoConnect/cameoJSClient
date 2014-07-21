@@ -17,11 +17,10 @@ define([
         'cmConversationFactory',
         'cmUserModel',
         function($scope, $rootScope, $element, $routeParams, $location, cmConversationFactory, cmUserModel){
-
+            $scope.isPurl           = false;
             $scope.conversationId   = $routeParams.conversationId;
             $scope.calledWithId     = $scope.conversationId && $scope.conversationId != 'new';
             $scope.pageChild1       = $routeParams.pageChild1 || '';
-
 
             // existing conversation
             if($scope.calledWithId){
