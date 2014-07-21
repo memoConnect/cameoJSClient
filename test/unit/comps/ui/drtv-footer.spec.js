@@ -2,9 +2,16 @@
 
 describe('Directive cmFooter', function () {
     var $el,
-        $scope,
-        $rootScope,
-        $location
+        $scope
+
+    function createDrtv(html){
+        inject(function ($rootScope, $compile) {
+            $scope = $rootScope.$new()
+            $el = angular.element(html || '<cm-footer></cm-footer>')
+            $compile($el)($scope)
+            $scope.$digest()
+        })
+    }
 
     beforeEach(function(){
         module(function($provide){
@@ -20,30 +27,36 @@ describe('Directive cmFooter', function () {
 
     beforeEach(module('cmUi'))
 
-    beforeEach(inject(function (_$rootScope_, $compile, _$location_) {
-        $rootScope = _$rootScope_
-        $location = _$location_
-        $scope = $rootScope.$new()
-        $el =  angular.element('<cm-footer></cm-footer>')
-        $compile($el)($scope)
-        $scope.$digest()
-    }))
-
-    it('should load template',function(){
-        expect($el.html()).not.toBe('')
-    })
-
-    it('have 3 default btns',function(){
-        expect(Object.keys($scope.btns).length).toEqual(3)
-    })
-
-    describe('check location',function(){
-        it('is empty toEqual 0 active',function(){
-            expect($el.find('.active').length).toEqual(0)
+    describe('with transclude informations', function() {
+        beforeEach(function(){
+            createDrtv()
         })
 
-        xit('talks setted toEqual 1 active',function(){
-            expect($el.find('.active').length).toEqual(1)
+        it('should load template', function () {
+            expect($el.html()).not.toBe('')
+        })
+
+        it('ng-translate should be empty', function () {
+            expect($el.find('[ng-transclude]').html()).toBe('')
+        })
+
+        it('have 3 default btns', function () {
+            expect($el.find('a').length).toEqual(3)
+        })
+    })
+
+    describe('with transclude informations', function(){
+        beforeEach(function(){
+            createDrtv('<cm-footer>i\'am <strong>moep</strong></cm-footer>')
+        })
+
+        it('should have filled ng-transclude container', function(){
+            expect($el.find('[ng-transclude]').text()).toBe('i\'am moep')
+            expect($el.find('[ng-transclude] strong').length).toEqual(1)
+        })
+
+        it('default btns are away', function(){
+            expect($el.find('a').length).toEqual(0)
         })
     })
 })

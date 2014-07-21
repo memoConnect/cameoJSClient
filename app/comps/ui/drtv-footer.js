@@ -74,8 +74,7 @@ angular.module('cmUi')
 .directive('cmFooter',[
     'cmConfig',
     '$location',
-    '$document',
-    function (cmConfig, $location, $document){
+    function (cmConfig, $location){
         return {
             restrict: 'E',
             transclude: true,
@@ -92,7 +91,7 @@ angular.module('cmUi')
 
                 // set menu btns from config
                 if(element[0].querySelector('[ng-transclude]').innerHTML == '') {
-                    scope.btns = cmConfig.footer;
+                    scope.btns = cmConfig.footer || {};
                     // set active & width
                     var btns = Object.keys(scope.btns);
                     angular.forEach(btns, function (btnHref) {
