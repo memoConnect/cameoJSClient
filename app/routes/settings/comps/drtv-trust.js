@@ -15,8 +15,10 @@ angular.module('cmRouteSettings')
                     device2 = ownKeys[0],
                     device1 = ownKeys[1];
 
-                    $scope.isSignatureValid = false;
-                    $scope.handshakeSucceed = false;
+                /////////////////////////////
+                // check vars
+                $scope.showModalHandshake = false;
+                $scope.handshakeSucceed = false;
 
                 //////////////////////////////
                 // transactionSecret
@@ -49,38 +51,37 @@ angular.module('cmRouteSettings')
                 }
 
                 console.log(request)
+                //////////////////////////////
+                // device #1
+                // get signature to new pub key
+                if (request.toKeyId == device1.id) {
+                    // check signature
+                    if (cmCrypt.verify({
+                        identityId: ownIdentityId, // identityId to verify signature
+                        fromKey: device2, // pubkey #2 request.fromKeyId
+                        encryptedTransactionSecret: request.encryptedTransactionSecret, // ecrypted pubkey with transactionSecret #1
+                        signature: request.signature
+                    })) {
+                        $scope.showModalHandshake = true;
+                    } else {
+                        $scope.showModalHandshake = false;
+                    }
+                }
 
                 $scope.checkHandshake = function() {
-                    //////////////////////////////
-                    // device #1
-                    // get signature to new pub key
-                    if (request.toKeyId == device1.id && $scope.transactionSecretUserInput != '') {
-                        // check signature
-                        if (cmCrypt.verify({
-                            identityId: ownIdentityId, // identityId to verify signature
-                            fromKey: device2, // pubkey #2 request.fromKeyId
-                            encryptedTransactionSecret: request.encryptedTransactionSecret, // ecrypted pubkey with transactionSecret #1
-                            signature: request.signature
-                        })) {
-                            $scope.isSignatureValid = true;
-                        } else {
-                            $scope.isSignatureValid = false;
-                        }
-
-                        // check encryptedTransactionSecret
-                        if ($scope.isSignatureValid && cmCrypt.isTransactionSecretValid({
-                            userInput: $scope.transactionSecretUserInput,
-                            toKey: device1, // pubkey #1 request.toKeyId
-                            encryptedTransactionSecret: request.encryptedTransactionSecret
-                        })) {
-                            $scope.handshakeSucceed = true;
-                            ///////////////////////////////////
-                            // BE
-                            // save signature to newPubKey
-                            // POST /identity...
-                        } else {
-                            $scope.handshakeSucceed = false;
-                        }
+                    // check encryptedTransactionSecret
+                    if ($scope.showModalHandshake && cmCrypt.isTransactionSecretValid({
+                        userInput: $scope.transactionSecretUserInput,
+                        toKey: device1, // pubkey #1 request.toKeyId
+                        encryptedTransactionSecret: request.encryptedTransactionSecret
+                    })) {
+                        $scope.handshakeSucceed = true;
+                        ///////////////////////////////////
+                        // BE
+                        // save signature to newPubKey
+                        // POST /identity...
+                    } else {
+                        $scope.handshakeSucceed = false;
                     }
                 }
             }
