@@ -172,7 +172,7 @@ angular.module('cmConversations')
                     return false
                 }
 
-                if((this.recipients.length == 1) && !this.solitary){
+                if((this.recipients.length == 1) && !this.solitary && this.state.is('new')){
                     self.trigger('recipients:missing')
                     return false
                 }
