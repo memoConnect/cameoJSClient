@@ -360,6 +360,14 @@ angular.module('cmCore')
             this.storageSave('rsa', []);
         };
 
+        this.trustsKey = function(key){
+            var keys = this.loadLocalKeys() || []
+
+            return  keys.some(function(local_key){
+                        return local_key.verify(key)
+                    })
+        }
+
         this.decryptPassphrase = function(encrypted_passphrase, keyId){
             var keys = this.loadLocalKeys() || [],
                 decrypted_passphrase;
