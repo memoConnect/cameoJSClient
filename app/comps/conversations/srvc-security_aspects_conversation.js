@@ -38,6 +38,7 @@ angular.module('cmSecurityAspects')
                     dependencies: ['ENCRYPTED'],
                     value: -1,
                     template: '     <div>{{aspect.description|cmTranslate}}</div>'
+                                +   '{{conversation.getKeyTransmission()}}'
                                 +   '{{aspect.description+"_BAD_RECIPIENTS"|cmTranslate}}<div ng-if = "aspect.numberOfBadRecipients > 0">{{aspect.badRecipients.join(", ")}}</div>'
                                 +   '<div ng-if = "aspect.privateKeyMissing">{{aspect.description+"_PRIVATE_KEY_MISSING"|cmTranslate}}</div>',
                     check: function(conversation){
@@ -80,7 +81,8 @@ angular.module('cmSecurityAspects')
                     dependencies: ['ENCRYPTED'],
                     value: 1,
                     check: function(conversation){
-                        return (conversation.getBadRecipients().length == 0)
+                        return      conversation.state.is('new')
+                                &&  (conversation.getBadRecipients().length == 0)
                     }
                 })   
                 .addAspect({                    
