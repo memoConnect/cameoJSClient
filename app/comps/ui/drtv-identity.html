@@ -4,9 +4,9 @@
 </a>
 
 <cm-modal id="modal-identity" cm-title="IDENTITY.MODAL.HEADER" type="plain" severity="info" class="no-padding">
-    <div class="modal-row">
+    <div class="modal-row is-disabled">
         <span>{{'IDENTITY.LABEL.NEW' | cmTranslate}}</span>
-        <button class="cm-disabled">
+        <button>
             <i class="fa cm-checkbox-add"></i>
         </button>
     </div>
@@ -14,15 +14,15 @@
         <cm-avatar cm-data="identity"></cm-avatar>
         <cm-key-level cm-data="identity.getWeakestKeySize()"></cm-key-level>
         <span cm-weight="1">{{identity.getDisplayName()}}</span>
-        <button data-qa="btn-identity-settings" ng-click="goToIdentitySettings()">
+        <button class="right" data-qa="btn-identity-settings" ng-click="goToIdentitySettings()">
             <i class="fa cm-fix"></i>
         </button>
     </div>
-    <div class="modal-row">
+    <div class="modal-row is-disabled">
         <cm-avatar cm-view="unknown"></cm-avatar>
         <cm-key-level cm-data="2"></cm-key-level>
         <span cm-weight="1">Mockname</span>
-        <button class="cm-disabled">
+        <button>
             <i class="fa cm-fix"></i>
         </button>
     </div>
