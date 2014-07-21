@@ -466,7 +466,7 @@
             },
             "NO_SYMMETRIC_KEY_TRANSMISSION": {
                 "NAME": "Diese Conversation ist ordentlich nur mit öffentlichen Schlüssel verschlüsselt.",
-                "DESCRIPTION": "Es wurde kein Passowrt gesetzt; die Verschlüsselung arbeitet nur mit Schlüsselpaaren und muss sich nicht auf ein Passwort verlassen.",
+                "DESCRIPTION": "Es wurde kein Passowrt gesetzt; die Verschlüsselung arbeitet nur mit Schlüsselpaaren und muss sich nicht auf ein Passwort verlassen."
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha aktiviert.",
