@@ -1,63 +1,60 @@
 'use strict';
 
 angular.module('cmUi').service('cmModal',[
-    '$rootScope',
-    'cmObject',
-    'cmLogger',
-    '$compile',
-    '$document',
-    function($rootScope, cmObject, cmLogger, $compile, $document){
-        var self = {}
+    'cmObject', 'cmLogger',
+    '$rootScope', '$compile', '$document',
+    function(cmObject, cmLogger,
+             $rootScope, $compile, $document){
+        var self = {};
 
-        cmObject.addEventHandlingTo(self)
+        cmObject.addEventHandlingTo(self);
 
-        self.instances = {}
+        self.instances = {};
 
         self.register = function(id, scope){
 
             if(!scope){
-                cmLogger.error('cmModal: unable to register modal without id or scope.')
-                return null
+                cmLogger.error('cmModal: unable to register modal without id or scope.');
+                return null;
             }
 
-            var old_scope = self.instances[id]
+            var old_scope = self.instances[id];
 
             if(old_scope != scope){
-                self.instances[id] = scope
-                self.trigger('register', id)
+                self.instances[id] = scope;
+                self.trigger('register', id);
             }
 
-            return self
-            
-        }
+            return self;
+        };
 
         self.open = function(id, data){
             if(self.instances[id]){
                 self.instances[id]
                     .setData(data)
-                    .open()
+                    .open();
             } else {
                 self.one('register', function(event, registered_id){
-                    return !!(registered_id == id ? self.open(id, data) : false)                              
-                })
+                    return !!(registered_id == id ? self.open(id, data) : false);
+                });
             }
-            return self
-        }
+            return self;
+        };
 
         self.close = function(id){
             self.instances[id].close();
 
             self.trigger('instance:closed');
 
-            return self
-        }
+            return self;
+        };
 
         self.closeAll = function(){
             angular.forEach(self.instances, function(modal_instance, key){
-                modal_instance.close()
-            })
-            return self
-        }
+                modal_instance.close();
+            });
+            return self;
+        };
 
         self.create = function(config, template, target, scope){
             // clear existing instance
@@ -72,23 +69,23 @@ angular.module('cmUi').service('cmModal',[
 
             // create new element
             var attrs = '',
-                scope = scope || $rootScope.$new()
+                scope = scope || $rootScope.$new();
 
             //Todo: könnte man schöner machen:
             angular.forEach(config, function(value, key){ attrs += key+'="'+value+'"' });
 
-            var modal = $compile('<cm-modal '+attrs+' >'+(template||'')+'</cm-modal>')(scope)
+            var modal = $compile('<cm-modal '+attrs+' >'+(template||'')+'</cm-modal>')(scope);
             // move modal up the dom hierarchy, if necessary:
-            angular.element(target || document.getElementById('cm-app') || 'body').append(modal)
+            angular.element(target || document.getElementById('cm-app') || 'body').append(modal);
 
             // the modal directive (<cm-modal>) will register itself on next digest
 
-            return modal
-        }
+            return modal;
+        };
 
-        $rootScope.openModal    = self.open
-        $rootScope.closeModal   = self.close
-        $rootScope.isModalVisible = false
+        $rootScope.openModal = self.open;
+        $rootScope.closeModal   = self.close;
+        $rootScope.isModalVisible = false;
 //        $rootScope.$watch('isModalVisible' ,function(newValue){
 //            console.log('watch modal '+newValue)
 //            $rootScope.isModalVisible = newValue;
@@ -105,6 +102,6 @@ angular.module('cmUi').service('cmModal',[
             }
         });
 
-        return self
+        return self;
     }
 ]);

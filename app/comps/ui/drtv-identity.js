@@ -25,7 +25,9 @@ angular.module('cmUi').directive('cmIdentity',[
                         cmModal.close('modal-identity');
                     }
                     $location.path('/settings/identity');
-                }
+                };
+
+                $scope.randModalId = Math.floor((Math.random()*6)+1);
             }
         }
     }
