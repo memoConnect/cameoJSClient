@@ -23,23 +23,29 @@ section.settings {
           width: 30% !important;
         }
         i {
-          margin-right: 1rem;
+          margin-right:1rem;
+          font-size:@cm-mega-font;
+          vertical-align: middle;
+          &.cm-lg-special{
+            margin-right:0.7rem;
+          }
         }
       }
-      .shortLinks{
+      .short-links{
         position:absolute;
+        background:@cm-white;
         right:0;
         top:0;
         i {
           text-align:center;
           width:@cm-unit;
-          height:@cm-unit;
+          height:@cm-unit - 0.1;
           line-height:@cm-unit;
-          font-size:@cm-mega-font;
+          font-size:@cm-unit/2;
         }
       }
       &.is-disabled{
-        .item, .shortLinks {
+        .item, .short-links {
           .cm-disabled
         }
       }
@@ -62,7 +68,7 @@ section.settings {
 .about-us{
   text-align:center;
   .cm-rhino-bubble-glyph{
-    font-size:10rem;
+    font-size:@cm-mega-font * 5 !important;
   }
 }
 

@@ -80,7 +80,7 @@ angular.module('cmUi')
             transclude: true,
             scope: true,
             template: '<div ng-transclude></div>' +
-                      '<a ng-repeat="btn in Object.keys(btns)" href="#/{{btn}}" ng-class="{active:btns[btn].isActive}" style="width:{{btns[btn].width}}%">' +
+                      '<a ng-repeat="btn in Object.keys(btns)" href="#/{{btn}}" class="btn-footer" ng-class="{active:btns[btn].isActive}" style="width:{{btns[btn].width}}%">' +
                         '<i ng-if="btns[btn].icon" class="fa {{btns[btn].icon}} cm-lg-icon"></i>' +
                         '{{btns[btn].i18n|cmTranslate}}' +
                       '</a>',
