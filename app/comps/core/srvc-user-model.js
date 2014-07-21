@@ -365,10 +365,10 @@ angular.module('cmCore')
         };
 
         this.trustsKey = function(key){
-            var keys = this.loadLocalKeys() || []
+            var local_keys = this.loadLocalKeys() || []
 
-            return  keys.some(function(local_key){
-                        return local_key.verify(key)
+            return  local_keys.some(function(local_key){
+                        return local_key.trusts(key)
                     })
         }
 

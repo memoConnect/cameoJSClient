@@ -79,8 +79,10 @@ angular.module('cmCore')
             }
 
             this.trusts = function(key){
-                return  this.signatures.some(function(signature){
-                            return  (key.id == signature.keyId) && key.verify(signature.content)
+                return  this == key //allways trusts itself
+                        ||
+                        this.signatures.some(function(signature){
+                            return (key.id == signature.keyId) && key.verify(signature.content)
                         })
             }
 
