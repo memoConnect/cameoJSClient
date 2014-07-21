@@ -1,17 +1,11 @@
 'use strict';
 
-angular.module('cmCore').factory('cmIdentityModel',[
-    'cmAuth',
-    'cmCrypt',
-    'cmKey',
-    'cmObject',
-    'cmLogger',
-    'cmApi',
-    'cmFileFactory',
-    'cmStateManagement',
-    'cmUtil',
-    'cmNotify',
-    function(cmAuth, cmCrypt, cmKey, cmObject, cmLogger, cmApi, cmFileFactory, cmStateManagement, cmUtil,cmNotify){
+angular.module('cmCore')
+.factory('cmIdentityModel',[
+    'cmAuth', 'cmCrypt', 'cmKey', 'cmObject', 'cmLogger', 'cmApi',
+    'cmFileFactory', 'cmStateManagement', 'cmUtil', 'cmNotify',
+    function(cmAuth, cmCrypt, cmKey, cmObject, cmLogger, cmApi,
+             cmFileFactory, cmStateManagement, cmUtil,cmNotify){
 
         function Identity(identity_data){
 

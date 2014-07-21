@@ -1,6 +1,7 @@
 'use strict';
 // TODO: doku and tests
-angular.module('cmCore').provider('cmBoot', [
+angular.module('cmCore')
+.provider('cmBoot', [
     function(){
         var promise = undefined;
 

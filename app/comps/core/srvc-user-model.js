@@ -21,18 +21,12 @@
 
 angular.module('cmCore')
 .service('cmUserModel',[
-    'cmBoot',
-    'cmAuth',
-    'cmLocalStorage', 
-    'cmIdentityFactory', 
-    'cmKey',
-    'cmObject',
-    'cmNotify',
-    'cmLogger',
-    '$rootScope', 
-    '$q', 
-    '$location',
-    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmKey, cmObject, cmNotify, cmLogger, $rootScope, $q, $location){
+    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmKey',
+    'cmObject', 'cmNotify', 'cmLogger',
+    '$rootScope', '$q', '$location',
+    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmKey,
+             cmObject, cmNotify, cmLogger,
+             $rootScope, $q, $location){
         var self = this,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check

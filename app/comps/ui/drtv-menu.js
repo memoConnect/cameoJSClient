@@ -39,7 +39,7 @@ angular.module('cmUi').directive('cmMenu',[
                         return false;
                     }
 
-                    if(parentBtn.isOnlyLabel && isSub == undefined)
+                    if(parentBtn.onlyLabel && isSub == undefined)
                         return false;
 
                     if(isSub != undefined)
