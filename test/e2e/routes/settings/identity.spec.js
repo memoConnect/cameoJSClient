@@ -183,7 +183,6 @@ describe('Route: Settings - Identity', function(){
             $("body").click()
 
             util.waitForElement("[data-qa='form-error-phoneNumber-invalid']");
-//            expect($("[data-qa='form-error-phoneNumber-invalid']").isDisplayed()).toBe(true)
         })
 
         it('should not be shown an error, if phonenumber is okay', function(){
@@ -194,7 +193,7 @@ describe('Route: Settings - Identity', function(){
             $("[data-qa='input-phonenumber']").sendKeys('123456789')
             $("body").click()
 
-            expect($("[data-qa='form-error-phoneNumber-invalid']").isDisplayed()).toBe(false)
+            util.waitForElementDisappear("[data-qa='form-error-phoneNumber-invalid']");
         })
     })
 
