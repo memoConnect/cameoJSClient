@@ -66,7 +66,12 @@ describe('transfer scope data conversation',function(){
         $("[data-qa='btn-send-answer']").click()
 
         util.waitForElements('cm-message',1)
-        expect(util.getVal('input-answer')).toBe('')
+
+        ptor.wait(function(){
+            return util.getVal('input-answer').then(function(val){
+                return val == ""
+            })
+        })
     })
 
     it('fill out in created conversation',function(){
