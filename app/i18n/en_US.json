@@ -459,17 +459,13 @@
             "KEY_TRANSMISSION_SYMMETRIC": {
                 "NAME": "Encryption relies on a password.",
                 "DESCRIPTION_NEW": "Encryption with a password is not bad in itself, but the strength of the encryption greatly depends on the password you choose. You have to use a password because not all recipients have a proper key available to you.",
-                "DESCRIPTION": "Encryption with a password is not bad in itself, but the strength of the encryption greatly depends on the password you choose. You have to use a password because not all recipients had proper a key available when the conversation started.",
+                "DESCRIPTION": "Encryption with a password is not bad in itself, but the strength of the encryption greatly depends on the password you choose. You have to use a password because not all recipients had a proper a key available when the conversation started.",
                 "DESCRIPTION_BAD_RECIPIENTS": "These recipients have no proper public keys:",
                 "DESCRIPTION_PRIVATE_KEY_MISSING": "You dont have a private Key on this device."
             },
-            "ALL_RECIPIENTS_HAVE_PROPER_PUBLIC_KEYS": {
-                "NAME": "All recipients have proper public keys.",
-                "DESCRIPTION": ""
-            },
             "NO_SYMMETRIC_KEY_TRANSMISSION": {
                 "NAME": "Conversation savely encrypted with public keys only.",
-                "DESCRIPTION": "None of the recipients used a password to en- or decrypt the conversation. No password has been set. The encryption works with key pairs only."
+                "DESCRIPTION": "No password has been set. The encryption works with key pairs only and won't have to rely on a password."
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha enabled!",

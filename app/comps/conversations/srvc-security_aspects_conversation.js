@@ -79,21 +79,11 @@ angular.module('cmSecurityAspects')
                     }
                 }) 
                 .addAspect({                    
-                    id: 'ALL_RECIPIENTS_HAVE_PROPER_PUBLIC_KEYS',
-                    dependencies: ['ENCRYPTED'],
-                    value: 1,
-                    check: function(conversation){
-                        return      conversation.state.is('new')
-                                &&  (conversation.getBadRecipients().length == 0)
-                    }
-                })   
-                .addAspect({                    
                     id: 'NO_SYMMETRIC_KEY_TRANSMISSION',
                     dependencies: ['ENCRYPTED'],
                     value: 1,
                     check: function(conversation){
-                        return      !conversation.state.is('new') 
-                                &&  ['symmetric', 'mixed'].indexOf(conversation.getKeyTransmission()) == -1
+                        return ['symmetric', 'mixed'].indexOf(conversation.getKeyTransmission()) == -1
                     }
                 }) 
 

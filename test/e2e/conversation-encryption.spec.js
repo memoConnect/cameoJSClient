@@ -303,7 +303,7 @@ describe('Conversation encryption -', function () {
         })
     })
 
-    describe("asym key transmission -", function () {
+    xdescribe("asym key transmission -", function () {
 
         var recipients = [
             {login: testUser1, hasKey: true},
@@ -313,7 +313,7 @@ describe('Conversation encryption -', function () {
         checkConversation(recipients, 0, 2, "asym")
     })
 
-    describe("password transmission -", function () {
+    xdescribe("password transmission -", function () {
         var recipients = [
             {login: testUser1, hasKey: true},
             {login: testUser2, hasKey: true},
@@ -323,7 +323,7 @@ describe('Conversation encryption -', function () {
         checkConversation(recipients, 1, 1, "password", password1)
     })
 
-    describe("passCaptcha transmission -", function () {
+    xdescribe("passCaptcha transmission -", function () {
         var recipients = [
             {login: testUser1, hasKey: true},
             {login: testUser2, hasKey: true},
@@ -333,7 +333,7 @@ describe('Conversation encryption -', function () {
         checkConversation(recipients, 2, 1, "passCaptcha", password2)
     })
 
-    describe("no encryption -", function () {
+    xdescribe("no encryption -", function () {
         var recipients = [
             {login: testUser1, hasKey: true},
             {login: testUser2, hasKey: true},
@@ -353,7 +353,7 @@ describe('Conversation encryption -', function () {
             util.login(testUser1, "password")
         })
 
-        describe("open existing conversations -", function () {
+        xdescribe("open existing conversations -", function () {
 
             it("should not be able to open conversation with asym key transmission", function () {
 
@@ -430,6 +430,7 @@ describe('Conversation encryption -', function () {
                 {login: testUser2, hasKey: true}
             ]
             checkConversation(recipients, 1, 1, "password", Math.floor(Math.random() * 1000000))
+            it('foo', function(){ptor.debugger()})
         })
 
         describe("conversation with users without keys -", function () {
