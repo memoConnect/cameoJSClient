@@ -181,7 +181,8 @@ describe('Conversation encryption -', function () {
                             case "password" :
                                 // expect password prompt
                                 util.waitForElement("cm-modal.active .cm-modal-alert")
-                                $("cm-modal.active").$(".body").$("a").click()
+                                util.waitForElement("cm-modal.active div.body a")
+                                $("cm-modal.active div.body a").click()
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
@@ -192,7 +193,8 @@ describe('Conversation encryption -', function () {
                             case "passCaptcha" :
                                 // expect password prompt
                                 util.waitForElement("cm-modal.active .cm-modal-alert")
-                                $("cm-modal.active").$(".body").$("a").click()
+                                util.waitForElement("cm-modal.active div.body a")
+                                $("cm-modal.active div.body a").click()
                                 util.waitForElement("[data-qa='captcha-image']")
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
