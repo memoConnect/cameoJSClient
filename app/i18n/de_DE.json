@@ -457,8 +457,9 @@
                 "TOGGLE": "Verschlüsselung aktivieren."
             },
             "KEY_TRANSMISSION_SYMMETRIC": {
-                "NAME": "Einige Empfänger haben kein ausreichendes Schlüsselpaar.",
-                "DESCRIPTION": "Verschlüsselung ist gerade nur mit Passwort möglich, weil mindestens einer der Empfänger keinen aureichenden Schlüssel hat. Mit einem Passwort zu verschlüsseln ist an sich nicht schlecht, aber die Güte der Verschlüsselung hängt stark von dem vergebenen Passwort ab.",
+                "NAME": "Verschlüsselung muss sich auf ein Passwort verlassen.",
+                "DESCRIPTION_NEW": "Verschlüsselung ist gerade nur mit Passwort möglich, weil mindestens einer der Empfänger keinen aureichenden Schlüssel hat. Mit einem Passwort zu verschlüsseln ist an sich nicht schlecht, aber die Güte der Verschlüsselung hängt stark von dem vergebenen Passwort ab.", 
+                "DESCRIPTION": "Verschlüsselung ist gerade nur mit Passwort möglich, weil mindestens einer der Empfänger beim Erstellen der Conversation keinen aureichenden Schlüssel hatte. Mit einem Passwort zu verschlüsseln ist an sich nicht schlecht, aber die Güte der Verschlüsselung hängt stark von dem vergebenen Passwort ab.",
                 "DESCRIPTION_BAD_RECIPIENTS": "Folgende Empfänger haben keinen ausreichenden öffentlichen Schlüssel:",
                 "DESCRIPTION_PRIVATE_KEY_MISSING": "Du hast auf diesem Gerät keinen privaten Schlüssel."
             },
@@ -468,7 +469,7 @@
             },
             "NO_SYMMETRIC_KEY_TRANSMISSION": {
                 "NAME": "Diese Conversation ist ordentlich nur mit öffentlichen Schlüssel verschlüsselt.",
-                "DESCRIPTION": "Keiner der Empfänger hat ein Passwort zum ver- oder entschlüsseln benutzt und das wäre auch nicht möglich."
+                "DESCRIPTION": "Keiner der Empfänger hat ein Passwort zum ver- oder entschlüsseln benutzt. Ein Passowrt wurde nicht gesetzt; die Verschlüsselung arbeitet nur mit Schlüsselpaaren."
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha aktiviert.",
