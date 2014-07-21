@@ -4,8 +4,8 @@
     <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
 
-<header class="inScreen">
-    <i class="fa cm-create-key cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE' | cmTranslate}}
+<header class="inScreen with-lg-special">
+    <i class="fa cm-create-key cm-lg-special"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE' | cmTranslate}}
 </header>
 
 <ul>
@@ -20,7 +20,7 @@
         <cm-footer cm-always-on-top>
             <button ng-click="generate()" class="cm-btn-block cm-btn-grey" data-qa="btn-generate-key">
                 {{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATE'|cmTranslate}}
-                <i class="fa cm-create-key cm-lg-icon"></i>
+                <i class="fa cm-checker cm-lg-icon"></i>
             </button>
         </cm-footer>
     </li>
@@ -34,7 +34,7 @@
         <cm-footer cm-always-on-top>
             <button ng-click="cancel()" class="cm-btn-block cm-btn-grey" data-qa="btn-cancel-key-generation">
                 {{'SETTINGS.PAGES.IDENTITY.KEYS.CANCEL'|cmTranslate}}
-                <i class="fa cm-cancel-key cm-lg-icon"></i>
+                <i class="fa cm-cancel-key cm-lg-special"></i>
             </button>
         </cm-footer>
     </li>

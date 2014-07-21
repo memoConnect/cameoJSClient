@@ -3,6 +3,13 @@ cm-menu {
   .cm-handler{
     .with-cursor;
     text-align: center;
+    cm-notify-signal {
+      display:block;
+      i{
+        font-size:@cm-mega-font + 0.5;
+        vertical-align:middle;
+      }
+    }
   }
   .cm-menu-layer {
     position:fixed!important;
@@ -38,9 +45,9 @@ cm-menu {
         position:relative;
         i{
           position:absolute;
-          bottom:0.5rem;
+          bottom:0.25rem;
           right:0.5rem;
-          font-size:@cm-mega-font+1;
+          font-size:@cm-large-font+1;
           color:@cm-light-grey;
         }
       }
@@ -68,7 +75,7 @@ cm-menu {
         i{
           width:@cm-unit - 0.5;
           text-align:center;
-          font-size:@cm-unit/2;
+          font-size: @cm-mega-font + 0.1;
           &.icon-left {
             float:left;
           }
