@@ -463,7 +463,7 @@
                 "DESCRIPTION_PRIVATE_KEY_MISSING": "Du hast auf diesem Gerät keinen privaten Schlüssel."
             },
             "ALL_RECIPIENTS_HAVE_PROPER_PUBLIC_KEYS": {
-                "NAME": "All recipients have proper keys.",
+                "NAME": "Alle Empfänger haben mindestens einen ausreichenden öffentlichen Schlüssel.",
                 "DESCRIPTION": ""
             },
             "NO_SYMMETRIC_KEY_TRANSMISSION": {

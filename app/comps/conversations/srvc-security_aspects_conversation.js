@@ -58,7 +58,6 @@ angular.module('cmSecurityAspects')
 //                        } else {
 //                            return conversation.hasPassword();
 //                        }
-
                         return ['symmetric', 'mixed'].indexOf(conversation.getKeyTransmission()) != -1;
                     }
                 })
