@@ -77,12 +77,11 @@ angular.module('cmSecurityAspects')
                     }
                 }) 
                 .addAspect({                    
-                    id: 'ALL_RECIPIENTS_HAVE_PROPER_KEYS',
+                    id: 'ALL_RECIPIENTS_HAVE_PROPER_PUBLIC_KEYS',
                     dependencies: ['ENCRYPTED'],
                     value: 1,
                     check: function(conversation){
-                        return      conversation.state.is('new') 
-                                &&  !conversation.passwordRequired()            
+                        return (conversation.getBadRecipients().length == 0)
                     }
                 })   
                 .addAspect({                    

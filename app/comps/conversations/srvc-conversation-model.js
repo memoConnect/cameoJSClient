@@ -595,7 +595,8 @@ angular.module('cmConversations')
              *
              * @returns {String} encryptionType look at encryptedPassphraseList
              */
-            this.getKeyTransmission = function(){                
+            this.getKeyTransmission = function(){
+//                cmLogger.debug('cmConversationModel.getKeyTransmission');
                 if(this.state.is('new')){
 
                     if(!this.isEncrypted())
@@ -674,6 +675,7 @@ angular.module('cmConversations')
              * @returns {Boolean} boolean Returns a Boolean
              */
             this.hasPassword = function(){
+//                cmLogger.debug('cmConversationModel:hasPassword');
                 if(this.state.is('new')){
                     return (this.options.hasPassword == true)
                 } else {
@@ -718,7 +720,7 @@ angular.module('cmConversations')
             };
 
             this.enablePassCaptcha = function(){
-                cmLogger.debug('cmConversationModel.enablePassCaptcha');
+//                cmLogger.debug('cmConversationModel.enablePassCaptcha');
                 this.options.hasCaptcha = true;
                 this.trigger('captcha:enabled');
 
@@ -726,7 +728,7 @@ angular.module('cmConversations')
             };
 
             this.disablePassCaptcha = function(){
-                cmLogger.debug('cmConversationModel.disablePassCaptcha');
+//                cmLogger.debug('cmConversationModel.disablePassCaptcha');
                 
                 if(!this.state.is('new')) return this
 
@@ -795,12 +797,32 @@ angular.module('cmConversations')
                 return this;
             };
 
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name getBadRecipients
+             * @description
+             * Function returns a list of all recipients who have no proper key
+             *
+             * @returns {Array} recipients Filter
+             */
             this.getBadRecipients = function(){
                 return  this.recipients.filter(function(recipient){
                     return recipient.getWeakestKeySize() <= 2000
                 })
             };
 
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name getNiceRecipients
+             * @description
+             * Function returns a list of all recipients who have a proper key
+             *
+             * @returns {Array} recipients Filter
+             */
             this.getNiceRecipients = function(){
                 return  this.recipients.filter(function(recipient){
                     return recipient.getWeakestKeySize() > 2000

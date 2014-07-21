@@ -461,7 +461,7 @@
                 "DESCRIPTION_BAD_RECIPIENTS": "These recipients have no proper public keys:",
                 "DESCRIPTION_PRIVATE_KEY_MISSING": "You dont have a private Key on this device."
             },
-            "ALL_RECIPIENTS_HAVE_PROPER_KEYS": {
+            "ALL_RECIPIENTS_HAVE_PROPER_PUBLIC_KEYS": {
                 "NAME": "All recipients have proper keys.",
                 "DESCRIPTION": ""
             },
