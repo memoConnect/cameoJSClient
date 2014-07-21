@@ -5,6 +5,7 @@ var util = require("../lib/e2e/cmTestUtil.js")
 describe('Conversation encryption -', function () {
 
     var ptor = util.getPtorInstance()
+    var date = Date.now()
 
     /*
      Helper functions
@@ -15,7 +16,6 @@ describe('Conversation encryption -', function () {
         var messages = []
         var sender = recipients[0]
         var getPurl = false
-        var subject = encryptionType + "_" + Math.floor(Math.random()*1000000)
         var purl
 
         // use first recipient to create conversation
@@ -27,7 +27,7 @@ describe('Conversation encryption -', function () {
         })
 
         it("add subject", function () {
-            $("[data-qa='input-subject']").sendKeys(subject)
+            $("[data-qa='input-subject']").sendKeys(encryptionType + "_" + date)
         })
 
         it("add recipients to conversation", function () {
@@ -55,7 +55,7 @@ describe('Conversation encryption -', function () {
         })
 
         it("add message text", function () {
-            var text = "moep_message_" + Math.floor(Math.random()*1000000);
+            var text = "moep_message_" + Math.floor(Math.random() * 1000000);
             $("[data-qa='input-answer']").sendKeys(text)
             var message = {
                 text: text,
@@ -153,9 +153,9 @@ describe('Conversation encryption -', function () {
             }
         })
 
-        var checkMessages = function (recipient) {
+        var checkMessages = function (recipient, index) {
 
-            describe("recipient " + recipient.login + " -", function () {
+            describe("recipient number " + (index + 1) + " -", function () {
 
                 var conversationRoute
 
@@ -184,8 +184,9 @@ describe('Conversation encryption -', function () {
                                 $("cm-modal.active").$(".body").$("a").click()
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
+                                $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
                                 $("[data-qa='btn-security-done']").click()
-                                util.waitForPageLoad(conversationRoute)
+                                util.waitForElementDisappear("cm-modal.active .cm-modal-alert")
                                 break;
 
                             case "passCaptcha" :
@@ -195,8 +196,9 @@ describe('Conversation encryption -', function () {
                                 util.waitForElement("[data-qa='captcha-image']")
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
+                                $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
                                 $("[data-qa='btn-security-done']").click()
-                                util.waitForPageLoad(conversationRoute)
+                                util.waitForElementDisappear("cm-modal.active .cm-modal-alert")
                                 break;
                         }
 
@@ -206,6 +208,15 @@ describe('Conversation encryption -', function () {
                 it("recipient read message(s)", function () {
                     util.expectCurrentUrl(conversationRoute)
                     util.waitForElements("cm-message", messages.length)
+
+                    // wait until there decrypted (just in case)
+                    ptor.wait(function () {
+                        return $$('cm-message').then(function (elements) {
+                            return elements[0].getText().then(function (text) {
+                                return text.indexOf("moep") != -1
+                            })
+                        })
+                    })
 
                     $$('cm-message').then(function (elements) {
                         expect(elements.length).toBe(messages.length)
@@ -219,7 +230,7 @@ describe('Conversation encryption -', function () {
                 })
 
                 it("recipient send response", function () {
-                    var text = "moep_message_" + Math.floor(Math.random()*1000000)
+                    var text = "moep_message_" + Math.floor(Math.random() * 1000000)
                     $("[data-qa='input-answer']").sendKeys(text)
                     var message = {
                         text: text,
@@ -236,12 +247,12 @@ describe('Conversation encryption -', function () {
         // login as all other recipients and send a message
         recipients.forEach(function (recipient, index) {
             if (index > 0) {
-                checkMessages(recipient, messages)
+                checkMessages(recipient, index)
             }
         })
 
         describe("sender should be able to read all messages -", function () {
-            checkMessages(recipients[0], messages)
+            checkMessages(recipients[0], 1)
         })
     }
 
@@ -264,8 +275,8 @@ describe('Conversation encryption -', function () {
     // external User
     var externalUser = "external_moep"
     // password
-    var password1 = "1_" + Math.floor(Math.random()*1000000)
-    var password2 = "2_" + Math.floor(Math.random()*1000000)
+    var password1 = "1_" + Math.floor(Math.random() * 1000000)
+    var password2 = "2_" + Math.floor(Math.random() * 1000000)
 
     describe("prepare tests -", function () {
 
@@ -348,6 +359,7 @@ describe('Conversation encryption -', function () {
 
                 util.headerSearchInList("asym_" + date)
                 $("cm-conversation-tag").click()
+
                 util.waitForElement("cm-message")
                 util.waitAndCloseNotify()
 
@@ -358,9 +370,10 @@ describe('Conversation encryption -', function () {
                 })
             })
 
-            it("ask for password for password encrypted conversation", function(){
+            it("ask for password for password encrypted conversation", function () {
 
-                util.headerSearchInList("password_" + Math.floor(Math.random()*1000000))
+                util.get("/talks")
+                util.headerSearchInList("password_" + date)
                 $("cm-conversation-tag").click()
 
                 util.waitForElement("cm-modal.active .cm-modal-alert")
@@ -376,8 +389,9 @@ describe('Conversation encryption -', function () {
                 })
             })
 
-            it("show passcaptcha for passCaptcha encrypted conversation", function(){
+            it("show passcaptcha for passCaptcha encrypted conversation", function () {
 
+                util.get("/talks")
                 util.headerSearchInList("passCaptcha_" + date)
                 $("cm-conversation-tag").click()
 
@@ -394,8 +408,9 @@ describe('Conversation encryption -', function () {
                 })
             })
 
-            it("open unencrypted conversation", function() {
+            it("open unencrypted conversation", function () {
 
+                util.get("/talks")
                 util.headerSearchInList("none_" + date)
                 $("cm-conversation-tag").click()
                 util.waitForElement("cm-message")
@@ -414,7 +429,7 @@ describe('Conversation encryption -', function () {
                 {login: testUser1, hasKey: true},
                 {login: testUser2, hasKey: true}
             ]
-            checkConversation(recipients, 1, 1, "password", Math.floor(Math.random()*1000000))
+            checkConversation(recipients, 1, 1, "password", Math.floor(Math.random() * 1000000))
         })
 
         describe("conversation with users without keys -", function () {
@@ -424,7 +439,7 @@ describe('Conversation encryption -', function () {
                 {login: testUser3, hasKey: false},
                 {login: externalUser, external: true, hasKey: false}
             ]
-            checkConversation(recipients, 1, 1, "password", Math.floor(Math.random()*1000000))
+            checkConversation(recipients, 1, 1, "password", Math.floor(Math.random() * 1000000))
         })
 
     })
@@ -439,29 +454,29 @@ describe('Conversation encryption -', function () {
             util.waitForElementDisappear("[data-qa='key-list-item']")
         })
 
-        describe("conversation with user that has key  -", function () {
+        describe("conversation with user that has key -", function () {
             var recipients = [
                 {login: testUser1, hasKey: true},
                 {login: testUser2, hasKey: true}
             ]
-            checkConversation(recipients, 1, 1, "password", Math.floor(Math.random()*1000000))
+            checkConversation(recipients, 1, 1, "password", Math.floor(Math.random() * 1000000))
         })
 
-        describe("conversation with users without keys  -", function () {
+        describe("conversation with users without keys -", function () {
             var recipients = [
                 {login: testUser1, hasKey: true},
                 {login: testUser2, hasKey: true},
                 {login: testUser3, hasKey: false},
                 {login: externalUser, external: true, hasKey: false}
             ]
-            checkConversation(recipients, 1, 1, "password", Math.floor(Math.random()*1000000))
+            checkConversation(recipients, 1, 1, "password", Math.floor(Math.random() * 1000000))
         })
     })
 
-//    describe("delete test users -", function () {
-//        util.deleteTestUser(testUser1)
-//        util.deleteTestUser(testUser2)
-//        util.deleteTestUser(testUser3)
-//    })
+    describe("delete test users -", function () {
+        util.deleteTestUser(testUser1)
+        util.deleteTestUser(testUser2)
+        util.deleteTestUser(testUser3)
+    })
 
 })

@@ -96,11 +96,13 @@ describe('Purl registration', function () {
 
     it('directly click on register button', function () {
         util.get("/purl/" + purl)
+        util.waitForElement("[data-qa='btn-fast-sign-in']")
         $("[data-qa='btn-fast-sign-in']").click()
         util.waitForPageLoad('/registration')
     })
 
     it('register as external user', function () {
+        util.waitForElement("[data-qa='input-loginName']")
         $("[data-qa='input-loginName']").sendKeys(externalLogin)
         $("[data-qa='input-password']").sendKeys(password)
         $("[data-qa='input-passwordConfirm']").sendKeys(password)
