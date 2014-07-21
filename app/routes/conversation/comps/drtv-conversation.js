@@ -48,7 +48,7 @@ angular.module('cmRouteConversation')
 
                         if(!$scope.conversation.state.is('new')
                             && $scope.conversation.getKeyTransmission() == 'asymmetric'
-                            && cmUserModel.hasLocalKeys() == false){
+                            && $scope.conversation.userHasPrivateKey() == false){
 
                             $scope.isSending = false;
 
@@ -119,7 +119,7 @@ angular.module('cmRouteConversation')
 //                    cmLogger.debug('cmConversationDRTV.showAsymmetricKeyError')
                     if(!$scope.conversation.state.is('new')
                         && $scope.conversation.getKeyTransmission() == 'asymmetric'
-                        && cmUserModel.hasLocalKeys() == false
+                        && $scope.conversation.userHasPrivateKey() == false
                         && showedAsymmetricKeyError == false){
                         showedAsymmetricKeyError = true;
                         cmNotify.warn('CONVERSATION.WARN.ASYMMETRIC_DECRYPT_ERROR',{ttl:0});

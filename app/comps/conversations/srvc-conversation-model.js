@@ -151,41 +151,8 @@ angular.module('cmConversations')
                 self.trigger('init:finished');
             }
 
-            this.getBadRecipients = function(){
-                return  this.recipients.filter(function(recipient){
-                            return recipient.getWeakestKeySize() <= 2000
-                        })
-            }
-
             this.userHasPrivateKey = function(){
                 return  cmUserModel.hasLocalKeys()
-            }
-
-            /**
-             * @ngdoc method
-             * @methodOf cmConversationModel
-             * 
-             * name passwordRequired 
-             * @description
-             * Checks if the conversation requires a password
-             * 
-             * @return {Boolean} returns true or false
-             */
-            this.passwordRequired = function(){
-//                cmLogger.debug('cmConversationModel:passwordRequired');
-
-                    if(this.state.is('new')){
-                        return  this.isEncrypted()
-                            &&  (
-                                this.getBadRecipients().length != 0
-                                ||  !this.userHasPrivateKey()
-                                )
-
-                    }else{
-                        return ['symmetric', 'mixed'].indexOf(this.getKeyTransmission()) != -1
-                                 &&  !this.isUserInPassphraseList()
-
-                }
             }
 
             /**
@@ -338,7 +305,7 @@ angular.module('cmConversations')
                     }
                 );
 
-                if(cmUserModel.hasLocalKeys() == false){
+                if(this.userHasPrivateKey() == false){
                     this.options.showKeyInfo = true;
                 }
 
@@ -628,14 +595,25 @@ angular.module('cmConversations')
              *
              * @returns {String} encryptionType look at encryptedPassphraseList
              */
-            this.getKeyTransmission = function(){                
+            this.getKeyTransmission = function(){
+//                cmLogger.debug('cmConversationModel.getKeyTransmission');
                 if(this.state.is('new')){
-                    var moep = passphrase
-                            .setPassword(this.password)
-                            .setIdentities(this.recipients)
-                            .encrypt()
-                            .getKeyTransmission();
-                    return moep;
+
+                    if(!this.isEncrypted())
+                        return 'none';
+
+                    if(this.getBadRecipients().length == 0 && this.options.hasPassword == false)
+                        return 'asymmetric';
+
+                    if(this.passwordRequired()){
+                        if(this.getNiceRecipients() > 0){
+                            return 'mixed';
+                        } else {
+                            return 'symmetric';
+                        }
+                    }
+
+
                 } else {
                     return this.keyTransmission;
                 }
@@ -663,6 +641,33 @@ angular.module('cmConversations')
              * @ngdoc method
              * @methodOf cmConversationModel
              *
+             * name passwordRequired
+             * @description
+             * Checks if the conversation requires a password
+             *
+             * @return {Boolean} returns true or false
+             */
+            this.passwordRequired = function(){
+//                cmLogger.debug('cmConversationModel:passwordRequired');
+
+                if(this.state.is('new')){
+                    return  this.isEncrypted()
+                    &&  (
+                    this.getBadRecipients().length != 0
+                    ||  !this.userHasPrivateKey()
+                    || this.hasPassword()
+                    )
+
+                }else{
+                    return this.hasPassword() && !this.isUserInPassphraseList()
+
+                }
+            }
+
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
              * @name hasPassword
              * @description
              * Helper Function which checks if Conversation has as Password
@@ -670,6 +675,7 @@ angular.module('cmConversations')
              * @returns {Boolean} boolean Returns a Boolean
              */
             this.hasPassword = function(){
+//                cmLogger.debug('cmConversationModel:hasPassword');
                 if(this.state.is('new')){
                     return (this.options.hasPassword == true)
                 } else {
@@ -714,7 +720,7 @@ angular.module('cmConversations')
             };
 
             this.enablePassCaptcha = function(){
-                cmLogger.debug('cmConversationModel.enablePassCaptcha');
+//                cmLogger.debug('cmConversationModel.enablePassCaptcha');
                 this.options.hasCaptcha = true;
                 this.trigger('captcha:enabled');
 
@@ -722,7 +728,7 @@ angular.module('cmConversations')
             };
 
             this.disablePassCaptcha = function(){
-                cmLogger.debug('cmConversationModel.disablePassCaptcha');
+//                cmLogger.debug('cmConversationModel.disablePassCaptcha');
                 
                 if(!this.state.is('new')) return this
 
@@ -795,6 +801,38 @@ angular.module('cmConversations')
              * @ngdoc method
              * @methodOf cmConversationModel
              *
+             * @name getBadRecipients
+             * @description
+             * Function returns a list of all recipients who have no proper key
+             *
+             * @returns {Array} recipients Filter
+             */
+            this.getBadRecipients = function(){
+                return  this.recipients.filter(function(recipient){
+                    return recipient.getWeakestKeySize() <= 2000
+                })
+            };
+
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name getNiceRecipients
+             * @description
+             * Function returns a list of all recipients who have a proper key
+             *
+             * @returns {Array} recipients Filter
+             */
+            this.getNiceRecipients = function(){
+                return  this.recipients.filter(function(recipient){
+                    return recipient.getWeakestKeySize() > 2000
+                })
+            };
+
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
              * @name addRecipient
              * @description
              * Function to add a recipient to a conversation. Will not update the backend.
@@ -835,37 +873,34 @@ angular.module('cmConversations')
             };
 
             this.checkPreferences = function(){
-                /**
-                 * set Default
-                 * has Captcha will be set at an other method
-                 */
-                //this.options.hasPassword = false;
-                this.options.showKeyInfo = false;
+                if(this.state.is('new')) {
+                    /**
+                     * set Default
+                     * has Captcha will be set at an other method
+                     */
+                    this.options.hasPassword = false;
+                    this.options.showKeyInfo = false;
 
-                if(this.isEncrypted()){
-                    if(this.state.is('new') && cmUserModel.hasLocalKeys() == false){
-                        this.options.hasPassword = true;
-                        this.options.showKeyInfo = true;
+                    if (this.isEncrypted()) {
+                        if (this.state.is('new') && this.userHasPrivateKey() == false) {
+                            this.options.hasPassword = true;
+                            this.options.showKeyInfo = true;
+                        }
+
+                        /**
+                         * check recipients
+                         */
+                        if (this.getBadRecipients().length > 0) {
+                            self.options.hasPassword = true;
+                        }
                     }
 
                     /**
-                     * check recipients
+                     * last check for captcha preference
                      */
-                    this.recipients.forEach(function(recipient){
-                        /**
-                         * if Recipient has no Keys
-                         */
-                        if(recipient.getWeakestKeySize() == 0){
-                            self.options.hasPassword = true;
-                        }
-                    });
-                }
-
-                /**
-                 * last check for captcha preference
-                 */
-                if(this.hasPassword() == false){
-                    this.options.hasCaptcha = false;
+                    if (this.hasPassword() == false) {
+                        this.options.hasCaptcha = false;
+                    }
                 }
             };
 

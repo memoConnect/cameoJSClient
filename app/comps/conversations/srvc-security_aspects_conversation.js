@@ -3,8 +3,7 @@
 angular.module('cmSecurityAspects')
 .factory('cmSecurityAspectsConversation',[
     'cmSecurityAspects',
-    'cmUserModel',
-    function(cmSecurityAspects, cmUserModel){
+    function(cmSecurityAspects){
 //        var securityAspectsConversation = new cmSecurityAspects()
 
         function securityAspectsConversation(conversation){
@@ -12,9 +11,6 @@ angular.module('cmSecurityAspects')
 
             self
             .setTarget(conversation)
-
-
-
 
             self
                 .addAspect({
@@ -57,11 +53,12 @@ angular.module('cmSecurityAspects')
                          * BS mit Andreas absprechen
                          * passwordRequired hat unterschiedleiche Bedeutungen??!
                          */
-                        if(conversation.state.is('new')){
-                            return conversation.passwordRequired()
-                        } else {
-                            return conversation.hasPassword();
-                        }
+//                        if(conversation.state.is('new')){
+//                            return conversation.passwordRequired()
+//                        } else {
+//                            return conversation.hasPassword();
+//                        }
+                        return ['symmetric', 'mixed'].indexOf(conversation.getKeyTransmission()) != -1;
                     }
                 })
                 .addAspect({
@@ -79,12 +76,11 @@ angular.module('cmSecurityAspects')
                     }
                 }) 
                 .addAspect({                    
-                    id: 'ALL_RECIPIENTS_HAVE_PROPER_KEYS',
+                    id: 'ALL_RECIPIENTS_HAVE_PROPER_PUBLIC_KEYS',
                     dependencies: ['ENCRYPTED'],
                     value: 1,
                     check: function(conversation){
-                        return      conversation.state.is('new') 
-                                &&  !conversation.passwordRequired()            
+                        return (conversation.getBadRecipients().length == 0)
                     }
                 })   
                 .addAspect({                    
