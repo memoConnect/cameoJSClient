@@ -1,3 +1,44 @@
+<cm-header cm-rubber-space ng-show="isPurl == false">
+    <div cm-weight="1">
+        <cm-back back-to="/talks" ng-if="conversationId == 'new'"></cm-back>
+        <cm-back back-to="/talks" plain-back="true" ng-if="conversationId != 'new'"></cm-back>
+    </div>
+    <cm-identity cm-weight="3"></cm-identity>
+    <cm-security-indicator
+        cm-weight       = "3"
+        cm-data         = "conversation.securityAspects"
+        cm-leading-icon = "cm-lock"
+        ng-click        = "goto('conversation/'+conversationId+'/security-settings')"
+        ></cm-security-indicator>
+    <cm-menu cm-weight="1"></cm-menu>
+</cm-header>
+
+<cm-header cm-rubber-space ng-show="isPurl == true && !isModalVisible" cm-user-rights>
+    <cm-back cm-weight="1" back-to="/talks" plain-back="true"></cm-back>
+    <cm-identity cm-weight="4"></cm-identity>
+    <cm-security-indicator
+        cm-weight       = "2"
+        cm-data         = "conversation.securityAspects"
+        cm-leading-icon = "cm-lock"
+        ng-click        = "goto('purl/'+purlId+'/security-settings')"
+        ></cm-security-indicator>
+    <cm-menu cm-weight="1"></cm-menu>
+</cm-header>
+
+<cm-header cm-rubber-space ng-show="isPurl == true && !isModalVisible" cm-user-rights="showForGuest">
+    <div class="fast-sign-in" ng-click="goToRegister()" data-qa="btn-fast-sign-in" cm-weight="2">
+        <i class="fa cm-register"></i>
+        <span>{{'PURL.SIGN_IN'|cmTranslate}}</span>
+    </div>
+    <cm-logo cm-weight="4"></cm-logo>
+    <cm-security-indicator
+        cm-weight       = "2"
+        cm-data         = "conversation.securityAspects"
+        cm-leading-icon = "cm-lock"
+        ng-click        = "goto('purl/'+purlId+'/security-settings')"
+        ></cm-security-indicator>
+</cm-header>
+
 <section class="body-group recipients" ng-if="conversation.state.is('new') || !conversation.state.is('new') && conversation.recipients.length > 1">
     <label>
         {{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}

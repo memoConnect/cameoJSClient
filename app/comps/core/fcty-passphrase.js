@@ -19,8 +19,9 @@ angular.module('cmCore').factory('cmPassphrase',[
     'cmUserModel',
     'cmCrypt',
     'cmObject',
+    'cmUtil',
     'cmLogger',
-    function(cmFactory, cmKey, cmUserModel, cmCrypt, cmObject, cmLogger){
+    function(cmFactory, cmKey, cmUserModel, cmCrypt, cmObject, cmUtil, cmLogger){
 
         function cmPassphrase(){
             var self            = this,
@@ -294,6 +295,7 @@ angular.module('cmCore').factory('cmPassphrase',[
                 if(couldBeAPassword(pw) && couldBeAPassphrase(passphrase)){
                     return cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(password, passphrase));
                 } else {
+                    console.log('falase!')
 //                    cmLogger.debug('cmPassphrase:symmetricallyEncryptPassphrase - provide a proper password and and passphrase before encrypting the passphrase!');
                     return false                   
                 }
@@ -336,9 +338,11 @@ angular.module('cmCore').factory('cmPassphrase',[
              * Encrypts the passphrase with all available means.
              */
             this.encrypt = function(){
+                console.log('pp encrypt: '+password)
                 var sym     = symmetricallyEncryptPassphrase(password),
                     asym    = asymmetricallyEncryptPassphrase(identities);
 
+                console.log('encrypt:sym '+sym)
                 self.importSymmetricallyEncryptedPassphrase(sym);
                 self.importAsymmetricallyEncryptedPassphrase(asym);
 
@@ -455,10 +459,10 @@ angular.module('cmCore').factory('cmPassphrase',[
                 var localKeys = cmUserModel.loadLocalKeys(),
                     check = false;
 
-                if(asymmetricallyEncryptedPassphrases.length > 0 && typeof localKeys == 'array' && localKeys.length > 0){
+                if(asymmetricallyEncryptedPassphrases.length > 0 && cmUtil.isArray(localKeys) && localKeys.length > 0){
                     localKeys.forEach(function(value){
                         asymmetricallyEncryptedPassphrases.forEach(function(key){
-                            if(key.keyId == value.keyId){
+                            if(key.keyId == value.id){
                                 check = true;
                             }
                         })

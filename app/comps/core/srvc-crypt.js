@@ -2,12 +2,10 @@
 
 angular.module('cmCore')
 .service('cmCrypt',[
-    'cmLogger',
-    'cmKey',
-    '$q',
-    '$interval',
-    '$rootScope',
-    function (cmLogger,cmKey, $q, $interval, $rootScope) {
+    'cmLogger', 'cmKey',
+    '$q', '$interval', '$rootScope',
+    function (cmLogger, cmKey,
+              $q, $interval, $rootScope) {
         // private vars
         var async = {
             interval: null,
@@ -16,6 +14,11 @@ angular.module('cmCore')
         };
 
         return {
+            /**
+             * now cmKey
+             */
+            Key: cmKey,
+
             /**
              * this method calculates a secure hash
              * @param secretString String that should be hashed
@@ -62,14 +65,11 @@ angular.module('cmCore')
 
                 if (null == secretString)
                     return "";
-                if (secretKey.length > 12)
-                    return "";
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
                 return encryptedSecretString;
             },
-
 
             /**
              * this method encrypts strings
@@ -126,11 +126,6 @@ angular.module('cmCore')
 
                 return decryptedString || false
             },
-
-            /**
-             * now cmKey
-             */
-            Key: cmKey,
 
             /**
              * return the bit size of possible keygeneration
@@ -210,15 +205,23 @@ angular.module('cmCore')
                 return false;
             },
 
-            generatePassword: function(){
+            generatePassword: function(length){
+                var length = parseInt(length) || 10;
                 var bad_random_passphrase ='';
 
-                while(bad_random_passphrase.length < 10){
+                /**
+                    TODO: check browser function
+                    [934838069, 3149100522, 522808787, 1733751200, 863464034, 738885619]
+                    try to this array hash this and take first chars!
+                 */
+//                var array = new Uint32Array(length);
+//                window.crypto.getRandomValues(array);
+
+                while(bad_random_passphrase.length < length){
                     bad_random_passphrase += Math.random().toString(36).replace('0.','')
                 }
 
-
-                return bad_random_passphrase.slice(-10);
+                return bad_random_passphrase.slice(-(length));
             },
 
             generatePassphrase: function(){
@@ -229,6 +232,84 @@ angular.module('cmCore')
                 }
 
                 return bad_random_passphrase;
+            },
+
+
+            /**
+             * generateTransactionSecret
+             * @returns {String} transactionSecret
+             */
+            generateTransactionSecret: function(){
+                return this.generatePassword(6);
+            },
+
+            /**
+             * signOwnPubKey
+             * @param _settings_
+             * @returns {String} rsaSha256Signature of newPrivKey
+             */
+            sign: function(_settings_){
+                var defaultSettings = {
+                    identityId: 0, // identityId to signature
+                    transactionSecret: '',
+                    fromKey: undefined, // key with privkey from new device
+                    toKey: undefined // key with pubkey from old device
+                },
+                dataForHandshake = {
+                    signature: '',
+                    encryptedTransactionSecret: '',
+                    fromKeyId: 0,
+                    toKeyId: 0
+                },
+                settings = angular.extend({},defaultSettings,_settings_),
+                hashPubKey,
+                signatory = new JSEncrypt();
+                // set new privKey
+                signatory.setPrivateKey(settings.fromKey.getPrivateKey());
+                dataForHandshake.fromKeyId = settings.fromKey.id;
+                // hash identityId and oldPubKey
+                dataForHandshake.encryptedTransactionSecret = settings.toKey.encrypt(settings.transactionSecret);
+                dataForHandshake.toKeyId = settings.toKey.id;
+                // hash the transaction
+                hashPubKey = sjcl.hash.sha256.hash(settings.identityId+':'+dataForHandshake.encryptedTransactionSecret).toString();
+                // create signature with hash of above
+                dataForHandshake.signature = signatory.sign(hashPubKey);
+                // return that moep dataForHandshake
+                return dataForHandshake;
+            },
+
+            /**
+             * verifyOwnPubKey
+             * @param _settings_
+             * @returns {Boolean} is verification valid of newPubKey
+             */
+            verify: function(_settings_){
+                var defaultSettings = {
+                    identityId: '', // identityId to verify signature
+                    formKey: undefined, // pubkey from new device
+                    encryptedTransactionSecret: '', // encrypted pubkey from old device with transactionSecret
+                    signature: '' // signature of newPubKey
+                },
+                settings = angular.extend({},defaultSettings,_settings_),
+                hashPubKey,
+                verifier = new JSEncrypt();
+                // set new pubKey
+                verifier.setPublicKey(settings.formKey.getPublicKey());
+                // hash pubkey
+                hashPubKey = sjcl.hash.sha256.hash(settings.identityId+':'+settings.encryptedTransactionSecret).toString();
+                // check verification
+                return verifier.verify(hashPubKey, settings.signature, CryptoJS.SHA256);
+            },
+
+            isTransactionSecretValid: function(_settings_){
+                var defaultSettings = {
+                    userInput: '', //
+                    toKey: undefined,
+                    encryptedTransactionSecret: ''
+                },
+                settings = angular.extend({},defaultSettings,_settings_);
+
+                return settings.toKey.decrypt(settings.encryptedTransactionSecret) == settings.userInput;
             }
         }
     }

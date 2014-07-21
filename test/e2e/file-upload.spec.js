@@ -7,7 +7,8 @@ var ptor = util.getPtorInstance(),
     subjectSafe = 'subjectSafe FileUpload',
     smallImageJPG = path.resolve(__dirname,'./data/file-upload-image-24KB.jpg'),
     largeImageJPG = path.resolve(__dirname,'./data/file-upload-image-1.4MB.jpg'),
-    smallFileMP3 = path.resolve(__dirname,'./data/file-upload-audio-23KB.mp3');
+    smallFileMP3 = path.resolve(__dirname,'./data/file-upload-audio-23KB.mp3'),
+    smallFilePDF = path.resolve(__dirname,'./data/file-upload-file-123KB.pdf');
 
 // expect functions
 function testFile(file, extension, index){
@@ -56,6 +57,7 @@ function chooseFileAndUpload(file, selector, index){
     it(getFilename(file)+' choose and check preview',function(){
         $("[data-qa='btn-file-choose']").sendKeys(file)
 
+        util.waitForElements('cm-files-preview '+selector)
         // preview should be show image
         $$('cm-files-preview '+selector).then(function(elements) {
             expect(elements.length).toEqual(1)
@@ -87,17 +89,27 @@ describe('FileUpload unsafe', function () {
         util.get('/conversation/new')
         util.waitForPageLoad('/conversation/new')
 
-        util.disableEncryption();
+        util.disableEncryption()
 
-        $("[data-qa='input-subject']").sendKeys(subjectUnsafe)
+        util.setVal('input-subject',subjectUnsafe)
     })
+
+    it('click on send message for open modal',function(){
+        $("[data-qa='btn-send-answer']").click()
+    })
+
+    it('check checkbox and close modal',function(){
+        util.waitAndCloseNotify('checkbox-dont-ask-me-again')
+    })
+
     // test files
     var files = [
         {html5: smallFileMP3},
         {image: smallImageJPG},
-        {image: largeImageJPG}
-//        {file: smallFileAAC},
+        {image: largeImageJPG},
+        {file: smallFilePDF}
     ]
+
     // testFile or testImage called for every entry
     for(index in files){
         // prepare file

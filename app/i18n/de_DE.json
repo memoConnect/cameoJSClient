@@ -140,6 +140,7 @@
         "WARN": {
             "MESSAGE_EMPTY": "Das Textfeld ist leer.",
             "RECIPIENTS_MISSING": "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
+            "RECIPIENTS_MISSING_OKAY": "Ich möchte keinen weiteren Empfänger außer mir selbst hinzufügen.",
             "PASSPHRASE_INVALID": "Ungültiger Schlüssel.",
             "PASSWORD_WRONG": "Das eingegebene Passwort ist falsch.",
             "NO_PASSWORD": "Es fehlt ein Passwort.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">jetzt eins eingeben!</a>",
@@ -263,7 +264,8 @@
     "IDENTITY":{
         "LABEL":{
             "KEYMANAGEMENT": "Key Verwaltung",
-            "TRUST": "Trust Me"
+            "TRUST": "Trust Me",
+            "NEW": "Neue Identität einrichten"
         },
         "MODAL":{
             "HEADER": "Identitäten"
@@ -455,37 +457,23 @@
                 "DESCRIPTION": "",
                 "TOGGLE": "Verschlüsselung aktivieren."
             },
-            "ALL_RECIPIENTS_WITH_PROPER_KEY": {
-                "NAME": "Alle Empfänger haben ein gutes Schlüsselpaar.",
-                "DESCRIPTION": ""
+            "KEY_TRANSMISSION_SYMMETRIC": {
+                "NAME": "Verschlüsselung muss sich auf ein Passwort verlassen.",
+                "DESCRIPTION_NEW": "Verschlüsselung ist gerade nur mit Passwort möglich, weil mindestens einer der Empfänger keinen aureichenden Schlüssel hat. Mit einem Passwort zu verschlüsseln ist an sich nicht schlecht, aber die Güte der Verschlüsselung hängt stark von dem vergebenen Passwort ab.", 
+                "DESCRIPTION": "Verschlüsselung ist gerade nur mit Passwort möglich, weil mindestens einer der Empfänger beim Erstellen der Conversation keinen aureichenden Schlüssel hatte. Mit einem Passwort zu verschlüsseln ist an sich nicht schlecht, aber die Güte der Verschlüsselung hängt stark von dem vergebenen Passwort ab.",
+                "DESCRIPTION_BAD_RECIPIENTS": "Folgende Empfänger haben keinen ausreichenden öffentlichen Schlüssel:",
+                "DESCRIPTION_PRIVATE_KEY_MISSING": "Du hast auf diesem Gerät keinen privaten Schlüssel."
             },
-            "SOME_RECIPIENTS_WITHOUT_PROPER_KEY": {
-                "NAME": "{{count}} Empfänger {{count!=1?'haben':'hat'}} kein gutes Schlüsselpaar.",
-                "DESCRIPTION": "Betroffene Empfänger: {{bad_recipients_list}}"
+            "NO_SYMMETRIC_KEY_TRANSMISSION": {
+                "NAME": "Diese Conversation ist ordentlich nur mit öffentlichen Schlüssel verschlüsselt.",
+                "DESCRIPTION": "Es wurde kein Passowrt gesetzt; die Verschlüsselung arbeitet nur mit Schlüsselpaaren und muss sich nicht auf ein Passwort verlassen."
             },
             "HAS_PASSCAPTCHA": {
-                "NAME": "Passcaptcha wird verwendet!",
-                "DESCRIPTION": "",
-                "TOGGLE": "Passcaptcha deaktivieren"
+                "NAME": "Passcaptcha aktiviert.",
+                "DESCRIPTION": "Die Passcaptcha.Method erschwert es, Nachrichten im großem Umfang automatisiert zu entschlüsseln, aber wirklich sicher ist sie nicht.",
+                "TOGGLE": "Passcaptcha abschalten."
             },
-            "NO_SE_PASSPHRASE_PRESENT":{
-                "NAME": "Keine Symetrische Passphrase vorhanden",
-                "DESCRIPTION": ""
-            },
-            "SE_PASSPHRASE_PRESENT":{
-                "NAME": "Symetrische Passphrase vorhanden",
-                "DESCRIPTION": ""
-            },
-            "PASSWORD_MISSING": {
-                "NAME": "Bitte geben Sie ein Passwort",
-                "DESCRIPTION": "Für symetrische Verschlüsselung wird ein Passwort benötigt."
-            },
-            "HAS_PASSWORD": {
-                "NAME": "Passwort wird verwendet!",
-                "DESCRIPTION": "",
-                "TOGGLE": ""
-            },
-            "MISSING_DATA": "Sicherheitsaspekte fehlen"
+            "MISSING_DATA": "Sicherheitsaspekte fehlen."
         }
     },
 

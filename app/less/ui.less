@@ -218,9 +218,19 @@ header.inScreen{
   width: 100%;
   color: @cm-grey;
   padding-left: 0.8rem;
+  position:relative;
   i{
-    margin-right:0;
-    vertical-align:text-bottom;
+    margin-right:0.6rem;
+  }
+  &.with-lg-special{
+    padding-left:@cm-unit;
+    i {
+      &.cm-lg-special{
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    }
   }
 }
 

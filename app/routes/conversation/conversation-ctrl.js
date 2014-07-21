@@ -16,16 +16,14 @@ define([
         '$location',
         'cmConversationFactory',
         'cmUserModel',
-        function($scope, $rootScope, $element, $routeParams, $location,
-                 cmConversationFactory, cmUserModel){
-
+        function($scope, $rootScope, $element, $routeParams, $location, cmConversationFactory, cmUserModel){
+            $scope.isPurl           = false;
             $scope.conversationId   = $routeParams.conversationId;
             $scope.calledWithId     = $scope.conversationId && $scope.conversationId != 'new';
             $scope.pageChild1       = $routeParams.pageChild1 || '';
 
             // existing conversation
             if($scope.calledWithId){
-
                 $scope.conversation = cmConversationFactory.create($scope.conversationId);
             // pending conversation:
             } else if($rootScope.pendingConversation){
@@ -35,13 +33,16 @@ define([
                 else
                     $scope.conversation = $rootScope.pendingConversation;
 
+
             // new conversation:
             } else {
                 // TODO: create at send message not on init!!! Factories should not automatically register new instances.; Done, new() will not register the new instance, do it yourself.
                 $scope.conversation =   cmConversationFactory.new()
                                         .addRecipient(cmUserModel.data.identity)
-                
+
             }
+
+
         }
     ]);
 });

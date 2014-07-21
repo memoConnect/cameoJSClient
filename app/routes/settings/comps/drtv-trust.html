@@ -1,0 +1,14 @@
+<header class="inScreen">
+    trust
+</header>
+
+<div ng-if="isSignatureValid" class="alert-success">Signatur korrekt</div>
+<div ng-if="!isSignatureValid" class="alert-warn">Signatur falsch</div>
+<div ng-if="handshakeSucceed" class="alert-success">Handshakte korrekt</div>
+<div ng-if="!handshakeSucceed" class="alert-warn">Handshake falsch</div>
+
+transactionSecret: {{transactionSecret}}
+<input type="text"
+       class="form-control"
+       ng-model="transactionSecretUserInput"
+       ng-keydown="checkHandshake()" />

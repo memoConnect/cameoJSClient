@@ -74,14 +74,13 @@ angular.module('cmUi')
 .directive('cmFooter',[
     'cmConfig',
     '$location',
-    '$document',
-    function (cmConfig, $location, $document){
+    function (cmConfig, $location){
         return {
             restrict: 'E',
             transclude: true,
             scope: true,
             template: '<div ng-transclude></div>' +
-                      '<a ng-repeat="btn in Object.keys(btns)" href="#/{{btn}}" ng-class="{active:btns[btn].isActive}" style="width:{{btns[btn].width}}%">' +
+                      '<a ng-repeat="btn in Object.keys(btns)" href="#/{{btn}}" class="btn-footer" ng-class="{active:btns[btn].isActive}" style="width:{{btns[btn].width}}%">' +
                         '<i ng-if="btns[btn].icon" class="fa {{btns[btn].icon}} cm-lg-icon"></i>' +
                         '{{btns[btn].i18n|cmTranslate}}' +
                       '</a>',
@@ -92,7 +91,7 @@ angular.module('cmUi')
 
                 // set menu btns from config
                 if(element[0].querySelector('[ng-transclude]').innerHTML == '') {
-                    scope.btns = cmConfig.footer;
+                    scope.btns = cmConfig.footer || {};
                     // set active & width
                     var btns = Object.keys(scope.btns);
                     angular.forEach(btns, function (btnHref) {

@@ -15,13 +15,13 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
             templateUrl : 'routes/conversation/comps/drtv-security_settings.html',
             scope : true,
 
-            link: function(scope, element, attrs, cmConversation){
+            link: function(scope){
                 scope.inputFocus    = false;
                 scope.showPasswordLocalKeyInfo = false;
                 var times = 0;
 
                 function showPasswordInfo(conversation){
-                    if(conversation.isEncrypted() && cmUserModel.hasLocalKeys() == false){
+                    if(conversation.isEncrypted() && conversation.userHasPrivateKey() == false){
                         scope.showPasswordLocalKeyInfo = true;
                     } else {
                         scope.showPasswordLocalKeyInfo = false;
@@ -71,10 +71,6 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
 
                 // TODO: pending conversation generate in drtv not in route controller
                 var conversation = $rootScope.pendingConversation;
-                /*if(!conversation){
-                    $location.path('/conversation/new');
-                    return null;
-                }*/
 
                 $scope.goBack = function(){
                     //goto('conversation/'+(conversation.id||'new'))
@@ -92,7 +88,7 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                  */
                 $scope.decrypt = function(){
                     if($scope.conversation.isEncrypted()
-                        && !($scope.conversation.keyTransmission == 'asymmetric' && cmUserModel.hasLocalKeys() == false)
+                        && !($scope.conversation.getKeyTransmission() == 'asymmetric' && conversation.userHasPrivateKey() == false)
                     ) {
 
                         $scope.conversation.one('decrypt:failed', function () {

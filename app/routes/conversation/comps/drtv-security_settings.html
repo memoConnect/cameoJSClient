@@ -1,3 +1,27 @@
+<cm-header cm-rubber-space ng-show="!isPurl">
+    <cm-back cm-weight="1" back-to="conversation/{{conversationId}}"></cm-back>
+    <cm-identity cm-weight="3"></cm-identity>
+    <cm-security-indicator
+        cm-weight       = "3"
+        cm-data         = "conversation.securityAspects"
+        cm-leading-icon = "cm-lock"
+        ng-click        = "goto('conversation/'+conversationId+'/security-settings')"
+    ></cm-security-indicator>
+    <cm-menu cm-weight="1"></cm-menu>
+</cm-header>
+
+<cm-header cm-rubber-space ng-show="isPurl">
+    <cm-back cm-weight="1" back-to="purl/{{purlId}}"></cm-back>
+    <div cm-weight="1"></div>
+    <cm-logo cm-weight="4"></cm-logo>
+    <cm-security-indicator
+        cm-weight       = "2"
+        cm-data         = "conversation.securityAspects"
+        cm-leading-icon = "cm-lock"
+        ng-click        = "goto('purl/'+purlId+'/security-settings')"
+    ></cm-security-indicator>
+</cm-header>
+
 <section class="body-group no-border">
     <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getPositiveAspects()" cm-data="aspect"></cm-security-aspect>
     <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getNegativeAspects()" cm-data="aspect"></cm-security-aspect>
@@ -12,16 +36,16 @@
         </div>
     </div>
 
-    <div class="label-with-checkbox" ng-if="conversation.options.hasPassword && conversation.isEncrypted()">
+    <div class="label-with-checkbox" ng-if="conversation.passwordRequired()">
         <label class="w20">{{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA' | cmTranslate}}</label>
         <div class="w80 checkbox-of-label">
-            <button ng-click="toggleCaptcha()">
+            <button ng-click="toggleCaptcha()" data-qa="btn-toggle-captcha">
                 <i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.options.hasCaptcha, 'cm-checkbox-right':conversation.options.hasCaptcha, 'cm-grey':!isNew()}" data-qa="icon-checkbox-passcaptcha"></i>
             </button>
         </div>
     </div>
 
-    <div ng-if="conversation.options.hasPassword && conversation.isEncrypted()" id="password-area">
+    <div ng-if="(conversation.passwordRequired() && conversation.isEncrypted()) || conversation.hasPassword()" id="password-area">
         <div class="captcha" ng-if="conversation.options.hasCaptcha && isNew()" data-qa="captcha-canvas">
             <cm-captcha></cm-captcha>
             <button class="refresh" ng-click="refreshCaptcha()" ng-if="isNew()"><i class="fa cm-change"></i></button>
@@ -40,8 +64,17 @@
         <div class="cm-form-group label-with-checkbox">
             <label class="w20">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</label>
             <div class="cm-form-control with-inputter w80" style="background-color:#fff" ng-class="{'with-inside-icon':!isNew()}">
-                <input style="background-color:#fff" type="text" ng-model="conversation.password" placeholder="{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" cm-adaptive-change cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls', scrollTop:true,handler:'#captcha-anchor'}" data-qa="input-password" />
-                <i class="fa cm-key fa-2x with-cursor" ng-click="decrypt()" ng-if="!isNew()"></i>
+                <input 
+                    style       = "background-color:#fff" 
+                    type        = "text" 
+                    ng-model    ="conversation.password" 
+                    placeholder ="{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}" 
+                    cm-ios-focus="{fixedElements:'cm-header, cm-conversation-controls', scrollTop:true,handler:'#captcha-anchor'}" 
+                    data-qa     ="input-password" 
+                    ng-blur     = "decrypt()" 
+                    ng-disabled = "conversation.state.is('decrypted')"
+                />
+                <i class="fa cm-checker" ng-if = "conversation.state.is('decrypted')"></i>
             </div>
         </div>
     </div>

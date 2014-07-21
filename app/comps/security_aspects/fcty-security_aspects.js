@@ -20,6 +20,14 @@ angular.module('cmSecurityAspects')
             //Description:  'SECURITY_ASPECT.CONVERSATION.DEFAULT.DESCRIPTION'
             this.value          = config.value          || 0;
             this.dependencies   = config.dependencies   || [];  //Array of aspect ids
+            this.languagePrefix = config.languagePrefix || ''
+
+            this.description    = this.languagePrefix+'.'+this.id+'.DESCRIPTION'
+            this.name           = this.languagePrefix+'.'+this.id+'.NAME'
+            this.toggleLabel    = this.languagePrefix+'.'+this.id+'.TOGGLE'
+
+
+            this.template       = config.template       || '{{"'+this.description+'"|cmTranslate}}'
 
             /**
              * Function to check if the aspect applies to the target.
@@ -61,7 +69,9 @@ angular.module('cmSecurityAspects')
          * Security aspect management
          */
         
-        function cmSecurityAspects(){
+        function cmSecurityAspects(config){
+            config = config || {}
+
             var self = this;
 
             cmObject.addEventHandlingTo(this)
@@ -73,6 +83,8 @@ angular.module('cmSecurityAspects')
             this.applyingAspects = []
 
             this.countForDigest = 0;
+
+            this.languagePrefix = config.languagePrefix
 
 
             this.refresh = function(){
@@ -97,12 +109,16 @@ angular.module('cmSecurityAspects')
              * @return {self}   returns self for chaining
              */
             this.addAspect = function(config){
+                config.languagePrefix = config.languagePrefix || this.languagePrefix
+
                 var aspect = new SecurityAspect(config);
 
                 aspect.on('toggle', function(){
                     if(aspect.toggleCheck(self.target))
                         aspect.toggleCall(self.target)
                 });
+
+
 
                 this.aspects.push(aspect);
                 return this;

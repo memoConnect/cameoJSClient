@@ -20,10 +20,10 @@ angular.module('cmCore')
         self.bellCounter = 0;
 
         function handleAdapter(args){
-            var notify = notifyTpl;
+            var notify = angular.extend({} ,notifyTpl);
 
             if(typeof args == 'object'){
-                notify = angular.extend(notify, args);
+                notify = angular.extend(notify, args);  
                 self.create(notify);
             }
         }

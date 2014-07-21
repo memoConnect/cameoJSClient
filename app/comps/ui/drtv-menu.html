@@ -1,4 +1,4 @@
-<div class="cm-handler" ng-click="handleMenu()">
+<div class="cm-handler" ng-click="handleMenu()" data-qa="btn-open-menu">
     <cm-notify-signal></cm-notify-signal>
 </div>
 <div class="cm-menu-layer" ng-show="menuVisible">
@@ -10,7 +10,7 @@
             </li>
 
             <li class="cm-list-group-item {{menu[btn].css}}" ng-repeat="btn in Object.keys(menu)" ng-class="{'has-submenu':menu[btn].subs}">
-                <div class="cm-list-parent-label" ng-click="goTo(menu[btn], btn)">
+                <div class="cm-list-parent-label" ng-click="goTo(menu[btn], btn)" data-qa="{{menu[btn]['data-qa']}}">
                     <i class="fa icon-left" ng-if="menu[btn].icon != undefined" ng-class="menu[btn].icon"></i>
                     <span>
                         {{menu[btn].i18n|cmTranslate}}

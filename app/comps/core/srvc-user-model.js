@@ -21,18 +21,12 @@
 
 angular.module('cmCore')
 .service('cmUserModel',[
-    'cmBoot',
-    'cmAuth',
-    'cmLocalStorage', 
-    'cmIdentityFactory', 
-    'cmKey',
-    'cmObject',
-    'cmNotify',
-    'cmLogger',
-    '$rootScope', 
-    '$q', 
-    '$location',
-    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmKey, cmObject, cmNotify, cmLogger, $rootScope, $q, $location){
+    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmKey',
+    'cmObject', 'cmNotify', 'cmLogger',
+    '$rootScope', '$q', '$location',
+    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmKey,
+             cmObject, cmNotify, cmLogger,
+             $rootScope, $q, $location){
         var self = this,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
@@ -266,6 +260,8 @@ angular.module('cmCore')
 
             this.storageSave('rsa', key_data_list);
 
+            this.trigger('key:stored')
+
             return this;
         };
 
@@ -353,6 +349,7 @@ angular.module('cmCore')
                     if(foundInLocalKeys > -1) {
                         keys.splice(foundInLocalKeys, 1);
                         self.storageSave('rsa', keys);
+                        self.trigger('key:removed')
                     }
                     // clear identity
                     self.data.identity.removeKey(keyToRemoved);

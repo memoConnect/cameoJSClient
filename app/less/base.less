@@ -69,8 +69,10 @@ exp.:
 
 // General page layout
 
-::selection {color:@cm-white;background:@cm-ci-color;}
-::-moz-selection {color:@cm-white;background:@cm-ci-color;}
+::selection {color:inherit;background:transparent}
+::-moz-selection {color:inherit;background:transparent}
+.is-selectable::selection {color:@cm-white;background:@cm-ci-color;}
+.is-selectable::-moz-selection {color:@cm-white;background:@cm-ci-color;}
 
 html, body {
     height:100%;
@@ -300,6 +302,8 @@ html[xmlns] .clearfix{display:block}
 .tar{text-align:right}
 .dib{display:inline-block}
 
+.no-pad{padding:0 !important}
+
 .pos-tr{position:absolute;right:0;top:0}
 .pos-tl{position:absolute;right:0;left:0}
 .pos-br{position:absolute;bottom:0;right:0}
@@ -333,4 +337,8 @@ html[xmlns] .clearfix{display:block}
     display:table-cell;
     vertical-align: middle;
   }
+}
+
+[ng-click] {
+  cursor:pointer;
 }
