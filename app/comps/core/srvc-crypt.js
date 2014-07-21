@@ -236,27 +236,82 @@ angular.module('cmCore')
                 return bad_random_passphrase;
             },
 
+
             /**
-             * signing
+             * generateTransactionSecret
+             * @returns {String} transactionSecret
              */
-            signPubKey: function(newPrivKey, identityId, oldPubKey){
-                var signatory = new JSEncrypt();
-                    signatory.setPrivateKey(newPrivKey);
-                // hash pubkey
-                var hashPubKey = sjcl.hash.sha256.hash(identityId+':'+oldPubKey).toString();
-                // create signature
-                var rsa_sha256_signature = signatory.sign(hashPubKey);
-                // return that moep
-                return rsa_sha256_signature;
+            generateTransactionSecret: function(){
+                return this.generatePassword(6);
             },
 
-            verifyPubKey: function(newPubKey, identityId, signedPubKey, signature){
-                var verifier = new JSEncrypt();
-                    verifier.setPublicKey(newPubKey);
+            /**
+             * signOwnPubKey
+             * @param _settings_
+             * @returns {String} rsaSha256Signature of newPrivKey
+             */
+            sign: function(_settings_){
+                var defaultSettings = {
+                    identityId: 0, // identityId to signature
+                    transactionSecret: '',
+                    fromKey: undefined, // key with privkey from new device
+                    toKey: undefined // key with pubkey from old device
+                },
+                dataForHandshake = {
+                    signature: '',
+                    encryptedTransactionSecret: '',
+                    fromKeyId: 0,
+                    toKeyId: 0
+                },
+                settings = angular.extend({},defaultSettings,_settings_),
+                hashPubKey,
+                signatory = new JSEncrypt();
+                // set new privKey
+                signatory.setPrivateKey(settings.fromKey.getPrivateKey());
+                dataForHandshake.fromKeyId = settings.fromKey.id;
+                // hash identityId and oldPubKey
+                dataForHandshake.encryptedTransactionSecret = settings.toKey.encrypt(settings.transactionSecret);
+                dataForHandshake.toKeyId = settings.toKey.id;
+                // hash the transaction
+                hashPubKey = sjcl.hash.sha256.hash(settings.identityId+':'+dataForHandshake.encryptedTransactionSecret).toString();
+                // create signature with hash of above
+                dataForHandshake.signature = signatory.sign(hashPubKey);
+                // return that moep dataForHandshake
+                return dataForHandshake;
+            },
+
+            /**
+             * verifyOwnPubKey
+             * @param _settings_
+             * @returns {Boolean} is verification valid of newPubKey
+             */
+            verify: function(_settings_){
+                var defaultSettings = {
+                    identityId: '', // identityId to verify signature
+                    formKey: undefined, // pubkey from new device
+                    encryptedTransactionSecret: '', // encrypted pubkey from old device with transactionSecret
+                    signature: '' // signature of newPubKey
+                },
+                settings = angular.extend({},defaultSettings,_settings_),
+                hashPubKey,
+                verifier = new JSEncrypt();
+                // set new pubKey
+                verifier.setPublicKey(settings.formKey.getPublicKey());
                 // hash pubkey
-                var hashPubKey = sjcl.hash.sha256.hash(identityId+':'+signedPubKey).toString();
+                hashPubKey = sjcl.hash.sha256.hash(settings.identityId+':'+settings.encryptedTransactionSecret).toString();
                 // check verification
-                return verifier.verify(hashPubKey, signature, CryptoJS.SHA256);
+                return verifier.verify(hashPubKey, settings.signature, CryptoJS.SHA256);
+            },
+
+            isTransactionSecretValid: function(_settings_){
+                var defaultSettings = {
+                    userInput: '', //
+                    toKey: undefined,
+                    encryptedTransactionSecret: ''
+                },
+                settings = angular.extend({},defaultSettings,_settings_);
+
+                return settings.toKey.decrypt(settings.encryptedTransactionSecret) == settings.userInput;
             }
         }
     }

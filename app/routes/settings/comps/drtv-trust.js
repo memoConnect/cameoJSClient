@@ -2,8 +2,8 @@
 
 angular.module('cmRouteSettings')
 .directive('cmTrust', [
-    'cmUserModel', 'cmUtil', 'cmCrypt',
-    function(cmUserModel, cmUtil, cmCrypt){
+    'cmUserModel', 'cmUtil', 'cmCrypt', 'cmKey',
+    function(cmUserModel, cmUtil, cmCrypt, cmKey){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-trust.html',
@@ -11,65 +11,70 @@ angular.module('cmRouteSettings')
                 $scope.cmUtil = cmUtil;
 
                 var ownKeys = cmUserModel.data.identity.keys,
-                    identityId = cmUserModel.data.identity.id,
+                    ownIdentityId = cmUserModel.data.identity.id,
                     device2 = ownKeys[0],
                     device1 = ownKeys[1];
 
                     $scope.isSignatureValid = false;
+                    $scope.handshakeSucceed = false;
 
                 //////////////////////////////
                 // transactionSecret
-                $scope.transactionSecret = cmCrypt.generatePassword(6);
-                var encryptedTransactionSecret = device1.encrypt($scope.transactionSecret);
+                $scope.transactionSecret = cmCrypt.generateTransactionSecret();
+                $scope.transactionSecretUserInput = '';
 
                 //////////////////////////////
                 // device #2
                 // sign his pubkey with signature
-                var signature = cmCrypt.signPubKey(
-                    device2.getPrivateKey(), // privkey #2
-                    identityId, // identityId to verify
-                    encryptedTransactionSecret // pubkey #1  //device1.getPublicKey()
-                );
+                var dataForRequest = cmCrypt.sign({
+                    identityId: ownIdentityId, // identityId for signature
+                    transactionSecret: $scope.transactionSecret,
+                    fromKey: device2, // cmKey with privkey #2
+                    toKey: device1 // cmKey with pubkey #1
+                });
 
                 //////////////////////////////
                 // BE save signature to pubkey #1
                 // BE event new:key
                 // (POST /identity/authenticationRequest)
                 var request = {
-                    signature: signature,
-                    encryptedTransactionSecret: encryptedTransactionSecret,
-                    fromKeyId: device2.id,
-                    toKeyId: device1.id
+                    signature: dataForRequest.signature,
+                    encryptedTransactionSecret: dataForRequest.encryptedTransactionSecret,
+                    fromKeyId: dataForRequest.fromKeyId,
+                    toKeyId: dataForRequest.toKeyId
                 };
+
                 console.log(request)
 
-                //////////////////////////////
-                // device #1
-                // get signature to new pub key
-                if(request.toKeyId == device1.id) {
-                    // check signature
-                    if (cmCrypt.verifyPubKey(
-                        device2.getPublicKey(), // pubkey #2 request.fromKeyId
-                        identityId, // identityId for verify
-                        request.encryptedTransactionSecret, // pubkey #1 //device1.getPublicKey()
-                        signature
-                    )) {
-                        $scope.isSignatureValid = true;
+                $scope.checkHandshake = function() {
+                    //////////////////////////////
+                    // device #1
+                    // get signature to new pub key
+                    if (request.toKeyId == device1.id && $scope.transactionSecretUserInput != '') {
+                        // check signature
+                        if (cmCrypt.verify({
+                            identityId: ownIdentityId, // identityId to verify signature
+                            formKey: device2, // pubkey #2 request.fromKeyId
+                            encryptedTransactionSecret: request.encryptedTransactionSecret, // ecrypted pubkey with transactionSecret #1
+                            signature: request.signature
+                        })) {
+                            $scope.isSignatureValid = true;
+                        }
+
+                        // check encryptedTransactionSecret
+                        if ($scope.isSignatureValid && cmCrypt.isTransactionSecretValid({
+                            userInput: $scope.transactionSecretUserInput,
+                            toKey: device1, // pubkey #1 request.toKeyId
+                            encryptedTransactionSecret: request.encryptedTransactionSecret
+                        })) {
+                            $scope.handshakeSucceed = true;
+                            ///////////////////////////////////
+                            // BE
+                            // save signature to newPubKey
+                            // POST /identity...
+                        }
                     }
-
-                    // check encryptedTransactionSecret
-                    console.log(device1.decrypt(request.encryptedTransactionSecret));
-
                 }
-
-
-                /////////////////////////////
-                // BE save signature
-
-                $scope.schmu = {
-                    ownKeys: ownKeys,
-                    signature: signature
-                };
             }
         }
     }
