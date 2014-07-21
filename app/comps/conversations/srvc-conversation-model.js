@@ -151,12 +151,6 @@ angular.module('cmConversations')
                 self.trigger('init:finished');
             }
 
-            this.getBadRecipients = function(){
-                return  this.recipients.filter(function(recipient){
-                            return recipient.getWeakestKeySize() <= 2000
-                        })
-            }
-
             this.userHasPrivateKey = function(){
                 return  cmUserModel.hasLocalKeys()
             }
@@ -603,15 +597,22 @@ angular.module('cmConversations')
              */
             this.getKeyTransmission = function(){                
                 if(this.state.is('new')){
-//                    var moep = passphrase
-//                            .setPassword(this.password)
-//                            .setIdentities(this.recipients)
-//                            .encrypt()
-//                            .getKeyTransmission();
+
+                    if(!this.isEncrypted())
+                        return 'none';
+
+                    if(this.getBadRecipients().length == 0 && this.options.hasPassword == false)
+                        return 'asymmetric';
+
+                    if(this.passwordRequired()){
+                        if(this.getNiceRecipients() > 0){
+                            return 'mixed';
+                        } else {
+                            return 'symmetric';
+                        }
+                    }
 
 
-
-                    return moep;
                 } else {
                     return this.keyTransmission;
                 }
@@ -653,11 +654,11 @@ angular.module('cmConversations')
                     &&  (
                     this.getBadRecipients().length != 0
                     ||  !this.userHasPrivateKey()
+                    || this.hasPassword()
                     )
 
                 }else{
-                    return ['symmetric', 'mixed'].indexOf(this.getKeyTransmission()) != -1
-                    &&  !this.isUserInPassphraseList()
+                    return this.hasPassword() && !this.isUserInPassphraseList()
 
                 }
             }
@@ -792,6 +793,18 @@ angular.module('cmConversations')
                 }
 
                 return this;
+            };
+
+            this.getBadRecipients = function(){
+                return  this.recipients.filter(function(recipient){
+                    return recipient.getWeakestKeySize() <= 2000
+                })
+            };
+
+            this.getNiceRecipients = function(){
+                return  this.recipients.filter(function(recipient){
+                    return recipient.getWeakestKeySize() > 2000
+                })
             };
 
             /**

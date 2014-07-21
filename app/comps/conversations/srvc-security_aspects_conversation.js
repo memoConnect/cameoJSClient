@@ -53,11 +53,13 @@ angular.module('cmSecurityAspects')
                          * BS mit Andreas absprechen
                          * passwordRequired hat unterschiedleiche Bedeutungen??!
                          */
-                        if(conversation.state.is('new')){
-                            return conversation.passwordRequired()
-                        } else {
-                            return conversation.hasPassword();
-                        }
+//                        if(conversation.state.is('new')){
+//                            return conversation.passwordRequired()
+//                        } else {
+//                            return conversation.hasPassword();
+//                        }
+
+                        return ['symmetric', 'mixed'].indexOf(conversation.getKeyTransmission()) != -1;
                     }
                 })
                 .addAspect({
