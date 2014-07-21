@@ -24,7 +24,7 @@ describe('Directive cmFooter', function () {
         $rootScope = _$rootScope_
         $location = _$location_
         $scope = $rootScope.$new()
-        $el =  angular.element('<footer cm-footer></footer>')
+        $el =  angular.element('<cm-footer></cm-footer>')
         $compile($el)($scope)
         $scope.$digest()
     }))
