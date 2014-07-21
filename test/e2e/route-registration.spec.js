@@ -33,7 +33,7 @@ describe('registration', function () {
         $("[data-qa='btn-createUser']").click()
 
         util.checkWarning("register-info-username-empty")
-        util.checkWarning("drtv-password-error-emtpy")
+        util.checkWarning("drtv-password-error-empty")
         util.checkWarning("register-info-terms")
     })
 
@@ -99,6 +99,7 @@ describe('registration', function () {
         // todo: find a less hackisch way to do this
         $("body").sendKeys(protractor.Key.END)
 
+        util.waitForElement("[data-qa='link-terms']")
         $("[data-qa='link-terms']").click()
         util.waitForPageLoad("/terms");
     })

@@ -50,7 +50,7 @@
     "grunt-contrib-less": "~0.10.0",
     "grunt-contrib-watch": "~0.6.0",
     "grunt-file-creator": "~0.1.1",
-    "grunt-protractor-runner": "~0.2.4",
+    "grunt-protractor-runner": "~1.0.1",
     "jasmine-reporters": "~0.4.0",
     "grunt-shell": "~0.7.0",
     "grunt-ngdocs": "~0.2.2",

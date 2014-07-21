@@ -9,13 +9,30 @@
 <div ng-controller="RegistrationCtrl">
     <div class="cm-registration-ctn">
         <form name="registrationForm" class="form-horizontal" role="form" autocomplete="off" novalidate>
-
             <h4>{{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}</h4>
 
-            <div class="cm-input-ctn" ng-class="{'cm-input-error':getLoginNameError()}" data-qa="form-input">
-                <input id="loginName" name="loginName" data-qa="input-loginName" ng-class="{'cm-input-error':getLoginNameError()}" type="text"  ng-model="formData.loginName" ng-keyup="verifyLoginName();" ng-minlength="6" ng-maxlength="20" maxlength="20" placeholder="{{'REGISTER.PLACEHOLDER.USERNAME' | cmTranslate}} *" required />
+            <div
+                data-qa="form-input"
+                class="cm-input-ctn"
+                ng-class="{'cm-input-error':getLoginNameError()}">
+                <input
+                    id="loginName"
+                    name="loginName"
+                    data-qa="input-loginName"
+                    ng-class="{'cm-input-error':getLoginNameError()}"
+                    type="text"
+                    ng-model="formData.loginName"
+                    ng-keyup="verifyLoginName();"
+                    ng-minlength="6"
+                    ng-maxlength="20"
+                    maxlength="20"
+                    placeholder="{{'REGISTER.PLACEHOLDER.USERNAME'|cmTranslate}} *"
+                    required />
             </div>
-            <div class="cm-alert" ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid" data-qa="register-info-user-min-letter-count">
+            <div
+                class="cm-alert"
+                ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid"
+                data-qa="register-info-user-min-letter-count">
                 <div ng-show="invalidLoginName()">
                     <i class="fa cm-info"></i>{{'REGISTER.INFO.MIN_LETTER_COUNT' | cmTranslate : {count: 6} }}
                 </div>
@@ -37,11 +54,25 @@
             <h4>{{'REGISTER.TITLE.HEAD_IDENTITY' | cmTranslate}}</h4>
 
             <div class="cm-input-ctn" data-qa="form-input">
-                <input id="displayName" name="displayName" data-qa="input-displayName" type="text" placeholder="{{'REGISTER.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" ng-model="formData.displayName" />
+                <input
+                    id="displayName"
+                    name="displayName"
+                    data-qa="input-displayName"
+                    type="text"
+                    placeholder="{{'REGISTER.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}"
+                    ng-model="formData.displayName" />
             </div>
 
             <div class="cm-input-ctn" ng-class="{'cm-input-error':registrationForm.email.$invalid}" data-qa="form-input">
-                <input id="email" name="email" data-qa="input-email" type="text" placeholder="{{'REGISTER.PLACEHOLDER.EMAIL'|cmTranslate}}" ng-model="formData.email" ng-class="{'cm-input-error':registrationForm.email.$invalid}" cm-validate-email />
+                <input
+                    id="email"
+                    name="email"
+                    data-qa="input-email"
+                    type="text"
+                    placeholder="{{'REGISTER.PLACEHOLDER.EMAIL'|cmTranslate}}"
+                    ng-model="formData.email"
+                    ng-class="{'cm-input-error':registrationForm.email.$invalid}"
+                    cm-validate-email />
             </div>
             <div class="cm-alert" ng-show="registrationForm.email.$dirty && registrationForm.email.$invalid" data-qa="register-info-invalid-mail">
                 <div ng-show="registrationForm.email.$invalid">
@@ -50,7 +81,16 @@
             </div>
 
             <div class="cm-input-ctn" ng-class="{'cm-input-error':registrationForm.phone.$invalid}" data-qa="form-input">
-                <input id="phone" name="phone" data-qa="input-phone" type="text" placeholder="{{'REGISTER.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" ng-model="formData.phone" ng-minlength="6" ng-class="{'cm-input-error':registrationForm.phone.$invalid}" cm-validate-phone />
+                <input
+                    id="phone"
+                    name="phone"
+                    data-qa="input-phone"
+                    type="text"
+                    placeholder="{{'REGISTER.PLACEHOLDER.PHONENUMBER'|cmTranslate}}"
+                    ng-model="formData.phone"
+                    ng-minlength="6"
+                    ng-class="{'cm-input-error':registrationForm.phone.$invalid}"
+                    cm-validate-phone />
             </div>
             <div class="cm-alert" ng-show="registrationForm.phone.$dirty && registrationForm.phone.$invalid" data-qa="register-info-invalid-phonenumber">
                 <div ng-show="registrationForm.phone.$invalid">
@@ -59,9 +99,24 @@
             </div>
 
             <div class="cm-input-ctn cm-clear-bg" data-qa="form-input">
-                {{'REGISTER.LABEL.TERMS_ACCEPT'|cmTranslate}} <a href="#/terms" data-qa="link-terms" class="link-terms" ng-click="handleFormDataCache('cache')">{{'REGISTER.LABEL.TERMS'|cmTranslate}}</a>
-                <input id="agbCheckboxInput" name="agb" type="checkbox" ng-model="formData.agb" required style="display:none" data-qa="checkbox-agb" />
-                <i id="agbCheckbox" class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':registrationForm.agb.$invalid, 'cm-checkbox-right':!registrationForm.agb.$invalid}" ng-click="acceptTerms()" data-qa="icon-checkbox-agb"></i>
+                {{'REGISTER.LABEL.TERMS_ACCEPT'|cmTranslate}} <a href="#/terms" data-qa="link-terms" class="link-terms">{{'REGISTER.LABEL.TERMS'|cmTranslate}}</a>
+                <input
+                    id="agbCheckboxInput"
+                    data-qa="checkbox-agb"
+                    name="agb"
+                    type="checkbox"
+                    ng-model="formData.agb"
+                    class="ng-hide"
+                    required />
+                <i
+                    id="agbCheckbox"
+                    data-qa="icon-checkbox-agb"
+                    class="fa cm-lg-icon cm-ci-color ml15"
+                    ng-class="{
+                        'cm-checkbox':registrationForm.agb.$invalid,
+                        'cm-checkbox-right':!registrationForm.agb.$invalid
+                    }"
+                    ng-click="acceptTerms()"></i>
             </div>
 
             <div class="cm-alert" ng-show="registrationForm.phone.dirty && registrationForm.agb.$invalid" data-qa="register-info-terms">

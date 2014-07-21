@@ -34,16 +34,14 @@ describe('Friendrequests', function () {
                 $("cm-contact-tag [data-qa='btn-openModal']").click()
 
                 // fill out modal
-                expect($('cm-modal').isPresent()).toBe(true);
-                $("cm-modal [data-qa='input-friendrequestMessage']").sendKeys(requestMessage)
+                expect($('cm-modal.active').isPresent()).toBe(true);
+                $("cm-modal.active [data-qa='input-friendrequestMessage']").sendKeys(requestMessage)
                 // send request
-                $("cm-modal [data-qa='btn-sendRequest']").click()
+                $("cm-modal.active [data-qa='btn-sendRequest']").click()
             })
 
             it('check request is removed', function(){
-                $$('cm-contact-tag').then(function(elements){
-                    expect(elements.length).toEqual(0)
-                })
+                util.waitForElementDisappear('cm-contact-tag')
             })
 
             it('check if request is pending in list', function(){

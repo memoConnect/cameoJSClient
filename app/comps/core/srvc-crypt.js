@@ -65,8 +65,6 @@ angular.module('cmCore')
 
                 if (null == secretString)
                     return "";
-                if (secretKey.length > 12)
-                    return "";
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 

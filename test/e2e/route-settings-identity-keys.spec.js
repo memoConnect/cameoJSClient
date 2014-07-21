@@ -73,6 +73,7 @@ describe('identity key settings', function(){
 
     it('the new key should be displayed as local', function(){
         util.waitForPageLoad('/settings/identity/keys')
+        util.waitForElement("[data-qa='key-list-item']")
 
         $$("[data-qa='key-list-item']").then(function (elements) {
             expect(elements.length).toBe(1)
@@ -119,15 +120,15 @@ describe('identity key settings', function(){
 
     it('delete key', function(){
         $("[data-qa='btn-remove-modal']").click()
+        util.waitForElement("[data-qa='btn-remove-key']")
         $("[data-qa='btn-remove-key']").click()
-        $$("[data-qa='key-list-item']").then(function (elements) {
-            expect(elements.length).toBe(0)
-        })
+        util.waitForElementDisappear("[data-qa='key-list-item']")
     })
 
     it('generate another local key', function(){
         util.generateKey()
         util.waitForPageLoad('/settings/identity/keys')
+        util.waitForElement("[data-qa='key-list-item']")
 
         $$("[data-qa='key-list-item']").then(function (elements) {
             expect(elements.length).toBe(1)

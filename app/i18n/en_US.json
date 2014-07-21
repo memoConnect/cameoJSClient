@@ -140,6 +140,7 @@
         "WARN": {
             "MESSAGE_EMPTY": "The input field is empty.",
             "RECIPIENTS_MISSING": "Please add at least one recipient.",
+            "RECIPIENTS_MISSING_OKAY": "I dont want any other recipients than myself.",
             "PASSPHRASE_INVALID": "Invalid passphrase",
             "PASSWORD_WRONG": "Password is wrong",
             "NO_PASSWORD": "Password is empty.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">here you can insert one</a>",
@@ -455,40 +456,26 @@
                 "DESCRIPTION": "",
                 "TOGGLE": "Enable encryption."
             },
-            "SE_PASSPHRASE_PRESENT": {
-                "NAME": "Passphrase was encrypted with a password.",
-                "DESCRIPTION": ""
+            "KEY_TRANSMISSION_SYMMETRIC": {
+                "NAME": "Encryption relies on a password.",
+                "DESCRIPTION_NEW": "Encryption with a password is not bad in itself, but the strength of the encryption greatly depends on the password you choose. You have to use a password because not all recipients have a proper key available to you.",
+                "DESCRIPTION": "Encryption with a password is not bad in itself, but the strength of the encryption greatly depends on the password you choose. You have to use a password because not all recipients had a proper a key available when the conversation started.",
+                "DESCRIPTION_BAD_RECIPIENTS": "These recipients have no proper public keys:",
+                "DESCRIPTION_PRIVATE_KEY_MISSING": "You dont have a private Key on this device."
             },
-            "NO_SE_PASSPHRASE_PRESENT": {
-                "NAME": "Passphrase was not encrypted with a password.",
-                "DESCRIPTION": ""
-            },
-            "ALL_RECIPIENTS_WITH_PROPER_KEY": {
-                "NAME": "All recipients have proper public keys.",
-                "DESCRIPTION": ""
-            },
-            "SOME_RECIPIENTS_WITHOUT_PROPER_KEY": {
-                "NAME": "{{count}} Recipient {{count!=1?'s have':' has'}} no proper public key.",
-                "DESCRIPTION": "If not all recipients have a proper public key a password is used to encrypt the conversation. Affected Recipients: {{bad_recipients_list}}"
+            "NO_SYMMETRIC_KEY_TRANSMISSION": {
+                "NAME": "Conversation savely encrypted with public keys only.",
+                "DESCRIPTION": "No password has been set. The encryption works with key pairs only and won't have to rely on a password."
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha enabled!",
                 "DESCRIPTION": "Using the passcaptcha method makes it harder to automatically decrypt your messages on a large scale, but it is not actually save.",
                 "TOGGLE": "Disable passcaptcha!"
             },
-            "PASSWORD_MISSING": {
-                "NAME": "Password missing.",
-                "DESCRIPTION": "If not all recipients have a proper public key a password is used to encrypt the conversation. Affected Recipients: {{bad_recipients_list}}",
-                "TOGGLE": ""
-            },            
-            "HAS_PASSWORD": {
-                "NAME": "Password enabled!",
-                "DESCRIPTION": "",
-                "TOGGLE": ""
-            },
             "MISSING_DATA": "Securityapsects missing"
         }
     },
+
     "SYSTEM":{
         "WELCOME": {
             "MESSAGE": "Cameo rulez",
