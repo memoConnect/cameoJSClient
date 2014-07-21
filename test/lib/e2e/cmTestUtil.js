@@ -217,7 +217,7 @@ this.waitForElementDisappear = function (selector, timeout) {
 this.waitForModalOpen = function (id) {
 
     ptor.wait(function () {
-        return $("cm-modal").then(function (element) {
+        return $("cm-modal.active").then(function (element) {
             return element.isDisplayed()
         })
     }, config.routeTimeout, "waitForModalOpen " + id + " timeout reached")
