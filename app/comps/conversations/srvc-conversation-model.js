@@ -655,7 +655,6 @@ angular.module('cmConversations')
                     )
 
                 }else{
-                    console.log('haspw:'+this.hasPassword())
                     return this.hasPassword() && (!this.userHasPrivateKey() || !this.isUserInPassphraseList())
                 }
             }

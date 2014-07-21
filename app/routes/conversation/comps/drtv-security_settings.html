@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    <div ng-if="conversation.passwordRequired() && conversation.isEncrypted()" id="password-area">
+    <div ng-if="(conversation.passwordRequired() && conversation.isEncrypted()) || conversation.hasPassword()" id="password-area">
         <div class="captcha" ng-if="conversation.options.hasCaptcha && isNew()" data-qa="captcha-canvas">
             <cm-captcha></cm-captcha>
             <button class="refresh" ng-click="refreshCaptcha()" ng-if="isNew()"><i class="fa cm-change"></i></button>

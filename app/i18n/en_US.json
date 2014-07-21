@@ -457,8 +457,9 @@
                 "TOGGLE": "Enable encryption."
             },
             "KEY_TRANSMISSION_SYMMETRIC": {
-                "NAME": "Some recipients dont have a proper key pair.",
-                "DESCRIPTION": "Encryption with a password is not bad in itself, but the strength of the encryption greatly depends on the password you choose. You have to use a password because not all recipients have proper keys available to you.",
+                "NAME": "Encryption relies on a password.",
+                "DESCRIPTION_NEW": "Encryption with a password is not bad in itself, but the strength of the encryption greatly depends on the password you choose. You have to use a password because not all recipients have a proper key available to you.",
+                "DESCRIPTION": "Encryption with a password is not bad in itself, but the strength of the encryption greatly depends on the password you choose. You have to use a password because not all recipients had proper a key available when the conversation started.",
                 "DESCRIPTION_BAD_RECIPIENTS": "These recipients have no proper public keys:",
                 "DESCRIPTION_PRIVATE_KEY_MISSING": "You dont have a private Key on this device."
             },
@@ -468,7 +469,7 @@
             },
             "NO_SYMMETRIC_KEY_TRANSMISSION": {
                 "NAME": "Conversation savely encrypted with public keys only.",
-                "DESCRIPTION": "None of the recipients used a password to en- or decrypt the conversation. Thats not even possible."
+                "DESCRIPTION": "None of the recipients used a password to en- or decrypt the conversation. No password has been set. The encryption works with key pairs only."
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "Passcaptcha enabled!",
