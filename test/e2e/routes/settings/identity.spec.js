@@ -160,7 +160,6 @@ describe('Route: Settings - Identity', function(){
             $("body").click()
 
             util.waitForElement("[data-qa='form-error-email-invalid']");
-//            expect($("[data-qa='form-error-email-invalid']").isDisplayed()).toBe(true)
         })
 
         it('should not be shown an error, if email is okay', function(){
@@ -171,7 +170,11 @@ describe('Route: Settings - Identity', function(){
             $("[data-qa='input-email']").sendKeys('moep@moep.de')
             $("body").click()
 
-            expect($("[data-qa='form-error-email-invalid']").isDisplayed()).toBe(false)
+            ptor.wait(function() {
+                return  $("[data-qa='form-error-email-invalid']").isDisplayed().then(function(res) {
+                    return ! res
+                })
+            }, 5000, "timeout while waiting for warning to disappear")
         })
 
         it('should be shown an error, if phonenumber is wrong', function(){
@@ -193,7 +196,11 @@ describe('Route: Settings - Identity', function(){
             $("[data-qa='input-phonenumber']").sendKeys('123456789')
             $("body").click()
 
-            util.waitForElementDisappear("[data-qa='form-error-phoneNumber-invalid']");
+            ptor.wait(function() {
+                return  $("[data-qa='form-error-phoneNumber-invalid']").isDisplayed().then(function(res) {
+                    return ! res
+                })
+            }, 5000, "timeout while waiting for warning to disappear")
         })
     })
 

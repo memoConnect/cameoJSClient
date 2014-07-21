@@ -41,9 +41,7 @@ describe('Friendrequests', function () {
             })
 
             it('check request is removed', function(){
-                $$('cm-contact-tag').then(function(elements){
-                    expect(elements.length).toEqual(0)
-                })
+                util.waitForElementDisappear('cm-contact-tag')
             })
 
             it('check if request is pending in list', function(){

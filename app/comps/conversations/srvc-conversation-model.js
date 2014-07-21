@@ -596,27 +596,23 @@ angular.module('cmConversations')
              * @returns {String} encryptionType look at encryptedPassphraseList
              */
             this.getKeyTransmission = function(){
-//                cmLogger.debug('cmConversationModel.getKeyTransmission');
-                if(this.state.is('new')){
-
-                    if(!this.isEncrypted())
-                        return 'none';
-
-                    if(this.getBadRecipients().length == 0 && this.options.hasPassword == false)
-                        return 'asymmetric';
-
-                    if(this.passwordRequired()){
-                        if(this.getNiceRecipients() > 0){
-                            return 'mixed';
-                        } else {
-                            return 'symmetric';
-                        }
-                    }
+                //If the conversation is not new:
+                if(!this.state.is('new')) 
+                    return this.keyTransmission
 
 
-                } else {
-                    return this.keyTransmission;
-                }
+                //Conversation is new, is it encrypted?
+                if(!this.isEncrypted())
+                    return 'none';
+
+                //Conversation is new and encrypted, 
+                //is a password required for at least one recipient and if so are there any recipients who wont need a password?
+                if(this.passwordRequired())
+                    return this.getNiceRecipients() > 0 ? 'mixed' : 'symmetric'
+
+                //Conversation is new, encrypted and there is no need for password:
+                return 'asymmetric';
+
 
             };
 
@@ -659,8 +655,8 @@ angular.module('cmConversations')
                     )
 
                 }else{
-                    return this.hasPassword() && !this.isUserInPassphraseList()
-
+                    console.log('haspw:'+this.hasPassword())
+                    return this.hasPassword() && (!this.userHasPrivateKey() || !this.isUserInPassphraseList())
                 }
             }
 
@@ -1078,6 +1074,12 @@ angular.module('cmConversations')
                 self.setLastMessage();
                 self.handleMissingAePassphrases();
             });
+
+            cmUserModel.on(['key:stored', 'key:removed'], function(){
+                self.checkPreferences();
+                self.securityAspects.refresh();
+                self.updateLockStatus();
+            })
 
 //            cmUserModel.data.identity.on('update:finished', function(){
 //                self.decrypt();
