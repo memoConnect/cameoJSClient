@@ -5,6 +5,7 @@ var util = require("../lib/e2e/cmTestUtil.js")
 describe('Conversation encryption -', function () {
 
     var ptor = util.getPtorInstance()
+    var date = Date.now()
 
     /*
      Helper functions
@@ -15,7 +16,6 @@ describe('Conversation encryption -', function () {
         var messages = []
         var sender = recipients[0]
         var getPurl = false
-        var subject = encryptionType + "_" + Math.floor(Math.random()*1000000)
         var purl
 
         // use first recipient to create conversation
@@ -27,7 +27,7 @@ describe('Conversation encryption -', function () {
         })
 
         it("add subject", function () {
-            $("[data-qa='input-subject']").sendKeys(subject)
+            $("[data-qa='input-subject']").sendKeys(encryptionType + "_" + date)
         })
 
         it("add recipients to conversation", function () {
@@ -348,6 +348,7 @@ describe('Conversation encryption -', function () {
 
                 util.headerSearchInList("asym_" + date)
                 $("cm-conversation-tag").click()
+
                 util.waitForElement("cm-message")
                 util.waitAndCloseNotify()
 
@@ -360,7 +361,8 @@ describe('Conversation encryption -', function () {
 
             it("ask for password for password encrypted conversation", function(){
 
-                util.headerSearchInList("password_" + Math.floor(Math.random()*1000000))
+                util.get("/talks")
+                util.headerSearchInList("password_" + date)
                 $("cm-conversation-tag").click()
 
                 util.waitForElement("cm-modal.active .cm-modal-alert")
@@ -378,6 +380,7 @@ describe('Conversation encryption -', function () {
 
             it("show passcaptcha for passCaptcha encrypted conversation", function(){
 
+                util.get("/talks")
                 util.headerSearchInList("passCaptcha_" + date)
                 $("cm-conversation-tag").click()
 
@@ -396,6 +399,7 @@ describe('Conversation encryption -', function () {
 
             it("open unencrypted conversation", function() {
 
+                util.get("/talks")
                 util.headerSearchInList("none_" + date)
                 $("cm-conversation-tag").click()
                 util.waitForElement("cm-message")
