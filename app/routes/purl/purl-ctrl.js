@@ -19,6 +19,7 @@ define([
         'cmUtil',
         'cmConversationFactory',
         function($scope, $rootScope, $routeParams, $location, cmModal, cmPurlModel, cmUserModel, cmUtil, cmConversationFactory){
+            $scope.isPurl = true;
             $scope.data = null;
             $scope.showConversation = false;
             $scope.showSignIn = false;

@@ -2,12 +2,10 @@
 
 angular.module('cmCore')
 .service('cmCrypt',[
-    'cmLogger',
-    'cmKey',
-    '$q',
-    '$interval',
-    '$rootScope',
-    function (cmLogger,cmKey, $q, $interval, $rootScope) {
+    'cmLogger', 'cmKey',
+    '$q', '$interval', '$rootScope',
+    function (cmLogger, cmKey,
+              $q, $interval, $rootScope) {
         // private vars
         var async = {
             interval: null,
@@ -16,6 +14,11 @@ angular.module('cmCore')
         };
 
         return {
+            /**
+             * now cmKey
+             */
+            Key: cmKey,
+
             /**
              * this method calculates a secure hash
              * @param secretString String that should be hashed
@@ -69,7 +72,6 @@ angular.module('cmCore')
 
                 return encryptedSecretString;
             },
-
 
             /**
              * this method encrypts strings
@@ -126,11 +128,6 @@ angular.module('cmCore')
 
                 return decryptedString || false
             },
-
-            /**
-             * now cmKey
-             */
-            Key: cmKey,
 
             /**
              * return the bit size of possible keygeneration
@@ -210,15 +207,23 @@ angular.module('cmCore')
                 return false;
             },
 
-            generatePassword: function(){
+            generatePassword: function(length){
+                var length = parseInt(length) || 10;
                 var bad_random_passphrase ='';
 
-                while(bad_random_passphrase.length < 10){
+                /**
+                    TODO: check browser function
+                    [934838069, 3149100522, 522808787, 1733751200, 863464034, 738885619]
+                    try to this array hash this and take first chars!
+                 */
+//                var array = new Uint32Array(length);
+//                window.crypto.getRandomValues(array);
+
+                while(bad_random_passphrase.length < length){
                     bad_random_passphrase += Math.random().toString(36).replace('0.','')
                 }
 
-
-                return bad_random_passphrase.slice(-10);
+                return bad_random_passphrase.slice(-(length));
             },
 
             generatePassphrase: function(){
@@ -229,6 +234,29 @@ angular.module('cmCore')
                 }
 
                 return bad_random_passphrase;
+            },
+
+            /**
+             * signing
+             */
+            signPubKey: function(newPrivKey, identityId, oldPubKey){
+                var signatory = new JSEncrypt();
+                    signatory.setPrivateKey(newPrivKey);
+                // hash pubkey
+                var hashPubKey = sjcl.hash.sha256.hash(identityId+':'+oldPubKey).toString();
+                // create signature
+                var rsa_sha256_signature = signatory.sign(hashPubKey);
+                // return that moep
+                return rsa_sha256_signature;
+            },
+
+            verifyPubKey: function(newPubKey, identityId, signedPubKey, signature){
+                var verifier = new JSEncrypt();
+                    verifier.setPublicKey(newPubKey);
+                // hash pubkey
+                var hashPubKey = sjcl.hash.sha256.hash(identityId+':'+signedPubKey).toString();
+                // check verification
+                return verifier.verify(hashPubKey, signature, CryptoJS.SHA256);
             }
         }
     }

@@ -263,7 +263,7 @@ define([
 
                 var height          = window.innerHeight,
                     width           = html.offsetWidth,
-                    landscape       = width > height,
+                    landscape       = width > 720 || width > height,
                     effective_width = landscape ? Math.min(height, 420) : width;
 
                 html.style.fontSize  = (effective_width/rem) +'px';

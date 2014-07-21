@@ -17,37 +17,40 @@ section cm-security-indicator{
 }
 
 cm-header cm-security-indicator{
-    display:block;
-    line-height: 0.5*@cm-unit;
-    cursor: pointer;
-    background: @cm-black;
-   
-    .leading-icon {
-        display:inline-block;
-        float:left;
-        line-height: @cm-unit;
-        font-size: 0.7*@cm-unit;
-    }
+  display:block;
+  line-height: 0.5*@cm-unit;
+  cursor: pointer;
+  background: @cm-black;
+  height: @cm-unit;
 
-    .positive{
-        display: block;
-        font-size: 0.4*@cm-unit;
-        color: @cm-white;
-        line-height: 1;
-        height: 1em;
-        margin-top: 0.1*@cm-unit;
-        text-align:left;
-    }
+  .leading-icon {
+    display:inline-block;
+    float:left;
+    line-height: @cm-unit;
+    font-size: 0.7*@cm-unit;
+  }
 
-    .negative{
-        display: block;
-        font-size: 0.4*@cm-unit;
-        color: @cm-white;
-        line-height: 1;
-        height: 1em;
-        margin-bottom: 0.1*@cm-unit;
-        text-align:left;
-    }
+  .positive{
+    float:none;
+    display: block;
+    font-size: 0.4*@cm-unit;
+    color: @cm-white;
+    line-height: 1;
+    height: 1em;
+    margin-top: 0.1*@cm-unit;
+    text-align:left;
+  }
+
+  .negative{
+    float:none;
+    display: block;
+    font-size: 0.4*@cm-unit;
+    color: @cm-white;
+    line-height: 1;
+    height: 1em;
+    margin-bottom: 0.1*@cm-unit;
+    text-align:left;
+  }
 }
 
 
