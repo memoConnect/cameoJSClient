@@ -1,5 +1,7 @@
 #modal-identity{
   div.modal-row{
+    position: relative;
+    text-align: left;
     color: @cm-font-color;
     font-size: @cm-large-font;
     span {
@@ -7,6 +9,14 @@
     }
     button {
       display: inline-block;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+    &.is-disabled{
+      >* {
+        .cm-disabled
+      }
     }
   }
 }

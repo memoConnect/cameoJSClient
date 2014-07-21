@@ -1,5 +1,11 @@
-<header class="inScreen">
-    <i class="fa cm-checkbox-add cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT' | cmTranslate}}
+<cm-header cm-rubber-space>
+    <cm-back cm-weight="1" back-to="/settings"></cm-back>
+    <cm-identity cm-weight="6"></cm-identity>
+    <cm-menu cm-weight="1"></cm-menu>
+</cm-header>
+
+<header class="inScreen with-lg-special">
+    <i class="fa cm-import-key cm-lg-special"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT' | cmTranslate}}
 </header>
 
 <ul>
@@ -19,11 +25,11 @@
         <cm-footer cm-always-on-top>
             <button ng-click="import()" class="cm-btn-block cm-btn-grey" data-qa="btn-import-key" ng-if="!isValid">
                 {{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT'|cmTranslate}}
-                <i class="fa cm-checkbox-right cm-lg-icon"></i>
+                <i class="fa cm-checker cm-lg-icon"></i>
             </button>
             <button ng-click="store()" class="cm-btn-block cm-btn-grey" data-qa="btn-save-key" ng-if="isValid">
                 {{'SETTINGS.PAGES.IDENTITY.KEYS.STORE_KEYPAIR'|cmTranslate}}
-                <i class="fa cm-checkbox-right cm-lg-icon"></i>
+                <i class="fa cm-checker cm-lg-icon"></i>
             </button>
         </cm-footer>
     </li>
