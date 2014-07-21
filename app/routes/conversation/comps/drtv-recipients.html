@@ -1,4 +1,4 @@
-<cm-header cm-rubber-space ng-if="!isPurl">
+<cm-header cm-rubber-space ng-show="!isPurl">
     <cm-back cm-weight="1" back-to="conversation/{{conversationId}}"></cm-back>
     <cm-identity cm-weight="3"></cm-identity>
     <cm-security-indicator
@@ -11,7 +11,7 @@
     <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
 
-<cm-header cm-rubber-space ng-if="isPurl">
+<cm-header cm-rubber-space ng-show="isPurl">
     <cm-back cm-weight="1" back-to="purl/{{purlId}}"></cm-back>
     <div cm-weight="1"></div>
     <cm-logo cm-weight="4"></cm-logo>

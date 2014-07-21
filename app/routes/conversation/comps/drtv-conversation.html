@@ -1,4 +1,4 @@
-<cm-header cm-rubber-space ng-if="!isPurl">
+<cm-header cm-rubber-space ng-show="!isPurl">
     <div cm-weight="1">
         <cm-back back-to="/talks" ng-if="conversationId == 'new'"></cm-back>
         <cm-back back-to="/talks" plain-back="true" ng-if="conversationId != 'new'"></cm-back>
@@ -13,7 +13,7 @@
     <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
 
-<cm-header cm-rubber-space ng-if="isPurl" ng-hide="isModalVisible" cm-user-rights>
+<cm-header cm-rubber-space ng-show="isPurl" ng-hide="isModalVisible" cm-user-rights>
     <cm-back cm-weight="1" back-to="/talks" plain-back="true"></cm-back>
     <cm-identity cm-weight="4"></cm-identity>
     <cm-security-indicator
