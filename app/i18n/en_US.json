@@ -263,7 +263,8 @@
     "IDENTITY":{
         "LABEL":{
             "KEYMANAGEMENT": "manage keys",
-            "TRUST": "trust"
+            "TRUST": "trust",
+            "NEW": "create new identity"
         },
         "MODAL":{
             "HEADER": "Identities"
