@@ -23,11 +23,14 @@ cm-menu {
         color:@cm-grey;
         line-height: inherit;
       }
-      ul.list-group {
-        font-size:@cm-large-font;
-        position:relative;
-        z-index:1;
-        margin-bottom:0;
+      ul{
+        background: transparent;
+        &.list-group {
+          font-size:@cm-large-font;
+          position:relative;
+          z-index:1;
+          margin-bottom:0;
+        }
       }
       .cm-nose-wrapper {
         height:@cm-header-height;
@@ -111,6 +114,7 @@ cm-menu {
             &-top {
               margin-left:0;
               height:1rem;
+              min-height:0;
               border:0;
               background: -moz-linear-gradient(top, rgba(242, 242, 242,1) 0%, rgba(242, 242, 242, 0) 100%);
               background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(242, 242, 242, 1)), color-stop(100%, rgba(242, 242, 242, 0)));
@@ -122,6 +126,7 @@ cm-menu {
             &-bottom {
               margin-left:0;
               height:1rem;
+              min-height:0;
               border:0;
               background: -moz-linear-gradient(top, rgba(242, 242, 242, 0) 0%, rgba(242, 242, 242, 1) 100%);
               background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(242, 242, 242, 0)), color-stop(100%, rgba(242, 242, 242, 1)));

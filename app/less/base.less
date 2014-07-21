@@ -69,8 +69,10 @@ exp.:
 
 // General page layout
 
-::selection {color:@cm-white;background:@cm-ci-color;}
-::-moz-selection {color:@cm-white;background:@cm-ci-color;}
+::selection {color:inherit;background:transparent}
+::-moz-selection {color:inherit;background:transparent}
+.is-selectable::selection {color:@cm-white;background:@cm-ci-color;}
+.is-selectable::-moz-selection {color:@cm-white;background:@cm-ci-color;}
 
 html, body {
     height:100%;

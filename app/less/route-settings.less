@@ -26,8 +26,9 @@ section.settings {
           margin-right: 1rem;
         }
       }
-      .shortLinks{
+      .short-links{
         position:absolute;
+        background:@cm-white;
         right:0;
         top:0;
         i {
@@ -35,11 +36,11 @@ section.settings {
           width:@cm-unit;
           height:@cm-unit;
           line-height:@cm-unit;
-          font-size:@cm-mega-font;
+          font-size:@cm-unit;
         }
       }
       &.is-disabled{
-        .item, .shortLinks {
+        .item, .short-links {
           .cm-disabled
         }
       }

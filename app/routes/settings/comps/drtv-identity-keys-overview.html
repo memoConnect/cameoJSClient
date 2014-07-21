@@ -11,24 +11,26 @@
 <ul>
     <li>
         <a href="#/settings/identity/keys/create" class="item w50" data-qa="btn-create-key">
-            <i class="fa cm-checkbox-add icon-left cm-lg-icon"></i>
+            <i class="fa cm-create-key icon-left cm-lg-icon"></i>
             <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE'|cmTranslate}}</span>
         </a>
-        <a href="#/settings/identity/keys/import" class="item w50">
-            <i class="fa cm-fix icon-left cm-lg-icon"></i>
+        <a href="#/settings/identity/keys/import" class="item w50" data-qa="btn-import-key">
+            <i class="fa cm-import-key icon-left cm-lg-icon"></i>
             <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT'|cmTranslate}}</span>
         </a>
     </li>
     <li ng-repeat="key in ownKeys | orderBy:'getPrivateKey()':false" data-qa="key-list-item">
         <span class="item clearfix">
             <strong>{{key.getSize()}}</strong>
-            <strong class="isInLocalstorage" ng-if="key.getPrivateKey()" data-qa="key-is-local"> {{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_ON_THIS_DEVICE'|cmTranslate}}</strong>
+            <strong class="isInLocalstorage" ng-if="key.getPrivateKey()" data-qa="key-is-local">
+                {{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_ON_THIS_DEVICE'|cmTranslate}}
+            </strong>
             {{key.name}}<br />
             {{key.created | date:'dd.MM.yy - HH:mm'}}
         </span>
-        <div class="shortLinks">
-            <i class="fa cm-clipboard" ng-click="openModal('modalExportKeyPair',key)"></i>
-            <i class="fa cm-checkbox-wrong" ng-click="openModal('modalRemoveKeypair',key)" data-qa="btn-remove-modal"></i>
+        <div class="short-links">
+            <i class="fa cm-export-key" ng-click="openModal('modalExportKeyPair',key)"></i>
+            <i class="fa cm-cancel-key" ng-click="openModal('modalRemoveKeypair',key)" data-qa="btn-remove-modal"></i>
         </div>
     </li>
 </ul>

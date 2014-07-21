@@ -298,3 +298,7 @@
 .cm-add-recipient:before{content:'\f065'}
 .cm-post-idle:before{content:'\f066'}
 .cm-list:before{content:'\f068'}
+.cm-cancel-key:before{content:'\f069'}
+.cm-create-key:before{content:'\f070'}
+.cm-export-key:before{content:'\f071'}
+.cm-import-key:before{content:'\f072'}
