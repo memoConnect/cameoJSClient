@@ -29,7 +29,8 @@ angular.module('cmCore')
                 crypt.setKey(data);
             }
 
-            this.created = 0;
+            this.created    = 0;
+            this.signatures = []
 
             this.setId = function(id){
                 this.id = id;
@@ -73,6 +74,16 @@ angular.module('cmCore')
                 return crypt.decrypt(encrypted_secret);
             };
 
+            this.verify = function(signature){
+                return crypt.verify(signature)
+            }
+
+            this.trusts = function(key){
+                return  this.signatures.some(function(signature){
+                            return  (key.id == signature.keyId) && key.verify(signature.content)
+                        })
+            }
+
             this.getSize = function(){
                 var size;
 
@@ -98,6 +109,7 @@ angular.module('cmCore')
                 if(data.name)       this.setName(data.name);
                 if(data.id)         this.setId(data.id);
                 if(data.created)    this.created = data.created;
+                if(data.signatures) this.signatures.concat(data.signatures)
 
                 if(key) this.setKey(key);
 

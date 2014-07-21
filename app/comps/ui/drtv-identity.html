@@ -1,9 +1,14 @@
-<a data-qa="btn-open-identity-modal" ng-click="openModal('modal-identity')">
+<a data-qa="btn-open-identity-modal" ng-click="openModal('modal-identity-'+randModalId)">
     <cm-avatar cm-data="identity"></cm-avatar>
     <span>{{identity.getDisplayName()}}</span>
 </a>
 
-<cm-modal id="modal-identity" cm-title="IDENTITY.MODAL.HEADER" type="plain" severity="info" class="no-padding">
+<cm-modal
+    id="modal-identity-{{randModalId}}"
+    cm-title="IDENTITY.MODAL.HEADER"
+    type="plain"
+    severity="info"
+    class="no-padding modal-identity">
     <div class="modal-row is-disabled">
         <span>{{'IDENTITY.LABEL.NEW' | cmTranslate}}</span>
         <button>
