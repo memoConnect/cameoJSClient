@@ -2,8 +2,8 @@
 
 angular.module('cmRouteSettings')
 .directive('cmTrust', [
-    'cmUserModel', 'cmUtil', 'cmCrypt', 'cmKey',
-    function(cmUserModel, cmUtil, cmCrypt, cmKey){
+    'cmUserModel', 'cmUtil', 'cmCrypt', 'cmKey', 'cmLogger',
+    function(cmUserModel, cmUtil, cmCrypt, cmKey, cmLogger){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-trust.html',
@@ -33,16 +33,20 @@ angular.module('cmRouteSettings')
                     toKey: device1 // cmKey with pubkey #1
                 });
 
-                //////////////////////////////
-                // BE save signature to pubkey #1
-                // BE event new:key
-                // (POST /identity/authenticationRequest)
-                var request = {
-                    signature: dataForRequest.signature,
-                    encryptedTransactionSecret: dataForRequest.encryptedTransactionSecret,
-                    fromKeyId: dataForRequest.fromKeyId,
-                    toKeyId: dataForRequest.toKeyId
-                };
+                if(dataForRequest != null) {
+                    //////////////////////////////
+                    // BE save signature to pubkey #1
+                    // BE event new:key
+                    // (POST /identity/authenticationRequest)
+                    var request = {
+                        signature: dataForRequest.signature,
+                        encryptedTransactionSecret: dataForRequest.encryptedTransactionSecret,
+                        fromKeyId: dataForRequest.fromKeyId,
+                        toKeyId: dataForRequest.toKeyId
+                    };
+                } else {
+                    cmLogger.warn('no keys exists');
+                }
 
                 console.log(request)
 
@@ -54,11 +58,13 @@ angular.module('cmRouteSettings')
                         // check signature
                         if (cmCrypt.verify({
                             identityId: ownIdentityId, // identityId to verify signature
-                            formKey: device2, // pubkey #2 request.fromKeyId
+                            fromKey: device2, // pubkey #2 request.fromKeyId
                             encryptedTransactionSecret: request.encryptedTransactionSecret, // ecrypted pubkey with transactionSecret #1
                             signature: request.signature
                         })) {
                             $scope.isSignatureValid = true;
+                        } else {
+                            $scope.isSignatureValid = false;
                         }
 
                         // check encryptedTransactionSecret
@@ -72,6 +78,8 @@ angular.module('cmRouteSettings')
                             // BE
                             // save signature to newPubKey
                             // POST /identity...
+                        } else {
+                            $scope.handshakeSucceed = false;
                         }
                     }
                 }

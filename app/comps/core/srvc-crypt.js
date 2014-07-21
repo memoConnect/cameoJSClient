@@ -266,6 +266,16 @@ angular.module('cmCore')
                 settings = angular.extend({},defaultSettings,_settings_),
                 hashPubKey,
                 signatory = new JSEncrypt();
+
+                if(settings.fromKey == undefined){
+                    cmLogger.error('sign fromKey isn\'t a cmKey');
+                    return null;
+                }
+                if(settings.toKey == undefined){
+                    cmLogger.error('sign toKey isn\'t a cmKey');
+                    return null;
+                }
+
                 // set new privKey
                 signatory.setPrivateKey(settings.fromKey.getPrivateKey());
                 dataForHandshake.fromKeyId = settings.fromKey.id;
@@ -288,15 +298,21 @@ angular.module('cmCore')
             verify: function(_settings_){
                 var defaultSettings = {
                     identityId: '', // identityId to verify signature
-                    formKey: undefined, // pubkey from new device
+                    fromKey: undefined, // pubkey from new device
                     encryptedTransactionSecret: '', // encrypted pubkey from old device with transactionSecret
                     signature: '' // signature of newPubKey
                 },
                 settings = angular.extend({},defaultSettings,_settings_),
                 hashPubKey,
                 verifier = new JSEncrypt();
+
+                if(settings.fromKey == undefined){
+                    cmLogger.error('sign fromKey isn\'t a cmKey');
+                    return false;
+                }
+
                 // set new pubKey
-                verifier.setPublicKey(settings.formKey.getPublicKey());
+                verifier.setPublicKey(settings.fromKey.getPublicKey());
                 // hash pubkey
                 hashPubKey = sjcl.hash.sha256.hash(settings.identityId+':'+settings.encryptedTransactionSecret).toString();
                 // check verification
