@@ -162,33 +162,6 @@ angular.module('cmConversations')
             }
 
             /**
-             * @ngdoc method
-             * @methodOf cmConversationModel
-             * 
-             * name passwordRequired 
-             * @description
-             * Checks if the conversation requires a password
-             * 
-             * @return {Boolean} returns true or false
-             */
-            this.passwordRequired = function(){
-//                cmLogger.debug('cmConversationModel:passwordRequired');
-
-                    if(this.state.is('new')){
-                        return  this.isEncrypted()
-                            &&  (
-                                this.getBadRecipients().length != 0
-                                ||  !this.userHasPrivateKey()
-                                )
-
-                    }else{
-                        return ['symmetric', 'mixed'].indexOf(this.getKeyTransmission()) != -1
-                                 &&  !this.isUserInPassphraseList()
-
-                }
-            }
-
-            /**
              * @todo !!!!
              * @ngdoc method
              * @methodOf cmConversationModel
@@ -338,7 +311,7 @@ angular.module('cmConversations')
                     }
                 );
 
-                if(cmUserModel.hasLocalKeys() == false){
+                if(this.userHasPrivateKey() == false){
                     this.options.showKeyInfo = true;
                 }
 
@@ -630,11 +603,14 @@ angular.module('cmConversations')
              */
             this.getKeyTransmission = function(){                
                 if(this.state.is('new')){
-                    var moep = passphrase
-                            .setPassword(this.password)
-                            .setIdentities(this.recipients)
-                            .encrypt()
-                            .getKeyTransmission();
+//                    var moep = passphrase
+//                            .setPassword(this.password)
+//                            .setIdentities(this.recipients)
+//                            .encrypt()
+//                            .getKeyTransmission();
+
+
+
                     return moep;
                 } else {
                     return this.keyTransmission;
@@ -658,6 +634,33 @@ angular.module('cmConversations')
                         .setIdentities(this.recipients)
                         .get();
             };
+
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * name passwordRequired
+             * @description
+             * Checks if the conversation requires a password
+             *
+             * @return {Boolean} returns true or false
+             */
+            this.passwordRequired = function(){
+//                cmLogger.debug('cmConversationModel:passwordRequired');
+
+                if(this.state.is('new')){
+                    return  this.isEncrypted()
+                    &&  (
+                    this.getBadRecipients().length != 0
+                    ||  !this.userHasPrivateKey()
+                    )
+
+                }else{
+                    return ['symmetric', 'mixed'].indexOf(this.getKeyTransmission()) != -1
+                    &&  !this.isUserInPassphraseList()
+
+                }
+            }
 
             /**
              * @ngdoc method
@@ -835,37 +838,34 @@ angular.module('cmConversations')
             };
 
             this.checkPreferences = function(){
-                /**
-                 * set Default
-                 * has Captcha will be set at an other method
-                 */
-                //this.options.hasPassword = false;
-                this.options.showKeyInfo = false;
+                if(this.state.is('new')) {
+                    /**
+                     * set Default
+                     * has Captcha will be set at an other method
+                     */
+                    this.options.hasPassword = false;
+                    this.options.showKeyInfo = false;
 
-                if(this.isEncrypted()){
-                    if(this.state.is('new') && cmUserModel.hasLocalKeys() == false){
-                        this.options.hasPassword = true;
-                        this.options.showKeyInfo = true;
+                    if (this.isEncrypted()) {
+                        if (this.state.is('new') && this.userHasPrivateKey() == false) {
+                            this.options.hasPassword = true;
+                            this.options.showKeyInfo = true;
+                        }
+
+                        /**
+                         * check recipients
+                         */
+                        if (this.getBadRecipients().length > 0) {
+                            self.options.hasPassword = true;
+                        }
                     }
 
                     /**
-                     * check recipients
+                     * last check for captcha preference
                      */
-                    this.recipients.forEach(function(recipient){
-                        /**
-                         * if Recipient has no Keys
-                         */
-                        if(recipient.getWeakestKeySize() == 0){
-                            self.options.hasPassword = true;
-                        }
-                    });
-                }
-
-                /**
-                 * last check for captcha preference
-                 */
-                if(this.hasPassword() == false){
-                    this.options.hasCaptcha = false;
+                    if (this.hasPassword() == false) {
+                        this.options.hasCaptcha = false;
+                    }
                 }
             };
 

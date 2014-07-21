@@ -3,8 +3,7 @@
 angular.module('cmSecurityAspects')
 .factory('cmSecurityAspectsConversation',[
     'cmSecurityAspects',
-    'cmUserModel',
-    function(cmSecurityAspects, cmUserModel){
+    function(cmSecurityAspects){
 //        var securityAspectsConversation = new cmSecurityAspects()
 
         function securityAspectsConversation(conversation){
@@ -12,9 +11,6 @@ angular.module('cmSecurityAspects')
 
             self
             .setTarget(conversation)
-
-
-
 
             self
                 .addAspect({
