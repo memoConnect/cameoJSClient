@@ -375,13 +375,19 @@ this.sendFriendRequest = function (displayName) {
 
 this.acceptFriendRequests = function () {
     $("[data-qa='btn-open-menu']").click()
+    self.waitForElement("[data-qa='btn-menu-contact-requests']")
     $("[data-qa='btn-menu-contact-requests']").click()
     self.waitForElement("cm-contact-tag")
-
     var clickAccept = function () {
         $$("[data-qa='btn-acceptRequest']").then(function (buttons) {
-            if (buttons.length > 0) {
+            var length = buttons.length
+            if (length > 0) {
                 buttons[0].click()
+                ptor.wait(function(){
+                    return $$("[data-qa='btn-acceptRequest']").then(function (buttons2){
+                        return buttons2.length == length - 1
+                    })
+                })
                 clickAccept()
             }
         })
