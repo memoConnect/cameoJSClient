@@ -88,7 +88,7 @@ describe('cmCrypt', function () {
             expect(typeof cmCrypt.cancelGeneration).toBe('function')
         })
 
-        it('should asynchronously generate a working 128-bit key par within a second.', function(){
+        it('should asynchronously generate a working 128-bit key pair within 3 seconds.', function(){
             runs(function(){
                 inject(function($rootScope){
                     cmCrypt
@@ -105,7 +105,7 @@ describe('cmCrypt', function () {
 
             waitsFor(function() {                    
                 return publicKey && privateKey
-            }, 'public and private key to be defined', 10000);
+            }, 'public and private key to be defined', 3000);
         })
 
         it('should not generate a key pair without a given proper key size', function(){
@@ -129,6 +129,7 @@ describe('cmCrypt', function () {
 
             beforeEach(function(){
                 key =  new cmCrypt.Key()
+                console.log('new key')
             })
 
             it('should provide a functions "setKey", "getPublicKey" and "getPrivateKey" to import and retrieve a public or private key', function(){                                
@@ -227,8 +228,10 @@ describe('cmCrypt', function () {
                 expect(list.length).toBe(1)
                 key.updateKeyList(list)
                 expect(list.length).toBe(1)
+                key.getPublicKey()
                 new_key.updateKeyList(list)
                 expect(list.length).toBe(2)
+                
             })
 
             it('should provide a function "updateKeyDataList" to add iteself to a list of key_data, preventing duplicates', function(){

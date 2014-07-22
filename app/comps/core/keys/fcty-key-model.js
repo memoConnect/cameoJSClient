@@ -11,7 +11,7 @@ angular.module('cmCore')
         function cmKey(data){
             //Wrapper for RSA Keys
             var self    = this,
-                crypt   = new JSEncrypt()
+                crypt   = new JSEncrypt({default_key_size:128})
 
             this.created    = 0;
             this.signatures = []
@@ -101,7 +101,10 @@ angular.module('cmCore')
 
             this.importData = function(data){
                 console.log(data)
-                if(!data) return self
+                if(!data){
+                    cmLogger('cmKey:importData: missing data')
+                    return self
+                }
 
                 var key =       data.privKey
                             ||  this.getPrivateKey()                  
@@ -139,15 +142,18 @@ angular.module('cmCore')
                 var check = false;
 
                 key_list.forEach(function(key){
+                    console.log(key.id)
                     if(
-                        (key.id && (key.id == self.id))
-                        || key.getPublicKey() == self.getPublicKey()
+                            (key.id && (key.id == self.id))
+                        ||  key.getPublicKey() == self.getPublicKey()
                     ){
+                        
                         //angular.extend(key, self);
                         key.importData(self.exportData())
                         check = true;
                     }
                 });
+                
 
                 if(!check)
                     key_list.push(self);
