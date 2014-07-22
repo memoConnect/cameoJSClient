@@ -293,8 +293,12 @@ angular.module('cmCore').service('cmAuth', [
         /**
          * rename Request/Event Name
          */
-        cmApi.on('identity:authRequest', function(event, data){
-            auth.trigger('auth:request', data)
+        cmApi.on('authenticationRequest:new', function(event, data){
+            auth.trigger('authenticationRequest:new', data)
+        });
+
+        cmApi.on('authenticationRequest:finished', function(event, data){
+            auth.trigger('authenticationRequest:finished', data)
         });
 
         return auth;

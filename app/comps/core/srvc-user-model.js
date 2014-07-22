@@ -453,15 +453,15 @@ angular.module('cmCore')
          * Handshake/Trust Handling
          */
 
-        this.startAuthRequest = function(){
+        this.startAuthenticationRequest = function(){
 
         };
 
-        this.handleAuthRequest = function(){
+        this.handleAuthenticationRequest = function(){
 
         };
 
-        this.finishAuthRequest = function(){
+        this.finishAuthenticationRequest = function(){
 
         };
 
@@ -483,10 +483,19 @@ angular.module('cmCore')
             }
         });
 
-        cmAuth.on('auth:request', function(event, data){
+        cmAuth.on('authenticationRequest:new', function(event, data){
             //@todo
             // - validate data
             // - start handshake part 2
+            // this.handleAuthenticationRequest()
+
+        });
+
+        cmAuth.on('authenticationRequest:finished', function(event, data){
+            //@todo
+            // - validate data
+            // - finish handshake part 3
+            // this.finishAuthenticationRequest()
 
         });
 
