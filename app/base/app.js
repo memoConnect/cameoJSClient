@@ -47,7 +47,7 @@ define([
                 .commitInterval( cameo_config.commitInterval )
                 .useEvents( cameo_config.useEvents )
                 .eventsPath( cameo_config.eventsPath )
-                .eventsInterval( 0 )//cameo_config.eventsInterval )
+                .eventsInterval( 4000 )//cameo_config.eventsInterval )
 
             cmLanguageProvider
                 .cacheLangFiles(cameo_config.cache_lang_files)
