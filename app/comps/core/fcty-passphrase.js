@@ -7,7 +7,6 @@
  * Handle Passphrase Conversation
  *
  * @requires cmFactory
- * @requires cmKey
  * @requires cmUserModel
  * @requires cmCrypt
  * @requires cmObject
@@ -15,13 +14,12 @@
  */
 angular.module('cmCore').factory('cmPassphrase',[
     'cmFactory',
-    'cmKey',
     'cmUserModel',
     'cmCrypt',
     'cmObject',
     'cmUtil',
     'cmLogger',
-    function(cmFactory, cmKey, cmUserModel, cmCrypt, cmObject, cmUtil, cmLogger){
+    function(cmFactory, cmUserModel, cmCrypt, cmObject, cmUtil, cmLogger){
 
         function cmPassphrase(){
             var self            = this,

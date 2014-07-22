@@ -76,7 +76,7 @@ describe('cmCrypt', function () {
             decrypted_secret = undefined
 
 
-        it('should provide a function "getKeysizes" with 3 available key sizes', function(){
+        it('should provide a function "getKeysizes" with 2 available key sizes', function(){
             expect(cmCrypt.getKeySizes().length).toEqual(2)
         })
 
@@ -122,6 +122,8 @@ describe('cmCrypt', function () {
         it('should have a constructor for "Key"', function(){
             expect(typeof cmCrypt.Key).toBe('function')
         })
+
+        //Todo: should be separate test for cmKey
 
         describe('Key', function(){
 
@@ -192,7 +194,7 @@ describe('cmCrypt', function () {
                 .setId('test_id')
 
 
-                var data_1 = key.exportData(key),
+                var data_1 = key.exportData(),
                     key_1  = (new cmCrypt.Key()).importData(data_1)
 
                 expect(key_1.name).toBe('test_name')

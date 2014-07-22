@@ -108,8 +108,8 @@ describe('cmUserModel', function(){
         var good_key, bad_key, encrypted_secret
 
         beforeEach(function(){
-            good_key = new cmKey('-----BEGIN RSA PRIVATE KEY-----MGACAQACEFhXgxfNAzZJ8Q3YpU4x9hsCAwEAAQIQDF99aej56TF5zFs6LBBveQIJAKDFUfKmtsZXAgkAjKtWvZtVC90CCBjUAEDSAD4HAghfDTfjjx58kQIIUHBhrwvxsKw=-----END RSA PRIVATE KEY-----'),
-            bad_key  = new cmKey(''),
+            good_key = (new cmKey() ).setKey('-----BEGIN RSA PRIVATE KEY-----MGACAQACEFhXgxfNAzZJ8Q3YpU4x9hsCAwEAAQIQDF99aej56TF5zFs6LBBveQIJAKDFUfKmtsZXAgkAjKtWvZtVC90CCBjUAEDSAD4HAghfDTfjjx58kQIIUHBhrwvxsKw=-----END RSA PRIVATE KEY-----'),
+            bad_key  = (new cmKey() ).setKey(''),
             encrypted_secret = 'GGddYb0ZAZizKuN3zCikcg==' //contains 'priv'
         })
 

@@ -5,32 +5,20 @@ angular.module('cmCore')
     function(){
         /**
          * @TODO TEsts!!!!!
-         * @param data
+         * @param args
          * @returns {*}
          */
         function cmKey(data){
             //Wrapper for RSA Keys
-            var self = this,
-                crypt;
-
-            if(typeof data == 'object' && 'updateKeyList' in data)
-                return data //data is already a Key object
-
-            if(
-                typeof data == 'object'
-                && 'getPublicKey'   in data
-                && 'getPrivateKey'  in data
-                && 'encrypt'        in data
-                && 'decrypt'        in data
-            ){
-                crypt = data;    //data is already a JSEncrypt object
-            } else {
-                crypt = new JSEncrypt();
-                crypt.setKey(data);
-            }
+            var self    = this,
+                crypt   = new JSEncrypt()
 
             this.created    = 0;
             this.signatures = []
+
+            function init(data){
+                self.importData(data)
+            }  
 
             this.setId = function(id){
                 this.id = id;
@@ -95,13 +83,26 @@ angular.module('cmCore')
 
                 }
 
+                //Todo: dirty workaround :)
                 if(size == 1023 || size == 2047 || size == 4095)
                     size = size+1;
 
                 return size;
             };
 
+            this.importJSEncrypt = function(jse){
+                crypt = jse
+                return this
+            }
+
+            this.exportJSEncrypt = function(){
+                return crypt
+            }
+
             this.importData = function(data){
+                console.log(data)
+                if(!data) return self
+
                 var key =       data.privKey
                             ||  this.getPrivateKey()                  
                             ||  data.key
@@ -173,8 +174,10 @@ angular.module('cmCore')
                 if(!check)
                     key_data_list.push(self.exportData());
             };
+
+            init(data)
         };
 
         return cmKey;
     }
-]);
+])

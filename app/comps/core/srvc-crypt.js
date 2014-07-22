@@ -16,6 +16,7 @@ angular.module('cmCore')
         return {
             /**
              * now cmKey
+             * todo: remove
              */
             Key: cmKey,
 
@@ -165,10 +166,9 @@ angular.module('cmCore')
 
                 // start keypair generation
                 async.crypt.getKey(function(){
-                    var key = new self.Key(async.crypt);
 
                     // only resolve if keypair exists
-                    if(key.getPrivateKey() == undefined)
+                    if(async.crypt.getPrivateKey() == undefined)
                         return false;
 
                     self.cancelGeneration(true);
@@ -176,7 +176,7 @@ angular.module('cmCore')
                         async.promise.resolve({
                             timeElapsed: (time + ((new Date()).getTime())),
                             counts: counts,
-                            key: key
+                            key: async.crypt
                         });
                         // !!! important for unit test, don't remove !!!
                         $rootScope.$apply();
