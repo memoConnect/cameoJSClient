@@ -1,5 +1,5 @@
 <cm-header>
-    <div cm-rubber-space ng-show="isPurl == false">
+    <div class="cm-header-wrapper" cm-rubber-space ng-show="isPurl == false">
         <div cm-weight="1">
             <cm-back back-to="/talks" ng-if="conversationId == 'new'"></cm-back>
             <cm-back back-to="/talks" plain-back="true" ng-if="conversationId != 'new'"></cm-back>
@@ -14,7 +14,7 @@
         <cm-menu cm-weight="1"></cm-menu>
     </div>
 
-    <div cm-rubber-space ng-show="isPurl == true" cm-user-rights>
+    <div class="cm-header-wrapper" cm-rubber-space ng-show="isPurl == true" cm-user-rights>
         <cm-back cm-weight="1" back-to="/talks" plain-back="true"></cm-back>
         <cm-identity cm-weight="4"></cm-identity>
         <cm-security-indicator
@@ -26,7 +26,7 @@
         <cm-menu cm-weight="1"></cm-menu>
     </div>
 
-    <div cm-rubber-space ng-show="isPurl == true" cm-user-rights="showForGuest">
+    <div class="cm-header-wrapper" cm-rubber-space ng-show="isPurl == true" cm-user-rights="showForGuest">
         <div class="fast-sign-in" ng-click="goToRegister()" data-qa="btn-fast-sign-in" cm-weight="2">
             <i class="fa cm-register"></i>
             <span>{{'PURL.SIGN_IN'|cmTranslate}}</span>
