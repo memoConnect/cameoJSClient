@@ -32,7 +32,7 @@ angular.module('cmUser')
                     $scope.step = 2;
                     // get keys from userModel
                     $scope.keys = [pleaseChoose].concat(cmUserModel.data.identity.keys.filter(function(key){
-                        return (key.getPrivateKey() == undefined || key != $scope.fromKey);
+                        return (key.getPrivateKey() == undefined && key != $scope.fromKey);
                     }));
                     // init please choose
                     $scope.toKey = $scope.keys[0];
