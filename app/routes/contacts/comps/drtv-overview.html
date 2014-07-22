@@ -1,17 +1,11 @@
-<cm-modal id="add-contact" cm-title="CONTACTS.HEADING.NEW_CONTACTS" type="plain" nose="top-right" severity="info" nose-position="0" class="no-padding">
-    <div class="modal-row">
-        <a href="#/contacts/search">
-            <i class="fa cm-search"></i>
-            {{"CONTACTS.LABEL.SEARCH_IDENTITY"|cmTranslate}}
-        </a>
-    </div>
-    <div class="modal-row">
-        <a href="#/contact/new">
-            <i class="fa cm-load-to-rhino"></i>
-            {{"CONTACTS.LABEL.ADD_EXTERN"|cmTranslate}}
-        </a>
-    </div>
-</cm-modal>
+<cm-header cm-rubber-space>
+    <cm-identity cm-weight="5"></cm-identity>
+    <cm-add-button cm-weight="1" ng-click="openModal('add-contact')" data-qa="add-contact-btn" cm-icon="new-contact"></cm-add-button>
+    <cm-header-list-search cm-weight="1" ng-model="search"></cm-header-list-search>
+    <cm-menu cm-weight="1"></cm-menu>
+</cm-header>
+
+<cm-modal-add-contact id="add-contact"></cm-modal-add-contact>
 
 <cm-contacts-list contacts-as="contacts">
     <div ng-show="isLoading" class="empty-list">
