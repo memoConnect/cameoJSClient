@@ -22,10 +22,10 @@
 angular.module('cmCore')
 .service('cmUserModel',[
     'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmKey',
-    'cmObject', 'cmNotify', 'cmLogger',
+    'cmObject', 'cmUtil', 'cmNotify', 'cmLogger',
     '$rootScope', '$q', '$location',
     function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmKey,
-             cmObject, cmNotify, cmLogger,
+             cmObject, cmUtil, cmNotify, cmLogger,
              $rootScope, $q, $location){
         var self = this,
             isAuth = false,
@@ -457,15 +457,12 @@ angular.module('cmCore')
          * Handshake/Trust Handling
          */
 
-        this.startAuthenticationRequest = function(){
+        this.verifyAuthenticationRequest = function(request){
+            if(typeof request == 'object' && cmUtil.objLen(request) > 0){
 
-        };
-
-        this.handleAuthenticationRequest = function(){
-        };
-
-        this.finishAuthenticationRequest = function(){
-
+            } else {
+                cmLogger.debug('cmUserModel.verifyAuthenticationRequest:failed');
+            }
         };
 
 
