@@ -319,6 +319,15 @@
                         "CHECK_PUBKEY": "Check public key",
                         "CHECK_KEYNAME": "Check keyname"
                     }
+                },
+                "AUTHENTICATION": {
+                    "MODAL_HEADER": "Authentication",
+                    "HANDSHAKE_NOW": "Do you want to perform a handshake with an older device now?",
+                    "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
+                    "CHOOSE_OLD_DEVICE": "Please select an old device with which you want to perform the authentication!",
+                    "CHOOSE": "Please select",
+                    "TRANSACTION_SECRET": "This generated transactionsecret must be entered on the other device.",
+                    "HANDSHAKE_START": "Start authentication"
                 }
             },
             "ABOUT_US": {

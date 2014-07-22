@@ -1,0 +1,52 @@
+<cm-modal
+    id="handshake"
+    cm-title="SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER"
+    type="plain"
+    class="no-padding">
+    <div ng-show="step == 1">
+        <div class="modal-row">
+            {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_NOW'|cmTranslate}}
+        </div>
+        <button
+            class="cm-btn cm-btn-block cm-btn-grey"
+            ng-click="doHandshakeNow()"
+            data-qa="btn-doHandshake">
+            {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_OK'|cmTranslate}}
+            <i class="fa cm-checker cm-lg-icon"></i>
+        </button>
+    </div>
+    <div ng-show="step == 2">
+        <div class="modal-row">
+            {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.CHOOSE_OLD_DEVICE'|cmTranslate}}<br />
+            <br />
+            <select
+                ng-model="choosedKey"
+                ng-options="key as key.name for key in keys"
+                ng-change="setChoosedKey(choosedKey)"
+            ></select>
+        </div>
+        <button
+            class="cm-btn cm-btn-block cm-btn-grey"
+            ng-click="verifyChoosedKey()"
+            data-qa="btn-sendRequestToOlderDevice">
+            {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_OK'|cmTranslate}}
+            <i class="fa cm-checker cm-lg-icon"></i>
+        </button>
+    </div>
+    <div ng-show="step == 3">
+        <div class="modal-row">
+            {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.TRANSACTION_SECRET'|cmTranslate}}<br />
+            <h1>{{transactionSecret}}</h1>
+        </div>
+        <button
+            class="cm-btn cm-btn-block cm-btn-grey"
+            ng-click="startHandshake()"
+            data-qa="btn-sendRequestToOlderDevice">
+            <span ng-show="!handshakeIdle">
+                {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_START'|cmTranslate}}
+                <i class="fa cm-checker cm-lg-icon"></i>
+            </span>
+            <cm-spinner ng-show="handshakeIdle" cm-color="#02BED2"></cm-spinner>
+        </button>
+    </div>
+</cm-modal>

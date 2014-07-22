@@ -2,11 +2,10 @@
 
 angular.module('cmUi')
 .directive('cmModal', [
-    'cmModal',
-    'cmTranslate',
-    '$rootScope',
-    '$timeout',
-    function (cmModal, cmTranslate, $rootScope, $timeout){
+    'cmModal', 'cmTranslate',
+    '$rootScope', '$timeout',
+    function (cmModal, cmTranslate,
+              $rootScope, $timeout){
 
         // handle nose position
         function addNose(element, attrs){
@@ -44,9 +43,9 @@ angular.module('cmUi')
             templateUrl: function(tElement, tAttrs){
                 var type = tAttrs.type || 'plain',
                     templateUrl = {
-                        plain: 'comps/ui/drtv-modal-plain.html',
-                        fullscreen: 'comps/ui/drtv-modal-fullscreen.html',
-                        alert: 'comps/ui/drtv-modal-alert.html'
+                        plain: 'comps/ui/modal/drtv-modal-plain.html',
+                        fullscreen: 'comps/ui/modal/drtv-modal-fullscreen.html',
+                        alert: 'comps/ui/modal/drtv-modal-alert.html'
                     };
 
                 return templateUrl[type];

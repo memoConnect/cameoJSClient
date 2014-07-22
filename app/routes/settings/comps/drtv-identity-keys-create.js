@@ -1,14 +1,11 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
-    'cmUserModel',
-    'cmCrypt',
-    'cmUtil',
-    'cmLogger',
-    'cmNotify',
-    'cmKey',
+angular.module('cmRouteSettings')
+.directive('cmIdentityKeysCreate', [
+    'cmUserModel', 'cmCrypt', 'cmUtil', 'cmLogger', 'cmNotify', 'cmKey',
     '$window',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey, $window){
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey,
+             $window){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-keys-create.html',
@@ -57,6 +54,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                         }
                     );
                 };
+
                 /**
                  * cancel keypair generation
                  */
@@ -65,6 +63,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                     $scope.active = 'choose';
                     $window.history.back();
                 };
+
                 /**
                  * store key pair
                  */
