@@ -3,7 +3,9 @@
 angular.module('cmUser')
 .directive('cmModalHandshake',[
     'cmUserModel', 'cmTranslate', 'cmKey', 'cmCrypt', 'cmAuth',
-    function (cmUserModel, cmTranslate, cmKey, cmCrypt, cmAuth){
+    '$rootScope',
+    function (cmUserModel, cmTranslate, cmKey, cmCrypt, cmAuth,
+              $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/drtv-modal-handshake.html',
@@ -14,26 +16,33 @@ angular.module('cmUser')
                     name:cmTranslate('SETTINGS.PAGES.IDENTITY.HANDSHAKE.CHOOSE'),
                     id:0
                 };
-                $scope.choosedKey = {};
+                $scope.toKey = {};
                 $scope.transactionSecret = '';
                 $scope.handshakeIdle = false;
+                $scope.fromKey = null;
 
-                $scope.doHandshakeNow = function(){
+                cmUserModel.on('key:saved', function(event, fromKey){
+                    if(fromKey instanceof cmKey && fromKey.getPrivateKey() != undefined) {
+                        $scope.fromKey = fromKey;
+                        $rootScope.openModal('handshake');
+                    }
+                });
+
+                $scope.doHandshake = function(){
                     $scope.step = 2;
                     // get keys from userModel
-                    $scope.keys = [pleaseChoose].concat(cmUserModel.data.identity.keys);
+                    $scope.keys = [pleaseChoose].concat(cmUserModel.data.identity.keys.filter(function(key){
+                        return (key.getPrivateKey() == undefined || key != $scope.fromKey);
+                    }));
                     // init please choose
-                    $scope.choosedKey = $scope.keys[0];
-
-                    // own new privKey
-                    $scope.ownNewPrivKey = null;
+                    $scope.toKey = $scope.keys[0];
                 };
 
-                $scope.setChoosedKey = function(choosedKey){
-                    if(choosedKey instanceof cmKey){
+                $scope.setToKey = function(toKey){
+                    if(toKey instanceof cmKey){
                         $scope.step = 3;
                         // set key to tmp
-                        $scope.choosedKey = choosedKey;
+                        $scope.toKey = toKey;
                         // generate TS
                         $scope.transactionSecret = cmCrypt.generateTransactionSecret();
                     }
@@ -44,17 +53,22 @@ angular.module('cmUser')
                         return false;
                     }
 
-                    if($scope.choosedKey instanceof cmKey && $scope.transactionSecret != ''){
+                    if($scope.toKey instanceof cmKey && $scope.transactionSecret != ''){
                         $scope.handshakeIdle = true;
 
                         var dataForRequest = cmCrypt.sign({
                             identityId: cmUserModel.data.identity.id,
                             transactionSecret: $scope.transactionSecret,
-                            fromKey: $scope.ownNewPrivKey,
-                            toKey: $scope.choosedKey
+                            fromKey: $scope.fromKey,
+                            toKey: $scope.toKey
                         });
 
                         cmAuth.startHandshake(dataForRequest);
+                        // TODO: watch for finish event
+                        /*
+                         $scope.handshakeIdle = false;
+                         $rootScope.closeModal();
+                        */
                     }
                 };
             }

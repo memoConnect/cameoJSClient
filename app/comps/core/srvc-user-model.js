@@ -325,7 +325,7 @@ angular.module('cmCore')
                         .addKey(local_key);
 
                         // event for handshake modal
-                        self.trigger('key:saved');
+                        self.trigger('key:saved', local_key);
                     })
                 } else {
                     self.addKey(local_key);

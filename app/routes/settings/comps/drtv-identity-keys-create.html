@@ -10,18 +10,11 @@
 
 <ul>
     <li ng-show="active == 'choose'" data-qa="page-chose-keysize">
-
-        <cm-modal-handshake></cm-modal-handshake>
-
         <div class="page">
             <h2>{{'SETTINGS.PAGES.IDENTITY.KEYS.CHOOSE_SIZE'|cmTranslate}}</h2>
             <select ng-model="keySize" >
                 <option ng-repeat="size in keySizes" data-qa="key-size-option">{{size}}</option>
             </select>
-
-            <br />
-
-            <button ng-click="openModal('handshake')">handshake!!!</button>
         </div>
 
         <cm-footer cm-always-on-top>
