@@ -15,6 +15,8 @@ angular.module('cmRouteSettings')
                     device2 = ownKeys[0],
                     device1 = ownKeys[1];
 
+                console.log('ownKeys',ownKeys)
+
                 /////////////////////////////
                 // check vars
                 $scope.showModalHandshake = false;

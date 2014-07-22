@@ -450,6 +450,23 @@ angular.module('cmCore')
         };
 
         /**
+         * Handshake/Trust Handling
+         */
+
+        this.startAuthRequest = function(){
+
+        };
+
+        this.handleAuthRequest = function(){
+
+        };
+
+        this.finishAuthRequest = function(){
+
+        };
+
+
+        /**
          * Event Handling
          */
         $rootScope.$on('logout', function(){
@@ -464,6 +481,13 @@ angular.module('cmCore')
             if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
                 self.data.identity.importData(data);
             }
+        });
+
+        cmAuth.on('auth:request', function(event, data){
+            //@todo
+            // - validate data
+            // - start handshake part 2
+
         });
 
         init();

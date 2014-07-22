@@ -290,6 +290,13 @@ angular.module('cmCore').service('cmAuth', [
             auth.trigger('identity:updated', data)
         });
 
+        /**
+         * rename Request/Event Name
+         */
+        cmApi.on('identity:authRequest', function(event, data){
+            auth.trigger('auth:request', data)
+        });
+
         return auth;
     }
 ]);
