@@ -317,11 +317,15 @@ angular.module('cmCore')
                         keySize: keySize || 0 //TODO: local_key.size == Nan ???
                     })
                     .then(function(data){
-                        local_key.importData(data);
+                        local_key
+                        .importData(data);
 
                         self
                         .saveKey(local_key)
                         .addKey(local_key);
+
+                        // event for handshake modal
+                        self.trigger('key:saved');
                     })
                 } else {
                     self.addKey(local_key);
