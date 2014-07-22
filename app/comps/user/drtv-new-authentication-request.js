@@ -7,7 +7,8 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
             restrict: 'E',
             templateUrl: 'comps/user/drtv-new-authentication-request.html',
             controller: function($scope,$element,$attrs){
-                console.log($scope.data)
+
+
             }
         }
     }

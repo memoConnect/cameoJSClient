@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('cmCore').service('cmHooks', [
+    'cmUserModel',
     'cmObject',
     'cmApi',
     'cmModal',
     'cmLogger',
     '$location',
     '$rootScope',
-    function(cmObject, cmApi, cmModal, cmLogger, $location, $rootScope){
+    function(cmUserModel, cmObject, cmApi, cmModal, cmLogger, $location, $rootScope){
         var self = this;
         cmObject.addEventHandlingTo(this);
 
@@ -18,6 +19,7 @@ angular.module('cmCore').service('cmHooks', [
         /**
          * authenticationRequest:new
          */
+//        cmApi.on('authenticationRequest:new', function(event, request))
         $rootScope.$on('authenticationRequest:new', function(){
             cmLogger.debug('cmHooks.on:authenticationRequest:new');
 

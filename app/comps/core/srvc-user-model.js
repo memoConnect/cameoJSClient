@@ -21,10 +21,10 @@
 
 angular.module('cmCore')
 .service('cmUserModel',[
-    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmKey',
+    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKey',
     'cmObject', 'cmUtil', 'cmNotify', 'cmLogger',
     '$rootScope', '$q', '$location',
-    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmKey,
+    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmKey,
              cmObject, cmUtil, cmNotify, cmLogger,
              $rootScope, $q, $location){
         var self = this,
@@ -458,11 +458,81 @@ angular.module('cmCore')
          */
 
         this.verifyAuthenticationRequest = function(request){
+            cmLogger.debug('cmUserModel.verifyAuthenticationRequest');
             if(typeof request == 'object' && cmUtil.objLen(request) > 0){
 
+                /**
+                 * check request data
+                 */
+                if(!("signature" in request) || typeof request.signature != 'string' || request.signature.length < 1){
+                    return false;
+                }
+
+                if(!("encryptedTransactionSecret" in request) || typeof request.encryptedTransactionSecret != 'string' || request.encryptedTransactionSecret.length < 1){
+                    return false;
+                }
+
+                if(!("fromKeyId" in request) || typeof request.fromKeyId != 'string' || !cmUtil.validateString(request.fromKeyId)){
+                    return false;
+                }
+
+                if(!("toKeyId" in request) || typeof request.toKeyId != 'string' || !cmUtil.validateString(request.toKeyId)){
+                    return false;
+                }
+
+                /**
+                 * load localKeys
+                 */
+                var localKeys = this.loadLocalKeys();
+                var fromKey = {};
+
+                /**
+                 * verify toKeyId
+                 */
+                var checkToKeyId = false;
+                localKeys.forEach(function(key){
+                   if(key.id == request.toKeyId){
+                       checkToKeyId = true;
+                   }
+                });
+
+                if(!checkToKeyId){
+                    return false;
+                }
+
+                /**
+                 * verify fromKeyId
+                 */
+                var checkFromKeyId = false;
+                this.data.identity.keys.forEach(function(key){
+                    if(key.id == request.fromKeyId){
+                        checkFromKeyId = true;
+                        fromKey = key;
+                    }
+                });
+
+                if(!checkFromKeyId){
+                    return false;
+                }
+
+                /**
+                 * verify signature
+                 */
+                if(!cmCrypt.verify({
+                        identityId: this.data.identity.id, // identityId to verify signature
+                        fromKey: fromKey, // pubkey #2 request.fromKeyId
+                        encryptedTransactionSecret: request.encryptedTransactionSecret, // ecrypted pubkey with transactionSecret #1
+                        signature: request.signature
+                    })) {
+                    return false;
+                }
+
+                return true;
             } else {
-                cmLogger.debug('cmUserModel.verifyAuthenticationRequest:failed');
+                cmLogger.debug('verifyAuthenticationRequest:failed');
             }
+
+            return false;
         };
 
 
