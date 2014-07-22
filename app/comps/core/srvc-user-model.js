@@ -458,7 +458,6 @@ angular.module('cmCore')
         };
 
         this.handleAuthenticationRequest = function(){
-
         };
 
         this.finishAuthenticationRequest = function(){
@@ -483,21 +482,21 @@ angular.module('cmCore')
             }
         });
 
-        cmAuth.on('authenticationRequest:new', function(event, data){
-            //@todo
-            // - validate data
-            // - start handshake part 2
-            // this.handleAuthenticationRequest()
-
-        });
-
-        cmAuth.on('authenticationRequest:finished', function(event, data){
-            //@todo
-            // - validate data
-            // - finish handshake part 3
-            // this.finishAuthenticationRequest()
-
-        });
+//        cmAuth.on('authenticationRequest:new', function(event, data){
+//            //@todo
+//            // - validate data
+//            // - start handshake part 2
+//            // this.handleAuthenticationRequest()
+//
+//        });
+//
+//        cmAuth.on('authenticationRequest:finished', function(event, data){
+//            //@todo
+//            // - validate data
+//            // - finish handshake part 3
+//            // this.finishAuthenticationRequest()
+//
+//        });
 
         init();
     }

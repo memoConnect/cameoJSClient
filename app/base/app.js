@@ -168,7 +168,8 @@ define([
         'cfpLoadingBar',
         'cmEnv',
         'cmApi',
-        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi) {
+        'cmHooks',
+        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks) {
 
             //prep $rootScope with useful tools
             $rootScope.console  =   console;
@@ -296,6 +297,7 @@ define([
             // Todo: whats is todo??
             if(cmUserModel.getToken())
                 cmApi.listenToEvents()
+
         }
     ])
 

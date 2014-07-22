@@ -2,8 +2,8 @@
 
 angular.module('cmRouteSettings')
 .directive('cmTrust', [
-    'cmUserModel', 'cmUtil', 'cmCrypt', 'cmKey', 'cmLogger',
-    function(cmUserModel, cmUtil, cmCrypt, cmKey, cmLogger){
+    'cmUserModel', 'cmUtil', 'cmCrypt', 'cmKey', 'cmLogger','$rootScope',
+    function(cmUserModel, cmUtil, cmCrypt, cmKey, cmLogger, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-trust.html',
@@ -73,10 +73,10 @@ angular.module('cmRouteSettings')
                 $scope.checkHandshake = function() {
                     // check encryptedTransactionSecret
                     if ($scope.showModalHandshake && cmCrypt.isTransactionSecretValid({
-                        userInput: $scope.transactionSecretUserInput,
-                        toKey: device1, // pubkey #1 request.toKeyId
-                        encryptedTransactionSecret: request.encryptedTransactionSecret
-                    })) {
+                            userInput: $scope.transactionSecretUserInput,
+                            toKey: device1, // pubkey #1 request.toKeyId
+                            encryptedTransactionSecret: request.encryptedTransactionSecret
+                        })) {
                         $scope.handshakeSucceed = true;
                         ///////////////////////////////////
                         // BE
@@ -85,6 +85,10 @@ angular.module('cmRouteSettings')
                     } else {
                         $scope.handshakeSucceed = false;
                     }
+                }
+
+                $scope.mockIncomingEvent = function(){
+                    $rootScope.$broadcast('authenticationRequest:new');
                 }
             }
         }

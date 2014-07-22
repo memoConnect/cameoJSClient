@@ -51,8 +51,6 @@ angular.module('cmCore')
             this.importData = function(data){
 //                cmLogger.debug('cmNotifyModel.importData');
 //                
-                console.dir(data)
-
                 if(typeof data == 'object') { //typeof never equals 'array': || typeof data == 'array'){
                     this.label = data.label || this.label;
 
