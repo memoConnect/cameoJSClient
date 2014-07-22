@@ -7,7 +7,8 @@ angular.module('cmContacts')
             restrict: 'E',
             templateUrl: 'comps/contacts/drtv-modal-add-contact.html',
             scope: {
-                modalId: "@id"
+                modalId: "@id",
+                nosePosition: "@nosePosition"
             }
         }
     }

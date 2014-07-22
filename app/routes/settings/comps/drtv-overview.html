@@ -9,7 +9,7 @@
     <i class="fa cm-settings cm-lg-icon"></i> {{'SETTINGS.LABEL' | cmTranslate}}
 </header>
 
-<cm-modal-add-contact id="add-contact"></cm-modal-add-contact>
+<cm-modal-add-contact id="add-contact" nose-position="6rem"></cm-modal-add-contact>
 
 <ul>
     <li ng-repeat="page in Object.keys(overview)" ng-click="goToSettingsPage($event, page, overview[page].disabled)" ng-class="{'is-disabled':overview[page].disabled}">
