@@ -320,9 +320,9 @@
                         "CHECK_KEYNAME": "Check keyname"
                     }
                 },
-                "AUTHENTICATION": {
+                "HANDSHAKE": {
                     "MODAL_HEADER": "Authentication",
-                    "HANDSHAKE_NOW": "Do you want to perform a handshake with an older device now?",
+                    "HANDSHAKE_NOW": "Do you want for the new cameoKey '<strong>{{keyName}}</strong>' to perform a handshake with an older device now?",
                     "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
                     "CHOOSE_OLD_DEVICE": "Please select an old device with which you want to perform the authentication!",
                     "CHOOSE": "Please select",

@@ -5,11 +5,11 @@
     class="no-padding">
     <div ng-show="step == 1">
         <div class="modal-row">
-            {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_NOW'|cmTranslate}}
+            <span ng-bind-html="'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_NOW'|cmTranslate:{keyName:fromKey.name}"></span>
         </div>
         <button
             class="cm-btn cm-btn-block cm-btn-grey"
-            ng-click="doHandshakeNow()"
+            ng-click="doHandshake()"
             data-qa="btn-doHandshake">
             {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_OK'|cmTranslate}}
             <i class="fa cm-checker cm-lg-icon"></i>
@@ -20,15 +20,14 @@
             {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.CHOOSE_OLD_DEVICE'|cmTranslate}}<br />
             <br />
             <select
-                ng-model="choosedKey"
+                ng-model="toKey"
                 ng-options="key as key.name for key in keys"
-                ng-change="setChoosedKey(choosedKey)"
             ></select>
         </div>
         <button
             class="cm-btn cm-btn-block cm-btn-grey"
-            ng-click="verifyChoosedKey()"
-            data-qa="btn-sendRequestToOlderDevice">
+            ng-click="setToKey(toKey)"
+            data-qa="btn-setToKey">
             {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_OK'|cmTranslate}}
             <i class="fa cm-checker cm-lg-icon"></i>
         </button>
@@ -41,7 +40,7 @@
         <button
             class="cm-btn cm-btn-block cm-btn-grey"
             ng-click="startHandshake()"
-            data-qa="btn-sendRequestToOlderDevice">
+            data-qa="btn-startHandshake">
             <span ng-show="!handshakeIdle">
                 {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_START'|cmTranslate}}
                 <i class="fa cm-checker cm-lg-icon"></i>

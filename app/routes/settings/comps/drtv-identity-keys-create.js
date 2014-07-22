@@ -1,11 +1,10 @@
 'use strict';
 
-angular.module('cmRouteSettings')
-.directive('cmIdentityKeysCreate', [
+angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
     'cmUserModel', 'cmCrypt', 'cmUtil', 'cmLogger', 'cmNotify', 'cmKey',
-    '$window',
+    '$window', '$rootScope',
     function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey,
-             $window){
+             $window, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-keys-create.html',

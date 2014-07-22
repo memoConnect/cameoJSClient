@@ -17,8 +17,6 @@ angular.module('cmRouteSettings')
                 $scope.import = function(){
                     var key = new cmKey($scope.privKey);
 
-                    console.log(!key.getPrivateKey(), !key.getPublicKey(), !key.getSize())
-
                     if(!key.getPrivateKey() || !key.getPublicKey() || !key.getSize()){
                         cmNotify.warn('SETTINGS.PAGES.IDENTITY.KEYS.WARN.IMPORT_FAILED')
                     } else {

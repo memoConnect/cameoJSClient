@@ -322,7 +322,7 @@
                 },
                 "HANDSHAKE": {
                     "MODAL_HEADER": "Authorisierung",
-                    "HANDSHAKE_NOW": "Wollen Sie einen Handshake mit einem älteren Gerät jetzt durchführen?",
+                    "HANDSHAKE_NOW": "Wollen Sie für den neuen cameoKey '<strong>{{keyName}}</strong>' einen Handshake mit einem älteren Gerät durchführen?",
                     "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
                     "CHOOSE_OLD_DEVICE": "Bitte wählen Sie ein altes Gerät mit dem Sie die Authorisierung durchführen wollen!",
                     "CHOOSE": "Bitte wählen",
