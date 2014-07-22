@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmUi').service('cmModal',[
+angular.module('cmUi')
+.service('cmModal',[
     'cmObject', 'cmLogger',
     '$rootScope', '$compile', '$document',
     function(cmObject, cmLogger,

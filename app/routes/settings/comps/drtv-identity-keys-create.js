@@ -97,10 +97,6 @@ angular.module('cmRouteSettings')
                         $window.history.back();
                     }
                 };
-
-                $scope.authentication = function(){
-
-                };
             }
         }
     }

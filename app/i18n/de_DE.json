@@ -319,6 +319,15 @@
                         "CHECK_PUBKEY": "Überprüfe den Öffentlichenschlüssel",
                         "CHECK_KEYNAME": "Überprüfe den Schlüsselnamen"
                     }
+                },
+                "HANDSHAKE": {
+                    "MODAL_HEADER": "Authorisierung",
+                    "HANDSHAKE_NOW": "Wollen Sie einen Handshake mit einem älteren Gerät jetzt durchführen?",
+                    "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
+                    "CHOOSE_OLD_DEVICE": "Bitte wählen Sie ein altes Gerät mit dem Sie die Authorisierung durchführen wollen!",
+                    "CHOOSE": "Bitte wählen",
+                    "TRANSACTION_SECRET": "Diese für Sie generierte TransactionSecret muss auf dem anderen Device eingeben werden.",
+                    "HANDSHAKE_START": "Authorisierung starten"
                 }
             },
             "ABOUT_US":{

@@ -10,9 +10,9 @@
  * @requires localStorage TODO: implement ServiceLocalStorage
  */
 
-angular.module('cmCore').service('cmAuth', [
-    'cmApi',
-    'cmObject',
+angular.module('cmCore')
+.service('cmAuth', [
+    'cmApi', 'cmObject',
     function(cmApi, cmObject){
         var auth = {
             /**
@@ -280,6 +280,13 @@ angular.module('cmCore').service('cmAuth', [
              */
             getTwoFactorToken: function(){
                 return localStorage.getItem('twoFactorToken');
+            },
+
+            startHandshake: function(data){
+                return cmApi.post({
+                    path: '/identity/authenticationRequest',
+                    data: data
+                });
             }
         };
 
