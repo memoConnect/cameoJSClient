@@ -1,25 +1,27 @@
-<cm-header cm-rubber-space ng-show="!isPurl">
-    <cm-back cm-weight="1" back-to="conversation/{{conversationId}}"></cm-back>
-    <cm-identity cm-weight="3"></cm-identity>
-    <cm-security-indicator
-        cm-weight       = "3"
-        cm-data         = "conversation.securityAspects"
-        cm-leading-icon = "cm-lock"
-        ng-click        = "goto('conversation/'+conversationId+'/security-settings')"
-    ></cm-security-indicator>
-    <cm-menu cm-weight="1"></cm-menu>
-</cm-header>
+<cm-header>
+    <div class="cm-header-wrapper" cm-rubber-space ng-show="!isPurl">
+        <cm-back cm-weight="1" back-to="conversation/{{conversationId}}"></cm-back>
+        <cm-identity cm-weight="3"></cm-identity>
+        <cm-security-indicator
+            cm-weight       = "3"
+            cm-data         = "conversation.securityAspects"
+            cm-leading-icon = "cm-lock"
+            ng-click        = "goto('conversation/'+conversationId+'/security-settings')"
+        ></cm-security-indicator>
+        <cm-menu cm-weight="1"></cm-menu>
+    </div>
 
-<cm-header cm-rubber-space ng-show="isPurl">
-    <cm-back cm-weight="1" back-to="purl/{{purlId}}"></cm-back>
-    <div cm-weight="1"></div>
-    <cm-logo cm-weight="4"></cm-logo>
-    <cm-security-indicator
-        cm-weight       = "2"
-        cm-data         = "conversation.securityAspects"
-        cm-leading-icon = "cm-lock"
-        ng-click        = "goto('purl/'+purlId+'/security-settings')"
-    ></cm-security-indicator>
+    <div class="cm-header-wrapper" cm-rubber-space ng-show="isPurl">
+        <cm-back cm-weight="1" back-to="purl/{{purlId}}"></cm-back>
+        <div cm-weight="1"></div>
+        <cm-logo cm-weight="4"></cm-logo>
+        <cm-security-indicator
+            cm-weight       = "2"
+            cm-data         = "conversation.securityAspects"
+            cm-leading-icon = "cm-lock"
+            ng-click        = "goto('purl/'+purlId+'/security-settings')"
+        ></cm-security-indicator>
+    </div>
 </cm-header>
 
 <section class="body-group no-border">

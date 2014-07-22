@@ -1,10 +1,13 @@
 <section ng-controller="ConversationsCtrl">
     <cm-header cm-rubber-space>
-        <cm-identity cm-weight="5"></cm-identity>
-        <cm-header-list-search cm-weight="1" ng-model="search"></cm-header-list-search>
+        <cm-identity cm-weight="4"></cm-identity>
         <cm-add-button cm-weight="1" ng-click="createNewConversation()" data-qa="new-conversation-btn" cm-icon="new-talk"></cm-add-button>
+        <cm-add-button cm-weight="1" ng-click="openModal('add-contact')" data-qa="add-contact-btn" cm-icon="new-contact"></cm-add-button>
+        <cm-header-list-search cm-weight="1" ng-model="search"></cm-header-list-search>
         <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
+
+    <cm-modal-add-contact id="add-contact" nose-position="6rem"></cm-modal-add-contact>
 
     <ul>
         <li ng-show="loading" class="empty-list">
@@ -24,5 +27,5 @@
         </button>
     </div>
 
-    <cm-footer cm-btns></cm-footer>
+    <cm-footer></cm-footer>
 </section>

@@ -5,8 +5,8 @@ angular.module('cmUi').directive('cmAddButton',[
         return {
             restrict: 'E',
             template: '<i class="fa cm-{{icon}}"></i>',
-            link: function(scope, element, attrs){
-                scope.icon = attrs.cmIcon;
+            scope: {
+                icon: "@cmIcon"
             }
         }
     }

@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmContacts').directive('cmKeyLevel',[
+angular.module('cmContacts')
+.directive('cmKeyLevel',[
     function (){
         return {
             restrict: 'E',
