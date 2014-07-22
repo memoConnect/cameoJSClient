@@ -13,6 +13,7 @@ cm-header{
 
   > *{
     vertical-align: middle;
+    background:@cm-black;
   }
 
   cm-back{
@@ -42,7 +43,6 @@ cm-header{
     white-space:nowrap;
     position:relative;
     padding-left:@cm-horizontal-padding;
-    background:@cm-black;
     cm-avatar{
       top:-0.1rem;
     }
@@ -62,7 +62,10 @@ cm-header{
     text-align:center;
   }
 
-  cm-reload,
+  cm-add-button{
+    display: inline-block;
+  }
+
   cm-header-list-search,
   cm-add-button{
     text-align:center;
@@ -95,7 +98,7 @@ cm-header{
       position:absolute;
       z-index:-1;
       height:@cm-unit;
-      width:(@cm-unit * 5) - @cm-horizontal-padding;
+      width:24rem - @cm-horizontal-padding;
       right:@cm-unit;
       top:0;
       padding:1rem 0.4rem;
@@ -196,15 +199,6 @@ header.menu{
     text-align:left;
     font-size:0.8em;
     .with-cursor;
-  }
-
-  cm-reload{
-    display: inline-block;
-    width: 6rem;
-    text-align:center;
-    position: absolute;
-    top: @cm-vertical-padding;
-    right: 3.1rem;
   }
 
   cm-menu{
