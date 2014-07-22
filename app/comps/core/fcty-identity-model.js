@@ -84,7 +84,7 @@ angular.module('cmCore')
                     cmAuth.getIdentity(this.id).then(
                         function (import_data) {
                             if (typeof import_data == 'string') {
-                                cmLogger('cmAuth.getIdentity() should forward an object, got string instead. ')
+                                cmLogger.debug('cmAuth.getIdentity() should forward an object, got string instead. ')
                             } else {
                                 self.importData(import_data);
                             }

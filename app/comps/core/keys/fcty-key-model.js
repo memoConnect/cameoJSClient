@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('cmCore')
-.factory('cmKey',[
+.factory('cmKey', [
+
     'cmLogger',
+
     function(cmLogger){
         /**
          * @TODO TEsts!!!!!
