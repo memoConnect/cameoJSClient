@@ -29,7 +29,7 @@ fi
 
 echo -e "\e[33m[ CameoClient - running unit/e2e tests ]\033[0m"
 ./node_modules/grunt-cli/bin/grunt tests-unit ${target} ${wwwUrlArg} ${apiUrlArg}
-./node_modules/grunt-cli/bin/grunt tests-e2e  ${target} ${wwwUrlArg} ${apiUrlArg} --specs="test/e2e/**/*.1.spec.js" &
-./node_modules/grunt-cli/bin/grunt tests-e2e  ${target} ${wwwUrlArg} ${apiUrlArg} --specs="test/e2e/**/*.2.spec.js" &
+./node_modules/grunt-cli/bin/grunt tests-e2e  ${target} ${wwwUrlArg} ${apiUrlArg} --specs="test/e2e/**/*.1.spec.js"
+./node_modules/grunt-cli/bin/grunt tests-e2e  ${target} ${wwwUrlArg} ${apiUrlArg} --specs="test/e2e/**/*.2.spec.js"
 ./node_modules/grunt-cli/bin/grunt tests-e2e  ${target} ${wwwUrlArg} ${apiUrlArg} --specs="test/e2e/**/*.3.spec.js"
 

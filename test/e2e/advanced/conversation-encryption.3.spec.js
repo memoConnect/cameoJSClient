@@ -181,22 +181,22 @@ describe('Conversation encryption -', function () {
 
                             case "password" :
                                 // expect password prompt
-                                //util.waitForModalOpen()
-                                util.waitForElement("cm-modal.active div.body a")
+                                util.waitForModalOpen()
+//                                util.waitForElement("cm-modal.active")
 //                                $("cm-modal.active div.body a").click()
                                 util.get(conversationRoute + "/security-settings")
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
                                 $("[data-qa='btn-security-done']").click()
-                                util.waitForElementDisappear("cm-modal.active .cm-modal-alert")
+                                util.waitForElementDisappear("[data-qa='btn-security-done']")
                                 break;
 
 
                             case "passCaptcha" :
                                 // expect password prompt
-//                                util.waitForModalOpen()
-                                util.waitForElement("cm-modal.active div.body a")
+                                util.waitForModalOpen()
+//                                util.waitForElement("cm-modal.active")
 //                                $("cm-modal.active div.body a").click()
                                 util.get(conversationRoute + "/security-settings")
                                 util.waitForElement("[data-qa='captcha-image']")
@@ -204,7 +204,7 @@ describe('Conversation encryption -', function () {
                                 $("[data-qa='input-password']").sendKeys(password)
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
                                 $("[data-qa='btn-security-done']").click()
-                                util.waitForElementDisappear("cm-modal.active .cm-modal-alert")
+                                util.waitForElementDisappear("[data-qa='btn-security-done']")
                                 break;
                         }
 
@@ -212,7 +212,7 @@ describe('Conversation encryption -', function () {
                 })
 
                 it("recipient read message(s)", function () {
-                    util.expectCurrentUrl(conversationRoute)
+
                     util.waitForElements("cm-message", messages.length)
 
                     // wait until there decrypted (just in case)
