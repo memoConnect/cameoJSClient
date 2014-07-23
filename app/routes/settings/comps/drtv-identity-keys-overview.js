@@ -9,9 +9,9 @@ angular.module('cmRouteSettings')
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-keys-overview.html',
             controller: function ($scope) {
-                //Todo: identity.keys oder cmUserModel.getLocalKeys() ?
-                //$scope.ownKeys = cmUserModel.data.identity.keys || [];
-                $scope.ownKeys = cmUserModel.loadLocalKeys() || [];
+                $scope.privateKeys  = cmUserModel.loadLocalKeys() || [];
+                $scope.publicKeys   = cmUserModel.data.identity.keys || [];
+
 
                 $scope.remove = function(key){
                     cmUserModel.removeKey(key);

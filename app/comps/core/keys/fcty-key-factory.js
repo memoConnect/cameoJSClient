@@ -16,7 +16,7 @@ angular.module('cmCore')
                                             ||  instance.getPublicKey() == data.privKey
                                 },
                                 function sameByInstance(instance_1, instance_2){
-                                    return      instance.id == data.id
+                                    return      instance_1.id == instance_2.id
                                             ||  instance_1.getPublicKey ==  instance_2.getPublicKey   
                                 }
                             )
