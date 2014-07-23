@@ -17,15 +17,14 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                 };
 
                 $scope.isTrustedKey = function(key){
-                    return cmUserModel.trustsKey(key)
+                    return cmUserModel.trustsKey(key);
                 };
-
 
                 $scope.sortByPrivKeys = function(key) {
                     return !($scope.privateKeys.find(key) instanceof cmKey);
                 };
 
-                cmUserModel.on('key:saved', function(local_key){
+                cmUserModel.on('key:saved', function(){
                     $scope.privateKeys = cmUserModel.loadLocalKeys() || [];
                 });
             }
