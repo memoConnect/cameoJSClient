@@ -23,12 +23,6 @@ describe('cmIdentityModel', function(){
         expect(cmIdentityModel).toBeDefined()
     })
 
-    // init is now private
-    xit('should have init function', function(){
-        var obj = createIdentity();
-        expect(obj.init).toBeDefined()
-    })
-
     it('should have importData & load methods', function(){
         var obj = createIdentity();
         expect(obj.importData).toBeDefined()
@@ -36,21 +30,21 @@ describe('cmIdentityModel', function(){
     })
 
     describe('Encryption and Key Management', function(){        
-        var publicKey_128 = '-----BEGIN PUBLIC KEY-----MCwwDQYJKoZIhvcNAQEBBQADGwAwGAIRALRvUT+teouT0TBjIsbaT8kCAwEAAQ==-----END PUBLIC KEY-----',            
-            publicKey_120 = '-----BEGIN PUBLIC KEY-----MCswDQYJKoZIhvcNAQEBBQADGgAwFwIQAKwGNK17gJWTZtwOsKRvmwIDAQAB-----END PUBLIC KEY-----',
-            identity_data = {
+        var publicKey_128   = '-----BEGIN PUBLIC KEY-----MCwwDQYJKoZIhvcNAQEBBQADGwAwGAIRALRvUT+teouT0TBjIsbaT8kCAwEAAQ==-----END PUBLIC KEY-----',            
+            publicKey_120   = '-----BEGIN PUBLIC KEY-----MCswDQYJKoZIhvcNAQEBBQADGgAwFwIQAKwGNK17gJWTZtwOsKRvmwIDAQAB-----END PUBLIC KEY-----',
+            identity_data   = {
                                 id:             'my_test_id',
                                 publicKeys :    [
                                                     { id: 'my_first_key',   pubKey : publicKey_128},
                                                     { id: 'my_second_key',  pubKey : publicKey_120}
                                                 ]
                             },
-            identity      = undefined,
-            dummy         = undefined
+            identity        = undefined,
+            dummy           = undefined
 
             beforeEach(inject(function(cmIdentityModel){
-                identity  = new cmIdentityModel(identity_data)
-                dummy = new cmIdentityModel()
+                identity    = new cmIdentityModel(identity_data)
+                dummy       = new cmIdentityModel()
             }))
 
             it('should provide a function "encryptPassphrase" to encrypt a passphrase with all availabe public keys', function(){       
@@ -67,7 +61,7 @@ describe('cmIdentityModel', function(){
                 expect(identity.getWeakestKeySize).toBeDefined()
                 expect(identity.getWeakestKeySize()).toBe(120)
 
-                expect(dummy.getWeakestKeySize()).toBeFalsy()
+                expect(dummy.getWeakestKeySize()).toBe(0)
             })
 
 

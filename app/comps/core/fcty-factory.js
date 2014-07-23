@@ -42,7 +42,6 @@ angular.module('cmCore').factory('cmFactory',[
                 var instance = self.find(data);
 
                 if(instance === null){
-                    
                     instance = self.new(data)
                     self.register(instance)
 
@@ -59,6 +58,12 @@ angular.module('cmCore').factory('cmFactory',[
                     self.create(data)
                 })
                 return self
+            }
+
+            self.exportDataArray = function(){
+                return  self.map(function(instance){
+                            return instance.exportData()
+                        })
             }
 
             /**

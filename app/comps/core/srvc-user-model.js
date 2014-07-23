@@ -217,13 +217,6 @@ angular.module('cmCore')
          * Key Handling
          */
 
-        /**
-         * @param key
-         */
-        this.addKey = function(key){
-            this.data.identity.addKey(key, true);
-            return this;
-        };
 
         this.getLocalKeyIdsForRequest = function(){
             if(this.isAuth !== false){
@@ -255,18 +248,17 @@ angular.module('cmCore')
          * @param key
          * @returns {*}
          */
-        this.saveKey = function(key){
-            var key_list  =  this.loadLocalKeys() || [],
-                key_data_list = [];
+        this.storeKey = function(key){
+            var local_keys      = this.loadLocalKeys() || new cmKeyFactory(),
+                matching_key    = local_keys.find(key)
 
-            key_list.forEach(function(local_key){
-                var data = local_key.exportData();
-                key_data_list.push(data);
-            });
+            if(matching_key && key.getPrivateKey())
+                matching_key.setKey(key.getPrivateKey())
+            else
+                local_keys.create(key.exportData())
 
-            key.updateKeyDataList(key_data_list);
 
-            this.storageSave('rsa', key_data_list);
+            this.storageSave('rsa', local_keys.exportDataArray());
 
             this.trigger('key:stored')
 
@@ -299,16 +291,10 @@ angular.module('cmCore')
             var localKeys = this.loadLocalKeys() || [];
 
             localKeys.forEach(function(local_key){
-                var isNotInPublicKeys = self.data.identity.keys
-                    ? self.data.identity.keys.filter(function(public_key){
-                        if(typeof local_key.id !== 'undefined' && local_key.id == public_key.id) {
-                            return true;
-                        }
-                        return false;
-                      }).length == 0
-                    : false;
 
-                if(isNotInPublicKeys || typeof local_key.id === 'undefined' || local_key.id == ''){
+                var matchingPublicKeyPresent = self.data.identity.keys && self.data.identity.keys.find(local_key)
+
+                if(!matchingPublicKeyPresent || !local_key.id){
 
                     if(local_key.getPublicKey() == undefined){
                         cmLogger.error('broken pubkey in localstorage! that can\'t be synced.');
@@ -321,18 +307,18 @@ angular.module('cmCore')
                         keySize: keySize || 0 //TODO: local_key.size == Nan ???
                     })
                     .then(function(data){
-                        local_key
-                        .importData(data);
+                        //data brings an id for the key
+                        local_key.importData(data)
 
-                        self
-                        .saveKey(local_key)
-                        .addKey(local_key);
+                        //add public key to identity
+                        self.data.identity.create(data)
+
+                        //store the key with its new id:
+                        self.storeKey(local_key)
 
                         // event for handshake modal
                         self.trigger('key:saved', local_key);
                     })
-                } else {
-                    self.addKey(local_key);
                 }
             });
 
@@ -398,15 +384,13 @@ angular.module('cmCore')
         }
 
         this.decryptPassphrase = function(encrypted_passphrase, keyId){
-            var keys = this.loadLocalKeys() || [],
-                decrypted_passphrase;
+            var keys = this.loadLocalKeys() || []
 
-            keys.forEach(function(key){ 
-                if(!decrypted_passphrase && (key.id == keyId || !keyId)){
-                    decrypted_passphrase = key.decrypt(encrypted_passphrase)                    
-                }
-            });
-            return decrypted_passphrase;
+            return  keys.reduce(function(decrypted_passphrase, key){
+                        return      decrypted_passphrase 
+                                ||  ( (key.id == keyId || !keyId) && key.decrypt(encrypted_passphrase) )
+
+                    }, undefined)
         };
 
         /**
