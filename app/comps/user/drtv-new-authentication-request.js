@@ -36,7 +36,10 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
 
                 $scope.verifyCode = function(){
                     setErrorsToDefault();
-                    $scope.showSpinner();
+
+                    $timeout(function(){
+                        $scope.showSpinner();
+                    },10);
 
                     if(cmUtil.validateString($scope.transactSecret)){
                         var localKeys = cmUserModel.loadLocalKeys();
@@ -64,6 +67,7 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
                             /**
                              * @todo toKeyId (privKey) sign fromKeyID (publicKey)
                              */
+                            cmUserModel.signKey($scope.data.toKeyId, $scope.data.fromKeyId);
                         }
                     } else {
                         $scope.error.emptyInput = true;

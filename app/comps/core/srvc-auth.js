@@ -212,6 +212,28 @@ angular.module('cmCore')
              * @ngdoc method
              * @methodOf cmAuth
              *
+             * @name savePublicKeySignature
+             * @description
+             * save a signature to a public key
+             *
+             * @param {String} keyId id of local key
+             * @param {String} signKeyId id of signed key
+             * @param {String} signature signature
+             * @returns {Promise} for async handling
+             */
+            savePublicKeySignature: function(localKeyId, signKeyId, signature){
+                return cmApi.post({
+                    path: '/identity/publicKey/' + signKeyId + '/signature',
+                    data: {
+                        keyId: localKeyId,
+                        content: signature
+                    }
+                });
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
              * @name requestTwoFactorKey
              * @description
              * Two factor authentication
@@ -296,17 +318,6 @@ angular.module('cmCore')
 //            console.log('cmAuth.on:identity:update')
             auth.trigger('identity:updated', data)
         });
-
-        /**
-         * rename Request/Event Name
-         */
-//        cmApi.on('authenticationRequest:new', function(event, data){
-//            auth.trigger('authenticationRequest:new', data)
-//        });
-//
-//        cmApi.on('authenticationRequest:finished', function(event, data){
-//            auth.trigger('authenticationRequest:finished', data)
-//        });
 
         return auth;
     }

@@ -357,6 +357,27 @@ angular.module('cmCore')
                 });
         };
 
+        this.signKey = function(localKeyId, signKeyId){
+            cmLogger.debug('cmUserModel.signKey');
+
+            var localKeys = this.loadLocalKeys();
+            var key = localKeys.find(localKeyId);
+            var signKey = this.data.identity.keys.find(signKeyId);
+
+            var signature = key.sign(signKey.getPublicKeyForSigning(this.data.identity.id));
+
+            if(typeof signature == 'string' && signature.length > 0){
+                cmAuth.savePublicKeySignature(key.id, signKey.id, signature).then(
+                    function(){
+                        self.trigger('signature:saved');
+                    },
+                    function(){
+                        self.trigger('signature:failed');
+                    }
+                )
+            }
+        };
+
         this.clearLocalKeys = function(){
             this.storageSave('rsa', []);
         };

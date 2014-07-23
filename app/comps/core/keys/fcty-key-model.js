@@ -49,6 +49,16 @@ angular.module('cmCore')
                 return public_key;
             };
 
+            this.getPublicKeyForSigning = function(identityId){
+                if(typeof identityId == 'string' && identityId.length > 0){
+                    return sjcl.hash.sha256.hash(identityId+':'+this.getPublicKey()).toString();
+                } else {
+                    cmLogger.debug('cmKey.getPublicKeyForSigning - Fail! - Empty identityId!');
+                }
+
+                return false;
+            }
+
             this.getPrivateKey = function(){
                 var private_key;
                 try{
