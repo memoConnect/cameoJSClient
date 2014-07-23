@@ -65,7 +65,7 @@ angular.module('cmCore')
 
             this.verify = function(signature){
                 return crypt.verify(signature)
-            }
+            };
 
             this.trusts = function(key){
                 return  this == key //allways trusts itself
@@ -73,7 +73,7 @@ angular.module('cmCore')
                         this.signatures.some(function(signature){
                             return (key.id == signature.keyId) && key.verify(signature.content)
                         })
-            }
+            };
 
             this.getSize = function(){
                 var size;
@@ -85,7 +85,7 @@ angular.module('cmCore')
                 }
 
                 //Todo: dirty workaround :)
-                if(size == 1023 || size == 2047 || size == 4095)
+                if(size == 127 || size == 1023 || size == 2047 || size == 4095)
                     size = size+1;
 
                 return size;
@@ -94,11 +94,11 @@ angular.module('cmCore')
             this.importJSEncrypt = function(jse){
                 crypt = jse
                 return this
-            }
+            };
 
             this.exportJSEncrypt = function(){
                 return crypt
-            }
+            };
 
             this.importData = function(data){
                 if(!data){
@@ -107,7 +107,7 @@ angular.module('cmCore')
                 }
 
                 var key =       data.privKey
-                            ||  this.getPrivateKey()                  
+                            //||  this.getPrivateKey()
                             ||  data.key
                             ||  data.pubKey
                             ||  undefined;
@@ -142,7 +142,6 @@ angular.module('cmCore')
                 var check = false;
 
                 key_list.forEach(function(key){
-                    console.log(key.id)
                     if(
                             (key.id && (key.id == self.id))
                         ||  key.getPublicKey() == self.getPublicKey()
@@ -182,7 +181,7 @@ angular.module('cmCore')
             };
 
             init(data)
-        };
+        }
 
         return cmKey;
     }

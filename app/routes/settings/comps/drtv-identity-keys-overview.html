@@ -21,13 +21,13 @@
     </li>
     <li ng-repeat="key in ownKeys | orderBy:'getPrivateKey()':false" data-qa="key-list-item">
         <span class="item clearfix">
-            <strong>{{key.getSize()}}</strong>
-            <strong class="isInLocalstorage" ng-if="key.getPrivateKey()" data-qa="key-is-local">
-                {{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_ON_THIS_DEVICE'|cmTranslate}}
+            <strong>{{key.name}}</strong><br />
+            <strong ng-if="key.getPrivateKey()" data-qa="key-is-local">
+                <span class="isInLocalstorage">{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_ON_THIS_DEVICE'|cmTranslate}}</span> |
             </strong>
-            {{key.name}}<br />
-            <span ng-if = "isTrustedKey(key)"> -- trusted -- </span>
-            <span ng-if = "!isTrustedKey(key)"> !! untrusted !! </span>
+            {{key.getSize()}} |
+            <span ng-if="isTrustedKey(key)"> -- trusted -- </span>
+            <span ng-if="!isTrustedKey(key)"> !! untrusted !! </span>
             {{key.created | date:'dd.MM.yy - HH:mm'}}            
         </span>
         <div class="short-links">

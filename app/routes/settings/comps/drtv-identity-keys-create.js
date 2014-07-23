@@ -85,9 +85,10 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                     }
 
                     if(error !== true){
-                        var key = (new cmKey())
-                            .setName($scope.keyName)
-                            .setKey($scope.privKey);
+                        var key = (new cmKey()).importData({
+                            name: $scope.keyName,
+                            privKey: $scope.privKey
+                        });
 
                         cmUserModel
                             .saveKey(key)
