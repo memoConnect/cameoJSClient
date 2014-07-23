@@ -25,7 +25,7 @@
             <strong ng-if="privateKeys.find(key)" data-qa="key-is-local">
                 <span class="isInLocalstorage">{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_ON_THIS_DEVICE'|cmTranslate}}</span> |
             </strong>
-            {{key.getSize()}} |
+            {{privateKeys.find(key).getSize() || key.getSize() || key.size}} |
             <span ng-if="isTrustedKey(key)"> -- trusted -- </span>
             <span ng-if="!isTrustedKey(key)"> !! untrusted !! </span>
             {{key.created | date:'dd.MM.yy - HH:mm'}}            

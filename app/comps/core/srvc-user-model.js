@@ -330,7 +330,6 @@ angular.module('cmCore')
 
                         // event for handshake modal
                         self.trigger('key:saved', local_key);
-                        console.log('sdf')
                     })
                 } else {
                     self.addKey(local_key);

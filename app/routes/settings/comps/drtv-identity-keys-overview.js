@@ -24,7 +24,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                     return !($scope.privateKeys.find(key) instanceof cmKey);
                 };
 
-                cmUserModel.on('key:saved', function(){
+                cmUserModel.on('key:stored', function(){
                     $scope.privateKeys = cmUserModel.loadLocalKeys() || [];
                 });
             }
