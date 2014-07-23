@@ -213,7 +213,7 @@ angular.module('cmCore')
          * @param key
          */
         this.addKey = function(key){
-            this.data.identity.addKey(key);
+            this.data.identity.addKey(key, true);
             return this;
         };
 
@@ -322,6 +322,7 @@ angular.module('cmCore')
 
                         // event for handshake modal
                         self.trigger('key:saved', local_key);
+                        console.log('sdf')
                     })
                 } else {
                     self.addKey(local_key);

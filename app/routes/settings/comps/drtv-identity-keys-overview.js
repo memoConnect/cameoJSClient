@@ -21,6 +21,12 @@ angular.module('cmRouteSettings')
                 $scope.isTrustedKey = function(key){
                     return cmUserModel.trustsKey(key)
                 }
+
+                cmUserModel.on('key:saved', function(local_key){
+                    $scope.privateKeys = cmUserModel.loadLocalKeys() || [];
+                })
+
+
             }
         }
     }
