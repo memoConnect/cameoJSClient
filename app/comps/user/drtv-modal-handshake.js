@@ -12,10 +12,6 @@ angular.module('cmUser')
             controller: function($scope){
                 $scope.step = 1;
                 $scope.keys = [];
-                var pleaseChoose = {
-                    name:cmTranslate('SETTINGS.PAGES.IDENTITY.HANDSHAKE.CHOOSE'),
-                    id:0
-                };
                 $scope.toKey = {};
                 $scope.transactionSecret = '';
                 $scope.handshakeIdle = false;
@@ -31,11 +27,9 @@ angular.module('cmUser')
                 $scope.doHandshake = function(){
                     $scope.step = 2;
                     // get keys from userModel
-                    $scope.keys = [pleaseChoose].concat(cmUserModel.data.identity.keys.filter(function(key){
+                    $scope.keys = cmUserModel.data.identity.keys.filter(function(key){
                         return (key.getPrivateKey() == undefined && key != $scope.fromKey);
-                    }));
-                    // init please choose
-                    $scope.toKey = $scope.keys[0];
+                    });
                 };
 
                 $scope.setToKey = function(toKey){

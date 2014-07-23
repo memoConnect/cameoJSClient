@@ -19,10 +19,17 @@
         <div class="modal-row">
             {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.CHOOSE_OLD_DEVICE'|cmTranslate}}<br />
             <br />
-            <select
-                ng-model="toKey"
-                ng-options="key as key.name for key in keys"
-            ></select>
+            <ul>
+                <li ng-repeat="key in keys">
+                    {{key.name}}
+                    <i class="fa"
+                       ng-click="toKey = key.id"
+                       ng-class="{
+                        'cm-checkbox': key.id != toKey,
+                        'cm-checkbox-right': key.id == toKey
+                    }"></i>
+                </li>
+            </ul>
         </div>
         <button
             class="cm-btn cm-btn-block cm-btn-grey"
