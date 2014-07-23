@@ -61,6 +61,9 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
                             // save signature to newPubKey
                             // POST /identity...
 
+                            /**
+                             * @todo toKeyId (privKey) sign fromKeyID (publicKey)
+                             */
                         }
                     } else {
                         $scope.error.emptyInput = true;
