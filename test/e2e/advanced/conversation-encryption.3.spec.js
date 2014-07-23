@@ -268,15 +268,15 @@ describe('Conversation encryption -', function () {
     // creates conversation
     var testUserId1 = Math.random().toString(36).substring(2, 9)
     var testUser1 = "testUser23_" + testUserId1
-    console.log("user1: " + testUser1)
+//    console.log("user1: " + testUser1)
     // recipient with key
     var testUserId2 = Math.random().toString(36).substring(2, 9)
     var testUser2 = "testUser23_" + testUserId2
-    console.log("user2: " + testUser2)
+//    console.log("user2: " + testUser2)
     // recipient without key
     var testUserId3 = Math.random().toString(36).substring(2, 9)
     var testUser3 = "testUser23_" + testUserId3
-    console.log("user3: " + testUser3)
+//    console.log("user3: " + testUser3)
     // external User
     var externalUser = "external_moep"
     // password

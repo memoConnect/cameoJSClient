@@ -5,10 +5,10 @@ var path = require('path')
 var ptor = util.getPtorInstance(),
     subjectUnsafe = 'subjectUnsafe FileUpload',
     subjectSafe = 'subjectSafe FileUpload',
-    smallImageJPG = path.resolve(__dirname,'./data/file-upload-image-24KB.jpg'),
-    largeImageJPG = path.resolve(__dirname,'./data/file-upload-image-1.4MB.jpg'),
-    smallFileMP3 = path.resolve(__dirname,'./data/file-upload-audio-23KB.mp3'),
-    smallFilePDF = path.resolve(__dirname,'./data/file-upload-file-123KB.pdf');
+    smallImageJPG = path.resolve(__dirname,'../data/file-upload-image-24KB.jpg'),
+    largeImageJPG = path.resolve(__dirname,'../data/file-upload-image-1.4MB.jpg'),
+    smallFileMP3 = path.resolve(__dirname,'../data/file-upload-audio-23KB.mp3'),
+    smallFilePDF = path.resolve(__dirname,'../data/file-upload-file-123KB.pdf');
 
 // expect functions
 function testFile(file, extension, index){
