@@ -192,6 +192,7 @@ describe('Conversation encryption -', function () {
                                 util.waitForElementDisappear("cm-modal.active .cm-modal-alert")
                                 break;
 
+
                             case "passCaptcha" :
                                 // expect password prompt
 //                                util.waitForModalOpen()

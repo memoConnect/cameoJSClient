@@ -13,12 +13,12 @@ describe('Friendrequests', function () {
         util.logout()
 
         describe('Friendrequests user2 "'+config.loginUser1+'" login and search for user1 "'+user1ToAccept+'"', function(){
-            util.login(config.loginUser1,config.passwordUser1)
-            util.waitForPageLoad('/talks')
+
 
             it('search', function(){
+                util.login(config.loginUser1,config.passwordUser1)
                 util.get('/contacts/search')
-                util.waitForPageLoad('/contacts/search')
+                util.waitForElement("[data-qa='inp-search-cameo-ids']")
 
                 $("[data-qa='inp-search-cameo-ids']").sendKeys(user1ToAccept)
 
