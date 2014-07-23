@@ -269,7 +269,6 @@ angular.module('cmCore')
             var storedKeys = this.storageGet('rsa') || [],
                 keys        = [];
 
-            console.log('loadLocalKey')
 
             storedKeys.forEach(function(stored_key){
                 var data = new cmKey(stored_key);
@@ -368,7 +367,6 @@ angular.module('cmCore')
         };
 
         this.trustsKey = function(key){
-            console.log('trust')
             var local_keys = this.loadLocalKeys() || []
 
             return  local_keys.some(function(local_key){
