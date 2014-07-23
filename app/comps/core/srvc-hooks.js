@@ -19,20 +19,20 @@ angular.module('cmCore').service('cmHooks', [
         /**
          * authenticationRequest:new
          */
-        cmApi.on('authenticationRequest:new', function(event, request){
-//        $rootScope.$on('authenticationRequest:new', function(){
+//        cmApi.on('authenticationRequest:new', function(event, request){
+        $rootScope.$on('authenticationRequest:new', function(){
             cmLogger.debug('cmHooks.on:authenticationRequest:new');
 
             var requestMock = {
-                signature: "3f6457ecd81aedc854f2931936b0b7eea3432f8dabe08b6f1fda1debe796e79897ff89a71ccb015d80111f58ec37baa15649a52240133a721dd78710538d1c882ef57d7276fd7b4bcbb4568d44c8684ec0d7a2607e66b2a835cf48692f92eddb5838c133962c7efc8033099d480822b3395817e682e9cb066015d2e59d771742539b28be3682ae38dfcd7671d1bf19f6fa21fffb61522d7c549cbc2f5ddf4d56ca6b241287ac4d728993e1afaab95fbd25f588cdebea524299c2dae92df8219678d0685de54dd1d0107349fb5dac63eeb99700330cd479ea98c86c69949c22c02c17df9460032bd7735bcaf4344793ccb41e69d219fbc6e0ae6ab55f21ad5092",
-                encryptedTransactionSecret: "ajQ1hzaxg4B7vHhzv9Untw3aN02FYJeHj6UNyFLxt+qbCVQNoZnw/Y2RVf69XmonXtxINE4MJl8EKmB7uqACzF+FJEul1s+A98MWD0VJ27+29wOM7zl4WC3i/Aw3ZDn0uFTzE9I/g/nh22Ku1VHWegLWXUSb2U7DdLwibUOI0lI5vIE1gApNKPZaXCMIUlFW15bkKbJZsB6RQVvVNPpmtlhcD/wZTyKwDaDzYdXM4iHuzDECESKjBVQriUT/6OuqwpdMEwvPYq5UVZhGcKMhpMpWXfunOl4/qGEBmOKOYxVer3O+bJFs0YBeJcsxltmTu6Fva4bPVcx2gfECjKvgZg==",
-                fromKeyId: "EACBgAsR4bTL1jyQiTTD",
-                toKeyId: "Df67hlI3Ws10DLp9PF61"
+                signature: "022724e66002cefc6f59cb6a8fbf8f5add1667df7623bfaf67e49ddeaca10d68032183118e2c89007fd1c66f93ab35cdb67829a939837d754a0898f6fab3bf94993fe765522489dd5cdbfaf66ebee0418c2719f1e4d45228c03d738aec1265005361521c4009196aa6eb8bc4108395f9cd6b60dea4c92d131cb9090359fb82da92064617f651475fff38bc3e526c8eb8e181fbd6a5c78956360f207f359d02b089c149324bd29ebd534f3a2ac4d9ed19aa7cd04dad914d7469ee7880e8fe86323314c2c8e450e0c9b14843a3f59ef9b2b64a566ea8d5eb88bac18e11a4011b3f52b15cd3871ae92d805d4afde83b95da2cf18c7f5b13973fb57fad55bd0f2f61",
+                encryptedTransactionSecret: "XQAgqCtu3TaB/+Gd9ynPyjaMM10UGii0xXP8dX3YbeS30HwgjYaPhGLO3z19tO/qHkejEmw2jYDHYHD5pB6lJOEPJQ9pY0JMrva5KBneXAzKyPcbjcAdbZGkwqCzrBKoXq1uuRrt6pE8wAfdshzgQonS0CMPFVT/VE6NVmeoZe6e1yi3ZaZwUejyzw+rpHcnKLbhyCF7fS/sj8L6hlSc4b7NSDpaz567ZradfduHXGiIVqOZWjPcNkPotn/t5GYbnyg84J0GXUVYBn+6WQ7NOlfPb3ENkquVkXpI7aTLtZRtvB9upuYfUzngkPCQLU/quMvZI4AiidKaBui9uX18Kw==",
+                fromKeyId: "0CboIaFvURzalSOC7Wz3",
+                toKeyId: "4UEYJBBcC8UCIn8flmGV"
             };
 
-            if(cmUserModel.verifyAuthenticationRequest(request) !== false){
+            if(cmUserModel.verifyAuthenticationRequest(requestMock) !== false){
                 var scope = $rootScope.$new();
-                scope.data = request;
+                scope.data = requestMock;
 
                 var modalId = 'new-authentication-request';
                 cmModal.create({

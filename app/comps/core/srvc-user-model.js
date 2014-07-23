@@ -521,9 +521,9 @@ angular.module('cmCore')
                  * verify signature
                  */
                 if(!cmCrypt.verify({
-                        identityId: this.data.identity.id, // identityId to verify signature
-                        fromKey: fromKey, // pubkey #2 request.fromKeyId
-                        encryptedTransactionSecret: request.encryptedTransactionSecret, // ecrypted pubkey with transactionSecret #1
+                        identityId: this.data.identity.id,
+                        fromKey: fromKey,
+                        encryptedTransactionSecret: request.encryptedTransactionSecret,
                         signature: request.signature
                     })) {
                     return false;
@@ -554,22 +554,6 @@ angular.module('cmCore')
                 self.data.identity.importData(data);
             }
         });
-
-//        cmAuth.on('authenticationRequest:new', function(event, data){
-//            //@todo
-//            // - validate data
-//            // - start handshake part 2
-//            // this.handleAuthenticationRequest()
-//
-//        });
-//
-//        cmAuth.on('authenticationRequest:finished', function(event, data){
-//            //@todo
-//            // - validate data
-//            // - finish handshake part 3
-//            // this.finishAuthenticationRequest()
-//
-//        });
 
         init();
     }
