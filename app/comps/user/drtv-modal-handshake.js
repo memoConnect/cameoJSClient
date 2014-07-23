@@ -46,7 +46,14 @@ angular.module('cmUser')
                     $scope.toKey = toKey;
                 };
 
-                $scope.setToKey = function(toKey){
+                $scope.startHandshake = function(toKey){
+
+                    if($scope.handshakeIdle){
+                        return false;
+                    }
+
+                    $scope.handshakeIdle = true;
+
                     if(toKey instanceof cmKey){
                         $scope.step = 3;
                         // set key to tmp
@@ -54,15 +61,8 @@ angular.module('cmUser')
                         // generate TS
                         $scope.transactionSecret = cmCrypt.generateTransactionSecret();
                     }
-                };
-
-                $scope.startHandshake = function(){
-                    if($scope.handshakeIdle){
-                        return false;
-                    }
 
                     if($scope.toKey instanceof cmKey && $scope.transactionSecret != ''){
-                        $scope.handshakeIdle = true;
 
                         var dataForRequest = cmCrypt.sign({
                             identityId: cmUserModel.data.identity.id,

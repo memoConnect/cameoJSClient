@@ -32,9 +32,9 @@
         </div>
         <button
             class="cm-btn cm-btn-block cm-btn-grey"
-            ng-click="setToKey(toKey)"
-            data-qa="btn-setToKey">
-            {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_OK'|cmTranslate}}
+            ng-click="startHandshake(toKey)"
+            data-qa="btn-startHandshake">
+            {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_START'|cmTranslate}}
             <i class="fa cm-checker cm-lg-icon"></i>
         </button>
     </div>
@@ -45,12 +45,7 @@
         </div>
         <button
             class="cm-btn cm-btn-block cm-btn-grey"
-            ng-click="startHandshake()"
             data-qa="btn-startHandshake">
-            <span ng-show="!handshakeIdle">
-                {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_START'|cmTranslate}}
-                <i class="fa cm-checker cm-lg-icon"></i>
-            </span>
             <cm-spinner ng-show="handshakeIdle" cm-color="#02BED2"></cm-spinner>
         </button>
     </div>
