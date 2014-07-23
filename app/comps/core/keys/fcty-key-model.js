@@ -60,7 +60,7 @@ angular.module('cmCore')
 
             this.sign = function(value){
                 return crypt.sign(value)
-            }
+            };
 
             this.encrypt = function(secret){
                 return crypt && crypt.encrypt(secret);

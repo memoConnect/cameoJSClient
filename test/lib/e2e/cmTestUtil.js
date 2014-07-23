@@ -362,7 +362,7 @@ this.disableEncryption = function () {
 }
 
 this.clickBackBtn = function () {
-    $("cm-header:not(.ng-hide) cm-back").click()
+    $(".cm-header-wrapper:not(.ng-hide) cm-back").click()
 }
 
 this.sendFriendRequest = function (displayName) {
