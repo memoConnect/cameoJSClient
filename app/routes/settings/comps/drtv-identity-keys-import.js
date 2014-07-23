@@ -15,7 +15,10 @@ angular.module('cmRouteSettings')
                 var detect = cmUtil.detectOSAndBrowser();
 
                 $scope.import = function(){
-                    var key = new cmKey($scope.privKey);
+                    var key = (new cmKey()).importData({
+                        name: $scope.keyName,
+                        privKey: $scope.privKey
+                    });
 
                     if(!key.getPrivateKey() || !key.getPublicKey() || !key.getSize()){
                         cmNotify.warn('SETTINGS.PAGES.IDENTITY.KEYS.WARN.IMPORT_FAILED')

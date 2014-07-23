@@ -40,7 +40,7 @@ angular.module('cmUi')
                 });
             }
 
-            self.trigger('modal:opened');
+            self.trigger('modal:opened',id);
             
             return self;
         };
@@ -48,7 +48,7 @@ angular.module('cmUi')
         self.close = function(id){
             self.instances[id].close();
 
-            self.trigger('modal:closed');
+            self.trigger('modal:closed',id);
             return self;
         };
 

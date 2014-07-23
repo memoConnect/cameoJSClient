@@ -108,7 +108,11 @@ describe('Event chain for Contacts', function(){
                 number_of_requests  =   cmContactsModel.requests.length
 
             expect(number_of_requests).toBe(1)
-            expect(cmContactsModel.requests.find('my_new_friend')).toBe(friend_request)
+            expect(
+                cmContactsModel.requests.filter(function(request){ 
+                    return request.identity.id == 'my_new_friend' 
+                })[0]
+            ).toBe(friend_request)
 
             $httpBackend.expectGET('/identity').respond(200, {})
             $httpBackend.expectGET('/identity/my_new_friend').respond(200, {})
@@ -134,7 +138,11 @@ describe('Event chain for Contacts', function(){
 
             $rootScope.$apply()
 
-            expect(cmContactsModel.requests.find('my_new_friend')).toBe(null)
+            expect(
+                cmContactsModel.requests.filter(function(request){ 
+                    return request.identity.id == 'my_new_friend' 
+                })[0]
+            ).toBeUndefined()
             expect(adapter_triggered).toBe(2)            
         })
     })

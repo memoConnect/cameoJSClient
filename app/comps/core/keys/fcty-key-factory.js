@@ -10,7 +10,16 @@ angular.module('cmCore')
 
         function keyFactory(){
 
-            var self = new cmFactory(cmKey)
+            var self =  new cmFactory(cmKey,
+                                function sameByData(instance, data){
+                                    return      instance.id == data.id
+                                            ||  instance.getPublicKey() == data.privKey
+                                },
+                                function sameByInstance(instance_1, instance_2){
+                                    return      instance_1.id == instance_2.id
+                                            ||  instance_1.getPublicKey ==  instance_2.getPublicKey   
+                                }
+                            )
 
             self.encryptPassphrase = function(passphrase, whiteList){
                 

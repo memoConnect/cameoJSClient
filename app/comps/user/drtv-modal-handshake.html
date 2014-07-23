@@ -20,7 +20,7 @@
             {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.CHOOSE_OLD_DEVICE'|cmTranslate}}<br />
             <br />
             <ul class="modal-list radio-list">
-                <li ng-repeat="key in keys" ng-click="selectToKey(key)">
+                <li ng-repeat="key in publicKeys" ng-click="selectToKey(key)">
                     {{key.name}}
                     <i class="fa cm-lg-icon icon-right"
                        ng-class="{
