@@ -192,9 +192,12 @@ angular.module('cmCore')
             };
 
             this.getWeakestKeySize = function(){
-                return this.keys.reduce(function(size, key){
-                    size = size != undefined ? Math.min(size, key.getSize()) : key.getSize();
-                }, undefined)
+                cmLogger.debug('identityModle:getWeakestKeySize() is deprecated; please use keys.getWeakestKeySize().')
+                return this.keys.getWeakestKeySize()
+                // return this.keys.reduce(function(size, key){                    
+                //     return size == undefined ? key.getSize() : Math.min(size, key.getSize())
+                // }, undefined)
+
             };
 
             this.hasKeys = function(){

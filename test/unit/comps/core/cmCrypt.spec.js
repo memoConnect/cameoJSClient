@@ -129,7 +129,6 @@ describe('cmCrypt', function () {
 
             beforeEach(function(){
                 key =  new cmCrypt.Key()
-                console.log('new key')
             })
 
             it('should provide a functions "setKey", "getPublicKey" and "getPrivateKey" to import and retrieve a public or private key', function(){                                
