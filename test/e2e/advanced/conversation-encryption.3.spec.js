@@ -1,5 +1,5 @@
-var config = require("./config-e2e-tests.js")
-var util = require("../lib/e2e/cmTestUtil.js")
+var config = require("../config-e2e-tests.js")
+var util = require("../../lib/e2e/cmTestUtil.js")
 
 
 describe('Conversation encryption -', function () {
@@ -167,6 +167,7 @@ describe('Conversation encryption -', function () {
                         conversationRoute = "/conversation/" + conversationId
                     }
                     util.get(conversationRoute)
+                    util.waitForElement("cm-message")
                 })
 
 
@@ -180,27 +181,30 @@ describe('Conversation encryption -', function () {
 
                             case "password" :
                                 // expect password prompt
-                                util.waitForElement("cm-modal.active .cm-modal-alert")
-                                util.waitForElement("cm-modal.active div.body a")
-                                $("cm-modal.active div.body a").click()
+                                util.waitForModalOpen()
+//                                util.waitForElement("cm-modal.active")
+//                                $("cm-modal.active div.body a").click()
+                                util.get(conversationRoute + "/security-settings")
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
                                 $("[data-qa='btn-security-done']").click()
-                                util.waitForElementDisappear("cm-modal.active .cm-modal-alert")
+                                util.waitForElementDisappear("[data-qa='btn-security-done']")
                                 break;
+
 
                             case "passCaptcha" :
                                 // expect password prompt
-                                util.waitForElement("cm-modal.active .cm-modal-alert")
-                                util.waitForElement("cm-modal.active div.body a")
-                                $("cm-modal.active div.body a").click()
+                                util.waitForModalOpen()
+//                                util.waitForElement("cm-modal.active")
+//                                $("cm-modal.active div.body a").click()
+                                util.get(conversationRoute + "/security-settings")
                                 util.waitForElement("[data-qa='captcha-image']")
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
                                 $("[data-qa='btn-security-done']").click()
-                                util.waitForElementDisappear("cm-modal.active .cm-modal-alert")
+                                util.waitForElementDisappear("[data-qa='btn-security-done']")
                                 break;
                         }
 
@@ -208,7 +212,7 @@ describe('Conversation encryption -', function () {
                 })
 
                 it("recipient read message(s)", function () {
-                    util.expectCurrentUrl(conversationRoute)
+
                     util.waitForElements("cm-message", messages.length)
 
                     // wait until there decrypted (just in case)
@@ -265,15 +269,15 @@ describe('Conversation encryption -', function () {
     // creates conversation
     var testUserId1 = Math.random().toString(36).substring(2, 9)
     var testUser1 = "testUser23_" + testUserId1
-    console.log("user1: " + testUser1)
+//    console.log("user1: " + testUser1)
     // recipient with key
     var testUserId2 = Math.random().toString(36).substring(2, 9)
     var testUser2 = "testUser23_" + testUserId2
-    console.log("user2: " + testUser2)
+//    console.log("user2: " + testUser2)
     // recipient without key
     var testUserId3 = Math.random().toString(36).substring(2, 9)
     var testUser3 = "testUser23_" + testUserId3
-    console.log("user3: " + testUser3)
+//    console.log("user3: " + testUser3)
     // external User
     var externalUser = "external_moep"
     // password

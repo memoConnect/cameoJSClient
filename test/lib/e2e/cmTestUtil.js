@@ -149,7 +149,7 @@ this.waitForPageLoad = function (expectedRoute) {
                 if (expectedRoute == undefined || route.path.search(expectedRoute) != -1) {
                     return route.status == "success"
                 } else {
-//                        console.log("unexpected route:\n" + route.path)
+//                        console.log("Error: unexpected route: " + route.path)
                 }
             }
         })
@@ -383,8 +383,8 @@ this.acceptFriendRequests = function () {
             var length = buttons.length
             if (length > 0) {
                 buttons[0].click()
-                ptor.wait(function(){
-                    return $$("[data-qa='btn-acceptRequest']").then(function (buttons2){
+                ptor.wait(function () {
+                    return $$("[data-qa='btn-acceptRequest']").then(function (buttons2) {
                         return buttons2.length == length - 1
                     })
                 })

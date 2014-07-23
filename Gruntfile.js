@@ -131,7 +131,6 @@ module.exports = function (grunt) {
         if(protractorDebug){
             testConfig.config.protractorDebug = true
         }
-        console.log("debug: " + testConfig.config.protractorDebug)
 
         var platform = process.platform
         console.log("OS: " + platform)
