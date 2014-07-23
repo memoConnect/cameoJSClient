@@ -311,7 +311,7 @@ angular.module('cmCore')
                         local_key.importData(data)
 
                         //add public key to identity
-                        self.data.identity.create(data)
+                        self.data.identity.keys.create(data)
 
                         //store the key with its new id:
                         self.storeKey(local_key)

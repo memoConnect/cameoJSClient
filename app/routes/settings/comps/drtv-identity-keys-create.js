@@ -91,7 +91,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                         });
 
                         cmUserModel
-                            .saveKey(key)
+                            .storeKey(key)
                             .syncLocalKeys($scope.keySize);
 
                         $window.history.back();
