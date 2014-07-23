@@ -2,7 +2,8 @@
 
 angular.module('cmCore')
 .factory('cmKey',[
-    function(){
+    'cmLogger',
+    function(cmLogger){
         /**
          * @TODO TEsts!!!!!
          * @param args
@@ -100,9 +101,8 @@ angular.module('cmCore')
             }
 
             this.importData = function(data){
-                console.log(data)
                 if(!data){
-                    cmLogger('cmKey:importData: missing data')
+                    cmLogger.debug('cmKey:importData: missing data')
                     return self
                 }
 
