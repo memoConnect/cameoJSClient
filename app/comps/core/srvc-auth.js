@@ -234,6 +234,28 @@ angular.module('cmCore')
              * @ngdoc method
              * @methodOf cmAuth
              *
+             * @name deleteAuthenticationRequest
+             * @description
+             * delete Authentication Request
+             *
+             * @param {String} is id of authentication request
+             * @returns {Promise} for async handling
+             */
+            deleteAuthenticationRequest: function(id){
+                return cmApi.delete({
+                    path: '/identity/authenticationRequest/' + id
+                });
+            },
+            startHandshake: function(data){
+                return cmApi.post({
+                    path: '/identity/authenticationRequest',
+                    data: data
+                });
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
              * @name requestTwoFactorKey
              * @description
              * Two factor authentication
@@ -302,13 +324,6 @@ angular.module('cmCore')
              */
             getTwoFactorToken: function(){
                 return localStorage.getItem('twoFactorToken');
-            },
-
-            startHandshake: function(data){
-                return cmApi.post({
-                    path: '/identity/authenticationRequest',
-                    data: data
-                });
             }
         };
 

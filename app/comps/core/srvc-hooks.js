@@ -19,8 +19,8 @@ angular.module('cmCore').service('cmHooks', [
         /**
          * authenticationRequest:new
          */
-//        cmApi.on('authenticationRequest:new', function(event, request){
-        $rootScope.$on('authenticationRequest:new', function(){
+        cmApi.on('authenticationRequest:new', function(event, request){
+//        $rootScope.$on('authenticationRequest:new', function(){
 //            cmLogger.debug('cmHooks.on:authenticationRequest:new');
 
             var requestMock = {
@@ -30,9 +30,9 @@ angular.module('cmCore').service('cmHooks', [
                 toKeyId: "4UEYJBBcC8UCIn8flmGV"
             };
 
-            if(cmUserModel.verifyAuthenticationRequest(requestMock) !== false){
+            if(cmUserModel.verifyAuthenticationRequest(request) !== false){
                 var scope = $rootScope.$new();
-                scope.data = requestMock;
+                scope.data = request;
 
                 var modalId = 'new-authentication-request';
                 cmModal.create({
@@ -43,6 +43,11 @@ angular.module('cmCore').service('cmHooks', [
                 },'<cm-new-authentication-request></cm-new-authentication-request>',null,scope);
                 cmModal.open(modalId);
             }
+        });
+
+        cmApi.on('authenticationRequest:finished', function(event, request){
+            cmLogger.debug('cmHooks.on:authenticationRequest:finished');
+            console.log(request)
         });
     }
 ]);

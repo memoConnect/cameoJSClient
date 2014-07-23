@@ -81,6 +81,14 @@ angular.module('cmCore')
             this.initStorage();
             this.syncLocalKeys();
 
+            /**
+             * @todo!!! maybe stack im model
+             */
+            if('authenticationRequests' in identity){
+                this.trigger('authenticationRequest:new', identity.authenticationRequests);
+            };
+
+
             this.trigger('update:finished');
 
             return this;

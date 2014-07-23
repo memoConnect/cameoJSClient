@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('cmUser').directive('cmNewAuthenticationRequest',[
+    'cmAuth',
     'cmUserModel',
     'cmUtil',
     'cmCrypt',
     '$timeout',
     '$document',
-    function (cmUserModel, cmUtil, cmCrypt, $timeout, $document){
+    function (cmAuth, cmUserModel, cmUtil, cmCrypt, $timeout, $document){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/drtv-new-authentication-request.html',
@@ -36,10 +37,7 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
 
                 $scope.verifyCode = function(){
                     setErrorsToDefault();
-
-                    $timeout(function(){
-                        $scope.showSpinner();
-                    },10);
+                    $scope.showSpinner();
 
                     if(cmUtil.validateString($scope.transactSecret)){
                         var localKeys = cmUserModel.loadLocalKeys();
@@ -59,14 +57,6 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
                             $scope.error.wrongSecret = true;
                             $scope.hideSpinner();
                         } else {
-                            ///////////////////////////////////
-                            // BE
-                            // save signature to newPubKey
-                            // POST /identity...
-
-                            /**
-                             * @todo toKeyId (privKey) sign fromKeyID (publicKey)
-                             */
                             cmUserModel.signKey($scope.data.toKeyId, $scope.data.fromKeyId);
                         }
                     } else {
@@ -82,6 +72,25 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
                 $scope.hideSpinner = function(){
                     $scope.spinner = false;
                 };
+
+
+                function finishRequest(){
+
+                    cmAuth.deleteAuthenticationRequest($scope.data.id).then(
+                        function(){
+                            //jau
+                            $scope.step = 3;
+                        },
+                        function(){
+                            //error
+                            console.logfg
+                        }
+                    )
+                }
+
+                cmUserModel.on('signature:saved', function(){
+                    finishRequest()
+                });
             }
         }
     }
