@@ -48,28 +48,24 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
                             }
                         });
 
-                        if(cmCrypt.isTransactionSecretValid({
+                        if(!cmCrypt.isTransactionSecretValid({
                             userInput: $scope.transactSecret,
-                            toKey: toKey, // pubkey #1 request.toKeyId
+                            toKey: toKey,
                             encryptedTransactionSecret: $scope.data.encryptedTransactionSecret
                         })){
-                          console.log('yeah!!!!');
-                        } else {
                             $scope.error.wrongSecret = true;
+                            $scope.hideSpinner();
+                        } else {
+                            ///////////////////////////////////
+                            // BE
+                            // save signature to newPubKey
+                            // POST /identity...
+
                         }
-
-
-                        ///////////////////////////////////
-                        // BE
-                        // save signature to newPubKey
-                        // POST /identity...
-
-
                     } else {
                         $scope.error.emptyInput = true;
+                        $scope.hideSpinner();
                     }
-
-                    $scope.hideSpinner();
                 };
 
                 $scope.showSpinner = function(){

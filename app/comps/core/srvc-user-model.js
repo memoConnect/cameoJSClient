@@ -460,7 +460,7 @@ angular.module('cmCore')
          */
 
         this.verifyAuthenticationRequest = function(request){
-            cmLogger.debug('cmUserModel.verifyAuthenticationRequest');
+//            cmLogger.debug('cmUserModel.verifyAuthenticationRequest');
             if(typeof request == 'object' && cmUtil.objLen(request) > 0){
 
                 /**

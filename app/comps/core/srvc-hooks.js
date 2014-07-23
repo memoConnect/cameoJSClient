@@ -21,7 +21,7 @@ angular.module('cmCore').service('cmHooks', [
          */
 //        cmApi.on('authenticationRequest:new', function(event, request){
         $rootScope.$on('authenticationRequest:new', function(){
-            cmLogger.debug('cmHooks.on:authenticationRequest:new');
+//            cmLogger.debug('cmHooks.on:authenticationRequest:new');
 
             var requestMock = {
                 signature: "022724e66002cefc6f59cb6a8fbf8f5add1667df7623bfaf67e49ddeaca10d68032183118e2c89007fd1c66f93ab35cdb67829a939837d754a0898f6fab3bf94993fe765522489dd5cdbfaf66ebee0418c2719f1e4d45228c03d738aec1265005361521c4009196aa6eb8bc4108395f9cd6b60dea4c92d131cb9090359fb82da92064617f651475fff38bc3e526c8eb8e181fbd6a5c78956360f207f359d02b089c149324bd29ebd534f3a2ac4d9ed19aa7cd04dad914d7469ee7880e8fe86323314c2c8e450e0c9b14843a3f59ef9b2b64a566ea8d5eb88bac18e11a4011b3f52b15cd3871ae92d805d4afde83b95da2cf18c7f5b13973fb57fad55bd0f2f61",
