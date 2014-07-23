@@ -19,7 +19,7 @@
             <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT'|cmTranslate}}</span>
         </a>
     </li>
-    <li ng-repeat="key in publicKeys | orderBy:'getPrivateKey()':false" data-qa="key-list-item">
+    <li ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
         <span class="item clearfix">
             <strong>{{key.name}}</strong><br />
             <strong ng-if="privateKeys.find(key)" data-qa="key-is-local">

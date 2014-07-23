@@ -10,35 +10,36 @@ angular.module('cmUser').directive('cmModalHandshake',[
         return {
             restrict: 'E',
             templateUrl: 'comps/user/drtv-modal-handshake.html',
+            scope: true,
             controller: function($scope){
+
+                var modalId = 'handshake';
+                var privateKeys  = cmUserModel.loadLocalKeys() || [];
+                $scope.publicKeys = cmUserModel.data.identity.keys.filter(function(key){
+                    return (privateKeys.find(key) == null && key != $scope.fromKey);
+                });
+
                 function reset(){
                     $scope.step = 1;
-                    $scope.keys = [];
                     $scope.toKey = {};
                     $scope.transactionSecret = '';
                     $scope.handshakeIdle = false;
                     $scope.fromKey = null;
                 }
 
-                reset();
-
-                cmUserModel.on('key:saved', function(event, fromKey){
-                    if(fromKey instanceof cmKey && fromKey.getPrivateKey() != undefined) {
+                function init(){
+                    if(fromKey instanceof cmKey && // is a cmKey
+                        fromKey.getPrivateKey() != undefined && // the privateKey of cmKey != undefined
+                        $scope.publicKeys.length > 0 // show only if more then 1 publicKey exists
+                        ){
+                        console.log($scope.publicKeys.length)
                         $scope.fromKey = fromKey;
-                        $rootScope.openModal('handshake');
+                        $rootScope.openModal(modalId);
                     }
-                });
-
-                cmModal.on('modal:closed', function(){
-                    reset();
-                });
+                }
 
                 $scope.doHandshake = function(){
                     $scope.step = 2;
-                    // get keys from userModel
-                    $scope.keys = cmUserModel.data.identity.keys.filter(function(key){
-                        return (key.getPrivateKey() == undefined && key != $scope.fromKey);
-                    });
                 };
 
                 $scope.selectToKey = function(toKey){
@@ -81,6 +82,22 @@ angular.module('cmUser').directive('cmModalHandshake',[
                         */
                     }
                 };
+
+                cmUserModel.on('key:saved', function(event, fromKey){
+                    init();
+                });
+
+                cmModal.on('modal:opened', function(event, _modalId_){
+                    if(modalId == _modalId_){
+                        init();
+                    }
+                });
+
+                cmModal.on('modal:closed', function(){
+                    reset();
+                });
+
+                reset();
             }
         }
     }
