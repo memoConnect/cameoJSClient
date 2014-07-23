@@ -21,10 +21,10 @@
 
 angular.module('cmCore')
 .service('cmUserModel',[
-    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKey',
+    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKeyFactory',
     'cmObject', 'cmUtil', 'cmNotify', 'cmLogger',
     '$rootScope', '$q', '$location',
-    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmKey,
+    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmKeyFactory,
              cmObject, cmUtil, cmNotify, cmLogger,
              $rootScope, $q, $location){
         var self = this,
@@ -266,16 +266,10 @@ angular.module('cmCore')
         };
 
         this.loadLocalKeys = function(){
-            var storedKeys = this.storageGet('rsa') || [],
-                keys        = [];
+            var storedKeys  = this.storageGet('rsa') || [],
+                keys        = cmKeyFactory();
 
-
-            storedKeys.forEach(function(stored_key){
-                var data = new cmKey(stored_key);
-                keys.push(data)
-            });
-
-            return keys;
+            return keys.importFromDataArray(storedKeys)
         };
 
         this.hasPrivateKey = function(){
