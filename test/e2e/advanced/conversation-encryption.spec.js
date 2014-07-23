@@ -1,5 +1,5 @@
-var config = require("./config-e2e-tests.js")
-var util = require("../lib/e2e/cmTestUtil.js")
+var config = require("../config-e2e-tests.js")
+var util = require("../../lib/e2e/cmTestUtil.js")
 
 
 describe('Conversation encryption -', function () {
@@ -167,6 +167,7 @@ describe('Conversation encryption -', function () {
                         conversationRoute = "/conversation/" + conversationId
                     }
                     util.get(conversationRoute)
+                    util.waitForElement("cm-message")
                 })
 
 
@@ -180,9 +181,10 @@ describe('Conversation encryption -', function () {
 
                             case "password" :
                                 // expect password prompt
-                                util.waitForElement("cm-modal.active .cm-modal-alert")
+                                //util.waitForModalOpen()
                                 util.waitForElement("cm-modal.active div.body a")
-                                $("cm-modal.active div.body a").click()
+//                                $("cm-modal.active div.body a").click()
+                                util.get(conversationRoute + "/security-settings")
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
@@ -192,9 +194,10 @@ describe('Conversation encryption -', function () {
 
                             case "passCaptcha" :
                                 // expect password prompt
-                                util.waitForElement("cm-modal.active .cm-modal-alert")
+//                                util.waitForModalOpen()
                                 util.waitForElement("cm-modal.active div.body a")
-                                $("cm-modal.active div.body a").click()
+//                                $("cm-modal.active div.body a").click()
+                                util.get(conversationRoute + "/security-settings")
                                 util.waitForElement("[data-qa='captcha-image']")
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
