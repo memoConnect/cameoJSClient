@@ -93,7 +93,7 @@ angular.module('cmCore')
             };
 
             this.getSize = function(){
-                var size;
+                var size
 
                 try{
                     size = crypt.key.n.bitLength();

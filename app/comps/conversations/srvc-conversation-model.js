@@ -804,7 +804,7 @@ angular.module('cmConversations')
              */
             this.getBadRecipients = function(){
                 return  this.recipients.filter(function(recipient){
-                    return recipient.getWeakestKeySize() <= 2000
+                    return recipient.getWeakestKeySize()||0 <= 2000
                 })
             };
 
