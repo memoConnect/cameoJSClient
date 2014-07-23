@@ -107,7 +107,7 @@ angular.module('cmUi')
                 // close modal
                 scope.close = function(){
                     this.toggle(false);
-                    cmModal.trigger('instance:closed');
+                    cmModal.trigger('modal:closed');
 
                     return this
                 };

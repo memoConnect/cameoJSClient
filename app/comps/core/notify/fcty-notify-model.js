@@ -120,7 +120,7 @@ angular.module('cmCore')
                     }, this.ttl);
                 }
 
-                cmModal.on('instance:closed', function(){
+                cmModal.on('modal:closed', function(){
                     if(self.ttlTimeout){
                         $timeout.cancel(self.ttlTimeout);
                     }

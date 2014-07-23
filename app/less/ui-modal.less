@@ -130,6 +130,24 @@ cm-modal {
           width: 100%;
         }
       }
+
+      ul.modal-list{
+        li {
+          cursor: pointer;
+          height: @cm-unit;
+          border-bottom: @cm-border-grey @cm-border-width solid;
+          position: relative;
+          &:last-child{
+            border-bottom: 0;
+          }
+        }
+        &.radio-list{
+          li {
+            line-height: @cm-unit;
+            i {color:@cm-ci-color}
+          }
+        }
+      }
     }
 
     footer {

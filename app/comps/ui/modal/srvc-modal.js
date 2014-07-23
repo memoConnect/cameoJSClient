@@ -39,21 +39,24 @@ angular.module('cmUi')
                     return !!(registered_id == id ? self.open(id, data) : false);
                 });
             }
+
+            self.trigger('modal:opened');
+            
             return self;
         };
 
         self.close = function(id){
             self.instances[id].close();
 
-            self.trigger('instance:closed');
-
+            self.trigger('modal:closed');
             return self;
         };
 
         self.closeAll = function(){
-            angular.forEach(self.instances, function(modal_instance, key){
+            angular.forEach(self.instances, function(modal_instance){
                 modal_instance.close();
             });
+
             return self;
         };
 
@@ -92,11 +95,12 @@ angular.module('cmUi')
 //            $rootScope.isModalVisible = newValue;
 //        });
 
-        //close all modals on route change:
+        // close all modals on route change:
         $rootScope.$on('$routeChangeStart', function(){
             self.closeAll();
-        })
+        });
 
+        // closeAll on ESC
         $document.bind('keydown', function (evt) {
             if (evt.which === 27) {
                 self.closeAll();

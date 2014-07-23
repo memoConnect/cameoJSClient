@@ -19,14 +19,13 @@
         <div class="modal-row">
             {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.CHOOSE_OLD_DEVICE'|cmTranslate}}<br />
             <br />
-            <ul>
-                <li ng-repeat="key in keys">
+            <ul class="modal-list radio-list">
+                <li ng-repeat="key in keys" ng-click="selectToKey(key)">
                     {{key.name}}
-                    <i class="fa"
-                       ng-click="toKey = key.id"
+                    <i class="fa cm-lg-icon icon-right"
                        ng-class="{
-                        'cm-checkbox': key.id != toKey,
-                        'cm-checkbox-right': key.id == toKey
+                        'cm-checkbox': key != toKey,
+                        'cm-checkbox-right': key == toKey
                     }"></i>
                 </li>
             </ul>
