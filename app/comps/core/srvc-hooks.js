@@ -38,7 +38,8 @@ angular.module('cmCore').service('cmHooks', [
                 cmModal.create({
                     id: modalId,
                     type: 'plain',
-                    'class': 'no-padding'
+                    'class': 'no-padding',
+                    'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
                 },'<cm-new-authentication-request></cm-new-authentication-request>',null,scope);
                 cmModal.open(modalId);
             }

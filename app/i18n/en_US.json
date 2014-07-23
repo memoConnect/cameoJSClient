@@ -272,7 +272,7 @@
         },
         "NOTIFY":{
             "UPDATE": {
-                "ERROR": "Something went wrong, pls try again"
+                "ERROR": "Something went wrong, please try again"
             }
         }
     },
@@ -491,6 +491,10 @@
         "WELCOME": {
             "MESSAGE": "Cameo rulez",
             "SUBJECT": "Hello"
+        },
+        "ERROR": {
+            "EMPTY_INPUT": "The input field is empty!",
+            "WRONG_INPUT": "Please check the code and try again!"
         }
     }
 }

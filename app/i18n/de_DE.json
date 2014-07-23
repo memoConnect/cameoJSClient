@@ -492,6 +492,10 @@
         "WELCOME": {
             "MESSAGE": "Cameo ist Beste",
             "SUBJECT": "Hallo"
+        },
+        "ERROR": {
+            "EMPTY_INPUT": "Eingabe ist leer!",
+            "WRONG_INPUT": "Bitte überprüfen Sie Ihre Eingabe!"
         }
     }
 }

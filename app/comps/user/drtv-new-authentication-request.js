@@ -11,6 +11,16 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
             restrict: 'E',
             templateUrl: 'comps/user/drtv-new-authentication-request.html',
             controller: function($scope,$element,$attrs){
+                function setErrorsToDefault(){
+                    $scope.error = {
+                        "emptyInput": false,
+                        "wrongSecret": false
+                    };
+                }
+
+                setErrorsToDefault();
+                $scope.spinner = false;
+
                 $scope.transactSecret = '';
                 $scope.step = 1;
 
@@ -25,6 +35,9 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
                 };
 
                 $scope.verifyCode = function(){
+                    setErrorsToDefault();
+                    $scope.showSpinner();
+
                     if(cmUtil.validateString($scope.transactSecret)){
                         var localKeys = cmUserModel.loadLocalKeys();
                         var toKey = {};
@@ -42,10 +55,7 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
                         })){
                           console.log('yeah!!!!');
                         } else {
-                            /**
-                             * Error wrong input
-                             */
-                            console.log('ohhh!!!!');
+                            $scope.error.wrongSecret = true;
                         }
 
 
@@ -56,11 +66,18 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
 
 
                     } else {
-                        /**
-                         * Error empty input
-                         */
-                        console.log('nope!');
+                        $scope.error.emptyInput = true;
                     }
+
+                    $scope.hideSpinner();
+                };
+
+                $scope.showSpinner = function(){
+                    $scope.spinner = true;
+                };
+
+                $scope.hideSpinner = function(){
+                    $scope.spinner = false;
                 };
             }
         }
