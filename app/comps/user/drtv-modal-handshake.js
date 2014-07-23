@@ -27,7 +27,7 @@ angular.module('cmUser').directive('cmModalHandshake',[
                     $scope.fromKey = null;
                 }
 
-                function init(){
+                function init(fromKey){
                     if(fromKey instanceof cmKey && // is a cmKey
                         fromKey.getPrivateKey() != undefined && // the privateKey of cmKey != undefined
                         $scope.publicKeys.length > 0 // show only if more then 1 publicKey exists
@@ -84,13 +84,13 @@ angular.module('cmUser').directive('cmModalHandshake',[
                 };
 
                 cmUserModel.on('key:saved', function(event, fromKey){
-                    init();
+                    init(fromKey);
                 });
 
                 cmModal.on('modal:opened', function(event, _modalId_){
-                    if(modalId == _modalId_){
-                        init();
-                    }
+//                    if(modalId == _modalId_){
+//                        init();
+//                    }
                 });
 
                 cmModal.on('modal:closed', function(){
