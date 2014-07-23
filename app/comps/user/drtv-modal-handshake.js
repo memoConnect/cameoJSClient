@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('cmUser')
-.directive('cmModalHandshake',[
+angular.module('cmUser').directive('cmModalHandshake',[
     'cmUserModel', 'cmTranslate', 'cmKey', 'cmCrypt', 'cmAuth',
     'cmModal',
     '$rootScope',
@@ -43,7 +42,10 @@ angular.module('cmUser')
                 };
 
                 $scope.selectToKey = function(toKey){
-                    $scope.toKey = toKey;
+                    if($scope.toKey != toKey)
+                        $scope.toKey = toKey;
+                    else
+                        $scope.toKey = {};
                 };
 
                 $scope.startHandshake = function(toKey){
