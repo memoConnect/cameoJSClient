@@ -363,6 +363,8 @@ angular.module('cmCore')
                     }
                 )
             }
+
+            return this;
         };
 
         this.clearLocalKeys = function(){

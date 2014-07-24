@@ -89,28 +89,29 @@ angular.module('cmUser').directive('cmModalHandshake',[
 
                 function callbackFinishHandshake(event, data){
                     cmLogger.debug('cmModalHandshake.callbackFinishHandshake');
-                    console.log(data);
 
                     if('id' in data && data.id == authenticationRequest.id){
-                        $scope.handshakeIdle = false;
-                        $rootScope.closeModal(modalId);
-                        authenticationRequest = {};
-
-                        /*
-                        * cross signing
-                        */
+                        cmUserModel.signKey(authenticationRequest.fromKeyId, authenticationRequest.toKeyId);
                     }
+                }
+
+                function finishRequest(){
+                    $scope.handshakeIdle = false;
+                    $rootScope.closeModal(modalId);
+                    authenticationRequest = {};
                 }
 
                 // event schmusi
                 cmUserModel.on('key:saved', init);
                 cmModal.on('modal:closed', reset);
                 cmHooks.on('authenticationRequest:finished', callbackFinishHandshake);
+                cmUserModel.on('signature:saved', finishRequest);
 
                 $scope.$on('$destroy', function(){
                     cmUserModel.off('key:saved', init);
                     cmModal.off('modal:closed', reset);
                     cmHooks.off('authenticationRequest:finished', callbackFinishHandshake);
+                    cmUserModel.off('signature:saved', finishRequest);
                 });
 
                 reset();
