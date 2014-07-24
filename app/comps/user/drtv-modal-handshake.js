@@ -28,7 +28,6 @@ angular.module('cmUser').directive('cmModalHandshake',[
                 }
 
                 function init(event, fromKey){
-                    console.log('init handshake')
                     if(fromKey instanceof cmKey && // is a cmKey
                         fromKey.getPrivateKey() != undefined && // the privateKey of cmKey != undefined
                         $scope.publicKeys.length > 0 // show only if more then 1 publicKey exists
