@@ -345,7 +345,7 @@ angular.module('cmCore')
         };
 
         this.signKey = function(localKeyId, signKeyId){
-            cmLogger.debug('cmUserModel.signKey');
+//            cmLogger.debug('cmUserModel.signKey');
 
             var localKeys = this.loadLocalKeys();
             var key = localKeys.find(localKeyId);
@@ -356,7 +356,6 @@ angular.module('cmCore')
             if(typeof signature == 'string' && signature.length > 0){
                 cmAuth.savePublicKeySignature(key.id, signKey.id, signature).then(
                     function(){
-                        console.log('api call succcess - siganture save')
                         self.trigger('signature:saved');
                     },
                     function(){
