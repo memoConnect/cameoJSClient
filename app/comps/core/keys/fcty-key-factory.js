@@ -13,11 +13,11 @@ angular.module('cmCore')
             var self =  new cmFactory(cmKey,
                                 function sameByData(instance, data){
                                     return      instance.id == data.id
-                                            ||  instance.getPublicKey() == data.privKey
+                                            ||  instance.getPublicKey() == data.pubKey
                                 },
                                 function sameByInstance(instance_1, instance_2){
                                     return      instance_1.id == instance_2.id
-                                            ||  instance_1.getPublicKey ==  instance_2.getPublicKey   
+                                            ||  instance_1.getPublicKey() ==  instance_2.getPublicKey()   
                                 }
                             )
 

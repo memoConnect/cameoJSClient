@@ -252,11 +252,7 @@ angular.module('cmCore')
             var local_keys      = this.loadLocalKeys() || new cmKeyFactory(),
                 matching_key    = local_keys.find(key)
 
-            if(matching_key && key.getPrivateKey())
-                matching_key.setKey(key.getPrivateKey())
-            else
-                local_keys.create(key.exportData())
-
+            local_keys.create(key.exportData(), true)
 
             this.storageSave('rsa', local_keys.exportDataArray());
 
@@ -292,9 +288,12 @@ angular.module('cmCore')
 
             localKeys.forEach(function(local_key){
 
-                var matchingPublicKeyPresent = self.data.identity.keys && self.data.identity.keys.find(local_key)
+                var no_matching_public_key_present = !self.data.identity.keys || !self.data.identity.keys.find(local_key),
+                    missing_key_id = !local_key.id
 
-                if(!matchingPublicKeyPresent || !local_key.id){
+
+
+                if(no_matching_public_key_present || missing_key_id){
 
                     if(local_key.getPublicKey() == undefined){
                         cmLogger.error('broken pubkey in localstorage! that can\'t be synced.');
@@ -313,6 +312,7 @@ angular.module('cmCore')
                         //add public key to identity
                         self.data.identity.keys.create(data)
 
+
                         //store the key with its new id:
                         self.storeKey(local_key)
 
@@ -325,28 +325,22 @@ angular.module('cmCore')
             return this;
         };
 
-        this.removeKey = function(keyToRemoved){
-            var self = this,
-                keys = this.loadLocalKeys(),
+        this.removeKey = function(keyToRemove){
+            var self            = this,
+                local_keys      = this.loadLocalKeys(),
                 foundInLocalKeys = -1;
 
-            // search in ls
-            keys.forEach(function(key, index){
-                if(key.id == keyToRemoved.id)
-                    foundInLocalKeys = index;
-            });
-
             // clear in backend
-            cmAuth.removePublicKey(keyToRemoved.id)
+            cmAuth.removePublicKey(keyToRemove.id)
                 .then(function(){
                     // renew ls
-                    if(foundInLocalKeys > -1) {
-                        keys.splice(foundInLocalKeys, 1);
-                        self.storageSave('rsa', keys);
+                    if(local_keys.deregister(keyToRemove)){
+                        self.storageSave('rsa', local_keys.exportDataArray());
+
                         self.trigger('key:removed')
                     }
                     // clear identity
-                    self.data.identity.removeKey(keyToRemoved);
+                    self.data.identity.keys.deregister(keyToRemove);
                 });
         };
 
