@@ -76,17 +76,16 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
 
 
                 function finishRequest(){
-                    cmLogger.debug('cmNewAuthenticationRequest.finishRequest');
+//                    cmLogger.debug('cmNewAuthenticationRequest.finishRequest');
 
                     cmAuth.deleteAuthenticationRequest($scope.data.id).then(
                         function(){
 //                            $scope.step = 3;
                             $rootScope.closeModal('new-authentication-request');
-
                         },
                         function(){
                             //error
-                            console.log('puff');
+                            cmLogger.debug('cmNewAuthenticationRequest.finishRequest - deleteAuthenticationRequest Error');
                         }
                     )
                 }
