@@ -49,6 +49,8 @@ angular.module('cmCore').factory('cmFactory',[
                     instance.importData(data);
                 }
 
+
+
                 return instance;
 
             };
@@ -129,23 +131,19 @@ angular.module('cmCore').factory('cmFactory',[
              * Function to remove a model instance
              * @param {model}           instance    an instance of model
              */
-            self.deregister = function(instance){
+            self.deregister = function(args){
+                var instance    = self.find(args),
+                    index       = self.indexOf(instance)
+
                 if(
-                    self.indexOf(instance) != -1
+                    index != -1
                     && instance instanceof this.model
                 ){
-                    var i = self.length;
-                    while(i){
-                        i--;
-                        if(self[i] == instance){
-                            self.splice(i, 1);
-
-                            self.trigger('deregister');
-
-                            break;
-                        }
-                    }
+                    self.splice(index, 1);
+                    self.trigger('deregister');
+                    return true
                 }
+                return false
             };
 
             /**
