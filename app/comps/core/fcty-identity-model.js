@@ -120,7 +120,7 @@ angular.module('cmCore')
             };
 
             this.clear = function(){
-                cmLogger.debug('cmIdentityModel.clear');
+                //cmLogger.debug('cmIdentityModel.clear');
 
                 this.id                     = undefined;
                 this.displayName            = undefined;
