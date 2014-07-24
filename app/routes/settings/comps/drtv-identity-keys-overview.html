@@ -28,7 +28,7 @@
             {{privateKeys.find(key).getSize() || key.getSize() || key.size}} |
             <span ng-if="isTrustedKey(key)"> -- trusted -- </span>
             <span ng-if="!isTrustedKey(key)"> !! untrusted !! </span>
-            {{key.created | date:'dd.MM.yy - HH:mm'}}            
+            {{key.created | date:'dd.MM.yy - HH:mm'}}
         </span>
         <div class="short-links">
             <i class="fa cm-export-key cm-lg-special" ng-click="openModal('modalExportKeyPair',key)"></i>
