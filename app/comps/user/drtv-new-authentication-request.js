@@ -5,9 +5,10 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
     'cmUserModel',
     'cmUtil',
     'cmCrypt',
+    'cmLogger',
     '$timeout',
     '$document',
-    function (cmAuth, cmUserModel, cmUtil, cmCrypt, $timeout, $document){
+    function (cmAuth, cmUserModel, cmUtil, cmCrypt, cmLogger, $timeout, $document){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/drtv-new-authentication-request.html',
@@ -75,6 +76,7 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
 
 
                 function finishRequest(){
+                    cmLogger.debug('cmNewAuthenticationRequest.finishRequest');
 
                     cmAuth.deleteAuthenticationRequest($scope.data.id).then(
                         function(){
@@ -83,12 +85,13 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
                         },
                         function(){
                             //error
-                            console.logfg
+                            console.log('puff');
                         }
                     )
                 }
 
                 cmUserModel.on('signature:saved', function(){
+                    cmLogger.debug('cmNewAuthenticationRequest.on:signature:saved');
                     finishRequest()
                 });
             }

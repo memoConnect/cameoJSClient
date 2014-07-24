@@ -362,6 +362,7 @@ angular.module('cmCore')
             if(typeof signature == 'string' && signature.length > 0){
                 cmAuth.savePublicKeySignature(key.id, signKey.id, signature).then(
                     function(){
+                        console.log('api call succcess - siganture save')
                         self.trigger('signature:saved');
                     },
                     function(){
