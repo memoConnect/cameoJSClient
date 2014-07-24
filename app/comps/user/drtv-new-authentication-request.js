@@ -11,7 +11,7 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
         return {
             restrict: 'E',
             templateUrl: 'comps/user/drtv-new-authentication-request.html',
-            controller: function($scope,$element,$attrs){
+            controller: function($scope){
                 function setErrorsToDefault(){
                     $scope.error = {
                         "emptyInput": false,
@@ -31,8 +31,7 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
                     $timeout(function(){
                         var input = $document[0].querySelector('#inp-transactSecret');
                         input.focus();
-                    }, 50)
-
+                    }, 50);
                 };
 
                 $scope.verifyCode = function(){
@@ -83,13 +82,14 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
                         },
                         function(){
                             //error
-                            console.logfg
                         }
                     )
                 }
 
-                cmUserModel.on('signature:saved', function(){
-                    finishRequest()
+                cmUserModel.on('signature:saved', finishRequest);
+
+                $scope.$on('$destroy', function(){
+                    cmUserModel.off('signature:saved', finishRequest);
                 });
             }
         }
