@@ -117,12 +117,12 @@ describe('Conversation encryption -', function () {
 
         var checkSecurityAspects = function () {
             it("check security aspects", function () {
-                util.waitForElement('cm-header:not(.ng-hide)')
+                util.waitForElement('.cm-header-wrapper:not(.ng-hide)')
 
-                $('cm-header:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
+                $('.cm-header-wrapper:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
                     expect(icons.length).toBe(positiveAspects)
                 })
-                $('cm-header:not(.ng-hide)').$('cm-icons.negative').$$("i").then(function (icons) {
+                $('.cm-header-wrapper:not(.ng-hide)').$('cm-icons.negative').$$("i").then(function (icons) {
                     expect(icons.length).toBe(negativeAspects)
                 })
             })
@@ -188,8 +188,10 @@ describe('Conversation encryption -', function () {
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
-                                $("[data-qa='btn-security-done']").click()
-                                util.waitForElementDisappear("[data-qa='btn-security-done']")
+                                ptor.sleep(300).then(function () {
+                                    $("[data-qa='btn-security-done']").click()
+                                    util.waitForElementDisappear("[data-qa='btn-security-done']")
+                                })
                                 break;
 
 
@@ -203,8 +205,10 @@ describe('Conversation encryption -', function () {
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
-                                $("[data-qa='btn-security-done']").click()
-                                util.waitForElementDisappear("[data-qa='btn-security-done']")
+                                ptor.sleep(300).then(function () {
+                                    $("[data-qa='btn-security-done']").click()
+                                    util.waitForElementDisappear("[data-qa='btn-security-done']")
+                                })
                                 break;
                         }
 
@@ -480,9 +484,11 @@ describe('Conversation encryption -', function () {
     })
 
     describe("delete test users -", function () {
-        util.deleteTestUser(testUser1)
-        util.deleteTestUser(testUser2)
-        util.deleteTestUser(testUser3)
+        it("delete test users", function(){
+            util.deleteTestUser(testUser1)
+            util.deleteTestUser(testUser2)
+            util.deleteTestUser(testUser3)
+        })
     })
 
 })
