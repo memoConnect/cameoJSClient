@@ -804,7 +804,7 @@ angular.module('cmConversations')
              */
             this.getBadRecipients = function(){
                 return  this.recipients.filter(function(recipient){
-                    return recipient.getWeakestKeySize() <= 2000
+                    return recipient.keys.getWeakestKeySize() <= 2000
                 })
             };
 
@@ -820,7 +820,7 @@ angular.module('cmConversations')
              */
             this.getNiceRecipients = function(){
                 return  this.recipients.filter(function(recipient){
-                    return recipient.getWeakestKeySize() > 2000
+                    return recipient.keys.getWeakestKeySize() > 2000
                 })
             };
 
@@ -928,7 +928,7 @@ angular.module('cmConversations')
                         this.lockStatus.level = levels.mixed;
 
                         this.recipients.forEach(function(recipient){
-                            if(recipient.getWeakestKeySize() == 0){
+                            if(recipient.keys.getWeakestKeySize() == 0){
                                 allRecipientsHasKeys = false;
                             }
                         });
