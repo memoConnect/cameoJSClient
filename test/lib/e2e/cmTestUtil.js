@@ -343,7 +343,7 @@ this.generateKey = function () {
         'c7m5AoGADULVNWSkHn0yoLB7QPq7iVWbXPYHiT8Myrsc7i6C8t0dxLFOyTVf2Y3B',
         'aO75+8RJOoDAs63t/BxhRP2usszjarvTx9sP4H2c8r1ERmMu1vLNWMV0Dpq/Zl3D',
         'b8stI0PXwZcu1IP8j4P3fv31IGXjnrKs81t9uCCTLdeM1eJrNsM=',
-        '-----END RSA PRIVATE KEY-----'].join('\n');
+        '-----END RSA PRIVATE KEY-----'].join('\\n');
 
     self.get('/settings/identity/keys/import')
     self.waitForElement("[data-qa='display-private-key']")

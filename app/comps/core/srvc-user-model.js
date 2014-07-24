@@ -345,7 +345,7 @@ angular.module('cmCore')
         };
 
         this.signKey = function(localKeyId, signKeyId){
-            cmLogger.debug('cmUserModel.signKey');
+//            cmLogger.debug('cmUserModel.signKey');
 
             var localKeys = this.loadLocalKeys();
             var key = localKeys.find(localKeyId);

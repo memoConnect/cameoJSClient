@@ -119,7 +119,7 @@ angular.module('cmCore')
                 var event_names = event_names instanceof Array ? event_names : event_names.split(' ') 
                 
                 event_names.forEach(function(event_name){
-                    if(!callback) obj._callbacks[event_name] = []
+                    if(!callback)obj._callbacks[event_name] = []
 
                     obj._callbacks[event_name].forEach(function(callback_obj, index){
                         if(callback_obj.fn == callback) delete obj._callbacks[event_name][index]
