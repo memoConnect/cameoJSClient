@@ -87,6 +87,9 @@ angular.module('cmUser').directive('cmModalHandshake',[
                     }
                 };
 
+                /**
+                 * @todo doppelten aufruf vermeiden
+                 */
                 function callbackFinishHandshake(event, data){
                     cmLogger.debug('cmModalHandshake.callbackFinishHandshake');
 
