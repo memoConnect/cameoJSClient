@@ -354,7 +354,7 @@ this.generateKey = function () {
 }
 
 this.disableEncryption = function () {
-    $(".cm-header-wrapper:not(.ng-hide) cm-security-indicator").click()
+    $("cm-header:not(.ng-hide) cm-security-indicator").click()
     self.waitForPageLoad("/conversation/new/security-settings")
     $("[data-qa='btn-encryption']").click()
     $("[data-qa='btn-security-done']").click()
@@ -362,7 +362,7 @@ this.disableEncryption = function () {
 }
 
 this.clickBackBtn = function () {
-    $(".cm-header-wrapper:not(.ng-hide) cm-back").click()
+    $("cm-header:not(.ng-hide) cm-back").click()
 }
 
 this.sendFriendRequest = function (displayName) {

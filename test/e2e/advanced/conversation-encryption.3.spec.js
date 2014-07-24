@@ -117,12 +117,12 @@ describe('Conversation encryption -', function () {
 
         var checkSecurityAspects = function () {
             it("check security aspects", function () {
-                util.waitForElement('.cm-header-wrapper:not(.ng-hide)')
+                util.waitForElement('cm-header:not(.ng-hide)')
 
-                $('.cm-header-wrapper:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
+                $('cm-header:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
                     expect(icons.length).toBe(positiveAspects)
                 })
-                $('.cm-header-wrapper:not(.ng-hide)').$('cm-icons.negative').$$("i").then(function (icons) {
+                $('cm-header:not(.ng-hide)').$('cm-icons.negative').$$("i").then(function (icons) {
                     expect(icons.length).toBe(negativeAspects)
                 })
             })
