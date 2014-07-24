@@ -8,7 +8,8 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
     'cmLogger',
     '$timeout',
     '$document',
-    function (cmAuth, cmUserModel, cmUtil, cmCrypt, cmLogger, $timeout, $document){
+    '$rootScope',
+    function (cmAuth, cmUserModel, cmUtil, cmCrypt, cmLogger, $timeout, $document, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/drtv-new-authentication-request.html',
@@ -79,8 +80,9 @@ angular.module('cmUser').directive('cmNewAuthenticationRequest',[
 
                     cmAuth.deleteAuthenticationRequest($scope.data.id).then(
                         function(){
-                            //jau
-                            $scope.step = 3;
+//                            $scope.step = 3;
+                            $rootScope.closeModal('new-authentication-request');
+
                         },
                         function(){
                             //error

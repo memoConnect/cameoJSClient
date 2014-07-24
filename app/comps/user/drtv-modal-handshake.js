@@ -2,16 +2,18 @@
 
 angular.module('cmUser').directive('cmModalHandshake',[
     'cmUserModel', 'cmTranslate', 'cmKey', 'cmCrypt', 'cmAuth',
-    'cmModal',
+    'cmModal', 'cmHooks', 'cmLogger',
     '$rootScope',
     function (cmUserModel, cmTranslate, cmKey, cmCrypt, cmAuth,
-              cmModal,
+              cmModal, cmHooks, cmLogger,
               $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/drtv-modal-handshake.html',
             scope: true,
             controller: function($scope){
+
+                var authenticationRequest = {};
 
                 var modalId = 'handshake';
                 var privateKeys  = cmUserModel.loadLocalKeys() || [];
@@ -74,22 +76,42 @@ angular.module('cmUser').directive('cmModalHandshake',[
                             toKey: $scope.toKey
                         });
 
-                        cmAuth.startHandshake(dataForRequest);
-                        // TODO: watch for finish event
-                        /*
-                         $scope.handshakeIdle = false;
-                         $rootScope.closeModal();
-                        */
+                        cmAuth.startHandshake(dataForRequest).then(
+                            function(request){
+                                authenticationRequest = angular.extend({}, request);
+                            },
+                            function(){
+                                cmLogger.debug('cmModalHandshake.startHandshake - Error');
+                            }
+                        );
+
                     }
                 };
+
+                function callbackFinishHandshake(event, data){
+                    cmLogger.debug('cmModalHandshake.callbackFinishHandshake');
+                    console.log(data);
+
+                    if('id' in data && data.id == authenticationRequest.id){
+                        $scope.handshakeIdle = false;
+                        $rootScope.closeModal(modalId);
+                        authenticationRequest = {};
+
+                        /*
+                        * cross signing
+                        */
+                    }
+                }
 
                 // event schmusi
                 cmUserModel.on('key:saved', init);
                 cmModal.on('modal:closed', reset);
+                cmHooks.on('authenticationRequest:finished', callbackFinishHandshake);
 
                 $scope.$on('$destroy', function(){
                     cmUserModel.off('key:saved', init);
                     cmModal.off('modal:closed', reset);
+                    cmHooks.off('authenticationRequest:finished', callbackFinishHandshake);
                 });
 
                 reset();

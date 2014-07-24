@@ -329,7 +329,9 @@
                     "TRANSACTION_SECRET": "Diese für Sie generierte TransactionSecret muss auf dem anderen Device eingeben werden.",
                     "HANDSHAKE_START": "Authorisierung starten",
                     "HANDSHAKE_RECEIVED": "Möchten Sie die Authorisierung durchführen?",
-                    "HANDSHAKE_NEED_TRANSACTID": "Geben Sie bitte den Code ein!"
+                    "HANDSHAKE_NEED_TRANSACTID": "Geben Sie bitte den Code ein!",
+                    "HANDSHAKE_DONE": "Authorisierung war erfolgreich!<br>"
+
                 }
             },
             "ABOUT_US":{

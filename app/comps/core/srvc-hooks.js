@@ -45,9 +45,9 @@ angular.module('cmCore').service('cmHooks', [
             }
         });
 
-//        cmApi.on('authenticationRequest:finished', function(event, request){
+        cmApi.on('authenticationRequest:finished', function(event, request){
 //            cmLogger.debug('cmHooks.on:authenticationRequest:finished');
-//            console.log(request)
-//        });
+            self.trigger('authenticationRequest:finished', request);
+        });
     }
 ]);
