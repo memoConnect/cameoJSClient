@@ -254,6 +254,8 @@ angular.module('cmCore')
 
             local_keys.create(key.exportData(), true)
 
+            this.storageSave('rsa', local_keys.exportDataArray());
+
             this.trigger('key:stored')
 
             return this;
@@ -289,8 +291,6 @@ angular.module('cmCore')
                 var no_matching_public_key_present = !self.data.identity.keys || !self.data.identity.keys.find(local_key),
                     missing_key_id = !local_key.id
 
-                console.log('missing_key_id: '+missing_key_id)
-                console.log('no_matching_public_key_present: '+no_matching_public_key_present)
 
 
                 if(no_matching_public_key_present || missing_key_id){
@@ -312,8 +312,6 @@ angular.module('cmCore')
                         //add public key to identity
                         self.data.identity.keys.create(data)
 
-                        console.log('after api')
-                        console.dir(local_key)
 
                         //store the key with its new id:
                         self.storeKey(local_key)
