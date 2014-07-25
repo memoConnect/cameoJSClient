@@ -244,11 +244,11 @@ angular.module('cmCore')
             },
 
             /**
-             * signOwnPubKey
+             * signAuthenticationRequest
              * @param _settings_
              * @returns {String} rsaSha256Signature of newPrivKey
              */
-            sign: function(_settings_){
+            signAuthenticationRequest: function(_settings_){
                 var defaultSettings = {
                     identityId: 0, // identityId to signature
                     transactionSecret: '',
@@ -289,11 +289,11 @@ angular.module('cmCore')
             },
 
             /**
-             * verifyOwnPubKey
+             * verifyAuthenticationRequest
              * @param _settings_
              * @returns {Boolean} is verification valid of newPubKey
              */
-            verify: function(_settings_){
+            verifyAuthenticationRequest: function(_settings_){
                 var defaultSettings = {
                     identityId: '', // identityId to verify signature
                     fromKey: undefined, // pubkey from new device

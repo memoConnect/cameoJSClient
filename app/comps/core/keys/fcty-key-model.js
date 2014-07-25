@@ -91,7 +91,8 @@ angular.module('cmCore')
                 return  this == key //allways trusts itself
                         ||
                         key.signatures.some(function(signature){
-                            return      crypt
+//                            console.log(signature.content)
+                            return      crypt 
                                     &&  (self.id == signature.keyId) 
                                     &&  crypt.verify(key.getFingerprint(), signature.content, function(x){ return x })
                         })

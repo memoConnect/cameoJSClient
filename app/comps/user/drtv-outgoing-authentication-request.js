@@ -1,21 +1,23 @@
 'use strict';
 
-angular.module('cmUser').directive('cmModalHandshake',[
+angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
+    'cmAuthenticationRequestFactory',
     'cmUserModel', 'cmTranslate', 'cmKey', 'cmCrypt', 'cmAuth',
     'cmModal', 'cmHooks', 'cmLogger',
     '$rootScope',
-    function (cmUserModel, cmTranslate, cmKey, cmCrypt, cmAuth,
+    function (cmAuthenticationRequestFactory,
+              cmUserModel, cmTranslate, cmKey, cmCrypt, cmAuth,
               cmModal, cmHooks, cmLogger,
               $rootScope){
         return {
             restrict: 'E',
-            templateUrl: 'comps/user/drtv-modal-handshake.html',
+            templateUrl: 'comps/user/drtv-outgoing-authentication-request.html',
             scope: true,
             controller: function($scope){
 
                 var authenticationRequest = {};
 
-                var modalId = 'handshake';
+                var modalId = 'outgoing-authentication-request';
                 var privateKeys  = cmUserModel.loadLocalKeys() || [];
                 $scope.publicKeys = cmUserModel.data.identity.keys.filter(function(key){
                     return (privateKeys.find(key) == null && key != $scope.fromKey);
@@ -68,35 +70,26 @@ angular.module('cmUser').directive('cmModalHandshake',[
 
                     if($scope.toKey instanceof cmKey && $scope.transactionSecret != ''){
 
-                        var dataForRequest = cmCrypt.sign({
+                        var dataForRequest = cmCrypt.signAuthenticationRequest({
                             identityId: cmUserModel.data.identity.id,
                             transactionSecret: $scope.transactionSecret,
                             fromKey: $scope.fromKey,
                             toKey: $scope.toKey
                         });
 
-                        cmAuth.startHandshake(dataForRequest).then(
-                            function(request){
-                                authenticationRequest = angular.extend({}, request);
-                            },
-                            function(){
-                                cmLogger.debug('cmModalHandshake.startHandshake - Error');
-                            }
-                        );
+                        authenticationRequest = cmAuthenticationRequestFactory.create(dataForRequest);
+                        authenticationRequest.state.set('outgoing');
 
+                        authenticationRequest.save();
+
+                        authenticationRequest.on('request:finished', function(){
+                            $scope.handshakeIdle = false;
+                            $rootScope.closeModal(modalId);
+
+                            cmAuthenticationRequestFactory.deregister(authenticationRequest);
+                        });
                     }
                 };
-
-                /**
-                 * @todo doppelten aufruf vermeiden
-                 */
-                function callbackFinishHandshake(event, data){
-                    cmLogger.debug('cmModalHandshake.callbackFinishHandshake');
-
-                    if('id' in data && data.id == authenticationRequest.id){
-                        cmUserModel.signKey(authenticationRequest.fromKeyId, authenticationRequest.toKeyId);
-                    }
-                }
 
                 function finishRequest(){
                     $scope.handshakeIdle = false;
@@ -108,14 +101,10 @@ angular.module('cmUser').directive('cmModalHandshake',[
                 $rootScope.$on('do:handshake', init)
                 cmUserModel.on('key:saved', init);
                 cmModal.on('modal:closed', reset);
-                cmHooks.on('authenticationRequest:finished', callbackFinishHandshake);
-                cmUserModel.on('signature:saved', finishRequest);
 
                 $scope.$on('$destroy', function(){
                     cmUserModel.off('key:saved', init);
                     cmModal.off('modal:closed', reset);
-                    cmHooks.off('authenticationRequest:finished', callbackFinishHandshake);
-                    cmUserModel.off('signature:saved', finishRequest);
                 });
 
                 reset();
