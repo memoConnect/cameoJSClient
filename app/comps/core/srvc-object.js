@@ -13,8 +13,9 @@ angular.module('cmCore')
 
     '$q',
     'cmLogger',
+    'cmUtil',
 
-    function($q, cmLogger){
+    function($q, cmLogger, cmUtil){
         var self = this
 
         /**

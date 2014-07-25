@@ -9,11 +9,14 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
             controller: function ($scope) {
 
                 function refresh(){
+                    console.log('pling')
                     $scope.privateKeys  =   cmUserModel.loadLocalKeys() || [];
                     $scope.publicKeys   =   cmUserModel.data.identity.keys || [];
                     $scope.trustedKeys  =   $scope.publicKeys.filter(function(key){
                                                 return cmUserModel.trustsKey(key)
                                             })
+
+                    $scope.ttKeys = $scope.publicKeys.getTransitivelyTrustedKeys($scope.privateKeys)
                 }
 
                 $scope.remove = function(key){
@@ -30,10 +33,10 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                 };
 
                 $scope.$on('$destroy', function(){
-                    cmUserModel.off(refresh)
+                    cmUserModel.off('key:stored signature:saved', refresh)
                 })
 
-                cmUserModel.on('key:stored', refresh);
+                cmUserModel.on('key:stored signature:saved', refresh);
 
                 refresh()
             }

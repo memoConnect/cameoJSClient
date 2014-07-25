@@ -34,6 +34,7 @@
                 <span ng-if="!isTrustedKey(key)" class="is-untrusted">{{'SETTINGS.PAGES.IDENTITY.KEYS.IS_UNTRUSTED'|cmTranslate}}
                     <span class="seperator">|</span>
                 </span>
+                {{ttKeys.indexOf(key)}}
                 {{key.created | date:'dd.MM.yy - HH:mm'}}
             </span>
         </a>
