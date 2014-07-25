@@ -82,6 +82,9 @@ function getFilename(file){
 
 // start init tests
 describe('FileUpload unsafe', function () {
+
+    afterEach(function() { util.stopOnError() });
+
     it('login create & new conversation',function(){
         util.login()
         util.waitForPageLoad('/talks')

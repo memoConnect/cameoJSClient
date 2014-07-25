@@ -5,6 +5,9 @@ var ptor = util.getPtorInstance()
 
 // start init tests
 describe('Textarea Resize', function () {
+
+    afterEach(function() { util.stopOnError() });
+
     it('login & open new conversation', function () {
         util.login()
         util.waitForPageLoad('/talks')

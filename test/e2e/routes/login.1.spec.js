@@ -4,6 +4,8 @@ var util = require("../../lib/e2e/cmTestUtil.js")
 describe('login screen', function () {
 
     var ptor = util.getPtorInstance()
+    afterEach(function() { util.stopOnError() });
+
 
     it('should contain two buttons', function () {
         util.logout()

@@ -7,6 +7,8 @@ var password = "PWD_Z" + Date.now();
 describe('registration', function () {
 
     var ptor = util.getPtorInstance()
+    afterEach(function() { util.stopOnError() });
+
 
     it('should contain 7 input fields with placeholders', function () {
 

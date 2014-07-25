@@ -419,6 +419,18 @@ this.setValQuick = function (dataQa, text) {
     ptor.executeScript("document.querySelector(\"[data-qa='" + dataQa + "']\").value = '" + text + "'")
 }
 
+this.stopOnError = function() {
+
+    if(config.stopOnError) {
+        var passed = jasmine.getEnv().currentSpec.results().passed();
+        if (!passed) {
+            jasmine.getEnv().specFilter = function (spec) {
+                return false;
+            };
+        }
+    }
+}
+
 
 
 
