@@ -22,6 +22,7 @@ angular.module('cmCore').service('cmHooks', [
          * authenticationRequest:new
          */
         cmApi.on('authenticationRequest:new', function(event, request){
+//            cmLogger.debug('cmHooks.on:authenticationRequest:new');
 //        $rootScope.$on('authenticationRequest:new', function(){
 //            cmLogger.debug('cmHooks.on:authenticationRequest:new');
 
@@ -51,7 +52,6 @@ angular.module('cmCore').service('cmHooks', [
                     },'<cm-incoming-authentication-request></cm-incoming-authentication-request>',null,scope);
                     cmModal.open(modalId);
                 }
-
 
                 authenticationRequest.on('delete:finished', function(){
                     cmAuthenticationRequestFactory.deregister(authenticationRequest);
