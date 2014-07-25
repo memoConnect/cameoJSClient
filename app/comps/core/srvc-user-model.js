@@ -280,7 +280,7 @@ angular.module('cmCore')
             return result;
         };
 
-        this.syncLocalKeys = function(keySize){
+        this.syncLocalKeys = function(){
             /**
              * check local Keys from Storage
              */
@@ -304,7 +304,7 @@ angular.module('cmCore')
                     cmAuth.savePublicKey({
                         name:    local_key.name, 
                         key:     local_key.getPublicKey(),
-                        keySize: keySize || 0 //TODO: local_key.size == Nan ???
+                        keySize: local_key.getSize()
                     })
                     .then(function(data){
                         //data brings an id for the key

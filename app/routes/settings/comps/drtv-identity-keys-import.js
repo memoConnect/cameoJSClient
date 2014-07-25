@@ -56,7 +56,7 @@ angular.module('cmRouteSettings')
 
                         cmUserModel
                             .storeKey(key)
-                            .syncLocalKeys($scope.keySize);
+                            .syncLocalKeys();
 
                         $window.history.back();
                     }
