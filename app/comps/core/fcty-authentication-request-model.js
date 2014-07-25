@@ -51,15 +51,8 @@ angular.module('cmCore')
                 return this;
             };
 
-            this.verifyIncomingRequest = function(){
-                cmLogger.debug('cmAuthenticationRequestModel.verifyIncomingRequest');
-
-                /**
-                 * check request data
-                 */
-                if(typeof this.id != 'string' || !cmUtil.validateString(this.id)){
-                    return false;
-                }
+            this.verifyForm = function(){
+                cmLogger.debug('cmAuthenticationRequestModel.verifyForm');
 
                 if(typeof this.signature != 'string' || this.signature.length < 1){
                     return false;
@@ -74,6 +67,20 @@ angular.module('cmCore')
                 }
 
                 if(typeof this.toKeyId != 'string' || !cmUtil.validateString(this.toKeyId)){
+                    return false;
+                }
+
+                return true;
+            };
+
+            this.verifyIncomingRequest = function(){
+                cmLogger.debug('cmAuthenticationRequestModel.verifyIncomingRequest');
+
+                if(typeof this.id != 'string' || !cmUtil.validateString(this.id)){
+                    return false;
+                }
+
+                if(this.verifyForm() !== true){
                     return false;
                 }
 
@@ -115,7 +122,7 @@ angular.module('cmCore')
                 /**
                  * verify signature
                  */
-                if(!cmCrypt.verify({
+                if(!cmCrypt.verifyAuthenticationRequest({
                         identityId: cmUserModel.data.identity.id,
                         fromKey: fromKey,
                         encryptedTransactionSecret: this.encryptedTransactionSecret,
@@ -154,8 +161,28 @@ angular.module('cmCore')
                 }
             };
 
+            this.save = function(){
+                if(this.verifyForm() !== false){
+                    cmAuth.saveAuthenticationRequest({
+                        identityId: cmUserModel.data.identity.id,
+                        encryptedTransactionSecret: this.encryptedTransactionSecret,
+                        signature: this.signature,
+                        fromKeyId: this.fromKeyId,
+                        toKeyId: this.toKeyId
+                    }).then(
+                        function(data){
+                            self.importData(data);
+                        },
+                        function(){
+                            cmLogger.debug('authenticationRequestModel.save - Error');
+                        }
+                    );
+                }
+            };
+
             this.delete = function(){
                 cmLogger.debug('cmAuthenticationRequestModel.delete');
+                console.log('delete - is incoming?', this.state.is('incoming'))
 
                 if(this.state.is('incoming')){
                     cmAuth.deleteAuthenticationRequest(this.id).then(
@@ -169,8 +196,20 @@ angular.module('cmCore')
                 }
             };
 
+            this.finish = function(){
+                if(this.state.is('outgoing')){
+                    cmUserModel.signKey(this.fromKeyId, this.toKeyId);
+                }
+            };
+
             cmUserModel.on('signature:saved', function(){
-                self.delete();
+                if(self.state.is('incoming')){
+                    self.delete();
+                }
+
+                if(self.state.is('outgoing')){
+                    self.trigger('request:finished');
+                }
             });
 
             init(requestData);

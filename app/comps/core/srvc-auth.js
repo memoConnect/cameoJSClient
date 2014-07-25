@@ -246,7 +246,18 @@ angular.module('cmCore')
                     path: '/identity/authenticationRequest/' + id
                 });
             },
-            startHandshake: function(data){
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name saveAuthenticationRequest
+             * @description
+             * save Authentication Request
+             *
+             * @param {Object} data data for authentication request
+             * @returns {Promise} for async handling
+             */
+            saveAuthenticationRequest: function(data){
                 return cmApi.post({
                     path: '/identity/authenticationRequest',
                     data: data

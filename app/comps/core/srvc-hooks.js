@@ -7,9 +7,10 @@ angular.module('cmCore').service('cmHooks', [
     'cmModal',
     'cmLogger',
     'cmAuthenticationRequestFactory',
+    'cmUtil',
     '$location',
     '$rootScope',
-    function(cmUserModel, cmObject, cmApi, cmModal, cmLogger, cmAuthenticationRequestFactory, $location, $rootScope){
+    function(cmUserModel, cmObject, cmApi, cmModal, cmLogger, cmAuthenticationRequestFactory, cmUtil, $location, $rootScope){
         var self = this;
         cmObject.addEventHandlingTo(this);
 
@@ -53,7 +54,13 @@ angular.module('cmCore').service('cmHooks', [
 
         cmApi.on('authenticationRequest:finished', function(event, request){
 //            cmLogger.debug('cmHooks.on:authenticationRequest:finished');
-            self.trigger('authenticationRequest:finished', request);
+            if(typeof request == 'object' && "id" in request && cmUtil.validateString(request.id)){
+                var authenticationRequest = cmAuthenticationRequestFactory.create(request.id);
+
+                if(typeof authenticationRequest.finish == 'function'){
+                    authenticationRequest.finish();
+                }
+            }
         });
     }
 ]);
