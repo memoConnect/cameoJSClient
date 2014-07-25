@@ -30,6 +30,10 @@ section.settings {
             margin-right:0.7rem;
           }
         }
+        .second-row {
+          display:block;
+          font-size:@cm-small-font;
+        }
       }
       .short-links{
         position:absolute;
@@ -72,6 +76,16 @@ section.settings {
   }
 }
 
-.isInLocalstorage{
+.is-local{
   color:@cm-ci-color;
+}
+.is-trusted{
+  color:@cm-green;
+}
+.is-untrusted{
+  color:@cm-red;
+}
+.seperator {
+  color:@cm-grey;
+  padding:0 @cm-horizontal-padding;
 }

@@ -1,0 +1,48 @@
+<cm-header cm-rubber-space>
+    <cm-back cm-weight="1" back-to="/settings"></cm-back>
+    <cm-identity cm-weight="6"></cm-identity>
+    <cm-menu cm-weight="1"></cm-menu>
+</cm-header>
+
+<header class="inScreen">
+    <i class="fa cm-key cm-lg-icon"></i>
+    {{'SETTINGS.PAGES.IDENTITY.KEYS.DETAIL'|cmTranslate}}
+</header>
+
+<ul>
+    <li>
+        <div class="page">
+
+            <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_NAME'|cmTranslate}}</h3>
+            <input class="form-control" ng-model="keyName" type="text" readonly="readonly" data-qa="input-key-name" />
+
+            <h4 ng-if="privKey" class="is-local">{{'SETTINGS.PAGES.IDENTITY.KEYS.IS_LOCAL_ON_THIS_DEVICE'|cmTranslate}}</h4>
+            <h4>
+                {{'SETTINGS.PAGES.IDENTITY.KEYS.TRUSTING'|cmTranslate}}:
+                <span ng-if="isTrusted" class="is-trusted">
+                    {{'SETTINGS.PAGES.IDENTITY.KEYS.IS_TRUSTED'|cmTranslate}}
+                </span>
+                <span ng-if="!isTrusted" class="is-untrusted">
+                    {{'SETTINGS.PAGES.IDENTITY.KEYS.IS_UNTRUSTED'|cmTranslate}}
+                </span>
+            </h4>
+            <h4>{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_SIZE'|cmTranslate}}: {{keySize}}</h4>
+
+            <div ng-if="privKey">
+                <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
+                <textarea class="form-control" ng-model="privKey" readonly="readonly" data-qa="input-private-key" cm-clipboard></textarea>
+            </div>
+            <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PUBLIC_KEY'|cmTranslate}}</h3>
+            <textarea class="form-control" ng-model="pubKey" readonly="readonly" data-qa="input-public-key" cm-clipboard></textarea>
+        </div>
+
+        <cm-modal-handshake></cm-modal-handshake>
+
+        <cm-footer cm-always-on-top ng-if="!isTrusted && privKey">
+            <button ng-click="startAuthentication()" class="cm-btn-block cm-btn-grey" data-qa="btn-start-authentication">
+                {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_START'|cmTranslate}}
+                <i class="fa cm-checker cm-lg-icon"></i>
+            </button>
+        </cm-footer>
+    </li>
+</ul>

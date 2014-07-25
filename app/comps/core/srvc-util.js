@@ -209,6 +209,12 @@ angular.module('cmCore')
             return Object.prototype.toString.call(value) === '[object Array]';
         };
 
+        this.isAlphaNumeric = function(id, length){
+            var alphNumericRegExp = "^[a-zA-Z0-9]{"+(length||20)+"}$";
+            var matches = id ? String(id).match(alphNumericRegExp) : null;
+            return matches != null;
+        };
+
         this.detectOSAndBrowser = function() {
             var nVer = $window.navigator.appVersion,
                 nAgt = $window.navigator.userAgent,

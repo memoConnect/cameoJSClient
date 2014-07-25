@@ -381,6 +381,7 @@ describe('cmUtil', function(){
         })
 
         it('should be false', function(){
+            expect(cmUtil.isArray()).toBeFalsy()
             expect(cmUtil.isArray(undefined)).toBeFalsy()
             expect(cmUtil.isArray(null)).toBeFalsy()
             expect(cmUtil.isArray('')).toBeFalsy()
@@ -391,6 +392,30 @@ describe('cmUtil', function(){
         it('should be true', function(){
             expect(cmUtil.isArray([])).toBeTruthy()
             expect(cmUtil.isArray(['1'])).toBeTruthy()
+        })
+    })
+
+    describe('isAlphaNumeric', function(){
+        it('should be defined', function(){
+            expect(cmUtil.isAlphaNumeric).toBeDefined()
+        })
+
+        it('should be false', function(){
+            expect(cmUtil.isAlphaNumeric()).toBeFalsy()
+            expect(cmUtil.isAlphaNumeric(undefined)).toBeFalsy()
+            expect(cmUtil.isAlphaNumeric(null)).toBeFalsy()
+            expect(cmUtil.isAlphaNumeric('')).toBeFalsy()
+            expect(cmUtil.isAlphaNumeric('huschibuschi')).toBeFalsy()
+            expect(cmUtil.isAlphaNumeric({})).toBeFalsy()
+            expect(cmUtil.isAlphaNumeric({'moep':'oida'})).toBeFalsy()
+            expect(cmUtil.isAlphaNumeric([])).toBeFalsy()
+            expect(cmUtil.isAlphaNumeric(['junge'])).toBeFalsy()
+        })
+
+        it('should be true', function(){
+            expect(cmUtil.isAlphaNumeric('2fsdf4F3ds',10)).toBeTruthy()
+            expect(cmUtil.isAlphaNumeric('eX28xqhS9eYrQyRfpm70')).toBeTruthy()
+            expect(cmUtil.isAlphaNumeric('kTqQrwPMlEe1OrmxcSIq',20)).toBeTruthy()
         })
     })
 
