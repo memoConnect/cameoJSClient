@@ -13,8 +13,9 @@ angular.module('cmCore')
 
     '$q',
     'cmLogger',
+    'cmUtil',
 
-    function($q, cmLogger){
+    function($q, cmLogger, cmUtil){
         var self = this
 
         /**
@@ -116,7 +117,7 @@ angular.module('cmCore')
              * @return {Object}               returns the object for chaining.
              */
             obj.off = function(event_names, callback){
-                var event_names = event_names instanceof Array ? event_names : event_names.split(' ') 
+                var event_names = cmUtil.isArray(event_names) ? event_names : event_names.split(' ') 
                 
                 event_names.forEach(function(event_name){
                     if(!callback)obj._callbacks[event_name] = []
