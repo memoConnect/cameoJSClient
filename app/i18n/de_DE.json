@@ -297,8 +297,13 @@
                     "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
                     "CREATE": "erstellen",
                     "IMPORT": "importieren",
+                    "DETAIL": "cameoKey",
                     "KEY_SIZE": "Schlüsselänge",
-                    "KEY_ON_THIS_DEVICE": "lokal",
+                    "IS_LOCAL": "lokal",
+                    "IS_LOCAL_ON_THIS_DEVICE": "lokal auf diesem Gerät",
+                    "TRUSTING": "Vertrauen",
+                    "IS_TRUSTED": "wird vertraut",
+                    "IS_UNTRUSTED": "kein vertrauen",
                     "EXPORT_KEY": "Schlüsselpaar exportieren",
                     "REMOVE_KEY": "Schlüsselpaar löschen",
                     "REMOVE_KEY_REALLY": "wirklich löschen?",
@@ -319,6 +324,19 @@
                         "CHECK_PUBKEY": "Überprüfe den Öffentlichenschlüssel",
                         "CHECK_KEYNAME": "Überprüfe den Schlüsselnamen"
                     }
+                },
+                "HANDSHAKE": {
+                    "MODAL_HEADER": "Authorisierung",
+                    "HANDSHAKE_NOW": "Wollen Sie für den neuen cameoKey '<strong>{{keyName}}</strong>' einen Handshake mit einem älteren Gerät durchführen?",
+                    "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
+                    "CHOOSE_OLD_DEVICE": "Bitte wählen Sie ein altes Gerät mit dem Sie die Authorisierung durchführen wollen!",
+                    "CHOOSE": "Bitte wählen",
+                    "TRANSACTION_SECRET": "Diese für Sie generierte TransactionSecret muss auf dem anderen Device eingeben werden.",
+                    "HANDSHAKE_START": "Authorisierung starten",
+                    "HANDSHAKE_RECEIVED": "Möchten Sie die Authorisierung durchführen?",
+                    "HANDSHAKE_NEED_TRANSACTID": "Geben Sie bitte den Code ein!",
+                    "HANDSHAKE_DONE": "Authorisierung war erfolgreich!<br>"
+
                 }
             },
             "ABOUT_US":{
@@ -481,6 +499,10 @@
         "WELCOME": {
             "MESSAGE": "Cameo ist Beste",
             "SUBJECT": "Hallo"
+        },
+        "ERROR": {
+            "EMPTY_INPUT": "Eingabe ist leer!",
+            "WRONG_INPUT": "Bitte überprüfen Sie Ihre Eingabe!"
         }
     }
 }

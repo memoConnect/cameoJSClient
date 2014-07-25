@@ -51,8 +51,6 @@ angular.module('cmCore')
             this.importData = function(data){
 //                cmLogger.debug('cmNotifyModel.importData');
 //                
-                console.dir(data)
-
                 if(typeof data == 'object') { //typeof never equals 'array': || typeof data == 'array'){
                     this.label = data.label || this.label;
 
@@ -122,7 +120,7 @@ angular.module('cmCore')
                     }, this.ttl);
                 }
 
-                cmModal.on('instance:closed', function(){
+                cmModal.on('modal:closed', function(){
                     if(self.ttlTimeout){
                         $timeout.cancel(self.ttlTimeout);
                     }

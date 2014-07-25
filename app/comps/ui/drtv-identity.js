@@ -10,6 +10,8 @@ angular.module('cmUi').directive('cmIdentity',[
             templateUrl: 'comps/ui/drtv-identity.html',
             scope: true,
             controller: function($scope){
+                $scope.randModalId = Math.floor((Math.random()*6)+1);
+
                 function setIdentity(){
                     $scope.identity = cmUserModel.data.identity;
                 }
@@ -20,14 +22,16 @@ angular.module('cmUi').directive('cmIdentity',[
                     setIdentity();
                 });
 
-                $scope.goToIdentitySettings = function(){
-                    if($location.$$url == '/settings/identity'){
-                        cmModal.close('modal-identity');
-                    }
-                    $location.path('/settings/identity');
+                $scope.showIdentityModal = function(){
+                    var modalId = 'modal-identity-' + $scope.randModalId;
+                    cmModal.create({
+                        id: modalId,
+                        type: 'plain',
+                        'class': 'no-padding',
+                        'cm-title': 'IDENTITY.MODAL.HEADER'
+                    },'<cm-identity-modal></cm-identity-modal>',null,$scope);
+                    cmModal.open(modalId);
                 };
-
-                $scope.randModalId = Math.floor((Math.random()*6)+1);
             }
         }
     }

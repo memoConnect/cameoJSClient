@@ -12,7 +12,7 @@ angular.module('cmCore').factory('cmFactory',[
          * @param {string}      [uniqueKey]     Key in raw data to check for dublicates with. (i.e. "instances.id")    
          */
 
-        return function cmFactory(model, uniqueKey){
+        return function cmFactory(model, sameByData, sameByInstance){
 
             var self        = new Array();
 
@@ -20,10 +20,12 @@ angular.module('cmCore').factory('cmFactory',[
 
             cmObject.addEventHandlingTo(self);
 
-            uniqueKey = uniqueKey || 'id'
+            sameByData = sameByData || function(instance, data){
+                return instance.id && instance.id == data.id
+            }
 
-            function evalPath(object, path){
-                return path.split('.').reduce(function(result,key){ return typeof result == 'object' ? result[key] : null }, object || {})
+            sameByInstance = sameByInstance || function(instance_1, instance_2){
+                return instance_1.id && instance_1.id == instance_2.id
             }
 
             /**
@@ -32,37 +34,62 @@ angular.module('cmCore').factory('cmFactory',[
              * @returns {model}                      allways returns an instance of model. If an id is present in args and an instance with that id already exists, 
              *                                      this instance will be returned – otherwise a new one will be created and if possible populated with data from the backend.
              */
-            self.create = function(args, withNewImport){
-                var id          =   evalPath(args, uniqueKey) || args;
+            self.create = function(data, withNewImport){
 
-                var instance = self.find(id);
+                if(typeof data == 'string') 
+                    data = {id: data}
+
+                var instance = self.find(data);
 
                 if(instance === null){
-                    
-                    instance = self.new(args)
+                    instance = self.new(data)
                     self.register(instance)
 
                 } else if(typeof withNewImport === 'boolean' && withNewImport == true && typeof instance.importData == 'function'){
-                    instance.importData(args);
+                    instance.importData(data);
                 }
 
+
+
                 return instance;
+
             };
+
+            self.importFromDataArray = function(data_arr){
+                data_arr.forEach(function(data){
+                    self.create(data)
+                })
+                return self
+            }
+
+            self.exportDataArray = function(){
+                return  self.map(function(instance){
+                            return instance.exportData()
+                        })
+            }
 
             /**
              * Function to find and instance by its id.
              * @param   {string}         id          The id of the instance to find.
              * @returns {model|null}                 returns the first instance to match the id or null if none is found 
              */
-            self.find = function(id){
-                if(!id)
+            self.find = function(args){
+                if(!args)
                     return null;
 
-                var matches = self.filter(function(instance){ return instance.id == id })
+                if(typeof args == 'string')
+                    args = {id: args}
+
+                var matches = []
+
+                if(args instanceof this.model){
+                    matches = self.filter(function(instance){ return sameByInstance(instance, args) })
+                }else{
+                    matches = self.filter(function(instance){ return sameByData(instance, args) })
+                }
 
                 return matches.length ? matches[0] : null       
             };
-
 
             /**
              * Function to create a new model instance. 
@@ -104,23 +131,19 @@ angular.module('cmCore').factory('cmFactory',[
              * Function to remove a model instance
              * @param {model}           instance    an instance of model
              */
-            self.deregister = function(instance){
+            self.deregister = function(args){
+                var instance    = self.find(args),
+                    index       = self.indexOf(instance)
+
                 if(
-                    self.indexOf(instance) != -1
+                    index != -1
                     && instance instanceof this.model
                 ){
-                    var i = self.length;
-                    while(i){
-                        i--;
-                        if(self[i] == instance){
-                            self.splice(i, 1);
-
-                            self.trigger('deregister');
-
-                            break;
-                        }
-                    }
+                    self.splice(index, 1);
+                    self.trigger('deregister');
+                    return true
                 }
+                return false
             };
 
             /**

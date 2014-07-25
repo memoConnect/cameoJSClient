@@ -16,6 +16,7 @@ angular.module('cmCore')
         return {
             /**
              * now cmKey
+             * todo: remove
              */
             Key: cmKey,
 
@@ -165,10 +166,9 @@ angular.module('cmCore')
 
                 // start keypair generation
                 async.crypt.getKey(function(){
-                    var key = new self.Key(async.crypt);
 
                     // only resolve if keypair exists
-                    if(key.getPrivateKey() == undefined)
+                    if(async.crypt.getPrivateKey() == undefined)
                         return false;
 
                     self.cancelGeneration(true);
@@ -176,7 +176,7 @@ angular.module('cmCore')
                         async.promise.resolve({
                             timeElapsed: (time + ((new Date()).getTime())),
                             counts: counts,
-                            key: key
+                            key: async.crypt
                         });
                         // !!! important for unit test, don't remove !!!
                         $rootScope.$apply();
@@ -244,11 +244,11 @@ angular.module('cmCore')
             },
 
             /**
-             * signOwnPubKey
+             * signAuthenticationRequest
              * @param _settings_
              * @returns {String} rsaSha256Signature of newPrivKey
              */
-            sign: function(_settings_){
+            signAuthenticationRequest: function(_settings_){
                 var defaultSettings = {
                     identityId: 0, // identityId to signature
                     transactionSecret: '',
@@ -289,11 +289,11 @@ angular.module('cmCore')
             },
 
             /**
-             * verifyOwnPubKey
+             * verifyAuthenticationRequest
              * @param _settings_
              * @returns {Boolean} is verification valid of newPubKey
              */
-            verify: function(_settings_){
+            verifyAuthenticationRequest: function(_settings_){
                 var defaultSettings = {
                     identityId: '', // identityId to verify signature
                     fromKey: undefined, // pubkey from new device

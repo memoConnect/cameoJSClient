@@ -2,26 +2,12 @@
 
 angular.module('cmCore')
 .factory('cmIdentityModel',[
-    'cmAuth', 'cmCrypt', 'cmKey', 'cmObject', 'cmLogger', 'cmApi',
+    'cmAuth', 'cmCrypt', 'cmKey', 'cmKeyFactory', 'cmObject', 'cmLogger', 'cmApi',
     'cmFileFactory', 'cmStateManagement', 'cmUtil', 'cmNotify',
-    function(cmAuth, cmCrypt, cmKey, cmObject, cmLogger, cmApi,
+    function(cmAuth, cmCrypt, cmKey, cmKeyFactory, cmObject, cmLogger, cmApi,
              cmFileFactory, cmStateManagement, cmUtil,cmNotify){
 
         function Identity(identity_data){
-
-            this.id = undefined;
-            this.displayName = undefined;
-            this.userKey = undefined;
-            this.cameoId = undefined;
-            this.avatarId = undefined;
-            this.avatar = undefined;
-            this.email                   = { value: undefined, isVerified: undefined };
-            this.phoneNumber             = { value: undefined, isVerified: undefined };
-            this.preferredMessageType = undefined;
-            this.keys                    = [];
-            this.userType = undefined;
-            this.created = undefined;
-            this.lastUpdated = undefined;
 
             var self = this;
 
@@ -35,6 +21,8 @@ angular.module('cmCore')
              * @returns {Message}
              */
             function init(data){
+                self.clear()
+
                 if(typeof data == 'string' && data.length > 0){
                     self.id = data;
                     self.load();
@@ -77,7 +65,7 @@ angular.module('cmCore')
                 data.publicKeys             = data.publicKeys || [];
 
                 data.publicKeys.forEach(function (publicKey_data) {
-                    self.addKey(publicKey_data);
+                    self.keys.create(publicKey_data, true);
                 });
 
                 this.state.unset('new');
@@ -96,7 +84,7 @@ angular.module('cmCore')
                     cmAuth.getIdentity(this.id).then(
                         function (import_data) {
                             if (typeof import_data == 'string') {
-                                cmLogger('cmAuth.getIdentity() should forward an object, got string instead. ')
+                                cmLogger.debug('cmAuth.getIdentity() should forward an object, got string instead. ')
                             } else {
                                 self.importData(import_data);
                             }
@@ -132,47 +120,28 @@ angular.module('cmCore')
             };
 
             this.clear = function(){
-                cmLogger.debug('cmIdentityModel.clear');
-                this.id = undefined;
-                this.displayName = undefined;
-                this.userKey = undefined;
-                this.cameoId = undefined;
-                this.avatarId = undefined;
-                this.avatar = undefined;
-                this.email                   = { value: undefined, isVerified: undefined };
-                this.phoneNumber             = { value: undefined, isVerified: undefined };
-                this.preferredMessageType = undefined;
-                this.keys                    = [];
-                this.userType = undefined;
-                this.created = undefined;
-                this.lastUpdated = undefined;
+                //cmLogger.debug('cmIdentityModel.clear');
+
+                this.id                     = undefined;
+                this.displayName            = undefined;
+                this.userKey                = undefined;
+                this.cameoId                = undefined;
+                this.avatarId               = undefined;
+                this.avatar                 = undefined;
+                this.email                  = { value: undefined, isVerified: undefined };
+                this.phoneNumber            = { value: undefined, isVerified: undefined };
+                this.preferredMessageType   = undefined;
+                this.keys                   = this.keys ? this.keys.reset() : new cmKeyFactory();
+                this.userType               = undefined;
+                this.created                = undefined;
+                this.lastUpdated            = undefined;
             };
 
             //Encrypt passphrase with all available public keys
             //Identities cannot decrypt, Users can
             this.encryptPassphrase = function(passphrase, whiteList){
-                var encrypted_key_list = [];
-
-                this.keys.forEach(function(key){
-                    if(typeof whiteList != 'object' || whiteList.indexOf(key.id) != -1){
-                        var key_2 = new cmCrypt.Key();
-
-                        key_2.setKey(key.getPrivateKey());
-
-                        var encrypted_passphrase = key.encrypt(passphrase);
-
-                        if(encrypted_passphrase){
-                            encrypted_key_list.push({
-                                keyId:                 key.id,
-                                encryptedPassphrase:   encrypted_passphrase
-                            });
-                        }else{
-                            cmLogger.debug('cmIdentity: unable to encrypt passphrase.')
-                        }
-                    }
-                });
-
-                return encrypted_key_list;
+                cmLogger.debug('indentityModel: encryptPassphrase is deprecated, use keys.encryptPassphrase instead.')
+                return this.keys.encryptPassphrase(passphrase, whiteList)
             };
 
             this.getDisplayName = function(){
@@ -193,36 +162,18 @@ angular.module('cmCore')
                 return false;
             };
 
-            this.addKey = function(key_data){
-                // key_data maybe a string containing a public or Private key, or a key Object (cmCrypt.Key)
-                var key,
-                    is_object  = (typeof key_data == 'object'),
-                    is_string  = (typeof key_data == 'string'),
-                    can_update = is_object && 'updateKeyList' in key_data
-
-                if( can_update )                key = key_data; //already a Key object
-                if( is_object && !can_update)   key = (new cmKey()).importData(key_data); //from backend or localstorgae
-                if( is_string)                  key = new cmKey(key_data); //plain text public or private key
-
-                key
-                ?   key.updateKeyList(self.keys)
-                :   cmLogger.error('unable to add key, unknown format: '+key_data);
-
-                return this;
-            };
-
             this.removeKey = function(key){
                 key.removeFromKeyList(self.keys);
                 return this;
             };
 
             this.getWeakestKeySize = function(){
-                var size = undefined;
-                this.keys.forEach(function(key){
-                    size = size != undefined ? Math.min(size, key.getSize()) : key.getSize();
-                });
-                size = size || 0;
-                return size;
+                cmLogger.debug('identityModle:getWeakestKeySize() is deprecated; please use keys.getWeakestKeySize().')
+                return this.keys.getWeakestKeySize()
+                // return this.keys.reduce(function(size, key){                    
+                //     return size == undefined ? key.getSize() : Math.min(size, key.getSize())
+                // }, undefined)
+
             };
 
             this.hasKeys = function(){

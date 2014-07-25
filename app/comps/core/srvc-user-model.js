@@ -21,11 +21,11 @@
 
 angular.module('cmCore')
 .service('cmUserModel',[
-    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmKey',
-    'cmObject', 'cmNotify', 'cmLogger',
+    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKeyFactory',
+    'cmObject', 'cmUtil', 'cmNotify', 'cmLogger',
     '$rootScope', '$q', '$location',
-    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmKey,
-             cmObject, cmNotify, cmLogger,
+    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmKeyFactory,
+             cmObject, cmUtil, cmNotify, cmLogger,
              $rootScope, $q, $location){
         var self = this,
             isAuth = false,
@@ -80,6 +80,14 @@ angular.module('cmCore')
             isAuth = true;
             this.initStorage();
             this.syncLocalKeys();
+
+            /**
+             * @todo!!! maybe stack im model
+             */
+            if('authenticationRequests' in identity){
+                this.trigger('authenticationRequest:new', identity.authenticationRequests);
+            };
+
 
             this.trigger('update:finished');
 
@@ -209,13 +217,6 @@ angular.module('cmCore')
          * Key Handling
          */
 
-        /**
-         * @param key
-         */
-        this.addKey = function(key){
-            this.data.identity.addKey(key);
-            return this;
-        };
 
         this.getLocalKeyIdsForRequest = function(){
             if(this.isAuth !== false){
@@ -247,18 +248,13 @@ angular.module('cmCore')
          * @param key
          * @returns {*}
          */
-        this.saveKey = function(key){
-            var key_list  =  this.loadLocalKeys() || [],
-                key_data_list = [];
+        this.storeKey = function(key){
+            var local_keys      = this.loadLocalKeys() || new cmKeyFactory(),
+                matching_key    = local_keys.find(key)
 
-            key_list.forEach(function(local_key){
-                var data = local_key.exportData();
-                key_data_list.push(data);
-            });
+            local_keys.create(key.exportData(), true)
 
-            key.updateKeyDataList(key_data_list);
-
-            this.storageSave('rsa', key_data_list);
+            this.storageSave('rsa', local_keys.exportDataArray());
 
             this.trigger('key:stored')
 
@@ -266,15 +262,10 @@ angular.module('cmCore')
         };
 
         this.loadLocalKeys = function(){
-            var storedKeys = this.storageGet('rsa') || [],
-                keys        = [];
+            var storedKeys  = this.storageGet('rsa') || [],
+                keys        = cmKeyFactory();
 
-            storedKeys.forEach(function(stored_key){
-                var data = (new cmKey()).importData(stored_key);
-                keys.push(data)
-            });
-
-            return keys;
+            return keys.importFromDataArray(storedKeys)
         };
 
         this.hasPrivateKey = function(){
@@ -292,19 +283,17 @@ angular.module('cmCore')
             /**
              * check local Keys from Storage
              */
+            
             var localKeys = this.loadLocalKeys() || [];
 
             localKeys.forEach(function(local_key){
-                var isNotInPublicKeys = self.data.identity.keys
-                    ? self.data.identity.keys.filter(function(public_key){
-                        if(typeof local_key.id !== 'undefined' && local_key.id == public_key.id) {
-                            return true;
-                        }
-                        return false;
-                      }).length == 0
-                    : false;
 
-                if(isNotInPublicKeys || typeof local_key.id === 'undefined' || local_key.id == ''){
+                var no_matching_public_key_present = !self.data.identity.keys || !self.data.identity.keys.find(local_key),
+                    missing_key_id = !local_key.id
+
+
+
+                if(no_matching_public_key_present || missing_key_id){
 
                     if(local_key.getPublicKey() == undefined){
                         cmLogger.error('broken pubkey in localstorage! that can\'t be synced.');
@@ -317,43 +306,66 @@ angular.module('cmCore')
                         keySize: keySize || 0 //TODO: local_key.size == Nan ???
                     })
                     .then(function(data){
-                        local_key.importData(data);
+                        //data brings an id for the key
+                        local_key.importData(data)
 
-                        self
-                        .saveKey(local_key)
-                        .addKey(local_key);
+                        //add public key to identity
+                        self.data.identity.keys.create(data)
+
+
+                        //store the key with its new id:
+                        self.storeKey(local_key)
+
+                        // event for handshake modal
+                        self.trigger('key:saved', local_key);
                     })
-                } else {
-                    self.addKey(local_key);
                 }
             });
 
             return this;
         };
 
-        this.removeKey = function(keyToRemoved){
-            var self = this,
-                keys = this.loadLocalKeys(),
+        this.removeKey = function(keyToRemove){
+            var self            = this,
+                local_keys      = this.loadLocalKeys(),
                 foundInLocalKeys = -1;
 
-            // search in ls
-            keys.forEach(function(key, index){
-                if(key.id == keyToRemoved.id)
-                    foundInLocalKeys = index;
-            });
-
             // clear in backend
-            cmAuth.removePublicKey(keyToRemoved.id)
-                .then(function(){
-                    // renew ls
-                    if(foundInLocalKeys > -1) {
-                        keys.splice(foundInLocalKeys, 1);
-                        self.storageSave('rsa', keys);
-                        self.trigger('key:removed')
+            cmAuth
+            .removePublicKey(keyToRemove.id)
+            .then(function(){
+                // renew ls
+                if(local_keys.deregister(keyToRemove)){
+                    self.storageSave('rsa', local_keys.exportDataArray());
+
+                    self.trigger('key:removed')
+                }
+                // clear identity
+                self.data.identity.keys.deregister(keyToRemove);
+            });
+        };
+
+        this.signKey = function(localKeyId, signKeyId){
+//            cmLogger.debug('cmUserModel.signKey');
+
+            var localKeys = this.loadLocalKeys();
+            var signingKey = localKeys.find(localKeyId);
+            var keyToSign = this.data.identity.keys.find(signKeyId);
+
+            var signature = signingKey.signKey(keyToSign);
+
+            if(typeof signature == 'string' && signature.length > 0){
+                cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
+                    function(){
+                        self.trigger('signature:saved');
+                    },
+                    function(){
+                        self.trigger('signature:failed');
                     }
-                    // clear identity
-                    self.data.identity.removeKey(keyToRemoved);
-                });
+                )
+            }
+
+            return this;
         };
 
         this.clearLocalKeys = function(){
@@ -361,23 +373,21 @@ angular.module('cmCore')
         };
 
         this.trustsKey = function(key){
-            var keys = this.loadLocalKeys() || []
+            var local_keys = this.loadLocalKeys() || []
 
-            return  keys.some(function(local_key){
-                        return local_key.verify(key)
+            return  local_keys.some(function(local_key){
+                        return local_key.trusts(key)
                     })
         }
 
         this.decryptPassphrase = function(encrypted_passphrase, keyId){
-            var keys = this.loadLocalKeys() || [],
-                decrypted_passphrase;
+            var keys = this.loadLocalKeys() || []
 
-            keys.forEach(function(key){ 
-                if(!decrypted_passphrase && (key.id == keyId || !keyId)){
-                    decrypted_passphrase = key.decrypt(encrypted_passphrase)                    
-                }
-            });
-            return decrypted_passphrase;
+            return  keys.reduce(function(decrypted_passphrase, key){
+                        return      decrypted_passphrase 
+                                ||  ( (key.id == keyId || !keyId) && key.decrypt(encrypted_passphrase) )
+
+                    }, undefined)
         };
 
         /**

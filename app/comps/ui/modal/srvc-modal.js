@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmUi').service('cmModal',[
+angular.module('cmUi')
+.service('cmModal',[
     'cmObject', 'cmLogger',
     '$rootScope', '$compile', '$document',
     function(cmObject, cmLogger,
@@ -38,21 +39,24 @@ angular.module('cmUi').service('cmModal',[
                     return !!(registered_id == id ? self.open(id, data) : false);
                 });
             }
+
+            self.trigger('modal:opened',id);
+            
             return self;
         };
 
         self.close = function(id){
             self.instances[id].close();
 
-            self.trigger('instance:closed');
-
+            self.trigger('modal:closed',id);
             return self;
         };
 
         self.closeAll = function(){
-            angular.forEach(self.instances, function(modal_instance, key){
+            angular.forEach(self.instances, function(modal_instance){
                 modal_instance.close();
             });
+
             return self;
         };
 
@@ -91,11 +95,12 @@ angular.module('cmUi').service('cmModal',[
 //            $rootScope.isModalVisible = newValue;
 //        });
 
-        //close all modals on route change:
+        // close all modals on route change:
         $rootScope.$on('$routeChangeStart', function(){
             self.closeAll();
-        })
+        });
 
+        // closeAll on ESC
         $document.bind('keydown', function (evt) {
             if (evt.which === 27) {
                 self.closeAll();

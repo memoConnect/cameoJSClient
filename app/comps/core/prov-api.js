@@ -448,7 +448,7 @@ angular.module('cmCore').provider('cmApi',[
                         .then(
                             function(events){
                                 events.forEach(function(event){
-                                 api.trigger(event.name, event.data)
+                                    api.trigger(event.name, event.data)
                                 })
                             },
                             function(){
@@ -464,7 +464,7 @@ angular.module('cmCore').provider('cmApi',[
                     //Dont listen to Events twice: 
                     api.stopListeningToEvents()
                     //Start listening:
-                    if(!events_disabled && events_interval) api._events_promise = $interval(function(){ api.getEvents(false) }, events_interval, false)
+                    if(!events_disabled && events_interval) api._events_promise = $interval(function(){ api.getEvents(false) }, events_interval, 0, false)
                 }
 
                 api.stopListeningToEvents = function(){

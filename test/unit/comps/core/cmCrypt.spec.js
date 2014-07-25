@@ -76,7 +76,7 @@ describe('cmCrypt', function () {
             decrypted_secret = undefined
 
 
-        it('should provide a function "getKeysizes" with 3 available key sizes', function(){
+        it('should provide a function "getKeysizes" with 2 available key sizes', function(){
             expect(cmCrypt.getKeySizes().length).toEqual(2)
         })
 
@@ -88,7 +88,7 @@ describe('cmCrypt', function () {
             expect(typeof cmCrypt.cancelGeneration).toBe('function')
         })
 
-        it('should asynchronously generate a working 128-bit key par within a second.', function(){
+        it('should asynchronously generate a working 128-bit key pair within 3 seconds.', function(){
             runs(function(){
                 inject(function($rootScope){
                     cmCrypt
@@ -105,7 +105,7 @@ describe('cmCrypt', function () {
 
             waitsFor(function() {                    
                 return publicKey && privateKey
-            }, 'public and private key to be defined', 10000);
+            }, 'public and private key to be defined', 3000);
         })
 
         it('should not generate a key pair without a given proper key size', function(){
@@ -122,6 +122,8 @@ describe('cmCrypt', function () {
         it('should have a constructor for "Key"', function(){
             expect(typeof cmCrypt.Key).toBe('function')
         })
+
+        //Todo: should be separate test for cmKey
 
         describe('Key', function(){
 
@@ -179,75 +181,6 @@ describe('cmCrypt', function () {
                 key.setId('my_test_id')
                 expect(key.id).toBe('my_test_id')
             })
-
-            it('should provide a function "exportData" and "importData" to im- and export stringifiable data', function(){
-                expect(typeof key.exportData).toBe('function')
-                expect(typeof key.importData).toBe('function')
-
-                var secret = 'x'
-
-                key
-                .setKey(privateKey)
-                .setName('test_name')
-                .setId('test_id')
-
-
-                var data_1 = key.exportData(key),
-                    key_1  = (new cmCrypt.Key()).importData(data_1)
-
-                expect(key_1.name).toBe('test_name')
-                expect(key_1.id).toBe('test_id')
-                expect(key_1.getPublicKey()).toBe(publicKey)
-                expect(key_1.getPrivateKey()).toBe(privateKey)
-
-                //weak import data must not overwrite existing data;
-                key.importData({})
-                expect(key.getPrivateKey()).toBe(privateKey)
-
-                key.importData({pubKey: key.getPublicKey()})
-                expect(key.getPrivateKey()).toBe(privateKey)
-
-                //key should still work:
-                expect(key_1.decrypt(key.encrypt('x'))).toBe('x')
-            })
-
-            it('should provide a function "updateKeyList" to add iteself to a list of keys, preventing duplicates', function(){
-                var list    = [],
-                    new_key = new cmCrypt.Key()
-
-                expect(key.updateKeyList).toBeDefined()
-
-                key
-                .setId('my_id')
-                .setKey(publicKey)
-
-                key.updateKeyList(list)
-                expect(list.length).toBe(1)
-                key.updateKeyList(list)
-                expect(list.length).toBe(1)
-                new_key.updateKeyList(list)
-                expect(list.length).toBe(2)
-            })
-
-            it('should provide a function "updateKeyDataList" to add iteself to a list of key_data, preventing duplicates', function(){
-                var list    = [],
-                    new_key = new cmCrypt.Key()
-
-                expect(key.updateKeyList).toBeDefined()
-
-                key
-                .setId('my_id')
-                .setKey(publicKey)
-
-                key.updateKeyDataList(list)
-                expect(list.length).toBe(1)
-                key.updateKeyDataList(list)
-                expect(list.length).toBe(1)
-                new_key.updateKeyDataList(list)
-                expect(list.length).toBe(2)
-
-            })
-
 
         })
 

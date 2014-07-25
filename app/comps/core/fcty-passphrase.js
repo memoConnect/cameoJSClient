@@ -7,7 +7,6 @@
  * Handle Passphrase Conversation
  *
  * @requires cmFactory
- * @requires cmKey
  * @requires cmUserModel
  * @requires cmCrypt
  * @requires cmObject
@@ -15,13 +14,12 @@
  */
 angular.module('cmCore').factory('cmPassphrase',[
     'cmFactory',
-    'cmKey',
     'cmUserModel',
     'cmCrypt',
     'cmObject',
     'cmUtil',
     'cmLogger',
-    function(cmFactory, cmKey, cmUserModel, cmCrypt, cmObject, cmUtil, cmLogger){
+    function(cmFactory, cmUserModel, cmCrypt, cmObject, cmUtil, cmLogger){
 
         function cmPassphrase(){
             var self            = this,
@@ -295,7 +293,6 @@ angular.module('cmCore').factory('cmPassphrase',[
                 if(couldBeAPassword(pw) && couldBeAPassphrase(passphrase)){
                     return cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(password, passphrase));
                 } else {
-                    console.log('falase!')
 //                    cmLogger.debug('cmPassphrase:symmetricallyEncryptPassphrase - provide a proper password and and passphrase before encrypting the passphrase!');
                     return false                   
                 }

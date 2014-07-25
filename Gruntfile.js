@@ -214,7 +214,7 @@ module.exports = function (grunt) {
             }
 
             packages[packagePath.replace('app/','app/packages/')+'/'+file] = [
-                packagePath+'/*.html', // at last all templates
+                packagePath+'/**/*.html', // at last all templates
                 packagePath+'/-module-'+moduleName+'.js', // at first module
                 packagePath+'/**/'+exclude+include+'.js' // all directives / services / factorys etc
             ];

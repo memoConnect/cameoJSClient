@@ -1,11 +1,16 @@
-.modal-identity{
+cm-identity-modal{
   div.modal-row{
     position: relative;
     text-align: left;
     color: @cm-font-color;
     font-size: @cm-large-font;
+    min-height:6rem;
+    padding-top: 1rem !important;
     span {
       display: inline-block;
+      &.text-only {
+        margin-top: 1rem;
+      }
     }
     button {
       display: inline-block;

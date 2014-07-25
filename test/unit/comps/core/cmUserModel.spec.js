@@ -103,24 +103,24 @@ describe('cmUserModel', function(){
         })
     })
 
-    xdescribe('Encryption and key management', function(){
+    describe('Encryption and key management', function(){
 
         var good_key, bad_key, encrypted_secret
 
         beforeEach(function(){
-            good_key = new cmKey('-----BEGIN RSA PRIVATE KEY-----MGACAQACEFhXgxfNAzZJ8Q3YpU4x9hsCAwEAAQIQDF99aej56TF5zFs6LBBveQIJAKDFUfKmtsZXAgkAjKtWvZtVC90CCBjUAEDSAD4HAghfDTfjjx58kQIIUHBhrwvxsKw=-----END RSA PRIVATE KEY-----'),
-            bad_key  = new cmKey(''),
-            encrypted_secret = 'GGddYb0ZAZizKuN3zCikcg==' //contains 'priv'
+            good_key = (new cmKey() ).setKey('-----BEGIN RSA PRIVATE KEY-----MGACAQACEFhXgxfNAzZJ8Q3YpU4x9hsCAwEAAQIQDF99aej56TF5zFs6LBBveQIJAKDFUfKmtsZXAgkAjKtWvZtVC90CCBjUAEDSAD4HAghfDTfjjx58kQIIUHBhrwvxsKw=-----END RSA PRIVATE KEY-----'),
+            bad_key  = (new cmKey() ).setKey(''),
+            encrypted_secret = 'FLgA/4gztg9pcxNSkqxGPA==' //contains 'priv'
         })
 
-        it('should provide functions "saveKey" and "loadLocalKeys" to store and retrieve rsa keys.', function(){
+        it('should provide functions "storeKey" and "loadLocalKeys" to store and retrieve rsa keys.', function(){
 //            console.log('start test')
-            expect(cmUserModel.saveKey).toBeDefined();
+            expect(cmUserModel.storeKey).toBeDefined();
             expect(cmUserModel.loadLocalKeys).toBeDefined();
 
             good_key.setId('my_good_key')
 
-            cmUserModel.saveKey(good_key)
+            cmUserModel.storeKey(good_key)
 
             var privateKey = ''
 
@@ -133,8 +133,9 @@ describe('cmUserModel', function(){
         })
 
         it('should provide a function "clearLocalKeys" to remove all Keys from local stroage.', function(){
-            cmUserModel.saveKey(good_key)
+            cmUserModel.storeKey(good_key)
             expect(cmUserModel.loadLocalKeys().length).toBeGreaterThan(0)
+
             cmUserModel.clearLocalKeys()
             expect(cmUserModel.loadLocalKeys().length).toBe(0)
         })
@@ -146,11 +147,12 @@ describe('cmUserModel', function(){
 
             cmUserModel.clearLocalKeys()
                         
-            cmUserModel.saveKey(bad_key)
+            cmUserModel.storeKey(bad_key)
             decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
             expect(decrypted_secret).toBeFalsy()
 
-            cmUserModel.saveKey(good_key)
+            cmUserModel.storeKey(good_key)
+
             decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
             expect(decrypted_secret).toBe('priv')
         })

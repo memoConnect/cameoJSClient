@@ -1,0 +1,22 @@
+<div class="modal-row is-disabled">
+    <span class="text-only">{{'IDENTITY.LABEL.NEW' | cmTranslate}}</span>
+    <button>
+        <i class="fa cm-checkbox-add"></i>
+    </button>
+</div>
+<div class="modal-row">
+    <cm-avatar cm-data="identity"></cm-avatar>
+    <cm-key-level cm-data="identity.keys.getWeakestKeySize()"></cm-key-level>
+    <span cm-weight="1">{{identity.getDisplayName()}}</span>
+    <button class="right" data-qa="btn-identity-settings" ng-click="goToIdentitySettings()">
+        <i class="fa cm-fix"></i>
+    </button>
+</div>
+<div class="modal-row is-disabled">
+    <cm-avatar cm-view="unknown"></cm-avatar>
+    <cm-key-level cm-data="2"></cm-key-level>
+    <span cm-weight="1">Mockname</span>
+    <button>
+        <i class="fa cm-fix"></i>
+    </button>
+</div>

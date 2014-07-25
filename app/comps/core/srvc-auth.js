@@ -10,9 +10,9 @@
  * @requires localStorage TODO: implement ServiceLocalStorage
  */
 
-angular.module('cmCore').service('cmAuth', [
-    'cmApi',
-    'cmObject',
+angular.module('cmCore')
+.service('cmAuth', [
+    'cmApi', 'cmObject',
     function(cmApi, cmObject){
         var auth = {
             /**
@@ -207,6 +207,61 @@ angular.module('cmCore').service('cmAuth', [
                 return cmApi.delete({
                     path: '/identity/publicKey/'+keyId
                 })
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name savePublicKeySignature
+             * @description
+             * save a signature to a public key
+             *
+             * @param {String} keyId id of local key
+             * @param {String} signKeyId id of signed key
+             * @param {String} signature signature
+             * @returns {Promise} for async handling
+             */
+            savePublicKeySignature: function(localKeyId, signKeyId, signature){
+                return cmApi.post({
+                    path: '/identity/publicKey/' + signKeyId + '/signature',
+                    data: {
+                        keyId: localKeyId,
+                        content: signature
+                    }
+                });
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name deleteAuthenticationRequest
+             * @description
+             * delete Authentication Request
+             *
+             * @param {String} is id of authentication request
+             * @returns {Promise} for async handling
+             */
+            deleteAuthenticationRequest: function(id){
+                return cmApi.delete({
+                    path: '/identity/authenticationRequest/' + id
+                });
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name saveAuthenticationRequest
+             * @description
+             * save Authentication Request
+             *
+             * @param {Object} data data for authentication request
+             * @returns {Promise} for async handling
+             */
+            saveAuthenticationRequest: function(data){
+                return cmApi.post({
+                    path: '/identity/authenticationRequest',
+                    data: data
+                });
             },
             /**
              * @ngdoc method

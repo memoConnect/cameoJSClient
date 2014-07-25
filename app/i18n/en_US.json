@@ -272,7 +272,7 @@
         },
         "NOTIFY":{
             "UPDATE": {
-                "ERROR": "Something went wrong, pls try again"
+                "ERROR": "Something went wrong, please try again"
             }
         }
     },
@@ -297,8 +297,13 @@
                     "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
                     "CREATE": "create",
                     "IMPORT": "import",
+                    "DETAIL": "cameoKey",
                     "KEY_SIZE": "keysize",
-                    "KEY_ON_THIS_DEVICE": "local",
+                    "IS_LOCAL": "local",
+                    "IS_LOCAL_ON_THIS_DEVICE": "Is local on this device",
+                    "TRUSTING": "Trusting",
+                    "IS_TRUSTED": "trusted",
+                    "IS_UNTRUSTED": "untrusted",
                     "EXPORT_KEY": "Keypair export",
                     "REMOVE_KEY": "Keypair remove",
                     "REMOVE_KEY_REALLY": "really remove?",
@@ -319,6 +324,18 @@
                         "CHECK_PUBKEY": "Check public key",
                         "CHECK_KEYNAME": "Check keyname"
                     }
+                },
+                "HANDSHAKE": {
+                    "MODAL_HEADER": "Authentication",
+                    "HANDSHAKE_NOW": "Do you want for the new cameoKey '<strong>{{keyName}}</strong>' to perform a handshake with an older device now?",
+                    "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
+                    "CHOOSE_OLD_DEVICE": "Please select an old device with which you want to perform the authentication!",
+                    "CHOOSE": "Please select",
+                    "TRANSACTION_SECRET": "This generated transactionsecret must be entered on the other device.",
+                    "HANDSHAKE_START": "Start authentication",
+                    "HANDSHAKE_RECEIVED": "Would you like to start the authentication?",
+                    "HANDSHAKE_NEED_TRANSACTID": "Please enter the code!",
+                    "HANDSHAKE_DONE": "Authentication succeed!'<br>' start reking?!?"
                 }
             },
             "ABOUT_US": {
@@ -480,6 +497,10 @@
         "WELCOME": {
             "MESSAGE": "Cameo rulez",
             "SUBJECT": "Hello"
+        },
+        "ERROR": {
+            "EMPTY_INPUT": "The input field is empty!",
+            "WRONG_INPUT": "Please check the code and try again!"
         }
     }
 }

@@ -15,15 +15,15 @@ describe('Route: Purl - ', function () {
             moep = param;
 
         it('should have back button "'+moep+'"', function(){
-            expect($('.cm-header-wrapper:not(.ng-hide) cm-back').isPresent()).toBe(true)
+            expect($('cm-header:not(.ng-hide) cm-back').isPresent()).toBe(true)
         })
 
         it('should have identity "'+moep+'"', function(){
-            expect($('.cm-header-wrapper:not(.ng-hide) cm-identity').isPresent()).toBe(true)
+            expect($('cm-header:not(.ng-hide) cm-identity').isPresent()).toBe(true)
         })
 
         it('should have menu "'+moep+'"', function(){
-            expect($('.cm-header-wrapper:not(.ng-hide) cm-menu').isPresent()).toBe(true)
+            expect($('cm-header:not(.ng-hide) cm-menu').isPresent()).toBe(true)
         })
 
         it('should have attachment button "'+moep+'"', function(){
@@ -43,15 +43,15 @@ describe('Route: Purl - ', function () {
             moep = param;
 
         it('should not have back button "'+moep+'"', function(){
-            expect($('.cm-header-wrapper:not(.ng-hide) cm-back').isPresent()).toBe(false)
+            expect($('cm-header:not(.ng-hide) cm-back').isPresent()).toBe(false)
         })
 
         it('should not have identity  "'+moep+'"', function(){
-            expect($('.cm-header-wrapper:not(.ng-hide) cm-identity').isPresent()).toBe(false)
+            expect($('cm-header:not(.ng-hide) cm-identity').isPresent()).toBe(false)
         })
 
         it('should not have menu "'+moep+'"', function(){
-            expect($('.cm-header-wrapper:not(.ng-hide) cm-menu').isPresent()).toBe(false)
+            expect($('cm-header:not(.ng-hide) cm-menu').isPresent()).toBe(false)
         })
 
         it('should have attachment button "'+moep+'"', function(){

@@ -2,8 +2,8 @@
 
 angular.module('cmCore')
 .service('cmUtil', [
-    '$q', 
-    function($q){
+    '$window',
+    function($window){
         /**
          * Checks if Key exists in an Object or Array
          * @param object
@@ -209,19 +209,29 @@ angular.module('cmCore')
             return Object.prototype.toString.call(value) === '[object Array]';
         };
 
+        this.isAlphaNumeric = function(id, length){
+            var alphNumericRegExp = "^[a-zA-Z0-9]{"+(length||20)+"}$";
+            var matches = id ? String(id).match(alphNumericRegExp) : null;
+            return matches != null;
+        };
+
         this.detectOSAndBrowser = function() {
-            var nVer = navigator.appVersion,
-                nAgt = navigator.userAgent,
-                browserName = navigator.appName,
-                nameOffset, verOffset, ix;
+            var nVer = $window.navigator.appVersion,
+                nAgt = $window.navigator.userAgent,
+                browserName = $window.navigator.appName,
+                nameOffset, verOffset;
 
             // In Opera, the true version is after 'Opera' or after 'Version'
-            if ((verOffset = nAgt.indexOf('Opera')) != -1) {
+            if ((verOffset = nAgt.indexOf('Opera')) != -1 || (verOffset = nAgt.indexOf('OPR')) != -1) {
                 browserName = 'Opera';
             }
             // In MSIE, the true version is after 'MSIE' in userAgent
             else if ((verOffset = nAgt.indexOf('MSIE')) != -1) {
                 browserName = 'Internet Explorer';
+            }
+            // Native Android
+            else if ((verOffset = nAgt.indexOf('Linux; U; Android')) != -1) {
+                browserName = 'Native Browser';
             }
             // In Chrome, the true version is after 'Chrome'
             else if ((verOffset = nAgt.indexOf('Chrome')) != -1) {
@@ -245,17 +255,19 @@ angular.module('cmCore')
             }
             var OSName = 'unknown OS';
 
-            if (navigator.appVersion.indexOf('Win') != -1)
+            if (nVer.indexOf('Win') != -1)
                 OSName = 'Windows';
-            if (navigator.appVersion.indexOf('like Mac OS X') != -1)
+
+            if (nVer.indexOf('like Mac OS X') != -1)
                 OSName = 'iOS';
-            else if (navigator.appVersion.indexOf('Mac') != -1)
+            else if (nVer.indexOf('Mac') != -1)
                 OSName = 'Mac OS X';
-            if (navigator.appVersion.indexOf('X11') != -1)
-                OSName = 'UNIX';
-            if(navigator.appVersion.indexOf('Android') != -1)
+
+            if(nVer.indexOf('Android') != -1)
                 OSName = 'Android';
-            else if (navigator.appVersion.indexOf('Linux') != -1)
+            else if (nVer.indexOf('X11') != -1)
+                OSName = 'UNIX';
+            else if (nVer.indexOf('Linux') != -1)
                 OSName = 'Linux';
 
             return {

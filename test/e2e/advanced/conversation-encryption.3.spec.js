@@ -119,12 +119,12 @@ describe('Conversation encryption -', function () {
 
         var checkSecurityAspects = function () {
             it("check security aspects", function () {
-                util.waitForElement('.cm-header-wrapper:not(.ng-hide)')
+                util.waitForElement('cm-header:not(.ng-hide)')
 
-                $('.cm-header-wrapper:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
+                $('cm-header:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
                     expect(icons.length).toBe(positiveAspects)
                 })
-                $('.cm-header-wrapper:not(.ng-hide)').$('cm-icons.negative').$$("i").then(function (icons) {
+                $('cm-header:not(.ng-hide)').$('cm-icons.negative').$$("i").then(function (icons) {
                     expect(icons.length).toBe(negativeAspects)
                 })
             })
@@ -164,6 +164,7 @@ describe('Conversation encryption -', function () {
 
                 it("login recipient", function () {
                     if (recipient.external) {
+                        util.logout()
                         conversationRoute = "/purl/" + purl
                     } else {
                         util.login(recipient.login, "password")
@@ -480,9 +481,11 @@ describe('Conversation encryption -', function () {
     })
 
     describe("delete test users -", function () {
-        util.deleteTestUser(testUser1)
-        util.deleteTestUser(testUser2)
-        util.deleteTestUser(testUser3)
+        it("delete test users", function () {
+            util.deleteTestUser(testUser1)
+            util.deleteTestUser(testUser2)
+            util.deleteTestUser(testUser3)
+        })
     })
 
 })

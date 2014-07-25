@@ -1,14 +1,10 @@
 'use strict';
 
 angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
-    'cmUserModel',
-    'cmCrypt',
-    'cmUtil',
-    'cmLogger',
-    'cmNotify',
-    'cmKey',
-    '$window',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey, $window){
+    'cmUserModel', 'cmCrypt', 'cmUtil', 'cmLogger', 'cmNotify', 'cmKey',
+    '$window', '$rootScope',
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey,
+             $window, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-keys-create.html',
@@ -57,6 +53,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                         }
                     );
                 };
+
                 /**
                  * cancel keypair generation
                  */
@@ -65,6 +62,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                     $scope.active = 'choose';
                     $window.history.back();
                 };
+
                 /**
                  * store key pair
                  */
@@ -87,12 +85,13 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                     }
 
                     if(error !== true){
-                        var key = (new cmKey())
-                            .setName($scope.keyName)
-                            .setKey($scope.privKey);
+                        var key = (new cmKey()).importData({
+                            name: $scope.keyName,
+                            privKey: $scope.privKey
+                        });
 
                         cmUserModel
-                            .saveKey(key)
+                            .storeKey(key)
                             .syncLocalKeys($scope.keySize);
 
                         $window.history.back();
