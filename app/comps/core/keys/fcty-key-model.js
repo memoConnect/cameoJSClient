@@ -153,48 +153,7 @@ angular.module('cmCore')
                 if(size)        data.size       = size;
 
                 return data;
-            };
-
-            this.updateKeyList = function(key_list){
-                var check = false;
-
-                key_list.forEach(function(key){
-                    if(
-                            (key.id && (key.id == self.id))
-                        ||  key.getPublicKey() == self.getPublicKey()
-                    ){
-                        
-                        key.importData(self.exportData())
-                        check = true;
-                    }
-                });
-                
-
-                if(!check)
-                    key_list.push(self);
-            };
-
-            this.removeFromKeyList = function(key_list){
-                var index = key_list.indexOf(self);
-                key_list.splice(index,1);
-            };
-
-            this.updateKeyDataList = function(key_data_list){
-                var check = false;
-
-                key_data_list.forEach(function(key_data){
-                    if(
-                        (key_data.id && (key_data.id == self.id))
-                        || key_data.pubKey == self.getPublicKey()
-                    ){
-                        angular.extend(key_data, self.exportData());
-                        check = true;
-                    }
-                });
-
-                if(!check)
-                    key_data_list.push(self.exportData());
-            };
+            };           
 
             init(data)
         }
