@@ -1,16 +1,12 @@
 'use strict';
 
 angular.module('cmCore').service('cmHooks', [
-    'cmUserModel',
-    'cmObject',
-    'cmApi',
-    'cmModal',
-    'cmLogger',
-    'cmAuthenticationRequestFactory',
-    'cmUtil',
-    '$location',
-    '$rootScope',
-    function(cmUserModel, cmObject, cmApi, cmModal, cmLogger, cmAuthenticationRequestFactory, cmUtil, $location, $rootScope){
+    'cmUserModel', 'cmObject', 'cmApi', 'cmModal', 'cmLogger',
+    'cmAuthenticationRequestFactory', 'cmUtil',
+    '$location', '$rootScope',
+    function(cmUserModel, cmObject, cmApi, cmModal, cmLogger,
+             cmAuthenticationRequestFactory, cmUtil,
+             $location, $rootScope){
         var self = this;
         cmObject.addEventHandlingTo(this);
 
@@ -66,7 +62,7 @@ angular.module('cmCore').service('cmHooks', [
                         type: 'plain',
                         'class': 'no-padding',
                         'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
-                    },'<cm-incoming-authentication-request></cm-incoming-authentication-request>',null,scope);
+                    },'<cm-incoming-authentication-request></cm-incoming-authentication-request>', null, scope);
                     cmModal.open(modalId);
                 }
 
@@ -86,6 +82,22 @@ angular.module('cmCore').service('cmHooks', [
                 if(typeof authenticationRequest.finish == 'function'){
                     authenticationRequest.finish();
                 }
+            }
+        });
+
+        cmUserModel.on('key:saved handshake:start', function(event, fromKey){
+            if(cmUserModel.verifyHandshake(fromKey)){
+                var scope = $rootScope.$new();
+                scope.fromKey = fromKey;
+
+                var modalId = 'outgoing-authentication-request';
+                cmModal.create({
+                    id: modalId,
+                    type: 'plain',
+                    'class': 'no-padding',
+                    'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
+                },'<cm-outgoing-authentication-request></cm-outgoing-authentication-request>', null, scope);
+                cmModal.open(modalId);
             }
         });
     }

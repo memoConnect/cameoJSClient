@@ -217,8 +217,6 @@ angular.module('cmCore')
         /**
          * Key Handling
          */
-
-
         this.getLocalKeyIdsForRequest = function(){
             if(this.isAuth !== false){
                 var keys = this.loadLocalKeys(),
@@ -434,6 +432,17 @@ angular.module('cmCore')
                     );
                 }
             }
+        };
+
+        this.verifyHandshake = function(fromKey){
+            var privateKeys  = self.loadLocalKeys() || [],
+            publicKeys = self.data.identity.keys.filter(function(key){
+                return (privateKeys.find(key) == null && key != fromKey);
+            });
+
+            return  fromKey instanceof cmKey && // is a cmKey
+                    fromKey.getPrivateKey() != undefined && // the privateKey of cmKey != undefined
+                    publicKeys.length > 0 // show only if more then 1 publicKey exists
         };
 
         /**

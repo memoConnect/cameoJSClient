@@ -2,9 +2,9 @@
 
 angular.module('cmRouteSettings')
 .directive('cmIdentityKeysImport', [
-    'cmNotify', 'cmKey', 'cmUtil', 'cmUserModel',
+    'cmNotify', 'cmKey', 'cmUtil', 'cmUserModel', 'cmModal',
     '$window',
-    function(cmNotify, cmKey, cmUtil, cmUserModel,
+    function(cmNotify, cmKey, cmUtil, cmUserModel, cmModal,
              $window){
         return {
             restrict: 'E',
