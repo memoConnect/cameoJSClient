@@ -391,7 +391,7 @@ angular.module('cmCore')
         };
 
         this.bulkReKeying = function(localKeyId, newKeyId){
-            cmLogger.debug('cmUserModel.startBulkReKeying');
+//            cmLogger.debug('cmUserModel.startBulkReKeying');
 
             if(typeof localKeyId == 'string' && cmUtil.validateString(localKeyId)
                 && typeof newKeyId == 'string' && cmUtil.validateString(newKeyId))

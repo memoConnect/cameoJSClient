@@ -12,7 +12,7 @@ angular.module('cmUser').directive('cmBulkRekeyingRequest',[
                 $scope.spinner = false;
 
                 $scope.startBulkRekeying = function(){
-                    cmLogger.debug('cmBulkRequest.startBulkRekeying');
+//                    cmLogger.debug('cmBulkRequest.startBulkRekeying');
 
                     $scope.spinner = true;
 
