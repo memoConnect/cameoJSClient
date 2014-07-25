@@ -51,6 +51,13 @@ angular.module('cmCore').service('cmHooks', [
                     },'<cm-incoming-authentication-request></cm-incoming-authentication-request>',null,scope);
                     cmModal.open(modalId);
                 }
+
+
+                authenticationRequest.on('delete:finished', function(){
+                    cmAuthenticationRequestFactory.deregister(authenticationRequest);
+
+                    console.log('after deregister cmAuthenticationRequestFactory', cmAuthenticationRequestFactory.length)
+                });
             }
         });
 

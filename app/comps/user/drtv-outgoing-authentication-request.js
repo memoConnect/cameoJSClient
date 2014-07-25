@@ -88,29 +88,8 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
 
                             cmAuthenticationRequestFactory.deregister(authenticationRequest);
                         });
-
-//                        cmAuth.startHandshake(dataForRequest).then(
-//                            function(request){
-//                                authenticationRequest = angular.extend({}, request);
-//                            },
-//                            function(){
-//                                cmLogger.debug('cmModalHandshake.startHandshake - Error');
-//                            }
-//                        );
-
                     }
                 };
-
-//                /**
-//                 * @todo doppelten aufruf vermeiden
-//                 */
-//                function callbackFinishHandshake(event, data){
-//                    cmLogger.debug('cmModalHandshake.callbackFinishHandshake');
-//
-//                    if('id' in data && data.id == authenticationRequest.id){
-//                        cmUserModel.signKey(authenticationRequest.fromKeyId, authenticationRequest.toKeyId);
-//                    }
-//                }
 
                 function finishRequest(){
                     $scope.handshakeIdle = false;
@@ -121,14 +100,10 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
                 // event schmusi
                 cmUserModel.on('key:saved', init);
                 cmModal.on('modal:closed', reset);
-//                cmHooks.on('authenticationRequest:finished', callbackFinishHandshake);
-//                cmUserModel.on('signature:saved', finishRequest);
 
                 $scope.$on('$destroy', function(){
                     cmUserModel.off('key:saved', init);
                     cmModal.off('modal:closed', reset);
-//                    cmHooks.off('authenticationRequest:finished', callbackFinishHandshake);
-//                    cmUserModel.off('signature:saved', finishRequest);
                 });
 
                 reset();

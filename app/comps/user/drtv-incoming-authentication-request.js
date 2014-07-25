@@ -66,7 +66,6 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
                     $scope.authenticationRequest.off('delete:finished',closeModal);
                 });
 
-
             }
         }
     }

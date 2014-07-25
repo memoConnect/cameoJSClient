@@ -186,6 +186,9 @@ angular.module('cmCore')
 //                cmLogger.debug('cmAuthenticationRequestModel.delete');
 
                 if(this.state.is('incoming')){
+                    /**
+                     * häß1ßß1?
+                     */
                     cmAuth.deleteAuthenticationRequest(this.id).then(
                         function(){
                             self.trigger('delete:finished');
