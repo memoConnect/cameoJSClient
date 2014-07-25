@@ -49,6 +49,13 @@ angular.module('cmCore')
                 return public_key;
             };
 
+
+            this.getFingerprint = function(){
+                return sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(this.getPublicKey()))
+            }
+
+
+            //in getFingerprint verwurstet
             this.getPublicKeyForSigning = function(identityId){
                 if(typeof identityId == 'string' && identityId.length > 0){
                     return sjcl.hash.sha256.hash(identityId+':'+this.getPublicKey()).toString();
@@ -68,8 +75,8 @@ angular.module('cmCore')
                 return private_key;
             };
 
-            this.sign = function(value){
-                return crypt.sign(value)
+            this.signKey = function(key){
+                return crypt && crypt.sign(key.getFingerprint())
             };
 
             this.encrypt = function(secret){
@@ -80,15 +87,14 @@ angular.module('cmCore')
                 return crypt && crypt.decrypt(encrypted_secret);
             };
 
-            this.verify = function(signature){
-                return crypt && crypt.verify(signature)
-            };
-
             this.trusts = function(key){
                 return  this == key //allways trusts itself
                         ||
-                        this.signatures.some(function(signature){
-                            return (key.id == signature.keyId) && key.verify(signature.content)
+                        key.signatures.some(function(signature){
+                            console.log(signature.content)
+                            return      crypt 
+                                    &&  (self.id == signature.keyId) 
+                                    &&  crypt.verify(key.getFingerprint(), signature.content, function(x){ return x })
                         })
             };
 
@@ -132,7 +138,8 @@ angular.module('cmCore')
                 if(data.name)       this.setName(data.name);
                 if(data.id)         this.setId(data.id);
                 if(data.created)    this.created = data.created;
-                if(data.signatures) this.signatures.concat(data.signatures)
+                if(data.signatures) Array().push.apply(this.signatures, data.signatures)
+
 
                 if(key) this.setKey(key);
 
@@ -145,12 +152,13 @@ angular.module('cmCore')
                     public_key  = this.getPublicKey(),
                     size        = this.getSize();
 
-                if(this.id)     data.id         = this.id;
-                if(this.name)   data.name       = this.name;
-                if(this.created)data.created    = this.created;
-                if(public_key)  data.pubKey     = public_key;
-                if(private_key) data.privKey    = private_key;
-                if(size)        data.size       = size;
+                if(this.id)         data.id         = this.id;
+                if(this.name)       data.name       = this.name;
+                if(this.signatures) data.signatures = this.signatures;
+                if(this.created)    data.created    = this.created;
+                if(public_key)      data.pubKey     = public_key;
+                if(private_key)     data.privKey    = private_key;
+                if(size)            data.size       = size;
 
                 return data;
             };           
