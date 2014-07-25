@@ -14,16 +14,33 @@ angular.module('cmCore').service('cmHooks', [
         var self = this;
         cmObject.addEventHandlingTo(this);
 
-        /**
-         * Event Handling
-         */
+        this.openBulkRequest = function(data){
+//            cmLogger.debug('cmHooks.openBulkRequest');
+
+            if(typeof data == 'object' && cmUtil.checkKeyExists(data,'key1') && cmUtil.checkKeyExists(data, 'key2')){
+                var scope = $rootScope.$new();
+                scope.data = data;
+
+                var modalId = 'bulk-rekeying-modal';
+                cmModal.create({
+                    id: modalId,
+                    type: 'plain',
+                    'class': 'no-padding',
+                    'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
+                },'<cm-bulk-rekeying-request></cm-bulk-rekeying-request>',null,scope);
+                cmModal.open(modalId);
+
+
+                cmUserModel.on('bulkrekeying:finished',function(){
+                    $rootScope.closeModal('bulk-rekeying-modal');
+                });
+            }
+        };
 
         /**
          * authenticationRequest:new
          */
         cmApi.on('authenticationRequest:new', function(event, request){
-//            cmLogger.debug('cmHooks.on:authenticationRequest:new');
-//        $rootScope.$on('authenticationRequest:new', function(){
 //            cmLogger.debug('cmHooks.on:authenticationRequest:new');
 
 //            var requestMock = {
@@ -54,9 +71,9 @@ angular.module('cmCore').service('cmHooks', [
                 }
 
                 authenticationRequest.on('delete:finished', function(){
-                    cmAuthenticationRequestFactory.deregister(authenticationRequest);
+                    self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
 
-                    console.log('after deregister cmAuthenticationRequestFactory', cmAuthenticationRequestFactory.length)
+                    cmAuthenticationRequestFactory.deregister(authenticationRequest);
                 });
             }
         });

@@ -51,6 +51,10 @@ angular.module('cmCore')
                 return this;
             };
 
+            this.exportKeyIdsForBulk = function(){
+                return {key1:this.toKeyId, key2:this.fromKeyId};
+            };
+
             this.verifyForm = function(){
 //                cmLogger.debug('cmAuthenticationRequestModel.verifyForm');
 

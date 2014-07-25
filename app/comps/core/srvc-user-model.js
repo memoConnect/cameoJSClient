@@ -512,12 +512,6 @@ angular.module('cmCore')
             cmBoot.resolve();
         });
 
-        this.on('signature:saved', function(event, value){
-            if(typeof value == 'object' && cmUtil.checkKeyExists(value,'key1') && cmUtil.checkKeyExists(value, 'key2')){
-                self.bulkReKeying(value.key1, value.key2);
-            }
-        });
-
         cmAuth.on('identity:updated', function(event, data){
             if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
                 self.data.identity.importData(data);
