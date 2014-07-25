@@ -425,6 +425,8 @@ angular.module('cmCore')
                                         cmLogger.debug('cmUserModel.bulkReKeying - Request Error - saveBulkPassphrases');
                                     }
                                 );
+                            } else {
+                                self.trigger('bulkrekeying:finished');
                             }
                         },function(){
                             cmLogger.debug('cmUserModel.bulkReKeying - Request Error - getBulkPassphrases');
