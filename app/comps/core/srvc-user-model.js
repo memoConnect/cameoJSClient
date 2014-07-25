@@ -347,19 +347,22 @@ angular.module('cmCore')
         this.signKey = function(localKeyId, signKeyId){
 //            cmLogger.debug('cmUserModel.signKey');
 
+            console.dir({localKeyId:localKeyId, signKeyId:signKeyId})
+
             if(localKeyId == signKeyId) return null //keys should not sign themselves
 
-            var localKeys = this.loadLocalKeys();
-            var signingKey = localKeys.find(localKeyId);
-            var keyToSign = this.data.identity.keys.find(signKeyId);
+            var localKeys   = this.loadLocalKeys();
+            var signingKey  = localKeys.find(localKeyId);
+            var keyToSign   = this.data.identity.keys.find(signKeyId);
 
-            var signature = signingKey.signKey(keyToSign);
+            var signature   = signingKey.signKey(keyToSign);
 
             if(typeof signature == 'string' && signature.length > 0){
                 cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
-                    function(){
+                    function(signature){
+                        console.dir(signature)
+                        self.data.identity.keys.find(keyToSign.id).importData({signatures:[signature]})
                         self.trigger('signature:saved', {signingKey : signingKey, keyToSign: keyToSign});
-                        console.log({signingKey : signingKey, keyToSign: keyToSign})
                     },
                     function(){
                         self.trigger('signature:failed');
@@ -518,6 +521,10 @@ angular.module('cmCore')
 
         this.signOwnKeys = function(){
             console.log('signing....')
+
+
+            self.state.set('signing')
+
             var local_keys       = this.loadLocalKeys(),
                 ttrusted_keys    = this.data.identity.keys.getTransitivelyTrustedKeys(local_keys)
                 
@@ -526,34 +533,32 @@ angular.module('cmCore')
             local_keys.forEach(function(local_key){
                 ttrusted_keys.forEach(function(ttrusted_key){
 
-                    var local_key_signatures =  ttrusted_key.signatures.filter(function(signature){
+                    var no_signature_present =  !ttrusted_key.signatures.some(function(signature){
                                                     return signature.keyId == local_key.id
                                                 })
-                    if(local_key_signatures.length == 0 && local_key.id  != ttrusted_key.id)
+
+                    if(no_signature_present && local_key.id  != ttrusted_key.id)
                         stack.push(function(){ self.signKey(local_key.id, ttrusted_key.id) })
 
                 })
             })
 
             function stack_advance(){
-                if(stack.length == 0 ){
-                    self.state.unset('signing')
-                    return false
-                }
-
+                console.log(stack.length)
+               
                 var callback = stack.pop()
-                if(callback)
-                    callback()
 
-                if(stack.length != 0)
-                    $timeout(stack_advance, 400)
+                if(callback) callback()
+
+                if(stack.length != 0){
+                    $timeout(stack_advance, 200)
+                }else{
+                    self.state.unset('signing')
+                }
                 
             }
 
             stack_advance()
-
-            self.state.set('signing')
-
 
             return self
         }

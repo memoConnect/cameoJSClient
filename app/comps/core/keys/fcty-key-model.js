@@ -137,7 +137,6 @@ angular.module('cmCore')
                 if(data.created)    this.created = data.created;
                 if(data.signatures) Array().push.apply(this.signatures, data.signatures)
 
-
                 if(key) this.setKey(key);
 
                 return this;
