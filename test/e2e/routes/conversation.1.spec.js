@@ -7,6 +7,8 @@ describe('Single Conversation:', function () {
     var newSubject = "wicked_test_subject_" + Date.now();
     var messageText = "wicked_test_message_text_" + Date.now();
     var messageText2 = "another_wicked_test_message_text_" + Date.now();
+    afterEach(function() { util.stopOnError() });
+
 
     it('should be at "#/talks"', function () {
         util.login()

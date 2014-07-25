@@ -13,6 +13,8 @@ describe('Route: Settings - Identity', function(){
     var newPhoneNumber = '+49123456789';
     var newEmail = 'moeper@moep.moep';
 
+    afterEach(function() { util.stopOnError() });
+
     describe('Test 1 - GUI', function(){
         it('should be load at "#/settings/identity" after login.', function(){
             util.login()

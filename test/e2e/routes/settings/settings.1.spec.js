@@ -3,6 +3,8 @@ var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('settings', function(){
 
+    afterEach(function() { util.stopOnError() });
+
     function openMenu(){
         $("cm-menu .cm-handler").click()
     }

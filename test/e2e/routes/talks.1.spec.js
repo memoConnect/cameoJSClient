@@ -4,6 +4,7 @@ var util = require("../../lib/e2e/cmTestUtil.js")
 describe('talks', function () {
 
     var ptor = util.getPtorInstance()
+    afterEach(function() { util.stopOnError() });
 
     it('should be at "#/talks".', function () {
         util.login()
