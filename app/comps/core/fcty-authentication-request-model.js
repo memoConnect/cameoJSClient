@@ -25,7 +25,7 @@ angular.module('cmCore')
             this.toKeyId = undefined;
 
             function init(requestData){
-                cmLogger.debug('cmAuthenticationRequestModel.init');
+//                cmLogger.debug('cmAuthenticationRequestModel.init');
 
                 self.importData(requestData);
 
@@ -33,7 +33,7 @@ angular.module('cmCore')
             }
 
             this.importData = function(requestData){
-                cmLogger.debug('cmAuthenticationRequestModel.importData');
+//                cmLogger.debug('cmAuthenticationRequestModel.importData');
 
                 if(typeof requestData !== 'object'){
                     cmLogger.debug('authenticationRequestModel.importData:failed - no data!');
@@ -52,7 +52,7 @@ angular.module('cmCore')
             };
 
             this.verifyForm = function(){
-                cmLogger.debug('cmAuthenticationRequestModel.verifyForm');
+//                cmLogger.debug('cmAuthenticationRequestModel.verifyForm');
 
                 if(typeof this.signature != 'string' || this.signature.length < 1){
                     return false;
@@ -74,7 +74,7 @@ angular.module('cmCore')
             };
 
             this.verifyIncomingRequest = function(){
-                cmLogger.debug('cmAuthenticationRequestModel.verifyIncomingRequest');
+//                cmLogger.debug('cmAuthenticationRequestModel.verifyIncomingRequest');
 
                 if(typeof this.id != 'string' || !cmUtil.validateString(this.id)){
                     return false;
@@ -135,7 +135,7 @@ angular.module('cmCore')
             };
 
             this.verifyTransactionSecret = function(transactionSecret){
-                cmLogger.debug('cmAuthenticationRequestModel.verifyTransactionSecret');
+//                cmLogger.debug('cmAuthenticationRequestModel.verifyTransactionSecret');
 
                 if(cmUtil.validateString(transactionSecret)){
                     var localKeys = cmUserModel.loadLocalKeys();
@@ -162,6 +162,8 @@ angular.module('cmCore')
             };
 
             this.save = function(){
+//                cmLogger.debug('cmAuthenticationRequestModel.save');
+
                 if(this.verifyForm() !== false){
                     cmAuth.saveAuthenticationRequest({
                         identityId: cmUserModel.data.identity.id,
@@ -181,8 +183,7 @@ angular.module('cmCore')
             };
 
             this.delete = function(){
-                cmLogger.debug('cmAuthenticationRequestModel.delete');
-                console.log('delete - is incoming?', this.state.is('incoming'))
+//                cmLogger.debug('cmAuthenticationRequestModel.delete');
 
                 if(this.state.is('incoming')){
                     cmAuth.deleteAuthenticationRequest(this.id).then(

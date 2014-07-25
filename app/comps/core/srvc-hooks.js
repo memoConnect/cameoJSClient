@@ -34,21 +34,23 @@ angular.module('cmCore').service('cmHooks', [
 //                created: 1406280637301
 //            };
 
-            var authenticationRequest = cmAuthenticationRequestFactory.create(request);
-            authenticationRequest.state.set('incoming');
+            if(cmAuthenticationRequestFactory.find(request) == null){
+                var authenticationRequest = cmAuthenticationRequestFactory.create(request);
+                authenticationRequest.state.set('incoming');
 
-            if(authenticationRequest.verifyIncomingRequest() !== false){
-                var scope = $rootScope.$new();
-                scope.authenticationRequest = authenticationRequest;
+                if(authenticationRequest.verifyIncomingRequest() !== false){
+                    var scope = $rootScope.$new();
+                    scope.authenticationRequest = authenticationRequest;
 
-                var modalId = 'incoming-authentication-request';
-                cmModal.create({
-                    id: modalId,
-                    type: 'plain',
-                    'class': 'no-padding',
-                    'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
-                },'<cm-incoming-authentication-request></cm-incoming-authentication-request>',null,scope);
-                cmModal.open(modalId);
+                    var modalId = 'incoming-authentication-request';
+                    cmModal.create({
+                        id: modalId,
+                        type: 'plain',
+                        'class': 'no-padding',
+                        'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
+                    },'<cm-incoming-authentication-request></cm-incoming-authentication-request>',null,scope);
+                    cmModal.open(modalId);
+                }
             }
         });
 
