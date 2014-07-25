@@ -518,7 +518,10 @@ angular.module('cmCore')
         };
 
         this.signOwnKeys = function(){
+            if(!this.data.identity.keys) return null
+
             self.state.set('signing')
+
 
             var local_keys       = this.loadLocalKeys(),
                 ttrusted_keys    = this.data.identity.keys.getTransitivelyTrustedKeys(local_keys)
@@ -555,6 +558,9 @@ angular.module('cmCore')
 
             return self
         }
+        init();
+
+
 
         /**
          * Event Handling
@@ -563,12 +569,13 @@ angular.module('cmCore')
             self.resetUser();
         });
 
-        this.on('update:finished', function(){            
-            self.signOwnKeys()
+        this.on('update:finished', function(){  
+            //Todo: tets sollte nicht nötig sein
+            if(self.data.identity.key && typeof self.data.identity.on)
+                self.signOwnKeys()       
+
             cmBoot.resolve();
         });
-
-
 
 
         cmAuth.on('identity:updated', function(event, data){
@@ -577,6 +584,5 @@ angular.module('cmCore')
             }
         });
 
-        init();
     }
 ]);
