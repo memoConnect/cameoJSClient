@@ -1,13 +1,9 @@
 <div class="modal-row">
-    <!--<span ng-bind-html="'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_RECEIVED'|cmTranslate:{keyName:fromKey.name}"></span>-->
-
-    Rekeing????
-
-    modal schließt sich selbst, wenn vorbei!
+    <span ng-bind-html="'DRTV.BULK_REKEYING.CONTENT'|cmTranslate"></span>
 </div>
 <button class="cm-btn cm-btn-block cm-btn-grey" data-qa="btn-acceptRequest" ng-click="startBulkRekeying();">
     <span ng-show="!spinner">
-            {{'MODAL.ALERT.OK'|cmTranslate}}
+            {{'DRTV.BULK_REKEYING.START'|cmTranslate}}
             <i class="fa cm-checker cm-lg-icon"></i>
         </span>
     <cm-spinner ng-show="spinner" cm-color="#02BED2"></cm-spinner>

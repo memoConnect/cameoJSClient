@@ -26,7 +26,7 @@ angular.module('cmCore').service('cmHooks', [
                     id: modalId,
                     type: 'plain',
                     'class': 'no-padding',
-                    'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
+                    'cm-title': 'DRTV.BULK_REKEYING.HEADER'
                 },'<cm-bulk-rekeying-request></cm-bulk-rekeying-request>',null,scope);
                 cmModal.open(modalId);
 

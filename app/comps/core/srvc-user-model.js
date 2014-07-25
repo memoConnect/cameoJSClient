@@ -21,10 +21,10 @@
 
 angular.module('cmCore')
 .service('cmUserModel',[
-    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKeyFactory', 'cmStateManagement',
+    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKeyFactory', 'cmKey', 'cmStateManagement',
     'cmObject', 'cmUtil', 'cmNotify', 'cmLogger',
     '$rootScope', '$q', '$location', '$timeout',
-    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmKeyFactory, cmStateManagement,
+    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmKeyFactory, cmKey, cmStateManagement,
              cmObject, cmUtil, cmNotify, cmLogger,
              $rootScope, $q, $location, $timeout){
         var self = this,
