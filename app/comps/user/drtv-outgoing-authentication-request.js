@@ -1,20 +1,17 @@
 'use strict';
 
 angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
-    'cmAuthenticationRequestFactory',
-    'cmUserModel', 'cmTranslate', 'cmKey', 'cmCrypt', 'cmAuth',
-    'cmModal', 'cmHooks', 'cmLogger',
+    'cmAuthenticationRequestFactory', 'cmUserModel', 'cmTranslate', 'cmKey',
+    'cmCrypt', 'cmAuth', 'cmModal', 'cmHooks', 'cmLogger',
     '$rootScope',
-    function (cmAuthenticationRequestFactory,
-              cmUserModel, cmTranslate, cmKey, cmCrypt, cmAuth,
-              cmModal, cmHooks, cmLogger,
+    function (cmAuthenticationRequestFactory, cmUserModel, cmTranslate, cmKey,
+              cmCrypt, cmAuth, cmModal, cmHooks, cmLogger,
               $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/drtv-outgoing-authentication-request.html',
             scope: true,
             controller: function($scope){
-
                 var authenticationRequest = {};
 
                 var modalId = 'outgoing-authentication-request';
@@ -28,19 +25,6 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
                     $scope.toKey = {};
                     $scope.transactionSecret = '';
                     $scope.handshakeIdle = false;
-                    $scope.fromKey = null;
-                }
-
-                function init(event, fromKey){
-                    if(fromKey instanceof cmKey && // is a cmKey
-                        fromKey.getPrivateKey() != undefined && // the privateKey of cmKey != undefined
-                        $scope.publicKeys.length > 0 // show only if more then 1 publicKey exists
-                        ){
-                        $scope.fromKey = fromKey;
-                        $rootScope.openModal(modalId);
-                    } else {
-
-                    }
                 }
 
                 $scope.doHandshake = function(){
@@ -93,14 +77,7 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
                     }
                 };
 
-                function finishRequest(){
-                    $scope.handshakeIdle = false;
-                    $rootScope.closeModal(modalId);
-                    authenticationRequest = {};
-                }
-
                 // event schmusis
-                $rootScope.$on('do:handshake', init);
                 cmModal.on('modal:closed', reset);
 
                 $scope.$on('$destroy', function(){

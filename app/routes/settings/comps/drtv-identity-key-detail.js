@@ -21,7 +21,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyDetail', [
                 $scope.isTrusted = cmUserModel.trustsKey(pubKey);
 
                 $scope.startAuthentication = function(){
-                    $rootScope.$broadcast('do:handshake', privKey);
+                    cmUserModel.trigger('handshake:start', privKey);
                 }
             }
         }

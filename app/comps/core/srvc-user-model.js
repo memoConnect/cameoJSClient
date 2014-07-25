@@ -20,11 +20,11 @@
  */
 
 angular.module('cmCore').service('cmUserModel',[
-    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKeyFactory', 'cmStateManagement',
-    'cmObject', 'cmUtil', 'cmNotify', 'cmLogger',
+    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKeyFactory', 'cmKey',
+    'cmStateManagement', 'cmObject', 'cmUtil', 'cmNotify', 'cmLogger',
     '$rootScope', '$q', '$location', '$timeout',
-    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmKeyFactory, cmStateManagement,
-             cmObject, cmUtil, cmNotify, cmLogger,
+    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmKeyFactory, cmKey,
+             cmStateManagement, cmObject, cmUtil, cmNotify, cmLogger,
              $rootScope, $q, $location, $timeout){
         var self = this,
             isAuth = false,
@@ -433,9 +433,15 @@ angular.module('cmCore').service('cmUserModel',[
             }
         };
 
-        this.verifyHandshake = function(){
+        this.verifyHandshake = function(fromKey){
+            var privateKeys  = self.loadLocalKeys() || [],
+            publicKeys = self.data.identity.keys.filter(function(key){
+                return (privateKeys.find(key) == null && key != fromKey);
+            });
 
-
+            return  fromKey instanceof cmKey && // is a cmKey
+                    fromKey.getPrivateKey() != undefined && // the privateKey of cmKey != undefined
+                    publicKeys.length > 0 // show only if more then 1 publicKey exists
         };
 
         /**

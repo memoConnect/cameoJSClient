@@ -32,8 +32,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                 };
 
                 $scope.$on('$destroy', function(){
-                    cmUserModel.off('key:stored signature:saved', refresh)
-
+                    cmUserModel.off('key:stored', refresh)
+                    cmUserModel.off('signature:saved', refresh)
                 })
 
                 cmUserModel.state.on('change', function(event, data){
