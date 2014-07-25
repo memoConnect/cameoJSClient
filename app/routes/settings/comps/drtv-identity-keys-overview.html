@@ -34,7 +34,7 @@
                 <span ng-if="!isTrustedKey(key)" class="is-untrusted">{{'SETTINGS.PAGES.IDENTITY.KEYS.IS_UNTRUSTED'|cmTranslate}}
                     <span class="seperator">|</span>
                 </span>
-                {{ttKeys.indexOf(key)}}
+                {{trustedKeys.indexOf(key)}}
                 {{key.created | date:'dd.MM.yy - HH:mm'}}
             </span>
         </a>
@@ -42,6 +42,9 @@
             <i class="fa cm-export-key cm-lg-special" ng-click="openModal('modalExportKeyPair',key)"></i>
             <i class="fa cm-cancel-key cm-lg-special" ng-click="openModal('modalRemoveKeypair',key)" data-qa="btn-remove-modal"></i>
         </div>
+    </li>
+    <li>
+        <cm-spinner ng-if="signing"></cm-spinner>
     </li>
 </ul>
 

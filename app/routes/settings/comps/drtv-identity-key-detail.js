@@ -10,7 +10,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyDetail', [
             templateUrl: 'routes/settings/comps/drtv-identity-key-detail.html',
             controller: function ($scope) {
 
-                var privKey = cmUserModel.loadLocalKeys().find($routeParams.pageChild2) || {};
+                var localKeys = cmUserModel.loadLocalKeys()
+                var privKey = localKeys.find($routeParams.pageChild2) || {};
                 var pubKey = cmUserModel.data.identity.keys.find($routeParams.pageChild2) || {};
 
                 $scope.privKey = 'getPrivateKey' in privKey ? privKey.getPrivateKey() : '';
@@ -20,7 +21,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyDetail', [
                 $scope.isTrusted = cmUserModel.trustsKey(pubKey);
 
                 $scope.startAuthentication = function(){
-                    $rootScope.$broadcast('do:handshake', privKey);
+                    $rootScope.$broadcast('do:handshake', localKeys[0]);
                 }
             }
         }

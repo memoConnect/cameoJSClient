@@ -88,7 +88,7 @@ angular.module('cmCore')
             };
 
             this.trusts = function(key){
-                return  (this.getPrivateKey()&& (this.getPublicKey() == key.getPublicKey() )) //allways trusts itself
+                return  this.getPublicKey() == key.getPublicKey() //allways trusts itself
                         ||
                         key.signatures.some(function(signature){
                             return      crypt 
