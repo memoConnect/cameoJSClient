@@ -8,8 +8,13 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
             templateUrl: 'routes/settings/comps/drtv-identity-keys-overview.html',
             controller: function ($scope) {
 
-                $scope.privateKeys  = cmUserModel.loadLocalKeys() || [];
-                $scope.publicKeys   = cmUserModel.data.identity.keys || [];
+                function refresh(){
+                    $scope.privateKeys  =   cmUserModel.loadLocalKeys() || [];
+                    $scope.publicKeys   =   cmUserModel.data.identity.keys || [];
+                    $scope.trustedKeys  =   $scope.publicKeys.filter(function(key){
+                                                return cmUserModel.trustsKey(key)
+                                            })
+                }
 
                 $scope.remove = function(key){
                     cmUserModel.removeKey(key);
@@ -17,16 +22,20 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                 };
 
                 $scope.isTrustedKey = function(key){
-                    return cmUserModel.trustsKey(key);
-                };
+                    return $scope.trustedKeys.indexOf(key) != -1
+                }
 
                 $scope.sortByPrivKeys = function(key) {
                     return !($scope.privateKeys.find(key) instanceof cmKey);
                 };
 
-                cmUserModel.on('key:stored', function(){
-                    $scope.privateKeys = cmUserModel.loadLocalKeys() || [];
-                });
+                $scope.$on('$destroy', function(){
+                    cmUserModel.off(refresh)
+                })
+
+                cmUserModel.on('key:stored', refresh);
+
+                refresh()
             }
         }
     }
