@@ -1,11 +1,10 @@
 'use strict';
 
-angular.module('cmCore')
-.service('cmFilesAdapter', [
-    'cmApi',
-    'cmLogger',
+angular.module('cmCore').service('cmFilesAdapter', [
+    'cmApi', 'cmLogger',
     '$q',
-    function (cmApi, cmLogger, $q){
+    function (cmApi, cmLogger,
+              $q){
         return {
             prepareFile: function(config){
                 return cmApi.post({
@@ -64,9 +63,9 @@ angular.module('cmCore')
                 } catch(e){
                     // TypeError old chrome and FF
                     window.BlobBuilder =    window.BlobBuilder ||
-                        window.WebKitBlobBuilder ||
-                        window.MozBlobBuilder ||
-                        window.MSBlobBuilder;
+                                            window.WebKitBlobBuilder ||
+                                            window.MozBlobBuilder ||
+                                            window.MSBlobBuilder;
 
                     // is already a blob!
                     if(data.toString() == '[object Blob]'){
@@ -122,17 +121,21 @@ angular.module('cmCore')
              * @returns {String} clearBase64
              */
             clearBase64: function(b64Data){
-                var clearBase64 = b64Data
-                    .replace(/\r?\n|\r/g,'')
-                    .replace(new RegExp('^(data:.{0,100};base64,)(.*)$','i'),function(){
-                        return arguments[2];// return the cleared base64
-                    });
-                return clearBase64;
+                if(typeof b64Data != 'string')
+                    return '';
+
+                return b64Data
+                .replace(/\r?\n|\r/g,'')
+                .replace(new RegExp('^(data:.{0,100};base64,)(.*)$','i'),function(){
+                    return arguments[2];// return the cleared base64
+                });
             },
 
-            base64ToBinary: function(base64){
-                var clearBase64 = this.clearBase64(base64);
-                return atob(clearBase64);
+            base64ToBinary: function(b64Data){
+                if(typeof b64Data != 'string')
+                    return '';
+
+                return atob(this.clearBase64(b64Data));
             },
 
             getBlobUrl: function(blob){

@@ -49,11 +49,9 @@ angular.module('cmCore')
                 return public_key;
             };
 
-
             this.getFingerprint = function(){
                 return sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(this.getPublicKey()))
             }
-
 
             //in getFingerprint verwurstet
             this.getPublicKeyForSigning = function(identityId){

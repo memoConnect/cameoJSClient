@@ -38,7 +38,8 @@ module.exports = function(config) {
             'test/lib/angular/angular-mocks.js',
 
             // specs
-            'test/unit/**/*.spec.js',
+            'test/unit/**/cmFilesAdapter.spec.js',
+            //'test/unit/**/*.spec.js',
 
             // json files
             'app/**/*.json'
