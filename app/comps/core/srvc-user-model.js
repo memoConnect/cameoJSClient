@@ -21,10 +21,10 @@
 
 angular.module('cmCore')
 .service('cmUserModel',[
-    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKeyFactory',
+    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKeyFactory','cmKey',
     'cmObject', 'cmUtil', 'cmNotify', 'cmLogger',
     '$rootScope', '$q', '$location',
-    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmKeyFactory,
+    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmKeyFactory, cmKey,
              cmObject, cmUtil, cmNotify, cmLogger,
              $rootScope, $q, $location){
         var self = this,
@@ -357,7 +357,7 @@ angular.module('cmCore')
             if(typeof signature == 'string' && signature.length > 0){
                 cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
                     function(){
-                        self.trigger('signature:saved');
+                        self.trigger('signature:saved',{key1:localKeyId,key2:signKeyId});
                     },
                     function(){
                         self.trigger('signature:failed');
@@ -378,7 +378,7 @@ angular.module('cmCore')
             return  local_keys.some(function(local_key){
                         return local_key.trusts(key)
                     })
-        }
+        };
 
         this.decryptPassphrase = function(encrypted_passphrase, keyId){
             var keys = this.loadLocalKeys() || []
@@ -388,6 +388,48 @@ angular.module('cmCore')
                                 ||  ( (key.id == keyId || !keyId) && key.decrypt(encrypted_passphrase) )
 
                     }, undefined)
+        };
+
+        this.bulkReKeying = function(localKeyId, newKeyId){
+            cmLogger.debug('cmUserModel.startBulkReKeying');
+
+            if(typeof localKeyId == 'string' && cmUtil.validateString(localKeyId)
+                && typeof newKeyId == 'string' && cmUtil.validateString(newKeyId))
+            {
+                var localKey = this.loadLocalKeys().find(localKeyId);
+                var newKey = this.data.identity.keys.find(newKeyId);
+
+                if(localKey instanceof cmKey && newKey instanceof cmKey){
+                    cmAuth.getBulkPassphrases(localKey.id, newKey.id).then(
+                        function(list){
+                            var newList = [],
+                                i = 0;
+
+                            while(i < list.length){
+                                var passphrase = self.decryptPassphrase(list[i].aePassphrase, localKey.id);
+                                if(cmUtil.validateString(passphrase)){
+                                    newList.push({conversationId: list[i].conversationId, aePassphrase: newKey.encrypt(passphrase)})
+                                }
+                                passphrase = undefined;
+                                i++;
+                            }
+
+                            if(newList.length > 0){
+                                cmAuth.saveBulkPassphrases(newKey.id, newList).then(
+                                    function(){
+                                        self.trigger('bulkrekeying:finished');
+                                    },
+                                    function(){
+                                        cmLogger.debug('cmUserModel.bulkReKeying - Request Error - saveBulkPassphrases');
+                                    }
+                                );
+                            }
+                        },function(){
+                            cmLogger.debug('cmUserModel.bulkReKeying - Request Error - getBulkPassphrases');
+                        }
+                    );
+                }
+            }
         };
 
         /**
@@ -468,6 +510,12 @@ angular.module('cmCore')
 
         this.on('update:finished', function(){
             cmBoot.resolve();
+        });
+
+        this.on('signature:saved', function(event, value){
+            if(typeof value == 'object' && cmUtil.checkKeyExists(value,'key1') && cmUtil.checkKeyExists(value, 'key2')){
+                self.bulkReKeying(value.key1, value.key2);
+            }
         });
 
         cmAuth.on('identity:updated', function(event, data){

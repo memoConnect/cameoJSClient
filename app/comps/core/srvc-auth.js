@@ -12,8 +12,8 @@
 
 angular.module('cmCore')
 .service('cmAuth', [
-    'cmApi', 'cmObject',
-    function(cmApi, cmObject){
+    'cmApi', 'cmObject', 'cmUtil',
+    function(cmApi, cmObject, cmUtil){
         var auth = {
             /**
              * @ngdoc method
@@ -260,6 +260,50 @@ angular.module('cmCore')
             saveAuthenticationRequest: function(data){
                 return cmApi.post({
                     path: '/identity/authenticationRequest',
+                    data: data
+                });
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name getBulkPassphrases
+             * @description
+             * get aePassphraseList for reKeying
+             *
+             * @param {String} keyId id of local key
+             * @param {String} newKeyId id of new public key
+             * @param {Integer} limit maximum answers in list
+             * @returns {Promise} for async handling
+             */
+            getBulkPassphrases: function(keyId, newKeyId, limit){
+                var queryString = cmUtil.handleLimitOffset(limit);
+
+                if(queryString == ''){
+                    queryString += '?newKeyId=' + newKeyId;
+                } else {
+                    queryString += '&newKeyId=' + newKeyId;
+                }
+
+                return cmApi.get({
+                    path: '/identity/publicKey/'+ keyId +'/aePassphrases' + queryString
+                });
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name saveBulkPassphrases
+             * @description
+             * post new aePassphraseList for conversation
+             *
+             * @param {String} keyId id of public key
+             * @param {Object} data new asymmetric encrypted passphrases
+             * @returns {Promise} for async handling
+             */
+            saveBulkPassphrases: function(keyId, data){
+                return cmApi.post({
+                    path: '/identity/publicKey/'+ keyId +'/aePassphrases',
                     data: data
                 });
             },
