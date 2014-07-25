@@ -55,11 +55,14 @@ angular.module('cmCore').service('cmFilesAdapter', [
                 });
             },
 
-            blobWrap: function(data, contentType, method){
+            blobWrap: function(byteArrays, contentType, method){
+                if(byteArrays == undefined || byteArrays == null)
+                    return false;
+
                 var blob = undefined;
 
                 try {
-                    blob = new Blob([data[0].buffer], {type: contentType});
+                    blob = new Blob([byteArrays[0].buffer], {type: contentType});
                 } catch(e){
                     // TypeError old chrome and FF
                     window.BlobBuilder =    window.BlobBuilder ||
@@ -68,29 +71,35 @@ angular.module('cmCore').service('cmFilesAdapter', [
                                             window.MSBlobBuilder;
 
                     // is already a blob!
-                    if(data.toString() == '[object Blob]'){
-                        blob = data;
+                    if(byteArrays.toString() == '[object Blob]'){
+                        blob = byteArrays;
                     } else if(e.name == 'TypeError' && window.BlobBuilder){
                         var bb = new BlobBuilder();
-                        bb.append(data[0].buffer);
+                        bb.append(byteArrays[0].buffer);
                         blob = bb.getBlob(contentType);
                     } else if(e.name == "InvalidStateError"){
                         // InvalidStateError (tested on FF13 WinXP)
-                        blob = new Blob( data, {type : contentType});
+                        blob = new Blob( byteArrays, {type : contentType});
                     } else {
                         cmLogger.debug('We\'re screwed, blob constructor unsupported entirely');
-                        console.log(e, data, 'from method: '+method);
+                        console.log(e, byteArrays, 'from method: '+method);
                     }
                 }
                 return blob;
             },
 
             blobBuilderWrap: function(){
+                if(typeof(BlobBuilder) === 'undefined')
+                    return false;
+
                 var blobBuilder = new BlobBuilder();
                 return blobBuilder;
             },
 
             binaryToBlob: function (binary, contentType){
+                if(typeof binary != 'string' || binary == '')
+                    return false;
+
                 var byteArrays = [],
                     binary = binary || '',
                     contentType = contentType || '',
@@ -138,12 +147,13 @@ angular.module('cmCore').service('cmFilesAdapter', [
                 return atob(this.clearBase64(b64Data));
             },
 
-            getBlobUrl: function(blob){
-                var useFileReader = true,
+            getBlobUrl: function(blob, useUrl){
+                var useFileReader = useUrl ? false : true,
                     deferred = $q.defer(),
                     objUrl = {
                         src: '',
                         revoke: function(){
+                            this.src = '';
                             return true;
                         }
                     };
@@ -162,7 +172,9 @@ angular.module('cmCore').service('cmFilesAdapter', [
                     objUrl = {
                         src: URL.createObjectURL(blob),
                         revoke: function(){
-                            URL.revokeObjectURL(this.url);
+                            URL.revokeObjectURL(this.src);
+                            this.src = '';
+                            return true;
                         }
                     };
                     deferred.resolve(objUrl);
