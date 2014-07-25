@@ -19,6 +19,7 @@ describe('Purl registration', function () {
     var id = Math.random().toString(36).substring(2, 9)
     var externalLogin = prefix + id
 
+    afterEach(function() { util.stopOnError() });
 
     var purl = ""
 

@@ -3,6 +3,9 @@ var util = require("../../lib/e2e/cmTestUtil.js")
 var ptor = util.getPtorInstance()
 
 describe('transfer scope data registration',function(){
+
+    afterEach(function() { util.stopOnError() });
+
     it('fill out registration with validation timeout',function() {
         util.logout()
         util.get('/registration')
@@ -42,6 +45,9 @@ describe('transfer scope data registration',function(){
 })
 
 describe('transfer scope data conversation',function(){
+
+    afterEach(function() { util.stopOnError() });
+
     var msg = 'oida wird dit hier mitjenommen?',
         msg2 = 'juhu buhu'
 

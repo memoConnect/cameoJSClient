@@ -3,7 +3,7 @@ exports.config = {
     seleniumServerJar: '../test/lib/ptor/selenium-server-standalone-2.41.0.jar',
     seleniumPort: null,
     chromeDriver: '<%= chromeDriverPath %>',
-    allScriptsTimeout: 60000,
+    allScriptsTimeout: 30000,
     specs: [
         '../test/e2e/**/*.spec.js'
     ],

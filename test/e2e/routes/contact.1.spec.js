@@ -4,6 +4,8 @@ var util = require("../../lib/e2e/cmTestUtil.js")
 describe('Route: Contact', function () {
 
     var ptor = util.getPtorInstance();
+    afterEach(function() { util.stopOnError() });
+
 
     it('at first goto "#/contacts".', function(){
         util.login()

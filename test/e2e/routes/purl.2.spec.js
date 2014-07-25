@@ -5,6 +5,8 @@ describe('Route: Purl - ', function () {
     "use strict";
 
     var ptor = util.getPtorInstance()
+    afterEach(function() { util.stopOnError() });
+
 
     function checkFormForInternUser(param){
         var moep = '';

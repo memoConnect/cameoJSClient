@@ -1,35 +1,38 @@
 var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
-describe('identity key settings', function(){
+describe('identity key settings', function () {
 
     var ptor = util.getPtorInstance()
     var login
     var password = "password"
-    var keyName= "Moeps key"
+    var keyName = "Moeps key"
 
-    it('create new user and open identity settings', function(){
+    afterEach(function() { util.stopOnError() });
+
+    it('create new user and open identity settings', function () {
         login = util.createTestUser()
         util.get('/settings/identity')
     })
 
-    it('key settings should open when clicking on button', function(){
+    it('key settings should open when clicking on button', function () {
         $("[data-qa='btn-identity-keys']").click()
         util.waitForPageLoad('/settings/identity/keys')
     })
 
-    it('there should be no keys', function(){
+    it('there should be no keys', function () {
         $$("[data-qa='key-list-item']").then(function (elements) {
             expect(elements.length).toBe(0)
         })
     })
 
-    it('click button to create key', function(){
+    it('click button to create key', function () {
         $("[data-qa='btn-create-key']").click()
         util.waitForPageLoad('/settings/identity/keys/create')
     })
 
-    it('select key size and generate', function(){
+
+    it('select key size and generate', function () {
         // there should be two key sizes: 2048 and 4096
         $$("[data-qa='key-size-option']").then(function (elements) {
             expect(elements.length).toBe(2)
@@ -41,37 +44,46 @@ describe('identity key settings', function(){
 
     })
 
-    it('page for key generation should be shown', function(){
+    it('page for key generation should be shown', function () {
         util.waitForElement("[data-qa='page-generating-key']")
         expect($("[data-qa='btn-cancel-key-generation']").isDisplayed()).toBe(true)
     })
 
-    it('cancel generation', function(){
+    it('cancel generation', function () {
         $("[data-qa='btn-cancel-key-generation']").click()
         util.waitForPageLoad("/settings/identity/keys")
     })
 
-    it('start generation again', function(){
+    it('start generation again', function () {
         $("[data-qa='btn-create-key']").click()
         util.waitForPageLoad('/settings/identity/keys/create')
         $("[data-qa='btn-generate-key']").click()
     })
+    describe('with increased timeout', function () {
+        beforeEach(function () {
+            jasmine.getEnv().defaultTimeoutInterval = 60000
+        })
 
-    it('wait for key generation and display key', function(){
-        util.waitForElementVisible("[data-qa='page-save-key']", 50000)
+        afterEach(function () {
+            jasmine.getEnv().defaultTimeoutInterval = 30000
+        })
 
-        expect($("[data-qa='display-private-key']").getAttribute('value')).toContain("-----BEGIN RSA PRIVATE KEY-----")
-        expect($("[data-qa='display-public-key']").getAttribute('value')).toContain("-----BEGIN PUBLIC KEY-----")
+        it('wait for key generation and display key', function () {
+            util.waitForElementVisible("[data-qa='page-save-key']", 50000)
 
-        expect($("[data-qa='input-key-name']").getAttribute('value')).toBeTruthy()
+            expect($("[data-qa='display-private-key']").getAttribute('value')).toContain("-----BEGIN RSA PRIVATE KEY-----")
+            expect($("[data-qa='display-public-key']").getAttribute('value')).toContain("-----BEGIN PUBLIC KEY-----")
 
-        util.clearInput("input-key-name")
-        $("[data-qa='input-key-name']").sendKeys(keyName)
-        $("[data-qa='btn-save-key']").click()
+            expect($("[data-qa='input-key-name']").getAttribute('value')).toBeTruthy()
 
+            util.clearInput("input-key-name")
+            $("[data-qa='input-key-name']").sendKeys(keyName)
+            $("[data-qa='btn-save-key']").click()
+
+        })
     })
 
-    it('the new key should be displayed as local', function(){
+    it('the new key should be displayed as local', function () {
         util.waitForPageLoad('/settings/identity/keys')
         util.waitForElement("[data-qa='key-list-item']")
 
@@ -86,7 +98,7 @@ describe('identity key settings', function(){
         })
     })
 
-    it('the key should still be there after logout/login', function(){
+    it('the key should still be there after logout/login', function () {
         util.logout()
         util.login(login, password)
         util.get('/settings/identity/keys')
@@ -102,7 +114,7 @@ describe('identity key settings', function(){
         })
     })
 
-    it('clear local storage and check that key is not local any more', function(){
+    it('clear local storage and check that key is not local any more', function () {
         util.clearLocalStorage()
         util.login(login, password)
         util.get('/settings/identity/keys')
@@ -118,14 +130,14 @@ describe('identity key settings', function(){
         })
     })
 
-    it('delete key', function(){
+    it('delete key', function () {
         $("[data-qa='btn-remove-modal']").click()
         util.waitForElement("[data-qa='btn-remove-key']")
         $("[data-qa='btn-remove-key']").click()
         util.waitForElementDisappear("[data-qa='key-list-item']")
     })
 
-    it('generate another local key', function(){
+    it('generate another local key', function () {
         util.generateKey()
         util.waitForPageLoad('/settings/identity/keys')
         util.waitForElement("[data-qa='key-list-item']")
@@ -135,7 +147,7 @@ describe('identity key settings', function(){
         })
     })
 
-    it('delete it and confirm that it is deleted after logout/login', function(){
+    it('delete it and confirm that it is deleted after logout/login', function () {
         $("[data-qa='btn-remove-modal']").click()
         $("[data-qa='btn-remove-key']").click()
 
@@ -147,7 +159,7 @@ describe('identity key settings', function(){
     })
 
 
-    it('delete test user', function(){
+    it('delete test user', function () {
         util.deleteTestUser(login)
     })
 })

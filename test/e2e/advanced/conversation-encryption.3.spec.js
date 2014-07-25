@@ -7,6 +7,8 @@ describe('Conversation encryption -', function () {
     var ptor = util.getPtorInstance()
     var date = Date.now()
 
+    afterEach(function() { util.stopOnError() });
+
     /*
      Helper functions
      */
@@ -157,6 +159,7 @@ describe('Conversation encryption -', function () {
 
             describe("recipient number " + (index + 1) + " -", function () {
 
+
                 var conversationRoute
 
                 it("login recipient", function () {
@@ -183,12 +186,11 @@ describe('Conversation encryption -', function () {
                             case "password" :
                                 // expect password prompt
                                 util.waitForModalOpen()
-//                                util.waitForElement("cm-modal.active")
-//                                $("cm-modal.active div.body a").click()
                                 util.get(conversationRoute + "/security-settings")
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
+                                util.waitForElement("[data-qa='icon-conversation-decrypted']")
                                 $("[data-qa='btn-security-done']").click()
                                 util.waitForElementDisappear("[data-qa='btn-security-done']")
                                 break;
@@ -197,13 +199,12 @@ describe('Conversation encryption -', function () {
                             case "passCaptcha" :
                                 // expect password prompt
                                 util.waitForModalOpen()
-//                                util.waitForElement("cm-modal.active")
-//                                $("cm-modal.active div.body a").click()
                                 util.get(conversationRoute + "/security-settings")
                                 util.waitForElement("[data-qa='captcha-image']")
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
+                                util.waitForElement("[data-qa='icon-conversation-decrypted']")
                                 $("[data-qa='btn-security-done']").click()
                                 util.waitForElementDisappear("[data-qa='btn-security-done']")
                                 break;
@@ -216,7 +217,7 @@ describe('Conversation encryption -', function () {
 
                     util.waitForElements("cm-message", messages.length)
 
-                    // wait until there decrypted (just in case)
+                    // wait until they are decrypted (just in case)
                     ptor.wait(function () {
                         return $$('cm-message').then(function (elements) {
                             return elements[0].getText().then(function (text) {
@@ -224,7 +225,6 @@ describe('Conversation encryption -', function () {
                             })
                         })
                     })
-
                     $$('cm-message').then(function (elements) {
                         expect(elements.length).toBe(messages.length)
                         for (var j = 1; j < messages.length; j++) {
@@ -323,8 +323,8 @@ describe('Conversation encryption -', function () {
     describe("password transmission -", function () {
         var recipients = [
             {login: testUser1, hasKey: true},
-            {login: testUser2, hasKey: true},
-            {login: testUser3, hasKey: false},
+//            {login: testUser2, hasKey: true},
+//            {login: testUser3, hasKey: false},
             {login: externalUser, external: true, hasKey: false}
         ]
         checkConversation(recipients, 1, 1, "password", password1)

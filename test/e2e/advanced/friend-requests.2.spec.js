@@ -7,6 +7,7 @@ describe('Friendrequests', function () {
     var user1ToAccept = util.createTestUser()
     var password = 'password'
     var requestMessage = 'moep moep mooooeeeppp?'
+    afterEach(function() { util.stopOnError() });
 
     it('user2', function(){
 
