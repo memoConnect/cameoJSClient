@@ -88,5 +88,14 @@ angular.module('cmCore').service('cmHooks', [
                 }
             }
         });
+
+        cmUserModel.on('key:saved', function(event, fromKey){
+            //<cm-outgoing-authentication-request></cm-outgoing-authentication-request>
+
+            if(cmUserModel.verifyHandshake(fromKey)){
+
+            }
+
+        });
     }
 ]);

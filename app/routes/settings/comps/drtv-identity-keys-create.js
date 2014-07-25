@@ -3,7 +3,7 @@
 angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
     'cmUserModel', 'cmCrypt', 'cmUtil', 'cmLogger', 'cmNotify', 'cmKey',
     '$window', '$rootScope',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey,
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey, cmModal,
              $window, $rootScope){
         return {
             restrict: 'E',

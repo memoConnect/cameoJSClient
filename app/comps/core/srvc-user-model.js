@@ -19,8 +19,7 @@
  * @type {{isActive: boolean, id: string, userKey: string, displayName: string, cameoId: string, email: {}, phoneNumber: {}, preferredMessageType: string, created: string, lastUpdated: string, userType: string, storage: {}, identity: {}}}
  */
 
-angular.module('cmCore')
-.service('cmUserModel',[
+angular.module('cmCore').service('cmUserModel',[
     'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKeyFactory', 'cmStateManagement',
     'cmObject', 'cmUtil', 'cmNotify', 'cmLogger',
     '$rootScope', '$q', '$location', '$timeout',
@@ -217,8 +216,6 @@ angular.module('cmCore')
         /**
          * Key Handling
          */
-
-
         this.getLocalKeyIdsForRequest = function(){
             if(this.isAuth !== false){
                 var keys = this.loadLocalKeys(),
@@ -434,6 +431,11 @@ angular.module('cmCore')
                     );
                 }
             }
+        };
+
+        this.verifyHandshake = function(){
+
+
         };
 
         /**

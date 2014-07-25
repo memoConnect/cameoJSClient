@@ -38,6 +38,8 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
                         ){
                         $scope.fromKey = fromKey;
                         $rootScope.openModal(modalId);
+                    } else {
+
                     }
                 }
 
@@ -99,11 +101,9 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
 
                 // event schmusis
                 $rootScope.$on('do:handshake', init);
-                cmUserModel.on('key:saved', init);
                 cmModal.on('modal:closed', reset);
 
                 $scope.$on('$destroy', function(){
-                    cmUserModel.off('key:saved', init);
                     cmModal.off('modal:closed', reset);
                 });
 
