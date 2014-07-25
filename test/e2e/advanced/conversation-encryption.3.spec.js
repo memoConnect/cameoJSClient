@@ -36,7 +36,7 @@ describe('Conversation encryption -', function () {
 
             util.get("/conversation/new/recipients")
 
-            $("[data-qa='btn-header-list-searchd']").click()
+            $("[data-qa='btn-header-list-search']").click()
 
             for (var i = 1; i < recipients.length; i++) {
                 var recipient = recipients[i]
