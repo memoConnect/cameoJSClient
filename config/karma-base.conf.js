@@ -38,7 +38,7 @@ module.exports = function(config) {
             'test/lib/angular/angular-mocks.js',
 
             // specs
-            'test/unit/**/*cmUserModel.spec.js',
+            'test/unit/**/*.spec.js',
 
             // json files
             'app/**/*.json'
