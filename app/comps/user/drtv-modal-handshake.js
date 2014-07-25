@@ -105,6 +105,7 @@ angular.module('cmUser').directive('cmModalHandshake',[
                 }
 
                 // event schmusi
+                $rootScope.$on('do:handshake', init)
                 cmUserModel.on('key:saved', init);
                 cmModal.on('modal:closed', reset);
                 cmHooks.on('authenticationRequest:finished', callbackFinishHandshake);

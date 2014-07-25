@@ -11,8 +11,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                 $scope.privateKeys  = cmUserModel.loadLocalKeys() || [];
                 $scope.publicKeys   = cmUserModel.data.identity.keys || [];
 
-                console.log($scope.publicKeys)
-
                 $scope.remove = function(key){
                     cmUserModel.removeKey(key);
                     cmModal.closeAll();

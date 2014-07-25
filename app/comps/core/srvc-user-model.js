@@ -331,17 +331,18 @@ angular.module('cmCore')
                 foundInLocalKeys = -1;
 
             // clear in backend
-            cmAuth.removePublicKey(keyToRemove.id)
-                .then(function(){
-                    // renew ls
-                    if(local_keys.deregister(keyToRemove)){
-                        self.storageSave('rsa', local_keys.exportDataArray());
+            cmAuth
+            .removePublicKey(keyToRemove.id)
+            .then(function(){
+                // renew ls
+                if(local_keys.deregister(keyToRemove)){
+                    self.storageSave('rsa', local_keys.exportDataArray());
 
-                        self.trigger('key:removed')
-                    }
-                    // clear identity
-                    self.data.identity.keys.deregister(keyToRemove);
-                });
+                    self.trigger('key:removed')
+                }
+                // clear identity
+                self.data.identity.keys.deregister(keyToRemove);
+            });
         };
 
         this.signKey = function(localKeyId, signKeyId){
