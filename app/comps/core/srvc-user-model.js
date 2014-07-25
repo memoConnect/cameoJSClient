@@ -348,13 +348,13 @@ angular.module('cmCore')
 //            cmLogger.debug('cmUserModel.signKey');
 
             var localKeys = this.loadLocalKeys();
-            var key = localKeys.find(localKeyId);
-            var signKey = this.data.identity.keys.find(signKeyId);
+            var signingKey = localKeys.find(localKeyId);
+            var keyToSign = this.data.identity.keys.find(signKeyId);
 
-            var signature = key.sign(signKey.getPublicKeyForSigning(this.data.identity.id));
+            var signature = signingKey.signKey(keyToSign);
 
             if(typeof signature == 'string' && signature.length > 0){
-                cmAuth.savePublicKeySignature(key.id, signKey.id, signature).then(
+                cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
                     function(){
                         self.trigger('signature:saved');
                     },
