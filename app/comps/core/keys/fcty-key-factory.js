@@ -52,20 +52,21 @@ angular.module('cmCore')
             self.getTransitivelyTrustedKeys = function(trustedKeys){
                 trustedKeys = trustedKeys || []
 
-                return null
+               
 
-                var keys_trusted_by_transitivity =  self.getTransitivelyTrustedKeys(
-                                                        //recursively call itself with addtional trusted keys:
-                                                        self.filter(function(key){
-                                                            return  trustedKeys.indexOf(key) != -1 //we trust this key already
-                                                                    ||
-                                                                    trustedKeys.some(function(trusted_key){
-                                                                        trusted_key.trusts(key)
-                                                                    })
+                var extended_key_list   =   self.filter(function(key){                                    
+                                                return  trustedKeys.some(function(trusted_key){
+                                                            return trusted_key.trusts(key)
                                                         })
-                                                    )
+                                            })
 
-                return  
+                console.log(extended_key_list.length)
+                console.log(trustedKeys.length)
+                console.log('##')
+
+                return  extended_key_list.length === trustedKeys.length
+                        ?   trustedKeys
+                        :   self.getTransitivelyTrustedKeys(extended_key_list)
             }
 
             return self

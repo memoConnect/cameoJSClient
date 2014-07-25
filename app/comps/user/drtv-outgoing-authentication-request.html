@@ -22,7 +22,7 @@
             <ul class="modal-list radio-list">
                 <li ng-repeat="key in publicKeys" ng-click="selectToKey(key)">
                     {{key.name}}
-                    <i class="fa cm-lg-icon icon-right"
+                    <i data-qa="item-available-key" class="fa cm-lg-icon icon-right"
                        ng-class="{
                         'cm-checkbox': key != toKey,
                         'cm-checkbox-right': key == toKey

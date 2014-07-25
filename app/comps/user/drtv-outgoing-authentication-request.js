@@ -97,8 +97,8 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
                     authenticationRequest = {};
                 }
 
-                // event schmusi
-                $rootScope.$on('do:handshake', init)
+                // event schmusis
+                $rootScope.$on('do:handshake', init);
                 cmUserModel.on('key:saved', init);
                 cmModal.on('modal:closed', reset);
 
