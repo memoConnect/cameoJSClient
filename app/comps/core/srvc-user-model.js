@@ -347,7 +347,6 @@ angular.module('cmCore')
         this.signKey = function(localKeyId, signKeyId){
 //            cmLogger.debug('cmUserModel.signKey');
 
-            console.dir({localKeyId:localKeyId, signKeyId:signKeyId})
 
             if(localKeyId == signKeyId) return null //keys should not sign themselves
 
@@ -360,7 +359,6 @@ angular.module('cmCore')
             if(typeof signature == 'string' && signature.length > 0){
                 cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
                     function(signature){
-                        console.dir(signature)
                         self.data.identity.keys.find(keyToSign.id).importData({signatures:[signature]})
                         self.trigger('signature:saved', {signingKey : signingKey, keyToSign: keyToSign});
                     },
@@ -520,9 +518,6 @@ angular.module('cmCore')
         };
 
         this.signOwnKeys = function(){
-            console.log('signing....')
-
-
             self.state.set('signing')
 
             var local_keys       = this.loadLocalKeys(),
@@ -544,8 +539,6 @@ angular.module('cmCore')
             })
 
             function stack_advance(){
-                console.log(stack.length)
-               
                 var callback = stack.pop()
 
                 if(callback) callback()

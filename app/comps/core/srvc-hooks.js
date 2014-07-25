@@ -100,5 +100,9 @@ angular.module('cmCore').service('cmHooks', [
                 cmModal.open(modalId);
             }
         });
+
+        cmAuthenticationRequestFactory.on('deregister', function(){
+            cmUserModel.signOwnKeys()
+        })
     }
 ]);

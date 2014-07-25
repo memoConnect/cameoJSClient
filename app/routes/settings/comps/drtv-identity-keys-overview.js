@@ -9,7 +9,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
             controller: function ($scope) {
 
                 function refresh(){
-                    console.log('pling')
                     $scope.privateKeys  =   cmUserModel.loadLocalKeys() || [];
                     $scope.publicKeys   =   cmUserModel.data.identity.keys || [];
                     $scope.trustedKeys  =   $scope.publicKeys.filter(function(key){
