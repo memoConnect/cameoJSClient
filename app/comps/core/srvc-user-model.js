@@ -21,12 +21,12 @@
 
 angular.module('cmCore')
 .service('cmUserModel',[
-    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKeyFactory',
+    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKeyFactory', 'cmKey', 'cmStateManagement',
     'cmObject', 'cmUtil', 'cmNotify', 'cmLogger',
-    '$rootScope', '$q', '$location',
-    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmKeyFactory,
+    '$rootScope', '$q', '$location', '$timeout',
+    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmKeyFactory, cmKey, cmStateManagement,
              cmObject, cmUtil, cmNotify, cmLogger,
-             $rootScope, $q, $location){
+             $rootScope, $q, $location, $timeout){
         var self = this,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
@@ -50,6 +50,7 @@ angular.module('cmCore')
         cmObject.addEventHandlingTo(this);
 
         this.data = angular.extend({}, dataModel);
+        this.state = new cmStateManagement(['signing'])
 
         this.comesFromRegistration = false;
 
@@ -216,8 +217,6 @@ angular.module('cmCore')
         /**
          * Key Handling
          */
-
-
         this.getLocalKeyIdsForRequest = function(){
             if(this.isAuth !== false){
                 var keys = this.loadLocalKeys(),
@@ -279,7 +278,7 @@ angular.module('cmCore')
             return result;
         };
 
-        this.syncLocalKeys = function(keySize){
+        this.syncLocalKeys = function(){
             /**
              * check local Keys from Storage
              */
@@ -303,7 +302,7 @@ angular.module('cmCore')
                     cmAuth.savePublicKey({
                         name:    local_key.name, 
                         key:     local_key.getPublicKey(),
-                        keySize: keySize || 0 //TODO: local_key.size == Nan ???
+                        keySize: local_key.getSize()
                     })
                     .then(function(data){
                         //data brings an id for the key
@@ -348,16 +347,20 @@ angular.module('cmCore')
         this.signKey = function(localKeyId, signKeyId){
 //            cmLogger.debug('cmUserModel.signKey');
 
-            var localKeys = this.loadLocalKeys();
-            var signingKey = localKeys.find(localKeyId);
-            var keyToSign = this.data.identity.keys.find(signKeyId);
 
-            var signature = signingKey.signKey(keyToSign);
+            if(localKeyId == signKeyId) return null //keys should not sign themselves
+
+            var localKeys   = this.loadLocalKeys();
+            var signingKey  = localKeys.find(localKeyId);
+            var keyToSign   = this.data.identity.keys.find(signKeyId);
+
+            var signature   = signingKey.signKey(keyToSign);
 
             if(typeof signature == 'string' && signature.length > 0){
                 cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
-                    function(){
-                        self.trigger('signature:saved');
+                    function(signature){
+                        self.data.identity.keys.find(keyToSign.id).importData({signatures:[signature]})
+                        self.trigger('signature:saved', {signingKey : signingKey, keyToSign: keyToSign});
                     },
                     function(){
                         self.trigger('signature:failed');
@@ -378,7 +381,7 @@ angular.module('cmCore')
             return  local_keys.some(function(local_key){
                         return local_key.trusts(key)
                     })
-        }
+        };
 
         this.decryptPassphrase = function(encrypted_passphrase, keyId){
             var keys = this.loadLocalKeys() || []
@@ -388,6 +391,61 @@ angular.module('cmCore')
                                 ||  ( (key.id == keyId || !keyId) && key.decrypt(encrypted_passphrase) )
 
                     }, undefined)
+        };
+
+        this.bulkReKeying = function(localKeyId, newKeyId){
+//            cmLogger.debug('cmUserModel.startBulkReKeying');
+
+            if(typeof localKeyId == 'string' && cmUtil.validateString(localKeyId)
+                && typeof newKeyId == 'string' && cmUtil.validateString(newKeyId))
+            {
+                var localKey = this.loadLocalKeys().find(localKeyId);
+                var newKey = this.data.identity.keys.find(newKeyId);
+
+                if(localKey instanceof cmKey && newKey instanceof cmKey){
+                    cmAuth.getBulkPassphrases(localKey.id, newKey.id).then(
+                        function(list){
+                            var newList = [],
+                                i = 0;
+
+                            while(i < list.length){
+                                var passphrase = self.decryptPassphrase(list[i].aePassphrase, localKey.id);
+                                if(cmUtil.validateString(passphrase)){
+                                    newList.push({conversationId: list[i].conversationId, aePassphrase: newKey.encrypt(passphrase)})
+                                }
+                                passphrase = undefined;
+                                i++;
+                            }
+
+                            if(newList.length > 0){
+                                cmAuth.saveBulkPassphrases(newKey.id, newList).then(
+                                    function(){
+                                        self.trigger('bulkrekeying:finished');
+                                    },
+                                    function(){
+                                        cmLogger.debug('cmUserModel.bulkReKeying - Request Error - saveBulkPassphrases');
+                                    }
+                                );
+                            } else {
+                                self.trigger('bulkrekeying:finished');
+                            }
+                        },function(){
+                            cmLogger.debug('cmUserModel.bulkReKeying - Request Error - getBulkPassphrases');
+                        }
+                    );
+                }
+            }
+        };
+
+        this.verifyHandshake = function(fromKey){
+            var privateKeys  = self.loadLocalKeys() || [],
+            publicKeys = self.data.identity.keys.filter(function(key){
+                return (privateKeys.find(key) == null && key != fromKey);
+            });
+
+            return  fromKey instanceof cmKey && // is a cmKey
+                    fromKey.getPrivateKey() != undefined && // the privateKey of cmKey != undefined
+                    publicKeys.length > 0 // show only if more then 1 publicKey exists
         };
 
         /**
@@ -459,6 +517,51 @@ angular.module('cmCore')
             this.data = angular.extend({}, dataModel);
         };
 
+        this.signOwnKeys = function(){
+            if(!this.data.identity.keys) return null
+
+            self.state.set('signing')
+
+
+            var local_keys       = this.loadLocalKeys(),
+                ttrusted_keys    = this.data.identity.keys.getTransitivelyTrustedKeys(local_keys)
+                
+            var stack = []
+
+            local_keys.forEach(function(local_key){
+                ttrusted_keys.forEach(function(ttrusted_key){
+
+                    var no_signature_present =  !ttrusted_key.signatures.some(function(signature){
+                                                    return signature.keyId == local_key.id
+                                                })
+
+                    if(no_signature_present && local_key.id  != ttrusted_key.id)
+                        stack.push(function(){ self.signKey(local_key.id, ttrusted_key.id) })
+
+                })
+            })
+
+            function stack_advance(){
+                var callback = stack.pop()
+
+                if(callback) callback()
+
+                if(stack.length != 0){
+                    $timeout(stack_advance, 200)
+                }else{
+                    self.state.unset('signing')
+                }
+                
+            }
+
+            stack_advance()
+
+            return self
+        }
+        init();
+
+
+
         /**
          * Event Handling
          */
@@ -466,9 +569,14 @@ angular.module('cmCore')
             self.resetUser();
         });
 
-        this.on('update:finished', function(){
+        this.on('update:finished', function(){  
+            //Todo: tets sollte nicht nötig sein
+            if(self.data.identity.key && typeof self.data.identity.on)
+                self.signOwnKeys()       
+
             cmBoot.resolve();
         });
+
 
         cmAuth.on('identity:updated', function(event, data){
             if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
@@ -476,6 +584,5 @@ angular.module('cmCore')
             }
         });
 
-        init();
     }
 ]);

@@ -14,7 +14,7 @@
             <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
             <textarea class="form-control" ng-model="privKey" ng-readonly="isValid" data-qa="display-private-key"></textarea>
             <h4 ng-if="keySize">{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_SIZE'|cmTranslate}}: {{keySize}}</h4>
-            <div ng-if="isValid">
+            <div ng-show="isValid">
                 <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PUBLIC_KEY'|cmTranslate}}</h3>
                 <textarea class="form-control" ng-model="pubKey" readonly="readonly" data-qa="display-public-key"></textarea>
                 <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_NAME'|cmTranslate}}</h3>

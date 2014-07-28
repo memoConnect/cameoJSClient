@@ -42,6 +42,9 @@
             <i class="fa cm-cancel-key cm-lg-special" ng-click="openModal('modalRemoveKeypair',key)" data-qa="btn-remove-modal"></i>
         </div>
     </li>
+    <li>
+        <cm-spinner ng-if="signing"></cm-spinner>
+    </li>
 </ul>
 
 <cm-modal id="modalExportKeyPair" class="no-padding" cm-data-as="key" cm-title="SETTINGS.PAGES.IDENTITY.KEYS.EXPORT_KEY">
@@ -65,5 +68,3 @@
         <i class="fa cm-checker cm-lg-icon"></i>
     </button>
 </cm-modal>
-
-<cm-outgoing-authentication-request></cm-outgoing-authentication-request>

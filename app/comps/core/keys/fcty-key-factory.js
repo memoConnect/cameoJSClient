@@ -44,6 +44,28 @@ angular.module('cmCore')
                 }, undefined) || 0
             }
 
+            /**
+             * [getTransitivelyTrustedKeys description]
+             * @param  {Array} trustedKeys Array of cmKey instances known to be trusted
+             * @return {Array}             Array of cmKey instances within a chain of trust connecting them to the initially trusted keys. 
+             */
+            self.getTransitivelyTrustedKeys = function(trustedKeys){
+                trustedKeys = trustedKeys || []
+
+               
+
+                var extended_key_list   =   self.filter(function(key){                                    
+                                                return  trustedKeys.some(function(trusted_key){
+                                                            return trusted_key.trusts(key)
+                                                        })
+                                            })
+
+
+                return  extended_key_list.length === trustedKeys.length
+                        ?   extended_key_list
+                        :   self.getTransitivelyTrustedKeys(extended_key_list)
+            }
+
             return self
         }
 

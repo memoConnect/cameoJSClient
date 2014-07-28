@@ -1,11 +1,10 @@
 'use strict';
 
-angular.module('cmCore')
-.service('cmFilesAdapter', [
-    'cmApi',
-    'cmLogger',
+angular.module('cmCore').service('cmFilesAdapter', [
+    'cmApi', 'cmLogger',
     '$q',
-    function (cmApi, cmLogger, $q){
+    function (cmApi, cmLogger,
+              $q){
         return {
             prepareFile: function(config){
                 return cmApi.post({
@@ -56,42 +55,51 @@ angular.module('cmCore')
                 });
             },
 
-            blobWrap: function(data, contentType, method){
+            blobWrap: function(byteArrays, contentType, method){
+                if(byteArrays == undefined || byteArrays == null)
+                    return false;
+
                 var blob = undefined;
 
                 try {
-                    blob = new Blob([data[0].buffer], {type: contentType});
+                    blob = new Blob([byteArrays[0].buffer], {type: contentType});
                 } catch(e){
                     // TypeError old chrome and FF
                     window.BlobBuilder =    window.BlobBuilder ||
-                        window.WebKitBlobBuilder ||
-                        window.MozBlobBuilder ||
-                        window.MSBlobBuilder;
+                                            window.WebKitBlobBuilder ||
+                                            window.MozBlobBuilder ||
+                                            window.MSBlobBuilder;
 
                     // is already a blob!
-                    if(data.toString() == '[object Blob]'){
-                        blob = data;
+                    if(byteArrays.toString() == '[object Blob]'){
+                        blob = byteArrays;
                     } else if(e.name == 'TypeError' && window.BlobBuilder){
                         var bb = new BlobBuilder();
-                        bb.append(data[0].buffer);
+                        bb.append(byteArrays[0].buffer);
                         blob = bb.getBlob(contentType);
                     } else if(e.name == "InvalidStateError"){
                         // InvalidStateError (tested on FF13 WinXP)
-                        blob = new Blob( data, {type : contentType});
+                        blob = new Blob( byteArrays, {type : contentType});
                     } else {
                         cmLogger.debug('We\'re screwed, blob constructor unsupported entirely');
-                        console.log(e, data, 'from method: '+method);
+                        console.log(e, byteArrays, 'from method: '+method);
                     }
                 }
                 return blob;
             },
 
             blobBuilderWrap: function(){
+                if(typeof(BlobBuilder) === 'undefined')
+                    return false;
+
                 var blobBuilder = new BlobBuilder();
                 return blobBuilder;
             },
 
             binaryToBlob: function (binary, contentType){
+                if(typeof binary != 'string' || binary == '')
+                    return false;
+
                 var byteArrays = [],
                     binary = binary || '',
                     contentType = contentType || '',
@@ -122,25 +130,30 @@ angular.module('cmCore')
              * @returns {String} clearBase64
              */
             clearBase64: function(b64Data){
-                var clearBase64 = b64Data
-                    .replace(/\r?\n|\r/g,'')
-                    .replace(new RegExp('^(data:.{0,100};base64,)(.*)$','i'),function(){
-                        return arguments[2];// return the cleared base64
-                    });
-                return clearBase64;
+                if(typeof b64Data != 'string')
+                    return '';
+
+                return b64Data
+                .replace(/\r?\n|\r/g,'')
+                .replace(new RegExp('^(data:.{0,100};base64,)(.*)$','i'),function(){
+                    return arguments[2];// return the cleared base64
+                });
             },
 
-            base64ToBinary: function(base64){
-                var clearBase64 = this.clearBase64(base64);
-                return atob(clearBase64);
+            base64ToBinary: function(b64Data){
+                if(typeof b64Data != 'string')
+                    return '';
+
+                return atob(this.clearBase64(b64Data));
             },
 
-            getBlobUrl: function(blob){
-                var useFileReader = true,
+            getBlobUrl: function(blob, useUrl){
+                var useFileReader = useUrl ? false : true,
                     deferred = $q.defer(),
                     objUrl = {
                         src: '',
                         revoke: function(){
+                            this.src = '';
                             return true;
                         }
                     };
@@ -159,7 +172,9 @@ angular.module('cmCore')
                     objUrl = {
                         src: URL.createObjectURL(blob),
                         revoke: function(){
-                            URL.revokeObjectURL(this.url);
+                            URL.revokeObjectURL(this.src);
+                            this.src = '';
+                            return true;
                         }
                     };
                     deferred.resolve(objUrl);

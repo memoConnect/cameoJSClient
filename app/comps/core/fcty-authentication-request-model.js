@@ -2,14 +2,10 @@
 
 angular.module('cmCore')
 .factory('cmAuthenticationRequestModel', [
-    'cmObject',
-    'cmStateManagement',
-    'cmCrypt',
-    'cmUtil',
-    'cmAuth',
-    'cmUserModel',
-    'cmLogger',
-    function(cmObject, cmStateManagement, cmCrypt, cmUtil, cmAuth, cmUserModel, cmLogger){
+    'cmObject', 'cmStateManagement', 'cmCrypt', 'cmUtil', 'cmAuth',
+    'cmUserModel', 'cmLogger',
+    function(cmObject, cmStateManagement, cmCrypt, cmUtil, cmAuth,
+             cmUserModel, cmLogger){
         function authenticationRequestModel(requestData){
             var self = this;
 
@@ -49,6 +45,10 @@ angular.module('cmCore')
 
 //                this.trigger('update:finished', this);
                 return this;
+            };
+
+            this.exportKeyIdsForBulk = function(){
+                return {key1:this.toKeyId, key2:this.fromKeyId};
             };
 
             this.verifyForm = function(){

@@ -49,11 +49,9 @@ angular.module('cmCore')
                 return public_key;
             };
 
-
             this.getFingerprint = function(){
                 return sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(this.getPublicKey()))
             }
-
 
             //in getFingerprint verwurstet
             this.getPublicKeyForSigning = function(identityId){
@@ -88,7 +86,7 @@ angular.module('cmCore')
             };
 
             this.trusts = function(key){
-                return  (this.getPrivateKey()&& (this.getPublicKey() == key.getPublicKey() )) //allways trusts itself
+                return  this.getPublicKey() == key.getPublicKey() //allways trusts itself
                         ||
                         key.signatures.some(function(signature){
                             return      crypt 
@@ -138,7 +136,6 @@ angular.module('cmCore')
                 if(data.id)         this.setId(data.id);
                 if(data.created)    this.created = data.created;
                 if(data.signatures) Array().push.apply(this.signatures, data.signatures)
-
 
                 if(key) this.setKey(key);
 

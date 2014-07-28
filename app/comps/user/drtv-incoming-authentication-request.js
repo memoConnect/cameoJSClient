@@ -1,15 +1,10 @@
 'use strict';
 
 angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
-    'cmAuth',
-    'cmUserModel',
-    'cmUtil',
-    'cmCrypt',
-    'cmLogger',
-    '$timeout',
-    '$document',
-    '$rootScope',
-    function (cmAuth, cmUserModel, cmUtil, cmCrypt, cmLogger, $timeout, $document, $rootScope){
+    'cmAuth', 'cmUserModel', 'cmUtil', 'cmCrypt', 'cmLogger',
+    '$timeout', '$document', '$rootScope',
+    function (cmAuth, cmUserModel, cmUtil, cmCrypt, cmLogger,
+              $timeout, $document, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/drtv-incoming-authentication-request.html',
@@ -65,7 +60,6 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
                 $scope.$on('$destroy', function(){
                     $scope.authenticationRequest.off('delete:finished',closeModal);
                 });
-
             }
         }
     }
