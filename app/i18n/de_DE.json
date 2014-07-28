@@ -272,7 +272,8 @@
         },
         "NOTIFY":{
             "UPDATE": {
-                "ERROR": "Die Änderung konnte nicht gespeichert werden!"
+                "ERROR": "Die Änderung konnte nicht gespeichert werden!",
+                "SUCCESS": "Die Änderung wurde erfolgreich gespeichert."
             }
         }
     },

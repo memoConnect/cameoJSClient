@@ -53,6 +53,7 @@ angular.module('cmCore')
                     options = angular.extend(options, args);
                 }
 
+                options.displayType = 'modal';
                 options.severity = 'info';
                 options.label = label;
                 options.icon = 'cm-info';
