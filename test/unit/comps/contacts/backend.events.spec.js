@@ -9,7 +9,11 @@ describe('Event chain for Contacts', function(){
         $rootScope,
         $httpBackend,
 
-        friendRequest_data = {"identityId":"80D8zD6OysTfoZA7Bzso","message":"my test message","created":1404313824779}
+        friendRequest_data = {
+            "identityId":"80D8zD6OysTfoZA7Bzso",
+            "message":"my test message",
+            "created":1404313824779
+        }
 
     beforeEach(function(){
         module(function($provide){

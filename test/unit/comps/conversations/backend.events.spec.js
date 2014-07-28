@@ -14,7 +14,7 @@ describe('Event chain for Conversations', function(){
                                     "messages"      :   [
                                                             {
                                                                 "id":"0kKqtZmEWKs0ndF03GHp",
-                                                                "fromIdentity":"g9PWZY7xKNbeCO6LPNnx",
+                                                                "fromIdentity":"ög9PWZY7xKNbeCO6LPNnx",
                                                                 "plain":null,
                                                                 "encrypted":null,
                                                                 "created":1392983860949
@@ -48,17 +48,14 @@ describe('Event chain for Conversations', function(){
     }))
 
     describe('backend event conversation:new', function(){
-
         it('should add a new conversation', function(){
             var adapter_triggered,
                 number_of_conversations = cmConversationFactory.length
 
+            cmConversationsAdapter.on('conversation:new', function(){ adapter_triggered = true })
 
             $httpBackend.expectGET('/identity').respond(200, {})
-            $httpBackend.expectGET('/identity/g9PWZY7xKNbeCO6LPNnx').respond(200, {})
-
-
-            cmConversationsAdapter.on('conversation:new', function(){ adapter_triggered = true })
+            $httpBackend.expectGET('/identity/ög9PWZY7xKNbeCO6LPNnx').respond(200, {})
 
             cmApi.trigger('conversation:new', conversation_data)
 
@@ -72,15 +69,15 @@ describe('Event chain for Conversations', function(){
     describe('backend event conversation:new-message', function(){
 
         it('should add a new message', function(){
+
             var adapter_triggered,
                 conversation_triggered,
                 conversation        = cmConversationFactory.create(conversation_data),
                 number_of_messages  = conversation.messages.length
 
-
             $httpBackend.expectGET('/identity').respond(200, {})
+            $httpBackend.expectGET('/identity/ög9PWZY7xKNbeCO6LPNnx').respond(200, {})
             $httpBackend.expectGET('/identity/g9PWZY7xKNbeCO6LPNnx').respond(200, {})
-
 
             cmConversationsAdapter.on('message:new', function(){ adapter_triggered = true })
             conversation.on('message:new', function(){ conversation_triggered = true })
