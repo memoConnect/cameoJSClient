@@ -1,5 +1,6 @@
 define([
     'app',
+    'ngload!pckCore',
     'ngload!pckUi',
     'ngload!pckUser',
     'ngload!pckValidate',

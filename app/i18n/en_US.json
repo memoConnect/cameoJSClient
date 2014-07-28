@@ -272,7 +272,8 @@
         },
         "NOTIFY":{
             "UPDATE": {
-                "ERROR": "Something went wrong, please try again"
+                "ERROR": "Something went wrong, please try again",
+                "SUCCESS": "Changes are saved!"
             }
         }
     },
