@@ -42,8 +42,8 @@
             <i class="fa cm-cancel-key cm-lg-special" ng-click="openModal('modalRemoveKeypair',key)" data-qa="btn-remove-modal"></i>
         </div>
     </li>
-    <li>
-        <cm-spinner ng-if="signing"></cm-spinner>
+    <li ng-if="signing">
+        <cm-spinner></cm-spinner>
     </li>
 </ul>
 
@@ -68,3 +68,5 @@
         <i class="fa cm-checker cm-lg-icon"></i>
     </button>
 </cm-modal>
+
+<cm-footer></cm-footer>
