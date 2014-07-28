@@ -72,7 +72,7 @@ angular.module('cmRouteSettings').directive('cmIdentitySettings', [
 
 
                             function callback_save_identity(){
-                                cmNotify.info('IDENTITY.NOTIFY.UPDATE.SUCCESS',{ttl:3000});
+                                cmNotify.info('IDENTITY.NOTIFY.UPDATE.SUCCESS',{ttl:3000,displayType:'modal'});
                             }
 
                             cmUserModel.data.identity.one('update:finished',callback_save_identity);
