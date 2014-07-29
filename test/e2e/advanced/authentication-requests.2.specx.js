@@ -17,6 +17,8 @@ describe('Authentication requests -', function () {
     var keyName2 = "moeps key 2"
     var keyName3 = "moeps key 3"
 
+    var transactionSecret
+
     it("create test user and generate first key", function () {
         util.createTestUser(testUserId)
         util.generateKey(1, keyName1)
@@ -28,7 +30,6 @@ describe('Authentication requests -', function () {
         util.login(testUser, "password")
         util.get("/settings/identity/keys")
         util.waitForElement("[data-qa='key-list-item']")
-        ptor.debugger()
         util.generateKey(2, keyName2)
     })
 
@@ -41,7 +42,7 @@ describe('Authentication requests -', function () {
         util.waitForElements("[data-qa='item-available-key']", 1)
         $$("[data-qa='item-available-key']").then(function (elements) {
             expect(elements.length).toBe(1)
-            expect(elements[0].getText()).toContain(keyName1)
+//            expect(elements[0].getText()).toContain(keyName1)
         })
     })
 
@@ -51,7 +52,7 @@ describe('Authentication requests -', function () {
         util.login(testUser, "password")
         util.get("/settings/identity/keys")
         util.waitForElement("[data-qa='key-list-item']")
-        util.generateKey(3)
+        util.generateKey(3, keyName3)
     })
 
     it("a modal asking for authentication should open", function () {
@@ -62,13 +63,33 @@ describe('Authentication requests -', function () {
     it("it should display the first and second key", function () {
         util.waitForElements("[data-qa='item-available-key']", 2)
         $$("[data-qa='item-available-key']").then(function (elements) {
-            expect(elements.length).toBe(1)
-            expect(elements[0].getText()).toContain(keyName1)
-            expect(elements[1].getText()).toContain(keyName2)
+            expect(elements.length).toBe(2)
+//            expect(elements[0].getText()).toContain(keyName1)
+//            expect(elements[1].getText()).toContain(keyName2)
         })
     })
 
+    it("request authorization from key one", function () {
+        $$("[data-qa='item-available-key']").then(function (elements) {
+            elements[0].click()
+            util.click("btn-startHandshake")
+            util.getVal("transaction-secret-value").then(function(secret) {
+                transactionSecret = secret
+            })
+        })
+    })
+
+    it("delete key three and import key one", function(){
+        util.logout()
+        util.clearLocalStorage()
+        util.login(testUser, "password")
+        util.get("/settings/identity/keys")
+        util.waitForElements("[data-qa='key-list-item']", 3)
+        util.generateKey(1, keyName1)
+    })
+
     it("delete testUser", function () {
+        console.log("Secret: " + secret)
         util.deleteTestUser(testUser)
     })
 

@@ -51,7 +51,7 @@ angular.module('cmCore')
 
             this.getFingerprint = function(){
                 return sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(this.getPublicKey()))
-            }
+            };
 
             //in getFingerprint verwurstet
             this.getPublicKeyForSigning = function(identityId){
@@ -62,7 +62,7 @@ angular.module('cmCore')
                 }
 
                 return false;
-            }
+            };
 
             this.getPrivateKey = function(){
                 var private_key;
