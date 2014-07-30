@@ -106,5 +106,9 @@ angular.module('cmCore').service('cmHooks', [
         cmAuthenticationRequestFactory.on('deregister', function(){
             cmUserModel.signOwnKeys()
         });
+
+        cmApi.on('broadcast:started',function(event, data){
+           console.log('cmHooks.on:broadcast:started', data);
+        });
     }
 ]);
