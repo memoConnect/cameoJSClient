@@ -396,43 +396,56 @@ angular.module('cmCore')
         this.bulkReKeying = function(localKeyId, newKeyId){
 //            cmLogger.debug('cmUserModel.startBulkReKeying');
 
-            if(typeof localKeyId == 'string' && cmUtil.validateString(localKeyId)
-                && typeof newKeyId == 'string' && cmUtil.validateString(newKeyId))
-            {
-                var localKey = this.loadLocalKeys().find(localKeyId);
-                var newKey = this.data.identity.keys.find(newKeyId);
+            if(!this.state.is('rekying')){
+                if(typeof localKeyId == 'string' && cmUtil.validateString(localKeyId)
+                    && typeof newKeyId == 'string' && cmUtil.validateString(newKeyId))
+                {
+                    this.state.set('rekying');
 
-                if(localKey instanceof cmKey && newKey instanceof cmKey){
-                    cmAuth.getBulkPassphrases(localKey.id, newKey.id).then(
-                        function(list){
-                            var newList = [],
-                                i = 0;
+                    var localKey = this.loadLocalKeys().find(localKeyId);
+                    var newKey = this.data.identity.keys.find(newKeyId);
 
-                            while(i < list.length){
-                                var passphrase = self.decryptPassphrase(list[i].aePassphrase, localKey.id);
-                                if(cmUtil.validateString(passphrase)){
-                                    newList.push({conversationId: list[i].conversationId, aePassphrase: newKey.encrypt(passphrase)})
-                                }
-                                passphrase = undefined;
-                                i++;
-                            }
+                    if(localKey instanceof cmKey && newKey instanceof cmKey){
+                        cmAuth.getBulkPassphrases(localKey.id, newKey.id).then(
+                            function(list){
+                                var newList = [],
+                                    i = 0;
 
-                            if(newList.length > 0){
-                                cmAuth.saveBulkPassphrases(newKey.id, newList).then(
-                                    function(){
-                                        self.trigger('bulkrekeying:finished');
-                                    },
-                                    function(){
-                                        cmLogger.debug('cmUserModel.bulkReKeying - Request Error - saveBulkPassphrases');
+                                while(i < list.length){
+                                    var passphrase = self.decryptPassphrase(list[i].aePassphrase, localKey.id);
+                                    if(cmUtil.validateString(passphrase)){
+                                        newList.push({conversationId: list[i].conversationId, aePassphrase: newKey.encrypt(passphrase)})
                                     }
-                                );
-                            } else {
-                                self.trigger('bulkrekeying:finished');
+                                    passphrase = undefined;
+                                    i++;
+                                }
+
+                                if(newList.length > 0){
+                                    cmAuth.saveBulkPassphrases(newKey.id, newList).then(
+                                        function(){
+                                            self.trigger('bulkrekeying:finished');
+                                        },
+                                        function(){
+                                            cmLogger.debug('cmUserModel.bulkReKeying - Request Error - saveBulkPassphrases');
+                                        }
+                                    ).finally(
+                                        function(){
+                                            self.state.unset('rekying');
+                                        }
+                                    );
+                                } else {
+                                    self.trigger('bulkrekeying:finished');
+                                    self.state.unset('rekying');
+                                }
+                            },function(){
+                                cmLogger.debug('cmUserModel.bulkReKeying - Request Error - getBulkPassphrases');
                             }
-                        },function(){
-                            cmLogger.debug('cmUserModel.bulkReKeying - Request Error - getBulkPassphrases');
-                        }
-                    );
+                        ).finally(
+                            function(){
+                                this.state.unset('rekying');
+                            }
+                        );
+                    }
                 }
             }
         };
@@ -518,28 +531,28 @@ angular.module('cmCore')
         };
 
         this.signOwnKeys = function(){
-            if(!this.data.identity.keys) return null
+            if(!this.data.identity.keys)
+                return null;
 
-            self.state.set('signing')
-
+            self.state.set('signing');
 
             var local_keys       = this.loadLocalKeys(),
-                ttrusted_keys    = this.data.identity.keys.getTransitivelyTrustedKeys(local_keys)
+                ttrusted_keys    = this.data.identity.keys.getTransitivelyTrustedKeys(local_keys);
                 
-            var stack = []
+            var stack = [];
 
             local_keys.forEach(function(local_key){
                 ttrusted_keys.forEach(function(ttrusted_key){
 
                     var no_signature_present =  !ttrusted_key.signatures.some(function(signature){
                                                     return signature.keyId == local_key.id
-                                                })
+                                                });
 
                     if(no_signature_present && local_key.id  != ttrusted_key.id)
                         stack.push(function(){ self.signKey(local_key.id, ttrusted_key.id) })
 
                 })
-            })
+            });
 
             function stack_advance(){
                 var callback = stack.pop()
@@ -554,13 +567,12 @@ angular.module('cmCore')
                 
             }
 
-            stack_advance()
+            stack_advance();
 
             return self
-        }
+        };
+
         init();
-
-
 
         /**
          * Event Handling
