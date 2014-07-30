@@ -1,29 +1,42 @@
 'use strict';
 
 angular.module('cmCore').service('cmHooks', [
-    'cmUserModel',
-    'cmObject',
-    'cmApi',
-    'cmModal',
-    'cmLogger',
-    'cmAuthenticationRequestFactory',
-    'cmUtil',
-    '$location',
-    '$rootScope',
-    function(cmUserModel, cmObject, cmApi, cmModal, cmLogger, cmAuthenticationRequestFactory, cmUtil, $location, $rootScope){
+    'cmUserModel', 'cmObject', 'cmApi', 'cmModal', 'cmLogger',
+    'cmAuthenticationRequestFactory', 'cmUtil',
+    '$location', '$rootScope',
+    function(cmUserModel, cmObject, cmApi, cmModal, cmLogger,
+             cmAuthenticationRequestFactory, cmUtil,
+             $location, $rootScope){
         var self = this;
         cmObject.addEventHandlingTo(this);
 
-        /**
-         * Event Handling
-         */
+        this.openBulkRequest = function(data){
+//            cmLogger.debug('cmHooks.openBulkRequest');
+
+            if(typeof data == 'object' && cmUtil.checkKeyExists(data,'key1') && cmUtil.checkKeyExists(data, 'key2')){
+                var scope = $rootScope.$new();
+                scope.data = data;
+
+                var modalId = 'bulk-rekeying-modal';
+                cmModal.create({
+                    id: modalId,
+                    type: 'plain',
+                    'class': 'no-padding',
+                    'cm-title': 'DRTV.BULK_REKEYING.HEADER'
+                },'<cm-bulk-rekeying-request></cm-bulk-rekeying-request>',null,scope);
+                cmModal.open(modalId);
+
+
+                cmUserModel.on('bulkrekeying:finished',function(){
+                    $rootScope.closeModal('bulk-rekeying-modal');
+                });
+            }
+        };
 
         /**
          * authenticationRequest:new
          */
         cmApi.on('authenticationRequest:new', function(event, request){
-//            cmLogger.debug('cmHooks.on:authenticationRequest:new');
-//        $rootScope.$on('authenticationRequest:new', function(){
 //            cmLogger.debug('cmHooks.on:authenticationRequest:new');
 
 //            var requestMock = {
@@ -49,14 +62,14 @@ angular.module('cmCore').service('cmHooks', [
                         type: 'plain',
                         'class': 'no-padding',
                         'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
-                    },'<cm-incoming-authentication-request></cm-incoming-authentication-request>',null,scope);
+                    },'<cm-incoming-authentication-request></cm-incoming-authentication-request>', null, scope);
                     cmModal.open(modalId);
                 }
 
                 authenticationRequest.on('delete:finished', function(){
-                    cmAuthenticationRequestFactory.deregister(authenticationRequest);
+                    self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
 
-                    console.log('after deregister cmAuthenticationRequestFactory', cmAuthenticationRequestFactory.length)
+                    cmAuthenticationRequestFactory.deregister(authenticationRequest);
                 });
             }
         });
@@ -71,5 +84,25 @@ angular.module('cmCore').service('cmHooks', [
                 }
             }
         });
+
+        cmUserModel.on('key:saved handshake:start', function(event, fromKey){
+            if(cmUserModel.verifyHandshake(fromKey)){
+                var scope = $rootScope.$new();
+                scope.fromKey = fromKey;
+
+                var modalId = 'outgoing-authentication-request';
+                cmModal.create({
+                    id: modalId,
+                    type: 'plain',
+                    'class': 'no-padding',
+                    'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
+                },'<cm-outgoing-authentication-request></cm-outgoing-authentication-request>', null, scope);
+                cmModal.open(modalId);
+            }
+        });
+
+        cmAuthenticationRequestFactory.on('deregister', function(){
+            cmUserModel.signOwnKeys()
+        })
     }
 ]);

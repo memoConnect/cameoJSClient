@@ -13,7 +13,7 @@ angular.module('cmCore')
 
             cmObject.addEventHandlingTo(this);
 
-            this.state = new cmStateManagement(['new','decrypted','loading']);
+            this.state  = new cmStateManagement(['new','decrypted','loading']);
 
             /**
              * Initialize Identity

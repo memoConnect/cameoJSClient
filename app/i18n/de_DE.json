@@ -272,7 +272,8 @@
         },
         "NOTIFY":{
             "UPDATE": {
-                "ERROR": "Die Änderung konnte nicht gespeichert werden!"
+                "ERROR": "Die Änderung konnte nicht gespeichert werden!",
+                "SUCCESS": "Die Änderung wurde erfolgreich gespeichert."
             }
         }
     },
@@ -403,6 +404,11 @@
             "LANDLINE": "Festnetz",
             "IP": "IP",
             "FAX": "Fax"
+        },
+        "BULK_REKEYING": {
+            "HEADER": "Bulk Rekeying",
+            "CONTENT": "Möchten Sie den neuen Key zu Ihren Talks hinzufügen?<br>Diese Info schließt sich selbst, wenn der Process abgeschlosen ist.",
+            "START": "Start"
         },
         "FOOTER": {
             "TALKS": "Talks",

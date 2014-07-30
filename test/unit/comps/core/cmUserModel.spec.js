@@ -15,7 +15,7 @@ describe('cmUserModel', function(){
 
     beforeEach(module('cmCore'))
 
-    beforeEach(inject(function(_cmUserModel_, _cmKey_) {
+    beforeEach(inject(function(_cmUserModel_, _cmKey_, _cmIdentityModel_) {
         //@TODO: UserModel initiert sich beim inject und ruft die api auf, promises werden erst mit flush oder $apply aufgelöst, überlegen wir wir das anders organisieren
         cmUserModel = _cmUserModel_
 //

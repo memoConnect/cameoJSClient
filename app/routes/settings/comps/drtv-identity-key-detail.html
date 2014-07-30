@@ -36,9 +36,7 @@
             <textarea class="form-control" ng-model="pubKey" readonly="readonly" data-qa="input-public-key" cm-clipboard></textarea>
         </div>
 
-        <cm-outgoing-authentication-request></cm-outgoing-authentication-request>
-
-        <cm-footer cm-always-on-top ng-if="!isTrusted && privKey">
+        <cm-footer cm-always-on-top ng-if="isTrusted && privKey && canAuthenticate">
             <button ng-click="startAuthentication()" class="cm-btn-block cm-btn-grey" data-qa="btn-start-authentication">
                 {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_START'|cmTranslate}}
                 <i class="fa cm-checker cm-lg-icon"></i>

@@ -2,9 +2,10 @@
 
 angular.module('cmRouteSettings').directive('cmIdentitySettings', [
     'cmUserModel',
+    'cmNotify',
     '$location',
     '$q',
-    function(cmUserModel, $location, $q){
+    function(cmUserModel, cmNotify, $location, $q){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-settings.html',
@@ -68,6 +69,13 @@ angular.module('cmRouteSettings').directive('cmIdentitySettings', [
                             checkPhoneNumber();
 
                             cmUserModel.data.identity.update(objectChange);
+
+
+                            function callback_save_identity(){
+                                cmNotify.info('IDENTITY.NOTIFY.UPDATE.SUCCESS',{ttl:3000,displayType:'modal'});
+                            }
+
+                            cmUserModel.data.identity.one('update:finished',callback_save_identity);
                         }
                     )
                 };

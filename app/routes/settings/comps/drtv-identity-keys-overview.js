@@ -14,6 +14,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                     $scope.trustedKeys  =   $scope.publicKeys.filter(function(key){
                                                 return cmUserModel.trustsKey(key)
                                             })
+                    $scope.signing      =   cmUserModel.state.is('signing')
                 }
 
                 $scope.remove = function(key){
@@ -30,8 +31,11 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                 };
 
                 $scope.$on('$destroy', function(){
-                    cmUserModel.off(refresh)
+                    cmUserModel.off('key:stored', refresh)
+                    cmUserModel.off('signature:saved', refresh)
                 })
+
+                cmUserModel.state.on('change', refresh)
 
                 cmUserModel.on('key:stored', refresh);
 

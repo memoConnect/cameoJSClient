@@ -272,7 +272,8 @@
         },
         "NOTIFY":{
             "UPDATE": {
-                "ERROR": "Something went wrong, please try again"
+                "ERROR": "Something went wrong, please try again",
+                "SUCCESS": "Changes are saved!"
             }
         }
     },
@@ -402,6 +403,11 @@
             "LANDLINE": "landline",
             "IP": "ip",
             "FAX": "fax"
+        },
+        "BULK_REKEYING": {
+            "HEADER": "Bulk Rekeying",
+            "CONTENT": "Add the new Key to your Talks.<br>The info close themselve when the process is finished.",
+            "START": "start"
         },
         "FOOTER": {
             "TALKS": "Talks",
