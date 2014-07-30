@@ -5,7 +5,7 @@
         version   = "<%= currentVersion %>">
     <name><%= currentName %></name>
     <description>safer communication</description>
-    <author href="www.cameo.io" email="contact@cameo.io">cameo.io</author>
+    <author href="www.cameonet.de" email="support@cameonet.de">cameoNet</author>
 
     <access origin="*" subdomains="true"  />
     <content src="index.html" />
