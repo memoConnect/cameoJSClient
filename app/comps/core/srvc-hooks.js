@@ -100,6 +100,12 @@ angular.module('cmCore').service('cmHooks', [
                     'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
                 },'<cm-outgoing-authentication-request></cm-outgoing-authentication-request>', null, scope);
                 cmModal.open(modalId);
+
+                cmModal.on('modal:closed', function(event, id){
+                    if(id == modalId){
+                        console.log('Andreas hats drauf!')
+                    }
+                });
             }
         });
 
