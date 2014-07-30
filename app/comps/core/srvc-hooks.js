@@ -11,7 +11,7 @@ angular.module('cmCore').service('cmHooks', [
         cmObject.addEventHandlingTo(this);
 
         this.openBulkRequest = function(data){
-//            cmLogger.debug('cmHooks.openBulkRequest');
+            cmLogger.debug('cmHooks.openBulkRequest');
 
             if(typeof data == 'object' && cmUtil.checkKeyExists(data,'key1') && cmUtil.checkKeyExists(data, 'key2')){
                 var scope = $rootScope.$new();
@@ -75,12 +75,14 @@ angular.module('cmCore').service('cmHooks', [
         });
 
         cmApi.on('authenticationRequest:finished', function(event, request){
-//            cmLogger.debug('cmHooks.on:authenticationRequest:finished');
+            cmLogger.debug('cmHooks.on:authenticationRequest:finished');
             if(typeof request == 'object' && "id" in request && cmUtil.validateString(request.id)){
                 var authenticationRequest = cmAuthenticationRequestFactory.create(request.id);
 
                 if(typeof authenticationRequest.finish == 'function'){
                     authenticationRequest.finish();
+
+                    self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
                 }
             }
         });
@@ -103,6 +105,6 @@ angular.module('cmCore').service('cmHooks', [
 
         cmAuthenticationRequestFactory.on('deregister', function(){
             cmUserModel.signOwnKeys()
-        })
+        });
     }
 ]);
