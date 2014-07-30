@@ -290,8 +290,6 @@ angular.module('cmCore')
                 var no_matching_public_key_present = !self.data.identity.keys || !self.data.identity.keys.find(local_key),
                     missing_key_id = !local_key.id
 
-
-
                 if(no_matching_public_key_present || missing_key_id){
 
                     if(local_key.getPublicKey() == undefined){
@@ -466,16 +464,15 @@ angular.module('cmCore')
             }
         };
 
-        this.verifyHandshake = function(toKey){
-            //var privateKeys  = self.loadLocalKeys() || [],
-//            var publicKeys = self.data.identity.keys.filter(function(key){
-//                return (privateKeys.find(key) == null && key != fromKey);
-//            });
-            var publicKeys = self.data.identity;
+        this.verifyPublicKeyForAuthenticationRequest = function(toKey){
+            var publicKeys = self.data.identity.keys;
+            var localKeys = this.loadLocalKeys();
 
-//            return  fromKey instanceof cmKey && // is a cmKey
-//                    fromKey.getPrivateKey() != undefined && // the privateKey of cmKey != undefined
-                return publicKeys.length > 0 // show only if more then 1 publicKey exists
+            if(publicKeys.find(toKey) != null && localKeys.find(toKey) == null){
+                return true;
+            }
+
+            return false;
         };
 
         /**

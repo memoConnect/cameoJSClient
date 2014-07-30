@@ -39,6 +39,7 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
                 };
 
                 $scope.startHandshake = function(toKey){
+                    var fromKey = privateKeys[0]; // ! attention ! works only with one local private key
 
                     if($scope.handshakeIdle){
                         return false;
@@ -54,19 +55,18 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
                         $scope.transactionSecret = cmCrypt.generateTransactionSecret();
                     }
 
-                    if($scope.toKey instanceof cmKey && $scope.transactionSecret != ''){
-
+                    if(fromKey instanceof cmKey && $scope.toKey instanceof cmKey && $scope.transactionSecret != ''){
                         var dataForRequest = cmCrypt.signAuthenticationRequest({
                             identityId: cmUserModel.data.identity.id,
                             transactionSecret: $scope.transactionSecret,
-                            fromKey: $scope.fromKey,
+                            fromKey: fromKey,
                             toKey: $scope.toKey
                         });
 
                         authenticationRequest = cmAuthenticationRequestFactory.create(dataForRequest);
                         authenticationRequest.state.set('outgoing');
 
-                        authenticationRequest.save();
+                        authenticationRequest.send();
 
                         authenticationRequest.on('request:finished', function(){
                             $scope.handshakeIdle = false;

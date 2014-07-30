@@ -36,7 +36,7 @@ angular.module('cmCore').service('cmHooks', [
         /**
          * authenticationRequest:new
          */
-        cmApi.on('authenticationRequest:new', function(event, request){
+        cmApi.on('authenticationRequest:start', function(event, request){
 //            cmLogger.debug('cmHooks.on:authenticationRequest:new');
 
 //            var requestMock = {
@@ -88,9 +88,8 @@ angular.module('cmCore').service('cmHooks', [
         });
 
         cmUserModel.on('key:saved handshake:start', function(event, toKey){
-            if(cmUserModel.verifyHandshake(toKey)){
+            if(cmUserModel.verifyPublicKeyForAuthenticationRequest(toKey)){
                 var scope = $rootScope.$new();
-//                scope.fromKey = fromKey;
                 scope.toKey = toKey;
 
                 var modalId = 'outgoing-authentication-request';

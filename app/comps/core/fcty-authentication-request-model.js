@@ -29,7 +29,8 @@ angular.module('cmCore')
             }
 
             this.importData = function(requestData){
-//                cmLogger.debug('cmAuthenticationRequestModel.importData');
+                cmLogger.debug('cmAuthenticationRequestModel.importData');
+                console.log(requestData)
 
                 if(typeof requestData !== 'object'){
                     cmLogger.debug('authenticationRequestModel.importData:failed - no data!');
@@ -52,21 +53,25 @@ angular.module('cmCore')
             };
 
             this.verifyForm = function(){
-//                cmLogger.debug('cmAuthenticationRequestModel.verifyForm');
+                cmLogger.debug('cmAuthenticationRequestModel.verifyForm');
 
                 if(typeof this.signature != 'string' || this.signature.length < 1){
+                    cmLogger.debug('Error - cmAuthenticationRequestModel.verifyForm - Signature is not a String!');
                     return false;
                 }
 
                 if(typeof this.encryptedTransactionSecret != 'string' || this.encryptedTransactionSecret.length < 1){
+                    cmLogger.debug('Error - cmAuthenticationRequestModel.verifyForm - encryptedTransactionSecret is not a String!');
                     return false;
                 }
 
                 if(typeof this.fromKeyId != 'string' || !cmUtil.validateString(this.fromKeyId)){
+                    cmLogger.debug('Error - cmAuthenticationRequestModel.verifyForm - fromKeyId is not a String!');
                     return false;
                 }
 
                 if(typeof this.toKeyId != 'string' || !cmUtil.validateString(this.toKeyId)){
+                    cmLogger.debug('Error - cmAuthenticationRequestModel.verifyForm - toKeyId is not a String!');
                     return false;
                 }
 
@@ -161,11 +166,11 @@ angular.module('cmCore')
                 }
             };
 
-            this.save = function(){
-//                cmLogger.debug('cmAuthenticationRequestModel.save');
+            this.send = function(){
+                cmLogger.debug('cmAuthenticationRequestModel.send');
 
                 if(this.verifyForm() !== false){
-                    cmAuth.saveAuthenticationRequest({
+                    cmAuth.sendBroadcast('authenticationRequest:start', {
                         identityId: cmUserModel.data.identity.id,
                         encryptedTransactionSecret: this.encryptedTransactionSecret,
                         signature: this.signature,
@@ -179,6 +184,8 @@ angular.module('cmCore')
                             cmLogger.debug('authenticationRequestModel.save - Error');
                         }
                     );
+                } else {
+                    cmLogger.debug('Error - cmAuthenticationRequestModel.send - Data have not the right form!');
                 }
             };
 

@@ -265,11 +265,11 @@ angular.module('cmCore')
                 hashPubKey,
                 signatory = new JSEncrypt();
 
-                if(settings.fromKey == undefined){
+                if(!(settings.fromKey instanceof cmKey)){
                     cmLogger.error('sign fromKey isn\'t a cmKey');
                     return null;
                 }
-                if(settings.toKey == undefined){
+                if(!(settings.toKey instanceof cmKey)){
                     cmLogger.error('sign toKey isn\'t a cmKey');
                     return null;
                 }
@@ -281,9 +281,10 @@ angular.module('cmCore')
                 dataForHandshake.encryptedTransactionSecret = settings.toKey.encrypt(settings.transactionSecret);
                 dataForHandshake.toKeyId = settings.toKey.id;
                 // hash the transaction
-                hashPubKey = sjcl.hash.sha256.hash(settings.identityId+':'+dataForHandshake.encryptedTransactionSecret).toString();
+                hashPubKey = this.base64Encode(sjcl.hash.sha256.hash(settings.identityId+':'+dataForHandshake.encryptedTransactionSecret).toString());
                 // create signature with hash of above
                 dataForHandshake.signature = signatory.sign(hashPubKey);
+//                dataForHandshake.signature = settings.fromKey.sign(hashPubKey);
                 // return that moep dataForHandshake
                 return dataForHandshake;
             },
@@ -312,7 +313,7 @@ angular.module('cmCore')
                 // set new pubKey
                 verifier.setPublicKey(settings.fromKey.getPublicKey());
                 // hash pubkey
-                hashPubKey = sjcl.hash.sha256.hash(settings.identityId+':'+settings.encryptedTransactionSecret).toString();
+                hashPubKey = this.base64Encode(sjcl.hash.sha256.hash(settings.identityId+':'+settings.encryptedTransactionSecret).toString());
                 // check verification
                 return verifier.verify(hashPubKey, settings.signature, CryptoJS.SHA256);
             },
