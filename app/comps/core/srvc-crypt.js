@@ -15,14 +15,28 @@ angular.module('cmCore')
 
         return {
          
-            random: function(){
-                return Math.random();
+            random: function(size){
+                //@Todo:
+                
+                cmLogger.warn('Bad random numbers.')
+                return Math.random()
+
+                /*
+                if(!window.crypto)
+                    cmLogger.warn('window.crypto not present!')
+
+                var array = new Uint32Array(size)
+                console.log(size)
+                console.log(sjcl.codec.base64.fromBits(window.crypto.getRandomValues(array)))
+                return  sjcl.codec.base64.fromBits(window.crypto.getRandomValues(array))//sjcl.codec.base64.fromBits(sjcl.random.randomWords(size));
+                */
             },
 
-
+            /**
              * this method calculates a secure hash
              * @param secretString String that should be hashed
              */
+            
             hash: function (secretString) {
                 if (null == secretString)
                     return "";
@@ -253,7 +267,7 @@ angular.module('cmCore')
 //                window.crypto.getRandomValues(array);
 
                 while(bad_random_passphrase.length < length){
-                    bad_random_passphrase += Math.random().toString(36).replace('0.','')
+                    bad_random_passphrase += this.random().toString(36).replace('0.','')
                 }
 
                 return bad_random_passphrase.slice(-(length));
@@ -263,7 +277,7 @@ angular.module('cmCore')
                 var bad_random_passphrase ='';
 
                 while(bad_random_passphrase.length < 60){
-                    bad_random_passphrase += Math.random().toString(36).replace('0.','')
+                    bad_random_passphrase += this.random().toString(36).replace('0.','')
                 }
 
                 return bad_random_passphrase;
