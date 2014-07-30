@@ -87,10 +87,11 @@ angular.module('cmCore').service('cmHooks', [
             }
         });
 
-        cmUserModel.on('key:saved handshake:start', function(event, fromKey){
-            if(cmUserModel.verifyHandshake(fromKey)){
+        cmUserModel.on('key:saved handshake:start', function(event, toKey){
+            if(cmUserModel.verifyHandshake(toKey)){
                 var scope = $rootScope.$new();
-                scope.fromKey = fromKey;
+//                scope.fromKey = fromKey;
+                scope.toKey = toKey;
 
                 var modalId = 'outgoing-authentication-request';
                 cmModal.create({
