@@ -75,7 +75,11 @@ angular.module('cmCore')
 
             this.sign = function(data){
                 return crypt && crypt.sign(data)
-            };
+            }
+
+            this.verify = function(data, signature){
+                return  crypt && crypt.verify(data, signature, function(){})
+            }
 
             this.encrypt = function(secret){
                 return crypt && crypt.encrypt(secret);

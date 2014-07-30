@@ -3,6 +3,7 @@
 describe('cmKeyModel', function() {
 
     var cmKey,
+        cmCrypt,
         key,
         publicKey   =   ['-----BEGIN PUBLIC KEY-----'
                         ,'MIIBITANBgkqhkiG9w0BAQEFAAOCAQ4AMIIBCQKCAQBW65EZMA3kk/KTp4dfLsYT'
@@ -45,8 +46,9 @@ describe('cmKeyModel', function() {
 
     beforeEach(module('cmCore'))
 
-    beforeEach(inject(function(_cmKey_){
+    beforeEach(inject(function(_cmKey_, _cmCrypt_){
         cmKey   = _cmKey_
+        cmCrypt = _cmCrypt_
         key     = new cmKey()
     }))
 
@@ -125,6 +127,24 @@ describe('cmKeyModel', function() {
         expect(typeof key.setId).toBe('function')  
         key.setId('my_test_id')
         expect(key.id).toBe('my_test_id')
+    })
+
+    it('should provide functions to sign data and verify signatures', function(){
+        var data =  {
+                        key_1 : 'my value',
+                        key_2 : 'my_second_value'
+                    }
+
+        key.setKey(privateKey)
+
+        var signature = key.sign(cmCrypt.hashObject(data))
+
+        var pub_key = new cmKey()
+        pub_key.setKey(publicKey)
+
+        expect(signature).toBeDefined()
+        expect(pub_key.verify(cmCrypt.hashObject(data), signature)).toBe(true)
+
     })
 
 })
