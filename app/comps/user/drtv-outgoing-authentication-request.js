@@ -22,7 +22,7 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
 
                 function reset(){
                     $scope.step = 1;
-                    $scope.toKey = {};
+                    $scope.fromKey = {};
                     $scope.transactionSecret = '';
                     $scope.handshakeIdle = false;
                 }

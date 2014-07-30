@@ -86,7 +86,7 @@ angular.module('cmCore').service('cmHooks', [
         });
 
         cmUserModel.on('key:saved handshake:start', function(event, toKey){
-//            if(cmUserModel.verifyHandshake(fromKey)){
+            if(cmUserModel.verifyHandshake(toKey)){
                 var scope = $rootScope.$new();
 //                scope.fromKey = fromKey;
                 scope.toKey = toKey;
@@ -99,7 +99,7 @@ angular.module('cmCore').service('cmHooks', [
                     'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
                 },'<cm-outgoing-authentication-request></cm-outgoing-authentication-request>', null, scope);
                 cmModal.open(modalId);
-//            }
+            }
         });
 
         cmAuthenticationRequestFactory.on('deregister', function(){
