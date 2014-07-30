@@ -12,9 +12,9 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                     $scope.privateKeys  =   cmUserModel.loadLocalKeys() || [];
                     $scope.publicKeys   =   cmUserModel.data.identity.keys || [];
                     $scope.trustedKeys  =   $scope.publicKeys.filter(function(key){
-                                                return cmUserModel.trustsKey(key)
-                                            })
-                    $scope.signing      =   cmUserModel.state.is('signing')
+                                                return cmUserModel.trustsKey(key);
+                                            });
+                    $scope.signing      =   cmUserModel.state.is('signing');
                 }
 
                 $scope.remove = function(key){
@@ -30,10 +30,14 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                     return !($scope.privateKeys.find(key) instanceof cmKey);
                 };
 
+                $scope.startAuthentication = function(toKey){
+                    cmUserModel.trigger('handshake:start', toKey);
+                };
+
                 $scope.$on('$destroy', function(){
                     cmUserModel.off('key:stored', refresh)
                     cmUserModel.off('signature:saved', refresh)
-                })
+                });
 
                 cmUserModel.state.on('change', refresh)
 

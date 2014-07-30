@@ -20,10 +20,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyDetail', [
                 $scope.keySize = pubKey.getSize();
                 $scope.isTrusted = cmUserModel.trustsKey(pubKey);
 
-                $scope.canAuthenticate = cmUserModel.verifyHandshake(privKey);
-                $scope.startAuthentication = function(){
-                    cmUserModel.trigger('handshake:start', privKey);
-                }
             }
         }
     }
