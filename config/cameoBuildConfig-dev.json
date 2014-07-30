@@ -6,6 +6,7 @@
     },
     "phonegap": {
         "baseName" : "cameoNet-dev",
-        "appId" : "io.cameo.cameonet.client.web.mobile.app.dev"
+        "appId" : "864855",
+        "bundleId" : "io.cameo.dev.cameo"
     }
 }

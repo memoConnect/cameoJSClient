@@ -6,6 +6,7 @@
     },
     "phonegap": {
         "baseName" : "cameoNet-stage",
-        "appId" : "io.cameo.cameonet.client.web.mobile.app.stage"
+        "appId" : "1028315",
+        "bundleId" : "de.cameonet.app.test.stage"
     }
 }
