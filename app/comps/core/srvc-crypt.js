@@ -20,6 +20,10 @@ angular.module('cmCore')
              */
             Key: cmKey,
 
+            random: function(){
+                return Math.random();
+            },
+
             /**
              * this method calculates a secure hash
              * @param secretString String that should be hashed

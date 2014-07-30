@@ -23,14 +23,15 @@ angular.module('cmCore')
             function init(requestData){
 //                cmLogger.debug('cmAuthenticationRequestModel.init');
 
+                if(!("id" in requestData)){
+                    self.id = cmCrypt.hash(cmCrypt.random());
+                }
                 self.importData(requestData);
-
 //                self.trigger('init:finished');
             }
 
             this.importData = function(requestData){
                 cmLogger.debug('cmAuthenticationRequestModel.importData');
-                console.log(requestData)
 
                 if(typeof requestData !== 'object'){
                     cmLogger.debug('authenticationRequestModel.importData:failed - no data!');
@@ -170,18 +171,22 @@ angular.module('cmCore')
                 cmLogger.debug('cmAuthenticationRequestModel.send');
 
                 if(this.verifyForm() !== false){
-                    cmAuth.sendBroadcast('authenticationRequest:start', {
-                        identityId: cmUserModel.data.identity.id,
-                        encryptedTransactionSecret: this.encryptedTransactionSecret,
-                        signature: this.signature,
-                        fromKeyId: this.fromKeyId,
-                        toKeyId: this.toKeyId
+                    cmAuth.sendBroadcast({
+                        name: 'authenticationRequest:start',
+                        data: {
+                            id: this.id,
+                            identityId: cmUserModel.data.identity.id,
+                            encryptedTransactionSecret: this.encryptedTransactionSecret,
+                            signature: this.signature,
+                            fromKeyId: this.fromKeyId,
+                            toKeyId: this.toKeyId
+                        }
                     }).then(
-                        function(data){
-                            self.importData(data);
+                        function(){
+                            // do nothing
                         },
                         function(){
-                            cmLogger.debug('authenticationRequestModel.save - Error');
+                            cmLogger.debug('authenticationRequestModel.send - Error');
                         }
                     );
                 } else {
