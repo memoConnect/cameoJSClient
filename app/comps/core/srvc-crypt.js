@@ -14,17 +14,12 @@ angular.module('cmCore')
         };
 
         return {
-            /**
-             * now cmKey
-             * todo: remove
-             */
-            Key: cmKey,
-
+         
             random: function(){
                 return Math.random();
             },
 
-            /**
+
              * this method calculates a secure hash
              * @param secretString String that should be hashed
              */
@@ -32,7 +27,41 @@ angular.module('cmCore')
                 if (null == secretString)
                     return "";
 
-                return sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(secretString))
+                return sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(secretString))
+            },
+            /**
+             * [hashObject description]
+             * @param  {[type]} obj         [description]
+             * @param  {[type]} hash_method [description]
+             * @return {[type]}             [description]
+             */
+            hashObject: function(obj){
+                var visited = []
+
+                function objectToArray(obj){
+
+                    //console.log(visited.length)
+
+                    if(visited.indexOf(obj) != -1)
+                        throw "Error: cmCrypt.hashObject() unable to hash cyclic Objects."
+                    
+
+                    if(typeof obj == "string") return obj
+                    if(typeof obj == "number") return obj.toString()
+                        
+                    if(["[object Object]", "[object Array]"].indexOf(Object.prototype.toString.call(obj)) == -1)
+                        throw "Error: cmCrypt.hashObject() unable to hash Objects with values like " + Object.prototype.toString.call(obj) 
+
+                    var keys    =   Object.keys(obj).sort()
+
+                    visited.push(obj)
+
+                    var values  =   keys.map(function(key){ return objectToArray(obj[key]) })
+
+                    return [keys, values]
+                }
+
+                return this.hash(JSON.stringify(objectToArray(obj)))
             },
 
             /**
@@ -93,8 +122,10 @@ angular.module('cmCore')
                 if (null == secretString)
                     return "";
 
-                if (secretKey.length < 60)
+                if (secretKey.length < 60){
+                    cmLogger.debug("cmCrypt.encrypt(): key too short.")
                     return "";
+                }
 
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);

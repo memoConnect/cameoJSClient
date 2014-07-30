@@ -73,8 +73,8 @@ angular.module('cmCore')
                 return private_key;
             };
 
-            this.signKey = function(key){
-                return crypt && crypt.sign(key.getFingerprint())
+            this.sign = function(data){
+                return crypt && crypt.sign(data)
             };
 
             this.encrypt = function(secret){
