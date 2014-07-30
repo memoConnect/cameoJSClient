@@ -44,7 +44,7 @@
     "karma-jasmine": "~0.1.5",
     "karma-coffee-preprocessor": "~0.1.2",
     "karma-phantomjs-launcher": "~0.1.1",
-    "karma-html2js-preprocessor": "~0.1.0",
+    "karma-ng-json2js-preprocessor": "~0.1.1",
     "karma-junit-reporter": "~0.1",
     "grunt-contrib-connect": "~0.5.0",
     "grunt-contrib-less": "~0.10.0",
