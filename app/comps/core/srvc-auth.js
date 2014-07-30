@@ -311,6 +311,23 @@ angular.module('cmCore')
              * @ngdoc method
              * @methodOf cmAuth
              *
+             * @name sendBroadcast
+             * @description
+             * post a broadcast event to own devices
+             *
+             * @param {Object} data event data
+             * @returns {Promise} for async handling
+             */
+            sendBroadcast: function( data){
+                return cmApi.post({
+                    path: '/event/broadcast',
+                    data: data
+                });
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
              * @name requestTwoFactorKey
              * @description
              * Two factor authentication
