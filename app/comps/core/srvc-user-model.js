@@ -268,7 +268,7 @@ angular.module('cmCore')
             });
 
             return result;
-        };
+        }
 
         this.syncLocalKeys = function(){
             /**
@@ -312,7 +312,7 @@ angular.module('cmCore')
             });
 
             return this;
-        };
+        }
 
         this.removeKey = function(keyToRemove){
             var self            = this,
@@ -345,7 +345,7 @@ angular.module('cmCore')
             localKeys.forEach(function(signingKey){
 
                 //Dont sign twice:
-                if(keyToSign.signatures.some(function(){ return signature.keyId == signingKey.id })
+                if(keyToSign.signatures.some(function(){ return signature.keyId == signingKey.id }))
                     return false
 
                 //Content of the signature:
@@ -365,27 +365,63 @@ angular.module('cmCore')
                 )
             });
 
-            $q.all(promises).then(function(){
+            return $q.all(promises).then(function(){
                 self.trigger('signatures:saved')
             });
-
-            return this;
         };
 
         this.verifyOwnPublicKey = function(key){
             var local_keys = this.loadLocalKeys()
 
-            return  key.signatures.some(function(signature){
-                        var local_key = local_keys.find(signature.keyId)
-                        
-                        if(!local_key) return false
-
-                        return local_key.verify([
-                            key.getPublicKey(),
-                            cmUserModel.cameoId
-                        ], signature)                        
-                    })
+            local_keys.some(function(local_key){
+                return local_key.verifyKey(key)
+            })
         }
+
+        this.signOwnKeys = function(){
+            if(!this.data.identity.keys)
+                return null;
+
+            self.state.set('signing');
+
+            var local_keys       =  this.loadLocalKeys(),
+                ttrusted_keys    =  this.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
+                                        return key.signatures.some(function(signature){
+                                            return  signature.keyId == trusted_key.id
+                                                    &&
+                                                    trusted_key.verify([
+                                                        key.getPublicKey(),
+                                                        cmUserModel.cameoId
+                                                    ], signature.content)
+                                        }
+                                    })
+                
+            var stack = [];
+
+            ttrusted_keys.forEach(function(ttrusted_key){
+                var fingerprint = ttrusted_key.getFingerprint()
+                stack.push(function(){
+                    self.signPublicKey(ttrusted_key, fingerprint)
+                })
+            })
+
+            function stack_advance(){
+                var callback = stack.pop()
+
+                if(callback) callback()
+
+                if(stack.length != 0){
+                    $timeout(stack_advance, 200)
+                }else{
+                    self.state.unset('signing')
+                }
+                
+            }
+
+            stack_advance();
+
+            return self
+        };
 
         this.clearLocalKeys = function(){
             this.storageSave('rsa', []);
@@ -562,43 +598,7 @@ angular.module('cmCore')
             this.data = angular.extend({}, dataModel);
         };
 
-        this.signOwnKeys = function(){
-            if(!this.data.identity.keys)
-                return null;
-
-            self.state.set('signing');
-
-            var local_keys       =  this.loadLocalKeys(),
-                ttrusted_keys    =  this.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(key){
-                                        self.verifyOwnPublicKey(key))
-                                    })
-                
-            var stack = [];
-
-            ttrusted_keys.forEach(function(ttrusted_key){
-                var fingerprint = ttrusted_key.getFingerprint()
-                stack.push(function(){
-                    self.signPublicKey(ttrusted_key, fingerprint)
-                })
-            })
-
-            function stack_advance(){
-                var callback = stack.pop()
-
-                if(callback) callback()
-
-                if(stack.length != 0){
-                    $timeout(stack_advance, 200)
-                }else{
-                    self.state.unset('signing')
-                }
-                
-            }
-
-            stack_advance();
-
-            return self
-        };
+        
 
         init();
 

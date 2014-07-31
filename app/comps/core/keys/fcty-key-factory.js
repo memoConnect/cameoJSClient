@@ -59,7 +59,7 @@ angular.module('cmCore')
 
                 var extended_key_list   =   self.filter(function(key){                                    
                                                 return  trustedKeys.some(function(trusted_key){
-                                                            return trust_callback(key)
+                                                            return trust_callback(trusted_key, key)
                                                         })
                                             })
 
