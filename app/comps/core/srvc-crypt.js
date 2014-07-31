@@ -308,7 +308,9 @@ angular.module('cmCore')
                     signature: '',
                     encryptedTransactionSecret: '',
                     fromKeyId: 0,
-                    toKeyId: 0
+                    fromKeyFingerprint: '',
+                    toKeyId: 0,
+                    toKeyFingerprint: ''
                 },
                 settings = angular.extend({},defaultSettings,_settings_);
 

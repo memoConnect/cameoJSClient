@@ -342,15 +342,16 @@ angular.module('cmCore')
             });
         };
 
-        this.signPublicKey = function(keyToSignId){
+        this.signPublicKey = function(keyToSign, keyToSignFingerprint){
 
-            if(localKeyId == signKeyId) return null //keys should not sign themselves
+            if(!(keyToSign instanceof cmKey) && (keyToSign.getFingerprint() == keyToSignFingerprint))
+                return false; //keys should not sign themselves
 
             var localKeys   = this.loadLocalKeys(),
-                keyToSign   = this.data.identity.keys.find(keyToSignId),
+//                keyToSign   = this.data.identity.keys.find(keyToSignId),
                 promises    = [];
 
-            localKeys.forEach(function(signingkey){
+            localKeys.forEach(function(signingKey){
 
                 //Content of the signature:
                 var signature   =   signingKey.sign([

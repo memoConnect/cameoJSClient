@@ -117,7 +117,7 @@ angular.module('cmCore')
                  */
                 var checkToKeyId = false;
                 localKeys.forEach(function(key){
-                    if(key.id == self.toKeyId && key.getFingerprint() === self.toKeyFingerprint){
+                    if(key.id == self.toKeyId && (key.getFingerprint() === self.toKeyFingerprint)){
                         checkToKeyId = true;
 
                         self.toKey = key;
@@ -134,7 +134,7 @@ angular.module('cmCore')
                  */
                 var checkFromKeyId = false;
                 cmUserModel.data.identity.keys.forEach(function(key){
-                    if(key.id == self.fromKeyId && key.getFingerprint() === self.fromKeyFingerprint){
+                    if(key.id == self.fromKeyId && (key.getFingerprint() === self.fromKeyFingerprint)){
                         checkFromKeyId = true;
                         self.fromKey = key;
                     }
@@ -150,7 +150,7 @@ angular.module('cmCore')
                  */
                 if(!cmCrypt.verifyAuthenticationRequest({
                         identityId: cmUserModel.data.identity.id,
-                        fromKey: self.fromKey,
+                        fromKey: this.fromKey,
                         encryptedTransactionSecret: this.encryptedTransactionSecret,
                         signature: this.signature
                     })) {
@@ -194,7 +194,9 @@ angular.module('cmCore')
                             encryptedTransactionSecret: this.encryptedTransactionSecret,
                             signature: this.signature,
                             fromKeyId: this.fromKeyId,
-                            toKeyId: this.toKeyId
+                            fromKeyFingerprint: this.fromKeyFingerprint,
+                            toKeyId: this.toKeyId,
+                            toKeyFingerprint: this.toKeyFingerprint
                         }
                     }).then(
                         function(){
@@ -222,7 +224,7 @@ angular.module('cmCore')
 
             this.on('secret:verified', function(){
                 if(self.state.is('incoming')) {
-                    cmUserModel.signPublicKey(this.toKeyId, this.fromKeyId);
+                    cmUserModel.signPublicKey(this.fromKey, this.fromKeyFingerprint);
                 }
             });
 
