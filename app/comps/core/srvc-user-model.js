@@ -566,18 +566,11 @@ angular.module('cmCore')
                 
             var stack = [];
 
-            local_keys.forEach(function(local_key){
-                ttrusted_keys.forEach(function(ttrusted_key){
-
-                    var no_signature_present =  !ttrusted_key.signatures.some(function(signature){
-                                                    return signature.keyId == local_key.id
-                                                });
-
-                    if(no_signature_present && local_key.id  != ttrusted_key.id)
-                        stack.push(function(){ self.signKey(local_key.id, ttrusted_key.id) })
-
+            ttrusted_keys.forEach(function(ttrusted_key){
+                stack.push(function(){
+                    self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint())
                 })
-            });
+            })
 
             function stack_advance(){
                 var callback = stack.pop()
