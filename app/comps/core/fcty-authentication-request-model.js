@@ -218,9 +218,9 @@ angular.module('cmCore')
             };
 
             this.finish = function(){
-//                if(this.state.is('outgoing')){
-//                    cmUserModel.signKey(this.fromKeyId, this.toKeyId);
-//                }
+                if(this.state.is('outgoing')){
+                    cmUserModel.signKey(this.fromKeyId, this.toKeyId);
+                }
             };
 
             init(requestData);

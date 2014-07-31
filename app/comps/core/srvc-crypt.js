@@ -299,10 +299,10 @@ angular.module('cmCore')
              */
             signAuthenticationRequest: function(_settings_){
                 var defaultSettings = {
-                    identityId: 0, // identityId to signature
+                    identityId: 0,
                     transactionSecret: '',
-                    fromKey: undefined, // key with privkey from new device
-                    toKey: undefined // key with pubkey from old device
+                    fromKey: undefined,
+                    toKey: undefined
                 },
                 dataForHandshake = {
                     signature: '',
@@ -310,9 +310,7 @@ angular.module('cmCore')
                     fromKeyId: 0,
                     toKeyId: 0
                 },
-                settings = angular.extend({},defaultSettings,_settings_),
-                hashPubKey,
-                signatory = new JSEncrypt();
+                settings = angular.extend({},defaultSettings,_settings_);
 
                 if(!(settings.fromKey instanceof cmKey)){
                     cmLogger.error('sign fromKey isn\'t a cmKey');
@@ -323,18 +321,17 @@ angular.module('cmCore')
                     return null;
                 }
 
-                // set new privKey
-                signatory.setPrivateKey(settings.fromKey.getPrivateKey());
                 dataForHandshake.fromKeyId = settings.fromKey.id;
-                // hash identityId and oldPubKey
                 dataForHandshake.encryptedTransactionSecret = settings.toKey.encrypt(settings.transactionSecret);
                 dataForHandshake.toKeyId = settings.toKey.id;
-                // hash the transaction
-                hashPubKey = this.base64Encode(sjcl.hash.sha256.hash(settings.identityId+':'+dataForHandshake.encryptedTransactionSecret).toString());
-                // create signature with hash of above
-                dataForHandshake.signature = signatory.sign(hashPubKey);
-//                dataForHandshake.signature = settings.fromKey.sign(hashPubKey);
-                // return that moep dataForHandshake
+
+                var signData = {
+                    identityId :settings.identityId,
+                    encryptedTransactionSecret: dataForHandshake.encryptedTransactionSecret
+                };
+
+                dataForHandshake.signature = settings.fromKey.sign(signData);
+
                 return dataForHandshake;
             },
 
@@ -345,26 +342,24 @@ angular.module('cmCore')
              */
             verifyAuthenticationRequest: function(_settings_){
                 var defaultSettings = {
-                    identityId: '', // identityId to verify signature
-                    fromKey: undefined, // pubkey from new device
-                    encryptedTransactionSecret: '', // encrypted pubkey from old device with transactionSecret
-                    signature: '' // signature of newPubKey
+                    identityId: '',
+                    fromKey: undefined,
+                    encryptedTransactionSecret: '',
+                    signature: ''
                 },
-                settings = angular.extend({},defaultSettings,_settings_),
-                hashPubKey,
-                verifier = new JSEncrypt();
+                settings = angular.extend({},defaultSettings,_settings_);
 
-                if(settings.fromKey == undefined){
+                if(!(settings.fromKey instanceof cmKey)){
                     cmLogger.error('sign fromKey isn\'t a cmKey');
                     return false;
                 }
 
-                // set new pubKey
-                verifier.setPublicKey(settings.fromKey.getPublicKey());
-                // hash pubkey
-                hashPubKey = this.base64Encode(sjcl.hash.sha256.hash(settings.identityId+':'+settings.encryptedTransactionSecret).toString());
-                // check verification
-                return verifier.verify(hashPubKey, settings.signature, CryptoJS.SHA256);
+                var verifyData = {
+                    identityId: settings.identityId,
+                    encryptedTransactionSecret: settings.encryptedTransactionSecret
+                };
+
+                return settings.fromKey.verify(verifyData, settings.signature);
             },
 
             isTransactionSecretValid: function(_settings_){
