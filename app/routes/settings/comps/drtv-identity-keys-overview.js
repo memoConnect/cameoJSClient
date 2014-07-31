@@ -18,7 +18,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                     $scope.privateKeys  =   cmUserModel.loadLocalKeys() || [];
                     $scope.publicKeys   =   cmUserModel.data.identity.keys || [];
                     $scope.trustedKeys  =   $scope.publicKeys.filter(function(key){
-                                                return cmUserModel.trustsKey(key);
+                                                console.log(cmUserModel.verifyOwnPublicKey(key))
+                                                return cmUserModel.verifyOwnPublicKey(key);
                                             });
                     $scope.signing      =   cmUserModel.state.is('signing');
 
