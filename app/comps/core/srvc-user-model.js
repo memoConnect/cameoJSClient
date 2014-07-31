@@ -343,6 +343,11 @@ angular.module('cmCore')
                 promises    = [];
 
             localKeys.forEach(function(signingKey){
+
+                //Dont sign twice:
+                if(keyToSign.signatures.some(function(){ return signature.keyId == signingKey.id })
+                    return false
+
                 //Content of the signature:
                 var signature  =  signingKey.sign(cmCrypt.hashObject({
                                         pubKey: keyToSign.getPublicKey(),
@@ -371,12 +376,14 @@ angular.module('cmCore')
             var local_keys = this.loadLocalKeys()
 
             return  key.signatures.some(function(signature){
-                        local_keys.find(signature.keyId)
-                        .verify([
+                        var local_key = local_keys.find(signature.keyId)
+                        
+                        if(!local_key) return false
+
+                        return local_key.verify([
                             key.getPublicKey(),
                             cmUserModel.cameoId
-                        ], signature)
-                        
+                        ], signature)                        
                     })
         }
 
@@ -561,14 +568,17 @@ angular.module('cmCore')
 
             self.state.set('signing');
 
-            var local_keys       = this.loadLocalKeys(),
-                ttrusted_keys    = this.data.identity.keys.getTransitivelyTrustedKeys(local_keys);
+            var local_keys       =  this.loadLocalKeys(),
+                ttrusted_keys    =  this.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(key){
+                                        self.verifyOwnPublicKey(key))
+                                    })
                 
             var stack = [];
 
             ttrusted_keys.forEach(function(ttrusted_key){
+                var fingerprint = ttrusted_key.getFingerprint()
                 stack.push(function(){
-                    self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint())
+                    self.signPublicKey(ttrusted_key, fingerprint)
                 })
             })
 
