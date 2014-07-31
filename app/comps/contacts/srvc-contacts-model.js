@@ -20,7 +20,17 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         this.state = new cmStateManagement(['loading-contacts','loading-groups','loading-requests']);
 
-        this.contacts   = new cmFactory(cmContactModel);
+        this.contacts   = new cmFactory(cmContactModel,
+                                function sameByData(instance, data){
+                                    console.log('sameByData', data, instance)
+                                    return data &&
+                                           data.identity &&
+                                           data.identity.id &&
+                                           instance &&
+                                           instance.identity &&
+                                           instance.identity.id &&
+                                           data.identity.id == instance.identity.id
+                                });
         // TODO: groups must be in factory style with models
         this.groups     = [];//new cmFactory(function(){return this;});
         this.requests   = new cmFactory(cmFriendRequestModel, 
@@ -196,7 +206,7 @@ angular.module('cmContacts').service('cmContactsModel',[
             */
            
             return this;
-        }
+        };
 
         this.sendFriendRequest = function(id, message){
             return cmContactsAdapter.sendFriendRequest(id, message);
@@ -274,21 +284,19 @@ angular.module('cmContacts').service('cmContactsModel',[
         });
 
         cmContactsAdapter.on('friendRequest:new', function(event, data){
+            console.log('friendRequest:new',data.to == cmUserModel.data.identity.id,data)
             if(data.to == cmUserModel.data.identity.id)
                 self.requests.create(data.friendRequest);
         });
 
         cmContactsAdapter.on('friendRequest:accepted', function(event, data){
-            //Friend request sent by the current user was accepted:
+            console.log('friendRequest:accepted',data.from == cmUserModel.data.identity.id,data.to == cmUserModel.data.identity.id,data)
+            // Friend request sent by the current user was accepted:
             if(data.from == cmUserModel.data.identity.id){
-                var contact = self.contacts.filter(function(contact){ return contact.identity.id == data.to })[0]
-
-                if(contact && typeof contact.setContactType == 'function'){
-                    contact.setContactType('internal')
-                }
+                self.contacts.create(data.contact, true);
             }
 
-            //Friend request accepted by the current user (on a different device):
+            // Friend request accepted by the current user (on a different device):
             if(data.to == cmUserModel.data.identity.id){
                 self.requests.forEach(function(request){
                     if(request.identity.id == data.from)
