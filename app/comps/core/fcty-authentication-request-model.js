@@ -220,7 +220,7 @@ angular.module('cmCore')
 
             init(requestData);
 
-            cmUserModel.on('signature:saved', function(){
+            cmUserModel.on('signatures:saved', function(){
                 if(self.state.is('incoming')){
                     self.delete();
                 }
