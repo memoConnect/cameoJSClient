@@ -468,7 +468,7 @@ angular.module('cmCore')
             var publicKeys = self.data.identity.keys;
             var localKeys = this.loadLocalKeys();
 
-            if(publicKeys.find(toKey) != null && localKeys.find(toKey) == null){
+            if(publicKeys.find(toKey) != null && localKeys.length > 0 && localKeys.find(toKey) == null){
                 return true;
             }
 
