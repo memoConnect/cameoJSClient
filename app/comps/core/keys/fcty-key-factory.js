@@ -55,10 +55,12 @@ angular.module('cmCore')
                 if(!trust_callback){
                     cmLogger.debug('cmKey.getTransitivelyTrustedKeys: trust_callback missing.')
                     return false
-                }               
+                }       
 
                 var extended_key_list   =   self.filter(function(key){                                    
-                                                return  trustedKeys.some(function(trusted_key){
+                                                return  trustedKeys.indexOf(key) != -1
+                                                        ||
+                                                        trustedKeys.some(function(trusted_key){
                                                             return trust_callback(trusted_key, key)
                                                         })
                                             })

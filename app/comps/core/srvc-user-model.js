@@ -405,10 +405,12 @@ angular.module('cmCore')
 
             var local_keys       =  this.loadLocalKeys(),
                 ttrusted_keys    =  this.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
-                                        trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
+                                        return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
                                     })
                 
             var stack = [];
+
+            console.log('sign own keys')
 
             ttrusted_keys.forEach(function(ttrusted_key){
                 var fingerprint = ttrusted_key.getFingerprint()
@@ -612,9 +614,10 @@ angular.module('cmCore')
         });
 
         this.on('update:finished', function(){  
-            //Todo: tets sollte nicht nötig sein
-            if(self.data.identity.key && typeof self.data.identity.on)
-                self.signOwnKeys()       
+            //Todo: tett sollte nicht nötig sein
+            if(self.data.identity.keys && typeof self.data.identity.on){
+                self.signOwnKeys()
+            }
 
             cmBoot.resolve();
         });

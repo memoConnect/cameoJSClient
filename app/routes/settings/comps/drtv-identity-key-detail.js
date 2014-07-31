@@ -18,7 +18,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyDetail', [
                 $scope.pubKey  = pubKey.getPublicKey();
                 $scope.keyName = pubKey.name;
                 $scope.keySize = pubKey.getSize();
-                $scope.isTrusted = cmUserModel.trustsKey(pubKey);
+                $scope.isTrusted = cmUserModel.verifyOwnPublicKey(pubKey);
 
             }
         }
