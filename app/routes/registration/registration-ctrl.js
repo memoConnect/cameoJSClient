@@ -85,38 +85,38 @@ app.register.controller('RegistrationCtrl', [
                         && $scope.invalidLoginName() == false
                         && reservationSecrets[lastloginName] == undefined) {
                         // check loginName
-                        $scope.pendingAccountCheck =    cmAuth.checkAccountName(lastloginName)
-                                                        .then(
-                                                            // valid case
-                                                            function(data){
-                                                                $scope.registrationForm.loginName.$valid = true;
-                                                                // save reservation secret
-                                                                reservationSecrets[lastloginName] = data.reservationSecret;
-                                                            },
-                                                            // invalid or exists
-                                                            function(response){
-                                //                                console.log(response)
-                                                                if(typeof response == "object"){
-                                                                    // invalid case
-                                                                    if(typeof response.data !== 'undefined' && typeof response.data.error !== 'undefined' && response.data.error == 'invalid login name') {
-                                //                                        console.log('case invalid')
-                                                                        $scope.showError.LoginNameInvalid = true;
-                                                                    }
-                                                                    if(typeof response.alternative !== 'undefined'){
-                                //                                        console.log('case alternative')
-                                                                        $scope.showError.LoginNameExists = true;
-                                                                        /**
-                                                                         * @TODO
-                                                                         * show alternatives
-                                                                         */
-                                                                        $scope.userNameAlternatives = response.alternative;
-                                                                        $scope.showUserNameAlternatives = true;
-                                                                    }
-                                                                }
+                        $scope.pendingAccountCheck = cmAuth.checkAccountName(lastloginName)
+                        .then(
+                            // valid case
+                            function(data){
+                                $scope.registrationForm.loginName.$valid = true;
+                                // save reservation secret
+                                reservationSecrets[lastloginName] = data.reservationSecret;
+                            },
+                            // invalid or exists
+                            function(response){
+                                if(typeof response == "object"){
+                                    // invalid case
+                                    if(typeof response.data !== 'undefined' &&
+                                        typeof response.data.error !== 'undefined' &&
+                                        response.data.error.search('invalid') != -1) {
+                                        $scope.showError.LoginNameInvalid = true;
+                                    }
+                                    // show alternatives
+                                    if(typeof response.alternative !== 'undefined'){
+                                        $scope.showError.LoginNameExists = true;
+                                        /**
+                                         * @TODO
+                                         * show alternatives
+                                         */
+                                        $scope.userNameAlternatives = response.alternative;
+                                        $scope.showUserNameAlternatives = true;
+                                    }
+                                }
 
-                                                                $scope.registrationForm.loginName.$valid = false;
-                                                            }
-                                                        );
+                                $scope.registrationForm.loginName.$valid = false;
+                            }
+                        );
 
                     } else {
                         if(lastloginName.length == 0){
