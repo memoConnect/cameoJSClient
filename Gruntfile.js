@@ -21,7 +21,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-sloc');
     grunt.loadNpmTasks('grunt-ngdocs');
-    grunt.loadNpmTasks('grunt-testflight');
+    grunt.loadNpmTasks('grunt-testflight-jsonresult');
 
     // cameo secrets
     var globalCameoSecrets = (function () {
@@ -535,8 +535,10 @@ module.exports = function (grunt) {
                 notes: globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName + " " + globalCameoBuildConfig.phonegap.version,
                 distributionLists: ['cameoNet-dev'],
                 notify: true,
-                replace: true
-
+                replace: true,
+                onDone: function (responseJson) {
+                    globalCameoBuildConfig.iosTestFlightURL = responseJson.install_url
+                }
             },
 
             iOS: {
@@ -603,7 +605,9 @@ module.exports = function (grunt) {
                 'options': {
                     'data': {
                         'phonegapBaseFilename': globalCameoBuildConfig.phonegap.phonegapBaseFilename,
-                        'testFlightiOSURL': globalCameoBuildConfig.phonegap.phonegapBaseFilename
+                        'testFlightiOSURL': function () {
+                            return globalCameoBuildConfig.iosTestFlightURL
+                        }
                     }
                 },
                 'files': {

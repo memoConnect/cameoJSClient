@@ -55,7 +55,7 @@
     "grunt-shell": "~0.7.0",
     "grunt-ngdocs": "~0.2.2",
     "grunt-sloc": "~0.5.2",
-    "grunt-testflight" : "~0.1.1"
+    "grunt-testflight-jsonresult" : "~0.1.2"
   },
   "engines": {
     "node": ">=0.8.0"
