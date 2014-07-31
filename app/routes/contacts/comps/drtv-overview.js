@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('cmRouteContacts').directive('cmOverviewContacts', [
-    function(){
+    '$rootScope', '$location',
+    function($rootScope, $location){
         return {
             restrict: 'E',
             templateUrl: 'routes/contacts/comps/drtv-overview.html',

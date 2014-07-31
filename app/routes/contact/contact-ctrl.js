@@ -8,24 +8,31 @@ define([
 
     app.register.controller('ContactCtrl',
         function(
-         $scope,
-         $rootScope,
-         $location,
-         $routeParams,
-         cmContactsModel,
-         cmIdentityFactory,
-         cmUtil,
-         cmNotify
+         $scope, $rootScope, $location,$routeParams,
+         cmContactsModel, cmIdentityFactory, cmUtil, cmNotify
         ){
             $scope.cmUtil = cmUtil;
 
             var isNew = $routeParams.id == 'new' ? true : false;
 
+            $scope.formData = {
+                phoneNumbers: [],
+                emails: []
+            };
+
             if(isNew){
                 $scope.contact = {};
                 $scope.identity = {
-                    phoneNumbers: [{value:""}],
-                    emails: [{value:""}]
+                    displayName: '',
+                    phoneNumber: '',
+                    email: '',
+                    exportData: function(){
+                        return {
+                            displayName: this.displayName,
+                            phoneNumber: this.phoneNumber,
+                            email: this.email
+                        }
+                    }
                 };
                 $scope.disabled = false;
                 $scope.chooseAvatar = true;
@@ -40,10 +47,10 @@ define([
 
                         //////////////////////
                         // TODO: mock workarround json in array
-                        $scope.identity.phoneNumbers = [
+                        $scope.formData.phoneNumbers = [
                             $scope.identity.phoneNumber || {value:''}
                         ];
-                        $scope.identity.emails = [
+                        $scope.formData.emails = [
                             $scope.identity.email || {value:''}
                         ];
                         //////////////////////
@@ -80,22 +87,20 @@ define([
                     name: null,
                     surName: null,
                     phoneProvider: null,
-                    phoneNumbers: [],
-                    emails: [],
                     groups: []
                 },
                 // merge given identity with default
-                identity = angular.extend({}, emptyIdentity, $scope.identity);
+                identity = angular.extend({}, emptyIdentity, $scope.identity.exportData());
 
                 // validation
                 //////////////////////
                 // TODO: mock workarround for multiinput from array to single string
-                if(identity.phoneNumbers.length > 0 && identity.phoneNumbers[0].value != ''){
-                    identity.phoneNumber = identity.phoneNumbers[0].value;
+                if($scope.formData.phoneNumbers.length > 0 && $scope.formData.phoneNumbers[0].value != ''){
+                    identity.phoneNumber = $scope.formData.phoneNumbers[0].value;
                     identity.preferredMessageType = 'sms';
                 }
-                if(identity.emails.length > 0 && identity.emails[0].value != ''){
-                    identity.email = identity.emails[0].value;
+                if($scope.formData.emails.length > 0 && $scope.formData.emails[0].value != ''){
+                    identity.email = $scope.formData.emails[0].value;
                     identity.preferredMessageType = 'mail';
                 }
 
@@ -125,7 +130,7 @@ define([
                     .editContact($routeParams.id, identity)
                     .then(
                         function () {
-                            cmNotify.success('CONTACT.INFO.SUCCESS.EDIT',{ttl:5000});
+                            cmNotify.info('CONTACT.INFO.SUCCESS.EDIT',{ttl:5000,displayType:'modal'});
                         },
                         function () {
                             cmNotify.error('CONTACT.INFO.ERROR.EDIT',{ttl:5000});
