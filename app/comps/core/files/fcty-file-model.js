@@ -348,8 +348,8 @@ angular.module('cmCore')
                 }
             };
 
-            this.stopDownload = function(){
-                cmFileDownload.remove(this);
+            this.downloadStop = function(){
+                cmFileDownload.stop(this);
             };
 
             this.promptSaveAs = function(){

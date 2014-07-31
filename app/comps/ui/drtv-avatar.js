@@ -117,7 +117,7 @@ angular.module('cmUi').directive('cmAvatar',[
                     if('cmStopDownload' in attrs) {
                         scope.$on('$destroy', function () {
                             if(avatar != null){
-                                avatar.stopDownload();
+                                avatar.downloadStop();
                             }
                         });
                     }

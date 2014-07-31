@@ -11,15 +11,15 @@
                 <cm-avatar cm-data="identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-if="identity"></cm-avatar>
             </div>
             <div cm-weight="1">
-                <div class="cm-contact-actions" cm-rubber-space ng-if="contact">
+                <div class="cm-contact-actions" cm-rubber-space ng-if="contact.contactType">
                     <div cm-weight="1">
                         <cm-key-level cm-data="identity.keys.getWeakestKeySize()"></cm-key-level>
                         <cm-contact-type cm-data="contact"></cm-contact-type>
                     </div>
                     <button
+                        data-qa="start-new-conversation-btn"
                         class="with-white-bg"
                         ng-click="startConversation()"
-                        data-qa="start-new-conversation-btn"
                         cm-weight="1">
                         <i class="fa cm-new-talk"></i>
                     </button>

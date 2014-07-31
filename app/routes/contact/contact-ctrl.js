@@ -16,8 +16,8 @@ define([
             var isNew = $routeParams.id == 'new' ? true : false;
 
             $scope.formData = {
-                phoneNumbers: [],
-                emails: []
+                phoneNumbers: [{value:''}],
+                emails: [{value:''}]
             };
 
             if(isNew){

@@ -57,13 +57,12 @@ angular.module('cmCore')
         /**
          * Stops Downloading
          */
-        this.stop = function(){
-            cmLogger.debug('cmFileDownload:stop');
-        };
-
-        this.remove = function(file){
-            console.log('cmFileDownload.remove',file)
-
+        this.stop = function(file){
+            var index = this.stack.indexOf(file);
+            console.log('cmFileDownload.remove', file, index, this.stack.length)
+            if(index > -1){
+                this.stack.splice(index, 1);
+            }
         };
 
         /**
