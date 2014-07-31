@@ -212,12 +212,40 @@ angular.module('cmCore')
                 }
             };
 
+            this.sendVerified = function(){
+                if(this.state.is('incoming')){
+                    cmAuth.sendBroadcast({
+                        name: 'authenticationRequest:verified',
+                        data: {
+                            id: this.id
+                        }
+                    }).then(
+                        function(){
+                            // do nothing
+                        },
+                        function(){
+                            cmLogger.debug('authenticationRequestModel.send - Error');
+                        }
+                    );
+                }
+            };
+
             this.finish = function(){
                 cmLogger.debug('cmAuthenticationRequestModel.finish');
 
                 if(this.state.is('outgoing')){
-                    console.log('arghhhhh');
-//                    cmUserModel.signPublicKey(this.fromKeyId, this.toKeyId);
+                    cmUserModel.data.identity.load();
+
+                    cmUserModel.data.identity.one('update:finished', function(){
+
+                        cmUserModel.data.identity.keys.forEach(function(key){
+                            if(key.id == self.toKeyId && (key.getFingerprint() === self.toKeyFingerprint)){
+                                self.toKey = key;
+                            }
+                        });
+
+                        cmUserModel.signPublicKey(self.toKey, self.toKeyFingerprint);
+                    });
                 }
             };
 
@@ -225,14 +253,14 @@ angular.module('cmCore')
 
             this.on('secret:verified', function(){
                 if(self.state.is('incoming')) {
-                    cmUserModel.signPublicKey(this.fromKey, this.fromKeyFingerprint);
+                    cmUserModel.signPublicKey(this.toKey, this.toKeyFingerprint);
                 }
             });
 
             cmUserModel.on('signatures:saved', function(){
-//                if(self.state.is('incoming')){
-//                    self.delete();
-//                }
+                if(self.state.is('incoming')){
+                    self.sendVerified();
+                }
 
                 if(self.state.is('outgoing')){
                     self.trigger('request:finished');

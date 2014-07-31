@@ -72,7 +72,7 @@ angular.module('cmCore').service('cmHooks', [
                         }
                     });
 
-                    authenticationRequest.on('delete:finished', function(){
+                    authenticationRequest.on('request:finished', function(){
                         self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
 
                         cmAuthenticationRequestFactory.deregister(authenticationRequest);
@@ -81,18 +81,31 @@ angular.module('cmCore').service('cmHooks', [
             }
         });
 
-        cmApi.on('authenticationRequest:finished', function(event, request){
-            cmLogger.debug('cmHooks.on:authenticationRequest:finished');
-            if(typeof request == 'object' && "id" in request && cmUtil.validateString(request.id)){
-                var authenticationRequest = cmAuthenticationRequestFactory.create(request.id);
+        cmApi.on('authenticationRequest:verified', function(event, request) {
+            cmLogger.debug('cmHooks.on:authenticationRequest:verified');
 
-                if(typeof authenticationRequest.finish == 'function'){
-                    authenticationRequest.finish();
+            var authenticationRequest = cmAuthenticationRequestFactory.find(request);
 
-                    self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
-                }
+            console.log('authenticationRequest:verified',authenticationRequest);
+
+            if(authenticationRequest !== null && (typeof authenticationRequest.finish == 'function')){
+                authenticationRequest.finish();
+//                self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
             }
         });
+
+//        cmApi.on('authenticationRequest:finished', function(event, request){
+//            cmLogger.debug('cmHooks.on:authenticationRequest:finished');
+//            if(typeof request == 'object' && "id" in request && cmUtil.validateString(request.id)){
+//                var authenticationRequest = cmAuthenticationRequestFactory.create(request.id);
+//
+//                if(typeof authenticationRequest.finish == 'function'){
+//                    authenticationRequest.finish();
+//
+//                    self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
+//                }
+//            }
+//        });
 
         cmUserModel.on('key:saved handshake:start', function(event, toKey){
             if(cmUserModel.verifyPublicKeyForAuthenticationRequest(toKey)){

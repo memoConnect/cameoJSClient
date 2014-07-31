@@ -119,7 +119,7 @@ angular.module('cmCore')
 
                             if(typeof response == 'object' && ('status' in response) && response.status == 401){
                                 cmLogger.debug('cmUserModel:init:reject:401');
-                                self.doLogout(true,'usermodl loadidentity reject');
+                                self.doLogout(true,'usermodel load identity reject');
                             }
                         }
                     );
@@ -241,13 +241,13 @@ angular.module('cmCore')
          */
         this.storeKey = function(key){
             var local_keys      = this.loadLocalKeys() || new cmKeyFactory(),
-                matching_key    = local_keys.find(key)
+                matching_key    = local_keys.find(key);
 
-            local_keys.create(key.exportData(), true)
+            local_keys.create(key.exportData(), true);
 
             this.storageSave('rsa', local_keys.exportDataArray());
 
-            this.trigger('key:stored')
+            this.trigger('key:stored');
 
             return this;
         };
@@ -335,9 +335,12 @@ angular.module('cmCore')
         };
 
         this.signPublicKey = function(keyToSign, keyToSignFingerprint){
+            cmLogger.debug('cmUserModel.signPublicKey');
 
-            if(!(keyToSign instanceof cmKey) && (keyToSign.getFingerprint() === keyToSignFingerprint))
+            if(!(keyToSign instanceof cmKey) && (keyToSign.getFingerprint() === keyToSignFingerprint)){
+                cmLogger.debug('cmUserModel.signPublicKey - faild');
                 return false; //keys should not sign themselves
+            }
 
             var localKeys   = this.loadLocalKeys(),
                 promises    = [];
