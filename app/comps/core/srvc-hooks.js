@@ -86,26 +86,11 @@ angular.module('cmCore').service('cmHooks', [
 
             var authenticationRequest = cmAuthenticationRequestFactory.find(request);
 
-            console.log('authenticationRequest:verified',authenticationRequest);
-
             if(authenticationRequest !== null && (typeof authenticationRequest.finish == 'function')){
                 authenticationRequest.finish();
-//                self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
+                self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
             }
         });
-
-//        cmApi.on('authenticationRequest:finished', function(event, request){
-//            cmLogger.debug('cmHooks.on:authenticationRequest:finished');
-//            if(typeof request == 'object' && "id" in request && cmUtil.validateString(request.id)){
-//                var authenticationRequest = cmAuthenticationRequestFactory.create(request.id);
-//
-//                if(typeof authenticationRequest.finish == 'function'){
-//                    authenticationRequest.finish();
-//
-//                    self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
-//                }
-//            }
-//        });
 
         cmUserModel.on('key:saved handshake:start', function(event, toKey){
             if(cmUserModel.verifyPublicKeyForAuthenticationRequest(toKey)){
@@ -124,7 +109,7 @@ angular.module('cmCore').service('cmHooks', [
 
                 cmModal.on('modal:closed', function(event, id){
                     if(id == modalId){
-                        console.log('Andreas hats drauf!')
+//                        console.log('Andreas hats drauf!')
                     }
                 });
             }

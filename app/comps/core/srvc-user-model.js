@@ -352,7 +352,7 @@ angular.module('cmCore')
             cmLogger.debug('cmUserModel.signPublicKey');
 
             if(!(keyToSign instanceof cmKey) && (keyToSign.getFingerprint() === keyToSignFingerprint)){
-                cmLogger.debug('cmUserModel.signPublicKey - faild');
+                cmLogger.debug('cmUserModel.signPublicKey - failed');
                 return false; //keys should not sign themselves
             }
 
@@ -362,8 +362,10 @@ angular.module('cmCore')
             localKeys.forEach(function(signingKey){
 
                 //Dont sign twice:
-                if(keyToSign.signatures.some(function(){ return signature.keyId == signingKey.id }))
-                    return false
+                if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
+                    self.trigger('signatures:cancel');
+                    return false;
+                }
 
                 //Content of the signature:
                 var signature  =  signingKey.sign(self.getTrustToken(keyToSign, self.data.identity.cameoId));
@@ -374,7 +376,7 @@ angular.module('cmCore')
                             keyToSign.importData({signatures:[signature]})                            
                         },
                         function(){
-                            self.trigger('signature:failed');
+                            self.trigger('signatures:failed');
                         }
                     )
                 )
@@ -448,7 +450,7 @@ angular.module('cmCore')
         };
 
         this.bulkReKeying = function(localKeyId, newKeyId){
-//            cmLogger.debug('cmUserModel.startBulkReKeying');
+            cmLogger.debug('cmUserModel.startBulkReKeying');
 
             if(!this.state.is('rekying')){
                 this.state.set('rekying');
@@ -600,8 +602,6 @@ angular.module('cmCore')
             this.data = angular.extend({}, dataModel);
         };
 
-        
-
         init();
 
         /**
@@ -619,8 +619,7 @@ angular.module('cmCore')
             cmBoot.resolve();
         });
 
-
-        cmAuth.on('identity:updated', function(event, data){
+        cmAuth.on('identity:updated signatures:updated', function(event, data){
             if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
                 self.data.identity.importData(data);
             }

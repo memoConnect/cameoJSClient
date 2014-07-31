@@ -238,15 +238,24 @@ angular.module('cmCore')
 
                     cmUserModel.data.identity.one('update:finished', function(){
 
+                        cmUserModel.loadLocalKeys().forEach(function(key){
+                            if(key.id == self.fromKeyId && (key.getFingerprint() === self.fromKeyFingerprint)){
+                                self.fromKey = key;
+                            }
+                        });
+
                         cmUserModel.data.identity.keys.forEach(function(key){
                             if(key.id == self.toKeyId && (key.getFingerprint() === self.toKeyFingerprint)){
                                 self.toKey = key;
                             }
                         });
 
-                        self.toKey.verify() //fromKey
+                        if(self.toKey.verify(self.fromKey, cmUserModel.getTrustToken(self.fromKey, cmUserModel.data.identity.cameoId))){
+                            cmUserModel.signPublicKey(self.toKey, self.toKeyFingerprint);
+                        } else {
+                            cmLogger.debug('Error - cmAuthenticationRequestModel.finish - verify fail!');
+                        }
 
-                        cmUserModel.signPublicKey(self.toKey, self.toKeyFingerprint);
                     });
                 }
             };
@@ -259,12 +268,19 @@ angular.module('cmCore')
                 }
             });
 
-            cmUserModel.on('signatures:saved', function(){
+            cmUserModel.on('signatures:saved signatures:cancel', function(){
                 if(self.state.is('incoming')){
                     self.sendVerified();
                 }
 
                 if(self.state.is('outgoing')){
+                    cmAuth.sendBroadcast({
+                        name: 'signatures:updated',
+                        data: {
+                            id: cmUserModel.data.identity.id
+                        }
+                    });
+
                     self.trigger('request:finished');
                 }
             });

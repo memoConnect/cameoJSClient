@@ -406,6 +406,11 @@ angular.module('cmCore')
             auth.trigger('identity:updated', data)
         });
 
+        cmApi.on('signatures:updated', function(event, data){
+//            console.log('cmAuth.on:signatures:updated')
+            auth.trigger('signatures:updated', data)
+        });
+
         return auth;
     }
 ]);

@@ -78,7 +78,7 @@ angular.module('cmCore')
             };
 
             this.verify = function(data, signature){
-                return  crypt && crypt.verify(data, signature, function(x){ return x })
+                return  crypt && crypt.verify(data, signature, function(){}) // andere version funktioniert nicht bei authentication requests
             };
 
             this.encrypt = function(secret){
