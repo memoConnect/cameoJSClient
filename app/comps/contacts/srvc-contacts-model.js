@@ -22,7 +22,6 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         this.contacts   = new cmFactory(cmContactModel,
                                 function sameByData(instance, data){
-                                    console.log('sameByData', data, instance)
                                     return data &&
                                            data.identity &&
                                            data.identity.id &&
@@ -284,13 +283,11 @@ angular.module('cmContacts').service('cmContactsModel',[
         });
 
         cmContactsAdapter.on('friendRequest:new', function(event, data){
-            console.log('friendRequest:new',data.to == cmUserModel.data.identity.id,data)
             if(data.to == cmUserModel.data.identity.id)
                 self.requests.create(data.friendRequest);
         });
 
         cmContactsAdapter.on('friendRequest:accepted', function(event, data){
-            console.log('friendRequest:accepted',data.from == cmUserModel.data.identity.id,data.to == cmUserModel.data.identity.id,data)
             // Friend request sent by the current user was accepted:
             if(data.from == cmUserModel.data.identity.id){
                 self.contacts.create(data.contact, true);
@@ -303,7 +300,6 @@ angular.module('cmContacts').service('cmContactsModel',[
                         self.requests.deregister(request)
                 });
             }
-
         });
 
         this.requests.on('register', function(){
