@@ -118,45 +118,62 @@ cm-security-settings {
   }
 
   .no-border{
-      border: none;
+    border: none;
   }
 
   .no-padding{
-      padding:0
+    padding:0
   }
 
   .label-with-checkbox{
-      label {
-          padding-left: 0.5rem;
+    line-height:@cm-unit;
+    label {
+      padding-left: 0.5rem;
+      .w40;
+    }
+    button {
+      i {
+        width:@cm-unit;
+        height:@cm-unit;
+        line-height:@cm-unit;
       }
-      button {
+    }
+    .checkbox-of-label{
+      .w60;
+      .tar;
+      .dib;
+      padding-right: 0.5rem;
+    }
+  }
 
-      }
-      .checkbox-of-label{
-        .tar;
-        .dib;
-        padding-right: 0.5rem;
-      }
+  .label-with-input{
+    label {
+      padding-left: 0.5rem;
+      .w40;
+    }
+    .cm-form-control{
+      .w60;
+    }
   }
 
   &:last-child{
-      border-bottom:0;
+    border-bottom:0;
   }
 
   .cm-btn{
-      color:@cm-ci-color;
-      .cm-btn-black;
-      .cm-btn-block;
+    color:@cm-ci-color;
+    .cm-btn-black;
+    .cm-btn-block;
   }
 
   .cm-form-group{
-      padding:0;
+    padding:0;
   }
 
   .cm-center{
-      .cm-info{
-          color:@cm-ci-color;
-      }
+    .cm-info{
+      color:@cm-ci-color;
+    }
   }
 }
 
