@@ -367,9 +367,18 @@ angular.module('cmCore')
             return this;
         };
 
-        this.verifyOwnKey = function(){
+        this.verifyOwnPublicKey = function(key){
+            var local_keys = this.loadLocalKeys()
 
-        };
+            return  key.signatures.some(function(signature){
+                        local_keys.find(signature.keyId)
+                        .verify([
+                            key.getPublicKey(),
+                            cmUserModel.cameoId
+                        ], signature)
+                        
+                    })
+        }
 
         this.clearLocalKeys = function(){
             this.storageSave('rsa', []);
