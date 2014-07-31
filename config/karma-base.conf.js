@@ -40,17 +40,15 @@ module.exports = function(config) {
             // specs
             'test/unit/**/*.spec.js',
 
-            // json files
             'app/**/*.json'
         ],
 
-        // generate js files from html templates to expose them during testing.
-        preprocessors: {
-            'app/**/*.json': ['html2js']
+        ngJson2JsPreprocessor: {
+            stripPrefix: 'app/'
         },
 
-        html2JsRequireJsPreprocessor: {
-            stripPrefix: 'app/'
+        preprocessors: {
+            'app/**/*.json': ['json2js']
         },
 
         // list of files to exclude
