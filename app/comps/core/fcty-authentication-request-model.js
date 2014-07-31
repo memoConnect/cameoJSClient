@@ -80,9 +80,10 @@ angular.module('cmCore')
             };
 
             this.verifyIncomingRequest = function(){
-//                cmLogger.debug('cmAuthenticationRequestModel.verifyIncomingRequest');
+                cmLogger.debug('cmAuthenticationRequestModel.verifyIncomingRequest');
 
-                if(typeof this.id != 'string' || !cmUtil.validateString(this.id)){
+                if(typeof this.id != 'string' || this.id.length < 1){
+                    cmLogger.debug('Error - cmAuthenticationRequestModel.verifyIncomingRequest - verify id fail');
                     return false;
                 }
 
@@ -107,6 +108,7 @@ angular.module('cmCore')
                 });
 
                 if(!checkToKeyId){
+                    cmLogger.debug('Error - cmAuthenticationRequestModel.verifyIncomingRequest - checkToKeyId fail');
                     return false;
                 }
 
@@ -122,6 +124,7 @@ angular.module('cmCore')
                 });
 
                 if(!checkFromKeyId){
+                    cmLogger.debug('Error - cmAuthenticationRequestModel.verifyIncomingRequest - checkFromKeyId fail');
                     return false;
                 }
 
@@ -134,6 +137,8 @@ angular.module('cmCore')
                         encryptedTransactionSecret: this.encryptedTransactionSecret,
                         signature: this.signature
                     })) {
+                    cmLogger.debug('Error - cmAuthenticationRequestModel.verifyIncomingRequest - cmCrypt.verifyAuthenticationRequest fail');
+
                     return false;
                 }
 

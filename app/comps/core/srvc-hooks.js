@@ -64,13 +64,13 @@ angular.module('cmCore').service('cmHooks', [
                         'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
                     },'<cm-incoming-authentication-request></cm-incoming-authentication-request>', null, scope);
                     cmModal.open(modalId);
+
+                    authenticationRequest.on('delete:finished', function(){
+                        self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
+
+                        cmAuthenticationRequestFactory.deregister(authenticationRequest);
+                    });
                 }
-
-                authenticationRequest.on('delete:finished', function(){
-                    self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
-
-                    cmAuthenticationRequestFactory.deregister(authenticationRequest);
-                });
             }
         });
 
