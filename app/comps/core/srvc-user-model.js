@@ -347,8 +347,8 @@ angular.module('cmCore')
             if(localKeyId == signKeyId) return null //keys should not sign themselves
 
             var localKeys   = this.loadLocalKeys(),
-                keyToSign   = this.data.identity.keys.find(keyToSignId)
-                promises    = []
+                keyToSign   = this.data.identity.keys.find(keyToSignId),
+                promises    = [];
 
             localKeys.forEach(function(signingkey){
 
@@ -373,7 +373,6 @@ angular.module('cmCore')
 
             if(typeof signature == 'string' && signature.length > 0){
 
-                
             }
 
             $q.all(promises).then(function(){

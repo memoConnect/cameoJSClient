@@ -322,8 +322,12 @@ angular.module('cmCore')
                 }
 
                 dataForHandshake.fromKeyId = settings.fromKey.id;
-                dataForHandshake.encryptedTransactionSecret = settings.toKey.encrypt(settings.transactionSecret);
+                dataForHandshake.fromKeyFingerprint = settings.fromKey.getFingerprint();
+
                 dataForHandshake.toKeyId = settings.toKey.id;
+                dataForHandshake.toKeyFingerprint = settings.toKey.getFingerprint();
+
+                dataForHandshake.encryptedTransactionSecret = settings.toKey.encrypt(settings.transactionSecret);
 
                 var signData = {
                     identityId :settings.identityId,
