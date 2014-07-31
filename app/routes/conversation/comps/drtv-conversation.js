@@ -94,9 +94,8 @@ angular.module('cmRouteConversation')
                     }
                 };
 
-                $rootScope.$on('sendOnReturn',function(){
-                    $scope.send();
-                });
+                $rootScope.$$listeners.sendOnReturn = [];
+                $rootScope.$on('sendOnReturn',$scope.send);
 
                 /**
                  * compare date for date-seperator
