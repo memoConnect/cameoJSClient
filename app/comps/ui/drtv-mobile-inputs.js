@@ -1,20 +1,31 @@
 'use strict';
 
-angular.module('cmUi').directive('cmIosFocus',[
-    'cmEnv',
-    '$document',
-    '$rootScope',
-    function (cmEnv, $document, $rootScope) {
-        return {
-            restrict: 'A',
-            link: function (scope, element, attrs) {
+/**
+ password security settings:
+ cm-ios-focus="{
+    fixedElements:'cm-header, cm-conversation-controls',
+    scrollTop:true,
+    handler:'#captcha-anchor'
+}"
 
-                var settings = undefined,
-                    fixedElements = undefined,
-                    view = undefined,
-                    handler = undefined;
+ conversation subject:
+ cm-ios-focus="{
+    fixedElements:'cm-header',
+    scrollTop:true
+}"
 
-                function stopEvent(e){
+ conversation answer:
+ cm-ios-focus="{
+    fixedElements:'cm-header',
+    handler:'.post-wrap'
+}"
+
+ var settings = undefined,
+ fixedElements = undefined,
+ view = undefined,
+ handler = undefined;
+
+ function stopEvent(e){
                     if(e.target != element[0] && e.target != handler) {
                         element[0].blur();
                         e.preventDefault();
@@ -23,8 +34,8 @@ angular.module('cmUi').directive('cmIosFocus',[
                     }
                 }
 
-                // Fix mobile floating toolbar when input is focused
-                if(cmEnv.isiOS && attrs.cmIosFocus != ''){
+ // Fix mobile floating toolbar when input is focused
+ if(cmEnv.isiOS && attrs.cmIosFocus != ''){
                     settings = scope.$eval(attrs.cmIosFocus),
                     fixedElements = angular.element($document[0].querySelectorAll(settings.fixedElements)),
                     view = angular.element($document[0].querySelectorAll('body,html')),
@@ -53,6 +64,25 @@ angular.module('cmUi').directive('cmIosFocus',[
                     element.on('blur', function(event){
                         $rootScope.$broadcast('cmIosFocus:blur');
                     });
+                }
+
+
+ */
+
+angular.module('cmUi').directive('input',[
+    'cmEnv',
+    '$document', '$rootScope',
+    function (cmEnv,
+              $document, $rootScope) {
+        return {
+            restrict: 'EA',
+            link: function (scope, element, attrs) {
+                var tagName = element[0].tagName.toLowerCase();
+
+                if(tagName == 'input' && element.attr('type') == 'text' ||// only text inputs
+                   tagName == 'textarea'
+                ){
+                    console.log('do that shit baby',element[0])
                 }
             }
         }

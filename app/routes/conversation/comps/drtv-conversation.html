@@ -104,10 +104,7 @@
                 ng-model="conversation.subject"
                 placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}"
                 cm-adaptive-change
-                cm-ios-focus="{
-                    fixedElements:'cm-header',
-                    scrollTop:true
-                }" />
+                 />
         </div>
     </div>
 </section>
@@ -148,10 +145,8 @@
                 ng-model="newMessageText"
                 cm-resize-textarea
                 cm-max-rows="8"
-                cm-ios-focus="{
-                    fixedElements:'cm-header',
-                    handler:'.post-wrap'
-                }"></textarea>
+                input
+                ></textarea>
             <cm-emoji-handler></cm-emoji-handler>
             <div class="inputter"></div>
         </div>
