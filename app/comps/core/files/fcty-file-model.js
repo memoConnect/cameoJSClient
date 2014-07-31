@@ -2,16 +2,11 @@
 
 angular.module('cmCore')
 .factory('cmFileModel', [
-    'cmFilesAdapter',
-    'cmFileDownload',
-    'cmLogger',
-    'cmChunk',
-    'cmCrypt',
-    'cmObject',
-    'cmModal',
-    'cmEnv',
+    'cmFilesAdapter', 'cmFileDownload', 'cmLogger', 'cmChunk', 'cmCrypt', 'cmObject',
+    'cmModal', 'cmEnv',
     '$q',
-    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject, cmModal, cmEnv,
+    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject,
+              cmModal, cmEnv,
               $q){
 
         function roundToTwo(num) {
@@ -351,6 +346,10 @@ angular.module('cmCore')
                 if(this.id != '' && this.state == 'exists'){
                     cmFileDownload.add(this);
                 }
+            };
+
+            this.stopDownload = function(){
+                cmFileDownload.remove(this);
             };
 
             this.promptSaveAs = function(){

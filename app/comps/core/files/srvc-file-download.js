@@ -61,6 +61,11 @@ angular.module('cmCore')
             cmLogger.debug('cmFileDownload:stop');
         };
 
+        this.remove = function(file){
+            console.log('cmFileDownload.remove',file)
+
+        };
+
         /**
          * Return Stack Quantity
          * @returns {Array}
