@@ -82,14 +82,6 @@ angular.module('cmCore')
             this.initStorage();
             this.syncLocalKeys();
 
-            /**
-             * @todo!!! maybe stack im model
-             */
-            if('authenticationRequests' in identity){
-                this.trigger('authenticationRequest:new', identity.authenticationRequests);
-            };
-
-
             this.trigger('update:finished');
 
             return this;
@@ -356,9 +348,8 @@ angular.module('cmCore')
                 //Content of the signature:
                 var signature  =  signingKey.sign([
                                         keyToSign.getPublicKey(),
-                                        cmUserModel.cameoId         //The CameoId of the identity (current users) whose publicKey is signed 
+                                        self.data.cameoId         //The CameoId of the identity (current users) whose publicKey is signed
                                     ]);
-
                 promises.push(
                     cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
                         function(signature){

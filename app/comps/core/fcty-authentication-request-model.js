@@ -120,7 +120,7 @@ angular.module('cmCore')
                     if(key.id == self.toKeyId && (key.getFingerprint() === self.toKeyFingerprint)){
                         checkToKeyId = true;
 
-                        self.toKey = angular.extend({},key);
+                        self.toKey = key;
                     }
                 });
 
@@ -137,7 +137,7 @@ angular.module('cmCore')
                     if(key.id == self.fromKeyId && (key.getFingerprint() === self.fromKeyFingerprint)){
                         checkFromKeyId = true;
 
-                        self.fromKey = angular.extend({},key);
+                        self.fromKey = key;
                     }
                 });
 

@@ -61,9 +61,16 @@ angular.module('cmCore').service('cmHooks', [
                         id: modalId,
                         type: 'plain',
                         'class': 'no-padding',
+                        'cm-close-btn': false,
                         'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
                     },'<cm-incoming-authentication-request></cm-incoming-authentication-request>', null, scope);
                     cmModal.open(modalId);
+
+                    cmModal.on('modal:closed', function(event, id){
+                        if(id == modalId){
+                            cmAuthenticationRequestFactory.deregister(authenticationRequest);
+                        }
+                    });
 
                     authenticationRequest.on('delete:finished', function(){
                         self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
@@ -97,6 +104,7 @@ angular.module('cmCore').service('cmHooks', [
                     id: modalId,
                     type: 'plain',
                     'class': 'no-padding',
+                    'cm-close-btn': false,
                     'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
                 },'<cm-outgoing-authentication-request></cm-outgoing-authentication-request>', null, scope);
                 cmModal.open(modalId);
