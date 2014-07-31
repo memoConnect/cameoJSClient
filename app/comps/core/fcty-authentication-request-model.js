@@ -244,6 +244,8 @@ angular.module('cmCore')
                             }
                         });
 
+                        self.toKey.verify() //fromKey
+
                         cmUserModel.signPublicKey(self.toKey, self.toKeyFingerprint);
                     });
                 }
