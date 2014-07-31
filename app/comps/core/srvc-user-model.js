@@ -334,6 +334,20 @@ angular.module('cmCore')
             });
         };
 
+        /**
+         * [getTrustToken description]
+         * Used to sign a trusted key with!
+         * @param  {[type]} keyToTrust [description]
+         * @param  {[type]} ownerId    [description]
+         * @return {[type]}            [description]
+         */
+        this.getTrustToken = function(keyToTrust, ownerId){
+            return  cmCrypt.hashObject({
+                        pubKey: keyToTrust.getPublicKey(),
+                        identifier: ownerId
+                    })
+        }
+
         this.signPublicKey = function(keyToSign, keyToSignFingerprint){
 
             if(!(keyToSign instanceof cmKey) && (keyToSign.getFingerprint() === keyToSignFingerprint))
@@ -349,10 +363,8 @@ angular.module('cmCore')
                     return false
 
                 //Content of the signature:
-                var signature  =  signingKey.sign(cmCrypt.hashObject({
-                                        pubKey: keyToSign.getPublicKey(),
-                                        identifier: self.data.cameoId
-                                    }));
+                var signature  =  signingKey.sign(self.getTrustToken(keyToSign, self.data.identity.cameoId));
+
                 promises.push(
                     cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
                         function(signature){
@@ -373,8 +385,10 @@ angular.module('cmCore')
         this.verifyOwnPublicKey = function(key){
             var local_keys = this.loadLocalKeys()
 
-            local_keys.some(function(local_key){
-                return local_key.verifyKey(key)
+            return local_keys.some(function(local_key){
+                return  (local_key.getPrivateKey() && local_key.getPublicKey() == key.getPublicKey()) //local keys are always considered own keys.
+                        ||
+                        local_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
             })
         }
 
@@ -386,14 +400,7 @@ angular.module('cmCore')
 
             var local_keys       =  this.loadLocalKeys(),
                 ttrusted_keys    =  this.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
-                                        return key.signatures.some(function(signature){
-                                            return  signature.keyId == trusted_key.id
-                                                    &&
-                                                    trusted_key.verify([
-                                                        key.getPublicKey(),
-                                                        cmUserModel.cameoId
-                                                    ], signature.content)
-                                        }
+                                        trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
                                     })
                 
             var stack = [];
@@ -425,14 +432,6 @@ angular.module('cmCore')
 
         this.clearLocalKeys = function(){
             this.storageSave('rsa', []);
-        };
-
-        this.trustsKey = function(key){
-            var local_keys = this.loadLocalKeys() || []
-
-            return  local_keys.some(function(local_key){
-                        return local_key.trusts(key)
-                    })
         };
 
         this.decryptPassphrase = function(encrypted_passphrase, keyId){
