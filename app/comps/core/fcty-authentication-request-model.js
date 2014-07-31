@@ -20,11 +20,11 @@ angular.module('cmCore')
 
             this.fromKeyId = undefined;
             this.fromKeyFingerprint = undefined;
-            this.fromKey = undefined;
+            this.fromKey = {};
 
             this.toKeyId = undefined;
             this.toKeyFingerprint = undefined;
-            this.toKey = undefined;
+            this.toKey = {};
 
             function init(requestData){
 //                cmLogger.debug('cmAuthenticationRequestModel.init');
@@ -120,7 +120,7 @@ angular.module('cmCore')
                     if(key.id == self.toKeyId && (key.getFingerprint() === self.toKeyFingerprint)){
                         checkToKeyId = true;
 
-                        self.toKey = key;
+                        self.toKey = angular.extend({},key);
                     }
                 });
 
@@ -136,7 +136,8 @@ angular.module('cmCore')
                 cmUserModel.data.identity.keys.forEach(function(key){
                     if(key.id == self.fromKeyId && (key.getFingerprint() === self.fromKeyFingerprint)){
                         checkFromKeyId = true;
-                        self.fromKey = key;
+
+                        self.fromKey = angular.extend({},key);
                     }
                 });
 
