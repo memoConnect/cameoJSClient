@@ -340,16 +340,14 @@ angular.module('cmCore')
                 return false; //keys should not sign themselves
 
             var localKeys   = this.loadLocalKeys(),
-//                keyToSign   = this.data.identity.keys.find(keyToSignId),
                 promises    = [];
 
             localKeys.forEach(function(signingKey){
-
                 //Content of the signature:
-                var signature  =  signingKey.sign([
-                                        keyToSign.getPublicKey(),
-                                        self.data.cameoId         //The CameoId of the identity (current users) whose publicKey is signed
-                                    ]);
+                var signature  =  signingKey.sign(cmCrypt.hashObject({
+                                        pubKey: keyToSign.getPublicKey(),
+                                        identifier: self.data.cameoId
+                                    }));
                 promises.push(
                     cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
                         function(signature){
@@ -371,7 +369,7 @@ angular.module('cmCore')
 
         this.verifyOwnKey = function(){
 
-        }
+        };
 
         this.clearLocalKeys = function(){
             this.storageSave('rsa', []);
