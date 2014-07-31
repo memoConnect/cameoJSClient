@@ -344,7 +344,7 @@ angular.module('cmCore')
 
         this.signPublicKey = function(keyToSign, keyToSignFingerprint){
 
-            if(!(keyToSign instanceof cmKey) && (keyToSign.getFingerprint() == keyToSignFingerprint))
+            if(!(keyToSign instanceof cmKey) && (keyToSign.getFingerprint() === keyToSignFingerprint))
                 return false; //keys should not sign themselves
 
             var localKeys   = this.loadLocalKeys(),
@@ -354,7 +354,7 @@ angular.module('cmCore')
             localKeys.forEach(function(signingKey){
 
                 //Content of the signature:
-                var signature   =   signingKey.sign([
+                var signature  =  signingKey.sign([
                                         keyToSign.getPublicKey(),
                                         cmUserModel.cameoId         //The CameoId of the identity (current users) whose publicKey is signed 
                                     ]);
@@ -369,16 +369,11 @@ angular.module('cmCore')
                         }
                     )
                 )
-            })
-
-
-            if(typeof signature == 'string' && signature.length > 0){
-
-            }
+            });
 
             $q.all(promises).then(function(){
                 self.trigger('signatures:saved')
-            })
+            });
 
             return this;
         };
