@@ -342,32 +342,50 @@ angular.module('cmCore')
             });
         };
 
-        this.signKey = function(localKeyId, signKeyId){
-//            cmLogger.debug('cmUserModel.signKey');
-
+        this.signPublicKey = function(keyToSignId){
 
             if(localKeyId == signKeyId) return null //keys should not sign themselves
 
-            var localKeys   = this.loadLocalKeys();
-            var signingKey  = localKeys.find(localKeyId);
-            var keyToSign   = this.data.identity.keys.find(signKeyId);
+            var localKeys   = this.loadLocalKeys(),
+                keyToSign   = this.data.identity.keys.find(keyToSignId)
+                promises    = []
 
-            var signature   = signingKey.signKey(keyToSign);
+            localKeys.forEach(function(signingkey){
+
+                //Content of the signature:
+                var signature   =   signingKey.sign([
+                                        keyToSign.getPublicKey(),
+                                        cmUserModel.cameoId         //The CameoId of the identity (current users) whose publicKey is signed 
+                                    ]);
+
+                promises.push(
+                    cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
+                        function(signature){
+                            keyToSign.importData({signatures:[signature]})                            
+                        },
+                        function(){
+                            self.trigger('signature:failed');
+                        }
+                    )
+                )
+            })
+
 
             if(typeof signature == 'string' && signature.length > 0){
-                cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
-                    function(signature){
-                        self.data.identity.keys.find(keyToSign.id).importData({signatures:[signature]})
-                        self.trigger('signature:saved', {signingKey : signingKey, keyToSign: keyToSign});
-                    },
-                    function(){
-                        self.trigger('signature:failed');
-                    }
-                )
+
+                
             }
+
+            $q.all(promises).then(function(){
+                self.trigger('signatures:saved')
+            })
 
             return this;
         };
+
+        this.verifyOwnKey = function(){
+
+        }
 
         this.clearLocalKeys = function(){
             this.storageSave('rsa', []);
