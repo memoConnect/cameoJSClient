@@ -11,10 +11,12 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                 $scope.publicKeys = [];
                 $scope.trustedKeys = [];
                 $scope.signing = false;
-
+                $scope.canCreate = true;
                 $scope.isHandshakePossible = false;
+                $scope.showKeyTrustDescription = true;
 
                 function refresh(){
+
                     $scope.privateKeys  =   cmUserModel.loadLocalKeys() || [];
                     $scope.publicKeys   =   cmUserModel.data.identity.keys || [];
                     $scope.trustedKeys  =   $scope.publicKeys.filter(function(key){
@@ -24,6 +26,14 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
 
 
                     $scope.isHandshakePossible = ($scope.privateKeys.length > 0);
+					$scope.canCreate    = !cmUserModel.hasPrivateKey();
+
+//                    $scope.debug = $scope.trustedKeys.length+' / '+$scope.publicKeys.length;
+
+                    $scope.showKeyTrustDescription =
+                        $scope.trustedKeys.length == 0 && $scope.publicKeys.length == 0 || // none key exists
+                        $scope.trustedKeys.length < $scope.publicKeys.length; // publickeys doesnt match trustedkeys
+
                 }
 
                 $scope.remove = function(key){
@@ -44,14 +54,9 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                     cmUserModel.trigger('handshake:start', toKey);
                 };
 
-                $scope.$on('$destroy', function(){
-                    cmUserModel.off('key:stored', refresh)
-                    cmUserModel.off('signature:saved', refresh)
-                });
-
-                cmUserModel.state.on('change', refresh)
-
-                cmUserModel.on('key:stored', refresh);
+                cmUserModel.state.on('change', refresh);
+                cmUserModel.on('key:stored key:removed', refresh);
+                cmUserModel.data.identity.on('update:finished', refresh);
 
                 refresh()
             }

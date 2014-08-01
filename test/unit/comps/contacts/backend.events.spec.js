@@ -67,7 +67,8 @@ describe('Event chain for Contacts', function(){
         it('should update a contact corresponding to a friend request from another user.', function(){
             var adapter_triggered   =   0,
                 contact             =   cmContactsModel.contacts.create({
-                                            identity:       { id: 'my_new_friend' }, 
+                                            id: 'wohuij2',
+                                            identity:       { id: 'my_new_friend' },
                                             contactType:    'pending'
                                         }),
                 number_of_contacts  =   cmContactsModel.contacts.length
@@ -88,7 +89,12 @@ describe('Event chain for Contacts', function(){
             //good event:
             cmApi.trigger('friendRequest:accepted', {
                 to              : 'my_new_friend',
-                from            : cmUserModel.data.identity.id
+                from            : cmUserModel.data.identity.id,
+                contact: {
+                    id: 'wohuij2',
+                    identity:       { id: 'my_new_friend' },
+                    contactType:    'internal'
+                }
             })
 
             //bad event:
@@ -97,7 +103,6 @@ describe('Event chain for Contacts', function(){
                 from            : '123'
             })
 
-            
             $rootScope.$apply()
 
             expect(contact.contactType).toBe('internal')
@@ -108,7 +113,10 @@ describe('Event chain for Contacts', function(){
 
         it('should update friend requests if accepted by current user (on another device).', function(){
             var adapter_triggered   =   0,
-                friend_request      =   cmContactsModel.requests.create({ identity :  { id:'my_new_friend' } }),
+                friend_request      =   cmContactsModel.requests.create({
+                                            id: 'wohuij',
+                                            identity :  { id:'my_new_friend' }
+                                        }),
                 number_of_requests  =   cmContactsModel.requests.length
 
             expect(number_of_requests).toBe(1)

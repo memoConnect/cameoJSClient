@@ -16,9 +16,7 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
             scope : true,
 
             link: function(scope){
-                scope.inputFocus    = false;
                 scope.showPasswordLocalKeyInfo = false;
-                var times = 0;
 
                 function showPasswordInfo(conversation){
                     if(conversation.isEncrypted() && conversation.userHasPrivateKey() == false){
@@ -34,7 +32,6 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                 scope.$watch('conversation', function(conversation){
                     if(conversation){
                         // open the controls for a new conversation and password isnt set in a symetric case || case mixed exists and user isnt in passphraselist
-
                         showPasswordInfo(conversation);
 
                         conversation.on('encryption:enabled', function(){
@@ -47,20 +44,7 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                     }
                 });
 
-                var inputFocus = undefined;
-
-                $rootScope.$on('cmIosFocus:focus',function(event,input){
-                    scope.inputFocus = true;
-                    if(input.attr('data-qa') == 'input-password'){
-                        inputFocus = input;
-                    }
-                });
-                $rootScope.$on('cmIosFocus:blur',function(){
-                    scope.inputFocus = false;
-                    inputFocus = undefined;
-                });
-
-                scope.$watch('conversation.password', function(password){
+                scope.$watch('conversation.password', function(){
                     if(scope.conversation.state.is('new'))
                         scope.conversation.securityAspects.refresh()
                 })

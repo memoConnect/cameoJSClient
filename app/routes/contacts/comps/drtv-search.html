@@ -42,7 +42,7 @@
     </div>
 
     <cm-contact-tag cm-rubber-space ng-repeat="contact in results" ng-click="openModal('modalSendRequest',contact)">
-        <cm-avatar cm-data="contact"></cm-avatar>
+        <cm-avatar cm-data="contact" cm-stop-download></cm-avatar>
         <div class="cm-request-brief" cm-weight="1">
             <strong>{{contact.getDisplayName()}}</strong>
         </div>

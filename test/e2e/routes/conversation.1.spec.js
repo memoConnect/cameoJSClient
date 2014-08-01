@@ -1,7 +1,7 @@
 var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
-describe('Single Conversation:', function () {
+describe('Route conversation:', function () {
 
     var ptor = util.getPtorInstance()
     var newSubject = "wicked_test_subject_" + Date.now();

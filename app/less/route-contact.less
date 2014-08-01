@@ -7,34 +7,42 @@
       vertical-align:top;
     }
     cm-avatar {
-      width: 6em;
-      height: 6em;
+      width: @cm-unit*3;
+      height: @cm-unit*3;
       -webkit-box-shadow: 0 0 0.625em 0.125em @cm-white;
       box-shadow: 0 0 0.625em 0.125em @cm-white;
     }
     .cm-contact-widget{
       background:@cm-black;
       .border-radius;
-      color:@cm-ci-color;
-      font-size: 0.8em;
+      color:@cm-white;
+      font-size: @cm-small-font;
+      padding: @cm-horizontal-padding;
+      margin-bottom: @cm-vertical-padding;
     }
     .cm-contact-actions {
-      color:@cm-ci-color;
+      color:@cm-grey;
       text-align: center;
-      height:4em;
-      line-height:4em;
-      padding-top: 0.2rem;
+      height:@cm-unit*3;
+      font-size:@cm-mega-font*2;
+      cm-icons{
+        letter-spacing: 0;
+        white-space:nowrap;
+        display:block;
+        i + i {
+          position: relative;
+          left: -1.5rem;
+        }
+      }
       button {
-        height:4em;
         &.with-white-bg{
+          line-height:@cm-unit*3;
           background:rgba(255,255,255,0.2);
           .border-radius;
         }
       }
       i {
-        font-size: 3em;
-        height: 1.5em;
-        line-height: 1.5em;
+        color:@cm-grey;
       }
     }
   }
@@ -75,7 +83,7 @@
 
   button.btn-identity-keys,
   button.btn-identity-trust {
-    height: 3em;
+    height: 5.8rem;
   }
   button.btn-identity-keys {
     .border-radius-top;

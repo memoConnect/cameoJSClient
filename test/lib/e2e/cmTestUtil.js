@@ -419,7 +419,6 @@ this.generateKey = function (keyNum, keyName) {
         self.clearInput("input-key-name")
         self.setVal("input-key-name", keyName)
     }
-    ptor.debugger()
     self.click("btn-save-key")
 }
 

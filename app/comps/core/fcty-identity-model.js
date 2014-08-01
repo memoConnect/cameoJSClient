@@ -74,6 +74,22 @@ angular.module('cmCore')
                 return this;
             };
 
+            this.exportData = function(){
+                return {
+                    id: this.id,
+                    displayName: this.displayName,
+                    userKey: this.userKey,
+                    cameoId: this.cameoId,
+                    avatarId: this.avatarId,
+                    email: this.email,
+                    phoneNumber: this.phoneNumber,
+                    preferredMessageType: this.preferredMessageType,
+                    userType: this.userType,
+                    created: this.created,
+                    lastUpdated: this.lastUpdated
+                }
+            };
+
             this.load = function(){
                 if(typeof this.id == 'string'
                     && this.id.length > 0
@@ -145,7 +161,9 @@ angular.module('cmCore')
             };
 
             this.getDisplayName = function(){
-                return this.displayName || this.cameoId || this.id;
+                var cameoId = this.cameoId || '',
+                    name = this.displayName || cameoId.split("@")[0] || this.id;
+                return name;
             };
 
             /**
