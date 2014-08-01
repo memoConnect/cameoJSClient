@@ -21,7 +21,7 @@ angular.module('cmCore').factory('cmFactory',[
             cmObject.addEventHandlingTo(self);
 
             sameByData = sameByData || function(instance, data){
-                return instance.id && instance.id == data.id
+                return instance.id && data.id && instance.id == data.id
             }
 
             sameByInstance = sameByInstance || function(instance_1, instance_2){
