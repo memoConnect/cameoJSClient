@@ -19,14 +19,14 @@ angular.module('cmUi')
 
             return text.replace(pattern, function(link){
                 var tag = '<a href="%href" target="_blank" title="%href">%link</a>',
-                    link = link.replace(/\s+/g,''), // clear whitespace
-                    url = !cmUtil.startsWith(link,'www') ? link : 'http://'+link; // check if starts with http
+                    clearLink = link.replace(/\s+/g,''), // clear whitespace
+                    url = !cmUtil.startsWith(clearLink,'www') ? clearLink : 'http://'+clearLink; // check if starts with http
 
                 if(url != undefined){
-                    if(link.length > strLen){
-                        return $sce.trustAsHtml(tag.replace(/%href/g,url).replace(/%link/g,String(link).substring(0, strLen)));
+                    if(clearLink.length > strLen){
+                        return $sce.trustAsHtml((cmUtil.startsWith(link,' ')?' ':'') + tag.replace(/%href/g,url).replace(/%link/g,String(clearLink).substring(0, strLen)));
                     } else {
-                        return $sce.trustAsHtml(tag.replace(/%href/g,url).replace(/%link/g,link));
+                        return $sce.trustAsHtml((cmUtil.startsWith(link,' ')?' ':'') + tag.replace(/%href/g,url).replace(/%link/g,clearLink));
                     }
                 }
             });
