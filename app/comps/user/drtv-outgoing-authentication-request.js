@@ -27,8 +27,8 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
                     $scope.handshakeIdle = false;
                 }
 
-                $scope.doHandshake = function(){
-                    $scope.step = 2;
+                $scope.cancel = function(){
+                    $rootScope.closeModal(modalId);
                 };
 
                 $scope.selectToKey = function(toKey){
@@ -48,7 +48,7 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
                     $scope.handshakeIdle = true;
 
                     if(toKey instanceof cmKey){
-                        $scope.step = 3;
+                        $scope.step = "2";
                         // set key to tmp
                         $scope.toKey = toKey;
                         // generate TS

@@ -108,6 +108,15 @@ angular.module('cmCore').service('cmHooks', [
             }
         });
 
+        cmApi.on('authenticationRequest:canceled', function(event, request) {
+            cmLogger.debug('cmHooks.on:authenticationRequest:canceled');
+
+            var authenticationRequest = cmAuthenticationRequestFactory.find(request);
+            if(authenticationRequest !== null){
+                cmAuthenticationRequestFactory.deregister(authenticationRequest);
+            }
+        });
+
         cmUserModel.on('key:saved handshake:start', function(event, toKey){
             if(cmUserModel.verifyPublicKeyForAuthenticationRequest(toKey)){
                 var scope = $rootScope.$new();
