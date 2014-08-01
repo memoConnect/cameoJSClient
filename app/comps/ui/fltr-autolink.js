@@ -13,12 +13,14 @@ angular.module('cmUi')
             if(text == undefined)
                 return '';
 
-            if(text.indexOf(slash) > -1)
-                text = text.replace(/[&#x2F;]{6}/g,'/');
+            if(text.indexOf(slash) > -1) {
+                text = text.replace(/[&#x2F;]{6}/g, '/');
+            }
 
             return text.replace(pattern, function(link){
-                var tag = '<a href="%href" target="_blank" title="%href">%link</a>';
-                var url = cmUtil.startsWith(link,'http://') ? link : 'http://'+link;
+                var tag = '<a href="%href" target="_blank" title="%href">%link</a>',
+                    link = link.replace(/\s+/g,''), // clear whitespace
+                    url = !cmUtil.startsWith(link,'www') ? link : 'http://'+link; // check if starts with http
 
                 if(url != undefined){
                     if(link.length > strLen){
