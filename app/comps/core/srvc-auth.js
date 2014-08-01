@@ -411,6 +411,11 @@ angular.module('cmCore')
             auth.trigger('signatures:updated', data)
         });
 
+        cmApi.on('conversation:new-aePassphrase', function(event, data){
+            console.log('conversation:new-aePassphrase');
+            auth.trigger('conversation:update', data)
+        });
+
         return auth;
     }
 ]);
