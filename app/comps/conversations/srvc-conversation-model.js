@@ -1075,11 +1075,11 @@ angular.module('cmConversations')
                 self.handleMissingAePassphrases();
             });
 
-            cmUserModel.on(['key:stored', 'key:removed'], function(){
+            cmUserModel.on('key:stored key:removed', function(){
                 self.checkPreferences();
                 self.securityAspects.refresh();
                 self.updateLockStatus();
-            })
+            });
 
 //            cmUserModel.data.identity.on('update:finished', function(){
 //                self.decrypt();
