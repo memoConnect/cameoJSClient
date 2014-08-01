@@ -44,7 +44,7 @@
     "karma-jasmine": "~0.1.5",
     "karma-coffee-preprocessor": "~0.1.2",
     "karma-phantomjs-launcher": "~0.1.1",
-    "karma-html2js-preprocessor": "~0.1.0",
+    "karma-ng-json2js-preprocessor": "~0.1.1",
     "karma-junit-reporter": "~0.1",
     "grunt-contrib-connect": "~0.5.0",
     "grunt-contrib-less": "~0.10.0",
@@ -54,7 +54,8 @@
     "jasmine-reporters": "~0.4.0",
     "grunt-shell": "~0.7.0",
     "grunt-ngdocs": "~0.2.2",
-    "grunt-sloc": "~0.5.2"
+    "grunt-sloc": "~0.5.2",
+    "grunt-testflight-jsonresult" : "~0.1.2"
   },
   "engines": {
     "node": ">=0.8.0"

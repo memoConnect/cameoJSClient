@@ -21,6 +21,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-sloc');
     grunt.loadNpmTasks('grunt-ngdocs');
+    grunt.loadNpmTasks('grunt-testflight-jsonresult');
 
     // cameo secrets
     var globalCameoSecrets = (function () {
@@ -29,7 +30,7 @@ module.exports = function (grunt) {
             return grunt.file.readJSON(src);
         }
         else {
-            return {"phonegap": {"email": "a", "password": "b"}};
+            return {"phonegap": {"email": "a", "password": "b"}, "testflight": {"apiToken": "a", "teamToken": "b"}};
         }
     })();
 
@@ -128,7 +129,7 @@ module.exports = function (grunt) {
         }
 
         var protractorDebug = grunt.option('debug');
-        if(protractorDebug){
+        if (protractorDebug) {
             testConfig.config.protractorDebug = true
         }
 
@@ -148,41 +149,41 @@ module.exports = function (grunt) {
     // create packages
     var concatCmTemplatesFound = [];
 
-    var concatConvertCmFiles = function(src, filepath){
+    var concatConvertCmFiles = function (src, filepath) {
         // templates to template cache
-        if(filepath.search(/.*\.html/g) != -1){
+        if (filepath.search(/.*\.html/g) != -1) {
             var lines = src
-                .replace(/(\r\n|\n|\r|\t)/gm,'')// clear system signs
-                .replace(/\s{2,100}(<)/gm,'<')// clear whitespaces before html tag
-                .replace(/\s{2,100}/gm,' ')// clear whitespaces on line
-                .replace(/(')/gm,"\\'");// uncomment single quotes,
-            filepath = filepath.replace('app/','');
+                .replace(/(\r\n|\n|\r|\t)/gm, '')// clear system signs
+                .replace(/\s{2,100}(<)/gm, '<')// clear whitespaces before html tag
+                .replace(/\s{2,100}/gm, ' ')// clear whitespaces on line
+                .replace(/(')/gm, "\\'");// uncomment single quotes,
+            filepath = filepath.replace('app/', '');
             // add to template array for module schmusi
             concatCmTemplatesFound.push(filepath);
 
 
-            return  "angular.module('"+filepath+"', []).run([\n" +
-                "'$templateCache', function($templateCache) {\n"+
-                "$templateCache.put('"+filepath+"'," +
-                "\n'"+lines+"'" +
-                ");\n"+
+            return  "angular.module('" + filepath + "', []).run([\n" +
+                "'$templateCache', function($templateCache) {\n" +
+                "$templateCache.put('" + filepath + "'," +
+                "\n'" + lines + "'" +
+                ");\n" +
                 "}]);";
-        // module banger
-        } else if(filepath.search(/.*\/-module-.*/g) != -1) {
+            // module banger
+        } else if (filepath.search(/.*\/-module-.*/g) != -1) {
             // add found templates to package module
-            if(concatCmTemplatesFound.length > 0) {
-                var templateNames = "'"+concatCmTemplatesFound.join("','")+"'";
+            if (concatCmTemplatesFound.length > 0) {
+                var templateNames = "'" + concatCmTemplatesFound.join("','") + "'";
                 concatCmTemplatesFound = [];
                 return src
                     .replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1')
-                    .replace(/\]\)/g, ','+templateNames+'])')
+                    .replace(/\]\)/g, ',' + templateNames + '])')
                     .replace(/(\;)$/g, '')
             } else {
                 return src
                     .replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1')
                     .replace(/(\;)$/g, '')
             }
-        // clear scripts use_strict, clear also angular.module(..) and last ;
+            // clear scripts use_strict, clear also angular.module(..) and last ;
         } else {
             return src
                 .replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1')
@@ -191,32 +192,32 @@ module.exports = function (grunt) {
         }
     };
 
-    var concatCreateCmPackages = function(packagesObject){
+    var concatCreateCmPackages = function (packagesObject) {
         var packages = {},
-            packagesObject = packagesObject||{};
+            packagesObject = packagesObject || {};
 
-        Object.keys(packagesObject).forEach(function(packageName){
+        Object.keys(packagesObject).forEach(function (packageName) {
             var settings,
                 moduleName = packageName;
-                exclude = '!(-module-'+moduleName+')',
+            exclude = '!(-module-' + moduleName + ')',
                 include = '*',
                 packagePath = packagesObject[packageName],
                 file = 'package.js';
 
-            if(typeof packagePath == "object"){
+            if (typeof packagePath == "object") {
                 settings = packagePath;
                 // override
-                moduleName = settings.moduleName||moduleName;
-                include = settings.include||include;
-                exclude = settings.exclude||exclude;
-                packagePath = settings.packagePath||packagePath;
-                file = settings.file||file;
+                moduleName = settings.moduleName || moduleName;
+                include = settings.include || include;
+                exclude = settings.exclude || exclude;
+                packagePath = settings.packagePath || packagePath;
+                file = settings.file || file;
             }
 
-            packages[packagePath.replace('app/','app/packages/')+'/'+file] = [
-                packagePath+'/**/*.html', // at last all templates
-                packagePath+'/-module-'+moduleName+'.js', // at first module
-                packagePath+'/**/'+exclude+include+'.js' // all directives / services / factorys etc
+            packages[packagePath.replace('app/', 'app/packages/') + '/' + file] = [
+                    packagePath + '/**/*.html', // at last all templates
+                    packagePath + '/-module-' + moduleName + '.js', // at first module
+                    packagePath + '/**/' + exclude + include + '.js' // all directives / services / factorys etc
             ];
         });
 
@@ -232,11 +233,11 @@ module.exports = function (grunt) {
                 separator: '\n'
             },
             'less': {
-                src:    [   
-                            'app/less/base.less', 
-                            'app/less/bootstrap.less', 
-                            'app/less/!(base|bootstrap).less'
-                        ],
+                src: [
+                    'app/less/base.less',
+                    'app/less/bootstrap.less',
+                    'app/less/!(base|bootstrap).less'
+                ],
                 dest: 'app/css/app.less'
             },
             'css': {
@@ -255,11 +256,11 @@ module.exports = function (grunt) {
                 files: concatCreateCmPackages({
                     'core': 'app/comps/core',
                     'core-cockpit': {
-                        packagePath:'app/comps/core',
-                        moduleName:'core-cockpit',
+                        packagePath: 'app/comps/core',
+                        moduleName: 'core-cockpit',
 //                        include:'*(*api|*auth|*crypt|*logger)',
-                        exclude:'!(fcty-|pack-|-module|*identity|*language|*notify|*cron|*job|*localstorage|*usermodel|*util)',
-                        file:'package-cockpit.js'
+                        exclude: '!(fcty-|pack-|-module|*identity|*language|*notify|*cron|*job|*localstorage|*usermodel|*util)',
+                        file: 'package-cockpit.js'
                     },
                     'conversations': 'app/comps/conversations',
                     'contacts': 'app/comps/contacts',
@@ -535,6 +536,31 @@ module.exports = function (grunt) {
                 }
             }
         },
+        testflight: {
+            options: {
+                apiToken: globalCameoSecrets.testflight.apiToken,
+                teamToken: globalCameoSecrets.testflight.teamToken,
+                notes: globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName + " " + globalCameoBuildConfig.phonegap.version,
+                distributionLists: ['cameoNet-dev'],
+                notify: true,
+                replace: true,
+                onDone: function (responseJson) {
+                    globalCameoBuildConfig.iosTestFlightURL = responseJson.install_url
+                }
+            },
+
+            iOS: {
+                options: {
+                    file: 'phonegap-target/' + globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.ipa'
+                }
+            },
+
+            android: {
+                options: {
+                    file: 'phonegap-target/' + globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk'
+                }
+            }
+        },
         template: {
             'index-phonegap': {
                 'options': {
@@ -556,13 +582,11 @@ module.exports = function (grunt) {
             'local-index-phonegap': {
                 'options': {
                     'data': {
-                        'phonegapFiles':
-                            //'<script src="cordova.js"></script>' +
+                        'phonegapFiles': //'<script src="cordova.js"></script>' +
                             '<script src="phonegap.js"></script>' +
                             //'<script src="phonegap-adapter.js"></script>',
                             '',
-                        'phonegapElements':
-//                            '<div class="well">' +
+                        'phonegapElements': //                            '<div class="well">' +
 //                                '<p id="networkState"></p>' +
 //                                '<p id="contactsNumber"></p>' +
 //                            '</div>' +
@@ -588,7 +612,10 @@ module.exports = function (grunt) {
             'index-dl': {
                 'options': {
                     'data': {
-                        'phonegapBaseFilename': globalCameoBuildConfig.phonegap.phonegapBaseFilename
+                        'phonegapBaseFilename': globalCameoBuildConfig.phonegap.phonegapBaseFilename,
+                        'testFlightiOSURL': function () {
+                            return globalCameoBuildConfig.iosTestFlightURL
+                        }
                     }
                 },
                 'files': {
@@ -626,7 +653,7 @@ module.exports = function (grunt) {
                     'data': {
                         'currentName': globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName,
                         'currentVersion': globalCameoBuildConfig.phonegap.version,
-                        'currentAppId': globalCameoBuildConfig.phonegap.appId
+                        'currentAppId': globalCameoBuildConfig.phonegap.bundleId
                     }
                 },
                 'files': {
@@ -638,7 +665,7 @@ module.exports = function (grunt) {
                     'data': {
                         'currentName': globalCameoBuildConfig.phonegap.baseName,
                         'currentVersion': globalCameoBuildConfig.phonegap.version,
-                        'currentAppId': globalCameoBuildConfig.phonegap.appId
+                        'currentAppId': globalCameoBuildConfig.phonegap.bundleId
                     }
                 },
                 'files': {
@@ -649,7 +676,7 @@ module.exports = function (grunt) {
                 'options': {
                     'data': {
                         'chromeDriverPath': globalCameoTestConfig.config.chromeDriverPath,
-                        'capabilities' : "capabilities:{'browserName':'chrome'}"
+                        'capabilities': "capabilities:{'browserName':'chrome'}"
                     }
                 },
                 'files': {
@@ -660,7 +687,7 @@ module.exports = function (grunt) {
                 'options': {
                     'data': {
                         'chromeDriverPath': globalCameoTestConfig.config.chromeDriverPath,
-                        'capabilities' : "multiCapabilities:[{'browserName': 'chrome'}, {'browserName': 'firefox'}]"
+                        'capabilities': "multiCapabilities:[{'browserName': 'chrome'}, {'browserName': 'firefox'}]"
                     }
                 },
                 'files': {
@@ -673,7 +700,7 @@ module.exports = function (grunt) {
             debug: {
                 options: {
                     archive: "phonegap-target/cameoNetApp.zip",
-                    "appId": "864855",
+                    "appId": globalCameoBuildConfig.phonegap.appId,
                     "user": {
                         "email": globalCameoSecrets.phonegap.email,
                         "password": globalCameoSecrets.phonegap.password
@@ -704,7 +731,7 @@ module.exports = function (grunt) {
                 dest: 'resource/phonegap/res',
                 options: {
                     layouts: ['portrait'],
-                    profiles: ['android','ios','windows-phone']
+                    profiles: ['android', 'ios', 'windows-phone']
                 }
             }
         },
@@ -717,7 +744,7 @@ module.exports = function (grunt) {
                 'app/comps/**/*',
                 'app/routes/**/comps/*'
             ],
-            tasks: ['genAllTemplates','packages']
+            tasks: ['genAllTemplates', 'packages']
         },
         less: {
             development: {
@@ -788,7 +815,7 @@ module.exports = function (grunt) {
         sloc: {
             'code-coverage': {
                 files: {
-                    './app':['base/*.js','comps/**/*.js','css/*.css','routes/**/*.js']
+                    './app': ['base/*.js', 'comps/**/*.js', 'css/*.css', 'routes/**/*.js']
                 }
             }
         }
@@ -836,11 +863,12 @@ module.exports = function (grunt) {
         'copy:resources-phonegap',
         'template:index-phonegap',
         'template:config-phonegap',
-        'template:index-dl',
-        'copy:resources-dl',
         'compress',
         'phonegap-build:debug',
-        'copy:phonegap-target'
+        'copy:phonegap-target',
+        'testflight:iOS',
+        'template:index-dl',
+        'copy:resources-dl'
     ]);
 
     grunt.registerTask('phonegap-splash', [
