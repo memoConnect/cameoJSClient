@@ -1081,12 +1081,6 @@ angular.module('cmConversations')
                 self.updateLockStatus();
             });
 
-            cmUserModel.on('bulkrekeying:finished', function(){
-                cmLogger.debug('cmConversationModel:on:bulkrekeying:finished');
-                self.decrypt();
-            });
-
-
             // after events!!!
             init(data);
         }
