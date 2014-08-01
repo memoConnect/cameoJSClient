@@ -8,6 +8,12 @@ describe("Directive cmValidatePhone", function(){
         scope,
         httpBackend;
 
+    beforeEach(function(){
+        module(function($provide){
+            $provide.constant('cmEnv',{});
+        })
+    })
+
     beforeEach(module('cmValidate'))
     beforeEach(inject(function($compile, $rootScope, $httpBackend){
         httpBackend = $httpBackend;

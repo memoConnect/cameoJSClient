@@ -161,8 +161,8 @@ angular.module('cmCore')
             };
 
             this.getDisplayName = function(){
-                var cameoId = this.cameoId.split("@")[0],
-                    name = this.displayName || cameoId || this.id;
+                var cameoId = this.cameoId || '',
+                    name = this.displayName || cameoId.split("@")[0] || this.id;
                 return name;
             };
 

@@ -159,7 +159,6 @@ describe('Conversation encryption -', function () {
 
             describe("recipient number " + (index + 1) + " -", function () {
 
-
                 var conversationRoute
 
                 it("login recipient", function () {

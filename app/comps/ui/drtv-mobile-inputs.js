@@ -68,13 +68,15 @@ angular.module('cmUi').directive('input',[
             restrict: 'EA',
             link: function (scope, element) {
                 // only for mobile devices
-                if(cmEnv.isNotMobile)
+                if(!('isNotMobile' in cmEnv) || cmEnv.isNotMobile)
                     return false;
 
                 // mobile device? go on!
                 var tagName = element[0].tagName.toLowerCase(),
                     fixedElements = angular.element($document[0].querySelectorAll('cm-header, cm-footer')),
                     view = angular.element($document[0].querySelectorAll('body,html'));
+
+                console.log(fixedElements)
 
                 function stopEvent(e){
                     if(e.target != element[0] && e.target != handler) {
