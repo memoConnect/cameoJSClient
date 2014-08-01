@@ -336,11 +336,11 @@ angular.module('cmCore')
                 // renew ls
                 if(local_keys.deregister(keyToRemove)){
                     self.storageSave('rsa', local_keys.exportDataArray());
-
-                    self.trigger('key:removed')
                 }
                 // clear identity
                 self.data.identity.keys.deregister(keyToRemove);
+
+                self.trigger('key:removed');
             });
         };
 
@@ -557,7 +557,8 @@ angular.module('cmCore')
             stack_advance()
 
             return self
-        }
+        };
+
         init();
 
 

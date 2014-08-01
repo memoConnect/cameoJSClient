@@ -73,31 +73,33 @@ angular.module('cmUi').directive('cmAvatar',[
 
             link: function(scope, element, attrs){
 
-                function showBlobAsImage(file){
-                    if(file['url'] == undefined) {
-                        cmFilesAdapter.getBlobUrl(file.blob).then(function(objUrl){
-                            file.url = objUrl;
-                            element.find('img').attr('src', file.url.src);
+                var avatar = null;
+
+                function showBlobAsImage(){
+                    if(avatar['url'] == undefined) {
+                        cmFilesAdapter.getBlobUrl(avatar.blob).then(function(objUrl){
+                            avatar.url = objUrl;
+                            element.find('img').attr('src', avatar.url.src);
                         });
                     } else {
-                        element.find('img').attr('src', file.url.src);
+                        element.find('img').attr('src', avatar.url.src);
                     }
                 }
 
                 function refresh(){
                     // get avatar image from model
-                    var file = scope.identity.getAvatar();
-                    if(typeof file.on == 'function' && file.state != 'cached'){
-                        file.on('file:cached', function(){
-                            showBlobAsImage(file);
+                    avatar = scope.identity.getAvatar();
+                    if(typeof avatar.on == 'function' && avatar.state != 'cached'){
+                        avatar.on('file:cached', function(){
+                            showBlobAsImage();
                         });
-                    } else if(file.state == 'cached') {
-                        showBlobAsImage(file);
+                    } else if(avatar.state == 'cached') {
+                        showBlobAsImage();
                     }
                 }
 
                 // is unknown avatar for add reciepients or choose avatar
-                if(attrs.cmView == 'unknown'){
+                if('cmView' in attrs && attrs.cmView == 'unknown'){
                     element.find('img').attr('src', avatarMocks.none );
                     //element.css({'background-image': 'url(' + avatarMocks.none +')'});
                 } else {
@@ -112,6 +114,13 @@ angular.module('cmUi').directive('cmAvatar',[
                             }
                         }
                     });
+                    if('cmStopDownload' in attrs) {
+                        scope.$on('$destroy', function () {
+                            if(avatar != null){
+                                avatar.downloadStop();
+                            }
+                        });
+                    }
                 }
             }
         }

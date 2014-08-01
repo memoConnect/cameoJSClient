@@ -5,19 +5,15 @@
 </cm-header>
 
 <header class="inScreen">
-    <i class="fa cm-key cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.HEADER' | cmTranslate}}
+    <i class="fa cm-key cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.HEADER'|cmTranslate}}
 </header>
 
 <ul>
-    <li>
-        <a href="#/settings/identity/keys/create" class="item w50 no-pad" data-qa="btn-create-key">
-            <i class="fa cm-create-key icon-left cm-lg-special"></i>
-            <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE'|cmTranslate}}</span>
-        </a>
-        <a href="#/settings/identity/keys/import" class="item w50 no-pad" data-qa="btn-import-key">
-            <i class="fa cm-import-key icon-left cm-lg-special"></i>
-            <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT'|cmTranslate}}</span>
-        </a>
+    <li ng-if="showKeyTrustDescription">
+        {{debug}}
+        <div class="page">
+            {{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_TRUST_DESCRIPTION'|cmTranslate}}
+        </div>
     </li>
     <li ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
         <a href="#/settings/identity/key/{{key.id}}" class="item tal clearfix">
@@ -69,4 +65,19 @@
     </button>
 </cm-modal>
 
-<cm-footer></cm-footer>
+<cm-footer ng-if="canCreate">
+    <a href="#/settings/identity/keys/create"
+        class="item w50 no-pad cm-btn-grey"
+        data-qa="btn-create-key"
+        title="{{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE'|cmTranslate}}">
+        <i class="fa cm-create-key icon-left cm-lg-special"></i>
+        <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE'|cmTranslate}}</span>
+    </a>
+    <a href="#/settings/identity/keys/import"
+        class="item w50 no-pad cm-btn-grey"
+        data-qa="btn-import-key"
+        title="{{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT'|cmTranslate}}">
+        <i class="fa cm-import-key icon-left cm-lg-special"></i>
+        <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT'|cmTranslate}}</span>
+    </a>
+</cm-footer>
