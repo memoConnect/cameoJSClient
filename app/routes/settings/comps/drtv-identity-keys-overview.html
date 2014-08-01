@@ -9,7 +9,7 @@
 </header>
 
 <ul>
-    <li>
+    <li ng-if="canCreate">
         <a href="#/settings/identity/keys/create" class="item w50 no-pad" data-qa="btn-create-key">
             <i class="fa cm-create-key icon-left cm-lg-special"></i>
             <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE'|cmTranslate}}</span>
