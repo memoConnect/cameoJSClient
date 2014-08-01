@@ -117,18 +117,18 @@
     },
 
     "CONVERSATION": {
-        "HEADING": "Talks",
+        "HEADING": "Talk",
         "LABEL": {
             "SEND": "Abschicken",
             "REQUEST_CAPTCHA": "PassCaptcha anfordern",
             "SEND_CAPTCHA": "PassCaptcha senden",
-            "KEY_GENERATION": "Um sicher zu kommunizieren können Sie hier einen cameoKey für diese Identität erzeugen.",
-            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "Ein Passwort wird angezeigt weil für Ihre Identität auf diesem Gerät kein cameoKey vorliegt."
+            "KEY_GENERATION": "Um sicher zu kommunizieren, können Sie hier einen cameoKey für diese Identität erzeugen.",
+            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "Es Passwort wird ein Password verwendet weil auf diesem Gerät kein cameoKey vorliegt."
         },
         "TAG": {
             "RECIPIENTS": "Empfänger",
             "SUBJECT": "Betreff",            
-            "PASSPHRASE": "Schlüssel",
+            "PASSPHRASE": "Passwort",
             "MESSAGES": "Nachrichten",
             "IMAGE": "Bild",
             "FILE": "Datei"
@@ -138,10 +138,10 @@
             "ENCRYPTED" : "- verschlüsselt -"
         },
         "WARN": {
-            "MESSAGE_EMPTY": "Das Textfeld ist leer.",
-            "RECIPIENTS_MISSING": "Bitte noch mindestens einen weiteren Empfänger hinzufügen.",
+            "MESSAGE_EMPTY": "Die Nachricht ist leer.",
+            "RECIPIENTS_MISSING": "Keine Empfänger angegeben.",
             "RECIPIENTS_MISSING_OKAY": "Ich möchte keinen weiteren Empfänger außer mir selbst hinzufügen.",
-            "PASSPHRASE_INVALID": "Ungültiger Schlüssel.",
+            "PASSPHRASE_INVALID": "Ungültiges Passwort.",
             "PASSWORD_WRONG": "Das eingegebene Passwort ist falsch.",
             "NO_PASSWORD": "Es fehlt ein Passwort für die Verschlüsselung.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">Jetzt ein Passwort eingeben!</a>",
             "PASSWORD_NEEDED": "Zum Entschlüsseln des Talks geben Sie bitte ein Passwort ein.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">Hier ein Passwort eingeben!</a>",
@@ -189,7 +189,7 @@
         },
         "LIST_EMPTY": "Bisher keine Kontakte vorhanden.",
         "PLACEHOLDER": {
-            "ADD_NEW_CONTACT": "Geben Sie hier eine cameoID ein!",
+            "ADD_NEW_CONTACT": "Geben Sie hier cameoID oder Anzeigename ein!",
             "REQUEST_MESSAGE": "Hier ist Platz für eine Mitteilung für die Kontaktanfrage:"
         },
         "INFO": {
@@ -303,9 +303,9 @@
                     "IS_LOCAL": "lokal",
                     "IS_LOCAL_ON_THIS_DEVICE": "lokal auf diesem Gerät",
                     "KEY_TRUST_DESCRIPTION": "@:SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_DESCRIPTION",
-                    "TRUSTING": "Authorisierung",
-                    "IS_TRUSTED": "ist authorisiert",
-                    "IS_UNTRUSTED": "ist nicht authorisiert",
+                    "TRUSTING": "Authentifikation",
+                    "IS_TRUSTED": "ist authentisiert",
+                    "IS_UNTRUSTED": "ist nicht authentisiert",
                     "EXPORT_KEY": "cameoKey exportieren",
                     "EXPORT_KEY_DESCRIPTION": "Um Ihren cameoKey zu exportieren, kopieren Sie hier bitte den privaten Schlüssel als Text und verwahren ihn sicher (z.B. in einer Passwort-geschützten Textdatei oder in einem Passwort-Safe). Im Fall dass Sie Ihren cameoKey \"verlieren\" (z.B. bei einer Neuinstalation), können Sie ihn darüber später wieder importieren.",
                     "REMOVE_KEY": "cameoKey löschen",
@@ -317,7 +317,7 @@
                     "CANCEL": "Generierung abbrechen",
                     "STORE_KEYPAIR": "cameoKey speichern",
                     "GENERATION_TIME": "Der cameoKey wurde erfolgreich generiert, die Generierung hat {{time}} gedauert.",
-                    "STOREKEY_DESCRIPTION": "Der cameoKey besteht aus einem privaten und einem öffentlichen Schlüssel. Der private Schlüssel wird nur auf Ihrem Gerät gespeichert. Den öffentlichen Schlüssel müssen Sie auf dem cameoServer speichern.<br>Um bei Verlust Ihres cameoKeys Ihre verschlüsselten Nachrichten wieder lesen zu können, sollten Sie Ihren cameoKey exportieren und sicher verwahren.",
+                    "STOREKEY_DESCRIPTION": "Der cameoKey besteht aus einem privaten und einem öffentlichen Schlüssel. Der private Schlüssel wird nur auf Ihrem Gerät gespeichert. Der öffentlichen Schlüssel wird Sie auf dem cameoServer gespeichert.<br>Um bei Verlust Ihres cameoKeys Ihre verschlüsselten Nachrichten wieder lesen zu können, sollten Sie Ihren cameoKey exportieren und sicher verwahren.",
                     "PRIVATE_KEY": "Privater Schlüssel",
                     "PUBLIC_KEY": "Öffentlicher Schlüssel",
                     "KEY_NAME": "Schlüsselname",
@@ -330,17 +330,17 @@
                     }
                 },
                 "HANDSHAKE": {
-                    "MODAL_HEADER": "Authorisierung",
-                    "HANDSHAKE_DESCRIPTION": "Sie haben einen neuen cameoKey auf diesem Gerät, der noch nicht authorisiert wurde. die alten Nachrichten dieser Identität zu entschlüsseln. Dies geschieht zu Ihrer Sicherheit. Mit der Authorisierung bestätigen Sie, dass Sie Zugriff zu einem der Geräte haben, mit denen Sie bisher cameoNet genutzt haben.",
+                    "MODAL_HEADER": "Authentifikation",
+                    "HANDSHAKE_DESCRIPTION": "Sie haben einen neuen cameoKey auf diesem Gerät, der noch nicht authentifiziert wurde die alten Nachrichten dieser Identität zu entschlüsseln. Dies geschieht zu Ihrer Sicherheit. Mit der Authentifikation bestätigen Sie, dass Sie Zugriff zu einem der Geräte haben, mit denen Sie bisher cameoNet genutzt haben.",
                     "HANDSHAKE_NOW": "Möchten Sie jetzt dem cameoKey '<strong>{{keyName}}</strong>' den Zugang zu Ihren bisherigen Nachrichten gewähren?",
                     "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
-                    "CHOOSE_OLD_DEVICE": "Bitte wählen Sie das Gerät aus, mit dem Sie die Authorisierung durchführen möchten!",
+                    "CHOOSE_OLD_DEVICE": "Bitte wählen Sie das Gerät aus, mit dem Sie die Authentifikation durchführen möchten!",
                     "CHOOSE": "Bitte wählen",
                     "TRANSACTION_SECRET": "Bitte starten Sie auf einem Ihrer anderen Geräte cameoNet und wechseln Sie ggf. in die selbe Identität {{identity}}. Geben Sie dort folgenden Code ein:",
-                    "HANDSHAKE_START": "Authorisierung starten",
-                    "HANDSHAKE_RECEIVED": "Möchten Sie die Authorisierung durchführen?",
+                    "HANDSHAKE_START": "Authentifikation starten",
+                    "HANDSHAKE_RECEIVED": "Möchten Sie die Authentifikation durchführen?",
                     "HANDSHAKE_NEED_TRANSACTID": "Haben Sie soeben auf einem anderen Gerät einen neuen cameoKey erzeugt und möchten dort den Zugriff auf Ihre verschlüsselten Nachrichten erlauben? Dann geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
-                    "HANDSHAKE_DONE": "Authorisierung war erfolgreich!<br>"
+                    "HANDSHAKE_DONE": "Authentifikation war erfolgreich!<br>"
 
                 }
             },
@@ -411,7 +411,7 @@
         },
         "BULK_REKEYING": {
             "HEADER": "Bulk Rekeying",
-            "CONTENT": "Möchten Sie den neuen cameoKey zu Ihren Talks hinzufügen?<br>Diese Info schließt sich selbst, wenn der Process abgeschlosen ist.",
+            "CONTENT": "Die Talks auf diesem Gerät werden für den neuen cameoKey verschlüsselt.",
             "START": "Start"
         },
         "FOOTER": {
@@ -448,7 +448,7 @@
                 "STORE_NEW": "cameoKey erfolgreich gespeichert!"
             },
             "SAVE_AS":{
-                "IOS_NOT_SUPPORT": "Leider unterstützt iOS das Herunterladen von Dateien für viele Formate nicht.<br>Unterstützte Formate: .pdf<br> Um andere Dateiformate herunterladen zu können, öffnen Sie den Talk auf einem anderen Gerät, das kein iOS verwendet (z.B. Android, Windows). "
+                "IOS_NOT_SUPPORT": "Leider unterstützt iOS das Herunterladen von Dateien für viele Formate nicht.<br>Unterstützte Formate: .pdf<br> Um andere Dateiformate herunterladen zu können, öffnen Sie den Talk auf einem anderen Gerät, das kein iOS verwendet. "
             },
             "FRIEND_REQUEST": "Neue Kontaktanfrage"
         }

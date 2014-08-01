@@ -9,11 +9,11 @@
     "LOGIN": {
         "HEADING": "Login",
         "LABEL": {
-            "SUBMIT": "log in",
-            "REMEMBER_ME": "remember me",
-            "AUTO": "choose auto login"
+            "SUBMIT": "Log in",
+            "REMEMBER_ME": "Remember me",
+            "AUTO": "Choose auto login"
         },
-        "LINK": "login",
+        "LINK": "Login",
         "PLACEHOLDER": {
             "USERNAME": "Username",
             "PASSWORD": "Password"
@@ -27,17 +27,17 @@
 
     "REGISTER": {
         "HEADING": "Registration",
-        "LINK": "or register",
+        "LINK": "or Register",
         "LABEL": {
-            "SUBMIT": "create User",
+            "SUBMIT": "Create account",
             "USERNAME": "Username",
             "NAME": "Name",
-            "TERMS": "terms of use",
+            "TERMS": "Terms of use",
             "TERMS_ACCEPT": "I accept"
         },
         "PLACEHOLDER": {
             "USERNAME": "Username",
-            "DISPLAYNAME": "Display Name",
+            "DISPLAYNAME": "Display name",
             "EMAIL": "@:DRTV.VALIDATE_EMAIL.PLACEHOLDER",
             "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER"
         },
@@ -48,7 +48,7 @@
                 "PASSWORD": "Please enter a Password."
             },
             "USERNAME": {
-                "EXISTS": "Username exists! Please choose another.",
+                "EXISTS": "Username already exists! Please choose another.",
                 "EMPTY": "Please enter a username.",
                 "INVALID": "Invalid username. Avoid spaces and special characters."
             },
@@ -65,10 +65,10 @@
     "START": {
         "MODAL": {
             "TITLE": "Welcome to cameoNet!",
-            "TEXT": "cameoNet is an open source messenger that provides end-to-end encryption for safe, private and commercial Communication!\nAttention: this is a first beta version!\nThe app may contains errors, the user interface is still under development and many nice features will be added in the next versions. And we cannot ensure for your data. We would like to please to copy all your important data to your local system.\nPlease help us to improve cameoNet. We are happy about every error or improvement you post on http://support.cameonet.de\nthe cameoNet-Team."
+            "TEXT": "cameoNet is an open source messenger that provides end-to-end encryption for safe, private and commercial Communication!\nAttention: this is a first beta version!\nThe app may contain errors, the user interface is still under development and many new features will be added in the next versions. We cannot guarantee the safety of your data. Please copy all your important data.\nPlease help us to improve cameoNet. We are happy about every error or improvement you post on http://support.cameonet.de\nthe cameoNet-Team."
         },
         "YOUR_ID": "Your cameoId",
-        "LOGOUT": "logout"
+        "LOGOUT": "Logout"
     },
 	
 	"VERIFICATION": {
@@ -78,8 +78,8 @@
 	},
 
     "PROFILE": {
-        "E-MAIL": "email",
-        "MOBILE": "mobile"
+        "E-MAIL": "Email",
+        "MOBILE": "Mobile"
     },
 
     "LANG":	{
@@ -112,18 +112,18 @@
 
     "TALKS": {
         "HEADING": "Talks",
-        "MORE": "load more",
+        "MORE": "Load more",
         "LIST_EMPTY": "No talks yet!"
     },
 
     "CONVERSATION" : {
-        "HEADING": "Conversation",
+        "HEADING": "Talk",
         "LABEL": {
-            "SEND": "send",
-            "REQUEST_CAPTCHA": "request captcha",
-            "SEND_CAPTCHA": "send captcha",
-            "KEY_GENERATION": "generate a keypair for better security",
-            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "password used, because you have no local keypar"
+            "SEND": "Send",
+            "REQUEST_CAPTCHA": "Request captcha",
+            "SEND_CAPTCHA": "Send captcha",
+            "KEY_GENERATION": "Generate a keypair for better security",
+            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "A password is used because there is no keypar on this device"
         },
         "TAG": {
             "RECIPIENTS": "Recipients",
@@ -139,63 +139,63 @@
         },
         "WARN": {
             "MESSAGE_EMPTY": "The message is empty.",
-            "RECIPIENTS_MISSING": "This conversation has not recipients.",
+            "RECIPIENTS_MISSING": "This conversation has no recipients.",
             "RECIPIENTS_MISSING_OKAY": "I do not want any other recipients than myself.",
             "PASSPHRASE_INVALID": "Invalid password",
-            "PASSWORD_WRONG": "Password is wrong",
-            "NO_PASSWORD": "No password .<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">enter here</a>",
-            "PASSWORD_NEEDED": "A password is required.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">enter here</a>",
-            "ASYMMETRIC_DECRYPT_ERROR": "Privatekey missing",
+            "PASSWORD_WRONG": "Wrong password",
+            "NO_PASSWORD": "No password configured.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">configure it here</a>",
+            "PASSWORD_NEEDED": "Password required.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">enter here</a>",
+            "ASYMMETRIC_DECRYPT_ERROR": "cameoKey missing",
             "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
             "FILESIZE_REACHED": "The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file '<strong>{{fileName}}</strong>' is <strong>{{fileSize | cmBytesHumanReadable}}</strong> big."
         },
         "PLACEHOLDER": {
             "SUBJECT": "Subject",
-            "NO_SUBJECT": "add subject",
+            "NO_SUBJECT": "Add subject",
             "RECIPIENTS": "Recipients",
             "ADD_RECIPIENTS": "add",
-            "INFO": "info",
-            "PASSWORD": "password",
-            "PASSCAPTCHA": "passcaptcha",
+            "INFO": "Info",
+            "PASSWORD": "Password",
+            "PASSCAPTCHA": "PassCaptcha",
             "ENCRYPTION": "encrypted"
         },
         "CONTROL": {
-            "SAVE": "save",
-            "CLOSE": "close"
+            "SAVE": "Save",
+            "CLOSE": "Close"
         },
         "SETTINGS": {
-            "OKAY": "done"
+            "OKAY": "Done"
         }
     },
 
     "PURL": {
-        "SIGN_IN": "sign in"
+        "SIGN_IN": "Register"
     },
 
     "RECIPIENTS": {
-        "HEADING": "add recipients",
+        "HEADING": "Add recipients",
         "LABEL": {
-            "DONE": "done"
+            "DONE": "Done"
         }
     },
 
 	"CONTACTS": {
         "HEADING": {
             "LIST": "Contacts",
-            "REQUESTS": "Contact requests",
+            "REQUESTS": "Friend requests",
             "SEARCH": "Search",
             "NEW_CONTACTS": "New contacts",
-            "SEND_REQUEST": "Request"
+            "SEND_REQUEST": "Send request"
         },
         "LIST_EMPTY": "No contacts yet!",
         "PLACEHOLDER": {
-            "ADD_NEW_CONTACT": "please insert a cameoId",
-            "REQUEST_MESSAGE": "here is place for a message for the request"
+            "ADD_NEW_CONTACT": "Enter a cameoId or display name",
+            "REQUEST_MESSAGE": "Add a message to the friend request"
         },
         "INFO": {
-            "NO_RESULTS": "No cameo contacts found",
+            "NO_RESULTS": "No identities found",
             "MORE_CHARS_NEEDED": "Please type more letters",
-            "NO_REQUESTS": "No requests",
+            "NO_REQUESTS": "No friend requests",
             "REQUEST":{
                 "SENDED": "Request send",
                 "FAILED": "Could not send request",
@@ -205,26 +205,26 @@
             }
         },
         "LABEL": {
-            "DISPLAYNAME": "Displayname",
+            "DISPLAYNAME": "Display name",
             "NAME": "Name",
             "SURNAME": "Surname",
-            "SORT": "sort",
-            "FILTER": "filter",
-            "SEARCH_IDENTITY": "search Cameo indentity",
-            "ADD_EXTERN": "create new extern contact",
-            "SEND_REQUEST": "send"
+            "SORT": "Sort",
+            "FILTER": "Filter",
+            "SEARCH_IDENTITY": "Search Cameo indentity",
+            "ADD_EXTERN": "Create new extern contact",
+            "SEND_REQUEST": "Send"
         },
         "BUTTON": {
-            "RESET": "reset",
-            "SUBMIT": "save"
+            "RESET": "Reset",
+            "SUBMIT": "Save"
         },
         "TAG" : {
             "FILTER": "Filter"
         },
         "REQUESTS":{
-            "ACCEPT": "accept",
-            "REJECT": "reject",
-            "IGNORE": "ignore"
+            "ACCEPT": "Accept",
+            "REJECT": "Reject",
+            "IGNORE": "Ignore"
         }
 	},
 
@@ -252,20 +252,20 @@
                 "EDIT": "Contact saved"
             },
             "ERROR": {
-                "SAVE": "Contact couldn't saved",
-                "EDIT": "Contact couldn't edit"
+                "SAVE": "Could not save contact",
+                "EDIT": "Could not edit contact"
             }
         },
         "FOOTER":{
-            "SAVE": "save"
+            "SAVE": "Save"
         }
     },
 
     "IDENTITY":{
         "LABEL":{
-            "KEYMANAGEMENT": "manage keys",
-            "TRUST": "trust",
-            "NEW": "create new identity"
+            "KEYMANAGEMENT": "cameoKeys",
+            "TRUST": "QR-Code",
+            "NEW": "Create new identity"
         },
         "MODAL":{
             "HEADER": "Identities"
@@ -273,7 +273,7 @@
         "NOTIFY":{
             "UPDATE": {
                 "ERROR": "Something went wrong, please try again",
-                "SUCCESS": "Changes are saved!"
+                "SUCCESS": "Changes saved"
             }
         }
     },
@@ -282,10 +282,10 @@
 		"WELCOME": "Settings",
         "LABEL": "Settings",
         "ACCOUNT": "Account",
-        "IDENTITY": "Identity",
-        "NOTIFY": "Notification",
+        "IDENTITY": "Identities",
+        "NOTIFY": "Notifications",
         "CONTACTS": "Contacts",
-        "APP": "APP Settings",
+        "APP": "App Settings",
         "CONTRACTS": "Contracts",
         "PAGES": {
             "APP": {
@@ -296,51 +296,51 @@
             "IDENTITY": {
                 "KEYS": {
                     "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
-                    "CREATE": "create",
-                    "IMPORT": "import",
+                    "CREATE": "Create",
+                    "IMPORT": "Import",
                     "DETAIL": "cameoKey",
-                    "KEY_SIZE": "keysize",
+                    "KEY_SIZE": "Key size",
                     "IS_LOCAL": "local",
                     "IS_LOCAL_ON_THIS_DEVICE": "Is local on this device",
                     "KEY_TRUST_DESCRIPTION": "@:SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_DESCRIPTION",
                     "TRUSTING": "Trusting",
                     "IS_TRUSTED": "trusted",
                     "IS_UNTRUSTED": "untrusted",
-                    "EXPORT_KEY": "Keypair export",
-                    "EXPORT_KEY_DESCRIPTION": "",
-                    "REMOVE_KEY": "Keypair remove",
-                    "REMOVE_KEY_REALLY": "really remove?",
-                    "CHOOSE_SIZE": "Choose keysize",
-                    "GENERATE": "generate",
-                    "GENERATION_IN_PROGRESS": "generation in progress",
+                    "EXPORT_KEY": "Export cameoKey",
+                    "EXPORT_KEY_DESCRIPTION": "Export your private cameoKey. Please make sure to keep it save. You can use to recover your encrypted data.",
+                    "REMOVE_KEY": "Remove cameoKey",
+                    "REMOVE_KEY_REALLY": "Really remove the cameoKey?",
+                    "CHOOSE_SIZE": "Choose key size",
+                    "GENERATE": "Generate cameoKey",
+                    "GENERATION_IN_PROGRESS": "key generation in progress",
                     "GENERATION_TIME_PROGRESS": "time elapsed: {{time}}",
                     "CANCEL": "cancel",
                     "STORE_KEYPAIR": "Store keypair",
                     "GENERATION_TIME": "The generation lasted {{time}}",
-                    "STOREKEY_DESCRIPTION": "",
-                    "PRIVATE_KEY": "Privatekey",
-                    "PUBLIC_KEY": "Publickey",
-                    "KEY_NAME": "Keyname",
-                    "STORE": "store",
+                    "STOREKEY_DESCRIPTION": "The cameoKey consists of a public and a private part. The private will be stored only on this device. It is important to keep it secret since it can decrypt all your data.<br>The private key can be exported for data recovery if the device is lost.",
+                    "PRIVATE_KEY": "Private key",
+                    "PUBLIC_KEY": "Public key",
+                    "KEY_NAME": "Key name",
+                    "STORE": "Save cameoKey",
                     "WARN": {
-                        "IMPORT_FAILED": "The given privatekey is not valid",
+                        "IMPORT_FAILED": "The private key is invalid",
                         "CHECK_PRIVKEY": "Check private key",
                         "CHECK_PUBKEY": "Check public key",
-                        "CHECK_KEYNAME": "Check keyname"
+                        "CHECK_KEYNAME": "Check key name"
                     }
                 },
                 "HANDSHAKE": {
                     "MODAL_HEADER": "Authentication",
-                    "HANDSHAKE_DESCRIPTION": "",
-                    "HANDSHAKE_NOW": "Do you want for the new cameoKey '<strong>{{keyName}}</strong>' to perform a handshake with an older device now?",
+                    "HANDSHAKE_DESCRIPTION": "There is a new cameoKey on this device which needs to be authenticated by another device. This is necessary to read all existing talks.",
+                    "HANDSHAKE_NOW": " Do you want to allow this cameoKey '<strong>{{keyName}}</strong>' to read all existing talks?",
                     "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
-                    "CHOOSE_OLD_DEVICE": "Please select an old device with which you want to perform the authentication!",
+                    "CHOOSE_OLD_DEVICE": "Please select a device with which you want to perform the authentication!",
                     "CHOOSE": "Please select",
-                    "TRANSACTION_SECRET": "This generated transactionsecret must be entered on the other device.",
+                    "TRANSACTION_SECRET": "Please start another authenticated device and enter the following code:",
                     "HANDSHAKE_START": "Start authentication",
                     "HANDSHAKE_RECEIVED": "Would you like to start the authentication?",
-                    "HANDSHAKE_NEED_TRANSACTID": "Please enter the code!",
-                    "HANDSHAKE_DONE": "Authentication succeed!'<br>' start reking?!?"
+                    "HANDSHAKE_NEED_TRANSACTID": "An other device asked to be authenticated by this device and get access to you encrypted talks. To proceed pleas encer the code below:",
+                    "HANDSHAKE_DONE": "Authentication successfull"
                 }
             },
             "ABOUT_US": {
@@ -352,12 +352,12 @@
 	
 	"NAVIGATION": {
 		"TABS": {
-			"BACK": "back",
-			"ADD": "add",
+			"BACK": "Back",
+			"ADD": "Add",
 			"ALL": "Contacts",
 			"REQUESTS": "Requests",
 			"SPINNER": "Spinner",
-			"KEY": "Key-Pair",
+			"KEY": "cameoKey",
 			"TALKS": "Talks"
 		}
 	},
@@ -371,32 +371,32 @@
             }
         },
         "VALIDATE_EMAIL": {
-            "LABEL": "E-mail",
-            "PLACEHOLDER": "E-mail",
+            "LABEL": "Email",
+            "PLACEHOLDER": "Email",
             "INFO": {
-                "INVALID": "Invalid e-mail. Please check!",
-                "EMPTY": "The e-mail field is empty"
+                "INVALID": "Invalid email. Please check!",
+                "EMPTY": "The email field is empty"
             }
         },
         "VALIDATE_PHONE": {
-            "LABEL": "Phone",
-            "PLACEHOLDER": "Phone",
+            "LABEL": "Phone number",
+            "PLACEHOLDER": "Phone number",
             "INFO": {
-                "INVALID_PHONE_NUMBER": "The string supplied does not seem to be a phone number.",
-                "EMPTY": "The phone field is empty"
+                "INVALID_PHONE_NUMBER": "The entered value does not seem to be a phone number.",
+                "EMPTY": "The phone number field is empty"
             }
         },
         "EXTERN_CONTACT": {
-            "HEADER": "Add extern contact",
+            "HEADER": "Add external contact",
             "INFO": {
-                "DISPLAYNAME_EXISTS": "The displayname already exists in your addressbook.",
+                "DISPLAYNAME_EXISTS": "The display name already exists in your constact book.",
                 "EMPTY":{
-                    "DISPLAYNAME": "The Displayname is empty.",
+                    "DISPLAYNAME": "The display name is empty.",
                     "NAME": "Name is empty.",
                     "SURNAME": "Surname is empty.",
-                    "PHONE_OR_EMAIL": "Please enter a phonenumber or a email address."
+                    "PHONE_OR_EMAIL": "Please enter a phone number or a email address."
                 },
-                "SAVE_FAIL": "Saving contact failed."
+                "SAVE_FAIL": "Contact could not be saved."
             }
         },
         "TYPE_CHOOSER": {
@@ -410,8 +410,8 @@
         },
         "BULK_REKEYING": {
             "HEADER": "Bulk Rekeying",
-            "CONTENT": "Add the new Key to your Talks.<br>The info close themselve when the process is finished.",
-            "START": "start"
+            "CONTENT": "The talks on this device are being encrypted for the new cameoKey.",
+            "START": "Start"
         },
         "FOOTER": {
             "TALKS": "Talks",
@@ -425,7 +425,7 @@
         "HEADER": "Menu",
         "NOTIFICATIONS": "@:NOTIFICATIONS.HEADER",
         "CONTACTS": "Contacts",
-        "REQUESTS": "Contact requests",
+        "REQUESTS": "Friend requests",
         "TALKS": "Talks",
         "SETTINGS": "@:SETTINGS.LABEL",
         "MESSAGES": "Messages",
@@ -437,19 +437,19 @@
     "NOTIFICATIONS":{
         "HEADER": "Notifications",
         "MODAL_HEADER": {
-            "INFO": "Notification",
+            "INFO": "Info",
             "WARN": "Warning",
             "ERROR": "Error",
             "SUCCESS": "Success"
         },
         "TYPES": {
             "KEYS":{
-                "STORE_NEW": "Key saved!"
+                "STORE_NEW": "cameoKey saved!"
             },
             "SAVE_AS":{
-                "IOS_NOT_SUPPORT": "Unfortunately iOS does not support to download files. Open this talk on a non-iOS device to download this file. Supported formats go anyway: .pdf"
+                "IOS_NOT_SUPPORT": "Unfortunately iOS does not support downloading this file. Open this talk on a non-iOS device to download this file. Supported formats: .pdf"
             },
-            "FRIEND_REQUEST": "New friendrequest"
+            "FRIEND_REQUEST": "New friend request"
         }
     },
 
@@ -458,28 +458,28 @@
             "OK": "OK"
         },
         "WEBREADER": {
-            "NOTICE": "For this function, please register!",
-            "REGISTRATION": "register now",
-            "LATER": "later"
+            "NOTICE": "Please register to use this feature.",
+            "REGISTRATION": "Register now",
+            "LATER": "Later"
         },
         "LABEL": {
-            "CLOSE": "close"
+            "CLOSE": "Close"
         }
     },
 
     "JOB": {
-        "IN_PROGRESS": "You have editet this site without saving. Do you would leave this page?",
-        "FILES_IN_UPLOAD_PROGRESS": "Files are in upload progress. Do you would leave this page?"
+        "IN_PROGRESS": "You have edited this site without saving. Do you really want to leave this page?",
+        "FILES_IN_UPLOAD_PROGRESS": "Files are being uploaded. Do you really want to leave this page?"
     },
 
     "SECURITY_ASPECT": {
         "CONVERSATION": {
             "ENCRYPTED": {
-                "NAME": "Conversation is encrypted.",
+                "NAME": "Talk is encrypted.",
                 "DESCRIPTION": ""
             },
             "NOT_ENCRYPTED": {
-                "NAME": "Conversation is not encrypted.",
+                "NAME": "Talk is not encrypted.",
                 "DESCRIPTION": "",
                 "TOGGLE": "Enable encryption."
             },
@@ -487,25 +487,25 @@
                 "NAME": "Encryption relies on a password.",
                 "DESCRIPTION_NEW": "Encryption with a password is not bad in itself, but the strength of the encryption greatly depends on the password you choose. You have to use a password because not all recipients have a proper key available to you.",
                 "DESCRIPTION": "Encryption with a password is not bad in itself, but the strength of the encryption greatly depends on the password you choose. You have to use a password because not all recipients had a proper a key available when the conversation started.",
-                "DESCRIPTION_BAD_RECIPIENTS": "These recipients have no proper public keys:",
-                "DESCRIPTION_PRIVATE_KEY_MISSING": "You dont have a private Key on this device."
+                "DESCRIPTION_BAD_RECIPIENTS": "These recipients have no cameoKey:",
+                "DESCRIPTION_PRIVATE_KEY_MISSING": "You do not have a cameoKey on this device."
             },
             "NO_SYMMETRIC_KEY_TRANSMISSION": {
-                "NAME": "Conversation savely encrypted with public keys only.",
-                "DESCRIPTION": "No password has been set. The encryption works with key pairs only and won't have to rely on a password."
+                "NAME": "This talk is safely encrypted with cameoKeys.",
+                "DESCRIPTION": ""
             },
             "HAS_PASSCAPTCHA": {
-                "NAME": "Passcaptcha enabled!",
-                "DESCRIPTION": "Using the passcaptcha method makes it harder to automatically decrypt your messages on a large scale, but it is not actually save.",
-                "TOGGLE": "Disable passcaptcha!"
+                "NAME": "PassCaptcha enabled",
+                "DESCRIPTION": "Using the passCaptcha method makes it harder to automatically decrypt your messages on a large scale, but it is not actually save.",
+                "TOGGLE": "Disable passCaptcha"
             },
-            "MISSING_DATA": "Securityapsects missing"
+            "MISSING_DATA": "Security aspects missing"
         }
     },
 
     "SYSTEM":{
         "WELCOME": {
-           "MESSAGE": "This is the cameoNet support. I want to help you.\n\nIf you have any questions or problems don't hesitate to reply on this message. You can also use our help system at http://support.cameonet.de,\n\nthe cameoNet team.",
+           "MESSAGE": "Hello, I am the cameoNet support. \n\nIf you have any questions or problems do not hesitate to reply on this message. You can also use our help system at http://support.cameonet.de,\n\nthe cameoNet team.",
             "SUBJECT": "Welcome to cameoNet!"
         },
         "ERROR": {
