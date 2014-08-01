@@ -98,12 +98,15 @@ define([
                 if($scope.formData.phoneNumbers.length > 0 && $scope.formData.phoneNumbers[0].value != ''){
                     identity.phoneNumber = $scope.formData.phoneNumbers[0].value;
                     identity.preferredMessageType = 'sms';
+                } else {
+                    identity.phoneNumber = null;
                 }
                 if($scope.formData.emails.length > 0 && $scope.formData.emails[0].value != ''){
                     identity.email = $scope.formData.emails[0].value;
                     identity.preferredMessageType = 'mail';
+                } else {
+                    identity.email = null;
                 }
-
                 //////////////////////
                 if($scope.cmForm.$invalid){
                     return false;
@@ -121,7 +124,7 @@ define([
                             $location.path('/contacts');
                         },
                         function () {
-                            cmNotify.error('CONTACT.INFO.ERROR.CREATE',{ttl:5000});
+                            cmNotify.error('CONTACT.INFO.ERROR.SAVE',{ttl:5000});
                         }
                     );
                 // edit contact
