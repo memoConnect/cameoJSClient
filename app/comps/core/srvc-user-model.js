@@ -71,13 +71,10 @@ angular.module('cmCore')
             self.trigger('init');// deprecated
             self.trigger('init:finish');
 
-
             self.one('update:finished', function(){
-                if(self.data.identity.keys && typeof self.data.identity.on){
+                if(self.data.identity.keys){
                     self.signOwnKeys();
                 }
-
-                cmBoot.resolve();
             });
         }
 
@@ -394,9 +391,11 @@ angular.module('cmCore')
                 )
             });
 
-            return $q.all(promises).then(function(){
-                self.trigger('signatures:saved')
-            });
+            return $q.all(promises).then(
+                function(){
+                    self.trigger('signatures:saved')
+                }
+            );
         };
 
         this.verifyOwnPublicKey = function(key){
@@ -619,6 +618,10 @@ angular.module('cmCore')
          */
         $rootScope.$on('logout', function(){
             self.resetUser();
+        });
+
+        this.on('update:finished', function(){
+            cmBoot.resolve();
         });
 
         cmAuth.on('identity:updated signatures:updated', function(event, data){

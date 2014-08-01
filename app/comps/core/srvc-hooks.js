@@ -75,8 +75,11 @@ angular.module('cmCore').service('cmHooks', [
 
                     authenticationRequest.on('request:finished', function(){
                         console.log('authenticationRequest:start -> incoming -> request:finished');
+                        var bulkData = authenticationRequest.exportKeyIdsForBulk();
 
-//                        self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
+//                        cmAuthenticationRequestFactory.deregister(authenticationRequest);
+
+//                        self.openBulkRequest(bulkData);
                     });
                 }
             }
@@ -94,7 +97,7 @@ angular.module('cmCore').service('cmHooks', [
                     authenticationRequest.finish();
 
                     authenticationRequest.on('request:finished', function(){
-                        console.log('authenticationRequest:verified -> incoming -> request:finished');
+                        console.log('authenticationRequest:verified -> outgoing -> request:finished');
 
 //                        self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
                     });
@@ -119,7 +122,8 @@ angular.module('cmCore').service('cmHooks', [
 
                 cmModal.on('modal:closed', function(event, id){
                     if(id == modalId){
-//                        console.log('Andreas hats drauf!')
+//                        cmAuthenticationRequestFactory.deregister(authenticationRequest);
+                        console.log('Andreas hats drauf!')
                     }
                 });
             }
@@ -127,8 +131,7 @@ angular.module('cmCore').service('cmHooks', [
 
         cmAuthenticationRequestFactory.on('deregister', function(){
             console.log('cmHooks - cmAuthenticationRequestFactory:deregister');
-
-            cmUserModel.signOwnKeys()
+            cmUserModel.signOwnKeys();
         });
 
         cmApi.on('broadcast:started',function(event, data){

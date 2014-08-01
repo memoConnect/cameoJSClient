@@ -303,9 +303,10 @@ angular.module('cmCore')
 
             });
 
-            cmUserModel.on('signatures:cancel', function(){
-                self.trigger('request:finished');
-            });
+//            cmUserModel.on('signatures:cancel', function(){
+//                console.log('signatures:cancel');
+//                self.trigger('request:finished');
+//            });
         }
 
         return authenticationRequestModel;
