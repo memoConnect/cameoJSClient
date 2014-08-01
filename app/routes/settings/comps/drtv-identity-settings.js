@@ -10,8 +10,6 @@ angular.module('cmRouteSettings').directive('cmIdentitySettings', [
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-settings.html',
             controller: function ($scope) {
-                $scope.pendingCheck = $q.when(true);
-
                 $scope.identity = angular.extend({},cmUserModel.data.identity);
 
                 //////////////////////
@@ -23,7 +21,6 @@ angular.module('cmRouteSettings').directive('cmIdentitySettings', [
                     $scope.identity.email || {value:''}
                 ];
                 //////////////////////
-//                console.log($scope.identity)
 
                 $scope.goToKeys = function(){
                     $location.path('/settings/identity/keys');

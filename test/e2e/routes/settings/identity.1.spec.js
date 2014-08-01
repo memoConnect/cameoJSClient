@@ -86,7 +86,7 @@ describe('Route: Settings - Identity', function(){
             util.waitForElement("[data-qa='input-cameoId']");
             expect($("[data-qa='input-cameoId']").isPresent()).toBe(true)
 
-            expect($("[data-qa='input-cameoId']").getAttribute('value')).toBe(newTestUser)
+            expect($("[data-qa='input-cameoId']").getAttribute('value')).toBe(newTestUser + "@cameonet.de")
         })
 
         it('should change the displayName', function(){
