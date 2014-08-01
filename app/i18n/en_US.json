@@ -64,8 +64,8 @@
 
     "START": {
         "MODAL": {
-            "TITLE": "Welcome to cameoNet",
-            "TEXT": "The end2end encrypted OpenSouce Messenger for safety private and commercial Communication!\nTo introduce you our support sent you a message explaining the first steps to use cameoNet. To open the message you just need to click on it in the talks overview.\nEnjoy your safer communication,\nthe cameoNet team."
+            "TITLE": "Welcome to cameoNet!",
+            "TEXT": "cameoNet is an open source messenger that provides end-to-end encryption for safe, private and commercial Communication!\nAttention: this is a first beta version!\nThe app may contains errors, the user interface is still under development and many nice features will be added in the next versions. And we cannot ensure for your data. We would like to please to copy all your important data to your local system.\nPlease help us to improve cameoNet. We are happy about every error or improvement you post on http://support.cameonet.de\nthe cameoNet-Team."
         },
         "YOUR_ID": "Your cameoId",
         "LOGOUT": "logout"
@@ -302,10 +302,12 @@
                     "KEY_SIZE": "keysize",
                     "IS_LOCAL": "local",
                     "IS_LOCAL_ON_THIS_DEVICE": "Is local on this device",
+                    "KEY_TRUST_DESCRIPTION": "@:SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_DESCRIPTION",
                     "TRUSTING": "Trusting",
                     "IS_TRUSTED": "trusted",
                     "IS_UNTRUSTED": "untrusted",
                     "EXPORT_KEY": "Keypair export",
+                    "EXPORT_KEY_DESCRIPTION": "",
                     "REMOVE_KEY": "Keypair remove",
                     "REMOVE_KEY_REALLY": "really remove?",
                     "CHOOSE_SIZE": "Choose keysize",
@@ -315,6 +317,7 @@
                     "CANCEL": "cancel",
                     "STORE_KEYPAIR": "Store keypair",
                     "GENERATION_TIME": "The generation lasted {{time}}",
+                    "STOREKEY_DESCRIPTION": "",
                     "PRIVATE_KEY": "Privatekey",
                     "PUBLIC_KEY": "Publickey",
                     "KEY_NAME": "Keyname",
@@ -328,6 +331,7 @@
                 },
                 "HANDSHAKE": {
                     "MODAL_HEADER": "Authentication",
+                    "HANDSHAKE_DESCRIPTION": "",
                     "HANDSHAKE_NOW": "Do you want for the new cameoKey '<strong>{{keyName}}</strong>' to perform a handshake with an older device now?",
                     "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
                     "CHOOSE_OLD_DEVICE": "Please select an old device with which you want to perform the authentication!",
@@ -501,8 +505,8 @@
 
     "SYSTEM":{
         "WELCOME": {
-            "MESSAGE": "Cameo rulez",
-            "SUBJECT": "Hello"
+           "MESSAGE": "This is the cameoNet support. I want to help you.\n\nIf you have any questions or problems don't hesitate to reply on this message. You can also use our help system at http://support.cameonet.de,\n\nthe cameoNet team.",
+            "SUBJECT": "Welcome to cameoNet!"
         },
         "ERROR": {
             "EMPTY_INPUT": "The input field is empty!",
