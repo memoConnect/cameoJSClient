@@ -12,6 +12,7 @@ angular.module('cmCore').service('cmHooks', [
 
         this.openBulkRequest = function(data){
             cmLogger.debug('cmHooks.openBulkRequest');
+            console.log('openBulkRequest data', data);
 
             if(typeof data == 'object' && cmUtil.checkKeyExists(data,'key1') && cmUtil.checkKeyExists(data, 'key2')){
                 var scope = $rootScope.$new();
@@ -73,9 +74,9 @@ angular.module('cmCore').service('cmHooks', [
                     });
 
                     authenticationRequest.on('request:finished', function(){
-                        self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
+                        console.log('authenticationRequest:start -> incoming -> request:finished');
 
-                        cmAuthenticationRequestFactory.deregister(authenticationRequest);
+//                        self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
                     });
                 }
             }
@@ -87,8 +88,17 @@ angular.module('cmCore').service('cmHooks', [
             var authenticationRequest = cmAuthenticationRequestFactory.find(request);
 
             if(authenticationRequest !== null && (typeof authenticationRequest.finish == 'function')){
-                authenticationRequest.finish();
-                self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
+
+                if(authenticationRequest.state.is('outgoing')){
+                    console.log('moep');
+                    authenticationRequest.finish();
+
+                    authenticationRequest.on('request:finished', function(){
+                        console.log('authenticationRequest:verified -> incoming -> request:finished');
+
+//                        self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
+                    });
+                }
             }
         });
 
@@ -116,6 +126,8 @@ angular.module('cmCore').service('cmHooks', [
         });
 
         cmAuthenticationRequestFactory.on('deregister', function(){
+            console.log('cmHooks - cmAuthenticationRequestFactory:deregister');
+
             cmUserModel.signOwnKeys()
         });
 

@@ -69,6 +69,7 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
                         authenticationRequest.send();
 
                         authenticationRequest.on('request:finished', function(){
+
                             $scope.handshakeIdle = false;
                             $rootScope.closeModal(modalId);
 

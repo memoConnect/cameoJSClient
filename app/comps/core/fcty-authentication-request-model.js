@@ -27,16 +27,16 @@ angular.module('cmCore')
             this.toKey = {};
 
             function init(requestData){
-//                cmLogger.debug('cmAuthenticationRequestModel.init');
+                cmLogger.debug('cmAuthenticationRequestModel.init');
 
                 if(!("id" in requestData)){
-                    self.id = cmCrypt.hash(cmCrypt.random());
+                    self.id = cmCrypt.hash(cmCrypt.random() + new Date());
                 }
                 self.importData(requestData);
             }
 
             this.importData = function(requestData){
-//                cmLogger.debug('cmAuthenticationRequestModel.importData');
+                cmLogger.debug('cmAuthenticationRequestModel.importData');
 
                 if(typeof requestData !== 'object'){
                     cmLogger.debug('authenticationRequestModel.importData:failed - no data!');
@@ -96,7 +96,7 @@ angular.module('cmCore')
             };
 
             this.verifyIncomingRequest = function(){
-//                cmLogger.debug('cmAuthenticationRequestModel.verifyIncomingRequest');
+                cmLogger.debug('cmAuthenticationRequestModel.verifyIncomingRequest');
 
                 if(typeof this.id != 'string' || this.id.length < 1){
                     cmLogger.debug('Error - cmAuthenticationRequestModel.verifyIncomingRequest - verify id fail');
@@ -213,7 +213,9 @@ angular.module('cmCore')
             };
 
             this.sendVerified = function(){
-                if(this.state.is('incoming')){
+                cmLogger.debug('cmAuthenticationRequestModel.sendVerified');
+
+                if(this.state.is('incoming') && !this.state.is('finished')){
                     cmAuth.sendBroadcast({
                         name: 'authenticationRequest:verified',
                         data: {
@@ -222,9 +224,14 @@ angular.module('cmCore')
                     }).then(
                         function(){
                             // do nothing
+                            self.state.set('finished');
                         },
                         function(){
                             cmLogger.debug('authenticationRequestModel.send - Error');
+                        }
+                    ).finally(
+                        function(){
+                            self.trigger('request:finished');
                         }
                     );
                 }
@@ -233,7 +240,7 @@ angular.module('cmCore')
             this.finish = function(){
                 cmLogger.debug('cmAuthenticationRequestModel.finish');
 
-                if(this.state.is('outgoing')){
+                if(this.state.is('outgoing') && !this.state.is('finished')){
                     cmUserModel.data.identity.load();
 
                     cmUserModel.data.identity.one('update:finished', function(){
@@ -252,6 +259,8 @@ angular.module('cmCore')
 
                         if(self.toKey.verify(self.fromKey, cmUserModel.getTrustToken(self.fromKey, cmUserModel.data.identity.cameoId))){
                             cmUserModel.signPublicKey(self.toKey, self.toKeyFingerprint);
+
+                            console.log('cmAuthenticationRequestModel.finish - after signPublicKey');
                         } else {
                             cmLogger.debug('Error - cmAuthenticationRequestModel.finish - verify fail!');
                         }
@@ -263,26 +272,39 @@ angular.module('cmCore')
             init(requestData);
 
             this.on('secret:verified', function(){
-                if(self.state.is('incoming')) {
-                    cmUserModel.signPublicKey(this.toKey, this.toKeyFingerprint);
+                cmLogger.debug('cmAuthenticationRequestModel.on:secret:verified');
+
+                if(self.state.is('incoming') && !self.state.is('finished')) {
+                    cmUserModel.signPublicKey(this.fromKey, this.fromKeyFingerprint);
                 }
             });
 
-            cmUserModel.on('signatures:saved signatures:cancel', function(){
-                if(self.state.is('incoming')){
+            cmUserModel.one('signatures:saved', function(){
+                cmLogger.debug('cmAuthenticationRequestModel - cmUserModel.on:signatures:saved');
+                console.log('cmAuthenticationRequestModel - cmUserModel.on:signatures:saved', self)
+
+                if(self.state.is('incoming') && !self.state.is('finished')){
                     self.sendVerified();
                 }
-
-                if(self.state.is('outgoing')){
+//
+                if(self.state.is('outgoing') && !self.state.is('finished')){
+                    console.log('knaller')
                     cmAuth.sendBroadcast({
                         name: 'signatures:updated',
                         data: {
                             id: cmUserModel.data.identity.id
                         }
-                    });
-
-                    self.trigger('request:finished');
+                    }).finally(
+                        function(){
+                            self.trigger('request:finished');
+                        }
+                    );
                 }
+
+            });
+
+            cmUserModel.on('signatures:cancel', function(){
+                self.trigger('request:finished');
             });
         }
 
