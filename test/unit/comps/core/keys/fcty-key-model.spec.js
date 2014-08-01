@@ -67,7 +67,6 @@ describe('cmKeyModel', function() {
         expect(key.getPrivateKey).toBeDefined()
         expect(key.encrypt).toBeDefined()
         expect(key.decrypt).toBeDefined()
-        expect(key.trusts).toBeDefined()
         expect(key.getSize).toBeDefined()
         expect(key.importJSEncrypt).toBeDefined()
         expect(key.exportJSEncrypt).toBeDefined()
