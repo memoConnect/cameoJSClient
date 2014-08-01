@@ -21,7 +21,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-sloc');
     grunt.loadNpmTasks('grunt-ngdocs');
-    grunt.loadNpmTasks('grunt-testflight');
+    grunt.loadNpmTasks('grunt-testflight-jsonresult');
 
     // cameo secrets
     var globalCameoSecrets = (function () {
@@ -30,7 +30,7 @@ module.exports = function (grunt) {
             return grunt.file.readJSON(src);
         }
         else {
-            return {"phonegap": {"email": "a", "password": "b"}};
+            return {"phonegap": {"email": "a", "password": "b"}, "testflight": {"apiToken": "a", "teamToken": "b"}};
         }
     })();
 
@@ -530,13 +530,15 @@ module.exports = function (grunt) {
         },
         testflight: {
             options: {
-                apiToken: '3965acc8e1f778cdc020d5aaaba0f89a_MjAwNzE1MjIwMTQtMDctMzAgMDM6NDk6MDEuNzMwODI2',
-                teamToken: '8c3479b53192e5f3c20914cc44ae3b0c_NDEzMTMzMjAxNC0wNy0zMCAwNDozNDozMC4wMzYyNDM',
+                apiToken: globalCameoSecrets.testflight.apiToken,
+                teamToken: globalCameoSecrets.testflight.teamToken,
                 notes: globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName + " " + globalCameoBuildConfig.phonegap.version,
                 distributionLists: ['cameoNet-dev'],
                 notify: true,
                 replace: true,
-                onDone: function () {console.log(arguments)}
+                onDone: function (responseJson) {
+                    globalCameoBuildConfig.iosTestFlightURL = responseJson.install_url
+                }
             },
 
             iOS: {
@@ -603,7 +605,9 @@ module.exports = function (grunt) {
                 'options': {
                     'data': {
                         'phonegapBaseFilename': globalCameoBuildConfig.phonegap.phonegapBaseFilename,
-                        'testFlightiOSURL': globalCameoBuildConfig.phonegap.phonegapBaseFilename
+                        'testFlightiOSURL': function () {
+                            return globalCameoBuildConfig.iosTestFlightURL
+                        }
                     }
                 },
                 'files': {

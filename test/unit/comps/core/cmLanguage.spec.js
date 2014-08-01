@@ -4,8 +4,6 @@ describe("cmLanguage", function() {
 
     describe("setup", function(){
 
-        var language_tables = {};
-
         it('should find an array of correctly formatted keys for supported languages at cameo.supported_languages', function() {
             expect(Object.prototype.toString.call( cameo_config.supported_languages )).toEqual('[object Array]')
             cameo_config.supported_languages.forEach(function(lang_key){
@@ -17,67 +15,100 @@ describe("cmLanguage", function() {
             expect(typeof cameo_config.path_to_languages).toEqual('string')
         })
 
-        it('should find and load correctly named and json formatted files for all supported languages within 5 second.', function() {
+        xit('should find and load correctly named and json formatted files for all supported languages within 5 second.', function() {
             var count = cameo_config.supported_languages.length
 
-            
             cameo_config.supported_languages.forEach(function(lang_key){
                 var file = 'app/'+cameo_config.path_to_languages+'/'+lang_key+'.json';
-                language_tables[lang_key] = window.__html__[file]
+                language_tables[lang_key] = eval(window.__html__[file])
+                console.log(typeof language_tables[lang_key])
             })
-            
-            expect(Object.keys(language_tables).length).toEqual(cameo_config.supported_languages.length)            
+
+            expect(Object.keys(language_tables).length).toEqual(cameo_config.supported_languages.length)
         })
 
-        it('should find a translation for each message_id for all supported langauges.', function(){
-            var message_ids = {}
+        var language_tables = {};
 
-            //Helper function to serialize all message ids
-            function extendList(list, str, obj){
-                if(typeof obj == 'string') {
-                    list.push(str)
-                } else {
-                    $.each(obj, function(key, value){
-                        extendList(list, str+(str?'.':'')+key, value)
-                    })
-                }
-            }
+        function ucfirst(str) {
+            //  discuss at: http://phpjs.org/functions/ucfirst/
+            // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+            // bugfixed by: Onno Marsman
+            // improved by: Brett Zamir (http://brett-zamir.me)
+            //   example 1: ucfirst('kevin van zonneveld');
+            //   returns 1: 'Kevin van zonneveld'
 
-            //Helper function to compare language lists od message ids
-            function diffLists(list1, list2){
-                list1.sort()
-                list2.sort()
+            str += '';
+            var f = str.charAt(0)
+                .toUpperCase();
+            return f + str.substr(1);
+        }
 
-                var i = 0
-
-                while (list1[i] && (list1[i] == list2[i])) { i++ }
-
-                return(list1[i] || list2[i])
-            }
-
-            var list = [],
-                all_the_same = true
-
-            $.each(language_tables, function(lang_key, language_data){
-                if(list.length == 0){
-                    extendList(list, '', language_data)
-                }else{
-                    var next_list = [],
-                        last_diff = undefined
-
-                    extendList(next_list, '', language_data)
-                    last_diff = diffLists(list, next_list)
-
-                    if(last_diff) {
-                        //console.log('Missing or surplus message id in '+lang_key+': '+last_diff)
-                    }
-
-                    all_the_same = all_the_same && !last_diff
-                    list = next_list
-                }
+        describe('validate files', function(){
+            cameo_config.supported_languages.forEach(function (lang_key) {
+                beforeEach(function(){
+                    module('i18n/' + lang_key + '.json')
+                })
             })
 
-            expect(all_the_same).toEqual(true)
+            it('should find a translation for each message_id for all supported languages.', function () {
+
+                cameo_config.supported_languages.forEach(function (lang_key) {
+                    inject(['i18n'+ucfirst(lang_key), function (jsonData){
+                        language_tables[lang_key] = jsonData
+                    }])
+                })
+
+                var message_ids = {}
+
+                //Helper function to serialize all message ids
+                function extendList(list, str, obj) {
+                    if (typeof obj == 'string') {
+                        list.push(str)
+                    } else {
+                        $.each(obj, function (key, value) {
+                            extendList(list, str + (str ? '.' : '') + key, value)
+                        })
+                    }
+                }
+
+                //Helper function to compare language lists od message ids
+                function diffLists(list1, list2) {
+                    list1.sort()
+                    list2.sort()
+
+                    var i = 0
+
+                    while (list1[i] && (list1[i] == list2[i])) {
+                        i++
+                    }
+
+                    return(list1[i] || list2[i])
+                }
+
+                var list = [],
+                    all_the_same = true
+
+                $.each(language_tables, function (lang_key, language_data) {
+                    if (list.length == 0) {
+                        extendList(list, '', language_data)
+                    } else {
+                        var next_list = [],
+                            last_diff = undefined
+
+                        extendList(next_list, '', language_data)
+                        last_diff = diffLists(list, next_list)
+
+                        if (last_diff) {
+                            console.log('Missing or surplus message id in ' + lang_key + ': ' + last_diff)
+                        }
+
+                        all_the_same = all_the_same && !last_diff
+                        list = next_list
+                    }
+                })
+
+                expect(all_the_same).toEqual(true)
+            })
         })
     })
 
