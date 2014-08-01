@@ -336,7 +336,7 @@ angular.module('cmCore')
                     encryptedTransactionSecret: dataForHandshake.encryptedTransactionSecret
                 };
 
-                dataForHandshake.signature = settings.fromKey.sign(signData);
+                dataForHandshake.signature = settings.fromKey.sign(this.hashObject(signData));
 
                 return dataForHandshake;
             },
@@ -365,7 +365,7 @@ angular.module('cmCore')
                     encryptedTransactionSecret: settings.encryptedTransactionSecret
                 };
 
-                return settings.fromKey.verify(verifyData, settings.signature);
+                return settings.fromKey.verify(this.hashObject(verifyData), settings.signature);
             },
 
             isTransactionSecretValid: function(_settings_){

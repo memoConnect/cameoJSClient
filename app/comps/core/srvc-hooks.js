@@ -12,7 +12,6 @@ angular.module('cmCore').service('cmHooks', [
 
         this.openBulkRequest = function(data){
             cmLogger.debug('cmHooks.openBulkRequest');
-            console.log('openBulkRequest data', data);
 
             if(typeof data == 'object' && cmUtil.checkKeyExists(data,'key1') && cmUtil.checkKeyExists(data, 'key2')){
                 var scope = $rootScope.$new();
@@ -70,16 +69,17 @@ angular.module('cmCore').service('cmHooks', [
                     cmModal.on('modal:closed', function(event, id){
                         if(id == modalId){
                             cmAuthenticationRequestFactory.deregister(authenticationRequest);
-                        }
+                    }
                     });
 
                     authenticationRequest.on('request:finished', function(){
-                        console.log('authenticationRequest:start -> incoming -> request:finished');
+                        console.log('authenticationRequest:verified -> outgoing -> request:finished');
+
                         var bulkData = authenticationRequest.exportKeyIdsForBulk();
 
-//                        cmAuthenticationRequestFactory.deregister(authenticationRequest);
+                        cmAuthenticationRequestFactory.deregister(authenticationRequest);
 
-//                        self.openBulkRequest(bulkData);
+                        self.openBulkRequest(bulkData);
                     });
                 }
             }
@@ -93,13 +93,16 @@ angular.module('cmCore').service('cmHooks', [
             if(authenticationRequest !== null && (typeof authenticationRequest.finish == 'function')){
 
                 if(authenticationRequest.state.is('outgoing')){
-                    console.log('moep');
                     authenticationRequest.finish();
 
                     authenticationRequest.on('request:finished', function(){
-                        console.log('authenticationRequest:verified -> outgoing -> request:finished');
+                        console.log('authenticationRequest:verified -> incoming -> request:finished');
 
-//                        self.openBulkRequest(authenticationRequest.exportKeyIdsForBulk());
+                        var bulkData = authenticationRequest.exportKeyIdsForBulk();
+
+                        cmAuthenticationRequestFactory.deregister(authenticationRequest);
+
+                        self.openBulkRequest(bulkData);
                     });
                 }
             }

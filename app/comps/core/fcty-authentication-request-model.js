@@ -56,7 +56,15 @@ angular.module('cmCore')
             };
 
             this.exportKeyIdsForBulk = function(){
-                return {key1:this.toKeyId, key2:this.fromKeyId};
+                var data = {};
+
+                if(this.state.is('incoming')){
+                    data = {key1:this.toKeyId, key2:this.fromKeyId};
+                } else if(this.state.is('outgoing')){
+                    data = {key1:this.fromKeyId, key2:this.toKeyId};
+                }
+
+                return data
             };
 
             this.verifyForm = function(){
@@ -245,7 +253,7 @@ angular.module('cmCore')
 
                     cmUserModel.data.identity.one('update:finished', function(){
 
-                        cmUserModel.loadLocalKeys().forEach(function(key){
+                        cmUserModel.data.identity.keys.forEach(function(key){
                             if(key.id == self.fromKeyId && (key.getFingerprint() === self.fromKeyFingerprint)){
                                 self.fromKey = key;
                             }
@@ -257,10 +265,8 @@ angular.module('cmCore')
                             }
                         });
 
-                        if(self.toKey.verify(self.fromKey, cmUserModel.getTrustToken(self.fromKey, cmUserModel.data.identity.cameoId))){
+                        if(self.toKey.verifyKey(self.fromKey, cmUserModel.getTrustToken(self.fromKey, cmUserModel.data.identity.cameoId))){
                             cmUserModel.signPublicKey(self.toKey, self.toKeyFingerprint);
-
-                            console.log('cmAuthenticationRequestModel.finish - after signPublicKey');
                         } else {
                             cmLogger.debug('Error - cmAuthenticationRequestModel.finish - verify fail!');
                         }
@@ -281,14 +287,12 @@ angular.module('cmCore')
 
             cmUserModel.one('signatures:saved', function(){
                 cmLogger.debug('cmAuthenticationRequestModel - cmUserModel.on:signatures:saved');
-                console.log('cmAuthenticationRequestModel - cmUserModel.on:signatures:saved', self)
 
                 if(self.state.is('incoming') && !self.state.is('finished')){
                     self.sendVerified();
                 }
 //
                 if(self.state.is('outgoing') && !self.state.is('finished')){
-                    console.log('knaller')
                     cmAuth.sendBroadcast({
                         name: 'signatures:updated',
                         data: {

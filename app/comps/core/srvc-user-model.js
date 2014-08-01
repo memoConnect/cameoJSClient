@@ -360,7 +360,6 @@ angular.module('cmCore')
             cmLogger.debug('cmUserModel.signPublicKey');
 
             if(!(keyToSign instanceof cmKey) && (keyToSign.getFingerprint() === keyToSignFingerprint)){
-                cmLogger.debug('cmUserModel.signPublicKey - failed');
                 self.trigger('signatures:cancel');
                 return false; //keys should not sign themselves
             }
@@ -369,6 +368,11 @@ angular.module('cmCore')
                 promises    = [];
 
             localKeys.forEach(function(signingKey){
+                //Dont sign own key
+                if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() === keyToSign.getFingerprint())){
+                    self.trigger('signatures:cancel');
+                    return false;
+                }
 
                 //Dont sign twice:
                 if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
@@ -391,7 +395,12 @@ angular.module('cmCore')
                 )
             });
 
-            return $q.all(promises).then(
+            if(promises.length == 0){
+                self.trigger('signatures:cancel');
+                return false;
+            }
+
+            $q.all(promises).then(
                 function(){
                     self.trigger('signatures:saved')
                 }

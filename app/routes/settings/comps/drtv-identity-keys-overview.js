@@ -53,6 +53,11 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
 
                 cmUserModel.on('key:stored', refresh);
 
+                $scope.moep = function(){
+                    console.log('moep - signownkeys')
+                    cmUserModel.signOwnKeys();
+                };
+
                 refresh()
             }
         }

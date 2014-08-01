@@ -1079,11 +1079,13 @@ angular.module('cmConversations')
                 self.checkPreferences();
                 self.securityAspects.refresh();
                 self.updateLockStatus();
-            })
+            });
 
-//            cmUserModel.data.identity.on('update:finished', function(){
-//                self.decrypt();
-//            });
+            cmUserModel.on('bulkrekeying:finished', function(){
+                cmLogger.debug('cmConversationModel:on:bulkrekeying:finished');
+                self.decrypt();
+            });
+
 
             // after events!!!
             init(data);
