@@ -33,6 +33,22 @@ angular.module('cmCore').service('cmHooks', [
             }
         };
 
+        this.openKeyRequest = function(){
+            cmLogger.debug('cmHooks.openKeyRequest');
+
+            var scope = $rootScope.$new();
+            scope.data = data;
+
+            var modalId = 'key-request';
+            cmModal.create({
+                id: modalId,
+                type: 'plain',
+                'class': 'no-padding',
+                'cm-title': 'DRTV.KEY_REQUEST.HEADER'
+            },'<cm-key-request></cm-key-request>',null,scope);
+            cmModal.open(modalId);
+        };
+
         /**
          * authenticationRequest:new
          */
@@ -117,7 +133,7 @@ angular.module('cmCore').service('cmHooks', [
             }
         });
 
-        cmUserModel.on('key:saved handshake:start', function(event, toKey){
+        cmUserModel.on('handshake:start', function(event, toKey){
             if(cmUserModel.verifyPublicKeyForAuthenticationRequest(toKey)){
                 var scope = $rootScope.$new();
                 scope.toKey = toKey;
@@ -141,13 +157,20 @@ angular.module('cmCore').service('cmHooks', [
             }
         });
 
-        cmAuthenticationRequestFactory.on('deregister', function(){
-            console.log('cmHooks - cmAuthenticationRequestFactory:deregister');
-            cmUserModel.signOwnKeys();
+        cmUserModel.on('key:saved ', function(){
+            console.log('cmHooks - key:saved');
+
+            var localKeys = cmUserModel.loadLocalKeys();
+            var publicKeys = cmUserModel.data.identity.keys;
+
+            if(localKeys.length < publicKeys.length){
+                self.openKeyRequest();
+            };
         });
 
-        cmApi.on('broadcast:started',function(event, data){
-           console.log('cmHooks.on:broadcast:started', data);
+        cmAuthenticationRequestFactory.on('deregister', function(){
+//            console.log('cmHooks - cmAuthenticationRequestFactory:deregister');
+            cmUserModel.signOwnKeys();
         });
     }
 ]);

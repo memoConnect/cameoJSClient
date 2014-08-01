@@ -1,0 +1,19 @@
+<div>
+    <div class="modal-row">
+        <span ng-bind-html="'DRTV.KEY_REQUEST.CONTENT'|cmTranslate"></span>
+    </div>
+    <div cm-rubber-space>
+        <button class="cm-btn cm-btn-block cm-btn-grey cm-inline-block cm-white-border-right" cm-weight="1" ng-click="cancel()">
+            CANCEL
+            <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
+        </button>
+        <button
+                class="cm-btn cm-btn-block cm-btn-grey cm-inline-block"
+                ng-click="startHandshake(toKey)"
+                data-qa="btn-doHandshake"
+                cm-weight="1">
+            {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_OK'|cmTranslate}}
+            <i class="fa cm-checker cm-lg-icon"></i>
+        </button>
+    </div>
+</div>
