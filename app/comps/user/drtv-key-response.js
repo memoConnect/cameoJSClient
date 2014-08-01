@@ -1,21 +1,25 @@
 'use strict';
 
-angular.module('cmUser').directive('cmKeyRequest',[
+angular.module('cmUser').directive('cmKeyResponse',[
     'cmAuth', 'cmUserModel', '$rootScope',
     function (cmAuth, cmUserModel, $rootScope){
         return {
             restrict: 'E',
-            templateUrl: 'comps/user/drtv-key-request.html',
+            templateUrl: 'comps/user/drtv-key-response.html',
             controller: function($scope){
                 $scope.spinner = false;
 
-                $scope.startRequest = function(){
+                $scope.startResponse = function(){
                     $scope.showSpinner();
-                    $rootScope.keyRequestSender = true;
+
+                    var localKeys = cmUserModel.loadLocalKeys();
 
                     cmAuth.sendBroadcast({
-                        name: "authenticationRequest:key-request",
-                        data: {}
+                        name: "authenticationRequest:key-response",
+                        data: {
+                            toKeyId: localKeys[0].id,
+                            toKeyFingerprint: localKeys[0].getFingerprint()
+                        }
                     });
 
                 };
@@ -29,7 +33,7 @@ angular.module('cmUser').directive('cmKeyRequest',[
                 };
 
                 function closeModal(){
-                    $rootScope.closeModal('key-request');
+                    $rootScope.closeModal('key-response');
                 }
             }
         }

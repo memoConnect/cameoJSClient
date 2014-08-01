@@ -2,10 +2,10 @@
 
 angular.module('cmCore').service('cmHooks', [
     'cmUserModel', 'cmObject', 'cmApi', 'cmModal', 'cmLogger',
-    'cmAuthenticationRequestFactory', 'cmUtil',
+    'cmAuthenticationRequestFactory', 'cmUtil', 'cmKey',
     '$location', '$rootScope',
     function(cmUserModel, cmObject, cmApi, cmModal, cmLogger,
-             cmAuthenticationRequestFactory, cmUtil,
+             cmAuthenticationRequestFactory, cmUtil, cmKey,
              $location, $rootScope){
         var self = this;
         cmObject.addEventHandlingTo(this);
@@ -37,7 +37,6 @@ angular.module('cmCore').service('cmHooks', [
             cmLogger.debug('cmHooks.openKeyRequest');
 
             var scope = $rootScope.$new();
-            scope.data = data;
 
             var modalId = 'key-request';
             cmModal.create({
@@ -133,7 +132,49 @@ angular.module('cmCore').service('cmHooks', [
             }
         });
 
-        cmUserModel.on('handshake:start', function(event, toKey){
+        cmApi.on('authenticationRequest:key-request', function(){
+            cmLogger.debug('cmHooks.authenticationRequest:key-request');
+
+            if((typeof $rootScope.keyRequestSender == 'undefined' || $rootScope.keyRequestSender == false) && cmUserModel.loadLocalKeys().length > 0){
+                var scope = $rootScope.$new();
+
+                var modalId = 'key-response';
+                cmModal.create({
+                    id: modalId,
+                    type: 'plain',
+                    'class': 'no-padding',
+                    'cm-title': 'DRTV.KEY_RESPONSE.HEADER'
+                },'<cm-key-response></cm-key-response>',null,scope);
+                cmModal.open(modalId);
+            }
+        });
+
+        cmApi.on('authenticationRequest:key-response', function(event, response){
+            cmLogger.debug('cmHooks.authenticationRequest:key-response');
+
+            if(typeof response == 'object'
+                && "toKeyId" in response
+                && "toKeyFingerprint" in response
+            ){
+                if(typeof $rootScope.keyRequestSender == 'undefined' || $rootScope.keyRequestSender == false){
+                    $rootScope.closeModal('key-response');
+                } else {
+                    var toKey = cmUserModel.data.identity.keys.find(response.toKeyId);
+
+                    if(toKey instanceof cmKey && toKey.id == response.toKeyId && (toKey.getFingerprint() === response.toKeyFingerprint)){
+                        $rootScope.keyRequestSender = false;
+                        $rootScope.closeModal('key-request');
+                        cmUserModel.trigger('key-response:accepted',toKey);
+                    }
+                }
+            } else {
+                console.log("cmHooks.authenticationRequest:key-response - fail");
+                $rootScope.closeModal('key-response');
+            }
+        });
+
+
+        cmUserModel.on('handshake:start key-response:accepted', function(event, toKey){
             if(cmUserModel.verifyPublicKeyForAuthenticationRequest(toKey)){
                 var scope = $rootScope.$new();
                 scope.toKey = toKey;
