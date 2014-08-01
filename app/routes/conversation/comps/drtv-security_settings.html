@@ -79,13 +79,14 @@
         </div>
     </div>
 
-    <div ng-if="conversation.options.showKeyInfo" style="text-align:center; cursor:pointer" cm-user-rights>
+    <div ng-if="conversation.options.showKeyInfo" class="settings-alert" cm-user-rights>
         <a href="#/settings/identity/keys">
             {{'CONVERSATION.LABEL.KEY_GENERATION'|cmTranslate}}
         </a>
     </div>
-    <div ng-if="showPasswordLocalKeyInfo && isNew()" class="tac cm-orange" cm-user-rights>
-        <i class="fa cm-attention"></i>{{'CONVERSATION.LABEL.SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS'|cmTranslate}}
+    <div ng-if="showPasswordLocalKeyInfo && isNew()" class="settings-alert cm-orange" cm-user-rights>
+        <i class="fa cm-attention"></i>
+        {{'CONVERSATION.LABEL.SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS'|cmTranslate}}
     </div>
 </section>
 
