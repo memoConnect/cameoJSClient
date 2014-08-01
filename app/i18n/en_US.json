@@ -1,7 +1,7 @@
 {
     "CAMEO": {
         "SLOGAN": "Safer Communication - Made in Germany!",
-        "DESCRIBE": "Register for free.\nWithout obligation.\nEasy and secure communication. Mobile and desktop\nConnect with all your contacts.\nExplore our smart features.\nGet registered today!",
+        "DESCRIBE": "Register for free.\nWithout obligation.\nEasy and secure communication. Mobile and desktop\nConnect with all your contacts.\nExplore our smart features.\nRegister today!",
         "MOEP": "moep",
         "VERSION": "version"
     },
@@ -10,8 +10,8 @@
         "HEADING": "Login",
         "LABEL": {
             "SUBMIT": "log in",
-            "REMEMBER_ME": "remember me.",
-            "AUTO": "auto login chooser"
+            "REMEMBER_ME": "remember me",
+            "AUTO": "choose auto login"
         },
         "LINK": "login",
         "PLACEHOLDER": {
@@ -19,8 +19,8 @@
             "PASSWORD": "Password"
         },
         "INFO": {
-            "401": "Invalid Credentials!",
-            "404": "Login is impossible right now. 404",
+            "401": "Invalid username or password",
+            "404": "Login is impossible right now.",
             "500": "Internal Server Error"
         }
     },
@@ -42,15 +42,15 @@
             "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER"
         },
         "INFO": {
-            "MIN_LETTER_COUNT": "Please use at least {{count}} letters.",
-            "TERMS": "You need to accept the terms of use!",
+            "MIN_LETTER_COUNT": "Please use at least {{count}} characters.",
+            "TERMS": "You need to accept the terms of use.",
             "EMPTY": {
-                "PASSWORD": "Please insert a Password."
+                "PASSWORD": "Please enter a Password."
             },
             "USERNAME": {
-                "EXISTS": "Username exists! Please choose an other.",
-                "EMPTY": "Please insert a username.",
-                "INVALID": "Invalid username. Avoid spaces and special character!"
+                "EXISTS": "Username exists! Please choose another.",
+                "EMPTY": "Please enter a username.",
+                "INVALID": "Invalid username. Avoid spaces and special characters."
             },
             "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
             "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
@@ -78,7 +78,7 @@
 	},
 
     "PROFILE": {
-        "E-MAIL": "E-mail",
+        "E-MAIL": "email",
         "MOBILE": "mobile"
     },
 
@@ -120,15 +120,15 @@
         "HEADING": "Conversation",
         "LABEL": {
             "SEND": "send",
-            "REQUEST_CAPTCHA": "ask for Captcha",
-            "SEND_CAPTCHA": "send Captcha",
-            "KEY_GENERATION": "for good encryption you can here generate a keypair",
-            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "password shown, because no local keypar exists"
+            "REQUEST_CAPTCHA": "request captcha",
+            "SEND_CAPTCHA": "send captcha",
+            "KEY_GENERATION": "generate a keypair for better security",
+            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "password used, because you have no local keypar"
         },
         "TAG": {
             "RECIPIENTS": "Recipients",
             "SUBJECT": "Subject",            
-            "PASSPHRASE": "Passphrase",
+            "PASSPHRASE": "Password",
             "MESSAGES": "Messages",
             "IMAGE": "Image",
             "FILE": "File"
@@ -138,13 +138,13 @@
             "ENCRYPTED": "- encrypted -"
         },
         "WARN": {
-            "MESSAGE_EMPTY": "The input field is empty.",
-            "RECIPIENTS_MISSING": "Please add at least one recipient.",
-            "RECIPIENTS_MISSING_OKAY": "I dont want any other recipients than myself.",
-            "PASSPHRASE_INVALID": "Invalid passphrase",
+            "MESSAGE_EMPTY": "The message is empty.",
+            "RECIPIENTS_MISSING": "This conversation has not recipients.",
+            "RECIPIENTS_MISSING_OKAY": "I do not want any other recipients than myself.",
+            "PASSPHRASE_INVALID": "Invalid password",
             "PASSWORD_WRONG": "Password is wrong",
-            "NO_PASSWORD": "Password is empty.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">here you can insert one</a>",
-            "PASSWORD_NEEDED": "A password is required.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">enter here!</a>",
+            "NO_PASSWORD": "No password .<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">enter here</a>",
+            "PASSWORD_NEEDED": "A password is required.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">enter here</a>",
             "ASYMMETRIC_DECRYPT_ERROR": "Privatekey missing",
             "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
             "FILESIZE_REACHED": "The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file '<strong>{{fileName}}</strong>' is <strong>{{fileSize | cmBytesHumanReadable}}</strong> big."
