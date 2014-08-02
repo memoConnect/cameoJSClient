@@ -9,7 +9,19 @@ angular.module('cmUser').directive('cmKeyResponse',[
             controller: function($scope){
                 $scope.spinner = false;
 
-                $scope.startResponse = function(){
+                $scope.showSpinner = function(){
+                    $scope.spinner = true;
+                };
+
+                $scope.hideSpinner = function(){
+                    $scope.spinner = false;
+                };
+
+                $scope.cancel = function(){
+                    $rootScope.closeModal('key-response');
+                }
+
+                $scope.accept = function(){
                     $scope.showSpinner();
 
                     var localKeys = cmUserModel.loadLocalKeys();
@@ -21,20 +33,7 @@ angular.module('cmUser').directive('cmKeyResponse',[
                             toKeyFingerprint: localKeys[0].getFingerprint()
                         }
                     });
-
                 };
-
-                $scope.showSpinner = function(){
-                    $scope.spinner = true;
-                };
-
-                $scope.hideSpinner = function(){
-                    $scope.spinner = false;
-                };
-
-                function closeModal(){
-                    $rootScope.closeModal('key-response');
-                }
             }
         }
     }

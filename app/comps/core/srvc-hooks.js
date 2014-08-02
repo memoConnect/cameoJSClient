@@ -146,6 +146,12 @@ angular.module('cmCore').service('cmHooks', [
                     'cm-title': 'DRTV.KEY_RESPONSE.HEADER'
                 },'<cm-key-response></cm-key-response>',null,scope);
                 cmModal.open(modalId);
+
+                cmModal.on('modal:closed', function(event, id){
+                    if(id == modalId){
+                        $rootScope.keyRequestSender = false;
+                    }
+                });
             }
         });
 

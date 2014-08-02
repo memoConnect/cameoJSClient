@@ -3,17 +3,17 @@
         <span ng-bind-html="'DRTV.KEY_REQUEST.CONTENT'|cmTranslate"></span>
     </div>
     <div cm-rubber-space ng-show="!spinner">
-        <button class="cm-btn cm-btn-block cm-btn-grey cm-inline-block cm-white-border-right" cm-weight="1" ng-click="closeModal()">
-            CANCEL
+        <button class="cm-btn cm-btn-block cm-btn-grey cm-inline-block cm-white-border-right" cm-weight="1" ng-click="cancel()" data-qa="btn-cancel">
+            {{'MODAL.LABEL.CANCEL'|cmTranslate}}
             <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
         </button>
         <button
                 class="cm-btn cm-btn-block cm-btn-grey cm-inline-block"
-                ng-click="startRequest()"
-                data-qa="btn-startRequest"
+                ng-click="start()"
+                data-qa="btn-start"
                 cm-weight="1">
-            {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_OK'|cmTranslate}}
-            <i class="fa cm-checker cm-lg-icon"></i>d
+            {{'MODAL.LABEL.START'|cmTranslate}}
+            <i class="fa cm-checker cm-lg-icon"></i>
         </button>
     </div>
     <button class="cm-btn cm-btn-block cm-btn-grey" ng-show="spinner">

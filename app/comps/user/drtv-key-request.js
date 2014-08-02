@@ -9,7 +9,19 @@ angular.module('cmUser').directive('cmKeyRequest',[
             controller: function($scope){
                 $scope.spinner = false;
 
-                $scope.startRequest = function(){
+                $scope.showSpinner = function(){
+                    $scope.spinner = true;
+                };
+
+                $scope.hideSpinner = function(){
+                    $scope.spinner = false;
+                };
+
+                $scope.cancel = function(){
+                    $rootScope.closeModal('key-request');
+                };
+
+                $scope.start = function(){
                     $scope.showSpinner();
                     $rootScope.keyRequestSender = true;
 
@@ -19,18 +31,6 @@ angular.module('cmUser').directive('cmKeyRequest',[
                     });
 
                 };
-
-                $scope.showSpinner = function(){
-                    $scope.spinner = true;
-                };
-
-                $scope.hideSpinner = function(){
-                    $scope.spinner = false;
-                };
-
-                function closeModal(){
-                    $rootScope.closeModal('key-request');
-                }
             }
         }
     }
