@@ -76,8 +76,6 @@ angular.module('cmUi').directive('input',[
                     fixedElements = angular.element($document[0].querySelectorAll('cm-header, cm-footer')),
                     view = angular.element($document[0].querySelectorAll('body,html'));
 
-                console.log(fixedElements)
-
                 function stopEvent(e){
                     if(e.target != element[0] && e.target != handler) {
                         element[0].blur();
