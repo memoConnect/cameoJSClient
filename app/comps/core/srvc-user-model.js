@@ -22,10 +22,10 @@
 angular.module('cmCore')
 .service('cmUserModel',[
     'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKeyFactory', 'cmKey', 'cmStateManagement',
-    'cmObject', 'cmUtil', 'cmNotify', 'cmLogger',
+    'cmObject', 'cmUtil', 'cmNotify', 'cmLogger', 'cmCallbackQueue',
     '$rootScope', '$q', '$location', '$timeout',
     function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmKeyFactory, cmKey, cmStateManagement,
-             cmObject, cmUtil, cmNotify, cmLogger,
+             cmObject, cmUtil, cmNotify, cmLogger, cmCallbackQueue,
              $rootScope, $q, $location, $timeout){
         var self = this,
             isAuth = false,
@@ -362,16 +362,16 @@ angular.module('cmCore')
         this.signPublicKey = function(keyToSign, keyToSignFingerprint){
             cmLogger.debug('cmUserModel.signPublicKey');
 
-            if(!(keyToSign instanceof cmKey) && (keyToSign.getFingerprint() === keyToSignFingerprint)){
+            if(!(keyToSign instanceof cmKey || (keyToSign.getFingerprint() === keyToSignFingerprint))){
                 self.trigger('signatures:cancel');
-                return false; //keys should not sign themselves
+                return false; 
             }
 
             var localKeys   = this.loadLocalKeys(),
                 promises    = [];
 
             localKeys.forEach(function(signingKey){
-                //Dont sign own key
+                //Keys should not sign themselves
                 if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() === keyToSign.getFingerprint())){
                     self.trigger('signatures:cancel');
                     return false;
@@ -423,44 +423,42 @@ angular.module('cmCore')
         }
 
         this.signOwnKeys = function(){
-            cmLogger.debug('cmUserModel.signOwnKeys');
+            return this.verifyIdentityKeys(this.data.identity, true)
+        }
 
-            if(!this.data.identity.keys)
+        /**
+         * [verifyIdentityKeys Checks for keys that are either signed by a local key or keys that are signed by a key of the former kind and have the same owner]
+         * @param  {cmIdentitymodel} identity [description]
+         * @return {cmKeyFactory}   cmKeyFactory returning all transitively trusted keys of identity. Users local keys are assumed to be trusted.
+         */
+        this.verifyIdentityKeys = function(identity, sign){
+            if(!identity.keys)
                 return null;
+
+            var local_keys       =  this.loadLocalKeys(),
+                ttrusted_keys    =  identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
+                                        return trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId))
+                                    });
+              
+            if(sign !== true)
+                return ttrusted_keys
 
             this.state.set('signing');
 
-            var local_keys       =  this.loadLocalKeys(),
-                ttrusted_keys    =  this.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
-                                        return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
-                                    });
-                
             var stack = [];
 
-            ttrusted_keys.forEach(function(ttrusted_key){
-                var fingerprint = ttrusted_key.getFingerprint();
-                stack.push(function(){
-                    self.signPublicKey(ttrusted_key, fingerprint)
+
+            cmCallbackQueue.push(
+                ttrusted_keys.map(function(ttrusted_key){
+                    return function(){ self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint()) }
                 })
-            });
+            ).then(function(){
+                self.state.unset('signing')
+            })
 
-            function stack_advance(){
-                var callback = stack.pop();
-
-                if(callback) callback();
-
-                if(stack.length != 0){
-                    $timeout(stack_advance, 200)
-                }else{
-                    self.state.unset('signing')
-                }
-                
-            }
-
-            stack_advance();
-
-            return this;
+            return ttrusted_keys
         };
+
 
         this.clearLocalKeys = function(){
             this.storageSave('rsa', []);

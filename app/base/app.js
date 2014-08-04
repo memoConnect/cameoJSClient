@@ -35,7 +35,9 @@ define([
         'cmLanguageProvider',
         'cmLoggerProvider',
         'cmApiProvider',
-        function (cmLanguageProvider, cmLoggerProvider, cmApiProvider){
+        'cmCallbackQueueProvider',
+
+        function (cmLanguageProvider, cmLoggerProvider, cmApiProvider, cmCallbackQueueProvider){
             cmLoggerProvider
                 .debugEnabled(true)
 
@@ -55,6 +57,9 @@ define([
                 .pathToLanguages( cameo_config.path_to_languages)
                 .preferredLanguage('en_US')   //for now
                 .useLocalStorage()
+
+            cmCallbackQueueProvider
+                .setQueueTime(250)
         }
     ])
     // app route config
