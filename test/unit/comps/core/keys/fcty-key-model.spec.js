@@ -132,17 +132,27 @@ describe('cmKeyModel', function() {
         var data =  {
                         key_1 : 'my value',
                         key_2 : 'my_second_value'
-                    }
+                    },
+            pub_key = new cmKey()
+
 
         key.setKey(privateKey)
-
-        var signature = key.sign(cmCrypt.hashObject(data))
-
-        var pub_key = new cmKey()
         pub_key.setKey(publicKey)
 
+
+        //sign hashed Object
+        var signature = key.sign(cmCrypt.hashObject(data))
+
         expect(signature).toBeDefined()
+        expect(pub_key.verify('abc', signature)).toBe(false)
         expect(pub_key.verify(cmCrypt.hashObject(data), signature)).toBe(true)
+
+        //sign hashed String
+        var signature = key.sign('my special string')
+
+        expect(signature).toBeDefined()
+        expect(pub_key.verify('abc', signature)).toBe(false)
+        expect(pub_key.verify('my special string')).toBe(true)
 
     })
 
