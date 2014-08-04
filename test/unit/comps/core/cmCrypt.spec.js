@@ -8,9 +8,13 @@ describe('cmCrypt', function () {
         cmCrypt = _cmCrypt_;
     }))
 
-    describe('should have the function',function(){
+    describe('should provide the function',function(){
         it('hash',function(){
             expect(typeof cmCrypt.hash).toBe('function')
+        })
+
+        it('hashObject', function(){
+            expect(typeof cmCrypt.hashObject).toBe('function')
         })
 
         it('base64Encode',function(){
@@ -36,7 +40,118 @@ describe('cmCrypt', function () {
 
     describe('calling hash with a string', function () {
         it('returns a hash', function () {
-            expect(cmCrypt.hash('Wumms')).toEqual('155de1086ab65e6443f52894bda880359e30f19bd44e494e4b74c7615cb3e1da')
+            expect(cmCrypt.hash('Wumms')).toEqual('FV3hCGq2XmRD9SiUvaiANZ4w8ZvUTklOS3THYVyz4do=')
+        })
+    })
+
+    describe('.hashObject()', function(){
+        var obj_0 = { 1: undefined },
+            obj_1 = {
+                        key_1:      "my first value",
+                        key_2:      {
+                                        "key in a box": "value in a box"
+                                    }, 
+                        _:          "value with funny key",
+                        1:          "value with numerical key",
+                        array:      [1, "2A", { 'my_key' : 'my_value' }]
+                    }
+
+        function shuffleKeys(obj){
+
+            obj = angular.extend({}, obj)
+
+            if(! (typeof obj != "object") ) return obj
+
+            var keys        = Object.keys()
+                shuffled    = {},
+                i
+
+            while(i = Math.floor(Math.random()*keys.length)){
+                var key = keys.splice(i,1)
+
+                shuffeld[key] = shuffleKeys(obj[key])
+            }
+            return shuffled
+        }
+
+        function getRandomObject(max_size, min_size){
+
+            max_size = isNaN(max_size) ? 8 : max_size
+            min_size = min_size || 0
+
+            var size    = Math.ceil(Math.random()*max_size),
+                obj     = {},
+                i       = 0
+
+            size = size < min_size ? min_size : size
+
+            while(size-i > 0){
+                obj[cmCrypt.hash(Math.random().toString())] =   Math.random() > 0.5 
+                                                                ?   cmCrypt.hash(cmCrypt.hash(Math.random().toString())) 
+                                                                :   getRandomObject(max_size-1)
+                i++
+            }
+
+            return obj
+        }
+
+        it('should throw an error if it encounter non string values somewhere within the passed argument.', function(){
+            expect(function(){ cmCrypt.hashObject(              )}).toThrow()
+            expect(function(){ cmCrypt.hashObject( undefined    )}).toThrow()
+            expect(function(){ cmCrypt.hashObject( null         )}).toThrow()
+            expect(function(){ cmCrypt.hashObject( function(){} )}).toThrow()
+            expect(function(){ cmCrypt.hashObject( false        )}).toThrow()
+            expect(function(){ cmCrypt.hashObject( true         )}).toThrow()
+            expect(function(){ cmCrypt.hashObject( cmCrypt      )}).toThrow()
+            expect(function(){ cmCrypt.hashObject( obj_0        )}).toThrow()
+            expect(function(){ cmCrypt.hashObject( new Date()   )}).toThrow()
+            expect(function(){ cmCrypt.hashObject( Math         )}).toThrow()
+
+            
+        })
+
+        it('should throw an error if it encounters a cyclic object.', function(){
+            var obj     = { key: "my string" },
+                cyclic  = { obj : obj}
+
+            obj.cyclic = cyclic
+
+            expect(function(){ cmCrypt.hashObject(cyclic) }).toThrow()
+        })
+
+        it('should calculate a proper hash for a proper object.', function(){
+
+            
+            //different strings should have different hashes:
+            expect(cmCrypt.hashObject("my string")).toBeTruthy()
+            expect(cmCrypt.hashObject("my string")).not.toBe(cmCrypt.hashObject(cmCrypt.hashObject("my other string")))
+
+            //same data, same order:
+            expect(cmCrypt.hashObject({A:1, B:2})).toBe(cmCrypt.hashObject({A:1, B:2}))
+
+            //same data, different order:
+            expect(cmCrypt.hashObject({A:1, B:2})).toBe(cmCrypt.hashObject({B:2, A:1}))
+
+            //different, data;
+            expect(cmCrypt.hashObject({A:1, B:2})).not.toBe(cmCrypt.hashObject({A:2, B:1}))
+            
+            //array:
+            expect(cmCrypt.hashObject({0:'A', 1:'B'})).toBe(cmCrypt.hashObject(['A','B']))
+
+            //test object;
+            expect(cmCrypt.hashObject(obj_1)).toBe("44QIT/asE9ZhRn8/jT5P+te3FrJrA/7i0G6zqSde2Pw=")
+            
+            //random objects:
+
+            for(var i = 0; i < 10; i++){
+                var randomObject    = getRandomObject(8),
+                    shuffledObject  = shuffleKeys(randomObject)
+
+                // copy with shuffled keys should be a different object
+                expect(randomObject === shuffledObject).toBe(false)
+                // copy with shuffled keys should have the same hash
+                expect(cmCrypt.hashObject(randomObject)).toBe(cmCrypt.hashObject(shuffledObject))
+            }
         })
     })
 
@@ -118,71 +233,7 @@ describe('cmCrypt', function () {
         it('should return false on cancel when no generating process is running', function(){
             expect(cmCrypt.cancelGeneration()).toBeFalsy()
         })
-
-        it('should have a constructor for "Key"', function(){
-            expect(typeof cmCrypt.Key).toBe('function')
-        })
-
-        //Todo: should be separate test for cmKey
-
-        describe('Key', function(){
-
-            beforeEach(function(){
-                key =  new cmCrypt.Key()
-            })
-
-            it('should provide a functions "setKey", "getPublicKey" and "getPrivateKey" to import and retrieve a public or private key', function(){                                
-
-                expect(key.setKey).toBeDefined()                
-                expect(key.getPublicKey).toBeDefined()                
-                expect(key.getPrivateKey).toBeDefined()                
-            
-                key.setKey(publicKey)
-
-                expect(key.getPrivateKey()).toBeFalsy()                
-                expect(key.getPublicKey()).toBe(publicKey)
-
-                key.setKey(privateKey)
-                
-                expect(key.getPrivateKey()).toBe(privateKey)
-                expect(key.getPublicKey()).toBe(publicKey)                 
-                
-            })      
-
-            it('should provide a functions "encrypt" and "decrypt" to encrypt strings with a public key and decrypt with the according private key', function(){                                
-
-                key.setKey(publicKey)
-
-                encrypted_secret = key.encrypt(secret)                
-
-                expect(encrypted_secret).toBeDefined()
-                expect(encrypted_secret).not.toEqual('priv')
-
-                key.setKey(privateKey)
-            
-                decrypted_secret = key.decrypt(encrypted_secret)
-
-                expect(decrypted_secret).toBeDefined()
-                expect(decrypted_secret).toEqual('priv')
-            })
-
-            it('should provide a function "getSize" to detect keysizes', function(){
-                expect(typeof  key.getSize).toBe('function')  
-            })
-
-            it('should provide a function "setName" to give a name to the key', function(){
-                expect(typeof key.setName).toBe('function')  
-                key.setName('my_test_name')
-                expect(key.name).toBe('my_test_name')
-            })
-
-            it('should provide a function "setId" to set the key\'s id', function(){
-                expect(typeof key.setId).toBe('function')  
-                key.setId('my_test_id')
-                expect(key.id).toBe('my_test_id')
-            })
-
-        })
+        
 
     })
 

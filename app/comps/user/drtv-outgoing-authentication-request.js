@@ -22,13 +22,13 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
 
                 function reset(){
                     $scope.step = 1;
-                    $scope.toKey = {};
+                    $scope.fromKey = {};
                     $scope.transactionSecret = '';
                     $scope.handshakeIdle = false;
                 }
 
-                $scope.doHandshake = function(){
-                    $scope.step = 2;
+                $scope.cancel = function(){
+                    $rootScope.closeModal(modalId);
                 };
 
                 $scope.selectToKey = function(toKey){
@@ -39,6 +39,7 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
                 };
 
                 $scope.startHandshake = function(toKey){
+                    var fromKey = privateKeys[0]; // ! attention ! works only with one local private key
 
                     if($scope.handshakeIdle){
                         return false;
@@ -47,28 +48,28 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
                     $scope.handshakeIdle = true;
 
                     if(toKey instanceof cmKey){
-                        $scope.step = 3;
+                        $scope.step = "2";
                         // set key to tmp
                         $scope.toKey = toKey;
                         // generate TS
                         $scope.transactionSecret = cmCrypt.generateTransactionSecret();
                     }
 
-                    if($scope.toKey instanceof cmKey && $scope.transactionSecret != ''){
-
+                    if(fromKey instanceof cmKey && $scope.toKey instanceof cmKey && $scope.transactionSecret != ''){
                         var dataForRequest = cmCrypt.signAuthenticationRequest({
                             identityId: cmUserModel.data.identity.id,
                             transactionSecret: $scope.transactionSecret,
-                            fromKey: $scope.fromKey,
+                            fromKey: fromKey,
                             toKey: $scope.toKey
                         });
 
                         authenticationRequest = cmAuthenticationRequestFactory.create(dataForRequest);
                         authenticationRequest.state.set('outgoing');
 
-                        authenticationRequest.save();
+                        authenticationRequest.send();
 
-                        authenticationRequest.on('request:finished', function(){
+                        authenticationRequest.one('request:finished', function(){
+
                             $scope.handshakeIdle = false;
                             $rootScope.closeModal(modalId);
 

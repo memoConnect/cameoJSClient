@@ -414,6 +414,14 @@
             "CONTENT": "Die Talks auf diesem Gerät werden für den neuen cameoKey verschlüsselt.",
             "START": "Start"
         },
+        "KEY_REQUEST":{
+            "HEADER": "DRTV.KEY_REQUEST.HEADER",
+            "CONTENT": "DRTV.KEY_REQUEST.CONTENT"
+        },
+        "KEY_RESPONSE":{
+            "HEADER": "DRTV.KEY_RESPONSE.HEADER",
+            "CONTENT": "DRTV.KEY_RESPONSE.CONTENT"
+        },
         "FOOTER": {
             "TALKS": "Talks",
             "CONTACTS": "Kontakte",
@@ -464,7 +472,11 @@
             "LATER": "Später"
         },
         "LABEL": {
-            "CLOSE": "Schließen"
+            "OK": "@:MODAL.ALERT.OK",
+            "CLOSE": "Schließen",
+            "ACCEPT": "Annehmen",
+            "CANCEL": "Abbrechen",
+            "START": "Start"
         }
 
     },

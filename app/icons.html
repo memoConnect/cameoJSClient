@@ -7,7 +7,7 @@
     <title>cameoAwesome</title>
 
     <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/cameo-awesome.css">
+    <link rel="stylesheet" href="css/cameofont.css">
     <script src="vendor/angular/angular.js"></script>
     <script src="vendor/emoji/emoji.js"></script>
     <link rel="stylesheet" href="vendor/emoji/emoji.css">
@@ -31,7 +31,7 @@
 <body ng-app="icons" ng-controller="ctrl" ng-class="{'captions-show':withFigcaption}">
 
     <header>
-        <a href="#icons">icons</a>
+        <a href="#font">icons</a>
         <a href="#filetypes">filetypes</a>
         <a href="#emojis">emojis</a>
         <label>
@@ -40,7 +40,7 @@
         </label>
     </header>
 
-    <h1><span class="anchor" id="icons"></span>cameoawesome</h1>
+    <h1><span class="anchor" id="icons"></span>cameofont</h1>
 
     <div ng-repeat="bundle in icons" class="maincat">
         <h3 ng-if="bundle.title">{{bundle.title}}</h3>
@@ -85,7 +85,7 @@
                 {title:'directions',css:'cm-nose-left cm-nose-right cm-nose-up cm-nose-down cm-left cm-right cm-down cm-up'},
                 {title:'notifications',css:'cm-info cm-attention cm-reject cm-ignore cm-bell cm-bell-ring cm-notification cm-notification-on'},
                 {title:'message states',css:'cm-envelope-closed cm-envelope-open cm-send cm-lock cm-unlock'},
-                {title:'handler',css:'cm-write cm-contacts cm-key cm-visible cm-hidden cm-group cm-person cm-arrange cm-filter cm-anchor cm-clipboard cm-search cm-change cm-grid cm-close cm-fix cm-settings cm-in cm-out cm-logout cm-register cm-add-recipient cm-new-talk cm-new-contact cm-list cm-import-key cm-export-key cm-create-key cm-cancel-key'},
+                {title:'handler',css:'cm-write cm-contacts cm-key cm-visible cm-hidden cm-group cm-person cm-arrange cm-filter cm-anchor cm-clipboard cm-search cm-change cm-grid cm-close cm-fix cm-settings cm-in cm-out cm-logout cm-register cm-add-recipient cm-new-talk cm-new-contact cm-list cm-import-key cm-export-key cm-create-key cm-cancel-key cm-handshake'},
                 {title:'answer',css:'cm-plus cm-smile-negative cm-smile-positive cm-post cm-post-attention cm-post-idle cm-attachment'},
                 {title:'media',css:'cm-video cm-file cm-sound cm-location cm-pictures cm-camera cm-mobile'}
             ];

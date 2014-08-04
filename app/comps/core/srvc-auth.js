@@ -311,6 +311,23 @@ angular.module('cmCore')
              * @ngdoc method
              * @methodOf cmAuth
              *
+             * @name sendBroadcast
+             * @description
+             * post a broadcast event to own devices
+             *
+             * @param {Object} data event data
+             * @returns {Promise} for async handling
+             */
+            sendBroadcast: function( data){
+                return cmApi.post({
+                    path: '/event/broadcast',
+                    data: data
+                });
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
              * @name requestTwoFactorKey
              * @description
              * Two factor authentication
@@ -387,6 +404,16 @@ angular.module('cmCore')
         cmApi.on('identity:update', function (event, data){
 //            console.log('cmAuth.on:identity:update')
             auth.trigger('identity:updated', data)
+        });
+
+        cmApi.on('signatures:updated', function(event, data){
+//            console.log('cmAuth.on:signatures:updated')
+            auth.trigger('signatures:updated', data)
+        });
+
+        cmApi.on('conversation:new-aePassphrase', function(event, data){
+            console.log('conversation:new-aePassphrase');
+            auth.trigger('conversation:update', data)
         });
 
         return auth;

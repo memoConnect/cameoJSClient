@@ -1,10 +1,6 @@
 <div class="modal-row">
     <span ng-bind-html="'DRTV.BULK_REKEYING.CONTENT'|cmTranslate"></span>
 </div>
-<button class="cm-btn cm-btn-block cm-btn-grey" data-qa="btn-acceptRequest" ng-click="startBulkRekeying();">
-    <span ng-show="!spinner">
-            {{'DRTV.BULK_REKEYING.START'|cmTranslate}}
-            <i class="fa cm-checker cm-lg-icon"></i>
-        </span>
+<button class="cm-btn cm-btn-block cm-btn-grey">
     <cm-spinner ng-show="spinner" cm-color="#02BED2"></cm-spinner>
 </button>

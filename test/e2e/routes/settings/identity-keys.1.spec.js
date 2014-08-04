@@ -41,7 +41,6 @@ describe('identity key settings', function () {
         })
 
         $("[data-qa='btn-generate-key']").click()
-
     })
 
     it('page for key generation should be shown', function () {

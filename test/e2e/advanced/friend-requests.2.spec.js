@@ -35,7 +35,7 @@ describe('Friendrequests', function () {
                 $("cm-contact-tag [data-qa='btn-openModal']").click()
 
                 // fill out modal
-                expect($('cm-modal.active').isPresent()).toBe(true);
+                expect($('cm-modal.active').isPresent()).toBe(true)
                 $("cm-modal.active [data-qa='input-friendrequestMessage']").sendKeys(requestMessage)
                 // send request
                 $("cm-modal.active [data-qa='btn-sendRequest']").click()

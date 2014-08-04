@@ -7,26 +7,39 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
             restrict: 'E',
             templateUrl: 'routes/settings/comps/drtv-identity-keys-overview.html',
             controller: function ($scope) {
+                $scope.privateKeys = [];
+                $scope.publicKeys = [];
+                $scope.trustedKeys = [];
+                $scope.signing = false;
+                $scope.canCreate = true;
+                $scope.isHandshakePossible = false;
+                $scope.showKeyTrustDescription = true;
 
                 function refresh(){
-                    $scope.privateKeys  = cmUserModel.loadLocalKeys() || [];
-                    $scope.publicKeys   = cmUserModel.data.identity.keys || [];
-                    $scope.trustedKeys  = $scope.publicKeys.filter(function(key){
-                                                return cmUserModel.trustsKey(key);
+
+                    $scope.privateKeys  =   cmUserModel.loadLocalKeys() || [];
+                    $scope.publicKeys   =   cmUserModel.data.identity.keys || [];
+                    $scope.trustedKeys  =   $scope.publicKeys.filter(function(key){
+                                                return cmUserModel.verifyOwnPublicKey(key);
                                             });
-                    $scope.signing      = cmUserModel.state.is('signing');
-                    $scope.canCreate    = !cmUserModel.hasPrivateKey();
+                    $scope.signing      =   cmUserModel.state.is('signing');
+
+
+                    $scope.isHandshakePossible = ($scope.privateKeys.length > 0);
+					$scope.canCreate    = !cmUserModel.hasPrivateKey();
 
 //                    $scope.debug = $scope.trustedKeys.length+' / '+$scope.publicKeys.length;
 
                     $scope.showKeyTrustDescription =
                         $scope.trustedKeys.length == 0 && $scope.publicKeys.length == 0 || // none key exists
                         $scope.trustedKeys.length < $scope.publicKeys.length; // publickeys doesnt match trustedkeys
+
                 }
 
                 $scope.remove = function(key){
                     cmUserModel.removeKey(key);
                     cmModal.closeAll();
+                    refresh();
                 };
 
                 $scope.isTrustedKey = function(key){
@@ -35,6 +48,10 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
 
                 $scope.sortByPrivKeys = function(key) {
                     return !($scope.privateKeys.find(key) instanceof cmKey);
+                };
+
+                $scope.startAuthentication = function(toKey){
+                    cmUserModel.trigger('handshake:start', toKey);
                 };
 
                 cmUserModel.state.on('change', refresh);

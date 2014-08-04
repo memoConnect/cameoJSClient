@@ -1,6 +1,6 @@
 'use strict';
 
-describe('key-factory', function() {
+describe('cmKeyFactory', function() {
 
     var cmKeyFactory,
         cmKey

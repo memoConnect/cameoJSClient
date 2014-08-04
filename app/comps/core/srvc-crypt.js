@@ -14,21 +14,68 @@ angular.module('cmCore')
         };
 
         return {
-            /**
-             * now cmKey
-             * todo: remove
-             */
-            Key: cmKey,
+         
+            random: function(size){
+                //@Todo:
+                
+                cmLogger.warn('Bad random numbers.')
+                return Math.random()
+
+                /*
+                if(!window.crypto)
+                    cmLogger.warn('window.crypto not present!')
+
+                var array = new Uint32Array(size)
+                console.log(size)
+                console.log(sjcl.codec.base64.fromBits(window.crypto.getRandomValues(array)))
+                return  sjcl.codec.base64.fromBits(window.crypto.getRandomValues(array))//sjcl.codec.base64.fromBits(sjcl.random.randomWords(size));
+                */
+            },
 
             /**
              * this method calculates a secure hash
              * @param secretString String that should be hashed
              */
+            
             hash: function (secretString) {
                 if (null == secretString)
                     return "";
 
-                return sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(secretString))
+                return sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(secretString))
+            },
+            /**
+             * [hashObject description]
+             * @param  {[type]} obj         [description]
+             * @param  {[type]} hash_method [description]
+             * @return {[type]}             [description]
+             */
+            hashObject: function(obj){
+                var visited = []
+
+                function objectToArray(obj){
+
+                    //console.log(visited.length)
+
+                    if(visited.indexOf(obj) != -1)
+                        throw "Error: cmCrypt.hashObject() unable to hash cyclic Objects."
+                    
+
+                    if(typeof obj == "string") return obj
+                    if(typeof obj == "number") return obj.toString()
+                        
+                    if(["[object Object]", "[object Array]"].indexOf(Object.prototype.toString.call(obj)) == -1)
+                        throw "Error: cmCrypt.hashObject() unable to hash Objects with values like " + Object.prototype.toString.call(obj) 
+
+                    var keys    =   Object.keys(obj).sort()
+
+                    visited.push(obj)
+
+                    var values  =   keys.map(function(key){ return objectToArray(obj[key]) })
+
+                    return [keys, values]
+                }
+
+                return this.hash(JSON.stringify(objectToArray(obj)))
             },
 
             /**
@@ -89,8 +136,10 @@ angular.module('cmCore')
                 if (null == secretString)
                     return "";
 
-                if (secretKey.length < 60)
+                if (secretKey.length < 60){
+                    cmLogger.debug("cmCrypt.encrypt(): key too short.")
                     return "";
+                }
 
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
@@ -218,7 +267,7 @@ angular.module('cmCore')
 //                window.crypto.getRandomValues(array);
 
                 while(bad_random_passphrase.length < length){
-                    bad_random_passphrase += Math.random().toString(36).replace('0.','')
+                    bad_random_passphrase += this.random().toString(36).replace('0.','')
                 }
 
                 return bad_random_passphrase.slice(-(length));
@@ -228,7 +277,7 @@ angular.module('cmCore')
                 var bad_random_passphrase ='';
 
                 while(bad_random_passphrase.length < 60){
-                    bad_random_passphrase += Math.random().toString(36).replace('0.','')
+                    bad_random_passphrase += this.random().toString(36).replace('0.','')
                 }
 
                 return bad_random_passphrase;
@@ -250,41 +299,45 @@ angular.module('cmCore')
              */
             signAuthenticationRequest: function(_settings_){
                 var defaultSettings = {
-                    identityId: 0, // identityId to signature
+                    identityId: 0,
                     transactionSecret: '',
-                    fromKey: undefined, // key with privkey from new device
-                    toKey: undefined // key with pubkey from old device
+                    fromKey: undefined,
+                    toKey: undefined
                 },
                 dataForHandshake = {
                     signature: '',
                     encryptedTransactionSecret: '',
                     fromKeyId: 0,
-                    toKeyId: 0
+                    fromKeyFingerprint: '',
+                    toKeyId: 0,
+                    toKeyFingerprint: ''
                 },
-                settings = angular.extend({},defaultSettings,_settings_),
-                hashPubKey,
-                signatory = new JSEncrypt();
+                settings = angular.extend({},defaultSettings,_settings_);
 
-                if(settings.fromKey == undefined){
+                if(!(settings.fromKey instanceof cmKey)){
                     cmLogger.error('sign fromKey isn\'t a cmKey');
                     return null;
                 }
-                if(settings.toKey == undefined){
+                if(!(settings.toKey instanceof cmKey)){
                     cmLogger.error('sign toKey isn\'t a cmKey');
                     return null;
                 }
 
-                // set new privKey
-                signatory.setPrivateKey(settings.fromKey.getPrivateKey());
                 dataForHandshake.fromKeyId = settings.fromKey.id;
-                // hash identityId and oldPubKey
-                dataForHandshake.encryptedTransactionSecret = settings.toKey.encrypt(settings.transactionSecret);
+                dataForHandshake.fromKeyFingerprint = settings.fromKey.getFingerprint();
+
                 dataForHandshake.toKeyId = settings.toKey.id;
-                // hash the transaction
-                hashPubKey = sjcl.hash.sha256.hash(settings.identityId+':'+dataForHandshake.encryptedTransactionSecret).toString();
-                // create signature with hash of above
-                dataForHandshake.signature = signatory.sign(hashPubKey);
-                // return that moep dataForHandshake
+                dataForHandshake.toKeyFingerprint = settings.toKey.getFingerprint();
+
+                dataForHandshake.encryptedTransactionSecret = settings.toKey.encrypt(settings.transactionSecret);
+
+                var signData = {
+                    identityId :settings.identityId,
+                    encryptedTransactionSecret: dataForHandshake.encryptedTransactionSecret
+                };
+
+                dataForHandshake.signature = settings.fromKey.sign(this.hashObject(signData));
+
                 return dataForHandshake;
             },
 
@@ -295,26 +348,24 @@ angular.module('cmCore')
              */
             verifyAuthenticationRequest: function(_settings_){
                 var defaultSettings = {
-                    identityId: '', // identityId to verify signature
-                    fromKey: undefined, // pubkey from new device
-                    encryptedTransactionSecret: '', // encrypted pubkey from old device with transactionSecret
-                    signature: '' // signature of newPubKey
+                    identityId: '',
+                    fromKey: undefined,
+                    encryptedTransactionSecret: '',
+                    signature: ''
                 },
-                settings = angular.extend({},defaultSettings,_settings_),
-                hashPubKey,
-                verifier = new JSEncrypt();
+                settings = angular.extend({},defaultSettings,_settings_);
 
-                if(settings.fromKey == undefined){
+                if(!(settings.fromKey instanceof cmKey)){
                     cmLogger.error('sign fromKey isn\'t a cmKey');
                     return false;
                 }
 
-                // set new pubKey
-                verifier.setPublicKey(settings.fromKey.getPublicKey());
-                // hash pubkey
-                hashPubKey = sjcl.hash.sha256.hash(settings.identityId+':'+settings.encryptedTransactionSecret).toString();
-                // check verification
-                return verifier.verify(hashPubKey, settings.signature, CryptoJS.SHA256);
+                var verifyData = {
+                    identityId: settings.identityId,
+                    encryptedTransactionSecret: settings.encryptedTransactionSecret
+                };
+
+                return settings.fromKey.verify(this.hashObject(verifyData), settings.signature);
             },
 
             isTransactionSecretValid: function(_settings_){

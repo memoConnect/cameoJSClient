@@ -240,6 +240,14 @@ module.exports = function (grunt) {
                 ],
                 dest: 'app/css/app.less'
             },
+            'css': {
+                src: [
+                    'app/css/bootstrap.min.css',
+                    'app/css/!(style|bootstrap).css',
+                    'app/vendor/**/*.css'
+                ],
+                dest: 'app/css/style.css'
+            },
             'packages': {
                 options: {
                     banner: "'use strict';\n\n",
@@ -880,6 +888,7 @@ module.exports = function (grunt) {
         'template:config-phonegap',
         'template:config-protractor',
         'concat:less',
+        'concat:css',
         'less']);
     grunt.registerTask('watcher', ['genAllTemplates', 'packages', 'watch']);
     grunt.registerTask('packages', ['concat:packages']);

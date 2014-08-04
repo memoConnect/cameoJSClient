@@ -22,14 +22,10 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
                 $scope.transactSecret = '';
                 $scope.step = 1;
 
-                $scope.acceptRequest = function(){
-                    $scope.step = 2;
-
-                    $timeout(function(){
-                        var input = $document[0].querySelector('#inp-transactSecret');
-                        input.focus();
-                    }, 50);
-                };
+                $timeout(function(){
+                    var input = $document[0].querySelector('#inp-transactSecret');
+                    input.focus();
+                }, 50);
 
                 $scope.verifyCode = function(){
                     setErrorsToDefault();
@@ -55,10 +51,10 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
                     $rootScope.closeModal('incoming-authentication-request');
                 }
 
-                $scope.authenticationRequest.on('delete:finished',closeModal);
+                $scope.authenticationRequest.on('secret:verified',closeModal);
 
                 $scope.$on('$destroy', function(){
-                    $scope.authenticationRequest.off('delete:finished',closeModal);
+                    $scope.authenticationRequest.off('secret:verified',closeModal);
                 });
             }
         }

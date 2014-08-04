@@ -413,6 +413,14 @@
             "CONTENT": "The talks on this device are being encrypted for the new cameoKey.",
             "START": "Start"
         },
+        "KEY_REQUEST":{
+            "HEADER": "DRTV.KEY_REQUEST.HEADER",
+            "CONTENT": "DRTV.KEY_REQUEST.CONTENT"
+        },
+        "KEY_RESPONSE":{
+            "HEADER": "DRTV.KEY_RESPONSE.HEADER",
+            "CONTENT": "DRTV.KEY_RESPONSE.CONTENT"
+        },
         "FOOTER": {
             "TALKS": "Talks",
             "CONTACTS": "Contacts",
@@ -463,7 +471,11 @@
             "LATER": "Later"
         },
         "LABEL": {
-            "CLOSE": "Close"
+            "OK": "@:MODAL.ALERT.OK",
+            "CLOSE": "Close",
+            "ACCEPT": "Accept",
+            "CANCEL": "Cancel",
+            "START": "Start"
         }
     },
 

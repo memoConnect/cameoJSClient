@@ -1081,10 +1081,6 @@ angular.module('cmConversations')
                 self.updateLockStatus();
             });
 
-//            cmUserModel.data.identity.on('update:finished', function(){
-//                self.decrypt();
-//            });
-
             // after events!!!
             init(data);
         }

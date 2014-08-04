@@ -73,8 +73,12 @@ angular.module('cmCore')
                 return private_key;
             };
 
-            this.signKey = function(key){
-                return crypt && crypt.sign(key.getFingerprint())
+            this.sign = function(data){
+                return crypt && crypt.sign(data)
+            };
+
+            this.verify = function(data, signature){
+                return  crypt && crypt.verify(data, signature, function(x){ return x }) // andere version funktioniert nicht bei authentication requests
             };
 
             this.encrypt = function(secret){
@@ -85,13 +89,13 @@ angular.module('cmCore')
                 return crypt && crypt.decrypt(encrypted_secret);
             };
 
-            this.trusts = function(key){
-                return  this.getPublicKey() == key.getPublicKey() //allways trusts itself
+            this.verifyKey = function(key, data){
+                return  this.getPublicKey() == key.getPublicKey() //allways verifies itself
                         ||
                         key.signatures.some(function(signature){
                             return      crypt 
                                     &&  (self.id == signature.keyId) 
-                                    &&  crypt.verify(key.getFingerprint(), signature.content, function(x){ return x })
+                                    &&  crypt.verify(data, signature.content, function(x){ return x }) //Todo: hier kann man ganz leicht fehler machen:digestMetod
                         })
             };
 
