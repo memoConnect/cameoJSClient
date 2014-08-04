@@ -155,9 +155,12 @@ describe('cmCrypt', function () {
         })
     })
 
-    describe('calling hash with empty string', function () {
-        it('returns nothing', function () {
-            expect(cmCrypt.hash()).toEqual('')
+    describe('calling hash with invalid argument', function () {
+        it('should throw an error.', function () {
+            expect(function(){ cmCrypt.hash()       }).toThrow()
+            expect(function(){ cmCrypt.hash(null)   }).toThrow()
+            expect(function(){ cmCrypt.hash("")     }).toThrow()
+            expect(function(){ cmCrypt.hash(true)   }).toThrow()
         })
     })
 

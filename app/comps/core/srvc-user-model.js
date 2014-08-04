@@ -74,6 +74,9 @@ angular.module('cmCore')
             self.one('update:finished', function(){
                 if(self.data.identity.keys){
                     self.signOwnKeys();
+                    return true
+                }else{
+                    return false
                 }
             });
         }
