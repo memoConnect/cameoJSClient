@@ -38,8 +38,8 @@ angular.module('cmCore')
              */
             
             hash: function (secretString) {
-                if (null == secretString)
-                    return "";
+                if (typeof secretString != 'string' || secretString.length == 0)
+                    throw "cmCrypt.hash(): invalid argument."
 
                 return sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(secretString))
             },
