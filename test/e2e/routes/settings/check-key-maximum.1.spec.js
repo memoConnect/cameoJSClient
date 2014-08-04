@@ -1,5 +1,5 @@
-var config = require("../config-e2e-tests.js")
-var util = require("../../lib/e2e/cmTestUtil.js")
+var config = require("../../config-e2e-tests.js")
+var util = require("../../../lib/e2e/cmTestUtil.js")
 var ptor = util.getPtorInstance()
 
 describe('check key maximum',function(){
@@ -32,7 +32,7 @@ describe('check key maximum',function(){
         't9IfzCAYgru01omROapCFBLU1TLilfsWWqX2j8EnQBD/w2Yrc3evHPeZsKjTqPHK',
         'SS947dx+ZdNKY4lkIDTu5QVqz1NVKCVWWid0jAfjhnA9+QK0z9f6unw=',
         '-----END RSA PRIVATE KEY-----'
-    ].join('\n')
+    ].join('\\n')
 
     afterEach(function() { util.stopOnError() });
 
@@ -44,24 +44,49 @@ describe('check key maximum',function(){
     it('open keyoverview and a message should be present',function(){
         util.get('settings/identity/keys')
         expect($("[data-qa='alert-key-needed']").isPresent()).toBe(true)
+        expect($("cm-footer").isPresent()).toBe(true)
     })
 
     it('import a key', function(){
-        self.click("btn-import-key")
+        util.click("btn-import-key")
+        util.expectCurrentUrl("settings/identity/keys/import")
         util.setValQuick("display-private-key", privKey)
         util.setVal("display-private-key", " ")
         util.click("btn-import-key")
         util.waitForElement("[data-qa='btn-save-key']")
         util.click("btn-save-key")
+        ptor.sleep(1000)
     })
 
-    it('check if message disapear', function(){
+    it('check if message and footer for create/import disapear', function(){
+        util.expectCurrentUrl("settings/identity/keys")
         expect($("[data-qa='alert-key-needed']").isPresent()).toBe(false)
-        expect($$("ul li.item").length).toEqual(1)
+        expect($("cm-footer").isPresent()).toBe(false)
+        $$("[data-qa='key-list-item']").then(function(elements){
+            expect(elements.length).toEqual(1)
+        })
     })
 
-    it('clear key and check if message appear', function(){
+    it('check closed routes', function(){
+        util.get('settings/identity/keys/import')
+        util.expectCurrentUrl("settings/identity/keys")
+        util.get('settings/identity/keys/create')
+        util.expectCurrentUrl("settings/identity/keys")
+    })
+
+    it('remove key and check if message and footer for create/import appear', function(){
+        util.click("btn-remove-modal")
+        util.click("btn-remove-key")
         expect($("[data-qa='alert-key-needed']").isPresent()).toBe(true)
-        expect($$("ul li.item").length).toEqual(0)
+        $$("[data-qa='key-list-item']").then(function(elements){
+            expect(elements.length).toEqual(0)
+        })
+    })
+
+    it('check open routes', function(){
+        util.get('settings/identity/keys/import')
+        util.expectCurrentUrl("settings/identity/keys/import")
+        util.get('settings/identity/keys/create')
+        util.expectCurrentUrl("settings/identity/keys/create")
     })
 })
