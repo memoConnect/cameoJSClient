@@ -123,7 +123,7 @@
             "REQUEST_CAPTCHA": "PassCaptcha anfordern",
             "SEND_CAPTCHA": "PassCaptcha senden",
             "KEY_GENERATION": "Um sicher zu kommunizieren, können Sie hier einen cameoKey für diese Identität erzeugen.",
-            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "Es Passwort wird ein Password verwendet weil auf diesem Gerät kein cameoKey vorliegt."
+            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "Es Passwort wird ein Password verwendet, weil auf diesem Gerät kein cameoKey vorliegt."
         },
         "TAG": {
             "RECIPIENTS": "Empfänger",
@@ -410,7 +410,7 @@
             "FAX": "Fax"
         },
         "BULK_REKEYING": {
-            "HEADER": "Bulk Rekeying",
+            "HEADER": "Neuverschlüsselung",
             "CONTENT": "Die Talks auf diesem Gerät werden für den neuen cameoKey verschlüsselt.",
             "START": "Start"
         },
