@@ -362,7 +362,7 @@ angular.module('cmCore')
         this.signPublicKey = function(keyToSign, keyToSignFingerprint){
             cmLogger.debug('cmUserModel.signPublicKey');
 
-            if(!(keyToSign instanceof cmKey) && (keyToSign.getFingerprint() !== keyToSignFingerprint)){
+            if(!(keyToSign instanceof cmKey) || (keyToSign.getFingerprint() !== keyToSignFingerprint)){
                 self.trigger('signatures:cancel');
                 return false; //keys should not sign themselves
             }
