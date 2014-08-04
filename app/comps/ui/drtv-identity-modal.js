@@ -10,6 +10,10 @@ angular.module('cmUi').directive('cmIdentityModal',[
             templateUrl: 'comps/ui/drtv-identity-modal.html',
             scope: true,
             controller: function($scope){
+                $scope.createNewIdentity = function(){
+                    $location.path('/settings/identity/new');
+                };
+
                 $scope.goToIdentitySettings = function(){
                     if($location.$$url == '/settings/identity'){
                         cmModal.close('modal-identity-' + $scope.randModalId);
