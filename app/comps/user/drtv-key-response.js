@@ -24,15 +24,7 @@ angular.module('cmUser').directive('cmKeyResponse',[
                 $scope.accept = function(){
                     $scope.showSpinner();
 
-                    var localKeys = cmUserModel.loadLocalKeys();
-
-                    cmAuth.sendBroadcast({
-                        name: "authenticationRequest:key-response",
-                        data: {
-                            toKeyId: localKeys[0].id,
-                            toKeyFingerprint: localKeys[0].getFingerprint()
-                        }
-                    });
+                    $scope.authenticationRequest.sendKeyResponse();
                 };
             }
         }

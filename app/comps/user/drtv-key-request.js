@@ -25,11 +25,7 @@ angular.module('cmUser').directive('cmKeyRequest',[
                     $scope.showSpinner();
                     $rootScope.keyRequestSender = true;
 
-                    cmAuth.sendBroadcast({
-                        name: "authenticationRequest:key-request",
-                        data: {}
-                    });
-
+                    $scope.authenticationRequest.sendKeyRequest();
                 };
             }
         }

@@ -29,7 +29,7 @@ angular.module('cmCore')
             function init(requestData){
                 cmLogger.debug('cmAuthenticationRequestModel.init');
 
-                if(!("id" in requestData)){
+                if(typeof requestData !== 'object' || !("id" in requestData)){
                     self.id = cmCrypt.hash(cmCrypt.random() + new Date());
                 }
                 self.importData(requestData);
@@ -55,7 +55,27 @@ angular.module('cmCore')
                 return this;
             };
 
+            this.importKeyResponse = function(response){
+                cmLogger.debug('cmAuthenticationRequestModel.importKeyResponse');
+
+                var toKey = cmUserModel.data.identity.keys.find(response.toKeyId);
+
+                if(toKey instanceof cmKey && toKey.id == response.toKeyId && (toKey.getFingerprint() === response.toKeyFingerprint)){
+                    this.toKeyId = response.toKeyId;
+                    this.toKeyFingerprint = response.toKeyFingerprint;
+
+                    this.tokey = toKey;
+
+                    this.trigger('key-response:accepted',this.id);
+                } else {
+                    cmLogger.debug('cmAuthenticationRequestModel.importKeyResponse - fail');
+                    this.trigger('key-response:failed');
+                }
+            };
+
             this.exportKeyIdsForBulk = function(){
+                cmLogger.debug('cmAuthenticationRequestModel.exportKeyIdsForBulk');
+
                 var data = {};
 
                 if(this.state.is('incoming')){
@@ -64,7 +84,7 @@ angular.module('cmCore')
                     data = {key1:this.fromKeyId, key2:this.toKeyId};
                 }
 
-                return data
+                return data;
             };
 
             this.verifyForm = function(){
@@ -217,6 +237,36 @@ angular.module('cmCore')
                     );
                 } else {
                     cmLogger.debug('Error - cmAuthenticationRequestModel.send - Data have not the right form!');
+                }
+            };
+
+            this.sendKeyResponse = function(){
+                cmLogger.debug('cmAuthenticationRequestModel.sendKeyResponse');
+
+                if(this.state.is('incoming') && !this.state.is('finished')){
+                    var localKeys = cmUserModel.loadLocalKeys();
+
+                    cmAuth.sendBroadcast({
+                        name: "authenticationRequest:key-response",
+                        data: {
+                            id: this.id,
+                            toKeyId: localKeys[0].id,
+                            toKeyFingerprint: localKeys[0].getFingerprint()
+                        }
+                    });
+                }
+            };
+
+            this.sendKeyRequest = function(){
+                cmLogger.debug('cmAuthenticationRequestModel.sendKeyRequest');
+
+                if(this.state.is('outgoing') && !this.state.is('finished')){
+                    cmAuth.sendBroadcast({
+                        name: "authenticationRequest:key-request",
+                        data: {
+                            id: this.id
+                        }
+                    });
                 }
             };
 
