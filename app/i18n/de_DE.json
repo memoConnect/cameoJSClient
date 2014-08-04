@@ -231,6 +231,7 @@
     "CONTACT": {
         "WIDGET": "Talks",
         "PLACEHOLDER": {
+            "CAMEOID": "CameoID",
             "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
             "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER",
             "EMAIL": "@:DRTV.VALIDATE_EMAIL.PLACEHOLDER",
@@ -294,10 +295,35 @@
                 "SEND_ON_RETURN": "Senden bei Enter-Eingabe"
             },
             "IDENTITY": {
+                "CREATE": {
+                    "HEADER": "Identität anlegen",
+                    "PLACEHOLDER": {
+                        "CAMEOID": "@:CONTACT.PLACEHOLDER.CAMEOID",
+                        "DISPLAYNAME": "@:CONTACT.PLACEHOLDER.DISPLAYNAME",
+                        "EMAIL": "@:CONTACT.PLACEHOLDER.EMAIL",
+                        "PHONENUMBER": "@:CONTACT.PLACEHOLDER.PHONENUMBER"
+                    },
+                    "INFO": {
+                        "EMPTY": {
+                            "DISPLAYNAME": "@:CONTACT.INFO.EMPTY.DISPLAYNAME"
+                        },
+                        "INVALID": {
+                            "EMAIL": "@:CONTACT.INFO.INVALID.EMAIL",
+                            "PHONENUMBER": "@:CONTACT.INFO.INVALID.PHONENUMBER"
+                        }
+                    },
+                    "FOOTER": "@:CONTACT.FOOTER.SAVE"
+                },
                 "KEYS": {
                     "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
-                    "CREATE": "cameoKey erstellen",
-                    "IMPORT": "cameoKey importieren",
+                    "CREATE": {
+                        "HEADER": "cameoKey erstellen",
+                        "BUTTON": "erstellen"
+                    },
+                    "IMPORT": {
+                        "HEADER": "cameoKey importieren",
+                        "BUTTON": "importieren"
+                    },
                     "DETAIL": "cameoKey",
                     "KEY_SIZE": "Schlüsselstärke",
                     "IS_LOCAL": "lokal",
