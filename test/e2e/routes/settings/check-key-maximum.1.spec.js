@@ -55,7 +55,7 @@ describe('check key maximum',function(){
         util.click("btn-import-key")
         util.waitForElement("[data-qa='btn-save-key']")
         util.click("btn-save-key")
-        ptor.sleep(1000)
+        ptor.sleep(1000) // because of eventsubscription identity:update
     })
 
     it('check if message and footer for create/import disapear', function(){
