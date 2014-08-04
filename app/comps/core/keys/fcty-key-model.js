@@ -53,17 +53,6 @@ angular.module('cmCore')
                 return sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(this.getPublicKey()))
             };
 
-            //in getFingerprint verwurstet
-            this.getPublicKeyForSigning = function(identityId){
-                if(typeof identityId == 'string' && identityId.length > 0){
-                    return sjcl.hash.sha256.hash(identityId+':'+this.getPublicKey()).toString();
-                } else {
-                    cmLogger.debug('cmKey.getPublicKeyForSigning - Fail! - Empty identityId!');
-                }
-
-                return false;
-            };
-
             this.getPrivateKey = function(){
                 var private_key;
                 try{
@@ -95,7 +84,7 @@ angular.module('cmCore')
                         key.signatures.some(function(signature){
                             return      crypt 
                                     &&  (self.id == signature.keyId) 
-                                    &&  crypt.verify(data, signature.content, function(x){ return x }) //Todo: hier kann man ganz leicht fehler machen:digestMetod
+                                    &&  self.verify(data, signature.content)
                         })
             };
 
