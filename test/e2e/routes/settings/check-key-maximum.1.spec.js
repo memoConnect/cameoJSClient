@@ -55,7 +55,6 @@ describe('check key maximum',function(){
         util.click("btn-import-key")
         util.waitForElement("[data-qa='btn-save-key']")
         util.click("btn-save-key")
-        ptor.sleep(1000) // because of eventsubscription identity:update
     })
 
     it('check if message and footer for create/import disapear', function(){
@@ -77,7 +76,10 @@ describe('check key maximum',function(){
     it('remove key and check if message and footer for create/import appear', function(){
         util.click("btn-remove-modal")
         util.click("btn-remove-key")
+
+        util.waitForElement("[data-qa='alert-key-needed']")
         expect($("[data-qa='alert-key-needed']").isPresent()).toBe(true)
+
         $$("[data-qa='key-list-item']").then(function(elements){
             expect(elements.length).toEqual(0)
         })

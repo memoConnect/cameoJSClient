@@ -65,7 +65,12 @@ angular.module('cmCore')
                 data.publicKeys             = data.publicKeys || [];
 
                 data.publicKeys.forEach(function (publicKey_data) {
-                    self.keys.create(publicKey_data, true);
+                    // first deleted event from BE
+                    if('deleted' in publicKey_data && publicKey_data.deleted){
+                        self.keys.deregister(publicKey_data);
+                    } else {
+                        self.keys.create(publicKey_data, true);
+                    }
                 });
 
                 this.state.unset('new');
