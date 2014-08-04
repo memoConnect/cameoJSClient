@@ -318,7 +318,7 @@ angular.module('cmCore')
             });
 
             return this;
-        }
+        };
 
         this.removeKey = function(keyToRemove){
             var self            = this,
@@ -354,7 +354,7 @@ angular.module('cmCore')
                         pubKey: keyToTrust.getPublicKey(),
                         identifier: ownerId
                     })
-        }
+        };
 
         this.signPublicKey = function(keyToSign, keyToSignFingerprint){
             cmLogger.debug('cmUserModel.signPublicKey');
@@ -410,14 +410,14 @@ angular.module('cmCore')
         this.verifyOwnPublicKey = function(key){
             cmLogger.debug('cmUserModel.verifyOwnPublicKey');
 
-            var local_keys = this.loadLocalKeys()
+            var local_keys = this.loadLocalKeys();
 
             return local_keys.some(function(local_key){
                 return  (local_key.getPrivateKey() && local_key.getPublicKey() == key.getPublicKey()) //local keys are always considered own keys.
                         ||
                         local_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
             })
-        }
+        };
 
         this.signOwnKeys = function(){
             cmLogger.debug('cmUserModel.signOwnKeys');
