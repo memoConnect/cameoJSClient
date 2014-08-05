@@ -5,10 +5,20 @@ cm-menu {
     text-align: center;
     cm-notify-signal {
       display:block;
+      position: relative;
+      z-index: 27;
       i{
         font-size:@cm-mega-font + 0.5;
         vertical-align:middle;
       }
+    }
+    .cm-beta{
+      position: absolute;
+      color:@cm-ci-color;
+      top: -0.1rem;
+      right: -0.4rem;
+      font-size:@cm-mega-font*2;
+      z-index: 20;
     }
   }
   .cm-menu-layer {
