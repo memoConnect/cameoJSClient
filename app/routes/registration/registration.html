@@ -49,9 +49,9 @@
 
             <div cm-password data-parent-item="formData.password"></div>
 
-            <div style="width:100%;height:1px;background-color:#fff"></div>
+            <div class="horizontal-line"></div>
 
-            <h4>{{'REGISTER.TITLE.HEAD_IDENTITY' | cmTranslate}}</h4>
+            <h4>{{'REGISTER.TITLE.HEAD_IDENTITY'|cmTranslate}}</h4>
 
             <div class="cm-input-ctn" data-qa="form-input">
                 <input
@@ -99,7 +99,8 @@
             </div>
 
             <div class="cm-input-ctn cm-clear-bg" data-qa="form-input">
-                {{'REGISTER.LABEL.TERMS_ACCEPT'|cmTranslate}} <a href="#/terms" data-qa="link-terms" class="link-terms">{{'REGISTER.LABEL.TERMS'|cmTranslate}}</a>
+                {{'REGISTER.LABEL.TERMS_ACCEPT'|cmTranslate}}
+                <a href="#/terms" data-qa="link-terms" class="classic-link">{{'REGISTER.LABEL.TERMS'|cmTranslate}}</a>
                 <input
                     id="agbCheckboxInput"
                     data-qa="checkbox-agb"

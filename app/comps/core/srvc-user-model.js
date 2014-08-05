@@ -321,7 +321,7 @@ angular.module('cmCore')
             });
 
             return this;
-        }
+        };
 
         this.removeKey = function(keyToRemove){
             var self            = this,
@@ -357,12 +357,12 @@ angular.module('cmCore')
                         pubKey: keyToTrust.getPublicKey(),
                         identifier: ownerId
                     })
-        }
+        };
 
         this.signPublicKey = function(keyToSign, keyToSignFingerprint){
             cmLogger.debug('cmUserModel.signPublicKey');
 
-            if(!(keyToSign instanceof cmKey || (keyToSign.getFingerprint() === keyToSignFingerprint))){
+            if(!(keyToSign instanceof cmKey) || (keyToSign.getFingerprint() !== keyToSignFingerprint)){
                 self.trigger('signatures:cancel');
                 return false; 
             }
@@ -413,14 +413,14 @@ angular.module('cmCore')
         this.verifyOwnPublicKey = function(key){
             cmLogger.debug('cmUserModel.verifyOwnPublicKey');
 
-            var local_keys = this.loadLocalKeys()
+            var local_keys = this.loadLocalKeys();
 
             return local_keys.some(function(local_key){
                 return  (local_key.getPrivateKey() && local_key.getPublicKey() == key.getPublicKey()) //local keys are always considered own keys.
                         ||
                         local_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
             })
-        }
+        };
 
         this.signOwnKeys = function(){
             return this.verifyIdentityKeys(this.data.identity, true)
@@ -461,7 +461,7 @@ angular.module('cmCore')
 
         this.verifyTrust = function(identity){
             return      identity.keys.length > 0
-                    //&&  identity.keys.length == this.verifyIdentityKeys(identity, true).length //true: sign keys if needed 
+                    &&  identity.keys.length == this.verifyIdentityKeys(identity, true).length //true: sign keys if needed 
         }
 
 
@@ -546,15 +546,17 @@ angular.module('cmCore')
             }
         };
 
-        this.verifyPublicKeyForAuthenticationRequest = function(toKey){
-            var publicKeys = self.data.identity.keys;
+        this.verifyPublicKeyForAuthenticationRequest = function(toKey, identity){
+            identity = identity || self.data.identity
+
+            var publicKeys = identity.keys;
             var localKeys = this.loadLocalKeys();
 
-            if(publicKeys.find(toKey) != null && localKeys.length > 0 && localKeys.find(toKey) == null){
-                return true;
-            }
 
-            return false;
+            return      toKey instanceof cmKey
+                    &&  publicKeys.find(toKey) != null 
+                    &&  localKeys.length > 0 
+                    &&  localKeys.find(toKey) == null
         };
 
         /**

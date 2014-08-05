@@ -2,9 +2,9 @@
 
 angular.module('cmCore')
 .factory('cmAuthenticationRequestModel', [
-    'cmObject', 'cmStateManagement', 'cmCrypt', 'cmUtil', 'cmAuth',
+    'cmObject', 'cmStateManagement', 'cmCrypt', 'cmKey', 'cmUtil', 'cmAuth',
     'cmUserModel', 'cmLogger',
-    function(cmObject, cmStateManagement, cmCrypt, cmUtil, cmAuth,
+    function(cmObject, cmStateManagement, cmCrypt, cmKey, cmUtil, cmAuth,
              cmUserModel, cmLogger){
         function authenticationRequestModel(requestData){
             var self = this;
@@ -26,55 +26,73 @@ angular.module('cmCore')
             this.toKeyFingerprint = undefined;
             this.toKey = {};
 
-            function init(requestData){
-                cmLogger.debug('cmAuthenticationRequestModel.init');
+            function init(data){
+//                cmLogger.debug('cmAuthenticationRequestModel.init');
 
-                if(typeof requestData !== 'object' || !("id" in requestData)){
+                if(typeof data !== 'object' || !("id" in data)){
                     self.id = cmCrypt.hash(cmCrypt.random() + new Date());
                 }
-                self.importData(requestData);
+
+                if(typeof data == 'object'){
+                    self.importData(data);
+                }
             }
 
-            this.importData = function(requestData){
-                cmLogger.debug('cmAuthenticationRequestModel.importData');
+            this.importData = function(data){
+//                cmLogger.debug('cmAuthenticationRequestModel.importData');
 
-                if(typeof requestData !== 'object'){
+                if(typeof data !== 'object'){
                     cmLogger.debug('authenticationRequestModel.importData:failed - no data!');
                     return this;
                 }
 
-                this.id = requestData.id || this.id;
-                this.created = requestData.created || this.created;
-                this.encryptedTransactionSecret = requestData.encryptedTransactionSecret || this.encryptedTransactionSecret;
-                this.signature = requestData.signature || this.signature;
-                this.fromKeyId = requestData.fromKeyId || this.fromKeyId;
-                this.fromKeyFingerprint = requestData.fromKeyFingerprint || this.fromKeyFingerprint;
-                this.toKeyId = requestData.toKeyId || this.toKeyId;
-                this.toKeyFingerprint = requestData.toKeyFingerprint || this.toKeyFingerprint;
+                this.id = data.id || this.id;
+                this.created = data.created || this.created;
+                this.encryptedTransactionSecret = data.encryptedTransactionSecret || this.encryptedTransactionSecret;
+                this.signature = data.signature || this.signature;
+                this.fromKeyId = data.fromKeyId || this.fromKeyId;
+                this.fromKeyFingerprint = data.fromKeyFingerprint || this.fromKeyFingerprint;
+                this.toKeyId = data.toKeyId || this.toKeyId;
+                this.toKeyFingerprint = data.toKeyFingerprint || this.toKeyFingerprint;
 
                 return this;
             };
 
             this.importKeyResponse = function(response){
-                cmLogger.debug('cmAuthenticationRequestModel.importKeyResponse');
+//                cmLogger.debug('cmAuthenticationRequestModel.importKeyResponse');
 
                 var toKey = cmUserModel.data.identity.keys.find(response.toKeyId);
 
                 if(toKey instanceof cmKey && toKey.id == response.toKeyId && (toKey.getFingerprint() === response.toKeyFingerprint)){
                     this.toKeyId = response.toKeyId;
                     this.toKeyFingerprint = response.toKeyFingerprint;
+                    this.toKey = toKey;
 
-                    this.tokey = toKey;
-
-                    this.trigger('key-response:accepted',this.id);
+                    this.trigger('key-response:accepted',{id:this.id});
                 } else {
                     cmLogger.debug('cmAuthenticationRequestModel.importKeyResponse - fail');
                     this.trigger('key-response:failed');
                 }
             };
 
+            this.setToKey = function(toKey){
+//                cmLogger.debug('cmAuthenticationRequestModel.importKeyResponse');
+
+                if(this.state.is('outgoing') && !this.state.is('finished') && (toKey instanceof cmKey)){
+                    this.toKeyId = toKey.id;
+                    this.toKeyFingerprint = toKey.getFingerprint();
+                    this.toKey = toKey;
+                }
+                return this
+            };
+
+            this.setIdentity = function(identity){
+                this.identity = identity
+                return this
+            }
+
             this.exportKeyIdsForBulk = function(){
-                cmLogger.debug('cmAuthenticationRequestModel.exportKeyIdsForBulk');
+//                cmLogger.debug('cmAuthenticationRequestModel.exportKeyIdsForBulk');
 
                 var data = {};
 
@@ -124,7 +142,7 @@ angular.module('cmCore')
             };
 
             this.verifyIncomingRequest = function(){
-                cmLogger.debug('cmAuthenticationRequestModel.verifyIncomingRequest');
+//                cmLogger.debug('cmAuthenticationRequestModel.verifyIncomingRequest');
 
                 if(typeof this.id != 'string' || this.id.length < 1){
                     cmLogger.debug('Error - cmAuthenticationRequestModel.verifyIncomingRequest - verify id fail');
@@ -192,7 +210,7 @@ angular.module('cmCore')
             };
 
             this.verifyTransactionSecret = function(transactionSecret){
-                cmLogger.debug('cmAuthenticationRequestModel.verifyTransactionSecret');
+//                cmLogger.debug('cmAuthenticationRequestModel.verifyTransactionSecret');
 
                 if(cmUtil.validateString(transactionSecret)){
 
@@ -241,7 +259,7 @@ angular.module('cmCore')
             };
 
             this.sendKeyResponse = function(){
-                cmLogger.debug('cmAuthenticationRequestModel.sendKeyResponse');
+//                cmLogger.debug('cmAuthenticationRequestModel.sendKeyResponse');
 
                 if(this.state.is('incoming') && !this.state.is('finished')){
                     var localKeys = cmUserModel.loadLocalKeys();
@@ -258,7 +276,7 @@ angular.module('cmCore')
             };
 
             this.sendKeyRequest = function(){
-                cmLogger.debug('cmAuthenticationRequestModel.sendKeyRequest');
+//                cmLogger.debug('cmAuthenticationRequestModel.sendKeyRequest');
 
                 if(this.state.is('outgoing') && !this.state.is('finished')){
                     cmAuth.sendBroadcast({
@@ -271,7 +289,7 @@ angular.module('cmCore')
             };
 
             this.sendVerified = function(){
-                cmLogger.debug('cmAuthenticationRequestModel.sendVerified');
+//                cmLogger.debug('cmAuthenticationRequestModel.sendVerified');
 
                 if(this.state.is('incoming') && !this.state.is('finished')){
                     cmAuth.sendBroadcast({
@@ -296,7 +314,7 @@ angular.module('cmCore')
             };
 
             this.finish = function(){
-                cmLogger.debug('cmAuthenticationRequestModel.finish');
+//                cmLogger.debug('cmAuthenticationRequestModel.finish');
 
                 if(this.state.is('outgoing') && !this.state.is('finished')){
                     cmUserModel.data.identity.load();

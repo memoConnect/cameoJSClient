@@ -39,7 +39,7 @@ angular.module('cmCore')
             }
 
             self.getWeakestKeySize = function(){
-                return this.reduce(function(size, key){                    
+                return this.reduce(function(size, key){
                     return (size == undefined) ? (key.getSize()||0) : Math.min(size||0, key.getSize()||0)
                 }, undefined) || 0
             }
