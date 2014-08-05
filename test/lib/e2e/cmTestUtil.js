@@ -315,7 +315,6 @@ this.clearLocalStorage = function () {
 }
 
 this.generateKey = function (keyNum, keyName) {
-
     var privKeys = []
 
     privKeys[0] = [
@@ -420,6 +419,11 @@ this.generateKey = function (keyNum, keyName) {
         self.setVal("input-key-name", keyName)
     }
     self.click("btn-save-key")
+}
+
+this.closeKeyRequestModal = function(){
+    self.waitForModalOpen("key-request")
+    self.click("btn-cancel")
 }
 
 this.disableEncryption = function () {
