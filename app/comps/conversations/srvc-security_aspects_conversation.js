@@ -2,8 +2,11 @@
 
 angular.module('cmSecurityAspects')
 .factory('cmSecurityAspectsConversation',[
+
     'cmSecurityAspects',
-    function(cmSecurityAspects){
+    'cmUserModel',
+
+    function(cmSecurityAspects, cmUserModel){
 //        var securityAspectsConversation = new cmSecurityAspects()
 
         function securityAspectsConversation(conversation){
@@ -85,7 +88,18 @@ angular.module('cmSecurityAspects')
                     check: function(conversation){
                         return ['symmetric', 'mixed'].indexOf(conversation.getKeyTransmission()) == -1
                     }
-                }) 
+                })
+                .addAspect({
+                    id: 'TRUSTING_ALL_RECIPIENTS',
+                    dependencies: ['ENCRYPTED', 'NO_SYMMETRIC_KEY_TRANSMISSION'],
+                    value: 1,
+                    check: function(conversation){
+                        this.bad_recipients = conversation.recipients.filter(function(recipient){
+                            return !cmUserModel.verifyTrust(recipient)
+                        })
+                        return this.bad_recipients.length == 0
+                    }
+                })
 
             return self;
         }

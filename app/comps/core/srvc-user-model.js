@@ -459,6 +459,11 @@ angular.module('cmCore')
             return ttrusted_keys
         };
 
+        this.verifyTrust = function(identity){
+            return      identity.keys.length > 0
+                    //&&  identity.keys.length == this.verifyIdentityKeys(identity, true).length //true: sign keys if needed 
+        }
+
 
         this.clearLocalKeys = function(){
             this.storageSave('rsa', []);
