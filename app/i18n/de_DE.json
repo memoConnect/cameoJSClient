@@ -123,7 +123,7 @@
             "REQUEST_CAPTCHA": "PassCaptcha anfordern",
             "SEND_CAPTCHA": "PassCaptcha senden",
             "KEY_GENERATION": "Um sicher zu kommunizieren, können Sie hier einen cameoKey für diese Identität erzeugen.",
-            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "Es Passwort wird ein Password verwendet, weil auf diesem Gerät kein cameoKey vorliegt."
+            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "Es wird ein Passwort verwendet, weil auf diesem Gerät kein cameoKey vorliegt."
         },
         "TAG": {
             "RECIPIENTS": "Empfänger",
@@ -231,6 +231,7 @@
     "CONTACT": {
         "WIDGET": "Talks",
         "PLACEHOLDER": {
+            "CAMEOID": "CameoID",
             "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
             "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER",
             "EMAIL": "@:DRTV.VALIDATE_EMAIL.PLACEHOLDER",
@@ -277,7 +278,7 @@
             }
         }
     },
-	
+
 	"SETTINGS": {
 		"WELCOME": "Einstellungen",
         "LABEL": "Einstellungen",
@@ -294,18 +295,43 @@
                 "SEND_ON_RETURN": "Senden bei Enter-Eingabe"
             },
             "IDENTITY": {
+                "CREATE": {
+                    "HEADER": "Identität anlegen",
+                    "PLACEHOLDER": {
+                        "CAMEOID": "@:CONTACT.PLACEHOLDER.CAMEOID",
+                        "DISPLAYNAME": "@:CONTACT.PLACEHOLDER.DISPLAYNAME",
+                        "EMAIL": "@:CONTACT.PLACEHOLDER.EMAIL",
+                        "PHONENUMBER": "@:CONTACT.PLACEHOLDER.PHONENUMBER"
+                    },
+                    "INFO": {
+                        "EMPTY": {
+                            "DISPLAYNAME": "@:CONTACT.INFO.EMPTY.DISPLAYNAME"
+                        },
+                        "INVALID": {
+                            "EMAIL": "@:CONTACT.INFO.INVALID.EMAIL",
+                            "PHONENUMBER": "@:CONTACT.INFO.INVALID.PHONENUMBER"
+                        }
+                    },
+                    "FOOTER": "@:CONTACT.FOOTER.SAVE"
+                },
                 "KEYS": {
                     "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
-                    "CREATE": "cameoKey erstellen",
-                    "IMPORT": "cameoKey importieren",
+                    "CREATE": {
+                        "HEADER": "cameoKey erstellen",
+                        "BUTTON": "erstellen"
+                    },
+                    "IMPORT": {
+                        "HEADER": "cameoKey importieren",
+                        "BUTTON": "importieren"
+                    },
                     "DETAIL": "cameoKey",
                     "KEY_SIZE": "Schlüsselstärke",
                     "IS_LOCAL": "lokal",
                     "IS_LOCAL_ON_THIS_DEVICE": "lokal auf diesem Gerät",
                     "KEY_TRUST_DESCRIPTION": "@:SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_DESCRIPTION",
                     "TRUSTING": "Authentifikation",
-                    "IS_TRUSTED": "ist authentisiert",
-                    "IS_UNTRUSTED": "ist nicht authentisiert",
+                    "IS_TRUSTED": "ist authentifiziert",
+                    "IS_UNTRUSTED": "ist nicht authentifiziert",
                     "EXPORT_KEY": "cameoKey exportieren",
                     "EXPORT_KEY_DESCRIPTION": "Um Ihren cameoKey zu exportieren, kopieren Sie hier bitte den privaten Schlüssel als Text und verwahren ihn sicher (z.B. in einer Passwort-geschützten Textdatei oder in einem Passwort-Safe). Im Fall dass Sie Ihren cameoKey \"verlieren\" (z.B. bei einer Neuinstalation), können Sie ihn darüber später wieder importieren.",
                     "REMOVE_KEY": "cameoKey löschen",
@@ -317,7 +343,7 @@
                     "CANCEL": "Generierung abbrechen",
                     "STORE_KEYPAIR": "cameoKey speichern",
                     "GENERATION_TIME": "Der cameoKey wurde erfolgreich generiert, die Generierung hat {{time}} gedauert.",
-                    "STOREKEY_DESCRIPTION": "Der cameoKey besteht aus einem privaten und einem öffentlichen Schlüssel. Der private Schlüssel wird nur auf Ihrem Gerät gespeichert. Der öffentlichen Schlüssel wird Sie auf dem cameoServer gespeichert.<br>Um bei Verlust Ihres cameoKeys Ihre verschlüsselten Nachrichten wieder lesen zu können, sollten Sie Ihren cameoKey exportieren und sicher verwahren.",
+                    "STOREKEY_DESCRIPTION": "Der cameoKey besteht aus einem privaten und einem öffentlichen Schlüssel. Der private Schlüssel wird nur auf Ihrem Gerät gespeichert. Der öffentlichen Schlüssel wird auf dem cameoServer gespeichert.\nUm bei Verlust Ihres cameoKeys Ihre verschlüsselten Nachrichten wieder lesen zu können, sollten Sie Ihren cameoKey exportieren und sicher verwahren.",
                     "PRIVATE_KEY": "Privater Schlüssel",
                     "PUBLIC_KEY": "Öffentlicher Schlüssel",
                     "KEY_NAME": "Schlüsselname",
@@ -331,15 +357,15 @@
                 },
                 "HANDSHAKE": {
                     "MODAL_HEADER": "Authentifikation",
-                    "HANDSHAKE_DESCRIPTION": "Sie haben einen neuen cameoKey auf diesem Gerät, der noch nicht authentifiziert wurde die alten Nachrichten dieser Identität zu entschlüsseln. Dies geschieht zu Ihrer Sicherheit. Mit der Authentifikation bestätigen Sie, dass Sie Zugriff zu einem der Geräte haben, mit denen Sie bisher cameoNet genutzt haben.",
-                    "HANDSHAKE_NOW": "Möchten Sie jetzt dem cameoKey '<strong>{{keyName}}</strong>' den Zugang zu Ihren bisherigen Nachrichten gewähren?",
+                    "HANDSHAKE_DESCRIPTION": "Sie haben keinen cameoKey für Ihre Identität auf diesem Gerät. Um sicher zu kommunizieren, können Sie hier einen cameoKey für diese Identität <link>erzeugen oder <link>importieren.",
+                    "HANDSHAKE_NOW": "Sie haben einen neuen cameoKey auf diesem Gerät, der noch nicht authentifiziert wurde. D.h. Sie können ältere Nachrichten dieser Identität nicht entschlüsseln. Dies geschieht zu Ihrer Sicherheit.<br>Möchten Sie die Authentifikation jetzt durchführen?<br> Sie müssen dazu auf einem anderen Geräte cameoNet mit der selben Identität <identity>{{identity}} öffnen.",
                     "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
                     "CHOOSE_OLD_DEVICE": "Bitte wählen Sie das Gerät aus, mit dem Sie die Authentifikation durchführen möchten!",
                     "CHOOSE": "Bitte wählen",
-                    "TRANSACTION_SECRET": "Bitte starten Sie auf einem Ihrer anderen Geräte cameoNet und wechseln Sie ggf. in die selbe Identität {{identity}}. Geben Sie dort folgenden Code ein:",
+                    "TRANSACTION_SECRET": "Geben Sie bitte folgenden Code im Dialog auf Ihrem anderen Gerät ein:",
                     "HANDSHAKE_START": "Authentifikation starten",
                     "HANDSHAKE_RECEIVED": "Möchten Sie die Authentifikation durchführen?",
-                    "HANDSHAKE_NEED_TRANSACTID": "Haben Sie soeben auf einem anderen Gerät einen neuen cameoKey erzeugt und möchten dort den Zugriff auf Ihre verschlüsselten Nachrichten erlauben? Dann geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
+                    "HANDSHAKE_NEED_TRANSACTID": "Geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
                     "HANDSHAKE_DONE": "Authentifikation war erfolgreich!<br>"
 
                 }
@@ -366,9 +392,9 @@
     "DRTV": {
         "PASSWORD": {
             "PASSWORD": "Passwort",
-            "PASSWORD_CONFIRM": "Passwort wiederholen",
+            "PASSWORD_CONFIRM": "Passwort wiederholen!",
             "ERROR": {
-                "EMPTY": "Bitte ein Passwort eingeben und bestätigen"
+                "EMPTY": "Bitte ein Passwort eingeben und bestätigen!"
             }
         },
         "VALIDATE_EMAIL": {
@@ -415,12 +441,12 @@
             "START": "Start"
         },
         "KEY_REQUEST":{
-            "HEADER": "DRTV.KEY_REQUEST.HEADER",
-            "CONTENT": "DRTV.KEY_REQUEST.CONTENT"
+            "HEADER": "Authentifizierung",
+            "CONTENT": "Wollen Sie dies Gerät gegen Ihr Geräte <device>{{device}} authentifizieren, so dass Sie auf beiden Geräten geschriebene Nachrichten dieser Identität entschlüsseln können?<br> Sie müssen dazu auf Ihrem Geräte <device>{{device}} cameoNet mit der selben Identität <identity>{{identity}} öffnen."
         },
         "KEY_RESPONSE":{
-            "HEADER": "DRTV.KEY_RESPONSE.HEADER",
-            "CONTENT": "DRTV.KEY_RESPONSE.CONTENT"
+            "HEADER": "Authentifizierungsanfrage",
+            "CONTENT": "Haben Sie soeben auf einem anderen Gerät <device>{{device}} einen neuen cameoKey erzeugt und möchten dort den Zugriff auf Ihre verschlüsselten Nachrichten erlauben?"
         },
         "FOOTER": {
             "TALKS": "Talks",
@@ -467,7 +493,7 @@
             "OK": "OK"
         },
         "WEBREADER": {
-            "NOTICE": "Um diese Funktion nutzen zu können, müssen Sie sich registrieren!",
+            "NOTICE": "Um diese Funktion nutzen zu können, müssen Sie sich registrieren.",
             "REGISTRATION": "Jetzt registrieren",
             "LATER": "Später"
         },
