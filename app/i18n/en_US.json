@@ -122,8 +122,8 @@
             "SEND": "Send",
             "REQUEST_CAPTCHA": "Request captcha",
             "SEND_CAPTCHA": "Send captcha",
-            "KEY_GENERATION": "Generate a keypair for better security",
-            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "A password is used because there is no keypar on this device"
+            "KEY_GENERATION": "Here you can generate a cameoKey for this identity for better security.",
+            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "A password is used because there is no cameoKey on this device"
         },
         "TAG": {
             "RECIPIENTS": "Recipients",
@@ -340,10 +340,10 @@
                     "GENERATE": "Generate cameoKey",
                     "GENERATION_IN_PROGRESS": "key generation in progress",
                     "GENERATION_TIME_PROGRESS": "time elapsed: {{time}}",
-                    "CANCEL": "cancel",
-                    "STORE_KEYPAIR": "Store keypair",
+                    "CANCEL": "Cancel",
+                    "STORE_KEYPAIR": "Save cameoKey",
                     "GENERATION_TIME": "The generation lasted {{time}}",
-                    "STOREKEY_DESCRIPTION": "The cameoKey consists of a public and a private part. The private will be stored only on this device. It is important to keep it secret since it can decrypt all your data.<br>The private key can be exported for data recovery if the device is lost.",
+                    "STOREKEY_DESCRIPTION": "The cameoKey consists of a public and a private part. The private will be stored only on this device. It is important to keep it secret since it can decrypt all your data.\nThe private key can be exported for data recovery if the device is lost.",
                     "PRIVATE_KEY": "Private key",
                     "PUBLIC_KEY": "Public key",
                     "KEY_NAME": "Key name",
@@ -357,16 +357,16 @@
                 },
                 "HANDSHAKE": {
                     "MODAL_HEADER": "Authentication",
-                    "HANDSHAKE_DESCRIPTION": "There is a new cameoKey on this device which needs to be authenticated by another device. This is necessary to read all existing talks.",
-                    "HANDSHAKE_NOW": " Do you want to allow this cameoKey '<strong>{{keyName}}</strong>' to read all existing talks?",
+                    "HANDSHAKE_DESCRIPTION": "There is no cameoKey on this device for your identity. Here you can <link>generate or <link>import a cameoKey for this identity for better security.",
+                    "HANDSHAKE_NOW": "Do you want to authenticate this device against <device>{{device}} now, to be able to read all talks written on these devices by each other?<br>Please start the device <device>{{device}} with the same identity <identity>{{identity}}.",
                     "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
                     "CHOOSE_OLD_DEVICE": "Please select a device with which you want to perform the authentication!",
                     "CHOOSE": "Please select",
-                    "TRANSACTION_SECRET": "Please start another authenticated device and enter the following code:",
+                    "TRANSACTION_SECRET": "To authenticate this device please enter the following code in the input field on your other device:",
                     "HANDSHAKE_START": "Start authentication",
                     "HANDSHAKE_RECEIVED": "Would you like to start the authentication?",
-                    "HANDSHAKE_NEED_TRANSACTID": "An other device asked to be authenticated by this device and get access to you encrypted talks. To proceed pleas encer the code below:",
-                    "HANDSHAKE_DONE": "Authentication successfull"
+                    "HANDSHAKE_NEED_TRANSACTID": "To authenticate your new device please enter the code below:",
+                    "HANDSHAKE_DONE": "Authentication successfull!"
                 }
             },
             "ABOUT_US": {
@@ -440,12 +440,12 @@
             "START": "Start"
         },
         "KEY_REQUEST":{
-            "HEADER": "DRTV.KEY_REQUEST.HEADER",
-            "CONTENT": "DRTV.KEY_REQUEST.CONTENT"
+            "HEADER": "Authentication",
+            "CONTENT": "There is a new cameoKey on this device which needs to be authenticated by another device. This is necessary to read all existing talks. Do you want to authenticate this cameoKey now?<br>Please start another device with the same identity <identity>{{identity}}."
         },
         "KEY_RESPONSE":{
-            "HEADER": "DRTV.KEY_RESPONSE.HEADER",
-            "CONTENT": "DRTV.KEY_RESPONSE.CONTENT"
+            "HEADER": "Authentication Request",
+            "CONTENT": "An other device which pretends to be yours asked to be authenticated by this device. After that your new device gets access to all of your encrypted talks.<br>Do you want to authenticate the following device <device>{{device}}?"
         },
         "FOOTER": {
             "TALKS": "Talks",
