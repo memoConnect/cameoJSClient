@@ -341,7 +341,7 @@
                     "GENERATION_IN_PROGRESS": "key generation in progress",
                     "GENERATION_TIME_PROGRESS": "time elapsed: {{time}}",
                     "CANCEL": "Cancel",
-                    "STORE_KEYPAIR": "Store cameoKey",
+                    "STORE_KEYPAIR": "Save cameoKey",
                     "GENERATION_TIME": "The generation lasted {{time}}",
                     "STOREKEY_DESCRIPTION": "The cameoKey consists of a public and a private part. The private will be stored only on this device. It is important to keep it secret since it can decrypt all your data.\nThe private key can be exported for data recovery if the device is lost.",
                     "PRIVATE_KEY": "Private key",
@@ -358,7 +358,7 @@
                 "HANDSHAKE": {
                     "MODAL_HEADER": "Authentication",
                     "HANDSHAKE_DESCRIPTION": "There is no cameoKey on this device for your identity. Here you can <link>generate or <link>import a cameoKey for this identity for better security.",
-                    "HANDSHAKE_NOW": "There is a new cameoKey on this device which needs to be authenticated by another device. This is necessary to read all existing talks. Do you want to authenticate this cameoKey now?<br>Please start another device with the same identity <identity>{{identity}}.",
+                    "HANDSHAKE_NOW": "Do you want to authenticate this device against <device>{{device}} now, to be able to read all talks written on these devices by each other?<br>Please start the device <device>{{device}} with the same identity <identity>{{identity}}.",
                     "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
                     "CHOOSE_OLD_DEVICE": "Please select a device with which you want to perform the authentication!",
                     "CHOOSE": "Please select",
@@ -441,7 +441,7 @@
         },
         "KEY_REQUEST":{
             "HEADER": "Authentication",
-            "CONTENT": "Do you want to authenticate this device against <device>{{device}} now, to be able read all talks written on these devices by each other?<br>Please start the device <device>{{device}} with the same identity <identity>{{identity}}."
+            "CONTENT": "There is a new cameoKey on this device which needs to be authenticated by another device. This is necessary to read all existing talks. Do you want to authenticate this cameoKey now?<br>Please start another device with the same identity <identity>{{identity}}."
         },
         "KEY_RESPONSE":{
             "HEADER": "Authentication Request",
