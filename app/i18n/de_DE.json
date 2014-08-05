@@ -462,6 +462,7 @@
         "CONTACTS": "Kontakte",
         "REQUESTS": "Kontaktanfragen",
         "TALKS": "Talks",
+        "KEYMANAGEMENT": "@:IDENTITY.LABEL.KEYMANAGEMENT",
         "SETTINGS": "@:SETTINGS.LABEL",
         "MESSAGES": "Nachrichten",
         "HINTS": "Sonstige Hinweise",

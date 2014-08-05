@@ -128,6 +128,7 @@ cameo_config = {
         'contacts/requests': {"data-qa":'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
         'talks': {i18n:'MENU.TALKS', icon:'cm-envelope-closed'},
         'contacts': {i18n:'MENU.CONTACTS', icon:'cm-address-book'},
+        'settings/identity/keys': {"data-qa":'btn-menu-key-management', i18n:'MENU.KEYMANAGEMENT', icon:'cm-key'},
         'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings', subs:{}}
     },
 

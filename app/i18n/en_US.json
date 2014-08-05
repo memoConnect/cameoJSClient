@@ -461,6 +461,7 @@
         "CONTACTS": "Contacts",
         "REQUESTS": "Friend requests",
         "TALKS": "Talks",
+        "KEYMANAGEMENT": "@:IDENTITY.LABEL.KEYMANAGEMENT",
         "SETTINGS": "@:SETTINGS.LABEL",
         "MESSAGES": "Messages",
         "HINTS": "Hints",
