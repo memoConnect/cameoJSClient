@@ -1,0 +1,46 @@
+<div ng-controller="StartCtrl">
+    <cm-header cm-rubber-space>
+        <cm-back cm-weight="1" back-to="/settings"></cm-back>
+        <cm-identity cm-weight="6"></cm-identity>
+        <cm-menu cm-weight="1"></cm-menu>
+    </cm-header>
+
+    <header class="inScreen" ng-show="showWelcome">
+        <i class="fa cm-rhino-positive cm-lg-icon"></i>
+        {{'START.TITLE'|cmTranslate}}
+    </header>
+
+    <section class="welcome" ng-bind-html="'START.TEXT' | cmParse" ng-show="showWelcome"></section>
+
+    <header class="inScreen">
+        <i class="fa cm-key cm-lg-icon"></i>
+        {{'SETTINGS.PAGES.IDENTITY.KEYS.HEADER '| cmTranslate}}
+    </header>
+
+    <section class="keyInfo">
+        <section
+            class="page in-screen-message"
+            data-qa="alert-key-needed"
+            ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE' | cmTranslate"></section>
+        <section class="skip">
+            <input
+                    id="skipStartinput"
+                    data-qa="checkbox-skip-start"
+                    name="skip"
+                    type="checkbox"
+                    ng-model="skipStart"
+                    class="ng-hide"
+                    required />
+            <i
+                    id="skipStart"
+                    data-qa="icon-checkbox-skip-start"
+                    class="fa cm-lg-icon cm-ci-color ml15"
+                    ng-class="{
+                        'cm-checkbox':!skipStart,
+                        'cm-checkbox-right':skipStart
+                    }"
+                    ng-click="setSkipStart()"></i>
+            <span ng-click="setSkipStart()">Show this Info again :D</span>
+        </section>
+    </section>
+</div>

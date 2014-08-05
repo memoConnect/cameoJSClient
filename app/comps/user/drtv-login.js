@@ -53,7 +53,11 @@ angular.module('cmUser').directive('cmLogin', [
                         function(){
                             $scope.spinner('stop');
                             if(!$location.$$path.match(/\/purl\/.*/)){
-                                $location.path("/talks");
+                                if(cmUserModel.loadLocalKeys().length > 0){
+                                    $location.path("/talks");
+                                } else {
+                                    $location.path("/start");
+                                }
                             }
                             $rootScope.$broadcast('cmLogin:success');
                         },
