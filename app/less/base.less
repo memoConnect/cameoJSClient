@@ -98,10 +98,19 @@ pre {
 
 a {
   text-decoration: none !important;
-  color:@cm-ci-color;
   &:hover,
-  &:focus, {
+  &:focus {
     color:inherit;
+  }
+}
+// only extern links
+a[target='_blank'], .classic-link {
+  text-decoration: underline !important;
+  color:@cm-ci-color !important;
+  &:hover,
+  &:focus {
+    color:@cm-ci-color !important;
+    text-decoration: none !important;
   }
 }
 

@@ -67,7 +67,7 @@
             "TITLE": "Welcome to cameoNet!",
             "TEXT": "cameoNet is an open source messenger that provides end-to-end encryption for safe, private and commercial Communication!\nAttention: this is a first beta version!\nThe app may contain errors, the user interface is still under development and many new features will be added in the next versions. We cannot guarantee the safety of your data. Please copy all your important data.\nPlease help us to improve cameoNet. We are happy about every error or improvement you post on http://support.cameonet.de\nthe cameoNet-Team."
         },
-        "YOUR_ID": "Your cameoId",
+        "YOUR_ID": "Your cameoID",
         "LOGOUT": "Logout"
     },
 	
@@ -189,7 +189,7 @@
         },
         "LIST_EMPTY": "No contacts yet!",
         "PLACEHOLDER": {
-            "ADD_NEW_CONTACT": "Enter a cameoId or display name",
+            "ADD_NEW_CONTACT": "Enter a cameoID or display name",
             "REQUEST_MESSAGE": "Add a message to the friend request"
         },
         "INFO": {

@@ -23,16 +23,18 @@ define([
             /**
              * Welcome modal shown for new user
              */
-            if(cmUserModel.comesFromRegistration !== false){
+            //if(cmUserModel.comesFromRegistration !== false){
                 cmUserModel.comesFromRegistration = false;
 
                 cmModal.create({
                     id: 'welcome',
+                    type: 'plain',
+                    'class': 'no-padding',
                     'cm-title': 'START.MODAL.TITLE'
-                },'<div ng-bind-html="\'START.MODAL.TEXT\' | cmParse"></div>');
+                },'<div class="modal-row" ng-bind-html="\'START.MODAL.TEXT\' | cmParse"></div>');
 
                 cmModal.open('welcome');
-            }
+            //}
 
             /**
              * init conversations to scope
