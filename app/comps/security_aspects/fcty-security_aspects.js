@@ -26,7 +26,6 @@ angular.module('cmSecurityAspects')
             this.name           = this.languagePrefix+'.'+this.id+'.NAME'
             this.toggleLabel    = this.languagePrefix+'.'+this.id+'.TOGGLE'
 
-
             this.template       = config.template       || '{{"'+this.description+'"|cmTranslate}}'
 
             /**
@@ -86,7 +85,6 @@ angular.module('cmSecurityAspects')
 
             this.languagePrefix = config.languagePrefix
 
-
             this.refresh = function(){
                 this.countForDigest++;
                 this.trigger('refresh')
@@ -101,7 +99,7 @@ angular.module('cmSecurityAspects')
                 this.target = target;
                 this.applyingAspects = this.getApplyingAspects()
                 return this;
-            }
+            };
 
             /**
              * Function to add a new SecurityAspect instance to the list
@@ -117,8 +115,6 @@ angular.module('cmSecurityAspects')
                     if(aspect.toggleCheck(self.target))
                         aspect.toggleCall(self.target)
                 });
-
-
 
                 this.aspects.push(aspect);
                 return this;

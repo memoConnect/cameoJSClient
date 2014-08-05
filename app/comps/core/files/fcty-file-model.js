@@ -1,12 +1,11 @@
 'use strict';
 
-angular.module('cmCore')
-.factory('cmFileModel', [
-    'cmFilesAdapter', 'cmFileDownload', 'cmLogger', 'cmChunk', 'cmCrypt', 'cmObject',
-    'cmModal', 'cmEnv',
+angular.module('cmCore').factory('cmFileModel', [
+    'cmFilesAdapter', 'cmFileDownload', 'cmFileTypes', 'cmLogger', 'cmChunk',
+    'cmCrypt', 'cmObject', 'cmModal', 'cmEnv',
     '$q',
-    function (cmFilesAdapter, cmFileDownload, cmLogger, cmChunk, cmCrypt, cmObject,
-              cmModal, cmEnv,
+    function (cmFilesAdapter, cmFileDownload, cmFileTypes, cmLogger, cmChunk,
+              cmCrypt, cmObject, cmModal, cmEnv,
               $q){
 
         function roundToTwo(num) {
@@ -32,6 +31,8 @@ angular.module('cmCore')
             this.base64 = '';
             this.onCompleteId = undefined;
 
+            this.detectedExtension = undefined;
+
             this.setPassphrase = function(p){
                 passphrase = p;// TODO: || null;
                 return this;
@@ -42,6 +43,14 @@ angular.module('cmCore')
                 if(arr_states.indexOf(state) != -1)
                     this.state = state;
                 return this;
+            };
+
+            this.isImage = function(){
+                return this.type == undefined ? false : this.type.search('^image/') != -1;
+            };
+
+            this.isEmbed = function(specificMime){
+                return this.type == undefined ? false : this.type.search('^('+(specificMime||'image|video|audio')+')') != -1;
             };
 
             // message id for backend event message:new
@@ -61,10 +70,10 @@ angular.module('cmCore')
 
                     this.chopIntoChunks(128);
                 }
-
                 return this;
             };
 
+            // for fileApi of browser -> upload
             this.importBlob = function(blob){
                 this.blob = blob;
                 this.id   = undefined;
@@ -72,6 +81,17 @@ angular.module('cmCore')
                 this.name = blob.name;
                 this.type = blob.type;
                 this.size = blob.size;
+
+                this.detectedExtension = cmFileTypes.find(this.type, this.name);
+
+                // broken mimetype???
+                if(this.detectedExtension == 'unknown'){
+                    var obj = cmFileTypes.getMimeTypeViaFilename(this.name);
+                    if(obj.detectedExtension != 'unknown') {
+                        this.detectedExtension = obj.detectedExtension;
+                        this.type = obj.mimeType;
+                    }
+                }
 
                 return this;
             };
@@ -481,6 +501,8 @@ angular.module('cmCore')
                     .setState('cached')
                     .decryptName()
                     .clearBuffer()
+
+                self.detectedExtension = cmFileTypes.find(self.type, self.name);
             });
         };
 
