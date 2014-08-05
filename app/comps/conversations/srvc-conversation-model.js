@@ -85,7 +85,7 @@ angular.module('cmConversations')
              * GUI Variable
              * @type {{level: string, class: string}}
              */
-            this.lockStatus         = {
+            this.lockStatus = {
                 'level': 2,
                 'class': 'safer'
             };
