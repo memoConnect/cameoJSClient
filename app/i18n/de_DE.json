@@ -338,7 +338,7 @@
                     "REMOVE_KEY": "cameoKey löschen",
                     "REMOVE_KEY_REALLY": "Soll der cameoKey wirklich gelöscht werden?",
                     "CHOOSE_SIZE": "Schlüsselstärke wählen",
-                    "GENERATE": "cameoKey erstellen",
+                    "GENERATE": "cameoKey erzeugen",
                     "GENERATION_IN_PROGRESS": "Generierung läuft",
                     "GENERATION_TIME_PROGRESS": "verbrauchte Zeit: {{time}}",
                     "CANCEL": "Generierung abbrechen",
