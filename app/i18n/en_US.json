@@ -231,6 +231,7 @@
     "CONTACT": {
         "WIDGET": "Talks",
         "PLACEHOLDER": {
+            "CAMEOID": "CameoID",
             "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
             "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER",
             "EMAIL": "@:DRTV.VALIDATE_EMAIL.PLACEHOLDER",
@@ -294,10 +295,35 @@
                 "SEND_ON_RETURN": "Send on Return"
             },
             "IDENTITY": {
+                "CREATE": {
+                    "HEADER": "Create identity",
+                    "PLACEHOLDER": {
+                        "CAMEOID": "@:CONTACT.PLACEHOLDER.CAMEOID",
+                        "DISPLAYNAME": "@:CONTACT.PLACEHOLDER.DISPLAYNAME",
+                        "EMAIL": "@:CONTACT.PLACEHOLDER.EMAIL",
+                        "PHONENUMBER": "@:CONTACT.PLACEHOLDER.PHONENUMBER"
+                    },
+                    "INFO": {
+                        "EMPTY": {
+                            "DISPLAYNAME": "@:CONTACT.INFO.EMPTY.DISPLAYNAME"
+                        },
+                        "INVALID": {
+                            "EMAIL": "@:CONTACT.INFO.INVALID.EMAIL",
+                            "PHONENUMBER": "@:CONTACT.INFO.INVALID.PHONENUMBER"
+                        }
+                    },
+                    "FOOTER": "@:CONTACT.FOOTER.SAVE"
+                },
                 "KEYS": {
                     "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
-                    "CREATE": "Create",
-                    "IMPORT": "Import",
+                    "CREATE": {
+                        "HEADER": "Create cameoKey",
+                        "BUTTON": "Create"
+                    },
+                    "IMPORT": {
+                        "HEADER": "Import cameoKey",
+                        "BUTTON": "Import"
+                    },
                     "DETAIL": "cameoKey",
                     "KEY_SIZE": "Key size",
                     "IS_LOCAL": "local",

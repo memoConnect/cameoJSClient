@@ -888,8 +888,9 @@ module.exports = function (grunt) {
         'template:config-phonegap',
         'template:config-protractor',
         'concat:less',
-        'concat:css',
-        'less']);
+        'less',
+        'concat:css'
+        ]);
     grunt.registerTask('watcher', ['genAllTemplates', 'packages', 'watch']);
     grunt.registerTask('packages', ['concat:packages']);
 
@@ -897,13 +898,12 @@ module.exports = function (grunt) {
     grunt.registerTask('deploy', [
         'clean:dist',
         'genAllTemplates',
-        'concat:less',
-        'less',
         'packages',
         'copy:dev-deploy',
         'uglify:dev-deploy',
         'copy:cockpit',
-        'uglify:cockpit']);
+        'uglify:cockpit'
+    ]);
 
     grunt.registerTask('create-docs', ['clean:docs', 'packages', 'concat:docs', 'ngdocs']);
     grunt.registerTask('node-webserver', ['shell:node-webserver']);
