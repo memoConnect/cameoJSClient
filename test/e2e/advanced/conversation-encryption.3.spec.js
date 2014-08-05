@@ -356,6 +356,7 @@ describe('Conversation encryption -', function () {
             util.clearLocalStorage()
             util.login(testUser2, "password")
             util.generateKey()
+            util.closeKeyRequestModal()
             util.login(testUser1, "password")
         })
 

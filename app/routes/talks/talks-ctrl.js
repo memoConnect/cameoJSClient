@@ -28,8 +28,10 @@ define([
 
                 cmModal.create({
                     id: 'welcome',
+                    type: 'plain',
+                    'class': 'no-padding',
                     'cm-title': 'START.MODAL.TITLE'
-                },'<div ng-bind-html="\'START.MODAL.TEXT\' | cmParse"></div>');
+                },'<div class="modal-row" ng-bind-html="\'START.MODAL.TEXT\' | cmParse"></div>');
 
                 cmModal.open('welcome');
             }
