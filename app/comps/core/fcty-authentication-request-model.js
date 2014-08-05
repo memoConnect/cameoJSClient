@@ -3,9 +3,9 @@
 angular.module('cmCore')
 .factory('cmAuthenticationRequestModel', [
     'cmObject', 'cmStateManagement', 'cmCrypt', 'cmKey', 'cmUtil', 'cmAuth',
-    'cmUserModel', 'cmLogger',
+    'cmUserModel', 'cmLogger', 'cmContactsModel',
     function(cmObject, cmStateManagement, cmCrypt, cmKey, cmUtil, cmAuth,
-             cmUserModel, cmLogger){
+             cmUserModel, cmLogger, cmContactsModel){
         function authenticationRequestModel(requestData){
             var self = this;
 
@@ -46,17 +46,34 @@ angular.module('cmCore')
                     return this;
                 }
 
-                this.id = data.id || this.id;
-                this.created = data.created || this.created;
+                this.id                         = data.id || this.id;
+                this.created                    = data.created || this.created;
                 this.encryptedTransactionSecret = data.encryptedTransactionSecret || this.encryptedTransactionSecret;
-                this.signature = data.signature || this.signature;
-                this.fromKeyId = data.fromKeyId || this.fromKeyId;
-                this.fromKeyFingerprint = data.fromKeyFingerprint || this.fromKeyFingerprint;
-                this.toKeyId = data.toKeyId || this.toKeyId;
-                this.toKeyFingerprint = data.toKeyFingerprint || this.toKeyFingerprint;
+                this.signature                  = data.signature || this.signature;
+                this.fromKeyId                  = data.fromKeyId || this.fromKeyId;
+                this.fromKeyFingerprint         = data.fromKeyFingerprint || this.fromKeyFingerprint;
+                this.toKeyId                    = data.toKeyId || this.toKeyId;
+                this.toKeyFingerprint           = data.toKeyFingerprint || this.toKeyFingerprint;
+                this.toIdentityId               = data.toIdentityId || this.toIdentityId
+                this.fromIdentityId             = data.fromIdentityId || this.fromIdentityId
 
                 return this;
             };
+
+            this.exportData = function(){
+                return {
+                            id:                         this.id,
+                            identityId:                 cmUserModel.data.identity.id,
+                            encryptedTransactionSecret: this.encryptedTransactionSecret,
+                            signature:                  this.signature,
+                            fromKeyId:                  this.fromKeyId,
+                            fromKeyFingerprint:         this.fromKeyFingerprint,
+                            toKeyId:                    this.toKeyId,
+                            toKeyFingerprint:           this.toKeyFingerprint,
+                            toIdentityId:               this.toIdentityId,
+                            fromIdentityId:             this.fromIdentityId
+                        }
+            }
 
             this.importKeyResponse = function(response){
 //                cmLogger.debug('cmAuthenticationRequestModel.importKeyResponse');
@@ -86,8 +103,13 @@ angular.module('cmCore')
                 return this
             };
 
-            this.setIdentity = function(identity){
-                this.identity = identity
+            this.setToIdentityId = function(identityId){
+                this.toIdentityId = identityId
+                return this
+            }
+
+            this.setFromIdentityId = function(identityId){
+                this.fromIdentityId = identityId
                 return this
             }
 
@@ -153,12 +175,14 @@ angular.module('cmCore')
                     return false;
                 }
 
+                
+
                 /**
                  * load localKeys
                  */
                 var localKeys = cmUserModel.loadLocalKeys();
 
-                /**
+                /*identity = 
                  * verify toKeyId
                  */
                 var checkToKeyId = false;
@@ -178,8 +202,15 @@ angular.module('cmCore')
                 /**
                  * verify fromKeyId
                  */
-                var checkFromKeyId = false;
-                cmUserModel.data.identity.keys.forEach(function(key){
+                
+                var checkFromKeyId  = false,
+                    identity        =   cmContactsModel.reduce(function(identity, contact){
+                                            return identity || (contact.identity.id == this.fromIdentityId ? contact.identity : false)
+                                        }, undefined)
+                                        ||
+                                        cmUserModel.data.identity
+
+                identity.keys.forEach(function(key){
                     if(key.id == self.fromKeyId && (key.getFingerprint() === self.fromKeyFingerprint)){
                         checkFromKeyId = true;
 
@@ -235,17 +266,8 @@ angular.module('cmCore')
                 if(this.verifyForm() !== false){
                     cmAuth.sendBroadcast({
                         name: 'authenticationRequest:start',
-                        data: {
-                            id: this.id,
-                            identityId: cmUserModel.data.identity.id,
-                            encryptedTransactionSecret: this.encryptedTransactionSecret,
-                            signature: this.signature,
-                            fromKeyId: this.fromKeyId,
-                            fromKeyFingerprint: this.fromKeyFingerprint,
-                            toKeyId: this.toKeyId,
-                            toKeyFingerprint: this.toKeyFingerprint
-                        }
-                    }).then(
+                        data: this.exportData()
+                    }, this.toIdentityId).then(
                         function(){
                             // do nothing
                         },
@@ -271,7 +293,7 @@ angular.module('cmCore')
                             toKeyId: localKeys[0].id,
                             toKeyFingerprint: localKeys[0].getFingerprint()
                         }
-                    });
+                    }, this.identity);
                 }
             };
 
@@ -284,7 +306,7 @@ angular.module('cmCore')
                         data: {
                             id: this.id
                         }
-                    });
+                    }, this.identity);
                 }
             };
 
@@ -297,7 +319,7 @@ angular.module('cmCore')
                         data: {
                             id: this.id
                         }
-                    }).then(
+                    }, this.identity).then(
                         function(){
                             // do nothing
                             self.state.set('finished');
@@ -366,7 +388,7 @@ angular.module('cmCore')
                         data: {
                             id: cmUserModel.data.identity.id
                         }
-                    }).finally(
+                    }, this.identity).finally(
                         function(){
                             self.trigger('request:finished');
                         }

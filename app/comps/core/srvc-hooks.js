@@ -90,6 +90,7 @@ angular.module('cmCore').service('cmHooks', [
 
             var authenticationRequest = cmAuthenticationRequestFactory.find(request);
 
+
             if(cmAuthenticationRequestFactory.find(request) == null) {
                 authenticationRequest = cmAuthenticationRequestFactory.create(request);
                 authenticationRequest.state.set('incoming');
@@ -97,7 +98,9 @@ angular.module('cmCore').service('cmHooks', [
                 authenticationRequest.importData(request);
             }
 
+
             if(authenticationRequest.state.is('incoming') && authenticationRequest.verifyIncomingRequest() !== false){
+
                 var scope = $rootScope.$new();
                 scope.authenticationRequest = authenticationRequest;
 
@@ -218,7 +221,8 @@ angular.module('cmCore').service('cmHooks', [
 
                 authenticationRequest
                 .setToKey(toKey)
-                .setIdentity(identity)
+                .setToIdentityId(identity.id)
+                .setFromIdentityId(cmUserModel.data.identity.id)
 
                 self.openOutgoingAuthenticationRequest(authenticationRequest);
             }

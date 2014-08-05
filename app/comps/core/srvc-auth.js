@@ -318,9 +318,9 @@ angular.module('cmCore')
              * @param {Object} data event data
              * @returns {Promise} for async handling
              */
-            sendBroadcast: function( data){
+            sendBroadcast: function(data, identityId){
                 return cmApi.post({
-                    path: '/event/broadcast',
+                    path: '/event/broadcast' + (identityId ? '/identity/' + identityId : ''),
                     data: data
                 });
             },
