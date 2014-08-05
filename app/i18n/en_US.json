@@ -328,7 +328,8 @@
                     "KEY_SIZE": "Key size",
                     "IS_LOCAL": "local",
                     "IS_LOCAL_ON_THIS_DEVICE": "Is local on this device",
-                    "KEY_TRUST_DESCRIPTION": "@:SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_DESCRIPTION",
+                    "NO_LOCALKEYS_ON_THIS_DEVICE": "There is no cameoKey on this device for your identity. Here you can <link>generate or <link>import a cameoKey for this identity for better security.",
+                    "UNTRUSTED_PUBLICKEYS_EXISTS": "UNTRUSTED_PUBLICKEYS_EXISTS",
                     "TRUSTING": "Trusting",
                     "IS_TRUSTED": "trusted",
                     "IS_UNTRUSTED": "untrusted",
@@ -357,7 +358,7 @@
                 },
                 "HANDSHAKE": {
                     "MODAL_HEADER": "Authentication",
-                    "HANDSHAKE_DESCRIPTION": "There is no cameoKey on this device for your identity. Here you can <link>generate or <link>import a cameoKey for this identity for better security.",
+                    "HANDSHAKE_DESCRIPTION": "HANDSHAKE_DESCRIPTION",
                     "HANDSHAKE_NOW": "Do you want to authenticate this device against <device>{{device}} now, to be able to read all talks written on these devices by each other?<br>Please start the device <device>{{device}} with the same identity <identity>{{identity}}.",
                     "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
                     "CHOOSE_OLD_DEVICE": "Please select a device with which you want to perform the authentication!",

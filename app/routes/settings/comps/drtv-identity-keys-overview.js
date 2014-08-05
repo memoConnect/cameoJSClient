@@ -13,7 +13,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                 $scope.signing = false;
                 $scope.canCreate = true;
                 $scope.isHandshakePossible = false;
-                $scope.showKeyTrustDescription = true;
+                $scope.showNoLocalKeysOnThisDevice = true;
+                $scope.showUntrustedPublickeysExists = true;
 
                 function refresh(){
 
@@ -28,12 +29,13 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                     $scope.isHandshakePossible = ($scope.privateKeys.length > 0);
 					$scope.canCreate    = !cmUserModel.hasPrivateKey();
 
-//                    $scope.debug = $scope.trustedKeys.length+' / '+$scope.publicKeys.length;
+                    // no key exists
+                    $scope.showNoLocalKeysOnThisDevice =
+                        $scope.trustedKeys.length == 0 && $scope.publicKeys.length == 0;
 
-                    $scope.showKeyTrustDescription =
-                        $scope.trustedKeys.length == 0 && $scope.publicKeys.length == 0 || // none key exists
-                        $scope.trustedKeys.length < $scope.publicKeys.length; // publickeys doesnt match trustedkeys
-
+                    // publickeys doesnt match trustedkeys
+                    $scope.showUntrustedPublickeysExists =
+                        $scope.trustedKeys.length < $scope.publicKeys.length;
                 }
 
                 $scope.remove = function(key){

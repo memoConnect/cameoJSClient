@@ -328,7 +328,8 @@
                     "KEY_SIZE": "Schlüsselstärke",
                     "IS_LOCAL": "lokal",
                     "IS_LOCAL_ON_THIS_DEVICE": "lokal auf diesem Gerät",
-                    "KEY_TRUST_DESCRIPTION": "@:SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_DESCRIPTION",
+                    "NO_LOCALKEYS_ON_THIS_DEVICE": "Sie haben keinen cameoKey für Ihre Identität auf diesem Gerät. Um sicher zu kommunizieren, können Sie hier einen cameoKey für diese Identität <a href=\"#/settings/identity/keys/create\">erzeugen</a> oder <a href=\"#/settings/identity/keys/import\">importieren</a>.",
+                    "UNTRUSTED_PUBLICKEYS_EXISTS": "UNTRUSTED_PUBLICKEYS_EXISTS",
                     "TRUSTING": "Authentifikation",
                     "IS_TRUSTED": "ist authentifiziert",
                     "IS_UNTRUSTED": "ist nicht authentifiziert",
@@ -357,7 +358,7 @@
                 },
                 "HANDSHAKE": {
                     "MODAL_HEADER": "Authentifikation",
-                    "HANDSHAKE_DESCRIPTION": "Sie haben keinen cameoKey für Ihre Identität auf diesem Gerät. Um sicher zu kommunizieren, können Sie hier einen cameoKey für diese Identität <link>erzeugen oder <link>importieren.",
+                    "HANDSHAKE_DESCRIPTION": "HANDSHAKE_DESCRIPTION",
                     "HANDSHAKE_NOW": "Wollen Sie dieses Gerät gegen Ihr Geräte <device>{{device}} authentifizieren, so dass Sie auf beiden Geräten geschriebene Nachrichten dieser Identität entschlüsseln können?<br> Sie müssen dazu auf Ihrem Geräte <device>{{device}} cameoNet mit der selben Identität <identity>{{identity}} öffnen.Wollen Sie dies Gerät gegen Ihr Geräte <device>{{device}} authentifizieren, so dass Sie auf beiden Geräten geschriebene Nachrichten dieser Identität entschlüsseln können?<br> Sie müssen dazu auf Ihrem Geräte <device>{{device}} cameoNet mit der selben Identität <identity>{{identity}} öffnen.",
                     "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
                     "CHOOSE_OLD_DEVICE": "Bitte wählen Sie das Gerät aus, mit dem Sie die Authentifikation durchführen möchten!",
