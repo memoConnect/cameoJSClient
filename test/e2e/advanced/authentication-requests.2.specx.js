@@ -17,80 +17,122 @@ describe('Authentication requests -', function () {
     var keyName2 = "moeps key 2"
     var keyName3 = "moeps key 3"
 
+    var localStorage1
+    var localStorage2
+    var localStorage3
+
+    var eventSubscription
+
+    var token
+
     var transactionSecret
 
-    it("create test user and generate first key", function () {
+    var event1
+    var event2
+    var event3
+    var event4
+
+    it("create test user, generate key1 and export localStorage", function () {
         util.createTestUser(testUserId)
         util.generateKey(1, keyName1)
+        util.getLocalStorage().then(function (lsexport) {
+            localStorage1 = lsexport
+        })
+        util.getToken().then(function(res){
+            token = res
+        })
+
     })
 
-    it("delete first key from local storage and generate a second key", function () {
+    it("delete first key from local storage and generate key2", function () {
         util.logout()
         util.clearLocalStorage()
         util.login(testUser, "password")
         util.get("/settings/identity/keys")
         util.waitForElement("[data-qa='key-list-item']")
         util.generateKey(2, keyName2)
-    })
-
-    it("a modal asking for authentication should open", function () {
-        util.waitForElement("[data-qa='btn-doHandshake']")
-        $("[data-qa='btn-doHandshake']").click()
-    })
-
-    it("it should display the first key", function () {
-        util.waitForElements("[data-qa='item-available-key']", 1)
-        $$("[data-qa='item-available-key']").then(function (elements) {
-            expect(elements.length).toBe(1)
-//            expect(elements[0].getText()).toContain(keyName1)
+        util.getLocalStorage().then(function (lsexport) {
+            localStorage2 = lsexport
         })
     })
 
-    it("delete second key and generate a third one", function () {
+    it("close modal and get event subscription", function () {
+        util.waitForElement("[data-qa='btn-cancel']")
+        util.click("btn-cancel")
+        ptor.debugger()
+        util.getEventSubscription(token).then(function(res){
+            eventSubscription = res
+        })
+    })
+
+    it("do the same with key3", function () {
         util.logout()
         util.clearLocalStorage()
         util.login(testUser, "password")
         util.get("/settings/identity/keys")
         util.waitForElement("[data-qa='key-list-item']")
         util.generateKey(3, keyName3)
+        util.getLocalStorage().then(function (lsexport) {
+            localStorage3 = lsexport
+        })
+        ptor.debugger()
     })
 
     it("a modal asking for authentication should open", function () {
-        util.waitForElement("[data-qa='btn-doHandshake']")
-        $("[data-qa='btn-doHandshake']").click()
+        util.waitForElement("[data-qa='btn-start']")
+        util.click("btn-start")
     })
 
-    it("it should display the first and second key", function () {
-        util.waitForElements("[data-qa='item-available-key']", 2)
-        $$("[data-qa='item-available-key']").then(function (elements) {
-            expect(elements.length).toBe(2)
-//            expect(elements[0].getText()).toContain(keyName1)
-//            expect(elements[1].getText()).toContain(keyName2)
+    it("get event1", function () {
+        util.getEvents(token, eventSubscription).then(function(res){
+            event1 = res.data.events[0]
         })
     })
 
-    it("request authorization from key one", function () {
-        $$("[data-qa='item-available-key']").then(function (elements) {
-            elements[0].click()
-            util.click("btn-startHandshake")
-            util.getVal("transaction-secret-value").then(function(secret) {
-                transactionSecret = secret
-            })
-        })
-    })
-
-    it("delete key three and import key one", function(){
+    it("delete localstorage, import key1 and broadcast event", function(){
+        console.log("event", event1)
+        console.log("localStorage", localStorage1.key)
         util.logout()
         util.clearLocalStorage()
+        util.setLocalStorage(localStorage1.key, localStorage1.value)
         util.login(testUser, "password")
-        util.get("/settings/identity/keys")
-        util.waitForElements("[data-qa='key-list-item']", 3)
-        util.generateKey(1, keyName1)
+        util.broadcastEvent(token, event1)
+        ptor.debugger()
     })
 
-    it("delete testUser", function () {
-        console.log("Secret: " + secret)
-        util.deleteTestUser(testUser)
+    it("a modal asking for authentication start should open", function () {
+        util.waitForElement("[data-qa='btn-start']")
+        util.click("btn-start")
     })
+
+    it("get event2", function () {
+        util.getEvents(token, eventSubscription).then(function(res){
+            event1 = res.data.events[0]
+        })
+    })
+//
+//    it("request authorization from key one", function () {
+//        $$("[data-qa='item-available-key']").then(function (elements) {
+//            elements[0].click()
+//            util.click("btn-startHandshake")
+//            util.getVal("transaction-secret-value").then(function(secret) {
+//                transactionSecret = secret
+//            })
+//        })
+//    })
+//
+//    it("delete key three and import key one", function(){
+//        util.logout()
+//        util.clearLocalStorage()
+//        util.login(testUser, "password")
+//        util.get("/settings/identity/keys")
+//        util.waitForElements("[data-qa='key-list-item']", 3)
+//        util.generateKey(1, keyName1)
+//    })
+//
+//    it("delete testUser", function () {
+//        console.log("Secret: " + secret)
+//        util.deleteTestUser(testUser)
+//    })
 
 })
