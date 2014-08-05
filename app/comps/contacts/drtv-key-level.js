@@ -12,8 +12,6 @@ angular.module('cmContacts').directive('cmKeyLevel',[
                     if(keySize >= 2048){
                         $scope.count = 2;
                     }
-
-                    console.log(keySize, $scope.count)
                 });
             }
         }
