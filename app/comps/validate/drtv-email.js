@@ -11,11 +11,13 @@ angular.module('cmValidate').directive('cmValidateEmail',[
             link: function(scope, element, attrs, ngModel){
                 scope.$watch('model',function (newValue) {
                     var check = true;
-                    if(newValue != ""){
+
+                    if(newValue && newValue != ''){
                         // http://stackoverflow.com/a/46181/11236
                         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                         check = re.test(newValue);
                     }
+
                     if(check !== true){
                         ngModel.$setValidity('email', false);
                     } else {

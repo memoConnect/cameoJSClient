@@ -11,8 +11,8 @@ angular.module('cmValidate').directive('cmValidatePhone',[
             link: function(scope, element, attrs, ngModel){
                 var correctValue;
                 scope.$watch('model',function (newValue) {
-                    if(newValue != "" && correctValue == undefined || // value is empty
-                       correctValue != undefined && newValue != correctValue // value isnt the correct value from BE
+                    if(newValue && newValue != "" && correctValue == undefined || // value isnt empty and first-check
+                        newValue && newValue != "" && correctValue != undefined && newValue != correctValue // value isnt the correct value from BE
                     ){
                         cmAuth.checkPhoneNumber(newValue).
                             then(
