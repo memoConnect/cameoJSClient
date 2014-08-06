@@ -65,6 +65,9 @@ app.register.controller('RegistrationCtrl', [
         /**
         * checks if LoginName exists, because Login Name have to be unique
         */
+        $scope.$watch('formData.loginName', function(){
+            $scope.verifyLoginName();
+        });
         $scope.verifyLoginName = function(){
 
             // clear exists timeout
