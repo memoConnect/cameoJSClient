@@ -38,6 +38,8 @@
     <preference name="KeepRunning" value="true"/>
     <preference name="DisallowOverscroll" value="true"/>
 
+    <preference name="permissions" value="none"/>
+
     <!--<preference name="LoadingDialog" value=" "/>-->
     <!--<preference name="show-splash-screen-spinner" value="false" />-->
     <preference name="auto-hide-splash-screen" value="true" />
