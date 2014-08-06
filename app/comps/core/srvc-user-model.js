@@ -359,12 +359,19 @@ angular.module('cmCore')
                     })
         };
 
-        this.signPublicKey = function(keyToSign, keyToSignFingerprint){
+        this.signPublicKey = function(keyToSign, keyToSignFingerprint, identity){
             cmLogger.debug('cmUserModel.signPublicKey');
+
+            identity = identity || self.data.identity
+
+            var deferred    = $q.defer(),
+                rejected    = deferred.promise
+
+            deferred.reject()
 
             if(!(keyToSign instanceof cmKey) || (keyToSign.getFingerprint() !== keyToSignFingerprint)){
                 self.trigger('signatures:cancel');
-                return false; 
+                return rejected;
             }
 
             var localKeys   = this.loadLocalKeys(),
@@ -380,11 +387,11 @@ angular.module('cmCore')
                 //Dont sign twice:
                 if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
                     self.trigger('signatures:cancel');
-                    return false;
+                    return false; 
                 }
 
                 //Content of the signature:
-                var signature  =  signingKey.sign(self.getTrustToken(keyToSign, self.data.identity.cameoId));
+                var signature  =  signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId));
 
                 promises.push(
                     cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
@@ -399,15 +406,15 @@ angular.module('cmCore')
             });
 
             if(promises.length == 0){
-                self.trigger('signatures:cancel');
-                return false;
+                self.trigger('signature:cancel');
+                return rejected; 
             }
 
-            $q.all(promises).then(
-                function(){
-                    self.trigger('signatures:saved')
-                }
-            );
+            return  $q.all(promises).then(
+                        function(){
+                            self.trigger('signatures:saved')
+                        }
+                    );
         };
 
         this.verifyOwnPublicKey = function(key){

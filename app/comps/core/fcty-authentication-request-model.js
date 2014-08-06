@@ -107,6 +107,15 @@ angular.module('cmCore')
                 return this
             };
 
+            this.setFromKey = function(fromKey){
+                if(this.state.is('outgoing') && !this.state.is('finished') && (fromKey instanceof cmKey)){
+                    this.fromKeyId = fromKey.id;
+                    this.fromKeyFingerprint = fromKey.getFingerprint();
+                    this.fromKey = fromKey;
+                }
+                return this
+            };
+
             this.setToIdentityId = function(identityId){
                 this.toIdentityId = identityId 
                 return this
@@ -266,12 +275,14 @@ angular.module('cmCore')
 
             this.send = function(){
                // cmLogger.debug('cmAuthenticationRequestModel.send');
+               console.dir(this.exportData())
 
                 if(this.verifyForm() !== false){
                     cmAuth.sendBroadcast({
                         name: 'authenticationRequest:start',
                         data: this.exportData()
-                    }, this.toIdentityId).then(
+                    }, (this.toIdentityId == cmUserModel.data.identity.id) ? undefined : this.toIdentityId)
+                    .then(
                         function(){
                             // do nothing
                         },
@@ -297,7 +308,7 @@ angular.module('cmCore')
                             toKeyId: localKeys[0].id,
                             toKeyFingerprint: localKeys[0].getFingerprint()
                         }
-                    }, this.fromIdentityId);
+                    }, (this.fromIdentityId == cmUserModel.data.identity.id) ? undefined : this.fromIdentityId);
                 }
             };
 
@@ -311,7 +322,7 @@ angular.module('cmCore')
                             id: this.id,
                             fromIdentityId: this.fromIdentityId
                         }
-                    }, this.toIdentityId);
+                    }, (this.toIdentityId == cmUserModel.data.identity.id) ? undefined : this.toIdentityId);
                 }
             };
 
@@ -324,7 +335,8 @@ angular.module('cmCore')
                         data: {
                             id: this.id
                         }
-                    }, this.identity).then(
+                    }, (this.fromIdentityId == cmUserModel.data.identity.id) ? undefined : this.fromIdentityId)
+                    .then(
                         function(){
                             // do nothing
                             self.state.set('finished');
@@ -346,6 +358,18 @@ angular.module('cmCore')
                 if(this.state.is('outgoing') && !this.state.is('finished')){
                     cmUserModel.data.identity.load();
 
+                    var identity =  (self.fromIdentityId == cmUserModel.data.identity.id)
+                                    ?   cmUserModel.data.identity
+                                    :   cmContactsModel.findByIdentityId(self.fromIdentityId).identity
+
+                    console.log('i:')
+                    console.log(identity)
+                    console.log('fromKey:')
+
+                    self.setFromKey(identity.keys.find(self.fromKeyId))
+
+                    console.dir(self.fromKey)
+
                     cmUserModel.data.identity.one('update:finished', function(){
 
                         cmUserModel.data.identity.keys.forEach(function(key){
@@ -360,8 +384,8 @@ angular.module('cmCore')
                             }
                         });
 
-                        if(self.toKey.verifyKey(self.fromKey, cmUserModel.getTrustToken(self.fromKey, cmUserModel.data.identity.cameoId))){
-                            cmUserModel.signPublicKey(self.toKey, self.toKeyFingerprint);
+                        if(self.toKey.verifyKey(self.fromKey, cmUserModel.getTrustToken(self.fromKey, cmUserModel.data.identity.cameoId))) {
+                            cmUserModel.signPublicKey(self.toKey, self.toKeyFingerprint, identity);
                         } else {
                             cmLogger.debug('Error - cmAuthenticationRequestModel.finish - verify fail!');
                         }
@@ -375,32 +399,41 @@ angular.module('cmCore')
             this.on('secret:verified', function(){
                 cmLogger.debug('cmAuthenticationRequestModel.on:secret:verified');
 
-                if(self.state.is('incoming') && !self.state.is('finished')) {
-                    cmUserModel.signPublicKey(this.fromKey, this.fromKeyFingerprint);
+
+                if(self.state.is('incoming') && !self.state.is('finished')){ 
+                    var identity =  (self.fromIdentityId == cmUserModel.data.identity.id)
+                                    ?   cmUserModel.data.identity
+                                    :   cmContactsModel.findByIdentityId(self.fromIdentityId).identity
+
+                    console.log(this.fromKey)
+                    console.log(identity)
+
+                    cmUserModel.signPublicKey(this.fromKey, this.fromKeyFingerprint, identity)
+                    .then(function(){ console.log('jau')}, function(){ console.log('nay') })
+                    .finally(function(){
+                        cmLogger.debug('cmAuthenticationRequestModel - after signing');
+
+                        if(self.state.is('incoming') && !self.state.is('finished')){
+                            self.sendVerified();
+                        }
+        //
+                        if(self.state.is('outgoing') && !self.state.is('finished')){
+                            cmAuth.sendBroadcast({
+                                name: 'signatures:updated',
+                                data: {
+                                    id: cmUserModel.data.identity.id
+                                }
+                            }, (this.fromIdentityId == cmUserModel.data.identity.id) ? undefined : this.fromIdentityId)
+                            .finally(
+                                function(){
+                                    self.trigger('request:finished');
+                                }
+                            );
+                        }
+                    })
                 }
             });
 
-            cmUserModel.one('signatures:saved', function(){
-                cmLogger.debug('cmAuthenticationRequestModel - cmUserModel.on:signatures:saved');
-
-                if(self.state.is('incoming') && !self.state.is('finished')){
-                    self.sendVerified();
-                }
-//
-                if(self.state.is('outgoing') && !self.state.is('finished')){
-                    cmAuth.sendBroadcast({
-                        name: 'signatures:updated',
-                        data: {
-                            id: cmUserModel.data.identity.id
-                        }
-                    }, this.identity).finally(
-                        function(){
-                            self.trigger('request:finished');
-                        }
-                    );
-                }
-
-            });
 
 //            cmUserModel.on('signatures:cancel', function(){
 //                console.log('signatures:cancel');

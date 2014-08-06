@@ -42,8 +42,6 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
 
                     $scope.transactionSecret = cmCrypt.generateTransactionSecret();
 
-                    console.log(fromKey)
-
                     if(fromKey instanceof cmKey && $scope.toKey instanceof cmKey && $scope.transactionSecret != ''){
                         var dataForRequest = cmCrypt.signAuthenticationRequest({
                             identityId: cmUserModel.data.identity.id,
@@ -52,8 +50,10 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
                             toKey: $scope.toKey
                         });
 
-                        $scope.authenticationRequest.importData(dataForRequest);
-                        $scope.authenticationRequest.send();
+                        $scope.authenticationRequest
+                        .importData(dataForRequest)
+                        .setFromKey(fromKey)
+                        .send();
                     } else {
                         //error
                     }
