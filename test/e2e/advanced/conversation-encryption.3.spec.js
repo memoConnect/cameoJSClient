@@ -411,6 +411,8 @@ describe('Conversation encryption -', function () {
 
                 util.get("/talks")
                 util.headerSearchInList("password_" + date)
+
+
                 $("cm-conversation-tag").click()
 
                 util.waitForElement("cm-modal.active .cm-modal-alert")
