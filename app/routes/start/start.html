@@ -14,17 +14,18 @@
 
     <header class="inScreen">
         <i class="fa cm-key cm-lg-icon"></i>
-        {{'SETTINGS.PAGES.IDENTITY.KEYS.HEADER '| cmTranslate}}
+        {{'SETTINGS.PAGES.IDENTITY.KEYS.HEADER'| cmTranslate}}
     </header>
 
     <section class="keyInfo">
         <section
             class="page in-screen-message"
             data-qa="alert-key-needed"
-            ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE' | cmTranslate"></section>
+            ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE' | cmTranslate">
+        </section>
         <section class="skip">
             <input
-                    id="skipStartinput"
+                    id="skipStartInput"
                     data-qa="checkbox-skip-start"
                     name="skip"
                     type="checkbox"
@@ -40,7 +41,10 @@
                         'cm-checkbox-right':skipStart
                     }"
                     ng-click="setSkipStart()"></i>
-            <span ng-click="setSkipStart()">Show this Info again :D</span>
+            <button ng-click="setSkipStart()">Show this Info again :D</button>
+        </section>
+        <section>
+            <button ng-click="goToTalks()"> Key generieren und weiter!</button>
         </section>
     </section>
 </div>

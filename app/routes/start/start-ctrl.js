@@ -9,9 +9,13 @@ define([
     'use strict';
 
     app.register.controller('StartCtrl', [
-        'cmUserModel', 'cmUtil',
-        '$scope', '$rootScope', '$routeParams', '$location',
-        function(cmUserModel, cmUtil, $scope, $rootScope, $routeParams, $location) {
+        'cmUserModel', 'cmUtil', 'cmUserKeyStorage',
+        '$scope', '$location',
+        function(cmUserModel, cmUtil, cmUserKeyStorage, $scope, $location) {
+            var storageKey = "userSettings",
+                storageService = new cmUserKeyStorage(storageKey);
+
+
             $scope.showWelcome = false;
             $scope.skipStart = false;
 
@@ -24,14 +28,19 @@ define([
                 $scope.showWelcome = true;
             }
 
-
             $scope.setSkipStart = function(){
                 if(!$scope.skipStart){
+                    storageService.set('skipStart', true);
                     $scope.skipStart = true;
                 } else {
+                    storageService.set('skipStart', false);
                     $scope.skipStart= false;
                 }
-            }
+            };
+
+            $scope.goToTalks = function(){
+                $location.path('/talks');
+            };
         }
     ]);
 });
