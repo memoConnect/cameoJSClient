@@ -51,7 +51,11 @@
                 <cm-multi-input cm-collection="formData.phoneNumbers" cm-disabled="disabled">
                     <ng-form name="formPhone">
                         <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
-                            <input type="text" name="phoneNumber" ng-model="item.value" placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" ng-disabled="disabled" cm-validate-phone tabindex="2" data-qa="input-phonenumber" />
+                            <input
+                                type="text" name="phoneNumber" ng-model="item.value"
+                                placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}"
+                                ng-disabled="disabled" tabindex="2" data-qa="input-phonenumber"
+                                cm-validate-phone cm-adaptive-change />
                         </div>
                         <div cm-type-chooser cm-choose-value-to="item" cm-disabled="disabled" ng-class="{'cm-input-disabled':disabled}"></div>
                         <div class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">

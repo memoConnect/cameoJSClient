@@ -13,7 +13,7 @@
 
             <div
                 data-qa="form-input"
-                class="cm-input-ctn"
+                class="cm-input-ctn with-inside-icon"
                 ng-class="{'cm-input-error':getLoginNameError()}">
                 <input
                     id="loginName"
@@ -22,12 +22,20 @@
                     ng-class="{'cm-input-error':getLoginNameError()}"
                     type="text"
                     ng-model="formData.loginName"
-                    ng-keyup="verifyLoginName();"
+                    cm-adaptive-change
                     ng-minlength="6"
                     ng-maxlength="20"
                     maxlength="20"
                     placeholder="{{'REGISTER.PLACEHOLDER.USERNAME'|cmTranslate}} *"
                     required />
+                <i
+                    class="fa cm-input-addon"
+                    ng-class="{
+                        'cm-checkbox-wrong':showError.LoginNameExists || showError.LoginNameEmpty || showError.LoginNameInvalid,
+                        'cm-checkbox-right':!getLoginNameError()
+                    }"
+                    ng-show="formData.loginName"
+                    data-qa="icon-loginName-reserved"></i>
             </div>
             <div
                 class="cm-alert"
@@ -80,7 +88,7 @@
                 </div>
             </div>
 
-            <div class="cm-input-ctn" ng-class="{'cm-input-error':registrationForm.phone.$invalid}" data-qa="form-input">
+            <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':registrationForm.phone.$invalid}" data-qa="form-input">
                 <input
                     id="phone"
                     name="phone"
@@ -88,9 +96,17 @@
                     type="text"
                     placeholder="{{'REGISTER.PLACEHOLDER.PHONENUMBER'|cmTranslate}}"
                     ng-model="formData.phone"
+                    cm-validate-phone cm-adaptive-change
                     ng-minlength="6"
-                    ng-class="{'cm-input-error':registrationForm.phone.$invalid}"
-                    cm-validate-phone />
+                    ng-class="{'cm-input-error':registrationForm.phone.$invalid}" />
+                <i
+                    class="fa cm-input-addon"
+                    ng-class="{
+                        'cm-checkbox-wrong':registrationForm.phone.$dirty && registrationForm.phone.$invalid,
+                        'cm-checkbox-right':!(registrationForm.phone.$dirty && registrationForm.phone.$invalid)
+                    }"
+                    ng-show="formData.phone"
+                    data-qa="icon-phone-correct"></i>
             </div>
             <div class="cm-alert" ng-show="registrationForm.phone.$dirty && registrationForm.phone.$invalid" data-qa="register-info-invalid-phonenumber">
                 <div ng-show="registrationForm.phone.$invalid">

@@ -12,7 +12,7 @@ if [ -z "$device" ]; then
 	echo -e "\e[33m[ CameoClient - no device found ]\033[0m"
 	exit 1
 else
-	echo -e "\e[33m[ CameoClient - deploying after build to device: $devic e]\033[0m"
+	echo -e "\e[33m[ CameoClient - deploying after build to device: $device]\033[0m"
 fi
 
 echo -e "\e[33m[cameo - build phonegap]\033[0m"

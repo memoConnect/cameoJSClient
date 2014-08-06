@@ -35,7 +35,11 @@
             <cm-multi-input cm-collection="identity.phoneNumbers">
                 <ng-form name="formPhone">
                     <div class="cm-input-ctn with-chooser">
-                        <input type="text" name="phoneNumber" ng-model="item.value" placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" cm-validate-phone tabindex="3" data-qa="input-phonenumber" />
+                        <input
+                            type="text" name="phoneNumber" ng-model="item.value"
+                            placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}"
+                            cm-validate-phone cm-adaptive-change
+                            tabindex="3" data-qa="input-phonenumber" />
                     </div>
                     <div cm-type-chooser cm-choose-value-to="item"></div>
                     <div class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid" data-qa="form-error-phoneNumber-invalid">

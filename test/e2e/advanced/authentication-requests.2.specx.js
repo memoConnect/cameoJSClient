@@ -31,6 +31,7 @@ describe('Authentication requests -', function () {
     var event2
     var event3
     var event4
+    var eventCancel = {"name":"authenticationRequest:cancel" "data":""}
 
     it("create test user, generate key1 and export localStorage", function () {
         util.createTestUser(testUserId)
@@ -41,7 +42,6 @@ describe('Authentication requests -', function () {
         util.getToken().then(function(res){
             token = res
         })
-
     })
 
     it("delete first key from local storage and generate key2", function () {
@@ -75,7 +75,6 @@ describe('Authentication requests -', function () {
         util.getLocalStorage().then(function (lsexport) {
             localStorage3 = lsexport
         })
-        ptor.debugger()
     })
 
     it("a modal asking for authentication should open", function () {
@@ -107,7 +106,7 @@ describe('Authentication requests -', function () {
 
     it("get event2", function () {
         util.getEvents(token, eventSubscription).then(function(res){
-            event1 = res.data.events[0]
+            event2 = res.data.events[0]
         })
     })
 //
