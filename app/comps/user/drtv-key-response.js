@@ -9,6 +9,11 @@ angular.module('cmUser').directive('cmKeyResponse',[
             controller: function($scope){
                 $scope.spinner = false;
 
+                // TODO: upgrade protokoll for fromId in key-request
+                $scope.modalMessageVars = {
+                    device: $scope.authenticationRequest.fromKey.name
+                };
+
                 $scope.showSpinner = function(){
                     $scope.spinner = true;
                 };

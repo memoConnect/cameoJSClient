@@ -35,6 +35,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
 
                     // publickeys doesnt match trustedkeys
                     $scope.showUntrustedPublickeysExists =
+                        $scope.trustedKeys.length != $scope.publicKeys.length &&
                         $scope.trustedKeys.length >= 1 &&
                         $scope.publicKeys.length >= 1;
                 }

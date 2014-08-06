@@ -36,7 +36,7 @@ angular.module('cmUi').directive('cmAdaptiveChange', [
             restrict: 'A',
             require: 'ngModel',
             scope: false,
-            link: function(scope, element, attrs, ngModelCtrl){
+            link: function(scope, element, attrs, ngModel){
                 var timeout;
                 element
                 .unbind('input')
@@ -48,7 +48,7 @@ angular.module('cmUi').directive('cmAdaptiveChange', [
                     // create new timeout
                     timeout = $timeout(function(){
                         scope.$apply(function() {
-                            ngModelCtrl.$setViewValue(element.val());
+                            ngModel.$setViewValue(element.val());
                         });
                     },500);
                 });

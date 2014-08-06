@@ -359,7 +359,7 @@
                 "HANDSHAKE": {
                     "MODAL_HEADER": "Authentication",
                     "HANDSHAKE_DESCRIPTION": "HANDSHAKE_DESCRIPTION",
-                    "HANDSHAKE_NOW": "Do you want to authenticate this device against 'device'{{device}} now, to be able to read all talks written and encrypted on these devices by each other?<br>Please start the device 'device'{{device}} with the same identity 'identity'{{identity}}.",
+                    "HANDSHAKE_NOW": "Do you want to authenticate this device against <strong>'{{device}}'</strong> now, to be able to read all talks written and encrypted on these devices by each other?<br>Please start the device <strong>'{{device}}'</strong> with the same identity <strong>'{{identity}}'</strong>.",
                     "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
                     "CHOOSE_OLD_DEVICE": "Please select a device with which you want to perform the authentication!",
                     "CHOOSE": "Please select",
@@ -442,11 +442,11 @@
         },
         "KEY_REQUEST":{
             "HEADER": "Authentication",
-            "CONTENT": "There is a new cameoKey on this device which needs to be authenticated by another device. This is necessary to read all existing talks. Do you want to authenticate this cameoKey now?<br>Please start another device with the same identity 'identity'{{identity}}."
+            "CONTENT": "There is a new cameoKey on this device which needs to be authenticated by another device. This is necessary to read all existing talks. Do you want to authenticate this cameoKey now?<br>Please start another device with the same identity <strong>'{{identity}}'</strong>."
         },
         "KEY_RESPONSE":{
             "HEADER": "Authentication Request",
-            "CONTENT": "An other device which pretends to be yours asked to be authenticated by this device. After that your new device gets access to all of your encrypted talks.<br>Do you want to authenticate the following device 'device'{{device}}?"
+            "CONTENT": "An other device which pretends to be yours asked to be authenticated by this device. After that your new device gets access to all of your encrypted talks.<br>Do you want to authenticate the following device?"
         },
         "FOOTER": {
             "TALKS": "Talks",
