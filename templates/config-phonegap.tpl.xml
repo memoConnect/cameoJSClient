@@ -38,8 +38,6 @@
     <preference name="KeepRunning" value="true"/>
     <preference name="DisallowOverscroll" value="true"/>
 
-    <preference name="permissions" value="none"/>
-
     <!--<preference name="LoadingDialog" value=" "/>-->
     <!--<preference name="show-splash-screen-spinner" value="false" />-->
     <preference name="auto-hide-splash-screen" value="true" />
@@ -52,8 +50,10 @@
     <gap:platform name="winphone" />
     <gap:platform name="ios" />
 
-    <gap:plugin name="org.apache.cordova.console" />
-    <gap:plugin name="org.apache.cordova.contacts" />
+    <preference name="permissions" value="none"/>
+
+    <!--<gap:plugin name="org.apache.cordova.console" />-->
+    <!--<gap:plugin name="org.apache.cordova.contacts" />-->
 
     <!-- Icons paths relative to /www -->
     <icon src="res/icon/android/icon-36-ldpi.png" gap:platform="android" gap:density="ldpi" />
