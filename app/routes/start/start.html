@@ -17,34 +17,34 @@
         {{'SETTINGS.PAGES.IDENTITY.KEYS.HEADER'| cmTranslate}}
     </header>
 
-    <section class="keyInfo">
-        <section
-            class="page in-screen-message"
+    <section
+            class="keyInfo in-screen-message"
             data-qa="alert-key-needed"
             ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE' | cmTranslate">
-        </section>
-        <section class="skip">
-            <input
-                    id="skipStartInput"
-                    data-qa="checkbox-skip-start"
-                    name="skip"
-                    type="checkbox"
-                    ng-model="skipStart"
-                    class="ng-hide"
-                    required />
-            <i
-                    id="skipStart"
-                    data-qa="icon-checkbox-skip-start"
-                    class="fa cm-lg-icon cm-ci-color ml15"
-                    ng-class="{
+    </section>
+
+    <section class="skipInfo">
+        <input
+                id="skipStartInput"
+                data-qa="checkbox-skip-start"
+                name="skip"
+                type="checkbox"
+                ng-model="skipStart"
+                class="ng-hide"
+                required />
+        <i
+                id="skipStart"
+                data-qa="icon-checkbox-skip-start"
+                class="fa cm-lg-icon cm-ci-color ml15"
+                ng-class="{
                         'cm-checkbox':!skipStart,
                         'cm-checkbox-right':skipStart
                     }"
-                    ng-click="setSkipStart()"></i>
-            <button ng-click="setSkipStart()">Dont show me this page again :D</button>
-        </section>
+                ng-click="setSkipStart()"></i>
+        <button ng-click="setSkipStart()">{{'START.SKIP.TEXT' | cmTranslate}}</button>
+
         <section>
-            <button ng-click="goToTalks()"> Key generieren und weiter!</button>
+            <button class="btn cm-btn-block cm-btn-grey" ng-click="goToTalks()">{{'START.SKIP.BTN_TEXT' | cmTranslate}}</button>
         </section>
     </section>
 </div>
