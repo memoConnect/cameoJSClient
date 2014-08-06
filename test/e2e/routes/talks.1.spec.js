@@ -7,8 +7,14 @@ describe('talks', function () {
     var ptor = util.getPtorInstance()
     afterEach(function() { util.stopOnError() });
 
-    it('should be at "#/talks".', function () {
+    it('should be at "#/start".', function () {
         util.login()
+        util.expectCurrentUrl('#/start')
+
+    })
+
+    it('should go to talks', function(){
+        util.get('/talks')
         util.expectCurrentUrl('#/talks')
     })
 

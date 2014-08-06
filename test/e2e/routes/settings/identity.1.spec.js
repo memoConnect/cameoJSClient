@@ -18,7 +18,7 @@ describe('Route: Settings - Identity', function(){
     describe('Test 1 - GUI', function(){
         it('should be load at "#/settings/identity" after login.', function(){
             util.login()
-            util.expectCurrentUrl('#/talks')
+            util.expectCurrentUrl('#/start')
 
             util.get('/settings/identity')
             util.expectCurrentUrl('#/settings/identity')
@@ -74,7 +74,7 @@ describe('Route: Settings - Identity', function(){
         })
 
         it('should be logged in', function(){
-            util.expectCurrentUrl('#/talks')
+            util.expectCurrentUrl('#/start')
         })
 
         it('should go to identity settings', function(){
@@ -116,7 +116,7 @@ describe('Route: Settings - Identity', function(){
     describe('Test 3 - check Data after logout and login', function(){
         it('should be load at "#/settings/identity" after login.', function(){
             util.login(newTestUser, password)
-            util.expectCurrentUrl('#/talks')
+            util.expectCurrentUrl('#/start')
 
             util.get('/settings/identity')
             util.expectCurrentUrl('#/settings/identity')
@@ -151,7 +151,7 @@ describe('Route: Settings - Identity', function(){
     describe('Test4 - Form Errors on wrong Input', function(){
         it('should be load at "#/settings/identity" after login.', function(){
             util.login()
-            util.expectCurrentUrl('#/talks')
+            util.expectCurrentUrl('#/start')
 
             util.get('/settings/identity')
             util.expectCurrentUrl('#/settings/identity')
