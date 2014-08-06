@@ -209,7 +209,6 @@ app.register.controller('RegistrationCtrl', [
                 deferred.reject(data);
             }
 
-
             if($scope.registrationForm.$valid !== false){
                 deferred.resolve(data);
             } else {
