@@ -43,7 +43,7 @@ describe('check key maximum',function(){
 
     it('open keyoverview and a message should be present',function(){
         util.get('settings/identity/keys')
-        expect($("[data-qa='alert-key-needed']").isPresent()).toBe(true)
+        expect($("[data-qa='message-no-keys']").isPresent()).toBe(true)
         expect($("cm-footer").isPresent()).toBe(true)
     })
 
@@ -59,7 +59,7 @@ describe('check key maximum',function(){
 
     it('check if message and footer for create/import disapear', function(){
         util.expectCurrentUrl("settings/identity/keys")
-        expect($("[data-qa='alert-key-needed']").isPresent()).toBe(false)
+        expect($("[data-qa='message-no-keys']").isPresent()).toBe(false)
         expect($("cm-footer").isPresent()).toBe(false)
         $$("[data-qa='key-list-item']").then(function(elements){
             expect(elements.length).toEqual(1)
@@ -77,8 +77,8 @@ describe('check key maximum',function(){
         util.click("btn-remove-modal")
         util.click("btn-remove-key")
 
-        util.waitForElement("[data-qa='alert-key-needed']")
-        expect($("[data-qa='alert-key-needed']").isPresent()).toBe(true)
+        util.waitForElement("[data-qa='message-no-keys']")
+        expect($("[data-qa='message-no-keys']").isPresent()).toBe(true)
 
         $$("[data-qa='key-list-item']").then(function(elements){
             expect(elements.length).toEqual(0)

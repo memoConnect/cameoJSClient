@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('cmFiles').directive('cmBlobVideoAudio',[
+    'cmEnv', 'cmFilesAdapter',
     '$rootScope',
-    'cmFileTypes',
-    'cmEnv',
-    'cmFilesAdapter',
-    function ($rootScope, cmFileTypes, cmEnv, cmFilesAdapter) {
+    function (cmEnv, cmFilesAdapter,
+              $rootScope) {
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
@@ -24,7 +23,7 @@ angular.module('cmFiles').directive('cmBlobVideoAudio',[
                             fileReady(file);
 
                             var fileEl = angular
-                                .element('<div class="file '+cmFileTypes.find(file.type, file.name)+'" ></div>')
+                                .element('<div class="file '+file.detectedExtension+'" ></div>')
                                 .on('click',function(){
                                     file.promptSaveAs()
                                 });

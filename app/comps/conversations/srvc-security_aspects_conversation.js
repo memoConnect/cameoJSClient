@@ -72,7 +72,7 @@ angular.module('cmSecurityAspects')
                         return conversation.options.hasCaptcha;
                     },
                     toggleCheck: function(conversation){
-                        return !conversation.options.hasCaptcha
+                        return conversation.options.hasCaptcha
                     },
                     toggleCall: function(conversation){
                         conversation.disablePassCaptcha();

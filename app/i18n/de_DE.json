@@ -315,19 +315,19 @@
                 "KEYS": {
                     "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
                     "CREATE": {
-                        "HEADER": "cameoKey erstellen",
-                        "BUTTON": "erstellen"
+                        "HEADER": "cameoKey erzeugen",
+                        "BUTTON": "Erzeugen"
                     },
                     "IMPORT": {
                         "HEADER": "cameoKey importieren",
-                        "BUTTON": "importieren"
+                        "BUTTON": "Importieren"
                     },
                     "DETAIL": "cameoKey",
                     "KEY_SIZE": "Schlüsselstärke",
                     "IS_LOCAL": "lokal",
                     "IS_LOCAL_ON_THIS_DEVICE": "lokal auf diesem Gerät",
                     "NO_LOCALKEYS_ON_THIS_DEVICE": "Sie haben keinen cameoKey für Ihre Identität auf diesem Gerät. Um sicher zu kommunizieren, können Sie hier einen cameoKey für diese Identität <a href=\"#/settings/identity/keys/create\">erzeugen</a> oder <a href=\"#/settings/identity/keys/import\">importieren</a>.",
-                    "UNTRUSTED_PUBLICKEYS_EXISTS": "UNTRUSTED_PUBLICKEYS_EXISTS",
+                    "UNTRUSTED_PUBLICKEYS_EXISTS": "Sie haben für diese Identität auf mehreren Geräten cameoKeys, die Sie noch nicht gegeneinander authentifiziert haben. Dadurch können Sie Nachrichten, die Sie auf einem anderen Gerät geschrieben und verschlüsselt haben, hier nicht lesen und umgekehrt.<br>Um dieses Gerät gegen ein anderes zu authentifizieren, klicken sie in der Liste unten auf <ICON>.",
                     "TRUSTING": "Authentifikation",
                     "IS_TRUSTED": "ist authentifiziert",
                     "IS_UNTRUSTED": "ist nicht authentifiziert",
@@ -336,7 +336,7 @@
                     "REMOVE_KEY": "cameoKey löschen",
                     "REMOVE_KEY_REALLY": "Soll der cameoKey wirklich gelöscht werden?",
                     "CHOOSE_SIZE": "Schlüsselstärke wählen",
-                    "GENERATE": "neuen cameoKey generieren",
+                    "GENERATE": "cameoKey erzeugen",
                     "GENERATION_IN_PROGRESS": "Generierung läuft",
                     "GENERATION_TIME_PROGRESS": "verbrauchte Zeit: {{time}}",
                     "CANCEL": "Generierung abbrechen",
@@ -357,7 +357,7 @@
                 "HANDSHAKE": {
                     "MODAL_HEADER": "Authentifikation",
                     "HANDSHAKE_DESCRIPTION": "HANDSHAKE_DESCRIPTION",
-                    "HANDSHAKE_NOW": "Wollen Sie dieses Gerät gegen Ihr Geräte <device>{{device}} authentifizieren, so dass Sie auf beiden Geräten geschriebene Nachrichten dieser Identität entschlüsseln können?<br> Sie müssen dazu auf Ihrem Geräte <device>{{device}} cameoNet mit der selben Identität <identity>{{identity}} öffnen.Wollen Sie dies Gerät gegen Ihr Geräte <device>{{device}} authentifizieren, so dass Sie auf beiden Geräten geschriebene Nachrichten dieser Identität entschlüsseln können?<br> Sie müssen dazu auf Ihrem Geräte <device>{{device}} cameoNet mit der selben Identität <identity>{{identity}} öffnen.",
+                    "HANDSHAKE_NOW": "Wollen Sie dieses Gerät gegen 'device'{{device}} authentifizieren, so dass Sie auf beiden Geräten geschriebene und verschlüsselte Nachrichten dieser Identität lesen können?<br> Sie müssen dazu auf Ihrem Geräte 'device'{{device}} cameoNet mit der selben Identität 'identity'{{identity}} öffnen.<br> Sie müssen dazu auf Ihrem Geräte 'device'{{device}} cameoNet mit der selben Identität 'identity'{{identity}} öffnen.",
                     "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
                     "CHOOSE_OLD_DEVICE": "Bitte wählen Sie das Gerät aus, mit dem Sie die Authentifikation durchführen möchten!",
                     "CHOOSE": "Bitte wählen",
@@ -441,11 +441,11 @@
         },
         "KEY_REQUEST":{
             "HEADER": "Authentifizierung",
-            "CONTENT": "Sie haben einen neuen cameoKey auf diesem Gerät, der noch nicht authentifiziert wurde. D.h. Sie können ältere Nachrichten dieser Identität nicht entschlüsseln. Dies geschieht zu Ihrer Sicherheit.<br>Möchten Sie die Authentifikation jetzt durchführen?<br> Sie müssen dazu auf einem anderen Geräte cameoNet mit der selben Identität <identity>{{identity}} öffnen."
+            "CONTENT": "Sie haben einen neuen cameoKey auf diesem Gerät, der noch nicht authentifiziert wurde. D.h. Sie können ältere Nachrichten dieser Identität nicht entschlüsseln. Dies geschieht zu Ihrer Sicherheit.<br>Möchten Sie die Authentifikation jetzt durchführen?<br> Sie müssen dazu auf einem anderen Geräte cameoNet mit der selben Identität 'identity'{{identity}} öffnen."
         },
         "KEY_RESPONSE":{
             "HEADER": "Authentifizierungsanfrage",
-            "CONTENT": "Haben Sie soeben auf einem anderen Gerät <device>{{device}} einen neuen cameoKey erzeugt und möchten dort den Zugriff auf Ihre verschlüsselten Nachrichten erlauben?"
+            "CONTENT": "Haben Sie soeben auf einem anderen Gerät 'device'{{device}} einen neuen cameoKey erzeugt und möchten dort den Zugriff auf Ihre verschlüsselten Nachrichten erlauben?"
         },
         "FOOTER": {
             "TALKS": "Talks",

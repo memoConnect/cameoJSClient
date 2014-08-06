@@ -574,7 +574,9 @@ angular.module('cmConversations')
                     success     =   passphrase && this.messages.reduce(function (success, message){
                                         return success && message.decrypt();
                                     }, true);
-
+                /**
+                 * @TODO check, problem micha!
+                 */
                 if (success) {
                     this.trigger('decrypt:success');
 
