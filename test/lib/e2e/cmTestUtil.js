@@ -52,7 +52,7 @@ this.logout = function () {
     return this
 }
 
-this.login = function (username, password) {
+this.login = function (username, password, expectedRoute) {
 
     self.logout()
     self.get('/login')
@@ -71,7 +71,11 @@ this.login = function (username, password) {
 
     $("[data-qa='login-submit-btn']").click();
 
-    self.waitForPageLoad("/talks")
+    if(typeof expectedRoute == 'string' && expectedRoute.length > 0){
+        self.waitForPageLoad(expectedRoute)
+    } else {
+        self.waitForPageLoad('/start')
+    }
 
     return this
 }
@@ -98,7 +102,7 @@ this.createTestUser = function (testUserId) {
 
     $("[data-qa='btn-createUser']").click()
 
-    this.waitForPageLoad("/talks")
+    this.waitForPageLoad("/start")
 
     return loginName
 }
