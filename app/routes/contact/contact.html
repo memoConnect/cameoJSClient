@@ -16,13 +16,21 @@
                         <cm-key-level cm-data="identity.keys.getWeakestKeySize()"></cm-key-level>
                         <cm-contact-type cm-data="contact"></cm-contact-type>
                     </div>
-                    <button
-                        data-qa="start-new-conversation-btn"
-                        class="with-white-bg"
-                        ng-click="startConversation()"
-                        cm-weight="1">
-                        <i class="fa cm-new-talk"></i>
-                    </button>
+                    <div cm-weight = "1" class="with-white-bg">
+                        <button
+                            data-qa="start-new-conversation-btn"
+                            ng-click="startConversation()"
+                        >
+                            <i class="fa cm-new-talk"></i>
+                        </button>
+                        <br/>
+                        <button
+                            data-qa="start-trust-handshake-btn"
+                            ng-click="startTrustHandshake()"
+                        >
+                            <i class="fa cm-handshake"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

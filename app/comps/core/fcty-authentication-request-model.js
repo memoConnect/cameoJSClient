@@ -26,6 +26,10 @@ angular.module('cmCore')
             this.toKeyFingerprint = undefined;
             this.toKey = {};
 
+            //default is the current user's id
+            this.toIdentityId   = cmUserModel.data.identity.id
+            this.fromIdentityId = cmUserModel.data.identity.id
+
             function init(data){
 //                cmLogger.debug('cmAuthenticationRequestModel.init');
 
@@ -78,7 +82,7 @@ angular.module('cmCore')
             this.importKeyResponse = function(response){
 //                cmLogger.debug('cmAuthenticationRequestModel.importKeyResponse');
 
-                var toKey = cmUserModel.data.identity.keys.find(response.toKeyId);
+                var toKey = cmContactsModel.findByIdentityId(self.toIdentityId).identity.keys.find(response.toKeyId);
 
                 if(toKey instanceof cmKey && toKey.id == response.toKeyId && (toKey.getFingerprint() === response.toKeyFingerprint)){
                     this.toKeyId = response.toKeyId;
@@ -104,12 +108,12 @@ angular.module('cmCore')
             };
 
             this.setToIdentityId = function(identityId){
-                this.toIdentityId = identityId
+                this.toIdentityId = identityId 
                 return this
             }
 
             this.setFromIdentityId = function(identityId){
-                this.fromIdentityId = identityId
+                this.fromIdentityId = identityId 
                 return this
             }
 
@@ -204,8 +208,8 @@ angular.module('cmCore')
                  */
                 
                 var checkFromKeyId  = false,
-                    identity        =   cmContactsModel.reduce(function(identity, contact){
-                                            return identity || (contact.identity.id == this.fromIdentityId ? contact.identity : false)
+                    identity        =   cmContactsModel.contacts.reduce(function(identity, contact){
+                                            return identity || (contact.identity.id == self.fromIdentityId ? contact.identity : false)
                                         }, undefined)
                                         ||
                                         cmUserModel.data.identity
@@ -227,7 +231,7 @@ angular.module('cmCore')
                  * verify signature
                  */
                 if(!cmCrypt.verifyAuthenticationRequest({
-                        identityId: cmUserModel.data.identity.id,
+                        identityId: identity.id,
                         fromKey: this.fromKey,
                         encryptedTransactionSecret: this.encryptedTransactionSecret,
                         signature: this.signature
@@ -261,7 +265,7 @@ angular.module('cmCore')
             };
 
             this.send = function(){
-//                cmLogger.debug('cmAuthenticationRequestModel.send');
+               // cmLogger.debug('cmAuthenticationRequestModel.send');
 
                 if(this.verifyForm() !== false){
                     cmAuth.sendBroadcast({
@@ -293,7 +297,7 @@ angular.module('cmCore')
                             toKeyId: localKeys[0].id,
                             toKeyFingerprint: localKeys[0].getFingerprint()
                         }
-                    }, this.identity);
+                    }, this.fromIdentityId);
                 }
             };
 
@@ -304,9 +308,10 @@ angular.module('cmCore')
                     cmAuth.sendBroadcast({
                         name: "authenticationRequest:key-request",
                         data: {
-                            id: this.id
+                            id: this.id,
+                            fromIdentityId: this.fromIdentityId
                         }
-                    }, this.identity);
+                    }, this.toIdentityId);
                 }
             };
 

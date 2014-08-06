@@ -57,6 +57,12 @@ angular.module('cmContacts').service('cmContactsModel',[
                                         return contact.identity == identity
                                     })[0]
                                 }
+
+        this.findByIdentityId =   function(identityId){
+            return this.contacts.filter(function(contact){
+                return contact.identity.id == identityId
+            })[0]
+        }
   
         cmObject.addEventHandlingTo(this);
 

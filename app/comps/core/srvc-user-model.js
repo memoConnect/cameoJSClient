@@ -482,8 +482,8 @@ angular.module('cmCore')
         this.bulkReKeying = function(localKeyId, newKeyId){
             cmLogger.debug('cmUserModel.startBulkReKeying');
 
-            if(!this.state.is('rekying')){
-                this.state.set('rekying');
+            if(!this.state.is('rekeying')){
+                this.state.set('rekeying');
 
                 if(typeof localKeyId == 'string' && cmUtil.validateString(localKeyId)
                     && typeof newKeyId == 'string' && cmUtil.validateString(newKeyId))
@@ -517,12 +517,12 @@ angular.module('cmCore')
                                     ).finally(
                                         function(){
                                             self.trigger('bulkrekeying:finished');
-                                            self.state.unset('rekying');
+                                            self.state.unset('rekeying');
                                         }
                                     );
                                 } else {
                                     self.trigger('bulkrekeying:finished');
-                                    self.state.unset('rekying');
+                                    self.state.unset('rekeying');
                                 }
                             },function(){
                                 cmLogger.debug('cmUserModel.bulkReKeying - Request Error - getBulkPassphrases');
@@ -530,18 +530,18 @@ angular.module('cmCore')
                         ).finally(
                             function(){
                                 self.trigger('bulkrekeying:finished');
-                                this.state.unset('rekying');
+                                this.state.unset('rekeying');
                             }
                         );
                     } else {
                         cmLogger.debug('cmUserModel.bulkReKeying - Key Error - getBulkPassphrases');
                         self.trigger('bulkrekeying:finished');
-                        this.state.unset('rekying');
+                        this.state.unset('rekeying');
                     }
                 } else {
                     cmLogger.debug('cmUserModel.bulkReKeying - Parameter Error - getBulkPassphrases');
                     self.trigger('bulkrekeying:finished');
-                    this.state.unset('rekying');
+                    this.state.unset('rekeying');
                 }
             }
         };
