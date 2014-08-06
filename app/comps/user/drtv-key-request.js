@@ -9,6 +9,10 @@ angular.module('cmUser').directive('cmKeyRequest',[
             controller: function($scope){
                 $scope.spinner = false;
 
+                $scope.modalMessageVars = {
+                    identity: cmUserModel.data.identity.getDisplayName()
+                };
+
                 $scope.showSpinner = function(){
                     $scope.spinner = true;
                 };

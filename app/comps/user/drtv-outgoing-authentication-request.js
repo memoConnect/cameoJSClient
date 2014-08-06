@@ -16,6 +16,11 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
 
                 $scope.toKey = $scope.authenticationRequest.toKey || {};
 
+                $scope.modalMessageVars = {
+                    device: $scope.toKey.name,
+                    identity: cmUserModel.data.identity.getDisplayName()
+                };
+
                 function reset(){
                     $scope.step = 1;
                     $scope.transactionSecret = '';
