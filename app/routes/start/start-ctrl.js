@@ -9,18 +9,17 @@ define([
     'use strict';
 
     app.register.controller('StartCtrl', [
-        'cmUserModel', 'cmUtil', 'cmUserKeyStorage',
+        'cmUserModel', 'cmUtil', 'cmUserKeyStorageService',
         '$scope', '$location',
-        function(cmUserModel, cmUtil, cmUserKeyStorage, $scope, $location) {
-            var storageKey = "userSettings",
-                storageService = new cmUserKeyStorage(storageKey);
-
+        function(cmUserModel, cmUtil, cmUserKeyStorageService, $scope, $location) {
+            var storageKey = 'appSettings',
+                storageService = new cmUserKeyStorageService(storageKey);
 
             $scope.showWelcome = false;
-            $scope.skipStart = false;
+            $scope.skipStart = storageService.get('skipStart') || false;
 
             /**
-             * Welcome modal shown for new user
+             * Welcome message for new user
              */
             if(cmUserModel.comesFromRegistration !== false){
                 cmUserModel.comesFromRegistration = false;
@@ -34,7 +33,7 @@ define([
                     $scope.skipStart = true;
                 } else {
                     storageService.set('skipStart', false);
-                    $scope.skipStart= false;
+                    $scope.skipStart = false;
                 }
             };
 
