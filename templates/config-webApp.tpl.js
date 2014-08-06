@@ -128,6 +128,7 @@ cameo_config = {
         'contacts/requests': {"data-qa":'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
         'talks': {i18n:'MENU.TALKS', icon:'cm-envelope-closed'},
         'contacts': {i18n:'MENU.CONTACTS', icon:'cm-address-book'},
+        'settings/identity/keys': {"data-qa":'btn-menu-key-management', i18n:'MENU.KEYMANAGEMENT', icon:'cm-key'},
         'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings', subs:{}}
     },
 
@@ -139,14 +140,7 @@ cameo_config = {
 
     routeSettings: {
         'account': {i18n:'SETTINGS.ACCOUNT', icon:'cm-person', disabled:true},
-        'identity': {
-            i18n:'SETTINGS.IDENTITY',
-            icon:'cm-person',
-            shortLinks:{
-                'keys': {icon:'cm-key'}
-                //,'trust': {icon:'cm-trust'}
-            }
-        },
+        'identity': {i18n:'SETTINGS.IDENTITY', icon:'cm-person'},
         'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell', disabled:true},
         'contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-address-book', disabled:true},
         'app': {i18n:'SETTINGS.APP', icon:'cm-fix'},

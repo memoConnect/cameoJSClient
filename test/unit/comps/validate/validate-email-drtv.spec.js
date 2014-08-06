@@ -25,23 +25,28 @@ describe("Directive cmValidateEmail ", function(){
         input = angular.element('input', element)
     }))
 
+    it('default should be valid', function(){
+        expect(form.email.$valid).toBe(true)
+        expect(form.email.$invalid).toBe(false)
+    })
+
     it('should be valid, if element is empty', function(){
-        input.val('')
-        input.blur()
+        scope.email = ''
+        scope.$apply()
         expect(form.email.$valid).toBe(true)
         expect(form.email.$invalid).toBe(false)
     })
 
     it('should be valid, if value is correct email form', function(){
-        input.val('moep@excample.com')
-        input.blur()
+        scope.email = 'moep@excample.com'
+        scope.$apply()
         expect(form.email.$valid).toBe(true)
         expect(form.email.$invalid).toBe(false)
     })
 
     it('should be invalid, if value is incorrect', function(){
-        input.val('moep@example')
-        input.blur()
+        scope.email = 'moep@example'
+        scope.$apply()
         expect(form.email.$valid).toBe(false)
         expect(form.email.$invalid).toBe(true)
     })

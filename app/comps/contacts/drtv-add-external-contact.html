@@ -33,7 +33,10 @@
     <div class="form-group">
         <label class="{{labelSize}} control-label">{{'DRTV.VALIDATE_PHONE.LABEL'|cmTranslate}}</label>
         <div class="{{colSize}}">
-            <input type="text" class="form-control" name="phone" ng-model="data.phone" placeholder="{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}"  cm-validate-phone />
+            <input
+                type="text" class="form-control" name="phone" ng-model="data.phone"
+                placeholder="{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}"
+                cm-validate-phone cm-adaptive-change />
             <div cm-type-chooser choose-to-data="phoneProvider" choose-type="provider"></div>
             <div cm-type-chooser choose-to-data="phoneType"></div>
             <div class="alert alert-danger alert-mini-padding" ng-show="addExternContact.phone.$dirty && addExternContact.phone.$invalid">

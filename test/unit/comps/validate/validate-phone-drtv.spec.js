@@ -6,7 +6,7 @@ describe("Directive cmValidatePhone", function(){
         form,
         input,
         scope,
-        httpBackend
+        $httpBackend
 
     beforeEach(function(){
         module(function($provide){
@@ -15,8 +15,8 @@ describe("Directive cmValidatePhone", function(){
     })
 
     beforeEach(module('cmValidate'))
-    beforeEach(inject(function($compile, $rootScope, $httpBackend){
-        httpBackend = $httpBackend
+    beforeEach(inject(function($compile, $rootScope, _$httpBackend_){
+        $httpBackend = _$httpBackend_
 
         scope = $rootScope.$new()
         element = angular.element('<form name="form"><input name="phone" cm-validate-phone ng-model="phone" /></form>')
@@ -27,14 +27,41 @@ describe("Directive cmValidatePhone", function(){
         input = angular.element('input', element)
     }))
 
-    it('should be valid, if element is empty', function(){
-        input.val('')
-        input.blur()
+    it('default should be valid', function(){
         expect(form.phone.$valid).toBe(true)
         expect(form.phone.$invalid).toBe(false)
     })
 
-    /**
-     * TODO add MockUp Tests for httpBackend with Promises
-     */
+    it('should be valid, if element is empty', function(){
+        scope.phone = ''
+        scope.$apply()
+        expect(form.phone.$valid).toBe(true)
+        expect(form.phone.$invalid).toBe(false)
+    })
+
+    it('should be valid', function(){
+        scope.phone = '123456'
+        $httpBackend.expectPOST('/services/checkPhoneNumber', {phoneNumber:scope.phone}).respond(200, {
+            res: "OK",
+            data: {phoneNumber:'+'+scope.phone}
+        })
+        scope.$apply()
+        $httpBackend.flush()
+
+        expect(form.phone.$valid).toBe(true)
+        expect(form.phone.$invalid).toBe(false)
+    })
+
+    it('should be invalid', function(){
+        scope.phone = 'asd'
+        $httpBackend.expectPOST('/services/checkPhoneNumber', {phoneNumber:scope.phone}).respond(400, {
+            "res":"KO",
+            "data":{"phoneNumber":"+4912312"}
+        })
+        scope.$apply()
+        $httpBackend.flush()
+
+        expect(form.phone.$valid).toBe(false)
+        expect(form.phone.$invalid).toBe(true)
+    })
 })

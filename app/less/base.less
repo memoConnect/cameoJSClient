@@ -74,6 +74,11 @@ exp.:
 .is-selectable::selection {color:@cm-white;background:@cm-ci-color;}
 .is-selectable::-moz-selection {color:@cm-white;background:@cm-ci-color;}
 
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
+  background:@cm-white;
+  color:@cm-grey;
+}
+
 html, body {
     height:100%;
     margin:0;
@@ -93,10 +98,19 @@ pre {
 
 a {
   text-decoration: none !important;
-  color:@cm-ci-color;
   &:hover,
-  &:focus, {
+  &:focus {
     color:inherit;
+  }
+}
+// only extern links
+a[target='_blank'], .classic-link {
+  text-decoration: underline !important;
+  color:@cm-ci-color !important;
+  &:hover,
+  &:focus {
+    color:@cm-ci-color !important;
+    text-decoration: none !important;
   }
 }
 

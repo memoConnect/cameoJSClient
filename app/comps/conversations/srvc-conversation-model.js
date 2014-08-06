@@ -85,7 +85,7 @@ angular.module('cmConversations')
              * GUI Variable
              * @type {{level: string, class: string}}
              */
-            this.lockStatus         = {
+            this.lockStatus = {
                 'level': 2,
                 'class': 'safer'
             };
@@ -153,7 +153,7 @@ angular.module('cmConversations')
 
             this.userHasPrivateKey = function(){
                 return  cmUserModel.hasLocalKeys()
-            }
+            };
 
             /**
              * @todo !!!!
@@ -283,10 +283,10 @@ angular.module('cmConversations')
                 }
 
                 // getting locally saved pw for conversation
-                if(!this.isUserInPassphraseList()){
+//                if(!this.isUserInPassphraseList()){
                     if(this.password == undefined)
                         this.password = this.localPWHandler.get(this.id)
-                }
+//                }
 
                 this.initPassCaptcha(data);
 
@@ -408,7 +408,11 @@ angular.module('cmConversations')
                         function (conversation_data) {
                             self
                             .importData(conversation_data)
-                            .savePassCaptcha();                          
+                            .savePassCaptcha();
+
+                            if(typeof self.password == 'string' && self.password.length > 0){
+                                self.localPWHandler.get(conversation_data.id, self.password);
+                            }
 
                             self.state.unset('new');
                             self.trigger('save:finished');
@@ -564,7 +568,7 @@ angular.module('cmConversations')
              * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
-//                cmLogger.debug('cmConversationModel.decrypt');
+                cmLogger.debug('cmConversationModel.decrypt');
                 
                 var passphrase  =   this.getPassphrase(),
                     success     =   passphrase && this.messages.reduce(function (success, message){
@@ -575,7 +579,8 @@ angular.module('cmConversations')
                     this.trigger('decrypt:success');
 
                     // save password to localstorage
-                    if (this.password && !this.isUserInPassphraseList()){
+//                    if (typeof this.password == 'string' && this.password.length > 0 && !this.isUserInPassphraseList()){
+                    if (typeof this.password == 'string' && this.password.length > 0){
                         this.localPWHandler.set(this.id, this.password);
                     }
                 } else {
