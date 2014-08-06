@@ -298,31 +298,89 @@ describe('Authentication requests -', function () {
         checkKeyTrust(keyName3, false)
     })
 
+    it("start authentication request for key3", function(){
+        $$("[data-qa='key-list-item']").then(function (keys) {
+            keys.forEach(function (key) {
+                key.getText().then(function (text) {
+                    if (text.search(keyName3) > -1) {
+                        key.$("[data-qa='btn-start-handshake']").click()
+                    }
+                })
+            })
+        })
+        util.waitForElement("cm-modal.active [data-qa='btn-start']")
+        $("cm-modal.active [data-qa='btn-start']").click()
+        util.waitForElement("cm-modal.active [data-qa='transaction-secret-value']")
+        $("cm-modal.active [data-qa='transaction-secret-value']").getText().then(function (text) {
+            transactionSecret = text
+        })
+    })
+
+    it("get start event", function () {
+        util.getEvents(token, eventSubscription).then(function (res) {
+            startEvent = res.data.events.filter(function (event) {
+                return event.name == "authenticationRequest:start"
+            })[0]
+        })
+    })
+
+    it("delete localstorage and import key3", function () {
+        util.logout()
+        util.clearLocalStorage()
+        util.setLocalStorage(localStorage3.key, localStorage3.value)
+        util.login(testUser, "password")
+        util.get("/settings/identity/keys")
+        checkKeyTrust(keyName1, false)
+        checkKeyTrust(keyName2, false)
+        checkKeyTrust(keyName3, true)
+        util.waitForEventSubscription()
+    })
+
+    it("send start event", function () {
+        util.broadcastEvent(token, startEvent)
+    })
+
+    it("enter transaction secret", function () {
+        util.waitForElement("cm-modal.active [data-qa='inp-transactSecret']")
+        util.setVal("inp-transactSecret", transactionSecret)
+        $("cm-modal.active [data-qa='btn-acceptRequest']").click()
+        util.waitForElementDisappear("cm-modal.active")
+    })
+
+    it("all keys should now be trusted via transitive trust", function () {
+        util.waitForElements("[data-qa='key-list-item']", 3)
+        checkKeyTrust(keyName1, true)
+        checkKeyTrust(keyName2, true)
+        checkKeyTrust(keyName3, true)
+        ptor.debugger()
+    })
+
+    it("delete localstorage and import key1, all three keys should be truested", function () {
+        util.logout()
+        util.clearLocalStorage()
+        util.setLocalStorage(localStorage1.key, localStorage1.value)
+        util.login(testUser, "password")
+        util.get("/settings/identity/keys")
+        checkKeyTrust(keyName1, true)
+        checkKeyTrust(keyName2, true)
+        checkKeyTrust(keyName3, true)
+        ptor.debugger()
+    })
+
+    it("delete localstorage and import key2, all three keys should be truested", function () {
+        util.logout()
+        util.clearLocalStorage()
+        util.setLocalStorage(localStorage2.key, localStorage2.value)
+        util.login(testUser, "password")
+        util.get("/settings/identity/keys")
+        checkKeyTrust(keyName1, true)
+        checkKeyTrust(keyName2, true)
+        checkKeyTrust(keyName3, true)
+        ptor.debugger()
+    })
 
 
-//
-//    it("request authorization from key one", function () {
-//        $$("[data-qa='item-available-key']").then(function (elements) {
-//            elements[0].click()
-//            util.click("btn-startHandshake")
-//            util.getVal("transaction-secret-value").then(function(secret) {
-//                transactionSecret = secret
-//            })
-//        })
-//    })
-//
-//    it("delete key three and import key one", function(){
-//        util.logout()
-//        util.clearLocalStorage()
-//        util.login(testUser, "password")
-//        util.get("/settings/identity/keys")
-//        util.waitForElements("[data-qa='key-list-item']", 3)
-//        util.generateKey(1, keyName1)
-//    })
-//
-//    it("delete testUser", function () {
-//        console.log("Secret: " + secret)
-//        util.deleteTestUser(testUser)
-//    })
+
+
 
 })
