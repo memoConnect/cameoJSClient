@@ -96,8 +96,7 @@
                     type="text"
                     placeholder="{{'REGISTER.PLACEHOLDER.PHONENUMBER'|cmTranslate}}"
                     ng-model="formData.phone"
-                    cm-validate-phone
-                    cm-adaptive-change
+                    cm-validate-phone cm-adaptive-change
                     ng-minlength="6"
                     ng-class="{'cm-input-error':registrationForm.phone.$invalid}" />
                 <i
