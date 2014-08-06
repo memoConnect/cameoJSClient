@@ -4,8 +4,7 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
     'cmUserModel',
     'cmUtil',
     'cmLogger',
-    '$rootScope',
-    function(cmUserModel, cmLogger) {
+    function(cmUserModel, cmUtil, cmLogger) {
         function userKeyStorage(key){
             var self = this,
                 storageKey = undefined;
@@ -16,7 +15,7 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
                 if(typeof key == 'string' && cmUtil.validateString(key)){
                     storageKey = key;
                 } else {
-                    throw new Error("cmUserKeyStorage init failed! Key is not a valid string!")
+                    throw new Error("cmUserKeyStorage init failed! Key is not a valid string!");
                 }
             }
 
@@ -48,6 +47,20 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
                 list[key] = value;
 
                 cmUserModel.storageSave(storageKey, list);
+            };
+
+            this.is = function(key){
+                var list = getAll(),
+                    boolReturn = false;
+
+                if(key != undefined && // key exists
+                    cmUtil.checkKeyExists(list, key) && // is in properties
+                    list[key])// and is true
+                {
+                    boolReturn = true;
+                }
+
+                return boolReturn;
             };
 
             init(key);

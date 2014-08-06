@@ -41,11 +41,12 @@ angular.module('cmConversations')
     'cmSecurityAspectsConversation',
     'cmUtil',
     'cmFilesAdapter',
+    'cmUserKeyStorageService',
     '$q',
     '$rootScope',
     function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
               cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase,
-              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter,
+              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmUserKeyStorageService,
               $q, $rootScope){
 
         function ConversationModel(data){
@@ -96,29 +97,7 @@ angular.module('cmConversations')
 
             cmObject.addEventHandlingTo(this);
 
-            this.localPWHandler = {
-                localKey: 'pw',
-                set: function(id_conversation, password){
-                    var pw_list = this.getAll();
-
-                    pw_list[id_conversation] = password;
-
-                    cmUserModel.storageSave(this.localKey, pw_list);
-                },
-                get: function(id_conversation){
-                    var pw_list = this.getAll(),
-                        password = undefined;
-
-                    if(typeof pw_list == 'object' && Object.keys(pw_list).indexOf(id_conversation)!= -1){
-                        password = pw_list[id_conversation];
-                    }
-
-                    return password;
-                },
-                getAll: function(){
-                    return cmUserModel.storageGet(this.localKey) || {};
-                }
-            };
+            this.localPWHandler = new cmUserKeyStorageService('pw');
 
             /**
              * @ngdoc method
