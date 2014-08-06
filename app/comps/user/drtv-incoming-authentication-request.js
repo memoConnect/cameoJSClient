@@ -20,7 +20,6 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
                 $scope.spinner = false;
 
                 $scope.transactSecret = '';
-                $scope.step = 1;
 
                 $timeout(function(){
                     var input = $document[0].querySelector('#inp-transactSecret');
