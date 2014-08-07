@@ -63,12 +63,19 @@
     },
 
 	"START": {
-        "MODAL": {
-            "TITLE": "Willkommen im cameoNet!",
-            "TEXT": "cameoNet ist ein Ende-zu-Ende verschlüsselter OpenSource Messenger für sichere private und geschäftliche Kommunikation!\nACHTUNG: Dies ist die erste Beta-Version!\nDie App enthält Fehler, die Benutzerführung kann an vielen Stellen verbessert werden und noch nicht alle wichtigen Feature sind enthalten. Zur Zeit können wir leider auch noch nicht garantieren, dass all Ihre Daten dauerhaft erhalten bleiben. Daher bitten wir Sie, zunächst von wichtigen Daten lokale Kopien anzulegen.\nBitte helfen Sie uns, cameoNet zu verbessern. Wir freuen uns über jeden Fehler und Verbesserungsvorschlag, den Sie unter http://support.cameonet.de einstellen\nIhr cameoNet-Team."
-        },
+        "TITLE": "Willkommen im cameoNet!",
+        "TEXT": "cameoNet ist ein Ende-zu-Ende verschlüsselter OpenSource Messenger für sichere private und geschäftliche Kommunikation!\nACHTUNG: Dies ist die erste Beta-Version!\nDie App enthält Fehler, die Benutzerführung kann an vielen Stellen verbessert werden und noch nicht alle wichtigen Feature sind enthalten. Zur Zeit können wir leider auch noch nicht garantieren, dass all Ihre Daten dauerhaft erhalten bleiben. Daher bitten wir Sie, zunächst von wichtigen Daten lokale Kopien anzulegen.\nBitte helfen Sie uns, cameoNet zu verbessern. Wir freuen uns über jeden Fehler und Verbesserungsvorschlag, den Sie unter http://support.cameonet.de einstellen\nIhr cameoNet-Team.",
 		"YOUR_ID": "Deine cameoID",
-		"LOGOUT": "Abmelden"
+		"LOGOUT": "Abmelden",
+        "SKIP": {
+            "TEXT": "Zeige mir diese Seite nicht mehr an",
+            "BTN_TEXT": "Überspringen"
+        },
+        "EXPLORE": {
+            "TITLE": "START.EXPLORE.TITLE",
+            "TEXT": "START.EXPLORE.TEXT",
+            "BTN_TEXT": "START.EXPLORE.BTN_TEXT"
+        }
 	},
 
 	"VERIFICATION": {
@@ -123,7 +130,7 @@
             "REQUEST_CAPTCHA": "PassCaptcha anfordern",
             "SEND_CAPTCHA": "PassCaptcha senden",
             "KEY_GENERATION": "Um sicher zu kommunizieren, können Sie hier einen cameoKey für diese Identität erzeugen.",
-            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "Es wird ein Passwort verwendet, weil auf diesem Gerät kein cameoKey vorliegt."
+            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "Es ist ein Passwort notwendig, weil auf diesem Gerät kein cameoKey vorliegt."
         },
         "TAG": {
             "RECIPIENTS": "Empfänger",
@@ -359,7 +366,7 @@
                 "HANDSHAKE": {
                     "MODAL_HEADER": "Authentifikation",
                     "HANDSHAKE_DESCRIPTION": "HANDSHAKE_DESCRIPTION",
-                    "HANDSHAKE_NOW": "Wollen Sie dieses Gerät gegen <device>{{device}} authentifizieren, so dass Sie auf beiden Geräten geschriebene und verschlüsselte Nachrichten dieser Identität lesen können?<br> Sie müssen dazu auf Ihrem Geräte <device>{{device}} cameoNet mit der selben Identität <identity>{{identity}} öffnen.<br> Sie müssen dazu auf Ihrem Geräte <device>{{device}} cameoNet mit der selben Identität <identity>{{identity}} öffnen.",
+                    "HANDSHAKE_NOW": "Wollen Sie dieses Gerät gegen <strong>'{{device}}'</strong> authentifizieren, so dass Sie auf beiden Geräten geschriebene und verschlüsselte Nachrichten dieser Identität lesen können?<br> Sie müssen dazu auf Ihrem Gerät <strong>'{{device}}'</strong> cameoNet mit der selben Identität <strong>'{{identity}}'</strong> öffnen.",
                     "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
                     "CHOOSE_OLD_DEVICE": "Bitte wählen Sie das Gerät aus, mit dem Sie die Authentifikation durchführen möchten!",
                     "CHOOSE": "Bitte wählen",
@@ -443,11 +450,11 @@
         },
         "KEY_REQUEST":{
             "HEADER": "Authentifizierung",
-            "CONTENT": "Sie haben einen neuen cameoKey auf diesem Gerät, der noch nicht authentifiziert wurde. D.h. Sie können ältere Nachrichten dieser Identität nicht entschlüsseln. Dies geschieht zu Ihrer Sicherheit.<br>Möchten Sie die Authentifikation jetzt durchführen?<br> Sie müssen dazu auf einem anderen Geräte cameoNet mit der selben Identität <identity>{{identity}} öffnen."
+            "CONTENT": "Sie haben einen neuen cameoKey auf diesem Gerät, der noch nicht authentifiziert wurde. D.h. Sie können ältere Nachrichten dieser Identität nicht entschlüsseln. Dies geschieht zu Ihrer Sicherheit.<br>Möchten Sie die Authentifikation jetzt durchführen?<br> Sie müssen dazu auf einem anderen Geräte cameoNet mit der selben Identität <strong>'{{identity}}'</strong> öffnen."
         },
         "KEY_RESPONSE":{
             "HEADER": "Authentifizierungsanfrage",
-            "CONTENT": "Haben Sie soeben auf einem anderen Gerät <device>{{device}} einen neuen cameoKey erzeugt und möchten dort den Zugriff auf Ihre verschlüsselten Nachrichten erlauben?"
+            "CONTENT": "Haben Sie soeben auf einem anderen Gerät einen neuen cameoKey erzeugt und möchten dort den Zugriff auf Ihre verschlüsselten Nachrichten erlauben?"
         },
         "FOOTER": {
             "TALKS": "Talks",
@@ -506,7 +513,6 @@
             "CANCEL": "Abbrechen",
             "START": "Start"
         }
-
     },
 
     "JOB": {
