@@ -183,19 +183,20 @@ this.getEvents = function (token, subscriptionId) {
 }
 
 this.broadcastEvent = function (token, event) {
+
     return ptor.executeAsyncScript(function (token, event, apiUrl) {
 
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", apiUrl + "/event/broadcast", true);
+        xhr.open("POST", apiUrl + "/event/broadcast", true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 callback(JSON.parse(xhr.responseText))
             }
         }
-        xhr.send(event.stringify);
+        xhr.send(JSON.stringify(event));
     }, token, event, config.apiUrl)
 }
 
@@ -213,6 +214,17 @@ this.waitForPageLoad = function (expectedRoute) {
         })
 
     }, config.routeTimeout, 'waitForPage ' + (expectedRoute || 'any page') + ' timeout reached')
+    return this
+}
+
+this.waitForEventSubscription = function () {
+    ptor.wait(function () {
+        return ptor.executeScript('return window != undefined && window._eventSubscriptionId').then(function (subscriptionId) {
+            if (subscriptionId) {
+                return true
+            }
+        })
+    }, config.routeTimeout, 'waitForEventSubscription timeout reached')
     return this
 }
 
@@ -272,27 +284,12 @@ this.waitForElementDisappear = function (selector, timeout) {
     return this
 }
 
-this.waitForModalOpen = function (id) {
-
-    ptor.wait(function () {
-        return $("cm-modal.active").then(function (element) {
-            return element.isDisplayed()
-        })
-    }, config.routeTimeout, "waitForModalOpen " + id + " timeout reached")
-
-    return this
+this.waitForModalOpen = function () {
+   this.waitForElement("cm-modal.active")
 }
 
 this.waitForModalClose = function () {
-    ptor.wait(function () {
-        var allHidden = true
-        $$("cm-modal").each(function (element) {
-            if (element.isDisplayed()) {
-                allHidden = false
-            }
-        })
-        return allHidden
-    }, config.routeTimeout, "waitForModalClose timeout reached")
+   this.waitForElementDisappear("cm-modal.active")
 
     return this
 }
@@ -377,7 +374,6 @@ this.getLocalStorage = function () {
     var execute = function () {
         for (var key in localStorage) {
             if (key.length > 25) {
-                console.log(key)
                 var res = {
                     key: key,
                     value: localStorage.getItem(key)

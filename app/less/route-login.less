@@ -1,5 +1,8 @@
 .login-screen-start{
   background-color:@cm-overlay-dark;
+  div[cm-language-select]{
+    margin:2rem 0;
+  }
 }
 
 .cm-login-container{
@@ -16,6 +19,16 @@
 }
 
 .cm-login-text{
-  margin-top:2em;
   color:rgba(255, 255, 255, 0.5)
+}
+.login-page{
+    position:relative;
+  i.cm-beta{
+    position: absolute;
+    right: -1rem;
+    top: -0.2rem;
+    font-size:@cm-mega-font*5;
+    color:@cm-ci-color;
+    z-index: 100001;
+  }
 }
