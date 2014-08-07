@@ -42,15 +42,9 @@
             "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER"
         },
         "INFO": {
-            "MIN_LETTER_COUNT": "Please use at least {{count}} characters.",
             "TERMS": "You need to accept the terms of use.",
             "EMPTY": {
                 "PASSWORD": "Please enter a Password."
-            },
-            "USERNAME": {
-                "EXISTS": "Username already exists! Please choose another.",
-                "EMPTY": "Please enter a username.",
-                "INVALID": "Invalid username. Avoid spaces and special characters."
             },
             "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
             "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
@@ -418,6 +412,17 @@
             "INFO": {
                 "INVALID_PHONE_NUMBER": "The entered value does not seem to be a phone number.",
                 "EMPTY": "The phone number field is empty"
+            }
+        },
+        "VALIDATE_CAMEOID": {
+            "INFO": {
+                "MAX_LETTER_COUNT": "Please use a maximum of {{count}} characters.",
+                "MIN_LETTER_COUNT": "Please use at least {{count}} characters.",
+                "USERNAME": {
+                    "EXISTS": "Username already exists! Please choose another.",
+                    "EMPTY": "Please enter a username.",
+                    "INVALID": "Invalid username. Avoid spaces and special characters."
+                }
             }
         },
         "EXTERN_CONTACT": {

@@ -12,7 +12,7 @@ app.register.controller('RegistrationCtrl', [
               $scope, $rootScope, $location, $q) {
 
         $scope.formData = {
-            loginName: '',
+            cameoId: '',
             password: '',
             email: '',
             phone: '',
@@ -37,7 +37,7 @@ app.register.controller('RegistrationCtrl', [
             var deferred = $q.defer();
 
             var data = {
-                loginName: null,
+                cameoId: null,
                 password: null,
                 email: null,
                 phone: null,
@@ -45,15 +45,15 @@ app.register.controller('RegistrationCtrl', [
                 reservationSecret: null
             };
 
-            // check loginName
-            if ($scope.registrationForm.loginName.$valid == false) {
-                if($scope.registrationForm.loginName.$viewValue == undefined
-                || $scope.registrationForm.loginName.$viewValue.toString() == ''
+            // check loginName aka cameoId
+            if ($scope.registrationForm.cameoId.$valid == false) {
+                if($scope.registrationForm.cameoId.$viewValue == undefined
+                || $scope.registrationForm.cameoId.$viewValue.toString() == ''
                 ){
                     $rootScope.$broadcast('cm-login-name:invalid');
                 }
             } else {
-                data.loginName = $scope.registrationForm.loginName.$viewValue;
+                data.cameoId = $scope.registrationForm.cameoId.$viewValue;
             }
 
             // check password
@@ -94,11 +94,11 @@ app.register.controller('RegistrationCtrl', [
             }
 
             // check reservation secret - index for correct login name
-            if(data.loginName != null && cmUtil.objLen($scope.reservationSecrets) > 0){
-                if (!(data.loginName in $scope.reservationSecrets)) {
+            if(data.cameoId != null && cmUtil.objLen($scope.reservationSecrets) > 0){
+                if (!(data.cameoId in $scope.reservationSecrets)) {
                     cmNotify.warn('REGISTRATION.WARN.RESERVATIONSECRET_MISSING');
                 } else {
-                    data.reservationSecret = $scope.reservationSecrets[data.loginName];
+                    data.reservationSecret = $scope.reservationSecrets[data.cameoId];
                 }
             } else {
                 deferred.reject(data);
@@ -139,7 +139,7 @@ app.register.controller('RegistrationCtrl', [
                     cmAuth
                     .createUser(data)
                     .then(function(userData){
-                        cmUserModel.doLogin($scope.formData.loginName, $scope.formData.password).then(
+                        cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password).then(
                             function(){
                                 $scope.spinner('stop');
                                 cmUserModel.setIdentity(userData.identities[0]);

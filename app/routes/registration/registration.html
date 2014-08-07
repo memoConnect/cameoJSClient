@@ -11,7 +11,10 @@
         <form name="registrationForm" class="form-horizontal" role="form" autocomplete="off" novalidate>
             <h4>{{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}</h4>
 
-            <cm-login-name ng-model="formData.loginName" form-name="registrationForm" tabindex="1"></cm-login-name>
+            <cm-cameo-id
+                ng-model="formData.cameoId" form-name="registrationForm" tabindex="1"
+                placeholder="REGISTER.PLACEHOLDER.USERNAME"
+            ></cm-cameo-id>
 
             <cm-password ng-model="formData.password" tabindex="2"></cm-password>
 

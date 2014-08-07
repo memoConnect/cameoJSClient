@@ -6,7 +6,7 @@
         tabindex="{{tabindex}}" data-qa="input-loginName" required
         type="text" id="loginName" name="loginName" ng-class="{'cm-input-error':hasError()}"
         ng-model="loginName" cm-adaptive-change
-        placeholder="{{'REGISTER.PLACEHOLDER.USERNAME'|cmTranslate}} *" />
+        placeholder="{{placeholder|cmTranslate}} *" />
     <i
         class="fa cm-input-addon"
         ng-class="{
@@ -17,17 +17,17 @@
         data-qa="icon-loginName-reserved"></i>
 </div>
 <div class="cm-alert" ng-show="errors.toolong" data-qa="register-info-user-max-letter-count">
-    <i class="fa cm-info"></i>{{'REGISTER.INFO.MAX_LETTER_COUNT'|cmTranslate:{count: max} }}
+    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.MAX_LETTER_COUNT'|cmTranslate:{count: max} }}
 </div>
 <div class="cm-alert" ng-show="errors.tooshort" data-qa="register-info-user-min-letter-count">
-    <i class="fa cm-info"></i>{{'REGISTER.INFO.MIN_LETTER_COUNT'|cmTranslate:{count: min} }}
+    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.MIN_LETTER_COUNT'|cmTranslate:{count: min} }}
 </div>
 <div class="cm-alert" ng-show="errors.exists" data-qa="register-info-username-exists">
-    <i class="fa cm-info"></i>{{'REGISTER.INFO.USERNAME.EXISTS'|cmTranslate}}
+    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.USERNAME.EXISTS'|cmTranslate}}
 </div>
 <div class="cm-alert" ng-show="errors.empty" data-qa="register-info-username-empty">
-    <i class="fa cm-info"></i>{{'REGISTER.INFO.USERNAME.EMPTY'|cmTranslate}}
+    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.USERNAME.EMPTY'|cmTranslate}}
 </div>
 <div class="cm-alert" ng-show="errors.invalid" data-qa="register-info-username-invalid">
-    <i class="fa cm-info"></i>{{'REGISTER.INFO.USERNAME.INVALID'|cmTranslate}}
+    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.USERNAME.INVALID'|cmTranslate}}
 </div>

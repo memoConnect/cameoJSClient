@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmValidate').directive('cmLoginName',[
+angular.module('cmValidate').directive('cmCameoId',[
     'cmAuth',
     '$q', '$rootScope',
     function (cmAuth,
@@ -8,11 +8,12 @@ angular.module('cmValidate').directive('cmLoginName',[
         return {
             restrict: 'E',
             require: 'ngModel',
-            templateUrl: 'comps/validate/drtv-login-name.html',
+            templateUrl: 'comps/validate/drtv-cameo-id.html',
             scope: {
-                loginName: '=ngModel',
+                cameoId: '=ngModel',
                 formName: '@formName',
-                tabindex: '@tabindex'
+                tabindex: '@tabindex',
+                placeholder: '@placeholder'
             },
             controller: function($scope){
 
@@ -46,7 +47,7 @@ angular.module('cmValidate').directive('cmLoginName',[
 
                 function checkValue(value){
                     if(value == undefined || value == '' || !checkLength(value)){
-                        $scope.parentForm.loginName.$valid = false;
+                        $scope.parentForm.cameoId.$valid = false;
                         return false;
                     }
 
@@ -66,16 +67,16 @@ angular.module('cmValidate').directive('cmLoginName',[
                 setDefault();
 
                 $rootScope.$on('cm-login-name:invalid', function(){
-                    $scope.parentForm.loginName.$invalid = true;
-                    $scope.parentForm.loginName.$dirty = true;
+                    $scope.parentForm.cameoId.$invalid = true;
+                    $scope.parentForm.cameoId.$dirty = true;
 
-                    if(!checkValue($scope.parentForm.loginName.$viewValue))
+                    if(!checkValue($scope.parentForm.cameoId.$viewValue))
                         $scope.errors.empty = true;
 
                 });
 
                 $scope.hasReservationSecret = function(){
-                    return $scope.loginName in $scope.$parent.reservationSecrets;
+                    return $scope.cameoId in $scope.$parent.reservationSecrets;
                 };
 
                 $scope.hasError = function(){
@@ -84,18 +85,18 @@ angular.module('cmValidate').directive('cmLoginName',[
                     || $scope.errors.invalid
                     || $scope.errors.tooshort
                     || $scope.errors.toolong
-                    || ($scope.parentForm.loginName.$invalid && $scope.parentForm.loginName.$dirty)
+                    || ($scope.parentForm.cameoId.$invalid && $scope.parentForm.cameoId.$dirty)
                     ){
                         return true;
                     }
                     return false;
                 };
 
-                $scope.$watch('loginName',function (newValue) {
+                $scope.$watch('cameoId',function (newValue) {
                     setDefault();
 
                     if(!checkValue(newValue)){
-                        if($scope.parentForm.loginName.$invalid && $scope.parentForm.loginName.$dirty)
+                        if($scope.parentForm.cameoId.$invalid && $scope.parentForm.cameoId.$dirty)
                             $scope.errors.empty = true;
 
                         return false;
@@ -104,7 +105,7 @@ angular.module('cmValidate').directive('cmLoginName',[
 
                     // if input is'nt empty && is valid && reservation secret is'nt exists
                     if(!(newValue in $scope.$parent.reservationSecrets)){
-                        // check loginName
+                        // check cameoId
                         $scope.pendingAccountCheck = cmAuth.checkAccountName(newValue)
                             .then(
                             // valid case
@@ -112,7 +113,7 @@ angular.module('cmValidate').directive('cmLoginName',[
                                 // reservation secret to parent scope
                                 $scope.$parent.reservationSecrets[newValue] = data.reservationSecret;
 
-                                $scope.parentForm.loginName.$valid = true;
+                                $scope.parentForm.cameoId.$valid = true;
                             },
                             // invalid or exists
                             function(response){
@@ -136,7 +137,7 @@ angular.module('cmValidate').directive('cmLoginName',[
                                     }
                                 }
 
-                                $scope.parentForm.loginName.$valid = false;
+                                $scope.parentForm.cameoId.$valid = false;
                             }
                         );
                     }
