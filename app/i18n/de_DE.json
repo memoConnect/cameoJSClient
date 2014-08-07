@@ -70,6 +70,11 @@
         "SKIP": {
             "TEXT": "Zeige mir diese Seite nicht mehr an",
             "BTN_TEXT": "Überspringen"
+        },
+        "EXPLORE": {
+            "TITLE": "START.EXPLORE.TITLE",
+            "TEXT": "START.EXPLORE.TEXT",
+            "BTN_TEXT": "START.EXPLORE.BTN_TEXT"
         }
 	},
 

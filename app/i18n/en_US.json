@@ -70,6 +70,11 @@
         "SKIP": {
             "TEXT": "Don't show me this page again",
             "BTN_TEXT": "Skip"
+        },
+        "EXPLORE": {
+            "TITLE": "START.EXPLORE.TITLE",
+            "TEXT": "START.EXPLORE.TEXT",
+            "BTN_TEXT": "START.EXPLORE.BTN_TEXT"
         }
     },
 	

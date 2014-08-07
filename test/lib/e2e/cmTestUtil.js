@@ -102,6 +102,8 @@ this.createTestUser = function (testUserId) {
 
     $("[data-qa='btn-createUser']").click()
 
+    ptor.debugger()
+
     this.waitForPageLoad("/start")
 
     return loginName
@@ -208,7 +210,7 @@ this.waitForPageLoad = function (expectedRoute) {
                 if (expectedRoute == undefined || route.path.search(expectedRoute) != -1) {
                     return route.status == "success"
                 } else {
-//                        console.log("Error: unexpected route: " + route.path)
+                        console.log("Error: unexpected route: " + route.path)
                 }
             }
         })
