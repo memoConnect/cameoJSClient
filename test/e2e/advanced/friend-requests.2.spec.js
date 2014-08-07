@@ -1,7 +1,7 @@
 var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
-describe('Friendrequests', function () {
+describe('Friendrequests: ', function () {
 
     var ptor = util.getPtorInstance()
     var user1ToAccept = util.createTestUser()
@@ -14,7 +14,6 @@ describe('Friendrequests', function () {
         util.logout()
 
         describe('Friendrequests user2 "'+config.loginUser1+'" login and search for user1 "'+user1ToAccept+'"', function(){
-
 
             it('search', function(){
                 util.login(config.loginUser1,config.passwordUser1)
@@ -66,19 +65,7 @@ describe('Friendrequests', function () {
         describe('Friendrequests again "'+ user1ToAccept + '"', function(){
             it('login and accept', function() {
                 util.login(user1ToAccept, password)
-                util.waitForPageLoad("/talks")
-            })
-
-            /**
-             * @deprecated
-             */
-            xit('check notification', function(){
-                // close notify of new friendRequest (might remove this at some point)
-//                util.waitAndCloseNotify()
-                // bell is orange
-//                util.waitForElement("i.cm-bell-ring .cm-orange")
-//                ptor.sleep(5000)
-//                expect($('i.cm-bell-ring .cm-orange').isPresent()).toBe(true)
+                util.waitForPageLoad("/start")
             })
 
             it('accept request', function(){
