@@ -210,7 +210,7 @@ this.waitForPageLoad = function (expectedRoute) {
                 if (expectedRoute == undefined || route.path.search(expectedRoute) != -1) {
                     return route.status == "success"
                 } else {
-                        console.log("Error: unexpected route: " + route.path)
+//                        console.log("Error: unexpected route: " + route.path)
                 }
             }
         })
