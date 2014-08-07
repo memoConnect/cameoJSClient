@@ -49,6 +49,15 @@ describe('Route: Start - ', function () {
             expect($("[data-qa='btn-skip']").isDisplayed()).toBe(true)
         })
 
+
+        it('explore info should not be displayed', function(){
+            util.waitForElement("[data-qa='ctn-explore-info-header']");
+            expect($("[data-qa='ctn-explore-info-text']").isDisplayed()).toBe(false)
+
+            util.waitForElement("[data-qa='ctn-explore-info-text']");
+            expect($("[data-qa='ctn-explore-info-text']").isDisplayed()).toBe(false)
+        })
+
         it('after click on skip button, url should be talks', function(){
             $("[data-qa='btn-skip']").click()
             util.expectCurrentUrl('#/talks')
@@ -95,6 +104,14 @@ describe('Route: Start - ', function () {
 
             util.waitForElement("[data-qa='btn-skip']");
             expect($("[data-qa='btn-skip']").isDisplayed()).toBe(true)
+        })
+
+        it('explore info should not be displayed', function(){
+            util.waitForElement("[data-qa='ctn-explore-info-header']");
+            expect($("[data-qa='ctn-explore-info-text']").isDisplayed()).toBe(false)
+
+            util.waitForElement("[data-qa='ctn-explore-info-text']");
+            expect($("[data-qa='ctn-explore-info-text']").isDisplayed()).toBe(false)
         })
 
         it('after click on skip button, url should be talks', function(){
@@ -202,6 +219,17 @@ describe('Route: Start - ', function () {
              */
         })
 
+        it('should be displayed explore info at url "start"', function(){
+            util.get('/start');
+            util.expectCurrentUrl('#/start')
+
+            util.waitForElement("[data-qa='ctn-explore-info-header']");
+            expect($("[data-qa='ctn-explore-info-text']").isDisplayed()).toBe(true)
+
+            util.waitForElement("[data-qa='ctn-explore-info-text']");
+            expect($("[data-qa='ctn-explore-info-text']").isDisplayed()).toBe(true)
+        })
+
         it('user should be logged out', function () {
             util.logout();
             util.expectCurrentUrl('#/login')
@@ -210,6 +238,26 @@ describe('Route: Start - ', function () {
         it('after login url should be talks', function () {
             util.login(newTestUser, password, '/talks');
             util.expectCurrentUrl('#/talks')
+        })
+
+        it('should be displayed explore info at url "start"', function(){
+            util.get('/start');
+            util.expectCurrentUrl('#/start')
+
+            util.waitForElement("[data-qa='ctn-explore-info-header']");
+            expect($("[data-qa='ctn-explore-info-text']").isDisplayed()).toBe(true)
+
+            util.waitForElement("[data-qa='ctn-explore-info-text']");
+            expect($("[data-qa='ctn-explore-info-text']").isDisplayed()).toBe(true)
+        })
+
+        it('should go to "talks"', function(){
+            util.waitForElement("[data-qa='btn-explore']");
+            expect($("[data-qa='btn-explore']").isDisplayed()).toBe(true)
+
+            $("[data-qa='btn-explore']").click()
+
+            util.waitForPageLoad('/talks')
         })
     })
 

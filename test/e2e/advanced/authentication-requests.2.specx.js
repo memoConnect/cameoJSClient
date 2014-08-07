@@ -132,7 +132,7 @@ describe('Authentication requests -', function () {
     it("delete local storage and generate key2", function () {
         util.logout()
         util.clearLocalStorage()
-        util.login(testUser, "password")
+        util.login(testUser, "password", "/start")
         util.get("/settings/identity/keys")
         util.waitForElement("[data-qa='key-list-item']")
         ptor.debugger()
