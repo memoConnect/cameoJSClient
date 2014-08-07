@@ -467,8 +467,10 @@ angular.module('cmCore').provider('cmApi',[
                     api.stopListeningToEvents()
                     //Start listening:
                     if(!events_disabled && events_interval) {
-                        api.getEvents(false)
-                        api._events_promise = $interval(function () {api.getEvents(false)}, events_interval, 0, false)
+//                        api.getEvents(false)
+                        api._events_promise = $interval(function () {
+                            api.getEvents(false)
+                        }, events_interval, 0, false)
                     }
                 }
 
