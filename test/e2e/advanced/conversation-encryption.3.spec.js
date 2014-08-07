@@ -24,7 +24,7 @@ describe('Conversation encryption -', function () {
 
         // use first recipient to create conversation
         it("create new conversation", function () {
-            util.login(sender.login, "password")
+            util.login(sender.login, "password", "/start")
             util.get("/conversation/new")
             // clear all test user messages
             util.getTestUserNotifications(recipients[0].login)
@@ -168,7 +168,7 @@ describe('Conversation encryption -', function () {
                         util.logout()
                         conversationRoute = "/purl/" + purl
                     } else {
-                        util.login(recipient.login, "password")
+                        util.login(recipient.login, "password", "/start")
                         conversationRoute = "/conversation/" + conversationId
                     }
                     util.get(conversationRoute)
@@ -384,10 +384,10 @@ describe('Conversation encryption -', function () {
         it("delete key and create local key for user2", function () {
             util.logout()
             util.clearLocalStorage()
-            util.login(testUser2, "password")
+            util.login(testUser2, "password", "/start")
             util.generateKey()
             util.closeKeyRequestModal()
-            util.login(testUser1, "password")
+            util.login(testUser1, "password", "/start")
         })
 
         describe("open existing conversations -", function () {
