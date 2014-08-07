@@ -255,7 +255,7 @@ app.register.controller('RegistrationCtrl', [
                                         $location.path('/purl/'+$rootScope.pendingPurl);
                                     } else {
                                         cmUserModel.comesFromRegistration = true;
-                                        $location.path("/talks");
+                                        $location.path("/start");
                                     }
                                 },
                                 function(){

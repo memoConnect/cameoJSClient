@@ -10,7 +10,7 @@ describe('Textarea Resize', function () {
 
     it('login & open new conversation', function () {
         util.login()
-        util.waitForPageLoad('/talks')
+        util.waitForPageLoad('/start')
 
         util.get('/conversation/new')
         util.waitForPageLoad('/conversation/new')

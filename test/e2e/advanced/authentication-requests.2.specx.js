@@ -378,9 +378,4 @@ describe('Authentication requests -', function () {
         checkKeyTrust(keyName3, true)
         ptor.debugger()
     })
-
-
-
-
-
 })
