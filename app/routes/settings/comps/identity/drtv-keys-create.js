@@ -7,7 +7,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
              $window, $location){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/drtv-identity-keys-create.html',
+            templateUrl: 'routes/settings/comps/identity/drtv-keys-create.html',
             controller: function ($scope) {
                 // only one privKey!!!
                 if(cmUserModel.hasPrivateKey()){

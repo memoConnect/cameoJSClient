@@ -1,16 +1,15 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmIdentitySettings', [
-    'cmUserModel',
-    'cmNotify',
-    '$location',
-    '$q',
-    function(cmUserModel, cmNotify, $location, $q){
+angular.module('cmRouteSettings').directive('cmIdentityCreate', [
+    'cmUserModel', 'cmNotify',
+    '$location', '$q',
+    function(cmUserModel, cmNotify,
+             $location, $q){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/drtv-identity-settings.html',
+            templateUrl: 'routes/settings/comps/identity/drtv-create.html',
             controller: function ($scope) {
-                $scope.identity = angular.extend({},cmUserModel.data.identity);
+                $scope.identity = {};
 
                 //////////////////////
                 // TODO: mock workarround json in array
@@ -22,10 +21,6 @@ angular.module('cmRouteSettings').directive('cmIdentitySettings', [
                 ];
                 //////////////////////
 
-                $scope.goToKeys = function(){
-                    $location.path('/settings/identity/keys');
-                };
-
                 $scope.validateForm = function(){
                     var deferred = $q.defer();
 
@@ -36,9 +31,9 @@ angular.module('cmRouteSettings').directive('cmIdentitySettings', [
                     }
 
                     return deferred.promise;
-                }
+                };
 
-                $scope.saveIdentity = function(){
+                $scope.addIdentity = function(){
                     var objectChange = {};
 
                     $scope.validateForm().then(

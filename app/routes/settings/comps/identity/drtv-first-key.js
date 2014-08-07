@@ -7,7 +7,7 @@ angular.module('cmRouteSettings').directive('cmIdentityFirstKey', [
              $window,cmAuth){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/drtv-identity-first-key.html',
+            templateUrl: 'routes/settings/comps/identity/drtv-first-key.html',
             controller: function ($scope) {
             }
         }

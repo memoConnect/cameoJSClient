@@ -16,7 +16,7 @@ angular.module('cmUser').directive('cmIdentityModal',[
                     $location.path('/settings/identity/new');
                 };
 
-                $scope.goToIdentitySettings = function(){
+                $scope.goToSettings = function(){
                     if($location.$$url == '/settings/identity'){
                         cmModal.close('modal-identity-' + $scope.randModalId);
                     }

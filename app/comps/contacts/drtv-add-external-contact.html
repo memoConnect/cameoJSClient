@@ -7,7 +7,10 @@
         <label class="{{labelSize}} control-label">{{'CONTACTS.LABEL.DISPLAYNAME'|cmTranslate}}*</label>
         <div class="{{colSize}}">
             <div class="input-group">
-                <input type="text" class="form-control" name="displayName" ng-model="data.displayName" required ng-keyup="handlePristine()" />
+                <input
+                    tabindex="1"
+                    type="text" class="form-control" name="displayName"
+                    ng-model="data.displayName" required ng-keyup="handlePristine()" />
                 <span class="input-group-addon self-size"><i class="fa" ng-class="{'fa-check':!displayNameExists,'fa-times':displayNameExists}"></i></span>
             </div>
             <div class="alert alert-danger alert-mini-padding" ng-show="addExternContact.displayName.$valid && displayNameExists">
@@ -19,14 +22,20 @@
     <div class="form-group">
         <label class="{{labelSize}} control-label">{{'CONTACTS.LABEL.NAME'|cmTranslate}}*</label>
         <div class="{{colSize}}">
-            <input type="text" class="form-control" name="name" ng-model="data.name" ng-keyup="createDisplayName()" required />
+            <input
+                tabindex="2"
+                type="text" class="form-control" name="name" ng-model="data.name"
+                ng-keyup="createDisplayName()" required />
         </div>
     </div>
 
     <div class="form-group">
         <label class="{{labelSize}} control-label">{{'CONTACTS.LABEL.SURNAME'|cmTranslate}}*</label>
         <div class="{{colSize}}">
-            <input type="text" class="form-control" name="surName" ng-model="data.surName" ng-keyup="createDisplayName()" required />
+            <input
+                tabindex="3"
+                type="text" class="form-control" name="surName" ng-model="data.surName"
+                ng-keyup="createDisplayName()" required />
         </div>
     </div>
 
@@ -34,9 +43,10 @@
         <label class="{{labelSize}} control-label">{{'DRTV.VALIDATE_PHONE.LABEL'|cmTranslate}}</label>
         <div class="{{colSize}}">
             <input
+                tabindex="4"
                 type="text" class="form-control" name="phone" ng-model="data.phone"
-                placeholder="{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}"
-                cm-validate-phone cm-adaptive-change />
+                cm-validate-phone cm-adaptive-change
+                placeholder="{{'DRTV.VALIDATE_PHONE.PLACEHOLDER'|cmTranslate}}" />
             <div cm-type-chooser choose-to-data="phoneProvider" choose-type="provider"></div>
             <div cm-type-chooser choose-to-data="phoneType"></div>
             <div class="alert alert-danger alert-mini-padding" ng-show="addExternContact.phone.$dirty && addExternContact.phone.$invalid">
@@ -48,7 +58,10 @@
     <div class="form-group">
         <label class="{{labelSize}} control-label">{{'DRTV.VALIDATE_EMAIL.LABEL'|cmTranslate}}</label>
         <div class="{{colSize}}">
-            <input type="text" class="form-control" name="email" ng-model="data.email" placeholder="{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}" cm-validate-email />
+            <input
+                tabindex="5"
+                type="text" class="form-control" name="email" ng-model="data.email"
+                placeholder="{{'DRTV.VALIDATE_EMAIL.PLACEHOLDER'|cmTranslate}}" cm-validate-email />
             <div cm-type-chooser choose-to-data="email_type"></div>
             <div class="alert alert-danger alert-mini-padding" ng-show="addExternContact.email.$dirty && addExternContact.email.$invalid">
                 {{'DRTV.VALIDATE_EMAIL.INFO.INVALID'|cmTranslate}}

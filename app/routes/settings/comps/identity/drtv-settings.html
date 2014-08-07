@@ -4,42 +4,37 @@
     <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
 
-<header class="inScreen">
-    <i class="fa cm-key cm-lg-icon"></i>
-    {{'SETTINGS.PAGES.IDENTITY.CREATE.HEADER'|cmTranslate}}
-</header>
-
 <div class="cm-contact-body">
+    <div class="cm-contact-details" cm-rubber-space>
+        <div cm-weight="1">
+            <cm-avatar cm-data="identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-if="identity"></cm-avatar>
+        </div>
+        <div cm-weight="1">
+            <button class="cm-btn-block cm-btn-grey btn-identity-keys" ng-click="goToKeys()" data-qa="btn-identity-keys">{{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}} <i class="fa cm-key"></i></button>
+            <button class="cm-btn-block cm-btn-grey btn-identity-trust cm-disabled" data-qa="btn-identity-trust">{{'IDENTITY.LABEL.TRUST'|cmTranslate}} <i class="fa cm-checker"></i></button>
+        </div>
+    </div>
+
     <div class="cm-contact-inputs">
         <form name="cmForm" novalidate>
-
             <div class="cm-input-ctn with-inside-icon cm-icon-grey">
                 <i class="fa cm-rhino-positive"></i>
                 <input
-                    data-qa="input-cameoid"
+                    tabindex="1" data-qa="input-cameoId" required disabled
                     type="text" name="cameoId" ng-model="identity.cameoId"
-                    placeholder="{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.CAMEOID'|cmTranslate}}"
-                    required tabindex="1" />
+                    placeholder="{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}" />
             </div>
 
             <div class="cm-input-ctn">
                 <input
-                    data-qa="input-displayname"
-                    type="text" name="displayName" ng-model="identity.displayName"
-                    placeholder="{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}"
-                    required tabindex="2" ng-keyup="validDisplayName()" />
+                    tabindex="2" data-qa="input-displayname" required
+                    type="text" name="displayName" ng-model="identity.displayName" ng-keyup="validDisplayName();"
+                    placeholder="{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" />
             </div>
 
-            <div
-                class="cm-alert"
-                ng-show="
-                    cmForm.displayName.$dirty &&
-                    cmForm.displayName.$invalid &&
-                    cmForm.displayName.length > 0
-                ">
+            <div class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid && cmForm.displayName.length > 0">
                 <div ng-show="cmForm.displayName.$error.required">
-                    <i class="fa cm-info"></i>
-                    {{'SETTINGS.PAGES.IDENTITY.CREATE.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
+                    <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
                 </div>
             </div>
 
@@ -47,23 +42,14 @@
                 <ng-form name="formPhone">
                     <div class="cm-input-ctn with-chooser">
                         <input
-                            data-qa="input-phonenumber"
-                            type="text" name="phoneNumber" ng-model="item.value"
-                            placeholder="{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.PHONENUMBER'|cmTranslate}}"
-                            cm-validate-phone cm-adaptive-change
-                            tabindex="3" />
+                            tabindex="3" data-qa="input-phonenumber"
+                            type="text" name="phoneNumber" ng-model="item.value" cm-validate-phone cm-adaptive-change
+                            placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" />
                     </div>
                     <div cm-type-chooser cm-choose-value-to="item"></div>
-                    <div
-                        class="cm-alert"
-                        ng-show="
-                            formPhone.phoneNumber.$dirty &&
-                            formPhone.phoneNumber.$invalid
-                        "
-                        data-qa="form-error-phoneNumber-invalid">
+                    <div class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid" data-qa="form-error-phoneNumber-invalid">
                         <div ng-show="formPhone.phoneNumber.$invalid">
-                            <i class="fa cm-info"></i>
-                            {{'SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.PHONENUMBER'|cmTranslate}}
+                            <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
                         </div>
                     </div>
                 </ng-form>
@@ -73,17 +59,14 @@
                 <ng-form name="formEmail">
                     <div class="cm-input-ctn with-chooser">
                         <input
-                            data-qa="input-email"
-                            name="email" ng-model="item.value"
-                            placeholder="{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.EMAIL'|cmTranslate}}"
-                            cm-validate-email
-                            tabindex="4" />
+                            tabindex="4" data-qa="input-email"
+                            name="email" ng-model="item.value" cm-validate-email
+                            placeholder="{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}" />
                     </div>
                     <div cm-type-chooser cm-choose-value-to="item"></div>
                     <div class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
                         <div ng-show="formEmail.email.$invalid" data-qa="form-error-email-invalid">
-                            <i class="fa cm-info"></i>
-                            {{'SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.EMAIL'|cmTranslate}}
+                            <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
                         </div>
                     </div>
                 </ng-form>
@@ -107,7 +90,5 @@
 </div>
 
 <cm-footer cm-always-on-top>
-    <button class="cm-btn-block cm-btn-grey" ng-click="createIdentity()" data-qa="btn-identity-create">
-        {{'SETTINGS.PAGES.IDENTITY.CREATE.FOOTER'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i>
-    </button>
+    <button class="cm-btn-block cm-btn-grey" ng-click="saveIdentity()" data-qa="btn-saveIdentity">{{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
 </cm-footer>

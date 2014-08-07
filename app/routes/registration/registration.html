@@ -16,18 +16,11 @@
                 class="cm-input-ctn with-inside-icon"
                 ng-class="{'cm-input-error':getLoginNameError()}">
                 <input
-                    id="loginName"
-                    name="loginName"
-                    data-qa="input-loginName"
-                    ng-class="{'cm-input-error':getLoginNameError()}"
-                    type="text"
-                    ng-model="formData.loginName"
-                    cm-adaptive-change
-                    ng-minlength="6"
-                    ng-maxlength="20"
-                    maxlength="20"
-                    placeholder="{{'REGISTER.PLACEHOLDER.USERNAME'|cmTranslate}} *"
-                    required />
+                    tabindex="1" data-qa="input-loginName"
+                    type="text" id="loginName" name="loginName" ng-class="{'cm-input-error':getLoginNameError()}"
+                    ng-model="formData.loginName" cm-adaptive-change ng-minlength="6" ng-maxlength="20"
+                    maxlength="20" required
+                    placeholder="{{'REGISTER.PLACEHOLDER.USERNAME'|cmTranslate}} *" />
                 <i
                     class="fa cm-input-addon"
                     ng-class="{
@@ -63,24 +56,18 @@
 
             <div class="cm-input-ctn" data-qa="form-input">
                 <input
-                    id="displayName"
-                    name="displayName"
-                    data-qa="input-displayName"
-                    type="text"
-                    placeholder="{{'REGISTER.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}"
-                    ng-model="formData.displayName" />
+                    tabindex="2" data-qa="input-displayName"
+                    type="text" id="displayName" name="displayName" ng-model="formData.displayName"
+                    placeholder="{{'REGISTER.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" />
             </div>
 
             <div class="cm-input-ctn" ng-class="{'cm-input-error':registrationForm.email.$invalid}" data-qa="form-input">
                 <input
-                    id="email"
-                    name="email"
-                    data-qa="input-email"
-                    type="text"
-                    placeholder="{{'REGISTER.PLACEHOLDER.EMAIL'|cmTranslate}}"
-                    ng-model="formData.email"
-                    ng-class="{'cm-input-error':registrationForm.email.$invalid}"
-                    cm-validate-email />
+                    tabindex="3" data-qa="input-email"
+                    type="text" id="email" name="email"
+                    ng-model="formData.email" ng-class="{'cm-input-error':registrationForm.email.$invalid}"
+                    cm-validate-email
+                    placeholder="{{'REGISTER.PLACEHOLDER.EMAIL'|cmTranslate}}" />
             </div>
             <div class="cm-alert" ng-show="registrationForm.email.$dirty && registrationForm.email.$invalid" data-qa="register-info-invalid-mail">
                 <div ng-show="registrationForm.email.$invalid">
@@ -90,15 +77,11 @@
 
             <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':registrationForm.phone.$invalid}" data-qa="form-input">
                 <input
-                    id="phone"
-                    name="phone"
-                    data-qa="input-phone"
-                    type="text"
-                    placeholder="{{'REGISTER.PLACEHOLDER.PHONENUMBER'|cmTranslate}}"
-                    ng-model="formData.phone"
-                    cm-validate-phone cm-adaptive-change
-                    ng-minlength="6"
-                    ng-class="{'cm-input-error':registrationForm.phone.$invalid}" />
+                    tabindex="4" data-qa="input-phone"
+                    type="text" id="phone" name="phone"
+                    ng-model="formData.phone" cm-validate-phone cm-adaptive-change ng-minlength="6"
+                    ng-class="{'cm-input-error':registrationForm.phone.$invalid}"
+                    placeholder="{{'REGISTER.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" />
                 <i
                     class="fa cm-input-addon"
                     ng-class="{
@@ -118,13 +101,9 @@
                 {{'REGISTER.LABEL.TERMS_ACCEPT'|cmTranslate}}
                 <a href="#/terms" data-qa="link-terms" class="classic-link">{{'REGISTER.LABEL.TERMS'|cmTranslate}}</a>
                 <input
-                    id="agbCheckboxInput"
                     data-qa="checkbox-agb"
-                    name="agb"
-                    type="checkbox"
-                    ng-model="formData.agb"
-                    class="ng-hide"
-                    required />
+                    type="checkbox" id="agbCheckboxInput" name="agb" ng-model="formData.agb"
+                    class="ng-hide" required />
                 <i
                     id="agbCheckbox"
                     data-qa="icon-checkbox-agb"
