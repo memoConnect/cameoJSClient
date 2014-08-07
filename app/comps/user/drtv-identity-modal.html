@@ -12,10 +12,11 @@
     </button>
 </div>
 <div
+    ng-repeat="identity in ownIdentities"
     class="modal-row"
     cm-rubber-space
     data-qa="btn-identity-settings"
-    ng-click="goToIdentitySettings()">
+    ng-click="goToSettings(identity)">
     <cm-avatar cm-data="identity" cm-weight="1"></cm-avatar>
     <cm-key-level cm-data="identity.keys.getWeakestKeySize()" cm-weight="1"></cm-key-level>
     <span cm-weight="4">{{identity.getDisplayName()}}</span>

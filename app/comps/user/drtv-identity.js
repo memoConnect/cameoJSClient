@@ -1,13 +1,12 @@
 'use strict';
 
-angular.module('cmUi').directive('cmIdentity',[
-    'cmUserModel',
-    'cmModal',
+angular.module('cmUser').directive('cmIdentity',[
+    'cmUserModel', 'cmModal',
     '$location',
     function (cmUserModel, cmModal, $location){
         return {
             restrict: 'AE',
-            templateUrl: 'comps/ui/drtv-identity.html',
+            templateUrl: 'comps/user/drtv-identity.html',
             scope: true,
             controller: function($scope){
                 $scope.randModalId = Math.floor((Math.random()*6)+1);
@@ -29,7 +28,7 @@ angular.module('cmUi').directive('cmIdentity',[
                         type: 'plain',
                         'class': 'no-padding',
                         'cm-title': 'IDENTITY.MODAL.HEADER'
-                    },'<cm-identity-modal></cm-identity-modal>',null,$scope);
+                    },'<cm-identity-modal></cm-identity-modal>');
                     cmModal.open(modalId);
                 };
             }

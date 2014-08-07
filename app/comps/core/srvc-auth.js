@@ -79,6 +79,12 @@ angular.module('cmCore')
                     //console.log('getToken',token)
                 return token;
             },
+
+            getIdentityToken: function(identityId){
+                return cmApi.get({
+                    path: '/identity/'+identityId+'/token'
+                })
+            },
             /**
              * @ngdoc method
              * @methodOf cmAuth
@@ -137,6 +143,13 @@ angular.module('cmCore')
                     exp_ok: 'phoneNumber'
                 })
             },
+
+            getAccount: function(){
+                return cmApi.get({
+                    path: '/account'
+                })
+            },
+
             /**
              * @ngdoc method
              * @methodOf cmAuth

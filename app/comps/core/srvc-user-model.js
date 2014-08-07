@@ -21,11 +21,13 @@
 
 angular.module('cmCore')
 .service('cmUserModel',[
-    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKeyFactory', 'cmKey', 'cmStateManagement',
-    'cmObject', 'cmUtil', 'cmNotify', 'cmLogger',
+    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmIdentityModel', 'cmFactory',
+    'cmCrypt', 'cmKeyFactory', 'cmKey', 'cmStateManagement','cmObject', 'cmUtil',
+    'cmNotify', 'cmLogger',
     '$rootScope', '$q', '$location', '$timeout',
-    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmKeyFactory, cmKey, cmStateManagement,
-             cmObject, cmUtil, cmNotify, cmLogger,
+    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmIdentityModel, cmFactory,
+             cmCrypt, cmKeyFactory, cmKey, cmStateManagement, cmObject, cmUtil,
+             cmNotify, cmLogger,
              $rootScope, $q, $location, $timeout){
         var self = this,
             isAuth = false,
@@ -50,7 +52,7 @@ angular.module('cmCore')
         cmObject.addEventHandlingTo(this);
 
         this.data = angular.extend({}, dataModel);
-        this.state = new cmStateManagement(['signing'])
+        this.state = new cmStateManagement(['signing']);
 
         this.comesFromRegistration = false;
 
@@ -74,18 +76,20 @@ angular.module('cmCore')
             self.one('update:finished', function(){
                 if(self.data.identity.keys){
                     self.signOwnKeys();
-                    return true
+                    return true;
                 }else{
-                    return false
+                    return false;
                 }
             });
         }
 
-        this.importData = function(identity){
-            angular.extend(this.data, identity);
+        this.importData = function(activeIdentity, data_identities){
+            angular.extend(this.data, activeIdentity);
 
-            this.data.identity = identity;
+            this.data.identity = activeIdentity;
             this.data.identity.isAppOwner = true;
+            // new factory for own identities
+            this.data.identities = new cmFactory(cmIdentityModel).importFromDataArray(data_identities);
 
             isAuth = true;
             this.initStorage();
@@ -113,15 +117,23 @@ angular.module('cmCore')
                 this.importData(identity);
             } else {
                 if(this.getToken() !== false){
-                    cmAuth.getIdentity().then(
+                    //cmAuth.getIdentity().then(
+                    cmAuth.getAccount().then(
                         function(data){
-                            var identity = cmIdentityFactory.create(data);
-
-                            identity.on('update:finished', function(event, data){
+                            // set active identity
+                            var arr_activeIdentity = data.identities.filter(function(identity){
+                                return identity.active == true;
+                            }),
+                            identity = cmIdentityFactory.create(arr_activeIdentity[0]);
+                            // update
+                            identity.on('update:finished', function(){
                                 self.trigger('update:finished');
                             });
 
-                            self.importData(identity);
+                            self.importData(identity, data.identities);
+
+                            // handle account data
+                            // TODO: set account data
                         },
                         function(r){
                             var response = r || {};
@@ -277,7 +289,7 @@ angular.module('cmCore')
             });
 
             return result;
-        }
+        };
 
         this.syncLocalKeys = function(){
             /**
