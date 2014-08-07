@@ -140,6 +140,9 @@ angular.module('cmCore')
 
                             // handle account data
                             // TODO: set account data
+
+
+                            deferred.resolve();
                         },
                         function(r){
                             var response = r || {};

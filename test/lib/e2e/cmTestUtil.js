@@ -91,7 +91,7 @@ this.createTestUser = function (testUserId) {
 
     this.get("/registration");
 
-    $("[data-qa='input-loginName']").sendKeys(loginName)
+    $("[data-qa='input-cameoId']").sendKeys(loginName)
     $("[data-qa='input-password']").sendKeys(password)
     $("[data-qa='input-passwordConfirm']").sendKeys(password)
 
