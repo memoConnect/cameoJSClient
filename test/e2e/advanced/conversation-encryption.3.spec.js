@@ -395,6 +395,7 @@ describe('Conversation encryption -', function () {
 
             it("should not be able to open conversation with asym key transmission", function () {
 
+                util.get("/talks")
                 util.headerSearchInList("asym_" + date)
                 $("cm-conversation-tag").click()
 
@@ -413,18 +414,19 @@ describe('Conversation encryption -', function () {
                 util.get("/talks")
                 util.headerSearchInList("password_" + date)
 
+                $$("cm-conversation-tag").then(function (tags) {
+                    tags[0].click()
 
-                $("cm-conversation-tag").click()
+                    util.waitForElement("cm-modal.active .cm-modal-alert")
+                    $("cm-modal.active").$(".body").$("a").click()
+                    util.waitForElement("[data-qa='input-password']")
+                    $("[data-qa='input-password']").sendKeys(password1)
+                    $("[data-qa='btn-security-done']").click()
 
-                util.waitForElement("cm-modal.active .cm-modal-alert")
-                $("cm-modal.active").$(".body").$("a").click()
-                util.waitForElement("[data-qa='input-password']")
-                $("[data-qa='input-password']").sendKeys(password1)
-                $("[data-qa='btn-security-done']").click()
-
-                $$('cm-message').then(function (elements) {
-                    elements.forEach(function (element) {
-                        expect(element.getText()).toContain("moep")
+                    $$('cm-message').then(function (elements) {
+                        elements.forEach(function (element) {
+                            expect(element.getText()).toContain("moep")
+                        })
                     })
                 })
             })
