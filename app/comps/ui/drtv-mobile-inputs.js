@@ -66,9 +66,13 @@ angular.module('cmUi').directive('input',[
 
         return {
             restrict: 'EA',
-            link: function (scope, element) {
-                // only for mobile devices
-                if(!('isNotMobile' in cmEnv) || cmEnv.isNotMobile)
+            link: function (scope, element, attrs) {
+                // only for mobile devices or enabled inputs
+                if(!('isNotMobile' in cmEnv) ||
+                    cmEnv.isNotMobile ||
+                    'disabled' in attrs ||
+                    'ngDisabled' in attrs
+                )
                     return false;
 
                 // mobile device? go on!
@@ -108,7 +112,12 @@ angular.module('cmUi').directive('input',[
                 ){
                     element.on('focus', onFocus);
                     element.on('blur', onBlur);
+                    element.on('closeKeyboard', onBlur);
                     scope.$on('$destroy', onBlur);
+
+                    // phonegap events
+                    document.addEventListener("showkeyboard", onFocus, false);
+                    document.addEventListener("hidekeyboard", onBlur, false);
                 }
             }
         }
