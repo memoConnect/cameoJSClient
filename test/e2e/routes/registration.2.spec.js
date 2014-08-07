@@ -4,7 +4,7 @@ var util = require("../../lib/e2e/cmTestUtil.js")
 var loginName = "Z" + Date.now();
 var password = "PWD_Z" + Date.now();
 
-describe('registration', function () {
+describe('Registration: ', function () {
 
     var ptor = util.getPtorInstance()
     afterEach(function() { util.stopOnError() });
@@ -106,11 +106,11 @@ describe('registration', function () {
     it('should create account with valid credentials', function() {
 
         var loginName = util.createTestUser()
+        util.waitForPageLoad('/start')
 
-        util.waitForElement("cm-modal")
+        util.get('/talks')
+        util.waitForPageLoad('/talks')
 
-        $("body").sendKeys(protractor.Key.ESCAPE)
-        util.waitForModalClose()
         expect($(".empty-list").isPresent()).toBe(true)
 
         // modal should only be displayed on first visit

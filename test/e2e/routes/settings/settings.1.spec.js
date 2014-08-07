@@ -14,9 +14,9 @@ describe('settings', function(){
         $("cm-menu .cm-nose-wrapper").click()
     }
 
-    it('should be at "#/talks".', function(){
+    it('should be at "#/start".', function(){
         util.login()
-        util.expectCurrentUrl('#/talks')
+        util.expectCurrentUrl('#/start')
     })
 
     it('open menu and submenu is closed', function(){

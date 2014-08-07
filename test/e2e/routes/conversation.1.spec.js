@@ -86,6 +86,10 @@ describe('Route conversation:', function () {
 
     it('log in as contact, the created conversation should be listed first', function () {
         util.login(config.contactUser1Login, config.contactUser1Password)
+
+        util.get('/talks');
+        util.expectCurrentUrl('#/talks')
+
         util.waitForElement("cm-conversation-tag")
         $$("cm-conversation-tag").then(function (elements) {
             expect(elements[0].$("[data-qa='conversation-subject']").getText()).toContain(newSubject.substring(0.10))
@@ -122,6 +126,9 @@ describe('Route conversation:', function () {
 
     it('log in as original user, the created conversation should be listed first', function() {
         util.login()
+
+        util.get('/talks');
+        util.expectCurrentUrl('#/talks')
 
         util.waitForElement("cm-conversation-tag")
         $$("cm-conversation-tag").then(function (elements) {
