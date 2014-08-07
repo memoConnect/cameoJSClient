@@ -418,6 +418,7 @@ angular.module('cmCore').provider('cmApi',[
 
                 api.resetSubscriptionId = function(){
                     api.subscriptionId = undefined
+                    window._eventSubscriptionId = undefined
                 }
 
                 api.subscribeToEventStream = function(){
@@ -430,6 +431,7 @@ angular.module('cmCore').provider('cmApi',[
                             }, true)
                             .then(function(id){
                                 api.subscriptionId = id
+                                window._eventSubscriptionId = id
                             })
                 }
 
@@ -464,7 +466,10 @@ angular.module('cmCore').provider('cmApi',[
                     //Dont listen to Events twice: 
                     api.stopListeningToEvents()
                     //Start listening:
-                    if(!events_disabled && events_interval) api._events_promise = $interval(function(){ api.getEvents(false) }, events_interval, 0, false)
+                    if(!events_disabled && events_interval) {
+                        api.getEvents(false)
+                        api._events_promise = $interval(function () {api.getEvents(false)}, events_interval, 0, false)
+                    }
                 }
 
                 api.stopListeningToEvents = function(){
