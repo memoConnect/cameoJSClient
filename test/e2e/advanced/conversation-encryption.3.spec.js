@@ -24,7 +24,7 @@ describe('Conversation encryption -', function () {
 
         // use first recipient to create conversation
         it("create new conversation", function () {
-            util.login(sender.login, "password", "/start")
+            util.login(sender.login, "password")
             util.get("/conversation/new")
             // clear all test user messages
             util.getTestUserNotifications(recipients[0].login)
@@ -168,7 +168,7 @@ describe('Conversation encryption -', function () {
                         util.logout()
                         conversationRoute = "/purl/" + purl
                     } else {
-                        util.login(recipient.login, "password", "/start")
+                        util.login(recipient.login, "password")
                         conversationRoute = "/conversation/" + conversationId
                     }
                     util.get(conversationRoute)
@@ -191,6 +191,7 @@ describe('Conversation encryption -', function () {
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
+                                ptor.debugger()
                                 util.waitForElement("[data-qa='icon-conversation-decrypted']")
                                 $("[data-qa='btn-security-done']").click()
                                 util.waitForElementDisappear("[data-qa='btn-security-done']")
@@ -384,10 +385,10 @@ describe('Conversation encryption -', function () {
         it("delete key and create local key for user2", function () {
             util.logout()
             util.clearLocalStorage()
-            util.login(testUser2, "password", "/start")
+            util.login(testUser2, "password")
             util.generateKey()
             util.closeKeyRequestModal()
-            util.login(testUser1, "password", "/start")
+            util.login(testUser1, "password")
         })
 
         describe("open existing conversations -", function () {
