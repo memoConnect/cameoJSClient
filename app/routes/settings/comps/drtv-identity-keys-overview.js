@@ -31,11 +31,13 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
 
                     // no key exists
                     $scope.showNoLocalKeysOnThisDevice =
-                        $scope.trustedKeys.length == 0 && $scope.publicKeys.length == 0;
+                        $scope.trustedKeys.length == 0;
 
                     // publickeys doesnt match trustedkeys
                     $scope.showUntrustedPublickeysExists =
-                        $scope.trustedKeys.length < $scope.publicKeys.length;
+                        $scope.trustedKeys.length != $scope.publicKeys.length &&
+                        $scope.trustedKeys.length >= 1 &&
+                        $scope.publicKeys.length >= 1;
                 }
 
                 $scope.remove = function(key){

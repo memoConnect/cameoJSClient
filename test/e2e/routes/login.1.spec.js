@@ -71,11 +71,11 @@ describe('login screen', function () {
 
         $("[data-qa='login-submit-btn']").click();
 
-        util.waitForPageLoad("/talks")
+        util.waitForPageLoad("/start")
     })
 
     it('dont show login page when already logged in', function () {
         util.get("");
-        util.expectCurrentUrl('#/talks$')
+        util.expectCurrentUrl('#/talks')
     })
 })

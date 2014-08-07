@@ -65,6 +65,9 @@ app.register.controller('RegistrationCtrl', [
         /**
         * checks if LoginName exists, because Login Name have to be unique
         */
+        $scope.$watch('formData.loginName', function(){
+            $scope.verifyLoginName();
+        });
         $scope.verifyLoginName = function(){
 
             // clear exists timeout
@@ -206,7 +209,6 @@ app.register.controller('RegistrationCtrl', [
                 deferred.reject(data);
             }
 
-
             if($scope.registrationForm.$valid !== false){
                 deferred.resolve(data);
             } else {
@@ -253,7 +255,7 @@ app.register.controller('RegistrationCtrl', [
                                         $location.path('/purl/'+$rootScope.pendingPurl);
                                     } else {
                                         cmUserModel.comesFromRegistration = true;
-                                        $location.path("/talks");
+                                        $location.path("/start");
                                     }
                                 },
                                 function(){

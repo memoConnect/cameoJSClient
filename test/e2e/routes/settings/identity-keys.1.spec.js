@@ -99,7 +99,7 @@ describe('identity key settings', function () {
 
     it('the key should still be there after logout/login', function () {
         util.logout()
-        util.login(login, password)
+        util.login(login, password,'/talks')
         util.get('/settings/identity/keys')
 
         $$("[data-qa='key-list-item']").then(function (elements) {
@@ -129,33 +129,30 @@ describe('identity key settings', function () {
         })
     })
 
-    it('delete key', function () {
-        $("[data-qa='btn-remove-modal']").click()
-        util.waitForElement("[data-qa='btn-remove-key']")
-        $("[data-qa='btn-remove-key']").click()
-        util.waitForElementDisappear("[data-qa='key-list-item']")
-    })
+//    it('delete key', function () {
+//        $("[data-qa='btn-remove-modal']").click()
+//        util.waitForElement("[data-qa='btn-remove-key']")
+//        $("[data-qa='btn-remove-key']").click()
+//        util.waitForElementDisappear("[data-qa='key-list-item']")
+//    })
 
     it('generate another local key', function () {
         util.generateKey()
         util.waitForPageLoad('/settings/identity/keys')
-        util.waitForElement("[data-qa='key-list-item']")
+        util.waitForElements("[data-qa='key-list-item']",2)
 
-        $$("[data-qa='key-list-item']").then(function (elements) {
-            expect(elements.length).toBe(1)
-        })
     })
 
-    it('delete it and confirm that it is deleted after logout/login', function () {
-        $("[data-qa='btn-remove-modal']").click()
-        $("[data-qa='btn-remove-key']").click()
-
-        util.logout()
-        util.login(login, password)
-        $$("[data-qa='key-list-item']").then(function (elements) {
-            expect(elements.length).toBe(0)
-        })
-    })
+//    it('delete it and confirm that it is deleted after logout/login', function () {
+//        $("[data-qa='btn-remove-modal']").click()
+//        $("[data-qa='btn-remove-key']").click()
+//
+//        util.logout()
+//        util.login(login, password)
+//        $$("[data-qa='key-list-item']").then(function (elements) {
+//            expect(elements.length).toBe(0)
+//        })
+//    })
 
 
     it('delete test user', function () {

@@ -19,11 +19,11 @@ describe('transfer scope data registration',function(){
         util.setVal('input-phone', '+49123456')
 
         $("body").sendKeys(protractor.Key.END)
-        $("[data-qa='icon-checkbox-agb']").click()
+        util.click("icon-checkbox-agb")
     })
 
     it('goto terms (do the transfer)',function() {
-        $("[data-qa='link-terms']").click()
+        util.click("link-terms")
         $(".back-wrap").click()
     })
 
@@ -38,7 +38,7 @@ describe('transfer scope data registration',function(){
         expect($("[data-qa='icon-checkbox-agb']").getAttribute('class')).toContain('cm-checkbox-right')
 
         // try to reg user but without password error message are shown
-        $("[data-qa='btn-createUser']").click()
+        util.click("btn-createUser")
 
         expect($("[data-qa='drtv-password-error-empty']").isDisplayed()).toBe(true)
     })

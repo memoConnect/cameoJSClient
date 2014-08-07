@@ -15,6 +15,11 @@ cameo_config = {
     path_to_languages: 'i18n',
     cache_lang_files: false,
     routes: {
+        'start': {
+            hasCtrl: true,
+            guests: false,
+            resolveOnBoot: true
+        },
         'login': {
             hasCtrl: true,
             isDefault: true,
@@ -140,14 +145,7 @@ cameo_config = {
 
     routeSettings: {
         'account': {i18n:'SETTINGS.ACCOUNT', icon:'cm-person', disabled:true},
-        'identity': {
-            i18n:'SETTINGS.IDENTITY',
-            icon:'cm-person',
-            shortLinks:{
-                'keys': {icon:'cm-key'}
-                //,'trust': {icon:'cm-trust'}
-            }
-        },
+        'identity': {i18n:'SETTINGS.IDENTITY', icon:'cm-person'},
         'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell', disabled:true},
         'contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-address-book', disabled:true},
         'app': {i18n:'SETTINGS.APP', icon:'cm-fix'},

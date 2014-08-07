@@ -7,7 +7,9 @@ describe('Conversation encryption -', function () {
     var ptor = util.getPtorInstance()
     var date = Date.now()
 
-    afterEach(function() { util.stopOnError() });
+    afterEach(function () {
+        util.stopOnError()
+    });
 
     /*
      Helper functions
@@ -189,6 +191,7 @@ describe('Conversation encryption -', function () {
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
+                                ptor.debugger()
                                 util.waitForElement("[data-qa='icon-conversation-decrypted']")
                                 $("[data-qa='btn-security-done']").click()
                                 util.waitForElementDisappear("[data-qa='btn-security-done']")
@@ -305,50 +308,78 @@ describe('Conversation encryption -', function () {
             util.login(testUser1, "password")
             util.acceptFriendRequests()
             util.addExternalContact(externalUser)
-            util.generateKey()
         })
     })
 
-    describe("asym key transmission -", function () {
+    describe("no keys -", function () {
 
-        var recipients = [
-            {login: testUser1, hasKey: true},
-            {login: testUser2, hasKey: true}
-        ]
+        describe("conversation with user that has key -", function () {
+            var recipients = [
+                {login: testUser1, hasKey: true},
+                {login: testUser2, hasKey: true}
+            ]
+            checkConversation(recipients, 1, 1, "password", Math.floor(Math.random() * 1000000))
+        })
 
-        checkConversation(recipients, 0, 2, "asym")
+        describe("conversation with users without keys -", function () {
+            var recipients = [
+                {login: testUser1, hasKey: true},
+                {login: testUser2, hasKey: true},
+                {login: testUser3, hasKey: false},
+                {login: externalUser, external: true, hasKey: false}
+            ]
+            checkConversation(recipients, 1, 1, "password", Math.floor(Math.random() * 1000000))
+        })
     })
 
-    describe("password transmission -", function () {
-        var recipients = [
-            {login: testUser1, hasKey: true},
-//            {login: testUser2, hasKey: true},
-//            {login: testUser3, hasKey: false},
-            {login: externalUser, external: true, hasKey: false}
-        ]
-        checkConversation(recipients, 1, 1, "password", password1)
-    })
+    describe("with local key -", function () {
 
-    describe("passCaptcha transmission -", function () {
-        var recipients = [
-            {login: testUser1, hasKey: true},
-            {login: testUser2, hasKey: true},
-            {login: testUser3, hasKey: false},
-            {login: externalUser, external: true, hasKey: false}
-        ]
-        checkConversation(recipients, 2, 1, "passCaptcha", password2)
-    })
+        it(" user 1 login and generate key", function () {
+            util.login(testUser1, "password")
+            util.generateKey()
+        })
 
-    describe("no encryption -", function () {
-        var recipients = [
-            {login: testUser1, hasKey: true},
-            {login: testUser2, hasKey: true},
-            {login: testUser3, hasKey: false},
-            {login: externalUser, external: true, hasKey: false}
-        ]
-        checkConversation(recipients, 3, 0, "none")
-    })
+        describe("asym key transmission -", function () {
 
+            var recipients = [
+                {login: testUser1, hasKey: true},
+                {login: testUser2, hasKey: true}
+            ]
+
+            checkConversation(recipients, 0, 2, "asym")
+        })
+
+        describe("password transmission -", function () {
+            var recipients = [
+                {login: testUser1, hasKey: true},
+                {login: testUser2, hasKey: true},
+                {login: testUser3, hasKey: false},
+                {login: externalUser, external: true, hasKey: false}
+            ]
+            checkConversation(recipients, 1, 1, "password", password1)
+        })
+
+        describe("passCaptcha transmission -", function () {
+            var recipients = [
+                {login: testUser1, hasKey: true},
+                {login: testUser2, hasKey: true},
+                {login: testUser3, hasKey: false},
+                {login: externalUser, external: true, hasKey: false}
+            ]
+            checkConversation(recipients, 2, 1, "passCaptcha", password2)
+        })
+
+        describe("no encryption -", function () {
+            var recipients = [
+                {login: testUser1, hasKey: true},
+                {login: testUser2, hasKey: true},
+                {login: testUser3, hasKey: false},
+                {login: externalUser, external: true, hasKey: false}
+            ]
+            checkConversation(recipients, 3, 0, "none")
+        })
+
+    })
     describe("no local private key -", function () {
 
         it("delete key and create local key for user2", function () {
@@ -364,6 +395,7 @@ describe('Conversation encryption -', function () {
 
             it("should not be able to open conversation with asym key transmission", function () {
 
+                util.get("/talks")
                 util.headerSearchInList("asym_" + date)
                 $("cm-conversation-tag").click()
 
@@ -381,17 +413,20 @@ describe('Conversation encryption -', function () {
 
                 util.get("/talks")
                 util.headerSearchInList("password_" + date)
-                $("cm-conversation-tag").click()
 
-                util.waitForElement("cm-modal.active .cm-modal-alert")
-                $("cm-modal.active").$(".body").$("a").click()
-                util.waitForElement("[data-qa='input-password']")
-                $("[data-qa='input-password']").sendKeys(password1)
-                $("[data-qa='btn-security-done']").click()
+                $$("cm-conversation-tag").then(function (tags) {
+                    tags[0].click()
 
-                $$('cm-message').then(function (elements) {
-                    elements.forEach(function (element) {
-                        expect(element.getText()).toContain("moep")
+                    util.waitForElement("cm-modal.active .cm-modal-alert")
+                    $("cm-modal.active").$(".body").$("a").click()
+                    util.waitForElement("[data-qa='input-password']")
+                    $("[data-qa='input-password']").sendKeys(password1)
+                    $("[data-qa='btn-security-done']").click()
+
+                    $$('cm-message').then(function (elements) {
+                        elements.forEach(function (element) {
+                            expect(element.getText()).toContain("moep")
+                        })
                     })
                 })
             })
@@ -451,34 +486,6 @@ describe('Conversation encryption -', function () {
 
     })
 
-    describe("no keys at all -", function () {
-
-        it("login and delete key of user 1", function () {
-            util.login(testUser1, "password")
-            util.get("/settings/identity/keys")
-            util.click("btn-remove-modal")
-            util.click("btn-remove-key")
-            util.waitForElementDisappear("[data-qa='key-list-item']")
-        })
-
-        describe("conversation with user that has key -", function () {
-            var recipients = [
-                {login: testUser1, hasKey: true},
-                {login: testUser2, hasKey: true}
-            ]
-            checkConversation(recipients, 1, 1, "password", Math.floor(Math.random() * 1000000))
-        })
-
-        describe("conversation with users without keys -", function () {
-            var recipients = [
-                {login: testUser1, hasKey: true},
-                {login: testUser2, hasKey: true},
-                {login: testUser3, hasKey: false},
-                {login: externalUser, external: true, hasKey: false}
-            ]
-            checkConversation(recipients, 1, 1, "password", Math.floor(Math.random() * 1000000))
-        })
-    })
 
     describe("delete test users -", function () {
         it("delete test users", function () {

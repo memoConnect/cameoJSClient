@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmFiles').service('cmFileTypes',[
+angular.module('cmCore').service('cmFileTypes',[
     function(){
         /**
          * e: extension
@@ -52,26 +52,65 @@ angular.module('cmFiles').service('cmFileTypes',[
             {e:'exe',m:'application/octet-stream'},
             {e:'exe',m:'application/x-msdownload'},
             {e:'dmg',m:'application/x-apple-diskimage'}
-        ];
+        ],
+        unknown = 'unknown';
 
         return {
             find: function(mime, filename){
                 var self = this,
-                    extension = 'unknown';
+                    detectedExtension = unknown;
                 // search for mimetype
                 if(mime != undefined) {
                     angular.forEach(fileMimeTypes, function (type) {
                         if (mime != '' && type.m == mime) {
-                            extension = self.getExtension(type.e, filename);
+                            detectedExtension = self.getExtension(type.e, filename);
                         }
                     });
                 }
 
-                return extension;
+                return detectedExtension;
+            },
+
+            findMimeType: function(detectedExtension){
+                var mimeType = unknown;
+
+                angular.forEach(fileMimeTypes, function (type) {
+                    // one extension
+                    if (typeof type.e == 'string') {
+                        if(detectedExtension == type.e)
+                            mimeType = type.m
+                    // more extensions
+                    } else {
+                        var findMime = type.e.filter(function(arrayExtension){
+                            return arrayExtension == detectedExtension
+                        })
+                        if(findMime.length == 1)
+                            mimeType = type.m;
+                    }
+                });
+
+                return mimeType;
+            },
+
+            getMimeTypeViaFilename: function(filename){
+                var arr_filename = filename.split('.'),
+                    extension = arr_filename[arr_filename.length-1],
+                    detectedExtension = unknown,
+                    mimeType = unknown;
+
+                if(extension != ''){
+                    detectedExtension = this.getExtension(extension, filename);
+                    mimeType = this.findMimeType(detectedExtension);
+                }
+
+                return {
+                    detectedExtension: extension,
+                    mimeType: mimeType
+                }
             },
 
             getExtension: function(extensions, filename){
-                var extension = 'unknown';
+                var extension = unknown;
 
                 // only one extension
                 if (typeof extensions == 'string' && extensions != '')

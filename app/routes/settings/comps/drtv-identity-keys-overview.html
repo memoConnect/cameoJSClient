@@ -12,13 +12,13 @@
     <li ng-if="showNoLocalKeysOnThisDevice">
         <div
          class="page in-screen-message"
-         data-qa="alert-key-needed"
+         data-qa="message-no-keys"
          ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE'|cmTranslate"></div>
     </li>
     <li ng-if="showUntrustedPublickeysExists">
         <div
          class="page in-screen-message"
-         data-qa="alert-key-needed"
+         data-qa="message-untrusted-keys"
          ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.UNTRUSTED_PUBLICKEYS_EXISTS'|cmTranslate"></div>
     </li>
     <li ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
@@ -40,9 +40,9 @@
             </span>
         </a>
         <div class="short-links">
-            <i class="fa cm-handshake cm-lg-icon" ng-if="!isTrustedKey(key) && isHandshakePossible" ng-click="startAuthentication(key)"></i>
+            <i class="fa cm-handshake cm-lg-icon" ng-if="!isTrustedKey(key) && isHandshakePossible" ng-click="startAuthentication(key)" data-qa="btn-start-handshake"></i>
             <i class="fa cm-export-key cm-lg-icon" ng-if="privateKeys.find(key)" ng-click="openModal('modalExportKeyPair',key)"></i>
-            <i class="fa cm-cancel-key cm-lg-icon" ng-click="openModal('modalRemoveKeypair',key)" data-qa="btn-remove-modal"></i>
+            <i class="fa cm-cancel-key cm-lg-icon" ng-if="privateKeys.find(key)" ng-click="openModal('modalRemoveKeypair',key)" data-qa="btn-remove-modal"></i>
         </div>
     </li>
     <li ng-if="signing">

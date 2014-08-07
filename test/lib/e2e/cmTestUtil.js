@@ -52,7 +52,7 @@ this.logout = function () {
     return this
 }
 
-this.login = function (username, password) {
+this.login = function (username, password, expectedRoute) {
 
     self.logout()
     self.get('/login')
@@ -71,7 +71,11 @@ this.login = function (username, password) {
 
     $("[data-qa='login-submit-btn']").click();
 
-    self.waitForPageLoad("/talks")
+    if(typeof expectedRoute == 'string' && expectedRoute.length > 0){
+        self.waitForPageLoad(expectedRoute)
+    } else {
+        self.waitForPageLoad('(start|talks)')
+    }
 
     return this
 }
@@ -98,7 +102,9 @@ this.createTestUser = function (testUserId) {
 
     $("[data-qa='btn-createUser']").click()
 
-    this.waitForPageLoad("/talks")
+    ptor.debugger()
+
+    this.waitForPageLoad("/start")
 
     return loginName
 }
@@ -141,6 +147,61 @@ this.getTestUserNotifications = function (loginName) {
     }, testUserId, config.apiUrl)
 }
 
+// todo write generic method for api calls
+this.getEventSubscription = function (token) {
+
+    return ptor.executeAsyncScript(function (token, apiUrl) {
+
+        var callback = arguments[arguments.length - 1];
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", apiUrl + "/eventSubscription", true);
+        xhr.setRequestHeader("Authorization", token);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                callback(JSON.parse(xhr.responseText).data.id)
+            }
+        }
+        xhr.send('{}');
+    }, token, config.apiUrl)
+}
+
+this.getEvents = function (token, subscriptionId) {
+
+    return ptor.executeAsyncScript(function (token, subscriptionId, apiUrl) {
+
+        var callback = arguments[arguments.length - 1];
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", apiUrl + "/eventSubscription/" + subscriptionId, true);
+        xhr.setRequestHeader("Authorization", token);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                callback(JSON.parse(xhr.responseText))
+            }
+        }
+        xhr.send('{}');
+    }, token, subscriptionId, config.apiUrl)
+}
+
+this.broadcastEvent = function (token, event) {
+
+    return ptor.executeAsyncScript(function (token, event, apiUrl) {
+
+        var callback = arguments[arguments.length - 1];
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", apiUrl + "/event/broadcast", true);
+        xhr.setRequestHeader("Authorization", token);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                callback(JSON.parse(xhr.responseText))
+            }
+        }
+        xhr.send(JSON.stringify(event));
+    }, token, event, config.apiUrl)
+}
+
 this.waitForPageLoad = function (expectedRoute) {
     ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route').then(function (route) {
@@ -149,12 +210,23 @@ this.waitForPageLoad = function (expectedRoute) {
                 if (expectedRoute == undefined || route.path.search(expectedRoute) != -1) {
                     return route.status == "success"
                 } else {
-//                        console.log("Error: unexpected route: " + route.path)
+                        console.log("Error: unexpected route: " + route.path)
                 }
             }
         })
 
     }, config.routeTimeout, 'waitForPage ' + (expectedRoute || 'any page') + ' timeout reached')
+    return this
+}
+
+this.waitForEventSubscription = function () {
+    ptor.wait(function () {
+        return ptor.executeScript('return window != undefined && window._eventSubscriptionId').then(function (subscriptionId) {
+            if (subscriptionId) {
+                return true
+            }
+        })
+    }, config.routeTimeout, 'waitForEventSubscription timeout reached')
     return this
 }
 
@@ -214,27 +286,12 @@ this.waitForElementDisappear = function (selector, timeout) {
     return this
 }
 
-this.waitForModalOpen = function (id) {
-
-    ptor.wait(function () {
-        return $("cm-modal.active").then(function (element) {
-            return element.isDisplayed()
-        })
-    }, config.routeTimeout, "waitForModalOpen " + id + " timeout reached")
-
-    return this
+this.waitForModalOpen = function () {
+   this.waitForElement("cm-modal.active")
 }
 
 this.waitForModalClose = function () {
-    ptor.wait(function () {
-        var allHidden = true
-        $$("cm-modal").each(function (element) {
-            if (element.isDisplayed()) {
-                allHidden = false
-            }
-        })
-        return allHidden
-    }, config.routeTimeout, "waitForModalClose timeout reached")
+   this.waitForElementDisappear("cm-modal.active")
 
     return this
 }
@@ -312,6 +369,36 @@ this.searchInList = function (searchString) {
 
 this.clearLocalStorage = function () {
     ptor.executeScript('localStorage.clear()')
+}
+
+this.getLocalStorage = function () {
+
+    var execute = function () {
+        for (var key in localStorage) {
+            if (key.length > 25) {
+                var res = {
+                    key: key,
+                    value: localStorage.getItem(key)
+                }
+                return res
+            }
+        }
+    }
+
+    return ptor.executeScript(execute)
+}
+
+this.setLocalStorage = function (key, value) {
+    ptor.executeScript(function (key, value) {
+        localStorage.setItem(key, value)
+    }, key, value)
+}
+
+this.getToken = function () {
+    var execute = function () {
+        return localStorage.getItem('token')
+    }
+    return ptor.executeScript(execute)
 }
 
 this.generateKey = function (keyNum, keyName) {
@@ -404,7 +491,7 @@ this.generateKey = function (keyNum, keyName) {
         'E021mUW/uBHAB981w5n3lTfTVeB90sOtlioHxqBitcGYDMelO0s=',
         '-----END RSA PRIVATE KEY-----'].join('\\n')
 
-    if(keyNum == undefined || keyNum >= privKeys.length){
+    if (keyNum == undefined || keyNum >= privKeys.length) {
         keyNum = 0
     }
 
@@ -414,7 +501,7 @@ this.generateKey = function (keyNum, keyName) {
     self.setVal("display-private-key", " ")
     self.click("btn-import-key")
     self.waitForElement("[data-qa='btn-save-key']")
-    if(keyName != undefined) {
+    if (keyName != undefined) {
         self.clearInput("input-key-name")
         self.setVal("input-key-name", keyName)
     }
@@ -492,9 +579,9 @@ this.setValQuick = function (dataQa, text) {
     ptor.executeScript("document.querySelector(\"[data-qa='" + dataQa + "']\").value = '" + text + "'")
 }
 
-this.stopOnError = function() {
+this.stopOnError = function () {
 
-    if(config.stopOnError) {
+    if (config.stopOnError) {
         var passed = jasmine.getEnv().currentSpec.results().passed();
         if (!passed) {
             jasmine.getEnv().specFilter = function (spec) {

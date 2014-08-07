@@ -5,29 +5,33 @@ angular.module('cmValidate').directive('cmValidatePhone',[
     function (cmAuth){
         return {
             require: 'ngModel',
-            link: function(scope, element, attrs, model){
-                element.on('blur', function(evt){
-                    scope.$apply(function(){
-                        var val = element.val();
-                        if(val != ""){
-                            cmAuth.checkPhoneNumber(val).
-                                then(
-                                //success
-                                function (phoneNumber){
-                                    model.$setValidity('phone', true);
-                                    model.$setViewValue(phoneNumber);
-                                    model.$render();
-                                },
-                                //error
-                                function (){
-                                    model.$setValidity('phone', false);
-                                }
-                            );
-                        } else {
-                            model.$setValidity('phone', true);
-                            model.$setPristine();
-                        }
-                    });
+            scope: {
+                model: '=ngModel'
+            },
+            link: function(scope, element, attrs, ngModel){
+                var correctValue;
+                scope.$watch('model',function (newValue) {
+                    if(newValue && newValue != "" && correctValue == undefined || // value isnt empty and first-check
+                        newValue && newValue != "" && correctValue != undefined && newValue != correctValue // value isnt the correct value from BE
+                    ){
+                        cmAuth.checkPhoneNumber(newValue).
+                            then(
+                            //success
+                            function (phoneNumber){
+                                correctValue = phoneNumber;
+                                ngModel.$setValidity('phone', true);
+                                ngModel.$setViewValue(phoneNumber);
+                                ngModel.$render();
+                            },
+                            //error
+                            function (){
+                                ngModel.$setValidity('phone', false);
+                            }
+                        );
+                    } else {
+                        ngModel.$setValidity('phone', true);
+                        ngModel.$setPristine();
+                    }
                 });
             }
         }
