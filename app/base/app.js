@@ -4,12 +4,13 @@ define([
     'angular-cookies',
     'angular-swipe',
     'angular-moment-wrap',
-
     'angular-loading-bar',
+    'fastclick',
 
     // cameo files
     'pckCore',
     'pckUi',
+    'pckContacts',
     'base/config'
 ], function (angularAMD) {
     'use strict';
@@ -18,25 +19,22 @@ define([
         'ngRoute',
         'ngCookies',
         'swipe',
-        'angularMoment',
+        //'angularMoment',
         'angular-loading-bar',
         'cmCore',
-        'cmUi'
-    ]);
+        'cmUi',
+        'cmContacts'
+    ])
 
-    app.constant('cmEnv',cameo_config.env);
-    app.constant('cmVersion',{version:cameo_config.version, last_build:'-'});
-    app.constant('cmConfig',cameo_config);
-
-    //cameo_config = cameo_config
+    .constant('cmEnv',cameo_config.env)
+    .constant('cmVersion',{version:cameo_config.version, last_build:'-'})
+    .constant('cmConfig',cameo_config)
 
     // cameo configuration for our providers
-    app.config([
-
+    .config([
         'cmLanguageProvider',
         'cmLoggerProvider',
         'cmApiProvider',
-
         function (cmLanguageProvider, cmLoggerProvider, cmApiProvider){
             cmLoggerProvider
                 .debugEnabled(true)
@@ -58,11 +56,12 @@ define([
                 .preferredLanguage('en_US')   //for now
                 .useLocalStorage()
         }
-    ]);
+    ])
     // app route config
-    app.config([
+    .config([
         '$routeProvider',
-        function ($routeProvider) {
+        'cmBootProvider',
+        function ($routeProvider, cmBootProvider) {
             /**
              * this option makes location use without #-tag
              * @param settings
@@ -90,29 +89,42 @@ define([
              *
              */
             function createRoutes(settings){
-                angular.forEach(settings,function(_settings_, routeKey){
+                angular.forEach(settings,function(_settings_, routeKey) {
                     var routes = [],
                         routeParams = {
-                            templateUrl: "",
-                            controllerUrl: "",
-                            css: "",
-                            guests: false
+                            templateUrl: '',
+                            controllerUrl: '',
+                            css: '',
+                            guests: false,
+                            resolve: {},
+                            isDefault: false
                         };
                     // create params for route
-                    if(angular.isDefined(_settings_['templateUrl'])){
+                    if (angular.isDefined(_settings_['templateUrl'])) {
                         routeParams.templateUrl = _settings_['templateUrl'];
                     } else {
-                        routeParams.templateUrl = 'routes/'+routeKey+'/'+routeKey+'.html';
+                        routeParams.templateUrl = 'routes/' + routeKey + '/' + routeKey + '.html';
                     }
                     // check if route has/need controller
-                    if(angular.isDefined(_settings_['hasCtrl']) && _settings_.hasCtrl === true)
-                        routeParams.controllerUrl = 'routes/'+routeKey+'/'+routeKey+'-ctrl';
+                    if (angular.isDefined(_settings_['hasCtrl']) && _settings_.hasCtrl === true)
+                        routeParams.controllerUrl = 'routes/' + routeKey + '/' + routeKey + '-ctrl';
 
-                    if(angular.isDefined(_settings_['css']))
+                    if (angular.isDefined(_settings_['css']))
                         routeParams.css = _settings_['css'];
 
-                    if(angular.isDefined(_settings_['guests']))
+                    if (angular.isDefined(_settings_['guests']))
                         routeParams.guests = _settings_['guests'];
+
+                    if (angular.isDefined(_settings_['resolveOnBoot'])){
+                        routeParams.resolve = {
+                            boot: function ($q) {
+                                return cmBootProvider.ready($q);
+                            }
+                        };
+                    }
+                    if(angular.isDefined(_settings_['isDefault'])){
+                        routeParams.isDefault = _settings_['isDefault'];
+                    }
 
                     // create route as defined or take simple route
                     if(angular.isDefined(_settings_['routes']))
@@ -126,7 +138,7 @@ define([
                             when(route, angularAMD.route(routeParams));
                     });
                     // check otherwise
-                    if(angular.isDefined(_settings_['isOtherwise'])){
+                    if(angular.isDefined(_settings_['isDefault'])){
                         $routeProvider.otherwise({
                             redirectTo: '/'+routeKey
                         });
@@ -137,35 +149,54 @@ define([
             // start creation of routes
             createRoutes(cameo_config.routes);
         }
-    ]);
-
+    ])
     // app run handling
-    app.run([
-        '$rootScope', '$location', '$window', '$route', 'cmUserModel', 'cmLanguage', 'cmLogger','cfpLoadingBar','cmEnv', 'cmApi',
-        function ($rootScope, $location, $window, $route, cmUserModel, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi) {
+    /**
+     * @TODO cmContactsModel anders initialisieren
+     */
+    .run([
+        '$rootScope',
+        '$location',
+        '$window',
+        '$document',
+        '$route',
+        'cmUserModel',
+        'cmContactsModel',
+        'cmSettings',
+        'cmLanguage',
+        'cmLogger',
+        'cfpLoadingBar',
+        'cmEnv',
+        'cmApi',
+        'cmHooks',
+        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks) {
 
             //prep $rootScope with useful tools
-            $rootScope.console = console
-            $rootScope.alert   = alert
+            $rootScope.console  =   console;
+            $rootScope.alert    =   alert;
+            $rootScope.goto     =   function(path){
+                                        path = path[0] == '/' ? path : '/'+path;
+                                        $location.path(path);
+                                    };
 
             //add Overlay handles:
-            $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) }
-            $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) }
+            $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };
+            $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) };
 
             // passing wrong route calls
-            $rootScope.$on("$routeChangeStart", function(){
+            $rootScope.$on('$routeChangeStart', function(){
                 // expections
                 var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
                 var path = $location.$$path;
                 // exists none token then otherwise to login
                 if (cmUserModel.isAuth() === false){
                     if (!path_regex.test(path)) {
-                        $location.path("/login");
+                        $location.path('/login');
                     }
-                } else if ((path == "/login" || path == "/registration") && cmUserModel.isGuest() !== true) {
-                    $location.path("/talks");
-                } else if (path == "/logout"){
-                    cmUserModel.doLogout();
+                } else if ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true) {
+                    $location.path('/talks');
+                } else if (path == '/logout'){
+                    cmUserModel.doLogout(true,'app.js logout-route');
                 }
             });
 
@@ -179,11 +210,10 @@ define([
             $rootScope.$on('$routeChangeSuccess', function(){
 
                 // hide app spinner
-                angular.element($window.document.getElementsByClassName('app-spinner')[0])
-                    .css('display','none');
+                angular.element($document[0].querySelector('.app-spinner')).css('display','none');
 
                 // momentjs
-                $window.moment.lang(cmLanguage.getCurrentLanguage());
+                //$window.moment.lang(cmLanguage.getCurrentLanguage());
 
                 // important for HTML Manipulation to switch classes etc.
                 $rootScope.cmIsGuest = cmUserModel.isGuest();
@@ -195,55 +225,57 @@ define([
                     prevRoute = $rootScope.urlHistory.length > 0
                               ? $rootScope.urlHistory[$rootScope.urlHistory.length - 1]
                               : '';
-                // clear if same route
-                if(currentRoute.indexOf('/login') != -1 || currentRoute == prevRoute)
+
+                // clear history in some cases
+                if(
+                    currentRoute.indexOf('/login') != -1 // when login route
+                 //|| currentRoute == prevRoute // current is the same then is startPage
+                ) {
                     $rootScope.urlHistory = [];
                 // push new route
-                else if(currentRoute !== prevRoute) {
+                } else if(currentRoute !== prevRoute) {
                     $rootScope.urlHistory.push($location.$$path);
                 }
-                
             });
             
-            //Make it easy for e2e-tests to monitor route changes:
-            window._route = {}
+            // Make it easy for e2e-tests to monitor route changes:
+            window._route = {};
 
             $rootScope.$on('$routeChangeStart', function(){
-                window._route.path   = $location.$$path
-                window._route.status = 'loading'
-            })
+                window._route.path   = $location.$$path;
+                window._route.status = 'loading';
+            });
 
             $rootScope.$on('$routeChangeSuccess', function(){
-                window._route.status = 'success'
-            })
+                window._route.status = 'success';
+            });
 
             $rootScope.$on('$routeChangeError', function(){
-                window._route.status = 'error'
-            })
+                window._route.status = 'error';
+            });
 
-
-            //Set view width e.g. 32rem
+            // Set view width e.g. 32rem
             function initScreenWidth(rem){
-                var html    = document.getElementsByTagName('html')[0],
-                    app     = document.getElementById('cm-app');
+                var html    = $document[0].querySelector('html'),
+                    app     = $document[0].querySelector('#cm-app');
 
                 //prevent screen size to change when content overflows
-                html.style.overflowY = 'scroll'                    
+                html.style.overflowY = 'scroll';
 
                 var height          = window.innerHeight,
-                    width           = html.offsetWidth,                      
-                    landscape       = width > height,
-                    effective_width = landscape ? Math.min(height, 420) : width
+                    width           = html.offsetWidth,
+                    landscape       = width > 720 || width > height,
+                    effective_width = landscape ? Math.min(height, 420) : width;
 
-                html.style.fontSize  = (effective_width/rem) +'px'
-                app.style.maxWidth   = rem+'rem'
-                angular.element(app).toggleClass('landscape', landscape)
+                html.style.fontSize  = (effective_width/rem) +'px';
+                app.style.maxWidth   = rem+'rem';
+                angular.element(app).toggleClass('landscape', landscape);
             }
 
-            //Actually set view width to 32 rem
-            initScreenWidth(32)
+            // Actually set view width to 32 rem
+            initScreenWidth(32);
 
-            //For dev purposes only:
+            // For dev purposes only:
 //            window.onresize = function() { initScreenWidth(32) }
 
 
@@ -260,13 +292,18 @@ define([
                 if(cmEnv.loadingBar !== false){
                     cfpLoadingBar.complete();
                 }
-            })
+            });
 
-            //Todo:
-            
-            if(cmUserModel.getToken()) cmApi.listenToEvents()
+            // Todo: whats is todo??
+            if(cmUserModel.getToken())
+                cmApi.listenToEvents()
+
         }
-    ]);
+    ])
+
+    .run(function() {
+        FastClick.attach(document.body);
+    });
 
     // bootstrap app and all things after here use app.register.{ng-type}
     angularAMD.bootstrap(app);

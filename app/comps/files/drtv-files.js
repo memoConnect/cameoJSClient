@@ -14,6 +14,7 @@ angular.module('cmFiles').directive('cmFiles',[
                  * @returns {boolean}
                  */
                 this.setFile = function(blob){
+
                     var bool = true;
 
                     angular.forEach($scope.files, function(value){
@@ -34,6 +35,7 @@ angular.module('cmFiles').directive('cmFiles',[
                     if(cmFileFactory.remove(file)){
                         var index = $scope.files.indexOf(file);
                         $scope.files.splice(index,1);
+                        $scope.$broadcast('reset:files');
                     }
                 };
                 /**
@@ -43,9 +45,8 @@ angular.module('cmFiles').directive('cmFiles',[
                  * @param passphrase
                  * @returns {*}
                  */
-                $scope.prepareFilesForUpload = function(passphrase){
-                    var defered = $q.defer(),
-                        promises = [];
+                $scope.prepareFilesForUpload = function(passphrase, conversationId){
+                    var promises = [];
 
                     // create all files and get fileIds
                     angular.forEach($scope.files, function(file){
@@ -53,7 +54,7 @@ angular.module('cmFiles').directive('cmFiles',[
                             file
                             .setPassphrase(passphrase)
                             .encryptName()
-                            .prepareForUpload()
+                            .prepareForUpload(conversationId)
                         )
                     });
 

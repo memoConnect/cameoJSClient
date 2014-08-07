@@ -1,3 +1,13 @@
+.form-control{
+  border: solid 0.1rem #cccccc !important;
+  font-size:@cm-small-font;
+  textarea& {
+    resize:vertical;
+  }
+  input& {
+    height:@cm-unit/2;
+  }
+}
 .cm-input-ctn {
   background-color: @cm-white;
   display: block;
@@ -21,6 +31,7 @@
       width:90%;
     }
     i{
+      font-size: 1.5em;
       .with-cursor;
       width:10%;
     }
@@ -141,7 +152,32 @@ form.form-signin {
   cm-spinner{
     height: @cm-unit;
     top:@cm-unit/2;
-
   }
 }
 
+cm-search-input,.cm-search-input{
+  display:inline-block;
+  position:relative;
+  background:@cm-white;
+  padding:1rem;
+  vertical-align:top;
+  input {
+    border:none;
+    width:90%;
+  }
+  i{
+    font-size:@cm-mega-font;
+  }
+}
+
+cm-add-button{
+  display:inline-block;
+  vertical-align:top;
+  position:relative;
+  text-align:right;
+  .with-cursor;
+}
+
+.cm-warning{
+  color: @cm-warning-color;
+}

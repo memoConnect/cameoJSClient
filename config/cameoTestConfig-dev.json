@@ -3,17 +3,18 @@
         "wwwUrl": "https://dev.cameo.io/m/"
     },
     "testData": [
-        "loginUser1 = 'prickly_yonath'",
+        "loginUser1 = 'angry_bardeen'",
         "passwordUser1 = 'password'",
-        "cameoIdUser1 = 'prickly_yonath'",
-        "purlUser1 = '5FwynM6cti'",
-        "displayNameUser1 = 'Prickly Yonath'",
-        "contactUser1DisplayName ='Silly Bohr'",
-        "contactUser1Login = 'silly_bohr'",
+        "cameoIdUser1 = 'angry_bardeen'",
+        "purlUser1 = 'A0qbjhI4V8'",
+        "displayNameUser1 = 'Angry Bardeen'",
+        "contactUser1DisplayName ='Goofy Torvalds'",
+        "contactUser1Login = 'goofy_torvalds'",
         "contactUser1password = 'password'",
-        "purlExtern = 'BS4PcRK3AP'",
-        "loginUser2 = 'lonely_pasteur'",
+        "purlExtern = 'AIKWiFa2qm'",
+        "loginUser2 = 'elegant_feynman'",
         "passwordUser2 = 'password'",
-        "cameoIdUser2 = 'lonely_pasteur'"
+        "cameoIdUser2 = 'elegant_feynman'" ,
+        "displayNameUser2 = 'Elegant Feynman'"
     ]
 }

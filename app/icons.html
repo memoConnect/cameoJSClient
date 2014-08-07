@@ -7,57 +7,91 @@
     <title>cameoAwesome</title>
 
     <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/cameofont.css">
     <script src="vendor/angular/angular.js"></script>
+    <script src="vendor/emoji/emoji.js"></script>
+    <link rel="stylesheet" href="vendor/emoji/emoji.css">
     <style>
-        body{font-size:5em;font-family:verdana;width:auto;padding:10px}
-        h1{font-size:24px;color:#02BED2}
-        h3{font-size:20px;margin:2px 0;border-bottom:solid 1px #02BED2;color:#02BED2}
+        header{height:3em;position:fixed;left:0;top:0;padding:0.5em 1em;background:#fff;z-index:2;box-sizing:border-box;;width:100%}
+        body{font-size:2rem;font-family:verdana;width:auto;padding:1em;padding-top:4em}
+        a{font-size:40px;color:#02BED2}
+        h1{font-size:2rem;color:#02BED2}
+        h3{font-size:1rem;margin:2px 0;border-bottom:solid 1px #02BED2;color:#02BED2,font-weight:normal}
         figure{margin:5px;position:relative;display:inline-block;text-align:center}
-        figure i{border:solid 1px #02BED2}
-        figure figcaption{font-size:15px;padding:2px 0}
+        figure i{background-color:#02BED2!important}
+        figure figcaption{display:none;white-space:nowrap;background:rgba(255,255,255,0.9);padding-right:10px}
+        figure:hover i{background-color:transparent!important}
+        figure:hover figcaption, .captions-show figcaption{z-index:1;display:inline-block!important}
+        label{font-size:0.5em;cursor:pointer}
+        .maincat{padding-left:0.25rem}
+        .subcat{padding-left:0.5rem}
+        .anchor{top:-6rem;left:0;position:relative;display:block}
     </style>
 </head>
-<body ng-app ng-controller="iconsCtrl">
+<body ng-app="icons" ng-controller="ctrl" ng-class="{'captions-show':withFigcaption}">
 
-    <h1>cameoawesome</h1>
+    <header>
+        <a href="#icons">icons</a>
+        <a href="#filetypes">filetypes</a>
+        <a href="#emojis">emojis</a>
+        <label>
+            <input type="checkbox" ng-model="withFigcaption" value="true">
+            mit classNames
+        </label>
+    </header>
 
-    <div ng-repeat="bundle in icons">
+    <h1><span class="anchor" id="icons"></span>cameofont</h1>
+
+    <div ng-repeat="bundle in icons" class="maincat">
         <h3 ng-if="bundle.title">{{bundle.title}}</h3>
         <figure ng-repeat="css in bundle.css.split(' ')">
-            <i class="fa {{css}}"></i>
-            <figcaption>{{css}}</figcaption>
+            <i class="fa {{css}}"></i><figcaption ng-show="withFigcaption">{{css}}</figcaption>
         </figure>
     </div>
 
-    <h1>filetypes</h1>
+    <h1><span class="anchor" id="filetypes"></span>filetypes</h1>
 
-    <div ng-repeat="bundle in types">
+    <div ng-repeat="bundle in types" class="maincat">
         <h3 ng-if="bundle.title">{{bundle.title}}</h3>
         <figure ng-repeat="css in bundle.css.split(' ')">
-            <div class="file {{css}}"></div>
-            <figcaption>{{css}}</figcaption>
+            <i class="file {{css}}"></i><figcaption ng-show="withFigcaption">{{css}}</figcaption>
         </figure>
+    </div>
+
+    <h1><span class="anchor" id="emojis"></span>emojis</h1>
+
+    <div ng-repeat="(index,mainCat) in Object.keys(emojis)" class="maincat">
+        <h3 ng-if="mainCat">{{mainCat}}</h3>
+        <div ng-repeat="(index,subCat) in Object.keys(emojis[mainCat])" class="subcat">
+            <h3 ng-if="subCat">{{subCat}}</h3>
+            <figure ng-repeat="icon in emojis[mainCat][subCat]" class="emoji-figure">
+                <i class="emoji emoji_{{icon | clearClassName}}"></i><figcaption ng-show="withFigcaption">{{icon | clearClassName}}</figcaption>
+            </figure>
+        </div>
     </div>
 
     <script>
-        function iconsCtrl($scope){
+        angular
+        .module('icons',['emoji'])
+        .controller('ctrl',function ($scope, emoji){
+			$scope.withFigcaption = false;
+            $scope.Object = Object;
             $scope.icons = [
-                {title:'ci icons',css:'cm-logo cm-logo-c cm-logo-a cm-logo-m cm-logo-e cm-logo-o cm-logo-net cm-rhino-bubble-glyph cm-rhino-positive'},
-                {title:'specials',css:'cm-edge cm-edge-add cm-search cm-scroll-pane cm-grip'},
+                {title:'ci icons',css:'cm-logo cm-logo-c cm-logo-a cm-logo-m cm-logo-e cm-logo-o cm-logo-net cm-rhino-bubble-glyph cm-rhino-positive cm-beta'},
+                {title:'specials',css:'cm-edge cm-edge-add cm-scroll-pane cm-grip'},
                 {title:'contact handler',css:'cm-client-add cm-address-book-positive cm-address-book cm-load-to-rhino cm-load-to'},
                 {title:'checkbox',css:'cm-checkbox-bg cm-checkbox cm-checker cm-checkbox-right cm-checkbox-wrong cm-checkbox-add cm-checkbox-minus'},
-				{title:'menu',css:'cm-menu cm-menu-right-close cm-menu-right-open'},
+				{title:'menu',css:'cm-menu cm-menu-right-close cm-menu-right-open cm-menu-weight cm-menu-weight-bell'},
                 {title:'directions',css:'cm-nose-left cm-nose-right cm-nose-up cm-nose-down cm-left cm-right cm-down cm-up'},
-                {title:'notifications',css:'cm-info cm-attention cm-reject cm-ignore cm-bell cm-bell-ring'},
+                {title:'notifications',css:'cm-info cm-attention cm-reject cm-ignore cm-bell cm-bell-ring cm-notification cm-notification-on'},
                 {title:'message states',css:'cm-envelope-closed cm-envelope-open cm-send cm-lock cm-unlock'},
-                {title:'handler',css:'cm-write cm-contacts cm-key cm-visible cm-hidden cm-group cm-person cm-arrange cm-filter cm-anchor cm-clipboard cm-search-cl cm-change cm-grid cm-close cm-fix cm-settings cm-in cm-out cm-logout cm-register'},
-                {title:'answer',css:'cm-plus cm-smile-negative cm-smile-positive cm-post cm-post-attention'},
+                {title:'handler',css:'cm-write cm-contacts cm-key cm-visible cm-hidden cm-group cm-person cm-arrange cm-filter cm-anchor cm-clipboard cm-search cm-change cm-grid cm-close cm-fix cm-settings cm-in cm-out cm-logout cm-register cm-add-recipient cm-new-talk cm-new-contact cm-list cm-import-key cm-export-key cm-create-key cm-cancel-key cm-handshake'},
+                {title:'answer',css:'cm-plus cm-smile-negative cm-smile-positive cm-post cm-post-attention cm-post-idle cm-attachment'},
                 {title:'media',css:'cm-video cm-file cm-sound cm-location cm-pictures cm-camera cm-mobile'}
             ];
 
             $scope.types = [
-                {title:'default',css:'unknown test-if-none-exists-selector-get-question-mark moep'},
+                {title:'default',css:'unknown moep test-if-none-exists-selector-get-question-mark'},
                 {title:'dirs',css:'dir dir-download dir-safe dir-public zip rar sit'},
                 {title:'docs',css:'pdf txt xlsx doc php css ppt pps'},
                 {title:'images',css:'jpg gif bmp tif eps png'},
@@ -65,8 +99,13 @@
                 {title:'audio',css:'mp3 wav wma aif ogg 3gpp aac'},
                 {title:'misc',css:'xml html chm ttf exe dmg'}
             ];
-        }
 
+            $scope.emojis = emoji.items;
+        }).filter('clearClassName', function(){
+            return function(className) {
+                return className.replace('\\','');
+            }
+        });
     </script>
 </body>
 </html>

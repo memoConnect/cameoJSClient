@@ -1,31 +1,28 @@
 <cm-header cm-rubber-space>
-    <cm-back cm-weight="1" back-to="/contacts" class="overlap-identity"></cm-back>
-    <cm-identity cm-weight="10"></cm-identity>
-    <cm-logo cm-weight="8"></cm-logo>
-    <cm-reload cm-weight="6"></cm-reload>
-    <cm-menu cm-weight="4"></cm-menu>
+    <cm-back cm-weight="1" back-to="/contacts"></cm-back>
+    <cm-identity cm-weight="6"></cm-identity>
+    <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
 
 <section ng-controller="ContactCtrl">
-    <div cm-transparent-bg></div>
-
     <div class="cm-contact-body">
         <div class="cm-contact-details" cm-rubber-space>
             <div cm-weight="1">
                 <cm-avatar cm-data="identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-if="identity"></cm-avatar>
             </div>
             <div cm-weight="1">
-                <div class="cm-contact-widget">
-                    {{'CONTACT.WIDGET'|cmTranslate}}:
-                    <cm-safety-level level="2"></cm-safety-level>
-                    12 (3)
-                    <i class="fa cm-right"></i>
-                </div>
-                <div class="cm-contact-actions" cm-rubber-space ng-if="contact">
-                    <cm-contact-type cm-data="contact" cm-weight="1"></cm-contact-type>
-                    <button class="with-white-bg" ng-click="startConversation()" data-qa="start-new-conversation-btn" cm-weight="1">
-                        <i class="fa cm-write "></i>
-                    </button>b
+                <div class="cm-contact-actions" cm-rubber-space ng-if="contact.contactType">
+                    <div cm-weight="1">
+                        <cm-key-level cm-data="identity.keys.getWeakestKeySize()"></cm-key-level>
+                        <cm-contact-type cm-data="contact"></cm-contact-type>
+                    </div>
+                    <button
+                        data-qa="start-new-conversation-btn"
+                        class="with-white-bg"
+                        ng-click="startConversation()"
+                        cm-weight="1">
+                        <i class="fa cm-new-talk"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -33,19 +30,32 @@
         <div class="cm-contact-inputs">
             <form name="cmForm" novalidate>
                 <div class="cm-input-ctn" ng-class="{'cm-input-disabled':disabled}">
-                    <input type="text" name="displayName" ng-model="identity.displayName" placeholder="{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" ng-disabled="disabled" required tabindex="1" data-qa="input-displayname" />
+                    <input
+                       data-qa="input-displayname"
+                       type="text"
+                       name="displayName"
+                       ng-model="identity.displayName"
+                       placeholder="{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}"
+                       ng-disabled="disabled"
+                       required
+                       tabindex="1"
+                       />
                 </div>
 
-                 <div class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid">
+                <div class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid">
                     <div ng-show="cmForm.displayName.$error.required">
                         <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
                     </div>
                 </div>
 
-                <cm-multi-input cm-collection="identity.phoneNumbers" cm-disabled="disabled">
+                <cm-multi-input cm-collection="formData.phoneNumbers" cm-disabled="disabled">
                     <ng-form name="formPhone">
                         <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
-                            <input type="text" name="phoneNumber" ng-model="item.value" placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" ng-disabled="disabled" cm-validate-phone tabindex="2" data-qa="input-phonenumber" />
+                            <input
+                                type="text" name="phoneNumber" ng-model="item.value"
+                                placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}"
+                                ng-disabled="disabled" tabindex="2" data-qa="input-phonenumber"
+                                cm-validate-phone cm-adaptive-change />
                         </div>
                         <div cm-type-chooser cm-choose-value-to="item" cm-disabled="disabled" ng-class="{'cm-input-disabled':disabled}"></div>
                         <div class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
@@ -56,7 +66,7 @@
                     </ng-form>
                 </cm-multi-input>
 
-                <cm-multi-input cm-collection="identity.emails" cm-disabled="disabled">
+                <cm-multi-input cm-collection="formData.emails" cm-disabled="disabled">
                     <ng-form name="formEmail">
                         <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
                             <input name="email" ng-model="item.value" placeholder="{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}" ng-disabled="disabled" cm-validate-email tabindex="3" data-qa="input-email" />
@@ -74,7 +84,9 @@
     </div>
 
     <cm-footer ng-hide="disabled">
-        <button class="cm-btn-block" id="registerUserButton" ng-click="saveUser()">{{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i></button>
+        <button data-qa="btn-create-contact" class="cm-btn-block cm-btn-grey" id="registerUserButton" ng-click="saveUser()">
+            {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i>
+        </button>
     </cm-footer>
 
 </section>

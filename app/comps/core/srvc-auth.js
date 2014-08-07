@@ -10,10 +10,11 @@
  * @requires localStorage TODO: implement ServiceLocalStorage
  */
 
-angular.module('cmCore').service('cmAuth', [
-    'cmApi',
-    function(cmApi){
-        return {
+angular.module('cmCore')
+.service('cmAuth', [
+    'cmApi', 'cmObject', 'cmUtil',
+    function(cmApi, cmObject, cmUtil){
+        var auth = {
             /**
              * @ngdoc method
              * @methodOf cmAuth
@@ -45,7 +46,8 @@ angular.module('cmCore').service('cmAuth', [
              *
              * @returns {Boolean} for removing succeed
              */
-            removeToken: function(){
+            removeToken: function(where){
+                //console.log('removeToken',where)
                 return localStorage.removeItem('token');
             },
             /**
@@ -73,7 +75,9 @@ angular.module('cmCore').service('cmAuth', [
              * @returns {String} Token
              */
             getToken: function(){
-                return localStorage.getItem('token');
+                var token = localStorage.getItem('token');
+                    //console.log('getToken',token)
+                return token;
             },
             /**
              * @ngdoc method
@@ -153,9 +157,27 @@ angular.module('cmCore').service('cmAuth', [
              * @ngdoc method
              * @methodOf cmAuth
              *
+             * @name updateIdentity
+             * @description
+             * Update own Identity
+             *
+             * @param {Object} data Identity Parameter
+             * @returns {Promise} async handling
+             */
+            updateIdentity: function(data){
+                return cmApi.put({
+                    path: '/identity',
+                    data: data
+                })
+            },
+
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
              * @name savePublicKey
              * @description
-             * Save the identity publickey
+             * saved a identity public key
              *
              * @param {Object} data Object with name, key & keySize
              * @returns {Promise} for async handling
@@ -169,6 +191,138 @@ angular.module('cmCore').service('cmAuth', [
                         keySize: parseInt(data.keySize)
                     }
                 })
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name removePublicKey
+             * @description
+             * removed a identity public key
+             *
+             * @param {String} keyId id of public key
+             * @returns {Promise} for async handling
+             */
+            removePublicKey: function(keyId){
+                return cmApi.delete({
+                    path: '/identity/publicKey/'+keyId
+                })
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name savePublicKeySignature
+             * @description
+             * save a signature to a public key
+             *
+             * @param {String} keyId id of local key
+             * @param {String} signKeyId id of signed key
+             * @param {String} signature signature
+             * @returns {Promise} for async handling
+             */
+            savePublicKeySignature: function(localKeyId, signKeyId, signature){
+                return cmApi.post({
+                    path: '/identity/publicKey/' + signKeyId + '/signature',
+                    data: {
+                        keyId: localKeyId,
+                        content: signature
+                    }
+                });
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name deleteAuthenticationRequest
+             * @description
+             * delete Authentication Request
+             *
+             * @param {String} is id of authentication request
+             * @returns {Promise} for async handling
+             */
+            deleteAuthenticationRequest: function(id){
+                return cmApi.delete({
+                    path: '/identity/authenticationRequest/' + id
+                });
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name saveAuthenticationRequest
+             * @description
+             * save Authentication Request
+             *
+             * @param {Object} data data for authentication request
+             * @returns {Promise} for async handling
+             */
+            saveAuthenticationRequest: function(data){
+                return cmApi.post({
+                    path: '/identity/authenticationRequest',
+                    data: data
+                });
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name getBulkPassphrases
+             * @description
+             * get aePassphraseList for reKeying
+             *
+             * @param {String} keyId id of local key
+             * @param {String} newKeyId id of new public key
+             * @param {Integer} limit maximum answers in list
+             * @returns {Promise} for async handling
+             */
+            getBulkPassphrases: function(keyId, newKeyId, limit){
+                var queryString = cmUtil.handleLimitOffset(limit);
+
+                if(queryString == ''){
+                    queryString += '?newKeyId=' + newKeyId;
+                } else {
+                    queryString += '&newKeyId=' + newKeyId;
+                }
+
+                return cmApi.get({
+                    path: '/identity/publicKey/'+ keyId +'/aePassphrases' + queryString
+                });
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name saveBulkPassphrases
+             * @description
+             * post new aePassphraseList for conversation
+             *
+             * @param {String} keyId id of public key
+             * @param {Object} data new asymmetric encrypted passphrases
+             * @returns {Promise} for async handling
+             */
+            saveBulkPassphrases: function(keyId, data){
+                return cmApi.post({
+                    path: '/identity/publicKey/'+ keyId +'/aePassphrases',
+                    data: data
+                });
+            },
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name sendBroadcast
+             * @description
+             * post a broadcast event to own devices
+             *
+             * @param {Object} data event data
+             * @returns {Promise} for async handling
+             */
+            sendBroadcast: function( data){
+                return cmApi.post({
+                    path: '/event/broadcast',
+                    data: data
+                });
             },
             /**
              * @ngdoc method
@@ -243,6 +397,25 @@ angular.module('cmCore').service('cmAuth', [
             getTwoFactorToken: function(){
                 return localStorage.getItem('twoFactorToken');
             }
-        }
+        };
+
+        cmObject.addEventHandlingTo(auth);
+
+        cmApi.on('identity:update', function (event, data){
+//            console.log('cmAuth.on:identity:update')
+            auth.trigger('identity:updated', data)
+        });
+
+        cmApi.on('signatures:updated', function(event, data){
+//            console.log('cmAuth.on:signatures:updated')
+            auth.trigger('signatures:updated', data)
+        });
+
+        cmApi.on('conversation:new-aePassphrase', function(event, data){
+            console.log('conversation:new-aePassphrase');
+            auth.trigger('conversation:update', data)
+        });
+
+        return auth;
     }
 ]);

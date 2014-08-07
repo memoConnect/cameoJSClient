@@ -2,17 +2,36 @@
 
 angular.module('cmUi').directive('cmIdentity',[
     'cmUserModel',
-    function (cmUserModel){
+    'cmModal',
+    '$location',
+    function (cmUserModel, cmModal, $location){
         return {
             restrict: 'AE',
-            template: '<cm-avatar cm-data="identity"></cm-avatar> {{identity.getDisplayName()}}',
+            templateUrl: 'comps/ui/drtv-identity.html',
             scope: true,
             controller: function($scope){
-                $scope.identity = cmUserModel.data.identity;
+                $scope.randModalId = Math.floor((Math.random()*6)+1);
+
+                function setIdentity(){
+                    $scope.identity = cmUserModel.data.identity;
+                }
+
+                setIdentity();
 
                 cmUserModel.on('update:finished',function(){
-                    $scope.identity = cmUserModel.data.identity;
+                    setIdentity();
                 });
+
+                $scope.showIdentityModal = function(){
+                    var modalId = 'modal-identity-' + $scope.randModalId;
+                    cmModal.create({
+                        id: modalId,
+                        type: 'plain',
+                        'class': 'no-padding',
+                        'cm-title': 'IDENTITY.MODAL.HEADER'
+                    },'<cm-identity-modal></cm-identity-modal>',null,$scope);
+                    cmModal.open(modalId);
+                };
             }
         }
     }

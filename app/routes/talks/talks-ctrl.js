@@ -8,7 +8,6 @@ define([
     'use strict';
 
     app.register.controller('ConversationsCtrl',[
-
         '$scope',
         '$rootScope',
         'cmUserModel',
@@ -16,24 +15,8 @@ define([
         'cmUtil',
         'cmModal',
         '$location',
-
         function($scope, $rootScope, cmUserModel, cmConversationFactory, cmUtil, cmModal, $location) {
             $scope.loading = true;
-
-            /**
-             * Welcome modal shown for new user
-             */
-            if(cmUserModel.comesFromRegistration !== false){
-                cmUserModel.comesFromRegistration = false;
-
-                cmModal
-                    .create({
-                        id: 'welcome',
-                        'cm-title': 'CAMEO.WELCOME'
-                    })
-
-                cmModal.open('welcome')
-            }
 
             /**
              * init conversations to scope
@@ -49,8 +32,8 @@ define([
              * load more Conversations
              */
             $scope.loadMore = function(){
-                if(cmUserModel.isAuth() === true){
-                    $scope.conversations.getList();
+                if(cmUserModel.isAuth() != false){
+                    $scope.conversations.getList($scope.conversations.getLimit(), $scope.conversations.length);
                 }
             }
 
@@ -72,15 +55,14 @@ define([
 
             $scope.goToConversation = function(id){
                 if(typeof id != 'undefined'){
-                    $location.path('/conversation/' + id)
+                    $location.path('/conversation/'+id);
                 }
-
                 return false;
             };
 
             $scope.createNewConversation = function(){
                 delete($rootScope.pendingConversation);
-                $location.path('/conversation/')
+                $location.path('/conversation/new');
             };
 
 

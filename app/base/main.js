@@ -16,13 +16,13 @@ require.config({
         'angular-sanitize': 'vendor/angular/angular-sanitize',
 
         'angular-translate': 'vendor/angular-translate/angular-translate',
-        'angular-growl': 'vendor/angular-growl/angular-growl',
 
         'angular-loading-bar': 'vendor/util/loading-bar',
 
         'angular-moment-wrap': 'vendor/angular-moment/angular-moment',
         'moment': 'vendor/angular-moment/moment-with-langs',
         'emoji': 'vendor/emoji/emoji',
+        'fastclick': 'vendor/util/fastclick',
 
         // requirejs stuff
         'angularAMD': 'vendor/requirejs/angularAMD',
@@ -39,7 +39,9 @@ require.config({
 
         // crypto
         'crypto-sjcl': 'vendor/crypto/sjcl/sjcl.min',
-        'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt.min',
+        'crypto-jsencrypt': 'vendor/crypto/jsencrypt/jsencrypt',
+        'crypto-sha256': 'vendor/crypto/jsencrypt/sha256',
+        'crypto-pgp': 'vendor/crypto/openpgp/openpgp',
 
         // packages generated via grunt task 'packages'
         'pckCore': 'packages/comps/core/package',
@@ -51,6 +53,7 @@ require.config({
         'pckFiles': 'packages/comps/files/package',
         'pckSecurityAspects': 'packages/comps/security_aspects/package',
 
+        'pckRouteConversation': 'packages/routes/conversation/comps/package',
         'pckRouteSettings': 'packages/routes/settings/comps/package',
         'pckRouteContacts': 'packages/routes/contacts/comps/package'
     },
@@ -65,7 +68,6 @@ require.config({
         'angular-swipe': ['angular'],
         'angular-translate': ['angular'],
         'angular-sanitize': ['angular'],
-        'angular-growl': ['angular'],
         'angular-moment-wrap': ['angular','moment'],
 
         'angular-loading-bar': ['angular', 'angular-animate'],
@@ -74,12 +76,12 @@ require.config({
         // packages
         'pckCore': [
             'angular',
-            'angular-growl',
             'angular-translate',
             'angular-sanitize',
             'util-base64',
             'crypto-sjcl',
-            'crypto-jsencrypt'
+            'crypto-jsencrypt',
+            'crypto-sha256'
         ],
         'pckContacts': [
             'pckCore'
@@ -111,7 +113,6 @@ require.config({
         'pckFiles': [
             'pckCore',
             'vendor/filesaver/filesaver',
-//            'vendor/filesaver/saveAs',
             'angular-resource',
             'util-base64_decode'
         ],

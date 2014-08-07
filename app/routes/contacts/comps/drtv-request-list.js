@@ -3,8 +3,7 @@
 angular.module('cmRouteContacts').directive('cmRequestList', [
     'cmContactsModel',
     'cmNotify',
-    '$rootScope',
-    function(cmContactsModel, cmNotify, $rootScope){
+    function(cmContactsModel, cmNotify){
         return {
             restrict: 'E',
             templateUrl: 'routes/contacts/comps/drtv-request-list.html',
@@ -12,6 +11,7 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                 $scope.requests = cmContactsModel.requests;
                 $scope.isLoading = false;
 
+                /*
                 cmContactsModel.on('friendRequests:loaded', function(){
                     $scope.requests = cmContactsModel.requests;
                 });
@@ -19,36 +19,10 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                 cmContactsModel.on('friendRequests:updated', function(){
                     $scope.requests = cmContactsModel.requests;
                 });
+                */
 
-                /**
-                 * reset
-                 */
-                $rootScope.$on('$routeChangeSuccess', function(){
-                    angular.forEach(cmContactsModel.requests, function(value){
-                        value.isOpen = false;
-                        value.showBar = false;
-                    });
-                });
-
-                $scope.toggleBrief = function(request){
-                    if((request.isOpen == undefined || request.isOpen == false ) && request.message != ''){
-                        request.state = 'new';
-                        request.isOpen = true;
-                    } else {
-                        request.isOpen = false;
-                    }
-                };
-
-                $scope.toggleBar = function(request){
-                    if(request.showBar !== 'undefined'){
-                        if(request.showBar){
-                            request.showBar = false;
-                        } else {
-                            request.showBar = true;
-                        }
-                    } else {
-                        request.showBar = true;
-                    }
+                if($scope.requests.length > 0){
+                    cmNotify.trigger('bell:unring');
                 }
 
                 /**
@@ -61,9 +35,7 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                             function(){
                                 cmContactsModel.removeFriendRequest(item);
 
-                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT',{ttl:2000});
-
-                                $rootScope.$broadcast('cmNotify:update');
+//                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT',{displayType:'modal', ttl:3000});
 
                                 cmContactsModel.trigger('friendRequests:updated');
                             },
@@ -87,9 +59,7 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                             function(){
                                 cmContactsModel.removeFriendRequest(item);
 
-                                cmNotify.success('CONTACTS.INFO.REQUEST.REJECT',{ttl:2000});
-
-                                $rootScope.$broadcast('cmNotify:update');
+//                                cmNotify.success('CONTACTS.INFO.REQUEST.REJECT',{displayType:'modal',ttl:3000});
 
                                 cmContactsModel.trigger('friendRequests:updated');
                             },
@@ -107,11 +77,9 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                     if(typeof item == 'object'){
                         item.ignore().then(
                             function(){
-                                cmContactsModel.removeFriendRequest(item);
+                                cmNotify.trigger('bell:unring');
 
-                                cmNotify.success('CONTACTS.INFO.REQUEST.IGNORE',{ttl:2000});
-
-                                $rootScope.$broadcast('cmNotify:update');
+//                                cmNotify.success('CONTACTS.INFO.REQUEST.IGNORE',{displayType:'modal',ttl:3000});
 
                                 cmContactsModel.trigger('friendRequests:updated');
                             },

@@ -1,0 +1,113 @@
+<cm-header cm-rubber-space>
+    <cm-back cm-weight="1" back-to="/settings"></cm-back>
+    <cm-identity cm-weight="6"></cm-identity>
+    <cm-menu cm-weight="1"></cm-menu>
+</cm-header>
+
+<header class="inScreen">
+    <i class="fa cm-key cm-lg-icon"></i>
+    {{'SETTINGS.PAGES.IDENTITY.CREATE.HEADER'|cmTranslate}}
+</header>
+
+<div class="cm-contact-body">
+    <div class="cm-contact-inputs">
+        <form name="cmForm" novalidate>
+
+            <div class="cm-input-ctn with-inside-icon cm-icon-grey">
+                <i class="fa cm-rhino-positive"></i>
+                <input
+                    data-qa="input-cameoid"
+                    type="text" name="cameoId" ng-model="identity.cameoId"
+                    placeholder="{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.CAMEOID'|cmTranslate}}"
+                    required tabindex="1" />
+            </div>
+
+            <div class="cm-input-ctn">
+                <input
+                    data-qa="input-displayname"
+                    type="text" name="displayName" ng-model="identity.displayName"
+                    placeholder="{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}"
+                    required tabindex="2" ng-keyup="validDisplayName()" />
+            </div>
+
+            <div
+                class="cm-alert"
+                ng-show="
+                    cmForm.displayName.$dirty &&
+                    cmForm.displayName.$invalid &&
+                    cmForm.displayName.length > 0
+                ">
+                <div ng-show="cmForm.displayName.$error.required">
+                    <i class="fa cm-info"></i>
+                    {{'SETTINGS.PAGES.IDENTITY.CREATE.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
+                </div>
+            </div>
+
+            <cm-multi-input cm-collection="identity.phoneNumbers">
+                <ng-form name="formPhone">
+                    <div class="cm-input-ctn with-chooser">
+                        <input
+                            data-qa="input-phonenumber"
+                            type="text" name="phoneNumber" ng-model="item.value"
+                            placeholder="{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.PHONENUMBER'|cmTranslate}}"
+                            cm-validate-phone cm-adaptive-change
+                            tabindex="3" />
+                    </div>
+                    <div cm-type-chooser cm-choose-value-to="item"></div>
+                    <div
+                        class="cm-alert"
+                        ng-show="
+                            formPhone.phoneNumber.$dirty &&
+                            formPhone.phoneNumber.$invalid
+                        "
+                        data-qa="form-error-phoneNumber-invalid">
+                        <div ng-show="formPhone.phoneNumber.$invalid">
+                            <i class="fa cm-info"></i>
+                            {{'SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.PHONENUMBER'|cmTranslate}}
+                        </div>
+                    </div>
+                </ng-form>
+            </cm-multi-input>
+
+            <cm-multi-input cm-collection="identity.emails">
+                <ng-form name="formEmail">
+                    <div class="cm-input-ctn with-chooser">
+                        <input
+                            data-qa="input-email"
+                            name="email" ng-model="item.value"
+                            placeholder="{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.EMAIL'|cmTranslate}}"
+                            cm-validate-email
+                            tabindex="4" />
+                    </div>
+                    <div cm-type-chooser cm-choose-value-to="item"></div>
+                    <div class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
+                        <div ng-show="formEmail.email.$invalid" data-qa="form-error-email-invalid">
+                            <i class="fa cm-info"></i>
+                            {{'SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.EMAIL'|cmTranslate}}
+                        </div>
+                    </div>
+                </ng-form>
+            </cm-multi-input>
+
+
+            <!--address class="cm-address">
+                <div class="cm-input-ctn">
+                    <input type="text" class="street" name="street" ng-model="identity.address.street" placeholder="{{'CONTACT.PLACEHOLDER.STREET'|cmTranslate}}" required tabindex="5" data-qa="input-address-street" />
+                    <input type="text" class="streetnr" name="streetnr" ng-model="identity.address.streetnr" placeholder="{{'CONTACT.PLACEHOLDER.STREETNR'|cmTranslate}}" required tabindex="6" data-qa="input-address-streetnr" />
+                </div>
+
+                <div class="cm-input-ctn">
+                    <input type="text" class="zip" name="zip" ng-model="identity.address.zip" placeholder="{{'CONTACT.PLACEHOLDER.ZIP'|cmTranslate}}" required tabindex="7" data-qa="input-address-zip" maxlength="5"/>
+                    <input type="text" class="city" name="city" ng-model="identity.address.city" placeholder="{{'CONTACT.PLACEHOLDER.CITY'|cmTranslate}}" required tabindex="8" data-qa="input-address-city" />
+                </div>
+            </address-->
+
+        </form>
+    </div>
+</div>
+
+<cm-footer cm-always-on-top>
+    <button class="cm-btn-block cm-btn-grey" ng-click="createIdentity()" data-qa="btn-identity-create">
+        {{'SETTINGS.PAGES.IDENTITY.CREATE.FOOTER'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i>
+    </button>
+</cm-footer>

@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('cmFiles').directive('cmBlobVideoAudio',[
+    'cmEnv', 'cmFilesAdapter',
     '$rootScope',
-    'cmFileTypes',
-    'cmEnv',
-    function ($rootScope, cmFileTypes, cmEnv) {
+    function (cmEnv, cmFilesAdapter,
+              $rootScope) {
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
@@ -13,22 +13,17 @@ angular.module('cmFiles').directive('cmBlobVideoAudio',[
                         var canPlay = element[0].canPlayType(file.type);
                         // browser supports file
                         if(!cmEnv.isiOS && canPlay) {
-                            // get for img tag base64 url
-                            var reader = new FileReader();
-                            // promise when base64 loaded
-                            reader.onload = function (e) {
-                                // set attribute
-                                element.attr('src', e.target.result);
-
+                            cmFilesAdapter.getBlobUrl(file.blob).then(function(objUrl){
+                                file.url = objUrl;
+                                element.attr('src', file.url.src);
                                 fileReady(file);
-                            };
-                            reader.readAsDataURL(file.blob);
+                            });
                         // file can't play via html5 video
                         } else {
-                            file.loaded = true;
+                            fileReady(file);
 
                             var fileEl = angular
-                                .element('<div class="file '+cmFileTypes.find(file.type, file.name)+'" ></div>')
+                                .element('<div class="file '+file.detectedExtension+'" ></div>')
                                 .on('click',function(){
                                     file.promptSaveAs()
                                 });
@@ -61,9 +56,7 @@ angular.module('cmFiles').directive('cmBlobVideoAudio',[
 
                 function fileReady(file){
                     // hide spinner
-                    scope.$apply(function () {
-                        file.loaded = true;
-                    });
+                    file.loaded = true;
 
                     if (attrs.cmScrollToTarget) {
                         $rootScope.$broadcast('scroll:to', attrs.cmScrollToTarget)

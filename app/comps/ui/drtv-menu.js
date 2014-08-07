@@ -4,21 +4,26 @@ angular.module('cmUi').directive('cmMenu',[
     '$location',
     'cmUserModel',
     'cmConfig',
-    function ($location, cmUserModel, cmConfig){
+    'cmNotify',
+    function ($location, cmUserModel, cmConfig, cmNotify){
         return {
             restrict: 'AE',
             scope: true,
             templateUrl: 'comps/ui/drtv-menu.html',
-
             controller: function($scope){
 
                 $scope.Object = Object;
                 $scope.menu = cmConfig.menu;
 
+                $scope.version = cmConfig.version;
+
                 $scope.menuVisible = false;
 
                 $scope.handleMenu = function(){
                     $scope.menuVisible = $scope.menuVisible ? false : true;
+
+                    if($scope.menuVisible)
+                        cmNotify.trigger('bell:unring');
                 };
 
                 $scope.toggleSubs = function(parent){
@@ -26,7 +31,15 @@ angular.module('cmUi').directive('cmMenu',[
                 };
 
                 $scope.goTo = function(parentBtn, url, isSub){
-                    if(parentBtn.isOnlyLabel && isSub == undefined)
+                    /**
+                     * if current location == url, then only close menu
+                     */
+                    if('/' + url == $location.$$url){
+                        $scope.handleMenu();
+                        return false;
+                    }
+
+                    if(parentBtn.onlyLabel && isSub == undefined)
                         return false;
 
                     if(isSub != undefined)
@@ -40,7 +53,7 @@ angular.module('cmUi').directive('cmMenu',[
                 };
 
                 $scope.logout = function(){
-                    cmUserModel.doLogout();
+                    cmUserModel.doLogout(true,'drtv-menu logout');
                 };
             }
         }

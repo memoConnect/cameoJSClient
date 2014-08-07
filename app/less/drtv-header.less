@@ -2,17 +2,18 @@ cm-header{
   display:block;
   position:fixed;
   top:0;
-  z-index:10;
+  z-index:11;
   padding: @cm-vertical-padding 0;
   width:@cm-app-width;
   color:@cm-white;
   background:@cm-bg-color;
   line-height:@cm-unit;
-  font-size:@cm-large-font;
+  font-size:@cm-mega-font;
   white-space:nowrap;
 
   > *{
     vertical-align: middle;
+    background:@cm-black;
   }
 
   cm-back{
@@ -23,33 +24,37 @@ cm-header{
     .back-wrap{
       text-overflow:ellipsis;
       overflow:hidden;
+      text-align:center;
     }
     i {
-      margin-left:0.2rem;
-      margin-right:0.5rem;
-      vertical-align:text-bottom;
+      font-size:@cm-mega-font;
     }
     span {
       position: relative;
       font-size:@cm-small-font;
     }
-    &.overlap-identity{
-      .back-wrap{
-        position:relative;
-        width:@cm-unit+1;
-      }
-    }
   }
 
   cm-identity{
     .with-cursor;
-    color:@cm-white;
+    height:@cm-unit;
     text-overflow:ellipsis;
     overflow:hidden;
     white-space:nowrap;
-    text-align:left;
     position:relative;
-    font-size:0.8em;
+    padding-left:@cm-horizontal-padding;
+    cm-avatar{
+      top:-0.1rem;
+    }
+    a{
+      text-align:left;
+      display:block;
+      color:@cm-white;
+      font-size:@cm-large-font;
+    }
+    span{
+      padding:@cm-horizontal-padding;
+    }
   }
 
   cm-logo{
@@ -57,8 +62,14 @@ cm-header{
     text-align:center;
   }
 
-  cm-reload{
+  cm-add-button{
+    display: inline-block;
+  }
+
+  cm-header-list-search,
+  cm-add-button{
     text-align:center;
+    .with-cursor;
   }
 
   .purl-identity-wrap{
@@ -68,14 +79,53 @@ cm-header{
   .fast-sign-in{
     .with-cursor;
     .cm-ci-color;
+    padding:0 @cm-horizontal-padding;
     i{
-      font-size: @cm-unit / 2;
-      vertical-align: text-top;
-      margin-right: -(@cm-unit / 8);
+      position: relative;
+      top:0.3rem;
     }
     span {
-      position: relative;
-      font-size:@cm-small-font;
+      position:relative;
+      font-size:@cm-large-font;
+    }
+  }
+
+  cm-header-list-search{
+    display:inline-block;
+    position:relative;
+    cm-search-input{
+      color:@cm-black;
+      position:absolute;
+      z-index:-1;
+      height:@cm-unit;
+      width:24rem - @cm-horizontal-padding;
+      right:@cm-unit;
+      top:0;
+      padding:1rem 0.4rem;
+      font-size:@cm-large-font;
+      line-height:@cm-mega-font;
+      text-align:left;
+      &.visible{
+        z-index:1;
+      }
+      input{
+
+      }
+      textarea{
+        border:0!important;
+        resize:none;
+        white-space:nowrap;
+        overflow:hidden;
+      }
+      i{
+        position: absolute;
+        right:0;
+        top:0;
+        width:@cm-unit;
+        height:@cm-unit;
+        line-height:@cm-unit!important;
+        text-align:center;
+      }
     }
   }
 }
@@ -149,15 +199,6 @@ header.menu{
     text-align:left;
     font-size:0.8em;
     .with-cursor;
-  }
-
-  cm-reload{
-    display: inline-block;
-    width: 6rem;
-    text-align:center;
-    position: absolute;
-    top: @cm-vertical-padding;
-    right: 3.1rem;
   }
 
   cm-menu{

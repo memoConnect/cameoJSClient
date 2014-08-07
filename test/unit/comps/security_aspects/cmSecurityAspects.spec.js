@@ -16,6 +16,7 @@ describe('cmSecurityAspects', function(){
                 my_method: function(){ return 'hello world' }
             }
 
+        // add aspects
         security_aspects
         .setTarget(test_object)
         .addAspect({
@@ -65,7 +66,9 @@ describe('cmSecurityAspects', function(){
                             }
         })
 
-        var applying    = security_aspects.getApplyingAspects(),
+        security_aspects.refresh()
+
+        var applying    = security_aspects.applyingAspects,
             positives   = security_aspects.getPositiveAspects(),
             negatives   = security_aspects.getNegativeAspects(),
             neutrals    = security_aspects.getNeutralAspects(),
@@ -78,10 +81,10 @@ describe('cmSecurityAspects', function(){
         expect(neutrals.length).toBe(0)     //
         expect(nonapplying.length).toBe(3)  //SA3, SA4, SA6
 
-        
-
-
+        // change method
         test_object.my_method = function() { return 'ping' }
+
+        security_aspects.refresh()
 
         applying    = security_aspects.getApplyingAspects(),
         positives   = security_aspects.getPositiveAspects(),
@@ -95,10 +98,10 @@ describe('cmSecurityAspects', function(){
         expect(neutrals.length).toBe(0)     //
         expect(nonapplying.length).toBe(1)  //SA6
 
-
-
-
+        // change value
         test_object.my_attribute = 4
+
+        security_aspects.refresh()
 
         applying    = security_aspects.getApplyingAspects(),
         positives   = security_aspects.getPositiveAspects(),
@@ -111,10 +114,5 @@ describe('cmSecurityAspects', function(){
         expect(negatives.length).toBe(2)    //SA2, SA5
         expect(neutrals.length).toBe(1)     //SA6
         expect(nonapplying.length).toBe(3)  //SA1, SA2, SA3
-        
-        
-
-        
-
-    })    
+    })
 })

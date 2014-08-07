@@ -3,11 +3,6 @@
 
 .cm-btn{&:hover{color:@cm-white}}
 
-.cm-btn-black, .cm-btn-white{ 
-  width:8em; 
-  height:3em 
-}
-
 .btn {
     -moz-user-select: none;
     background-image: none;
@@ -25,6 +20,10 @@
     white-space: nowrap;
 }
 
+.cm-btn-black, .cm-btn-white{
+  width:@cm-unit*2.5;
+  height:@cm-unit;
+}
 .cm-btn-black{
   background-color:#000;
   .cm-ci-color;
@@ -42,20 +41,28 @@
 .cm-grey {
   color: @cm-grey;
 }
-
 .cm-btn-white{
-  background-color:rgba(255, 255, 255, 0.15);color:@cm-white;
-  &:hover{.cm-ci-color}
+  background-color:rgba(255, 255, 255, 0.15);
+  color:@cm-white;
+  &:hover{
+    .cm-ci-color
+  }
 }
 .cm-btn,.cm-form-control{.without-border-radius}
 .cm-btn-block{display:block;width:100%;padding-right:0;padding-left:0}
+.cm-inline-block{display:inline-block !important}
 .cm-btn-primary{background:@cm-bg-color;color:@cm-ci-color}
+
+.cm-btn-grey{background-color:@cm-grey-new;color:@cm-white}
 
 .cm-btn-lg{
   padding:0.5rem 0.5rem;
   font-size:1.5em;
   line-height:1
 }
+
+.cm-white-border-right{border-right: 1px solid @cm-white !important}
+
 
 .cm-alert{padding:1em}
 .cm-center{text-align:center}
@@ -64,11 +71,32 @@
 .input-group-addon{background-color: transparent}
 .input-group-addon.self-size i{width:1em}
 
-.cm-input-disabled{-moz-opacity:0.60;-khtml-opacity:0.60;opacity:0.60}
+.cm-disabled{
+  -moz-opacity:0.25;
+  -khtml-opacity:0.25;
+  opacity:0.25;
+  cursor:default;
+}
 
 .cm-nose-wrapper{}
 
-.cm-lg-icon{font-size:1.5em;position:relative;top:0.19em}
+.cm-lg-icon{
+  font-size:@cm-mega-font;
+  position:relative;
+  vertical-align:middle;
+}
+.cm-lg-special{
+  font-size:@cm-mega-font*2 !important;
+  position:relative;
+  vertical-align:middle;
+}
+
+.cm-icon-black {
+  color:@cm-black;
+}
+.cm-icon-grey {
+  color:@cm-grey;
+}
 
 .cm-page-header{
   background:rgba(255,255,255,0.50);position:relative;height:5em;

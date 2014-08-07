@@ -1,30 +1,64 @@
 'use strict';
 
 angular.module('cmContacts').service('cmContactsModel',[
+    'cmFactory',
     'cmUserModel',
+    'cmContactModel',
     'cmContactsAdapter',
     'cmIdentityFactory',
     'cmFriendRequestModel',
+    'cmStateManagement',
     'cmUtil',
     'cmObject',
     'cmLogger',
     'cmNotify',
     '$q',
     '$rootScope',
-    function (cmUserModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmUtil, cmObject, cmLogger, cmNotify, $q, $rootScope){
+    function (cmFactory, cmUserModel, cmContactModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger, cmNotify, $q, $rootScope){
         var self = this,
             events = {};
 
-        this.contacts = [];
-        this.groups = [];
-        this.requests = [];
+        this.state = new cmStateManagement(['loading-contacts','loading-groups','loading-requests']);
 
+        this.contacts   = new cmFactory(cmContactModel,
+                                function sameByData(instance, data){
+                                    return data &&
+                                           data.identity &&
+                                           data.identity.id &&
+                                           instance &&
+                                           instance.identity &&
+                                           instance.identity.id &&
+                                           data.identity.id == instance.identity.id
+                                });
+        // TODO: groups must be in factory style with models
+        this.groups     = [];//new cmFactory(function(){return this;});
+        this.requests   = new cmFactory(cmFriendRequestModel, 
+                                function sameByData(instance, data){
+                                    return      data 
+                                            &&  data.identity 
+                                            &&  data.identity.id 
+                                            &&  instance
+                                            &&  instance.identity
+                                            &&  instance.identity.id
+                                            &&  data.identity.id == instance.identity.id
+                                },
+                                function sameByInstance(instance_1, instance_2){
+                                    return      instance_1
+                                            &&  instance_1.identity
+                                            &&  instance_1.identity.id
+                                            &&  instance_2
+                                            &&  instance_2.identity
+                                            &&  instance_2.identity.id
+                                            &&  instance_1.identity.id == instance_2.identity.id
+                                });
+  
         cmObject.addEventHandlingTo(this);
 
         /**
          * Init Object
          */
         function init(){
+//            cmLogger.debug('cmContactsModel:init');
             self.getAll();
             self.getGroups();
             self.getFriendRequests();
@@ -37,6 +71,8 @@ angular.module('cmContacts').service('cmContactsModel',[
          */
 
         function _add(contact){
+            self.contacts.create(contact)
+            /*
             var check = false,
                 i = 0;
 
@@ -59,10 +95,11 @@ angular.module('cmContacts').service('cmContactsModel',[
                     });
                 }
             }
+            */
         }
 
         this._clearContacts = function(){
-            this.contacts = [];
+            this.contacts.reset()
         };
 
         /**
@@ -74,55 +111,28 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         this.getAll = function(limit, offset){
 //            cmLogger.debug('cmContactsModel:getAll');
+            var i = 0;
 
-            var deferred = $q.defer(),
-                i = 0;
             if(cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
-                this.trigger('start:load-contacts');
-                this.loading = true;
+                if(!this.state.is('loading-contacts')){
+                    this.trigger('start:load-contacts');
+                    self.state.set('loading-contacts');
 
-                cmContactsAdapter.getAll().then(
-                    function(data){
-                        while(i < data.length){
-                            _add(data[i]);
-                            i++;
+                    cmContactsAdapter.getAll().then(
+                        function(data){
+                            while(i < data.length){
+                                _add(data[i]);
+                                i++;
+                            }
                         }
-
-                        deferred.resolve(self.contacts);
-                    },
-                    function(){
-                        deferred.reject();
-                    }
-                ).finally(function(){
+                    ).finally(function(){
                         self.trigger('finish:load-contacts');
+                        self.state.unset('loading-contacts');
                     })
-            } else {
-                deferred.resolve(self.contacts);
-                self.trigger('finish:load-contacts');
+                }
             }
 
-
-
-            return deferred.promise;
-        };
-
-        this.getQuantity = function(){
-            var deferred = $q.defer();
-
-            if(this.contacts.length < 1 && cmUserModel.isAuth() !== false){
-                this.getAll().then(
-                    function(data){
-                        deferred.resolve(data.length);
-                    },
-                    function(){
-                        deferred.reject();
-                    }
-                )
-            } else {
-                deferred.resolve(self.contacts.length);
-            }
-
-            return deferred.promise;
+            return this;
         };
 
         this.getOne = function(id){
@@ -132,23 +142,21 @@ angular.module('cmContacts').service('cmContactsModel',[
         this.getGroups = function(){
 //            cmLogger.debug('cmContactsModel:getGroups');
 
-            var deferred = $q.defer();
-
             if(this.groups.length < 1 && cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
-                cmContactsAdapter.getGroups().then(
-                    function(data){
-                        self.groups = data;
-                        deferred.resolve(self.groups);
-                    },
-                    function(){
-                        deferred.reject();
-                    }
-                );
-            } else {
-                deferred.resolve(self.groups);
+                if(!this.state.is('loading-groups')) {
+                    this.state.set('loading-groups');
+
+                    cmContactsAdapter.getGroups().then(
+                        function (data) {
+                            self.groups = data;
+                        }
+                    ).finally(function(){
+                        self.state.unset('loading-groups')
+                    });
+                }
             }
 
-            return deferred.promise;
+            return this;
         };
 
         this.getAllFromGroup = function(group,limit,offset){
@@ -159,76 +167,48 @@ angular.module('cmContacts').service('cmContactsModel',[
          * Friend Request Handling
          */
 
-        /**
-         * add Friend Request to Model
-         * @param identity_data
-         * @private
-         */
-        this._addFriendRequest = function(request_data){
-            var i = 0,
-                check = false;
-
-            while(i < this.requests.length){
-                if(this.requests[i].identity.id == request_data.identityId){
-                    check = true;
-                    break;
-                }
-                i++;
-            }
-
-            if(check !== true){
-                this.requests.push(new cmFriendRequestModel({identity: cmIdentityFactory.create(request_data.identity, true), message:request_data.message || '', created:request_data.created || ''}));
-            }
-        };
 
         this.getFriendRequests = function(){
 //            cmLogger.debug('cmContactsModel:getFriendRequests');
             if(cmUserModel.isAuth() !== false && cmUserModel.isGuest() !== true){
-                cmContactsAdapter.getFriendRequests().then(
-                    function(data){
+                if(!this.state.is('loading-requests')){
+                    this.state.set('loading-requests');
+
+                    cmContactsAdapter.getFriendRequests().then(
+                        function(data) {
 //                        cmLogger.debug('cmContactsModel:getFriendRequests:done');
-                        var old_length = self.requests.length;
+                            var old_length = self.requests.length;
 
-                        angular.forEach(data, function(value){
-                            self._addFriendRequest(value);
-                        });
+                            angular.forEach(data, function (request_data) {
+                                self.requests.create(request_data)
+                            });
 
-                        if(old_length < self.requests.length){
-                            self.trigger('friendRequests:loaded');
-                            cmNotify.info('new Friend Requests', {ttl:1000})
+                            if (old_length < self.requests.length) {
+                                self.trigger('friendRequests:loaded');
+                            }
                         }
-                    }
-                )
+                    ).finally(function(){
+                        self.state.unset('loading-requests');
+                    })
+                }
             }
         };
 
         this.removeFriendRequest = function(request){
+            this.requests.deregister(request)
+
+            /*
 //            cmLogger.debug('cmContactsModel:removeFriendRequest');
 
             var index = this.requests.indexOf(request);
             this.requests.splice(index,1);
-
+            */
+           
             return this;
-        }
+        };
 
         this.sendFriendRequest = function(id, message){
             return cmContactsAdapter.sendFriendRequest(id, message);
-        };
-
-        this.answerFriendRequest = function(id, type){
-            return cmContactsAdapter.answerFriendRequest(id, type);
-        };
-
-        this.checkDisplayName = function(displayName){
-            var defer = $q.defer();
-            // TODO: check displayName in local contacts
-            if(displayName != 'WummsBrumms'){
-                defer.resolve();
-            } else {
-                defer.reject();
-            }
-
-            return defer.promise;
         };
 
         this.addContact = function(data){
@@ -287,36 +267,59 @@ angular.module('cmContacts').service('cmContactsModel',[
             return defer.promise;
         };
 
-        function resetContacts(){
-            self.contacts = [];
-            self.groups = [];
-            self.requests = [];
-        }
 
+        /**
+         * event handling
+         */
         $rootScope.$on('logout', function(){
-            resetContacts();
+            self.contacts.reset();
+            self.groups = [];//self.groups.reset();
+            self.requests.reset();
         });
 
-        this.on('friendRequests:updated', function(){
+        this.on('friendRequests:updated friendRequest:send after-add-contact', function(){
             this._clearContacts();
             init();
         });
 
-        this.on('friendRequest:send', function(){
-            this._clearContacts();
-            init();
+        cmContactsAdapter.on('friendRequest:new', function(event, data){
+            if(data.to == cmUserModel.data.identity.id)
+                self.requests.create(data.friendRequest);
         });
 
-        this.on('after-add-contact', function(){
-            console.log('after-add-contact');
-            this._clearContacts();
-            init();
+        cmContactsAdapter.on('friendRequest:accepted', function(event, data){
+            // Friend request sent by the current user was accepted:
+            if(data.from == cmUserModel.data.identity.id){
+                self.contacts.create(data.contact, true);
+            }
+
+            // Friend request accepted by the current user (on a different device):
+            if(data.to == cmUserModel.data.identity.id){
+                self.requests.forEach(function(request){
+                    if(request.identity.id == data.from)
+                        self.requests.deregister(request)
+                });
+            }
         });
 
-        cmUserModel.on('init', function(){
-            init();
+        this.requests.on('register', function(){
+            cmNotify.create({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell:true});
         });
 
-        init();
+        cmContactsAdapter.on('identity:updated', function(event, data){
+            if(typeof data.id != 'undefined') {
+                var contact = self.contacts.filter(function (contact) {
+                    return contact.identity.id == data.id
+                })[0];
+
+                if (typeof contact == 'object' && 'identity' in contact && typeof contact.identity.importData == 'function') {
+                    contact.identity.importData(data);
+                }
+            }
+        });
+
+        cmUserModel.on('update:finished', function(){
+            init();
+        });
     }
 ]);

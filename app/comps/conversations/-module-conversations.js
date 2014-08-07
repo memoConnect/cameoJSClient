@@ -3,5 +3,6 @@
 angular.module('cmConversations', [
     'cmCore',
     'cmFiles',
-    'cmSecurityAspects'
-])
+    'cmSecurityAspects',
+    'cmUser'
+]);

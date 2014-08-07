@@ -1,3 +1,4 @@
+'use strict';
 /*
 
  # Usage in html template:
@@ -48,8 +49,8 @@
 
  */
 
-
-angular.module('cmUi').filter('nl2br', [
+angular.module('cmUi')
+.filter('nl2br', [
     '$sce',
     function($sce){
         return function(msg, is_xhtml) {

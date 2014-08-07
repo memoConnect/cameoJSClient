@@ -1,20 +1,20 @@
-<cm-avatar cm-data="(conversation | cmLatestMessage).from"></cm-avatar>
+<cm-avatar cm-data="conversation.lastMessage.from"></cm-avatar>
 
 <div class="details" cm-weight="3">
     <div class="subject" data-qa="conversation-subject" ng-bind-html="conversation | cmTagline"></div>
-    <cm-message cm-data="conversation.getLastMessage()" text-only="true" data-qa ="conversation-last-message"></cm-message>
+    <cm-message cm-data="conversation.lastMessage" text-only="true" data-qa="conversation-last-message"></cm-message>
 </div>
 
 <div class="meta" cm-weight="1">
     <div class="top">
-        <cm-safety-level cm-level="conversation.getSafetyLevel()"></cm-safety-level>
+        <cm-lock-level cm-level="conversation.lockStatus.level"></cm-lock-level>
         <span class="last-updated small">
             {{conversation.timeOfLastUpdate | date:'HH:mm'}}
         </span>
     </div>
     <div class="bottom">
         <cm-recipient-counter>{{conversation.recipients.length||0}}</cm-recipient-counter>
-        <span class="message-count" ng-class="{'cm-unread' : conversation.messages.length > 0}"> ({{conversation.numberOfMessages || conversation.messages.length||0}}) </span>
+        <span class="message-count" ng-class="{'cm-unread' : conversation.messages.length > 0}"> ({{conversation.numberOfMessages || 0}}) </span>
     </div>
 </div>
 

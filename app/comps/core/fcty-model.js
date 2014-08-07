@@ -1,6 +1,8 @@
 'use strict';
 
-//This factory provides a generic Factory
+
+//Todo: This is not in use, ist it?
+//This factory provides a generic Model
 
 angular.module('cmCore')
 .factory('cmModel',[

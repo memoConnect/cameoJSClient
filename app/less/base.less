@@ -7,13 +7,15 @@ unicode number table for css selectors
 exp.:
 .\33ggp -> .3ggp
 */
-
 @cm-ci-color: #02BED2;
 @cm-light-grey: #EDEDED;
 @cm-readed-grey: #B5B5B5;
+@cm-lightdark-grey: #999999;
 @cm-grey: #666666;
+@cm-grey-new: #555555;
 @cm-dark-grey: #444444;
 @cm-border-grey: #CCCCCC;
+@cm-border-lightgrey: #eeeeee;
 @cm-white: #FFFFFF;
 @cm-black: #000000;
 @cm-green: #66CC00;
@@ -21,14 +23,22 @@ exp.:
 @cm-red: #CC0000;
 @cm-bg-color: @cm-black;
 @cm-warning-color: #FF6600;
-@cm-input-bg-color: #EDEDED;
+@cm-input-bg-color: @cm-light-grey;
 @cm-overlay-dark:rgba(0,0,0,0.7);
 @cm-overlay-light:rgba(255,255,255,1);
 @cm-overlay-light-transparent:rgba(255,255,255,0.4);
-@cm-color-positive: #66CC00;
-@cm-color-negative: #CC0000;
+@cm-color-positive: @cm-green;
+@cm-color-negative: @cm-red;
 
 @cm-form-alert-red: #F4DFDF;
+
+@cm-notify-success: @cm-green;
+@cm-notify-info: @cm-ci-color;
+@cm-notify-warn: @cm-warning-color;
+@cm-notify-error: @cm-red;
+
+// new color!!!
+@cm-grey-btn: #555555;
 
 @cm-unit: 4rem;
 @cm-vertical-padding: 0.3rem;
@@ -59,8 +69,15 @@ exp.:
 
 // General page layout
 
-::selection {color:@cm-white;background:@cm-ci-color;}
-::-moz-selection {color:@cm-white;background:@cm-ci-color;}
+//::selection {color:inherit;background:transparent}
+//::-moz-selection {color:inherit;background:transparent}
+.is-selectable::selection {color:@cm-white;background:@cm-ci-color;}
+.is-selectable::-moz-selection {color:@cm-white;background:@cm-ci-color;}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
+  background:@cm-white;
+  color:@cm-grey;
+}
 
 html, body {
     height:100%;
@@ -81,10 +98,19 @@ pre {
 
 a {
   text-decoration: none !important;
-  color:@cm-ci-color;
   &:hover,
-  &:focus, {
+  &:focus {
     color:inherit;
+  }
+}
+// only extern links
+a[target='_blank'], .classic-link {
+  text-decoration: underline !important;
+  color:@cm-ci-color !important;
+  &:hover,
+  &:focus {
+    color:@cm-ci-color !important;
+    text-decoration: none !important;
   }
 }
 
@@ -128,7 +154,7 @@ textarea:focus, button:focus, input[type="text"]:focus, input[type="password"]:f
   outline: 0 none;
 }
 
-#cm-app, #cm-app-wrapper{
+#cm-app, #cm-bg-wrapper{
   display:block;
   position:relative;
   min-height: 100%; /* Mindesthöhe für moderne Browser */
@@ -147,12 +173,15 @@ textarea:focus, button:focus, input[type="text"]:focus, input[type="password"]:f
   .full-height;
 }
 
-#cm-app-wrapper {
+#cm-bg-wrapper {
   width: 100%;
   position: fixed !important;
   z-index: 1;
-  background-size:cover;
-  background-image: url('../gfx/backgroundStart.jpg');
+  //background-size:cover;
+  background-image: url('../gfx/background/app.jpg');
+  &.start-page{
+    background-image: url('../gfx/background/start.jpg');
+  }
 }
 
 #cm-app.landscape {
@@ -171,16 +200,18 @@ textarea:focus, button:focus, input[type="text"]:focus, input[type="password"]:f
   section{
     header.cm-list-header {
       position:relative;
-      padding-top:1rem;
-      padding-bottom:1.5rem;
+      padding:1.5rem;
       background:rgba(255,255,255,0.5);
       h1 {
         display:block;
         margin:0;
-        line-height:1.2em;
-        font-size: 1.2em;
         text-align:center;
         font-weight:bold;
+        font-size:@cm-large-font;
+        margin-bottom:0.5rem;
+      }
+      cm-search-input, .cm-search-input{
+        width:100%;
       }
     }
   }
@@ -245,6 +276,14 @@ textarea:focus, button:focus, input[type="text"]:focus, input[type="password"]:f
   -webkit-border-bottom-left-radius:0.5rem;
   border-bottom-left-radius:0.5rem;
 }
+.border-radius-top{
+  -moz-border-radius-topright:0.5rem;
+  -webkit-border-top-right-radius:0.5rem;
+  border-top-right-radius:0.5rem;
+  -moz-border-radius-topleft:0.5rem;
+  -webkit-border-top-left-radius:0.5rem;
+  border-top-left-radius:0.5rem;
+}
 
 .clearfix:after{
   content:".";
@@ -258,6 +297,14 @@ textarea:focus, button:focus, input[type="text"]:focus, input[type="password"]:f
 html[xmlns] .clearfix{display:block}
 * html .clearfix{height:1%}
 
+.w20{width:20% !important}
+.w30{width:30% !important}
+.w40{width:40% !important}
+.w50{width:50% !important}
+.w60{width:60% !important}
+.w70{width:70% !important}
+.w75{width:75% !important}
+.w80{width:80% !important}
 .mt5{margin-top:0.3rem}
 .mb5{margin-bottom:0.3rem}
 .ml15{margin-left:1rem}
@@ -266,6 +313,11 @@ html[xmlns] .clearfix{display:block}
 .mr30{margin-right:2rem}
 .mt30{margin-top:2rem}
 .tac{text-align:center}
+.tar{text-align:right}
+.tal{text-align:left}
+.dib{display:inline-block}
+
+.no-pad{padding:0 !important}
 
 .pos-tr{position:absolute;right:0;top:0}
 .pos-tl{position:absolute;right:0;left:0}
@@ -300,4 +352,8 @@ html[xmlns] .clearfix{display:block}
     display:table-cell;
     vertical-align: middle;
   }
+}
+
+[ng-click] {
+  cursor:pointer;
 }

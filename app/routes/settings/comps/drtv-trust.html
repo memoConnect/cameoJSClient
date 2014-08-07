@@ -1,0 +1,20 @@
+<header class="inScreen">
+    trust
+</header>
+
+<div ng-if="showModalHandshake" class="alert-success">Signatur correct</div>
+<div ng-if="!showModalHandshake" class="alert-warning">Signatur wrong</div>
+<div ng-if="handshakeSucceed" class="alert-success">Handshake succeed</div>
+<div ng-if="!handshakeSucceed" class="alert-warning">Handshake failed</div>
+
+<div ng-show="showModalHandshake">
+    <h1>transactionSecret from device #2: <u>{{transactionSecret}}</u></h1>
+    <hr>
+    <h1>device #1 have to insert this from device #2</h1>
+    <input type="text"
+           class="form-control"
+           ng-model="transactionSecretUserInput"
+           ng-keyup="checkHandshake()" />
+</div>
+
+<button ng-click="mockIncomingEvent()">mockIncomingEvent</button>

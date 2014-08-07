@@ -213,7 +213,7 @@ angular.module('cmCore').provider('cmApi',[
                     ?   //response valid, check if OK:
                         //if a certain key was expected, resolve promise resp. reject the promise with the according values
                         //if nothing was expected, just resolve or reject with value of 'data' in the response body if present or all the data
-                        //reponse should now look similar to this:
+                        //response should now look similar to this:
                         /*
                             "res":  "OK",
                             "data": {
@@ -248,7 +248,6 @@ angular.module('cmCore').provider('cmApi',[
                     config.method   =   method || config.method 
                     config.headers  =   angular.extend(token           ? {'Authorization': token} : {}, config.headers || {})   //add authorization token to the header
                     config.headers  =   angular.extend(twoFactorToken  ? {'X-TwoFactorToken': twoFactorToken} : {}, config.headers || {})   //add two factor authorization token to the header
-
                 }
 
 
@@ -415,8 +414,12 @@ angular.module('cmCore').provider('cmApi',[
                 //API EVENTS:
                 
                 cmObject.addEventHandlingTo(api)
-
                 api.subscriptionId = undefined
+
+                api.resetSubscriptionId = function(){
+                    api.subscriptionId = undefined
+                    window._eventSubscriptionId = undefined
+                }
 
                 api.subscribeToEventStream = function(){
                     return  api.post({
@@ -428,6 +431,7 @@ angular.module('cmCore').provider('cmApi',[
                             }, true)
                             .then(function(id){
                                 api.subscriptionId = id
+                                window._eventSubscriptionId = id
                             })
                 }
 
@@ -443,11 +447,18 @@ angular.module('cmCore').provider('cmApi',[
                             path: events_path + '/' + api.subscriptionId,
                             exp_ok: 'events'
                         }, force)
-                        .then(function(events){
-                            events.forEach(function(event){
-                                api.trigger(event.name, event.data)
-                            })
-                        })
+                        .then(
+                            function(events){
+                                events.forEach(function(event){
+                                    api.trigger(event.name, event.data)
+                                })
+                            },
+                            function(){
+                                //Todo: Alle Daten updaten// reload ?
+                                api.resetSubscriptionId()
+                                cmLogger.debug('cmApi.getEvents() reset invalid subscriptionId.')
+                            }
+                        )
                     }
                 }
 
@@ -455,16 +466,29 @@ angular.module('cmCore').provider('cmApi',[
                     //Dont listen to Events twice: 
                     api.stopListeningToEvents()
                     //Start listening:
-                    if(!events_disabled && events_interval) api._events_promise = $interval(function(){ api.getEvents(false) }, events_interval, false)
+                    if(!events_disabled && events_interval) {
+//                        api.getEvents(false)
+                        api._events_promise = $interval(function () {
+                            api.getEvents(false)
+                        }, events_interval, 0, false)
+                    }
                 }
 
                 api.stopListeningToEvents = function(){
                     if(api._events_promise) $interval.cancel(api._events_promise)
-                }                 
+                }      
+
 
                 if(!events_disabled && events_interval){
-                    $rootScope.$on('login',     function(){ api.listenToEvents() })
-                    $rootScope.$on('logout',    function(){ api.stopListeningToEvents() })
+                    $rootScope.$on('login',     function(){ 
+                                                    api.resetSubscriptionId()
+                                                    api.listenToEvents() 
+
+                                                })
+                    $rootScope.$on('logout',    function(){
+                                                    api.stopListeningToEvents() 
+                                                    api.resetSubscriptionId()
+                                                })
                 }
 
                 return api

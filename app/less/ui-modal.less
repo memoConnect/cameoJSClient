@@ -93,8 +93,7 @@ cm-modal {
       text-align: center;
       padding: 1rem;
 
-      a,
-      button {
+      button, .modal-link {
         display: block;
         line-height: @cm-unit;
         color: @cm-font-color;
@@ -130,6 +129,24 @@ cm-modal {
           width: 100%;
         }
       }
+
+      ul.modal-list{
+        li {
+          cursor: pointer;
+          height: @cm-unit;
+          border-bottom: @cm-border-grey @cm-border-width solid;
+          position: relative;
+          &:last-child{
+            border-bottom: 0;
+          }
+        }
+        &.radio-list{
+          li {
+            line-height: @cm-unit;
+            i {color:@cm-ci-color}
+          }
+        }
+      }
     }
 
     footer {
@@ -155,8 +172,13 @@ cm-modal {
 
     &.cm-modal-plain {}
     &.cm-modal-alert {
-      header {
+      header{
         height: @cm-unit*0.66;
+      }
+      .body{
+        a {
+          .classic-link;
+        }
       }
     }
   }
@@ -245,6 +267,47 @@ cm-modal {
       i{
         .cm-grey;
       }
+    }
+  }
+
+  cm-spinner{
+    height: @cm-unit;
+    top:@cm-unit/2;
+  }
+}
+
+cm-modal.modal-notification{
+  header {
+    height:0 !important;
+  }
+  .header {
+    padding:@cm-vertical-padding @cm-horizontal-padding;
+    font-size:@cm-mega-font;
+    font-weight:bold;
+    .cm-lg-icon{
+      font-size:@cm-mega-font + 1;
+    }
+  }
+  .body{
+    font-size:@cm-large-font;
+  }
+
+  &.modal-type-{
+    &success{
+      .header{color: @cm-notify-success}
+      .body{ i.fa {color: @cm-notify-success} }
+    }
+    &info{
+      .header{color: @cm-notify-info}
+      .body{ i.fa {color: @cm-notify-info} }
+    }
+    &warn{
+      .header{color: @cm-notify-warn}
+      .body{ i.fa {color: @cm-notify-warn} }
+    }
+    &error{
+      .header{color: @cm-notify-error}
+      .body{ i.fa {color: @cm-notify-error} }
     }
   }
 }

@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('cmCore').service('cmCrypt',[
-    'cmLogger',
-    'cmKey',
-    '$q',
-    '$rootScope',
-    function (cmLogger,cmKey, $q, $rootScope) {
+angular.module('cmCore')
+.service('cmCrypt',[
+    'cmLogger', 'cmKey',
+    '$q', '$interval', '$rootScope',
+    function (cmLogger, cmKey,
+              $q, $interval, $rootScope) {
         // private vars
         var async = {
             interval: null,
@@ -14,15 +14,68 @@ angular.module('cmCore').service('cmCrypt',[
         };
 
         return {
+         
+            random: function(size){
+                //@Todo:
+                
+                cmLogger.warn('Bad random numbers.')
+                return Math.random()
+
+                /*
+                if(!window.crypto)
+                    cmLogger.warn('window.crypto not present!')
+
+                var array = new Uint32Array(size)
+                console.log(size)
+                console.log(sjcl.codec.base64.fromBits(window.crypto.getRandomValues(array)))
+                return  sjcl.codec.base64.fromBits(window.crypto.getRandomValues(array))//sjcl.codec.base64.fromBits(sjcl.random.randomWords(size));
+                */
+            },
+
             /**
              * this method calculates a secure hash
              * @param secretString String that should be hashed
              */
+            
             hash: function (secretString) {
-                if (null == secretString)
-                    return "";
+                if (typeof secretString != 'string' || secretString.length == 0)
+                    throw "cmCrypt.hash(): invalid argument."
 
-                return sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(secretString))
+                return sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(secretString))
+            },
+            /**
+             * [hashObject description]
+             * @param  {[type]} obj         [description]
+             * @param  {[type]} hash_method [description]
+             * @return {[type]}             [description]
+             */
+            hashObject: function(obj){
+                var visited = []
+
+                function objectToArray(obj){
+
+                    //console.log(visited.length)
+
+                    if(visited.indexOf(obj) != -1)
+                        throw "Error: cmCrypt.hashObject() unable to hash cyclic Objects."
+                    
+
+                    if(typeof obj == "string") return obj
+                    if(typeof obj == "number") return obj.toString()
+                        
+                    if(["[object Object]", "[object Array]"].indexOf(Object.prototype.toString.call(obj)) == -1)
+                        throw "Error: cmCrypt.hashObject() unable to hash Objects with values like " + Object.prototype.toString.call(obj) 
+
+                    var keys    =   Object.keys(obj).sort()
+
+                    visited.push(obj)
+
+                    var values  =   keys.map(function(key){ return objectToArray(obj[key]) })
+
+                    return [keys, values]
+                }
+
+                return this.hash(JSON.stringify(objectToArray(obj)))
             },
 
             /**
@@ -50,25 +103,21 @@ angular.module('cmCore').service('cmCrypt',[
              * @returns base64 encoded encrypted string
              */
             encryptWithShortKey: function (secretKey, secretString) {
-
                 var parameters = { cipher: "aes", ks: 256, iter: 4096 };
 
-                if(typeof secretKey != 'string' || secretKey.length < 3){ //Todo! key sollte länger sein 
+                if(typeof secretKey != 'string' || secretKey.length < 3){ //Todo! key sollte länger sein
                     cmLogger.warn('cmCrypt.encryptWithShortKey(): unable to encrypt, invalid key. '+secretKey)
-                    return "";                    
+                    return "";
                 }
-                
+
 
                 if (null == secretString)
-                    return "";
-                if (secretKey.length > 12)
                     return "";
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
                 return encryptedSecretString;
             },
-
 
             /**
              * this method encrypts strings
@@ -77,19 +126,21 @@ angular.module('cmCore').service('cmCrypt',[
              * @returns base64 encoded encrypted string
              */
             encrypt: function (secretKey, secretString) {
-                var parameters = {cipher: "aes", ks: 256, iter: 500 }; 
+                var parameters = {cipher: "aes", ks: 256, iter: 500 };
 
                 if(typeof secretKey != 'string' || secretKey.length < 1){ //Todo: längere Keys verlangen
                     cmLogger.warn('cmCrypt.encrypt(): unable to encrypt, invalid key.'+secretKey)
-                    return "";                    
+                    return "";
                 }
 
                 if (null == secretString)
                     return "";
-                
-                if (secretKey.length < 60)
+
+                if (secretKey.length < 60){
+                    cmLogger.debug("cmCrypt.encrypt(): key too short.")
                     return "";
-                
+                }
+
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
@@ -119,169 +170,19 @@ angular.module('cmCore').service('cmCrypt',[
                 try {
                     decryptedString = sjcl.decrypt(secretKey, secretString)
                 } catch (e) {
-//                    cmLogger.warn('Unable to decrypt.', e)
-//                    console.warn(e)
+    //                    cmLogger.warn('Unable to decrypt.', e)
+    //                    console.warn(e)
                 }
 
                 return decryptedString || false
             },
 
             /**
-             * @Todo Aufräumen
-             * now cmKey
-             */
-            Key: cmKey,
-//            Key : function (data){
-//                //Wrapper for RSA Keys
-//                var self = this,
-//                    crypt
-//
-//                if(typeof data == "object" && "updateKeyList" in data) return data //data is already a Key object
-//
-//                if(
-//                       typeof data == "object"
-//                    && "getPublicKey"   in data
-//                    && "getPrivateKey"  in data
-//                    && "encrypt"        in data
-//                    && "decrypt"        in data
-//                ){
-//                    crypt = data    //data is already a JSEncrypt object
-//                }else{
-//                    crypt = new JSEncrypt()
-//                    crypt.setKey(data)
-//                }
-//
-//                this.setId = function(id){
-//                    this.id = id
-//                    return this
-//                }
-//
-//                this.setName = function(name){
-//                    this.name = name
-//                    return this
-//                }
-//
-//                //set either public or private key
-//                this.setKey = function(key){
-//                    crypt.setKey(key)
-//                    return this
-//                }
-//
-//                this.getPublicKey = function(){
-//                    var public_key
-//                    try{
-//                        public_key = crypt.getPublicKey()
-//                    }catch(e){}
-//
-//                    return public_key
-//                }
-//
-//                this.getPrivateKey = function(){
-//                    var private_key
-//                    try{
-//                        private_key = crypt.getPrivateKey()
-//                    }catch(e){}
-//
-//                    return private_key
-//                }
-//
-//                this.encrypt = function(secret){
-//                    return crypt.encrypt(secret)
-//                }
-//
-//                this.decrypt = function(encrypted_secret){
-//                    return crypt.decrypt(encrypted_secret)
-//                }
-//
-//                this.getSize = function(){
-//                    var size
-//
-//                    try{
-//                        size = crypt.key.n.bitLength()
-//                    }catch(e){}
-//
-//                    return size
-//                }
-//
-//                this.exportData = function(){
-//                    var data        = {},
-//                        private_key = this.getPrivateKey(),
-//                        public_key  = this.getPublicKey(),
-//                        size        = this.getSize()
-//
-//                    if(this.id)     data.id         = this.id
-//                    if(this.name)   data.name       = this.name
-//                    if(public_key)  data.pubKey     = public_key
-//                    if(private_key) data.privKey    = private_key
-//                    if(size)        data.size       = size
-//
-//                    return data
-//                }
-//
-//                this.importData = function(data){
-//                    var public_key = this.getPublicKey()
-//
-//                    data.pubKey = data.pubKey   ? data.pubKey.replace(/\n/g,'') : undefined
-//                    public_key  = public_key    ? public_key.replace(/\n/g,'')  : undefined
-//
-//
-//                    if(data.name)   this.setName(data.name)
-//                    if(data.id)     this.setId(data.id)
-//
-//                    if( data.pubKey && (data.pubKey != public_key) ){
-//                        this.setKey(data.pubKey)
-//                    }
-//
-//                    if( data.key && (data.key != public_key) ){
-//                        this.setKey(data.key)
-//                    }
-//
-//                    if(data.privKey) this.setKey(data.privKey)
-//
-//                    return this
-//                }
-//
-//                this.updateKeyList = function(key_list){
-//                    var check = false
-//
-//                    key_list.forEach(function(key){
-//                        if(
-//                               (key.id && (key.id == self.id))
-//                            || key.getPublicKey() == self.getPublicKey()
-//                        ){
-//                            angular.extend(key, self)
-//                            check = true
-//                        }
-//                    })
-//
-//                    if(!check) key_list.push(self)
-//                }
-//
-//                this.updateKeyDataList = function(key_data_list){
-//                    var check = false
-//
-//                    key_data_list.forEach(function(key_data){
-//                        if(
-//                               (key_data.id && (key_data.id == self.id))
-//                            || key_data.pubKey == self.getPublicKey()
-//                        ){
-//                            angular.extend(key_data, self.exportData())
-//                            check = true
-//                        }
-//                    })
-//
-//
-//
-//                    if(!check) key_data_list.push(this.exportData())
-//                }
-//            },
-
-            /**
              * return the bit size of possible keygeneration
              * @returns {string[]}
              */
             getKeySizes: function(){
-                return ['512','1024','2048','4096'];
+                return ['2048','4096'];
             },
 
             /**
@@ -291,40 +192,44 @@ angular.module('cmCore').service('cmCrypt',[
              * @returns {Promise.promise|*|webdriver.promise.Deferred.promise}
              */
             generateAsyncKeypair: function(keySize, onGeneration){
-                if ( keySize == undefined ||
+                if (keySize == undefined ||
                     typeof keySize != 'number' ||
                     async.interval != null ) {
                     return false;
                 }
 
-                cmLogger.debug('jsencrypt generateAsync '+keySize);
-
                 // Create the encryption object.
                 var self = this,
                     time = -((new Date()).getTime()),
                     counts = 0;
+
                 // init vars
                 async.crypt = new JSEncrypt({default_key_size: keySize}),
                 async.promise = $q.defer();
-                async.interval = setInterval(function () {
+                async.interval = $interval(function(){
                     counts++;
                     if(typeof onGeneration == "function"){
                         onGeneration(counts, (time + ((new Date()).getTime())))
                     }
                 }, 500);
+
                 // start keypair generation
-                async.crypt.getKey(function () {
+                async.crypt.getKey(function(){
+
+                    // only resolve if keypair exists
+                    if(async.crypt.getPrivateKey() == undefined)
+                        return false;
+
                     self.cancelGeneration(true);
-
-                    async.promise.resolve({
-                        timeElapsed: (time + ((new Date()).getTime())),
-                        counts: counts,
-                        key : new self.Key(async.crypt)
-                        //privKey: async.crypt.getPrivateKey(),
-                        //pubKey: async.crypt.getPublicKey()
-                    })
-
-                    $rootScope.$apply() 
+                    if(async.promise != null) {
+                        async.promise.resolve({
+                            timeElapsed: (time + ((new Date()).getTime())),
+                            counts: counts,
+                            key: async.crypt
+                        });
+                        // !!! important for unit test, don't remove !!!
+                        $rootScope.$apply();
+                    }
                 });
 
                 return async.promise.promise;
@@ -334,45 +239,145 @@ angular.module('cmCore').service('cmCrypt',[
              * if interval is pending
              * @returns {boolean}
              */
-            cancelGeneration: function(withReject){
-                if ( async.interval != null ) {
-                    cmLogger.debug('jsencrypt cancelGeneration');
+            cancelGeneration: function(withoutReject){
+                if(async.interval != null){
                     // clear interval
-                    var id = async.interval;
+                    $interval.cancel(async.interval);
                     async.interval = null;
-                    clearInterval( id );
                     // clear promise and library vars if param withReject is true
-                    if(withReject == undefined && async.promise != undefined){
+                    if(withoutReject == undefined) {
+                        async.crypt.cancelAsync();
                         async.promise.reject();
-                        async.promise = null;
-                        async.crypt = null;
                     }
                     return true;
                 }
                 return false;
             },
 
-            generatePassword: function(){                
-                var bad_random_passphrase =''
+            generatePassword: function(length){
+                var length = parseInt(length) || 10;
+                var bad_random_passphrase ='';
 
-                while(bad_random_passphrase.length < 10){
-                    bad_random_passphrase += Math.random().toString(36).replace('0.','')
+                /**
+                    TODO: check browser function
+                    [934838069, 3149100522, 522808787, 1733751200, 863464034, 738885619]
+                    try to this array hash this and take first chars!
+                 */
+//                var array = new Uint32Array(length);
+//                window.crypto.getRandomValues(array);
+
+                while(bad_random_passphrase.length < length){
+                    bad_random_passphrase += this.random().toString(36).replace('0.','')
                 }
 
-                
-                return bad_random_passphrase.slice(-10)
+                return bad_random_passphrase.slice(-(length));
             },
 
-            generatePassphrase: function(){                
-                var bad_random_passphrase =''
+            generatePassphrase: function(){
+                var bad_random_passphrase ='';
 
                 while(bad_random_passphrase.length < 60){
-                    bad_random_passphrase += Math.random().toString(36).replace('0.','')
+                    bad_random_passphrase += this.random().toString(36).replace('0.','')
                 }
 
-                
-                return bad_random_passphrase
+                return bad_random_passphrase;
+            },
+
+
+            /**
+             * generateTransactionSecret
+             * @returns {String} transactionSecret
+             */
+            generateTransactionSecret: function(){
+                return this.generatePassword(6);
+            },
+
+            /**
+             * signAuthenticationRequest
+             * @param _settings_
+             * @returns {String} rsaSha256Signature of newPrivKey
+             */
+            signAuthenticationRequest: function(_settings_){
+                var defaultSettings = {
+                    identityId: 0,
+                    transactionSecret: '',
+                    fromKey: undefined,
+                    toKey: undefined
+                },
+                dataForHandshake = {
+                    signature: '',
+                    encryptedTransactionSecret: '',
+                    fromKeyId: 0,
+                    fromKeyFingerprint: '',
+                    toKeyId: 0,
+                    toKeyFingerprint: ''
+                },
+                settings = angular.extend({},defaultSettings,_settings_);
+
+                if(!(settings.fromKey instanceof cmKey)){
+                    cmLogger.error('sign fromKey isn\'t a cmKey');
+                    return null;
+                }
+                if(!(settings.toKey instanceof cmKey)){
+                    cmLogger.error('sign toKey isn\'t a cmKey');
+                    return null;
+                }
+
+                dataForHandshake.fromKeyId = settings.fromKey.id;
+                dataForHandshake.fromKeyFingerprint = settings.fromKey.getFingerprint();
+
+                dataForHandshake.toKeyId = settings.toKey.id;
+                dataForHandshake.toKeyFingerprint = settings.toKey.getFingerprint();
+
+                dataForHandshake.encryptedTransactionSecret = settings.toKey.encrypt(settings.transactionSecret);
+
+                var signData = {
+                    identityId :settings.identityId,
+                    encryptedTransactionSecret: dataForHandshake.encryptedTransactionSecret
+                };
+
+                dataForHandshake.signature = settings.fromKey.sign(this.hashObject(signData));
+
+                return dataForHandshake;
+            },
+
+            /**
+             * verifyAuthenticationRequest
+             * @param _settings_
+             * @returns {Boolean} is verification valid of newPubKey
+             */
+            verifyAuthenticationRequest: function(_settings_){
+                var defaultSettings = {
+                    identityId: '',
+                    fromKey: undefined,
+                    encryptedTransactionSecret: '',
+                    signature: ''
+                },
+                settings = angular.extend({},defaultSettings,_settings_);
+
+                if(!(settings.fromKey instanceof cmKey)){
+                    cmLogger.error('sign fromKey isn\'t a cmKey');
+                    return false;
+                }
+
+                var verifyData = {
+                    identityId: settings.identityId,
+                    encryptedTransactionSecret: settings.encryptedTransactionSecret
+                };
+
+                return settings.fromKey.verify(this.hashObject(verifyData), settings.signature);
+            },
+
+            isTransactionSecretValid: function(_settings_){
+                var defaultSettings = {
+                    userInput: '', //
+                    toKey: undefined,
+                    encryptedTransactionSecret: ''
+                },
+                settings = angular.extend({},defaultSettings,_settings_);
+
+                return settings.toKey.decrypt(settings.encryptedTransactionSecret) == settings.userInput;
             }
         }
-    }]
-);
+    }
+]);

@@ -45,9 +45,14 @@
 
 angular.module('cmUi').directive('cmResizeTextarea',[
     '$timeout',
-    function ($timeout) {
+    'cmSettings',
+    '$rootScope',
+    function ($timeout, cmSettings, $rootScope) {
         return {
             restrict: 'A',
+            scope: {
+                text: '=ngModel'
+            },
             link: function (scope, element, attrs) {
                 // vars
                 var paddingLeft = element.css('paddingLeft'),
@@ -67,10 +72,12 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         if(width == 0)
                             width = parseInt(element.css('width'));
 
-                    $shadow = angular.element('<div></div>').css({
+                    $shadow = angular.element('<div class="textarea-shadow"></div>').css({
                         position: 'fixed',
                         top: -10000+unit,
                         left: -10000+unit,
+//                        top: 0,
+//                        left: 0,
                         width: width - parseInt(paddingLeft || 0) - parseInt(paddingRight || 0)+unit,
                         'font-size': element.css('fontSize'),
                         'font-family': element.css('fontFamily'),
@@ -100,12 +107,15 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                     $shadow.html(val);
 
                     // on init get one row height
-                    var shadowHeight = $shadow[0].offsetHeight;
+                    var shadowHeight = $shadow[0].offsetHeight,
+                        hasNewLines = scope.text ? scope.text.split(/\r\n|\r|\n/g) : [];
 
                     // on init get one row height
-                    if(shadowHeight > 0 && shadowRowHeight == 0){
-                        shadowRowHeight = shadowHeight
-                        diffRowHeight = textAreaRowHeight-shadowHeight
+                    if(shadowHeight > 0 && shadowRowHeight == 0 && hasNewLines.length > 0){
+                        shadowRowHeight = shadowHeight / hasNewLines.length;
+                    } else if(shadowHeight > 0 && shadowRowHeight == 0){
+                        shadowRowHeight = shadowHeight;
+                        diffRowHeight = textAreaRowHeight-shadowHeight;
                     }
                     // handle textarea height
                     if(shadowRowHeight > 0) {
@@ -162,11 +172,29 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                     textAreaRowHeight = element[0].offsetHeight;
 
                 // event binding
-                element.on('keyup redo undo keypress change', update);
-                element.on('keydown', function(event){
-                    if (event.which == 9) {
+                scope.$watch('text', function(newText){
+                    update(newText);
+                });
+                element.on('keyup', update);
+                element.on('redo', update);
+                element.on('undo', update);
+                element.on('keypress', update);
+                element.on('change', update);
+                element.on('keydown', function(e){
+                    // on tab
+                    if (e.keyCode == 9) {
                         insertTextAtCursor(this, '\t');
-                        return(false)
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
+                    }
+                    // on return
+                    if(e.keyCode == 13 && e.shiftKey == false && cmSettings.is('sendOnReturn')){
+                        console.log(e)
+                        $rootScope.$broadcast('sendOnReturn');
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
                     }
                     return true;
                 });

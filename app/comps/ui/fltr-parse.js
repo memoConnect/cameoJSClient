@@ -1,19 +1,17 @@
 'use strict';
 
-angular.module('cmUi').filter('cmParse', [
-
+angular.module('cmUi')
+.filter('cmParse', [
     '$filter',
-
     function($filter){
-        return function(text){
-
-            text = $filter('cmTranslate')(text)
-            text = $filter('cmInlineTranslate')(text)
-            text = $filter('cmAutolink')(text, 40)
-            text = $filter('nl2br')(text)
-            text = $filter('emoji')(text)
-
-            return text
+        return function(html){
+            html = $filter('cmEscape')(html);
+            html = $filter('cmTranslate')(html);
+            html = $filter('cmInlineTranslate')(html);
+            html = $filter('cmAutolink')(html, 40);// $sce
+            html = $filter('cmEmoji')(html);
+            html = $filter('nl2br')(html);//$sce
+            return html;
         }
     }
 ]);

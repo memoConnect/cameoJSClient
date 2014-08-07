@@ -3,34 +3,16 @@
 angular.module('cmContacts').directive('cmKeyLevel',[
     function (){
         return {
-            restrict: 'AE',
-            template: '',
+            restrict: 'E',
+            template: '<cm-icons icons="cm-lock" alt="cm-unlock" count="{{count}}"></cm-icons>',
+            controller: function($scope, $element, $attrs){
+                $scope.$watch($attrs.cmData, function(keySize){
+                    $scope.count = 0;
 
-            link: function(scope, element, attrs){
-
-                function draw(x){
-                    element.children().remove()
-                    for(var i = 0; i < x; i++){
-                        element.append('<i class="fa cm-key"></i>')
+                    if(keySize >= 2048){
+                        $scope.count = 2;
                     }
-                    if(x == 0) element.append('<i class="fa cm-close"></i>')
-                }
-
-                /* dont watch, neither level nor key-size should change dynamically
-
-                 scope.$watch(attrs.level, function(x){
-                 if(x != undefined) draw(x)
-                 })
-
-                 scope.$watch(attrs.keySize, function(key_size){
-                 if(key_size != undefined){
-                 draw(Math.floor((key_size+1)/2048))
-                 }
-                 })
-                 */
-
-                var number = attrs.level || Math.floor((attrs.keySize + 1)/2048) || 0
-                draw(number)
+                });
             }
         }
     }

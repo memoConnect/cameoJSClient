@@ -1,24 +1,24 @@
 'use strict';
 
-angular.module('cmContacts').directive('cmFriendRequestCounter', [
+angular.module('cmContacts')
+.directive('cmFriendRequestCounter', [
     'cmContactsModel',
-    'cmEnv',
-    function (cmContactsModel, cmEnv) {
+    function (cmContactsModel) {
         return {
             restrict : 'AE',
             scope: true,
-            link: function(scope, element, attrs){
+            link: function(scope, element){
                 scope.counter = 0;
 
-                function setColor(){
+                scope.setColor = function(){
                     if(scope.counter > 0){
-                        element.parent().parent().addClass('info')
+                        element.parent().parent().addClass('info');
                     } else {
-                        element.parent().parent().removeClass('info')
+                        element.parent().parent().removeClass('info');
                     }
-                }
+                };
 
-                function show(){
+                scope.show = function(){
                     scope.counter = cmContactsModel.requests.length;
 
                     if(scope.counter > 0){
@@ -27,17 +27,20 @@ angular.module('cmContacts').directive('cmFriendRequestCounter', [
                         element.html('');
                     }
 
-                    setColor();
-                }
+                    scope.setColor();
+                };
 
+                cmContactsModel.requests.on('register', function(){
+                    scope.show();
+                });
                 cmContactsModel.on('friendRequests:loaded', function(){
-                    show();
+                    scope.show();
                 });
                 cmContactsModel.on('friendRequests:updated', function(){
-                    show();
+                    scope.show();
                 });
 
-                show();
+                scope.show();
             }
         }
     }

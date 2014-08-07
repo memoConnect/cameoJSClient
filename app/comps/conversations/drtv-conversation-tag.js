@@ -3,12 +3,26 @@
 angular.module('cmConversations').directive('cmConversationTag',[
     function (){
         return {
-            restrict : 'AE',
+            restrict: 'AE',
             scope: {
-                conversation : "=cmData"
+                conversation: "=cmData"
             },
-            templateUrl : 'comps/conversations/drtv-conversation-tag.html',
-            priority: 0
+            templateUrl: 'comps/conversations/drtv-conversation-tag.html',
+            priority: 0,
+            link: function(scope){
+//                scope.conversation.on('update:finished', function(){
+//                    console.log(scope.conversation.lastMessage.text);
+//                    //scope.conversation = {};
+//                    //scope.conversation.update();
+//                });
+
+//                scope.$watch('conversation', function(newValue, oldValue) {
+//                    if (newValue !== oldValue) {
+//                        // You actions here
+//                        console.log("I got the new value! ", newValue);
+//                    }
+//                }, true);
+            }
         }
     }
 ])

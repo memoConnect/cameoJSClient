@@ -2,37 +2,34 @@ button, a,
 cm-reload,
 cm-notify-signal,
 cm-back,
-cm-conversation-controls cm-key,
 div.answer
 {
   .fa:hover, .fa:focus {
-    color: @cm-ci-color!important;
+    color: @cm-ci-color;
   }
 }
 
 .safetylevel {
   &-safer{
     &-btn{background-color:@cm-green}
-    &-wrap{color:@cm-green}
+    &-wrap{color:@cm-green !important}
   }
   &-safe{
     &-btn{background-color:@cm-yellow}
-    &-wrap{color:@cm-yellow}
+    &-wrap{color:@cm-yellow !important}
   }
   &-unsafe{
     &-btn{background-color:@cm-red}
-    &-wrap{color:@cm-red}
+    &-wrap{color:@cm-red !important}
   }
 }
 
 button.full {
-    display:block !important;
-    background: @cm-black;
-    color:@cm-ci-color;
-    height:@cm-footer-height;
-    font-size:@cm-large-font;
-    width:100%;
-    padding:0;
+  display:block !important;
+  height:@cm-footer-height;
+  font-size:@cm-large-font;
+  width:100%;
+  padding:0;
 }
 
 cm-overlay {
@@ -146,6 +143,7 @@ cm-spinner {
   left:50%;
   width:1px;
   height:1px;
+  z-index:1;
 }
 
 cm-progressbar{
@@ -180,8 +178,8 @@ cm-multi-input{
         .with-cursor;
         display: block;
         position: absolute;
-        right:2em;
-        top:-1em;
+        right:3em;
+        top:-0.3em;
         background:#ff0000;
         i{
           position:absolute;
@@ -191,7 +189,7 @@ cm-multi-input{
           color:@cm-white;
         }
         i.cm-checkbox-add {
-          color:@cm-black;
+          color:@cm-grey;
         }
       }
     }
@@ -214,17 +212,31 @@ cm-rubber-space,
 
 header.inScreen{
   background:@cm-input-bg-color;
-  padding:0 1em;
-  line-height:4rem;
+  padding:0 1rem;
+  line-height:@cm-unit;
   font-weight:bold;
+  width: 100%;
+  color: @cm-grey;
+  padding-left: 0.8rem;
+  position:relative;
   i{
-    margin-right:1em;
-    vertical-align:text-bottom;
+    margin-right:0.6rem;
+  }
+  &.with-lg-special{
+    padding-left:@cm-unit;
+    i {
+      &.cm-lg-special{
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    }
   }
 }
 
 cm-icons,
-cm-safety-level {
+cm-lock-level {
   word-spacing:0;
   letter-spacing:-0.3em;
+  padding-right:0.3em;
 }

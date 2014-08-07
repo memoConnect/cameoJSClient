@@ -29,9 +29,20 @@
   }
 
   .cm-lg-icon {
-    font-size:2em
+    font-size:@cm-mega-font;
+  }
+
+  .horizontal-line{
+    width:100%;
+    height:1px;
+    background-color:@cm-white;
+    margin:@cm-vertical-padding 0;
   }
 }
 #registerUserButton{
   color:@cm-ci-color;
+  cm-spinner{
+    height: @cm-unit;
+    top:@cm-unit/2;
+  }
 }

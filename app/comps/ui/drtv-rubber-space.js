@@ -1,48 +1,51 @@
 'use strict';
 
 angular.module('cmUi').directive('cmRubberSpace',[
-    function (){
+    '$rootScope',
+    function ($rootScope){
         return {
-            restrict : 'AE',
-            priority: 1,
-
-            link : function(scope, element, attrs, controller){
-                var total_weight    = 0,
+            restrict : 'A',
+            link : function(scope, element, attrs) {
+                var total_weight = 0,
                     available_space = 100,
-                    width           = element[0].offsetWidth
+                    width = element[0].offsetWidth
 
-                //remove text nodes:
-                angular.forEach(element[0].childNodes, function(el){
-                    if(el.nodeType != 1) element[0].removeChild(el)
-                })
-
-                //calculate total weight:
-                angular.forEach(element.children(), function(child){
-                    var weight = parseInt( angular.element(child).attr('cm-weight')) || false
-
-                    if(weight){
-                        child.weight     = weight
-                        total_weight    += child.weight
-                    }else{
-                        available_space -= 100 * child.offsetWidth/width
+                // remove text nodes:
+                angular.forEach(element[0].childNodes, function (el) {
+                    if(el.nodeType == 3) {//nodeType === 8 is <!-- -->
+                        angular.element(el).remove();
                     }
+                });
 
-                })
-
-                //stretch children according to their weight:
                 function tighten(){
+                    // calculate total weight:
                     angular.forEach(element.children(), function(child){
+                        var weight = parseInt( angular.element(child).attr('cm-weight')) || false
+
+                        if(weight){
+                            child.weight     = weight
+                            total_weight    += child.weight
+                        }else{
+                            available_space -= 100 * child.offsetWidth/width
+                        }
+                    });
+                    // stretch children according to their weight:
+                    angular.forEach(element.children(), function (child) {
                         child = angular.element(child)
 
-                        if(child[0].weight){
-                            child.css('width', (available_space*child[0].weight/total_weight)+'%')
+                        if (child[0].weight) {
+                            child.css('width', (available_space * child[0].weight / total_weight) + '%')
                         }
-
                     })
                 }
 
-                tighten()
+                tighten();
 
+                if(attrs.cmRubberSpace == 'withRepeat'){
+                    $rootScope.$on('rubberSpace:tighten',function(){
+                        tighten();
+                    });
+                }
             }
         }
     }

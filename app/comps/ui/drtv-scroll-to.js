@@ -3,21 +3,22 @@
 angular.module('cmUi').directive('cmScrollTo',[
     '$timeout',
     '$rootScope',
-    function ($timeout, $rootScope){
+    '$document',
+    function ($timeout, $rootScope, $document){
         return {
             restrict: 'A',
             link: function($scope, $element, $attrs){
 
                 function initTimeout(target){
-                    var anchor = angular.element(document.querySelector(target)),
-                        body = angular.element(document.querySelector('body')),
-                        html = angular.element(document.querySelector('html'));
+                    var anchor = angular.element($document[0].querySelector(target)),
+                        bodyAndHtml = angular.element($document[0].querySelectorAll('body,html'));
 
                     $timeout(function(){
                         var bottom = anchor[0].offsetTop + 5000;
-                        body[0].scrollTop = bottom;
-                        html[0].scrollTop = bottom;
-                    },500);
+                        angular.forEach(bodyAndHtml,function(tag){
+                            tag.scrollTop = bottom;
+                        });
+                    },250);
                 }
 
                 if($attrs.ngRepeat && $scope.$last && $attrs.cmScrollTo != ''){

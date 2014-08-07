@@ -1,6 +1,6 @@
-<div class="cm-handler" ng-click="handleMenu()">
+<div class="cm-handler" ng-click="handleMenu()" data-qa="btn-open-menu">
     <cm-notify-signal></cm-notify-signal>
-    <i class="fa cm-menu-right-close" ng-class="{'cm-menu-right-open':menuVisible}"></i>
+    <i class="fa cm-beta"></i>
 </div>
 <div class="cm-menu-layer" ng-show="menuVisible">
     <div cm-transparent-bg ng-click="handleMenu()"></div>
@@ -11,7 +11,7 @@
             </li>
 
             <li class="cm-list-group-item {{menu[btn].css}}" ng-repeat="btn in Object.keys(menu)" ng-class="{'has-submenu':menu[btn].subs}">
-                <div ng-click="goTo(menu[btn], btn)">
+                <div class="cm-list-parent-label" ng-click="goTo(menu[btn], btn)" data-qa="{{menu[btn]['data-qa']}}">
                     <i class="fa icon-left" ng-if="menu[btn].icon != undefined" ng-class="menu[btn].icon"></i>
                     <span>
                         {{menu[btn].i18n|cmTranslate}}
@@ -21,17 +21,25 @@
                 <i class="fa icon-right" ng-if="menu[btn].subs" ng-class="{'cm-down':!menu[btn].subsVisible,'cm-up':menu[btn].subsVisible}" ng-click="toggleSubs(menu[btn])"></i>
                 <div class="clearfix"></div>
                 <ul class="cm-submenu" ng-if="menu[btn].subs" ng-show="menu[btn].subsVisible">
-                    <li ng-repeat="subBtn in Object.keys(menu[btn].subs)" ng-click="goTo(menu[btn], btn+'/'+subBtn, true)">
+                    <li class="gradient-top"></li>
+                    <li ng-repeat="subBtn in Object.keys(menu[btn].subs)" ng-click="goTo(menu[btn], btn+'/'+subBtn, true)" ng-class="{'is-disabled':menu[btn].subs[subBtn].disabled,'is-last':$last}">
                         <i class="fa icon-left" ng-if="menu[btn].subs[subBtn].icon != undefined" ng-class="menu[btn].subs[subBtn].icon"></i>
                         <span>{{menu[btn].subs[subBtn].i18n|cmTranslate}}</span>
                         <div class="clearfix"></div>
                     </li>
+                    <li class="gradient-bottom"></li>
                 </ul>
             </li>
 
             <li class="cm-list-group-item" ng-click="logout()" data-qa="logout-btn">
                 <i class="fa cm-logout icon-left"></i>
                 <a class="logout">{{'MENU.LOGOUT'|cmTranslate}}</a>
+                <div class="clearfix"></div>
+            </li>
+
+            <li class="cm-list-group-item">
+                <i class="fa cm-rhino-positive icon-left"></i>
+                <span>{{version}}</span>
                 <div class="clearfix"></div>
             </li>
         </ul>

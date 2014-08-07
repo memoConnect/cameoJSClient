@@ -28,10 +28,6 @@ describe('cmContactsModel', function(){
            expect(model.getAll).toBeDefined();
        })
 
-       it('should defined getQuantity',function(){
-           expect(model.getQuantity).toBeDefined();
-       })
-
        it('should defined getOne',function(){
            expect(model.getOne).toBeDefined();
        })
@@ -50,10 +46,6 @@ describe('cmContactsModel', function(){
 
        it('should defined sendFriendRequest',function(){
            expect(model.sendFriendRequest).toBeDefined();
-       })
-
-       it('should defined answerFriendRequest',function(){
-           expect(model.answerFriendRequest).toBeDefined();
        })
     })
 })

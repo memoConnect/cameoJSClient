@@ -70,38 +70,48 @@
  </example>
  */
 
-angular.module('cmUi').directive('cmFooter',[
+angular.module('cmUi')
+.directive('cmFooter',[
+    'cmConfig',
     '$location',
-    'cmTranslate',
-    function ($location, cmTranslate){
+    function (cmConfig, $location){
         return {
-            restrict: 'AE',
-            priority: '0',
+            restrict: 'E',
+            transclude: true,
+            scope: true,
+            template: '<div ng-transclude></div>' +
+                      '<div cm-rubber-space="withRepeat">'+
+                          '<a ' +
+                            'ng-repeat="btn in Object.keys(btns)" ' +
+                            'href="#/{{btn}}" ' +
+                            'class="btn-footer" ' +
+                            'cm-weight="1" ' +
+                            'cm-rubber-space-repeat ' +
+                            'ng-class="{active:btns[btn].isActive}">' +
+                            '<i ng-if="btns[btn].icon" class="fa {{btns[btn].icon}} cm-lg-icon"></i>' +
+                            '{{btns[btn].i18n|cmTranslate}}' +
+                          '</a>'+
+                      '</div>',
+            link: function(scope, element, attrs){
+                scope.btns = {};
+                scope.Object = Object;
 
-            link : function(scope, element){
-                //if element has no children add default elements:
-                if(element.children().length == 0 ) {
-                    scope.btns.forEach(function(btn){
-                        var el = angular.element('<a cm-weight="1">'+cmTranslate(btn.i18n)+'</a>');
-                        el.toggleClass('active', btn.isActive ? true : false);
-                        if(btn.href != '')
-                            el.attr('href', '#'+btn.href);
-                        else
-                            el.addClass('deactivated');
-                        element.append(el);
+                // set menu btns from config
+                if(element[0].querySelector('[ng-transclude]').innerHTML == '') {
+                    scope.btns = cmConfig.footer || {};
+                    // set active & width
+                    var btns = Object.keys(scope.btns);
+                    angular.forEach(btns, function (btnHref) {
+                        var btn = scope.btns[btnHref];
+                        btn.isActive = btnHref != '' && $location.$$path.search(btnHref) != -1;
                     });
                 }
-            },
-            controller: function($scope){
-                $scope.btns = [
-                    {i18n:'DRTV.FOOTER.TALKS',    href:'/talks'},
-                    {i18n:'DRTV.FOOTER.CONTACTS', href:'/contacts'},
-                    {i18n:'DRTV.FOOTER.MEDIA',    href:''}
-                ];
 
-                angular.forEach($scope.btns,function(btn){
-                    btn.isActive = btn.href != '' && $location.$$path.search(btn.href) != -1;
-                });
+                if('cmAlwaysOnTop' in attrs){
+                    element.css('z-index',10);
+                } else {
+                    element.css('z-index',9);
+                }
             }
         }
     }

@@ -15,10 +15,7 @@
     <link rel="apple-touch-icon" sizes="120x120" href="gfx/touch-icons/touch-icon-iphone-retina.png">
     <link rel="apple-touch-icon" sizes="152x152" href="gfx/touch-icons/touch-icon-ipad-retina.png">
 
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/app.css">
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="vendor/emoji/emoji.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <script data-main="base/main.js" src="vendor/requirejs/require.js"></script>
     <%= phonegapFiles %>
@@ -30,10 +27,9 @@
         </div>
     </div>
 
-    <div id="cm-app-wrapper"></div>
+    <div id="cm-bg-wrapper" cm-background></div>
 
     <div id="cm-app">
-        <!--<div cm-language-select></div>-->
         <div cm-notify></div>
 
         <div ng-view cm-view class="view-frame cm-content" ng-class="css"></div>

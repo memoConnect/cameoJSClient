@@ -23,7 +23,7 @@ module.exports = function(config) {
             'app/vendor/!(require*)/*.js',
 
             'app/vendor/crypto/sjcl/sjcl.min.js',
-            'app/vendor/crypto/jsencrypt/jsencrypt.min.js',
+            'app/vendor/crypto/jsencrypt/jsencrypt.js',
 
             // packages
             'app/packages/comps/core/package.js',
@@ -40,17 +40,15 @@ module.exports = function(config) {
             // specs
             'test/unit/**/*.spec.js',
 
-            // json files
             'app/**/*.json'
         ],
 
-        // generate js files from html templates to expose them during testing.
-        preprocessors: {
-            'app/**/*.json': ['html2js']
+        ngJson2JsPreprocessor: {
+            stripPrefix: 'app/'
         },
 
-        html2JsRequireJsPreprocessor: {
-            stripPrefix: 'app/'
+        preprocessors: {
+            'app/**/*.json': ['json2js']
         },
 
         // list of files to exclude

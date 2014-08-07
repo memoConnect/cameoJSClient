@@ -17,7 +17,7 @@ describe('cmFactory', function(){
     }))
 
     describe('.new()', function(){
-         it('should create and add new instances and trigger register event even if dublicates exist.', function(){
+         it('should create a new instance but should not yet register it.', function(){
 
             factory.on('register', function(instance){ instance_count++ })
 
@@ -25,16 +25,23 @@ describe('cmFactory', function(){
             
             expect(instance instanceof TestModel).toBe(true)
             expect(instance.id).toBe('my_id')
-            expect(factory.length).toBe(1)
-            expect(instance_count).toBe(1)
+            expect(factory.length).toBe(0)
+            expect(instance_count).toBe(0)
 
             var instance2       = factory.new({id: 'my_id'})  
 
             expect(instance2 instanceof TestModel).toBe(true)
             expect(instance2.id).toBe('my_id')
-            expect(factory.length).toBe(2)
-            expect(instance_count).toBe(2) 
+            expect(factory.length).toBe(0)
+            expect(instance_count).toBe(0) 
 
+        })
+
+        it('should return an instance but not register it to the factory, so that count will still be 0', function(){
+            var instance        = factory.new({id: 'my_id'}, true)
+
+            expect(instance instanceof TestModel).toBe(true)
+            expect(factory.length).toBe(0)
         })
     })
 
@@ -97,6 +104,8 @@ describe('cmFactory', function(){
 
         it('should add an instance if not yet present and trigger a register event.', function(){
 
+            var instance_count  = 0
+
             factory.on('register', function(instance){ instance_count++ })
 
             var instance = new TestModel({id: 'my_id'})
@@ -112,6 +121,8 @@ describe('cmFactory', function(){
 
         it('should not add alien instances.', function(){
 
+            var instance_count  = 0
+
             factory.on('register', function(instance){ instance_count++ })
 
             var instance = '123'
@@ -124,9 +135,32 @@ describe('cmFactory', function(){
 
     })
 
+    describe('.deregister()', function(){
+        it('should remove a given instance from factory', function(){
+
+            var instance_count  = 0
+
+            factory.on('register', function(instance){ instance_count++ })
+            factory.on('deregister', function(instance){ instance_count-- })
+
+            var instance = new TestModel({id: 'my_id'})
+
+            factory.register( instance )
+            expect(instance_count).toBe(1)
+            expect(factory.length).toBe(1)
+
+            factory.deregister( instance )
+            expect(instance_count).toBe(0)
+            expect(factory.length).toBe(0)
+
+        });
+    })
+
     describe('.reset()', function(){
 
         it('should remove all instances.', function(){
+
+            var instance_count  = 0
 
             factory.on('register', function(instance){ instance_count++ })
 

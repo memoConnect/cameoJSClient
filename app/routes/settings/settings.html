@@ -1,14 +1,15 @@
-<cm-header cm-rubber-space>
-    <cm-back cm-weight="3" page-title="'SETTINGS.WELCOME'|cmTranslate" back-to="/talks"></cm-back>
-    <cm-logo cm-weight="3"></cm-logo>
-    <cm-reload cm-weight="2"></cm-reload>
-    <cm-menu cm-weight="1"></cm-menu>
-</cm-header>
-
-<div cm-transparent-bg></div>
-
-<div class="cm-page-body" ng-controller="SettingsCtrl" ng-switch="mainPage+'/'+subPage">
-    <cm-overview-settings ng-switch-default></cm-overview-settings>
-    <cm-account-profile ng-switch-when="account-profile/"></cm-account-profile>
-    <cm-account-keypair ng-switch-when="account-profile/keypair"></cm-account-keypair>
+<div ng-controller="SettingsCtrl">
+    <section ng-switch="route" class="settings">
+        <cm-overview-settings ng-switch-default></cm-overview-settings>
+        <cm-app-settings ng-switch-when="app"></cm-app-settings>
+        <cm-identity-settings ng-switch-when="identity"></cm-identity-settings>
+        <cm-identity-create ng-switch-when="identity/new"></cm-identity-create>
+        <cm-identity-keys-overview ng-switch-when="identity/keys"></cm-identity-keys-overview>
+        <cm-identity-keys-create ng-switch-when="identity/keys/create"></cm-identity-keys-create>
+        <cm-identity-keys-import ng-switch-when="identity/keys/import"></cm-identity-keys-import>
+        <cm-identity-key-detail ng-switch-when="identity/key"></cm-identity-key-detail>
+        <cm-identity-trust ng-switch-when="identity/trust"></cm-identity-trust>
+        <cm-about-us ng-switch-when="about-us"></cm-about-us>
+        <cm-trust ng-switch-when="trust"></cm-trust>
+    </section>
 </div>
