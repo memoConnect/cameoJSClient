@@ -22,7 +22,7 @@ angular.module('cmValidate').directive('cmCameoId',[
 
                 $scope.parentForm = $scope.$parent[$scope.formName];
 
-                $scope.$parent.reservationSecrets = {};
+                $scope.$parent.reservationSecrets = $scope.$parent.reservationSecrets || {};
 
                 $scope.userNameAlternatives = [];
                 $scope.showUserNameAlternatives = false;
@@ -102,6 +102,7 @@ angular.module('cmValidate').directive('cmCameoId',[
                         return false;
                     }
 
+                    console.log(newValue,$scope.$parent.reservationSecrets)
 
                     // if input is'nt empty && is valid && reservation secret is'nt exists
                     if(!(newValue in $scope.$parent.reservationSecrets)){
