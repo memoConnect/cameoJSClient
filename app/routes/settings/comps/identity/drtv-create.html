@@ -5,7 +5,7 @@
 </cm-header>
 
 <header class="inScreen">
-    <i class="fa cm-key cm-lg-icon"></i>
+    <i class="fa cm-person cm-lg-icon"></i>
     {{'SETTINGS.PAGES.IDENTITY.CREATE.HEADER'|cmTranslate}}
 </header>
 
@@ -16,17 +16,17 @@
             <div class="cm-input-ctn with-inside-icon">
                 <input
                     tabindex="1" data-qa="input-cameoid" required
-                    type="text" name="cameoId" ng-model="identity.cameoId"
+                    type="text" name="cameoId" ng-model="formData.cameoId"
                     placeholder="{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.CAMEOID'|cmTranslate}}" />
+
             </div>
 
             <div class="cm-input-ctn">
                 <input
                     tabindex="2" data-qa="input-displayname" required
-                    type="text" name="displayName" ng-model="identity.displayName" ng-keyup="validDisplayName()"
+                    type="text" name="displayName" ng-model="formData.displayName" ng-keyup="validateDisplayName()"
                     placeholder="{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}"  />
             </div>
-
             <div
                 class="cm-alert"
                 ng-show="
@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            <cm-multi-input cm-collection="identity.phoneNumbers">
+            <cm-multi-input cm-collection="formData.phoneNumbers">
                 <ng-form name="formPhone">
                     <div class="cm-input-ctn with-chooser">
                         <input
@@ -64,7 +64,7 @@
                 </ng-form>
             </cm-multi-input>
 
-            <cm-multi-input cm-collection="identity.emails">
+            <cm-multi-input cm-collection="formData.emails">
                 <ng-form name="formEmail">
                     <div class="cm-input-ctn with-chooser">
                         <input
@@ -82,25 +82,12 @@
                 </ng-form>
             </cm-multi-input>
 
-
-            <!--address class="cm-address">
-                <div class="cm-input-ctn">
-                    <input type="text" class="street" name="street" ng-model="identity.address.street" placeholder="{{'CONTACT.PLACEHOLDER.STREET'|cmTranslate}}" required tabindex="5" data-qa="input-address-street" />
-                    <input type="text" class="streetnr" name="streetnr" ng-model="identity.address.streetnr" placeholder="{{'CONTACT.PLACEHOLDER.STREETNR'|cmTranslate}}" required tabindex="6" data-qa="input-address-streetnr" />
-                </div>
-
-                <div class="cm-input-ctn">
-                    <input type="text" class="zip" name="zip" ng-model="identity.address.zip" placeholder="{{'CONTACT.PLACEHOLDER.ZIP'|cmTranslate}}" required tabindex="7" data-qa="input-address-zip" maxlength="5"/>
-                    <input type="text" class="city" name="city" ng-model="identity.address.city" placeholder="{{'CONTACT.PLACEHOLDER.CITY'|cmTranslate}}" required tabindex="8" data-qa="input-address-city" />
-                </div>
-            </address-->
-
         </form>
     </div>
 </div>
 
 <cm-footer cm-always-on-top>
-    <button class="cm-btn-block cm-btn-grey" ng-click="createIdentity()" data-qa="btn-identity-create">
+    <button class="cm-btn-block cm-btn-grey" ng-click="addidentity()" data-qa="btn-identity-create">
         {{'SETTINGS.PAGES.IDENTITY.CREATE.FOOTER'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i>
     </button>
 </cm-footer>

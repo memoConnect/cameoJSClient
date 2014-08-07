@@ -9,17 +9,39 @@ angular.module('cmRouteSettings').directive('cmIdentityCreate', [
             restrict: 'E',
             templateUrl: 'routes/settings/comps/identity/drtv-create.html',
             controller: function ($scope) {
-                $scope.identity = {};
+
+                $scope.formData = {
+                    loginName: '',
+                    password: '',
+                    email: '',
+                    phone: '',
+                    displayName: ''
+                };
 
                 //////////////////////
                 // TODO: mock workarround json in array
-                $scope.identity.phoneNumbers = [
-                    $scope.identity.phoneNumber || {value:''}
+                $scope.formData.phoneNumbers = [
+                    {value:''}
                 ];
-                $scope.identity.emails = [
-                    $scope.identity.email || {value:''}
+                $scope.formData.emails = [
+                    {value:''}
                 ];
                 //////////////////////
+
+                $scope.invalidLoginName = function(){
+                    return $scope.registrationForm.loginName.$dirty
+                        && $scope.registrationForm.loginName.$invalid
+                        && $scope.registrationForm.loginName.$error.minlength;
+                };
+
+                $scope.validateDisplayName = function(){
+                    if($scope.identity.displayName == undefined
+                    || $scope.identity.displayName.length == 0
+                    ){
+                        $scope.cmForm.displayName.$pristine = true;
+                        $scope.cmForm.displayName.$dirty = false;
+                    }
+                };
 
                 $scope.validateForm = function(){
                     var deferred = $q.defer();
@@ -33,6 +55,7 @@ angular.module('cmRouteSettings').directive('cmIdentityCreate', [
                     return deferred.promise;
                 };
 
+                // save
                 $scope.addIdentity = function(){
                     var objectChange = {};
 
@@ -60,6 +83,19 @@ angular.module('cmRouteSettings').directive('cmIdentityCreate', [
                             checkEmail();
                             checkPhoneNumber();
 
+                            /*
+                             {
+                             "cameoId": "reserved cameoId",
+                             "reservationSecret": "secret",
+                             "phoneNumber": "optional",
+                             "email": "optional",
+                             "displayName": "optional"
+                             }
+                            */
+
+                            console.log(objectChange)
+                            return false;
+
                             cmUserModel.data.identity.update(objectChange);
 
 
@@ -71,13 +107,6 @@ angular.module('cmRouteSettings').directive('cmIdentityCreate', [
                         }
                     )
                 };
-
-                $scope.validDisplayName = function(){
-                    if($scope.identity.displayName == undefined || $scope.identity.displayName.length == 0){
-                        $scope.cmForm.displayName.$pristine = true;
-                        $scope.cmForm.displayName.$dirty = false;
-                    }
-                }
             }
         }
     }

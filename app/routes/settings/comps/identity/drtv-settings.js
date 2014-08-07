@@ -26,6 +26,13 @@ angular.module('cmRouteSettings').directive('cmIdentitySettings', [
                     $location.path('/settings/identity/keys');
                 };
 
+                $scope.validateDisplayName = function(){
+                    if($scope.identity.displayName == undefined || $scope.identity.displayName.length == 0){
+                        $scope.cmForm.displayName.$pristine = true;
+                        $scope.cmForm.displayName.$dirty = false;
+                    }
+                }
+
                 $scope.validateForm = function(){
                     var deferred = $q.defer();
 
@@ -76,13 +83,6 @@ angular.module('cmRouteSettings').directive('cmIdentitySettings', [
                         }
                     )
                 };
-
-                $scope.validDisplayName = function(){
-                    if($scope.identity.displayName == undefined || $scope.identity.displayName.length == 0){
-                        $scope.cmForm.displayName.$pristine = true;
-                        $scope.cmForm.displayName.$dirty = false;
-                    }
-                }
             }
         }
     }

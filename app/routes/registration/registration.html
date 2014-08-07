@@ -11,44 +11,9 @@
         <form name="registrationForm" class="form-horizontal" role="form" autocomplete="off" novalidate>
             <h4>{{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}</h4>
 
-            <div
-                data-qa="form-input"
-                class="cm-input-ctn with-inside-icon"
-                ng-class="{'cm-input-error':getLoginNameError()}">
-                <input
-                    tabindex="1" data-qa="input-loginName"
-                    type="text" id="loginName" name="loginName" ng-class="{'cm-input-error':getLoginNameError()}"
-                    ng-model="formData.loginName" cm-adaptive-change ng-minlength="6" ng-maxlength="20"
-                    maxlength="20" required
-                    placeholder="{{'REGISTER.PLACEHOLDER.USERNAME'|cmTranslate}} *" />
-                <i
-                    class="fa cm-input-addon"
-                    ng-class="{
-                        'cm-checkbox-wrong':showError.LoginNameExists || showError.LoginNameEmpty || showError.LoginNameInvalid,
-                        'cm-checkbox-right':!getLoginNameError()
-                    }"
-                    ng-show="formData.loginName"
-                    data-qa="icon-loginName-reserved"></i>
-            </div>
-            <div
-                class="cm-alert"
-                ng-show="registrationForm.loginName.$dirty && registrationForm.loginName.$invalid"
-                data-qa="register-info-user-min-letter-count">
-                <div ng-show="invalidLoginName()">
-                    <i class="fa cm-info"></i>{{'REGISTER.INFO.MIN_LETTER_COUNT' | cmTranslate : {count: 6} }}
-                </div>
-            </div>
-            <div class="cm-alert" ng-show="showError.LoginNameExists" data-qa="register-info-username-exists">
-                <i class="fa cm-info"></i>{{'REGISTER.INFO.USERNAME.EXISTS'|cmTranslate}}
-            </div>
-            <div class="cm-alert" ng-show="showError.LoginNameEmpty" data-qa="register-info-username-empty">
-                <i class="fa cm-info"></i>{{'REGISTER.INFO.USERNAME.EMPTY'|cmTranslate}}
-            </div>
-            <div class="cm-alert" ng-show="showError.LoginNameInvalid" data-qa="register-info-username-invalid">
-                <i class="fa cm-info"></i>{{'REGISTER.INFO.USERNAME.INVALID'|cmTranslate}}
-            </div>
+            <cm-login-name ng-model="formData.loginName" form-name="registrationForm" tabindex="1"></cm-login-name>
 
-            <div cm-password data-parent-item="formData.password"></div>
+            <cm-password ng-model="formData.password" tabindex="2"></cm-password>
 
             <div class="horizontal-line"></div>
 
@@ -56,18 +21,26 @@
 
             <div class="cm-input-ctn" data-qa="form-input">
                 <input
-                    tabindex="2" data-qa="input-displayName"
+                    tabindex="4" data-qa="input-displayName"
                     type="text" id="displayName" name="displayName" ng-model="formData.displayName"
                     placeholder="{{'REGISTER.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" />
             </div>
 
-            <div class="cm-input-ctn" ng-class="{'cm-input-error':registrationForm.email.$invalid}" data-qa="form-input">
+            <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':registrationForm.email.$invalid}" data-qa="form-input">
                 <input
                     tabindex="3" data-qa="input-email"
                     type="text" id="email" name="email"
                     ng-model="formData.email" ng-class="{'cm-input-error':registrationForm.email.$invalid}"
                     cm-validate-email
                     placeholder="{{'REGISTER.PLACEHOLDER.EMAIL'|cmTranslate}}" />
+                <i
+                    class="fa cm-input-addon"
+                    ng-class="{
+                        'cm-checkbox-wrong':registrationForm.email.$dirty && registrationForm.email.$invalid,
+                        'cm-checkbox-right':!(registrationForm.email.$dirty && registrationForm.email.$invalid)
+                    }"
+                    ng-show="formData.email"
+                    data-qa="icon-phone-correct"></i>
             </div>
             <div class="cm-alert" ng-show="registrationForm.email.$dirty && registrationForm.email.$invalid" data-qa="register-info-invalid-mail">
                 <div ng-show="registrationForm.email.$invalid">

@@ -1,0 +1,33 @@
+<div
+    data-qa="form-input"
+    class="cm-input-ctn with-inside-icon"
+    ng-class="{'cm-input-error':hasError()}">
+    <input
+        tabindex="{{tabindex}}" data-qa="input-loginName" required
+        type="text" id="loginName" name="loginName" ng-class="{'cm-input-error':hasError()}"
+        ng-model="loginName" cm-adaptive-change
+        placeholder="{{'REGISTER.PLACEHOLDER.USERNAME'|cmTranslate}} *" />
+    <i
+        class="fa cm-input-addon"
+        ng-class="{
+            'cm-checkbox-wrong':hasError(),
+            'cm-checkbox-right':hasReservationSecret()
+        }"
+        ng-show="hasError() || hasReservationSecret()"
+        data-qa="icon-loginName-reserved"></i>
+</div>
+<div class="cm-alert" ng-show="errors.toolong" data-qa="register-info-user-max-letter-count">
+    <i class="fa cm-info"></i>{{'REGISTER.INFO.MAX_LETTER_COUNT'|cmTranslate:{count: max} }}
+</div>
+<div class="cm-alert" ng-show="errors.tooshort" data-qa="register-info-user-min-letter-count">
+    <i class="fa cm-info"></i>{{'REGISTER.INFO.MIN_LETTER_COUNT'|cmTranslate:{count: min} }}
+</div>
+<div class="cm-alert" ng-show="errors.exists" data-qa="register-info-username-exists">
+    <i class="fa cm-info"></i>{{'REGISTER.INFO.USERNAME.EXISTS'|cmTranslate}}
+</div>
+<div class="cm-alert" ng-show="errors.empty" data-qa="register-info-username-empty">
+    <i class="fa cm-info"></i>{{'REGISTER.INFO.USERNAME.EMPTY'|cmTranslate}}
+</div>
+<div class="cm-alert" ng-show="errors.invalid" data-qa="register-info-username-invalid">
+    <i class="fa cm-info"></i>{{'REGISTER.INFO.USERNAME.INVALID'|cmTranslate}}
+</div>
