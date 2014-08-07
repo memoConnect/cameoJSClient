@@ -384,7 +384,7 @@ angular.module('cmConversations')
             // if files are incomplete wait for message:new backend event to reinit
             this.incompleteFiles = [];
             if(conversation != undefined && ('on' in conversation)) {
-                conversation.on('message:reinitFiles', function () {
+                conversation.on('message:reInitFiles', function () {
                     if (self.state.is('incomplete')) {
                         self.incompleteFiles.forEach(function (file) {
                             file.importFile();
