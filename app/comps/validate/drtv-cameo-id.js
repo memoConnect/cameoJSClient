@@ -102,8 +102,6 @@ angular.module('cmValidate').directive('cmCameoId',[
                         return false;
                     }
 
-                    console.log(newValue,$scope.$parent.reservationSecrets)
-
                     // if input is'nt empty && is valid && reservation secret is'nt exists
                     if(!(newValue in $scope.$parent.reservationSecrets)){
                         // check cameoId

@@ -13,17 +13,14 @@
     <div class="cm-contact-inputs">
         <form name="cmForm" novalidate>
 
-            <div class="cm-input-ctn with-inside-icon">
-                <input
-                    tabindex="1" data-qa="input-cameoid" required
-                    type="text" name="cameoId" ng-model="formData.cameoId"
-                    placeholder="{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.CAMEOID'|cmTranslate}}" />
-
-            </div>
+            <cm-cameo-id
+                ng-model="formData.cameoId" form-name="cmForm" tabindex="1"
+                placeholder="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.CAMEOID"
+            ></cm-cameo-id>
 
             <div class="cm-input-ctn">
                 <input
-                    tabindex="2" data-qa="input-displayname" required
+                    tabindex="2" data-qa="input-displayname"
                     type="text" name="displayName" ng-model="formData.displayName" ng-keyup="validateDisplayName()"
                     placeholder="{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}"  />
             </div>
@@ -87,7 +84,7 @@
 </div>
 
 <cm-footer cm-always-on-top>
-    <button class="cm-btn-block cm-btn-grey" ng-click="addidentity()" data-qa="btn-identity-create">
+    <button class="cm-btn-block cm-btn-grey" ng-click="addIdentity()" data-qa="btn-identity-create">
         {{'SETTINGS.PAGES.IDENTITY.CREATE.FOOTER'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i>
     </button>
 </cm-footer>
