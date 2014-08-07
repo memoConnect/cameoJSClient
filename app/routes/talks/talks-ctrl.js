@@ -8,7 +8,6 @@ define([
     'use strict';
 
     app.register.controller('ConversationsCtrl',[
-
         '$scope',
         '$rootScope',
         'cmUserModel',
@@ -16,25 +15,8 @@ define([
         'cmUtil',
         'cmModal',
         '$location',
-
         function($scope, $rootScope, cmUserModel, cmConversationFactory, cmUtil, cmModal, $location) {
             $scope.loading = true;
-
-            /**
-             * Welcome modal shown for new user
-             */
-            if(cmUserModel.comesFromRegistration !== false){
-                cmUserModel.comesFromRegistration = false;
-
-                cmModal.create({
-                    id: 'welcome',
-                    type: 'plain',
-                    'class': 'no-padding',
-                    'cm-title': 'START.MODAL.TITLE'
-                },'<div class="modal-row" ng-bind-html="\'START.MODAL.TEXT\' | cmParse"></div>');
-
-                cmModal.open('welcome');
-            }
 
             /**
              * init conversations to scope

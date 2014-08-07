@@ -83,8 +83,9 @@ angular.module('cmConversations').service('cmConversationFactory', [
         $rootScope.$on('logout', function(){ self.reset() });
 
         cmConversationsAdapter.on('message:new', function(event,data){
-            self.create(data.conversationId)
-            .trigger('message:new', data.message)
+            self
+                .create(data.conversationId)
+                .trigger('message:new', data.message)
         });
 
         cmConversationsAdapter.on('conversation:new', function(event,data){

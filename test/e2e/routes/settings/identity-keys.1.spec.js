@@ -99,7 +99,7 @@ describe('identity key settings', function () {
 
     it('the key should still be there after logout/login', function () {
         util.logout()
-        util.login(login, password)
+        util.login(login, password,'/talks')
         util.get('/settings/identity/keys')
 
         $$("[data-qa='key-list-item']").then(function (elements) {

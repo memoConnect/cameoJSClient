@@ -107,6 +107,10 @@ angular.module('cmCore')
          * @returns {*}
          */
         this.loadIdentity = function(identity_data){
+            cmLogger.debug('cmUserModel:loadIdentity');
+
+            var deferred = $q.defer();
+
             if(typeof identity_data !== 'undefined'){
                 var identity = cmIdentityFactory.create(identity_data.id);
 
@@ -115,6 +119,8 @@ angular.module('cmCore')
                 });
 
                 this.importData(identity);
+
+                deferred.resolve();
             } else {
                 if(this.getToken() !== false){
                     //cmAuth.getIdentity().then(
@@ -142,10 +148,14 @@ angular.module('cmCore')
                                 cmLogger.debug('cmUserModel:init:reject:401');
                                 self.doLogout(true,'usermodel load identity reject');
                             }
+
+                            deferred.reject();
                         }
                     );
                 }
             }
+
+            return deferred.promise;
         };
 
         /**
@@ -153,6 +163,8 @@ angular.module('cmCore')
          * @returns {data.identity|*}
          */
         this.getIdentity = function(){
+            cmLogger.debug('cmUserModel:getIdentity');
+
             return this.data.identity;
         };
 
@@ -203,9 +215,12 @@ angular.module('cmCore')
                 function(token){
                     cmAuth.storeToken(token);
 
-                    self.loadIdentity();
+                    self.loadIdentity().finally(
+                        function(){
+                            deferred.resolve();
+                        }
+                    );
                     $rootScope.$broadcast('login');
-                    deferred.resolve();
                 },
                 function(state, response){
                     deferred.reject(state, response);

@@ -63,14 +63,21 @@
     },
 
     "START": {
-        "MODAL": {
-            "TITLE": "Welcome to cameoNet!",
-            "TEXT": "cameoNet is an open source messenger that provides end-to-end encryption for safe, private and commercial Communication!\nAttention: this is a first beta version!\nThe app may contain errors, the user interface is still under development and many new features will be added in the next versions. We cannot guarantee the safety of your data. Please copy all your important data.\nPlease help us to improve cameoNet. We are happy about every error or improvement you post on http://support.cameonet.de\nthe cameoNet-Team."
-        },
+        "TITLE": "Welcome to cameoNet!",
+        "TEXT": "cameoNet is an open source messenger that provides end-to-end encryption for safe, private and commercial Communication!\nAttention: this is a first beta version!\nThe app may contain errors, the user interface is still under development and many new features will be added in the next versions. We cannot guarantee the safety of your data. Please copy all your important data.\nPlease help us to improve cameoNet. We are happy about every error or improvement you post on http://support.cameonet.de\nthe cameoNet-Team.",
         "YOUR_ID": "Your cameoID",
-        "LOGOUT": "Logout"
+        "LOGOUT": "Logout",
+        "SKIP": {
+            "TEXT": "Don't show me this page again",
+            "BTN_TEXT": "Skip"
+        },
+        "EXPLORE": {
+            "TITLE": "START.EXPLORE.TITLE",
+            "TEXT": "START.EXPLORE.TEXT",
+            "BTN_TEXT": "START.EXPLORE.BTN_TEXT"
+        }
     },
-	
+
 	"VERIFICATION": {
 		"REQUEST": {
 			"LABEL": "Request verification"
@@ -103,7 +110,7 @@
     },
 
     "PASSWORD": {
-        "LABEL_PW": "Passwort",
+        "LABEL_PW": "Password",
         "LABEL_CONFIRM": "Confirm password",
         "ERROR": {
             "EMPTY": "Please enter a password"
@@ -123,7 +130,7 @@
             "REQUEST_CAPTCHA": "Request captcha",
             "SEND_CAPTCHA": "Send captcha",
             "KEY_GENERATION": "Here you can generate a cameoKey for this identity for better security.",
-            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "A password is used because there is no cameoKey on this device"
+            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "A password is required because there is no cameoKey on this device"
         },
         "TAG": {
             "RECIPIENTS": "Recipients",
@@ -143,7 +150,7 @@
             "RECIPIENTS_MISSING_OKAY": "I do not want any other recipients than myself.",
             "PASSPHRASE_INVALID": "Invalid password",
             "PASSWORD_WRONG": "Wrong password",
-            "NO_PASSWORD": "No password configured.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">configure it here</a>",
+            "NO_PASSWORD": "Password required but not configured.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">Configure your encryption settings here</a>",
             "PASSWORD_NEEDED": "Password required.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">enter here</a>",
             "ASYMMETRIC_DECRYPT_ERROR": "cameoKey missing",
             "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",

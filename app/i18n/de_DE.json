@@ -63,12 +63,19 @@
     },
 
 	"START": {
-        "MODAL": {
-            "TITLE": "Willkommen im cameoNet!",
-            "TEXT": "cameoNet ist ein Ende-zu-Ende verschlüsselter OpenSource Messenger für sichere private und geschäftliche Kommunikation!\nACHTUNG: Dies ist die erste Beta-Version!\nDie App enthält Fehler, die Benutzerführung kann an vielen Stellen verbessert werden und noch nicht alle wichtigen Feature sind enthalten. Zur Zeit können wir leider auch noch nicht garantieren, dass all Ihre Daten dauerhaft erhalten bleiben. Daher bitten wir Sie, zunächst von wichtigen Daten lokale Kopien anzulegen.\nBitte helfen Sie uns, cameoNet zu verbessern. Wir freuen uns über jeden Fehler und Verbesserungsvorschlag, den Sie unter http://support.cameonet.de einstellen\nIhr cameoNet-Team."
-        },
+        "TITLE": "Willkommen im cameoNet!",
+        "TEXT": "cameoNet ist ein Ende-zu-Ende verschlüsselter OpenSource Messenger für sichere private und geschäftliche Kommunikation!\nACHTUNG: Dies ist die erste Beta-Version!\nDie App enthält Fehler, die Benutzerführung kann an vielen Stellen verbessert werden und noch nicht alle wichtigen Features sind enthalten. Zur Zeit können wir leider auch noch nicht garantieren, dass all Ihre Daten dauerhaft erhalten bleiben. Daher bitten wir Sie, zunächst von wichtigen Daten lokale Kopien anzulegen.\nBitte helfen Sie uns, cameoNet zu verbessern. Wir freuen uns über jeden Fehler und Verbesserungsvorschlag, den Sie unter http://support.cameonet.de einstellen\nIhr cameoNet-Team.",
 		"YOUR_ID": "Deine cameoID",
-		"LOGOUT": "Abmelden"
+		"LOGOUT": "Abmelden",
+        "SKIP": {
+            "TEXT": "Zeige mir diese Seite nicht mehr an",
+            "BTN_TEXT": "Überspringen"
+        },
+        "EXPLORE": {
+            "TITLE": "START.EXPLORE.TITLE",
+            "TEXT": "START.EXPLORE.TEXT",
+            "BTN_TEXT": "START.EXPLORE.BTN_TEXT"
+        }
 	},
 
 	"VERIFICATION": {
@@ -97,7 +104,7 @@
 
     "TERMS": {
         "HEADING": "Allgemeine Geschäftsbedingungen",
-        "HEADING_SHORT": "AGBs",
+        "HEADING_SHORT": "AGB",
         "PARAGRAPH_1": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.",
         "PARAGRAPH_2": "Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero."
     },
@@ -123,7 +130,7 @@
             "REQUEST_CAPTCHA": "PassCaptcha anfordern",
             "SEND_CAPTCHA": "PassCaptcha senden",
             "KEY_GENERATION": "Um sicher zu kommunizieren, können Sie hier einen cameoKey für diese Identität erzeugen.",
-            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "Es wird ein Passwort verwendet, weil auf diesem Gerät kein cameoKey vorliegt."
+            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "Es ist ein Passwort notwendig, weil auf diesem Gerät kein cameoKey vorliegt."
         },
         "TAG": {
             "RECIPIENTS": "Empfänger",
@@ -506,7 +513,6 @@
             "CANCEL": "Abbrechen",
             "START": "Start"
         }
-
     },
 
     "JOB": {

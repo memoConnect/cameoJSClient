@@ -87,7 +87,7 @@ describe('FileUpload unsafe', function () {
 
     it('login create & new conversation',function(){
         util.login()
-        util.waitForPageLoad('/talks')
+        util.waitForPageLoad('/start')
 
         util.get('/conversation/new')
         util.waitForPageLoad('/conversation/new')

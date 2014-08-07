@@ -15,6 +15,11 @@ cameo_config = {
     path_to_languages: 'i18n',
     cache_lang_files: false,
     routes: {
+        'start': {
+            hasCtrl: true,
+            guests: false,
+            resolveOnBoot: true
+        },
         'login': {
             hasCtrl: true,
             isDefault: true,
