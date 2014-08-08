@@ -34,7 +34,8 @@ app.register.controller('RegistrationCtrl', [
          * @returns {*}
          */
         $scope.validateForm = function(){
-            var deferred = $q.defer();
+            var deferred = $q.defer(),
+                reservationCheck = false;
 
             var data = {
                 loginName: null,
@@ -53,7 +54,7 @@ app.register.controller('RegistrationCtrl', [
                     $rootScope.$broadcast('cm-login-name:invalid');
                 }
             } else {
-                data.cameoId = $scope.registrationForm.cameoId.$viewValue;
+                data.loginName = $scope.registrationForm.cameoId.$viewValue;
             }
 
             // check password
@@ -94,20 +95,19 @@ app.register.controller('RegistrationCtrl', [
             }
 
             // check reservation secret - index for correct login name
-            if(data.cameoId != null && cmUtil.objLen($scope.reservationSecrets) > 0){
-                if (!(data.cameoId in $scope.reservationSecrets)) {
+            if(data.loginName != null && cmUtil.objLen($scope.reservationSecrets) > 0){
+                if (!(data.loginName in $scope.reservationSecrets)) {
                     cmNotify.warn('REGISTRATION.WARN.RESERVATIONSECRET_MISSING');
                 } else {
-                    data.reservationSecret = $scope.reservationSecrets[data.cameoId];
+                    data.reservationSecret = $scope.reservationSecrets[data.loginName];
+                    reservationCheck = true;
                 }
-            } else {
-                deferred.reject(data);
             }
 
-            if($scope.registrationForm.$valid !== false){
+            if($scope.registrationForm.$valid !== false && reservationCheck == true){
                 deferred.resolve(data);
             } else {
-                deferred.reject(data);
+                deferred.reject();
             }
 
             return deferred.promise;
@@ -130,38 +130,36 @@ app.register.controller('RegistrationCtrl', [
 
             $scope.spinner('start');
 
-            $scope
-            .validateForm()
-            .then(
+            $scope.validateForm().then(
                 function(data){
                     clearTransferScopeData();
 
-                    cmAuth
-                    .createUser(data)
-                    .then(function(userData){
-                        cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password).then(
-                            function(){
-                                $scope.spinner('stop');
-                                cmUserModel.setIdentity(userData.identities[0]);
-                                if($scope.handleGuest !== false){
-                                    $location.path('/purl/'+$rootScope.pendingPurl);
-                                } else {
-                                    cmUserModel.comesFromRegistration = true;
-                                    $location.path("/talks");
+                    cmAuth.createUser(data).then(
+                        function(userData){
+                            cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password).then(
+                                function(){
+                                    $scope.spinner('stop');
+                                    cmUserModel.setIdentity(userData.identities[0]);
+                                    if($scope.handleGuest !== false){
+                                        $location.path('/purl/'+$rootScope.pendingPurl);
+                                    } else {
+                                        cmUserModel.comesFromRegistration = true;
+                                        $location.path("/talks");
+                                    }
+                                },
+                                function(){
+                                    $scope.spinner('stop');
                                 }
-                            },
-                            function(){
-                                $scope.spinner('stop');
-                            }
-                        );
-                        return true;
-                    },
-                    function(response){
-                        cmNotify.warn('REGISTRATION.WARN.REGISTRATION_FAILED');
-                        $scope.spinner('stop');
-                    });
+                            );
+                            return true;
+                        },
+                        function(){
+                            cmNotify.warn('REGISTRATION.WARN.REGISTRATION_FAILED');
+                            $scope.spinner('stop');
+                        }
+                    );
                 },
-                function(data){
+                function(){
                     $scope.spinner('stop');
                 }
             );
