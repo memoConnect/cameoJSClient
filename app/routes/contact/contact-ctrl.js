@@ -12,7 +12,7 @@ define([
     app.register.controller('ContactCtrl',
         function(
          $scope, $rootScope, $location,$routeParams,
-         cmContactsModel, cmIdentityFactory, cmUtil, cmNotify, cmHooks
+         cmContactsModel, cmIdentityFactory, cmUtil, cmNotify, cmHooks, cmUserModel
         ){
             $scope.cmUtil = cmUtil;
 
@@ -148,6 +148,12 @@ define([
             $scope.startTrustHandshake = function(){
                 cmHooks.openKeyRequest($scope.identity)
             }
+
+            $scope.$watch('identity', function(identity){
+                if(identity)
+                    $scope.isTrusted = cmUserModel.verifyTrust($scope.identity)
+            })
+
         }
     );
 });

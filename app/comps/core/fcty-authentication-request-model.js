@@ -16,6 +16,7 @@ angular.module('cmCore')
             this.id = undefined;
             this.created = undefined;
             this.encryptedTransactionSecret = undefined;
+            this.reencryptedTransactionSecret = undefined;
             this.signature = undefined;
 
             this.fromKeyId = undefined;
@@ -29,6 +30,7 @@ angular.module('cmCore')
             //default is the current user's id
             this.toIdentityId   = cmUserModel.data.identity.id
             this.fromIdentityId = cmUserModel.data.identity.id
+
 
             function init(data){
 //                cmLogger.debug('cmAuthenticationRequestModel.init');
@@ -50,32 +52,34 @@ angular.module('cmCore')
                     return this;
                 }
 
-                this.id                         = data.id || this.id;
-                this.created                    = data.created || this.created;
-                this.encryptedTransactionSecret = data.encryptedTransactionSecret || this.encryptedTransactionSecret;
-                this.signature                  = data.signature || this.signature;
-                this.fromKeyId                  = data.fromKeyId || this.fromKeyId;
-                this.fromKeyFingerprint         = data.fromKeyFingerprint || this.fromKeyFingerprint;
-                this.toKeyId                    = data.toKeyId || this.toKeyId;
-                this.toKeyFingerprint           = data.toKeyFingerprint || this.toKeyFingerprint;
-                this.toIdentityId               = data.toIdentityId || this.toIdentityId
-                this.fromIdentityId             = data.fromIdentityId || this.fromIdentityId
+                this.id                             = data.id || this.id;
+                this.created                        = data.created || this.created;
+                this.encryptedTransactionSecret     = data.encryptedTransactionSecret || this.encryptedTransactionSecret;
+                this.reencryptedTransactionSecret   = data.reencryptedTransactionSecret || this.reencryptedTransactionSecret;
+                this.signature                      = data.signature || this.signature;
+                this.fromKeyId                      = data.fromKeyId || this.fromKeyId;
+                this.fromKeyFingerprint             = data.fromKeyFingerprint || this.fromKeyFingerprint;
+                this.toKeyId                        = data.toKeyId || this.toKeyId;
+                this.toKeyFingerprint               = data.toKeyFingerprint || this.toKeyFingerprint;
+                this.toIdentityId                   = data.toIdentityId || this.toIdentityId
+                this.fromIdentityId                 = data.fromIdentityId || this.fromIdentityId
 
                 return this;
             };
 
             this.exportData = function(){
                 return {
-                            id:                         this.id,
-                            identityId:                 cmUserModel.data.identity.id,
-                            encryptedTransactionSecret: this.encryptedTransactionSecret,
-                            signature:                  this.signature,
-                            fromKeyId:                  this.fromKeyId,
-                            fromKeyFingerprint:         this.fromKeyFingerprint,
-                            toKeyId:                    this.toKeyId,
-                            toKeyFingerprint:           this.toKeyFingerprint,
-                            toIdentityId:               this.toIdentityId,
-                            fromIdentityId:             this.fromIdentityId
+                            id:                             this.id,
+                            identityId:                     cmUserModel.data.identity.id,
+                            encryptedTransactionSecret:     this.encryptedTransactionSecret,
+                            reencryptedTransactionSecret:   this.reencryptedTransactionSecret,
+                            signature:                      this.signature,
+                            fromKeyId:                      this.fromKeyId,
+                            fromKeyFingerprint:             this.fromKeyFingerprint,
+                            toKeyId:                        this.toKeyId,
+                            toKeyFingerprint:               this.toKeyFingerprint,
+                            toIdentityId:                   this.toIdentityId,
+                            fromIdentityId:                 this.fromIdentityId
                         }
             }
 
@@ -94,7 +98,7 @@ angular.module('cmCore')
                     cmLogger.debug('cmAuthenticationRequestModel.importKeyResponse - fail');
                     this.trigger('key-response:failed');
                 }
-            };
+            }
 
             this.setToKey = function(toKey){
 //                cmLogger.debug('cmAuthenticationRequestModel.importKeyResponse');
@@ -123,6 +127,11 @@ angular.module('cmCore')
 
             this.setFromIdentityId = function(identityId){
                 this.fromIdentityId = identityId 
+                return this
+            }
+
+            this.setTransactionSecret = function(secret){
+                this.transactionSecret = secret
                 return this
             }
 
@@ -263,7 +272,7 @@ angular.module('cmCore')
                         toKey: this.toKey,
                         encryptedTransactionSecret: this.encryptedTransactionSecret
                     })){
-
+                        self.setTransactionSecret(transactionSecret)
                         this.trigger('secret:verified');
 
                         return true;
@@ -308,7 +317,10 @@ angular.module('cmCore')
                             toKeyId: localKeys[0].id,
                             toKeyFingerprint: localKeys[0].getFingerprint()
                         }
-                    }, (this.fromIdentityId == cmUserModel.data.identity.id) ? undefined : this.fromIdentityId);
+                    }, (this.fromIdentityId == cmUserModel.data.identity.id) ? undefined : this.fromIdentityId)
+                    .finally(function(){
+                        self.trigger('request:finished')
+                    })
                 }
             };
 
@@ -329,11 +341,15 @@ angular.module('cmCore')
             this.sendVerified = function(){
 //                cmLogger.debug('cmAuthenticationRequestModel.sendVerified');
 
+                console.log('before enc: '+self.transactionSecret)
+                console.log(self.fromKey)
+
                 if(this.state.is('incoming') && !this.state.is('finished')){
                     cmAuth.sendBroadcast({
                         name: 'authenticationRequest:verified',
                         data: {
-                            id: this.id
+                            id: this.id,
+                            reencryptedTransactionSecret: self.fromKey.encrypt(self.transactionSecret)
                         }
                     }, (this.fromIdentityId == cmUserModel.data.identity.id) ? undefined : this.fromIdentityId)
                     .then(
@@ -356,41 +372,40 @@ angular.module('cmCore')
 //                cmLogger.debug('cmAuthenticationRequestModel.finish');
 
                 if(this.state.is('outgoing') && !this.state.is('finished')){
-                    cmUserModel.data.identity.load();
 
-                    var identity =  (self.fromIdentityId == cmUserModel.data.identity.id)
+                    var identity =  (self.toIdentityId == cmUserModel.data.identity.id)
                                     ?   cmUserModel.data.identity
-                                    :   cmContactsModel.findByIdentityId(self.fromIdentityId).identity
+                                    :   cmContactsModel.findByIdentityId(self.toIdentityId).identity
 
-                    console.log('i:')
-                    console.log(identity)
-                    console.log('fromKey:')
+                    self.fromKey = cmUserModel.loadLocalKeys().find(self.fromKeyId)
+                    self.fromKey.decrypt(self.reencryptedTransactionSecret)
 
-                    self.setFromKey(identity.keys.find(self.fromKeyId))
+                    if(self.fromKey.getFingerprint() != self.fromKeyFingerprint){
+                        cmLogger.debug('Error - cmAuthenticationRequestModel.finish - Fingerprints of fromKey dont match.')
+                        return false
+                    }
 
-                    console.dir(self.fromKey)
+                    console.log('toKey')
 
-                    cmUserModel.data.identity.one('update:finished', function(){
+                    console.log(self.toKey)
+                    console.log(self.toKeyId)
+                    self.toKey = identity.keys.find(self.toKeyId)
 
-                        cmUserModel.data.identity.keys.forEach(function(key){
-                            if(key.id == self.fromKeyId && (key.getFingerprint() === self.fromKeyFingerprint)){
-                                self.fromKey = key;
-                            }
-                        });
+                    if(self.toKey.getFingerprint() != self.toKeyFingerprint){
+                        cmLogger.debug('Error - cmAuthenticationRequestModel.finish - Fingerprints of toKey dont match.')
+                        return false
+                    }
 
-                        cmUserModel.data.identity.keys.forEach(function(key){
-                            if(key.id == self.toKeyId && (key.getFingerprint() === self.toKeyFingerprint)){
-                                self.toKey = key;
-                            }
-                        });
-
-                        if(self.toKey.verifyKey(self.fromKey, cmUserModel.getTrustToken(self.fromKey, cmUserModel.data.identity.cameoId))) {
-                            cmUserModel.signPublicKey(self.toKey, self.toKeyFingerprint, identity);
-                        } else {
-                            cmLogger.debug('Error - cmAuthenticationRequestModel.finish - verify fail!');
-                        }
-
-                    });
+                    if(
+                            typeof self.transactionSecret == 'string'
+                        &&  self.transactionSecret === self.fromKey.decrypt(self.reencryptedTransactionSecret)
+                    ) {
+                        cmUserModel.signPublicKey(self.toKey, self.toKeyFingerprint, identity);
+                    } else {
+                        cmLogger.debug('Error - cmAuthenticationRequestModel.finish - verify fail!');
+                    }
+                    this.state.set('finished')
+                    self.trigger('request:finished')
                 }
             };
 
@@ -408,8 +423,11 @@ angular.module('cmCore')
                     console.log(this.fromKey)
                     console.log(identity)
 
+                    console.log('sigs:')
+                    console.log(this.fromKey)
+
+
                     cmUserModel.signPublicKey(this.fromKey, this.fromKeyFingerprint, identity)
-                    .then(function(){ console.log('jau')}, function(){ console.log('nay') })
                     .finally(function(){
                         cmLogger.debug('cmAuthenticationRequestModel - after signing');
 

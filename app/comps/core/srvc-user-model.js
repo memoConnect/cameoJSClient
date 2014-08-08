@@ -413,7 +413,8 @@ angular.module('cmCore')
                 promises.push(
                     cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
                         function(signature){
-                            keyToSign.importData({signatures:[signature]})                            
+                            keyToSign.importData({signatures:[signature]})  
+                            return signature                          
                         },
                         function(){
                             self.trigger('signatures:failed');
@@ -428,8 +429,9 @@ angular.module('cmCore')
             }
 
             return  $q.all(promises).then(
-                        function(){
-                            self.trigger('signatures:saved')
+                        function(result){
+                            self.trigger('signatures:saved', result)
+                            return result
                         }
                     );
         };

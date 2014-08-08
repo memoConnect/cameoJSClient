@@ -80,6 +80,7 @@ angular.module('cmCore').service('cmHooks', [
                 });
 
                 authenticationRequest.one('request:finished', function(){
+                    console.log('RIIE')
                     $rootScope.closeModal(modalId);
                     cmAuthenticationRequestFactory.deregister(authenticationRequest);
                 });
@@ -91,6 +92,9 @@ angular.module('cmCore').service('cmHooks', [
          */
         cmApi.on('authenticationRequest:start', function(event, request){
 //            cmLogger.debug('cmHooks.on:authenticationRequest:start');
+//            
+
+            cmModal.close('key-response')
 
             var authenticationRequest = cmAuthenticationRequestFactory.find(request);
 
@@ -141,7 +145,7 @@ angular.module('cmCore').service('cmHooks', [
         cmApi.on('authenticationRequest:verified', function(event, request) {
 //            cmLogger.debug('cmHooks.on:authenticationRequest:verified');
 
-            var authenticationRequest = cmAuthenticationRequestFactory.find(request);
+            var authenticationRequest = cmAuthenticationRequestFactory.create(request, true);
 
             if(authenticationRequest !== null && (typeof authenticationRequest.finish == 'function')){
 
@@ -149,11 +153,15 @@ angular.module('cmCore').service('cmHooks', [
                     authenticationRequest.finish();
 
                     authenticationRequest.on('request:finished', function(){
-                        var bulkData = authenticationRequest.exportKeyIdsForBulk();
 
                         cmAuthenticationRequestFactory.deregister(authenticationRequest);
-
-                        self.openBulkRequest(bulkData);
+                        if(
+                                self.fromIdentityId == self.ToIdentityId
+                            &&  self.fromIdentityId == cmUserModel.data.identity.id
+                        ){
+                            var bulkData = authenticationRequest.exportKeyIdsForBulk();
+                            self.openBulkRequest(bulkData);
+                        }
                     });
                 }
             }
@@ -193,6 +201,7 @@ angular.module('cmCore').service('cmHooks', [
 //                        $rootScope.keyRequestSender = false;
                     }
                 });
+
             }
         });
 

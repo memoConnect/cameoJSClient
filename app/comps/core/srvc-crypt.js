@@ -348,12 +348,12 @@ angular.module('cmCore')
              */
             verifyAuthenticationRequest: function(_settings_){
                 var defaultSettings = {
-                    identityId: '',
-                    fromKey: undefined,
-                    encryptedTransactionSecret: '',
-                    signature: ''
-                },
-                settings = angular.extend({},defaultSettings,_settings_);
+                        identityId: '',
+                        fromKey: undefined,
+                        encryptedTransactionSecret: '',
+                        signature: ''
+                    },
+                    settings = angular.extend({},defaultSettings,_settings_);
 
                 if(!(settings.fromKey instanceof cmKey)){
                     cmLogger.error('sign fromKey isn\'t a cmKey');
