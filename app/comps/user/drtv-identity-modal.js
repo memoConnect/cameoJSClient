@@ -26,6 +26,14 @@ angular.module('cmUser').directive('cmIdentityModal',[
                 $scope.switchToIdentity = function(identity){
                     cmUserModel.switchToIdentity(identity);
                 };
+
+                $scope.bam = function(identity){
+                    if(identity.isActive == true){
+                        $scope.goToSettings();
+                    } else {
+                        $scope.switchToIdentity(identity);
+                    }
+                }
             }
         }
     }

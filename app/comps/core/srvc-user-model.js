@@ -268,6 +268,8 @@ angular.module('cmCore')
         };
 
         this.switchToIdentity = function(identity){
+            cmLogger.debug('cmUserModel:switchToIdentity');
+
             cmAuth.getIdentityToken(identity.id).then(
                 function(res){
                     self.storeToken(res.token);
