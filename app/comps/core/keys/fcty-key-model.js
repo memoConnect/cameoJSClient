@@ -4,8 +4,9 @@ angular.module('cmCore')
 .factory('cmKey', [
 
     'cmLogger',
+    '$rootScope',
 
-    function(cmLogger){
+    function(cmLogger, $rootScope){
         /**
          * @TODO TEsts!!!!!
          * @param args

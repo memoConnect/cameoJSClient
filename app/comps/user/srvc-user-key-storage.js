@@ -4,7 +4,8 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
     'cmUserModel',
     'cmUtil',
     'cmLogger',
-    function(cmUserModel, cmUtil, cmLogger) {
+    '$rootScope',
+    function(cmUserModel, cmUtil, cmLogger, $rootScope) {
         function userKeyStorage(key){
             var self = this,
                 storageKey = undefined;
