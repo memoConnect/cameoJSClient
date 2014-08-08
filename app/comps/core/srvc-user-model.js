@@ -196,7 +196,7 @@ angular.module('cmCore')
         this.setIdentity = function(identity_data){
             cmLogger.debug('cmUserModel:setIdentity');
 
-            this.importData(cmIdentityFactory.clear(identity_data).create(identity_data, true));
+            this.importData(cmIdentityFactory.clear(identity_data).create(identity_data, true),[]);
 
             return this;
         };

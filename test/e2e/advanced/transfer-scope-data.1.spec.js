@@ -11,7 +11,7 @@ describe('transfer scope data registration',function(){
         util.get('/registration')
         util.expectCurrentUrl('/registration')
 
-        util.setVal('input-loginName', 'moeper')
+        util.setVal('input-cameoId', 'moeper')
         util.setVal('input-password', 'moep12345')
         util.setVal('input-passwordConfirm', 'moep12345')
         util.setVal('input-displayName', 'moepDisp')
@@ -24,11 +24,15 @@ describe('transfer scope data registration',function(){
 
     it('goto terms (do the transfer)',function() {
         util.click("link-terms")
+        util.expectCurrentUrl('/terms')
+
+
+        util.waitForElement(".back-wrap")
         $(".back-wrap").click()
     })
 
     it('check if transfer succeed',function(){
-        expect(util.getVal('input-loginName')).toBe('moeper')
+        expect(util.getVal('input-cameoId')).toBe('moeper')
         expect(util.getVal('input-password')).toBe('')
         expect(util.getVal('input-passwordConfirm')).toBe('')
         expect(util.getVal('input-displayName')).toBe('moepDisp')

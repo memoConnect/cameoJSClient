@@ -52,14 +52,14 @@ describe('Registration: ', function () {
         ptor.sleep(501)//adaptive change delay
         expect($("[data-qa='cameoId-info-user-min-letter-count']").isDisplayed()).toBe(false)
 
-        util.clearInput('input-loginName')
+        util.clearInput('input-cameoId')
     })
 
     it('should display error if username is invalid', function () {
 
         util.get("/registration");
 
-        $("[data-qa='input-loginName']").sendKeys("moep-moep")
+        $("[data-qa='input-cameoId']").sendKeys("moep-moep")
 
         ptor.wait(function () {
             return $("[data-qa='cameoId-info-username-invalid']").isDisplayed()

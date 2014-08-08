@@ -57,10 +57,6 @@ angular.module('cmConversations').service('cmPurlModel',[
             if(typeof id !== 'undefined'){
                 cmConversationsAdapter.getPurl(id).then(
                     function (data) {
-//                        handleIdentity(data.identity);
-//                        handleToken(data.token);
-//
-//                        deferred.resolve(handleConversation(data.conversation));
                         deferred.resolve(data);
                     },
                     function (response) {
