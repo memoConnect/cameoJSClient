@@ -36,13 +36,8 @@ angular.module('cmCore').service('cmHooks', [
         this.openKeyRequest = function(identity){
 //            cmLogger.debug('cmHooks.openKeyRequest');
 
-            console.log('openKeyRe')
-            console.log(identity.id)
 
             identity = identity || cmUserModel.data.identity.id    
-
-            console.log(identity.id)
-
 
 
             var authenticationRequest = cmAuthenticationRequestFactory.create()
@@ -221,7 +216,6 @@ angular.module('cmCore').service('cmHooks', [
             ){
                 var authenticationRequest = cmAuthenticationRequestFactory.find(response);
 
-            console.dir(authenticationRequest)
 
                 if(authenticationRequest !== null && authenticationRequest.state.is('outgoing')){
                     $rootScope.closeModal('key-request');
