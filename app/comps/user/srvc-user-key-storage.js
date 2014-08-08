@@ -10,7 +10,7 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
                 storageKey = undefined;
 
             function init(key){
-                cmLogger.debug('cmUserKeyStorage.init');
+                //cmLogger.debug('cmUserKeyStorage.init');
 
                 if(typeof key == 'string' && cmUtil.validateString(key)){
                     storageKey = key;
@@ -20,13 +20,13 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
             }
 
             function getAll(){
-                cmLogger.debug('cmUserKeyStorage.getAll');
+                //cmLogger.debug('cmUserKeyStorage.getAll');
 
                 return cmUserModel.storageGet(storageKey) || {};
             }
 
             this.get = function(key){
-                cmLogger.debug('cmUserKeyStorage.get');
+                //cmLogger.debug('cmUserKeyStorage.get');
 
                 var list = getAll(),
                     value = undefined;
@@ -40,7 +40,7 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
             };
 
             this.set = function(key, value){
-                cmLogger.debug('cmUserKeyStorage.set');
+                //cmLogger.debug('cmUserKeyStorage.set');
 
                 var list = getAll();
 
@@ -50,6 +50,8 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
             };
 
             this.is = function(key){
+                //cmLogger.debug('cmUserKeyStorage.is');
+
                 var list = getAll(),
                     boolReturn = false;
 

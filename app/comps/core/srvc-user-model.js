@@ -106,43 +106,50 @@ angular.module('cmCore')
          * @param {Object|undefined} identity_data
          * @returns {*}
          */
-        this.loadIdentity = function(identity_data){
-            cmLogger.debug('cmUserModel:loadIdentity');
+        this.loadIdentity = function(data){
+            //cmLogger.debug('cmUserModel:loadIdentity');
 
             var deferred = $q.defer();
 
-            if(typeof identity_data !== 'undefined'){
-                var identity = cmIdentityFactory.create(identity_data.id);
+            function importIdentity(accountData){
+                if(typeof accountData !== 'undefined' && 'identities' in accountData){
+                    var arr_activeIdentity = accountData.identities.filter(function(identity){
+                        return identity.active == true;
+                    });
 
-                identity.on('update:finished', function(event, data){
-                    self.trigger('update:finished');
-                });
+                    var identity = cmIdentityFactory.create(arr_activeIdentity[0]);
 
-                this.importData(identity);
+                    identity.on('update:finished', function(event, data){
+                        self.trigger('update:finished');
+                    });
 
-                deferred.resolve();
+                    self.importData(identity, accountData.identities);
+
+                    // handle account data
+                    // TODO: set account data
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            if(typeof data !== 'undefined' && 'identities' in data){
+                if(importIdentity(data)){
+                    deferred.resolve();
+                } else {
+                    deferred.reject();
+                }
             } else {
                 if(this.getToken() !== false){
                     //cmAuth.getIdentity().then(
                     cmAuth.getAccount().then(
                         function(data){
-                            // set active identity
-                            var arr_activeIdentity = data.identities.filter(function(identity){
-                                return identity.active == true;
-                            }),
-                            identity = cmIdentityFactory.create(arr_activeIdentity[0]);
-                            // update
-                            identity.on('update:finished', function(){
-                                self.trigger('update:finished');
-                            });
-
-                            self.importData(identity, data.identities);
-
-                            // handle account data
-                            // TODO: set account data
-
-
-                            deferred.resolve();
+                            if(importIdentity(data)){
+                                deferred.resolve();
+                            } else {
+                                deferred.reject();
+                            }
                         },
                         function(r){
                             var response = r || {};
@@ -209,7 +216,7 @@ angular.module('cmCore')
             return false;
         };
 
-        this.doLogin = function(user, pass){
+        this.doLogin = function(user, pass, accountData){
 //            cmLogger.debug('cmUserModel:doLogin');
 
             var deferred = $q.defer();
@@ -218,7 +225,7 @@ angular.module('cmCore')
                 function(token){
                     cmAuth.storeToken(token);
 
-                    self.loadIdentity().finally(
+                    self.loadIdentity(accountData).finally(
                         function(){
                             deferred.resolve();
                         }

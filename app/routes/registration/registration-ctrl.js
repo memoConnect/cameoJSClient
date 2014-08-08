@@ -135,16 +135,16 @@ app.register.controller('RegistrationCtrl', [
                     clearTransferScopeData();
 
                     cmAuth.createUser(data).then(
-                        function(userData){
-                            cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password).then(
+                        function(accountData){
+                            cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
                                 function(){
                                     $scope.spinner('stop');
-                                    cmUserModel.setIdentity(userData.identities[0]);
+                                    //cmUserModel.setIdentity(userData.identities[0]);
                                     if($scope.handleGuest !== false){
                                         $location.path('/purl/'+$rootScope.pendingPurl);
                                     } else {
                                         cmUserModel.comesFromRegistration = true;
-                                        $location.path("/talks");
+                                        $location.path("/start");
                                     }
                                 },
                                 function(){
