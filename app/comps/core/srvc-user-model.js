@@ -263,19 +263,18 @@ angular.module('cmCore')
             $rootScope.$broadcast('logout');
 
             if(typeof goToLogin === 'undefined' || goToLogin !== false){
-                $location.path("/login");
+                $location.path('/login');
             }
         };
 
         this.switchToIdentity = function(identity){
-
-            console.log('switchToIdentity',identity.id)
-
-//            cmAuth.getIdentityToken(identity.id).then(
-//                function(newToken){
-//
-//                }
-//            );
+            cmAuth.getIdentityToken(identity.id).then(
+                function(res){
+                    self.storeToken(res.token);
+                    $rootScope.$broadcast('identity:switched');
+                    //$location.path('/start');
+                }
+            );
         };
 
         /**
@@ -541,7 +540,6 @@ angular.module('cmCore')
             return      identity.keys.length > 0
                     &&  identity.keys.length == this.verifyIdentityKeys(identity, true).length //true: sign keys if needed 
         }
-
 
         this.clearLocalKeys = function(){
             this.storageSave('rsa', []);
