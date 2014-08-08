@@ -1,6 +1,7 @@
 <div>
     <div class="modal-row">
-        <span ng-bind-html="'DRTV.KEY_RESPONSE.CONTENT'|cmTranslate:modalMessageVars"></span>
+        <span ng-if="authenticationRequest.is3rdParty()"    ng-bind-html="'DRTV.KEY_RESPONSE_3RD.CONTENT'|cmTranslate:modalMessageVars"></span>
+        <span ng-if="!authenticationRequest.is3rdParty()"   ng-bind-html="'DRTV.KEY_RESPONSE.CONTENT'|cmTranslate:modalMessageVars"></span>
     </div>
     <div cm-rubber-space ng-show="!spinner">
         <button class="cm-btn cm-btn-block cm-btn-grey cm-inline-block cm-white-border-right" cm-weight="1" ng-click="cancel()" data-qa="btn-cancel">
