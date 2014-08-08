@@ -86,12 +86,9 @@ angular.module('cmCore')
             this.importKeyResponse = function(response){
 //                cmLogger.debug('cmAuthenticationRequestModel.importKeyResponse');
 
-                console.log(self.toIdentityId)
-
                 var identity    =  !self.toIdentityId || (self.toIdentityId == cmUserModel.data.identity.id)
                                     ?   cmUserModel.data.identity
                                     :   cmContactsModel.findByIdentityId(self.toIdentityId).identity
-                console.dir(identity)
 
 
                 var   toKey       = identity.keys.find(response.toKeyId);
@@ -130,7 +127,6 @@ angular.module('cmCore')
 
             this.setToIdentityId = function(identityId){
                 this.toIdentityId = identityId 
-                console.log(this.toIdentityId)
                 return this
             }
 
@@ -350,8 +346,6 @@ angular.module('cmCore')
                         }
                     }, (this.toIdentityId == cmUserModel.data.identity.id) ? undefined : this.toIdentityId);
 
-                    console.log('sendKeyRequest')
-                    console.dir(self)
                 }
             };
 

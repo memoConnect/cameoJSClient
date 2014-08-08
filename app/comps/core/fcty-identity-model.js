@@ -69,7 +69,12 @@ angular.module('cmCore')
                     if('deleted' in publicKey_data && publicKey_data.deleted){
                         self.keys.deregister(publicKey_data);
                     } else {
-                        self.keys.create(publicKey_data, true);
+                        var key =  self.keys.create(publicKey_data, true);
+
+                        //check if the keyis working properly, if not, get rid of it:
+                        if(!key.getPublicKey() || !key.getSize() || key.getSize()< 2048){
+                            self.keys.deregister(key)
+                        }
                     }
                 });
 
