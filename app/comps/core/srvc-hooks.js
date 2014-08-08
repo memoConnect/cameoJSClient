@@ -33,10 +33,16 @@ angular.module('cmCore').service('cmHooks', [
             }
         };
 
-        this.openKeyRequest = function(){
+        this.openKeyRequest = function(identity){
 //            cmLogger.debug('cmHooks.openKeyRequest');
 
-            var authenticationRequest = cmAuthenticationRequestFactory.create();
+
+            identity = identity || cmUserModel.data.identity.id    
+
+
+            var authenticationRequest = cmAuthenticationRequestFactory.create()
+                                        .setToIdentityId(identity.id);
+
             authenticationRequest.state.set('outgoing');
 
             var scope = $rootScope.$new();
@@ -87,8 +93,12 @@ angular.module('cmCore').service('cmHooks', [
          */
         cmApi.on('authenticationRequest:start', function(event, request){
 //            cmLogger.debug('cmHooks.on:authenticationRequest:start');
+//            
+
+            cmModal.close('key-response')
 
             var authenticationRequest = cmAuthenticationRequestFactory.find(request);
+
 
             if(cmAuthenticationRequestFactory.find(request) == null) {
                 authenticationRequest = cmAuthenticationRequestFactory.create(request);
@@ -97,7 +107,9 @@ angular.module('cmCore').service('cmHooks', [
                 authenticationRequest.importData(request);
             }
 
+
             if(authenticationRequest.state.is('incoming') && authenticationRequest.verifyIncomingRequest() !== false){
+
                 var scope = $rootScope.$new();
                 scope.authenticationRequest = authenticationRequest;
 
@@ -114,15 +126,19 @@ angular.module('cmCore').service('cmHooks', [
                 cmModal.on('modal:closed', function(event, id){
                     if(id == modalId){
                         cmAuthenticationRequestFactory.deregister(authenticationRequest);
-                }
+                    }
                 });
 
                 authenticationRequest.on('request:finished', function(){
-                    var bulkData = authenticationRequest.exportKeyIdsForBulk();
-
                     cmAuthenticationRequestFactory.deregister(authenticationRequest);
-
-                    self.openBulkRequest(bulkData);
+                    if( 
+                        this.fromIdentityId == cmUserModel.data.identity.id 
+                        &&
+                        this.toIdentityId == cmUserModel.data.identity.id 
+                    ){
+                        var bulkData = authenticationRequest.exportKeyIdsForBulk();
+                        self.openBulkRequest(bulkData);
+                    }
                 });
             }
         });
@@ -130,7 +146,7 @@ angular.module('cmCore').service('cmHooks', [
         cmApi.on('authenticationRequest:verified', function(event, request) {
 //            cmLogger.debug('cmHooks.on:authenticationRequest:verified');
 
-            var authenticationRequest = cmAuthenticationRequestFactory.find(request);
+            var authenticationRequest = cmAuthenticationRequestFactory.create(request, true);
 
             if(authenticationRequest !== null && (typeof authenticationRequest.finish == 'function')){
 
@@ -138,11 +154,15 @@ angular.module('cmCore').service('cmHooks', [
                     authenticationRequest.finish();
 
                     authenticationRequest.on('request:finished', function(){
-                        var bulkData = authenticationRequest.exportKeyIdsForBulk();
 
                         cmAuthenticationRequestFactory.deregister(authenticationRequest);
-
-                        self.openBulkRequest(bulkData);
+                        if(
+                                self.fromIdentityId == self.ToIdentityId
+                            &&  self.fromIdentityId == cmUserModel.data.identity.id
+                        ){
+                            var bulkData = authenticationRequest.exportKeyIdsForBulk();
+                            self.openBulkRequest(bulkData);
+                        }
                     });
                 }
             }
@@ -160,8 +180,9 @@ angular.module('cmCore').service('cmHooks', [
         cmApi.on('authenticationRequest:key-request', function(event, request){
 //            cmLogger.debug('cmHooks.authenticationRequest:key-request');
 
+
             if(cmAuthenticationRequestFactory.find(request) == null && cmUserModel.loadLocalKeys().length > 0){
-                var authenticationRequest = cmAuthenticationRequestFactory.create(request);
+                var authenticationRequest = cmAuthenticationRequestFactory.create(request, true);
                 authenticationRequest.state.set('incoming');
 
                 var scope = $rootScope.$new();
@@ -181,6 +202,7 @@ angular.module('cmCore').service('cmHooks', [
 //                        $rootScope.keyRequestSender = false;
                     }
                 });
+
             }
         });
 
@@ -194,6 +216,7 @@ angular.module('cmCore').service('cmHooks', [
             ){
                 var authenticationRequest = cmAuthenticationRequestFactory.find(response);
 
+
                 if(authenticationRequest !== null && authenticationRequest.state.is('outgoing')){
                     $rootScope.closeModal('key-request');
                     authenticationRequest.importKeyResponse(response);
@@ -206,13 +229,20 @@ angular.module('cmCore').service('cmHooks', [
             }
         });
 
-        cmUserModel.on('handshake:start', function(event, toKey){
-            if(cmUserModel.verifyPublicKeyForAuthenticationRequest(toKey)){
+        cmUserModel.on('handshake:start', function(event, data){
+
+            var toKey       = data.key,
+                identity    = data.identity || cmUserModel.data.identity
+
+            if(cmUserModel.verifyPublicKeyForAuthenticationRequest(toKey, identity)){
 
                 var authenticationRequest = cmAuthenticationRequestFactory.create();
                 authenticationRequest.state.set('outgoing');
 
-                authenticationRequest.setToKey(toKey);
+                authenticationRequest
+                .setToKey(toKey)
+                .setToIdentityId(identity.id)
+                .setFromIdentityId(cmUserModel.data.identity.id)
 
                 self.openOutgoingAuthenticationRequest(authenticationRequest);
             }
@@ -229,8 +259,9 @@ angular.module('cmCore').service('cmHooks', [
             }
         });
 
+
         cmAuthenticationRequestFactory.on('key-response:accepted', function(event, data){
-//            cmLogger.debug('cmHooks - cmAuthenticationRequestFactory.on:key-response:accepted');
+            // cmLogger.debug('cmHooks - cmAuthenticationRequestFactory.on:key-response:accepted');
 
             if(typeof data == 'object' || typeof data == 'string'){
                 var authenticationRequest = cmAuthenticationRequestFactory.find(data);

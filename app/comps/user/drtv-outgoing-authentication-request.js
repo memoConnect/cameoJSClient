@@ -50,8 +50,11 @@ angular.module('cmUser').directive('cmOutgoingAuthenticationRequest',[
                             toKey: $scope.toKey
                         });
 
-                        $scope.authenticationRequest.importData(dataForRequest);
-                        $scope.authenticationRequest.send();
+                        $scope.authenticationRequest
+                        .importData(dataForRequest)
+                        .setTransactionSecret($scope.transactionSecret)
+                        .setFromKey(fromKey)
+                        .send();
                     } else {
                         //error
                     }

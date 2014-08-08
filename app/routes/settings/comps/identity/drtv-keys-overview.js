@@ -18,13 +18,14 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
 
                 function refresh(){
 
+                    console.log('REFRESH')
+
                     $scope.privateKeys  =   cmUserModel.loadLocalKeys() || [];
                     $scope.publicKeys   =   cmUserModel.data.identity.keys || [];
                     $scope.trustedKeys  =   $scope.publicKeys.filter(function(key){
                                                 return cmUserModel.verifyOwnPublicKey(key);
                                             });
                     $scope.signing      =   cmUserModel.state.is('signing');
-
 
                     $scope.isHandshakePossible = ($scope.privateKeys.length > 0);
 					$scope.canCreate    = !cmUserModel.hasPrivateKey();
@@ -55,11 +56,11 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
                 };
 
                 $scope.startAuthentication = function(toKey){
-                    cmUserModel.trigger('handshake:start', toKey);
+                    cmUserModel.trigger('handshake:start', {key: toKey});
                 };
 
                 cmUserModel.state.on('change', refresh);
-                cmUserModel.on('key:stored key:removed', refresh);
+                cmUserModel.on('key:stored key:removed signatures:saved', refresh);
                 cmUserModel.data.identity.on('update:finished', refresh);
 
                 refresh()

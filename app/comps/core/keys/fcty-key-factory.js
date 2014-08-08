@@ -66,7 +66,6 @@ angular.module('cmCore')
                                                         })
                                             })
 
-
                 return  extended_key_list.length === trustedKeys.length
                         ?   extended_key_list
                         :   self.getTransitivelyTrustedKeys(extended_key_list, trust_callback)

@@ -550,9 +550,13 @@
                 "DESCRIPTION": ""
             },
             "HAS_PASSCAPTCHA": {
-                "NAME": "PassCaptcha enabled",
+                "NAME": "PassCaptcha enabled.",
                 "DESCRIPTION": "Using the passCaptcha method makes it harder to automatically decrypt your messages on a large scale, but it is not actually save.",
                 "TOGGLE": "Disable passCaptcha"
+            },
+            "TRUSTING_ALL_RECIPIENTS": {
+                "NAME": "You trust all recipients.",
+                "DESCRIPTION": ""
             },
             "MISSING_DATA": "Security aspects missing"
         }

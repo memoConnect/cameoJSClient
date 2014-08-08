@@ -1,7 +1,10 @@
 'use strict';
 
 angular.module('cmContacts').directive('cmContactTag',[
-    function (){
+
+    'cmUserModel',
+
+    function (cmUserModel){
         return {
             restrict: 'AE',
             require: '^cmContactsList',
