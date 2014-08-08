@@ -5,7 +5,7 @@
 var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
-describe('Purl registration', function () {
+describe('Purl Registration: ', function () {
 
     var ptor = util.getPtorInstance();
 
@@ -97,6 +97,10 @@ describe('Purl registration', function () {
 
     it('directly click on register button', function () {
         util.get("/purl/" + purl)
+        util.waitForPageLoad("/purl/" + purl)
+
+        ptor.debugger()
+
         util.waitForElement("[data-qa='btn-fast-sign-in']")
         $("[data-qa='btn-fast-sign-in']").click()
         util.waitForPageLoad('/registration')
@@ -104,7 +108,7 @@ describe('Purl registration', function () {
 
     it('register as external user', function () {
         util.waitForElement("[data-qa='input-loginName']")
-        $("[data-qa='input-loginName']").sendKeys(externalLogin)
+        $("[data-qa='input-cameoId']").sendKeys(externalLogin)
         $("[data-qa='input-password']").sendKeys(password)
         $("[data-qa='input-passwordConfirm']").sendKeys(password)
 
