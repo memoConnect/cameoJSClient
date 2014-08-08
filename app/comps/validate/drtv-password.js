@@ -9,9 +9,12 @@ angular.module('cmValidate').directive('cmPassword', [
             templateUrl: 'comps/validate/drtv-password.html',
             scope: {
                 password: '=ngModel',
-                tabindex: '@tabindex'
+                tabindex: '@cmTabindex'
             },
             controller: function($scope){
+
+                $scope.nextTabIndex = parseInt($scope.tabindex) + 1;
+
                 $scope.showConfirmPWStatus = false;
                 $scope.passwordType = 'password';
                 $scope.showPassword = false;

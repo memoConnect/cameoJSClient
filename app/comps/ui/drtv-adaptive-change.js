@@ -30,8 +30,8 @@
  */
 
 angular.module('cmUi').directive('cmAdaptiveChange', [
-    '$timeout',
-    function ($timeout){
+    '$timeout', '$rootScope',
+    function ($timeout, $rootScope){
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -49,6 +49,7 @@ angular.module('cmUi').directive('cmAdaptiveChange', [
                     timeout = $timeout(function(){
                         scope.$apply(function() {
                             ngModel.$setViewValue(element.val());
+                            $rootScope.$broadcast('multi-input:changed',ngModel);
                         });
                     },500);
                 });

@@ -10,8 +10,7 @@
  * @requires localStorage TODO: implement ServiceLocalStorage
  */
 
-angular.module('cmCore')
-.service('cmAuth', [
+angular.module('cmCore').service('cmAuth', [
     'cmApi', 'cmObject', 'cmUtil',
     function(cmApi, cmObject, cmUtil){
         var auth = {
@@ -85,6 +84,7 @@ angular.module('cmCore')
                     path: '/identity/'+identityId+'/token'
                 })
             },
+
             /**
              * @ngdoc method
              * @methodOf cmAuth
@@ -179,6 +179,13 @@ angular.module('cmCore')
              */
             updateIdentity: function(data){
                 return cmApi.put({
+                    path: '/identity',
+                    data: data
+                })
+            },
+
+            addIdentity: function(data){
+                return cmApi.post({
                     path: '/identity',
                     data: data
                 })

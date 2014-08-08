@@ -10,7 +10,6 @@
     <i
         class="fa cm-input-addon"
         ng-class="{
-            'cm-checkbox-wrong':hasError(),
             'cm-checkbox-right':hasReservationSecret()
         }"
         ng-show="hasError() || hasReservationSecret()"
@@ -23,11 +22,11 @@
     <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.MIN_LETTER_COUNT'|cmTranslate:{count: min} }}
 </div>
 <div class="cm-alert" ng-show="errors.exists" data-qa="cameoId-info-username-exists">
-    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.USERNAME.EXISTS'|cmTranslate}}
+    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.INPUT.EXISTS'|cmTranslate}}
 </div>
 <div class="cm-alert" ng-show="errors.empty" data-qa="cameoId-info-username-empty">
-    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.USERNAME.EMPTY'|cmTranslate}}
+    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.INPUT.EMPTY'|cmTranslate}}
 </div>
 <div class="cm-alert" ng-show="errors.invalid" data-qa="cameoId-info-username-invalid">
-    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.USERNAME.INVALID'|cmTranslate}}
+    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.INPUT.INVALID'|cmTranslate}}
 </div>

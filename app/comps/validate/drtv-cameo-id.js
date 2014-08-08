@@ -12,7 +12,7 @@ angular.module('cmValidate').directive('cmCameoId',[
             scope: {
                 cameoId: '=ngModel',
                 formName: '@formName',
-                tabindex: '@tabindex',
+                tabindex: '@cmTabindex',
                 placeholder: '@placeholder'
             },
             controller: function($scope){

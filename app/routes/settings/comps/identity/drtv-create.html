@@ -11,10 +11,10 @@
 
 <div class="cm-contact-body">
     <div class="cm-contact-inputs">
-        <form name="cmForm" novalidate>
+        <form name="cmForm" novalidate autocomplete="off">
 
             <cm-cameo-id
-                ng-model="formData.cameoId" form-name="cmForm" tabindex="1"
+                ng-model="formData.cameoId" form-name="cmForm" cm-tabindex="1"
                 placeholder="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.CAMEOID"
             ></cm-cameo-id>
 
@@ -38,7 +38,7 @@
             </div>
 
             <cm-multi-input cm-collection="formData.phoneNumbers">
-                <ng-form name="formPhone">
+                <ng-form name="formPhone"autocomplete="off">
                     <div class="cm-input-ctn with-chooser">
                         <input
                             tabindex="3" data-qa="input-phonenumber"
@@ -62,7 +62,7 @@
             </cm-multi-input>
 
             <cm-multi-input cm-collection="formData.emails">
-                <ng-form name="formEmail">
+                <ng-form name="formEmail" autocomplete="off">
                     <div class="cm-input-ctn with-chooser">
                         <input
                             tabindex="4" data-qa="input-email"
