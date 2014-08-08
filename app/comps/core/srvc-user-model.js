@@ -267,15 +267,23 @@ angular.module('cmCore')
             }
         };
 
-        this.switchToIdentity = function(identity){
+        this.switchToIdentity = function(identity, identityToken){
             cmLogger.debug('cmUserModel:switchToIdentity');
 
-            cmAuth.getIdentityToken(identity.id).then(
-                function(res){
-                    self.storeToken(res.token);
-                    $rootScope.$broadcast('identity:switched');
-                }
-            );
+            function doSwitch(newToken){
+                self.storeToken(newToken);
+                $rootScope.$broadcast('identity:switched');
+            }
+
+            if(identityToken){
+                doSwitch(identityToken);
+            } else {
+                cmAuth.getIdentityToken(identity.id).then(
+                    function (res) {
+                        doSwitch(res.token);
+                    }
+                );
+            }
         };
 
         /**
@@ -717,6 +725,13 @@ angular.module('cmCore')
         $rootScope.$on('identity:switched', function(){
             self.resetUser();
             init();
+            self.one('update:finished', function(){
+                if(!self.hasLocalKeys()){
+                    $location.path('/start');
+                } else {
+                    $location.path('/talks');
+                }
+            });
         });
 
         this.on('update:finished', function(){
