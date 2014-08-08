@@ -12,18 +12,19 @@
 
     <section class="welcome" ng-bind-html="'START.TEXT' | cmParse" ng-show="showWelcome" data-qa="ctn-welcome-text"></section>
 
-    <header class="inScreen" data-qa="ctn-key-info-header">
+    <header class="inScreen" data-qa="ctn-key-info-header" ng-show="showKeyInfo">
         <i class="fa cm-key cm-lg-icon"></i>
         {{'SETTINGS.PAGES.IDENTITY.KEYS.HEADER'| cmTranslate}}
     </header>
 
     <section
+            ng-show="showKeyInfo"
             class="keyInfo in-screen-message"
             data-qa="ctn-key-info-text"
             ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE' | cmTranslate">
     </section>
 
-    <section class="skipInfo">
+    <section class="skipInfo" ng-show="showKeyInfo">
         <input
                 id="skipStartInput"
                 data-qa="checkbox-skip-start"
@@ -44,5 +45,20 @@
         <button ng-click="setSkipStart()" data-qa="btn-skip-text">{{'START.SKIP.TEXT' | cmTranslate}}</button>
 
         <button class="btn cm-btn-block cm-btn-grey" ng-click="goToTalks()" data-qa="btn-skip">{{'START.SKIP.BTN_TEXT' | cmTranslate}}</button>
+    </section>
+
+    <header class="inScreen" data-qa="ctn-explore-info-header" ng-show="!showKeyInfo">
+        <i class="fa cm-rhino-positive cm-lg-icon"></i>
+        {{'START.EXPLORE.TITLE'|cmTranslate}}
+    </header>
+
+    <section
+            ng-show="!showKeyInfo"
+            class="exploreInfo in-screen-message"
+            data-qa="ctn-explore-info-text">
+
+            <span  ng-bind-html="'START.EXPLORE.TEXT' | cmTranslate"></span>
+
+            <button class="btn cm-btn-block cm-btn-grey" ng-click="goToTalks()" data-qa="btn-explore">{{'START.EXPLORE.BTN_TEXT' | cmTranslate}}</button>
     </section>
 </div>
