@@ -72,7 +72,7 @@ angular.module('cmCore')
                         var key =  self.keys.create(publicKey_data, true);
 
                         //check if the keyis working properly, if not, get rid of it:
-                        if(!key.getPublicKey() || !key.getSize() || key.getSize()< 2048){
+                        if(!key.getPublicKey()){
                             self.keys.deregister(key)
                         }
                     }
