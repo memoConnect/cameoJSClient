@@ -22,6 +22,10 @@ angular.module('cmUser').directive('cmIdentityModal',[
                     }
                     $location.path('/settings/identity');
                 };
+
+                $scope.switchToIdentity = function(identity){
+                    cmUserModel.switchToIdentity(identity);
+                };
             }
         }
     }

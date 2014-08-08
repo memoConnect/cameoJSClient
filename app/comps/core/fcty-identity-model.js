@@ -61,6 +61,7 @@ angular.module('cmCore')
                 this.userType               = data.userType || this.userType;
                 this.created                = data.created || this.created;
                 this.lastUpdated            = data.lastUpdated || this.lastUpdated;
+                this.isActive               = data.active || this.isActive;
 
                 data.publicKeys             = data.publicKeys || [];
 
