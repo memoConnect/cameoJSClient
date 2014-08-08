@@ -669,6 +669,11 @@ angular.module('cmCore')
             self.resetUser();
         });
 
+        $rootScope.$on('identity:switched', function(){
+            self.resetUser();
+            init();
+        });
+
         this.on('update:finished', function(){
             cmBoot.resolve();
         });

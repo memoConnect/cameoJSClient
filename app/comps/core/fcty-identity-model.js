@@ -231,9 +231,9 @@ angular.module('cmCore')
             return self;
         };
 
-        $rootScope.$on('logout', function(){
-            self.reset()
-        });
+        $rootScope.$on('logout', function(){ self.reset() });
+
+        $rootScope.$on('identity:switched', function(){ self.reset() });
 
         return self;
     }

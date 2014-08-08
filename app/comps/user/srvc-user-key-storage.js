@@ -25,6 +25,10 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
                 return cmUserModel.storageGet(storageKey) || {};
             }
 
+            function reset(){
+                storageKey = undefined;
+            }
+
             this.get = function(key){
                 //cmLogger.debug('cmUserKeyStorage.get');
 
@@ -64,6 +68,10 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
 
                 return boolReturn;
             };
+
+            $rootScope.$on('logout', function(){ reset() });
+
+            $rootScope.$on('identity:switched', function(){ reset() });
 
             init(key);
         }

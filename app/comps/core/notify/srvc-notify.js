@@ -99,6 +99,9 @@ angular.module('cmCore')
          */
         $rootScope.$on('logout', function(){ self.reset() });
 
+        $rootScope.$on('identity:switched', function(){ self.reset() });
+
+
         self.on('bell:ring', function(event, instance){
             self.bellCounter++;
         });

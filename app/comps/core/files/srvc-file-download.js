@@ -10,10 +10,18 @@ angular.module('cmCore')
         this.stack = [];
         this.atWork = false;
 
-        $rootScope.$on('logout', function(){
+        function reset(){
             self.atWork = false;
             self.stack = [];
             self.stop();
+        }
+
+        $rootScope.$on('logout', function(){
+            reset();
+        });
+
+        $rootScope.$on('identity:switched', function(){
+            reset();
         });
 
         /**

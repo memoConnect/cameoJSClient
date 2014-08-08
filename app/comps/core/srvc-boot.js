@@ -19,7 +19,11 @@ angular.module('cmCore')
             function($q, $rootScope, $window) {
 
                 $rootScope.$on('logout', function(){
-                    promise = undefined
+                    promise = undefined;
+                });
+
+                $rootScope.$on('identity:switched', function(){
+                    promise = undefined;
                 });
 
                 return {

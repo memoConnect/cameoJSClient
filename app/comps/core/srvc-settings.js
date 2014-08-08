@@ -81,6 +81,10 @@ angular.module('cmCore')
             self.properties = {};
         });
 
+        $rootScope.$on('identity:switched', function(){
+            self.properties = {};
+        });
+
         cmUserModel.on('update:finished', function(){
             init();
         });

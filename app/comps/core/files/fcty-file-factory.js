@@ -11,6 +11,10 @@ angular.module('cmCore')
             instances = [];
         });
 
+        $rootScope.$on('identity:switched', function(){
+            instances = [];
+        });
+
         return {
             create: function(data, explicit){
                 var file = null,

@@ -989,6 +989,11 @@ angular.module('cmConversations')
                 self.recipients.reset();
             });
 
+            $rootScope.$on('identity:switched', function(){
+                self.messages.reset();
+                self.recipients.reset();
+            });
+
             passphrase.on('passphrase:changed', function(){
 //                self.decrypt();
             });
