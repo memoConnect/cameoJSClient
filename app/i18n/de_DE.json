@@ -547,6 +547,10 @@
                 "DESCRIPTION": "Das PassCaptcha-Verfahren erschwert es, Nachrichten - die bei der Übertragung durch das Internet abgefangen oder auf dem cameoNet-Server gespeichert werden - in großem Umfang automatisiert zu entschlüsseln. Sicher verschlüsselt ist die Nachricht aber hiermit nicht, da Entschlüsselungsmethoden für Captchas  immer leistungsfähiger werden und eine Person die Nachricht direkt entschlüsseln könnte.",
                 "TOGGLE": "PassCaptcha deaktivieren."
             },
+            "TRUSTING_ALL_RECIPIENTS":{
+                "NAME": "Du vertraust allen Empfängern.",
+                "DESCRIPTION": ""
+            },
             "MISSING_DATA": "Sicherheitsaspekte fehlen!"
         }
     },

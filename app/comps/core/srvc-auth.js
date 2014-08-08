@@ -184,7 +184,7 @@ angular.module('cmCore')
              */
             savePublicKey: function(data){
                 return cmApi.post({
-                    path: '/identity/publicKey',
+                    path: '/publicKey',
                     data: {
                         name: data.name,
                         key: data.key,
@@ -205,7 +205,7 @@ angular.module('cmCore')
              */
             removePublicKey: function(keyId){
                 return cmApi.delete({
-                    path: '/identity/publicKey/'+keyId
+                    path: '/publicKey/'+keyId
                 })
             },
             /**
@@ -223,7 +223,7 @@ angular.module('cmCore')
              */
             savePublicKeySignature: function(localKeyId, signKeyId, signature){
                 return cmApi.post({
-                    path: '/identity/publicKey/' + signKeyId + '/signature',
+                    path: '/publicKey/' + signKeyId + '/signature',
                     data: {
                         keyId: localKeyId,
                         content: signature
@@ -286,7 +286,7 @@ angular.module('cmCore')
                 }
 
                 return cmApi.get({
-                    path: '/identity/publicKey/'+ keyId +'/aePassphrases' + queryString
+                    path: '/publicKey/'+ keyId +'/aePassphrases' + queryString
                 });
             },
             /**
@@ -303,7 +303,7 @@ angular.module('cmCore')
              */
             saveBulkPassphrases: function(keyId, data){
                 return cmApi.post({
-                    path: '/identity/publicKey/'+ keyId +'/aePassphrases',
+                    path: '/publicKey/'+ keyId +'/aePassphrases',
                     data: data
                 });
             },
@@ -318,9 +318,9 @@ angular.module('cmCore')
              * @param {Object} data event data
              * @returns {Promise} for async handling
              */
-            sendBroadcast: function( data){
+            sendBroadcast: function(data, identityId){
                 return cmApi.post({
-                    path: '/event/broadcast',
+                    path: '/event/broadcast' + (identityId ? '/identity/' + identityId : ''),
                     data: data
                 });
             },

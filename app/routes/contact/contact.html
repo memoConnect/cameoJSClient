@@ -16,13 +16,24 @@
                         <cm-key-level cm-data="identity.keys.getWeakestKeySize()"></cm-key-level>
                         <cm-contact-type cm-data="contact"></cm-contact-type>
                     </div>
-                    <button
-                        data-qa="start-new-conversation-btn"
-                        class="with-white-bg"
-                        ng-click="startConversation()"
-                        cm-weight="1">
-                        <i class="fa cm-new-talk"></i>
-                    </button>
+                    <div cm-weight = "1" class="with-white-bg">
+                        <button
+                            data-qa="start-new-conversation-btn"
+                            ng-click="startConversation()"
+                        >
+                            <i class="fa cm-new-talk"></i>
+                        </button>
+                        <br/>
+                        <button
+                            data-qa="start-trust-handshake-btn"
+                            ng-click="startTrustHandshake()"
+                            ng-disabled = "getTrust() || !hasKey()"
+                        >
+                                <i ng-if="!hasKey()"    class="fa cm-close"></i>
+                                <i ng-if="hasKey()"     class="fa {{ getTrust() ? 'cm-checkbox-right' : 'cm-handshake'}}"></i>
+                        </button>
+                        <br/>
+                    </div>
                 </div>
             </div>
         </div>
