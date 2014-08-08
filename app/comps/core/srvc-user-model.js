@@ -272,7 +272,6 @@ angular.module('cmCore')
                 function(res){
                     self.storeToken(res.token);
                     $rootScope.$broadcast('identity:switched');
-                    //$location.path('/start');
                 }
             );
         };

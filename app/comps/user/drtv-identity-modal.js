@@ -2,9 +2,9 @@
 
 angular.module('cmUser').directive('cmIdentityModal',[
     'cmUserModel', 'cmModal',
-    '$location',
+    '$location', '$rootScope',
     function (cmUserModel, cmModal,
-              $location){
+              $location, $rootScope){
         return {
             restrict: 'AE',
             templateUrl: 'comps/user/drtv-identity-modal.html',
@@ -18,7 +18,7 @@ angular.module('cmUser').directive('cmIdentityModal',[
 
                 $scope.goToSettings = function(){
                     if($location.$$url == '/settings/identity'){
-                        cmModal.close('modal-identity-' + $scope.randModalId);
+                        cmModal.close($scope.modalId);
                     }
                     $location.path('/settings/identity');
                 };
@@ -26,6 +26,10 @@ angular.module('cmUser').directive('cmIdentityModal',[
                 $scope.switchToIdentity = function(identity){
                     cmUserModel.switchToIdentity(identity);
                 };
+
+                $rootScope.$on('identity:switched', function(){
+                    cmModal.close($scope.modalId);
+                });
             }
         }
     }
