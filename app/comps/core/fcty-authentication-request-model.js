@@ -144,6 +144,12 @@ angular.module('cmCore')
                 return this
             }
 
+            this.is3rdParty = function(){
+                var to      = this.toIdentityId     || cmUserModel.data.identity.id,
+                    from    = this.fromIdentityId   || cmUserModel.data.identity.id
+                return to !== from
+            }
+
             this.exportKeyIdsForBulk = function(){
 //                cmLogger.debug('cmAuthenticationRequestModel.exportKeyIdsForBulk');
 
