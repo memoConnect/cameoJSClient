@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('cmUi').directive('cmMultiInput',[
-    function (){
+    '$rootScope',
+    function ($rootScope){
         return {
             restrict: 'AE',
             scope: true,
@@ -9,12 +10,12 @@ angular.module('cmUi').directive('cmMultiInput',[
             priority: 101,
 
             template: '<div ng-repeat="item in collection" class="cm-multi-input-wrap">' +
-                '<div ng-transclude ng-keyup="showMultiplier()"></div>'+
-                '<div class="cm-multiplier" ng-click="multiply()" ng-show="isMultiplyable">'+
-                '<i class="fa cm-checkbox-bg"></i>'+
-                '<i class="fa cm-checkbox-add"></i>'+
-                '</div>'+
-                '</div>',
+                        '<div ng-transclude ng-keyup="showMultiplier()"></div>'+
+                        '<div class="cm-multiplier" ng-click="multiply()" ng-show="isMultiplyable">'+
+                            '<i class="fa cm-checkbox-bg"></i>'+
+                            '<i class="fa cm-checkbox-add"></i>'+
+                        '</div>'+
+                      '</div>',
 
             controller: function ($scope, $element, $attrs) {
                 $scope.collection = [];
@@ -25,6 +26,10 @@ angular.module('cmUi').directive('cmMultiInput',[
                         $scope.collection = collection;
                         $scope.showMultiplier();
                     }
+                });
+
+                $rootScope.$on('multi-input:changed', function(ngModel){
+                    $scope.showMultiplier();
                 });
 
                 $scope.showMultiplier = function(){

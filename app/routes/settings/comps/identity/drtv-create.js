@@ -28,8 +28,6 @@ angular.module('cmRouteSettings').directive('cmIdentityCreate', [
                 ];
                 //////////////////////
 
-                console.log($scope.formData)
-
                 $scope.validateDisplayName = function(){
                     if($scope.formData.displayName == undefined
                     || $scope.formData.displayName.length == 0
@@ -40,19 +38,56 @@ angular.module('cmRouteSettings').directive('cmIdentityCreate', [
                 };
 
                 $scope.validateForm = function(){
-                    var deferred = $q.defer();
+                    var deferred = $q.defer(),
+                        data = {};
+
+                    function checkCameoId() {
+                        if ($scope.formData.cameoId && $scope.formData.cameoId != '') {
+                            data.cameoId = $scope.formData.cameoId;
+                            data.reservationSecret = $scope.reservationSecrets[data.cameoId];
+                        }
+                    }
+
+                    function checkDisplayName() {
+                        if ($scope.formData.displayName && $scope.formData.displayName != '') {
+                            data.displayName = $scope.formData.displayName;
+                        }
+                    }
+
+                    function checkEmail() {
+                        if ($scope.formData.emails.length > 0
+                            && $scope.formData.emails[0].value != undefined
+                            && $scope.formData.emails[0].value != ''
+                            ) {
+                            data.email = $scope.formData.emails[0].value;
+                        }
+                    }
+
+                    function checkPhoneNumber() {
+                        if ($scope.formData.phoneNumbers.length > 0
+                            && $scope.formData.phoneNumbers[0].value != undefined
+                            && $scope.formData.phoneNumbers[0].value != ''
+                            ) {
+                            data.phoneNumber = $scope.formData.phoneNumbers[0].value;
+                        }
+                    }
 
                     // check loginName aka cameoId
                     if ($scope.cmForm.cameoId.$valid == false) {
                         if($scope.cmForm.cameoId.$viewValue == undefined
-                            || $scope.cmForm.cameoId.$viewValue.toString() == ''
-                            ){
+                        || $scope.cmForm.cameoId.$viewValue.toString() == ''
+                        ){
                             $rootScope.$broadcast('cm-login-name:invalid');
                         }
                     }
 
+                    checkCameoId();
+                    checkDisplayName();
+                    checkEmail();
+                    checkPhoneNumber();
+
                     if($scope.cmForm.$valid !== false){
-                        deferred.resolve();
+                        deferred.resolve(data);
                     } else {
                         deferred.reject();
                     }
@@ -62,63 +97,12 @@ angular.module('cmRouteSettings').directive('cmIdentityCreate', [
 
                 // save
                 $scope.addIdentity = function(){
-                    var data = {};
-
                     $scope.validateForm().then(
-                        function(){
-                            function checkCameoId() {
-                                if ($scope.formData.cameoId && $scope.formData.cameoId != '') {
-                                    data.cameoId = $scope.formData.cameoId;
-                                    data.reservationSecret = $scope.reservationSecrets[data.cameoId];
-                                }
-                            }
-
-                            function checkDisplayName() {
-                                if ($scope.formData.displayName && $scope.formData.displayName != '') {
-                                    data.displayName = $scope.formData.displayName;
-                                }
-                            }
-
-                            function checkEmail() {
-                                if ($scope.formData.emails.length > 0
-                                 && $scope.formData.emails[0].value != undefined
-                                 && $scope.formData.emails[0].value != ''
-                                ) {
-                                    data.email = $scope.formData.emails[0].value;
-                                }
-                            }
-
-                            function checkPhoneNumber() {
-                                if ($scope.formData.phoneNumbers.length > 0
-                                 && $scope.formData.phoneNumbers[0].value != undefined
-                                 && $scope.formData.phoneNumbers[0].value != ''
-                                 ) {
-                                    data.phoneNumber = $scope.formData.phoneNumbers[0].value;
-                                }
-                            }
-
-                            checkCameoId();
-                            checkDisplayName();
-                            checkEmail();
-                            checkPhoneNumber();
-
-                            /*
-                             {
-                             "cameoId": "reserved cameoId",
-                             "reservationSecret": "secret",
-                             "phoneNumber": "optional",
-                             "email": "optional",
-                             "displayName": "optional"
-                             }
-                            */
-
-                            console.log(data)
-                            return false;
-
+                        function(data){
                             cmAuth.addIdentity(data).then(
                                 function(){
                                     // TODO: logout and set new token!!!
-
+                                    cmNotify.info('SETTINGS.PAGES.IDENTITY.CREATE.INFO.SUCCES',{displayType:'modal'})
                                 },
                                 function(){
                                     cmNotify.warn('SETTINGS.PAGES.IDENTITY.CREATE.WARN.FAILED')
