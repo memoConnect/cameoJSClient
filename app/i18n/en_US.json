@@ -313,6 +313,9 @@
                             "PHONENUMBER": "@:CONTACT.INFO.INVALID.PHONENUMBER"
                         }
                     },
+                    "WARN": {
+                        "FAILED": "The creating of new identity has failed. Please try again later."
+                    },
                     "FOOTER": "@:CONTACT.FOOTER.SAVE"
                 },
                 "KEYS": {
@@ -418,10 +421,10 @@
             "INFO": {
                 "MAX_LETTER_COUNT": "Please use a maximum of {{count}} characters.",
                 "MIN_LETTER_COUNT": "Please use at least {{count}} characters.",
-                "USERNAME": {
-                    "EXISTS": "Username already exists! Please choose another.",
-                    "EMPTY": "Please enter a username.",
-                    "INVALID": "Invalid username. Avoid spaces and special characters."
+                "INPUT": {
+                    "EXISTS": "Your input already exists! Please choose another.",
+                    "EMPTY": "This field is required. Please fill out",
+                    "INVALID": "Invalid input. Avoid spaces and special characters."
                 }
             }
         },

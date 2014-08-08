@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('cmRouteSettings').directive('cmIdentityCreate', [
-    'cmUserModel', 'cmNotify',
-    '$location', '$q',
-    function(cmUserModel, cmNotify,
-             $location, $q){
+    'cmAuth', 'cmNotify',
+    '$location', '$q', '$rootScope',
+    function(cmAuth, cmNotify,
+             $location, $q, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/identity/drtv-create.html',
@@ -28,6 +28,8 @@ angular.module('cmRouteSettings').directive('cmIdentityCreate', [
                 ];
                 //////////////////////
 
+                console.log($scope.formData)
+
                 $scope.validateDisplayName = function(){
                     if($scope.formData.displayName == undefined
                     || $scope.formData.displayName.length == 0
@@ -39,6 +41,15 @@ angular.module('cmRouteSettings').directive('cmIdentityCreate', [
 
                 $scope.validateForm = function(){
                     var deferred = $q.defer();
+
+                    // check loginName aka cameoId
+                    if ($scope.cmForm.cameoId.$valid == false) {
+                        if($scope.cmForm.cameoId.$viewValue == undefined
+                            || $scope.cmForm.cameoId.$viewValue.toString() == ''
+                            ){
+                            $rootScope.$broadcast('cm-login-name:invalid');
+                        }
+                    }
 
                     if($scope.cmForm.$valid !== false){
                         deferred.resolve();
@@ -104,14 +115,15 @@ angular.module('cmRouteSettings').directive('cmIdentityCreate', [
                             console.log(data)
                             return false;
 
-//                            cmUserModel.data.identity.update(objectChange);
-//
-//
-//                            function callback_save_identity(){
-//                                cmNotify.info('IDENTITY.NOTIFY.UPDATE.SUCCESS',{ttl:3000,displayType:'modal'});
-//                            }
-//
-//                            cmUserModel.data.identity.one('update:finished',callback_save_identity);
+                            cmAuth.addIdentity(data).then(
+                                function(){
+                                    // TODO: logout and set new token!!!
+
+                                },
+                                function(){
+                                    cmNotify.warn('SETTINGS.PAGES.IDENTITY.CREATE.WARN.FAILED')
+                                }
+                            );
                         }
                     )
                 };
