@@ -35,7 +35,7 @@ describe('cmConversationFactory', function(){
             result.push({})
         }
 
-        $httpBackend.whenGET('/identity').respond({})
+        $httpBackend.whenGET('/account').respond({})
         $httpBackend.expectGET('/conversations?limit=7&offset=0').respond(200, {
             res: 'OK',
             data: { numberOfConversations: result.length, conversations:result }

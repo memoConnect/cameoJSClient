@@ -54,7 +54,7 @@ describe('Event chain for Conversations', function(){
 
             cmConversationsAdapter.on('conversation:new', function(){ adapter_triggered = true })
 
-            $httpBackend.expectGET('/identity').respond(200, {})
+            $httpBackend.expectGET('/account').respond(200, {})
             $httpBackend.expectGET('/identity/ög9PWZY7xKNbeCO6LPNnx').respond(200, {})
 
             cmApi.trigger('conversation:new', conversation_data)
@@ -75,7 +75,7 @@ describe('Event chain for Conversations', function(){
                 conversation        = cmConversationFactory.create(conversation_data),
                 number_of_messages  = conversation.messages.length
 
-            $httpBackend.expectGET('/identity').respond(200, {})
+            $httpBackend.expectGET('/account').respond(200, {})
             $httpBackend.expectGET('/identity/ög9PWZY7xKNbeCO6LPNnx').respond(200, {})
             $httpBackend.expectGET('/identity/g9PWZY7xKNbeCO6LPNnx').respond(200, {})
 
