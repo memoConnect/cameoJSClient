@@ -37,7 +37,7 @@ app.register.controller('RegistrationCtrl', [
             var deferred = $q.defer();
 
             var data = {
-                cameoId: null, //@todo loginName for request
+                loginName: null,
                 password: null,
                 email: null,
                 phone: null,
