@@ -101,8 +101,9 @@ angular.module('cmRouteSettings').directive('cmIdentityCreate', [
                         function(data){
                             cmAuth.addIdentity(data).then(
                                 function(){
-                                    // TODO: logout and set new token!!!
                                     cmNotify.info('SETTINGS.PAGES.IDENTITY.CREATE.INFO.SUCCES',{displayType:'modal'})
+                                    // TODO: logout and set new token!!!
+                                    //cmUserModel.switchToIdentity(identity);
                                 },
                                 function(){
                                     cmNotify.warn('SETTINGS.PAGES.IDENTITY.CREATE.WARN.FAILED')

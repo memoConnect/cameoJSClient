@@ -15,12 +15,12 @@
     ng-repeat="identity in ownIdentities"
     class="modal-row"
     cm-rubber-space
-    data-qa="btn-identity-settings"
-    ng-click="goToSettings()">
+    data-qa="btn-identity-settings">
     <cm-avatar cm-data="identity" cm-weight="1"></cm-avatar>
     <cm-key-level cm-data="identity.keys.getWeakestKeySize()" cm-weight="1"></cm-key-level>
     <span cm-weight="4">{{identity.getDisplayName()}}</span>
     <button cm-weight="1">
-        <i class="fa cm-fix"></i>
+        <i class="fa cm-change" ng-if="!identity.isActive" ng-click="switchToIdentity(identity)"></i>
+        <i class="fa cm-fix" ng-if="identity.isActive" ng-click="goToSettings()"></i>
     </button>
 </div>

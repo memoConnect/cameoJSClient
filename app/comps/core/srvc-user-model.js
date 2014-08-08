@@ -252,6 +252,17 @@ angular.module('cmCore')
             }
         };
 
+        this.switchToIdentity = function(identity){
+
+            console.log('switchToIdentity',identity.id)
+
+//            cmAuth.getIdentityToken(identity.id).then(
+//                function(newToken){
+//
+//                }
+//            );
+        };
+
         /**
          * Key Handling
          */
