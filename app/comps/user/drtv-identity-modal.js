@@ -1,7 +1,5 @@
 'use strict';
-/**
-* HAHAHA
-*/
+
 angular.module('cmUser').directive('cmIdentityModal',[
     'cmUserModel',
     'cmModal',
