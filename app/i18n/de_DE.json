@@ -42,15 +42,9 @@
             "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER"
         },
         "INFO": {
-            "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
             "TERMS": "Bitte akzeptieren Sie die AGB!",
             "EMPTY": {
                 "PASSWORD": "Bitte geben Sie ein Passwort ein!"
-            },
-            "USERNAME": {
-                "EXISTS": "Benutzername bereits vergeben. Bitte wählen Sie einen anderen Benutzernamen!",
-                "EMPTY": "Bitte geben Sie einen Benutzernamen ein!",
-                "INVALID": "Der Benutzername enthält nicht erlaubte Zeichen. Vermeiden Sie Umlaute, Leer- und Sonderzeichen."
             },
             "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
             "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
