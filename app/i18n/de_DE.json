@@ -6,7 +6,7 @@
         "VERSION": "Version"
     },
 
-    "LOGIN": {
+	"LOGIN": {
         "HEADING": "Login",
         "LABEL": {
             "SUBMIT": "Einloggen",
@@ -32,7 +32,7 @@
             "SUBMIT": "Benutzerkonto anlegen",
             "USERNAME": "Benutzername",
             "NAME": "Anzeigename",
-            "TERMS": " die AGB",
+            "TERMS": " die s",
             "TERMS_ACCEPT": "Ich akzeptiere"
         },
         "PLACEHOLDER": {
@@ -42,9 +42,15 @@
             "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER"
         },
         "INFO": {
+            "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
             "TERMS": "Bitte akzeptieren Sie die AGB!",
             "EMPTY": {
                 "PASSWORD": "Bitte geben Sie ein Passwort ein!"
+            },
+            "USERNAME": {
+                "EXISTS": "Benutzername bereits vergeben. Bitte wählen Sie einen anderen Benutzernamen!",
+                "EMPTY": "Bitte geben Sie einen Benutzernamen ein!",
+                "INVALID": "Der Benutzername enthält nicht erlaubte Zeichen. Vermeiden Sie Umlaute, Leer- und Sonderzeichen."
             },
             "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
             "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
@@ -56,11 +62,11 @@
 
     },
 
-    "START": {
+	"START": {
         "TITLE": "Willkommen im cameoNet!",
         "TEXT": "cameoNet ist ein Ende-zu-Ende verschlüsselter OpenSource Messenger für sichere private und geschäftliche Kommunikation!\nACHTUNG: Dies ist die erste Beta-Version!\nDie App enthält Fehler, die Benutzerführung kann an vielen Stellen verbessert werden und noch nicht alle wichtigen Features sind enthalten. Zur Zeit können wir leider auch noch nicht garantieren, dass all Ihre Daten dauerhaft erhalten bleiben. Daher bitten wir Sie, zunächst von wichtigen Daten lokale Kopien anzulegen.\nBitte helfen Sie uns, cameoNet zu verbessern. Wir freuen uns über jeden Fehler und Verbesserungsvorschlag, den Sie unter http://support.cameonet.de einstellen\nIhr cameoNet-Team.",
-        "YOUR_ID": "Deine cameoID",
-        "LOGOUT": "Abmelden",
+		"YOUR_ID": "Deine cameoID",
+		"LOGOUT": "Abmelden",
         "SKIP": {
             "TEXT": "Zeige mir diese Seite nicht mehr an",
             "BTN_TEXT": "Überspringen"
@@ -70,31 +76,31 @@
             "TEXT": "START.EXPLORE.TEXT",
             "BTN_TEXT": "START.EXPLORE.BTN_TEXT"
         }
-    },
+	},
 
-    "VERIFICATION": {
-        "REQUEST": {
-            "LABEL": "Verifizierung anfragen"
-        }
-    },
+	"VERIFICATION": {
+		"REQUEST": {
+			"LABEL": "Verifizierung anfragen"
+		}
+	},
 
-    "PROFILE": {
-        "E-MAIL": "E-Mail",
-        "MOBILE": "Mobilfunknummer"
-    },
+	"PROFILE": {
+		"E-MAIL": "E-Mail",
+		"MOBILE": "Mobilfunknummer"
+	},
 
-    "LANG":	{
-        "DE_DE": "Deutsch",
-        "EN_US": "Englisch",
-        "SWITCH": {
-            "SUCCESS": "Sprache auf {{lang}} gestellt.",
-            "ERROR": "Konnte Sprache nicht auf {{lang}} stellen.",
-            "LABEL": {
-                "DE_DE": "@:LANG.DE_DE",
-                "EN_US": "@:LANG.EN_US"
-            }
-        }
-    },
+	"LANG":	{
+		"DE_DE": "Deutsch",
+		"EN_US": "Englisch",
+		"SWITCH": {
+			"SUCCESS": "Sprache auf {{lang}} gestellt.",
+			"ERROR": "Konnte Sprache nicht auf {{lang}} stellen.",
+			"LABEL": {
+				"DE_DE": "@:LANG.DE_DE",
+				"EN_US": "@:LANG.EN_US"
+			}
+		}
+	},
 
     "TERMS": {
         "HEADING": "Allgemeine Geschäftsbedingungen",
@@ -180,8 +186,8 @@
         }
     },
 
-    "CONTACTS": {
-        "HEADING": {
+	"CONTACTS": {
+		"HEADING": {
             "LIST": "Kontakte",
             "REQUESTS": "Kontaktanfragen",
             "SEARCH": "Suchen",
@@ -227,7 +233,7 @@
             "REJECT": "Zurückweisen",
             "IGNORE": "Ignorieren"
         }
-    },
+	},
 
     "CONTACT": {
         "WIDGET": "Talks",
@@ -280,8 +286,8 @@
         }
     },
 
-    "SETTINGS": {
-        "WELCOME": "Einstellungen",
+	"SETTINGS": {
+		"WELCOME": "Einstellungen",
         "LABEL": "Einstellungen",
         "ACCOUNT": "Account",
         "IDENTITY": "Identitäten",
@@ -377,19 +383,19 @@
                 "TEXT": "cameoNet 2014"
             }
         }
-    },
+	},
 
-    "NAVIGATION": {
-        "TABS": {
-            "BACK": "Zurück",
+	"NAVIGATION": {
+		"TABS": {
+			"BACK": "Zurück",
             "ADD": "Hinzufügen",
             "ALL": "Kontakte",
             "REQUESTS": "Anfragen",
-            "SPINNER": "Spinner",
-            "KEY": "cameoKey",
-            "TALKS": "Talks"
-        }
-    },
+			"SPINNER": "Spinner",
+			"KEY": "cameoKey",
+			"TALKS": "Talks"
+		}
+	},
 
     "DRTV": {
         "PASSWORD": {
@@ -413,17 +419,6 @@
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
                 "EMPTY": "Sie haben keine Mobilfunknummer eingegeben."
-            }
-        },
-        "VALIDATE_CAMEOID": {
-            "INFO": {
-                "MAX_LETTER_COUNT": "Bitte maximal {{count}} Zeichen verwenden!",
-                "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
-                "USERNAME": {
-                    "EXISTS": "Benutzername bereits vergeben. Bitte wählen Sie einen anderen Benutzernamen!",
-                    "EMPTY": "Bitte geben Sie einen Benutzernamen ein!",
-                    "INVALID": "Der Benutzername enthält nicht erlaubte Zeichen. Vermeiden Sie Umlaute, Leer- und Sonderzeichen."
-                }
             }
         },
         "EXTERN_CONTACT": {
