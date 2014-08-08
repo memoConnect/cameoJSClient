@@ -2,8 +2,9 @@
 
 angular.module('cmUser').directive('cmIdentity',[
     'cmUserModel', 'cmModal',
-    '$location',
-    function (cmUserModel, cmModal, $location){
+    '$location', '$rootScope',
+    function (cmUserModel, cmModal,
+              $location, $rootScope){
         return {
             restrict: 'AE',
             templateUrl: 'comps/user/drtv-identity.html',
@@ -23,12 +24,14 @@ angular.module('cmUser').directive('cmIdentity',[
 
                 $scope.showIdentityModal = function(){
                     var modalId = 'modal-identity-' + $scope.randModalId;
+                    var $scopeModal = $rootScope.$new()
+                        $scopeModal.modalId = modalId;
                     cmModal.create({
                         id: modalId,
                         type: 'plain',
                         'class': 'no-padding',
                         'cm-title': 'IDENTITY.MODAL.HEADER'
-                    },'<cm-identity-modal></cm-identity-modal>');
+                    },'<cm-identity-modal></cm-identity-modal>', null, $scopeModal);
                     cmModal.open(modalId);
                 };
             }
