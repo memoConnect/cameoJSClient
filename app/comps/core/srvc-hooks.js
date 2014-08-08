@@ -36,7 +36,14 @@ angular.module('cmCore').service('cmHooks', [
         this.openKeyRequest = function(identity){
 //            cmLogger.debug('cmHooks.openKeyRequest');
 
+            console.log('openKeyRe')
+            console.log(identity.id)
+
             identity = identity || cmUserModel.data.identity.id    
+
+            console.log(identity.id)
+
+
 
             var authenticationRequest = cmAuthenticationRequestFactory.create()
                                         .setToIdentityId(identity.id);
@@ -213,6 +220,8 @@ angular.module('cmCore').service('cmHooks', [
                 && "toKeyFingerprint" in response
             ){
                 var authenticationRequest = cmAuthenticationRequestFactory.find(response);
+
+            console.dir(authenticationRequest)
 
                 if(authenticationRequest !== null && authenticationRequest.state.is('outgoing')){
                     $rootScope.closeModal('key-request');
