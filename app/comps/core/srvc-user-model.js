@@ -39,11 +39,10 @@ angular.module('cmCore')
     '$rootScope',
     '$q',
     '$location',
-    '$timeout',
     function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmIdentityModel, cmFactory,
              cmCrypt, cmKeyFactory, cmKey, cmStateManagement, cmObject, cmUtil,
              cmNotify, cmLogger, cmCallbackQueue,
-             $rootScope, $q, $location, $timeout){
+             $rootScope, $q, $location){
         var self = this,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
@@ -126,7 +125,7 @@ angular.module('cmCore')
 
             var deferred = $q.defer();
 
-            function importIdentity(accountData){
+            function importAccount(accountData){
                 if(typeof accountData !== 'undefined' && 'identities' in accountData){
                     var arr_activeIdentity = accountData.identities.filter(function(identity){
                         return identity.active == true;
@@ -149,6 +148,23 @@ angular.module('cmCore')
                 return false;
             }
 
+            function importIdentity(identity_data){
+                if(typeof identity_data == 'object'){
+
+                    var identity = cmIdentityFactory.create(identity_data);
+
+                    identity.on('update:finished', function(event, data){
+                        self.trigger('update:finished');
+                    });
+
+                    self.importData(identity, []);
+
+                    return true;
+                }
+
+                return false;
+            }
+
             if(typeof data !== 'undefined' && 'identities' in data){
                 if(importIdentity(data)){
                     deferred.resolve();
@@ -157,26 +173,51 @@ angular.module('cmCore')
                 }
             } else {
                 if(this.getToken() !== false){
-                    //cmAuth.getIdentity().then(
-                    cmAuth.getAccount().then(
-                        function(data){
-                            if(importIdentity(data)){
-                                deferred.resolve();
-                            } else {
+
+                    /**
+                     * @todo hack for extern user in purl
+                     */
+                    if($location.$$path.search('/purl') != -1){
+                        cmAuth.getIdentity().then(
+                            function (data) {
+                                if (importIdentity(data)) {
+                                    deferred.resolve();
+                                } else {
+                                    deferred.reject();
+                                }
+                            },
+                            function (r) {
+                                var response = r || {};
+
+                                if (typeof response == 'object' && ('status' in response) && response.status == 401) {
+                                    cmLogger.debug('cmUserModel:init:reject:401');
+                                    self.doLogout(true, 'usermodel load identity reject');
+                                }
+
                                 deferred.reject();
                             }
-                        },
-                        function(r){
-                            var response = r || {};
+                        )
+                    } else {
+                        cmAuth.getAccount().then(
+                            function (data) {
+                                if (importAccount(data)) {
+                                    deferred.resolve();
+                                } else {
+                                    deferred.reject();
+                                }
+                            },
+                            function (r) {
+                                var response = r || {};
 
-                            if(typeof response == 'object' && ('status' in response) && response.status == 401){
-                                cmLogger.debug('cmUserModel:init:reject:401');
-                                self.doLogout(true,'usermodel load identity reject');
+                                if (typeof response == 'object' && ('status' in response) && response.status == 401) {
+                                    cmLogger.debug('cmUserModel:init:reject:401');
+                                    self.doLogout(true, 'usermodel load identity reject');
+                                }
+
+                                deferred.reject();
                             }
-
-                            deferred.reject();
-                        }
-                    );
+                        );
+                    }
                 }
             }
 

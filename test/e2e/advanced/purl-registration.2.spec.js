@@ -99,8 +99,6 @@ describe('Purl Registration: ', function () {
         util.get("/purl/" + purl)
         util.waitForPageLoad("/purl/" + purl)
 
-        ptor.debugger()
-
         util.waitForElement("[data-qa='btn-fast-sign-in']")
         $("[data-qa='btn-fast-sign-in']").click()
         util.waitForPageLoad('/registration')
