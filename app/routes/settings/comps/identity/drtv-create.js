@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmRouteSettings').directive('cmIdentityCreate', [
-    'cmAuth', 'cmNotify',
+    'cmAuth', 'cmNotify', 'cmUserModel',
     '$location', '$q', '$rootScope',
-    function(cmAuth, cmNotify,
+    function(cmAuth, cmNotify, cmUserModel,
              $location, $q, $rootScope){
         return {
             restrict: 'E',
@@ -100,10 +100,8 @@ angular.module('cmRouteSettings').directive('cmIdentityCreate', [
                     $scope.validateForm().then(
                         function(data){
                             cmAuth.addIdentity(data).then(
-                                function(){
-                                    cmNotify.info('SETTINGS.PAGES.IDENTITY.CREATE.INFO.SUCCES',{displayType:'modal'})
-                                    // TODO: logout and set new token!!!
-                                    //cmUserModel.switchToIdentity(identity);
+                                function(res){
+                                    cmUserModel.switchToIdentity(res.identity, res.token.token);
                                 },
                                 function(){
                                     cmNotify.warn('SETTINGS.PAGES.IDENTITY.CREATE.WARN.FAILED')
