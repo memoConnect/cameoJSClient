@@ -12,6 +12,9 @@ angular.module('cmValidate').directive('cmPassword', [
                 tabindex: '@cmTabindex'
             },
             controller: function($scope){
+
+                $scope.nextTabIndex = parseInt($scope.tabindex) + 1;
+
                 $scope.showConfirmPWStatus = false;
                 $scope.passwordType = 'password';
                 $scope.showPassword = false;
