@@ -32,7 +32,7 @@
             "SUBMIT": "Benutzerkonto anlegen",
             "USERNAME": "Benutzername",
             "NAME": "Anzeigename",
-            "TERMS": " die AGBs",
+            "TERMS": " die s",
             "TERMS_ACCEPT": "Ich akzeptiere"
         },
         "PLACEHOLDER": {
@@ -43,7 +43,7 @@
         },
         "INFO": {
             "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
-            "TERMS": "Bitte akzeptieren Sie die AGBs!",
+            "TERMS": "Bitte akzeptieren Sie die AGB!",
             "EMPTY": {
                 "PASSWORD": "Bitte geben Sie ein Passwort ein!"
             },
@@ -134,7 +134,7 @@
         },
         "TAG": {
             "RECIPIENTS": "Empfänger",
-            "SUBJECT": "Betreff",            
+            "SUBJECT": "Betreff",
             "PASSPHRASE": "Passwort",
             "MESSAGES": "Nachrichten",
             "IMAGE": "Bild",
@@ -185,7 +185,7 @@
             "DONE": "Fertig"
         }
     },
-	
+
 	"CONTACTS": {
 		"HEADING": {
             "LIST": "Kontakte",
@@ -384,7 +384,7 @@
             }
         }
 	},
-	
+
 	"NAVIGATION": {
 		"TABS": {
 			"BACK": "Zurück",
@@ -533,7 +533,7 @@
             },
             "KEY_TRANSMISSION_SYMMETRIC": {
                 "NAME": "Verschlüsselung muss sich auf ein Passwort verlassen.",
-                "DESCRIPTION_NEW": "Dieser Talk kann zur Zeit nur mit Passwort verschlüsselt werden, weil mindestens einer der Empfänger keinen cameoKey besitzt. Die Sicherheit einer auf einem Passwort basierenden Verschlüsselung hängt von der Güte des Passworts und der Übertragung des Passworts an die Empfänger ab.", 
+                "DESCRIPTION_NEW": "Dieser Talk kann zur Zeit nur mit Passwort verschlüsselt werden, weil mindestens einer der Empfänger keinen cameoKey besitzt. Die Sicherheit einer auf einem Passwort basierenden Verschlüsselung hängt von der Güte des Passworts und der Übertragung des Passworts an die Empfänger ab.",
                 "DESCRIPTION": "Dieser Talk kann nur mit Passwort verschlüsselt werden, weil mindestens einer der Empfänger beim Erstellen des Talks keinen cameoKey besaß. Die Sicherheit einer auf einem Passwort basierenden Verschlüsselung hängt von der Güte des Passworts und der Übertragung des Passworts an die Empfänger ab.",
                 "DESCRIPTION_BAD_RECIPIENTS": "Folgende Empfänger haben keinen cameoKey:",
                 "DESCRIPTION_PRIVATE_KEY_MISSING": "Sie haben auf diesem Gerät keinen cameoKey."

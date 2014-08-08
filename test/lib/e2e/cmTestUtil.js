@@ -102,8 +102,6 @@ this.createTestUser = function (testUserId) {
 
     $("[data-qa='btn-createUser']").click()
 
-    ptor.debugger()
-
     this.waitForPageLoad("/start")
 
     return loginName

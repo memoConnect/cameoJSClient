@@ -119,19 +119,24 @@ describe('Conversation encryption -', function () {
             $("[data-qa='btn-security-done']").click()
         })
 
-        var checkSecurityAspects = function () {
-            it("check security aspects", function () {
+        var checkSecurityAspects = function (trust) {
+            xit("check security aspects", function () {
                 util.waitForElement('cm-header:not(.ng-hide)')
 
                 $('cm-header:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
-                    expect(icons.length).toBe(positiveAspects)
+                    ptor.debugger()
+                    if (trust) {
+                        expect(icons.length).toBe(positiveAspects + 1)
+                    } else {
+                        expect(icons.length).toBe(positiveAspects)
+                    }
                 })
                 $('cm-header:not(.ng-hide)').$('cm-icons.negative').$$("i").then(function (icons) {
                     expect(icons.length).toBe(negativeAspects)
                 })
             })
         }
-        checkSecurityAspects()
+        checkSecurityAspects(encryptionType == "asym" && sender.hasKey)
 
         it("send initial message", function () {
 
@@ -177,7 +182,7 @@ describe('Conversation encryption -', function () {
 
 
                 it("enter password (if required)", function () {
-                    if (recipient.hasKey) {
+                    if (recipient.hasKey || recipient.storedPassword) {
                         $$("cm-modal.active").then(function (modals) {
                             expect(modals.length).toBe(0)
                         })
@@ -191,7 +196,6 @@ describe('Conversation encryption -', function () {
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
-                                ptor.debugger()
                                 util.waitForElement("[data-qa='icon-conversation-decrypted']")
                                 $("[data-qa='btn-security-done']").click()
                                 util.waitForElementDisappear("[data-qa='btn-security-done']")
@@ -261,7 +265,7 @@ describe('Conversation encryption -', function () {
         })
 
         describe("sender should be able to read all messages -", function () {
-            checkMessages(recipients[0], 1)
+            checkMessages(recipients[0], 0)
         })
     }
 
@@ -315,7 +319,7 @@ describe('Conversation encryption -', function () {
 
         describe("conversation with user that has key -", function () {
             var recipients = [
-                {login: testUser1, hasKey: true},
+                {login: testUser1, hasKey: false, storedPassword: true},
                 {login: testUser2, hasKey: true}
             ]
             checkConversation(recipients, 1, 1, "password", Math.floor(Math.random() * 1000000))
@@ -323,7 +327,7 @@ describe('Conversation encryption -', function () {
 
         describe("conversation with users without keys -", function () {
             var recipients = [
-                {login: testUser1, hasKey: true},
+                {login: testUser1, hasKey: false, storedPassword: true},
                 {login: testUser2, hasKey: true},
                 {login: testUser3, hasKey: false},
                 {login: externalUser, external: true, hasKey: false}
@@ -468,7 +472,7 @@ describe('Conversation encryption -', function () {
 
         describe("conversation with user that has key -", function () {
             var recipients = [
-                {login: testUser1, hasKey: true},
+                {login: testUser1, hasKey: false, storedPassword: true},
                 {login: testUser2, hasKey: true}
             ]
             checkConversation(recipients, 1, 1, "password", Math.floor(Math.random() * 1000000))
@@ -476,7 +480,7 @@ describe('Conversation encryption -', function () {
 
         describe("conversation with users without keys -", function () {
             var recipients = [
-                {login: testUser1, hasKey: true},
+                {login: testUser1, hasKey: false, storedPassword: true},
                 {login: testUser2, hasKey: true},
                 {login: testUser3, hasKey: false},
                 {login: externalUser, external: true, hasKey: false}
