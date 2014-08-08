@@ -80,7 +80,6 @@ angular.module('cmCore').service('cmHooks', [
                 });
 
                 authenticationRequest.one('request:finished', function(){
-                    console.log('RIIE')
                     $rootScope.closeModal(modalId);
                     cmAuthenticationRequestFactory.deregister(authenticationRequest);
                 });
@@ -230,7 +229,7 @@ angular.module('cmCore').service('cmHooks', [
         cmUserModel.on('handshake:start', function(event, data){
 
             var toKey       = data.key,
-                identity    = data.identity
+                identity    = data.identity || cmUserModel.data.identity
 
             if(cmUserModel.verifyPublicKeyForAuthenticationRequest(toKey, identity)){
 

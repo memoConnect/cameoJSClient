@@ -27,9 +27,10 @@
                         <button
                             data-qa="start-trust-handshake-btn"
                             ng-click="startTrustHandshake()"
-                            ng-disabled = "isTrusted"
+                            ng-disabled = "getTrust() || !hasKey()"
                         >
-                                <i class="fa" ng-class="{'cm-handshake': !isTrusted, 'cm-checkbox-right': isTrusted}"></i>
+                                <i ng-if="!hasKey()"    class="fa cm-close"></i>
+                                <i ng-if="hasKey()"     class="fa {{ getTrust() ? 'cm-checkbox-right' : 'cm-handshake'}}"></i>
                         </button>
                         <br/>
                     </div>

@@ -86,7 +86,10 @@ angular.module('cmCore')
             this.importKeyResponse = function(response){
 //                cmLogger.debug('cmAuthenticationRequestModel.importKeyResponse');
 
-                var toKey = cmContactsModel.findByIdentityId(self.toIdentityId).identity.keys.find(response.toKeyId);
+                var identity    =  !self.toIdentityId || self.toIdentityId == cmUserModel.data.identity.id
+                                    ?   cmUserModel.data.identity
+                                    :   cmContactsModel.findByIdentityId(self.toIdentityId),
+                    toKey       = identity.keys.find(response.toKeyId);
 
                 if(toKey instanceof cmKey && toKey.id == response.toKeyId && (toKey.getFingerprint() === response.toKeyFingerprint)){
                     this.toKeyId = response.toKeyId;
@@ -284,7 +287,6 @@ angular.module('cmCore')
 
             this.send = function(){
                // cmLogger.debug('cmAuthenticationRequestModel.send');
-               console.dir(this.exportData())
 
                 if(this.verifyForm() !== false){
                     cmAuth.sendBroadcast({
@@ -341,8 +343,6 @@ angular.module('cmCore')
             this.sendVerified = function(){
 //                cmLogger.debug('cmAuthenticationRequestModel.sendVerified');
 
-                console.log('before enc: '+self.transactionSecret)
-                console.log(self.fromKey)
 
                 if(this.state.is('incoming') && !this.state.is('finished')){
                     cmAuth.sendBroadcast({
@@ -373,7 +373,7 @@ angular.module('cmCore')
 
                 if(this.state.is('outgoing') && !this.state.is('finished')){
 
-                    var identity =  (self.toIdentityId == cmUserModel.data.identity.id)
+                    var identity =  !self.toIdentityId || self.toIdentityId == cmUserModel.data.identity.id
                                     ?   cmUserModel.data.identity
                                     :   cmContactsModel.findByIdentityId(self.toIdentityId).identity
 
@@ -385,10 +385,6 @@ angular.module('cmCore')
                         return false
                     }
 
-                    console.log('toKey')
-
-                    console.log(self.toKey)
-                    console.log(self.toKeyId)
                     self.toKey = identity.keys.find(self.toKeyId)
 
                     if(self.toKey.getFingerprint() != self.toKeyFingerprint){
@@ -419,12 +415,6 @@ angular.module('cmCore')
                     var identity =  (self.fromIdentityId == cmUserModel.data.identity.id)
                                     ?   cmUserModel.data.identity
                                     :   cmContactsModel.findByIdentityId(self.fromIdentityId).identity
-
-                    console.log(this.fromKey)
-                    console.log(identity)
-
-                    console.log('sigs:')
-                    console.log(this.fromKey)
 
 
                     cmUserModel.signPublicKey(this.fromKey, this.fromKeyFingerprint, identity)

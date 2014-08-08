@@ -149,10 +149,18 @@ define([
                 cmHooks.openKeyRequest($scope.identity)
             }
 
-            $scope.$watch('identity', function(identity){
-                if(identity)
-                    $scope.isTrusted = cmUserModel.verifyTrust($scope.identity)
-            })
+            $scope.getTrust = function(){
+                return $scope.identity && cmUserModel.verifyTrust($scope.identity)
+            }
+
+            $scope.hasKey = function(){
+                return $scope.identity && $scope.identity.keys.length > 0  
+            }
+
+            // $scope.$watchCollection('identity.keys', function(identity){
+            //     if(identity)
+            //         $scope.isTrusted = cmUserModel.verifyTrust($scope.identity)
+            // })
 
         }
     );

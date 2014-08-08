@@ -368,8 +368,6 @@ angular.module('cmCore')
          * @return {[type]}            [description]
          */
         this.getTrustToken = function(keyToTrust, ownerId){
-            cmLogger.debug('cmUserModel.getTrustToken');
-
             return  cmCrypt.hashObject({
                         pubKey: keyToTrust.getPublicKey(),
                         identifier: ownerId
@@ -377,7 +375,8 @@ angular.module('cmCore')
         };
 
         this.signPublicKey = function(keyToSign, keyToSignFingerprint, identity){
-            cmLogger.debug('cmUserModel.signPublicKey');
+            //cmLogger.debug('cmUserModel.signPublicKey');
+
 
             identity = identity || self.data.identity
 
@@ -459,27 +458,32 @@ angular.module('cmCore')
          */
         this.verifyIdentityKeys = function(identity, sign){
             if(!identity.keys)
-                return null;
+                return [];
 
-            var local_keys       =  this.loadLocalKeys(),
-                ttrusted_keys    =  identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
-                                        return trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId))
-                                    });
-              
-            if(sign !== true)
+            var local_keys              =   this.loadLocalKeys(),
+                ttrusted_keys           =   identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
+                                                return trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId))
+                                            }),
+                unsigned_ttrusted_keys  =   ttrusted_keys.filter(function(ttrusted_key){
+                                                return  local_keys.some(function(local_key){
+                                                            return  ttrusted_key.signatures.every(function(signature){
+                                                                        return signature.keyId != local_key.id
+                                                                    })
+                                                        })
+                                            })
+
+            if(sign !== true || unsigned_ttrusted_keys.length == 0)
                 return ttrusted_keys
 
             this.state.set('signing');
-
-            var stack = [];
-
 
             cmCallbackQueue.push(
                 ttrusted_keys.map(function(ttrusted_key){
                     return function(){ self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint()) }
                 })
-            ).then(function(){
-                self.state.unset('signing')
+            )
+            .finally(function(){
+                 self.state.unset('signing')
             })
 
             return ttrusted_keys

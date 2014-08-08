@@ -335,11 +335,9 @@ angular.module('cmCore').factory('cmPassphrase',[
              * Encrypts the passphrase with all available means.
              */
             this.encrypt = function(){
-                console.log('pp encrypt: '+password)
                 var sym     = symmetricallyEncryptPassphrase(password),
                     asym    = asymmetricallyEncryptPassphrase(identities);
 
-                console.log('encrypt:sym '+sym)
                 self.importSymmetricallyEncryptedPassphrase(sym);
                 self.importAsymmetricallyEncryptedPassphrase(asym);
 

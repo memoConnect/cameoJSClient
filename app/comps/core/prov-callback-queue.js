@@ -28,9 +28,9 @@ angular.module('cmCore')
 
                 this.push = function(callbacks){
 
+
                     if(!(callbacks instanceof Array)) 
                         callbacks = [callbacks]
-
 
                     return $q.all(
                         callbacks.map(function(callback){
