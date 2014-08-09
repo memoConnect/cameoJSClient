@@ -397,7 +397,8 @@
         "PASSWORD": {
             "PASSWORD": "Password",
             "PASSWORD_CONFIRM": "Confirm Password",
-            "ERROR": {
+            "INFO": {
+                "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
                 "EMPTY": "Please add a Password and confirm it"
             }
         },

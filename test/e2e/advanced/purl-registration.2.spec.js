@@ -97,6 +97,7 @@ describe('Purl Registration: ', function () {
 
     it('directly click on register button', function () {
         util.get("/purl/" + purl)
+
         util.waitForPageLoad("/purl/" + purl)
 
         util.waitForElement("[data-qa='btn-fast-sign-in']")

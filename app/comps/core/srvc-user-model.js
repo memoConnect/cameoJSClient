@@ -120,7 +120,7 @@ angular.module('cmCore')
          * @param {Object|undefined} identity_data
          * @returns {*}
          */
-        this.loadIdentity = function(data){
+        this.loadIdentity = function(accountData){
             //cmLogger.debug('cmUserModel:loadIdentity');
 
             var deferred = $q.defer();
@@ -131,7 +131,7 @@ angular.module('cmCore')
                         return identity.active == true;
                     });
 
-                    var identity = cmIdentityFactory.create(arr_activeIdentity[0]);
+                    var identity = cmIdentityFactory.clear(arr_activeIdentity[0]).create(arr_activeIdentity[0], true);
 
                     identity.on('update:finished', function(event, data){
                         self.trigger('update:finished');
@@ -151,7 +151,7 @@ angular.module('cmCore')
             function importIdentity(identity_data){
                 if(typeof identity_data == 'object'){
 
-                    var identity = cmIdentityFactory.create(identity_data);
+                    var identity = cmIdentityFactory.clear(identity_data).create(identity_data, true);
 
                     identity.on('update:finished', function(event, data){
                         self.trigger('update:finished');
@@ -165,8 +165,8 @@ angular.module('cmCore')
                 return false;
             }
 
-            if(typeof data !== 'undefined' && 'identities' in data){
-                if(importIdentity(data)){
+            if(typeof accountData !== 'undefined' && 'identities' in accountData){
+                if(importAccount(accountData)){
                     deferred.resolve();
                 } else {
                     deferred.reject();
@@ -178,6 +178,7 @@ angular.module('cmCore')
                      * @todo hack for extern user in purl
                      */
                     if($location.$$path.search('/purl') != -1){
+                        console.log($location.$$path)
                         cmAuth.getIdentity().then(
                             function (data) {
                                 if (importIdentity(data)) {
@@ -235,7 +236,7 @@ angular.module('cmCore')
         };
 
         this.setIdentity = function(identity_data){
-            cmLogger.debug('cmUserModel:setIdentity');
+            //cmLogger.debug('cmUserModel:setIdentity');
 
             this.importData(cmIdentityFactory.clear(identity_data).create(identity_data, true),[]);
 
@@ -265,6 +266,7 @@ angular.module('cmCore')
         };
 
         this.isGuest = function(){
+            console.log('isGuest',this.data.userType,this.data.identity.userType)
             if(this.data.userType == 'external'){
                 return true;
             }

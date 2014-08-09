@@ -398,7 +398,8 @@
         "PASSWORD": {
             "PASSWORD": "Passwort",
             "PASSWORD_CONFIRM": "Passwort wiederholen!",
-            "ERROR": {
+            "INFO": {
+                "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
                 "EMPTY": "Bitte ein Passwort eingeben und bestätigen!"
             }
         },

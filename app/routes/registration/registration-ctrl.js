@@ -136,10 +136,10 @@ app.register.controller('RegistrationCtrl', [
 
                     cmAuth.createUser(data).then(
                         function(accountData){
+                            
                             cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
                                 function(){
                                     $scope.spinner('stop');
-                                    //cmUserModel.setIdentity(userData.identities[0]);
                                     if($scope.handleGuest !== false){
                                         $location.path('/purl/'+$rootScope.pendingPurl);
                                     } else {
