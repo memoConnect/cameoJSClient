@@ -7,7 +7,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyDetail', [
              $rootScope, $routeParams){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/drtv-identity-key-detail.html',
+            templateUrl: 'routes/settings/comps/identity/drtv-key-detail.html',
             controller: function ($scope) {
 
                 var localKeys = cmUserModel.loadLocalKeys()

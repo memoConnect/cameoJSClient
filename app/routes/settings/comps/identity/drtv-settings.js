@@ -1,15 +1,16 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmIdentityCreate', [
-    'cmUserModel', 'cmNotify',
-    '$location', '$q',
-    function(cmUserModel, cmNotify,
-             $location, $q){
+angular.module('cmRouteSettings').directive('cmIdentitySettings', [
+    'cmUserModel',
+    'cmNotify',
+    '$location',
+    '$q',
+    function(cmUserModel, cmNotify, $location, $q){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/drtv-identity-create.html',
+            templateUrl: 'routes/settings/comps/identity/drtv-settings.html',
             controller: function ($scope) {
-                $scope.identity = {};
+                $scope.identity = angular.extend({},cmUserModel.data.identity);
 
                 //////////////////////
                 // TODO: mock workarround json in array
@@ -21,6 +22,17 @@ angular.module('cmRouteSettings').directive('cmIdentityCreate', [
                 ];
                 //////////////////////
 
+                $scope.goToKeys = function(){
+                    $location.path('/settings/identity/keys');
+                };
+
+                $scope.validateDisplayName = function(){
+                    if($scope.identity.displayName == undefined || $scope.identity.displayName.length == 0){
+                        $scope.cmForm.displayName.$pristine = true;
+                        $scope.cmForm.displayName.$dirty = false;
+                    }
+                }
+
                 $scope.validateForm = function(){
                     var deferred = $q.defer();
 
@@ -31,9 +43,9 @@ angular.module('cmRouteSettings').directive('cmIdentityCreate', [
                     }
 
                     return deferred.promise;
-                };
+                }
 
-                $scope.createIdentity = function(){
+                $scope.saveIdentity = function(){
                     var objectChange = {};
 
                     $scope.validateForm().then(
@@ -71,13 +83,6 @@ angular.module('cmRouteSettings').directive('cmIdentityCreate', [
                         }
                     )
                 };
-
-                $scope.validDisplayName = function(){
-                    if($scope.identity.displayName == undefined || $scope.identity.displayName.length == 0){
-                        $scope.cmForm.displayName.$pristine = true;
-                        $scope.cmForm.displayName.$dirty = false;
-                    }
-                }
             }
         }
     }

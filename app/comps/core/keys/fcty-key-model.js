@@ -4,8 +4,9 @@ angular.module('cmCore')
 .factory('cmKey', [
 
     'cmLogger',
+    '$rootScope',
 
-    function(cmLogger){
+    function(cmLogger, $rootScope){
         /**
          * @TODO TEsts!!!!!
          * @param args
@@ -14,14 +15,19 @@ angular.module('cmCore')
         function cmKey(data){
             //Wrapper for RSA Keys
             var self    = this,
-                crypt   = undefined // will be JSEncrypt() once a key is set
+                crypt   = undefined; // will be JSEncrypt() once a key is set
 
             this.created    = 0;
-            this.signatures = []
+            this.signatures = [];
 
             function init(data){
                 self.importData(data)
-            }  
+            }
+
+            function reset(){
+                self.created    = 0;
+                self.signatures = [];
+            }
 
             this.setId = function(id){
                 this.id = id;
@@ -150,7 +156,10 @@ angular.module('cmCore')
                 if(size)            data.size       = size;
 
                 return data;
-            };           
+            };
+
+            $rootScope.$on('logout', function(){ reset() });
+            $rootScope.$on('identity:switched', function(){ reset() });
 
             init(data)
         }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
+        xmlns:android = "http://schemas.android.com/apk/res/android"
         id        = "<%= currentAppId %>"
         version   = "<%= currentVersion %>">
     <name><%= currentName %></name>
@@ -11,46 +12,53 @@
     <content src="index.html" />
 
     <preference name="phonegap-version" value="3.3.0" />
-    <preference name="orientation" value="portrait" />
-    <preference name="fullscreen" value="true" />
-    <preference name="target-device" value="universal" />
-    <preference name="webviewbounce" value="false" />
-    <preference name="prerendered-icon" value="false" />
-    <preference name="stay-in-webview" value="true" />
-    <preference name="ios-statusbarstyle" value="default" />
-    <preference name="detect-data-types" value="true" />
-    <preference name="exit-on-suspend" value="false" />
-    <preference name="EnableViewportScale" value="true" />
-    <preference name="MediaPlaybackRequiresUserAction" value="true" />
-    <preference name="AllowInlineMediaPlayback" value="true" />
-    <preference name="BackupWebStorage" value="cloud" />
-    <preference name="TopActivityIndicator" value="gray" />
-    <preference name="KeyboardDisplayRequiresUserAction" value="true" />
-    <preference name="HideKeyboardFormAccessoryBar" value="true" />
-    <preference name="SuppressesIncrementalRendering" value="true" />
-    <preference name="android-minSdkVersion" value="7" />
-    <preference name="android-maxSdkVersion" value="19" />
-    <preference name="android-targetSdkVersion" value="15" />
-    <preference name="android-installLocation" value="internalOnly" />
-    <preference name="android-windowSoftInputMode" value="adjustResize" />
-    <preference name="ErrorUrl" value=""/>
-    <preference name="BackgroundColor" value="0x02BED2"/>
-    <preference name="KeepRunning" value="true"/>
-    <preference name="DisallowOverscroll" value="true"/>
-
-    <!--<preference name="LoadingDialog" value=" "/>-->
-    <!--<preference name="show-splash-screen-spinner" value="false" />-->
-    <preference name="auto-hide-splash-screen" value="true" />
-
-    <preference name="LoadUrlTimeoutValue" value="5000" />
-    <preference name="disable-cursor" value="true" />
-    <preference name="SplashScreenDelay" value="5000" />
 
     <gap:platform name="android" />
     <gap:platform name="winphone" />
     <gap:platform name="ios" />
 
     <preference name="permissions" value="none"/>
+
+    <!-- multiplatform -->
+    <preference name="DisallowOverscroll" value="true"/>
+    <preference name="orientation" value="portrait" />
+    <preference name="HideKeyboardFormAccessoryBar" value="true" />
+
+    <!-- android -->
+    <preference name="KeepRunning" value="true"/>
+    <preference name="LoadUrlTimeoutValue" value="5000" />
+    <preference name="SplashScreenDelay" value="5000" />
+    <preference name="ErrorUrl" value=""/>
+    <!-- build -->
+    <preference name="android-minSdkVersion" value="7" />
+    <preference name="android-maxSdkVersion" value="19" />
+    <preference name="android-targetSdkVersion" value="15" />
+    <preference name="android-installLocation" value="internalOnly" />
+    <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
+
+    <!-- ios -->
+    <preference name="EnableViewportScale" value="true" />
+    <preference name="MediaPlaybackRequiresUserAction" value="true" />
+    <preference name="AllowInlineMediaPlayback" value="true" />
+    <preference name="BackupWebStorage" value="local" />
+    <preference name="TopActivityIndicator" value="gray" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="true" />
+    <preference name="SuppressesIncrementalRendering" value="true" />
+    <!-- build -->
+    <preference name="target-device" value="universal" />
+    <preference name="prerendered-icon" value="false" />
+    <preference name="detect-data-types" value="true" />
+    <preference name="exit-on-suspend" value="false" />
+
+    <!-- other -->
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="stay-in-webview" value="true" />
+    <preference name="ios-statusbarstyle" value="default" />
+    <preference name="auto-hide-splash-screen" value="true" />
+    <preference name="disable-cursor" value="true" />
+
+    <!-- plugins -->
 
     <!--<gap:plugin name="org.apache.cordova.console" />-->
     <!--<gap:plugin name="org.apache.cordova.contacts" />-->

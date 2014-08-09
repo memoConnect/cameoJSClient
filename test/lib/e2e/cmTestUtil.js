@@ -91,7 +91,7 @@ this.createTestUser = function (testUserId) {
 
     this.get("/registration");
 
-    $("[data-qa='input-loginName']").sendKeys(loginName)
+    $("[data-qa='input-cameoId']").sendKeys(loginName)
     $("[data-qa='input-password']").sendKeys(password)
     $("[data-qa='input-passwordConfirm']").sendKeys(password)
 
@@ -132,22 +132,21 @@ this.getTestUserNotifications = function (loginName) {
 
     return ptor.executeAsyncScript(function (testUserId, apiUrl) {
 
-        var callback = arguments[arguments.length - 1];
+        var callback = arguments[arguments.length - 1]
 
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", apiUrl + "/testUser/" + testUserId, true);
+        var xhr = new XMLHttpRequest()
+        xhr.open("GET", apiUrl + "/testUser/" + testUserId, true)
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 callback(JSON.parse(xhr.responseText))
             }
         }
-        xhr.send('');
+        xhr.send('')
     }, testUserId, config.apiUrl)
 }
 
 // todo write generic method for api calls
 this.getEventSubscription = function (token) {
-
     return ptor.executeAsyncScript(function (token, apiUrl) {
 
         var callback = arguments[arguments.length - 1];

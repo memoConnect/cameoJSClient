@@ -21,12 +21,28 @@
 
 angular.module('cmCore')
 .service('cmUserModel',[
-    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmCrypt', 'cmKeyFactory', 'cmKey', 'cmStateManagement',
-    'cmObject', 'cmUtil', 'cmNotify', 'cmLogger', 'cmCallbackQueue',
-    '$rootScope', '$q', '$location', '$timeout',
-    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmCrypt, cmKeyFactory, cmKey, cmStateManagement,
-             cmObject, cmUtil, cmNotify, cmLogger, cmCallbackQueue,
-             $rootScope, $q, $location, $timeout){
+'cmBoot',
+    'cmAuth',
+    'cmLocalStorage',
+    'cmIdentityFactory',
+    'cmIdentityModel',
+    'cmFactory',
+    'cmCrypt',
+    'cmKeyFactory',
+    'cmKey',
+    'cmStateManagement',
+    'cmObject',
+    'cmUtil',
+    'cmNotify',
+    'cmLogger',
+    'cmCallbackQueue',
+    '$rootScope',
+    '$q',
+    '$location',
+    function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmIdentityModel, cmFactory,
+             cmCrypt, cmKeyFactory, cmKey, cmStateManagement, cmObject, cmUtil,
+             cmNotify, cmLogger, cmCallbackQueue,
+             $rootScope, $q, $location){
         var self = this,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
@@ -50,7 +66,7 @@ angular.module('cmCore')
         cmObject.addEventHandlingTo(this);
 
         this.data = angular.extend({}, dataModel);
-        this.state = new cmStateManagement(['signing'])
+        this.state = new cmStateManagement(['signing']);
 
         this.comesFromRegistration = false;
 
@@ -74,18 +90,20 @@ angular.module('cmCore')
             self.one('update:finished', function(){
                 if(self.data.identity.keys){
                     self.signOwnKeys();
-                    return true
+                    return true;
                 }else{
-                    return false
+                    return false;
                 }
             });
         }
 
-        this.importData = function(identity){
-            angular.extend(this.data, identity);
+        this.importData = function(activeIdentity, data_identities){
+            angular.extend(this.data, activeIdentity);
 
-            this.data.identity = identity;
+            this.data.identity = activeIdentity;
             this.data.identity.isAppOwner = true;
+            // new factory for own identities
+            this.data.identities = new cmFactory(cmIdentityModel).importFromDataArray(data_identities);
 
             isAuth = true;
             this.initStorage();
@@ -102,46 +120,105 @@ angular.module('cmCore')
          * @param {Object|undefined} identity_data
          * @returns {*}
          */
-        this.loadIdentity = function(identity_data){
-            cmLogger.debug('cmUserModel:loadIdentity');
+        this.loadIdentity = function(accountData){
+            //cmLogger.debug('cmUserModel:loadIdentity');
 
             var deferred = $q.defer();
 
-            if(typeof identity_data !== 'undefined'){
-                var identity = cmIdentityFactory.create(identity_data.id);
+            function importAccount(accountData){
+                if(typeof accountData !== 'undefined' && 'identities' in accountData){
+                    var arr_activeIdentity = accountData.identities.filter(function(identity){
+                        return identity.active == true;
+                    });
 
-                identity.on('update:finished', function(event, data){
-                    self.trigger('update:finished');
-                });
+                    var identity = cmIdentityFactory.clear(arr_activeIdentity[0]).create(arr_activeIdentity[0], true);
 
-                this.importData(identity);
+                    identity.on('update:finished', function(event, data){
+                        self.trigger('update:finished');
+                    });
 
-                deferred.resolve();
+                    self.importData(identity, accountData.identities);
+
+                    // handle account data
+                    // TODO: set account data
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            function importIdentity(identity_data){
+                if(typeof identity_data == 'object'){
+
+                    var identity = cmIdentityFactory.clear(identity_data).create(identity_data, true);
+
+                    identity.on('update:finished', function(event, data){
+                        self.trigger('update:finished');
+                    });
+
+                    self.importData(identity, []);
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            if(typeof accountData !== 'undefined' && 'identities' in accountData){
+                if(importAccount(accountData)){
+                    deferred.resolve();
+                } else {
+                    deferred.reject();
+                }
             } else {
                 if(this.getToken() !== false){
-                    cmAuth.getIdentity().then(
-                        function(data){
-                            var identity = cmIdentityFactory.create(data);
 
-                            identity.on('update:finished', function(event, data){
-                                self.trigger('update:finished');
-                            });
+                    /**
+                     * @todo hack for extern user in purl
+                     */
+                    if($location.$$path.search('/purl') != -1){
+                        console.log($location.$$path)
+                        cmAuth.getIdentity().then(
+                            function (data) {
+                                if (importIdentity(data)) {
+                                    deferred.resolve();
+                                } else {
+                                    deferred.reject();
+                                }
+                            },
+                            function (r) {
+                                var response = r || {};
 
-                            self.importData(identity);
+                                if (typeof response == 'object' && ('status' in response) && response.status == 401) {
+                                    cmLogger.debug('cmUserModel:init:reject:401');
+                                    self.doLogout(true, 'usermodel load identity reject');
+                                }
 
-                            deferred.resolve();
-                        },
-                        function(r){
-                            var response = r || {};
-
-                            if(typeof response == 'object' && ('status' in response) && response.status == 401){
-                                cmLogger.debug('cmUserModel:init:reject:401');
-                                self.doLogout(true,'usermodel load identity reject');
+                                deferred.reject();
                             }
+                        )
+                    } else {
+                        cmAuth.getAccount().then(
+                            function (data) {
+                                if (importAccount(data)) {
+                                    deferred.resolve();
+                                } else {
+                                    deferred.reject();
+                                }
+                            },
+                            function (r) {
+                                var response = r || {};
 
-                            deferred.reject();
-                        }
-                    );
+                                if (typeof response == 'object' && ('status' in response) && response.status == 401) {
+                                    cmLogger.debug('cmUserModel:init:reject:401');
+                                    self.doLogout(true, 'usermodel load identity reject');
+                                }
+
+                                deferred.reject();
+                            }
+                        );
+                    }
                 }
             }
 
@@ -153,15 +230,15 @@ angular.module('cmCore')
          * @returns {data.identity|*}
          */
         this.getIdentity = function(){
-            cmLogger.debug('cmUserModel:getIdentity');
+            //cmLogger.debug('cmUserModel:getIdentity');
 
             return this.data.identity;
         };
 
         this.setIdentity = function(identity_data){
-            cmLogger.debug('cmUserModel:setIdentity');
+            //cmLogger.debug('cmUserModel:setIdentity');
 
-            this.importData(cmIdentityFactory.clear(identity_data).create(identity_data, true));
+            this.importData(cmIdentityFactory.clear(identity_data).create(identity_data, true),[]);
 
             return this;
         };
@@ -196,7 +273,7 @@ angular.module('cmCore')
             return false;
         };
 
-        this.doLogin = function(user, pass){
+        this.doLogin = function(user, pass, accountData){
 //            cmLogger.debug('cmUserModel:doLogin');
 
             var deferred = $q.defer();
@@ -205,7 +282,7 @@ angular.module('cmCore')
                 function(token){
                     cmAuth.storeToken(token);
 
-                    self.loadIdentity().finally(
+                    self.loadIdentity(accountData).finally(
                         function(){
                             deferred.resolve();
                         }
@@ -228,7 +305,26 @@ angular.module('cmCore')
             $rootScope.$broadcast('logout');
 
             if(typeof goToLogin === 'undefined' || goToLogin !== false){
-                $location.path("/login");
+                $location.path('/login');
+            }
+        };
+
+        this.switchToIdentity = function(identity, identityToken){
+            cmLogger.debug('cmUserModel:switchToIdentity');
+
+            function doSwitch(newToken){
+                self.storeToken(newToken);
+                $rootScope.$broadcast('identity:switched');
+            }
+
+            if(identityToken){
+                doSwitch(identityToken);
+            } else {
+                cmAuth.getIdentityToken(identity.id).then(
+                    function (res) {
+                        doSwitch(res.token);
+                    }
+                );
             }
         };
 
@@ -294,7 +390,7 @@ angular.module('cmCore')
             });
 
             return result;
-        }
+        };
 
         this.syncLocalKeys = function(){
             /**
@@ -368,6 +464,8 @@ angular.module('cmCore')
          * @return {[type]}            [description]
          */
         this.getTrustToken = function(keyToTrust, ownerId){
+            cmLogger.debug('cmUserModel.getTrustToken');
+
             return  cmCrypt.hashObject({
                         pubKey: keyToTrust.getPublicKey(),
                         identifier: ownerId
@@ -494,7 +592,6 @@ angular.module('cmCore')
                     &&  identity.keys.length == this.verifyIdentityKeys(identity, true).length //true: sign keys if needed 
         }
 
-
         this.clearLocalKeys = function(){
             this.storageSave('rsa', []);
         };
@@ -607,7 +704,7 @@ angular.module('cmCore')
         };
 
         this.removeToken = function(where){
-            cmLogger.debug('cmUserModel:removeToken');
+            //cmLogger.debug('cmUserModel:removeToken');
             cmAuth.removeToken(where);
         };
 
@@ -665,6 +762,18 @@ angular.module('cmCore')
          */
         $rootScope.$on('logout', function(){
             self.resetUser();
+        });
+
+        $rootScope.$on('identity:switched', function(){
+            self.resetUser();
+            init();
+            self.one('update:finished', function(){
+                if(!self.hasLocalKeys()){
+                    $location.path('/start');
+                } else {
+                    $location.path('/talks');
+                }
+            });
         });
 
         this.on('update:finished', function(){

@@ -13,15 +13,11 @@ angular.module('cmConversations').service('cmPurlModel',[
 
         this.purls = [];
 
-        $rootScope.$on('logout', function(){
-            self.purls = [];
-        });
-
         this.handleConversation = function(conversation_data){
             var conversation = cmConversationFactory.create(conversation_data);
 
             return conversation.id;
-        }
+        };
 
         /**
          * @TODO add Function to cmUserModel to handle Guests and add Identities
@@ -31,18 +27,18 @@ angular.module('cmConversations').service('cmPurlModel',[
             var currentIdentity = cmUserModel.getIdentity();
 
             if(identity_data.userType == 'external'){
-                cmLogger.debug('cmPurlModel:handleIdentity:externUser')
+                //cmLogger.debug('cmPurlModel:handleIdentity:externUser');
                 cmUserModel.doLogout(false,'purl-modl handleIdentity');
 
                 cmUserModel.setIdentity(identity_data);
 
                 $rootScope.$broadcast('login');
             } else if(identity_data.id != currentIdentity.id){
-                cmLogger.debug('cmPurlModel:handleIdentity:internUser')
+                //cmLogger.debug('cmPurlModel:handleIdentity:internUser')
             }
 
             return this;
-        }
+        };
 
         /**
          * @param token
@@ -53,7 +49,7 @@ angular.module('cmConversations').service('cmPurlModel',[
             }
 
             return this;
-        }
+        };
 
         this.getPurl = function(id){
             var deferred = $q.defer();
@@ -61,10 +57,6 @@ angular.module('cmConversations').service('cmPurlModel',[
             if(typeof id !== 'undefined'){
                 cmConversationsAdapter.getPurl(id).then(
                     function (data) {
-//                        handleIdentity(data.identity);
-//                        handleToken(data.token);
-//
-//                        deferred.resolve(handleConversation(data.conversation));
                         deferred.resolve(data);
                     },
                     function (response) {
@@ -76,6 +68,14 @@ angular.module('cmConversations').service('cmPurlModel',[
             }
 
             return deferred.promise;
-        }
+        };
+
+        $rootScope.$on('logout', function(){
+            self.purls = [];
+        });
+
+        $rootScope.$on('identity:switched', function(){
+            self.purls = [];
+        });
     }
 ])

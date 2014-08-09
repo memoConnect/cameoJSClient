@@ -4,19 +4,24 @@ angular.module('cmValidate').directive('cmPassword', [
     'cmCrypt',
     function (cmCrypt) {
         return  {
-            restrict: 'A',
+            restrict: 'E',
+            require: 'ngModel',
             templateUrl: 'comps/validate/drtv-password.html',
             scope: {
-                password: '=parentItem'
+                password: '=ngModel',
+                tabindex: '@cmTabindex'
             },
-            controller: function($scope, $element, $attrs){
+            controller: function($scope){
+
+                $scope.nextTabIndex = parseInt($scope.tabindex) + 1;
+
                 $scope.showConfirmPWStatus = false;
                 $scope.passwordType = 'password';
                 $scope.showPassword = false;
                 $scope.showPasswordLengthError = false;
                 $scope.showPasswordEmptyError = false;
 
-                $scope.$on('cm-empty-password', function(){
+                $scope.$on('cm-password:empty', function(){
                     $scope.showPasswordEmptyError = true;
                 });
 
@@ -26,7 +31,7 @@ angular.module('cmValidate').directive('cmPassword', [
                     } else {
                         $scope.showPasswordLengthError = false;
                     }
-                }
+                };
 
                 $scope.togglePassword = function(){
                     if($scope.showPassword){

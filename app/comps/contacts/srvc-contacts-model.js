@@ -77,6 +77,15 @@ angular.module('cmContacts').service('cmContactsModel',[
         }
 
         /**
+         * Reset Object
+         */
+        function reset(){
+            self.contacts.reset();
+            self.groups = [];
+            self.requests.reset();
+        }
+
+        /**
          * add to contacts and creates identities
          * @param contact
          * @private
@@ -279,14 +288,15 @@ angular.module('cmContacts').service('cmContactsModel',[
             return defer.promise;
         };
 
-
         /**
          * event handling
          */
         $rootScope.$on('logout', function(){
-            self.contacts.reset();
-            self.groups = [];//self.groups.reset();
-            self.requests.reset();
+            reset();
+        });
+
+        $rootScope.$on('identity:switched', function(){
+            reset();
         });
 
         this.on('friendRequests:updated friendRequest:send after-add-contact', function(){

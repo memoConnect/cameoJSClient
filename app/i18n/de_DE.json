@@ -32,7 +32,7 @@
             "SUBMIT": "Benutzerkonto anlegen",
             "USERNAME": "Benutzername",
             "NAME": "Anzeigename",
-            "TERMS": " die s",
+            "TERMS": " die AGB",
             "TERMS_ACCEPT": "Ich akzeptiere"
         },
         "PLACEHOLDER": {
@@ -42,15 +42,9 @@
             "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER"
         },
         "INFO": {
-            "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
             "TERMS": "Bitte akzeptieren Sie die AGB!",
             "EMPTY": {
                 "PASSWORD": "Bitte geben Sie ein Passwort ein!"
-            },
-            "USERNAME": {
-                "EXISTS": "Benutzername bereits vergeben. Bitte wählen Sie einen anderen Benutzernamen!",
-                "EMPTY": "Bitte geben Sie einen Benutzernamen ein!",
-                "INVALID": "Der Benutzername enthält nicht erlaubte Zeichen. Vermeiden Sie Umlaute, Leer- und Sonderzeichen."
             },
             "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
             "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
@@ -319,6 +313,9 @@
                             "PHONENUMBER": "@:CONTACT.INFO.INVALID.PHONENUMBER"
                         }
                     },
+                    "WARN": {
+                        "FAILED": "Das anlegen der neuen Identität ist fehlgeschlagen. Bitte probieren Sie es später noch einmal."
+                    },
                     "FOOTER": "@:CONTACT.FOOTER.SAVE"
                 },
                 "KEYS": {
@@ -401,7 +398,8 @@
         "PASSWORD": {
             "PASSWORD": "Passwort",
             "PASSWORD_CONFIRM": "Passwort wiederholen!",
-            "ERROR": {
+            "INFO": {
+                "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
                 "EMPTY": "Bitte ein Passwort eingeben und bestätigen!"
             }
         },
@@ -419,6 +417,17 @@
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
                 "EMPTY": "Sie haben keine Mobilfunknummer eingegeben."
+            }
+        },
+        "VALIDATE_CAMEOID": {
+            "INFO": {
+                "MAX_LETTER_COUNT": "Bitte maximal {{count}} Zeichen verwenden!",
+                "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
+                "INPUT": {
+                    "EXISTS": "Ihre Eingabe ist bereits vergeben. Bitte wählen Sie eine andere!",
+                    "EMPTY": "Dieses Feld wird benötigt! Bitte füllen Sie dieses aus.",
+                    "INVALID": "Ihre Eingabe enthält nicht erlaubte Zeichen. Vermeiden Sie Umlaute, Leer- und Sonderzeichen."
+                }
             }
         },
         "EXTERN_CONTACT": {

@@ -231,16 +231,20 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt','$rootScope', fu
             }
 
             return false;
-        }
+        };
 
-        $rootScope.$on('logout', function(){
+        function reset(){
             self.instanceId = "";
             self.instanceKey = "";
             self.storageValue = {};
             self.cryptKey = "";
-        });
+        }
 
-    }
+        $rootScope.$on('logout', function(){ reset(); });
+
+        $rootScope.$on('identity:switched', function(){ reset() });
+
+    };
 
     return LocalStorageService;
 }]).
@@ -257,6 +261,10 @@ factory('cmLocalStorage',['LocalStorageService','$rootScope', function(LocalStor
     var instances = [];
 
     $rootScope.$on('logout', function(){
+        instances = [];
+    });
+
+    $rootScope.$on('identity:switched', function(){
         instances = [];
     });
 

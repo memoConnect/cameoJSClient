@@ -4,13 +4,14 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
     'cmUserModel',
     'cmUtil',
     'cmLogger',
-    function(cmUserModel, cmUtil, cmLogger) {
+    '$rootScope',
+    function(cmUserModel, cmUtil, cmLogger, $rootScope) {
         function userKeyStorage(key){
             var self = this,
                 storageKey = undefined;
 
             function init(key){
-                cmLogger.debug('cmUserKeyStorage.init');
+                //cmLogger.debug('cmUserKeyStorage.init');
 
                 if(typeof key == 'string' && cmUtil.validateString(key)){
                     storageKey = key;
@@ -20,13 +21,17 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
             }
 
             function getAll(){
-                cmLogger.debug('cmUserKeyStorage.getAll');
+                //cmLogger.debug('cmUserKeyStorage.getAll');
 
                 return cmUserModel.storageGet(storageKey) || {};
             }
 
+            function reset(){
+                storageKey = undefined;
+            }
+
             this.get = function(key){
-                cmLogger.debug('cmUserKeyStorage.get');
+                //cmLogger.debug('cmUserKeyStorage.get');
 
                 var list = getAll(),
                     value = undefined;
@@ -40,7 +45,7 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
             };
 
             this.set = function(key, value){
-                cmLogger.debug('cmUserKeyStorage.set');
+                //cmLogger.debug('cmUserKeyStorage.set');
 
                 var list = getAll();
 
@@ -50,6 +55,8 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
             };
 
             this.is = function(key){
+                //cmLogger.debug('cmUserKeyStorage.is');
+
                 var list = getAll(),
                     boolReturn = false;
 
@@ -62,6 +69,10 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
 
                 return boolReturn;
             };
+
+            $rootScope.$on('logout', function(){ reset() });
+
+            $rootScope.$on('identity:switched', function(){ reset() });
 
             init(key);
         }

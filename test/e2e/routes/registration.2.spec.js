@@ -34,7 +34,7 @@ describe('Registration: ', function () {
 
         $("[data-qa='btn-createUser']").click()
 
-        util.checkWarning("register-info-username-empty")
+        util.checkWarning("cameoId-info-username-empty")
         util.checkWarning("drtv-password-error-empty")
         util.checkWarning("register-info-terms")
     })
@@ -43,45 +43,45 @@ describe('Registration: ', function () {
 
         util.get("/registration");
 
-        $("[data-qa='input-loginName']").sendKeys("moep")
+        $("[data-qa='input-cameoId']").sendKeys("moep")
         ptor.sleep(501)//adaptive change delay
-        util.checkWarning("register-info-user-min-letter-count")
+        util.checkWarning("cameoId-info-user-min-letter-count")
 
         // it should disappear if we type more letters
-        $("[data-qa='input-loginName']").sendKeys("moep")
+        $("[data-qa='input-cameoId']").sendKeys("moep")
         ptor.sleep(501)//adaptive change delay
-        expect($("[data-qa='register-info-user-min-letter-count']").isDisplayed()).toBe(false)
+        expect($("[data-qa='cameoId-info-user-min-letter-count']").isDisplayed()).toBe(false)
 
-        util.clearInput('input-loginName')
+        util.clearInput('input-cameoId')
     })
 
     it('should display error if username is invalid', function () {
 
         util.get("/registration");
 
-        $("[data-qa='input-loginName']").sendKeys("moep-moep")
+        $("[data-qa='input-cameoId']").sendKeys("moep-moep")
 
         ptor.wait(function () {
-            return $("[data-qa='register-info-username-invalid']").isDisplayed()
+            return $("[data-qa='cameoId-info-username-invalid']").isDisplayed()
         }, 1000, "username invalid timeout")
 
-        util.checkWarning("register-info-username-invalid")
+        util.checkWarning("cameoId-info-username-invalid")
 
-        util.clearInput('input-loginName')
+        util.clearInput('input-cameoId')
     })
 
     it('should display error if username exists', function () {
 
         util.get("/registration")
 
-        $("[data-qa='input-loginName']").sendKeys(config.loginUser1)
+        $("[data-qa='input-cameoId']").sendKeys(config.loginUser1)
 
         ptor.wait(function () {
-            return $("[data-qa='register-info-username-exists']").isDisplayed()
+            return $("[data-qa='cameoId-info-username-exists']").isDisplayed()
         }, 5000, "username exists timeout")
 
-        util.checkWarning("register-info-username-exists")
-        util.clearInput('input-loginName')
+        util.checkWarning("cameoId-info-username-exists")
+        util.clearInput('input-cameoId')
 
     })
 

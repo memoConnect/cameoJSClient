@@ -5,8 +5,9 @@ angular.module('cmCore')
 
     'cmKey',
     'cmFactory',
+    '$rootScope',
 
-    function(cmKey, cmFactory){
+    function(cmKey, cmFactory, $rootScope){
 
         function keyFactory(){
 
@@ -19,7 +20,7 @@ angular.module('cmCore')
                                     return      instance_1.id == instance_2.id
                                             ||  instance_1.getPublicKey() ==  instance_2.getPublicKey()   
                                 }
-                            )
+                            );
 
             self.encryptPassphrase = function(passphrase, whiteList){
                 
@@ -36,13 +37,13 @@ angular.module('cmCore')
                         .filter(function(item){
                             return item && item.encryptedPassphrase
                         })
-            }
+            };
 
             self.getWeakestKeySize = function(){
                 return this.reduce(function(size, key){
                     return (size == undefined) ? (key.getSize()||0) : Math.min(size||0, key.getSize()||0)
                 }, undefined) || 0
-            }
+            };
 
             /**
              * [getTransitivelyTrustedKeys description]
@@ -68,7 +69,10 @@ angular.module('cmCore')
                 return  extended_key_list.length === trustedKeys.length
                         ?   extended_key_list
                         :   self.getTransitivelyTrustedKeys(extended_key_list, trust_callback)
-            }
+            };
+
+            $rootScope.$on('logout', function(){ self.reset() });
+            $rootScope.$on('identity:switched', function(){ self.reset() });
 
             return self
         }

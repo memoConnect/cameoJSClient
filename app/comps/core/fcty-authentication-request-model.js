@@ -468,9 +468,9 @@ angular.module('cmCore')
     function(cmFactory, cmAuthenticationRequestModel, $rootScope){
         var self = new cmFactory(cmAuthenticationRequestModel);
 
-        $rootScope.$on('logout', function(){
-            self.reset()
-        });
+        $rootScope.$on('logout', function(){ self.reset() });
+        $rootScope.$on('identity:switched', function(){ self.reset() });
+
 
         return self;
     }
