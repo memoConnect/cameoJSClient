@@ -12,8 +12,6 @@ angular.module('cmContacts').directive('cmContactTag',[
             controller: function($scope, $element, $attrs){
                             $scope.isTrusted = function(contact){
                                 return      contact.identity 
-                                        &&  contact.identity.keys
-                                        &&  contact.identity.keys.length > 0 
                                         &&  cmUserModel.verifyTrust(contact.identity)
                             }
                         }
