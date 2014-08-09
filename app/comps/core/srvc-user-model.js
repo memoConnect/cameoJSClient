@@ -230,7 +230,7 @@ angular.module('cmCore')
          * @returns {data.identity|*}
          */
         this.getIdentity = function(){
-            cmLogger.debug('cmUserModel:getIdentity');
+            //cmLogger.debug('cmUserModel:getIdentity');
 
             return this.data.identity;
         };
@@ -266,7 +266,6 @@ angular.module('cmCore')
         };
 
         this.isGuest = function(){
-            console.log('isGuest',this.data.userType,this.data.identity.userType)
             if(this.data.userType == 'external'){
                 return true;
             }
@@ -705,7 +704,7 @@ angular.module('cmCore')
         };
 
         this.removeToken = function(where){
-            cmLogger.debug('cmUserModel:removeToken');
+            //cmLogger.debug('cmUserModel:removeToken');
             cmAuth.removeToken(where);
         };
 

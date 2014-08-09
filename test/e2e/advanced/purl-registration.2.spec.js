@@ -106,7 +106,7 @@ describe('Purl Registration: ', function () {
     })
 
     it('register as external user', function () {
-        util.waitForElement("[data-qa='input-loginName']")
+        util.waitForElement("[data-qa='input-cameoId']")
         $("[data-qa='input-cameoId']").sendKeys(externalLogin)
         $("[data-qa='input-password']").sendKeys(password)
         $("[data-qa='input-passwordConfirm']").sendKeys(password)
