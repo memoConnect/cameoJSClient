@@ -11,7 +11,7 @@ angular.module('cmUi')
             scope: {
                 ngModel: '=ngModel'
             },
-            template: '<i class="fa cm-search" ng-click="toggleInput($event)" data-qa="btn-header-list-search"></i>' +
+            template: '<i class="fa with-response cm-search" ng-click="toggleInput($event)" data-qa="btn-header-list-search"></i>' +
                       '<cm-search-input ng-model="ngModel" cm-without-search-icon="true" cm-hide-elements="cm-footer" ng-class="{visible:visible}"></cm-search-input>',
             controller: function($scope){
                 $scope.visible = false;
