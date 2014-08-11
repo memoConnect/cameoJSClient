@@ -66,9 +66,9 @@
             "BTN_TEXT": "Skip"
         },
         "EXPLORE": {
-            "TITLE": "START.EXPLORE.TITLE",
-            "TEXT": "START.EXPLORE.TEXT",
-            "BTN_TEXT": "START.EXPLORE.BTN_TEXT"
+            "TITLE": "Quick Start",
+            "TEXT": "Three steps to send your first secure talk: TODO",
+            "BTN_TEXT": "And go.. TODO"
         }
     },
 
