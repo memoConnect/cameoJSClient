@@ -405,12 +405,15 @@ angular.module('cmCore')
                             typeof self.transactionSecret == 'string'
                         &&  self.transactionSecret === self.fromKey.decrypt(self.reencryptedTransactionSecret)
                     ) {
-                        cmUserModel.signPublicKey(self.toKey, self.toKeyFingerprint, identity);
+                        cmUserModel.signPublicKey(self.toKey, self.toKeyFingerprint, identity)
+                        .finally(function(){
+                            self.trigger('request:finished')
+                        })
+
                     } else {
                         cmLogger.debug('Error - cmAuthenticationRequestModel.finish - verify fail!');
                     }
                     this.state.set('finished')
-                    self.trigger('request:finished')
                 }
             };
 

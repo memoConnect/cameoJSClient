@@ -6,8 +6,9 @@ angular.module('cmCore')
     'cmKey',
     'cmFactory',
     '$rootScope',
+    'cmLogger',
 
-    function(cmKey, cmFactory, $rootScope){
+    function(cmKey, cmFactory, $rootScope,cmLogger){
 
         function keyFactory(){
 
@@ -51,6 +52,8 @@ angular.module('cmCore')
              * @return {Array}             Array of cmKey instances within a chain of trust connecting them to the initially trusted keys. 
              */
             self.getTransitivelyTrustedKeys = function(trustedKeys, trust_callback){
+                // cmLogger.debug('cmKeyFactory.getTransitivelyTrustedKeys');
+
                 trustedKeys = trustedKeys || []
 
                 if(!trust_callback){
@@ -59,11 +62,13 @@ angular.module('cmCore')
                 }       
 
                 var extended_key_list   =   self.filter(function(key){                                    
-                                                return  trustedKeys.indexOf(key) != -1
-                                                        ||
-                                                        trustedKeys.some(function(trusted_key){
-                                                            return trust_callback(trusted_key, key)
-                                                        })
+                                                var is_ttrusted =   trustedKeys.indexOf(key) != -1
+                                                                    ||
+                                                                    trustedKeys.some(function(trusted_key){
+                                                                        return trust_callback(trusted_key, key)
+                                                                    }) 
+
+                                                return  is_ttrusted
                                             })
 
                 return  extended_key_list.length === trustedKeys.length

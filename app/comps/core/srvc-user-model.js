@@ -175,7 +175,7 @@ angular.module('cmCore')
                 if(this.getToken() !== false){
 
                     /**
-                     * @todo hack for extern user in purl
+                     * @todo hack for external user in purl
                      */
                     if($location.$$path.search('/purl') != -1){
                         //console.log($location.$$path)
@@ -310,7 +310,7 @@ angular.module('cmCore')
         };
 
         this.switchToIdentity = function(identity, identityToken){
-            cmLogger.debug('cmUserModel:switchToIdentity');
+           // cmLogger.debug('cmUserModel:switchToIdentity');
 
             function doSwitch(newToken){
                 self.storeToken(newToken);
@@ -464,8 +464,7 @@ angular.module('cmCore')
          * @return {[type]}            [description]
          */
         this.getTrustToken = function(keyToTrust, ownerId){
-            cmLogger.debug('cmUserModel.getTrustToken');
-
+            //cmLogger.debug('cmUserModel.getTrustToken');
             return  cmCrypt.hashObject({
                         pubKey: keyToTrust.getPublicKey(),
                         identifier: ownerId
@@ -507,6 +506,7 @@ angular.module('cmCore')
                 //Content of the signature:
                 var signature  =  signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId));
 
+                
                 promises.push(
                     cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
                         function(signature){
@@ -534,7 +534,7 @@ angular.module('cmCore')
         };
 
         this.verifyOwnPublicKey = function(key){
-            cmLogger.debug('cmUserModel.verifyOwnPublicKey');
+            // cmLogger.debug('cmUserModel.verifyOwnPublicKey');
 
             var local_keys = this.loadLocalKeys();
 
@@ -546,6 +546,7 @@ angular.module('cmCore')
         };
 
         this.signOwnKeys = function(){
+            // cmLogger.debug('cmUserModel.signOwnKeys');
             return this.verifyIdentityKeys(this.data.identity, true)
         }
 
@@ -555,13 +556,18 @@ angular.module('cmCore')
          * @return {cmKeyFactory}   cmKeyFactory returning all transitively trusted keys of identity. Users local keys are assumed to be trusted.
          */
         this.verifyIdentityKeys = function(identity, sign){
+            // cmLogger.debug('cmUserModel.verifyIdentityKeys');
+
             if(!identity.keys)
                 return [];
 
             var local_keys              =   this.loadLocalKeys(),
                 ttrusted_keys           =   identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
-                                                return trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId))
-                                            }),
+
+                                                return      trusted_key.getPublicKey() == key.getPublicKey()
+                                                        ||  trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId))
+
+                                            }),                     
                 unsigned_ttrusted_keys  =   ttrusted_keys.filter(function(ttrusted_key){
                                                 return  local_keys.some(function(local_key){
                                                             return  ttrusted_key.signatures.every(function(signature){

@@ -275,5 +275,7 @@ angular.module('cmCore').service('cmHooks', [
 //            console.log('cmHooks - cmAuthenticationRequestFactory:deregister');
             cmUserModel.signOwnKeys();
         });
+
+
     }
 ]);

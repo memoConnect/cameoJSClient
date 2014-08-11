@@ -1,7 +1,7 @@
 define([
     'app',
     'ngload!pckValidate',
-    'ngload!pckUi'
+    'ngload!pckUi',
 ], function (app) {
     'use strict';
 
