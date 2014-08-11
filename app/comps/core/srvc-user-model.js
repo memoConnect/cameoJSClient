@@ -178,7 +178,7 @@ angular.module('cmCore')
                      * @todo hack for extern user in purl
                      */
                     if($location.$$path.search('/purl') != -1){
-                        console.log($location.$$path)
+                        //console.log($location.$$path)
                         cmAuth.getIdentity().then(
                             function (data) {
                                 if (importIdentity(data)) {
