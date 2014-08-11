@@ -58,7 +58,7 @@
 
 	"START": {
         "TITLE": "Willkommen im cameoNet!",
-        "TEXT": "cameoNet ist ein Ende-zu-Ende verschlüsselter OpenSource Messenger für sichere private und geschäftliche Kommunikation!\nACHTUNG: Dies ist die erste Beta-Version!\nDie App enthält Fehler, die Benutzerführung kann an vielen Stellen verbessert werden und noch nicht alle wichtigen Features sind enthalten. Zur Zeit können wir leider auch noch nicht garantieren, dass all Ihre Daten dauerhaft erhalten bleiben. Daher bitten wir Sie, zunächst von wichtigen Daten lokale Kopien anzulegen.\nBitte helfen Sie uns, cameoNet zu verbessern. Wir freuen uns über jeden Fehler und Verbesserungsvorschlag, den Sie unter http://support.cameonet.de einstellen\nIhr cameoNet-Team.",
+        "TEXT": "cameoNet ist ein Ende-zu-Ende verschlüsselter OpenSource Messenger für sichere private und geschäftliche Kommunikation!<br><br>ACHTUNG: Dies ist die erste Beta-Version!<br>Die App enthält Fehler, die Benutzerführung kann an vielen Stellen verbessert werden und noch nicht alle wichtigen Features sind enthalten. Zur Zeit können wir leider auch noch nicht garantieren, dass all Ihre Daten dauerhaft erhalten bleiben. Daher bitten wir Sie, zunächst von wichtigen Daten lokale Kopien anzulegen.\nBitte helfen Sie uns, cameoNet zu verbessern. Wir freuen uns über jeden Fehler und Verbesserungsvorschlag, den Sie unter http://support.cameonet.de einstellen<br>Ihr cameoNet-Team.",
 		"YOUR_ID": "Deine cameoID",
 		"LOGOUT": "Abmelden",
         "SKIP": {
@@ -66,9 +66,9 @@
             "BTN_TEXT": "Überspringen"
         },
         "EXPLORE": {
-            "TITLE": "Identitäts-Einstellungen",
-            "TEXT": "Hier können Sie ...",
-            "BTN_TEXT": "Schließen"
+            "TITLE": "Schnelleinstieg",
+            "TEXT": "Um einen ersten sicheren 'Talk' ( = Unterhaltung) zu führen, sind nur ein paar Schritte notwendig:<br>1. Schlüssel erzeugen<br>Um sicher kommunizieren zu können, brauchen alle Teilnehmer eines Talks einen cameoKey. Sie haben noch keinen? Öffnen Sie Einstellungen > cameoKeys.<br>2. Freunde finden<br>Drücken Sie auf 'Kontakt hinzufügen' im Header und wählen 'cameoNet durchsuchen', um Freunde zu suchen - über ihre cameoIDs oder Anzeigenamen. Wenn Sie einen Nutzer gefunden haben, senden Sie ihm eine Freundschaftsanfrage.<br>3. Nachricht schreiben<br>An befreundete Kontakte können Sie direkt aus der Kontakt-Übersicht über das Brief-Symbol Nachrichten senden. Es öffnet sich ein neuer Talk. Geben Sie eine Nachricht ein und drücken Sie auf den Senden-Button.<br><br>Herzlichen Glückwunsch! Sie haben Ihren ersten verschlüsselten Talk geführt!<br><br>Wenn Sie Fragen zu cameoNet haben oder auf Probleme mit der Nutzung stoßen, können Sie mir jederzeit auf diese Nachricht antworten.<br>Oder Sie nutzen unser Forum unter https://support.cameonet.de,<br>Ihr cameoNet-Support",
+            "BTN_TEXT": "Und los..."
         }
 	},
 
