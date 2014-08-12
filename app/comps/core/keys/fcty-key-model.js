@@ -73,7 +73,9 @@ angular.module('cmCore')
             };
 
             this.verify = function(data, signature){
-                return  crypt && crypt.verify(data, signature, function(x){ return x }) // andere version funktioniert nicht bei authentication requests
+                var result = crypt && crypt.verify(data, signature, function(x){ return x }) 
+                if(!result) cmLogger.warn('keyModel.verify() failed.')
+                return  result // andere version funktioniert nicht bei authentication requests
             };
 
             this.encrypt = function(secret){
