@@ -14,8 +14,9 @@ angular.module('cmCore')
          */
         function cmKey(data){
             //Wrapper for RSA Keys
-            var self    = this,
-                crypt   = undefined; // will be JSEncrypt() once a key is set
+            var self        = this,
+                crypt       = undefined, // will be JSEncrypt() once a key is set
+                verified    = {}
 
             this.created    = 0;
             this.signatures = [];
@@ -72,10 +73,23 @@ angular.module('cmCore')
                 return crypt && crypt.sign(data)
             };
 
-            this.verify = function(data, signature){
-                var result = crypt && crypt.verify(data, signature, function(x){ return x }) 
-                if(!result) cmLogger.warn('keyModel.verify() failed.')
-                return  result // andere version funktioniert nicht bei authentication requests
+            this.verify = function(data, signature, force){
+
+                 var result =   !force && (verified[data] && verified[data][signature])
+                                ?   verified[data][signature]
+                                :   crypt && crypt.verify(data, signature, function(x){ return x }) 
+
+                if(result){
+                    verified[data] = { signature: result}
+                }else{
+                    cmLogger.warn('keyModel.verify() failed.')
+                }
+
+                //TODO: das funktioniert noch nicht
+                console.log(result)
+                console.log(verified[data])
+
+                return  result // andere version funktioniert nicht bei authentication requests , TODO Kommentar überholt?
             };
 
             this.encrypt = function(secret){

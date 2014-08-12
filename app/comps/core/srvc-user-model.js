@@ -568,11 +568,14 @@ angular.module('cmCore')
                 return [];
 
             var local_keys              =   this.loadLocalKeys(),
-                ttrusted_keys           =   identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
+                own_ttrusted_keys       =   self.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
+                                                return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
+                                            }), 
 
-                                                return      trusted_key.getPublicKey() == key.getPublicKey()
-                                                        ||  trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId))
-                                            }),                     
+                ttrusted_keys           =   identity.keys.getTransitivelyTrustedKeys(own_ttrusted_keys, function trust(trusted_key, key){
+                                                return trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId))
+                                            }),    
+
                 unsigned_ttrusted_keys  =   ttrusted_keys.filter(function(ttrusted_key){
                                                 return  local_keys.some(function(local_key){
                                                             return  ttrusted_key.signatures.every(function(signature){
