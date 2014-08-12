@@ -34,7 +34,7 @@
     <preference name="android-maxSdkVersion" value="19" />
     <preference name="android-targetSdkVersion" value="15" />
     <preference name="android-installLocation" value="internalOnly" />
-    <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
+    <preference name="android-windowSoftInputMode" value="adjustResize" />
 
     <!-- ios -->
     <preference name="EnableViewportScale" value="true" />
@@ -51,7 +51,7 @@
     <preference name="exit-on-suspend" value="false" />
 
     <!-- other -->
-    <preference name="fullscreen" value="true" />
+    <preference name="fullscreen" value="false" />
     <preference name="webviewbounce" value="false" />
     <preference name="stay-in-webview" value="true" />
     <preference name="ios-statusbarstyle" value="default" />
