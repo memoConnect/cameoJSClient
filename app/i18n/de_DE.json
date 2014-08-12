@@ -431,9 +431,9 @@
                 "MAX_LETTER_COUNT": "Bitte maximal {{count}} Zeichen verwenden!",
                 "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
                 "INPUT": {
-                    "EXISTS": "Ihre Eingabe ist bereits vergeben. Bitte wählen Sie eine andere!",
+                    "EXISTS": "Dieser Name ist bereits vergeben. Bitte wählen Sie eine andere!",
                     "EMPTY": "Dieses Feld wird benötigt! Bitte füllen Sie dieses aus.",
-                    "INVALID": "Ihre Eingabe enthält nicht erlaubte Zeichen. Vermeiden Sie Umlaute, Leer- und Sonderzeichen."
+                    "INVALID": "Ihr Name enthält nicht erlaubte Zeichen. Vermeiden Sie Umlaute, Leer- und Sonderzeichen."
                 }
             }
         },
