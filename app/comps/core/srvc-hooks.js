@@ -73,7 +73,7 @@ angular.module('cmCore').service('cmHooks', [
                     'cm-close-btn': false,
                     'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
                 },'<cm-outgoing-authentication-request></cm-outgoing-authentication-request>', null, scope);
-                cmModal.open(modalId);
+                cmModal.open(modalId)
 
                 cmModal.on('modal:closed', function(event, id){
                     if(id == modalId){
