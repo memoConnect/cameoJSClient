@@ -51,10 +51,10 @@ angular.module('cmCore')
              * @param  {Array} trustedKeys Array of cmKey instances known to be trusted
              * @return {Array}             Array of cmKey instances within a chain of trust connecting them to the initially trusted keys. 
              */
-            self.getTransitivelyTrustedKeys = function(trustedKeys, trust_callback){
+            self.getTransitivelyTrustedKeys = function(initially_trusted_keys, trust_callback, trustedKeys){
                 // cmLogger.debug('cmKeyFactory.getTransitivelyTrustedKeys');
 
-                trustedKeys = trustedKeys || []
+                trustedKeys = trustedKeys || initially_trusted_keys || []
 
                 if(!trust_callback){
                     cmLogger.debug('cmKey.getTransitivelyTrustedKeys: trust_callback missing.')
@@ -73,7 +73,7 @@ angular.module('cmCore')
 
                 return  extended_key_list.length === trustedKeys.length
                         ?   extended_key_list
-                        :   self.getTransitivelyTrustedKeys(extended_key_list, trust_callback)
+                        :   self.getTransitivelyTrustedKeys(null, trust_callback, extended_key_list)
             };
 
             $rootScope.$on('logout', function(){ self.reset() });
