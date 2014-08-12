@@ -21,3 +21,5 @@
 *.sublime-workspace
 *.sublime-project
 /grunt
+/atlassian-ide-plugin.xml
+/projectFilesBackup/
