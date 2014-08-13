@@ -85,11 +85,7 @@ angular.module('cmCore')
                     cmLogger.warn('keyModel.verify() failed.')
                 }
 
-                //TODO: das funktioniert noch nicht
-                console.log(result)
-                console.log(verified[data])
-
-                return  result // andere version funktioniert nicht bei authentication requests , TODO Kommentar überholt?
+                return  result
             };
 
             this.encrypt = function(secret){
