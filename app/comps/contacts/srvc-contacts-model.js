@@ -299,7 +299,7 @@ angular.module('cmContacts').service('cmContactsModel',[
             reset();
         });
 
-        this.on('friendRequests:updated friendRequest:send after-add-contact', function(){
+        this.on('friendRequests:updated friendRequest:sent after-add-contact', function(){
             this._clearContacts();
             init();
         });
