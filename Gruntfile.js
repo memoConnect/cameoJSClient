@@ -468,7 +468,7 @@ module.exports = function (grunt) {
         protractor: {
             options: {
                 configFile: "config/ptor.e2e.conf.js", // Default config file
-                keepAlive: true, // If false, the grunt process stops when the test fails.
+                keepAlive: false, // If false, the grunt process stops when the test fails.
                 noColor: false, // If true, protractor will not use colors in its output.
                 args: {
                     // Arguments passed to the command
@@ -488,7 +488,7 @@ module.exports = function (grunt) {
                 plugins: [
                     './resource/phonegap/plugins/org.apache.cordova.device',
                     './resource/phonegap/plugins/org.apache.cordova.splashscreen',
-                    './resource/phonegap/plugins/com.cesidiodibenedetto.filechooser'
+                    //'./resource/phonegap/plugins/com.cesidiodibenedetto.filechooser'
                 ],
                 platforms: ['android'],
                 maxBuffer: 200, // You may need to raise this for iOS.
@@ -565,37 +565,21 @@ module.exports = function (grunt) {
             'index-phonegap': {
                 'options': {
                     'data': {
-                        'phonegapFiles': //                            '<script src="cordova.js"></script>' +
-                            '<script src="phonegap.js"></script>' +
-                            '<script src="phonegap-adapter.js"></script>',
-                        'phonegapElements': '<div class="well">' +
-                            '<p id="networkState"></p>' +
-                            '<p id="contactsNumber"></p>' +
-                            '</div>' +
-                            '<button class="btn btn-primary" onclick="loadContacts()">get contacts</button>'
+                        'phonegapFiles': '<script src="phonegap.js"></script>'
                     }
                 },
                 'files': {
-                    'phonegap-build/www/index.html': ['templates/index.tpl.html']
+                    'phonegap-build/www/index.html': ['templates/index.html']
                 }
             },
             'local-index-phonegap': {
                 'options': {
                     'data': {
-                        'phonegapFiles': //'<script src="cordova.js"></script>' +
-                            '<script src="phonegap.js"></script>' +
-                            //'<script src="phonegap-adapter.js"></script>',
-                            '',
-                        'phonegapElements': //                            '<div class="well">' +
-//                                '<p id="networkState"></p>' +
-//                                '<p id="contactsNumber"></p>' +
-//                            '</div>' +
-//                            '<button class="btn btn-primary" onclick="loadContacts()">get contacts</button>' +
-                            ''
+                        'phonegapFiles': '<script src="phonegap.js"></script>'
                     }
                 },
                 'files': {
-                    'phonegap-build/www/index.html': ['templates/index.tpl.html']
+                    'phonegap-build/www/index.html': ['templates/index.html']
                 }
             },
             'index-www': {
@@ -606,7 +590,7 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'app/index.html': ['templates/index.tpl.html']
+                    'app/index.html': ['templates/index.html']
                 }
             },
             'index-dl': {
@@ -619,7 +603,7 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'dist/dl/index.html': ['templates/dl-index.tpl.html']
+                    'dist/dl/index.html': ['templates/dl-index.html']
                 }
             },
             'config-webApp': {
@@ -632,7 +616,7 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'app/base/config.js': ['templates/config-webApp.tpl.js']
+                    'app/base/config.js': ['templates/config-webApp.js']
                 }
             },
             'config-tests': {
@@ -645,7 +629,7 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'test/e2e/config-e2e-tests.js': ['templates/config-e2e-tests.tpl.js']
+                    'test/e2e/config-e2e-tests.js': ['templates/config-e2e-tests.js']
                 }
             },
             'config-phonegap': {
@@ -657,7 +641,7 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'phonegap-build/www/config.xml': ['templates/config-phonegap.tpl.xml']
+                    'phonegap-build/www/config.xml': ['templates/config.xml']
                 }
             },
             'local-config-phonegap': {
@@ -669,7 +653,7 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'resource/phonegap/config.xml': ['templates/config-phonegap.tpl.xml']
+                    'resource/phonegap/config.xml': ['templates/config.xml']
                 }
             },
             'config-protractor': {
@@ -680,7 +664,7 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'config/ptor.e2e.conf.js': ['templates/ptor.e2e.conf.tpl.js']
+                    'config/ptor.e2e.conf.js': ['templates/ptor.e2e.conf.js']
                 }
             },
             'config-protractor-multi': {
@@ -691,7 +675,7 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'config/ptor.e2e.conf.js': ['templates/ptor.e2e.conf.tpl.js']
+                    'config/ptor.e2e.conf.js': ['templates/ptor.e2e.conf.js']
                 }
             }
         },
@@ -727,8 +711,8 @@ module.exports = function (grunt) {
         // splashscrenn for apps
         phonegapsplash: {
             build: {
-                src: 'resource/phonegap/res/splash-canevas.png',
-                dest: 'resource/phonegap/res',
+                src: 'resource/phonegap/res/screen/splash-canevas.png',
+                dest: 'resource/phonegap/gen',
                 options: {
                     layouts: ['portrait'],
                     profiles: ['android', 'ios', 'windows-phone']
@@ -739,10 +723,10 @@ module.exports = function (grunt) {
         // watch
         watch: {
             files: [
+                'templates/*',
                 'app/less/*.less',
-                'templates/*.tpl.*',
                 'app/comps/**/*',
-                'app/routes/**/comps/*'
+                'app/routes/**/comps/**/*'
             ],
             tasks: ['genAllTemplates', 'packages']
         },

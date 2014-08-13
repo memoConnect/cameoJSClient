@@ -27,42 +27,42 @@ describe('Route: Settings - Identity', function(){
         it('should be possible to go to identity settings, if clicking on name in header', function(){
 
             util.get('/talks');
-            util.expectCurrentUrl('#/talks')
+            util.expectCurrentUrl('/talks')
 
-            util.waitForElement("[data-qa='btn-open-identity-modal']");
+            util.waitForElement("[data-qa='btn-open-identity-modal']")
             expect($("[data-qa='btn-open-identity-modal']").isPresent()).toBe(true)
 
-            $("[data-qa='btn-open-identity-modal']").click();
+            util.click('btn-open-identity-modal')
 
-            util.waitForModalOpen('modal-identity');
+            util.waitForModalOpen('modal-identity')
 
-            expect($("[data-qa='btn-identity-settings']").isPresent()).toBe(true)
+            expect($("[data-qa='btn-identity-active']").isPresent()).toBe(true)
 
-            $("[data-qa='btn-identity-settings']").click();
+            util.click('btn-identity-active')
 
             util.waitForPageLoad("/settings/identity")
         })
 
         it('should exists a key management button', function(){
-            util.waitForElement("[data-qa='btn-identity-keys']");
+            util.waitForElement("[data-qa='btn-identity-keys']")
             expect($("[data-qa='btn-identity-keys']").isPresent()).toBe(true)
         })
 
         it('should be exists a trust button', function(){
-            util.waitForElement("[data-qa='btn-identity-trust']");
+            util.waitForElement("[data-qa='btn-identity-trust']")
             expect($("[data-qa='btn-identity-trust']").isPresent()).toBe(true)
         })
 
         it('should be exists a form with following elements', function(){
-            util.waitForElement("[data-qa='input-cameoId']");
+            util.waitForElement("[data-qa='input-cameoId']")
             expect($("[data-qa='input-cameoId']").isPresent()).toBe(true)
 
-            util.waitForElement("[data-qa='input-displayname']");
+            util.waitForElement("[data-qa='input-displayname']")
             expect($("[data-qa='input-displayname']").isPresent()).toBe(true)
         })
 
         it('shoudl be exists a save button', function(){
-            util.waitForElement("[data-qa='btn-saveIdentity']");
+            util.waitForElement("[data-qa='btn-saveIdentity']")
             expect($("[data-qa='btn-saveIdentity']").isPresent()).toBe(true)
         })
     })
@@ -83,7 +83,7 @@ describe('Route: Settings - Identity', function(){
         })
 
         it('cameoId should be exists ('+ newTestUser +')', function(){
-            util.waitForElement("[data-qa='input-cameoId']");
+            util.waitForElement("[data-qa='input-cameoId']")
             expect($("[data-qa='input-cameoId']").isPresent()).toBe(true)
 
             expect($("[data-qa='input-cameoId']").getAttribute('value')).toBe(newTestUser + "@cameonet.de")
@@ -184,7 +184,7 @@ describe('Route: Settings - Identity', function(){
         })
 
         it('should be shown an error, if phonenumber is wrong', function(){
-            util.waitForElement("[data-qa='input-phonenumber']");
+            util.waitForElement("[data-qa='input-phonenumber']")
             expect($("[data-qa='input-phonenumber']").isPresent()).toBe(true)
 
             util.clearInput('input-phonenumber')
@@ -195,7 +195,7 @@ describe('Route: Settings - Identity', function(){
         })
 
         it('should not be shown an error, if phonenumber is okay', function(){
-            util.waitForElement("[data-qa='input-phonenumber']");
+            util.waitForElement("[data-qa='input-phonenumber']")
             expect($("[data-qa='input-phonenumber']").isPresent()).toBe(true)
 
             util.clearInput('input-phonenumber')

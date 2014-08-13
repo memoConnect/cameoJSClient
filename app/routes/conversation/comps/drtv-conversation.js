@@ -318,15 +318,21 @@ angular.module('cmRouteConversation')
                 var stop_listening_to_logout =  $rootScope.$on('logout', function(){
                             $rootScope.pendingRecipients = [];
                             $rootScope.pendingConversation = null;
-                    })
+                    });
+
+                var stop_listening_to_idenity_switch =  $rootScope.$on('identity:switched', function(){
+                            $rootScope.pendingRecipients = [];
+                            $rootScope.pendingConversation = null;
+                    });
 
                 $scope.$on('$destroy', function(){
-                    $scope.conversation.off('update:finished',       callback_update_finished)
-                    $scope.conversation.off('password:missing',      callback_password_missing)
-                    $scope.conversation.off('recipients:missing',    callback_recipients_missing)
-                    $scope.conversation.off('save:aborted',          callback_save_aborted)
+                    $scope.conversation.off('update:finished',       callback_update_finished);
+                    $scope.conversation.off('password:missing',      callback_password_missing);
+                    $scope.conversation.off('recipients:missing',    callback_recipients_missing);
+                    $scope.conversation.off('save:aborted',          callback_save_aborted);
 
-                    stop_listening_to_logout()
+                    stop_listening_to_logout();
+                    stop_listening_to_idenity_switch();
                 });
 
                 // transfer data between routeChanges

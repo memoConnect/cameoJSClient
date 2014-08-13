@@ -38,9 +38,8 @@ describe('Event chain for Contacts', function(){
             var adapter_triggered  = 0,
                 number_of_requests = cmContactsModel.requests.length
 
-
             
-            $httpBackend.expectGET('/identity').respond(200, {})
+            $httpBackend.expectGET('/account').respond(200, {})
 
 
             cmContactsAdapter.on('friendRequest:new', function(){ adapter_triggered++ })
@@ -76,7 +75,7 @@ describe('Event chain for Contacts', function(){
             expect(number_of_contacts).toBe(1)
             expect(contact.contactType).toBe('pending')
 
-            $httpBackend.expectGET('/identity').respond(200, {})
+            $httpBackend.expectGET('/account').respond(200, {})
             $httpBackend.expectGET('/identity/my_new_friend').respond(200, {})
 
             // :(
@@ -126,7 +125,7 @@ describe('Event chain for Contacts', function(){
                 })[0]
             ).toBe(friend_request)
 
-            $httpBackend.expectGET('/identity').respond(200, {})
+            $httpBackend.expectGET('/account').respond(200, {})
             $httpBackend.expectGET('/identity/my_new_friend').respond(200, {})
 
             // :(

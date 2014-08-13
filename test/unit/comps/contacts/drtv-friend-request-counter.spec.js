@@ -14,7 +14,7 @@ describe('Directive cmFriendRequestCounter', function () {
 
     beforeEach(inject(function(_$httpBackend_){
         $httpBackend = _$httpBackend_;
-        $httpBackend.whenGET('/identity').respond({});
+        $httpBackend.whenGET('/account').respond({});
         $httpBackend.whenGET('/contacts').respond({});
         $httpBackend.whenGET('/contact-groups').respond({});
         $httpBackend.whenGET('/friendRequests').respond({});

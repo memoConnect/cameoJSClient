@@ -20,7 +20,7 @@ describe('Directive cmResizeTextarea', function () {
 
     beforeEach(inject(function(_$httpBackend_){
         $httpBackend = _$httpBackend_;
-        $httpBackend.whenGET('/identity').respond({});
+        $httpBackend.whenGET('/account').respond({});
     }))
 
     function createDrtv(html, _scope_){

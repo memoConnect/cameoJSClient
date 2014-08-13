@@ -1,0 +1,21 @@
+{
+    "config": {
+        "wwwUrl": "https://stage.cameo.io/m/"
+    },
+    "testData": [
+        "loginUser1 = 'nostalgic_newton'",
+        "passwordUser1 = 'password'",
+        "cameoIdUser1 = 'nostalgic_newton'",
+        "purlUser1 = 'ujgsvWMPxs'",
+        "displayNameUser1 = 'Nostalgic Newton'",
+        "contactUser1DisplayName ='Sick Yonath'",
+        "contactUser1Login = 'sick_yonath'",
+        "contactUser1password = 'password'",
+        "purlExtern = 'SV0GdHJ4hA'",
+        "loginUser2 = 'drunk_mayer'",
+        "passwordUser2 = 'password'",
+        "cameoIdUser2 = 'drunk_mayer'",
+        "displayNameUser2 = 'Drunk Mayer'"
+    ]
+}
+

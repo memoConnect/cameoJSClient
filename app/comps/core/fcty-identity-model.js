@@ -61,6 +61,7 @@ angular.module('cmCore')
                 this.userType               = data.userType || this.userType;
                 this.created                = data.created || this.created;
                 this.lastUpdated            = data.lastUpdated || this.lastUpdated;
+                this.isActive               = data.active || this.isActive;
 
                 data.publicKeys             = data.publicKeys || [];
 
@@ -69,7 +70,12 @@ angular.module('cmCore')
                     if('deleted' in publicKey_data && publicKey_data.deleted){
                         self.keys.deregister(publicKey_data);
                     } else {
-                        self.keys.create(publicKey_data, true);
+                        var key =  self.keys.create(publicKey_data, true);
+
+                        //check if the keyis working properly, if not, get rid of it:
+                        if(!key.getPublicKey()){
+                            self.keys.deregister(key)
+                        }
                     }
                 });
 
@@ -231,9 +237,9 @@ angular.module('cmCore')
             return self;
         };
 
-        $rootScope.$on('logout', function(){
-            self.reset()
-        });
+        $rootScope.$on('logout', function(){ self.reset() });
+
+        $rootScope.$on('identity:switched', function(){ self.reset() });
 
         return self;
     }

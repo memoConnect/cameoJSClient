@@ -989,6 +989,11 @@ angular.module('cmConversations')
                 self.recipients.reset();
             });
 
+            $rootScope.$on('identity:switched', function(){
+                self.messages.reset();
+                self.recipients.reset();
+            });
+
             passphrase.on('passphrase:changed', function(){
 //                self.decrypt();
             });
@@ -1019,9 +1024,16 @@ angular.module('cmConversations')
 
             //Todo: fire event on factory and delegate to conversation or something
             this.on('message:new', function(event, message_data){
-                message_data.conversation = self;
-                self.messages.create(message_data).decrypt();
-                self.trigger('message:reinitFiles');
+                if(typeof message_data == 'object'){
+                    if('created' in message_data){
+                        self.timeOfLastUpdate = message_data.created;
+                    }
+
+                    message_data.conversation = self;
+                    self.messages.create(message_data).decrypt();
+
+                    self.trigger('message:reInitFiles');
+                }
             });
 
             this.recipients.on(['register', 'update:finished'], function(event, recipient){

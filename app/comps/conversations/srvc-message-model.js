@@ -80,6 +80,14 @@ angular.module('cmConversations')
             }
 
             /**
+             * reset object
+             */
+            function reset(){
+                self.files = [];
+                self.fileIds = [];
+            }
+
+            /**
              * @name importData
              * @description import data
              */
@@ -370,10 +378,8 @@ angular.module('cmConversations')
             /**
              * Event Handling
              */
-            $rootScope.$on('logout', function(){
-                self.files = [];
-                self.fileIds = [];
-            });
+            $rootScope.$on('logout', function(){ reset(); });
+            $rootScope.$on('identity:switched', function(){ reset(); });
 
             this.on('message:saved', function(){
                 self.uploadFiles();
@@ -384,7 +390,7 @@ angular.module('cmConversations')
             // if files are incomplete wait for message:new backend event to reinit
             this.incompleteFiles = [];
             if(conversation != undefined && ('on' in conversation)) {
-                conversation.on('message:reinitFiles', function () {
+                conversation.on('message:reInitFiles', function () {
                     if (self.state.is('incomplete')) {
                         self.incompleteFiles.forEach(function (file) {
                             file.importFile();

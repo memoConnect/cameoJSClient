@@ -10,8 +10,7 @@
  * @requires localStorage TODO: implement ServiceLocalStorage
  */
 
-angular.module('cmCore')
-.service('cmAuth', [
+angular.module('cmCore').service('cmAuth', [
     'cmApi', 'cmObject', 'cmUtil',
     function(cmApi, cmObject, cmUtil){
         var auth = {
@@ -79,6 +78,13 @@ angular.module('cmCore')
                     //console.log('getToken',token)
                 return token;
             },
+
+            getIdentityToken: function(identityId){
+                return cmApi.get({
+                    path: '/identity/'+identityId+'/token'
+                })
+            },
+
             /**
              * @ngdoc method
              * @methodOf cmAuth
@@ -137,6 +143,13 @@ angular.module('cmCore')
                     exp_ok: 'phoneNumber'
                 })
             },
+
+            getAccount: function(){
+                return cmApi.get({
+                    path: '/account'
+                })
+            },
+
             /**
              * @ngdoc method
              * @methodOf cmAuth
@@ -171,6 +184,13 @@ angular.module('cmCore')
                 })
             },
 
+            addIdentity: function(data){
+                return cmApi.post({
+                    path: '/identity',
+                    data: data
+                })
+            },
+
             /**
              * @ngdoc method
              * @methodOf cmAuth
@@ -184,7 +204,7 @@ angular.module('cmCore')
              */
             savePublicKey: function(data){
                 return cmApi.post({
-                    path: '/identity/publicKey',
+                    path: '/publicKey',
                     data: {
                         name: data.name,
                         key: data.key,
@@ -205,7 +225,7 @@ angular.module('cmCore')
              */
             removePublicKey: function(keyId){
                 return cmApi.delete({
-                    path: '/identity/publicKey/'+keyId
+                    path: '/publicKey/'+keyId
                 })
             },
             /**
@@ -223,7 +243,7 @@ angular.module('cmCore')
              */
             savePublicKeySignature: function(localKeyId, signKeyId, signature){
                 return cmApi.post({
-                    path: '/identity/publicKey/' + signKeyId + '/signature',
+                    path: '/publicKey/' + signKeyId + '/signature',
                     data: {
                         keyId: localKeyId,
                         content: signature
@@ -286,7 +306,7 @@ angular.module('cmCore')
                 }
 
                 return cmApi.get({
-                    path: '/identity/publicKey/'+ keyId +'/aePassphrases' + queryString
+                    path: '/publicKey/'+ keyId +'/aePassphrases' + queryString
                 });
             },
             /**
@@ -303,7 +323,7 @@ angular.module('cmCore')
              */
             saveBulkPassphrases: function(keyId, data){
                 return cmApi.post({
-                    path: '/identity/publicKey/'+ keyId +'/aePassphrases',
+                    path: '/publicKey/'+ keyId +'/aePassphrases',
                     data: data
                 });
             },
@@ -318,9 +338,9 @@ angular.module('cmCore')
              * @param {Object} data event data
              * @returns {Promise} for async handling
              */
-            sendBroadcast: function( data){
+            sendBroadcast: function(data, identityId){
                 return cmApi.post({
-                    path: '/event/broadcast',
+                    path: '/event/broadcast' + (identityId ? '/identity/' + identityId : ''),
                     data: data
                 });
             },

@@ -1,6 +1,7 @@
 <div ng-show="step == 1">
     <div class="modal-row">
-        <span ng-bind-html="'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_NOW'|cmTranslate:modalMessageVars"></span>
+        <span ng-if="authenticationRequest.is3rdParty()"    ng-bind-html="'CONTACT.HANDSHAKE_3RD.HANDSHAKE_NOW'|cmTranslate:modalMessageVars"></span>
+        <span ng-if="!authenticationRequest.is3rdParty()"   ng-bind-html="'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_NOW'|cmTranslate:modalMessageVars"></span>
     </div>
     <div cm-rubber-space>
         <button class="cm-btn cm-btn-block cm-btn-grey cm-inline-block cm-white-border-right" cm-weight="1" ng-click="cancel()">
@@ -12,14 +13,25 @@
             ng-click="start()"
             data-qa="btn-start"
             cm-weight="1">
-            {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_OK'|cmTranslate}}
+            {{
+                authenticationRequest.is3rdParty()
+                ?   'CONTACT.HANDSHAKE_3RD.HANDSHAKE_OK'
+                :   'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_OK'
+                |cmTranslate
+            }}
             <i class="fa cm-checker cm-lg-icon"></i>
         </button>
     </div>
 </div>
 <div ng-show="step == 2">
     <div class="modal-row">
-        {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.TRANSACTION_SECRET'|cmTranslate}}<br />
+        {{
+            authenticationRequest.is3rdParty()
+            ?   'CONTACT.HANDSHAKE_3RD.TRANSACTION_SECRET'
+            :   'SETTINGS.PAGES.IDENTITY.HANDSHAKE.TRANSACTION_SECRET'
+            |cmTranslate
+        }}
+        <br />
         <h1 data-qa="transaction-secret-value">{{transactionSecret}}</h1>
     </div>
     <button class="cm-btn cm-btn-block cm-btn-grey">

@@ -4,7 +4,6 @@
     <cm-security-indicator
         cm-weight       = "2"
         cm-data         = "conversation.securityAspects"
-        cm-leading-icon = "cm-lock"
         ng-click        = "goto('conversation/'+conversationId+'/security-settings')"
     ></cm-security-indicator>
     <cm-header-list-search cm-weight="1" ng-model="search"></cm-header-list-search>
@@ -27,8 +26,9 @@
     <cm-contacts-list contacts-as="contacts">
         <cm-contact-tag
             cm-rubber-space
-            ng-repeat="contact in contacts|cmRecipients:true:selected|cmSearch:'contacts':search"
-            ng-class="{'disabled':contact.contactType == 'pending'}">
+            ng-repeat   = "contact in contacts|cmRecipients:true:selected|cmSearch:'contacts':search"
+            ng-if       = "contact.contactType != 'pending'" 
+        >
             <cm-avatar cm-data="contact.identity"></cm-avatar>
             <cm-key-level cm-data="contact.identity.keys.getWeakestKeySize()"></cm-key-level>
             <cm-contact-brief cm-data="contact" cm-weight="1"></cm-contact-brief>
@@ -51,8 +51,9 @@
         <cm-contacts-list contacts-as="contacts">
             <cm-contact-tag
                 cm-rubber-space
-                ng-repeat="contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search"
-                ng-class="{'disabled':contact.contactType == 'pending'}">
+                ng-repeat   =   "contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search"
+                ng-if       =   "contact.contactType != 'pending'" 
+            >
                 <cm-avatar cm-data="contact.identity"></cm-avatar>
                 <cm-key-level cm-data="contact.identity.keys.getWeakestKeySize()"></cm-key-level>
                 <cm-contact-brief cm-data="contact" cm-weight="1"></cm-contact-brief>

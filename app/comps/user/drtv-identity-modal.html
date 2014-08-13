@@ -1,0 +1,27 @@
+<div
+    class="modal-row"
+    cm-rubber-space
+    data-qa="btn-identity-new"
+    ng-click="createNewIdentity()"
+    >
+    <span class="text-only" cm-weight="6">
+        {{'IDENTITY.LABEL.NEW' | cmTranslate}}
+    </span>
+    <button cm-weight="1">
+        <i class="fa cm-checkbox-add"></i>
+    </button>
+</div>
+<div
+    ng-repeat="identity in ownIdentities | orderBy: 'isActive':false"
+    class="modal-row"
+    cm-rubber-space
+    data-qa="btn-identity-{{identity.isActive?'active':'switchto'}}"
+    ng-click="bam(identity)">
+    <cm-avatar cm-data="identity" cm-weight="1"></cm-avatar>
+    <cm-key-level cm-data="identity.keys.getWeakestKeySize()" cm-weight="1"></cm-key-level>
+    <span cm-weight="4">{{identity.getDisplayName()}}</span>
+    <button cm-weight="1">
+        <i class="fa cm-change" ng-if="!identity.isActive"></i>
+        <i class="fa cm-fix" ng-if="identity.isActive"></i>
+    </button>
+</div>

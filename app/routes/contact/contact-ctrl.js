@@ -2,14 +2,17 @@ define([
     'app',
     'ngload!pckContacts',
     'ngload!pckUi',
-    'ngload!pckValidate'
+    'ngload!pckValidate',
+    'ngload!pckCore',
+    'ngload!pckUser',
+
 ], function(app){
     'use strict';
 
     app.register.controller('ContactCtrl',
         function(
          $scope, $rootScope, $location,$routeParams,
-         cmContactsModel, cmIdentityFactory, cmUtil, cmNotify
+         cmContactsModel, cmIdentityFactory, cmUtil, cmNotify, cmHooks, cmUserModel
         ){
             $scope.cmUtil = cmUtil;
 
@@ -141,6 +144,24 @@ define([
                     );
                 }
             };
+
+            $scope.startTrustHandshake = function(){
+                cmHooks.openKeyRequest($scope.identity)
+            }
+
+            $scope.getTrust = function(){
+                return $scope.identity && cmUserModel.verifyTrust($scope.identity)
+            }
+
+            $scope.hasKey = function(){
+                return $scope.identity && $scope.identity.keys.length > 0  
+            }
+
+            // $scope.$watchCollection('identity.keys', function(identity){
+            //     if(identity)
+            //         $scope.isTrusted = cmUserModel.verifyTrust($scope.identity)
+            // })
+
         }
     );
 });

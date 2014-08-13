@@ -74,13 +74,13 @@ describe('Authentication requests -', function () {
         util.login(testUser, "password")
         util.get("/settings/identity/keys")
         util.waitForElement("[data-qa='key-list-item']")
-        ptor.debugger()
         util.generateKey(3, keyName3)
         checkKeyTrust(keyName1, false)
         checkKeyTrust(keyName3, true)
         util.getLocalStorage().then(function (lsexport) {
             localStorage3 = lsexport
         })
+        util.waitForEventSubscription()
     })
 
     it("a modal asking for authentication should open", function () {
@@ -135,7 +135,6 @@ describe('Authentication requests -', function () {
         util.login(testUser, "password", "/start")
         util.get("/settings/identity/keys")
         util.waitForElement("[data-qa='key-list-item']")
-        ptor.debugger()
         util.generateKey(2, keyName2)
         checkKeyTrust(keyName1, false)
         checkKeyTrust(keyName2, true)
@@ -143,6 +142,7 @@ describe('Authentication requests -', function () {
         util.getLocalStorage().then(function (lsexport) {
             localStorage2 = lsexport
         })
+        util.waitForEventSubscription()
     })
 
     it("start another key-request", function () {
@@ -287,7 +287,10 @@ describe('Authentication requests -', function () {
 
     it("send verified request", function(){
         verifiedEvent.data.id = requestId
+        console.log(verifiedEvent)
+        ptor.debugger()
         util.broadcastEvent(token, verifiedEvent)
+        ptor.debugger()
     })
 
     it("key1 should now be trusted", function(){

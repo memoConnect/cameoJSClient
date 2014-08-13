@@ -32,7 +32,7 @@
             "SUBMIT": "Benutzerkonto anlegen",
             "USERNAME": "Benutzername",
             "NAME": "Anzeigename",
-            "TERMS": " die AGBs",
+            "TERMS": " die AGB",
             "TERMS_ACCEPT": "Ich akzeptiere"
         },
         "PLACEHOLDER": {
@@ -42,15 +42,9 @@
             "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER"
         },
         "INFO": {
-            "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
-            "TERMS": "Bitte akzeptieren Sie die AGBs!",
+            "TERMS": "Bitte akzeptieren Sie die AGB!",
             "EMPTY": {
                 "PASSWORD": "Bitte geben Sie ein Passwort ein!"
-            },
-            "USERNAME": {
-                "EXISTS": "Benutzername bereits vergeben. Bitte wählen Sie einen anderen Benutzernamen!",
-                "EMPTY": "Bitte geben Sie einen Benutzernamen ein!",
-                "INVALID": "Der Benutzername enthält nicht erlaubte Zeichen. Vermeiden Sie Umlaute, Leer- und Sonderzeichen."
             },
             "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
             "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
@@ -64,7 +58,7 @@
 
 	"START": {
         "TITLE": "Willkommen im cameoNet!",
-        "TEXT": "cameoNet ist ein Ende-zu-Ende verschlüsselter OpenSource Messenger für sichere private und geschäftliche Kommunikation!\nACHTUNG: Dies ist die erste Beta-Version!\nDie App enthält Fehler, die Benutzerführung kann an vielen Stellen verbessert werden und noch nicht alle wichtigen Features sind enthalten. Zur Zeit können wir leider auch noch nicht garantieren, dass all Ihre Daten dauerhaft erhalten bleiben. Daher bitten wir Sie, zunächst von wichtigen Daten lokale Kopien anzulegen.\nBitte helfen Sie uns, cameoNet zu verbessern. Wir freuen uns über jeden Fehler und Verbesserungsvorschlag, den Sie unter http://support.cameonet.de einstellen\nIhr cameoNet-Team.",
+        "TEXT": "cameoNet ist ein Ende-zu-Ende verschlüsselter OpenSource Messenger für sichere private und geschäftliche Kommunikation!<br><br>ACHTUNG: Dies ist die erste Beta-Version!<br>Die App enthält Fehler, die Benutzerführung kann an vielen Stellen verbessert werden und noch nicht alle wichtigen Features sind enthalten. Zur Zeit können wir leider auch noch nicht garantieren, dass all Ihre Daten dauerhaft erhalten bleiben. Daher bitten wir Sie, zunächst von wichtigen Daten lokale Kopien anzulegen.\nBitte helfen Sie uns, cameoNet zu verbessern. Wir freuen uns über jeden Fehler und Verbesserungsvorschlag, den Sie unter http://support.cameonet.de einstellen<br>Ihr cameoNet-Team.",
 		"YOUR_ID": "Deine cameoID",
 		"LOGOUT": "Abmelden",
         "SKIP": {
@@ -72,9 +66,9 @@
             "BTN_TEXT": "Überspringen"
         },
         "EXPLORE": {
-            "TITLE": "START.EXPLORE.TITLE",
-            "TEXT": "START.EXPLORE.TEXT",
-            "BTN_TEXT": "START.EXPLORE.BTN_TEXT"
+            "TITLE": "Schnelleinstieg",
+            "TEXT": "Um einen ersten sicheren 'Talk' ( = Unterhaltung) zu führen, sind nur ein paar Schritte notwendig:<br>1. Schlüssel erzeugen<br>Um sicher kommunizieren zu können, brauchen alle Teilnehmer eines Talks einen cameoKey. Sie haben noch keinen? Öffnen Sie Einstellungen > cameoKeys.<br>2. Freunde finden<br>Drücken Sie auf 'Kontakt hinzufügen' im Header und wählen 'cameoNet durchsuchen', um Freunde zu suchen - über ihre cameoIDs oder Anzeigenamen. Wenn Sie einen Nutzer gefunden haben, senden Sie ihm eine Freundschaftsanfrage.<br>3. Nachricht schreiben<br>An befreundete Kontakte können Sie direkt aus der Kontakt-Übersicht über das Brief-Symbol Nachrichten senden. Es öffnet sich ein neuer Talk. Geben Sie eine Nachricht ein und drücken Sie auf den Senden-Button.<br><br>Herzlichen Glückwunsch! Sie haben Ihren ersten verschlüsselten Talk geführt!<br><br>Wenn Sie Fragen zu cameoNet haben oder auf Probleme mit der Nutzung stoßen, können Sie mir jederzeit auf diese Nachricht antworten.<br>Oder Sie nutzen unser Forum unter https://support.cameonet.de,<br>Ihr cameoNet-Support",
+            "BTN_TEXT": "Und los..."
         }
 	},
 
@@ -104,7 +98,7 @@
 
     "TERMS": {
         "HEADING": "Allgemeine Geschäftsbedingungen",
-        "HEADING_SHORT": "AGBs",
+        "HEADING_SHORT": "AGB",
         "PARAGRAPH_1": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.",
         "PARAGRAPH_2": "Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero."
     },
@@ -134,7 +128,7 @@
         },
         "TAG": {
             "RECIPIENTS": "Empfänger",
-            "SUBJECT": "Betreff",            
+            "SUBJECT": "Betreff",
             "PASSPHRASE": "Passwort",
             "MESSAGES": "Nachrichten",
             "IMAGE": "Bild",
@@ -147,10 +141,10 @@
         "WARN": {
             "MESSAGE_EMPTY": "Die Nachricht ist leer.",
             "RECIPIENTS_MISSING": "Keine Empfänger angegeben.",
-            "RECIPIENTS_MISSING_OKAY": "Ich möchte keinen weiteren Empfänger außer mir selbst hinzufügen.",
+            "RECIPIENTS_MISSING_OKAY": "Ich möchte keinen Empfänger hinzufügen (Nachricht für mich selbst)",
             "PASSPHRASE_INVALID": "Ungültiges Passwort.",
             "PASSWORD_WRONG": "Das eingegebene Passwort ist falsch.",
-            "NO_PASSWORD": "Es fehlt ein Passwort für die Verschlüsselung.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">Jetzt ein Passwort eingeben!</a>",
+            "NO_PASSWORD": "Sie müssen ein Passwort setzen oder die Verschlüsselung deaktivieren, weil nicht alle Empfänger einen cameoKey besitzen.<br /><br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">Hier Verschlüsselung einstellen</a>",
             "PASSWORD_NEEDED": "Zum Entschlüsseln des Talks geben Sie bitte ein Passwort ein.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">Hier ein Passwort eingeben!</a>",
             "ASYMMETRIC_DECRYPT_ERROR": "Der cameoKey fehlt.",
             "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
@@ -185,7 +179,7 @@
             "DONE": "Fertig"
         }
     },
-	
+
 	"CONTACTS": {
 		"HEADING": {
             "LIST": "Kontakte",
@@ -264,9 +258,16 @@
                 "EDIT": "Kontakt konnte nicht gespeichert werden."
             }
         },
+        "HANDSHAKE_3RD": {
+            "HANDSHAKE_NOW": "Der Kontakt hat den Vertrauens-Prozess angenommen. Wollen Sie den nächsten Schritt nun durchführen?",
+            "TRANSACTION_SECRET": "Ihr Kontakt muss folgenden Code eingeben:",
+            "HANDSHAKE_NEED_TRANSACTID": "Bitte geben Sie hier den Code ein, der Ihrem Gegenüber angezeigt wird:",
+            "HANDSHAKE_OK": "Durchführen"
+        },
         "FOOTER": {
             "SAVE": "Speichern"
         }
+
     },
 
     "IDENTITY":{
@@ -289,10 +290,10 @@
 	"SETTINGS": {
 		"WELCOME": "Einstellungen",
         "LABEL": "Einstellungen",
-        "ACCOUNT": "Account",
-        "IDENTITY": "Identitäten",
+        "ACCOUNT": "Account Einstellungen",
+        "IDENTITY": "Identität Einstellungen",
         "NOTIFY": "Benachrichtungen",
-        "CONTACTS": "Kontakte",
+        "CONTACTS": "Kontakte Einstellungen",
         "APP": "App Einstellungen",
         "CONTRACTS": "Verträge",
         "PAGES":{
@@ -319,6 +320,9 @@
                             "PHONENUMBER": "@:CONTACT.INFO.INVALID.PHONENUMBER"
                         }
                     },
+                    "WARN": {
+                        "FAILED": "Das anlegen der neuen Identität ist fehlgeschlagen. Bitte probieren Sie es später noch einmal."
+                    },
                     "FOOTER": "@:CONTACT.FOOTER.SAVE"
                 },
                 "KEYS": {
@@ -333,6 +337,7 @@
                     },
                     "DETAIL": "cameoKey",
                     "KEY_SIZE": "Schlüsselstärke",
+                    "FINGERPRINT": "Fingerprint",
                     "IS_LOCAL": "lokal",
                     "IS_LOCAL_ON_THIS_DEVICE": "lokal auf diesem Gerät",
                     "NO_LOCALKEYS_ON_THIS_DEVICE": "Sie haben keinen cameoKey für Ihre Identität auf diesem Gerät. Um sicher zu kommunizieren, können Sie hier einen cameoKey für diese Identität <a href=\"#/settings/identity/keys/create\">erzeugen</a> oder <a href=\"#/settings/identity/keys/import\">importieren</a>.",
@@ -384,7 +389,7 @@
             }
         }
 	},
-	
+
 	"NAVIGATION": {
 		"TABS": {
 			"BACK": "Zurück",
@@ -401,7 +406,8 @@
         "PASSWORD": {
             "PASSWORD": "Passwort",
             "PASSWORD_CONFIRM": "Passwort wiederholen!",
-            "ERROR": {
+            "INFO": {
+                "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
                 "EMPTY": "Bitte ein Passwort eingeben und bestätigen!"
             }
         },
@@ -419,6 +425,17 @@
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
                 "EMPTY": "Sie haben keine Mobilfunknummer eingegeben."
+            }
+        },
+        "VALIDATE_CAMEOID": {
+            "INFO": {
+                "MAX_LETTER_COUNT": "Bitte maximal {{count}} Zeichen verwenden!",
+                "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
+                "INPUT": {
+                    "EXISTS": "Dieser Name ist bereits vergeben. Bitte wählen Sie eine andere!",
+                    "EMPTY": "Dieses Feld wird benötigt! Bitte füllen Sie dieses aus.",
+                    "INVALID": "Ihr Name enthält nicht erlaubte Zeichen. Vermeiden Sie Umlaute, Leer- und Sonderzeichen."
+                }
             }
         },
         "EXTERN_CONTACT": {
@@ -455,6 +472,14 @@
         "KEY_RESPONSE":{
             "HEADER": "Authentifizierungsanfrage",
             "CONTENT": "Haben Sie soeben auf einem anderen Gerät einen neuen cameoKey erzeugt und möchten dort den Zugriff auf Ihre verschlüsselten Nachrichten erlauben?"
+        },
+        "KEY_REQUEST_3RD":{
+            "HEADER": "Vertrauens-Prozess",
+            "CONTENT": "Wollen Sie den Vertrauens-Prozess für diesen Kontakt starten?<br>Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen.<br><br>ACHTUNG!! Der Kontakt muss im cameoNet mit der Identität angemeldet sein, bevor Sie den Prozess starten!"
+        },
+        "KEY_RESPONSE_3RD":{
+            "HEADER": "Vertrauens-Prozess",
+            "CONTENT": "Ein Kontakt hat soeben den Vertrauens-Prozess mit Ihnen gestartet. Wollen Sie ihn mit diesem Gerät durchführen?<br><br>Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen."
         },
         "FOOTER": {
             "TALKS": "Talks",
@@ -499,7 +524,7 @@
 
     "MODAL": {
         "ALERT": {
-            "OK": "OK"
+            "OK": "Ok"
         },
         "WEBREADER": {
             "NOTICE": "Um diese Funktion nutzen zu können, müssen Sie sich registrieren.",
@@ -533,7 +558,7 @@
             },
             "KEY_TRANSMISSION_SYMMETRIC": {
                 "NAME": "Verschlüsselung muss sich auf ein Passwort verlassen.",
-                "DESCRIPTION_NEW": "Dieser Talk kann zur Zeit nur mit Passwort verschlüsselt werden, weil mindestens einer der Empfänger keinen cameoKey besitzt. Die Sicherheit einer auf einem Passwort basierenden Verschlüsselung hängt von der Güte des Passworts und der Übertragung des Passworts an die Empfänger ab.", 
+                "DESCRIPTION_NEW": "Dieser Talk kann zur Zeit nur mit Passwort verschlüsselt werden, weil mindestens einer der Empfänger keinen cameoKey besitzt. Die Sicherheit einer auf einem Passwort basierenden Verschlüsselung hängt von der Güte des Passworts und der Übertragung des Passworts an die Empfänger ab.",
                 "DESCRIPTION": "Dieser Talk kann nur mit Passwort verschlüsselt werden, weil mindestens einer der Empfänger beim Erstellen des Talks keinen cameoKey besaß. Die Sicherheit einer auf einem Passwort basierenden Verschlüsselung hängt von der Güte des Passworts und der Übertragung des Passworts an die Empfänger ab.",
                 "DESCRIPTION_BAD_RECIPIENTS": "Folgende Empfänger haben keinen cameoKey:",
                 "DESCRIPTION_PRIVATE_KEY_MISSING": "Sie haben auf diesem Gerät keinen cameoKey."
@@ -546,6 +571,10 @@
                 "NAME": "PassCaptcha aktiviert.",
                 "DESCRIPTION": "Das PassCaptcha-Verfahren erschwert es, Nachrichten - die bei der Übertragung durch das Internet abgefangen oder auf dem cameoNet-Server gespeichert werden - in großem Umfang automatisiert zu entschlüsseln. Sicher verschlüsselt ist die Nachricht aber hiermit nicht, da Entschlüsselungsmethoden für Captchas  immer leistungsfähiger werden und eine Person die Nachricht direkt entschlüsseln könnte.",
                 "TOGGLE": "PassCaptcha deaktivieren."
+            },
+            "TRUSTING_ALL_RECIPIENTS":{
+                "NAME": "Du vertraust allen Empfängern.",
+                "DESCRIPTION": ""
             },
             "MISSING_DATA": "Sicherheitsaspekte fehlen!"
         }

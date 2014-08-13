@@ -5,8 +5,10 @@ angular.module('cmCore')
 
     'cmKey',
     'cmFactory',
+    '$rootScope',
+    'cmLogger',
 
-    function(cmKey, cmFactory){
+    function(cmKey, cmFactory, $rootScope,cmLogger){
 
         function keyFactory(){
 
@@ -19,7 +21,7 @@ angular.module('cmCore')
                                     return      instance_1.id == instance_2.id
                                             ||  instance_1.getPublicKey() ==  instance_2.getPublicKey()   
                                 }
-                            )
+                            );
 
             self.encryptPassphrase = function(passphrase, whiteList){
                 
@@ -36,21 +38,23 @@ angular.module('cmCore')
                         .filter(function(item){
                             return item && item.encryptedPassphrase
                         })
-            }
+            };
 
             self.getWeakestKeySize = function(){
                 return this.reduce(function(size, key){
                     return (size == undefined) ? (key.getSize()||0) : Math.min(size||0, key.getSize()||0)
                 }, undefined) || 0
-            }
+            };
 
             /**
              * [getTransitivelyTrustedKeys description]
              * @param  {Array} trustedKeys Array of cmKey instances known to be trusted
              * @return {Array}             Array of cmKey instances within a chain of trust connecting them to the initially trusted keys. 
              */
-            self.getTransitivelyTrustedKeys = function(trustedKeys, trust_callback){
-                trustedKeys = trustedKeys || []
+            self.getTransitivelyTrustedKeys = function(initially_trusted_keys, trust_callback, trustedKeys){
+                // cmLogger.debug('cmKeyFactory.getTransitivelyTrustedKeys');
+
+                trustedKeys = trustedKeys || initially_trusted_keys || []
 
                 if(!trust_callback){
                     cmLogger.debug('cmKey.getTransitivelyTrustedKeys: trust_callback missing.')
@@ -58,18 +62,22 @@ angular.module('cmCore')
                 }       
 
                 var extended_key_list   =   self.filter(function(key){                                    
-                                                return  trustedKeys.indexOf(key) != -1
-                                                        ||
-                                                        trustedKeys.some(function(trusted_key){
-                                                            return trust_callback(trusted_key, key)
-                                                        })
-                                            })
+                                                var is_ttrusted =   trustedKeys.indexOf(key) != -1
+                                                                    ||
+                                                                    trustedKeys.some(function(trusted_key){
+                                                                        return trust_callback(trusted_key, key)
+                                                                    }) 
 
+                                                return  is_ttrusted
+                                            })
 
                 return  extended_key_list.length === trustedKeys.length
                         ?   extended_key_list
-                        :   self.getTransitivelyTrustedKeys(extended_key_list, trust_callback)
-            }
+                        :   self.getTransitivelyTrustedKeys(null, trust_callback, extended_key_list)
+            };
+
+            $rootScope.$on('logout', function(){ self.reset() });
+            $rootScope.$on('identity:switched', function(){ self.reset() });
 
             return self
         }

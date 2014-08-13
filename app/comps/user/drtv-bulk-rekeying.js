@@ -11,13 +11,13 @@ angular.module('cmUser').directive('cmBulkRekeyingRequest',[
             controller: function($scope){
                 $scope.spinner = false;
 
-                function startRekying(){
+                function startrekeying(){
                     $scope.spinner = true;
 
                     cmUserModel.bulkReKeying($scope.data.key1, $scope.data.key2);
                 }
 
-                startRekying();
+                startrekeying();
 
                 $scope.showSpinner = function(){
                     $scope.spinner = true;

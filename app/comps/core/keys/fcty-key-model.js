@@ -4,8 +4,9 @@ angular.module('cmCore')
 .factory('cmKey', [
 
     'cmLogger',
+    '$rootScope',
 
-    function(cmLogger){
+    function(cmLogger, $rootScope){
         /**
          * @TODO TEsts!!!!!
          * @param args
@@ -13,15 +14,21 @@ angular.module('cmCore')
          */
         function cmKey(data){
             //Wrapper for RSA Keys
-            var self    = this,
-                crypt   = undefined // will be JSEncrypt() once a key is set
+            var self        = this,
+                crypt       = undefined, // will be JSEncrypt() once a key is set
+                verified    = {}
 
             this.created    = 0;
-            this.signatures = []
+            this.signatures = [];
 
             function init(data){
                 self.importData(data)
-            }  
+            }
+
+            function reset(){
+                self.created    = 0;
+                self.signatures = [];
+            }
 
             this.setId = function(id){
                 this.id = id;
@@ -50,7 +57,7 @@ angular.module('cmCore')
             };
 
             this.getFingerprint = function(){
-                return sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(this.getPublicKey()))
+                return sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(this.getPublicKey()), true, true)
             };
 
             this.getPrivateKey = function(){
@@ -66,8 +73,19 @@ angular.module('cmCore')
                 return crypt && crypt.sign(data)
             };
 
-            this.verify = function(data, signature){
-                return  crypt && crypt.verify(data, signature, function(x){ return x }) // andere version funktioniert nicht bei authentication requests
+            this.verify = function(data, signature, force){
+
+                 var result =   !force && (verified[data] && verified[data][signature])
+                                ?   verified[data][signature]
+                                :   crypt && crypt.verify(data, signature, function(x){ return x }) 
+
+                if(result){
+                    verified[data] = { signature: result}
+                }else{
+                    cmLogger.warn('keyModel.verify() failed.')
+                }
+
+                return  result
             };
 
             this.encrypt = function(secret){
@@ -150,7 +168,10 @@ angular.module('cmCore')
                 if(size)            data.size       = size;
 
                 return data;
-            };           
+            };
+
+            $rootScope.$on('logout', function(){ reset() });
+            $rootScope.$on('identity:switched', function(){ reset() });
 
             init(data)
         }

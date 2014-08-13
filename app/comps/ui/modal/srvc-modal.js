@@ -1,4 +1,4 @@
-'use strict';
+ 'use strict';
 
 angular.module('cmUi')
 .service('cmModal',[
@@ -46,9 +46,13 @@ angular.module('cmUi')
         };
 
         self.close = function(id){
-            self.instances[id].close();
+            var instance = self.instances[id]
+            
+            if(instance){
+                self.instances[id].close();
 
-            self.trigger('modal:closed',id);
+                self.trigger('modal:closed',id);
+            }
             return self;
         };
 

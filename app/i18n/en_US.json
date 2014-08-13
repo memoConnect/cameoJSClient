@@ -42,15 +42,9 @@
             "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER"
         },
         "INFO": {
-            "MIN_LETTER_COUNT": "Please use at least {{count}} characters.",
             "TERMS": "You need to accept the terms of use.",
             "EMPTY": {
                 "PASSWORD": "Please enter a Password."
-            },
-            "USERNAME": {
-                "EXISTS": "Username already exists! Please choose another.",
-                "EMPTY": "Please enter a username.",
-                "INVALID": "Invalid username. Avoid spaces and special characters."
             },
             "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
             "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
@@ -72,9 +66,9 @@
             "BTN_TEXT": "Skip"
         },
         "EXPLORE": {
-            "TITLE": "START.EXPLORE.TITLE",
-            "TEXT": "START.EXPLORE.TEXT",
-            "BTN_TEXT": "START.EXPLORE.BTN_TEXT"
+            "TITLE": "Quick Start",
+            "TEXT": "Three steps to send your first secure talk: TODO",
+            "BTN_TEXT": "And go.. TODO"
         }
     },
 
@@ -264,6 +258,12 @@
                 "EDIT": "Could not edit contact"
             }
         },
+        "HANDSHAKE_3RD": {
+            "HANDSHAKE_NOW": "Wollen Sie jetzt vertrauen? TODO: translate",
+            "TRANSACTION_SECRET": "Dann tippen Sie das ab: TODO: translate",
+            "HANDSHAKE_NEED_TRANSACTID": "Geben Sie den Code vom Gegenüber hier ein: TODO: translate",
+            "HANDSHAKE_OK": "Accept TODO: translate"
+        },
         "FOOTER":{
             "SAVE": "Save"
         }
@@ -319,6 +319,9 @@
                             "PHONENUMBER": "@:CONTACT.INFO.INVALID.PHONENUMBER"
                         }
                     },
+                    "WARN": {
+                        "FAILED": "The creating of new identity has failed. Please try again later."
+                    },
                     "FOOTER": "@:CONTACT.FOOTER.SAVE"
                 },
                 "KEYS": {
@@ -333,6 +336,7 @@
                     },
                     "DETAIL": "cameoKey",
                     "KEY_SIZE": "Key size",
+                    "FINGERPRINT": "Fingerprint",
                     "IS_LOCAL": "local",
                     "IS_LOCAL_ON_THIS_DEVICE": "Is local on this device",
                     "NO_LOCALKEYS_ON_THIS_DEVICE": "There is no cameoKey on this device for your identity. Here you can <a href=\"#/settings/identity/keys/create\">generate</a> or <a href=\"#/settings/identity/keys/import\">import</a> a cameoKey for better security.",
@@ -400,7 +404,8 @@
         "PASSWORD": {
             "PASSWORD": "Password",
             "PASSWORD_CONFIRM": "Confirm Password",
-            "ERROR": {
+            "INFO": {
+                "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
                 "EMPTY": "Please add a Password and confirm it"
             }
         },
@@ -418,6 +423,17 @@
             "INFO": {
                 "INVALID_PHONE_NUMBER": "The entered value does not seem to be a phone number.",
                 "EMPTY": "The phone number field is empty"
+            }
+        },
+        "VALIDATE_CAMEOID": {
+            "INFO": {
+                "MAX_LETTER_COUNT": "Please use a maximum of {{count}} characters.",
+                "MIN_LETTER_COUNT": "Please use at least {{count}} characters.",
+                "INPUT": {
+                    "EXISTS": "Your input already exists! Please choose another.",
+                    "EMPTY": "This field is required. Please fill out",
+                    "INVALID": "Invalid input. Avoid spaces and special characters."
+                }
             }
         },
         "EXTERN_CONTACT": {
@@ -443,7 +459,7 @@
             "FAX": "fax"
         },
         "BULK_REKEYING": {
-            "HEADER": "Bulk Rekeying",
+            "HEADER": "Encrypting talks",
             "CONTENT": "The talks on this device are being encrypted for the new cameoKey.",
             "START": "Start"
         },
@@ -454,6 +470,14 @@
         "KEY_RESPONSE":{
             "HEADER": "Authentication Request",
             "CONTENT": "An other device which pretends to be yours asked to be authenticated by this device. After that your new device gets access to all of your encrypted talks.<br>Do you want to authenticate the following device?"
+        },
+        "KEY_REQUEST_3RD":{
+            "HEADER": "Trust TODO: translate",
+            "CONTENT": "Do you want to trust(Request)? TODO: translate"
+        },
+        "KEY_RESPONSE_3RD":{
+            "HEADER": "Trust Request TODO: translate",
+            "CONTENT": "Do you want to trust(Response)? TODO: translate"
         },
         "FOOTER": {
             "TALKS": "Talks",
@@ -542,9 +566,13 @@
                 "DESCRIPTION": ""
             },
             "HAS_PASSCAPTCHA": {
-                "NAME": "PassCaptcha enabled",
+                "NAME": "PassCaptcha enabled.",
                 "DESCRIPTION": "Using the passCaptcha method makes it harder to automatically decrypt your messages on a large scale, but it is not actually save.",
                 "TOGGLE": "Disable passCaptcha"
+            },
+            "TRUSTING_ALL_RECIPIENTS": {
+                "NAME": "You trust all recipients.",
+                "DESCRIPTION": ""
             },
             "MISSING_DATA": "Security aspects missing"
         }

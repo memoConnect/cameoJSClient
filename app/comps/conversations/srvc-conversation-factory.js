@@ -15,13 +15,14 @@
  *
  */
 angular.module('cmConversations').service('cmConversationFactory', [
+    'cmUserModel',
     'cmConversationsAdapter',
     'cmFactory',
     'cmStateManagement',
     'cmConversationModel',
     'cmLogger',
     '$rootScope',
-    function(cmConversationsAdapter, cmFactory, cmStateManagement, cmConversationModel, cmLogger, $rootScope) {
+    function(cmUserModel, cmConversationsAdapter, cmFactory, cmStateManagement, cmConversationModel, cmLogger, $rootScope) {
         var self = cmFactory(cmConversationModel);
 
         var _quantity   = 0,
@@ -82,9 +83,17 @@ angular.module('cmConversations').service('cmConversationFactory', [
          */
         $rootScope.$on('logout', function(){ self.reset() });
 
+        $rootScope.$on('identity:switched', function(){
+            cmUserModel.one('update:finished', function(){
+                self.reset();
+                self.getList();
+            })
+        });
+
         cmConversationsAdapter.on('message:new', function(event,data){
-            self.create(data.conversationId)
-            .trigger('message:new', data.message)
+            self
+                .create(data.conversationId)
+                .trigger('message:new', data.message)
         });
 
         cmConversationsAdapter.on('conversation:new', function(event,data){

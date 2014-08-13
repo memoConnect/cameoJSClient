@@ -18,39 +18,51 @@ angular.module('cmContacts').service('cmContactsModel',[
         var self = this,
             events = {};
 
-        this.state = new cmStateManagement(['loading-contacts','loading-groups','loading-requests']);
+        this.state          =   new cmStateManagement(['loading-contacts','loading-groups','loading-requests']);
 
-        this.contacts   = new cmFactory(cmContactModel,
-                                function sameByData(instance, data){
-                                    return data &&
-                                           data.identity &&
-                                           data.identity.id &&
-                                           instance &&
-                                           instance.identity &&
-                                           instance.identity.id &&
-                                           data.identity.id == instance.identity.id
-                                });
+        this.contacts       =   new cmFactory(cmContactModel,
+                                    function sameByData(instance, data){
+                                        return data &&
+                                               data.identity &&
+                                               data.identity.id &&
+                                               instance &&
+                                               instance.identity &&
+                                               instance.identity.id &&
+                                               data.identity.id == instance.identity.id
+                                    });
         // TODO: groups must be in factory style with models
-        this.groups     = [];//new cmFactory(function(){return this;});
-        this.requests   = new cmFactory(cmFriendRequestModel, 
-                                function sameByData(instance, data){
-                                    return      data 
-                                            &&  data.identity 
-                                            &&  data.identity.id 
-                                            &&  instance
-                                            &&  instance.identity
-                                            &&  instance.identity.id
-                                            &&  data.identity.id == instance.identity.id
-                                },
-                                function sameByInstance(instance_1, instance_2){
-                                    return      instance_1
-                                            &&  instance_1.identity
-                                            &&  instance_1.identity.id
-                                            &&  instance_2
-                                            &&  instance_2.identity
-                                            &&  instance_2.identity.id
-                                            &&  instance_1.identity.id == instance_2.identity.id
-                                });
+        this.groups         =   [];//new cmFactory(function(){return this;});
+        this.requests       =   new cmFactory(cmFriendRequestModel, 
+                                    function sameByData(instance, data){
+                                        return      data 
+                                                &&  data.identity 
+                                                &&  data.identity.id 
+                                                &&  instance
+                                                &&  instance.identity
+                                                &&  instance.identity.id
+                                                &&  data.identity.id == instance.identity.id
+                                    },
+                                    function sameByInstance(instance_1, instance_2){
+                                        return      instance_1
+                                                &&  instance_1.identity
+                                                &&  instance_1.identity.id
+                                                &&  instance_2
+                                                &&  instance_2.identity
+                                                &&  instance_2.identity.id
+                                                &&  instance_1.identity.id == instance_2.identity.id
+                                    });
+
+        this.findByIdentity =   function(identity){
+                                    return this.contacts.filter(function(contact){
+                                        return contact.identity == identity
+                                    })[0]
+                                }
+
+        this.findByIdentityId =   function(identityId){
+            return this.contacts.filter(function(contact){
+                return contact.identity.id == identityId
+            })[0]
+        }
   
         cmObject.addEventHandlingTo(this);
 
@@ -62,6 +74,15 @@ angular.module('cmContacts').service('cmContactsModel',[
             self.getAll();
             self.getGroups();
             self.getFriendRequests();
+        }
+
+        /**
+         * Reset Object
+         */
+        function reset(){
+            self.contacts.reset();
+            self.groups = [];
+            self.requests.reset();
         }
 
         /**
@@ -267,14 +288,15 @@ angular.module('cmContacts').service('cmContactsModel',[
             return defer.promise;
         };
 
-
         /**
          * event handling
          */
         $rootScope.$on('logout', function(){
-            self.contacts.reset();
-            self.groups = [];//self.groups.reset();
-            self.requests.reset();
+            reset();
+        });
+
+        $rootScope.$on('identity:switched', function(){
+            reset();
         });
 
         this.on('friendRequests:updated friendRequest:send after-add-contact', function(){

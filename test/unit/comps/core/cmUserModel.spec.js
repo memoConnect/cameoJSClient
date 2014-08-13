@@ -24,7 +24,7 @@ describe('cmUserModel', function(){
         cmUserModel.importData({
             id : 'my_id_moep',
             userKey: 'my_user_key'
-        })
+        },[])
 //        _$rootScope_.$apply()
 
     }))

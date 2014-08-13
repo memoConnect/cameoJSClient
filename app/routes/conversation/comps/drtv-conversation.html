@@ -3,11 +3,10 @@
         <cm-back back-to="/talks" ng-if="conversationId == 'new'"></cm-back>
         <cm-back back-to="/talks" plain-back="true" ng-if="conversationId != 'new'"></cm-back>
     </div>
-    <cm-identity cm-weight="3"></cm-identity>
+    <cm-identity cm-weight="4"></cm-identity>
     <cm-security-indicator
-        cm-weight       = "3"
+        cm-weight       = "2"
         cm-data         = "conversation.securityAspects"
-        cm-leading-icon = "cm-lock"
         ng-click        = "goto('conversation/'+conversationId+'/security-settings')"
     ></cm-security-indicator>
     <cm-menu cm-weight="1"></cm-menu>
