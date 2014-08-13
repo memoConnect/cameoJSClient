@@ -26,8 +26,9 @@
     <cm-contacts-list contacts-as="contacts">
         <cm-contact-tag
             cm-rubber-space
-            ng-repeat="contact in contacts|cmRecipients:true:selected|cmSearch:'contacts':search"
-            ng-class="{'disabled':contact.contactType == 'pending'}">
+            ng-repeat   = "contact in contacts|cmRecipients:true:selected|cmSearch:'contacts':search"
+            ng-if       = "contact.contactType != 'pending'" 
+        >
             <cm-avatar cm-data="contact.identity"></cm-avatar>
             <cm-key-level cm-data="contact.identity.keys.getWeakestKeySize()"></cm-key-level>
             <cm-contact-brief cm-data="contact" cm-weight="1"></cm-contact-brief>
@@ -50,8 +51,9 @@
         <cm-contacts-list contacts-as="contacts">
             <cm-contact-tag
                 cm-rubber-space
-                ng-repeat="contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search"
-                ng-class="{'disabled':contact.contactType == 'pending'}">
+                ng-repeat   =   "contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search"
+                ng-if       =   "contact.contactType != 'pending'" 
+            >
                 <cm-avatar cm-data="contact.identity"></cm-avatar>
                 <cm-key-level cm-data="contact.identity.keys.getWeakestKeySize()"></cm-key-level>
                 <cm-contact-brief cm-data="contact" cm-weight="1"></cm-contact-brief>
