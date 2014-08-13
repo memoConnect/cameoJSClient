@@ -337,6 +337,7 @@
                     },
                     "DETAIL": "cameoKey",
                     "KEY_SIZE": "Schlüsselstärke",
+                    "FINGERPRINT": "Fingerprint",
                     "IS_LOCAL": "lokal",
                     "IS_LOCAL_ON_THIS_DEVICE": "lokal auf diesem Gerät",
                     "NO_LOCALKEYS_ON_THIS_DEVICE": "Sie haben keinen cameoKey für Ihre Identität auf diesem Gerät. Um sicher zu kommunizieren, können Sie hier einen cameoKey für diese Identität <a href=\"#/settings/identity/keys/create\">erzeugen</a> oder <a href=\"#/settings/identity/keys/import\">importieren</a>.",
