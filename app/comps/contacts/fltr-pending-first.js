@@ -4,8 +4,13 @@ angular.module('cmContacts').filter('cmPendingFirst', [
     
     function(){
         return  function(arrayOfContacts){
-                    return arrayOfContacts.sort(function(contact1, contact2){
-                        return (contact2.contactType == 'pending' && contact1.contactType != 'pending')
+                    var copy = arrayOfContacts.slice(0)
+                    return copy.sort(function(contact1, contact2){
+                       
+                        var a           =   contact1.contactType == 'pending' ? 1 : 0,
+                            b           =   contact2.contactType == 'pending' ? 1 : 0
+
+                        return b-a
                     })
                 }
     }

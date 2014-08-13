@@ -49,7 +49,7 @@ define([
                 .commitInterval( cameo_config.commitInterval )
                 .useEvents( cameo_config.useEvents )
                 .eventsPath( cameo_config.eventsPath )
-                .eventsInterval( 4000 )//cameo_config.eventsInterval )
+                .eventsInterval( cameo_config.eventsInterval )
 
             cmLanguageProvider
                 .cacheLangFiles(cameo_config.cache_lang_files)
@@ -302,10 +302,6 @@ define([
             // Todo: whats is todo??
             if(cmUserModel.getToken())
                 cmApi.listenToEvents()
-
-            $rootScope.$watch(function(){
-                cmLogger.debug('digest')
-            })
 
         }
     ])
