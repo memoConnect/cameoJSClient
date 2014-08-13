@@ -499,15 +499,11 @@ angular.module('cmCore')
 
                 //Dont sign twice:
                 if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
-                    console.log('bah')
                     self.trigger('signatures:cancel');
                     return false; 
                 }
 
                 //Content of the signature:
-                console.log(keyToSign.id)
-                console.log(identity.cameoId)
-
                 var signature  =  signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId));
 
                 
@@ -583,10 +579,6 @@ angular.module('cmCore')
                                                                     })
                                                         })
                                             })
-
-            console.log(identity.cameoId)
-            console.log(ttrusted_keys)
-
 
             if(sign != true || unsigned_ttrusted_keys.length == 0)
                 return ttrusted_keys
