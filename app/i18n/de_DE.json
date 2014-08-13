@@ -290,10 +290,10 @@
 	"SETTINGS": {
 		"WELCOME": "Einstellungen",
         "LABEL": "Einstellungen",
-        "ACCOUNT": "Account",
-        "IDENTITY": "Identitäten",
+        "ACCOUNT": "Account Einstellungen",
+        "IDENTITY": "Identität Einstellungen",
         "NOTIFY": "Benachrichtungen",
-        "CONTACTS": "Kontakte",
+        "CONTACTS": "Kontakte Einstellungen",
         "APP": "App Einstellungen",
         "CONTRACTS": "Verträge",
         "PAGES":{
