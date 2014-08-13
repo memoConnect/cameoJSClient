@@ -303,6 +303,10 @@ define([
             if(cmUserModel.getToken())
                 cmApi.listenToEvents()
 
+            $rootScope.$watch(function(){
+                cmLogger.debug('digest')
+            })
+
         }
     ])
 

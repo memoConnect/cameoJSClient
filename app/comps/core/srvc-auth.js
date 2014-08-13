@@ -432,7 +432,7 @@ angular.module('cmCore').service('cmAuth', [
         });
 
         cmApi.on('conversation:new-aePassphrase', function(event, data){
-            console.log('conversation:new-aePassphrase');
+           //console.log('conversation:new-aePassphrase');
             auth.trigger('conversation:update', data)
         });
 
