@@ -202,7 +202,7 @@ describe('cmKeyModel', function() {
         expect(key_1.getFingerprint()).not.toBe(key_2.getFingerprint())
 
         //Has to use the same hashing method has cmCrypt.hash():
-        expect(key_1.getFingerprint()).toBe(cmCrypt.hash(key_1.getPublicKey()))
+        expect(key_1.getFingerprint()).toBe('7XiLqw1US1LarDT8QEM7MvxypdH1nvCyUz7AuxaVA1M')
         
     })
 
