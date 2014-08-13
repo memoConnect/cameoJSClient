@@ -57,7 +57,7 @@ angular.module('cmCore')
             };
 
             this.getFingerprint = function(){
-                return sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(this.getPublicKey()))
+                return sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(this.getPublicKey()), true, true)
             };
 
             this.getPrivateKey = function(){
