@@ -29,12 +29,16 @@
                 <strong>{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_SIZE'|cmTranslate}}:</strong>
                 {{keySize}}
             </h4>
+            <h4>
+                <strong>{{'SETTINGS.PAGES.IDENTITY.KEYS.FINGERPRINT'|cmTranslate}}:</strong>
+                {{fingerprint}}
+            </h4>
 
             <div ng-if="privKey">
                 <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
                 <textarea class="form-control" ng-model="privKey" readonly="readonly" data-qa="input-private-key" cm-clipboard></textarea>
             </div>
-            <div ng-if="!privKey">
+            <div ng-if="privKey">
                 <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PUBLIC_KEY'|cmTranslate}}</h3>
                 <textarea class="form-control" ng-model="pubKey" readonly="readonly" data-qa="input-public-key" cm-clipboard></textarea>
             </div>
