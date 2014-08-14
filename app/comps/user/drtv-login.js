@@ -44,7 +44,7 @@ angular.module('cmUser').directive('cmLogin', [
                         return false;
 
                     $scope.alertState = '';
-                    $scope.spinner('start/keyinfo');
+                    $scope.spinner('start');
 
                     cmUserModel.doLogin(
                         $scope.formData.user,
@@ -58,7 +58,7 @@ angular.module('cmUser').directive('cmLogin', [
                             $scope.spinner('stop');
                             if(!$location.$$path.match(/\/purl\/.*/)){
                                 if(cmUserModel.loadLocalKeys().length == 0 && skipStart == false){
-                                    $location.path("/start");
+                                    $location.path("/start/keyinfo");
                                 } else {
                                     $location.path("/talks");
                                 }
