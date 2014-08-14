@@ -84,4 +84,43 @@
       color: @cm-ci-color;
     }
   }
+
+
+  .authentication-status{
+    position:relative;
+    margin:2rem auto;
+    width:3.5*@cm-unit;
+    line-height:1em;
+    text-align:center;
+    font-size:2*@cm-unit;
+
+    i{
+      
+      &.active{
+        color:@cm-ci-color;
+      }
+
+      &.cm-key-request{
+        position:absolute;
+        font-size:1em;
+        left:0;
+        top:0;
+      }
+
+      &.cm-key-response{
+        position:absolute;
+        font-size:1em;
+        right:0;
+        top:0;
+      }
+
+      &.cm-handshake{
+        font-size: 0.4em;
+        vertical-align: middle;
+      }
+      
+    }
+
+
+  }
 }
