@@ -1,0 +1,32 @@
+cm-info-bubble{
+    display:block;
+    position:relative;
+    margin: 0.5rem 1rem 1rem 1rem;
+    padding: 1.05rem;
+    background-color: @cm-light-grey;
+    .border-radius;
+
+    &.up {
+        margin-top: 2em;
+    }
+
+    &.down {
+        margin-bottom: 2em;
+    }
+
+    i.cm-nose-up,
+    i.cm-nose-down {
+      position: absolute;
+      color: @cm-light-grey;
+      font-size: @cm-unit;
+      margin-left:-0.575*@cm-unit;
+    }
+
+    i.cm-beta {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: @cm-unit;
+      color: @cm-ci-color;
+    }
+}
