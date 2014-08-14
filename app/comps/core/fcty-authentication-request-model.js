@@ -2,10 +2,11 @@
 
 angular.module('cmCore')
 .factory('cmAuthenticationRequestModel', [
-    'cmObject', 'cmStateManagement', 'cmCrypt', 'cmKey', 'cmUtil', 'cmAuth',
+    'cmObject', 'cmStateManagement', 'cmCrypt', 'cmKey', 'cmUtil', 'cmAuth', 'cmApi',
     'cmUserModel', 'cmLogger', 'cmContactsModel',
-    function(cmObject, cmStateManagement, cmCrypt, cmKey, cmUtil, cmAuth,
-             cmUserModel, cmLogger, cmContactsModel){
+    '$q',
+    function(cmObject, cmStateManagement, cmCrypt, cmKey, cmUtil, cmAuth, cmApi,
+             cmUserModel, cmLogger, cmContactsModel, $q){
         function authenticationRequestModel(requestData){
             var self = this;
 
@@ -99,10 +100,14 @@ angular.module('cmCore')
                     this.toKey = toKey;
 
                     this.trigger('key-response:accepted',{id:this.id});
+                    return true
                 } else {
                     cmLogger.debug('cmAuthenticationRequestModel.importKeyResponse - fail');
                     this.trigger('key-response:failed');
+                    return false
                 }
+
+             
             }
 
             this.setToKey = function(toKey){
@@ -309,6 +314,27 @@ angular.module('cmCore')
                             cmLogger.debug('authenticationRequestModel.send - Error');
                         }
                     );
+
+                    cmApi.on('authenticationRequest:verified', function(event, request) {
+
+                        self.importData(request)
+                            
+                        authenticationRequest.finish();
+
+                        //TODO: Hier Weiterarbeiten!
+                        authenticationRequest.on('request:finished', function(){
+
+                            cmAuthenticationRequestFactory.deregister(authenticationRequest);
+                            if(
+                                    self.fromIdentityId == self.ToIdentityId
+                                &&  self.fromIdentityId == cmUserModel.data.identity.id
+                            ){
+                                var bulkData = authenticationRequest.exportKeyIdsForBulk();
+                                self.openBulkRequest(bulkData);
+                            }
+                        })
+
+                    });
                 } else {
                     cmLogger.debug('Error - cmAuthenticationRequestModel.send - Data have not the right form!');
                 }
@@ -337,6 +363,8 @@ angular.module('cmCore')
             this.sendKeyRequest = function(){
 //                cmLogger.debug('cmAuthenticationRequestModel.sendKeyRequest');
 
+                var deferred = $q.defer()
+
                 if(this.state.is('outgoing') && !this.state.is('finished')){
                     cmAuth.sendBroadcast({
                         name: "authenticationRequest:key-request",
@@ -347,6 +375,26 @@ angular.module('cmCore')
                     }, (this.toIdentityId == cmUserModel.data.identity.id) ? undefined : this.toIdentityId);
 
                 }
+
+                cmApi.one('authenticationRequest:key-response', function(event, response){
+                    cmLogger.debug('authentificationModel.authenticationRequest:key-response');
+
+                    if(typeof response == 'object'
+                        && "id" in response
+                        && "toKeyId" in response
+                        && "toKeyFingerprint" in response
+                        && self.id == response.id
+                        && self.state.is('outgoing')
+                    ){
+                        if(self.importKeyResponse(response)){
+                            deferred.resolve()
+                        }else{
+                            deferred.reject()
+                        }
+                    }
+                });
+
+                return deferred.promise
             };
 
             this.sendVerified = function(){
@@ -465,9 +513,11 @@ angular.module('cmCore')
     }
 ])
 .factory('cmAuthenticationRequestFactory',[
+
     'cmFactory',
     'cmAuthenticationRequestModel',
     '$rootScope',
+
     function(cmFactory, cmAuthenticationRequestModel, $rootScope){
         var self = new cmFactory(cmAuthenticationRequestModel);
 
