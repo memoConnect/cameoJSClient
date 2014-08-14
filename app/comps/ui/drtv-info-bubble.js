@@ -23,9 +23,9 @@ angular.module('cmUi').directive('cmInfoBubble',[
                             element.toggleClass('down', scope.nose_icon == 'cm-nose-down')
 
                             element.children('i.').css({
-                                top     : scope.nosePos == 'bottom' ? 'auto': '-1.05em',
-                                bottom  : scope.nosePos == 'bottom' ? '-1.05em' : 'auto',
-                                left    : scope.noseX                               
+                                top     : scope.nosePos == 'bottom' ? 'auto': '-1em',
+                                bottom  : scope.nosePos == 'bottom' ? '-1em' : 'auto',
+                                left    : scope.noseX || '70%'                               
                             })
                         }
         }

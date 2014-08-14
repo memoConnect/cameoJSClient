@@ -1,25 +1,79 @@
-cm-info-bubble{
+.theme-a{
+  color: @cm-grey;
+  background:@cm-white;
+  min-height:60rem;
+
+  >*{
+    padding: 0 2rem;
+  }
+
+  h2{
+    background:@cm-input-bg-color;
+    padding:0 1rem;
+    font-size:1em;
+    line-height:@cm-unit;
+    font-weight:bold;
+    width: 100%;
+    margin:0;
+    position:relative;
+    text-align:center;
+    i{
+      margin-right:0.6rem;
+      font-size:2em;
+      vertical-align:middle;
+    }
+  }
+
+  h3{
+    font-size:1em;
+    font-weight:bold;
+  }
+
+  hr {
+    background-color: @cm-border-grey;
+    border: none;
+    /*border-bottom: 0.01*@cm-unit solid @cm-border-grey;*/
+    margin: 1em 0.1rem;
+    height:1px;
+  }
+
+  article{
+  }
+
+
+  cm-info-bubble{
     display:block;
     position:relative;
-    margin: 0.5rem 1rem 1rem 1rem;
+    margin: 0 -1rem;
     padding: 1.05rem;
     background-color: @cm-light-grey;
     .border-radius;
 
     &.up {
-        margin-top: 2em;
+        margin-top: 1rem;
     }
 
     &.down {
-        margin-bottom: 2em;
+        margin-bottom: 1rem;
+    }
+
+    > div {
+      font-size: 0.9em;
     }
 
     i.cm-nose-up,
     i.cm-nose-down {
       position: absolute;
       color: @cm-light-grey;
-      font-size: @cm-unit;
+      font-size: 0.75*@cm-unit;
       margin-left:-0.575*@cm-unit;
+      margin-right:0;
+
+      &.flip{
+        margin-left:0;
+        margin-right:-0.575*@cm-unit;
+      }
+
     }
 
     i.cm-beta {
@@ -29,4 +83,5 @@ cm-info-bubble{
       font-size: @cm-unit;
       color: @cm-ci-color;
     }
+  }
 }

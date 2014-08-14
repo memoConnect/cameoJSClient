@@ -7,25 +7,55 @@
     </cm-header>
 
     <section class = "theme-a">
+
         <h2>
             <i class = "fa cm-key"></i>
             {{"AUTHENTICATION.HEADING" | cmTranslate}}
         </h2>
 
+        <!-- status -->
 
-        <article>
-        
+        <article class= "authentication-status" ng-click = "step = ((step||0)+1)%4">
+            <i class= "fa cm-key-request"   ng-class="'active': step > 0"></i>
+            <i class= "fa cm-key-response"  ng-class="'active': step > 1"></i>
+            <i class= "fa cm-handshake"     ng-class="'active': step > 2"></i>
+            {{step}}
         </article>
 
-        
+        <hr/>
+
+        <h3>
+            {{"AUTHENTICATION.HEADING" | cmTranslate}}
+        </h3>
+
+        <article>
+            <cm-info-bubble noseX = "60%">
+                {{"AUTHENTICATION.EXPLANATION" | cmTranslate}}
+
+                <br/>
+                <br/>
+
+                <strong>
+                    {{"AUTHENTICATION.INSTRUCTIONS" | cmTranslate}}
+                </strong>
+            </cm-info-bubble>
+        </article>
+
+        <hr/>
+
+        <article>
+            <strong>
+                {{"AUTHENTICATION.NOTE" | cmTranslate}}
+            </string>
+        </article>
 
     <section>
 
 
     <cm-footer cm-always-on-top>
         <button ng-click="startAuthentication()" class="cm-btn-block cm-btn-grey" data-qa="btn-start-authentication">
-            {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_START'|cmTranslate}}
-            <i class="fa cm-checker cm-lg-icon"></i>
+            {{'AUTHENTICATION.HANDSHAKE_START'|cmTranslate}}
+            <i class="fa cm-handshake cm-lg-icon"></i>
         </button>
     </cm-footer>
 </section>
