@@ -14,52 +14,47 @@
     </cm-info-bubble>
 </article>
 
-<!--<hr />-->
+<hr />
 
-<!--<ul>-->
-    <!--<li>-->
-        <!--<span class="item clearfix">-->
-            <!--Moep-->
-        <!--</span>-->
-        <!--<div class="short-links">-->
-            <!--<span>-->
+<ul>
+    <li ng-click="toggleSkipKeyInfo()">
+        <span class="item">
+           {{'START.KEYINFO.CHECKBOX_TEXT' | cmTranslate}}
+        </span>
+        <div class="short-links">
+            <input
+                id="skipKeyInfoInput"
+                data-qa="checkbox-skip-key-info-input"
+                name="skip"
+                type="checkbox"
+                ng-model="skipStart"
+                class="ng-hide" />
+            <i
+                id="skipKeyInfoIcon"
+                data-qa="checkbox-skip-key-info-icon"
+                class="fa cm-lg-icon cm-grey"
+                ng-class="{
+                'cm-checkbox':!skipKeyInfo,
+                'cm-checkbox-right':skipKeyInfo
+                }"></i>
+        </div>
+    </li>
+    <li ng-click="goToTalks()">
+        <span class="item">
+            {{'START.KEYINFO.SKIP_TEXT' | cmTranslate}}
+        </span>
+        <div class="short-links">
+            <span>
 
-            <!--</span>-->
-            <!--<i class="fa cm-right"></i>-->
-        <!--</div>-->
-    <!--</li>-->
-    <!--<li>-->
-        <!--<span class="item clearfix">-->
-            <!--Moep-->
-        <!--</span>-->
-        <!--<div class="short-links">-->
-            <!--<span>-->
+            </span>
+            <i class="fa cm-right"></i>
+        </div>
+    </li>
+</ul>
 
-            <!--</span>-->
-            <!--<i class="fa cm-right"></i>-->
-        <!--</div>-->
-    <!--</li>-->
-<!--</ul>-->
-
-<!--<section class="skipInfo">-->
-    <!--<input-->
-            <!--id="skipStartInput"-->
-            <!--data-qa="checkbox-skip-start"-->
-            <!--name="skip"-->
-            <!--type="checkbox"-->
-            <!--ng-model="skipStart"-->
-            <!--class="ng-hide"-->
-            <!--required />-->
-    <!--<i-->
-            <!--id="skipStart"-->
-            <!--data-qa="icon-checkbox-skip-start"-->
-            <!--class="fa cm-lg-icon cm-ci-color ml15"-->
-            <!--ng-class="{-->
-                        <!--'cm-checkbox':!skipStart,-->
-                        <!--'cm-checkbox-right':skipStart-->
-                    <!--}"-->
-            <!--ng-click="setSkipStart()"></i>-->
-    <!--<button ng-click="setSkipStart()" data-qa="btn-skip-text">{{'START.SKIP.TEXT' | cmTranslate}}</button>-->
-
-    <!--<button class="btn cm-btn-block cm-btn-grey" ng-click="goToTalks()" data-qa="btn-skip">{{'START.SKIP.BTN_TEXT' | cmTranslate}}</button>-->
-<!--</section>-->
+<cm-footer>
+    <button ng-click="generateKey()" class="cm-btn-block cm-btn-grey" data-qa="btn-next-step">
+        {{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE.HEADER' | cmTranslate}}
+        <i class="fa cm-key cm-lg-icon"></i>
+    </button>
+</cm-footer>

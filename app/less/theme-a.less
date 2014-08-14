@@ -1,8 +1,6 @@
 .theme-a{
   color: @cm-grey;
-  background:@cm-white;
-  min-height:60rem;
-
+  background-color: @cm-white;
   >*{
     padding: 0 2rem;
   }
@@ -95,5 +93,63 @@
 
   cm-footer button i {
     margin-left: 1rem;
+  }
+
+  ul {
+    background-color: @cm-white;
+    padding:0 !important;
+    li {
+      .with-cursor;
+      min-height: 4rem;
+      border-bottom: @cm-border-grey @cm-border-width solid;
+      position: relative;
+      .item {
+        color: @cm-grey;
+        display: inline-block;
+        padding: 1rem;
+        width: 100%;
+        position: relative;
+        .title, .content {
+          display: inline-block;
+          width: 70%;
+        }
+        .content{
+          position: relative;
+          text-align: right;
+          right: 0.5rem;
+          width: 30% !important;
+        }
+        i {
+          margin-right:1rem;
+          font-size:@cm-mega-font;
+          vertical-align: middle;
+          &.cm-lg-special{
+            margin-right:0.7rem;
+          }
+        }
+        .second-row {
+          display:block;
+          font-size:@cm-small-font;
+        }
+      }
+      .short-links{
+        position:absolute;
+        background:@cm-white;
+        right:0;
+        top:0;
+        i {
+          text-align:center;
+          width:@cm-unit;
+          height:@cm-unit - 0.1;
+          line-height:@cm-unit;
+          font-size:@cm-unit/2;
+        }
+      }
+      &.is-disabled{
+        .item, .short-links {
+          .cm-disabled
+        }
+      }
+    }
   }
 }

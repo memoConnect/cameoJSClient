@@ -59,10 +59,6 @@
 	"START": {
 		"YOUR_ID": "Deine cameoID",
 		"LOGOUT": "Abmelden",
-        "SKIP": {
-            "TEXT": "Zeige mir diese Seite nicht mehr an",
-            "BTN_TEXT": "Überspringen"
-        },
         "WELCOME": {
             "HEADLINE": "Willkommen im cameoNet!",
             "TEXT_1": "<span class='cm-ci-color'>cameoNet</span> ist ein Ende-zu-Ende verschlüsselter OpenSource Messenger für sichere private und geschäftliche Kommunikation!",
@@ -83,8 +79,9 @@
             "TEXT_4": "Wenn Sie Fragen zu cameoNet haben oder auf Probleme mit der Nutzung stoßen, können Sie mir jederzeit auf diese Nachricht antworten.<br>Oder Sie nutzen unser Forum unter https://support.cameonet.de,<br>Ihr cameoNet-Support",
             "BTN_TEXT": "Und los..."
         },
-        "KEY_INFO": {
-            
+        "KEYINFO": {
+            "CHECKBOX_TEXT": "Diese Seite nicht mehr anzeigen",
+            "SKIP_TEXT": "Diesen Schritt überspringen"
         },
         "BTNS": {
             "NEXT": "Weiter"
