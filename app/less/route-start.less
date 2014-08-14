@@ -2,32 +2,8 @@ cm-welcome, cm-quick-start, cm-key-info {
   background-color: @cm-white;
   display: block;
   color: @cm-grey-font;
-  header {
-    font-size: 1.5rem;
-    i {
-      font-size: 3rem;
-      margin-right: 0.3rem !important;
-    }
-  }
-  section {
-    background-color: @cm-white;
-    padding: 1rem 2rem;
-    &.headline {
-      color: @cm-grey;
-      font-weight: bold;
-      padding: 1rem 2rem 0.5rem 2rem;
-    }
-    &.box-grey {
-      margin: 0.5rem 1rem 1rem 1rem;
-      padding: 1.05rem;
-      background-color: @cm-light-grey;
-      .border-radius;
-    }
-    &.text{
-      padding: 0 2rem 1rem;
-    }
-  }
-  div.welcome-beta-info, div.key-info {
+
+  article.welcome-beta-info {
     position: relative;
     i.cm-beta {
       position: absolute;
@@ -35,87 +11,70 @@ cm-welcome, cm-quick-start, cm-key-info {
       right: 1rem;
       color: @cm-ci-color;
     }
-    i.cm-nose-up {
-      position: absolute;
-      top: -4rem;
-      right: 11rem;
-      color: @cm-light-grey;
-    }
   }
-  div.key-info {
-    margin-top: 2rem;
-  }
-
-  cm-footer i {
-    margin-left: 1rem;
-  }
-
-  ul {
-    background-color: @cm-white;
-    li {
-      .with-cursor;
-      min-height: 4rem;
-      border-bottom: @cm-border-grey @cm-border-width solid;
-      position: relative;
-      .item {
-        color: @cm-grey;
-        display: inline-block;
-        padding: 1rem;
-        width: 100%;
-        position: relative;
-        .title, .content {
-          display: inline-block;
-          width: 70%;
-        }
-        .content{
-          position: relative;
-          text-align: right;
-          right: 0.5rem;
-          width: 30% !important;
-        }
-        i {
-          margin-right:1rem;
-          font-size:@cm-mega-font;
-          vertical-align: middle;
-          &.cm-lg-special{
-            margin-right:0.7rem;
-          }
-        }
-        .second-row {
-          display:block;
-          font-size:@cm-small-font;
-        }
-      }
-      .short-links{
-        position:absolute;
-        background:@cm-white;
-        right:0;
-        top:0;
-        i {
-          text-align:center;
-          width:@cm-unit;
-          height:@cm-unit - 0.1;
-          line-height:@cm-unit;
-          font-size:@cm-unit/2;
-        }
-      }
-      &.is-disabled{
-        .item, .short-links {
-          .cm-disabled
-        }
-      }
-    }
-  }
-}
-
-
-//section.welcome, section.keyInfo, section.skipInfo, section.exploreInfo {
-//  background-color: @cm-white;
-//  padding: 1rem;
-//}
-//
-//section.skipInfo {
-//  button {
-//    font-weight: bold;
 //  }
-//}
+//  div.key-info {
+//    margin-top: 2rem;
+//  }
+//
+//  cm-footer i {
+  //    margin-left: 1rem;
+  //  }
+//
+//  ul {
+//    background-color: @cm-white;@cm-base-font
+//    li {
+//      .with-cursor;
+//      min-height: 4rem;
+//      border-bottom: @cm-border-grey @cm-border-width solid;
+//      position: relative;
+//      .item {
+//        color: @cm-grey;
+//        display: inline-block;
+//        padding: 1rem;
+//        width: 100%;
+//        position: relative;
+//        .title, .content {
+//          display: inline-block;
+//          width: 70%;
+//        }
+//        .content{
+//          position: relative;
+//          text-align: right;
+//          right: 0.5rem;
+//          width: 30% !important;
+//        }
+//        i {
+//          margin-right:1rem;
+//          font-size:@cm-mega-font;
+//          vertical-align: middle;
+//          &.cm-lg-special{
+//            margin-right:0.7rem;
+//          }
+//        }
+//        .second-row {
+//          display:block;
+//          font-size:@cm-small-font;
+//        }
+//      }
+//      .short-links{
+//        position:absolute;
+//        background:@cm-white;
+//        right:0;
+//        top:0;
+//        i {
+//          text-align:center;
+//          width:@cm-unit;
+//          height:@cm-unit - 0.1;
+//          line-height:@cm-unit;
+//          font-size:@cm-unit/2;
+//        }
+//      }
+//      &.is-disabled{
+//        .item, .short-links {
+//          .cm-disabled
+//        }
+//      }
+//    }
+//  }
+}

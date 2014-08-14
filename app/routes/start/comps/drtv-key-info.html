@@ -3,42 +3,43 @@
     <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
 
-<header class="inScreen tac" data-qa="ctn-explore-info-header">
+<h2>
     <i class="fa cm-key"></i>
     {{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}
-</header>
+</h2>
 
-<div class="key-info">
-    <section class="box-grey" ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE' | cmParse"></section>
-    <i class="fa cm-nose-up cm-lg-special"></i>
-</div>
+<article>
+    <cm-info-bubble nose-x="50%">
+        <span ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE' | cmParse"></span>
+    </cm-info-bubble>
+</article>
 
-<hr />
+<!--<hr />-->
 
-<ul>
-    <li>
-        <span class="item clearfix">
-            Moep
-        </span>
-        <div class="short-links">
-            <span>
+<!--<ul>-->
+    <!--<li>-->
+        <!--<span class="item clearfix">-->
+            <!--Moep-->
+        <!--</span>-->
+        <!--<div class="short-links">-->
+            <!--<span>-->
 
-            </span>
-            <i class="fa cm-right"></i>
-        </div>
-    </li>
-    <li>
-        <span class="item clearfix">
-            Moep
-        </span>
-        <div class="short-links">
-            <span>
+            <!--</span>-->
+            <!--<i class="fa cm-right"></i>-->
+        <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+        <!--<span class="item clearfix">-->
+            <!--Moep-->
+        <!--</span>-->
+        <!--<div class="short-links">-->
+            <!--<span>-->
 
-            </span>
-            <i class="fa cm-right"></i>
-        </div>
-    </li>
-</ul>
+            <!--</span>-->
+            <!--<i class="fa cm-right"></i>-->
+        <!--</div>-->
+    <!--</li>-->
+<!--</ul>-->
 
 <!--<section class="skipInfo">-->
     <!--<input-->

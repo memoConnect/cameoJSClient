@@ -38,6 +38,15 @@ cameo_config = {
             ],
             resolveOnBoot: true
         },
+        'authentication' :{
+            hasCtrl: true,
+            routes: [
+                '/authentication/:keyId'
+            ],
+            resolveOnBoot: true,
+            guests: false
+        },
+
         'talks': {
             hasCtrl: true,
             resolveOnBoot: true
