@@ -1,5 +1,10 @@
-<cm-header cm-rubber-space>
-    <cm-back cm-weight="1" back-to="/talks" ng-show="prevWelcomePage"></cm-back>
+<cm-header cm-rubber-space ng-if="startRoute">
+    <cm-identity cm-weight="6"></cm-identity>
+    <cm-menu cm-weight="1"></cm-menu>
+</cm-header>
+
+<cm-header cm-rubber-space ng-if="!startRoute">
+    <cm-back cm-weight="1" back-to="/talks"></cm-back>
     <cm-identity cm-weight="6"></cm-identity>
     <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
@@ -36,9 +41,10 @@
 
 <section ng-bind-html="'START.QUICKSTART.TEXT_4' | cmParse"></section>
 
-<cm-footer cm-always-on-top ng-show="prevWelcomePage">
-    <button ng-click="goToKeyInfo()" class="cm-btn-block cm-btn-grey" data-qa="btn-save-key">
-        {{'START.BTNS.NEXT' | cmTranslate}}
-        <i class="fa cm-right cm-lg-icon"></i>
-    </button>
+<cm-footer ng-if="startRoute">
+        <button ng-click="goToKeyInfo()" class="cm-btn-block cm-btn-grey" data-qa="btn-save-key">
+            {{'START.BTNS.NEXT' | cmTranslate}}
+            <i class="fa cm-right cm-lg-icon"></i>
+        </button>
 </cm-footer>
+<cm-footer ng-if="!startRoute"></cm-footer>

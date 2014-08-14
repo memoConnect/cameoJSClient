@@ -1,4 +1,4 @@
-cm-welcome, cm-quick-start {
+cm-welcome, cm-quick-start, cm-key-info {
   background-color: @cm-white;
   display: block;
   color: @cm-grey-font;
@@ -27,7 +27,7 @@ cm-welcome, cm-quick-start {
       padding: 0 2rem 1rem;
     }
   }
-  div.welcome-beta-info {
+  div.welcome-beta-info, div.key-info {
     position: relative;
     i.cm-beta {
       position: absolute;
@@ -42,6 +42,10 @@ cm-welcome, cm-quick-start {
       color: @cm-light-grey;
     }
   }
+  div.key-info {
+    margin-top: 2rem;
+  }
+
   cm-footer i {
     margin-left: 1rem;
   }

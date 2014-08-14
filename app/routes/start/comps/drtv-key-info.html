@@ -1,34 +1,43 @@
 <cm-header cm-rubber-space>
-    <cm-back cm-weight="1" back-to="/settings"></cm-back>
     <cm-identity cm-weight="6"></cm-identity>
     <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
 
-<section
-        class="keyInfo in-screen-message"
-        data-qa="ctn-key-info-text"
-        ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE' | cmTranslate">
-</section>
+<header class="inScreen tac" data-qa="ctn-explore-info-header">
+    <i class="fa cm-key"></i>
+    {{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}
+</header>
 
-<section class="skipInfo">
-    <input
-            id="skipStartInput"
-            data-qa="checkbox-skip-start"
-            name="skip"
-            type="checkbox"
-            ng-model="skipStart"
-            class="ng-hide"
-            required />
-    <i
-            id="skipStart"
-            data-qa="icon-checkbox-skip-start"
-            class="fa cm-lg-icon cm-ci-color ml15"
-            ng-class="{
-                        'cm-checkbox':!skipStart,
-                        'cm-checkbox-right':skipStart
-                    }"
-            ng-click="setSkipStart()"></i>
-    <button ng-click="setSkipStart()" data-qa="btn-skip-text">{{'START.SKIP.TEXT' | cmTranslate}}</button>
+<div class="key-info">
+    <section class="box-grey" ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE' | cmParse"></section>
+    <i class="fa cm-nose-up cm-lg-special"></i>
+</div>
 
-    <button class="btn cm-btn-block cm-btn-grey" ng-click="goToTalks()" data-qa="btn-skip">{{'START.SKIP.BTN_TEXT' | cmTranslate}}</button>
-</section>
+<hr />
+
+<!--<ul>-->
+    <!---->
+<!--</ul>-->
+
+<!--<section class="skipInfo">-->
+    <!--<input-->
+            <!--id="skipStartInput"-->
+            <!--data-qa="checkbox-skip-start"-->
+            <!--name="skip"-->
+            <!--type="checkbox"-->
+            <!--ng-model="skipStart"-->
+            <!--class="ng-hide"-->
+            <!--required />-->
+    <!--<i-->
+            <!--id="skipStart"-->
+            <!--data-qa="icon-checkbox-skip-start"-->
+            <!--class="fa cm-lg-icon cm-ci-color ml15"-->
+            <!--ng-class="{-->
+                        <!--'cm-checkbox':!skipStart,-->
+                        <!--'cm-checkbox-right':skipStart-->
+                    <!--}"-->
+            <!--ng-click="setSkipStart()"></i>-->
+    <!--<button ng-click="setSkipStart()" data-qa="btn-skip-text">{{'START.SKIP.TEXT' | cmTranslate}}</button>-->
+
+    <!--<button class="btn cm-btn-block cm-btn-grey" ng-click="goToTalks()" data-qa="btn-skip">{{'START.SKIP.BTN_TEXT' | cmTranslate}}</button>-->
+<!--</section>-->

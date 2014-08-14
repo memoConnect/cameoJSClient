@@ -8,10 +8,10 @@ angular.module('cmRouteStart').directive('cmQuickStart', [
             restrict: 'E',
             templateUrl: 'routes/start/comps/drtv-quick-start.html',
             controller: function ($scope) {
-                $scope.prevWelcomePage = false;
+                $scope.startRoute = false;
 
-                if($rootScope.urlHistory.length > 1 && $rootScope.urlHistory[$rootScope.urlHistory.length - 2].indexOf('/welcome') != -1){
-                    $scope.prevWelcomePage = true;
+                if($rootScope.urlHistory.length > 1 && $rootScope.urlHistory[$rootScope.urlHistory.length - 2].indexOf('/start') != -1){
+                    $scope.startRoute = true;
                 }
 
                 $scope.goToKeyInfo = function(){

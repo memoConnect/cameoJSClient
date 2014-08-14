@@ -44,7 +44,7 @@ angular.module('cmUser').directive('cmLogin', [
                         return false;
 
                     $scope.alertState = '';
-                    $scope.spinner('start');
+                    $scope.spinner('start/keyinfo');
 
                     cmUserModel.doLogin(
                         $scope.formData.user,
