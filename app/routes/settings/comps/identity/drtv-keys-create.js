@@ -100,7 +100,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                             .storeKey(key)
                             .syncLocalKeys();
 
-                        $window.history.back();
+                        //$window.history.back();
+                        $location.path('/talks');
                     }
                 };
             }
