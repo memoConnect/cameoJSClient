@@ -12,7 +12,7 @@ define([
         'cmUtil',
         '$scope', '$rootScope', '$routeParams', '$location',
         function(cmUtil,
-                 $scope, $rootScope, $routeParams, $location) {
+            $scope, $rootScope, $routeParams, $location) {
             $scope.pageTitle = 'SETTINGS.WELCOME';
 
             $scope.pageParent = $routeParams.pageParent || '';

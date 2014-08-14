@@ -1,0 +1,26 @@
+<section ng-controller="AuthenticationCtrl">
+    <cm-header cm-rubber-space>
+        <cm-back cm-weight="1" back-to="/settings"></cm-back>
+        <cm-identity cm-weight="6"></cm-identity>
+        <cm-menu cm-weight="1"></cm-menu>
+    </cm-header>
+
+    <h2 class="inScreen">
+        <i class = "fa cm-key"></i>
+        {{"AUTHENTICATION.HEADING" | cmTranslate}}
+    </h2>
+
+
+    <section>
+        sdf
+    </section>
+
+
+    <cm-footer cm-always-on-top>
+        <button ng-click="startAuthentication()" class="cm-btn-block cm-btn-grey" data-qa="btn-start-authentication">
+            {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_START'|cmTranslate}}
+            <i class="fa cm-checker cm-lg-icon"></i>
+        </button>
+    </cm-footer>
+</section>
+
