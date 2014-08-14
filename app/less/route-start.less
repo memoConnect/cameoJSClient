@@ -1,10 +1,60 @@
-section.welcome, section.keyInfo, section.skipInfo, section.exploreInfo {
+cm-welcome, cm-quick-start {
   background-color: @cm-white;
-  padding: 1rem;
-}
-
-section.skipInfo {
-  button {
-    font-weight: bold;
+  display: block;
+  color: @cm-grey-font;
+  header {
+    font-size: 1.5rem;
+    i {
+      font-size: 3rem;
+      margin-right: 0.3rem !important;
+    }
+  }
+  section {
+    background-color: @cm-white;
+    padding: 1rem 2rem;
+    &.headline {
+      color: @cm-grey;
+      font-weight: bold;
+      padding: 1rem 2rem 0.5rem 2rem;
+    }
+    &.box-grey {
+      margin: 0.5rem 1rem 1rem 1rem;
+      padding: 1.05rem;
+      background-color: @cm-light-grey;
+      .border-radius;
+    }
+    &.text{
+      padding: 0 2rem 1rem;
+    }
+  }
+  div.welcome-beta-info {
+    position: relative;
+    i.cm-beta {
+      position: absolute;
+      top: 0;
+      right: 1rem;
+      color: @cm-ci-color;
+    }
+    i.cm-nose-up {
+      position: absolute;
+      top: -4rem;
+      right: 11rem;
+      color: @cm-light-grey;
+    }
+  }
+  cm-footer i {
+    margin-left: 1rem;
   }
 }
+
+
+//section.welcome, section.keyInfo, section.skipInfo, section.exploreInfo {
+//  background-color: @cm-white;
+//  padding: 1rem;
+//}
+//
+//section.skipInfo {
+//  button {
+//    font-weight: bold;
+//  }
+//}

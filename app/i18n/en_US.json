@@ -57,18 +57,31 @@
     },
 
     "START": {
-        "TITLE": "Welcome to cameoNet!",
-        "TEXT": "cameoNet is an open source messenger that provides end-to-end encryption for safe, private and commercial Communication!\nAttention: this is a first beta version!\nThe app may contain errors, the user interface is still under development and many new features will be added in the next versions. We cannot guarantee the safety of your data. Please copy all your important data.\nPlease help us to improve cameoNet. We are happy about every error or improvement you post on http://support.cameonet.de\nthe cameoNet-Team.",
         "YOUR_ID": "Your cameoID",
         "LOGOUT": "Logout",
         "SKIP": {
             "TEXT": "Don't show me this page again",
             "BTN_TEXT": "Skip"
         },
-        "EXPLORE": {
-            "TITLE": "Quick Start",
-            "TEXT": "Three steps to send your first secure talk: TODO",
+        "WELCOME": {
+            "HEADLINE": "Welcome to cameoNet!",
+            "TEXT_1": "<span class='cm-ci-color'>cameoNet</span> is an open source messenger that provides end-to-end encryption for safe, private and commercial Communication!",
+            "TEXT_2": "Attention: this is a first beta version!",
+            "TEXT_3": "The app may contain errors, the user interface is still under development and many new features will be added in the next versions. We cannot guarantee the safety of your data. Please copy all your important data.",
+            "TEXT_4": "Please help us to improve cameoNet!",
+            "TEXT_5": "We are happy about every error or improvement you post on http://support.cameonet.de<br>the cameoNet-Team."
+        },
+        "QUICKSTART": {
+            "HEADLINE": "Quick Start",
+            "SUB_TEXT": "Three steps to send your first secure talk: TODO",
+            "TEXT_1": "START.QUICKSTART.TEXT_1 TODO",
+            "TEXT_2": "START.QUICKSTART.TEXT_2 TODO",
+            "TEXT_3": "START.QUICKSTART.TEXT_3 TODO",
+            "TEXT_4": "START.QUICKSTART.TEXT_4 TODO",
             "BTN_TEXT": "And go.. TODO"
+        },
+        "BTNS": {
+            "NEXT": "next step"
         }
     },
 

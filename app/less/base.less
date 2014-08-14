@@ -39,6 +39,7 @@ exp.:
 
 // new color!!!
 @cm-grey-btn: #555555;
+@cm-grey-font: #555555;
 
 @cm-unit: 4rem;
 @cm-vertical-padding: 0.3rem;
@@ -221,6 +222,13 @@ textarea:focus, button:focus, input[type="text"]:focus, input[type="password"]:f
   }
   &.no-header{padding-top:0px}
   &.no-footer{padding-bottom:0px}
+
+  hr {
+    background-color: @cm-border-grey;
+    border: none;
+    border-bottom: 0.01*@cm-unit solid @cm-border-grey;
+    margin: 1em 0.1rem;
+  }
 }
 
 .cm-page-body{

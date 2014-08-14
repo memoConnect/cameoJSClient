@@ -271,7 +271,8 @@ module.exports = function (grunt) {
                     'ui': 'app/comps/ui',
                     'route-conversation': 'app/routes/conversation/comps',
                     'route-settings': 'app/routes/settings/comps',
-                    'route-contacts': 'app/routes/contacts/comps'
+                    'route-contacts': 'app/routes/contacts/comps',
+                    'route-start': 'app/routes/start/comps'
                 })
             },
             'docs': {

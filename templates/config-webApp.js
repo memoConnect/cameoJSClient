@@ -18,6 +18,9 @@ cameo_config = {
         'start': {
             hasCtrl: true,
             guests: false,
+            routes: [
+                '/start/:pageParent?'
+            ],
             resolveOnBoot: true
         },
         'login': {
@@ -134,6 +137,7 @@ cameo_config = {
         'talks': {i18n:'MENU.TALKS', icon:'cm-envelope-closed'},
         'contacts': {i18n:'MENU.CONTACTS', icon:'cm-address-book'},
         'settings/identity/keys': {"data-qa":'btn-menu-key-management', i18n:'MENU.KEYMANAGEMENT', icon:'cm-key'},
+        'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-rhino-positive'},
         'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings', subs:{}}
     },
 

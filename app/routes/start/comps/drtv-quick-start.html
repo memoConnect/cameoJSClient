@@ -1,0 +1,44 @@
+<cm-header cm-rubber-space>
+    <cm-back cm-weight="1" back-to="/talks" ng-show="prevWelcomePage"></cm-back>
+    <cm-identity cm-weight="6"></cm-identity>
+    <cm-menu cm-weight="1"></cm-menu>
+</cm-header>
+
+<header class="inScreen tac" data-qa="ctn-explore-info-header">
+    <i class="fa cm-rhino-positive"></i>
+    {{'START.QUICKSTART.HEADLINE'|cmTranslate}}
+</header>
+
+<section ng-bind-html="'START.QUICKSTART.SUB_TEXT' | cmParse"></section>
+
+<hr />
+
+<section>
+    <i class='fa cm-key cm-lg-icon'></i>&nbsp;
+    <span ng-bind-html="'START.QUICKSTART.TEXT_1' | cmParse"></span>
+</section>
+
+<hr />
+
+<section>
+    <i class='fa cm-new-contact cm-lg-icon'></i>&nbsp;
+    <span ng-bind-html="'START.QUICKSTART.TEXT_2' | cmParse"></span>
+</section>
+
+<hr />
+
+<section>
+    <i class='fa cm-new-talk cm-lg-icon'></i>&nbsp;
+    <span ng-bind-html="'START.QUICKSTART.TEXT_3' | cmParse"></span>
+</section>
+
+<hr />
+
+<section ng-bind-html="'START.QUICKSTART.TEXT_4' | cmParse"></section>
+
+<cm-footer cm-always-on-top ng-show="prevWelcomePage">
+    <button ng-click="goToKeyInfo()" class="cm-btn-block cm-btn-grey" data-qa="btn-save-key">
+        {{'START.BTNS.NEXT' | cmTranslate}}
+        <i class="fa cm-right cm-lg-icon"></i>
+    </button>
+</cm-footer>
