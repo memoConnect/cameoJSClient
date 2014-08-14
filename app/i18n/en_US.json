@@ -74,8 +74,11 @@
         "QUICKSTART": {
             "HEADLINE": "Quick Start",
             "SUB_TEXT": "Three steps to send your first secure talk: TODO",
+            "HEADLINE_1": "START.QUICKSTART.HEADLINE_1 TODO",
             "TEXT_1": "START.QUICKSTART.TEXT_1 TODO",
+            "HEADLINE_2": "START.QUICKSTART.HEADLINE_2 TODO",
             "TEXT_2": "START.QUICKSTART.TEXT_2 TODO",
+            "HEADLINE_3": "START.QUICKSTART.HEADLINE_3 TODO",
             "TEXT_3": "START.QUICKSTART.TEXT_3 TODO",
             "TEXT_4": "START.QUICKSTART.TEXT_4 TODO",
             "BTN_TEXT": "And go.. TODO"
