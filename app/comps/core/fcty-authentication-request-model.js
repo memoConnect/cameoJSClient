@@ -300,6 +300,8 @@ angular.module('cmCore')
 
             this.send = function(){
                // cmLogger.debug('cmAuthenticationRequestModel.send');
+               
+               var deferred = $q.defer()
 
                 if(this.verifyForm() !== false){
                     cmAuth.sendBroadcast({
@@ -311,33 +313,39 @@ angular.module('cmCore')
                             // do nothing
                         },
                         function(){
+                            deferred.reject()
                             cmLogger.debug('authenticationRequestModel.send - Error');
                         }
                     );
 
-                    cmApi.on('authenticationRequest:verified', function(event, request) {
+                    cmApi.one('authenticationRequest:verified', function(event, request) {
 
-                        self.importData(request)
-                            
-                        authenticationRequest.finish();
-
-                        //TODO: Hier Weiterarbeiten!
-                        authenticationRequest.on('request:finished', function(){
-
-                            cmAuthenticationRequestFactory.deregister(authenticationRequest);
-                            if(
-                                    self.fromIdentityId == self.ToIdentityId
-                                &&  self.fromIdentityId == cmUserModel.data.identity.id
-                            ){
-                                var bulkData = authenticationRequest.exportKeyIdsForBulk();
-                                self.openBulkRequest(bulkData);
+                        self
+                        .importData(request)
+                        .finish()
+                        .then(
+                            function(){
+                                cmAuthenticationRequestFactory.deregister(self);
+                                    if(
+                                            self.fromIdentityId == self.ToIdentityId
+                                        &&  self.fromIdentityId == cmUserModel.data.identity.id
+                                    ){
+                                        var bulkData = self.exportKeyIdsForBulk();
+                                        self.openBulkRequest(bulkData);
+                                    }
+                                deferred.resolve()
+                            },
+                            function(){
+                                deferred.reject()
                             }
-                        })
+                        )
 
                     });
                 } else {
+                    deferred.reject()
                     cmLogger.debug('Error - cmAuthenticationRequestModel.send - Data have not the right form!');
                 }
+                return deferred.promise
             };
 
             this.sendKeyResponse = function(){
@@ -430,6 +438,8 @@ angular.module('cmCore')
             this.finish = function(){
 //                cmLogger.debug('cmAuthenticationRequestModel.finish');
 
+                var deferred = $q.defer()
+
                 if(this.state.is('outgoing') && !this.state.is('finished')){
 
                     var identity =  !self.toIdentityId || (self.toIdentityId == cmUserModel.data.identity.id)
@@ -441,14 +451,16 @@ angular.module('cmCore')
 
                     if(self.fromKey.getFingerprint() != self.fromKeyFingerprint){
                         cmLogger.debug('Error - cmAuthenticationRequestModel.finish - Fingerprints of fromKey dont match.')
-                        return false
+                        deferred.reject()
+                        return deferred.promise
                     }
 
                     self.toKey = identity.keys.find(self.toKeyId)
 
                     if(self.toKey.getFingerprint() != self.toKeyFingerprint){
                         cmLogger.debug('Error - cmAuthenticationRequestModel.finish - Fingerprints of toKey dont match.')
-                        return false
+                        deferred.reject()
+                        return deferred.promise
                     }
 
                     if(
@@ -458,13 +470,17 @@ angular.module('cmCore')
                         cmUserModel.signPublicKey(self.toKey, self.toKeyFingerprint, identity)
                         .finally(function(){
                             self.trigger('request:finished')
+                            deferred.resolve()
                         })
 
                     } else {
+                        deferred.reject()
                         cmLogger.debug('Error - cmAuthenticationRequestModel.finish - verify fail!');
                     }
                     this.state.set('finished')
                 }
+
+                return deferred.promise
             };
 
             init(requestData);

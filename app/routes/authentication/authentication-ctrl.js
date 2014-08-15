@@ -52,11 +52,18 @@ define([
                                                 toKey: $scope.authenticationRequest.toKey
                                             });
 
+                    $scope.waiting = true
+
                     $scope.authenticationRequest
                     .importData(dataForRequest)
                     .setTransactionSecret($scope.transactionSecret)
                     .setFromKey(fromKey)
                     .send()
+                    .then(function(){
+                        $step           = 3
+                        $scope.waiting  = false
+                    })
+
                 } else {
                     //error
                 }
@@ -70,7 +77,6 @@ define([
 
                 cmAuthenticationRequestFactory.deregister($scope.authenticationRequest)
 
-                .log('sdf')
                 init()
 
                 //Todo: event cmApi.on ... entfernen

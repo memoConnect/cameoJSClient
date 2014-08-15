@@ -50,17 +50,21 @@
         <article>
             <strong>
                 {{"AUTHENTICATION.NOTE" | cmTranslate}}
-            </string>
+            </strong>
         </article>
 
-        <article>
-            {{transactionSecret}}
+        {{step}}
+
+        <article ng-if("step == 3">
+            <div class="transaction-secret">
+                {{transactionSecret}}
+            </div>
         </article>
 
-    <section>
+    </section>
 
 
-    <cm-footer cm-always-on-top ng-if       = "step == 0">
+    <cm-footer cm-always-on-top ng-if = "step == 0">
 
         <button 
             ng-click    = "requestKey()" 
@@ -73,7 +77,7 @@
 
     </cm-footer>
 
-    <cm-footer cm-always-on-top ng-if       = "step == 1">
+    <cm-footer cm-always-on-top ng-if = "step == 1">
 
         <button 
             ng-click    = "cancelKeyRequest()" 
@@ -86,7 +90,7 @@
 
     </cm-footer>
 
-    <cm-footer cm-always-on-top ng-if       = "step == 2">
+    <cm-footer cm-always-on-top ng-if = "step == 2">
 
         <button 
             ng-click    = "startAuthenticationRequest()" 

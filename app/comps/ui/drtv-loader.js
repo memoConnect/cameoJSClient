@@ -58,7 +58,6 @@ angular.module('cmUi').directive('cmLoader',[
 
                 $scope.$watch($attrs.ngShow, function(bool){
                     if(bool != false){
-                        console.log('ngshow!')
                         $scope.animate(true)
                         $scope.loading = true
                     } else {
