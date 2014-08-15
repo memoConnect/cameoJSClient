@@ -76,7 +76,7 @@
             "TEXT_2": "Drücken Sie auf 'Kontakt hinzufügen' im Header und wählen 'cameoNet durchsuchen', um Freunde zu suchen - über ihre cameoIDs oder Anzeigenamen. Wenn Sie einen Nutzer gefunden haben, senden Sie ihm eine Freundschaftsanfrage.",
             "HEADLINE_3": "3. Nachricht schreiben",
             "TEXT_3": "An befreundete Kontakte können Sie direkt aus der Kontakt-Übersicht über das Brief-Symbol Nachrichten senden. Es öffnet sich ein neuer Talk. Geben Sie eine Nachricht ein und drücken Sie auf den Senden-Button.<br><br>Herzlichen Glückwunsch! Sie haben Ihren ersten verschlüsselten Talk geführt!",
-            "TEXT_4": "Wenn Sie Fragen zu cameoNet haben oder auf Probleme mit der Nutzung stoßen, können Sie mir jederzeit auf diese Nachricht antworten.<br>Oder Sie nutzen unser Forum unter https://support.cameonet.de,<br>Ihr cameoNet-Support",
+            "TEXT_4": "Wenn Sie Fragen zu cameoNet haben oder auf Probleme stoßen, nutzen Sie unser Forum unter http://support.cameonet.de.",
             "BTN_TEXT": "Und los..."
         },
         "KEYINFO": {
@@ -356,7 +356,7 @@
                     "FINGERPRINT": "Fingerprint",
                     "IS_LOCAL": "lokal",
                     "IS_LOCAL_ON_THIS_DEVICE": "lokal auf diesem Gerät",
-                    "NO_LOCALKEYS_ON_THIS_DEVICE": "Sie haben keinen cameoKey für Ihre Identität auf diesem Gerät. Um sicher zu kommunizieren, können Sie hier einen cameoKey für diese Identität <a href=\"#/settings/identity/keys/create\">erzeugen</a> oder <a href=\"#/settings/identity/keys/import\">importieren</a>.",
+                    "NO_LOCALKEYS_ON_THIS_DEVICE": "Sie haben noch keinen cameoKey für Ihre Identität auf diesem Gerät.<br>Um sicher zu kommunizieren, müssen Sie zuerst einen cameoKey für diese Identität erzeugen oder importieren.",
                     "UNTRUSTED_PUBLICKEYS_EXISTS": "Sie haben für diese Identität auf mehreren Geräten cameoKeys, die Sie noch nicht gegeneinander authentifiziert haben. Dadurch können Sie Nachrichten, die Sie auf einem anderen Gerät geschrieben und verschlüsselt haben, hier nicht lesen und umgekehrt.<br>Um dieses Gerät gegen ein anderes zu authentifizieren, klicken sie in der Liste unten auf <ICON>.",
                     "TRUSTING": "Authentifikation",
                     "IS_TRUSTED": "ist authentifiziert",
