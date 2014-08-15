@@ -14,36 +14,40 @@ angular.module('cmRouteStart').directive('cmKeyInfo', [
                 var storageKey = 'appSettings',
                     storageService = new cmUserKeyStorageService(storageKey);
 
-                $scope.showWelcome = true;
-                $scope.showKeyInfo = true;
-                $scope.skipStart = storageService.get('skipStart') || false;
-
-                /**
-                 * Welcome message for new user
-                 */
-                if(cmUserModel.comesFromRegistration !== false){
-                    cmUserModel.comesFromRegistration = false;
-
-                    $scope.showWelcome = true;
-                }
+                $scope.skipKeyInfo = false;
+                $scope.skipKeyInfo = storageService.get('skipKeyInfo') || false;
 
                 if(cmUserModel.loadLocalKeys().length > 0){
-                    $scope.showKeyInfo = false;
+                    $scope.skipKeyInfo = true;
                 }
 
-                $scope.setSkipStart = function(){
-                    if(!$scope.skipStart){
-                        storageService.set('skipStart', true);
-                        $scope.skipStart = true;
+                $scope.toggleSkipKeyInfo = function(){
+                    if(!$scope.skipKeyInfo){
+                        storageService.set('skipKeyInfo', true);
+                        $scope.skipKeyInfo = true;
                     } else {
-                        storageService.set('skipStart', false);
-                        $scope.skipStart = false;
+                        storageService.set('skipKeyInfo', false);
+                        $scope.skipKeyInfo = false;
                     }
                 };
 
                 $scope.goToTalks = function(){
                     $location.path('/talks');
                 };
+
+                $scope.generateKey = function(){
+                    $location.path('settings/identity/keys/create');
+                };
+
+                $scope.showKeySize = false;
+                $scope.toggleKeySize = function(){
+                    //console.log('toggleKeySize', $scope.showKeySize)
+                    if(!$scope.showKeySize){
+                        $scope.showKeySize = true;
+                    } else {
+                        $scope.showKeySize = false;
+                    }
+                }
             }
         }
     }

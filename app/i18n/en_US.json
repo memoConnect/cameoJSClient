@@ -59,10 +59,6 @@
     "START": {
         "YOUR_ID": "Your cameoID",
         "LOGOUT": "Logout",
-        "SKIP": {
-            "TEXT": "Don't show me this page again",
-            "BTN_TEXT": "Skip"
-        },
         "WELCOME": {
             "HEADLINE": "Welcome to cameoNet!",
             "TEXT_1": "<span class='cm-ci-color'>cameoNet</span> is an open source messenger that provides end-to-end encryption for safe, private and commercial Communication!",
@@ -74,11 +70,18 @@
         "QUICKSTART": {
             "HEADLINE": "Quick Start",
             "SUB_TEXT": "Three steps to send your first secure talk: TODO",
+            "HEADLINE_1": "START.QUICKSTART.HEADLINE_1 TODO",
             "TEXT_1": "START.QUICKSTART.TEXT_1 TODO",
+            "HEADLINE_2": "START.QUICKSTART.HEADLINE_2 TODO",
             "TEXT_2": "START.QUICKSTART.TEXT_2 TODO",
+            "HEADLINE_3": "START.QUICKSTART.HEADLINE_3 TODO",
             "TEXT_3": "START.QUICKSTART.TEXT_3 TODO",
             "TEXT_4": "START.QUICKSTART.TEXT_4 TODO",
             "BTN_TEXT": "And go.. TODO"
+        },
+        "KEYINFO": {
+            "CHECKBOX_TEXT": "Don't show me this page again",
+            "SKIP_TEXT": "Skip"
         },
         "BTNS": {
             "NEXT": "next step"

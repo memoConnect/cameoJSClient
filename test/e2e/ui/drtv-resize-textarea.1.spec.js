@@ -60,7 +60,10 @@ describe('Textarea Resize', function () {
         expect(textarea.getAttribute('rows')).toBe('1')
     })
 
-    it('check input without newlines', function(){
+    /**
+     * @todo
+     */
+    xit('check input without newlines', function(){
         var textarea = $("[data-qa='input-answer']"),
             longText = 'mmmmmmmmeeeeeeeeooooooooooppppppppppppppppppppppppppppppppppppppp'
 

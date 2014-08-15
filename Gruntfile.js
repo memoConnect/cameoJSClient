@@ -91,6 +91,12 @@ module.exports = function (grunt) {
             buildConfig.config.version = "no version";
         }
 
+        if(buildConfig.config.version == 'no version'){
+            buildConfig.config.urlBust =  (new Date()).getTime();
+        } else {
+            buildConfig.config.urlBust = buildConfig.config.version.replace('.','');
+        }
+
         buildConfig.phonegap.phonegapBaseFilename = buildConfig.phonegap.baseName + buildConfig.phonegap.extraName + '.' + buildConfig.phonegap.version;
 
         return buildConfig;
@@ -127,6 +133,8 @@ module.exports = function (grunt) {
             console.log("wwwUrl: " + wwwUrl);
             testConfig.config.wwwUrl = wwwUrl;
         }
+        // URL Bust for requireJS
+        testConfig.config.urlBust = (new Date()).getTime();
 
         var protractorDebug = grunt.option('debug');
         if (protractorDebug) {
@@ -620,6 +628,16 @@ module.exports = function (grunt) {
                     'app/base/config.js': ['templates/config-webApp.js']
                 }
             },
+            'main-webApp': {
+                'options': {
+                    'data': {
+                        'urlBust': globalCameoBuildConfig.config.urlBust
+                    }
+                },
+                'files': {
+                    'app/base/main.js': ['templates/main-webApp.js']
+                }
+            },
             'config-tests': {
                 'options': {
                     'data': {
@@ -869,6 +887,7 @@ module.exports = function (grunt) {
     grunt.registerTask('genAllTemplates', [
         'template:config-tests',
         'template:config-webApp',
+        'template:main-webApp',
         'template:index-www',
         'template:config-phonegap',
         'template:config-protractor',

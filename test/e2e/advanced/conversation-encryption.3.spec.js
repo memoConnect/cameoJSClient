@@ -82,6 +82,7 @@ describe('Conversation encryption -', function () {
 
             switch (encryptionType) {
                 case "asym" :
+                    ptor.debugger()
                     expect($("[data-qa='btn-encryption']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
                     expect(ptor.isElementPresent(by.css("[data-qa='btn-toggle-captcha']"))).toBe(false)
                     expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(false)
@@ -299,7 +300,8 @@ describe('Conversation encryption -', function () {
 
         it("create test user 2, generate key and send friend request", function () {
             util.createTestUser(testUserId2)
-            util.generateKey()
+            util.generateKey(2)
+            ptor.debugger()
             util.sendFriendRequest(testUser1)
         })
 
@@ -340,7 +342,7 @@ describe('Conversation encryption -', function () {
 
         it(" user 1 login and generate key", function () {
             util.login(testUser1, "password")
-            util.generateKey()
+            util.generateKey(1)
         })
 
         describe("asym key transmission -", function () {
@@ -384,13 +386,14 @@ describe('Conversation encryption -', function () {
         })
 
     })
+
     describe("no local private key -", function () {
 
         it("delete key and create local key for user2", function () {
             util.logout()
             util.clearLocalStorage()
             util.login(testUser2, "password")
-            util.generateKey()
+            util.generateKey(3)
             util.closeKeyRequestModal()
             util.login(testUser1, "password")
         })

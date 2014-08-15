@@ -1,44 +1,56 @@
-<cm-header cm-rubber-space>
-    <cm-back cm-weight="1" back-to="/talks" ng-show="prevWelcomePage"></cm-back>
+<cm-header cm-rubber-space ng-if="startRoute">
     <cm-identity cm-weight="6"></cm-identity>
     <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
 
-<header class="inScreen tac" data-qa="ctn-explore-info-header">
+<cm-header cm-rubber-space ng-if="!startRoute">
+    <cm-back cm-weight="1" back-to="/talks"></cm-back>
+    <cm-identity cm-weight="6"></cm-identity>
+    <cm-menu cm-weight="1"></cm-menu>
+</cm-header>
+
+<h2>
     <i class="fa cm-rhino-positive"></i>
     {{'START.QUICKSTART.HEADLINE'|cmTranslate}}
-</header>
+</h2>
 
-<section ng-bind-html="'START.QUICKSTART.SUB_TEXT' | cmParse"></section>
+<article ng-bind-html="'START.QUICKSTART.SUB_TEXT' | cmParse" class="cm-bold"></article>
 
 <hr />
 
-<section>
+<h4>
     <i class='fa cm-key cm-lg-icon'></i>&nbsp;
-    <span ng-bind-html="'START.QUICKSTART.TEXT_1' | cmParse"></span>
-</section>
+    {{'START.QUICKSTART.HEADLINE_1'|cmTranslate}}
+</h4>
+
+<article ng-bind-html="'START.QUICKSTART.TEXT_1' | cmParse"></article>
 
 <hr />
 
-<section>
+<h4>
     <i class='fa cm-new-contact cm-lg-icon'></i>&nbsp;
-    <span ng-bind-html="'START.QUICKSTART.TEXT_2' | cmParse"></span>
-</section>
+    {{'START.QUICKSTART.HEADLINE_2'|cmTranslate}}
+</h4>
+
+<article ng-bind-html="'START.QUICKSTART.TEXT_2' | cmParse"></article>
 
 <hr />
 
-<section>
+<h4>
     <i class='fa cm-new-talk cm-lg-icon'></i>&nbsp;
-    <span ng-bind-html="'START.QUICKSTART.TEXT_3' | cmParse"></span>
-</section>
+    {{'START.QUICKSTART.HEADLINE_3'|cmTranslate}}
+</h4>
+
+<article ng-bind-html="'START.QUICKSTART.TEXT_3' | cmParse"></article>
 
 <hr />
 
-<section ng-bind-html="'START.QUICKSTART.TEXT_4' | cmParse"></section>
+<article ng-bind-html="'START.QUICKSTART.TEXT_4' | cmParse"></article>
 
-<cm-footer cm-always-on-top ng-show="prevWelcomePage">
-    <button ng-click="goToKeyInfo()" class="cm-btn-block cm-btn-grey" data-qa="btn-save-key">
-        {{'START.BTNS.NEXT' | cmTranslate}}
-        <i class="fa cm-right cm-lg-icon"></i>
-    </button>
+<cm-footer ng-if="startRoute">
+        <button ng-click="goToKeyInfo()" class="cm-btn-block cm-btn-grey" data-qa="btn-save-key">
+            {{'START.BTNS.NEXT' | cmTranslate}}
+            <i class="fa cm-right cm-lg-icon"></i>
+        </button>
 </cm-footer>
+<cm-footer ng-if="!startRoute"></cm-footer>

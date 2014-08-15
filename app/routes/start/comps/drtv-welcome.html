@@ -3,29 +3,31 @@
     <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
 
-<header class="inScreen tac" data-qa="ctn-welcome-header">
+<h2>
     <i class="fa cm-rhino-positive"></i>
     {{'START.WELCOME.HEADLINE'|cmTranslate}}
-</header>
+</h2>
 
-<section ng-bind-html="'START.WELCOME.TEXT_1' | cmParse"></section>
+<article ng-bind-html="'START.WELCOME.TEXT_1' | cmParse"></article>
 
 <hr/>
 
-<section class="headline" ng-bind-html="'START.WELCOME.TEXT_2' | cmParse"></section>
-<div class="welcome-beta-info">
-    <section class="box-grey" ng-bind-html="'START.WELCOME.TEXT_3' | cmParse"></section>
+<h3 ng-bind-html="'START.WELCOME.TEXT_2' | cmParse"></h3>
+
+<article class="welcome-beta-info">
+    <cm-info-bubble nose-x="55%">
+        <span ng-bind-html="'START.WELCOME.TEXT_3' | cmParse"></span>
+    </cm-info-bubble>
     <i class="fa cm-beta cm-lg-special"></i>
-    <i class="fa cm-nose-up cm-lg-special"></i>
-</div>
+</article>
 
 <hr/>
 
-<section class="headline" ng-bind-html="'START.WELCOME.TEXT_4' | cmParse"></section>
-<section class="text" ng-bind-html="'START.WELCOME.TEXT_5' | cmParse"></section>
+<h3 ng-bind-html="'START.WELCOME.TEXT_4' | cmParse"></h3>
+<article ng-bind-html="'START.WELCOME.TEXT_5' | cmParse"></article>
 
-<cm-footer cm-always-on-top>
-    <button ng-click="goToQuickStart()" class="cm-btn-block cm-btn-grey" data-qa="btn-save-key">
+<cm-footer>
+    <button ng-click="goToQuickStart()" class="cm-btn-block cm-btn-grey" data-qa="btn-next-step">
         {{'START.BTNS.NEXT' | cmTranslate}}
         <i class="fa cm-right cm-lg-icon"></i>
     </button>

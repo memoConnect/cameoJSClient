@@ -1,7 +1,7 @@
 <div ng-controller="StartCtrl">
     <section ng-switch="route" class="start">
-        <cm-welcome ng-switch-default></cm-welcome>
-        <cm-quick-start ng-switch-when="quickstart"></cm-quick-start>
-        <cm-key-info ng-switch-when="keyinfo"></cm-key-info>
+        <cm-welcome ng-switch-default class="theme-a"></cm-welcome>
+        <cm-quick-start ng-switch-when="quickstart" class="theme-a"></cm-quick-start>
+        <cm-key-info ng-switch-when="keyinfo" class="theme-a"></cm-key-info>
     </section>
 </div>

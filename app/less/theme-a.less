@@ -1,8 +1,7 @@
 .theme-a{
   color: @cm-grey;
-  background:@cm-white;
-  min-height:60rem;
-
+  background-color: @cm-white;
+  padding-bottom: 3rem !important;
   >*{
     padding: 0 2rem;
   }
@@ -10,16 +9,17 @@
   h2{
     background:@cm-input-bg-color;
     padding:0 1rem;
-    font-size:1em;
+    font-size:@cm-large-font;
     line-height:@cm-unit;
     font-weight:bold;
     width: 100%;
     margin:0;
     position:relative;
     text-align:center;
+    margin-bottom: 1rem;
     i{
       margin-right:0.6rem;
-      font-size:2em;
+      font-size:3rem;
       vertical-align:middle;
     }
   }
@@ -27,6 +27,13 @@
   h3{
     font-size:1em;
     font-weight:bold;
+  }
+
+  h4 {
+    font-weight:bold;
+    font-size: @cm-base-font;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   hr {
@@ -85,6 +92,68 @@
     }
   }
 
+  cm-footer button i {
+    margin-left: 1rem;
+  }
+
+  ul {
+    background-color: @cm-white;
+    padding:0 !important;
+    li {
+      .with-cursor;
+      min-height: 4rem;
+      border-bottom: @cm-border-grey @cm-border-width solid;
+      position: relative;
+      .item {
+        color: @cm-grey;
+        display: inline-block;
+        padding: 1rem;
+        width: 100%;
+        position: relative;
+        .title, .content {
+          display: inline-block;
+          width: 70%;
+        }
+        .content{
+          position: relative;
+          text-align: right;
+          right: 0.5rem;
+          width: 30% !important;
+        }
+        i {
+          margin-right:1rem;
+          font-size:@cm-mega-font;
+          vertical-align: middle;
+          &.cm-lg-special{
+            margin-right:0.7rem;
+          }
+        }
+        .second-row {
+          display:block;
+          font-size:@cm-small-font;
+        }
+      }
+      .short-links{
+        position:absolute;
+        background:@cm-white;
+        right:0;
+        top:0;
+        i {
+          text-align:center;
+          width:@cm-unit;
+          height:@cm-unit - 0.1;
+          line-height:@cm-unit;
+          font-size:@cm-unit/2;
+        }
+      }
+      &.is-disabled{
+        .item, .short-links {
+          .cm-disabled
+        }
+      }
+    }
+  }
+  
 
   .authentication-status{
     position:relative;

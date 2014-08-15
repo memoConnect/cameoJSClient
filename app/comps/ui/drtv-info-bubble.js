@@ -6,7 +6,6 @@ angular.module('cmUi').directive('cmInfoBubble',[
             restrict: 'AE',
             transclude: true,
             scope:      {
-                            noseX      :"@",
                             nosePos    :"="
                         },
 
@@ -25,7 +24,7 @@ angular.module('cmUi').directive('cmInfoBubble',[
                             element.children('i.').css({
                                 top     : scope.nosePos == 'bottom' ? 'auto': '-1em',
                                 bottom  : scope.nosePos == 'bottom' ? '-1em' : 'auto',
-                                left    : scope.noseX || '70%'                               
+                                left    : attrs.noseX || '70%'
                             })
                         }
         }

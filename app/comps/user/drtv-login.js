@@ -53,12 +53,12 @@ angular.module('cmUser').directive('cmLogin', [
                     .then(
                         function(){
                             var storageService = new cmUserKeyStorageService('appSettings'),
-                                skipStart = storageService.get('skipStart') || false;
+                                skipKeyInfo = storageService.get('skipKeyInfo') || false;
 
                             $scope.spinner('stop');
                             if(!$location.$$path.match(/\/purl\/.*/)){
-                                if(cmUserModel.loadLocalKeys().length == 0 && skipStart == false){
-                                    $location.path("/start");
+                                if(cmUserModel.loadLocalKeys().length == 0 && skipKeyInfo == false){
+                                    $location.path("/start/keyinfo");
                                 } else {
                                     $location.path("/talks");
                                 }
