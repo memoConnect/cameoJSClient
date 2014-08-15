@@ -22,6 +22,10 @@ angular.module('cmUser').directive('cmIdentity',[
                     setIdentity();
                 });
 
+                $scope.goToIdentity = function(){
+                    $location.path('/settings/identity');
+                };
+
                 $scope.showIdentityModal = function(){
                     var modalId = 'modal-identity-' + $scope.randModalId;
                     var $scopeModal = $rootScope.$new()
