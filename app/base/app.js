@@ -127,6 +127,9 @@ define([
                             }
                         };
                     }
+                    if (angular.isDefined(_settings_['reloadOnSearch'])){
+                        routeParams.reloadOnSearch = _settings_['reloadOnSearch'];
+                    }
                     if(angular.isDefined(_settings_['isDefault'])){
                         routeParams.isDefault = _settings_['isDefault'];
                     }
