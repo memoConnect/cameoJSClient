@@ -159,11 +159,12 @@ cameo_config = {
     routeSettings: {
         'account': {i18n:'SETTINGS.ACCOUNT', icon:'cm-person', disabled:true},
         'identity': {i18n:'SETTINGS.IDENTITY', icon:'cm-person'},
+        'settings/identity/keys': {i18n:'MENU.KEYMANAGEMENT', icon:'cm-key'},
         'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell', disabled:true},
-        'contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-address-book', disabled:true},
+        'settings/contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-address-book', disabled:true},
         'app': {i18n:'SETTINGS.APP', icon:'cm-fix'},
-        'about-us': {i18n:'SETTINGS.PAGES.ABOUT_US.TITLE', icon:'cm-rhino-positive'},
-        'contracts': {i18n:'SETTINGS.CONTRACTS', icon:'cm-clipboard', disabled:true}
+        'contracts': {i18n:'SETTINGS.CONTRACTS', icon:'cm-clipboard', disabled:true},
+        'about-us': {i18n:'SETTINGS.PAGES.ABOUT_US.TITLE', icon:'cm-rhino-positive'}
     }
 };
 // settings config to menu subs
