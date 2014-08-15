@@ -336,6 +336,7 @@ angular.module('cmCore')
                     encryptedTransactionSecret: dataForHandshake.encryptedTransactionSecret
                 };
 
+
                 dataForHandshake.signature = settings.fromKey.sign(this.hashObject(signData));
 
                 return dataForHandshake;

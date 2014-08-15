@@ -79,7 +79,7 @@
             "TEXT_4": "Wenn Sie Fragen zu cameoNet haben oder auf Probleme stoßen, nutzen Sie unser Forum unter http://support.cameonet.de.",
             "BTN_TEXT": "Und los..."
         },
-        "KEYINFO": {
+        "SKIP": {
             "CHECKBOX_TEXT": "Diese Seite nicht mehr anzeigen",
             "SKIP_TEXT": "Diesen Schritt überspringen"
         },
@@ -299,6 +299,87 @@
             "UPDATE": {
                 "ERROR": "Die Änderungen konnte nicht gespeichert werden.",
                 "SUCCESS": "Die Änderungen wurde erfolgreich gespeichert."
+            }
+        },
+        "KEYS":{
+            "HEADER": "cameoKeys",
+            "KEYLIST":{
+                "EXPLANATION": {
+                    "UNTRUSTED_KEYS": "Sie haben für diese Identität auf anderen Geräten cameoKeys, die sich gegenseitig nicht kennen.<br />Um verschlüsselte Nachrichten auf allen Geräten lesen zu können, müssen Sie die cameoKeys miteinander verknüpfen.",
+                    "ALL_KEYS_TRUSTED": "Für '{{Identity}}' haben Sie einen cameoKey auf Ihrem Gerät, mit dem Sie alle Talks lesen können."
+                },
+                "LABEL_LOCALKEY": "lokaler cameoKey",
+                "LABEL_OTHERKEYS": "cameoKeys auf anderen Geräten/Browsern/App",
+                "BUTTON_KEY_DETAILS": "cameoKey Details anzeigen",
+                "BUTTON_AUTHENTICATE": "cameoKeys verknüpfen",
+                "BUTTON_EXPORT": "cameoKey exportieren",
+                "BUTTON_DELETE": "cameoKey löschen",
+                "BUTTON_REVOKE": "cameoKey deaktivieren"
+            },
+            "GENERATE": {
+                "START": {
+                    "HEADLINE": "cameoKey erzeugen",
+                    "EXPLANATION": "Sie haben noch keinen cameoKey für Ihre Identität auf diesem Gerät.<br />Um sicher zu kommunizieren, müssen Sie zuerst einen cameoKey für diese Identität erzeugen oder importieren.",
+                    "KEY_LENGTH": {
+                        "BUTTON_LABEL": "Schlüsselstärke <strong>'{{key_length}}'</strong>",
+                        "LENGTH_2048": "2048Bit (default)",
+                        "LENGTH_4096": "4096Bit"
+                    },
+                    "GENERATE_BUTTON": "cameoKey erzeugen"
+                },
+                "GENERATING": {
+                    "HEADLINE": "cameoKey Generierung läuft!",
+                    "EXPLANATION": "Bitte haben Sie einen Moment Geduld. Dieser Prozess kann je nach Gerät und Schlüssellänge einige Zeit in Anspruch nehmen.<br /> Bei Wartenzeiten von über 5 Minuten sollten Sie den Prozess abbrechen und erneut starten.",
+                    "TIME_PASSED": "Verbrauchte Zeit:",
+                    "STOP_BUTTON": "Generierung abbrechen"
+                },
+                "SAVE": {
+                    "HEADLINE": "cameoKey Generierung erfolgreich!",
+                    "EXPLANATION": "Der cameoKey besteht aus einem privaten Schlüssel, der nur auf Ihrem Gerät gespeichert wird, und einem öffentlichen Schlüssel, den Sie an den cameoServer übertragen und dort speichern müssen.",
+                    "NOTE": "Um bei Verlust Ihres cameoKeys Ihre verschlüsselten Nachrichten wieder lesen zu können, sollten Sie Ihren cameoKey öffnen, den privaten Schlüssel aus dem Textfeld kopieren und sicher verwahren.",
+                    "TIME_PASSED": "Verbrauchte Zeit:",
+                    "KEY_NAME": "Schlüsselname",
+                    "SAVE_BUTTON": "cameoKey speichern"
+                }
+            },
+            "AUTHENTICATION": {
+                "HEADLINE": "cameoKeys verknüpfen",
+                "EXPLANATION": "Um Ihre Nachrichten die Sie als <strong>'{{identity}}'</strong> geschrieben haben auf allen Geräten lesen zu können, müssen die ihren lokalen cameoKey mit Ihren cameoKeys auf anderen Geräten verknüpfen.",
+                "START": {
+                    "START_BUTTON": "Verbinden",
+                    "INSTRUCTIONS": "Drücken Sie auf 'Verbinden' um den Vorgang zu starten.",
+                    "NOTE": "ACHTUNG! Bevor Sie auf 'Verbinden' klicken müssen Sie auf einem Ihrer Geräte cameoNet als <strong>'{{identity}}'</strong> öffnen!"
+                },
+                "REQUEST_STARTED": {
+                    "CANCEL_BUTTON": "Anfrage Abbrechen",
+                    "INSTRUCTIONS": "Drücken Sie auf 'Anfrage abbrechen' um den Vorgang zu beenden.",
+                    "NOTE": "Anfrage gestartet. Bestätigen Sie die Anfrage auf dem zu verknüpfenden Gerät!"
+                },
+                "ACCEPT_REQUEST": {
+                    "HEADER": "Anfrage cameoKeys zu verknüpfen",
+                    "INSTRUCTIONS": "Sie haben auf einem anderen Gerät einen cameoKey. den Sie auf diesem Gerät noch nicht kennen. D.h. Sie können Nachrichten, die Sie hier verschlüsselt haben, auf dem anderen Gerät nicht lesen und umgekehrt.<br />Wollen Sie den cameoKey '{{cameoKey}}' mit Ihrem lokalen cameoKey verknüpfen?",
+                    "NOTE": "Um die cameoKeys zu verknüpfen, starten Sie die Verknüpfung.",
+                    "EXCEPT_BUTTON": "Verknüpfung starten",
+                    "CANCEL_BUTTON": "Ablehnen"
+                },
+                "SHOW_TRANSACTION_SECRET": {
+                    "INSTRUCTIONS": "Drücken Sie auf 'Verknüpfung abbrechen' um den Vorgang zu beenden.",
+                    "NOTE": "Übertragen Sie bitte folgenden Code auf Ihr anderes Gerät:",
+                    "LABEL_CODE": "Code",
+                    "CLOSE_BUTTON": "Verknüpfung abbrechen"
+                },
+                "INSERT_TRANSACTION_SECRET": {
+                    "HEADER": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER",
+                    "INSTRUCTIONS": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.INSTRUCTIONS",
+                    "NOTE": "Geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
+                    "LABEL_CODE": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CODE",
+                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON"
+                },
+                "SUCCESSFUL": {
+                    "INSTRUCTIONS": "Die Verknüpfung der cameoKeys war erfolgreich! Die bisherigen Talks können in Kürze mit allen verknüpften cameoKeys lesabar sein.",
+                    "NOTE": "Sie können den Dialog nun schließen.",
+                    "CLOSE_BUTTON": "Schließen"
+                }
             }
         }
     },

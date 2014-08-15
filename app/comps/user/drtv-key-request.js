@@ -27,7 +27,6 @@ angular.module('cmUser').directive('cmKeyRequest',[
 
                 $scope.start = function(){
                     $scope.showSpinner();
-                    $rootScope.keyRequestSender = true;
 
                     $scope.authenticationRequest.sendKeyRequest();
                 };

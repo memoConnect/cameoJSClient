@@ -26,7 +26,7 @@
                         <br/>
                         <button
                             data-qa="start-trust-handshake-btn"
-                            ng-click="startTrustHandshake()"
+                            ng-click="goto('authentication/identity/'+contact.identity.id)"
                             ng-disabled = "getTrust() || !hasKey()"
                         >
                                 <i ng-if="!hasKey()"    class="fa cm-close"></i>

@@ -15,12 +15,16 @@
 
         <!-- status -->
 
-        <article class= "authentication-status" ng-click = "step = ((step||0)+1)%4">
-            <i class= "fa cm-key-request"   ng-class="'active': step > 0"></i>
-            <i class= "fa cm-key-response"  ng-class="'active': step > 1"></i>
-            <i class= "fa cm-handshake"     ng-class="'active': step > 2"></i>
-            {{step}}
-        </article>
+        <article>
+            <div class= "authentication-status" ng-click = "step = ((step||0)+1)%4">
+                <i class= "fa cm-key-request"   ng-class="{'active': step > 0}"></i>
+                <i class= "fa cm-key-response"  ng-class="{'active': step > 1}"></i>
+                <i class= "fa cm-handshake"     ng-class="{'active': step > 3}"></i>
+            </div>
+            <div class= "space-for-loader">
+                <cm-loader cm-halt = "waiting" type="balls"></cm-loader>
+            </div>
+        <article>
 
         <hr/>
 
@@ -46,18 +50,57 @@
         <article>
             <strong>
                 {{"AUTHENTICATION.NOTE" | cmTranslate}}
-            </string>
+            </strong>
         </article>
 
-    <section>
+        <article ng-if("step == 3">
+            <div class="transaction-secret">
+                {{transactionSecret}}
+            </div>
+        </article>
+
+    </section>
 
 
-    <cm-footer cm-always-on-top>
-        <button ng-click="startAuthentication()" class="cm-btn-block cm-btn-grey" data-qa="btn-start-authentication">
-            {{'AUTHENTICATION.HANDSHAKE_START'|cmTranslate}}
+    <cm-footer cm-always-on-top ng-if = "step == 0">
+
+        <button 
+            ng-click    = "requestKey()" 
+            class       = "cm-btn-block cm-btn-grey" 
+            data-qa     = "btn-start-authentication"
+        >
+            {{'AUTHENTICATION.KEY_REQUEST.START'|cmTranslate}}
             <i class="fa cm-handshake cm-lg-icon"></i>
         </button>
+
     </cm-footer>
+
+    <cm-footer cm-always-on-top ng-if = "step == 1">
+
+        <button 
+            ng-click    = "cancel()" 
+            class       = "cm-btn-block cm-btn-grey" 
+            data-qa     = "btn-start-authentication"
+        >
+            {{'AUTHENTICATION.KEY_REQUEST.CANCEL'|cmTranslate}}
+            <i class="fa cm-handshake cm-lg-icon"></i>
+        </button>
+
+    </cm-footer>
+
+    <cm-footer cm-always-on-top ng-if = "step == 2">
+
+        <button 
+            ng-click    = "startAuthenticationRequest()" 
+            class       = "cm-btn-block cm-btn-grey" 
+            data-qa     = "btn-start-authentication"
+        >
+            {{'AUTHENTICATION.AUTHENTICATION.START'|cmTranslate}}
+            <i class="fa cm-handshake cm-lg-icon"></i>
+        </button>
+        
+    </cm-footer>
+
 </section>
 
 
