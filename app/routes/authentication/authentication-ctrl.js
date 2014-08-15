@@ -22,6 +22,7 @@ define([
                 $scope.authenticationRequest
                 .state.set('outgoing')
 
+                $scope.identity     = cmUserModel.data.identity
                 
                 $scope.toKey        = $routeParams.keyId && cmUserModel.data.identity.keys.find($routeParams.keyId)
                 $scope.step         = $scope.toKey ? 2 : 0
@@ -35,7 +36,8 @@ define([
                 if($scope.toIdentity)
                      $scope.authenticationRequest.setToIdentityId($scope.toIdentity.id)
 
-                $scope.waiting  = false
+                $scope.waiting              = false
+                $scope.transactionSecret    = undefined
             }
 
 
@@ -63,8 +65,7 @@ define([
                         $scope.waiting = false
                         $scope.cancelTimeout()  
                         $scope.step = 2
-                        $scope.startAuthenticationRequest()
-                        
+                        $scope.startAuthenticationRequest()                        
                     },
                     function(){
                         $scope.waiting  = false
