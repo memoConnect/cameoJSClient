@@ -68,16 +68,16 @@
             "TEXT_5": "We are happy about every error or improvement you post on http://support.cameonet.de<br>the cameoNet-Team."
         },
         "QUICKSTART": {
-            "HEADLINE": "Quick Start",
-            "SUB_TEXT": "Three steps to send your first secure talk: TODO",
-            "HEADLINE_1": "START.QUICKSTART.HEADLINE_1 TODO",
-            "TEXT_1": "START.QUICKSTART.TEXT_1 TODO",
-            "HEADLINE_2": "START.QUICKSTART.HEADLINE_2 TODO",
-            "TEXT_2": "START.QUICKSTART.TEXT_2 TODO",
-            "HEADLINE_3": "START.QUICKSTART.HEADLINE_3 TODO",
-            "TEXT_3": "START.QUICKSTART.TEXT_3 TODO",
-            "TEXT_4": "START.QUICKSTART.TEXT_4 TODO",
-            "BTN_TEXT": "And go.. TODO"
+           "HEADLINE": "Quick Start",
+           "SUB_TEXT": "Just a few operations are required to design your first secure talk:",
+           "HEADLINE_1": "1. Generate Key",
+           "TEXT_1": "An individual cameoKey is needed for all members of a secure talk. You don't have one? Please open Settings > cameoKeys.",
+           "HEADLINE_2": "2. Search for Peers",
+           "TEXT_2": "To find friends or peers please press 'Add Contact' in the app header and choose 'Search cameoNet' to select the cameoID or display name. If you have selected one, please send him a 'Friend Request'.",
+           "HEADLINE_3": "3. Write Message",
+           "TEXT_3": "You can send messages to contacts from your contact list by clicking the 'Add Mail' icon right to the contact. A new talk will be opened. Please enter a subject (optional), write a message and press on the 'Send Button (paper plane)'.<br><br>Congratulations! You have just led your first encrypted talk!",
+           "TEXT_4": "If you have any questions regarding our service, please feel free to let us a short notice through our platform at http://support.cameonet.de.",
+           "BTN_TEXT": "And - go!..."
         },
         "KEYINFO": {
             "CHECKBOX_TEXT": "Don't show me this page again",
@@ -355,7 +355,7 @@
                     "FINGERPRINT": "Fingerprint",
                     "IS_LOCAL": "local",
                     "IS_LOCAL_ON_THIS_DEVICE": "Is local on this device",
-                    "NO_LOCALKEYS_ON_THIS_DEVICE": "There is no cameoKey on this device for your identity. Here you can <a href=\"#/settings/identity/keys/create\">generate</a> or <a href=\"#/settings/identity/keys/import\">import</a> a cameoKey for better security.",
+                    "NO_LOCALKEYS_ON_THIS_DEVICE": "TODO There is no cameoKey on this device for your identity. Here you can <a href=\"#/settings/identity/keys/create\">generate</a> or <a href=\"#/settings/identity/keys/import\">import</a> a cameoKey for better security.",
                     "UNTRUSTED_PUBLICKEYS_EXISTS": "You have cameoKeys for this identity on several devides that are not authenticated. You cannot read messages written and encrypted on devices with not authenticated cameoKeys. <br>To authenticate a cameoKey click on <ICON> next to the cameoKey in the list below.",
                     "TRUSTING": "Trusting",
                     "IS_TRUSTED": "trusted",
