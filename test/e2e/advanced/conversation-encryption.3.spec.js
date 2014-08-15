@@ -301,7 +301,6 @@ describe('Conversation encryption -', function () {
         it("create test user 2, generate key and send friend request", function () {
             util.createTestUser(testUserId2)
             util.generateKey(2)
-            ptor.debugger()
             util.sendFriendRequest(testUser1)
         })
 
