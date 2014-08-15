@@ -19,11 +19,13 @@ define([
             $scope.pageChild1 = $routeParams.pageChild1 || '';
             $scope.pageChild2 = $routeParams.pageChild2 || '';
 
-            var isPageChild2AnId = cmUtil.isAlphaNumeric($scope.pageChild2);
+            var isPageChild2AnId = cmUtil.validateString($scope.pageChild2);
 
             $scope.route = $scope.pageParent +
                            ($scope.pageChild1 ? '/' + $scope.pageChild1 : '') +
                            (!isPageChild2AnId && $scope.pageChild2 ? '/' + $scope.pageChild2 : '');
+
+            console.log($scope.route)
 
             $scope.createNewConversation = function(){
                 delete($rootScope.pendingConversation);
