@@ -193,7 +193,7 @@ angular.module('cmCore').service('cmHooks', [
                     id: modalId,
                     type: 'plain',
                     'class': 'no-padding',
-                    'cm-title': 'DRTV.KEY_RESPONSE.HEADER'
+                    'cm-title': 'IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER'
                 },'<cm-key-response></cm-key-response>',null,scope);
                 cmModal.open(modalId);
 
