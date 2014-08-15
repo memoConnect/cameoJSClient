@@ -39,17 +39,28 @@
                 }"></i>
         </div>
     </li>
+
     <li ng-click="goToTalks()">
         <span class="item">
             {{'START.KEYINFO.SKIP_TEXT' | cmTranslate}}
         </span>
         <div class="short-links">
-            <span>
-
-            </span>
             <i class="fa cm-right"></i>
         </div>
     </li>
+
+    <!--<li>-->
+        <!--<span class="item" ng-click="toggleKeySize()">-->
+            <!--Ich klappe mich aus-->
+        <!--</span>-->
+        <!--<div class="short-links" ng-click="toggleKeySize()">-->
+            <!--<i class="fa" ng-class="{'cm-down':!showKeySize,'cm-up':showKeySize}"></i>-->
+        <!--</div>-->
+        <!--<ul class="cm-submenu" ng-show="showKeySize">-->
+            <!--<li>Moep</li>-->
+            <!--<li>Pups</li>-->
+        <!--</ul>-->
+    <!--</li>-->
 </ul>
 
 <cm-footer>
