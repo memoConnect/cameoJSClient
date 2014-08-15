@@ -8,7 +8,7 @@ cameo_config = {
     callStackPath: '/callStack',
     useEvents: true,
     eventsPath: '/eventSubscription',
-    eventsInterval: '2000',
+    eventsInterval: '5000',
 
     token: null,
     supported_languages: ['de_DE', 'en_US'],
