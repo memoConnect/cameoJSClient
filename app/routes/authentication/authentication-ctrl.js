@@ -9,9 +9,9 @@ define([
     'use strict';
 
     app.register.controller('AuthenticationCtrl', [
-        'cmUtil', 'cmUserModel', 'cmAuthenticationRequestFactory', 'cmCrypt', 'cmCallbackQueue',
+        'cmUtil', 'cmUserModel', 'cmContactsModel', 'cmAuthenticationRequestFactory', 'cmCrypt', 'cmCallbackQueue',
         '$scope', '$rootScope', '$routeParams', '$timeout',
-        function(cmUtil, cmUserModel, cmAuthenticationRequestFactory, cmCrypt, cmCallbackQueue, $scope, $rootScope, $routeParams, $timeout) {
+        function(cmUtil, cmUserModel, cmContactsModel, cmAuthenticationRequestFactory, cmCrypt, cmCallbackQueue, $scope, $rootScope, $routeParams, $timeout) {
             
             var timeoutPromise
 
@@ -23,13 +23,17 @@ define([
                 .state.set('outgoing')
 
                 
-                $scope.toKey    = $routeParams.keyId && cmUserModel.data.identity.keys.find($routeParams.keyId)
-                $scope.step     = $scope.toKey ? 2 : 0
-
+                $scope.toKey        = $routeParams.keyId && cmUserModel.data.identity.keys.find($routeParams.keyId)
+                $scope.step         = $scope.toKey ? 2 : 0
 
                 if($scope.toKey){
                     $scope.authenticationRequest.setToKey($scope.toKey)
                 }
+
+                $scope.toIdentity    = $routeParams.identityId && cmContactsModel.findByIdentityId($routeParams.identityId).identity
+
+                if($scope.toIdentity)
+                     $scope.authenticationRequest.setToIdentityId($scope.toIdentity.id)
 
                 $scope.waiting  = false
             }
@@ -109,7 +113,6 @@ define([
 
                                 $scope.waiting = true
 
-                                console.log(dataForRequest)
                                 $scope.authenticationRequest
                                 .importData(dataForRequest)
                                 .setTransactionSecret($scope.transactionSecret)
@@ -119,7 +122,8 @@ define([
                                     function(){
                                         $scope.cancelTimeout()
                                         $scope.step     = 4   
-                                        $scope.waiting  = false                         
+                                        $scope.waiting  = false    
+                                        $scope.done()
                                     },
                                     function(){
                                         $scope.cancelTimeout()
@@ -132,6 +136,15 @@ define([
                         }
                     }
                 )                
+            }
+
+            $scope.done = function(){
+                console.log('done')
+                if($routeParams.keyId)
+                    $rootScope.goto('settings/identity/keys')
+
+                if($routeParams.identityId)
+                    $rootScope.goto('contact/'+cmContactsModel.findByIdentityId($routeParams.identityId).id)
             }
 
             init()
