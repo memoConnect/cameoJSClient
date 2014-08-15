@@ -22,8 +22,6 @@ define([
 
                 $scope.authenticationRequest
                 .state.set('outgoing')
-
-                $scope.identity     = cmUserModel.data.identity
                 
                 $scope.toKey        = $routeParams.keyId && cmUserModel.data.identity.keys.find($routeParams.keyId)
                 $scope.step         = $scope.toKey ? 2 : 0
@@ -33,7 +31,11 @@ define([
                     $scope.startAuthenticationRequest()
                 }
 
-                $scope.toIdentity    = $routeParams.identityId && cmContactsModel.findByIdentityId($routeParams.identityId).identity
+                
+                $scope.toIdentity    =  $routeParams.identityId
+                                        ?   cmContactsModel.findByIdentityId($routeParams.identityId).identity
+                                        :   cmUserModel.data.identity
+
 
                 if($scope.toIdentity)
                      $scope.authenticationRequest.setToIdentityId($scope.toIdentity.id)
