@@ -298,7 +298,6 @@ define([
             // For dev purposes only:
 //            window.onresize = function() { initScreenWidth(32) }
 
-
             /**
              * Loading Bar on RouteChange
              */
@@ -317,7 +316,6 @@ define([
             // Todo: whats is todo??
             if(cmUserModel.getToken())
                 cmApi.listenToEvents()
-
         }
     ])
 
