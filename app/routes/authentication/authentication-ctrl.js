@@ -13,7 +13,8 @@ define([
         '$scope', '$rootScope', '$routeParams', '$timeout',
         function(cmUtil, cmUserModel, cmContactsModel, cmAuthenticationRequestFactory, cmCrypt, cmCallbackQueue, $scope, $rootScope, $routeParams, $timeout) {
             
-            var timeoutPromise
+            var timeoutPromise,
+                timeoutInterval
 
 
             function init(){
@@ -29,6 +30,7 @@ define([
 
                 if($scope.toKey){
                     $scope.authenticationRequest.setToKey($scope.toKey)
+                    $scope.startAuthenticationRequest()
                 }
 
                 $scope.toIdentity    = $routeParams.identityId && cmContactsModel.findByIdentityId($routeParams.identityId).identity
@@ -44,6 +46,28 @@ define([
             $scope.cancelTimeout = function(){
                 if(timeoutPromise)
                     $timeout.cancel(timeoutPromise)
+
+                if(timeoutInterval)
+                    window.clearInterval(timeoutInterval)
+
+                $scope.timeout = undefined
+            }
+
+            $scope.startTimeout = function(time){
+                $scope.timeout = time || 60000                
+                $scope.timeoutPromise = $timeout(function(){
+                    $scope.cancel()
+                    $scope.timeout = undefined
+                }, $scope.timeout)
+
+                timeoutInterval = window.setInterval(function(){
+                    $scope.timeout -= 1000
+
+                    if($scope.timeout < 0) 
+                        $scope.timeout = 0
+
+                    $scope.$digest()
+                }, 1000)
             }
 
             
@@ -51,11 +75,7 @@ define([
                 $scope.step     = 1
                 $scope.waiting  = true
 
-                $scope.timeout = 60000
-                $scope.timeoutPromise = $timeout(function(){
-                    $scope.cancel()
-                    $scope.timeout = 0
-                }, $scope.timeout)
+                $scope.startTimeout()
 
 
                 $scope.authenticationRequest
@@ -82,6 +102,7 @@ define([
                         .set('canceled')
 
                 $scope.authenticationRequest.deregister()
+                $scope.cancelTimeout()
 
                 init()
             }
@@ -105,12 +126,7 @@ define([
                                                             toKey: $scope.authenticationRequest.toKey
                                                         });
                                 
-                                $scope.timeout = 60000
-                                $scope.timeoutPromise = $timeout(function(){
-                                    $scope.cancel()
-                                    $scope.timeout = 0
-                                }, $scope.timeout)
-
+                                $scope.startTimeout(120000)
 
                                 $scope.waiting = true
 
@@ -141,11 +157,20 @@ define([
 
             $scope.done = function(){
                 console.log('done')
-                if($routeParams.keyId)
-                    $rootScope.goto('settings/identity/keys')
 
-                if($routeParams.identityId)
+                if($routeParams.keyId){
+                    $rootScope.goto('settings/identity/keys')
+                    return null
+                }
+
+
+                if($routeParams.identityId){
                     $rootScope.goto('contact/'+cmContactsModel.findByIdentityId($routeParams.identityId).id)
+                    return null
+                }
+
+                $rootScope.goto('settings/identity/keys')
+                return null
             }
 
             init()

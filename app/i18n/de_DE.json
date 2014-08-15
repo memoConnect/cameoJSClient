@@ -379,7 +379,7 @@
                     "NOTE": "Sie können den Dialog nun schließen.",
                     "CLOSE_BUTTON": "Schließen"
                 },
-                "TIMEOUT":"Der Vorgang wird abgebrochen in ..."
+                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen."
             }
         }
     },

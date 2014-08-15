@@ -260,11 +260,16 @@ cm-lock-level {
   display:block;
   &.halt .followingBallsG{
     left:50%;
-    animation:none;
     background-color: @cm-grey;
     width: 3em;
     height: 0.1em;
     margin: -0.05em -1.5em;
+
+    -moz-animation:none;
+    -webkit-animation:none;
+    -ms-animation:none;
+    -o-animation:none;
+    animation:none;
   }
 }
 

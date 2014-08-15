@@ -90,11 +90,10 @@
                 </div>
             </article>
 
+            <br/>
+
             <article ng-if ="timeout">
-                {{IDENTITY.KEYS.AUTHENTICATION.TIMEOUT}}
-                <div class="timeout">
-                    {{timeout/1000 +' s'}}
-                </div>
+                {{"IDENTITY.KEYS.AUTHENTICATION.TIMEOUT" | cmTranslate: {'timeout' : timeout/1000 +'s'} }}
             </article>
 
 
