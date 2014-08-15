@@ -41,7 +41,7 @@ cameo_config = {
         'authentication' :{
             hasCtrl: true,
             routes: [
-                '/authentication/:keyId'
+                '/authentication/:keyId?/:identityId?'
             ],
             resolveOnBoot: true,
             guests: false

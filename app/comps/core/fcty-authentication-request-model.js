@@ -166,7 +166,8 @@ angular.module('cmCore')
             };
 
             this.verifyForm = function(){
-//                cmLogger.debug('cmAuthenticationRequestModel.verifyForm');
+                cmLogger.debug('cmAuthenticationRequestModel.verifyForm');
+                console.log(this.signature)
 
                 if(typeof this.signature != 'string' || this.signature.length < 1){
                     cmLogger.debug('Error - cmAuthenticationRequestModel.verifyForm - Signature is not a String!');
@@ -180,6 +181,7 @@ angular.module('cmCore')
 
                 if(typeof this.fromKeyId != 'string' || !cmUtil.validateString(this.fromKeyId)){
                     cmLogger.debug('Error - cmAuthenticationRequestModel.verifyForm - fromKeyId is not a String!');
+                    console.log(this.fromKeyId)
                     return false;
                 }
 
@@ -325,7 +327,7 @@ angular.module('cmCore')
                         .finish()
                         .then(
                             function(){
-                                cmAuthenticationRequestFactory.deregister(self);
+                                self.deregister()
                                     if(
                                             self.fromIdentityId == self.ToIdentityId
                                         &&  self.fromIdentityId == cmUserModel.data.identity.id

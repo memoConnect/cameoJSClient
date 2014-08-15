@@ -61,7 +61,7 @@ angular.module('cmCore')
          * @returns {boolean}
          */
         this.validateString = function(val){
-            var reg = /^[a-zA-Z0-9\-]{1,}$/;
+            var reg = /^[a-zA-Z0-9\-_]{1,}$/;
 
             return reg.test(val);
         };

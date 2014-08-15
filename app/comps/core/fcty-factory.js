@@ -50,7 +50,6 @@ angular.module('cmCore').factory('cmFactory',[
                 }
 
 
-
                 return instance;
 
             };
@@ -118,6 +117,10 @@ angular.module('cmCore').factory('cmFactory',[
                     self.push(instance);
 
                     self.echoEventsFrom(instance);
+
+                    instance.deregister = function(){
+                        self.deregister(instance)
+                    }
 
                     self.trigger('register', instance);
 

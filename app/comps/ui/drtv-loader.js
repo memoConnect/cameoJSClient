@@ -7,7 +7,7 @@ angular.module('cmUi').directive('cmLoader',[
             template:   function(element, attrs){
                             return  {
                                         'spinner'   :   '<div class="spinner-wrapper" ng-show="loading"><div class="spinner"></div></div>',
-                                        'balls'     :   '<div class="followingBallsWrapper">'+
+                                        'balls'     :   '<div class="followingBallsWrapper halt">'+
                                                             '<div class="G_1 followingBallsG"></div>'+
                                                             '<div class="G_2 followingBallsG"></div>'+
                                                             '<div class="G_3 followingBallsG"></div>'+
@@ -53,10 +53,25 @@ angular.module('cmUi').directive('cmLoader',[
                     }
 
                     if(type == 'balls'){
+                        if(start){
+                            $element.children().removeClass('halt')
+                        }else{
+                            $element.children().addClass('halt')
+                        }
                     }
                 }
 
                 $scope.$watch($attrs.ngShow, function(bool){
+                    if(bool != false){
+                        $scope.animate(true)
+                        $scope.loading = true
+                    } else {
+                        $scope.animate(false)
+                        $scope.loading = false
+                    }
+                });
+
+                $scope.$watch($attrs.cmHalt, function(bool){
                     if(bool != false){
                         $scope.animate(true)
                         $scope.loading = true

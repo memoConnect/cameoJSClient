@@ -258,16 +258,25 @@ cm-lock-level {
   position:relative;
   width:100%;
   display:block;
+  &.halt .followingBallsG{
+    left:50%;
+    animation:none;
+    background-color: @cm-grey;
+    width: 3em;
+    height: 0.1em;
+    margin: -0.05em -1.5em;
+  }
 }
 
 .followingBallsG{
-  background-color:#000000;
   position:absolute;
   top:0;
   left:0;
   width:1em;
   height:1em;
   margin:-0.5em;
+  transition: 200ms;
+  background-color: @cm-ci-color;
   -moz-border-radius:0.5em;
   -moz-animation-name:bounce_followingBallsG;
   -moz-animation-duration:1.6s;
@@ -340,90 +349,90 @@ cm-lock-level {
 
 @-moz-keyframes bounce_followingBallsG{
   0%{
-    left:0px;
-    background-color:#000000;
+    left:0;
+    opacity: 1;
   }
 
   50%{
     left:100%;
-    background-color:#FFFFFF;
+    opacity: 0;
   }
 
   100%{
-    left:0px;
-    background-color:#000000;
+    left:0;
+    opacity: 1;
   }
 
 }
 
 @-webkit-keyframes bounce_followingBallsG{
   0%{
-    left:0px;
-    background-color:#000000;
+    left:0;
+    opacity: 1;
   }
 
   50%{
     left:100%;
-    background-color:#FFFFFF;
+    opacity: 0;
   }
 
   100%{
-    left:0px;
-    background-color:#000000;
+    left:0;
+    opacity: 1;
   }
 
 }
 
 @-ms-keyframes bounce_followingBallsG{
   0%{
-    left:0px;
-    background-color:#000000;
+    left:0;
+    opacity: 1;
   }
 
   50%{
     left:100%;
-    background-color:#FFFFFF;
+    opacity: 0;
   }
 
   100%{
-    left:0px;
-    background-color:#000000;
+    left:0;
+    opacity: 1;
   }
 
 }
 
 @-o-keyframes bounce_followingBallsG{
   0%{
-    left:0px;
-    background-color:#000000;
+    left:0;
+    opacity: 1;
   }
 
   50%{
     left:100%;
-    background-color:#FFFFFF;
+    opacity: 0;
   }
 
   100%{
-    left:0px;
-    background-color:#000000;
+    left:0;
+    opacity: 1;
   }
 
 }
 
 @keyframes bounce_followingBallsG{
   0%{
-    left:0px;
-    background-color:#000000;
+    left:0;
+    opacity: 1;
   }
 
   50%{
     left:100%;
-    background-color:#FFFFFF;
+    opacity: 0;
   }
 
   100%{
-    left:0px;
-    background-color:#000000;
+    left:0;
+    opacity: 1;
   }
 
 }

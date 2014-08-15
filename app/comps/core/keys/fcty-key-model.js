@@ -74,8 +74,7 @@ angular.module('cmCore')
             };
 
             this.verify = function(data, signature, force){
-
-                 var result =   !force && (verified[data] && verified[data][signature])
+                var result =   !force && (verified[data] && verified[data][signature])
                                 ?   verified[data][signature]
                                 :   crypt && crypt.verify(data, signature, function(x){ return x }) 
 

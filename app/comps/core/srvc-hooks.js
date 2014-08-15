@@ -255,7 +255,7 @@ angular.module('cmCore').service('cmHooks', [
             var publicKeys = cmUserModel.data.identity.keys;
 
             if(localKeys.length < publicKeys.length){
-                self.openKeyRequest();
+                $rootScope.goto('/authentication')
             }
         });
 

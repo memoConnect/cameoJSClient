@@ -9,10 +9,12 @@ define([
     'use strict';
 
     app.register.controller('AuthenticationCtrl', [
-        'cmUtil', 'cmUserModel', 'cmAuthenticationRequestFactory', 'cmCrypt',
-        '$scope', '$rootScope', '$routeParams',
-        function(cmUtil, cmUserModel, cmAuthenticationRequestFactory, cmCrypt, $scope, $rootScope, $routeParams) {
+        'cmUtil', 'cmUserModel', 'cmAuthenticationRequestFactory', 'cmCrypt', 'cmCallbackQueue',
+        '$scope', '$rootScope', '$routeParams', '$timeout',
+        function(cmUtil, cmUserModel, cmAuthenticationRequestFactory, cmCrypt, cmCallbackQueue, $scope, $rootScope, $routeParams, $timeout) {
             
+            var timeoutPromise
+
 
             function init(){
                 $scope.authenticationRequest    = cmAuthenticationRequestFactory.create()
@@ -21,66 +23,117 @@ define([
                 .state.set('outgoing')
 
                 
-                $scope.toKey    = cmUserModel.data.identity.keys.find($routeParams.keyId)
-                $scope.step     = $scope.toKey ? 3 : 0
+                $scope.toKey    = $routeParams.keyId && cmUserModel.data.identity.keys.find($routeParams.keyId)
+                $scope.step     = $scope.toKey ? 2 : 0
+
+
+                if($scope.toKey){
+                    $scope.authenticationRequest.setToKey($scope.toKey)
+                }
 
                 $scope.waiting  = false
             }
 
-            //Functionality for footer buttons:
+
+            $scope.cancelTimeout = function(){
+                if(timeoutPromise)
+                    $timeout.cancel(timeoutPromise)
+            }
+
             
             $scope.requestKey = function(){
                 $scope.step     = 1
                 $scope.waiting  = true
+
+                $scope.timeout = 60000
+                $scope.timeoutPromise = $timeout(function(){
+                    $scope.cancel()
+                    $scope.timeout = 0
+                }, $scope.timeout)
+
+
                 $scope.authenticationRequest
                 .sendKeyRequest()
-                .then(function(){
-                    $scope.transactionSecret = cmCrypt.generateTransactionSecret();
-                    $scope.step = 2
-                    $scope.startAuthenticationRequest()
-                })
-            }
-
-            $scope.startAuthenticationRequest = function(){
-                var fromKey = cmUserModel.loadLocalKeys()[0]; // ! attention ! works only with one local private key
-
-                if(fromKey && $scope.transactionSecret != ''){
-                    var dataForRequest =    cmCrypt.signAuthenticationRequest({
-                                                identityId: cmUserModel.data.identity.id,
-                                                transactionSecret: $scope.transactionSecret,
-                                                fromKey: fromKey,
-                                                toKey: $scope.authenticationRequest.toKey
-                                            });
-
-                    $scope.waiting = true
-
-                    $scope.authenticationRequest
-                    .importData(dataForRequest)
-                    .setTransactionSecret($scope.transactionSecret)
-                    .setFromKey(fromKey)
-                    .send()
-                    .then(function(){
-                        $step           = 3
+                .then(
+                    function(){
+                        $scope.waiting = false
+                        $scope.cancelTimeout()  
+                        $scope.step = 2
+                        $scope.startAuthenticationRequest()
+                        
+                    },
+                    function(){
                         $scope.waiting  = false
-                    })
+                    }
+                )
 
-                } else {
-                    //error
-                }
+
             }
 
-            $scope.cancelKeyRequest = function(){
+            $scope.cancel = function(){
                 $scope.authenticationRequest
                     .state
                         .unset('outgoing')
                         .set('canceled')
 
-                cmAuthenticationRequestFactory.deregister($scope.authenticationRequest)
+                $scope.authenticationRequest.deregister()
 
                 init()
-
-                //Todo: event cmApi.on ... entfernen
             }
+
+            $scope.startAuthenticationRequest = function(){
+                cmCallbackQueue.push(function(){
+                    return cmCrypt.generateTransactionSecret();
+                }).then(
+                    function(result){
+                        $scope.step = 3
+                        $scope.transactionSecret = result[0]
+
+                        var fromKey = cmUserModel.loadLocalKeys()[0]; // ! attention ! works only with one local private key
+
+                        if(fromKey && $scope.transactionSecret != ''){
+                            
+                                var dataForRequest =    cmCrypt.signAuthenticationRequest({
+                                                            identityId: cmUserModel.data.identity.id,
+                                                            transactionSecret: $scope.transactionSecret,
+                                                            fromKey: fromKey,
+                                                            toKey: $scope.authenticationRequest.toKey
+                                                        });
+                                
+                                $scope.timeout = 60000
+                                $scope.timeoutPromise = $timeout(function(){
+                                    $scope.cancel()
+                                    $scope.timeout = 0
+                                }, $scope.timeout)
+
+
+                                $scope.waiting = true
+
+                                console.log(dataForRequest)
+                                $scope.authenticationRequest
+                                .importData(dataForRequest)
+                                .setTransactionSecret($scope.transactionSecret)
+                                .setFromKey(fromKey)
+                                .send()
+                                .then(
+                                    function(){
+                                        $scope.cancelTimeout()
+                                        $scope.step     = 4   
+                                        $scope.waiting  = false                         
+                                    },
+                                    function(){
+                                        $scope.cancelTimeout()
+                                        $scope.waiting  = false
+                                    }
+                                )
+
+                        } else {
+                            //error
+                        }
+                    }
+                )                
+            }
+
 
             init()
 
