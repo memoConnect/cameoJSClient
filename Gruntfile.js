@@ -94,7 +94,7 @@ module.exports = function (grunt) {
         if(buildConfig.config.version == 'no version'){
             buildConfig.config.urlBust =  (new Date()).getTime();
         } else {
-            buildConfig.config.urlBust = buildConfig.config.version.replace('.','');
+            buildConfig.config.urlBust = buildConfig.config.version.replace(/\./g,'');
         }
 
         buildConfig.phonegap.phonegapBaseFilename = buildConfig.phonegap.baseName + buildConfig.phonegap.extraName + '.' + buildConfig.phonegap.version;
@@ -319,6 +319,7 @@ module.exports = function (grunt) {
                 'test/jasmine/**/*.js'
             ]
         },
+
 
         // contrib
         uglify: {
@@ -813,6 +814,12 @@ module.exports = function (grunt) {
         shell: {
             'node-webserver': {
                 command: 'node ./scripts/web-server.js'
+            },
+            generateKeys: {
+                options: {
+                    stdout: false
+                },
+                command: 'cd test/e2e/keys && rm -f *.key && for i in $(seq 1 1 10) ; do ssh-keygen -N "" -f ${i}.key; done && rm *.key.pub'
             }
         },
         sloc: {
@@ -832,6 +839,7 @@ module.exports = function (grunt) {
     ]);
     grunt.registerTask('tests-e2e', [
         'genAllTemplates',
+        'shell:generateKeys',
         'packages',
         'protractor:default'
     ]);
@@ -894,7 +902,7 @@ module.exports = function (grunt) {
         'concat:less',
         'less',
         'concat:css'
-        ]);
+    ]);
     grunt.registerTask('watcher', ['genAllTemplates', 'packages', 'watch']);
     grunt.registerTask('packages', ['concat:packages']);
 

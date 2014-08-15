@@ -69,17 +69,17 @@
         },
         "QUICKSTART": {
             "HEADLINE": "Quick Start",
-            "SUB_TEXT": "Three steps to send your first secure talk: TODO",
-            "HEADLINE_1": "START.QUICKSTART.HEADLINE_1 TODO",
-            "TEXT_1": "START.QUICKSTART.TEXT_1 TODO",
-            "HEADLINE_2": "START.QUICKSTART.HEADLINE_2 TODO",
-            "TEXT_2": "START.QUICKSTART.TEXT_2 TODO",
-            "HEADLINE_3": "START.QUICKSTART.HEADLINE_3 TODO",
-            "TEXT_3": "START.QUICKSTART.TEXT_3 TODO",
-            "TEXT_4": "START.QUICKSTART.TEXT_4 TODO",
-            "BTN_TEXT": "And go.. TODO"
+            "SUB_TEXT": "Just a few operations are required to design your first secure talk:",
+            "HEADLINE_1": "1. Generate Key",
+            "TEXT_1": "An individual cameoKey is needed for all members of a secure talk. You don't have one? Please open Settings > cameoKeys.",
+            "HEADLINE_2": "2. Search for Peers",
+            "TEXT_2": "To find friends or peers please press 'Add Contact' in the app header and choose 'Search cameoNet' to select the cameoID or display name. If you have selected one, please send him a 'Friend Request'.",
+            "HEADLINE_3": "3. Write Message",
+            "TEXT_3": "You can send messages to contacts from your contact list by clicking the 'Add Mail' icon right to the contact. A new talk will be opened. Please enter a subject (optional), write a message and press on the 'Send Button (paper plane)'.<br><br>Congratulations! You have just led your first encrypted talk!",
+            "TEXT_4": "If you have any questions regarding our service, please feel free to let us a short notice through our platform at http://support.cameonet.de.",
+            "BTN_TEXT": "And - go!..."
         },
-        "KEYINFO": {
+        "SKIP": {
             "CHECKBOX_TEXT": "Don't show me this page again",
             "SKIP_TEXT": "Skip"
         },
@@ -88,18 +88,18 @@
         }
     },
 
-	"VERIFICATION": {
-		"REQUEST": {
-			"LABEL": "Request verification"
-		}
-	},
+    "VERIFICATION": {
+        "REQUEST": {
+            "LABEL": "Request verification"
+        }
+    },
 
     "PROFILE": {
         "E-MAIL": "Email",
         "MOBILE": "Mobile"
     },
 
-    "LANG":	{
+    "LANG": {
         "DE_DE": "German",
         "EN_US": "English",
         "SWITCH": {
@@ -133,7 +133,7 @@
         "LIST_EMPTY": "No talks yet!"
     },
 
-    "CONVERSATION" : {
+    "CONVERSATION": {
         "HEADING": "Talk",
         "LABEL": {
             "SEND": "Send",
@@ -144,7 +144,7 @@
         },
         "TAG": {
             "RECIPIENTS": "Recipients",
-            "SUBJECT": "Subject",            
+            "SUBJECT": "Subject",
             "PASSPHRASE": "Password",
             "MESSAGES": "Messages",
             "IMAGE": "Image",
@@ -196,7 +196,7 @@
         }
     },
 
-	"CONTACTS": {
+    "CONTACTS": {
         "HEADING": {
             "LIST": "Contacts",
             "REQUESTS": "Friend requests",
@@ -213,7 +213,7 @@
             "NO_RESULTS": "No identities found",
             "MORE_CHARS_NEEDED": "Please type more letters",
             "NO_REQUESTS": "No friend requests",
-            "REQUEST":{
+            "REQUEST": {
                 "SENDED": "Request send",
                 "FAILED": "Could not send request",
                 "ACCEPT": "Request accepted",
@@ -235,15 +235,15 @@
             "RESET": "Reset",
             "SUBMIT": "Save"
         },
-        "TAG" : {
+        "TAG": {
             "FILTER": "Filter"
         },
-        "REQUESTS":{
+        "REQUESTS": {
             "ACCEPT": "Accept",
             "REJECT": "Reject",
             "IGNORE": "Ignore"
         }
-	},
+    },
 
     "CONTACT": {
         "WIDGET": "Talks",
@@ -280,30 +280,111 @@
             "HANDSHAKE_NEED_TRANSACTID": "Geben Sie den Code vom Gegenüber hier ein: TODO: translate",
             "HANDSHAKE_OK": "Accept TODO: translate"
         },
-        "FOOTER":{
+        "FOOTER": {
             "SAVE": "Save"
         }
     },
 
-    "IDENTITY":{
-        "LABEL":{
+    "IDENTITY": {
+        "LABEL": {
             "KEYMANAGEMENT": "cameoKeys",
             "TRUST": "QR-Code",
             "NEW": "Create new identity"
         },
-        "MODAL":{
+        "MODAL": {
             "HEADER": "Identities"
         },
-        "NOTIFY":{
+        "NOTIFY": {
             "UPDATE": {
                 "ERROR": "Something went wrong, please try again",
                 "SUCCESS": "Changes saved"
             }
+        },
+        "KEYS": {
+            "HEADER": "TODO",
+            "KEYLIST": {
+                "EXPLANATION": {
+                    "UNTRUSTED_KEYS": "TODO",
+                    "ALL_KEYS_TRUSTED": "TODO"
+                },
+                "LABEL_LOCALKEY": "TODO",
+                "LABEL_OTHERKEYS": "TODO",
+                "BUTTON_KEY_DETAILS": "TODO",
+                "BUTTON_AUTHENTICATE": "TODO",
+                "BUTTON_EXPORT": "TODO",
+                "BUTTON_DELETE": "TODO",
+                "BUTTON_REVOKE": "TODO"
+            },
+            "GENERATE": {
+                "START": {
+                    "HEADLINE": "TODO",
+                    "EXPLANATION": "TODO",
+                    "KEY_LENGTH": {
+                        "BUTTON_LABEL": "TODO",
+                        "LENGTH_2048": "TODO",
+                        "LENGTH_4096": "TODO"
+                    },
+                    "GENERATE_BUTTON": "TODO"
+                },
+                "GENERATING": {
+                    "HEADLINE": "TODO",
+                    "EXPLANATION": "TODO",
+                    "TIME_PASSED": "TODO",
+                    "STOP_BUTTON": "TODO"
+                },
+                "SAVE": {
+                    "HEADLINE": "TODO",
+                    "EXPLANATION": "TODO",
+                    "NOTE": "TODO",
+                    "TIME_PASSED": "TODO",
+                    "KEY_NAME": "TODO",
+                    "SAVE_BUTTON": "TODO"
+                }
+            },
+            "AUTHENTICATION": {
+                "HEADLINE": "TODO",
+                "EXPLANATION": "TODO",
+                "START": {
+                    "START_BUTTON": "TODO",
+                    "INSTRUCTIONS": "TODO",
+                    "NOTE": "TODO"
+                },
+                "REQUEST_STARTED": {
+                    "CANCEL_BUTTON": "TODO",
+                    "INSTRUCTIONS": "TODO",
+                    "NOTE": "TODO"
+                },
+                "ACCEPT_REQUEST": {
+                    "HEADER": "TODO",
+                    "INSTRUCTIONS": "TODO",
+                    "NOTE": "TODO",
+                    "EXCEPT_BUTTON": "TODO",
+                    "CANCEL_BUTTON": "TODO"
+                },
+                "SHOW_TRANSACTION_SECRET": {
+                    "INSTRUCTIONS": "TODO",
+                    "NOTE": "TODO",
+                    "LABEL_CODE": "TODO",
+                    "CLOSE_BUTTON": "TODO"
+                },
+                "INSERT_TRANSACTION_SECRET": {
+                    "HEADER": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER",
+                    "INSTRUCTIONS": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.INSTRUCTIONS",
+                    "NOTE": "Geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
+                    "LABEL_CODE": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CODE",
+                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON"
+                },
+                "SUCCESSFUL": {
+                    "INSTRUCTIONS": "Die Verknüpfung der cameoKeys war erfolgreich! Die bisherigen Talks können in Kürze mit allen verknüpften cameoKeys lesabar sein.",
+                    "NOTE": "Sie können den Dialog nun schließen.",
+                    "CLOSE_BUTTON": "Schließen"
+                }
+            }
         }
     },
-	
-	"SETTINGS": {
-		"WELCOME": "Settings",
+
+    "SETTINGS": {
+        "WELCOME": "Settings",
         "LABEL": "Settings",
         "ACCOUNT": "Account",
         "IDENTITY": "Identities",
@@ -355,7 +436,7 @@
                     "FINGERPRINT": "Fingerprint",
                     "IS_LOCAL": "local",
                     "IS_LOCAL_ON_THIS_DEVICE": "Is local on this device",
-                    "NO_LOCALKEYS_ON_THIS_DEVICE": "There is no cameoKey on this device for your identity. Here you can <a href=\"#/settings/identity/keys/create\">generate</a> or <a href=\"#/settings/identity/keys/import\">import</a> a cameoKey for better security.",
+                    "NO_LOCALKEYS_ON_THIS_DEVICE": "TODO There is no cameoKey on this device for your identity. Here you can <a href=\"#/settings/identity/keys/create\">generate</a> or <a href=\"#/settings/identity/keys/import\">import</a> a cameoKey for better security.",
                     "UNTRUSTED_PUBLICKEYS_EXISTS": "You have cameoKeys for this identity on several devides that are not authenticated. You cannot read messages written and encrypted on devices with not authenticated cameoKeys. <br>To authenticate a cameoKey click on <ICON> next to the cameoKey in the list below.",
                     "TRUSTING": "Trusting",
                     "IS_TRUSTED": "trusted",
@@ -402,19 +483,19 @@
                 "TEXT": "cameoNet 2014"
             }
         }
-	},
-	
-	"NAVIGATION": {
-		"TABS": {
-			"BACK": "Back",
-			"ADD": "Add",
-			"ALL": "Contacts",
-			"REQUESTS": "Requests",
-			"SPINNER": "Spinner",
-			"KEY": "cameoKey",
-			"TALKS": "Talks"
-		}
-	},
+    },
+
+    "NAVIGATION": {
+        "TABS": {
+            "BACK": "Back",
+            "ADD": "Add",
+            "ALL": "Contacts",
+            "REQUESTS": "Requests",
+            "SPINNER": "Spinner",
+            "KEY": "cameoKey",
+            "TALKS": "Talks"
+        }
+    },
 
     "DRTV": {
         "PASSWORD": {
@@ -456,7 +537,7 @@
             "HEADER": "Add external contact",
             "INFO": {
                 "DISPLAYNAME_EXISTS": "The display name already exists in your constact book.",
-                "EMPTY":{
+                "EMPTY": {
                     "DISPLAYNAME": "The display name is empty.",
                     "NAME": "Name is empty.",
                     "SURNAME": "Surname is empty.",
@@ -479,19 +560,19 @@
             "CONTENT": "The talks on this device are being encrypted for the new cameoKey.",
             "START": "Start"
         },
-        "KEY_REQUEST":{
+        "KEY_REQUEST": {
             "HEADER": "Authentication",
             "CONTENT": "There is a new cameoKey on this device which needs to be authenticated by another device. This is necessary to read all existing talks. Do you want to authenticate this cameoKey now?<br>Please start another device with the same identity <strong>'{{identity}}'</strong>."
         },
-        "KEY_RESPONSE":{
+        "KEY_RESPONSE": {
             "HEADER": "Authentication Request",
             "CONTENT": "An other device which pretends to be yours asked to be authenticated by this device. After that your new device gets access to all of your encrypted talks.<br>Do you want to authenticate the following device?"
         },
-        "KEY_REQUEST_3RD":{
+        "KEY_REQUEST_3RD": {
             "HEADER": "Trust TODO: translate",
             "CONTENT": "Do you want to trust(Request)? TODO: translate"
         },
-        "KEY_RESPONSE_3RD":{
+        "KEY_RESPONSE_3RD": {
             "HEADER": "Trust Request TODO: translate",
             "CONTENT": "Do you want to trust(Response)? TODO: translate"
         },
@@ -500,6 +581,10 @@
             "CONTACTS": "Contacts",
             "MEDIA": "Media",
             "SETTINGS": "Settings"
+        },
+        "IMPRINT": {
+            "HEADLINE": "Imprint",
+            "CONTENT": "cameoNet is provided by:<br>memo Connect GmbH<br>Große Nikolaistraße 7 06108 Halle (Saale) Germany<br>Fon: +49 345 213 79 66 5<br>Fax: +49 345 213 79 66 59<br>Amtsgericht Stendal HRB 20018<br>Directors: Michael Merz, Dr. Holger Haedrich"
         }
     },
 
@@ -517,7 +602,7 @@
         "LOGOUT": "Logout"
     },
 
-    "NOTIFICATIONS":{
+    "NOTIFICATIONS": {
         "HEADER": "Notifications",
         "MODAL_HEADER": {
             "INFO": "Info",
@@ -526,10 +611,10 @@
             "SUCCESS": "Success"
         },
         "TYPES": {
-            "KEYS":{
+            "KEYS": {
                 "STORE_NEW": "cameoKey saved!"
             },
-            "SAVE_AS":{
+            "SAVE_AS": {
                 "IOS_NOT_SUPPORT": "Unfortunately iOS does not support downloading this file. Open this talk on a non-iOS device to download this file. Supported formats: .pdf"
             },
             "FRIEND_REQUEST": "New friend request"
@@ -594,9 +679,9 @@
         }
     },
 
-    "SYSTEM":{
+    "SYSTEM": {
         "WELCOME": {
-           "MESSAGE": "Hello, I am the cameoNet support. \n\nIf you have any questions or problems do not hesitate to reply on this message. You can also use our help system at http://support.cameonet.de,\n\nthe cameoNet team.",
+            "MESSAGE": "Hello, I am the cameoNet support. \n\nIf you have any questions or problems do not hesitate to reply on this message. You can also use our help system at http://support.cameonet.de,\n\nthe cameoNet team.",
             "SUBJECT": "Welcome to cameoNet!"
         },
         "ERROR": {
