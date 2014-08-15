@@ -38,6 +38,16 @@ angular.module('cmRouteStart').directive('cmKeyInfo', [
                 $scope.generateKey = function(){
                     $location.path('settings/identity/keys/create');
                 };
+
+                $scope.showKeySize = false;
+                $scope.toggleKeySize = function(){
+                    //console.log('toggleKeySize', $scope.showKeySize)
+                    if(!$scope.showKeySize){
+                        $scope.showKeySize = true;
+                    } else {
+                        $scope.showKeySize = false;
+                    }
+                }
             }
         }
     }
