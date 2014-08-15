@@ -494,12 +494,14 @@ angular.module('cmCore')
                 //Keys should not sign themselves
                 if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() === keyToSign.getFingerprint())){
                     self.trigger('signatures:cancel');
+                    cmLoger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
                     return false;
                 }
 
                 //Dont sign twice:
                 if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
                     self.trigger('signatures:cancel');
+                    cmLoger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
                     return false; 
                 }
 
@@ -566,13 +568,15 @@ angular.module('cmCore')
             var local_keys              =   this.loadLocalKeys(),
                 own_ttrusted_keys       =   self.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
                                                 return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
-                                            }), 
+                                            })
 
-                ttrusted_keys           =   identity.keys.getTransitivelyTrustedKeys(own_ttrusted_keys, function trust(trusted_key, key){
+
+            var ttrusted_keys           =   identity.keys.getTransitivelyTrustedKeys(own_ttrusted_keys, function trust(trusted_key, key){
                                                 return trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId))
-                                            }),    
+                                            })
+               
 
-                unsigned_ttrusted_keys  =   ttrusted_keys.filter(function(ttrusted_key){
+            var unsigned_ttrusted_keys  =   ttrusted_keys.filter(function(ttrusted_key){
                                                 return  local_keys.some(function(local_key){
                                                             return  ttrusted_key.signatures.every(function(signature){
                                                                         return signature.keyId != local_key.id
@@ -586,7 +590,7 @@ angular.module('cmCore')
             this.state.set('signing');
 
             cmCallbackQueue.push(
-                ttrusted_keys.map(function(ttrusted_key){
+                unsigned_ttrusted_keys.map(function(ttrusted_key){
                     return function(){ self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint(), identity) }
                 })
             )

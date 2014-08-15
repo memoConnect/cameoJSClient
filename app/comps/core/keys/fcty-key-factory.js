@@ -51,10 +51,10 @@ angular.module('cmCore')
              * @param  {Array} trustedKeys Array of cmKey instances known to be trusted
              * @return {Array}             Array of cmKey instances within a chain of trust connecting them to the initially trusted keys. 
              */
-            self.getTransitivelyTrustedKeys = function(initially_trusted_keys, trust_callback, trustedKeys){
+            self.getTransitivelyTrustedKeys = function(initially_trusted_keys, trust_callback, trusted_keys_iteration){
                 // cmLogger.debug('cmKeyFactory.getTransitivelyTrustedKeys');
 
-                trustedKeys = trustedKeys || initially_trusted_keys || []
+                var trustedKeys = trusted_keys_iteration || initially_trusted_keys || []
 
                 if(!trust_callback){
                     cmLogger.debug('cmKey.getTransitivelyTrustedKeys: trust_callback missing.')
@@ -71,7 +71,7 @@ angular.module('cmCore')
                                                 return  is_ttrusted
                                             })
 
-                return  extended_key_list.length === trustedKeys.length
+                return  trusted_keys_iteration && (extended_key_list.length === trusted_keys_iteration.length)
                         ?   extended_key_list
                         :   self.getTransitivelyTrustedKeys(null, trust_callback, extended_key_list)
             };
