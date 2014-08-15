@@ -50,6 +50,7 @@ angular.module('cmCore').factory('cmStateManagement',[
 //                        self.trigger('set:' + state);
                     }
                 }
+                return self
             };
 
             /**
@@ -71,6 +72,7 @@ angular.module('cmCore').factory('cmStateManagement',[
 //                        self.trigger('unset:' + state);
                     }
                 }
+                return self
             };
 
             /**

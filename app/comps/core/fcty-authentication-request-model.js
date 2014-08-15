@@ -397,6 +397,8 @@ angular.module('cmCore')
                 return deferred.promise
             };
 
+            this.handleKeyRequest = function(){}
+
             this.sendVerified = function(){
 //                cmLogger.debug('cmAuthenticationRequestModel.sendVerified');
 
