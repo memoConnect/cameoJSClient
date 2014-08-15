@@ -158,7 +158,7 @@ cameo_config = {
 
     routeSettings: {
         'account': {i18n:'SETTINGS.ACCOUNT', icon:'cm-person', disabled:true},
-        'identity': {i18n:'SETTINGS.IDENTITY', icon:'cm-person'},
+        'identity/overview': {i18n:'SETTINGS.IDENTITY', icon:'cm-person'},
         'settings/identity/keys': {i18n:'MENU.KEYMANAGEMENT', icon:'cm-key'},
         'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell', disabled:true},
         'settings/contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-address-book', disabled:true},
@@ -168,4 +168,4 @@ cameo_config = {
     }
 };
 // settings config to menu subs
-cameo_config.menu.settings.subs = cameo_config.routeSettings;
+//cameo_config.menu.settings.subs = cameo_config.routeSettings;
