@@ -44,7 +44,7 @@ define([
             cmApiProvider
                 .restApiUrl( cameo_config.restApi )
                 .callStackPath( cameo_config.callStackPath )
-                .useCallStack( false )//cameo_config.useCallStack)
+                .useCallStack( cameo_config.useCallStack )
                 .commitSize( cameo_config.commitSize )
                 .commitInterval( cameo_config.commitInterval )
                 .useEvents( cameo_config.useEvents )

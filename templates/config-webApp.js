@@ -4,7 +4,7 @@ cameo_config = {
 
     commitSize: 50,
     commitInterval: 500,
-    useCallStack: true,
+    useCallStack: false,
     callStackPath: '/callStack',
     useEvents: true,
     eventsPath: '/eventSubscription',
