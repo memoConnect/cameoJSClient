@@ -358,7 +358,7 @@
                     "HEADER": "Anfrage cameoKeys zu verknüpfen",
                     "INSTRUCTIONS": "Sie haben auf einem anderen Gerät einen cameoKey. den Sie auf diesem Gerät noch nicht kennen. D.h. Sie können Nachrichten, die Sie hier verschlüsselt haben, auf dem anderen Gerät nicht lesen und umgekehrt.<br />Wollen Sie den cameoKey '{{cameoKey}}' mit Ihrem lokalen cameoKey verknüpfen?",
                     "NOTE": "Um die cameoKeys zu verknüpfen, starten Sie die Verknüpfung.",
-                    "EXCEPT_BUTTON": "Verknüpfung starten",
+                    "ACCEPT_BUTTON": "Verknüpfung starten",
                     "CANCEL_BUTTON": "Ablehnen"
                 },
                 "SHOW_TRANSACTION_SECRET": {
@@ -367,12 +367,13 @@
                     "LABEL_CODE": "Code",
                     "CLOSE_BUTTON": "Verknüpfung abbrechen"
                 },
-                "INSERT_TRANSACTION_SECRET": {
+                "ENTER_TRANSACTION_SECRET": {
                     "HEADER": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER",
                     "INSTRUCTIONS": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.INSTRUCTIONS",
                     "NOTE": "Geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
                     "LABEL_CODE": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CODE",
-                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON"
+                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
+                    "SUBMIT_BUTTON": "Übertragen"
                 },
                 "SUCCESSFUL": {
                     "INSTRUCTIONS": "Die Verknüpfung der cameoKeys war erfolgreich! Die bisherigen Talks können in Kürze mit allen verknüpften cameoKeys lesabar sein.",
