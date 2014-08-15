@@ -378,7 +378,8 @@
                     "INSTRUCTIONS": "Die Verknüpfung der cameoKeys war erfolgreich! Die bisherigen Talks können in Kürze mit allen verknüpften cameoKeys lesabar sein.",
                     "NOTE": "Sie können den Dialog nun schließen.",
                     "CLOSE_BUTTON": "Schließen"
-                }
+                },
+                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen."
             }
         }
     },
