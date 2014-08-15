@@ -94,7 +94,7 @@ module.exports = function (grunt) {
         if(buildConfig.config.version == 'no version'){
             buildConfig.config.urlBust =  (new Date()).getTime();
         } else {
-            buildConfig.config.urlBust = buildConfig.config.version.replace('./g','');
+            buildConfig.config.urlBust = buildConfig.config.version.replace(/\./g,'');
         }
 
         buildConfig.phonegap.phonegapBaseFilename = buildConfig.phonegap.baseName + buildConfig.phonegap.extraName + '.' + buildConfig.phonegap.version;
