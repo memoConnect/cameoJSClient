@@ -25,7 +25,6 @@ define([
                            ($scope.pageChild1 ? '/' + $scope.pageChild1 : '') +
                            (!isPageChild2AnId && $scope.pageChild2 ? '/' + $scope.pageChild2 : '');
 
-            console.log($scope.route)
 
             $scope.createNewConversation = function(){
                 delete($rootScope.pendingConversation);

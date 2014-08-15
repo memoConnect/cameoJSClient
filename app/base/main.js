@@ -1,6 +1,6 @@
 require.config({
     baseUrl: "",
-    urlArgs: "bust=" + '1408130345951',
+    urlArgs: "bust=" + '1408130979388',
     waitTimeout: 0,
     paths: {
         'app': 'base/app',
