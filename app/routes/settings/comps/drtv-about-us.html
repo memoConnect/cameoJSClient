@@ -4,20 +4,21 @@
     <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
 
-<header class="inScreen">
-    <i class="fa cm-rhino-bubble-glyph cm-lg-icon"></i> {{'SETTINGS.PAGES.ABOUT_US.TITLE'|cmTranslate}}
-</header>
+<h2>
+    <i class="fa cm-rhino-bubble-glyph cm-lg-icon"></i>
+    {{'SETTINGS.PAGES.ABOUT_US.TITLE'|cmTranslate}}
+</h2>
 
-<ul class="about-us">
-    <li>
-        <span class="item clearfix">
-            <span class="title">
-                <i class="fa cm-rhino-bubble-glyph"></i><br />
-                <span>{{version}}</span><br />
-                <span>{{'SETTINGS.PAGES.ABOUT_US.TEXT'|cmTranslate}}</span><br />
-            </span>
-        </span>
-    </li>
-</ul>
+<article class="about-us">
+    <i class="fa cm-rhino-bubble-glyph"></i><br />
+    {{version}}<br />
+    {{'SETTINGS.PAGES.ABOUT_US.TEXT'|cmTranslate}}
+</article>
+
+<hr>
+
+<h4 ng-bind-html="'DRTV.IMPRINT.HEADLINE'| cmParse"></h4>
+<article ng-bind-html="'DRTV.IMPRINT.CONTENT'| cmParse"></article>
+
 
 <cm-footer></cm-footer>
