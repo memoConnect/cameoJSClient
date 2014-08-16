@@ -381,6 +381,47 @@
                     "CLOSE_BUTTON": "Schließen"
                 },
                 "TIMEOUT":"The process will be canceld in {{timeout}}."
+            },
+            "TRUST": {
+                "HEADLINE": "TODO",
+                "EXPLANATION": "TODO",
+                "START": {
+                    "START_BUTTON": "TODO",
+                    "INSTRUCTIONS": "TODO",
+                    "NOTE": "TODO"
+                },
+                "REQUEST_STARTED": {
+                    "CANCEL_BUTTON": "TODO",
+                    "INSTRUCTIONS": "TODO",
+                    "NOTE": "TODO"
+                },
+                "ACCEPT_REQUEST": {
+                    "HEADER": "TODO",
+                    "INSTRUCTIONS": "TODO",
+                    "NOTE": "TODO",
+                    "ACCEPT_BUTTON": "TODO",
+                    "CANCEL_BUTTON": "TODO"
+                },
+                "SHOW_TRANSACTION_SECRET": {
+                    "INSTRUCTIONS": "TODO",
+                    "NOTE": "TODO",
+                    "LABEL_CODE": "TODO",
+                    "CLOSE_BUTTON": "TODO"
+                },
+                "ENTER_TRANSACTION_SECRET": {
+                    "HEADER": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.HEADER",
+                    "INSTRUCTIONS": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.INSTRUCTIONS",
+                    "NOTE": "Geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
+                    "LABEL_CODE": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CODE",
+                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
+                    "SUBMIT_BUTTON": "Submit"
+                },
+                "SUCCESSFUL": {
+                    "INSTRUCTIONS": "Die Verknüpfung der cameoKeys war erfolgreich! Die bisherigen Talks können in Kürze mit allen verknüpften cameoKeys lesabar sein.",
+                    "NOTE": "Sie können den Dialog nun schließen.",
+                    "CLOSE_BUTTON": "Schließen"
+                },
+                "TIMEOUT":"The process will be canceld in {{timeout}}."
             }
         }
     },

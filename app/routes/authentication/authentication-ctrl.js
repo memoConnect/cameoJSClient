@@ -44,8 +44,11 @@ define([
                 if($scope.toIdentity)
                      $scope.authenticationRequest.setToIdentityId($scope.toIdentity.id)
 
-                $scope.waiting              = false
-                $scope.transactionSecret    = undefined
+                $scope.waiting              =   false
+                $scope.transactionSecret    =   undefined
+                $scope.BASE                 =   $routeParams.identityId
+                                                ?   'IDENTITY.KEYS.AUTHENTICATION.'
+                                                :   'IDENTITY.KEYS.TRUST.'
             }
 
 
@@ -107,7 +110,6 @@ define([
                         .unset('outgoing')
                         .set('canceled')
 
-                $scope.authenticationRequest.deregister()
                 $scope.cancelTimeout()
 
                 init()

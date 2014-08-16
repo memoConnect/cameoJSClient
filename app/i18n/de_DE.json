@@ -381,6 +381,47 @@
                     "CLOSE_BUTTON": "Schließen"
                 },
                 "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen."
+            },
+            "TRUST": {
+                "HEADLINE": "cameoKeys verknüpfen",
+                "EXPLANATION": "Um Ihre Nachrichten die Sie als <strong>'{{identity}}'</strong> geschrieben haben auf allen Geräten lesen zu können, müssen die ihren lokalen cameoKey mit Ihren cameoKeys auf anderen Geräten verknüpfen.",
+                "START": {
+                    "START_BUTTON": "Verbinden",
+                    "INSTRUCTIONS": "Drücken Sie auf 'Verbinden' um den Vorgang zu starten.",
+                    "NOTE": "ACHTUNG! Bevor Sie auf 'Verbinden' klicken müssen Sie auf einem Ihrer Geräte cameoNet als <strong>'{{identity}}'</strong> öffnen!"
+                },
+                "REQUEST_STARTED": {
+                    "CANCEL_BUTTON": "Anfrage Abbrechen",
+                    "INSTRUCTIONS": "Drücken Sie auf 'Anfrage abbrechen' um den Vorgang zu beenden.",
+                    "NOTE": "Anfrage gestartet. Bestätigen Sie die Anfrage auf dem zu verknüpfenden Gerät!"
+                },
+                "ACCEPT_REQUEST": {
+                    "HEADER": "Anfrage cameoKeys zu verknüpfen",
+                    "INSTRUCTIONS": "Sie haben auf einem anderen Gerät einen cameoKey. den Sie auf diesem Gerät noch nicht kennen. D.h. Sie können Nachrichten, die Sie hier verschlüsselt haben, auf dem anderen Gerät nicht lesen und umgekehrt.<br />Wollen Sie den cameoKey '{{cameoKey}}' mit Ihrem lokalen cameoKey verknüpfen?",
+                    "NOTE": "Um die cameoKeys zu verknüpfen, starten Sie die Verknüpfung.",
+                    "ACCEPT_BUTTON": "Verknüpfung starten",
+                    "CANCEL_BUTTON": "Ablehnen"
+                },
+                "SHOW_TRANSACTION_SECRET": {
+                    "INSTRUCTIONS": "Drücken Sie auf 'Verknüpfung abbrechen' um den Vorgang zu beenden.",
+                    "NOTE": "Übertragen Sie bitte folgenden Code auf Ihr anderes Gerät:",
+                    "LABEL_CODE": "Code",
+                    "CLOSE_BUTTON": "Verknüpfung abbrechen"
+                },
+                "ENTER_TRANSACTION_SECRET": {
+                    "HEADER": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.HEADER",
+                    "INSTRUCTIONS": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.INSTRUCTIONS",
+                    "NOTE": "Geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
+                    "LABEL_CODE": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CODE",
+                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
+                    "SUBMIT_BUTTON": "Übertragen"
+                },
+                "SUCCESSFUL": {
+                    "INSTRUCTIONS": "Die Verknüpfung der cameoKeys war erfolgreich! Die bisherigen Talks können in Kürze mit allen verknüpften cameoKeys lesabar sein.",
+                    "NOTE": "Sie können den Dialog nun schließen.",
+                    "CLOSE_BUTTON": "Schließen"
+                },
+                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen."
             }
         }
     },

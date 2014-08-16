@@ -30,10 +30,10 @@
             <h3>
                 {{ 
                     [
-                        "IDENTITY.KEYS.AUTHENTICATION.HEADLINE",
-                        "IDENTITY.KEYS.AUTHENTICATION.HEADLINE", 
-                        "IDENTITY.KEYS.AUTHENTICATION.HEADLINE", 
-                        "IDENTITY.KEYS.AUTHENTICATION.HEADLINE" 
+                        BASE+"HEADLINE",
+                        BASE+"HEADLINE", 
+                        BASE+"HEADLINE", 
+                        BASE+"HEADLINE" 
                     ][step]
 
                 | cmTranslate}}
@@ -43,10 +43,10 @@
                 <cm-info-bubble nose-x = "60%">
                     {{
                         [
-                            "IDENTITY.KEYS.AUTHENTICATION.EXPLANATION",
-                            "IDENTITY.KEYS.AUTHENTICATION.EXPLANATION",
-                            "IDENTITY.KEYS.AUTHENTICATION.EXPLANATION",
-                            "IDENTITY.KEYS.AUTHENTICATION.EXPLANATION"
+                            BASE+"EXPLANATION",
+                            BASE+"EXPLANATION",
+                            BASE+"EXPLANATION",
+                            BASE+"EXPLANATION"
                         ][step]
 
                     | cmTranslate:{'identity': toIdentity.getDisplayName()} }}
@@ -57,10 +57,10 @@
                     <strong>
                         {{
                             [
-                                "IDENTITY.KEYS.AUTHENTICATION.START.INSTRUCTIONS",
-                                "IDENTITY.KEYS.AUTHENTICATION.REQUEST_STARTED.INSTRUCTIONS",
-                                "IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.INSTRUCTIONS",
-                                "IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.INSTRUCTIONS"
+                                BASE+"START.INSTRUCTIONS",
+                                BASE+"REQUEST_STARTED.INSTRUCTIONS",
+                                BASE+"SHOW_TRANSACTION_SECRET.INSTRUCTIONS",
+                                BASE+"SHOW_TRANSACTION_SECRET.INSTRUCTIONS"
                             ] [step]
 
                         | cmTranslate }}
@@ -74,10 +74,10 @@
                 <strong>
                     {{
                         [
-                            "IDENTITY.KEYS.AUTHENTICATION.START.NOTE",
-                            "IDENTITY.KEYS.AUTHENTICATION.REQUEST_STARTED.NOTE",
-                            "IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.NOTE",
-                            "IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.NOTE"
+                            BASE+"START.NOTE",
+                            BASE+"REQUEST_STARTED.NOTE",
+                            BASE+"SHOW_TRANSACTION_SECRET.NOTE",
+                            BASE+"SHOW_TRANSACTION_SECRET.NOTE"
                         ][step] 
 
                     | cmTranslate:{'identity': toIdentity.getDisplayName()} }}
@@ -93,7 +93,7 @@
             <br/>
 
             <article ng-if ="timeout">
-                {{"IDENTITY.KEYS.AUTHENTICATION.TIMEOUT" | cmTranslate: {'timeout' : timeout/1000 +'s'} }}
+                {{BASE+"TIMEOUT" | cmTranslate: {'timeout' : timeout/1000 +'s'} }}
             </article>
 
 
@@ -107,7 +107,7 @@
             class       = "cm-btn-block cm-btn-grey" 
             data-qa     = "btn-start-authentication"
         >
-            {{'IDENTITY.KEYS.AUTHENTICATION.START.START_BUTTON'|cmTranslate}}
+            {{BASE+"START.START_BUTTON"|cmTranslate}}
             <i class="fa cm-handshake cm-lg-icon"></i>
         </button>
 
@@ -120,7 +120,7 @@
             class       = "cm-btn-block cm-btn-grey" 
             data-qa     = "btn-start-authentication"
         >
-            {{'IDENTITY.KEYS.AUTHENTICATION.REQUEST_STARTED.CANCEL_BUTTON'|cmTranslate}}
+            {{BASE+"REQUEST_STARTED.CANCEL_BUTTON"|cmTranslate}}
             <i class="fa cm-handshake cm-lg-icon"></i>
         </button>
 
@@ -133,7 +133,7 @@
             class       = "cm-btn-block cm-btn-grey" 
             data-qa     = "btn-start-authentication"
         >
-            {{'IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON'|cmTranslate}}
+            {{BASE+"SHOW_TRANSACTION_SECRET.CLOSE_BUTTON"|cmTranslate}}
             <i class="fa cm-handshake cm-lg-icon"></i>
         </button>
 
@@ -146,7 +146,7 @@
             class       = "cm-btn-block cm-btn-grey" 
             data-qa     = "btn-start-authentication"
         >
-            {{'AUTHENTICATION.AUTHENTICATION.START'|cmTranslate}}
+            {{BASE+"AUTHENTICATION.START"|cmTranslate}}
             <i class="fa cm-handshake cm-lg-icon"></i>
         </button>
         
