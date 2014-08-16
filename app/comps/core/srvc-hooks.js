@@ -119,7 +119,9 @@ angular.module('cmCore').service('cmHooks', [
                     type: 'plain',
                     'class': 'no-padding',
                     'cm-close-btn': false,
-                    'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
+                    'cm-title': authenticationRequest.is3rdParty()
+                                ?   'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.HEADER'
+                                :   'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRETT.HEADER'
                 },'<cm-incoming-authentication-request></cm-incoming-authentication-request>', null, scope);
                 cmModal.open(modalId);
 
@@ -193,7 +195,9 @@ angular.module('cmCore').service('cmHooks', [
                     id: modalId,
                     type: 'plain',
                     'class': 'no-padding',
-                    'cm-title': 'IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER'
+                    'cm-title': authenticationRequest.is3rdParty()
+                                ?   'IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.HEADER'
+                                :   'IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER'
                 },'<cm-key-response></cm-key-response>',null,scope);
                 cmModal.open(modalId);
 
