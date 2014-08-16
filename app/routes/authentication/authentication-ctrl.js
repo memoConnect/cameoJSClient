@@ -9,13 +9,17 @@ define([
     'use strict';
 
     app.register.controller('AuthenticationCtrl', [
-        'cmUtil', 'cmUserModel', 'cmContactsModel', 'cmAuthenticationRequestFactory', 'cmCrypt', 'cmCallbackQueue',
-        '$scope', '$rootScope', '$routeParams', '$timeout',
-        function(cmUtil, cmUserModel, cmContactsModel, cmAuthenticationRequestFactory, cmCrypt, cmCallbackQueue, $scope, $rootScope, $routeParams, $timeout) {
+        'cmUtil', 'cmUserModel', 'cmContactsModel', 'cmAuthenticationRequestFactory', 'cmCrypt', 'cmCallbackQueue', 'cmModal',
+        '$scope', '$rootScope', '$routeParams', '$timeout', 
+        function(cmUtil, cmUserModel, cmContactsModel, cmAuthenticationRequestFactory, cmCrypt, cmCallbackQueue, cmModal, $scope, $rootScope, $routeParams, $timeout) {
             
             var timeoutPromise,
-                timeoutInterval
+                timeoutInterval,
+                fromKey = cmUserModel.loadLocalKeys()[0]; // ! attention ! works only with one local private key
 
+            if(!fromKey){
+                $rootScope.goto('/settings/identity/keys')
+            }
 
             function init(){
                 $scope.authenticationRequest    = cmAuthenticationRequestFactory.create()
@@ -116,8 +120,6 @@ define([
                     function(result){
                         $scope.step = 3
                         $scope.transactionSecret = result[0]
-
-                        var fromKey = cmUserModel.loadLocalKeys()[0]; // ! attention ! works only with one local private key
 
                         if(fromKey && $scope.transactionSecret != ''){
                             
