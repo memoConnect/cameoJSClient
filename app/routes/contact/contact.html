@@ -27,10 +27,10 @@
                         <button
                             data-qa="start-trust-handshake-btn"
                             ng-click="goto('authentication/identity/'+contact.identity.id)"
-                            ng-disabled = "getTrust() || !hasKey()"
+                            ng-disabled = "getTrust() || !hasKey() || !hasLocalKey"
                         >
-                                <i ng-if="!hasKey()"    class="fa cm-close"></i>
-                                <i ng-if="hasKey()"     class="fa {{ getTrust() ? 'cm-checkbox-right' : 'cm-handshake'}}"></i>
+                                <i ng-if="!hasKey() || !hasLocalKey"    class="fa cm-close"></i>
+                                <i ng-if="hasKey() && hasLocalKey"      class="fa {{ getTrust() ? 'cm-checkbox-right' : 'cm-handshake'}}"></i>
                         </button>
                         <br/>
                     </div>

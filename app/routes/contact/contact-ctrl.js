@@ -157,6 +157,8 @@ define([
                 return $scope.identity && $scope.identity.keys.length > 0  
             }
 
+            $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length
+
             // $scope.$watchCollection('identity.keys', function(identity){
             //     if(identity)
             //         $scope.isTrusted = cmUserModel.verifyTrust($scope.identity)
