@@ -344,7 +344,7 @@
             "AUTHENTICATION": {
                 "PAGE_HEADLINE": "cameoKeys",
                 "HEADLINE": "cameoKeys verknüpfen",
-                "EXPLANATION": "Um Ihre Nachrichten die Sie als {{identity}} geschrieben haben auf allen Geräten lesen zu können, müssen die ihren lokalen cameoKey mit Ihren cameoKeys auf anderen Geräten verknüpfen.",
+                "EXPLANATION": "Um Ihre Nachrichten die Sie als {{identity}} geschrieben haben auf allen Geräten lesen zu können, müssen Sie ihren lokalen cameoKey mit Ihren cameoKeys auf anderen Geräten verknüpfen.",
                 "START": {
                     "START_BUTTON": "Verbinden",
                     "INSTRUCTIONS": "Drücken Sie auf 'Verbinden' um den Vorgang zu starten.",
@@ -390,7 +390,7 @@
                 "START": {
                     "START_BUTTON": "Anfragen",
                     "INSTRUCTIONS": "Wenn Sie diesem Kontakt vertrauen wollen, drücken Sie auf 'Anfragen', um ihm eine Vertrauensanfrage zu senden.",
-                    "NOTE": "ACHTUNG! Bevor Sie auf 'Anfragen' klicken muss Ihr Kontakt im cameoNet als <strong>'{{identity}}'</strong> angemeldet sein!"
+                    "NOTE": "ACHTUNG! Bevor Sie auf 'Anfragen' klicken muss Ihr Kontakt im cameoNet als {{identity}} angemeldet sein!"
                 },
                 "REQUEST_STARTED": {
                     "CANCEL_BUTTON": "Anfrage abbrechen",
