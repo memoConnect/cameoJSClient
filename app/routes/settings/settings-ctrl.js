@@ -25,6 +25,9 @@ define([
                            ($scope.pageChild1 ? '/' + $scope.pageChild1 : '') +
                            (!isPageChild2AnId && $scope.pageChild2 ? '/' + $scope.pageChild2 : '');
 
+            if($routeParams.keyId)
+                $scope.route = 'identity/key'
+
             $scope.createNewConversation = function(){
                 delete($rootScope.pendingConversation);
                 $location.path('/conversation/');

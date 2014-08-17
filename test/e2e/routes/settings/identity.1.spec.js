@@ -29,16 +29,10 @@ describe('Route: Settings - Identity', function(){
             util.get('/talks');
             util.expectCurrentUrl('/talks')
 
-            util.waitForElement("[data-qa='btn-open-identity-modal']")
-            expect($("[data-qa='btn-open-identity-modal']").isPresent()).toBe(true)
+            util.waitForElement("[data-qa='btn-identity-settings']")
+            expect($("[data-qa='btn-identity-settings']").isPresent()).toBe(true)
 
-            util.click('btn-open-identity-modal')
-
-            util.waitForModalOpen('modal-identity')
-
-            expect($("[data-qa='btn-identity-active']").isPresent()).toBe(true)
-
-            util.click('btn-identity-active')
+            $("[data-qa='btn-identity-settings']").click()
 
             util.waitForPageLoad("/settings/identity")
         })
@@ -61,7 +55,7 @@ describe('Route: Settings - Identity', function(){
             expect($("[data-qa='input-displayname']").isPresent()).toBe(true)
         })
 
-        it('shoudl be exists a save button', function(){
+        it('should be exists a save button', function(){
             util.waitForElement("[data-qa='btn-saveIdentity']")
             expect($("[data-qa='btn-saveIdentity']").isPresent()).toBe(true)
         })
