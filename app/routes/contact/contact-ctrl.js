@@ -39,6 +39,7 @@ define([
                 };
                 $scope.disabled = false;
                 $scope.chooseAvatar = true;
+                $scope.isNew = true;
             } else {
                 $scope.chooseAvatar = false;
                 cmContactsModel.getOne($routeParams.id).then(
