@@ -376,48 +376,48 @@
                     "SUBMIT_BUTTON": "Übertragen"
                 },
                 "SUCCESSFUL": {
-                    "INSTRUCTIONS": "Die Verknüpfung der cameoKeys war erfolgreich! Die bisherigen Talks können in Kürze mit allen verknüpften cameoKeys lesabar sein.",
+                    "INSTRUCTIONS": "Die Verknüpfung Ihrer cameoKeys war erfolgreich! In Kürze können Sie alle Talks lesen, die Sie mit Ihren verknüpften cameoKeys verschlüsselt haben.",
                     "NOTE": "Sie können den Dialog nun schließen.",
                     "CLOSE_BUTTON": "Schließen"
                 },
                 "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen."
             },
             "TRUST": {
-                "HEADLINE": "cameoKeys verknüpfen",
-                "EXPLANATION": "Um Ihre Nachrichten die Sie als <strong>'{{identity}}'</strong> geschrieben haben auf allen Geräten lesen zu können, müssen die ihren lokalen cameoKey mit Ihren cameoKeys auf anderen Geräten verknüpfen.",
+                "HEADLINE": "Kontakt vertrauen",
+                "EXPLANATION": "Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität zu einer Person gehört, die Sie persönlich kennen.",
                 "START": {
-                    "START_BUTTON": "Verbinden",
-                    "INSTRUCTIONS": "Drücken Sie auf 'Verbinden' um den Vorgang zu starten.",
-                    "NOTE": "ACHTUNG! Bevor Sie auf 'Verbinden' klicken müssen Sie auf einem Ihrer Geräte cameoNet als <strong>'{{identity}}'</strong> öffnen!"
+                    "START_BUTTON": "Anfragen",
+                    "INSTRUCTIONS": "Wenn Sie diesem Kontakt vertrauen wollen, drücken Sie auf 'Anfragen', um ihm eine Vertrauensanfrage zu senden.",
+                    "NOTE": "ACHTUNG! Bevor Sie auf 'Anfragen' klicken muss Ihr Kontakt im cameoNet als <strong>'{{identity}}'</strong> angemeldet sein!"
                 },
                 "REQUEST_STARTED": {
-                    "CANCEL_BUTTON": "Anfrage Abbrechen",
+                    "CANCEL_BUTTON": "Anfrage abbrechen",
                     "INSTRUCTIONS": "Drücken Sie auf 'Anfrage abbrechen' um den Vorgang zu beenden.",
-                    "NOTE": "Anfrage gestartet. Bestätigen Sie die Anfrage auf dem zu verknüpfenden Gerät!"
+                    "NOTE": "Bitte warten Sie bis Ihr Kontakt die Anfrage angenommen hat."
                 },
                 "ACCEPT_REQUEST": {
-                    "HEADER": "Anfrage cameoKeys zu verknüpfen",
-                    "INSTRUCTIONS": "Sie haben auf einem anderen Gerät einen cameoKey. den Sie auf diesem Gerät noch nicht kennen. D.h. Sie können Nachrichten, die Sie hier verschlüsselt haben, auf dem anderen Gerät nicht lesen und umgekehrt.<br />Wollen Sie den cameoKey '{{cameoKey}}' mit Ihrem lokalen cameoKey verknüpfen?",
-                    "NOTE": "Um die cameoKeys zu verknüpfen, starten Sie die Verknüpfung.",
-                    "ACCEPT_BUTTON": "Verknüpfung starten",
+                    "HEADER": "Vertrauensanfrage",
+                    "INSTRUCTIONS": "'{{identity}}' hat soeben den Prozess gestartet, mit Ihnen eine Vertrauensbasis einzugehen.<br />Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen.",
+                    "NOTE": "Wenn Sie '{{identity}}' vertrauen wollen, drücken Sie auf 'Annehmen'.",
+                    "ACCEPT_BUTTON": "Annehmen",
                     "CANCEL_BUTTON": "Ablehnen"
                 },
                 "SHOW_TRANSACTION_SECRET": {
-                    "INSTRUCTIONS": "Drücken Sie auf 'Verknüpfung abbrechen' um den Vorgang zu beenden.",
-                    "NOTE": "Übertragen Sie bitte folgenden Code auf Ihr anderes Gerät:",
+                    "INSTRUCTIONS": "Drücken Sie auf 'Abbrechen' um den Vorgang zu beenden.",
+                    "NOTE": "'{{identity}}' muss folgenden Code eingeben:",
                     "LABEL_CODE": "Code",
-                    "CLOSE_BUTTON": "Verknüpfung abbrechen"
+                    "CLOSE_BUTTON": "Abbrechen"
                 },
                 "ENTER_TRANSACTION_SECRET": {
                     "HEADER": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.HEADER",
                     "INSTRUCTIONS": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.INSTRUCTIONS",
-                    "NOTE": "Geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
+                    "NOTE": "Bitte geben Sie hier den Code ein, der '{{identity}}' angezeigt wird:",
                     "LABEL_CODE": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CODE",
                     "CANCEL_BUTTON": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
                     "SUBMIT_BUTTON": "Übertragen"
                 },
                 "SUCCESSFUL": {
-                    "INSTRUCTIONS": "Die Verknüpfung der cameoKeys war erfolgreich! Die bisherigen Talks können in Kürze mit allen verknüpften cameoKeys lesabar sein.",
+                    "INSTRUCTIONS": "Der Vertrauens-Prozess wurde erfogreich durchgeführt!<br />Sie und '{{identity}} vertrauen sich jetzt gegenseitig.",
                     "NOTE": "Sie können den Dialog nun schließen.",
                     "CLOSE_BUTTON": "Schließen"
                 },
@@ -460,7 +460,7 @@
                         }
                     },
                     "WARN": {
-                        "FAILED": "Das anlegen der neuen Identität ist fehlgeschlagen. Bitte probieren Sie es später noch einmal."
+                        "FAILED": "Das Anlegen der neuen Identität ist fehlgeschlagen. Bitte probieren Sie es später noch einmal."
                     },
                     "FOOTER": "@:CONTACT.FOOTER.SAVE"
                 },
