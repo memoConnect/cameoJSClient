@@ -326,13 +326,13 @@
                 }
             },
             "AUTHENTICATION": {
-                "PAGE_HEADLINE": "IDENTITY.KEYS.AUTHENTICATION.PAGE_HEADLINE @todo",
+                "PAGE_HEADLINE": "cameoKeys",
                 "HEADLINE": "Link cameoKey",
-                "EXPLANATION": "To read encrypted messages written under <strong>'{{identity}}'</strong> on other devices, please link the local cameoKey with all other keys that you are using there.",
+                "EXPLANATION": "To read encrypted messages written under {{identity}} on other devices, please link the local cameoKey with all other keys that you are using there.",
                 "START": {
                     "START_BUTTON": "Link up",
                     "INSTRUCTIONS": "Please press 'Link up' to start the process.",
-                    "NOTE": "Attention! Before pressing 'Link up' you should first choose your identity <strong>'{{identity}}'</strong> from the header!"
+                    "NOTE": "Attention! Before pressing 'Link up' you should first choose your identity {{identity}} from the header!"
                 },
                 "REQUEST_STARTED": {
                     "CANCEL_BUTTON": "Abort request",
@@ -368,7 +368,7 @@
                 "TIMEOUT": "Der Vorgang wird in {{timeout}} abgebrochen."
             },
             "TRUST": {
-                "PAGE_HEADLINE": "IDENTITY.KEYS.TRUST.PAGE_HEADLINE @todo",
+                "PAGE_HEADLINE": "Trust Process",
                 "HEADLINE": "TODO",
                 "EXPLANATION": "TODO",
                 "START": {
