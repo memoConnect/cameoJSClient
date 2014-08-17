@@ -47,8 +47,8 @@ define([
                 $scope.waiting              =   false
                 $scope.transactionSecret    =   undefined
                 $scope.BASE                 =   $routeParams.identityId
-                                                ?   'IDENTITY.KEYS.AUTHENTICATION.'
-                                                :   'IDENTITY.KEYS.TRUST.'
+                                                ?   'IDENTITY.KEYS.TRUST.'
+                                                :   'IDENTITY.KEYS.AUTHENTICATION.'
             }
 
 
