@@ -342,7 +342,7 @@
                 }
             },
             "AUTHENTICATION": {
-                "PAGE_HEADLINE": "IDENTITY.KEYS.AUTHENTICATION.PAGE_HEADLINE @todo",
+                "PAGE_HEADLINE": "cameoKeys",
                 "HEADLINE": "cameoKeys verknüpfen",
                 "EXPLANATION": "Um Ihre Nachrichten die Sie als {{identity}} geschrieben haben auf allen Geräten lesen zu können, müssen die ihren lokalen cameoKey mit Ihren cameoKeys auf anderen Geräten verknüpfen.",
                 "START": {
@@ -384,7 +384,7 @@
                 "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen."
             },
             "TRUST": {
-                "PAGE_HEADLINE": "IDENTITY.KEYS.TRUST.PAGE_HEADLINE @todo",
+                "PAGE_HEADLINE": "Vertrauensprozess",
                 "HEADLINE": "Kontakt vertrauen",
                 "EXPLANATION": "Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität zu einer Person gehört, die Sie persönlich kennen.",
                 "START": {

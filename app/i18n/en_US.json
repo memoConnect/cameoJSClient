@@ -326,7 +326,7 @@
                 }
             },
             "AUTHENTICATION": {
-                "PAGE_HEADLINE": "IDENTITY.KEYS.AUTHENTICATION.PAGE_HEADLINE @todo",
+                "PAGE_HEADLINE": "cameoKeys",
                 "HEADLINE": "Link cameoKey",
                 "EXPLANATION": "To read encrypted messages written under {{identity}} on other devices, please link the local cameoKey with all other keys that you are using there.",
                 "START": {
@@ -368,7 +368,7 @@
                 "TIMEOUT": "Der Vorgang wird in {{timeout}} abgebrochen."
             },
             "TRUST": {
-                "PAGE_HEADLINE": "IDENTITY.KEYS.TRUST.PAGE_HEADLINE @todo",
+                "PAGE_HEADLINE": "Trust Process",
                 "HEADLINE": "TODO",
                 "EXPLANATION": "TODO",
                 "START": {
