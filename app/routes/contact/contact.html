@@ -40,6 +40,14 @@
 
         <div class="cm-contact-inputs">
             <form name="cmForm" novalidate autocomplete="off">
+                <div class="cm-input-ctn with-inside-icon cm-icon-grey" ng-class="{'cm-input-disabled':disabled}">
+                    <i class="fa cm-rhino-positive"></i>
+                    <input
+                            tabindex="1" data-qa="input-cameoId" required disabled
+                            type="text" name="cameoId" ng-model="identity.cameoId"
+                            placeholder="{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}" />
+                </div>
+
                 <div class="cm-input-ctn" ng-class="{'cm-input-disabled':disabled}">
                     <input
                         tabindex="1" data-qa="input-displayname"

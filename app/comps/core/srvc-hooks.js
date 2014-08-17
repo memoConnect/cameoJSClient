@@ -121,7 +121,7 @@ angular.module('cmCore').service('cmHooks', [
                     'cm-close-btn': false,
                     'cm-title': authenticationRequest.is3rdParty()
                                 ?   'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.HEADER'
-                                :   'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRETT.HEADER'
+                                :   'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.HEADER'
                 },'<cm-incoming-authentication-request></cm-incoming-authentication-request>', null, scope);
                 cmModal.open(modalId);
 
