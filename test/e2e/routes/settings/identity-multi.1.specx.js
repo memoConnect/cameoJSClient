@@ -1,7 +1,7 @@
 var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
-describe('identity multi', function () {
+describe('Identity multi', function () {
     var ptor = util.getPtorInstance()
     var login
     var newIdentity = {
