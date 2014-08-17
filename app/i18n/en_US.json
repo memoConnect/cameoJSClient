@@ -76,7 +76,7 @@
             "BTN_TEXT": "And - go!..."
         },
         "KEYINFO": {
-            "CHECKBOX_TEXT": "Don't show me this page again",
+            "SKIP_CHECKBOX_TEXT": "Don't show me this page again",
             "SKIP_TEXT": "Skip"
         },
         "BTNS": {
