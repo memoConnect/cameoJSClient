@@ -80,7 +80,7 @@
             "BTN_TEXT": "Und los..."
         },
         "KEYINFO": {
-            "CHECKBOX_TEXT": "Diese Seite nicht mehr anzeigen",
+            "SKIP_CHECKBOX_TEXT": "Diese Seite nicht mehr anzeigen",
             "SKIP_TEXT": "Diesen Schritt überspringen"
         },
         "BTNS": {
