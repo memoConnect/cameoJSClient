@@ -4,33 +4,31 @@
     <cm-menu cm-weight="1"></cm-menu>
 </cm-header>
 
+<h2>
+    <i class="fa cm-person cm-lg-icon"></i>
+    {{'IDENTITY.MODAL.HEADER'|cmTranslate}}
+</h2>
 
-<h2 ng-bind-html="'IDENTITY.MODAL.HEADER | cmParse'"></h2>
-
-<div
-        class="modal-row"
-        cm-rubber-space
-        data-qa="btn-identity-new"
-        ng-click="createNewIdentity()"
-        >
-    <span class="text-only" cm-weight="6">
+<ul>
+    <li ng-click="createNewIdentity()">
+        <span class="item">
         {{'IDENTITY.LABEL.NEW' | cmTranslate}}
-    </span>
-    <button cm-weight="1">
-        <i class="fa cm-checkbox-add"></i>
-    </button>
-</div>
-<div
-        ng-repeat="identity in ownIdentities | orderBy: 'isActive':false"
-        class="modal-row"
-        cm-rubber-space
-        data-qa="btn-identity-{{identity.isActive?'active':'switchto'}}"
-        ng-click="bam(identity)">
-    <cm-avatar cm-data="identity" cm-weight="1"></cm-avatar>
-    <cm-key-level cm-data="identity.keys.getWeakestKeySize()" cm-weight="1"></cm-key-level>
-    <span cm-weight="4">{{identity.getDisplayName()}}</span>
-    <button cm-weight="1">
-        <i class="fa cm-change" ng-if="!identity.isActive"></i>
-        <i class="fa cm-fix" ng-if="identity.isActive"></i>
-    </button>
-</div>
+        </span>
+        <div class="short-links">
+            <i class="fa cm-checkbox-add cm-lg-icon"></i>
+        </div>
+    </li>
+    <li ng-repeat="identity in ownIdentities | orderBy: 'isActive':false" ng-click="bam(identity)">
+        <span class="item" cm-rubber-space>
+            <cm-avatar cm-data="identity" cm-weight="1"></cm-avatar>
+            <cm-key-level cm-data="identity.keys.getWeakestKeySize()" cm-weight="1"></cm-key-level>
+            <span cm-weight="4">{{identity.getDisplayName()}}</span>
+        </span>
+        <div class="short-links">
+            <i class="fa cm-change cm-lg-icon" ng-if="!identity.isActive"></i>
+            <i class="fa cm-fix cm-lg-icon" ng-if="identity.isActive"></i>
+        </div>
+    </li>
+</ul>
+
+<cm-footer></cm-footer>

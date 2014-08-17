@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmIdentitíesOverview', [
+angular.module('cmRouteSettings').directive('cmIdentitiesOverview', [
     'cmUserModel',
-    function(cmUserModel){
+    '$rootScope',
+    function(cmUserModel, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/identity/drtv-overview.html',
@@ -10,14 +11,7 @@ angular.module('cmRouteSettings').directive('cmIdentitíesOverview', [
                 $scope.ownIdentities = cmUserModel.data.identities;
 
                 $scope.createNewIdentity = function(){
-                    $location.path('/settings/identity/new');
-                };
-
-                $scope.goToSettings = function(){
-                    if($location.$$url == '/settings/identity'){
-                        cmModal.close($scope.modalId);
-                    }
-                    $location.path('/settings/identity');
+                    $rootScope.goto('/settings/identity/new');
                 };
 
                 $scope.switchToIdentity = function(identity){
@@ -26,7 +20,7 @@ angular.module('cmRouteSettings').directive('cmIdentitíesOverview', [
 
                 $scope.bam = function(identity){
                     if(identity.isActive == true){
-                        $scope.goToSettings();
+                        $rootScope.goto('/settings/identity');
                     } else {
                         $scope.switchToIdentity(identity);
                     }
