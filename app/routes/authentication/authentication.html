@@ -10,7 +10,15 @@
 
             <h2>
                 <i class = "fa cm-key"></i>
-                {{"IDENTITY.KEYS.HEADER" | cmTranslate}}
+                {{
+                [
+                BASE+"PAGE_HEADLINE",
+                BASE+"PAGE_HEADLINE",
+                BASE+"PAGE_HEADLINE",
+                BASE+"PAGE_HEADLINE"
+                ][step]
+
+                | cmTranslate}}
             </h2>
 
 
