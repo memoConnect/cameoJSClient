@@ -6,7 +6,7 @@
         "VERSION": "Version"
     },
 
-	"LOGIN": {
+    "LOGIN": {
         "HEADING": "Login",
         "LABEL": {
             "SUBMIT": "Einloggen",
@@ -27,7 +27,7 @@
 
     "REGISTER": {
         "HEADING": "Registrierung",
-        "LINK" : "Registrieren",
+        "LINK": "Registrieren",
         "LABEL": {
             "SUBMIT": "Benutzerkonto anlegen",
             "USERNAME": "Benutzername",
@@ -56,9 +56,9 @@
 
     },
 
-	"START": {
-		"YOUR_ID": "Deine cameoID",
-		"LOGOUT": "Abmelden",
+    "START": {
+        "YOUR_ID": "Deine cameoID",
+        "LOGOUT": "Abmelden",
         "WELCOME": {
             "HEADLINE": "Willkommen im cameoNet!",
             "TEXT_1": "<span class='cm-ci-color'>cameoNet</span> ist ein Ende-zu-Ende verschlüsselter OpenSource Messenger für sichere private und geschäftliche Kommunikation!",
@@ -79,38 +79,38 @@
             "TEXT_4": "Wenn Sie Fragen zu cameoNet haben oder auf Probleme stoßen, nutzen Sie unser Forum unter http://support.cameonet.de.",
             "BTN_TEXT": "Und los..."
         },
-        "KEYINFO": {
+        "SKIP": {
             "CHECKBOX_TEXT": "Diese Seite nicht mehr anzeigen",
             "SKIP_TEXT": "Diesen Schritt überspringen"
         },
         "BTNS": {
             "NEXT": "Weiter"
         }
-	},
+    },
 
-	"VERIFICATION": {
-		"REQUEST": {
-			"LABEL": "Verifizierung anfragen"
-		}
-	},
+    "VERIFICATION": {
+        "REQUEST": {
+            "LABEL": "Verifizierung anfragen"
+        }
+    },
 
-	"PROFILE": {
-		"E-MAIL": "E-Mail",
-		"MOBILE": "Mobilfunknummer"
-	},
+    "PROFILE": {
+        "E-MAIL": "E-Mail",
+        "MOBILE": "Mobilfunknummer"
+    },
 
-	"LANG":	{
-		"DE_DE": "Deutsch",
-		"EN_US": "Englisch",
-		"SWITCH": {
-			"SUCCESS": "Sprache auf {{lang}} gestellt.",
-			"ERROR": "Konnte Sprache nicht auf {{lang}} stellen.",
-			"LABEL": {
-				"DE_DE": "@:LANG.DE_DE",
-				"EN_US": "@:LANG.EN_US"
-			}
-		}
-	},
+    "LANG": {
+        "DE_DE": "Deutsch",
+        "EN_US": "Englisch",
+        "SWITCH": {
+            "SUCCESS": "Sprache auf {{lang}} gestellt.",
+            "ERROR": "Konnte Sprache nicht auf {{lang}} stellen.",
+            "LABEL": {
+                "DE_DE": "@:LANG.DE_DE",
+                "EN_US": "@:LANG.EN_US"
+            }
+        }
+    },
 
     "TERMS": {
         "HEADING": "Allgemeine Geschäftsbedingungen",
@@ -152,7 +152,7 @@
         },
         "TEXT": {
             "REQUEST_CAPTCHA": "Bitte ein (neues) PassCaptcha senden.",
-            "ENCRYPTED" : "- verschlüsselt -"
+            "ENCRYPTED": "- verschlüsselt -"
         },
         "WARN": {
             "MESSAGE_EMPTY": "Die Nachricht ist leer.",
@@ -196,8 +196,8 @@
         }
     },
 
-	"CONTACTS": {
-		"HEADING": {
+    "CONTACTS": {
+        "HEADING": {
             "LIST": "Kontakte",
             "REQUESTS": "Kontaktanfragen",
             "SEARCH": "Suchen",
@@ -213,7 +213,7 @@
             "NO_RESULTS": "Keine passenden Identitäten im cameoNet gefunden.",
             "MORE_CHARS_NEEDED": "Bitte geben Sie mehr Zeichen ein!",
             "NO_REQUESTS": "Keine Anfragen vorhanden.",
-            "REQUEST":{
+            "REQUEST": {
                 "SENDED": "Die Anfrage wurde verschickt.",
                 "FAILED": "Die Anfrage konnte nicht verschickt werden.",
                 "ACCEPT": "Sie sind nun mit diesem Kontakt verbunden.",
@@ -235,15 +235,15 @@
             "RESET": "Zurücksetzen",
             "SUBMIT": "Speichern"
         },
-        "TAG":{
+        "TAG": {
             "FILTER": "Filter"
         },
-        "REQUESTS":{
+        "REQUESTS": {
             "ACCEPT": "Akzeptieren",
             "REJECT": "Zurückweisen",
             "IGNORE": "Ignorieren"
         }
-	},
+    },
 
     "CONTACT": {
         "WIDGET": "Talks",
@@ -283,28 +283,151 @@
         "FOOTER": {
             "SAVE": "Speichern"
         }
-
     },
 
-    "IDENTITY":{
-        "LABEL":{
+    "IDENTITY": {
+        "LABEL": {
             "KEYMANAGEMENT": "cameoKeys",
             "TRUST": "QR-Code",
             "NEW": "Neue Identität anlegen"
         },
-        "MODAL":{
+        "MODAL": {
             "HEADER": "Identitäten"
         },
-        "NOTIFY":{
+        "NOTIFY": {
             "UPDATE": {
                 "ERROR": "Die Änderungen konnte nicht gespeichert werden.",
                 "SUCCESS": "Die Änderungen wurde erfolgreich gespeichert."
             }
+        },
+        "KEYS": {
+            "HEADER": "cameoKeys",
+            "KEYLIST": {
+                "EXPLANATION": {
+                    "UNTRUSTED_KEYS": "Sie haben für diese Identität auf anderen Geräten cameoKeys, die sich gegenseitig nicht kennen.<br />Um verschlüsselte Nachrichten auf allen Geräten lesen zu können, müssen Sie die cameoKeys miteinander verknüpfen.",
+                    "ALL_KEYS_TRUSTED": "Für '{{Identity}}' haben Sie einen cameoKey auf Ihrem Gerät, mit dem Sie alle Talks lesen können."
+                },
+                "LABEL_LOCALKEY": "lokaler cameoKey",
+                "LABEL_OTHERKEYS": "cameoKeys auf anderen Geräten/Browsern/App",
+                "BUTTON_KEY_DETAILS": "cameoKey Details anzeigen",
+                "BUTTON_AUTHENTICATE": "cameoKeys verknüpfen",
+                "BUTTON_EXPORT": "cameoKey exportieren",
+                "BUTTON_DELETE": "cameoKey löschen",
+                "BUTTON_REVOKE": "cameoKey deaktivieren"
+            },
+            "GENERATE": {
+                "START": {
+                    "HEADLINE": "cameoKey erzeugen",
+                    "EXPLANATION": "Sie haben noch keinen cameoKey für Ihre Identität auf diesem Gerät.<br />Um sicher zu kommunizieren, müssen Sie zuerst einen cameoKey für diese Identität erzeugen oder importieren.",
+                    "KEY_LENGTH": {
+                        "BUTTON_LABEL": "Schlüsselstärke <strong>'{{key_length}}'</strong>",
+                        "LENGTH_2048": "2048Bit (default)",
+                        "LENGTH_4096": "4096Bit"
+                    },
+                    "GENERATE_BUTTON": "cameoKey erzeugen"
+                },
+                "GENERATING": {
+                    "HEADLINE": "cameoKey Generierung läuft!",
+                    "EXPLANATION": "Bitte haben Sie einen Moment Geduld. Dieser Prozess kann je nach Gerät und Schlüssellänge einige Zeit in Anspruch nehmen.<br /> Bei Wartenzeiten von über 5 Minuten sollten Sie den Prozess abbrechen und erneut starten.",
+                    "TIME_PASSED": "Verbrauchte Zeit:",
+                    "STOP_BUTTON": "Generierung abbrechen"
+                },
+                "SAVE": {
+                    "HEADLINE": "cameoKey Generierung erfolgreich!",
+                    "EXPLANATION": "Der cameoKey besteht aus einem privaten Schlüssel, der nur auf Ihrem Gerät gespeichert wird, und einem öffentlichen Schlüssel, den Sie an den cameoServer übertragen und dort speichern müssen.",
+                    "NOTE": "Um bei Verlust Ihres cameoKeys Ihre verschlüsselten Nachrichten wieder lesen zu können, sollten Sie Ihren cameoKey öffnen, den privaten Schlüssel aus dem Textfeld kopieren und sicher verwahren.",
+                    "TIME_PASSED": "Verbrauchte Zeit:",
+                    "KEY_NAME": "Schlüsselname",
+                    "SAVE_BUTTON": "cameoKey speichern"
+                }
+            },
+            "AUTHENTICATION": {
+                "HEADLINE": "cameoKeys verknüpfen",
+                "EXPLANATION": "Um Ihre Nachrichten die Sie als <strong>'{{identity}}'</strong> geschrieben haben auf allen Geräten lesen zu können, müssen die ihren lokalen cameoKey mit Ihren cameoKeys auf anderen Geräten verknüpfen.",
+                "START": {
+                    "START_BUTTON": "Verbinden",
+                    "INSTRUCTIONS": "Drücken Sie auf 'Verbinden' um den Vorgang zu starten.",
+                    "NOTE": "ACHTUNG! Bevor Sie auf 'Verbinden' klicken müssen Sie auf einem Ihrer Geräte cameoNet als <strong>'{{identity}}'</strong> öffnen!"
+                },
+                "REQUEST_STARTED": {
+                    "CANCEL_BUTTON": "Anfrage Abbrechen",
+                    "INSTRUCTIONS": "Drücken Sie auf 'Anfrage abbrechen' um den Vorgang zu beenden.",
+                    "NOTE": "Anfrage gestartet. Bestätigen Sie die Anfrage auf dem zu verknüpfenden Gerät!"
+                },
+                "ACCEPT_REQUEST": {
+                    "HEADER": "Anfrage cameoKeys zu verknüpfen",
+                    "INSTRUCTIONS": "Sie haben auf einem anderen Gerät einen cameoKey. den Sie auf diesem Gerät noch nicht kennen. D.h. Sie können Nachrichten, die Sie hier verschlüsselt haben, auf dem anderen Gerät nicht lesen und umgekehrt.<br />Wollen Sie den cameoKey '{{cameoKey}}' mit Ihrem lokalen cameoKey verknüpfen?",
+                    "NOTE": "Um die cameoKeys zu verknüpfen, starten Sie die Verknüpfung.",
+                    "ACCEPT_BUTTON": "Verknüpfung starten",
+                    "CANCEL_BUTTON": "Ablehnen"
+                },
+                "SHOW_TRANSACTION_SECRET": {
+                    "INSTRUCTIONS": "Drücken Sie auf 'Verknüpfung abbrechen' um den Vorgang zu beenden.",
+                    "NOTE": "Übertragen Sie bitte folgenden Code auf Ihr anderes Gerät:",
+                    "LABEL_CODE": "Code",
+                    "CLOSE_BUTTON": "Verknüpfung abbrechen"
+                },
+                "ENTER_TRANSACTION_SECRET": {
+                    "HEADER": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER",
+                    "INSTRUCTIONS": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.INSTRUCTIONS",
+                    "NOTE": "Geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
+                    "LABEL_CODE": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CODE",
+                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
+                    "SUBMIT_BUTTON": "Übertragen"
+                },
+                "SUCCESSFUL": {
+                    "INSTRUCTIONS": "Die Verknüpfung der cameoKeys war erfolgreich! Die bisherigen Talks können in Kürze mit allen verknüpften cameoKeys lesabar sein.",
+                    "NOTE": "Sie können den Dialog nun schließen.",
+                    "CLOSE_BUTTON": "Schließen"
+                },
+                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen."
+            },
+            "TRUST": {
+                "HEADLINE": "cameoKeys verknüpfen",
+                "EXPLANATION": "Um Ihre Nachrichten die Sie als <strong>'{{identity}}'</strong> geschrieben haben auf allen Geräten lesen zu können, müssen die ihren lokalen cameoKey mit Ihren cameoKeys auf anderen Geräten verknüpfen.",
+                "START": {
+                    "START_BUTTON": "Verbinden",
+                    "INSTRUCTIONS": "Drücken Sie auf 'Verbinden' um den Vorgang zu starten.",
+                    "NOTE": "ACHTUNG! Bevor Sie auf 'Verbinden' klicken müssen Sie auf einem Ihrer Geräte cameoNet als <strong>'{{identity}}'</strong> öffnen!"
+                },
+                "REQUEST_STARTED": {
+                    "CANCEL_BUTTON": "Anfrage Abbrechen",
+                    "INSTRUCTIONS": "Drücken Sie auf 'Anfrage abbrechen' um den Vorgang zu beenden.",
+                    "NOTE": "Anfrage gestartet. Bestätigen Sie die Anfrage auf dem zu verknüpfenden Gerät!"
+                },
+                "ACCEPT_REQUEST": {
+                    "HEADER": "Anfrage cameoKeys zu verknüpfen",
+                    "INSTRUCTIONS": "Sie haben auf einem anderen Gerät einen cameoKey. den Sie auf diesem Gerät noch nicht kennen. D.h. Sie können Nachrichten, die Sie hier verschlüsselt haben, auf dem anderen Gerät nicht lesen und umgekehrt.<br />Wollen Sie den cameoKey '{{cameoKey}}' mit Ihrem lokalen cameoKey verknüpfen?",
+                    "NOTE": "Um die cameoKeys zu verknüpfen, starten Sie die Verknüpfung.",
+                    "ACCEPT_BUTTON": "Verknüpfung starten",
+                    "CANCEL_BUTTON": "Ablehnen"
+                },
+                "SHOW_TRANSACTION_SECRET": {
+                    "INSTRUCTIONS": "Drücken Sie auf 'Verknüpfung abbrechen' um den Vorgang zu beenden.",
+                    "NOTE": "Übertragen Sie bitte folgenden Code auf Ihr anderes Gerät:",
+                    "LABEL_CODE": "Code",
+                    "CLOSE_BUTTON": "Verknüpfung abbrechen"
+                },
+                "ENTER_TRANSACTION_SECRET": {
+                    "HEADER": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.HEADER",
+                    "INSTRUCTIONS": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.INSTRUCTIONS",
+                    "NOTE": "Geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
+                    "LABEL_CODE": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CODE",
+                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
+                    "SUBMIT_BUTTON": "Übertragen"
+                },
+                "SUCCESSFUL": {
+                    "INSTRUCTIONS": "Die Verknüpfung der cameoKeys war erfolgreich! Die bisherigen Talks können in Kürze mit allen verknüpften cameoKeys lesabar sein.",
+                    "NOTE": "Sie können den Dialog nun schließen.",
+                    "CLOSE_BUTTON": "Schließen"
+                },
+                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen."
+            }
         }
     },
 
-	"SETTINGS": {
-		"WELCOME": "Einstellungen",
+    "SETTINGS": {
+        "WELCOME": "Einstellungen",
         "LABEL": "Einstellungen",
         "ACCOUNT": "Account Einstellungen",
         "IDENTITY": "Identität Einstellungen",
@@ -312,7 +435,7 @@
         "CONTACTS": "Kontakte Einstellungen",
         "APP": "App Einstellungen",
         "CONTRACTS": "Verträge",
-        "PAGES":{
+        "PAGES": {
             "APP": {
                 "LANGUAGE": "Sprache",
                 "EMOJI_CONVERT": "Smileys zu Emojis",
@@ -396,27 +519,26 @@
                     "HANDSHAKE_RECEIVED": "Möchten Sie die Authentifikation durchführen?",
                     "HANDSHAKE_NEED_TRANSACTID": "Geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
                     "HANDSHAKE_DONE": "Authentifikation war erfolgreich!<br>"
-
                 }
             },
-            "ABOUT_US":{
+            "ABOUT_US": {
                 "TITLE": "Über uns",
                 "TEXT": "cameoNet 2014"
             }
         }
-	},
+    },
 
-	"NAVIGATION": {
-		"TABS": {
-			"BACK": "Zurück",
+    "NAVIGATION": {
+        "TABS": {
+            "BACK": "Zurück",
             "ADD": "Hinzufügen",
             "ALL": "Kontakte",
             "REQUESTS": "Anfragen",
-			"SPINNER": "Spinner",
-			"KEY": "cameoKey",
-			"TALKS": "Talks"
-		}
-	},
+            "SPINNER": "Spinner",
+            "KEY": "cameoKey",
+            "TALKS": "Talks"
+        }
+    },
 
     "DRTV": {
         "PASSWORD": {
@@ -458,7 +580,7 @@
             "HEADER": "Externen Kontakt hinzufügen",
             "INFO": {
                 "DISPLAYNAME_EXISTS": "Der gewählte Anzeigename existiert bereits im Adressbuch.",
-                "EMPTY":{
+                "EMPTY": {
                     "DISPLAYNAME": "Bitte geben Sie einen Anzeigenamen ein!",
                     "NAME": "Bitte geben Sie einen Vornamen ein!",
                     "SURNAME": "Bitte geben Sie einen Nachnamen ein!",
@@ -481,19 +603,19 @@
             "CONTENT": "Die Talks auf diesem Gerät werden für den neuen cameoKey verschlüsselt.",
             "START": "Start"
         },
-        "KEY_REQUEST":{
+        "KEY_REQUEST": {
             "HEADER": "Authentifizierung",
             "CONTENT": "Sie haben einen neuen cameoKey auf diesem Gerät, der noch nicht authentifiziert wurde. D.h. Sie können ältere Nachrichten dieser Identität nicht entschlüsseln. Dies geschieht zu Ihrer Sicherheit.<br>Möchten Sie die Authentifikation jetzt durchführen?<br> Sie müssen dazu auf einem anderen Geräte cameoNet mit der selben Identität <strong>'{{identity}}'</strong> öffnen."
         },
-        "KEY_RESPONSE":{
+        "KEY_RESPONSE": {
             "HEADER": "Authentifizierungsanfrage",
             "CONTENT": "Haben Sie soeben auf einem anderen Gerät einen neuen cameoKey erzeugt und möchten dort den Zugriff auf Ihre verschlüsselten Nachrichten erlauben?"
         },
-        "KEY_REQUEST_3RD":{
+        "KEY_REQUEST_3RD": {
             "HEADER": "Vertrauens-Prozess",
             "CONTENT": "Wollen Sie den Vertrauens-Prozess für diesen Kontakt starten?<br>Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen.<br><br>ACHTUNG!! Der Kontakt muss im cameoNet mit der Identität angemeldet sein, bevor Sie den Prozess starten!"
         },
-        "KEY_RESPONSE_3RD":{
+        "KEY_RESPONSE_3RD": {
             "HEADER": "Vertrauens-Prozess",
             "CONTENT": "Ein Kontakt hat soeben den Vertrauens-Prozess mit Ihnen gestartet. Wollen Sie ihn mit diesem Gerät durchführen?<br><br>Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen."
         },
@@ -503,7 +625,7 @@
             "MEDIA": "Media",
             "SETTINGS": "Einstellungen"
         },
-        "IMPRINT":{
+        "IMPRINT": {
             "HEADLINE": "Impressum",
             "CONTENT": "cameoNet ein Dienst der:<br>memo Connect GmbH<br>Große Nikolaistraße 7 06108 Halle (Saale) Germany<br>Fon: +49 345 213 79 66 5<br>Fax: +49 345 213 79 66 59<br>Amtsgericht Stendal HRB 20018<br>Geschäftsführer: Michael Merz, Dr. Holger Haedrich"
         }
@@ -523,7 +645,7 @@
         "LOGOUT": "Abmelden"
     },
 
-    "NOTIFICATIONS":{
+    "NOTIFICATIONS": {
         "HEADER": "Notifikationen",
         "MODAL_HEADER": {
             "INFO": "Hinweis",
@@ -532,10 +654,10 @@
             "SUCCESS": "Erfolgreich"
         },
         "TYPES": {
-            "KEYS":{
+            "KEYS": {
                 "STORE_NEW": "cameoKey erfolgreich gespeichert!"
             },
-            "SAVE_AS":{
+            "SAVE_AS": {
                 "IOS_NOT_SUPPORT": "Leider unterstützt iOS das Herunterladen von Dateien für viele Formate nicht.<br>Unterstützte Formate: .pdf<br> Um andere Dateiformate herunterladen zu können, öffnen Sie den Talk auf einem anderen Gerät, das kein iOS verwendet. "
             },
             "FRIEND_REQUEST": "Neue Kontaktanfrage"
@@ -592,7 +714,7 @@
                 "DESCRIPTION": "Das PassCaptcha-Verfahren erschwert es, Nachrichten - die bei der Übertragung durch das Internet abgefangen oder auf dem cameoNet-Server gespeichert werden - in großem Umfang automatisiert zu entschlüsseln. Sicher verschlüsselt ist die Nachricht aber hiermit nicht, da Entschlüsselungsmethoden für Captchas  immer leistungsfähiger werden und eine Person die Nachricht direkt entschlüsseln könnte.",
                 "TOGGLE": "PassCaptcha deaktivieren."
             },
-            "TRUSTING_ALL_RECIPIENTS":{
+            "TRUSTING_ALL_RECIPIENTS": {
                 "NAME": "Du vertraust allen Empfängern.",
                 "DESCRIPTION": ""
             },

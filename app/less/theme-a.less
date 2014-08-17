@@ -47,6 +47,7 @@
   article{
   }
 
+
   cm-info-bubble{
     display:block;
     position:relative;
@@ -152,6 +153,64 @@
       }
     }
   }
+  
+
+  .authentication-status{
+    position:relative;
+    margin:0 auto;
+    margin-top: 1rem;
+    width:3.5*@cm-unit;
+    line-height:1em;
+    text-align:center;
+    font-size:2*@cm-unit;
+
+    i{
+      
+      &.active{
+        color:@cm-ci-color;
+      }
+
+      &.cm-key-request{
+        position:absolute;
+        font-size:1em;
+        left:0;
+        top:0;
+      }
+
+      &.cm-key-response{
+        position:absolute;
+        font-size:1em;
+        right:0;
+        top:0;
+      }
+
+      &.cm-handshake{
+        font-size: 0.4em;
+        vertical-align: top;
+        padding-top:0.65em;
+      }
+      
+    }
+  }
+
+  cm-loader{
+    color:@cm-ci-color;
+  }
+
+  .space-for-loader{
+      padding:1em  0 !important;
+  }
+
+  .transaction-secret{
+    font-size: @cm-unit;
+    text-align:center;
+  }
+
+  .timeout{
+    text-align:center;
+    font-size:@cm-large-font;
+  }
+
 }
 
 cm-welcome, cm-quick-start, cm-key-info, cm-about-us {

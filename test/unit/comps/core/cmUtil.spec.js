@@ -107,11 +107,9 @@ describe('cmUtil', function() {
         it('should be wrong, if param is contains special characters and whitespace', function () {
             expect(cmUtil.validateString('moep sdvdsv')).toBeFalsy() // whitespace
             expect(cmUtil.validateString('moep$3fewe')).toBeFalsy()// $
-            expect(cmUtil.validateString('moep_')).toBeFalsy() // _
             expect(cmUtil.validateString('moep*')).toBeFalsy() // *
             expect(cmUtil.validateString('moep@')).toBeFalsy() // @
             expect(cmUtil.validateString('moep+')).toBeFalsy() // +
-            expect(cmUtil.validateString('moep-')).toBeFalsy() // -
             expect(cmUtil.validateString('moep/')).toBeFalsy() // /
             expect(cmUtil.validateString('moep\\')).toBeFalsy() // \
         })

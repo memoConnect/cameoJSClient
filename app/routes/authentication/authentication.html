@@ -8,56 +8,150 @@
 
     <section class = "theme-a">
 
-        <h2>
-            <i class = "fa cm-key"></i>
-            {{"AUTHENTICATION.HEADING" | cmTranslate}}
-        </h2>
+            <h2>
+                <i class = "fa cm-key"></i>
+                {{"IDENTITY.KEYS.HEADER" | cmTranslate}}
+            </h2>
 
-        <!-- status -->
 
-        <article class= "authentication-status" ng-click = "step = ((step||0)+1)%4">
-            <i class= "fa cm-key-request"   ng-class="'active': step > 0"></i>
-            <i class= "fa cm-key-response"  ng-class="'active': step > 1"></i>
-            <i class= "fa cm-handshake"     ng-class="'active': step > 2"></i>
-            {{step}}
-        </article>
+            <article>
+                <div class= "authentication-status" ng-click = "step = ((step||0)+1)%4">
+                    <i class= "fa cm-key-request"   ng-class="{'active': step > 0}"></i>
+                    <i class= "fa cm-key-response"  ng-class="{'active': step > 1}"></i>
+                    <i class= "fa cm-handshake"     ng-class="{'active': step > 3}"></i>
+                </div>
+                <div class= "space-for-loader">
+                    <cm-loader cm-halt = "waiting" type="balls"></cm-loader>
+                </div>
+            <article>
 
-        <hr/>
+            <hr/>
 
-        <h3>
-            {{"AUTHENTICATION.HEADING" | cmTranslate}}
-        </h3>
+            <h3>
+                {{ 
+                    [
+                        BASE+"HEADLINE",
+                        BASE+"HEADLINE", 
+                        BASE+"HEADLINE", 
+                        BASE+"HEADLINE" 
+                    ][step]
 
-        <article>
-            <cm-info-bubble nose-x = "60%">
-                {{"AUTHENTICATION.EXPLANATION" | cmTranslate}}
+                | cmTranslate}}
+            </h3>
 
-                <br/>
-                <br/>
+            <article>
+                <cm-info-bubble nose-x = "60%">
+                    {{
+                        [
+                            BASE+"EXPLANATION",
+                            BASE+"EXPLANATION",
+                            BASE+"EXPLANATION",
+                            BASE+"EXPLANATION"
+                        ][step]
 
+                    | cmTranslate:{'identity': toIdentity.getDisplayName()} }}
+
+                    <br/>
+                    <br/>
+
+                    <strong>
+                        {{
+                            [
+                                BASE+"START.INSTRUCTIONS",
+                                BASE+"REQUEST_STARTED.INSTRUCTIONS",
+                                BASE+"SHOW_TRANSACTION_SECRET.INSTRUCTIONS",
+                                BASE+"SHOW_TRANSACTION_SECRET.INSTRUCTIONS"
+                            ] [step]
+
+                        | cmTranslate }}
+                    </strong>
+                </cm-info-bubble>
+            </article>
+
+            <hr/>
+
+            <article>
                 <strong>
-                    {{"AUTHENTICATION.INSTRUCTIONS" | cmTranslate}}
+                    {{
+                        [
+                            BASE+"START.NOTE",
+                            BASE+"REQUEST_STARTED.NOTE",
+                            BASE+"SHOW_TRANSACTION_SECRET.NOTE",
+                            BASE+"SHOW_TRANSACTION_SECRET.NOTE"
+                        ][step] 
+
+                    | cmTranslate:{'identity': toIdentity.getDisplayName()} }}
                 </strong>
-            </cm-info-bubble>
-        </article>
+            </article>
 
-        <hr/>
+            <article ng-if = "step > 1">
+                <div class="transaction-secret">
+                    {{transactionSecret || '...'}}
+                </div>
+            </article>
 
-        <article>
-            <strong>
-                {{"AUTHENTICATION.NOTE" | cmTranslate}}
-            </string>
-        </article>
+            <br/>
 
-    <section>
+            <article ng-if ="timeout">
+                {{BASE+"TIMEOUT" | cmTranslate: {'timeout' : timeout/1000 +'s'} }}
+            </article>
 
 
-    <cm-footer cm-always-on-top>
-        <button ng-click="startAuthentication()" class="cm-btn-block cm-btn-grey" data-qa="btn-start-authentication">
-            {{'AUTHENTICATION.HANDSHAKE_START'|cmTranslate}}
+    </section>
+
+
+    <cm-footer cm-always-on-top ng-if = "step == 0">
+
+        <button 
+            ng-click    = "requestKey()" 
+            class       = "cm-btn-block cm-btn-grey" 
+            data-qa     = "btn-start-authentication"
+        >
+            {{BASE+"START.START_BUTTON"|cmTranslate}}
             <i class="fa cm-handshake cm-lg-icon"></i>
         </button>
+
     </cm-footer>
+
+    <cm-footer cm-always-on-top ng-if = "step == 1">
+
+        <button 
+            ng-click    = "cancel()" 
+            class       = "cm-btn-block cm-btn-grey" 
+            data-qa     = "btn-start-authentication"
+        >
+            {{BASE+"REQUEST_STARTED.CANCEL_BUTTON"|cmTranslate}}
+            <i class="fa cm-handshake cm-lg-icon"></i>
+        </button>
+
+    </cm-footer>
+
+    <cm-footer cm-always-on-top ng-if = "step == 3">
+
+        <button 
+            ng-click    = "cancel()" 
+            class       = "cm-btn-block cm-btn-grey" 
+            data-qa     = "btn-start-authentication"
+        >
+            {{BASE+"SHOW_TRANSACTION_SECRET.CLOSE_BUTTON"|cmTranslate}}
+            <i class="fa cm-handshake cm-lg-icon"></i>
+        </button>
+
+    </cm-footer>
+
+    <cm-footer cm-always-on-top ng-if = "step == 4">
+
+        <button 
+            ng-click    = "startAuthenticationRequest()" 
+            class       = "cm-btn-block cm-btn-grey" 
+            data-qa     = "btn-start-authentication"
+        >
+            {{BASE+"AUTHENTICATION.START"|cmTranslate}}
+            <i class="fa cm-handshake cm-lg-icon"></i>
+        </button>
+        
+    </cm-footer>
+
 </section>
 
 

@@ -32,6 +32,7 @@ cameo_config = {
         'settings': {
             hasCtrl: true,
             routes: [
+                '/settings/identity/key/:keyId?',
                 '/settings/:pageParent?',
                 '/settings/:pageParent/:pageChild1?',
                 '/settings/:pageParent/:pageChild1/:pageChild2?'
@@ -41,7 +42,8 @@ cameo_config = {
         'authentication' :{
             hasCtrl: true,
             routes: [
-                '/authentication/:keyId'
+                '/authentication/:keyId?',
+                '/authentication/identity/:identityId?',
             ],
             resolveOnBoot: true,
             guests: false
