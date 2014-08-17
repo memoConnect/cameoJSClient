@@ -29,13 +29,13 @@
                 <li>
                     <span class="item">2048</span>
                     <div class="short-links" ng-click="chooseKeySize('2048')">
-                        <i class="fa" ng-class="{'cm-checkbox':!keySize.2048,'cm-checkbox-right':keySize.2048}"></i>
+                        <i class="fa" ng-class="{'cm-checkbox':keySize != 2048,'cm-checkbox-right':keySize == 2048}"></i>
                     </div>
                 </li>
                 <li>
                     <span class="item">4096</span>
                     <div class="short-links" ng-click="chooseKeySize('4096')">
-                        <i class="fa" ng-class="{'cm-checkbox':!keySize.4096,'cm-checkbox-right':keySize.4096}"></i>
+                        <i class="fa" ng-class="{'cm-checkbox':keySize != 4096,'cm-checkbox-right':keySize == 4096}"></i>
                     </div>
                 </li>
             </ul>

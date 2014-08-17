@@ -5,11 +5,17 @@ angular.module('cmRouteStart').directive('cmKeyInfo', [
     'cmUtil',
     'cmUserKeyStorageService',
     '$location',
-    function(cmUserModel, cmUtil, cmUserKeyStorageService, $location){
+    '$rootScope',
+    function(cmUserModel, cmUtil, cmUserKeyStorageService, $location, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'routes/start/comps/drtv-key-info.html',
             controller: function ($scope) {
+
+                if(cmUserModel.hasPrivateKey()){
+                    $location.path('/settings/identity/keys');
+                    return false;
+                }
 
                 var storageKey = 'appSettings',
                     storageService = new cmUserKeyStorageService(storageKey);
@@ -32,11 +38,11 @@ angular.module('cmRouteStart').directive('cmKeyInfo', [
                 };
 
                 $scope.goToTalks = function(){
-                    $location.path('/talks');
+                    $scope.goto('/talks');
                 };
 
                 $scope.generateKey = function(){
-                    $location.path('settings/identity/keys/create');
+                    $scope.goto('settings/identity/keys/create');
                 };
 
                 $scope.showKeySize = false;
@@ -47,6 +53,24 @@ angular.module('cmRouteStart').directive('cmKeyInfo', [
                     } else {
                         $scope.showKeySize = false;
                     }
+                };
+
+                $scope.keySize = 2048;
+                $scope.chooseKeySize = function(size){
+                    if(size == '4096'){
+                        $scope.keySize = 4096;
+                    } else {
+                        $scope.keySize = 2048;
+                    }
+                };
+
+                $scope.generateKey = function(){
+                    $rootScope.generateAutomatic = {
+                        generate:true,
+                        keySize: $scope.keySize
+                    };
+
+                    $scope.goto('/settings/identity/keys/create');
                 }
             }
         }

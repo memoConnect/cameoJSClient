@@ -2,9 +2,9 @@
 
 angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
     'cmUserModel', 'cmCrypt', 'cmUtil', 'cmLogger', 'cmNotify', 'cmKey',
-    '$window', '$location',
+    '$window', '$rootScope',
     function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey,
-             $window, $location){
+             $window, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'routes/settings/comps/identity/drtv-keys-create.html',
@@ -25,10 +25,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
 
                 $scope.active = 'choose'; // choose, active, store
                 //$scope.keySizes = cmCrypt.getKeySizes();
-                $scope.keySize = {
-                    '2048': true,
-                    '4096': false
-                };
+                $scope.keySize = 2048;
                 $scope.keyName = '';
                 $scope.i18n = {time:''};
 
@@ -42,18 +39,13 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                     }
                 };
 
+                $scope.keySize = 2048;
                 $scope.chooseKeySize = function(size){
-                  if(size == '4096'){
-                      $scope.keySize = {
-                          '2048': false,
-                          '4096': true
-                      };
-                  } else {
-                      $scope.keySize = {
-                          '2048': true,
-                          '4096': false
-                      };
-                  }
+                    if(size == '4096'){
+                        $scope.keySize = 4096;
+                    } else {
+                        $scope.keySize = 2048;
+                    }
                 };
 
                 /**
@@ -133,9 +125,31 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                             .syncLocalKeys();
 
                         //$window.history.back();
-                        $location.path('/settings/identity/keys');
+                        if(generateAutomatic == false){
+                            $scope.goto('/settings/identity/keys');
+                        } else {
+                            $scope.goto('/talks');
+                        }
+
                     }
                 };
+
+                var generateAutomatic = false;
+                if(typeof $rootScope.generateAutomatic != 'undefined'){
+                    if('generate' in $rootScope.generateAutomatic && $rootScope.generateAutomatic.generate == true){
+                        generateAutomatic = true;
+
+                        if('keySize' in $rootScope.generateAutomatic && parseInt($rootScope.generateAutomatic.keySize) == 4096){
+                            $scope.keySize = 4096;
+                        } else {
+                            $scope.keySize = 2048;
+                        }
+
+                        $scope.generate();
+                    }
+
+                    $rootScope.generateAutomatic = {}
+                }
             }
         }
     }
