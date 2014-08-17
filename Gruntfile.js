@@ -846,7 +846,7 @@ module.exports = function (grunt) {
     ]);
     grunt.registerTask('tests-e2e', [
         'genAllTemplates',
-        'shell:generateKeys',
+        'exec:generateKeys',
         'packages',
         'protractor:default'
     ]);
