@@ -92,6 +92,7 @@ this.createTestUser = function (testUserId) {
 
     this.get("/registration");
 
+    $("[data-qa='input-cameoId']").clear()
     $("[data-qa='input-cameoId']").sendKeys(loginName)
     $("[data-qa='input-password']").sendKeys(password)
     $("[data-qa='input-passwordConfirm']").sendKeys(password)
@@ -103,7 +104,7 @@ this.createTestUser = function (testUserId) {
 
     $("[data-qa='btn-createUser']").click()
 
-    this.waitForPageLoad("/start")
+    this.waitForPageLoad("/start/welcome")
 
     return loginName
 }
