@@ -60,7 +60,8 @@ describe('Check key maximum: ',function(){
     it('check if message and footer for create/import disapear', function(){
         util.expectCurrentUrl("settings/identity/keys")
         expect($("[data-qa='message-no-keys']").isPresent()).toBe(false)
-        expect($("[data-qa='canCreate']").isPresent()).toBe(true)
+        expect($("[data-qa='canCreate']").isPresent()).toBe(false)
+        expect($("[data-qa='canNotCreate']").isPresent()).toBe(false)
         $$("[data-qa='key-list-item']").then(function(elements){
             expect(elements.length).toEqual(1)
         })
