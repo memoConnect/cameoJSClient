@@ -40,12 +40,11 @@ describe('Friendrequests: ', function () {
                 $("cm-modal.active [data-qa='btn-sendRequest']").click()
             })
 
-            it('check request is removed', function(){
-                util.waitForElementDisappear('cm-contact-tag')
+            it('should be now an contacts page', function(){
+                util.expectCurrentUrl('#/contacts')
             })
 
             it('check if request is pending in list', function(){
-                util.get('/contacts')
                 util.waitForElement('cm-contact-tag')
 
                 util.headerSearchInList('pending');
