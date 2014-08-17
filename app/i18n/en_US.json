@@ -79,7 +79,7 @@
             "TEXT_4": "If you have any questions regarding our service, please feel free to let us a short notice through our platform at http://support.cameonet.de.",
             "BTN_TEXT": "And - go!..."
         },
-        "SKIP": {
+        "KEYINFO": {
             "CHECKBOX_TEXT": "Don't show me this page again",
             "SKIP_TEXT": "Skip"
         },
@@ -300,88 +300,88 @@
                 "SUCCESS": "Changes saved"
             }
         },
-        "KEYS": {
-            "HEADER": "TODO",
-            "KEYLIST": {
-                "EXPLANATION": {
-                    "UNTRUSTED_KEYS": "TODO",
-                    "ALL_KEYS_TRUSTED": "TODO"
-                },
-                "LABEL_LOCALKEY": "TODO",
-                "LABEL_OTHERKEYS": "TODO",
-                "BUTTON_KEY_DETAILS": "TODO",
-                "BUTTON_AUTHENTICATE": "TODO",
-                "BUTTON_EXPORT": "TODO",
-                "BUTTON_DELETE": "TODO",
-                "BUTTON_REVOKE": "TODO"
-            },
-            "GENERATE": {
-                "START": {
-                    "HEADLINE": "TODO",
-                    "EXPLANATION": "TODO",
-                    "KEY_LENGTH": {
-                        "BUTTON_LABEL": "TODO",
-                        "LENGTH_2048": "TODO",
-                        "LENGTH_4096": "TODO"
-                    },
-                    "GENERATE_BUTTON": "TODO"
-                },
-                "GENERATING": {
-                    "HEADLINE": "TODO",
-                    "EXPLANATION": "TODO",
-                    "TIME_PASSED": "TODO",
-                    "STOP_BUTTON": "TODO"
-                },
-                "SAVE": {
-                    "HEADLINE": "TODO",
-                    "EXPLANATION": "TODO",
-                    "NOTE": "TODO",
-                    "TIME_PASSED": "TODO",
-                    "KEY_NAME": "TODO",
-                    "SAVE_BUTTON": "TODO"
-                }
-            },
-            "AUTHENTICATION": {
-                "HEADLINE": "TODO",
-                "EXPLANATION": "TODO",
-                "START": {
-                    "START_BUTTON": "TODO",
-                    "INSTRUCTIONS": "TODO",
-                    "NOTE": "TODO"
-                },
-                "REQUEST_STARTED": {
-                    "CANCEL_BUTTON": "TODO",
-                    "INSTRUCTIONS": "TODO",
-                    "NOTE": "TODO"
-                },
-                "ACCEPT_REQUEST": {
-                    "HEADER": "TODO",
-                    "INSTRUCTIONS": "TODO",
-                    "NOTE": "TODO",
-                    "ACCEPT_BUTTON": "TODO",
-                    "CANCEL_BUTTON": "TODO"
-                },
-                "SHOW_TRANSACTION_SECRET": {
-                    "INSTRUCTIONS": "TODO",
-                    "NOTE": "TODO",
-                    "LABEL_CODE": "TODO",
-                    "CLOSE_BUTTON": "TODO"
-                },
-                "ENTER_TRANSACTION_SECRET": {
+        "KEYS":{
+            "HEADER": "cameoKeys",
+            "KEYLIST":{
+                "EXPLANATION": {
+                    "UNTRUSTED_KEYS": "For this identity you already obtain cameoKeys. These keys are installed on other devices and are not trusted at the moment.<br />To read encrypted talks on all of your devices, please link the cameoKeys together. ",
+                    "ALL_KEYS_TRUSTED": "For '{{Identity}}' you have a cameoKey that allows you to read all encrypted talks on your device."
+                },
+                "LABEL_LOCALKEY": "Local cameoKey",
+                "LABEL_OTHERKEYS": "cameoKeys on other devices/ other browsers or apps ",
+                "BUTTON_KEY_DETAILS": "cameoKey show details",
+                "BUTTON_AUTHENTICATE": "Link cameoKey",
+                "BUTTON_EXPORT": "Export cameoKey",
+                "BUTTON_DELETE": "Erase cameoKey",
+                "BUTTON_REVOKE": "Disable cameoKey"
+            },
+            "GENERATE": {
+                "START": {
+                    "HEADLINE": "Generate cameoKey",
+                    "EXPLANATION": "On this device you don't have a cameoKey tied to this identity.<br /> For secure communication please generate or import a cameoKey first.",
+                    "KEY_LENGTH": {
+                        "BUTTON_LABEL": "Key size <strong>'{{key_length}}'</strong>",
+                        "LENGTH_2048": "2048Bit (default)",
+                        "LENGTH_4096": "4096Bit"
+                    },
+                    "GENERATE_BUTTON": "Generate cameoKey"
+                },
+                "GENERATING": {
+                    "HEADLINE": "Generation of cameoKey in progress!",
+                    "EXPLANATION": "Please be patient. This process can take some time according to the technical parameter of your device and the size of the cameoKey.<br /> If it lasts more than 5 minutes, you may stop the process and start again.",
+                    "TIME_PASSED": "Elapsed time:",
+                    "STOP_BUTTON": "Stop generation"
+                },
+                "SAVE": {
+                    "HEADLINE": "cameoKey was generated successfully!",
+                    "EXPLANATION": "Each cameoKey consists of a private part that will be stored on your device only and a public part that has to be transferred and stored on our server.",
+                    "NOTE": "To avoid loss of encrypted data please open your cameoKey and copy it's private part to a safe place on your computer - we recommend to use a password safe.",
+                    "TIME_PASSED": "Elapsed time:",
+                    "KEY_NAME": "Key name",
+                    "SAVE_BUTTON": "Save cameoKey "
+                }
+            },
+            "AUTHENTICATION": {
+                "HEADLINE": "Link cameoKey",
+                "EXPLANATION": "To read encrypted messages written under <strong>'{{identity}}'</strong> on other devices, please link the local cameoKey with all other keys that you are using there.",
+                "START": {
+                    "START_BUTTON": "Link up",
+                    "INSTRUCTIONS": "Please press 'Link up' to start the process.",
+                    "NOTE": "Attention! Before pressing 'Link up' you should first choose your identity <strong>'{{identity}}'</strong> from the header!"
+                },
+                "REQUEST_STARTED": {
+                    "CANCEL_BUTTON": "Abort request",
+                    "INSTRUCTIONS": "Please press 'Abort request' to stop the process.",
+                    "NOTE": "Request has been started. Please confirm the request on the other device."
+                },
+                "ACCEPT_REQUEST": {
+                    "HEADER": "Request for linking of cameoKeys",
+                    "INSTRUCTIONS": "On another device a cameoKey is stored that is not linked to this device. Therefore it is not possible to read encrypted data on this device and vice versa.<br /> Do you want to link your local cameoKey '{{cameoKey}}' with the other device?",
+                    "NOTE": "To link cameoKeys, please start the link up process.",
+                    "ACCEPT_BUTTON": "Start linking",
+                    "CANCEL_BUTTON": "Decline"
+                },
+                "SHOW_TRANSACTION_SECRET": {
+                    "INSTRUCTIONS": "Please press 'Stop linking' to stop the process.",
+                    "NOTE": "Please enter the code into the other device:",
+                    "LABEL_CODE": "Code",
+                    "CLOSE_BUTTON": "Stop linking"
+                },
+                "ENTER_TRANSACTION_SECRET": {
                     "HEADER": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER",
                     "INSTRUCTIONS": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.INSTRUCTIONS",
-                    "NOTE": "Geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
+                    "NOTE": "Please enter the code displayed on the other device:",
                     "LABEL_CODE": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CODE",
                     "CANCEL_BUTTON": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
                     "SUBMIT_BUTTON": "Submit"
-                },
-                "SUCCESSFUL": {
-                    "INSTRUCTIONS": "Die Verknüpfung der cameoKeys war erfolgreich! Die bisherigen Talks können in Kürze mit allen verknüpften cameoKeys lesabar sein.",
-                    "NOTE": "Sie können den Dialog nun schließen.",
-                    "CLOSE_BUTTON": "Schließen"
-                },
-                "TIMEOUT":"The process will be canceld in {{timeout}}."
-            },
+                },
+                "SUCCESSFUL": {
+                    "INSTRUCTIONS": "You have successfully linked your cameoKey! In a few seconds, all previous talks that have been created by the linked cameoKeys will be egible.",
+                    "NOTE": "Please close this dialogue.",
+                    "CLOSE_BUTTON": "Close"
+                },
+                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen."
+            },
             "TRUST": {
                 "HEADLINE": "TODO",
                 "EXPLANATION": "TODO",
