@@ -19,6 +19,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-exec');
     grunt.loadNpmTasks('grunt-sloc');
     grunt.loadNpmTasks('grunt-ngdocs');
     grunt.loadNpmTasks('grunt-testflight-jsonresult');
@@ -824,6 +825,10 @@ module.exports = function (grunt) {
 
             }
         },
+        exec: {
+            generateKeys: './bin/genKey.sh'
+
+        },
         sloc: {
             'code-coverage': {
                 files: {
@@ -841,7 +846,7 @@ module.exports = function (grunt) {
     ]);
     grunt.registerTask('tests-e2e', [
         'genAllTemplates',
-        'shell:generateKeys',
+        'exec:generateKeys',
         'packages',
         'protractor:default'
     ]);

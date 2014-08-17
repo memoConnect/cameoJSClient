@@ -32,6 +32,7 @@ describe('Registration: ', function () {
 
     it('should display errors if required fields are empty', function () {
 
+        ptor.debugger()
         $("[data-qa='btn-createUser']").click()
 
         util.checkWarning("cameoId-info-username-empty")
@@ -106,7 +107,7 @@ describe('Registration: ', function () {
     it('should create account with valid credentials', function() {
 
         var loginName = util.createTestUser()
-        util.waitForPageLoad('/start')
+        util.waitForPageLoad('/start/welcome')
 
         util.get('/talks')
         util.waitForPageLoad('/talks')
