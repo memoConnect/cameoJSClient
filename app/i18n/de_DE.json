@@ -52,8 +52,10 @@
         "TITLE": {
             "HEAD_LOGIN": "Login-Informationen",
             "HEAD_IDENTITY": "Benutzer-Informationen"
+        },
+        "WARN": {
+            "REGISTRATION_FAILED": "Bei der Registrierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
         }
-
     },
 
     "START": {
@@ -69,13 +71,13 @@
         },
         "QUICKSTART": {
             "HEADLINE": "Schnelleinstieg",
-            "SUB_TEXT": "Um einen ersten sicheren 'Talk' ( = Unterhaltung) zu führen, sind nur ein paar Schritte notwendig:",
+            "SUB_TEXT": "Um eine erste sichere Nachricht zu verschicken, sind nur ein paar Schritte notwendig:",
             "HEADLINE_1": "1. Schlüssel erzeugen",
-            "TEXT_1": "Um sicher kommunizieren zu können, brauchen alle Teilnehmer eines Talks einen cameoKey. Sie haben noch keinen? Öffnen Sie Einstellungen > cameoKeys.",
+            "TEXT_1": "Um sicher kommunizieren zu können, brauchen alle Teilnehmer eines Talks einen cameoKey. Wenn Sie keinen haben öffnen Sie Einstellungen > cameoKeys.",
             "HEADLINE_2": "2. Freunde finden",
-            "TEXT_2": "Drücken Sie auf 'Kontakt hinzufügen' im Header und wählen 'cameoNet durchsuchen', um Freunde zu suchen - über ihre cameoIDs oder Anzeigenamen. Wenn Sie einen Nutzer gefunden haben, senden Sie ihm eine Freundschaftsanfrage.",
+            "TEXT_2": "Drücken Sie auf 'Kontakt hinzufügen' im Header und wählen 'cameoNet durchsuchen'. Ihre Freunde finden Sie über deren cameoIDs oder Anzeigenamen. Senden Sie ihnen eine Kontaktanfrage. Sobald diese angenommen wurde, sind Sie befreundet.",
             "HEADLINE_3": "3. Nachricht schreiben",
-            "TEXT_3": "An befreundete Kontakte können Sie direkt aus der Kontakt-Übersicht über das Brief-Symbol Nachrichten senden. Es öffnet sich ein neuer Talk. Geben Sie eine Nachricht ein und drücken Sie auf den Senden-Button.<br><br>Herzlichen Glückwunsch! Sie haben Ihren ersten verschlüsselten Talk geführt!",
+            "TEXT_3": "An befreundete Kontakte können Sie direkt aus der Kontakt-Übersicht über das Brief-Symbol Nachrichten senden. Es öffnet sich ein neuer Talk (=Unterhaltung). Geben Sie eine Nachricht ein und drücken Sie auf den Senden-Button.<br><br>Herzlichen Glückwunsch! Sie haben Ihren ersten verschlüsselten Talk geführt!",
             "TEXT_4": "Wenn Sie Fragen zu cameoNet haben oder auf Probleme stoßen, nutzen Sie unser Forum unter http://support.cameonet.de.",
             "BTN_TEXT": "Und los..."
         },
@@ -115,8 +117,8 @@
     "TERMS": {
         "HEADING": "Allgemeine Geschäftsbedingungen",
         "HEADING_SHORT": "AGB",
-        "PARAGRAPH_1": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.",
-        "PARAGRAPH_2": "Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero."
+        "PARAGRAPH_1": "Für die Nutzung des Dienstes cameoNet gelten die Gesetze der Bundesrepublik Deutschland. Das Angebot und die Nutzung des Dienstes ist derzeit auf die Europäische Union beschränkt. Der Gerichtsstandort ist, sofern der Nutzer keinen allgemeinen Gerichtsstand in  Deutschland hat, Deutschland, Halle.",
+        "PARAGRAPH_2": ""
     },
 
     "PASSWORD": {
