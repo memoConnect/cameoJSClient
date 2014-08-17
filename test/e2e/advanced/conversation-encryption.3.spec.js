@@ -386,7 +386,8 @@ describe('Conversation encryption -', function () {
 
     })
 
-    describe("no local private key -", function () {
+    console.log('test removed')
+    xdescribe("no local private key -", function () {
 
         it("delete key and create local key for user2", function () {
             util.logout()
