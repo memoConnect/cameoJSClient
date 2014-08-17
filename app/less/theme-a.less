@@ -1,0 +1,229 @@
+.theme-a{
+  color: @cm-grey;
+  background-color: @cm-white;
+  padding-bottom: 3rem !important;
+  >*{
+    padding: 0 2rem;
+  }
+
+  h2{
+    background:@cm-input-bg-color;
+    padding:0 1rem;
+    font-size:@cm-large-font;
+    line-height:@cm-unit;
+    font-weight:bold;
+    width: 100%;
+    margin:0;
+    position:relative;
+    text-align:center;
+    margin-bottom: 1rem;
+    i{
+      margin-right:0.6rem;
+      font-size:3rem;
+      vertical-align:middle;
+    }
+  }
+
+  h3{
+    font-size:1em;
+    font-weight:bold;
+  }
+
+  h4 {
+    font-weight:bold;
+    font-size: @cm-base-font;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  hr {
+    background-color: @cm-border-grey;
+    border: none;
+    /*border-bottom: 0.01*@cm-unit solid @cm-border-grey;*/
+    margin: 1em 0.1rem;
+    height:1px;
+  }
+
+  article{
+  }
+
+  cm-info-bubble{
+    display:block;
+    position:relative;
+    margin: 0 -1rem;
+    padding: 1.05rem;
+    background-color: @cm-light-grey;
+    .border-radius;
+
+    &.up {
+        margin-top: 1rem;
+    }
+
+    &.down {
+        margin-bottom: 1rem;
+    }
+
+    > div {
+      font-size: 0.9em;
+    }
+
+    i.cm-nose-up,
+    i.cm-nose-down {
+      position: absolute;
+      color: @cm-light-grey;
+      font-size: 0.75*@cm-unit;
+      margin-left:-0.575*@cm-unit;
+      margin-right:0;
+
+      &.flip{
+        margin-left:0;
+        margin-right:-0.575*@cm-unit;
+      }
+
+    }
+
+    i.cm-beta {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: @cm-unit;
+      color: @cm-ci-color;
+    }
+  }
+
+  cm-footer button i {
+    margin-left: 1rem;
+  }
+
+  ul {
+    background-color: @cm-white;
+    padding:0 !important;
+    li {
+      .with-cursor;
+      min-height: 4rem;
+      border-bottom: @cm-border-grey @cm-border-width solid;
+      position: relative;
+      .item {
+        color: @cm-grey;
+        display: inline-block;
+        padding: 1rem;
+        width: 100%;
+        position: relative;
+        .title, .content {
+          display: inline-block;
+          width: 70%;
+        }
+        .content{
+          position: relative;
+          text-align: right;
+          right: 0.5rem;
+          width: 30% !important;
+        }
+        i {
+          margin-right:1rem;
+          font-size:@cm-mega-font;
+          vertical-align: middle;
+          &.cm-lg-special{
+            margin-right:0.7rem;
+          }
+        }
+        .second-row {
+          display:block;
+          font-size:@cm-small-font;
+        }
+        cm-avatar {
+        }
+      }
+      .short-links{
+        position:absolute;
+        background:@cm-white;
+        right:0;
+        top:0;
+        i {
+          text-align:center;
+          width:@cm-unit;
+          height:@cm-unit - 0.1;
+          line-height:@cm-unit;
+          font-size:@cm-unit/2;
+        }
+      }
+      &.is-disabled{
+        .item, .short-links {
+          .cm-disabled
+        }
+      }
+    }
+  }
+  
+
+  .authentication-status{
+    position:relative;
+    margin:0 auto;
+    margin-top: 1rem;
+    width:3.5*@cm-unit;
+    line-height:1em;
+    text-align:center;
+    font-size:2*@cm-unit;
+
+    i{
+      
+      &.active{
+        color:@cm-ci-color;
+      }
+
+      &.cm-key-request{
+        position:absolute;
+        font-size:1em;
+        left:0;
+        top:0;
+      }
+
+      &.cm-key-response{
+        position:absolute;
+        font-size:1em;
+        right:0;
+        top:0;
+      }
+
+      &.cm-handshake{
+        font-size: 0.4em;
+        vertical-align: top;
+        padding-top:0.65em;
+      }
+      
+    }
+  }
+
+  cm-loader{
+    color:@cm-ci-color;
+  }
+
+  .space-for-loader{
+      padding:1em  0 !important;
+  }
+
+  .transaction-secret{
+    font-size: @cm-unit;
+    text-align:center;
+  }
+
+  .timeout{
+    text-align:center;
+    font-size:@cm-large-font;
+  }
+
+}
+
+cm-welcome, cm-quick-start, cm-key-info, cm-about-us, cm-identities-overview {
+  display: block;
+  color: @cm-grey-font;
+  article.welcome-beta-info {
+    position: relative;
+    i.cm-beta {
+      position: absolute;
+      top: 0;
+      right: 1rem;
+      color: @cm-ci-color;
+    }
+  }
+}

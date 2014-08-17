@@ -11,7 +11,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyDetail', [
             controller: function ($scope) {
 
                 var localKeys   = cmUserModel.loadLocalKeys(),
-                    key         = localKeys.find($routeParams.pageChild2) || cmUserModel.data.identity.keys.find($routeParams.pageChild2) || {};
+                    key         = localKeys.find($routeParams.keyId) || cmUserModel.data.identity.keys.find($routeParams.keyId) || {};
 
                 $scope.privKey      = key && key.getPrivateKey()
                 $scope.pubKey       = key && key.getPublicKey()

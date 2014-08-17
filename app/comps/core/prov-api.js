@@ -250,7 +250,6 @@ angular.module('cmCore').provider('cmApi',[
                     config.headers  =   angular.extend(twoFactorToken  ? {'X-TwoFactorToken': twoFactorToken} : {}, config.headers || {})   //add two factor authorization token to the header
                 }
 
-
                 var api = function(method, config){
                     var deferred	=	$q.defer(),
 
@@ -462,9 +461,12 @@ angular.module('cmCore').provider('cmApi',[
                     }
                 }
 
+                var eventIntervall;
+
                 api.listenToEvents = function(){
                     //Dont listen to Events twice: 
                     api.stopListeningToEvents()
+
                     //Start listening:
                     if(!events_disabled && events_interval) {
 //                        api.getEvents(false)
@@ -476,7 +478,7 @@ angular.module('cmCore').provider('cmApi',[
 
                 api.stopListeningToEvents = function(){
                     if(api._events_promise) $interval.cancel(api._events_promise)
-                }      
+                }
 
 
                 if(!events_disabled && events_interval){

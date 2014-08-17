@@ -39,6 +39,7 @@ define([
                 };
                 $scope.disabled = false;
                 $scope.chooseAvatar = true;
+                $scope.showCameoId = true;
             } else {
                 $scope.chooseAvatar = false;
                 cmContactsModel.getOne($routeParams.id).then(
@@ -60,6 +61,12 @@ define([
 
                         // cameo user can't edit only extern end local
                         $scope.disabled = data.contactType == 'internal' ? true : false;
+
+                        if(!$scope.disabled){
+                            $scope.showCameoId = true;
+                        } else {
+                            $scope.showCameoId = false;
+                        }
                     }
                 );
             }
@@ -156,6 +163,8 @@ define([
             $scope.hasKey = function(){
                 return $scope.identity && $scope.identity.keys.length > 0  
             }
+
+            $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length
 
             // $scope.$watchCollection('identity.keys', function(identity){
             //     if(identity)

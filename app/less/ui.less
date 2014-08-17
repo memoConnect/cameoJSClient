@@ -133,7 +133,8 @@ textarea[cm-resize-textarea]{
   -o-transition: 0.05s;
 }
 
-cm-spinner {
+cm-loader.spinner,
+cm-spinner { /*spinner is part of loader now*/
   display:block;
   position:relative;
   top:50%;
@@ -141,6 +142,13 @@ cm-spinner {
   width:1px;
   height:1px;
   z-index:1;
+}
+
+cm-loader.balls{
+  display:block;
+  position:relative;
+  width: 40%;
+  margin:auto;
 }
 
 cm-progressbar{
@@ -207,17 +215,22 @@ cm-rubber-space,
   }
 }
 
-header.inScreen{
+h2, header.inScreen{
   background:@cm-input-bg-color;
   padding:0 1rem;
+  font-size:1em;
   line-height:@cm-unit;
   font-weight:bold;
   width: 100%;
   color: @cm-grey;
   padding-left: 0.8rem;
+  margin:0;
   position:relative;
+  text-align:center;
   i{
     margin-right:0.6rem;
+    font-size:2em;
+    vertical-align:middle;
   }
   &.with-lg-special{
     padding-left:@cm-unit;
@@ -236,4 +249,195 @@ cm-lock-level {
   word-spacing:0;
   letter-spacing:-0.3em;
   padding-right:0.3em;
+}
+
+/* Loader Animation, thanks to http://cssload.net/ */
+
+
+.followingBallsWrapper{
+  position:relative;
+  width:100%;
+  display:block;
+  &.halt .followingBallsG{
+    left:50%;
+    background-color: @cm-grey;
+    width: 3em;
+    height: 0.1em;
+    margin: -0.05em -1.5em;
+
+    -moz-animation:none;
+    -webkit-animation:none;
+    -ms-animation:none;
+    -o-animation:none;
+    animation:none;
+  }
+}
+
+.followingBallsG{
+  position:absolute;
+  top:0;
+  left:0;
+  width:1em;
+  height:1em;
+  margin:-0.5em;
+  transition: 200ms;
+  background-color: @cm-ci-color;
+  -moz-border-radius:0.5em;
+  -moz-animation-name:bounce_followingBallsG;
+  -moz-animation-duration:1.6s;
+  -moz-animation-iteration-count:infinite;
+  -moz-animation-direction:linear;
+  -webkit-border-radius:0.5em;
+  -webkit-animation-name:bounce_followingBallsG;
+  -webkit-animation-duration:1.6s;
+  -webkit-animation-iteration-count:infinite;
+  -webkit-animation-direction:linear;
+  -ms-border-radius:0.5em;
+  -ms-animation-name:bounce_followingBallsG;
+  -ms-animation-duration:1.6s;
+  -ms-animation-iteration-count:infinite;
+  -ms-animation-direction:linear;
+  -o-border-radius:0.5em;
+  -o-animation-name:bounce_followingBallsG;
+  -o-animation-duration:1.6s;
+  -o-animation-iteration-count:infinite;
+  -o-animation-direction:linear;
+  border-radius:0.5em;
+  animation-name:bounce_followingBallsG;
+  animation-duration:1.6s;
+  animation-iteration-count:infinite;
+  animation-direction:linear;
+}
+
+.G_1{
+  -moz-animation-delay:0s;
+}
+
+.G_1{
+  -webkit-animation-delay:0s;
+}
+
+.G_1{
+  -ms-animation-delay:0s;
+}
+
+.G_1{
+  -o-animation-delay:0s;
+}
+
+.G_1{
+  animation-delay:0s;
+}
+
+.G_2{
+  -moz-animation-delay:0.16s;
+  -webkit-animation-delay:0.16s;
+  -ms-animation-delay:0.16s;
+  -o-animation-delay:0.16s;
+  animation-delay:0.16s;
+}
+
+.G_3{
+  -moz-animation-delay:0.32s;
+  -webkit-animation-delay:0.32s;
+  -ms-animation-delay:0.32s;
+  -o-animation-delay:0.32s;
+  animation-delay:0.32s;
+}
+
+.G_4{
+ -moz-animation-delay:0.48s;
+ -webkit-animation-delay:0.48s;
+ -ms-animation-delay:0.48s;
+  animation-delay:0.48s;
+}
+
+@-moz-keyframes bounce_followingBallsG{
+  0%{
+    left:0;
+    opacity: 1;
+  }
+
+  50%{
+    left:100%;
+    opacity: 0;
+  }
+
+  100%{
+    left:0;
+    opacity: 1;
+  }
+
+}
+
+@-webkit-keyframes bounce_followingBallsG{
+  0%{
+    left:0;
+    opacity: 1;
+  }
+
+  50%{
+    left:100%;
+    opacity: 0;
+  }
+
+  100%{
+    left:0;
+    opacity: 1;
+  }
+
+}
+
+@-ms-keyframes bounce_followingBallsG{
+  0%{
+    left:0;
+    opacity: 1;
+  }
+
+  50%{
+    left:100%;
+    opacity: 0;
+  }
+
+  100%{
+    left:0;
+    opacity: 1;
+  }
+
+}
+
+@-o-keyframes bounce_followingBallsG{
+  0%{
+    left:0;
+    opacity: 1;
+  }
+
+  50%{
+    left:100%;
+    opacity: 0;
+  }
+
+  100%{
+    left:0;
+    opacity: 1;
+  }
+
+}
+
+@keyframes bounce_followingBallsG{
+  0%{
+    left:0;
+    opacity: 1;
+  }
+
+  50%{
+    left:100%;
+    opacity: 0;
+  }
+
+  100%{
+    left:0;
+    opacity: 1;
+  }
+
 }

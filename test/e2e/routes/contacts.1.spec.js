@@ -35,7 +35,7 @@ describe('Route: Contacts', function () {
     describe('contact list', function(){
         it('should have an avatar.', function(){
             util.waitForElement('cm-contacts-list cm-avatar')            
-            $$('cm-contacts-list cm-avatar').get(0).click()
+            $$('cm-contacts-list cm-avatar:not(.disabled)').get(0).click()
             util.waitForPageLoad(/\/contact\/[a-zA-Z0-9]+$/)       
         })
 

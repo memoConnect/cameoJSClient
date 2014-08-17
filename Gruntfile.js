@@ -19,6 +19,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-exec');
     grunt.loadNpmTasks('grunt-sloc');
     grunt.loadNpmTasks('grunt-ngdocs');
     grunt.loadNpmTasks('grunt-testflight-jsonresult');
@@ -91,6 +92,12 @@ module.exports = function (grunt) {
             buildConfig.config.version = "no version";
         }
 
+        if(buildConfig.config.version == 'no version'){
+            buildConfig.config.urlBust =  (new Date()).getTime();
+        } else {
+            buildConfig.config.urlBust = buildConfig.config.version.replace(/\./g,'');
+        }
+
         buildConfig.phonegap.phonegapBaseFilename = buildConfig.phonegap.baseName + buildConfig.phonegap.extraName + '.' + buildConfig.phonegap.version;
 
         return buildConfig;
@@ -127,6 +134,8 @@ module.exports = function (grunt) {
             console.log("wwwUrl: " + wwwUrl);
             testConfig.config.wwwUrl = wwwUrl;
         }
+        // URL Bust for requireJS
+        testConfig.config.urlBust = (new Date()).getTime();
 
         var protractorDebug = grunt.option('debug');
         if (protractorDebug) {
@@ -271,7 +280,8 @@ module.exports = function (grunt) {
                     'ui': 'app/comps/ui',
                     'route-conversation': 'app/routes/conversation/comps',
                     'route-settings': 'app/routes/settings/comps',
-                    'route-contacts': 'app/routes/contacts/comps'
+                    'route-contacts': 'app/routes/contacts/comps',
+                    'route-start': 'app/routes/start/comps'
                 })
             },
             'docs': {
@@ -310,6 +320,7 @@ module.exports = function (grunt) {
                 'test/jasmine/**/*.js'
             ]
         },
+
 
         // contrib
         uglify: {
@@ -619,6 +630,16 @@ module.exports = function (grunt) {
                     'app/base/config.js': ['templates/config-webApp.js']
                 }
             },
+            'main-webApp': {
+                'options': {
+                    'data': {
+                        'urlBust': globalCameoBuildConfig.config.urlBust
+                    }
+                },
+                'files': {
+                    'app/base/main.js': ['templates/main-webApp.js']
+                }
+            },
             'config-tests': {
                 'options': {
                     'data': {
@@ -794,7 +815,19 @@ module.exports = function (grunt) {
         shell: {
             'node-webserver': {
                 command: 'node ./scripts/web-server.js'
+            },
+            generateKeys: {
+                options: {
+                    stdout: false
+                },
+                //command: 'cd test/e2e/keys && rm -f *.key && for i in `seq 1 10`; do ssh-keygen -N "" -f ${i}.key; done && rm *.key.pub'
+                command: './bin/genKey.sh'
+
             }
+        },
+        exec: {
+            generateKeys: './bin/genKey.sh'
+
         },
         sloc: {
             'code-coverage': {
@@ -813,6 +846,7 @@ module.exports = function (grunt) {
     ]);
     grunt.registerTask('tests-e2e', [
         'genAllTemplates',
+        'exec:generateKeys',
         'packages',
         'protractor:default'
     ]);
@@ -868,13 +902,14 @@ module.exports = function (grunt) {
     grunt.registerTask('genAllTemplates', [
         'template:config-tests',
         'template:config-webApp',
+        'template:main-webApp',
         'template:index-www',
         'template:config-phonegap',
         'template:config-protractor',
         'concat:less',
         'less',
         'concat:css'
-        ]);
+    ]);
     grunt.registerTask('watcher', ['genAllTemplates', 'packages', 'watch']);
     grunt.registerTask('packages', ['concat:packages']);
 

@@ -44,12 +44,12 @@ define([
             cmApiProvider
                 .restApiUrl( cameo_config.restApi )
                 .callStackPath( cameo_config.callStackPath )
-                .useCallStack( false )//cameo_config.useCallStack)
+                .useCallStack( cameo_config.useCallStack )
                 .commitSize( cameo_config.commitSize )
                 .commitInterval( cameo_config.commitInterval )
                 .useEvents( cameo_config.useEvents )
                 .eventsPath( cameo_config.eventsPath )
-                .eventsInterval( 4000 )//cameo_config.eventsInterval )
+                .eventsInterval( cameo_config.eventsInterval )
 
             cmLanguageProvider
                 .cacheLangFiles(cameo_config.cache_lang_files)
@@ -127,6 +127,9 @@ define([
                             }
                         };
                     }
+                    if (angular.isDefined(_settings_['reloadOnSearch'])){
+                        routeParams.reloadOnSearch = _settings_['reloadOnSearch'];
+                    }
                     if(angular.isDefined(_settings_['isDefault'])){
                         routeParams.isDefault = _settings_['isDefault'];
                     }
@@ -175,6 +178,19 @@ define([
         'cmApi',
         'cmHooks',
         function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks) {
+
+            //get browser language:
+            cmApi.get({
+                path    : '/services/getBrowserInfo'
+            })
+            .then(function(data){
+
+                if(!cmUserModel.isAuth()){
+                    var language = data.languageCode.substr(0,2),
+                        lc       = language == 'de' ? 'de_DE' : 'en_US'
+                    cmLanguage.switchLanguage(lc)
+                }
+            })
 
             //prep $rootScope with useful tools
             $rootScope.console  =   console;
@@ -283,7 +299,6 @@ define([
             // For dev purposes only:
 //            window.onresize = function() { initScreenWidth(32) }
 
-
             /**
              * Loading Bar on RouteChange
              */
@@ -302,7 +317,6 @@ define([
             // Todo: whats is todo??
             if(cmUserModel.getToken())
                 cmApi.listenToEvents()
-
         }
     ])
 

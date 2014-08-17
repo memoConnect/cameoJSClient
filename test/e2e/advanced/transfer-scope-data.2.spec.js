@@ -2,11 +2,13 @@ var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 var ptor = util.getPtorInstance()
 
-describe('transfer scope data registration',function(){
+describe('transfer scope data registration', function () {
 
-    afterEach(function() { util.stopOnError() });
+    afterEach(function () {
+        util.stopOnError()
+    });
 
-    it('fill out registration with validation timeout',function() {
+    it('fill out registration with validation timeout', function () {
         util.logout()
         util.get('/registration')
         util.expectCurrentUrl('/registration')
@@ -22,7 +24,7 @@ describe('transfer scope data registration',function(){
         util.click("icon-checkbox-agb")
     })
 
-    it('goto terms (do the transfer)',function() {
+    it('goto terms (do the transfer)', function () {
         util.click("link-terms")
         util.expectCurrentUrl('/terms')
 
@@ -31,7 +33,7 @@ describe('transfer scope data registration',function(){
         $(".back-wrap").click()
     })
 
-    it('check if transfer succeed',function(){
+    it('check if transfer succeed', function () {
         expect(util.getVal('input-cameoId')).toBe('moeper')
         expect(util.getVal('input-password')).toBe('')
         expect(util.getVal('input-passwordConfirm')).toBe('')
@@ -48,47 +50,50 @@ describe('transfer scope data registration',function(){
     })
 })
 
-describe('transfer scope data conversation',function(){
+describe('transfer scope data conversation', function () {
 
-    afterEach(function() { util.stopOnError() });
+    afterEach(function () {
+        util.stopOnError()
+    });
 
     var msg = 'oida wird dit hier mitjenommen?',
         msg2 = 'juhu buhu'
 
-    it('login', function() {
+    it('login', function () {
         util.get('/login')
         util.login()
     })
 
-    it('open new conversation and fill out',function(){
+    it('open new conversation and fill out', function () {
         util.get('/conversation/new')
-        util.setVal('input-answer',msg)
+        util.setVal('input-answer', msg)
     })
 
-    it('disabled encryption (do the transfer) and check if transfer succeed',function(){
+    it('disabled encryption (do the transfer) and check if transfer succeed', function () {
         util.disableEncryption();
         expect(util.getVal('input-answer')).toBe(msg)
     })
 
-    it('send message & create conversation',function(){
+    it('send message & create conversation', function () {
+        util.waitForElement("[data-qa='btn-send-answer']")
         $("[data-qa='btn-send-answer']").click()
         util.waitAndCloseNotify('checkbox-dont-ask-me-again', true)
         $("[data-qa='btn-send-answer']").click()
 
-        util.waitForElements('cm-message',1)
+        util.waitForElements('cm-message', 1)
 
-        ptor.wait(function(){
-            return util.getVal('input-answer').then(function(val){
+        ptor.wait(function () {
+            return util.getVal('input-answer').then(function (val) {
                 return val == ""
             })
         })
     })
 
-    it('fill out in created conversation',function(){
-        util.setVal('input-answer',msg2)
+    it('fill out in created conversation', function () {
+        util.setVal('input-answer', msg2)
     })
 
-    it('check new conversation if empty message',function(){
+    it('check new conversation if empty message', function () {
         util.get('/talks')
         util.expectCurrentUrl('/talks')
 

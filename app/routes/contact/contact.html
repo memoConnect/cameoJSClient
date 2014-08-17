@@ -26,11 +26,11 @@
                         <br/>
                         <button
                             data-qa="start-trust-handshake-btn"
-                            ng-click="startTrustHandshake()"
-                            ng-disabled = "getTrust() || !hasKey()"
+                            ng-click="goto('authentication/identity/'+contact.identity.id)"
+                            ng-disabled = "getTrust() || !hasKey() || !hasLocalKey"
                         >
-                                <i ng-if="!hasKey()"    class="fa cm-close"></i>
-                                <i ng-if="hasKey()"     class="fa {{ getTrust() ? 'cm-checkbox-right' : 'cm-handshake'}}"></i>
+                                <i ng-if="!hasKey() || !hasLocalKey"    class="fa cm-close"></i>
+                                <i ng-if="hasKey() && hasLocalKey"      class="fa {{ getTrust() ? 'cm-checkbox-right' : 'cm-handshake'}}"></i>
                         </button>
                         <br/>
                     </div>
@@ -40,6 +40,14 @@
 
         <div class="cm-contact-inputs">
             <form name="cmForm" novalidate autocomplete="off">
+                <div class="cm-input-ctn with-inside-icon cm-icon-grey" ng-class="{'cm-input-disabled':disabled}" ng-if="!showCameoId">
+                    <i class="fa cm-rhino-positive"></i>
+                    <input
+                            tabindex="1" data-qa="input-cameoId" required disabled
+                            type="text" name="cameoId" ng-model="identity.cameoId"
+                            placeholder="{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}" />
+                </div>
+
                 <div class="cm-input-ctn" ng-class="{'cm-input-disabled':disabled}">
                     <input
                         tabindex="1" data-qa="input-displayname"

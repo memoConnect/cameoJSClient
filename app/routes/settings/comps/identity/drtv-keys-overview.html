@@ -40,7 +40,7 @@
             </span>
         </a>
         <div class="short-links">
-            <i class="fa cm-handshake cm-lg-icon" ng-if="!isTrustedKey(key) && isHandshakePossible" ng-click="startAuthentication(key)" data-qa="btn-start-handshake"></i>
+            <i class="fa cm-handshake cm-lg-icon" ng-if="!isTrustedKey(key) && isHandshakePossible" ng-click="goto('/authentication/'+key.id)" data-qa="btn-start-handshake"></i>
             <i class="fa cm-export-key cm-lg-icon" ng-if="privateKeys.find(key)" ng-click="goto('settings/identity/key/'+key.id)"></i>
             <!--
                 <i class="fa cm-export-key cm-lg-icon" ng-if="privateKeys.find(key)" ng-click="openModal('modalExportKeyPair',key)"></i>

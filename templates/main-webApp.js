@@ -1,7 +1,6 @@
 require.config({
     baseUrl: "",
-    // alias libraries paths
-    urlArgs: "bust=" + (new Date()).getTime(),
+    urlArgs: "bust=" + '<%= urlBust %>',
     waitTimeout: 0,
     paths: {
         'app': 'base/app',
@@ -55,7 +54,9 @@ require.config({
 
         'pckRouteConversation': 'packages/routes/conversation/comps/package',
         'pckRouteSettings': 'packages/routes/settings/comps/package',
-        'pckRouteContacts': 'packages/routes/contacts/comps/package'
+        'pckRouteContacts': 'packages/routes/contacts/comps/package',
+        'pckRouteStart': 'packages/routes/start/comps/package'
+
     },
 
     // Add angular modules that does not support AMD out of the box, put it in a shim
@@ -122,6 +123,11 @@ require.config({
         'pckRouteContacts': [
             'pckCore',
             'pckContacts'
+        ],
+        'pckRouteStart': [
+            'pckCore',
+            'pckUi',
+            'pckUser'
         ]
     },
     // kick start application

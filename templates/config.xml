@@ -11,12 +11,13 @@
     <access origin="*" subdomains="true"  />
     <content src="index.html" />
 
-    <preference name="phonegap-version" value="3.3.0" />
+    <preference name="phonegap-version" value="3.5.0" />
 
     <gap:platform name="android" />
     <gap:platform name="winphone" />
     <gap:platform name="ios" />
 
+    <!-- <preference name="permissions" value="all-permissions"/> -->
     <preference name="permissions" value="none"/>
 
     <!-- multiplatform -->
@@ -44,9 +45,15 @@
     <preference name="TopActivityIndicator" value="gray" />
     <preference name="KeyboardDisplayRequiresUserAction" value="true" />
     <preference name="SuppressesIncrementalRendering" value="true" />
+
+    <!-- statusbar -->
+    <!-- <preference name="StatusBarOverlaysWebView" value="false" /> -->
+    <!-- <preference name="StatusBarBackgroundColor" value="#555555" /> -->
+    <!-- <preference name="StatusBarStyle" value="lightcontent" /> -->
+
     <!-- build -->
     <preference name="target-device" value="universal" />
-    <preference name="prerendered-icon" value="false" />
+    <preference name="prerendered-icon" value="true" />
     <preference name="detect-data-types" value="true" />
     <preference name="exit-on-suspend" value="false" />
 
@@ -59,6 +66,10 @@
     <preference name="disable-cursor" value="true" />
 
     <!-- plugins -->
+
+    <!-- <gap:plugin name="org.apache.cordova.statusbar" version="0.1.4"/> -->
+    <!-- <gap:plugin name="org.apache.cordova.camera" version="0.2.9" /> -->
+    <!-- <gap:plugin name="org.apache.cordova.media-capture" version="0.2.8" /> -->
 
     <!--<gap:plugin name="org.apache.cordova.console" />-->
     <!--<gap:plugin name="org.apache.cordova.contacts" />-->

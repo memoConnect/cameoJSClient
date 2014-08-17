@@ -12,7 +12,7 @@ define([
         'cmUtil',
         '$scope', '$rootScope', '$routeParams', '$location',
         function(cmUtil,
-                 $scope, $rootScope, $routeParams, $location) {
+            $scope, $rootScope, $routeParams, $location) {
             $scope.pageTitle = 'SETTINGS.WELCOME';
 
             $scope.pageParent = $routeParams.pageParent || '';
@@ -24,6 +24,9 @@ define([
             $scope.route = $scope.pageParent +
                            ($scope.pageChild1 ? '/' + $scope.pageChild1 : '') +
                            (!isPageChild2AnId && $scope.pageChild2 ? '/' + $scope.pageChild2 : '');
+
+            if($routeParams.keyId)
+                $scope.route = 'identity/key'
 
             $scope.createNewConversation = function(){
                 delete($rootScope.pendingConversation);

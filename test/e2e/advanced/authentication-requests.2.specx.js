@@ -288,9 +288,7 @@ describe('Authentication requests -', function () {
     it("send verified request", function(){
         verifiedEvent.data.id = requestId
         console.log(verifiedEvent)
-        ptor.debugger()
         util.broadcastEvent(token, verifiedEvent)
-        ptor.debugger()
     })
 
     it("key1 should now be trusted", function(){

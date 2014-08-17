@@ -119,7 +119,9 @@ angular.module('cmCore').service('cmHooks', [
                     type: 'plain',
                     'class': 'no-padding',
                     'cm-close-btn': false,
-                    'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
+                    'cm-title': authenticationRequest.is3rdParty()
+                                ?   'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.HEADER'
+                                :   'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.HEADER'
                 },'<cm-incoming-authentication-request></cm-incoming-authentication-request>', null, scope);
                 cmModal.open(modalId);
 
@@ -143,30 +145,30 @@ angular.module('cmCore').service('cmHooks', [
             }
         });
 
-        cmApi.on('authenticationRequest:verified', function(event, request) {
-//            cmLogger.debug('cmHooks.on:authenticationRequest:verified');
+//         cmApi.on('authenticationRequest:verified', function(event, request) {
+// //            cmLogger.debug('cmHooks.on:authenticationRequest:verified');
 
-            var authenticationRequest = cmAuthenticationRequestFactory.create(request, true);
+//             var authenticationRequest = cmAuthenticationRequestFactory.create(request, true);
 
-            if(authenticationRequest !== null && (typeof authenticationRequest.finish == 'function')){
+//             if(authenticationRequest !== null && (typeof authenticationRequest.finish == 'function')){
 
-                if(authenticationRequest.state.is('outgoing')){
-                    authenticationRequest.finish();
+//                 if(authenticationRequest.state.is('outgoing')){
+//                     authenticationRequest.finish();
 
-                    authenticationRequest.on('request:finished', function(){
+//                     authenticationRequest.on('request:finished', function(){
 
-                        cmAuthenticationRequestFactory.deregister(authenticationRequest);
-                        if(
-                                self.fromIdentityId == self.ToIdentityId
-                            &&  self.fromIdentityId == cmUserModel.data.identity.id
-                        ){
-                            var bulkData = authenticationRequest.exportKeyIdsForBulk();
-                            self.openBulkRequest(bulkData);
-                        }
-                    });
-                }
-            }
-        });
+//                         cmAuthenticationRequestFactory.deregister(authenticationRequest);
+//                         if(
+//                                 self.fromIdentityId == self.ToIdentityId
+//                             &&  self.fromIdentityId == cmUserModel.data.identity.id
+//                         ){
+//                             var bulkData = authenticationRequest.exportKeyIdsForBulk();
+//                             self.openBulkRequest(bulkData);
+//                         }
+//                     });
+//                 }
+//             }
+//         });
 
         cmApi.on('authenticationRequest:canceled', function(event, request) {
 //            cmLogger.debug('cmHooks.on:authenticationRequest:canceled');
@@ -193,7 +195,9 @@ angular.module('cmCore').service('cmHooks', [
                     id: modalId,
                     type: 'plain',
                     'class': 'no-padding',
-                    'cm-title': 'DRTV.KEY_RESPONSE.HEADER'
+                    'cm-title': authenticationRequest.is3rdParty()
+                                ?   'IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.HEADER'
+                                :   'IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER'
                 },'<cm-key-response></cm-key-response>',null,scope);
                 cmModal.open(modalId);
 
@@ -206,28 +210,28 @@ angular.module('cmCore').service('cmHooks', [
             }
         });
 
-        cmApi.on('authenticationRequest:key-response', function(event, response){
-//            cmLogger.debug('cmHooks.authenticationRequest:key-response');
+//         cmApi.on('authenticationRequest:key-response', function(event, response){
+// //            cmLogger.debug('cmHooks.authenticationRequest:key-response');
 
-            if(typeof response == 'object'
-                && "id" in response
-                && "toKeyId" in response
-                && "toKeyFingerprint" in response
-            ){
-                var authenticationRequest = cmAuthenticationRequestFactory.find(response);
+//             if(typeof response == 'object'
+//                 && "id" in response
+//                 && "toKeyId" in response
+//                 && "toKeyFingerprint" in response
+//             ){
+//                 var authenticationRequest = cmAuthenticationRequestFactory.find(response);
 
 
-                if(authenticationRequest !== null && authenticationRequest.state.is('outgoing')){
-                    $rootScope.closeModal('key-request');
-                    authenticationRequest.importKeyResponse(response);
-                } else {
-                    $rootScope.closeModal('key-response');
-                }
-            } else {
-//                console.log("cmHooks.authenticationRequest:key-response - fail");
-                $rootScope.closeModal('key-response');
-            }
-        });
+//                 if(authenticationRequest !== null && authenticationRequest.state.is('outgoing')){
+//                     $rootScope.closeModal('key-request');
+//                     authenticationRequest.importKeyResponse(response);
+//                 } else {
+//                     $rootScope.closeModal('key-response');
+//                 }
+//             } else {
+// //                console.log("cmHooks.authenticationRequest:key-response - fail");
+//                 $rootScope.closeModal('key-response');
+//             }
+//         });
 
         cmUserModel.on('handshake:start', function(event, data){
 
@@ -255,21 +259,21 @@ angular.module('cmCore').service('cmHooks', [
             var publicKeys = cmUserModel.data.identity.keys;
 
             if(localKeys.length < publicKeys.length){
-                self.openKeyRequest();
+                $rootScope.goto('/authentication')
             }
         });
 
 
-        cmAuthenticationRequestFactory.on('key-response:accepted', function(event, data){
-            // cmLogger.debug('cmHooks - cmAuthenticationRequestFactory.on:key-response:accepted');
+        // cmAuthenticationRequestFactory.on('key-response:accepted', function(event, data){
+        //     // cmLogger.debug('cmHooks - cmAuthenticationRequestFactory.on:key-response:accepted');
 
-            if(typeof data == 'object' || typeof data == 'string'){
-                var authenticationRequest = cmAuthenticationRequestFactory.find(data);
-                if(authenticationRequest !== null){
-                    self.openOutgoingAuthenticationRequest(authenticationRequest);
-                }
-            }
-        });
+        //     if(typeof data == 'object' || typeof data == 'string'){
+        //         var authenticationRequest = cmAuthenticationRequestFactory.find(data);
+        //         if(authenticationRequest !== null){
+        //             self.openOutgoingAuthenticationRequest(authenticationRequest);
+        //         }
+        //     }
+        // });
 
         cmAuthenticationRequestFactory.on('deregister', function(){
 //            console.log('cmHooks - cmAuthenticationRequestFactory:deregister');

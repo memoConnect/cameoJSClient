@@ -1,6 +1,11 @@
 'use strict';
 
 /**
+ * Is now part of cmLoader!
+ */
+
+
+/**
  * @ngdoc directive
  * @name cmUi.directive:cmSpinner
  * @description
