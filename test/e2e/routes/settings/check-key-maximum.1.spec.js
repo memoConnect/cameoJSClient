@@ -77,7 +77,6 @@ describe('Check key maximum: ',function(){
     it('remove key and check if message and footer for create/import appear', function(){
         util.waitForElement("[data-qa='btn-remove-modal']")
         util.click("btn-remove-modal")
-        util.waitForModalOpen()
         util.click("btn-remove-key'");
 
         util.waitForElement("[data-qa='message-no-keys']")
