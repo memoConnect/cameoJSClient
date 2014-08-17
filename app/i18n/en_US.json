@@ -79,8 +79,8 @@
             "TEXT_4": "If you have any questions regarding our service, please feel free to let us a short notice through our platform at http://support.cameonet.de.",
             "BTN_TEXT": "And - go!..."
         },
-        "SKIP": {
-            "CHECKBOX_TEXT": "Don't show me this page again",
+        "KEYINFO": {
+            "SKIP_CHECKBOX_TEXT": "Don't show me this page again",
             "SKIP_TEXT": "Skip"
         },
         "BTNS": {
