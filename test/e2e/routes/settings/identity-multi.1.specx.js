@@ -26,7 +26,7 @@ describe('Identity multi', function () {
         util.expectCurrentUrl('/settings/identity/new')
 
         util.setVal('input-cameoId',newIdentity.cameoId)
-        ptor.sleep(501)//adaptive change delay
+        ptor.sleep(1001)//adaptive change delay
 
         util.waitForElement("[data-qa='icon-cameoId-reserved']")
         $("[data-qa='icon-cameoId-reserved']")
