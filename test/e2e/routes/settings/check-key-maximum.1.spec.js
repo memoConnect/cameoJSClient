@@ -2,7 +2,8 @@ var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 var ptor = util.getPtorInstance()
 
-describe('check key maximum',function(){
+console.log('test removed')
+xdescribe('Check key maximum: ',function(){
 
     var privKey = [
         '-----BEGIN RSA PRIVATE KEY-----',
@@ -60,7 +61,8 @@ describe('check key maximum',function(){
     it('check if message and footer for create/import disapear', function(){
         util.expectCurrentUrl("settings/identity/keys")
         expect($("[data-qa='message-no-keys']").isPresent()).toBe(false)
-        expect($("cm-footer").isPresent()).toBe(false)
+        expect($("[data-qa='canCreate']").isPresent()).toBe(false)
+        expect($("[data-qa='canNotCreate']").isPresent()).toBe(true)
         $$("[data-qa='key-list-item']").then(function(elements){
             expect(elements.length).toEqual(1)
         })
@@ -74,8 +76,9 @@ describe('check key maximum',function(){
     })
 
     it('remove key and check if message and footer for create/import appear', function(){
+        util.waitForElement("[data-qa='btn-remove-modal']")
         util.click("btn-remove-modal")
-        util.click("btn-remove-key")
+        util.click("btn-remove-key'");
 
         util.waitForElement("[data-qa='message-no-keys']")
         expect($("[data-qa='message-no-keys']").isPresent()).toBe(true)
@@ -83,6 +86,8 @@ describe('check key maximum',function(){
         $$("[data-qa='key-list-item']").then(function(elements){
             expect(elements.length).toEqual(0)
         })
+
+        expect($("[data-qa='canCreate']").isPresent()).toBe(true)
     })
 
     it('check open routes', function(){

@@ -154,7 +154,7 @@ app.register.controller('RegistrationCtrl', [
                             return true;
                         },
                         function(){
-                            cmNotify.warn('REGISTRATION.WARN.REGISTRATION_FAILED');
+                            cmNotify.warn('REGISTER.WARN.REGISTRATION_FAILED');
                             $scope.spinner('stop');
                         }
                     );

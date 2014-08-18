@@ -161,7 +161,7 @@ cameo_config = {
     routeSettings: {
         'account': {i18n:'SETTINGS.ACCOUNT', icon:'cm-person', disabled:true},
         'identity/overview': {i18n:'SETTINGS.IDENTITY', icon:'cm-person'},
-        'settings/identity/keys': {i18n:'MENU.KEYMANAGEMENT', icon:'cm-key'},
+        'identity/keys': {i18n:'MENU.KEYMANAGEMENT', icon:'cm-key'},
         'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell', disabled:true},
         'settings/contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-address-book', disabled:true},
         'app': {i18n:'SETTINGS.APP', icon:'cm-fix'},

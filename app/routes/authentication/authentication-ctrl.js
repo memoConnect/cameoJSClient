@@ -41,8 +41,9 @@ define([
                                         :   cmUserModel.data.identity
 
 
-                if($scope.toIdentity)
+                if($scope.toIdentity){
                      $scope.authenticationRequest.setToIdentityId($scope.toIdentity.id)
+                }
 
                 $scope.waiting              =   false
                 $scope.transactionSecret    =   undefined

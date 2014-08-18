@@ -92,6 +92,7 @@ this.createTestUser = function (testUserId) {
 
     this.get("/registration");
 
+    $("[data-qa='input-cameoId']").clear()
     $("[data-qa='input-cameoId']").sendKeys(loginName)
     $("[data-qa='input-password']").sendKeys(password)
     $("[data-qa='input-passwordConfirm']").sendKeys(password)
@@ -103,7 +104,7 @@ this.createTestUser = function (testUserId) {
 
     $("[data-qa='btn-createUser']").click()
 
-    this.waitForPageLoad("/start")
+    this.waitForPageLoad("/start/welcome")
 
     return loginName
 }
@@ -430,11 +431,6 @@ this.generateKey = function (keyNum, keyName) {
     })
 }
 
-this.closeKeyRequestModal = function () {
-    self.waitForModalOpen("key-request")
-    self.click("btn-cancel")
-}
-
 this.disableEncryption = function () {
     $("cm-header:not(.ng-hide) cm-security-indicator").click()
     self.waitForPageLoad("/conversation/new/security-settings")
@@ -444,7 +440,10 @@ this.disableEncryption = function () {
 }
 
 this.clickBackBtn = function () {
+    self.waitForElement("cm-header:not(.ng-hide) cm-back")
+    ptor.debugger()
     $("cm-header:not(.ng-hide) cm-back").click()
+    return this
 }
 
 this.sendFriendRequest = function (displayName) {

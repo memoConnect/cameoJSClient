@@ -88,7 +88,7 @@
     </button>
 </cm-modal>
 
-<cm-footer ng-if="canCreate">
+<cm-footer ng-if="canCreate" data-qa='canCreate'>
     <a href="#/settings/identity/keys/create"
         class="item w50 no-pad cm-btn-grey"
         data-qa="btn-create-key">
@@ -102,3 +102,4 @@
         <i class="fa cm-import-key icon-left cm-lg-icon"></i>
     </a>
 </cm-footer>
+<cm-footer ng-if="!canCreate" data-qa='canNotCreate'></cm-footer>
