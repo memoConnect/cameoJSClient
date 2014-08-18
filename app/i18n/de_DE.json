@@ -322,7 +322,7 @@
                     "HEADLINE": "cameoKey erzeugen",
                     "EXPLANATION": "Sie haben noch keinen cameoKey für Ihre Identität auf diesem Gerät.<br />Um sicher zu kommunizieren, müssen Sie zuerst einen cameoKey für diese Identität erzeugen oder importieren.",
                     "KEY_LENGTH": {
-                        "BUTTON_LABEL": "Schlüsselstärke <strong>'{{key_length}}'</strong>",
+                        "BUTTON_LABEL": "Schlüsselstärke",
                         "LENGTH_2048": "2048Bit (default)",
                         "LENGTH_4096": "4096Bit"
                     },
@@ -332,6 +332,7 @@
                     "HEADLINE": "cameoKey Generierung läuft!",
                     "EXPLANATION": "Bitte haben Sie einen Moment Geduld. Dieser Prozess kann je nach Gerät und Schlüssellänge einige Zeit in Anspruch nehmen.<br /> Bei Wartenzeiten von über 5 Minuten sollten Sie den Prozess abbrechen und erneut starten.",
                     "TIME_PASSED": "Verbrauchte Zeit:",
+                    "GENERATION_TIMER": " {{time}}",
                     "STOP_BUTTON": "Generierung abbrechen"
                 },
                 "SAVE": {
@@ -339,6 +340,7 @@
                     "EXPLANATION": "Der cameoKey besteht aus einem privaten Schlüssel, der nur auf Ihrem Gerät gespeichert wird, und einem öffentlichen Schlüssel, den Sie an den cameoServer übertragen und dort speichern müssen.",
                     "NOTE": "Um bei Verlust Ihres cameoKeys Ihre verschlüsselten Nachrichten wieder lesen zu können, sollten Sie Ihren cameoKey öffnen, den privaten Schlüssel aus dem Textfeld kopieren und sicher verwahren.",
                     "TIME_PASSED": "Verbrauchte Zeit:",
+                    "GENERATION_TIMER": " {{time}}",
                     "KEY_NAME": "Schlüsselname",
                     "SAVE_BUTTON": "cameoKey speichern"
                 }
