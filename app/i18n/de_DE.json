@@ -358,8 +358,8 @@
                     "NOTE": "Anfrage gestartet. Bestätigen Sie die Anfrage auf dem zu verknüpfenden Gerät!"
                 },
                 "ACCEPT_REQUEST": {
-                    "HEADER": "Anfrage cameoKeys zu verknüpfen",
-                    "INSTRUCTIONS": "Sie haben auf einem anderen Gerät einen cameoKey. den Sie auf diesem Gerät noch nicht kennen. D.h. Sie können Nachrichten, die Sie hier verschlüsselt haben, auf dem anderen Gerät nicht lesen und umgekehrt.<br />Wollen Sie den cameoKey '{{cameoKey}}' mit Ihrem lokalen cameoKey verknüpfen?",
+                    "HEADER": "Verknüpfungsanfrage",
+                    "INSTRUCTIONS": "Sie haben auf einem anderen Gerät einen cameoKey, den Sie auf diesem Gerät noch nicht kennen. D.h. Sie können Nachrichten, die Sie hier verschlüsselt haben, auf dem anderen Gerät nicht lesen und umgekehrt.<br />Wollen Sie den cameoKey '{{cameoKey}}' mit Ihrem lokalen cameoKey verknüpfen?",
                     "NOTE": "Um die cameoKeys zu verknüpfen, starten Sie die Verknüpfung.",
                     "ACCEPT_BUTTON": "Verknüpfung starten",
                     "CANCEL_BUTTON": "Ablehnen"
@@ -373,7 +373,7 @@
                 "ENTER_TRANSACTION_SECRET": {
                     "HEADER": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER",
                     "INSTRUCTIONS": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.INSTRUCTIONS",
-                    "NOTE": "Geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
+                    "NOTE": "Geben Sie hier bitte den Code ein, der Ihnen auf dem anderen Gerät angezeigt wird:",
                     "LABEL_CODE": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CODE",
                     "CANCEL_BUTTON": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
                     "SUBMIT_BUTTON": "Übertragen"
@@ -495,10 +495,12 @@
                     "CHOOSE_SIZE": "Schlüsselstärke wählen",
                     "GENERATE": "cameoKey erzeugen",
                     "GENERATION_IN_PROGRESS": "Generierung läuft",
-                    "GENERATION_TIME_PROGRESS": "verbrauchte Zeit: {{time}}",
+                    "GENERATION_TIME_PROGRESS": "verbrauchte Zeit:",
+                    "GENERATION_TIMER": " {{time}}",
+                    "GENERATE_INFO_TEXT": "Bitte haben Sie einen Moment Geduld, dieser Prozess kann nach Device oder Schlüsselstärke variieren. Bei Wartezeiten von mehr als 5min können Sie den Prozess abbrechen und erneut starten.",
                     "CANCEL": "Generierung abbrechen",
                     "STORE_KEYPAIR": "cameoKey speichern",
-                    "GENERATION_TIME": "Der cameoKey wurde erfolgreich generiert, die Generierung hat {{time}} gedauert.",
+                    "GENERATION_TIME": "Der cameoKey wurde erfolgreich generiert, die Generierung hat {{time}} gedauert. GENERATION_READY @TODO",
                     "STOREKEY_DESCRIPTION": "Der cameoKey besteht aus einem privaten und einem öffentlichen Schlüssel. Der private Schlüssel wird nur auf Ihrem Gerät gespeichert. Der öffentlichen Schlüssel wird auf dem cameoServer gespeichert.\nUm bei Verlust Ihres cameoKeys Ihre verschlüsselten Nachrichten wieder lesen zu können, sollten Sie Ihren cameoKey exportieren und sicher verwahren.",
                     "PRIVATE_KEY": "Privater Schlüssel",
                     "PUBLIC_KEY": "Öffentlicher Schlüssel",
