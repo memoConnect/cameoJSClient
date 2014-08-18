@@ -1,13 +1,12 @@
 'use strict';
 
 angular.module('cmUser').directive('cmLogin', [
-    '$location',
     'cmNotify',
     'cmUserModel',
     'cmUserKeyStorageService',
     'cmCrypt',
     'cmConfig',
-    function ($location, cmNotify, cmUserModel, cmUserKeyStorageService, cmCrypt, cmConfig) {
+    function (cmNotify, cmUserModel, cmUserKeyStorageService, cmCrypt, cmConfig) {
         return  {
             restrict    :   'A',
             templateUrl :   'comps/user/drtv-login.html',
@@ -55,12 +54,11 @@ angular.module('cmUser').directive('cmLogin', [
                             var storageService = new cmUserKeyStorageService('appSettings'),
                                 skipKeyInfo = storageService.get('skipKeyInfo') || false;
 
-                            $scope.spinner('stop');
                             if(!$location.$$path.match(/\/purl\/.*/)){
                                 if(cmUserModel.loadLocalKeys().length == 0 && skipKeyInfo == false){
-                                    $location.path("/start/keyinfo");
+                                    $scope.goto("/start/keyinfo");
                                 } else {
-                                    $location.path("/talks");
+                                    $scope.goto("/talks");
                                 }
                             }
                             $rootScope.$broadcast('cmLogin:success');

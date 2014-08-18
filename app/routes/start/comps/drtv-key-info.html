@@ -15,8 +15,8 @@
 </article>
 
 <ul class="border-top border-bottom mt15">
-    <li>
-        <span class="item">
+    <li ng-click="toggleSkipKeyInfo()">
+        <span class="item disabled">
            {{'START.KEYINFO.SKIP_CHECKBOX_TEXT' | cmTranslate}}
         </span>
         <div class="short-links">
@@ -25,7 +25,6 @@
                 data-qa="checkbox-skip-key-info-input"
                 name="skip"
                 type="checkbox"
-                ng-model="skipStart"
                 class="ng-hide" />
             <i
                 id="skipKeyInfoIcon"
