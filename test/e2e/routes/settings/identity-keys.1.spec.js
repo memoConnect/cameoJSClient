@@ -8,7 +8,9 @@ describe('Identity key settings: ', function () {
     var password = "password"
     var keyName = "Moeps key"
 
-    afterEach(function() { util.stopOnError() });
+    afterEach(function () {
+        util.stopOnError()
+    });
 
     it('create new user and open identity settings', function () {
         login = util.createTestUser()
@@ -31,19 +33,12 @@ describe('Identity key settings: ', function () {
         util.waitForPageLoad('/settings/identity/keys/create')
     })
 
-
-    /**
-     * @TODO anpassen
-     */
     it('select key size and generate', function () {
-        // there should be two key sizes: 2048 and 4096
-        /**
-        $$("[data-qa='key-size-option']").then(function (elements) {
-            expect(elements.length).toBe(2)
-            expect(elements[0].getText()).toContain("2048")
-            expect(elements[1].getText()).toContain("4096")
-        })
-         **/
+        util.waitForElement("[data-qa='select-key-size']")
+
+        util.click("select-key-size")
+        util.waitForElement("[data-qa='keysize-2048']")
+        util.waitForElement("[data-qa='keysize-4096']")
 
         $("[data-qa='btn-generate-key']").click()
     })
@@ -76,9 +71,6 @@ describe('Identity key settings: ', function () {
         it('wait for key generation and display key', function () {
             util.waitForElementVisible("[data-qa='page-save-key']", 50000)
 
-            //expect($("[data-qa='display-private-key']").getAttribute('value')).toContain("-----BEGIN RSA PRIVATE KEY-----")
-            //expect($("[data-qa='display-public-key']").getAttribute('value')).toContain("-----BEGIN PUBLIC KEY-----")
-
             expect($("[data-qa='input-key-name']").getAttribute('value')).toBeTruthy()
 
             util.clearInput("input-key-name")
@@ -88,10 +80,7 @@ describe('Identity key settings: ', function () {
         })
     })
 
-    /**
-     * @TODO fix after gui refactoring
-     */
-    xit('the new key should be displayed as local', function () {
+    it('the new key should be displayed as local', function () {
         util.waitForPageLoad('/settings/identity/keys')
         util.waitForElement("[data-qa='key-list-item']")
 
@@ -108,7 +97,7 @@ describe('Identity key settings: ', function () {
 
     it('the key should still be there after logout/login', function () {
         util.logout()
-        util.login(login, password,'/talks')
+        util.login(login, password, '/talks')
         util.get('/settings/identity/keys')
 
         $$("[data-qa='key-list-item']").then(function (elements) {
@@ -133,19 +122,14 @@ describe('Identity key settings: ', function () {
         })
     })
 
-    //Todo: folgender test schlägt bei neuen keys fehl, da gleich auf die authetifizierungsseite weitergeleitet wird:
-    console.log('test removed')
-    xit('generate another local key', function () {
-        util.generateKey(1,keyName)
-        util.waitForPageLoad('/start')
+    it('generate another local key', function () {
+        util.generateKey(1, keyName)
         util.get('/settings/identity/keys')
-        util.waitForElements("[data-qa='key-list-item']",1)
+        util.waitForElements("[data-qa='key-list-item']", 1)
 
     })
 
-    //Todo: Die Seite sieht mittlerweile anders aus, deshalb klappt der tets nicht mehr:
-    console.log('test removed')
-    xit('clear local storage and check that key is not local any more', function () {
+    it('clear local storage and check that key is not local any more', function () {
         util.clearLocalStorage()
         util.login(login, password)
         util.get('/settings/identity/keys')
@@ -161,13 +145,11 @@ describe('Identity key settings: ', function () {
         })
     })
 
-    //Todo: folgender test schlägt bei neuen keys fehl, da gleich auf die authetifizierungsseite weitergeleitet wird:
-    console.log('test removed')
-    xit('generate another local key', function () {
+    it('generate another local key', function () {
         util.generateKey(2)
-        util.waitForPageLoad('/settings/identity/keys')
-        util.waitForElements("[data-qa='key-list-item']",2)
-
+        util.clickBackBtn()
+        ptor.debugger()
+        util.waitForElements("[data-qa='key-list-item']", 2)
     })
 
     it('delete test user', function () {

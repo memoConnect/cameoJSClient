@@ -820,14 +820,11 @@ module.exports = function (grunt) {
                 options: {
                     stdout: false
                 },
-                //command: 'cd test/e2e/keys && rm -f *.key && for i in `seq 1 10`; do ssh-keygen -N "" -f ${i}.key; done && rm *.key.pub'
-                command: './bin/genKey.sh'
-
+                command: 'cd test/e2e/keys && rm -f *.key && for i in 1 2 3 4 5; do ssh-keygen -N "" -f ${i}.key; done && rm *.key.pub'
             }
         },
         exec: {
             generateKeys: './bin/genKey.sh'
-
         },
         sloc: {
             'code-coverage': {
@@ -846,7 +843,7 @@ module.exports = function (grunt) {
     ]);
     grunt.registerTask('tests-e2e', [
         'genAllTemplates',
-        'exec:generateKeys',
+        'shell:generateKeys',
         'packages',
         'protractor:default'
     ]);
