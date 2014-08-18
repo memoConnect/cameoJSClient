@@ -41,10 +41,6 @@ angular.module('cmRouteStart').directive('cmKeyInfo', [
                     $scope.goto('/talks');
                 };
 
-                $scope.generateKey = function(){
-                    $scope.goto('settings/identity/keys/create');
-                };
-
                 $scope.showKeySize = false;
                 $scope.toggleKeySize = function(){
                     //console.log('toggleKeySize', $scope.showKeySize)
