@@ -307,7 +307,7 @@
                     "HEADLINE": "Generate cameoKey",
                     "EXPLANATION": "On this device you don't have a cameoKey tied to this identity.<br /> For secure communication please generate or import a cameoKey first.",
                     "KEY_LENGTH": {
-                        "BUTTON_LABEL": "Key size <strong>'{{key_length}}'</strong>",
+                        "BUTTON_LABEL": "Key size",
                         "LENGTH_2048": "2048Bit (default)",
                         "LENGTH_4096": "4096Bit"
                     },
@@ -317,6 +317,7 @@
                     "HEADLINE": "Generation of cameoKey in progress!",
                     "EXPLANATION": "Please be patient. This process can take some time according to the technical parameter of your device and the size of the cameoKey.<br /> If it lasts more than 5 minutes, you may stop the process and start again.",
                     "TIME_PASSED": "Elapsed time:",
+                    "GENERATION_TIMER": " {{time}}",
                     "STOP_BUTTON": "Stop generation"
                 },
                 "SAVE": {
@@ -324,6 +325,7 @@
                     "EXPLANATION": "Each cameoKey consists of a private part that will be stored on your device only and a public part that has to be transferred and stored on our server.",
                     "NOTE": "To avoid loss of encrypted data please open your cameoKey and copy it's private part to a safe place on your computer - we recommend to use a password safe.",
                     "TIME_PASSED": "Elapsed time:",
+                    "GENERATION_TIMER": " {{time}}",
                     "KEY_NAME": "Key name",
                     "SAVE_BUTTON": "Save cameoKey "
                 }
