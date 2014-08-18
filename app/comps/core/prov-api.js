@@ -245,7 +245,7 @@ angular.module('cmCore').provider('cmApi',[
                                             rest_api +      // base url API
                                             config.path     // path to specific method
                                         )
-                    config.method   =   method || config.method 
+                    config.method   =   method || config.method
                     config.headers  =   angular.extend(token           ? {'Authorization': token} : {}, config.headers || {})   //add authorization token to the header
                     config.headers  =   angular.extend(twoFactorToken  ? {'X-TwoFactorToken': twoFactorToken} : {}, config.headers || {})   //add two factor authorization token to the header
                 }
@@ -428,10 +428,12 @@ angular.module('cmCore').provider('cmApi',[
                                     secret: 'b4plIJMNITRDeJ9vl0JG' //only working on dev
                                 }
                             }, true)
-                            .then(function(id){
-                                api.subscriptionId = id
-                                window._eventSubscriptionId = id
-                            })
+                            .then(
+                                function(id){
+                                    api.subscriptionId = id
+                                    window._eventSubscriptionId = id
+                                }
+                            )
                 }
 
                 api.getEvents = function(force){

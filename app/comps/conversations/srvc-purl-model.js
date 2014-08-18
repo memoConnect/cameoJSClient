@@ -27,7 +27,7 @@ angular.module('cmConversations').service('cmPurlModel',[
             var currentIdentity = cmUserModel.getIdentity();
 
             if(identity_data.userType == 'external'){
-                cmLogger.debug('cmPurlModel:handleIdentity:externUser');
+                //cmLogger.debug('cmPurlModel:handleIdentity:externUser');
                 cmUserModel.doLogout(false,'purl-modl handleIdentity');
                 cmUserModel.setIdentity(identity_data);
 
@@ -35,6 +35,8 @@ angular.module('cmConversations').service('cmPurlModel',[
             } else if(identity_data.id != currentIdentity.id){
                 //cmLogger.debug('cmPurlModel:handleIdentity:internUser')
             }
+
+            return this;
         };
 
         /**

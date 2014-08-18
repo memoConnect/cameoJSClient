@@ -11,8 +11,9 @@
  */
 
 angular.module('cmCore').service('cmAuth', [
-    'cmApi', 'cmObject', 'cmUtil',
-    function(cmApi, cmObject, cmUtil){
+    'cmApi', 'cmObject', 'cmUtil', 'cmLogger' ,'$rootScope',
+    function(cmApi, cmObject, cmUtil, cmLogger, $rootScope){
+        var _TOKEN_ = undefined;
         var auth = {
             /**
              * @ngdoc method
@@ -47,6 +48,7 @@ angular.module('cmCore').service('cmAuth', [
              */
             removeToken: function(where){
                 //console.log('removeToken',where)
+                _TOKEN_ = undefined;
                 return localStorage.removeItem('token');
             },
             /**
@@ -61,7 +63,12 @@ angular.module('cmCore').service('cmAuth', [
              * @returns {Boolean} for setting succeed
              */
             storeToken: function(token){
-                return localStorage.setItem('token', token);
+                if(_TOKEN_ == undefined || _TOKEN_ == token){
+                    _TOKEN_ = token;
+                    return localStorage.setItem('token', token);
+                } else if(_TOKEN_ != token) {
+                    cmLogger.debug('cmAuth.storeToken - Error - validateToken is different')
+                }
             },
             /**
              * @ngdoc method
@@ -75,8 +82,17 @@ angular.module('cmCore').service('cmAuth', [
              */
             getToken: function(){
                 var token = localStorage.getItem('token');
-                    //console.log('getToken',token)
-                return token;
+
+                if(token !== undefined && token !== 'undefined' && token !== null && token.length > 0){
+                    if(_TOKEN_ != undefined && _TOKEN_ != token){
+                        $rootScope.$broadcast('logout',{where: 'cmAuth getToken failure'});
+                        cmLogger.debug('cmAuth.storeToken - Error - validateToken is different');
+                    } else {
+                        return token;
+                    }
+                }
+
+                return false;
             },
 
             getIdentityToken: function(identityId){

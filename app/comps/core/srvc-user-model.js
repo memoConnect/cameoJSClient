@@ -44,7 +44,6 @@ angular.module('cmCore')
              cmNotify, cmLogger, cmCallbackQueue,
              $rootScope, $q, $location){
         var self = this,
-            _TOKEN_ = undefined,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
 
@@ -699,45 +698,27 @@ angular.module('cmCore')
          * @TODO handle Token with identity
          */
         this.getToken = function(){
-            cmLogger.debug('cmUserModel:getToken');
+            //cmLogger.debug('cmUserModel:getToken');
 
             var token = cmAuth.getToken();
-            console.log('cmUserModel:getToken','token: ' + token, '_TOKEN_: ' + _TOKEN_)
 
-            if(token !== undefined && token !== 'undefined' && token !== null && (_TOKEN_ == undefined || _TOKEN_ == token)){
-                if(_TOKEN_ == undefined){
-                    _TOKEN_ = token;
-                }
 
+            if(token !== undefined && token !== 'undefined' && token !== null && token.length > 0){
                 return token;
-            } else if(token != _TOKEN_) {
-                cmLogger.debug('cmUserModel:getToken TOKEN ERROR');
-                this.doLogout();
             }
 
             return false;
         };
 
         this.storeToken = function(token){
-            cmLogger.debug('cmUserModel:storeToken');
-
-            if(_TOKEN_ == undefined || _TOKEN_ == token){
-                _TOKEN_ = token;
-                cmAuth.storeToken(token);
-            } else {
-                cmLogger.debug('cmUserModel:storeToken TOKEN ERROR');
-                this.doLogout();
-            }
+            //cmLogger.debug('cmUserModel:storeToken');
+            cmAuth.storeToken(token);
 
             return this;
         };
 
         this.removeToken = function(where){
-            cmLogger.debug('cmUserModel:removeToken');
-
-            console.log('cmUserModel:removeToken','token: ' + this.getToken(), '_TOKEN_: ' + _TOKEN_)
-
-            _TOKEN_ = undefined;
+            //cmLogger.debug('cmUserModel:removeToken');
             cmAuth.removeToken(where);
 
             return this;
@@ -796,19 +777,18 @@ angular.module('cmCore')
          * Event Handling
          */
         $rootScope.$on('logout', function(event, data){
-            cmLogger.debug('cmUserModel - $rootScope.logout');
-            console.log('data',data);
+            //cmLogger.debug('cmUserModel - $rootScope.logout');
 
             self.resetUser();
             isAuth = false;
 
-            if('where' in data){
+            if(typeof data == 'object' && 'where' in data){
                 self.removeToken(data.where);
             } else {
                 self.removeToken();
             }
 
-            if('goToLogin' in data && typeof data.goToLogin === 'undefined' || data.goToLogin !== false){
+            if(typeof data == 'object' && 'goToLogin' in data && typeof data.goToLogin === 'undefined' || data.goToLogin !== false){
                 $location.path('/login');
             }
         });

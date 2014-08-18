@@ -141,7 +141,8 @@ app.register.controller('RegistrationCtrl', [
                                 function(){
                                     $scope.spinner('stop');
                                     if($scope.handleGuest !== false){
-                                        $location.path('/purl/'+$rootScope.pendingPurl);
+                                        //$location.path('/purl/'+$rootScope.pendingPurl);
+                                        $location.path('/start/keyinfo');
                                     } else {
                                         cmUserModel.comesFromRegistration = true;
                                         $location.path("/start/welcome");
