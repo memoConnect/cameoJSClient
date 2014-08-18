@@ -431,11 +431,6 @@ this.generateKey = function (keyNum, keyName) {
     })
 }
 
-this.closeKeyRequestModal = function () {
-    self.waitForModalOpen("key-request")
-    self.click("btn-cancel")
-}
-
 this.disableEncryption = function () {
     $("cm-header:not(.ng-hide) cm-security-indicator").click()
     self.waitForPageLoad("/conversation/new/security-settings")
@@ -445,7 +440,10 @@ this.disableEncryption = function () {
 }
 
 this.clickBackBtn = function () {
+    self.waitForElement("cm-header:not(.ng-hide) cm-back")
+    ptor.debugger()
     $("cm-header:not(.ng-hide) cm-back").click()
+    return this
 }
 
 this.sendFriendRequest = function (displayName) {
