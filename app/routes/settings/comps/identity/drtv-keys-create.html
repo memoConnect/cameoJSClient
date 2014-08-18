@@ -26,15 +26,15 @@
                 <i class="fa" ng-class="{'cm-down':!showKeySize,'cm-up':showKeySize}"></i>
             </div>
             <ul class="cm-submenu" ng-show="showKeySize">
-                <li>
+                <li ng-click="chooseKeySize('2048')">
                     <span class="item" data-qa="keysize-2048">2048</span>
-                    <div class="short-links" ng-click="chooseKeySize('2048')">
+                    <div class="short-links">
                         <i class="fa" ng-class="{'cm-checkbox':keySize != 2048,'cm-checkbox-right':keySize == 2048}"></i>
                     </div>
                 </li>
-                <li>
+                <li ng-click="chooseKeySize('4096')">
                     <span class="item" data-qa="keysize-4096">4096</span>
-                    <div class="short-links" ng-click="chooseKeySize('4096')">
+                    <div class="short-links">
                         <i class="fa" ng-class="{'cm-checkbox':keySize != 4096,'cm-checkbox-right':keySize == 4096}"></i>
                     </div>
                 </li>
