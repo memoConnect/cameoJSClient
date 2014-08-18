@@ -820,7 +820,7 @@ module.exports = function (grunt) {
                 options: {
                     stdout: false
                 },
-                command: 'cd test/e2e/keys && rm -f *.key && for i in 1 2 3 4 5; do ssh-keygen -N "" -f ${i}.key; done && rm *.key.pub'
+                command: 'cd test/e2e/keys && rm -f *.key && ssh-keygen -N "" -f 1.key && ssh-keygen -N "" -f 2.key && ssh-keygen -N "" -f 3.key && ssh-keygen -N "" -f 4.key && ssh-keygen -N "" -f 5.key&& rm *.key.pub'
             }
         },
         exec: {

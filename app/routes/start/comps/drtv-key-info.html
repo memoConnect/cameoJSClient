@@ -14,9 +14,9 @@
     </cm-info-bubble>
 </article>
 
-<ul class="border-top border-bottom">
-    <li>
-        <span class="item">
+<ul class="border-top border-bottom mt15">
+    <li ng-click="toggleSkipKeyInfo()">
+        <span class="item disabled">
            {{'START.KEYINFO.SKIP_CHECKBOX_TEXT' | cmTranslate}}
         </span>
         <div class="short-links">
@@ -25,7 +25,6 @@
                 data-qa="checkbox-skip-key-info-input"
                 name="skip"
                 type="checkbox"
-                ng-model="skipStart"
                 class="ng-hide" />
             <i
                 id="skipKeyInfoIcon"
@@ -49,21 +48,21 @@
 
     <li class="no-border">
         <span class="item" ng-click="toggleKeySize()">
-        {{'SETTINGS.PAGES.IDENTITY.KEYS.CHOOSE_SIZE'|cmTranslate}} <strong>default (2048)</strong>
+        {{'IDENTITY.KEYS.GENERATE.START.KEY_LENGTH.BUTTON_LABEL'|cmTranslate}} <strong>2048 (default)</strong>
         </span>
         <div class="short-links" ng-click="toggleKeySize()">
             <i class="fa" ng-class="{'cm-down':!showKeySize,'cm-up':showKeySize}"></i>
         </div>
         <ul class="cm-submenu" ng-show="showKeySize">
-            <li>
+            <li ng-click="chooseKeySize('2048')">
                 <span class="item">2048</span>
-                <div class="short-links" ng-click="chooseKeySize('2048')">
+                <div class="short-links">
                     <i class="fa" ng-class="{'cm-checkbox':keySize != 2048,'cm-checkbox-right':keySize == 2048}"></i>
                 </div>
             </li>
-            <li>
+            <li ng-click="chooseKeySize('4096')">
                 <span class="item">4096</span>
-                <div class="short-links" ng-click="chooseKeySize('4096')">
+                <div class="short-links">
                     <i class="fa" ng-class="{'cm-checkbox':keySize != 4096,'cm-checkbox-right':keySize == 4096}"></i>
                 </div>
             </li>

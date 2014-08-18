@@ -5,36 +5,36 @@
 </cm-header>
 
 <h2>
-    <i class="fa cm-create-key cm-lg-icon"></i>
-    {{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE.HEADER'|cmTranslate}}
+    <i class="fa cm-key cm-lg-icon"></i>
+    {{'IDENTITY.KEYS.HEADER'|cmTranslate}}
 </h2>
 
 <div class="section" ng-show="active == 'choose'" data-qa="page-chose-keysize">
 
     <article class="mb15">
         <cm-info-bubble nose-x="50%">
-            <span ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE' | cmParse"></span>
+            <span ng-bind-html="'IDENTITY.KEYS.GENERATE.START.EXPLANATION' | cmParse"></span>
         </cm-info-bubble>
     </article>
 
     <ul class="border-top border-bottom">
         <li class="no-border">
             <span class="item" ng-click="toggleKeySize()" data-qa="select-key-size" >
-            {{'SETTINGS.PAGES.IDENTITY.KEYS.CHOOSE_SIZE'|cmTranslate}} <strong>default (2048)</strong>
+            {{'IDENTITY.KEYS.GENERATE.START.KEY_LENGTH.BUTTON_LABEL'|cmTranslate}} <strong>2048 (default)</strong>
             </span>
             <div class="short-links" ng-click="toggleKeySize()">
                 <i class="fa" ng-class="{'cm-down':!showKeySize,'cm-up':showKeySize}"></i>
             </div>
             <ul class="cm-submenu" ng-show="showKeySize">
-                <li>
+                <li ng-click="chooseKeySize('2048')">
                     <span class="item" data-qa="keysize-2048">2048</span>
-                    <div class="short-links" ng-click="chooseKeySize('2048')">
+                    <div class="short-links">
                         <i class="fa" ng-class="{'cm-checkbox':keySize != 2048,'cm-checkbox-right':keySize == 2048}"></i>
                     </div>
                 </li>
-                <li>
+                <li ng-click="chooseKeySize('4096')">
                     <span class="item" data-qa="keysize-4096">4096</span>
-                    <div class="short-links" ng-click="chooseKeySize('4096')">
+                    <div class="short-links">
                         <i class="fa" ng-class="{'cm-checkbox':keySize != 4096,'cm-checkbox-right':keySize == 4096}"></i>
                     </div>
                 </li>
@@ -44,26 +44,26 @@
 
     <cm-footer>
         <button ng-click="generate()" class="cm-btn-block cm-btn-grey" data-qa="btn-generate-key">
-            {{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATE'|cmTranslate}}
+            {{'IDENTITY.KEYS.GENERATE.START.GENERATE_BUTTON'|cmTranslate}}
             <i class="fa cm-checker cm-lg-icon"></i>
         </button>
     </cm-footer>
 </div>
 
 <div class="section" ng-show="active == 'generate'" data-qa="page-generating-key">
-    <h3 ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.GENERATION_IN_PROGRESS' | cmParse"></h3>
+    <h3 ng-bind-html="'IDENTITY.KEYS.GENERATE.GENERATING.HEADLINE' | cmParse"></h3>
 
     <article class="key-generates">
         <cm-info-bubble nose-x="55%">
-            <span ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.GENERATE_INFO_TEXT' | cmParse"></span>
+            <span ng-bind-html="'IDENTITY.KEYS.GENERATE.GENERATING.EXPLANATION' | cmParse"></span>
         </cm-info-bubble>
     </article>
 
     <hr>
 
     <article>
-        <span ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.GENERATION_TIME_PROGRESS'|cmParse"></span>
-        <section class="cm-special-text">{{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATION_TIMER'|cmTranslate:i18n}}</section>
+        <span ng-bind-html="'IDENTITY.KEYS.GENERATE.GENERATING.TIME_PASSED'|cmParse"></span>
+        <section class="cm-special-text">{{'IDENTITY.KEYS.GENERATE.GENERATING.GENERATION_TIMER'|cmTranslate:i18n}}</section>
     </article>
 
     <hr>
@@ -74,29 +74,34 @@
 
     <cm-footer>
         <button ng-click="cancel()" class="cm-btn-block cm-btn-grey" data-qa="btn-cancel-key-generation">
-            {{'SETTINGS.PAGES.IDENTITY.KEYS.CANCEL'|cmTranslate}}
-            <i class="fa cm-cancel-key cm-lg-icon"></i>
+            {{'IDENTITY.KEYS.GENERATE.GENERATING.STOP_BUTTON'|cmTranslate}}
+            <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
         </button>
     </cm-footer>
 </div>
 
 <div class="section" ng-show="active == 'store'" data-qa="page-save-key">
+    <h3 ng-bind-html="'IDENTITY.KEYS.GENERATE.SAVE.HEADLINE' | cmParse"></h3>
     <article class="key-generates">
         <cm-info-bubble nose-x="55%">
-            <span ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.STOREKEY_DESCRIPTION' | cmParse"></span>
+            <span ng-bind-html="'IDENTITY.KEYS.GENERATE.SAVE.EXPLANATION' | cmParse"></span>
+            <br />
+            <strong>
+                <span ng-bind-html="'IDENTITY.KEYS.GENERATE.SAVE.NOTE' | cmParse"></span>
+            </strong>
         </cm-info-bubble>
     </article>
 
     <hr>
 
     <article>
-        <span ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.GENERATION_TIME_PROGRESS'|cmParse"></span>
-        <section class="cm-special-text">{{'SETTINGS.PAGES.IDENTITY.KEYS.GENERATION_TIMER'|cmTranslate:i18n}}</section>
+        <span ng-bind-html="'IDENTITY.KEYS.GENERATE.SAVE.TIME_PASSED'|cmParse"></span>
+        <section class="cm-special-text">{{'IDENTITY.KEYS.GENERATE.SAVE.GENERATION_TIMER'|cmTranslate:i18n}}</section>
     </article>
 
     <hr>
 
-    <h3 ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.KEY_NAME' | cmParse"></h3>
+    <h3 ng-bind-html="'IDENTITY.KEYS.GENERATE.SAVE.KEY_NAME' | cmParse"></h3>
 
     <article>
         <div class="cm-form-group">
@@ -115,7 +120,7 @@
 
     <cm-footer>
         <button ng-click="store()" class="cm-btn-block cm-btn-grey" data-qa="btn-save-key">
-            {{'SETTINGS.PAGES.IDENTITY.KEYS.STORE'|cmTranslate}}
+            {{'IDENTITY.KEYS.GENERATE.SAVE.SAVE_BUTTON'|cmTranslate}}
             <i class="fa cm-checker cm-lg-icon"></i>
         </button>
     </cm-footer>

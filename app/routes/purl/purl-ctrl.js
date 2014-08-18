@@ -12,13 +12,11 @@ define([
         '$scope',
         '$rootScope',
         '$routeParams',
-        '$location',
         'cmModal',
         'cmPurlModel',
-        'cmUserModel',
         'cmUtil',
         'cmConversationFactory',
-        function($scope, $rootScope, $routeParams, $location, cmModal, cmPurlModel, cmUserModel, cmUtil, cmConversationFactory){
+        function($scope, $rootScope, $routeParams, cmModal, cmPurlModel, cmUtil, cmConversationFactory){
             $scope.isPurl = true;
             $scope.data = null;
             $scope.showConversation = false;
@@ -33,6 +31,7 @@ define([
                     function(data){
                         // identity check internal || external user
                         cmPurlModel.handleIdentity(data.identity);
+
                         if(data.identity.userType == 'external'){
                             $scope.showSignIn = true;
                             $rootScope.pendingPurl = $routeParams.purlId;
@@ -50,13 +49,13 @@ define([
                     function(response){
                         if(typeof response !== 'undefined' && cmUtil.checkKeyExists(response, 'status')){
                             if(response.status == 401){
-                                cmUserModel.doLogout(false,'purl-ctrl getPurl reject');
+                                $rootScope.$broadcast('logout', {goToLogin: false, where: 'purl-ctrl getPurl reject'})
                                 $scope.showLogin();
                             } else if(response.status == 404){
-                                $location.path('/404');
+                                $scope.goto('/404');
                             }
                         } else {
-                            $location.path('/404');
+                            $scope.goto('/404');
                         }
                     }
                 );
@@ -66,7 +65,7 @@ define([
              * header btn for fast registration
              */
             $scope.goToRegister = function(){
-                $location.path('/registration');
+                $scope.goto('/registration');
             };
             /**
              * modal for fast registration

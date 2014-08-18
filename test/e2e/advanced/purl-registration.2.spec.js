@@ -117,7 +117,11 @@ describe('Purl Registration: ', function () {
 
         $("[data-qa='btn-createUser']").click()
 
-        util.waitForPageLoad("/purl/.*")
+        util.waitForPageLoad("/start/keyinfo")
+
+        util.get("/purl/" + purl)
+
+        util.waitForPageLoad("/purl/" + purl)
     })
 
     it('conversation with the right message should be loaded', function () {

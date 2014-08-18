@@ -11,7 +11,7 @@ define([
 
     app.register.controller('ContactCtrl',
         function(
-         $scope, $rootScope, $location,$routeParams,
+         $scope, $rootScope,$routeParams,
          cmContactsModel, cmIdentityFactory, cmUtil, cmNotify, cmHooks, cmUserModel
         ){
             $scope.cmUtil = cmUtil;
@@ -82,7 +82,7 @@ define([
                     } else {
                         cmLogger.error('Unable to find identity on contact. ' + $scope.contact)
                     }
-                    $location.path('/conversation');
+                    $scope.goto('/conversation/new');
                 }
             };
 
@@ -131,7 +131,7 @@ define([
                     })
                     .then(
                         function () {
-                            $location.path('/contacts');
+                            $scope.goto('/contacts');
                         },
                         function () {
                             cmNotify.error('CONTACT.INFO.ERROR.SAVE',{ttl:5000});
