@@ -87,12 +87,12 @@ angular.module('cmCore').service('cmAuth', [
                     if(_TOKEN_ != undefined && _TOKEN_ != token){
                         $rootScope.$broadcast('logout',{where: 'cmAuth getToken failure'});
                         cmLogger.debug('cmAuth.storeToken - Error - validateToken is different');
-                    } else {
-                        return token;
+
+                        return false;
                     }
                 }
 
-                return false;
+                return token;
             },
 
             getIdentityToken: function(identityId){
