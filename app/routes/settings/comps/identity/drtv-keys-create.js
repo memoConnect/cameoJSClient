@@ -55,7 +55,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                     $scope.active = 'generate';
 
                     var size = 2048;
-                    if($scope.keySize = 4096){
+                    if($scope.keySize == 4096){
                         size = 4096;
                     }
 
