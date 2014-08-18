@@ -494,14 +494,14 @@ angular.module('cmCore')
                 //Keys should not sign themselves
                 if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() === keyToSign.getFingerprint())){
                     self.trigger('signatures:cancel');
-                    cmLoger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
+                    cmLogger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
                     return false;
                 }
 
                 //Dont sign twice:
                 if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
                     self.trigger('signatures:cancel');
-                    cmLoger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
+                    cmLogger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
                     return false; 
                 }
 
