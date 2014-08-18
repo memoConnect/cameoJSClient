@@ -12,13 +12,12 @@ define([
         '$scope',
         '$rootScope',
         '$routeParams',
-        '$location',
         'cmModal',
         'cmPurlModel',
         'cmUserModel',
         'cmUtil',
         'cmConversationFactory',
-        function($scope, $rootScope, $routeParams, $location, cmModal, cmPurlModel, cmUserModel, cmUtil, cmConversationFactory){
+        function($scope, $rootScope, $routeParams, cmModal, cmPurlModel, cmUserModel, cmUtil, cmConversationFactory){
             $scope.isPurl = true;
             $scope.data = null;
             $scope.showConversation = false;
@@ -32,20 +31,24 @@ define([
                 cmPurlModel.getPurl($routeParams.purlId).then(
                     function(data){
                         // identity check internal || external user
-                        cmPurlModel.handleIdentity(data.identity);
-                        if(data.identity.userType == 'external'){
-                            $scope.showSignIn = true;
-                            $rootScope.pendingPurl = $routeParams.purlId;
-                        }
+                        cmPurlModel.handleIdentity(data.identity).then(
+                            function(){
+                                console.log('moep')
+                                if(data.identity.userType == 'external'){
+                                    $scope.showSignIn = true;
+                                    $rootScope.pendingPurl = $routeParams.purlId;
+                                }
 
-                        if(typeof data.token !== 'undefined'){
-                            cmPurlModel.handleToken(data.token)
-                        }
+                                if(typeof data.token !== 'undefined'){
+                                    cmPurlModel.handleToken(data.token)
+                                }
 
-                        $scope.conversationId = cmPurlModel.handleConversation(data.conversation);
-                        $scope.showConversation = true;
+                                $scope.conversationId = cmPurlModel.handleConversation(data.conversation);
+                                $scope.showConversation = true;
 
-                        $scope.conversation = cmConversationFactory.create($scope.conversationId)
+                                $scope.conversation = cmConversationFactory.create($scope.conversationId)
+                            }
+                        );
                     },
                     function(response){
                         if(typeof response !== 'undefined' && cmUtil.checkKeyExists(response, 'status')){
@@ -53,10 +56,10 @@ define([
                                 cmUserModel.doLogout(false,'purl-ctrl getPurl reject');
                                 $scope.showLogin();
                             } else if(response.status == 404){
-                                $location.path('/404');
+                                $scope.goto('/404');
                             }
                         } else {
-                            $location.path('/404');
+                            $scope.goto('/404');
                         }
                     }
                 );

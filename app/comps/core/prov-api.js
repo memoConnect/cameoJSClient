@@ -452,10 +452,15 @@ angular.module('cmCore').provider('cmApi',[
                                     api.trigger(event.name, event.data)
                                 })
                             },
-                            function(){
-                                //Todo: Alle Daten updaten// reload ?
-                                api.resetSubscriptionId()
-                                cmLogger.debug('cmApi.getEvents() reset invalid subscriptionId.')
+                            function(response){
+                                if(response.status == 401){
+                                    cmLogger.debug('cmApi.getEvents() Authentication Error.')
+                                    $rootScope.$broadcast('logout');
+                                } else {
+                                    //Todo: Alle Daten updaten// reload ?
+                                    api.resetSubscriptionId();
+                                    cmLogger.debug('cmApi.getEvents() reset invalid subscriptionId.')
+                                }
                             }
                         )
                     }

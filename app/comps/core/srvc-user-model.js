@@ -44,6 +44,7 @@ angular.module('cmCore')
              cmNotify, cmLogger, cmCallbackQueue,
              $rootScope, $q, $location){
         var self = this,
+            _TOKEN_ = undefined,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
 
@@ -173,7 +174,6 @@ angular.module('cmCore')
                 }
             } else {
                 if(this.getToken() !== false){
-
                     /**
                      * @todo hack for external user in purl
                      */
@@ -298,15 +298,9 @@ angular.module('cmCore')
         };
 
         this.doLogout = function(goToLogin, where){
-//            cmLogger.debug('cmUserModel:doLogout');
+            //cmLogger.debug('cmUserModel:doLogout');
 
-            isAuth = false;
-            this.removeToken(where);
-            $rootScope.$broadcast('logout');
-
-            if(typeof goToLogin === 'undefined' || goToLogin !== false){
-                $location.path('/login');
-            }
+            $rootScope.$broadcast('logout', {goToLogin: goToLogin, where: where});
         };
 
         this.switchToIdentity = function(identity, identityToken){
@@ -705,21 +699,48 @@ angular.module('cmCore')
          * @TODO handle Token with identity
          */
         this.getToken = function(){
+            cmLogger.debug('cmUserModel:getToken');
+
             var token = cmAuth.getToken();
-            if(token !== undefined && token !== 'undefined' && token !== null){
+            console.log('cmUserModel:getToken','token: ' + token, '_TOKEN_: ' + _TOKEN_)
+
+            if(token !== undefined && token !== 'undefined' && token !== null && (_TOKEN_ == undefined || _TOKEN_ == token)){
+                if(_TOKEN_ == undefined){
+                    _TOKEN_ = token;
+                }
+
                 return token;
+            } else if(token != _TOKEN_) {
+                cmLogger.debug('cmUserModel:getToken TOKEN ERROR');
+                this.doLogout();
             }
 
             return false;
         };
 
-        this.storeToken = function(t){
-            cmAuth.storeToken(t);
+        this.storeToken = function(token){
+            cmLogger.debug('cmUserModel:storeToken');
+
+            if(_TOKEN_ == undefined || _TOKEN_ == token){
+                _TOKEN_ = token;
+                cmAuth.storeToken(token);
+            } else {
+                cmLogger.debug('cmUserModel:storeToken TOKEN ERROR');
+                this.doLogout();
+            }
+
+            return this;
         };
 
         this.removeToken = function(where){
-            //cmLogger.debug('cmUserModel:removeToken');
+            cmLogger.debug('cmUserModel:removeToken');
+
+            console.log('cmUserModel:removeToken','token: ' + this.getToken(), '_TOKEN_: ' + _TOKEN_)
+
+            _TOKEN_ = undefined;
             cmAuth.removeToken(where);
+
+            return this;
         };
 
         /**
@@ -774,8 +795,22 @@ angular.module('cmCore')
         /**
          * Event Handling
          */
-        $rootScope.$on('logout', function(){
+        $rootScope.$on('logout', function(event, data){
+            cmLogger.debug('cmUserModel - $rootScope.logout');
+            console.log('data',data);
+
             self.resetUser();
+            isAuth = false;
+
+            if('where' in data){
+                self.removeToken(data.where);
+            } else {
+                self.removeToken();
+            }
+
+            if('goToLogin' in data && typeof data.goToLogin === 'undefined' || data.goToLogin !== false){
+                $location.path('/login');
+            }
         });
 
         $rootScope.$on('identity:switched', function(){
