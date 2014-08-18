@@ -14,10 +14,8 @@
     </cm-info-bubble>
 </article>
 
-<hr />
-
-<ul>
-    <li ng-click="toggleSkipKeyInfo()">
+<ul class="border-top border-bottom">
+    <li>
         <span class="item">
            {{'START.KEYINFO.SKIP_CHECKBOX_TEXT' | cmTranslate}}
         </span>
@@ -49,18 +47,28 @@
         </div>
     </li>
 
-    <!--<li>-->
-        <!--<span class="item" ng-click="toggleKeySize()">-->
-            <!--Ich klappe mich aus-->
-        <!--</span>-->
-        <!--<div class="short-links" ng-click="toggleKeySize()">-->
-            <!--<i class="fa" ng-class="{'cm-down':!showKeySize,'cm-up':showKeySize}"></i>-->
-        <!--</div>-->
-        <!--<ul class="cm-submenu" ng-show="showKeySize">-->
-            <!--<li>Moep</li>-->
-            <!--<li>Pups</li>-->
-        <!--</ul>-->
-    <!--</li>-->
+    <li class="no-border">
+        <span class="item" ng-click="toggleKeySize()">
+        {{'SETTINGS.PAGES.IDENTITY.KEYS.CHOOSE_SIZE'|cmTranslate}} <strong>default (2048)</strong>
+        </span>
+        <div class="short-links" ng-click="toggleKeySize()">
+            <i class="fa" ng-class="{'cm-down':!showKeySize,'cm-up':showKeySize}"></i>
+        </div>
+        <ul class="cm-submenu" ng-show="showKeySize">
+            <li>
+                <span class="item">2048</span>
+                <div class="short-links" ng-click="chooseKeySize('2048')">
+                    <i class="fa" ng-class="{'cm-checkbox':keySize != 2048,'cm-checkbox-right':keySize == 2048}"></i>
+                </div>
+            </li>
+            <li>
+                <span class="item">4096</span>
+                <div class="short-links" ng-click="chooseKeySize('4096')">
+                    <i class="fa" ng-class="{'cm-checkbox':keySize != 4096,'cm-checkbox-right':keySize == 4096}"></i>
+                </div>
+            </li>
+        </ul>
+    </li>
 </ul>
 
 <cm-footer>

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('cmUser').directive('cmKeyResponse',[
-    'cmAuth', 'cmUserModel', '$rootScope',
-    function (cmAuth, cmUserModel, $rootScope){
+    'cmAuth', 'cmUserModel', 'cmIdentityFactory', '$rootScope',
+    function (cmAuth, cmUserModel, cmIdentityFactory, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/drtv-key-response.html',
@@ -11,7 +11,8 @@ angular.module('cmUser').directive('cmKeyResponse',[
 
                 // TODO: upgrade protokoll for fromId in key-request
                 $scope.modalMessageVars = {
-                    device: $scope.authenticationRequest.fromKey.name
+                    device: $scope.authenticationRequest.fromKey.name,
+                    identity: cmIdentityFactory.create($scope.authenticationRequest.fromIdentityId).getDisplayName()
                 };
 
                 $scope.showSpinner = function(){

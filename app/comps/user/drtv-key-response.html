@@ -1,8 +1,8 @@
 <div>
     <div class="modal-row">
-        <span ng-if="authenticationRequest.is3rdParty()"    ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.INSTRUCTIONS'|cmTranslate:modalMessageVars"></span>
+        <span ng-if="authenticationRequest.is3rdParty()"    ng-bind-html="'IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.INSTRUCTIONS'|cmTranslate:modalMessageVars"></span>
         <br/>
-        <strong ng-if="authenticationRequest.is3rdParty()"    ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.NOTE'|cmTranslate:modalMessageVars"></strong>
+        <strong ng-if="authenticationRequest.is3rdParty()"    ng-bind-html="'IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.NOTE'|cmTranslate:modalMessageVars"></strong>
 
         <span ng-if="!authenticationRequest.is3rdParty()"   ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.INSTRUCTIONS'|cmTranslate:modalMessageVars"></span>
         <br/>
@@ -18,9 +18,10 @@
                 ng-click="accept()"
                 data-qa="btn-accept"
                 cm-weight="1">
-            {{'IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.ACCEPT_BUTTON'|cmTranslate}}
+            {{'IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.ACCEPT_BUTTON'|cmTranslate}}
             <i class="fa cm-checker cm-lg-icon"></i>
         </button>
+
     </div>
     <button class="cm-btn cm-btn-block cm-btn-grey" ng-show="spinner">
         <cm-spinner ng-show="spinner" cm-color="#02BED2"></cm-spinner>
