@@ -60,7 +60,6 @@ describe('transfer scope data conversation', function () {
         msg2 = 'juhu buhu'
 
     it('login', function () {
-        util.get('/login')
         util.login()
     })
 

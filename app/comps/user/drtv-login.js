@@ -6,7 +6,8 @@ angular.module('cmUser').directive('cmLogin', [
     'cmUserKeyStorageService',
     'cmCrypt',
     'cmConfig',
-    function (cmNotify, cmUserModel, cmUserKeyStorageService, cmCrypt, cmConfig) {
+    '$location',
+    function (cmNotify, cmUserModel, cmUserKeyStorageService, cmCrypt, cmConfig, $location) {
         return  {
             restrict    :   'A',
             templateUrl :   'comps/user/drtv-login.html',
