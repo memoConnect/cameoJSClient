@@ -3,8 +3,9 @@ cd test/e2e/keys
 
 rm -f *.key
 
-for i in {1..10};
+for i in {1..10}
 do
+    echo foo
     ssh-keygen -N "" -f ${i}.key
 done
 

@@ -827,7 +827,6 @@ module.exports = function (grunt) {
         },
         exec: {
             generateKeys: './bin/genKey.sh'
-
         },
         sloc: {
             'code-coverage': {
@@ -846,7 +845,7 @@ module.exports = function (grunt) {
     ]);
     grunt.registerTask('tests-e2e', [
         'genAllTemplates',
-        'exec:generateKeys',
+        'shell:generateKeys',
         'packages',
         'protractor:default'
     ]);

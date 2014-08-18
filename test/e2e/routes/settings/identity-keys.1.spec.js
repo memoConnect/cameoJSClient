@@ -78,7 +78,7 @@ describe('Identity key settings: ', function () {
 
             //expect($("[data-qa='display-private-key']").getAttribute('value')).toContain("-----BEGIN RSA PRIVATE KEY-----")
             //expect($("[data-qa='display-public-key']").getAttribute('value')).toContain("-----BEGIN PUBLIC KEY-----")
-
+            ptor.debugger()
             expect($("[data-qa='input-key-name']").getAttribute('value')).toBeTruthy()
 
             util.clearInput("input-key-name")
