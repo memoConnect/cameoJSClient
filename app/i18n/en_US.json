@@ -336,6 +336,7 @@
                 "EXPLANATION": "To read encrypted messages written under {{identity}} on other devices, please link the local cameoKey with all other keys that you are using there.",
                 "START": {
                     "START_BUTTON": "Link up",
+                    "CANCEL_BUTTON": "Not now",
                     "INSTRUCTIONS": "Please press 'Link up' to start the process.",
                     "NOTE": "Attention! Before pressing 'Link up' you should first choose your identity {{identity}} (Settings > Identity Settings)!"
                 },

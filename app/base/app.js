@@ -195,9 +195,12 @@ define([
             //prep $rootScope with useful tools
             $rootScope.console  =   console;
             $rootScope.alert    =   alert;
-            $rootScope.goto     =   function(path){
+            $rootScope.goto     =   function(path, replace){
                                         path = path[0] == '/' ? path : '/'+path;
                                         $location.path(path);
+                                        //Todo: find foifferent solution:
+                                        if(replace)
+                                            $location.replace()
                                     };
 
             //add Overlay handles:

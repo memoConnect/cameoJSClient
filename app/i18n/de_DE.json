@@ -351,6 +351,7 @@
                 "EXPLANATION": "Um Ihre Nachrichten die Sie als {{identity}} geschrieben haben auf allen Geräten lesen zu können, müssen Sie ihren lokalen cameoKey mit Ihren cameoKeys auf anderen Geräten verknüpfen.",
                 "START": {
                     "START_BUTTON": "Verbinden",
+                    "CANCEL_BUTTON": "Nicht jetzt",
                     "INSTRUCTIONS": "Drücken Sie auf 'Verbinden' um den Vorgang zu starten.",
                     "NOTE": "ACHTUNG! Bevor Sie auf 'Verbinden' klicken müssen Sie auf einem Ihrer Geräte cameoNet als {{identity}} öffnen!"
                 },
