@@ -110,6 +110,16 @@
 
     <cm-footer ng-if = "step == 0" cm-rubber-space>
         <button 
+            ng-click    = "cancel()" 
+            class       = "cm-btn-block cm-btn-grey" 
+            data-qa     = "btn-start-authentication"
+            cm-weight   = "1"
+        >
+            {{BASE+"START.CANCEL_BUTTON"|cmTranslate}}
+            <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
+        </button>
+        
+        <button 
             ng-click    = "requestKey()" 
             class       = "cm-btn-block cm-btn-grey" 
             data-qa     = "btn-start-authentication"
@@ -119,15 +129,6 @@
             <i class="fa cm-handshake cm-lg-icon"></i>
         </button>
 
-        <button 
-            ng-click    = "cancel()" 
-            class       = "cm-btn-block cm-btn-grey" 
-            data-qa     = "btn-start-authentication"
-            cm-weight   = "1"
-        >
-            {{BASE+"START.CANCEL_BUTTON"|cmTranslate}}
-            <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
-        </button>
     </cm-footer>
 
     <cm-footer ng-if = "step == 1" cm-rubber-space>

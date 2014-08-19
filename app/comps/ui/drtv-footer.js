@@ -80,13 +80,13 @@ angular.module('cmUi')
             scope: true,
             priority: 0,
             link: function(scope, element, attrs, controller, transclude){
-                /*
+                
                 if('cmAlwaysOnTop' in attrs){
                     element.css('z-index',10);
                 } else {
                     element.css('z-index',9);
                 }
-                */
+                
             }
         }
     }

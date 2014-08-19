@@ -94,7 +94,7 @@ angular.module('cmUi').directive('input',[
                     fixedElements.css('position','absolute');
                     angular.forEach(fixedElements,function(fixedElement){
                         if(fixedElement.tagName.toLowerCase() == 'cm-footer')
-                            angular.element(fixedElement).addClass('ng-hide');
+                            angular.element(fixedElement).addClass('defixed');  //Todo: changes class from 'ng-hide' to 'defixed', because registration footer disappeared permanently.
                     });
                 }
 
@@ -102,7 +102,7 @@ angular.module('cmUi').directive('input',[
                     fixedElements.css('position','fixed');
                     angular.forEach(fixedElements,function(fixedElement){
                         if(fixedElement.tagName.toLowerCase() == 'cm-footer')
-                            angular.element(fixedElement).removeClass('ng-hide');
+                            angular.element(fixedElement).removeClass('defixed'); //Todo: changes class from 'ng-hide' to 'defixed', because registration footer disappeared permanently.
                     });
                     view.off('touchstart',stopEvent);
                 }
