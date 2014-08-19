@@ -56,8 +56,8 @@ define([
 
 
             $scope.cancelTimeout = function(){
-                if(timeoutPromise)
-                    $timeout.cancel(timeoutPromise)
+                if($scope.timeoutPromise)
+                    $timeout.cancel($scope.timeoutPromise)
 
                 if(timeoutInterval)
                     window.clearInterval(timeoutInterval)
@@ -66,6 +66,7 @@ define([
             }
 
             $scope.startTimeout = function(time){
+                $scope.cancelTimeout()
                 $scope.timeout = time || 60000                
                 $scope.timeoutPromise = $timeout(function(){
                     $scope.cancel()

@@ -379,6 +379,7 @@
                 "EXPLANATION": "By using the trust process you can verify whether an identity is of an individual that you know in person.",
                 "START": {
                     "START_BUTTON": "Request",
+                    "CANCEL_BUTTON": "Not now",
                     "INSTRUCTIONS": "If you like to trust this contact please press 'Request', to send an inquiry for trusting each other.",
                     "NOTE": "Attention! Before you press 'Request' the contact has to be registered to cameoNet as {{identity}}."
                 },

@@ -394,6 +394,7 @@
                 "EXPLANATION": "Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität zu einer Person gehört, die Sie persönlich kennen.",
                 "START": {
                     "START_BUTTON": "Anfragen",
+                    "CANCEL_BUTTON": "Nicht jetzt",
                     "INSTRUCTIONS": "Wenn Sie diesem Kontakt vertrauen wollen, drücken Sie auf 'Anfragen', um ihm eine Vertrauensanfrage zu senden.",
                     "NOTE": "ACHTUNG! Bevor Sie auf 'Anfragen' klicken muss Ihr Kontakt im cameoNet als {{identity}} angemeldet sein!"
                 },
