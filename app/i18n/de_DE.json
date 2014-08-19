@@ -502,7 +502,6 @@
                     "GENERATE_INFO_TEXT": "Bitte haben Sie einen Moment Geduld, dieser Prozess kann nach Device oder Schlüsselstärke variieren. Bei Wartezeiten von mehr als 5min können Sie den Prozess abbrechen und erneut starten.",
                     "CANCEL": "Generierung abbrechen",
                     "STORE_KEYPAIR": "cameoKey speichern",
-                    "GENERATION_TIME": "Der cameoKey wurde erfolgreich generiert, die Generierung hat {{time}} gedauert. GENERATION_READY @TODO",
                     "STOREKEY_DESCRIPTION": "Der cameoKey besteht aus einem privaten und einem öffentlichen Schlüssel. Der private Schlüssel wird nur auf Ihrem Gerät gespeichert. Der öffentlichen Schlüssel wird auf dem cameoServer gespeichert.\nUm bei Verlust Ihres cameoKeys Ihre verschlüsselten Nachrichten wieder lesen zu können, sollten Sie Ihren cameoKey exportieren und sicher verwahren.",
                     "PRIVATE_KEY": "Privater Schlüssel",
                     "PUBLIC_KEY": "Öffentlicher Schlüssel",
