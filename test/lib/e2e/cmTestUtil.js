@@ -455,6 +455,7 @@ this.sendFriendRequest = function (displayName) {
 }
 
 this.acceptFriendRequests = function () {
+    self.get('/talks')
     $("[data-qa='btn-open-menu']").click()
     self.waitForElement("[data-qa='btn-menu-contact-requests']")
     $("[data-qa='btn-menu-contact-requests']").click()

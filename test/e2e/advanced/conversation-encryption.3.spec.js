@@ -201,7 +201,6 @@ describe('Conversation encryption -', function () {
 
                                 ptor.wait(function(){
                                     return util.getVal('input-password').then(function(val){
-                                        console.log(val + ' -> ' + password)
                                         return val == password
                                     })
                                 })
