@@ -56,6 +56,8 @@ describe('mobile-inputs', function () {
         })
     })
 
+    console.log('changed test')
+    //changed expected class
     describe('check mobile input compile the drtv', function(){
         createInput({
             isNotMobile: false
@@ -67,12 +69,12 @@ describe('mobile-inputs', function () {
             $input.triggerHandler('focus')
 
             expect($($fixedElements[0]).css('position')).toBe('absolute')
-            expect($($fixedElements[1]).hasClass('ng-hide')).toBeTruthy()
+            expect($($fixedElements[1]).hasClass('defixed')).toBeTruthy()       //Todo: changed class
 
             $input.triggerHandler('blur')
 
             expect($($fixedElements[0]).css('position')).toBe('fixed')
-            expect($($fixedElements[1]).hasClass('ng-hide')).toBeFalsy()
+            expect($($fixedElements[1]).hasClass('defixed')).toBeFalsy()    //Todo: changed class
         })
     })
 
