@@ -306,7 +306,7 @@ angular.module('cmCore')
            // cmLogger.debug('cmUserModel:switchToIdentity');
 
             function doSwitch(newToken){
-                self.storeToken(newToken);
+                self.storeToken(newToken, true);
                 $rootScope.$broadcast('identity:switched');
             }
 
@@ -710,9 +710,9 @@ angular.module('cmCore')
             return false;
         };
 
-        this.storeToken = function(token){
+        this.storeToken = function(token, force){
             //cmLogger.debug('cmUserModel:storeToken');
-            cmAuth.storeToken(token);
+            cmAuth.storeToken(token, force);
 
             return this;
         };
@@ -798,7 +798,7 @@ angular.module('cmCore')
             init();
             self.one('update:finished', function(){
                 if(!self.hasLocalKeys()){
-                    $location.path('/start');
+                    $location.path('/start/welcome');
                 } else {
                     $location.path('/talks');
                 }
