@@ -11,7 +11,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
             controller: function ($scope) {
                 // only one privKey!!!
                 if(cmUserModel.hasPrivateKey()){
-                    $location.path('/settings/identity/keys');
+                    $scope.goto('/settings/identity/keys');
                     return false;
                 }
 
