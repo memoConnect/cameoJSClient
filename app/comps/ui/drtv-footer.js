@@ -77,41 +77,16 @@ angular.module('cmUi')
     function (cmConfig, $location){
         return {
             restrict: 'E',
-            transclude: true,
             scope: true,
-            template: '<div ng-transclude></div>' +
-                      '<div cm-rubber-space="withRepeat">'+
-                          '<a ' +
-                            'ng-repeat="btn in Object.keys(btns)" ' +
-                            'href="#/{{btn}}" ' +
-                            'class="btn-footer" ' +
-                            'cm-weight="1" ' +
-                            'cm-rubber-space-repeat ' +
-                            'ng-class="{active:btns[btn].isActive}">' +
-                            '<i ng-if="btns[btn].icon" class="fa {{btns[btn].icon}} cm-lg-icon"></i>' +
-                            '{{btns[btn].i18n|cmTranslate}}' +
-                          '</a>'+
-                      '</div>',
-            link: function(scope, element, attrs){
-                scope.btns = {};
-                scope.Object = Object;
-
-                // set menu btns from config
-                if(element[0].querySelector('[ng-transclude]').innerHTML == '') {
-                    scope.btns = cmConfig.footer || {};
-                    // set active & width
-                    var btns = Object.keys(scope.btns);
-                    angular.forEach(btns, function (btnHref) {
-                        var btn = scope.btns[btnHref];
-                        btn.isActive = btnHref != '' && $location.$$path.search(btnHref) != -1;
-                    });
-                }
-
+            priority: 0,
+            link: function(scope, element, attrs, controller, transclude){
+                
                 if('cmAlwaysOnTop' in attrs){
                     element.css('z-index',10);
                 } else {
                     element.css('z-index',9);
                 }
+                
             }
         }
     }

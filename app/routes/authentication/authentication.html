@@ -108,12 +108,22 @@
     </section>
 
 
-    <cm-footer cm-always-on-top ng-if = "step == 0">
-
+    <cm-footer ng-if = "step == 0" cm-rubber-space>
+        <button 
+            ng-click    = "cancel()" 
+            class       = "cm-btn-block cm-btn-grey" 
+            data-qa     = "btn-start-authentication"
+            cm-weight   = "1"
+        >
+            {{BASE+"START.CANCEL_BUTTON"|cmTranslate}}
+            <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
+        </button>
+        
         <button 
             ng-click    = "requestKey()" 
             class       = "cm-btn-block cm-btn-grey" 
             data-qa     = "btn-start-authentication"
+            cm-weight   = "1"
         >
             {{BASE+"START.START_BUTTON"|cmTranslate}}
             <i class="fa cm-handshake cm-lg-icon"></i>
@@ -121,7 +131,7 @@
 
     </cm-footer>
 
-    <cm-footer cm-always-on-top ng-if = "step == 1">
+    <cm-footer ng-if = "step == 1" cm-rubber-space>
 
         <button 
             ng-click    = "cancel()" 
@@ -129,12 +139,12 @@
             data-qa     = "btn-start-authentication"
         >
             {{BASE+"REQUEST_STARTED.CANCEL_BUTTON"|cmTranslate}}
-            <i class="fa cm-handshake cm-lg-icon"></i>
+            <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
         </button>
 
     </cm-footer>
 
-    <cm-footer cm-always-on-top ng-if = "step == 3">
+    <cm-footer ng-if = "step == 3" cm-rubber-space>
 
         <button 
             ng-click    = "cancel()" 
@@ -142,13 +152,13 @@
             data-qa     = "btn-start-authentication"
         >
             {{BASE+"SHOW_TRANSACTION_SECRET.CLOSE_BUTTON"|cmTranslate}}
-            <i class="fa cm-handshake cm-lg-icon"></i>
+            <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
         </button>
 
     </cm-footer>
 
-    <cm-footer cm-always-on-top ng-if = "step == 4">
-
+    <cm-footer ng-if = "step == 4" cm-rubber-space>
+ 
         <button 
             ng-click    = "startAuthenticationRequest()" 
             class       = "cm-btn-block cm-btn-grey" 

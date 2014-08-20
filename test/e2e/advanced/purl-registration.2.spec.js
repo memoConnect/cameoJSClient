@@ -117,7 +117,7 @@ describe('Purl Registration: ', function () {
 
         $("[data-qa='btn-createUser']").click()
 
-        util.waitForPageLoad("/start/keyinfo")
+        util.waitForPageLoad("/start/welcome")
 
         util.get("/purl/" + purl)
 

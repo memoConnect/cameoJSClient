@@ -60,14 +60,20 @@ angular.module('cmCore').service('cmAuth', [
              * Store the token in localstorage
              *
              * @param {String} token From Api given token
+             * @param {Boolean} froce Force storeToken
              * @returns {Boolean} for setting succeed
              */
-            storeToken: function(token){
-                if(_TOKEN_ == undefined || _TOKEN_ == token){
+            storeToken: function(token, force){
+                if(typeof force != 'undefined' && force == true){
                     _TOKEN_ = token;
                     return localStorage.setItem('token', token);
-                } else if(_TOKEN_ != token) {
-                    cmLogger.debug('cmAuth.storeToken - Error - validateToken is different')
+                } else {
+                    if(_TOKEN_ == undefined || _TOKEN_ == token){
+                        _TOKEN_ = token;
+                        return localStorage.setItem('token', token);
+                    } else if(_TOKEN_ != token) {
+                        cmLogger.debug('cmAuth.storeToken - Error - validateToken is different')
+                    }
                 }
             },
             /**

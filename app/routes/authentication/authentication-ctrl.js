@@ -10,15 +10,17 @@ define([
 
     app.register.controller('AuthenticationCtrl', [
         'cmUtil', 'cmUserModel', 'cmContactsModel', 'cmAuthenticationRequestFactory', 'cmCrypt', 'cmCallbackQueue', 'cmModal',
-        '$scope', '$rootScope', '$routeParams', '$timeout', 
-        function(cmUtil, cmUserModel, cmContactsModel, cmAuthenticationRequestFactory, cmCrypt, cmCallbackQueue, cmModal, $scope, $rootScope, $routeParams, $timeout) {
+        '$scope', '$rootScope', '$routeParams', '$timeout', '$location', 
+        function(cmUtil, cmUserModel, cmContactsModel, cmAuthenticationRequestFactory, cmCrypt, cmCallbackQueue, cmModal, $scope, $rootScope, $routeParams, $timeout, $location) {
             
             var timeoutPromise,
                 timeoutInterval,
                 fromKey = cmUserModel.loadLocalKeys()[0]; // ! attention ! works only with one local private key
 
+            $rootScope.urlHistory.pop()
+
             if(!fromKey){
-                $rootScope.goto('/settings/identity/keys')
+                $rootScope.goto('/settings/identity/keys', true)
             }
 
             function init(){
@@ -28,7 +30,7 @@ define([
                 .state.set('outgoing')
                 
                 $scope.toKey        = $routeParams.keyId && cmUserModel.data.identity.keys.find($routeParams.keyId)
-                $scope.step         = $scope.toKey ? 2 : 0
+                $scope.step         = $scope.toKey ? 1 : 0
 
                 if($scope.toKey){
                     $scope.authenticationRequest.setToKey($scope.toKey)
@@ -54,8 +56,8 @@ define([
 
 
             $scope.cancelTimeout = function(){
-                if(timeoutPromise)
-                    $timeout.cancel(timeoutPromise)
+                if($scope.timeoutPromise)
+                    $timeout.cancel($scope.timeoutPromise)
 
                 if(timeoutInterval)
                     window.clearInterval(timeoutInterval)
@@ -64,6 +66,7 @@ define([
             }
 
             $scope.startTimeout = function(time){
+                $scope.cancelTimeout()
                 $scope.timeout = time || 60000                
                 $scope.timeoutPromise = $timeout(function(){
                     $scope.cancel()
@@ -113,7 +116,7 @@ define([
 
                 $scope.cancelTimeout()
 
-                init()
+                $scope.done()
             }
 
             $scope.startAuthenticationRequest = function(){
@@ -163,20 +166,19 @@ define([
             }
 
             $scope.done = function(){
-                console.log('done')
 
                 if($routeParams.keyId){
-                    $rootScope.goto('settings/identity/keys')
+                    $rootScope.goto('settings/identity/keys', true)
                     return null
                 }
 
 
                 if($routeParams.identityId){
-                    $rootScope.goto('contact/'+cmContactsModel.findByIdentityId($routeParams.identityId).id)
+                    $rootScope.goto('contact/'+cmContactsModel.findByIdentityId($routeParams.identityId).id, true)
                     return null
                 }
 
-                $rootScope.goto('settings/identity/keys')
+                $rootScope.goto('settings/identity/keys', true)
                 return null
             }
 

@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
-    'cmAuth', 'cmUserModel', 'cmUtil', 'cmCrypt', 'cmLogger',
+    'cmAuth', 'cmUserModel', 'cmIdentityFactory', 'cmUtil', 'cmCrypt', 'cmLogger',
     '$timeout', '$document', '$rootScope',
-    function (cmAuth, cmUserModel, cmUtil, cmCrypt, cmLogger,
+    function (cmAuth, cmUserModel, cmIdentityFactory, cmUtil, cmCrypt, cmLogger,
               $timeout, $document, $rootScope){
         return {
             restrict: 'E',
@@ -18,6 +18,12 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
 
                 setErrorsToDefault();
                 $scope.spinner = false;
+
+                $scope.modalMessageVars = {
+                    keyName: $scope.authenticationRequest.fromKey.name,
+                    identity: cmIdentityFactory.create($scope.authenticationRequest.fromIdentityId).getDisplayName()
+                };
+
 
                 $scope.transactSecret = '';
 

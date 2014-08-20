@@ -6,9 +6,7 @@ angular.module('cmUi').directive('cmRubberSpace',[
         return {
             restrict : 'A',
             link : function(scope, element, attrs) {
-                var total_weight = 0,
-                    available_space = 100,
-                    width = element[0].offsetWidth
+                
 
                 // remove text nodes:
                 angular.forEach(element[0].childNodes, function (el) {
@@ -19,7 +17,11 @@ angular.module('cmUi').directive('cmRubberSpace',[
 
                 function tighten(){
                     // calculate total weight:
-                    angular.forEach(element.children(), function(child){
+                    var available_space = 100,
+                        total_weight    = 0,
+                        width           = element[0].offsetWidth
+
+                    angular.forEach(element.children(), function(child){                        
                         var weight = parseInt( angular.element(child).attr('cm-weight')) || false
 
                         if(weight){
@@ -37,15 +39,14 @@ angular.module('cmUi').directive('cmRubberSpace',[
                             child.css('width', (available_space * child[0].weight / total_weight) + '%')
                         }
                     })
+
                 }
 
                 tighten();
 
-                if(attrs.cmRubberSpace == 'withRepeat'){
-                    $rootScope.$on('rubberSpace:tighten',function(){
-                        tighten();
-                    });
-                }
+                $rootScope.$on('rubberSpace:tighten',function(){
+                    tighten();
+                });
             }
         }
     }

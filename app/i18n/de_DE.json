@@ -65,7 +65,7 @@
             "HEADLINE": "Willkommen im cameoNet!",
             "TEXT_1": "<span class='cm-ci-color'>cameoNet</span> ist ein Ende-zu-Ende verschlüsselter OpenSource Messenger für sichere private und geschäftliche Kommunikation!",
             "TEXT_2": "ACHTUNG: Dies ist die erste Beta-Version!",
-            "TEXT_3": "Die App enthält Fehler, die Benutzerführung kann an vielen Stellen verbessert werden und noch nicht alle wichtigen Features sind enthalten. Zur Zeit können wir leider auch noch nicht garantieren, dass all Ihre Daten dauerhaft erhalten bleiben. Daher bitten wir Sie, zunächst von wichtigen Daten lokale Kopien anzulegen.",
+            "TEXT_3": "Die App enthält Fehler, die Benutzerführung wird noch an vielen Stellen verbessert; noch nicht alle wichtigen Features sind enthalten. Zur Zeit können wir leider auch noch nicht garantieren, dass all Ihre Daten dauerhaft erhalten bleiben. Daher bitten wir Sie, zunächst von wichtigen Daten lokale Kopien anzulegen.",
             "TEXT_4": "Helfen Sie uns, cameoNet zu verbessern!",
             "TEXT_5": "Wir freuen uns über jeden Fehler und Verbesserungsvorschlag, den Sie unter http://support.cameonet.de einstellen<br>Ihr cameoNet-Team."
         },
@@ -75,9 +75,9 @@
             "HEADLINE_1": "1. Schlüssel erzeugen",
             "TEXT_1": "Um sicher kommunizieren zu können, brauchen alle Teilnehmer eines Talks einen cameoKey. Wenn Sie keinen haben öffnen Sie Einstellungen > cameoKeys.",
             "HEADLINE_2": "2. Freunde finden",
-            "TEXT_2": "Drücken Sie auf 'Kontakt hinzufügen' im Header und wählen 'cameoNet durchsuchen'. Ihre Freunde finden Sie über deren cameoIDs oder Anzeigenamen. Senden Sie ihnen eine Kontaktanfrage. Sobald diese angenommen wurde, sind Sie befreundet.",
+            "TEXT_2": "Drücken Sie auf 'Kontakt hinzufügen' im Header und wählen 'cameoNet durchsuchen'. Ihre Freunde finden Sie über deren cameoIDs oder Anzeigenamen. Senden Sie ihnen eine Kontaktanfrage. Sobald diese angenommen wurde, sind die Kontakte miteinander verknüpft, um sicher zu kommunizieren.",
             "HEADLINE_3": "3. Nachricht schreiben",
-            "TEXT_3": "An befreundete Kontakte können Sie direkt aus der Kontakt-Übersicht über das Brief-Symbol Nachrichten senden. Es öffnet sich ein neuer Talk (=Unterhaltung). Geben Sie eine Nachricht ein und drücken Sie auf den Senden-Button.<br><br>Herzlichen Glückwunsch! Sie haben Ihren ersten verschlüsselten Talk geführt!",
+            "TEXT_3": "An verknüpfte Kontakte können Sie direkt aus der Kontakt-Übersicht über das Brief-Symbol Nachrichten senden. Es öffnet sich ein neuer Talk (=Unterhaltung). Geben Sie eine Nachricht ein und drücken Sie auf den Senden-Button.<br><br>Herzlichen Glückwunsch! Sie haben Ihren ersten verschlüsselten Talk geführt!",
             "TEXT_4": "Wenn Sie Fragen zu cameoNet haben oder auf Probleme stoßen, nutzen Sie unser Forum unter http://support.cameonet.de.",
             "BTN_TEXT": "Und los..."
         },
@@ -351,6 +351,7 @@
                 "EXPLANATION": "Um Ihre Nachrichten die Sie als {{identity}} geschrieben haben auf allen Geräten lesen zu können, müssen Sie ihren lokalen cameoKey mit Ihren cameoKeys auf anderen Geräten verknüpfen.",
                 "START": {
                     "START_BUTTON": "Verbinden",
+                    "CANCEL_BUTTON": "Nicht jetzt",
                     "INSTRUCTIONS": "Drücken Sie auf 'Verbinden' um den Vorgang zu starten.",
                     "NOTE": "ACHTUNG! Bevor Sie auf 'Verbinden' klicken müssen Sie auf einem Ihrer Geräte cameoNet als {{identity}} öffnen!"
                 },
@@ -393,6 +394,7 @@
                 "EXPLANATION": "Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität zu einer Person gehört, die Sie persönlich kennen.",
                 "START": {
                     "START_BUTTON": "Anfragen",
+                    "CANCEL_BUTTON": "Nicht jetzt",
                     "INSTRUCTIONS": "Wenn Sie diesem Kontakt vertrauen wollen, drücken Sie auf 'Anfragen', um ihm eine Vertrauensanfrage zu senden.",
                     "NOTE": "ACHTUNG! Bevor Sie auf 'Anfragen' klicken muss Ihr Kontakt im cameoNet als {{identity}} angemeldet sein!"
                 },
@@ -502,7 +504,6 @@
                     "GENERATE_INFO_TEXT": "Bitte haben Sie einen Moment Geduld, dieser Prozess kann nach Device oder Schlüsselstärke variieren. Bei Wartezeiten von mehr als 5min können Sie den Prozess abbrechen und erneut starten.",
                     "CANCEL": "Generierung abbrechen",
                     "STORE_KEYPAIR": "cameoKey speichern",
-                    "GENERATION_TIME": "Der cameoKey wurde erfolgreich generiert, die Generierung hat {{time}} gedauert. GENERATION_READY @TODO",
                     "STOREKEY_DESCRIPTION": "Der cameoKey besteht aus einem privaten und einem öffentlichen Schlüssel. Der private Schlüssel wird nur auf Ihrem Gerät gespeichert. Der öffentlichen Schlüssel wird auf dem cameoServer gespeichert.\nUm bei Verlust Ihres cameoKeys Ihre verschlüsselten Nachrichten wieder lesen zu können, sollten Sie Ihren cameoKey exportieren und sicher verwahren.",
                     "PRIVATE_KEY": "Privater Schlüssel",
                     "PUBLIC_KEY": "Öffentlicher Schlüssel",
