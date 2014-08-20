@@ -1,6 +1,9 @@
 <div>
     <div class="modal-row cm-form-group">
 
+        <strong ng-if="authenticationRequest.is3rdParty()"    ng-bind-html="'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.NOTE'|cmTranslate:{keyName:fromKey.name}"></strong>
+        <strong ng-if="!authenticationRequest.is3rdParty()"    ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.NOTE'|cmTranslate:{keyName:fromKey.name}"></strong>
+
         <div class="cm-form-control white-control with-inputter">
             <input id="inp-transactSecret" class="transaction-secret" type="text" ng-model="transactSecret" cm-adaptive-change data-qa="inp-transactSecret">
         </div>
@@ -9,12 +12,7 @@
         <br/>
 
         <span ng-if="authenticationRequest.is3rdParty()"    ng-bind-html="'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.INSTRUCTIONS'|cmTranslate:{keyName:fromKey.name}"></span>
-        <br/>
-        <strong ng-if="authenticationRequest.is3rdParty()"    ng-bind-html="'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.NOTE'|cmTranslate:{keyName:fromKey.name}"></strong>
-
         <span ng-if="!authenticationRequest.is3rdParty()"   ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.INSTRUCTIONS'|cmTranslate:{keyName:fromKey.name}"></span>
-        <br/>
-        <strong ng-if="!authenticationRequest.is3rdParty()"    ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.NOTE'|cmTranslate:{keyName:fromKey.name}"></strong>
 
 
         <div class="cm-warning" ng-show="error.emptyInput">
