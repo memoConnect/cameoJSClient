@@ -92,6 +92,7 @@ define([
 
 
                 $scope.authenticationRequest
+                .setFromKey(fromKey)
                 .sendKeyRequest()
                 .then(
                     function(){
