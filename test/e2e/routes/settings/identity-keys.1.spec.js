@@ -147,8 +147,7 @@ describe('Identity key settings: ', function () {
 
     it('generate another local key', function () {
         util.generateKey(2)
-        util.clickBackBtn()
-        ptor.debugger()
+        util.get('/settings/identity/keys')
         util.waitForElements("[data-qa='key-list-item']", 2)
     })
 

@@ -208,8 +208,6 @@ describe('Conversation encryption -', function () {
                                 //make sure that the input loses focus and ng-blur gets fired:
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
                                 $("#cm-app").click()
-
-                                ptor.debugger()
                                 
                                 util.waitForElement("[data-qa='icon-conversation-decrypted']")
                                 $("[data-qa='btn-security-done']").click()

@@ -28,8 +28,6 @@ describe('Identity multi', function () {
         })
     })
 
-    console.log('changed test')
-    //the header is empty on the welcome page, the new identity's display name will not be available.
     it('create a new identity', function(){
         util.click('btn-identity-new')
         util.expectCurrentUrl('/settings/identity/new')
@@ -52,8 +50,9 @@ describe('Identity multi', function () {
 
         util.waitForPageLoad('/start/welcome')
 
-        //expect removed, see above
-        //expect($("[data-qa='btn-identity-settings']").getText()).toBe(newIdentity.displayName)
+        util.get('/talks')
+
+        expect($("[data-qa='btn-identity-settings']").getText()).toBe(newIdentity.displayName)
     })
 
     it('should be two itdentities in list', function(){
@@ -82,6 +81,8 @@ describe('Identity multi', function () {
         util.click('btn-identity-switchto')
 
         util.waitForPageLoad('/start/welcome')
+        util.get('/talks')
+        
         expect($("[data-qa='btn-identity-settings']").getText()).toBe(login)
     })
 })
