@@ -2,8 +2,7 @@ var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 var ptor = util.getPtorInstance()
 
-console.log('test removed')
-xdescribe('Check key maximum: ',function(){
+describe('Check key maximum: ',function(){
 
     var privKey = [
         '-----BEGIN RSA PRIVATE KEY-----',
@@ -78,7 +77,7 @@ xdescribe('Check key maximum: ',function(){
     it('remove key and check if message and footer for create/import appear', function(){
         util.waitForElement("[data-qa='btn-remove-modal']")
         util.click("btn-remove-modal")
-        util.click("btn-remove-key'");
+        util.click("btn-remove-key");
 
         util.waitForElement("[data-qa='message-no-keys']")
         expect($("[data-qa='message-no-keys']").isPresent()).toBe(true)
