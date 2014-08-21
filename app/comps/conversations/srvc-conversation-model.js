@@ -1010,6 +1010,7 @@ angular.module('cmConversations')
                 self.decrypt();
                 self.securityAspects.refresh();
                 self.updateLockStatus();
+                //self.handleMissingAePassphrases();
             });
 
             this.on('encryption:enabled', function(){
@@ -1068,11 +1069,13 @@ angular.module('cmConversations')
 
             this.messages.on('message:saved', function(){
                 self.setLastMessage();
+                //self.handleMissingAePassphrases();
             });
 
             this.messages.on('decrypt:success', function(){
                 self.state.set('decrypted');
                 self.setLastMessage();
+                //self.handleMissingAePassphrases();
             });
 
             cmUserModel.on('key:stored key:removed', function(){
