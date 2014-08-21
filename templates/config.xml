@@ -11,6 +11,8 @@
     <access origin="*" subdomains="true"  />
     <content src="index.html" />
 
+    <log level="ERROR"/>
+
     <preference name="phonegap-version" value="3.5.0" />
 
     <gap:platform name="android" />
