@@ -1,7 +1,7 @@
 var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
-describe('Identity multi', function () {
+describe('Multi Identity: ', function () {
     var ptor = util.getPtorInstance()
     var login
     var newIdentity = {
@@ -15,6 +15,8 @@ describe('Identity multi', function () {
 
     it('create new user and open identity settings', function () {
         login = util.createTestUser()
+        util.expectCurrentUrl('/start/welcome')
+
         util.get('settings/identity/overview')
         util.expectCurrentUrl('/settings/identity/overview')
     })
@@ -84,5 +86,9 @@ describe('Identity multi', function () {
         util.get('/talks')
         
         expect($("[data-qa='btn-identity-settings']").getText()).toBe(login)
+    })
+
+    it('should delete TestUser', function(){
+        util.deleteTestUser(login)
     })
 })
