@@ -24,11 +24,11 @@ angular.module('cmUser').directive('cmLogin', [
                 };
 
                 function checkPasswordLength(pw){
-                    if(typeof pw == 'string' && pw.length > 0 && pw.length < 6){
-                        return true;
+                    if(typeof pw != 'string' || (pw.length > 0 && pw.length < 6)){
+                        return false;
                     }
 
-                    return false;
+                    return true;
                 }
 
                 $scope.handlePassword = function(){
