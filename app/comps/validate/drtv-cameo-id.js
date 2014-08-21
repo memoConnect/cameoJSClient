@@ -146,6 +146,7 @@ angular.module('cmValidate').directive('cmCameoId',[
                 });
 
                 $rootScope.$on('checkAccountName', function(){
+                    console.log('piepe');
                     setDefault();
 
                     checkAccountName($scope.cameoId);

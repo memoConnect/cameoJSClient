@@ -156,15 +156,14 @@ app.register.controller('RegistrationCtrl', [
                         console.log('response',response)
 
                         if(typeof response == 'object' && 'data' in response && typeof response.data == 'object'){
-                            console.log('hier');
                             if('error' in response.data && response.data.error == 'invalid reservation secret'){
-                                console.log('moep');
                                 $rootScope.$broadcast('checkAccountName');
                             }
+                        } else {
+                            cmNotify.warn('REGISTER.WARN.REGISTRATION_FAILED');
                         }
 
                         $scope.spinner('stop');
-                        cmNotify.warn('REGISTER.WARN.REGISTRATION_FAILED');
                     }
                 );
             }
