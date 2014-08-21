@@ -11,8 +11,8 @@
  */
 
 angular.module('cmCore').service('cmAuth', [
-    'cmApi', 'cmObject', 'cmUtil', 'cmLogger' ,'$rootScope',
-    function(cmApi, cmObject, cmUtil, cmLogger, $rootScope){
+    'cmApi','LocalStorageAdapter', 'cmObject', 'cmUtil', 'cmLogger' ,'$rootScope',
+    function(cmApi, LocalStorageAdapter, cmObject, cmUtil, cmLogger, $rootScope){
         var _TOKEN_ = undefined;
         var auth = {
             /**
@@ -50,7 +50,7 @@ angular.module('cmCore').service('cmAuth', [
                 //console.log('removeToken',where)
                 _TOKEN_ = undefined;
                 try {
-                    return localStorage.removeItem('token');
+                    return LocalStorageAdapter.remove('token');
                 } catch (e){
                     cmLogger.warn('cmAuth.removeToken - Local Storage Error')
                 }
@@ -72,14 +72,14 @@ angular.module('cmCore').service('cmAuth', [
 
                 if(typeof force != 'undefined' && force == true){
                     _TOKEN_ = token;
-                    return localStorage.setItem('token', token);
+                    return LocalStorageAdapter.save('token', token);
                 } else {
                     if(_TOKEN_ == undefined || _TOKEN_ == token){
                         _TOKEN_ = token;
 
                         var moep;
                         try {
-                            moep = localStorage.setItem('token', token);
+                            moep = LocalStorageAdapter.save('token', token);
                         } catch(e){
                             cmLogger.warn('cmAuth.storeToken - Local Storage Error')
                         }
@@ -107,7 +107,7 @@ angular.module('cmCore').service('cmAuth', [
                 var token;
 
                 try {
-                    token = localStorage.getItem('token');
+                    token = LocalStorageAdapter.get('token');
 
                     if(token !== undefined && token !== 'undefined' && token !== null && token.length > 0){
                         if(_TOKEN_ != undefined && _TOKEN_ != token){
