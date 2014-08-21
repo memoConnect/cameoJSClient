@@ -954,9 +954,14 @@ angular.module('cmConversations')
                 return this;
             };
 
+            /**
+             * @deprecated
+             * @returns {cmConversationModel.ConversationModel}
+             */
             this.handleMissingAePassphrases = function(){
-//                cmLogger.debug('cmConversationModel.handleMissingAePassphrases');
+                cmLogger.debug('cmConversationModel.handleMissingAePassphrases @ deprecated');
 
+                /*
                 if(this.state.is('decrypted') && !this.state.is('handle-missing-keys') && this.missingAePassphrases.length > 0){
                     var aeList = {};
 
@@ -975,7 +980,7 @@ angular.module('cmConversations')
                         cmLogger.debug('cmConversationModel.handleMissingAePassphrases Error Line 856');
                         this.state.unset('handle-missing-keys');
                     }
-                }
+                }*/
 
                 return this;
             };
@@ -1005,7 +1010,7 @@ angular.module('cmConversations')
                 self.decrypt();
                 self.securityAspects.refresh();
                 self.updateLockStatus();
-                self.handleMissingAePassphrases();
+                //self.handleMissingAePassphrases();
             });
 
             this.on('encryption:enabled', function(){
@@ -1064,13 +1069,13 @@ angular.module('cmConversations')
 
             this.messages.on('message:saved', function(){
                 self.setLastMessage();
-                self.handleMissingAePassphrases();
+                //self.handleMissingAePassphrases();
             });
 
             this.messages.on('decrypt:success', function(){
                 self.state.set('decrypted');
                 self.setLastMessage();
-                self.handleMissingAePassphrases();
+                //self.handleMissingAePassphrases();
             });
 
             cmUserModel.on('key:stored key:removed', function(){

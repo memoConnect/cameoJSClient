@@ -11,7 +11,7 @@ angular.module('cmUser').directive('cmKeyResponse',[
 
                 // TODO: upgrade protokoll for fromId in key-request
                 $scope.modalMessageVars = {
-                    device: $scope.authenticationRequest.fromKey.name,
+                    cameoKey: $scope.authenticationRequest.fromKey.name,
                     identity: cmIdentityFactory.create($scope.authenticationRequest.fromIdentityId).getDisplayName()
                 };
 
@@ -25,7 +25,7 @@ angular.module('cmUser').directive('cmKeyResponse',[
 
                 $scope.cancel = function(){
                     $rootScope.closeModal('key-response');
-                }
+                };
 
                 $scope.accept = function(){
                     $scope.showSpinner();

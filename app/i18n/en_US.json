@@ -403,8 +403,8 @@
                 },
                 "ENTER_TRANSACTION_SECRET": {
                     "HEADER": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.HEADER",
-                    "INSTRUCTIONS": "Recently somebody has started a trust process with you.<br /> By using the trust process you can verify whether an identity is of an individual that you know in person.",
-                    "NOTE": "Please enter the code below, that will be displayed to the device of the contact, who has started the trust process:",
+                    "INSTRUCTIONS": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.INSTRUCTIONS",
+                    "NOTE": "Please enter a code below, that will be displayed to '{{identity}}':",
                     "LABEL_CODE": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CODE",
                     "CANCEL_BUTTON": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
                     "SUBMIT_BUTTON": "Transmit"

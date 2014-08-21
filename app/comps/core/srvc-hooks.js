@@ -252,7 +252,7 @@ angular.module('cmCore').service('cmHooks', [
             }
         });
 
-        cmUserModel.on('key:saved ', function(){
+        cmUserModel.on('key:saved ', function(event, data){
 //            console.log('cmHooks - key:saved');
 
             var localKeys = cmUserModel.loadLocalKeys();

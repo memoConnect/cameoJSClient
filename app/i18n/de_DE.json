@@ -419,8 +419,7 @@
                 "ENTER_TRANSACTION_SECRET": {
                     "HEADER": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.HEADER",
                     "INSTRUCTIONS": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.INSTRUCTIONS",
-                    "INSTRUCTIONS": "Es wurde soeben der Prozess gestartet, mit Ihnen eine Vertrauensbasis einzugehen.<br />Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen.",
-                    "NOTE": "Bitte geben Sie hier den Code ein, der auf dem Gerät des Kontaktes angezeigt wird, dem Sie vertrauen wollen:",
+                    "NOTE": "Bitte geben Sie hier den Code ein, der auf dem Gerät von '{{identity}}' angezeigt wird:",
                     "LABEL_CODE": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CODE",
                     "CANCEL_BUTTON": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
                     "SUBMIT_BUTTON": "Übertragen"
