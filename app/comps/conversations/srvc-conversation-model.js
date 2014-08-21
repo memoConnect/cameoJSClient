@@ -1036,6 +1036,7 @@ angular.module('cmConversations')
 
                     message_data.conversation = self;
                     self.messages.create(message_data).decrypt();
+                    self.setLastMessage()
 
                     self.trigger('message:reInitFiles');
                 }

@@ -150,7 +150,7 @@ angular.module('cmCore')
              * this method decrypts uuencoded strings
              * @param secretKey a secret key
              * @param secretString a base64 encoded string that should be decrypted
-             * @returns decrypted string
+             * @returns decrypted string or false if unable to decrypt
              */
             decrypt: function (secretKey, secretString) {
 
@@ -159,7 +159,7 @@ angular.module('cmCore')
                 }
 
                 if(typeof secretKey != 'string' || secretKey.length < 1){
-                    return secretString;
+                    return false;
                 }
 
                 if (null == secretString)

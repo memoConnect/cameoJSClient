@@ -145,7 +145,7 @@ angular.module('cmCore')
              */
             this.decrypt = function(passphrase){
                 this.encryptedRaw
-                    ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw)
+                    ?   this.raw = cmCrypt.decrypt(passphrase, this.encryptedRaw) || this.encryptedRaw
                     :   cmLogger.debug('Unable to decrypt; chunk.encryptedRaw is empty. Try calling chunk.download() first.');
                 return this;
             };

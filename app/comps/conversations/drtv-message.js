@@ -27,6 +27,7 @@ angular.module('cmConversations').directive('cmMessage', [
                 }
 
                 if(typeof scope.message == 'object' && typeof scope.message.on == 'function'){
+                    //Todo: this should be 'one' not 'on', shouldn't it? Andreas
                     scope.message.on('init:files', function(){
                         if (scope.message.files.length > 0) {
                             setFileView();
@@ -34,6 +35,7 @@ angular.module('cmConversations').directive('cmMessage', [
                         }
                     });
                 }
+
             },
 
             controller: function ($scope, $element, $attrs) {
@@ -57,11 +59,18 @@ angular.module('cmConversations').directive('cmMessage', [
                     if($scope.message.id == undefined){
                         /**
                          * hack for empty messages
-                         */
+                         */                        
                         return false;
                     }
 
-                    if($scope.message.text != undefined || ($scope.message.text == undefined && typeof $scope.message.files !== 'undefined' && $scope.message.files.length > 0)){
+                    if(
+                            $scope.message.text != undefined 
+                        ||  (
+                                    $scope.message.text == undefined 
+                                &&  typeof $scope.message.files !== 'undefined' 
+                                &&  $scope.message.files.length > 0
+                            )
+                    ){
                         return false;
                     }
                     return true;
