@@ -177,7 +177,27 @@ define([
         'cmEnv',
         'cmApi',
         'cmHooks',
-        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks) {
+        'LocalStorageAdapter',
+        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks, LocalStorageAdapter) {
+
+            function checkLocalStorage(){
+                var test = {key:'cameoNet',value:'cameoNet'};
+                if(!LocalStorageAdapter.check()){
+                    return false;
+                } else {
+                    if(LocalStorageAdapter.save(test.key,test.value)){
+                        LocalStorageAdapter.remove(test.key);
+                    }
+
+                    return false;
+                }
+            }
+
+            if(!checkLocalStorage()){
+                cmLogger.warn('App can not use LocalStorage!');
+                return false;
+            }
+
 
             //get browser language:
             cmApi.get({
