@@ -132,36 +132,49 @@ app.register.controller('RegistrationCtrl', [
 
             $scope.spinner('start');
 
+            function sendCreateUserRequest(data){
+                cmAuth.createUser(data).then(
+                    function(accountData){
+
+                        cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
+                            function(){
+                                if($scope.handleGuest !== false){
+                                    //$location.path('/purl/'+$rootScope.pendingPurl);
+                                    $rootScope.goto('/start/welcome');
+                                } else {
+                                    cmUserModel.comesFromRegistration = true;
+                                    $rootScope.goto("/start/welcome");
+                                }
+                            },
+                            function(){
+                                $scope.spinner('stop');
+                            }
+                        );
+                        return true;
+                    },
+                    function(response){
+                        console.log('response',response)
+
+                        if(typeof response == 'object' && 'data' in response && typeof response.data == 'object'){
+                            console.log('hier');
+                            if('error' in response.data && response.data.error == 'invalid reservation secret'){
+                                console.log('moep');
+                                $rootScope.$broadcast('checkAccountName');
+                            }
+                        }
+
+                        $scope.spinner('stop');
+                        cmNotify.warn('REGISTER.WARN.REGISTRATION_FAILED');
+                    }
+                );
+            }
+
+
             $scope.validateForm().then(
                 function(data){
                     clearTransferScopeData();
 
-                    cmAuth.createUser(data).then(
-                        function(accountData){
-                            
-                            cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
-                                function(){
-                                    $scope.spinner('stop');
-                                    if($scope.handleGuest !== false){
-                                        //$location.path('/purl/'+$rootScope.pendingPurl);
-                                        $rootScope.goto('/start/welcome');
-                                    } else {
-                                        cmUserModel.comesFromRegistration = true;
-                                        $rootScope.goto("/start/welcome");
-                                    }
-                                },
-                                function(){
-                                    $scope.spinner('stop');
-                                }
-                            );
-                            return true;
-                        },
-                        function(response){
-                            console.log('response',response)
-                            cmNotify.warn('REGISTER.WARN.REGISTRATION_FAILED');
-                            $scope.spinner('stop');
-                        }
-                    );
+                    sendCreateUserRequest(data);
                 },
                 function(){
                     $scope.spinner('stop');

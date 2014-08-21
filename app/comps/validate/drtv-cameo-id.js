@@ -66,6 +66,53 @@ angular.module('cmValidate').directive('cmCameoId',[
 
                 setDefault();
 
+                function checkAccountName(newValue){
+                    if(!checkValue(newValue)){
+                        if($scope.parentForm.cameoId.$invalid && $scope.parentForm.cameoId.$dirty)
+                            $scope.errors.empty = true;
+
+                        return false;
+                    }
+
+                    // if input is'nt empty && is valid && reservation secret is'nt exists
+                    if(!(newValue in $scope.$parent.reservationSecrets)) {
+                        // check cameoId
+                        $scope.pendingAccountCheck = cmAuth.checkAccountName(newValue).then(
+                            // valid case
+                            function (data) {
+                                // reservation secret to parent scope
+                                $scope.$parent.reservationSecrets[newValue] = data.reservationSecret;
+
+                                $scope.parentForm.cameoId.$valid = true;
+                            },
+                            // invalid or exists
+                            function (response) {
+                                if (typeof response == "object") {
+                                    // invalid case
+                                    if (typeof response.data !== 'undefined'
+                                        && typeof response.data.error !== 'undefined'
+                                        && response.data.error.search('invalid') != -1
+                                    ) {
+                                        $scope.errors.invalid = true;
+                                    }
+                                    // show alternatives
+                                    if (typeof response.alternative !== 'undefined') {
+                                        $scope.errors.exists = true;
+                                        /**
+                                         * @TODO
+                                         * show alternatives
+                                         */
+                                        $scope.userNameAlternatives = response.alternative;
+                                        $scope.showUserNameAlternatives = true;
+                                    }
+                                }
+
+                                $scope.parentForm.cameoId.$valid = false;
+                            }
+                        );
+                    }
+                }
+
                 $rootScope.$on('cm-login-name:invalid', function(){
                     $scope.parentForm.cameoId.$invalid = true;
                     $scope.parentForm.cameoId.$dirty = true;
@@ -95,51 +142,13 @@ angular.module('cmValidate').directive('cmCameoId',[
                 $scope.$watch('cameoId',function (newValue) {
                     setDefault();
 
-                    if(!checkValue(newValue)){
-                        if($scope.parentForm.cameoId.$invalid && $scope.parentForm.cameoId.$dirty)
-                            $scope.errors.empty = true;
+                    checkAccountName(newValue);
+                });
 
-                        return false;
-                    }
+                $rootScope.$on('checkAccountName', function(){
+                    setDefault();
 
-                    // if input is'nt empty && is valid && reservation secret is'nt exists
-                    if(!(newValue in $scope.$parent.reservationSecrets)){
-                        // check cameoId
-                        $scope.pendingAccountCheck = cmAuth.checkAccountName(newValue)
-                            .then(
-                            // valid case
-                            function(data){
-                                // reservation secret to parent scope
-                                $scope.$parent.reservationSecrets[newValue] = data.reservationSecret;
-
-                                $scope.parentForm.cameoId.$valid = true;
-                            },
-                            // invalid or exists
-                            function(response){
-                                if(typeof response == "object"){
-                                    // invalid case
-                                    if(typeof response.data !== 'undefined'
-                                    && typeof response.data.error !== 'undefined'
-                                    && response.data.error.search('invalid') != -1
-                                    ){
-                                        $scope.errors.invalid = true;
-                                    }
-                                    // show alternatives
-                                    if(typeof response.alternative !== 'undefined'){
-                                        $scope.errors.exists = true;
-                                        /**
-                                         * @TODO
-                                         * show alternatives
-                                         */
-                                        $scope.userNameAlternatives = response.alternative;
-                                        $scope.showUserNameAlternatives = true;
-                                    }
-                                }
-
-                                $scope.parentForm.cameoId.$valid = false;
-                            }
-                        );
-                    }
+                    checkAccountName($scope.cameoId);
                 });
             }
         }
