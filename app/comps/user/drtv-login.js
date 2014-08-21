@@ -66,7 +66,7 @@ angular.module('cmUser').directive('cmLogin', [
                         },
                         function(error){
                             $scope.spinner('stop');
-                            $rootScope.$broadcast('cmLogin:error');
+                            //$rootScope.$broadcast('cmLogin:error'); // not use in app - BS 21.08.2014
 
                             if(typeof error == 'object' && 'status' in error){
                                 if(error.status){
