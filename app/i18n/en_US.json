@@ -18,10 +18,10 @@
             "PASSWORD": "Password"
         },
         "INFO": {
+            "X": "Something went wrong.<br>Pleas try again.",
             "401": "Invalid username or password",
             "404": "Login is impossible right now.",
-            "500": "Internal Server Error",
-            "X": "Something went wrong.<br>Pleas try again."
+            "500": "Internal Server Error"
         }
     },
     "REGISTER": {

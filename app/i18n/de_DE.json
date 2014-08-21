@@ -19,10 +19,10 @@
             "PASSWORD": "Passwort"
         },
         "INFO": {
+            "X": "Es ist ein Problem aufgetreten.<br>Versuchen Sie es bitte erneut",
             "401": "Benutzername oder Passwort falsch.",
             "404": "Ein Login ist zur Zeit nicht möglich. 404",
-            "500": "Server Error. 500",
-            "X": "Es ist ein Problem aufgetreten.<br>Versuchen Sie es bitte erneut"
+            "500": "Server Error. 500"
         }
     },
 
