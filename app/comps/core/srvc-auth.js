@@ -49,7 +49,11 @@ angular.module('cmCore').service('cmAuth', [
             removeToken: function(where){
                 //console.log('removeToken',where)
                 _TOKEN_ = undefined;
-                return localStorage.removeItem('token');
+                try {
+                    return localStorage.removeItem('token');
+                } catch (e){
+                    cmLogger.warn('cmAuth.removeToken - Local Storage Error')
+                }
             },
             /**
              * @ngdoc method
@@ -64,13 +68,24 @@ angular.module('cmCore').service('cmAuth', [
              * @returns {Boolean} for setting succeed
              */
             storeToken: function(token, force){
+                //cmLogger.debug('cmAuth.storeToken');
+
                 if(typeof force != 'undefined' && force == true){
                     _TOKEN_ = token;
                     return localStorage.setItem('token', token);
                 } else {
                     if(_TOKEN_ == undefined || _TOKEN_ == token){
                         _TOKEN_ = token;
-                        return localStorage.setItem('token', token);
+
+                        var moep;
+                        try {
+                            moep = localStorage.setItem('token', token);
+                        } catch(e){
+                            cmLogger.warn('cmAuth.storeToken - Local Storage Error')
+                        }
+
+                        //return localStorage.setItem('token', token)/
+                        return moep;
                     } else if(_TOKEN_ != token) {
                         cmLogger.debug('cmAuth.storeToken - Error - validateToken is different')
                     }
@@ -87,15 +102,23 @@ angular.module('cmCore').service('cmAuth', [
              * @returns {String} Token
              */
             getToken: function(){
-                var token = localStorage.getItem('token');
+                //cmLogger.debug('cmAuth.getToken')
 
-                if(token !== undefined && token !== 'undefined' && token !== null && token.length > 0){
-                    if(_TOKEN_ != undefined && _TOKEN_ != token){
-                        $rootScope.$broadcast('logout',{where: 'cmAuth getToken failure'});
-                        cmLogger.debug('cmAuth.storeToken - Error - validateToken is different');
+                var token;
 
-                        return false;
+                try {
+                    token = localStorage.getItem('token');
+
+                    if(token !== undefined && token !== 'undefined' && token !== null && token.length > 0){
+                        if(_TOKEN_ != undefined && _TOKEN_ != token){
+                            $rootScope.$broadcast('logout',{where: 'cmAuth getToken failure'});
+                            cmLogger.debug('cmAuth.storeToken - Error - validateToken is different');
+
+                            return false;
+                        }
                     }
+                } catch (e){
+                    cmLogger.warn('cmAuth.getToken - Local Storage Error')
                 }
 
                 return token;
