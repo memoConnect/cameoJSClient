@@ -47,7 +47,8 @@ angular.module('cmCore').service('cmAuth', [
              * @returns {Boolean} for removing succeed
              */
             removeToken: function(where){
-                //console.log('removeToken',where)
+                //cmLogger.debug('cmAuth.removeToken');
+
                 _TOKEN_ = undefined;
                 try {
                     return LocalStorageAdapter.remove('token');
