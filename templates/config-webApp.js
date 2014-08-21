@@ -80,6 +80,10 @@ cameo_config = {
             hasCtrl: true,
             guests: true
         },
+        'systemcheck': {
+            hasCtrl: true,
+            guests: true
+        },
         'profile': {},
         'filter': {
             hasCtrl: true

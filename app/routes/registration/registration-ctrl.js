@@ -6,10 +6,12 @@ define([
     'use strict';
 
 app.register.controller('RegistrationCtrl', [
-    'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferScopeData', 'cmNotify',
+    'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferScopeData', 'cmNotify', 'cmSystemCheck',
     '$scope', '$rootScope', '$location', '$q',
-    function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferScopeData, cmNotify,
+    function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferScopeData, cmNotify, cmSystemCheck,
               $scope, $rootScope, $location, $q) {
+
+        cmSystemCheck.run(true);
 
         $scope.formData = {
             cameoId: '',

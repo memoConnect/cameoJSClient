@@ -556,10 +556,18 @@ angular.module('pascalprecht.translate').factory('$translateLocalStorage', [
     function ($window, $translateCookieStorage) {
         var localStorageAdapter = {
             get: function (name) {
-                return $window.localStorage.getItem(name);
+                try {
+                    return $window.localStorage.getItem(name);
+                } catch(e){
+                    return false;
+                }
             },
             set: function (name, value) {
-                $window.localStorage.setItem(name, value);
+                try {
+                    $window.localStorage.setItem(name, value);
+                } catch (e){
+                    return false;
+                }
             }
         };
         var $translateLocalStorage = 'localStorage' in $window && $window.localStorage !== null ? localStorageAdapter : $translateCookieStorage;

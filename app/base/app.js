@@ -177,27 +177,8 @@ define([
         'cmEnv',
         'cmApi',
         'cmHooks',
-        'LocalStorageAdapter',
-        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks, LocalStorageAdapter) {
-
-            function checkLocalStorage(){
-                var test = {key:'cameoNet',value:'cameoNet'};
-                if(!LocalStorageAdapter.check()){
-                    return false;
-                } else {
-                    if(LocalStorageAdapter.save(test.key,test.value)){
-                        LocalStorageAdapter.remove(test.key);
-                    }
-
-                    return false;
-                }
-            }
-
-            if(!checkLocalStorage()){
-                cmLogger.warn('App can not use LocalStorage!');
-                return false;
-            }
-
+        'cmSystemCheck',
+        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks, cmSystemCheck) {
 
             //get browser language:
             cmApi.get({
@@ -230,7 +211,7 @@ define([
             // passing wrong route calls
             $rootScope.$on('$routeChangeStart', function(){
                 // expections
-                var path_regex = /^(\/login|\/registration|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
+                var path_regex = /^(\/login|\/registration|\/systemcheck|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
                 var path = $location.$$path;
                 // exists none token then otherwise to login
                 if (cmUserModel.isAuth() === false){
@@ -340,6 +321,9 @@ define([
             // Todo: whats is todo??
             if(cmUserModel.getToken())
                 cmApi.listenToEvents()
+
+            // Systemcheck
+            cmSystemCheck.run(true);
         }
     ])
 

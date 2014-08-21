@@ -8,7 +8,10 @@ define([
         '$scope',
         '$location',
         'cmVersion',
-        function($scope, $location, cmVersion){
+        'cmSystemCheck',
+        function($scope, $location, cmVersion, cmSystemCheck){
+            cmSystemCheck.run(true);
+
             $scope.cmVersion = cmVersion;
 
             $scope.goToReg = function(){

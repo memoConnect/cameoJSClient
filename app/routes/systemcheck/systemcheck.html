@@ -1,0 +1,23 @@
+<cm-header cm-rubber-space>
+    <cm-back cm-weight="1" back-to="/login"></cm-back>
+    <cm-logo cm-weight="6"></cm-logo>
+    <div cm-weight="1"></div>
+</cm-header>
+
+<div ng-controller="SystemcheckCtrl" class="system-check theme-a">
+    <h2>Systemcheck</h2>
+
+    <h3 ng-class="{'cm-green':localStorage,'cm-orange':!localStorage}">LocalStorage <i class="fa cm-lg-icon" ng-class="{'cm-checker':localStorage,'cm-checkbox-wrong':!localStorage}"></i></h3>
+
+    <article>
+        <cm-info-bubble nose-x="15%">
+            <section ng-if="!localStorage">
+                Probleme mit dem LocalStorage, bitte einschalten, bzw. den Private Modus im Browser verlassen.
+            </section>
+            <section ng-if="localStorage">
+                Alles in Ordnung!
+            </section>
+        </cm-info-bubble>
+    </article>
+</div>
+
