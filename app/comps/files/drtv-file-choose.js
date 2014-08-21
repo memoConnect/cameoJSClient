@@ -3,7 +3,7 @@
 angular.module('cmFiles').directive('cmFileChoose', [
     function () {
 
-        var tpl = '<input type="file" data-qa="btn-file-choose">'
+        var tpl = '<input type="file" data-qa="btn-file-choose" capture>'
 
         return {
             restrict: 'AE',

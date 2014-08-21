@@ -19,8 +19,14 @@
     <gap:platform name="winphone" />
     <gap:platform name="ios" />
 
-    <!-- <preference name="permissions" value="all-permissions"/> -->
-    <preference name="permissions" value="none"/>
+    <!-- <preference name="permissions" value="all-permissions" /> -->
+    <!-- <preference name="permissions" value="none" /> -->
+
+    <!-- plugins -->
+    <gap:plugin name="org.apache.cordova.media-capture" version="0.2.8" />
+    <gap:plugin name="nl.x-services.plugins.launchmyapp" version="3.2.0">
+        <param name="URL_SCHEME" value="https://cameonet.de/p/" />
+    </gap:plugin>
 
     <!-- multiplatform -->
     <preference name="DisallowOverscroll" value="true"/>
@@ -67,15 +73,6 @@
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="true" />
 
-    <!-- plugins -->
-
-    <!-- <gap:plugin name="org.apache.cordova.statusbar" version="0.1.4"/> -->
-    <!-- <gap:plugin name="org.apache.cordova.camera" version="0.2.9" /> -->
-    <!-- <gap:plugin name="org.apache.cordova.media-capture" version="0.2.8" /> -->
-
-    <!--<gap:plugin name="org.apache.cordova.console" />-->
-    <!--<gap:plugin name="org.apache.cordova.contacts" />-->
-
     <!-- Icons paths relative to /www -->
     <icon src="res/icon/android/icon-36-ldpi.png" gap:platform="android" gap:density="ldpi" />
     <icon src="res/icon/android/icon-48-mdpi.png" gap:platform="android" gap:density="mdpi" />
@@ -88,10 +85,11 @@
     <icon src="res/icon/default.png" />
 
 	<!-- Splash -->
-    <gap:splash src="res/screen/android/drawable-port-ldpi/screen.png" gap:platform="android" gap:density="ldpi" />
-    <gap:splash src="res/screen/android/drawable-port-mdpi/screen.png" gap:platform="android" gap:density="mdpi" />
-    <gap:splash src="res/screen/android/drawable-port-hdpi/screen.png" gap:platform="android" gap:density="hdpi" />
-    <gap:splash src="res/screen/android/drawable-port-xhdpi/screen.png" gap:platform="android" gap:density="xhdpi" />
+    <gap:splash src="res/screen/android/drawable-ldpi/screen.png" gap:platform="android" gap:density="ldpi" />
+    <gap:splash src="res/screen/android/drawable-mdpi/screen.9.png" gap:platform="android" gap:density="mdpi" />
+    <gap:splash src="res/screen/android/drawable-hdpi/screen.9.png" gap:platform="android" gap:density="hdpi" />
+    <gap:splash src="res/screen/android/drawable-xhdpi/screen.9.png" gap:platform="android" gap:density="xhdpi" />
+    <gap:splash src="res/screen/android/drawable-xxhdpi/screen.9.png" gap:platform="android" gap:density="xxhdpi" />
 
     <gap:splash src="res/screen/ios/Default~iphone.png" gap:platform="ios" width="320" height="480" />
     <gap:splash src="res/screen/ios/Default@2x~iphone.png" gap:platform="ios" width="640" height="960" />
