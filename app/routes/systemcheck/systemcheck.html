@@ -5,17 +5,17 @@
 </cm-header>
 
 <div ng-controller="SystemcheckCtrl" class="system-check theme-a">
-    <h2>Systemcheck</h2>
+    <h2>{{'SYSTEMCHECK.HEADLINE'|cmTranslate}}</h2>
 
-    <h3 ng-class="{'cm-green':localStorage,'cm-orange':!localStorage}">LocalStorage <i class="fa cm-lg-icon" ng-class="{'cm-checker':localStorage,'cm-checkbox-wrong':!localStorage}"></i></h3>
+    <h3 ng-class="{'cm-green':localStorage,'cm-orange':!localStorage}">{{'SYSTEMCHECK.LOCALSTORAGE.HEADLINE'|cmTranslate}} <i class="fa cm-lg-icon" ng-class="{'cm-checker':localStorage,'cm-checkbox-wrong':!localStorage}"></i></h3>
 
     <article>
         <cm-info-bubble nose-x="15%">
             <section ng-if="!localStorage">
-                Probleme mit dem LocalStorage, bitte einschalten, bzw. den Private Modus im Browser verlassen.
+                {{'SYSTEMCHECK.LOCALSTORAGE.TEXT_ERROR'|cmTranslate}}
             </section>
             <section ng-if="localStorage">
-                Alles in Ordnung!
+                {{'SYSTEMCHECK.LOCALSTORAGE.TEXT_OK'|cmTranslate}}
             </section>
         </cm-info-bubble>
     </article>

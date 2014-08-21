@@ -5,6 +5,7 @@
         "MOEP": "moep",
         "VERSION": "version"
     },
+
     "LOGIN": {
         "HEADING": "Login",
         "LABEL": {
@@ -24,6 +25,7 @@
             "500": "Internal Server Error"
         }
     },
+
     "REGISTER": {
         "HEADING": "Registration",
         "LINK": "or Register",
@@ -56,6 +58,7 @@
              "REGISTRATION_FAILED": "Bei der Registrierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
          }
     },
+
     "START": {
         "YOUR_ID": "Your cameoID",
         "LOGOUT": "Logout",
@@ -87,15 +90,18 @@
             "NEXT": "next step"
         }
     },
+
     "VERIFICATION": {
         "REQUEST": {
             "LABEL": "Request verification"
         }
     },
+
     "PROFILE": {
         "E-MAIL": "Email",
         "MOBILE": "Mobile"
     },
+
     "LANG": {
         "DE_DE": "German",
         "EN_US": "English",
@@ -108,12 +114,14 @@
             }
         }
     },
+
     "TERMS": {
         "HEADING": "General Business Conditions",
         "HEADING_SHORT": "GBC",
         "PARAGRAPH_1": "German law and regulations applie for the use of the service cameoNet. At the moment, the offer and the use of the service is restricted to the European Union. Germany (Halle) is the exclusive place of jurisdiction for any disputes, in case the user has no general place of jurisdition in Germany.",
         "PARAGRAPH_2": ""
     },
+
     "PASSWORD": {
         "LABEL_PW": "Password",
         "LABEL_CONFIRM": "Confirm password",
@@ -121,11 +129,13 @@
             "EMPTY": "Please enter a password"
         }
     },
+
     "TALKS": {
         "HEADING": "Talks",
         "MORE": "Load more",
         "LIST_EMPTY": "No talks yet!"
     },
+
     "CONVERSATION": {
         "HEADING": "Talk",
         "LABEL": {
@@ -177,15 +187,18 @@
             "OKAY": "Done"
         }
     },
+
     "PURL": {
         "SIGN_IN": "Register"
     },
+
     "RECIPIENTS": {
         "HEADING": "Add recipients",
         "LABEL": {
             "DONE": "Done"
         }
     },
+
     "CONTACTS": {
         "HEADING": {
             "LIST": "Contacts",
@@ -234,6 +247,7 @@
             "IGNORE": "Ignore"
         }
     },
+
     "CONTACT": {
         "WIDGET": "Talks",
         "PLACEHOLDER": {
@@ -273,6 +287,16 @@
             "SAVE": "Save"
         }
     },
+
+    "SYSTEMCHECK": {
+        "HEADLINE": "Systemcheck",
+        "LOCALSTORAGE": {
+            "HEADLINE": "LocalStorage",
+            "TEXT_OK": "LocalStorage is activated!",
+            "TEXT_ERROR": "On the Local Storage can not be accessed!<br />Enable the access, or open the app outside of a private browsing session."
+        }
+    },
+
     "IDENTITY": {
         "LABEL": {
             "KEYMANAGEMENT": "cameoKeys",

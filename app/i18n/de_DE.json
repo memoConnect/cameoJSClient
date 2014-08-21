@@ -288,6 +288,15 @@
         }
     },
 
+    "SYSTEMCHECK": {
+        "HEADLINE": "Systemcheck",
+        "LOCALSTORAGE": {
+            "HEADLINE" : "LocalStorage",
+            "TEXT_OK": "Alles in Ordnung!",
+            "TEXT_ERROR": "Auf den LocalStorage kann nicht zugegriffen werden!<br> Schalten die den Zugriff bitte frei, oder öffnen Sie die App nicht mehr einer privaten Browser Session."
+        }
+    },
+
     "IDENTITY": {
         "LABEL": {
             "KEYMANAGEMENT": "cameoKeys",
