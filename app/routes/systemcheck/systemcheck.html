@@ -11,12 +11,8 @@
 
     <article>
         <cm-info-bubble nose-x="15%">
-            <section ng-if="!localStorage">
-                {{'SYSTEMCHECK.LOCALSTORAGE.TEXT_ERROR'|cmTranslate}}
-            </section>
-            <section ng-if="localStorage">
-                {{'SYSTEMCHECK.LOCALSTORAGE.TEXT_OK'|cmTranslate}}
-            </section>
+            <section ng-if="!localStorage" ng-bind-html="'SYSTEMCHECK.LOCALSTORAGE.TEXT_ERROR'|cmParse"></section>
+            <section ng-if="localStorage" ng-bind-html="'SYSTEMCHECK.LOCALSTORAGE.TEXT_OK'|cmParse"></section>
         </cm-info-bubble>
     </article>
 </div>
