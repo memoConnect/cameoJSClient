@@ -156,7 +156,8 @@ app.register.controller('RegistrationCtrl', [
                             );
                             return true;
                         },
-                        function(){
+                        function(response){
+                            console.log('response',response)
                             cmNotify.warn('REGISTER.WARN.REGISTRATION_FAILED');
                             $scope.spinner('stop');
                         }
