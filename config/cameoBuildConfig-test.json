@@ -2,7 +2,8 @@
     "config": {
         "apiUrl": "http://localhost:9000/a/v1",
         "autoLogin": false,
-        "loadingBar": false
+        "loadingBar": false,
+        "enableDebug": true
     },
     "phonegap": {
         "baseName" : "cameoNet-test" ,

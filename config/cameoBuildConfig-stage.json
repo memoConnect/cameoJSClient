@@ -2,7 +2,8 @@
     "config": {
         "apiUrl": "https://stage.cameo.io/a/v1",
         "autoLogin": false,
-        "loadingBar": true
+        "loadingBar": true,
+        "enableDebug": true
     },
     "phonegap": {
         "baseName" : "cameoNet-stage",

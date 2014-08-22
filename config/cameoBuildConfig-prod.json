@@ -2,7 +2,8 @@
     "config": {
         "apiUrl": "https://www.cameonet.de/a/v1",
         "autoLogin": false,
-        "loadingBar": false
+        "loadingBar": false,
+        "enableDebug": false
     } ,
     "phonegap": {
         "baseName" : "cameoNet",
