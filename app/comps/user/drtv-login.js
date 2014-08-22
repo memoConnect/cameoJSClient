@@ -23,10 +23,26 @@ angular.module('cmUser').directive('cmLogin', [
                     autologin:'none'
                 };
 
+                function checkPasswordLength(pw){
+                    if(typeof pw != 'string' || (pw.length > 0 && pw.length < 6)){
+                        return false;
+                    }
+
+                    return true;
+                }
+
                 $scope.handlePassword = function(){
                     $scope.passwordType = ($scope.passwordType != 'password')
                         ? 'password'
                         : 'text';
+                };
+
+                $scope.checkPasswordLength = function(){
+                    if($scope.formData.pass.length > 0 && $scope.formData.pass.length < 6){
+                        return true;
+                    }
+
+                    return false;
                 };
 
                 $scope.changeAutologin = function(){
@@ -45,6 +61,12 @@ angular.module('cmUser').directive('cmLogin', [
 
                     $scope.alertState = '';
                     $scope.spinner('start');
+
+                    if(!checkPasswordLength($scope.formData.pass)){
+                        $scope.spinner('stop');
+                        $scope.alertState = 'PW';
+                        return false;
+                    }
 
                     cmUserModel.doLogin(
                         $scope.formData.user,
@@ -66,8 +88,17 @@ angular.module('cmUser').directive('cmLogin', [
                         },
                         function(error){
                             $scope.spinner('stop');
-                            $rootScope.$broadcast('cmLogin:error');
-                            $scope.alertState = error.status;
+                            //$rootScope.$broadcast('cmLogin:error'); // not use in app - BS 21.08.2014
+
+                            if(typeof error == 'object' && 'status' in error){
+                                if(error.status){
+                                    $scope.alertState = error.status;
+                                } else {
+                                    $scope.alertState = 'X';
+                                }
+                            } else {
+                                $scope.alertState = 'X';
+                            }
                         }
                     );
 

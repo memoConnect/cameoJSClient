@@ -65,11 +65,11 @@
             <label>{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</label>
             <div class="cm-form-control with-inputter" style="background-color:#fff" ng-class="{'with-inside-icon':!isNew()}">
                 <input
-                    data-qa     ="input-password"
+                    data-qa     = "input-password"
                     style       = "background-color:#fff" 
                     type        = "text" 
-                    ng-model    ="conversation.password" 
-                    placeholder ="{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}"
+                    ng-model    = "conversation.password" 
+                    placeholder = "{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}"
                     ng-blur     = "decrypt()"
                     ng-disabled = "conversation.state.is('decrypted')"
                 />

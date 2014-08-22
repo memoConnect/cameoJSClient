@@ -20,7 +20,7 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
                 $scope.spinner = false;
 
                 $scope.modalMessageVars = {
-                    keyName: $scope.authenticationRequest.fromKey.name,
+                    cameoKey: $scope.authenticationRequest.fromKey.name,
                     identity: cmIdentityFactory.create($scope.authenticationRequest.fromIdentityId).getDisplayName()
                 };
 

@@ -26,6 +26,13 @@ describe('cmAuthenticationRequestModel', function() {
         cmAuthenticationRequestModel = _cmAuthenticationRequestModel_
     }))
 
+    beforeEach(inject(function(_cmUserModel_, _cmFactory_){
+        cmUserModel = _cmUserModel_
+        cmUserModel.data.identity = {}
+        cmUserModel.data.identity.keys = {}
+        cmUserModel.data.identity.keys.find = function(){}
+    }))
+
     describe('object and methods',function(){
         it('should exists', function(){
            expect(cmAuthenticationRequestModel).toBeDefined()

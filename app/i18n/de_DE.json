@@ -21,7 +21,9 @@
         "INFO": {
             "401": "Benutzername oder Passwort falsch.",
             "404": "Ein Login ist zur Zeit nicht möglich. 404",
-            "500": "Server Error. 500"
+            "500": "Server Error. 500",
+            "X": "Es ist ein Problem aufgetreten.<br>Versuchen Sie es bitte erneut",
+            "PW": "@:LOGIN.INFO.401"
         }
     },
 
@@ -287,6 +289,15 @@
         }
     },
 
+    "SYSTEMCHECK": {
+        "HEADLINE": "Systemcheck",
+        "LOCALSTORAGE": {
+            "HEADLINE" : "LocalStorage",
+            "TEXT_OK": "Alles in Ordnung!",
+            "TEXT_ERROR": "Auf den LocalStorage kann nicht zugegriffen werden!<br> Schalten die den Zugriff bitte frei, oder öffnen Sie die App nicht mehr einer privaten Browser Session."
+        }
+    },
+
     "IDENTITY": {
         "LABEL": {
             "KEYMANAGEMENT": "cameoKeys",
@@ -419,7 +430,7 @@
                 "ENTER_TRANSACTION_SECRET": {
                     "HEADER": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.HEADER",
                     "INSTRUCTIONS": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.INSTRUCTIONS",
-                    "NOTE": "Bitte geben Sie hier den Code ein, der '{{identity}}' angezeigt wird:",
+                    "NOTE": "Bitte geben Sie hier den Code ein, der auf dem Gerät von '{{identity}}' angezeigt wird:",
                     "LABEL_CODE": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CODE",
                     "CANCEL_BUTTON": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
                     "SUBMIT_BUTTON": "Übertragen"
@@ -579,7 +590,7 @@
                 "MAX_LETTER_COUNT": "Bitte maximal {{count}} Zeichen verwenden!",
                 "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
                 "INPUT": {
-                    "EXISTS": "Dieser Name ist bereits vergeben. Bitte wählen Sie eine andere!",
+                    "EXISTS": "Dieser Name ist bereits vergeben. Bitte wählen Sie einen anderen!",
                     "EMPTY": "Dieses Feld wird benötigt! Bitte füllen Sie dieses aus.",
                     "INVALID": "Ihr Name enthält nicht erlaubte Zeichen. Vermeiden Sie Umlaute, Leer- und Sonderzeichen."
                 }

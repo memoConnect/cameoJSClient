@@ -191,11 +191,8 @@ angular.module('cmConversations')
 
                         var decrypted_data = JSON.parse(cmCrypt.decrypt(conversation.getPassphrase(),this.encryptedData));
 
-                        if(decrypted_data !== false){
+                        if(decrypted_data){
                             this.importData(decrypted_data);
-                        }
-
-                        if(!!decrypted_data){
                             this.state.set('decrypted');
                             this.trigger('decrypt:success');
                         }

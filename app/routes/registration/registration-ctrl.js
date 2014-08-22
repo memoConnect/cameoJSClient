@@ -6,10 +6,12 @@ define([
     'use strict';
 
 app.register.controller('RegistrationCtrl', [
-    'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferScopeData', 'cmNotify',
+    'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferScopeData', 'cmNotify', 'cmSystemCheck',
     '$scope', '$rootScope', '$location', '$q',
-    function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferScopeData, cmNotify,
+    function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferScopeData, cmNotify, cmSystemCheck,
               $scope, $rootScope, $location, $q) {
+
+        cmSystemCheck.run(true);
 
         $scope.formData = {
             cameoId: '',
@@ -130,41 +132,56 @@ app.register.controller('RegistrationCtrl', [
 
             $scope.spinner('start');
 
+            function sendCreateUserRequest(data){
+                cmAuth.createUser(data).then(
+                    function(accountData){
+
+                        cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
+                            function(){
+                                if($scope.handleGuest !== false){
+                                    //$location.path('/purl/'+$rootScope.pendingPurl);
+                                    $rootScope.goto('/start/welcome');
+                                } else {
+                                    cmUserModel.comesFromRegistration = true;
+                                    $rootScope.goto("/start/welcome");
+                                }
+                            },
+                            function(){
+                                $scope.spinner('stop');
+                            }
+                        );
+                        return true;
+                    },
+                    function(response){
+                        $scope.spinner('stop');
+
+                        if(typeof response == 'object' && 'data' in response && typeof response.data == 'object'){
+                            if('error' in response.data && response.data.error == 'invalid reservation secret'){
+                                $rootScope.$broadcast('registration:checkAccountName');
+                            }
+                        } else {
+                            cmNotify.warn('REGISTER.WARN.REGISTRATION_FAILED');
+                        }
+                    }
+                );
+            }
+
+
             $scope.validateForm().then(
                 function(data){
                     clearTransferScopeData();
 
-                    cmAuth.createUser(data).then(
-                        function(accountData){
-                            
-                            cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
-                                function(){
-                                    $scope.spinner('stop');
-                                    if($scope.handleGuest !== false){
-                                        //$location.path('/purl/'+$rootScope.pendingPurl);
-                                        $location.path('/start/welcome');
-                                    } else {
-                                        cmUserModel.comesFromRegistration = true;
-                                        $location.path("/start/welcome");
-                                    }
-                                },
-                                function(){
-                                    $scope.spinner('stop');
-                                }
-                            );
-                            return true;
-                        },
-                        function(){
-                            cmNotify.warn('REGISTER.WARN.REGISTRATION_FAILED');
-                            $scope.spinner('stop');
-                        }
-                    );
+                    sendCreateUserRequest(data);
                 },
                 function(){
                     $scope.spinner('stop');
                 }
             );
         };
+
+        $rootScope.$on('registration:createUser', function(){
+            $scope.createUser();
+        });
 
         /**
          * Guest Handling

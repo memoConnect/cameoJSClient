@@ -62,8 +62,19 @@ angular.module('cmCore')
                 this.fromKeyFingerprint             = data.fromKeyFingerprint || this.fromKeyFingerprint;
                 this.toKeyId                        = data.toKeyId || this.toKeyId;
                 this.toKeyFingerprint               = data.toKeyFingerprint || this.toKeyFingerprint;
-                this.toIdentityId                   = data.toIdentityId || this.toIdentityId
-                this.fromIdentityId                 = data.fromIdentityId || this.fromIdentityId
+                this.toIdentityId                   = data.toIdentityId || this.toIdentityId;
+                this.fromIdentityId                 = data.fromIdentityId || this.fromIdentityId;
+
+
+                /**
+                 * add for key request event
+                 */
+                if(this.fromKeyId != undefined && this.fromKeyId.length > 0){
+                    var fromKey = cmUserModel.data.identity.keys.find(this.fromKeyId);
+                    if(fromKey instanceof cmKey){
+                        this.fromKey = fromKey;
+                    }
+                }
 
                 return this;
             };
@@ -370,7 +381,6 @@ angular.module('cmCore')
 
             this.sendKeyRequest = function(){
 //                cmLogger.debug('cmAuthenticationRequestModel.sendKeyRequest');
-
                 var deferred = $q.defer()
 
                 if(this.state.is('outgoing') && !this.state.is('finished')){
@@ -378,7 +388,8 @@ angular.module('cmCore')
                         name: "authenticationRequest:key-request",
                         data: {
                             id: this.id,
-                            fromIdentityId: this.fromIdentityId
+                            fromIdentityId: this.fromIdentityId,
+                            fromKeyId: this.fromKey.id
                         }
                     }, (this.toIdentityId == cmUserModel.data.identity.id) ? undefined : this.toIdentityId);
 
