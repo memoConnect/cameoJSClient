@@ -1,9 +1,13 @@
 'use strict';
 
 angular.module('cmUi').directive('cmHeader',[
-    function (){
+
+    '$window', 
+
+    function ($window){
         return {
-            restrict: 'E'
+            restrict:   'E'
+
         }
     }
 ]);

@@ -1,6 +1,10 @@
 'use strict';
 
-describe('mobile-inputs', function () {
+/**
+ * @depracted
+ */
+console.log('removed test')
+xdescribe('mobile-inputs', function () {
     var $fixedElements,
         $input
 

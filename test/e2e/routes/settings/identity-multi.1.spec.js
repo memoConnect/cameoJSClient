@@ -50,7 +50,7 @@ describe('Multi Identity: ', function () {
 
         util.click('btn-identity-create')
 
-        util.waitForPageLoad('/start/welcome')
+        util.waitForPageLoad('/start/keyinfo')
 
         util.get('/talks')
 
@@ -77,14 +77,15 @@ describe('Multi Identity: ', function () {
     })
 
     it('switch back to first identity', function(){
-        util.get('settings/identity/overview')
+        util.get('/settings/identity/overview')
         util.expectCurrentUrl('/settings/identity/overview')
 
         util.click('btn-identity-switchto')
 
-        util.waitForPageLoad('/start/welcome')
-        util.get('/talks')
+        util.waitForPageLoad()
         
+        util.get('/talks')
+
         expect($("[data-qa='btn-identity-settings']").getText()).toBe(login)
     })
 

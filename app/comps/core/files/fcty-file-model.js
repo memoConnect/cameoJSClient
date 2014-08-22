@@ -322,7 +322,9 @@ angular.module('cmCore').factory('cmFileModel', [
                     .download(self.id, index)
                     .then(
                     function(){
-                        self.trigger('progress:chunk', (index/self.chunks.length));
+                        if(self.chunks != null){
+                            self.trigger('progress:chunk', (index/self.chunks.length));
+                        }
 
                         if(index == (self.chunkIndices.length - 1)){
                             self.trigger('download:finish', index);

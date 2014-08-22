@@ -1,3 +1,8 @@
+#cm-app.reduced-screen cm-footer{
+  position:relative !important;
+  margin-bottom: -@cm-footer-height;
+}
+
 cm-footer {
   display:block;
   position:fixed;
@@ -50,8 +55,5 @@ cm-footer {
     }
   }
 
-  &.defixed{
-    position:absolute !important;
-    bottom: -@cm-footer-height !important;
-  }
+
 }
