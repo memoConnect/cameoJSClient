@@ -58,68 +58,72 @@
 }
  */
 
-angular.module('cmUi').directive('input',[
-    'cmEnv',
-    '$document',
-    function (cmEnv,
-              $document) {
+/***
+/* Issue now addressed in cm-footer and cm-header
+*/
 
-        return {
-            restrict: 'EA',
-            link: function (scope, element, attrs) {
-                // only for mobile devices or enabled inputs
-                if(!('isNotMobile' in cmEnv) ||
-                    cmEnv.isNotMobile ||
-                    'disabled' in attrs ||
-                    'ngDisabled' in attrs
-                )
-                    return false;
+// angular.module('cmUi').directive('input',[
+//     'cmEnv',
+//     '$document',
+//     function (cmEnv,
+//               $document) {
 
-                // mobile device? go on!
-                var tagName = element[0].tagName.toLowerCase(),
-                    fixedElements = angular.element($document[0].querySelectorAll('cm-header, cm-footer')),
-                    view = angular.element($document[0].querySelectorAll('body, html'));
+//         return {
+//             restrict: 'EA',
+//             link: function (scope, element, attrs) {
+//                 // only for mobile devices or enabled inputs
+//                 if(!('isNotMobile' in cmEnv) ||
+//                     cmEnv.isNotMobile ||
+//                     'disabled' in attrs ||
+//                     'ngDisabled' in attrs
+//                 )
+//                     return false;
 
-                function stopEvent(e){
-                    if(e.target != element[0] && e.target != handler) {
-                        element[0].blur();
-                        e.preventDefault();
-                        e.stopPropagation();
-                        return false;
-                    }
-                }
+//                 // mobile device? go on!
+//                 var tagName = element[0].tagName.toLowerCase(),
+//                     fixedElements = angular.element($document[0].querySelectorAll('cm-header, cm-footer')),
+//                     view = angular.element($document[0].querySelectorAll('body, html'));
 
-                function onFocus(){
-                    view.on('touchstart',stopEvent);
-                    fixedElements.css('position','absolute');
-                    angular.forEach(fixedElements,function(fixedElement){
-                        if(fixedElement.tagName.toLowerCase() == 'cm-footer')
-                            angular.element(fixedElement).addClass('defixed');  //Todo: changes class from 'ng-hide' to 'defixed', because registration footer disappeared permanently.
-                    });
-                }
+//                 function stopEvent(e){
+//                     if(e.target != element[0] && e.target != handler) {
+//                         element[0].blur();
+//                         e.preventDefault();
+//                         e.stopPropagation();
+//                         return false;
+//                     }
+//                 }
 
-                function onBlur(){
-                    fixedElements.css('position','fixed');
-                    angular.forEach(fixedElements,function(fixedElement){
-                        if(fixedElement.tagName.toLowerCase() == 'cm-footer')
-                            angular.element(fixedElement).removeClass('defixed'); //Todo: changes class from 'ng-hide' to 'defixed', because registration footer disappeared permanently.
-                    });
-                    view.off('touchstart',stopEvent);
-                }
+//                 function onFocus(){
+//                     view.on('touchstart',stopEvent);
+//                     fixedElements.css('position','absolute');
+//                     angular.forEach(fixedElements,function(fixedElement){
+//                         if(fixedElement.tagName.toLowerCase() == 'cm-footer')
+//                             angular.element(fixedElement).addClass('ng-hide');  
+//                     });
+//                 }
 
-                if(tagName == 'input' && element.attr('type') != 'checkbox' ||// only inputs text,password,mail,tel,
-                   tagName == 'textarea' // accept texareas to
-                ){
-                    element.on('focus', onFocus);
-                    element.on('blur', onBlur);
-                    element.on('closeKeyboard', onBlur);
-                    scope.$on('$destroy', onBlur);
+//                 function onBlur(){
+//                     fixedElements.css('position','fixed');
+//                     angular.forEach(fixedElements,function(fixedElement){
+//                         if(fixedElement.tagName.toLowerCase() == 'cm-footer')
+//                             angular.element(fixedElement).removeClass('ng-hide');
+//                     });
+//                     view.off('touchstart',stopEvent);
+//                 }
 
-                    // phonegap events
-                    document.addEventListener("showkeyboard", onFocus, false);
-                    document.addEventListener("hidekeyboard", onBlur, false);
-                }
-            }
-        }
-    }
-]);
+//                 if(tagName == 'input' && element.attr('type') != 'checkbox' ||// only inputs text,password,mail,tel,
+//                    tagName == 'textarea' // accept texareas to
+//                 ){
+//                     element.on('focus', onFocus);
+//                     element.on('blur', onBlur);
+//                     element.on('closeKeyboard', onBlur);
+//                     scope.$on('$destroy', onBlur);
+
+//                     // phonegap events
+//                     document.addEventListener("showkeyboard", onFocus, false);
+//                     document.addEventListener("hidekeyboard", onBlur, false);
+//                 }
+//             }
+//         }
+//     }
+// ]);
