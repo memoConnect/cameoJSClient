@@ -77,13 +77,15 @@ describe('Multi Identity: ', function () {
     })
 
     it('switch back to first identity', function(){
-        util.get('settings/identity/overview')
+        util.get('/settings/identity/overview')
         util.expectCurrentUrl('/settings/identity/overview')
 
         util.click('btn-identity-switchto')
 
-        util.waitForPageLoad('/talks')
+        util.waitForPageLoad()
         
+        util.get('/talks')
+
         expect($("[data-qa='btn-identity-settings']").getText()).toBe(login)
     })
 
