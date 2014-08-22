@@ -26,15 +26,23 @@ angular.module('cmConversations').directive('cmMessage', [
                     }
                 }
 
+                function handleFiles(){
+                    if (!scope.textOnly && scope.message.files.length > 0) {
+                        setFileView();
+                        scope.message.decryptFiles();
+                    }
+                }
+
+
                 if(typeof scope.message == 'object' && typeof scope.message.on == 'function'){
                     //Todo: this should be 'one' not 'on', shouldn't it? Andreas
+
                     scope.message.on('init:files', function(){
-                        if (scope.message.files.length > 0) {
-                            setFileView();
-                            scope.message.decryptFiles();
-                        }
+                        handleFiles();
                     });
                 }
+
+                handleFiles();
 
             },
 

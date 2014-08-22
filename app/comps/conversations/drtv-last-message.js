@@ -19,7 +19,7 @@ angular.module('cmConversations').directive('cmLastMessage', [
                 }
 
                 if($scope.$last){
-                    loadFiles();
+                    //loadFiles();
                 }
             }
         }
