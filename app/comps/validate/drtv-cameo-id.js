@@ -67,11 +67,14 @@ angular.module('cmValidate').directive('cmCameoId',[
                 setDefault();
 
                 function checkAccountName(newValue){
+                    var deferred = $q.defer();
+
                     if(!checkValue(newValue)){
                         if($scope.parentForm.cameoId.$invalid && $scope.parentForm.cameoId.$dirty)
                             $scope.errors.empty = true;
 
-                        return false;
+                        deferred.reject();
+                        return deferred.promise;
                     }
 
                     // if input is'nt empty && is valid && reservation secret is'nt exists
@@ -84,6 +87,7 @@ angular.module('cmValidate').directive('cmCameoId',[
                                 $scope.$parent.reservationSecrets[newValue] = data.reservationSecret;
 
                                 $scope.parentForm.cameoId.$valid = true;
+                                deferred.resolve();
                             },
                             // invalid or exists
                             function (response) {
@@ -108,9 +112,12 @@ angular.module('cmValidate').directive('cmCameoId',[
                                 }
 
                                 $scope.parentForm.cameoId.$valid = false;
+                                deferred.reject();
                             }
                         );
                     }
+
+                    return deferred.promise;
                 }
 
                 $rootScope.$on('cm-login-name:invalid', function(){
@@ -145,11 +152,19 @@ angular.module('cmValidate').directive('cmCameoId',[
                     checkAccountName(newValue);
                 });
 
-                $rootScope.$on('checkAccountName', function(){
-                    console.log('piepe');
+                $rootScope.$on('registration:checkAccountName', function(){
                     setDefault();
 
-                    checkAccountName($scope.cameoId);
+                    $scope.$parent.reservationSecrets = {};
+
+                    checkAccountName($scope.cameoId).then(
+                        function(){
+                            $rootScope.$emit('registration:createUser');
+                        }, function(){
+                            console.log('check account again fail')
+                        }
+
+                    );
                 });
             }
         }

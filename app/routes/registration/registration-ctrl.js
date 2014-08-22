@@ -153,17 +153,15 @@ app.register.controller('RegistrationCtrl', [
                         return true;
                     },
                     function(response){
-                        console.log('response',response)
+                        $scope.spinner('stop');
 
                         if(typeof response == 'object' && 'data' in response && typeof response.data == 'object'){
                             if('error' in response.data && response.data.error == 'invalid reservation secret'){
-                                $rootScope.$broadcast('checkAccountName');
+                                $rootScope.$broadcast('registration:checkAccountName');
                             }
                         } else {
                             cmNotify.warn('REGISTER.WARN.REGISTRATION_FAILED');
                         }
-
-                        $scope.spinner('stop');
                     }
                 );
             }
@@ -180,6 +178,10 @@ app.register.controller('RegistrationCtrl', [
                 }
             );
         };
+
+        $rootScope.$on('registration:createUser', function(){
+            $scope.createUser();
+        });
 
         /**
          * Guest Handling
