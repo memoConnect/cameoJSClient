@@ -19,7 +19,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-exec');
     grunt.loadNpmTasks('grunt-sloc');
     grunt.loadNpmTasks('grunt-ngdocs');
     grunt.loadNpmTasks('grunt-testflight-jsonresult');
@@ -822,16 +821,6 @@ module.exports = function (grunt) {
                     stdout: false
                 },
                 command: 'cd test/e2e/keys && rm -f *.key && ssh-keygen -N "" -f 1.key && ssh-keygen -N "" -f 2.key && ssh-keygen -N "" -f 3.key && ssh-keygen -N "" -f 4.key && ssh-keygen -N "" -f 5.key&& rm *.key.pub'
-            }
-        },
-        exec: {
-            generateKeys: './bin/genKey.sh'
-        },
-        sloc: {
-            'code-coverage': {
-                files: {
-                    './app': ['base/*.js', 'comps/**/*.js', 'css/*.css', 'routes/**/*.js']
-                }
             }
         }
     });
