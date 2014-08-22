@@ -347,7 +347,7 @@ angular.module('cmConversations')
                 return this;
             };
 
-            this.decryptFiles = function(passphrase){
+            this.decryptFiles = function(){
                 angular.forEach(this.files, function(file){
                     if(file.state == 'exists') {
                         file
