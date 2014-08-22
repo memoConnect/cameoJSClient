@@ -82,8 +82,7 @@ describe('Multi Identity: ', function () {
 
         util.click('btn-identity-switchto')
 
-        util.waitForPageLoad('/start/welcome')
-        util.get('/talks')
+        util.waitForPageLoad('/talks')
         
         expect($("[data-qa='btn-identity-settings']").getText()).toBe(login)
     })
