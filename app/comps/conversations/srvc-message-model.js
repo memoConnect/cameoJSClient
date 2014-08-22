@@ -351,7 +351,7 @@ angular.module('cmConversations')
                 angular.forEach(this.files, function(file){
                     if(file.state == 'exists') {
                         file
-                            .setPassphrase(passphrase)
+                            .setPassphrase(conversation.getPassphrase())
                             .downloadStart();
 
                         file.on('importFile:incomplete',function(event, file){
