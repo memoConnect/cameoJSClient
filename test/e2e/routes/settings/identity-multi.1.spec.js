@@ -50,7 +50,7 @@ describe('Multi Identity: ', function () {
 
         util.click('btn-identity-create')
 
-        util.waitForPageLoad('/start/welcome')
+        util.waitForPageLoad('/start/keyinfo')
 
         util.get('/talks')
 
