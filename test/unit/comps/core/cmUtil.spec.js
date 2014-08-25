@@ -296,6 +296,7 @@ describe('cmUtil', function() {
             it('should be true at year change', function(){
                 var current = 1388530800000 // 1.1.2014 00:00:00 000
                 var prev = 1388530799000 // 31.12.2013 23:59:59 000
+                console.log(new Date(current), new Date(prev))
 
                 expect(cmUtil.compareDate(current, prev)).toBe(true)
             })
@@ -303,6 +304,7 @@ describe('cmUtil', function() {
             it('should be true at monthly change', function(){
                 var current = 1391209200000 // 1.2.2014 00:00:00 000
                 var prev = 1391209199000 // 31.01.2014 23:59:59 000
+                console.log(new Date(current), new Date(prev))
 
                 expect(cmUtil.compareDate(current, prev)).toBe(true)
             })
@@ -310,6 +312,7 @@ describe('cmUtil', function() {
             it('should be true at daily change', function(){
                 var current = 1391295600000 // 2.2.2014 00:00:00 000
                 var prev = 1391295599000 // 1.2.2014 23:59:59 000
+                console.log(new Date(current), new Date(prev))
 
                 expect(cmUtil.compareDate(current, prev)).toBe(true)
             })
