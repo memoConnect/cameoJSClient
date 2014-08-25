@@ -20,14 +20,14 @@
     <gap:platform name="ios" />
 
     <!-- <preference name="permissions" value="all-permissions" /> -->
-    <!-- <preference name="permissions" value="none" /> -->
+    <preference name="permissions" value="none" />
 
     <!-- plugins -->
     <!-- <gap:plugin name="org.apache.cordova.media-capture" version="0.2.8" /> -->
     <!-- <gap:plugin name="nl.x-services.plugins.launchmyapp" version="3.2.0">
         <param name="URL_SCHEME" value="https://cameonet.de/p/" />
     </gap:plugin> -->
-    <gap:plugin name="org.apache.cordova.console" version="0.2.7" />
+    <!-- <gap:plugin name="org.apache.cordova.console" version="0.2.7" /> -->
 
     <!-- multiplatform -->
     <preference name="DisallowOverscroll" value="true"/>
