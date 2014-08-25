@@ -261,14 +261,14 @@ describe('cmUtil', function() {
         })
 
         it('should be true, if current is newer higher then prev', function(){
-            var current = 1408970707699
-            var prev = 1208970707699
+            var current = 1408970707699000
+            var prev = 1208970707699000
 
             expect(cmUtil.compareDate(current, prev)).toBe(true)
         })
 
         it('should be true, if prev is undefined', function(){
-            var current = 1408970707699
+            var current = 1408970707699000
             var prev
 
             expect(cmUtil.compareDate(current, prev)).toBe(true)
@@ -279,15 +279,15 @@ describe('cmUtil', function() {
         })
 
         it('should be false, if current and prev are the same', function(){
-            var current = 1408970707699
-            var prev = 1408970707699
+            var current = 1408970707699000
+            var prev = 1408970707699000
 
             expect(cmUtil.compareDate(current, prev)).toBe(false)
         })
 
         it('should be false, if prev higher then current', function(){
-            var current = 1208970707699
-            var prev = 1408970707699
+            var current = 1208970707699000
+            var prev = 1408970707699000
 
             expect(cmUtil.compareDate(current, prev)).toBe(false)
         })
