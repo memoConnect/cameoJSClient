@@ -318,6 +318,18 @@ define([
                 }
             });
 
+
+
+            //check on resize if the screen is too small for header an footer ( i.e. onscreen keyboard is active)
+            angular.element($window).bind('resize', function(){
+                var cm_app = $document[0].querySelector('#cm-app')
+                if(cm_app.offsetWidth > $window.innerHeight){
+                    angular.element(cm_app).addClass('reduced-screen')
+                } else {
+                    angular.element(cm_app).removeClass('reduced-screen')
+                }
+            })
+
             // Todo: whats is todo??
             if(cmUserModel.getToken())
                 cmApi.listenToEvents()
