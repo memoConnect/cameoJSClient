@@ -9,6 +9,7 @@
     <author href="www.cameonet.de" email="support@cameonet.de">cameoNet</author>
 
     <access origin="*" subdomains="true"  />
+    <!-- <access origin="http://puship.cloudapp.net" /> -->
     <content src="index.html" />
 
     <log level="ERROR"/>
@@ -75,6 +76,12 @@
 
     <!--<gap:plugin name="org.apache.cordova.console" />-->
     <!--<gap:plugin name="org.apache.cordova.contacts" />-->
+
+    <!-- puship plugins -->
+    <gap:plugin name="org.apache.cordova.console" /> <!-- required -->
+    <gap:plugin name="org.apache.cordova.device" /> <!-- required -->
+    <!-- <gap:plugin name="org.apache.cordova.geolocation" /> --> <!-- needed only if you use geolocalization -->
+    <gap:plugin name="com.phonegap.plugins.pushplugin" /> <!-- required -->
 
     <!-- Icons paths relative to /www -->
     <icon src="res/icon/android/icon-36-ldpi.png" gap:platform="android" gap:density="ldpi" />
