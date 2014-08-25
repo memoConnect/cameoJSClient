@@ -126,8 +126,8 @@ angular.module('cmCore')
 
         /**
          *
-         * @param current (integer) unix timestamp
-         * @param prev (integer) unix timestamp
+         * @param current (integer) unix timestamp in ms
+         * @param prev (integer) unix timestamp in ms
          * @returns {boolean}
          */
         this.compareDate = function(current, prev){
@@ -135,19 +135,20 @@ angular.module('cmCore')
                 if (current > prev) {
                     var cDate = new Date(current);
                     var pDate = new Date(prev);
+
                     if ((cDate.getFullYear() > pDate.getFullYear())
                         || (cDate.getMonth() > pDate.getMonth())
                         || (cDate.getDate() > pDate.getDate())
                     ) {
                         return true;
                     }
-                } else if (typeof current !== 'undefined' && typeof prev === 'undefined') {
-                    return true;
                 }
-
-                return false;
+            } else if (typeof current !== 'undefined' && typeof prev === 'undefined') {
+                return true;
             }
-        }
+
+            return false;
+        };
 
         /**
          * convert milliseconds to human readable string
