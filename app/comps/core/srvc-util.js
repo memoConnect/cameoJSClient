@@ -125,6 +125,31 @@ angular.module('cmCore')
         };
 
         /**
+         *
+         * @param current (integer) unix timestamp
+         * @param prev (integer) unix timestamp
+         * @returns {boolean}
+         */
+        this.compareDate = function(current, prev){
+            if (typeof current !== 'undefined' && typeof prev !== 'undefined') {
+                if (current > prev) {
+                    var cDate = new Date(current);
+                    var pDate = new Date(prev);
+                    if ((cDate.getFullYear() > pDate.getFullYear())
+                        || (cDate.getMonth() > pDate.getMonth())
+                        || (cDate.getDate() > pDate.getDate())
+                    ) {
+                        return true;
+                    }
+                } else if (typeof current !== 'undefined' && typeof prev === 'undefined') {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        /**
          * convert milliseconds to human readable string
          * @param milliseconds
          * @returns {string}
