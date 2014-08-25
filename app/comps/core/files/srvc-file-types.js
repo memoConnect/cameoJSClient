@@ -37,6 +37,7 @@ angular.module('cmCore').service('cmFileTypes',[
             {e:'doc',m:'application/msword'},
             {e:['docx','doc'],m:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'},
             {e:['pps','ppt'],m:'application/vnd.ms-powerpoint'},
+            {e:'pptx',m:'application/vnd.openxmlformats-officedocument.presentationml.presentation'},
             // various
             {e:'php',m:'text/php'},
             {e:'css',m:'text/css'},
@@ -49,7 +50,7 @@ angular.module('cmCore').service('cmFileTypes',[
             {e:['html','htm'],m:'text/html'},
             {e:'chm',m:'application/vnd.ms-htmlhelp'},
             {e:'ttf',m:'application/x-font-ttf'},
-            {e:'exe',m:'application/octet-stream'},
+            //{e:'exe',m:'application/octet-stream'},
             {e:'exe',m:'application/x-msdownload'},
             {e:'dmg',m:'application/x-apple-diskimage'}
         ],
@@ -115,13 +116,14 @@ angular.module('cmCore').service('cmFileTypes',[
                 // only one extension
                 if (typeof extensions == 'string' && extensions != '')
                     extension = extensions;
+
                 // more extensions exists
                 else if(typeof extensions == 'object'){
                     if(filename == undefined || filename == ''){
                         extension = extensions[0];
                     } else {
                         angular.forEach(extensions, function (inExtension) {
-                            if (filename.search(inExtension+'$') != -1) {
+                            if (filename.toLowerCase().search(inExtension+'$') != -1) {
                                 extension = inExtension;
                             }
                         })
