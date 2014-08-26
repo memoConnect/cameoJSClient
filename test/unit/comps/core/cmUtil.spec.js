@@ -294,7 +294,6 @@ describe('cmUtil', function() {
 
         describe('test special dates', function(){
             it('should be true at year change', function(){
-                console.log('year change')
                 var current = 1388534400000 // 1.1.2014 00:00:00 000 1388534400000
                 var prev = 1388534399000 // 31.12.2013 23:59:59 000
 
@@ -302,7 +301,6 @@ describe('cmUtil', function() {
             })
 
             it('should be true at monthly change', function(){
-                console.log('monthly change')
                 var current = 1391209200000 // 1.2.2014 00:00:00 000
                 var prev = 139120919900 // 31.01.2014 23:59:59 000
 
@@ -310,7 +308,6 @@ describe('cmUtil', function() {
             })
 
             it('should be true at daily change', function(){
-                console.log('daily change')
                 var current = 1391295600000 // 2.2.2014 00:00:00 000
                 var prev = 1388620800000 // 1.2.2014 23:59:59 000
 
