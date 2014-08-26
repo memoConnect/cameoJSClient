@@ -261,14 +261,14 @@ describe('cmUtil', function() {
         })
 
         it('should be true, if current is newer higher then prev', function(){
-            var current = 1408970707699000
-            var prev = 1208970707699000
+            var current = 1409041624000 // 26.08.2014 10:27:04 000
+            var prev = 1408955224000 // 25.08.2014 10:27:04 000
 
             expect(cmUtil.compareDate(current, prev)).toBe(true)
         })
 
         it('should be true, if prev is undefined', function(){
-            var current = 1408970707699000
+            var current = 1409041624000 // 26.08.2014 10:27:04 000
             var prev
 
             expect(cmUtil.compareDate(current, prev)).toBe(true)
@@ -279,40 +279,40 @@ describe('cmUtil', function() {
         })
 
         it('should be false, if current and prev are the same', function(){
-            var current = 1408970707699000
-            var prev = 1408970707699000
+            var current = 1409041624000 // 26.08.2014 10:27:04 000
+            var prev = 1409041624000 // 26.08.2014 10:27:04 000
 
             expect(cmUtil.compareDate(current, prev)).toBe(false)
         })
 
         it('should be false, if prev higher then current', function(){
-            var current = 1208970707699000
-            var prev = 1408970707699000
+            var current = 1408955224000 // 25.08.2014 10:27:04 000
+            var prev = 1409041624000 // 26.08.2014 10:27:04 000
 
             expect(cmUtil.compareDate(current, prev)).toBe(false)
         })
 
-        xdescribe('test special dates', function(){
+        describe('test special dates', function(){
             it('should be true at year change', function(){
-                var current = 1388530800000 // 1.1.2014 00:00:00 000
-                var prev = 1388530799000 // 31.12.2013 23:59:59 000
-                console.log(new Date(current), new Date(prev))
+                console.log('year change')
+                var current = 1388534400000 // 1.1.2014 00:00:00 000 1388534400000
+                var prev = 1388534399000 // 31.12.2013 23:59:59 000
 
                 expect(cmUtil.compareDate(current, prev)).toBe(true)
             })
 
             it('should be true at monthly change', function(){
+                console.log('monthly change')
                 var current = 1391209200000 // 1.2.2014 00:00:00 000
-                var prev = 1391209199000 // 31.01.2014 23:59:59 000
-                console.log(new Date(current), new Date(prev))
+                var prev = 139120919900 // 31.01.2014 23:59:59 000
 
                 expect(cmUtil.compareDate(current, prev)).toBe(true)
             })
 
             it('should be true at daily change', function(){
+                console.log('daily change')
                 var current = 1391295600000 // 2.2.2014 00:00:00 000
-                var prev = 1391295599000 // 1.2.2014 23:59:59 000
-                console.log(new Date(current), new Date(prev))
+                var prev = 1388620800000 // 1.2.2014 23:59:59 000
 
                 expect(cmUtil.compareDate(current, prev)).toBe(true)
             })
