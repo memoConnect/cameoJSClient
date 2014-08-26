@@ -95,6 +95,34 @@ function initPuship() {
     } else {
         console.log("Not supported platform");
     }
+
+    Puship.Common.OnPushReceived(function (event) {
+        console.log('push received');
+        try {
+            alert(event.notification.Alert);
+        }
+        catch (err) {
+            console.warn("Cannot display alert in background");
+        }
+    });
+
+    Puship.Common.GetPushMessagesByDevice(
+        {
+            //limit: 10, //max limit is 50 default is 20
+            //offset: 100,
+            successCallback: function (regresult) {
+                console.log("GetPushMessagesByDevice done");
+
+                if (regresult.length > 0) {
+                    navigator.notification.alert("Message 1 of " + regresult.length + ": " + regresult[0].Message);
+                } else {
+                    navigator.notification.alert("No message found");
+                }
+            },
+            failCallback: function (regresult) {
+                navigator.notification.alert("error during GetPushMessagesByDevice: " + regresult);
+            }
+        });
 }
 
 // Wait for device API libraries to load
