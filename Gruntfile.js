@@ -714,8 +714,8 @@ module.exports = function (grunt) {
             debug: {
                 options: {
                     archive: "phonegap-target/cameoNetApp.zip",
-                    "appId": globalCameoBuildConfig.phonegap.appId,
-                    "user": {
+                    appId: globalCameoBuildConfig.phonegap.appId,
+                    user: {
                         "email": globalCameoSecrets.phonegap.email,
                         "password": globalCameoSecrets.phonegap.password
                     },
@@ -724,6 +724,12 @@ module.exports = function (grunt) {
                         android: 'phonegap-target/' + globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk',
                         winphone: 'phonegap-target/' + globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.xap'
                     }
+                }
+            },
+            'only-zip': {
+                options: {
+                    archive: "phonegap-target/cameoNetApp.zip",
+                    appId: globalCameoBuildConfig.phonegap.appId
                 }
             }
         },
@@ -873,7 +879,6 @@ module.exports = function (grunt) {
         'clean:phonegap-target',
         'clean:phonegap-build',
         'deploy',
-        //   'phonegap:build',
         'copy:resources-phonegap',
         'template:index-phonegap',
         'template:config-phonegap',
@@ -883,6 +888,16 @@ module.exports = function (grunt) {
         'testflight:iOS',
         'template:index-dl',
         'copy:resources-dl'
+    ]);
+    grunt.registerTask('phonegap-only-zip', [
+        'clean:phonegap-target',
+        'clean:phonegap-build',
+        'deploy',
+        'copy:resources-phonegap',
+        'template:index-phonegap',
+        'template:config-phonegap',
+        'compress',
+        'phonegap-build:only-zip'
     ]);
 
     grunt.registerTask('phonegap-splash', [

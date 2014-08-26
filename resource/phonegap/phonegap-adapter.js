@@ -2,8 +2,6 @@ var deviceReady = false;
 
 // device APIs are available
 function onDeviceReady() {
-    console.log('onDeviceReady')
-    console.log(arguments)
     console.log('device ready')
     console.log('check device ' + (typeof device))
     console.log('check requirejs ' + (typeof define))
@@ -12,7 +10,7 @@ function onDeviceReady() {
     deviceReady = true;
     // do function
     //checkConnection();
-    //initPuship();
+    initPuship();
 }
 
 function prettify(object) {
