@@ -496,8 +496,11 @@ module.exports = function (grunt) {
                 config: 'resource/phonegap/config.xml',
                 path: 'phonegap-build',
                 plugins: [
-                    './resource/phonegap/plugins/org.apache.cordova.device',
-                    './resource/phonegap/plugins/org.apache.cordova.splashscreen',
+                    'org.apache.cordova.console',
+                    'org.apache.cordova.device',
+                    'com.phonegap.plugins.pushplugin'
+                    //'./resource/phonegap/plugins/org.apache.cordova.device',
+                    //'./resource/phonegap/plugins/org.apache.cordova.splashscreen',
                     //'./resource/phonegap/plugins/com.cesidiodibenedetto.filechooser'
                 ],
                 platforms: ['android'],
@@ -575,7 +578,10 @@ module.exports = function (grunt) {
             'index-phonegap': {
                 'options': {
                     'data': {
-                        'phonegapFiles': '<script src="phonegap.js"></script> <script src="vendor/puship/PushipNotification.js"></script> <script src="phonegap-adapter.js">'
+                        'phonegapFiles': '<script src="cordova.js"></script>'+
+                                        '<script src="phonegap.js"></script>'+
+                                        '<script src="vendor/puship/PushipNotification.js"></script>'+
+                                        '<script src="phonegap-adapter.js"></script>'
                     }
                 },
                 'files': {
@@ -585,7 +591,10 @@ module.exports = function (grunt) {
             'local-index-phonegap': {
                 'options': {
                     'data': {
-                        'phonegapFiles': '<script src="phonegap.js"></script>'
+                        'phonegapFiles': '<script src="cordova.js"></script>'+
+                                        '<script src="phonegap.js"></script>'+
+                                        '<script src="vendor/puship/PushipNotification.js"></script>'+
+                                        '<script src="phonegap-adapter.js"></script>'
                     }
                 },
                 'files': {

@@ -76,6 +76,9 @@
 
     <!--<gap:plugin name="org.apache.cordova.console" />-->
     <!--<gap:plugin name="org.apache.cordova.contacts" />-->
+    <gap:plugin name="org.apache.cordova.console" version="0.2.7" />
+    <gap:plugin name="org.apache.cordova.device" version="0.2.8" />
+    <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1" />
 
     <!-- puship plugins -->
     <gap:plugin name="org.apache.cordova.console" /> <!-- required -->

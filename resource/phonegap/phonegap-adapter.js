@@ -1,22 +1,18 @@
-//define(function(require){
-//
-//    var angular = require('angular');
-
 var deviceReady = false;
-
-// Wait for device API libraries to load
-document.addEventListener("deviceready", onDeviceReady, false);
 
 // device APIs are available
 function onDeviceReady() {
+    console.log('onDeviceReady')
+    console.log(arguments)
     console.log('device ready')
+    console.log('check device ' + (typeof device))
     console.log('check requirejs ' + (typeof define))
     console.log('check angularjs ' + (typeof angular))
     // set global var
     deviceReady = true;
     // do function
-    checkConnection();
-    initPuship()
+    //checkConnection();
+    //initPuship();
 }
 
 function prettify(object) {
@@ -102,4 +98,6 @@ function initPuship() {
         console.log("Not supported platform");
     }
 }
-//})
+
+// Wait for device API libraries to load
+document.addEventListener("deviceready", onDeviceReady, false);
