@@ -622,7 +622,8 @@ module.exports = function (grunt) {
                         'currentApiUrl': globalCameoBuildConfig.config.apiUrl,
                         'currentVersion': globalCameoBuildConfig.config.version,
                         'autoLogin': globalCameoBuildConfig.config.autoLogin,
-                        'loadingBar': globalCameoBuildConfig.config.loadingBar
+                        'loadingBar': globalCameoBuildConfig.config.loadingBar,
+                        'enableDebug': globalCameoBuildConfig.config.enableDebug
                     }
                 },
                 'files': {
@@ -826,16 +827,6 @@ module.exports = function (grunt) {
                     stdout: false
                 },
                 command: 'cd test/e2e/keys && rm -f *.key && ssh-keygen -N "" -f 1.key && ssh-keygen -N "" -f 2.key && ssh-keygen -N "" -f 3.key && ssh-keygen -N "" -f 4.key && ssh-keygen -N "" -f 5.key&& rm *.key.pub'
-            }
-        },
-        exec: {
-            generateKeys: './bin/genKey.sh'
-        },
-        sloc: {
-            'code-coverage': {
-                files: {
-                    './app': ['base/*.js', 'comps/**/*.js', 'css/*.css', 'routes/**/*.js']
-                }
             }
         }
     });

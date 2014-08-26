@@ -125,6 +125,7 @@ cameo_config = {
     env: {
         autoLogin: ('<%= autoLogin %>' == 'true'),
         loadingBar: ('<%= loadingBar %>' == 'true'),
+        enableDebug: ('<%= enableDebug %>' == 'true'),
         isiOS: ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false ),
         isNotMobile: (function() {
             var check = false;

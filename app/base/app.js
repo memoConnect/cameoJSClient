@@ -39,7 +39,7 @@ define([
 
         function (cmLanguageProvider, cmLoggerProvider, cmApiProvider, cmCallbackQueueProvider){
             cmLoggerProvider
-                .debugEnabled(true)
+                .debugEnabled(cameo_config.env.enableDebug)
 
             cmApiProvider
                 .restApiUrl( cameo_config.restApi )

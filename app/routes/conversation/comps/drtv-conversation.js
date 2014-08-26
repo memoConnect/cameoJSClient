@@ -103,15 +103,8 @@ angular.module('cmRouteConversation')
                  * @param prevDate
                  * @returns {boolean}
                  */
-                $scope.compareDate = function(current, prev){
-                    if(typeof current !== 'undefined' && typeof prev !== 'undefined'){
-                        if( (new Date(current)).getDate() > (new Date(prev)).getDate() ){
-                            return true;
-                        }
-                    } else if(typeof current !== 'undefined' && typeof prev === 'undefined') {
-                        return true;
-                    }
-                    return false;
+                $scope.compareDate = function(current, prev) {
+                    return cmUtil.compareDate(current, prev);
                 };
 
                 $scope.showAsymmetricKeyError = function(){
@@ -123,7 +116,7 @@ angular.module('cmRouteConversation')
                         showedAsymmetricKeyError = true;
                         cmNotify.warn('CONVERSATION.WARN.ASYMMETRIC_DECRYPT_ERROR',{ttl:0});
                     }
-                }
+                };
 
                 $scope.showGoToSettingsModal = function(){
 //                    cmLogger.debug('cmConversationDRTV.showGoToSettingsModal')
@@ -143,7 +136,7 @@ angular.module('cmRouteConversation')
                         }
                         cmNotify.warn('CONVERSATION.WARN.PASSWORD_NEEDED',{ttl:0,i18n:settingsLinker});
                     }
-                }
+                };
 
                 /**
                  * validator helper

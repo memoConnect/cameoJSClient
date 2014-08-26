@@ -798,7 +798,7 @@ angular.module('cmCore')
             init();
             self.one('update:finished', function(){
                 if(!self.hasLocalKeys()){
-                    $location.path('/start/welcome');
+                    $location.path('/start/keyinfo');
                 } else {
                     $location.path('/talks');
                 }
