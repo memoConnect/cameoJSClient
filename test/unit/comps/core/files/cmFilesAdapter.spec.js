@@ -10,7 +10,7 @@ describe('cmFilesAdapter', function(){
             function(cmApiProvider){
                 cmApiProvider.restApiUrl(apiUrl)
             }
-        ]));
+        ]))
     beforeEach(inject(function(_cmFilesAdapter_, _$httpBackend_, _$rootScope_){
         cmFilesAdapter = _cmFilesAdapter_
         $httpBackend = _$httpBackend_
