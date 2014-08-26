@@ -139,8 +139,8 @@ angular.module('cmCore')
                     cDate.setTime(cDate.getTime() - cDate.getTimezoneOffset()*60*1000);
                     pDate.setTime(pDate.getTime() - pDate.getTimezoneOffset()*60*1000);
 
-                    console.log('cDate ' + cDate + ' - cDate UTC + ' + cDate.toUTCString())
-                    console.log('pDate ' + pDate + ' - pDate UTC + ' + pDate.toUTCString())
+                    //console.log('cDate ' + cDate + ' - cDate UTC + ' + cDate.toUTCString())
+                    //console.log('pDate ' + pDate + ' - pDate UTC + ' + pDate.toUTCString())
 
                     //if ((cDate.getFullYear() > pDate.getFullYear())
                     //    || (cDate.getMonth() > pDate.getMonth())
