@@ -34,35 +34,6 @@
 
         <div ng-view cm-view class="view-frame cm-content" ng-class="css"></div>
     </div>
-
-    <scrip>
-        Puship.PushipAppId = "gAV1O8QJasNr8K0"
-
-        if (Puship.Common.GetCurrentOs()==Puship.OS.ANDROID){
-        var GCMCode = your_sender_id; // This is the senderID provided by Google. I.E.: "28654934133"
-        Puship.GCM.Register(GCMCode,
-        {
-        successCallback: function (pushipresult){
-        navigator.notification.alert("device registered");
-        },
-        failCallback: function (pushipresult){
-        navigator.notification.alert("error during registration: "+ JSON.stringify(pushipresult));
-        }
-        });
-        } else if (Puship.Common.GetCurrentOs()==Puship.OS.IOS){
-        Puship.APNS.Register(
-        {
-        successCallback: function (pushipresult){
-        navigator.notification.alert("device registered");
-        },
-        failCallback: function (pushipresult){
-        navigator.notification.alert("error during registration: "+ JSON.stringify(pushipresult));
-        }
-        });
-        } else {
-        Console.log("Not supported platform");
-        }
-    </scrip>
 </body>
 </html>
 <!-- modify this file only under templates/ -->

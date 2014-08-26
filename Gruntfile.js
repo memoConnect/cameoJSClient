@@ -575,7 +575,7 @@ module.exports = function (grunt) {
             'index-phonegap': {
                 'options': {
                     'data': {
-                        'phonegapFiles': '<script src="phonegap.js"></script> <script type="text/javascript" src="./vendor/puship/PushipNotification.js"></script>'
+                        'phonegapFiles': '<script src="phonegap.js"></script> <script src="vendor/puship/PushipNotification.js"></script> <script src="phonegap-adapter.js">'
                     }
                 },
                 'files': {
