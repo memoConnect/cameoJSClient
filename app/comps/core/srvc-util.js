@@ -136,12 +136,25 @@ angular.module('cmCore')
                     var cDate = new Date(current);
                     var pDate = new Date(prev);
 
+                    //cDate.setTime(cDate.getTime() - cDate.getTimezoneOffset()*60*1000);
+                    //pDate.setTime(pDate.getTime() - pDate.getTimezoneOffset()*60*1000);
+
+                    //console.log('cDate ' + cDate + ' - cDate UTC + ' + cDate.toUTCString())
+                    //console.log('pDate ' + pDate + ' - pDate UTC + ' + pDate.toUTCString())
+
                     if ((cDate.getFullYear() > pDate.getFullYear())
                         || (cDate.getMonth() > pDate.getMonth())
                         || (cDate.getDate() > pDate.getDate())
                     ) {
                         return true;
                     }
+
+                    //if ((cDate.getUTCFullYear() > pDate.getUTCFullYear())
+                    //    || (cDate.getUTCMonth() > pDate.getUTCMonth())
+                    //    || (cDate.getUTCDate() > pDate.getUTCDate())
+                    //) {
+                    //    return true;
+                    //}
                 }
             } else if (typeof current !== 'undefined' && typeof prev === 'undefined') {
                 return true;
