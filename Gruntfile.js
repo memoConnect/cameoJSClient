@@ -23,19 +23,22 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-ngdocs');
     grunt.loadNpmTasks('grunt-testflight-jsonresult');
 
+    // set current target
+    var currentTarget = grunt.option('target') || "default";
+
     // cameo secrets
     var globalCameoSecrets = (function () {
-        src = '../cameoSecrets/cameoJSClientSecrets.json';
-        if (grunt.file.exists(src)) {
-            return grunt.file.readJSON(src);
+        dummySrc = './config/cameoJSClientSecrets_dummy.json';
+        secretSrc = '../cameoSecrets/cameoJSClientSecrets_'+currentTarget+'.json';
+
+        if (grunt.file.exists(secretSrc)) {
+            return grunt.file.readJSON(secretSrc);
         }
         else {
-            return {"phonegap": {"email": "a", "password": "b"}, "testflight": {"apiToken": "a", "teamToken": "b"}};
+            return grunt.file.readJSON(dummySrc);
         }
     })();
 
-    // set current target
-    var currentTarget = grunt.option('target') || "default";
     // cameo build config
     var globalCameoBuildConfig = (function () {
         var buildConfig;
@@ -82,7 +85,6 @@ module.exports = function (grunt) {
                 buildConfig.phonegap.extraName = "-" + v[0];
             } else {
                 buildConfig.phonegap.version = version;
-                buildConfig.phonegap.extraName = "";
             }
 
             console.log("phonegap name: " + buildConfig.phonegap.baseName + buildConfig.phonegap.extraName);
@@ -667,11 +669,23 @@ module.exports = function (grunt) {
                     'data': {
                         'currentName': globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName,
                         'currentVersion': globalCameoBuildConfig.phonegap.version,
-                        'currentAppId': globalCameoBuildConfig.phonegap.bundleId
+                        'currentAppId': globalCameoBuildConfig.phonegap.bundleId,
+                        'logLevel' : globalCameoBuildConfig.config.logLevel
                     }
                 },
                 'files': {
                     'phonegap-build/www/config.xml': ['templates/config.xml']
+                }
+            },
+            'phonegap-adapter': {
+                'options': {
+                    'data': {
+                        'pushIpAppId': globalCameoSecrets.puship.appId,
+                        'googleSenderId': globalCameoSecrets.google.senderId
+                    }
+                },
+                'files': {
+                    'phonegap-build/www/phonegap-adapter.js': ['templates/phonegap-adapter.js']
                 }
             },
             'local-config-phonegap': {
@@ -679,7 +693,8 @@ module.exports = function (grunt) {
                     'data': {
                         'currentName': globalCameoBuildConfig.phonegap.baseName,
                         'currentVersion': globalCameoBuildConfig.phonegap.version,
-                        'currentAppId': globalCameoBuildConfig.phonegap.bundleId
+                        'currentAppId': globalCameoBuildConfig.phonegap.bundleId,
+                        'logLevel' : globalCameoBuildConfig.config.logLevel
                     }
                 },
                 'files': {
@@ -869,6 +884,7 @@ module.exports = function (grunt) {
     // phonegap to device
     grunt.registerTask('phonegap-local', [
         'template:local-config-phonegap',
+        'template:phonegap-adapter',
         'phonegap:build',
         'copy:local-resources-phonegap',
         'template:local-index-phonegap'
@@ -882,6 +898,7 @@ module.exports = function (grunt) {
         'copy:resources-phonegap',
         'template:index-phonegap',
         'template:config-phonegap',
+        'template:phonegap-adapter',
         'compress',
         'phonegap-build:debug',
         'copy:phonegap-target',
@@ -896,6 +913,7 @@ module.exports = function (grunt) {
         'copy:resources-phonegap',
         'template:index-phonegap',
         'template:config-phonegap',
+        'template:phonegap-adapter',
         'compress',
         'phonegap-build:only-zip'
     ]);
@@ -916,6 +934,7 @@ module.exports = function (grunt) {
         'template:main-webApp',
         'template:index-www',
         'template:config-phonegap',
+        'template:phonegap-adapter',
         'template:config-protractor',
         'concat:less',
         'less',

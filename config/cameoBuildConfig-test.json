@@ -3,10 +3,13 @@
         "apiUrl": "http://localhost:9000/a/v1",
         "autoLogin": false,
         "loadingBar": false,
-        "enableDebug": true
+        "enableDebug": true,
+        "logLevel": "DEBUG"
     },
     "phonegap": {
         "baseName" : "cameoNet-test" ,
-        "appId" : "io.cameo.cameonet.client.web.mobile.app.test"
+        "appId" : "io.cameo.cameonet.client.web.mobile.app.test",
+        "bundleId" : "de.cameonet.app.test.test",
+        "extraName" : ""
     }
 }

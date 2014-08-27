@@ -12,7 +12,7 @@
     <!-- <access origin="http://puship.cloudapp.net" /> -->
     <content src="index.html" />
 
-    <log level="ERROR"/>
+    <log level="<%= logLevel %>"/>
 
     <preference name="phonegap-version" value="3.5.0" />
 

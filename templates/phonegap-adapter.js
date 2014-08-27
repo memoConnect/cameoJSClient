@@ -69,9 +69,9 @@ function checkConnection() {
 
 function initPuship() {
     console.log("*******************************************")
-    Puship.PushipAppId = "gAV1O8QJasNr8K0";
+    Puship.PushipAppId = "<%= pushIpAppId %>";
     if (Puship.Common.GetCurrentOs() == Puship.OS.ANDROID) {
-        var GCMCode = "283512756921"; // This is the senderID provided by Google. I.E.: "28654934133"
+        var GCMCode = "<%= googleSenderId %>"; // This is the senderID provided by Google. I.E.: "28654934133"
         Puship.GCM.Register(GCMCode,
             {
                 successCallback: function (pushipresult) {
