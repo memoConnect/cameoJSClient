@@ -767,6 +767,7 @@ angular.module('cmConversations')
                         .importBase64(this.tmpPassCaptcha)
                         .prepareForUpload()
                         .then(function(){
+                            console.log('cmConversationModel savePassCaptcha before Upload Chunks')
                             self.passCaptcha.uploadChunks();
                          });
 

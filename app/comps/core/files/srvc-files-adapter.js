@@ -20,6 +20,7 @@ angular.module('cmCore').service('cmFilesAdapter', [
             },
 
             addChunk: function(fileId, index, chunk) {
+                console.log('addChunk:', chunk)
                 return cmApi.postBinary({
                     path: '/file/'+fileId,
                     data: chunk,
@@ -135,7 +136,7 @@ angular.module('cmCore').service('cmFilesAdapter', [
 
                 return b64Data
                 .replace(/\r?\n|\r/g,'')
-                .replace(new RegExp('^(data:.{0,100};base64,)(.*)$','i'),function(){
+                .replace(new RegExp('^(data:.{0,100};base64,|data:.{0,100}base64,)(.*)$','i'),function(){
                     return arguments[2];// return the cleared base64
                 });
             },

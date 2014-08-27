@@ -63,6 +63,7 @@ angular.module('cmCore').factory('cmFileModel', [
             // upload for state = new
 
             this.importBase64 = function(base64){
+                console.log('importBase64:', base64)
                 if(typeof base64 !== 'undefined'){
                     this.type = base64.replace(new RegExp('^(data:(.*);base64,.*)','i'),'$2');
 
@@ -265,6 +266,7 @@ angular.module('cmCore').factory('cmFileModel', [
                             chunks: self.chunks.length
                         })
                         .then(function(id){
+                                console.log('prepareFile success', id)
                             return self.id = id
                         })
                     :   cmLogger.debug('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
@@ -273,11 +275,15 @@ angular.module('cmCore').factory('cmFileModel', [
 
             this._uploadChunk = function(index){
                 var chunk = this.chunks[index];
+                console.log('uploadChunk', chunk)
+
 
                 chunk
                     .encrypt(passphrase)
                     .upload(this.id, index)
                     .then(function(){
+                        console.log('uploadChunk ready!')
+
                         self.trigger('progress:chunk', (index/self.chunks.length));
 
                         if(index == (self.chunks.length - 1)){
