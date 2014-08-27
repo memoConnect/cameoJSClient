@@ -670,7 +670,7 @@ module.exports = function (grunt) {
                         'currentName': globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName,
                         'currentVersion': globalCameoBuildConfig.phonegap.version,
                         'currentAppId': globalCameoBuildConfig.phonegap.bundleId,
-                        'logLevel' : globalCameoBuildConfig.config.logLevel
+                        'logLevel' : globalCameoBuildConfig.config.logLevel || 'DEBUG'
                     }
                 },
                 'files': {
