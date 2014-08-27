@@ -1,0 +1,13 @@
+
+<section class="theme-a" ng-controller="ErrorCtrl">
+    <cm-header></cm-header>
+    <h2>{{'APP.ERROR'|cmTranslate}}</h2>
+    <pre class = "error">
+        {{data_str}}
+    </pre>
+        <a ng-click ="goto('/logout')">{{'APP.ERROR.LOGOUT'|cmTranslate}}</a>
+        <br/>
+        <br/>
+        <a ng-click ="goto('/talks')">{{'APP.ERROR.BACK_TO_TALKS'|cmTranslate}}</a>
+</section>
+

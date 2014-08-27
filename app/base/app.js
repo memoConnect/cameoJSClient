@@ -23,7 +23,7 @@ define([
         'angular-loading-bar',
         'cmCore',
         'cmUi',
-        'cmContacts'
+        'cmContacts',
     ])
 
     .constant('cmEnv',cameo_config.env)
@@ -178,7 +178,8 @@ define([
         'cmApi',
         'cmHooks',
         'cmSystemCheck',
-        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks, cmSystemCheck) {
+        'cmError',
+        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks, cmSystemCheck, cmError) {
 
             //get browser language:
             cmApi.get({
@@ -336,6 +337,7 @@ define([
 
             // Systemcheck
             cmSystemCheck.run(true);
+
         }
     ])
 
