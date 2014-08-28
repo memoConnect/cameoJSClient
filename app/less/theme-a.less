@@ -1,15 +1,15 @@
 .theme-a{
   color: @cm-grey;
   background-color: @cm-white;
-  padding-bottom: 3rem !important;
+
   >* {
     padding: 0 2rem;
   }
 
-  div.section{
+  .section{
     padding:0!important;
   }
-  div.section > * {
+  .section > * {
     padding: 0 2rem;
   }
 
@@ -250,6 +250,12 @@
   .cm-special-text {
     .tac;
     font-size:4em;
+  }
+
+  .circle-border {
+    -webkit-border-radius: @cm-unit;
+    -moz-border-radius: @cm-unit;
+    border-radius: @cm-unit;
   }
 }
 
