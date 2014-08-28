@@ -16,6 +16,9 @@ angular.module('cmFiles').directive('cmFiles',[
                 this.setFile = function(blob){
                     var bool = true;
 
+                    console.log('####setFile')
+                    console.log(JSON.stringify(blob))
+
                     angular.forEach($scope.files, function(value){
                         if(value.name == blob.name){
                             bool = false;
