@@ -69,6 +69,8 @@ angular.module('cmCore').factory('cmFileModel', [
 
                     this.blob = cmFilesAdapter.binaryToBlob(cmFilesAdapter.base64ToBinary(base64),this.type);
 
+                    console.log('blob:', this.blob);
+
                     this.chopIntoChunks(128);
                 }
                 return this;
