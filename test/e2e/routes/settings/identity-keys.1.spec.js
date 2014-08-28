@@ -69,7 +69,7 @@ describe('Identity key settings: ', function () {
         })
 
         it('wait for key generation and display key', function () {
-            util.waitForElementVisible("[data-qa='page-save-key']", 50000)
+            util.waitForElementVisible("[data-qa='page-save-key']", 60000)
 
             expect($("[data-qa='input-key-name']").getAttribute('value')).toBeTruthy()
 
