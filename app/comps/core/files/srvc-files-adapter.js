@@ -164,6 +164,9 @@ angular.module('cmCore').service('cmFilesAdapter', [
                     var filereader = new FileReader();
                     filereader.onload = function(e){
                         objUrl.src = e.target.result;
+
+                        console.log('getBlobUrl', objUrl.src);
+
                         deferred.resolve(objUrl);
                     };
                     filereader.readAsDataURL(blob);
