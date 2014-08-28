@@ -13,7 +13,7 @@
 
     <log level="ERROR"/>
 
-    <preference name="phonegap-version" value="3.5.0" />
+    <preference name="phonegap-version" value="3.4.0" />
 
     <gap:platform name="android" />
     <gap:platform name="winphone" />
@@ -23,11 +23,7 @@
     <preference name="permissions" value="none" />
 
     <!-- plugins -->
-    <!-- <gap:plugin name="org.apache.cordova.media-capture" version="0.2.8" /> -->
-    <!-- <gap:plugin name="nl.x-services.plugins.launchmyapp" version="3.2.0">
-        <param name="URL_SCHEME" value="https://cameonet.de/p/" />
-    </gap:plugin> -->
-    <!-- <gap:plugin name="org.apache.cordova.console" version="0.2.7" /> -->
+    <gap:plugin name="org.apache.cordova.file" version="1.0.1" />
 
     <!-- multiplatform -->
     <preference name="DisallowOverscroll" value="true"/>
