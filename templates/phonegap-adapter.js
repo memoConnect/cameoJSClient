@@ -68,41 +68,64 @@ function checkConnection() {
 }
 
 function initPuship() {
-    console.log("*******************************************")
+    console.info("#####")
+    console.info("initPuship")
     Puship.PushipAppId = "<%= pushIpAppId %>";
+
+    function censor(censor) {
+        var i = 0;
+
+        return function(key, value) {
+            if(i !== 0 && typeof(censor) === 'object' && typeof(value) == 'object' && censor == value)
+                return '[Circular]';
+
+            if(i >= 29) // seems to be a harded maximum of 30 serialized objects?
+                return '[Unknown]';
+
+            ++i; // so we know we aren't using the original object anymore
+
+            return value;
+        }
+    }
+
     if (Puship.Common.GetCurrentOs() == Puship.OS.ANDROID) {
         var GCMCode = "<%= googleSenderId %>"; // This is the senderID provided by Google. I.E.: "28654934133"
-        Puship.GCM.Register(GCMCode,
-            {
-                successCallback: function (pushipresult) {
-                    navigator.notification.alert("device registered");
-                    console.log("device registered")
-                },
-                failCallback: function (pushipresult) {
-                    navigator.notification.alert("error during registration: " + JSON.stringify(pushipresult));
-                }
-            });
+        Puship.GCM.Register(GCMCode,{
+            successCallback: function (pushipresult) {
+                console.info("#####")
+                console.info("device registered")
+//                console.info("device registered: " +JSON.stringify(pushipresult, censor(pushipresult)))
+                console.info("DeviceToken: "+pushipresult.DeviceToken+" DeviceId:"+pushipresult.DeviceId)
+            },
+            failCallback: function (pushipresult) {
+                console.info("#####")
+                console.info("error during registration: " + JSON.stringify(pushipresult))
+            }
+        });
     } else if (Puship.Common.GetCurrentOs() == Puship.OS.IOS) {
-        Puship.APNS.Register(
-            {
-                successCallback: function (pushipresult) {
-                    navigator.notification.alert("device registered");
-                },
-                failCallback: function (pushipresult) {
-                    navigator.notification.alert("error during registration: " + JSON.stringify(pushipresult));
-                }
-            });
+        Puship.APNS.Register({
+            successCallback: function (pushipresult) {
+                console.info("#####")
+                console.info("device registered: " +JSON.stringify(pushipresult, censor(pushipresult)))
+                console.info("DeviceToken: "+pushipresult.DeviceToken+" DeviceId:"+pushipresult.DeviceId)
+            },
+            failCallback: function (pushipresult) {
+                console.info("#####")
+                console.info("error during registration: " + JSON.stringify(pushipresult))
+            }
+        });
     } else {
-        console.log("Not supported platform");
+        console.info("Not supported platform");
     }
 
     Puship.Common.OnPushReceived(function (event) {
-        console.log('push received');
+        console.info("#####")
+        console.info('push received');
         try {
-            alert(event.notification.Alert);
+            console.info(event.notification.Alert);
         }
         catch (err) {
-            console.warn("Cannot display alert in background");
+            console.info("Cannot display alert in background");
         }
     });
 
@@ -111,16 +134,18 @@ function initPuship() {
             //limit: 10, //max limit is 50 default is 20
             //offset: 100,
             successCallback: function (regresult) {
-                console.log("GetPushMessagesByDevice done");
+                console.info("#####")
+                console.info("GetPushMessagesByDevice done");
 
                 if (regresult.length > 0) {
-                    navigator.notification.alert("Message 1 of " + regresult.length + ": " + regresult[0].Message);
+                    console.info("Message 1 of " + regresult.length + ": " + regresult[0].Message)
                 } else {
-                    navigator.notification.alert("No message found");
+                    console.info("No message found");
                 }
             },
             failCallback: function (regresult) {
-                navigator.notification.alert("error during GetPushMessagesByDevice: " + regresult);
+                console.info("#####")
+                console.info("error during GetPushMessagesByDevice: " + JSON.stringify(regresult))
             }
         });
 }
