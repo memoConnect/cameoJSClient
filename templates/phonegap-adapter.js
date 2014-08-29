@@ -72,6 +72,9 @@ function initPuship() {
     console.info("initPuship")
     Puship.PushipAppId = "<%= pushIpAppId %>";
 
+    Puship.Common.CleanTagFilter();
+    //Puship.Common.AddTagFilter("Moep",{removePrevTag:true})
+
     function censor(censor) {
         var i = 0;
 
@@ -150,5 +153,7 @@ function initPuship() {
         });
 }
 
-// Wait for device API libraries to load
-document.addEventListener("deviceready", onDeviceReady, false);
+function initPhonegap() {
+    // Wait for device API libraries to load
+    document.addEventListener("deviceready", onDeviceReady, false);
+}

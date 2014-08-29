@@ -20,7 +20,7 @@
     <script data-main="base/main.js" src="vendor/requirejs/require.js"></script>
     <%= phonegapFiles %>
 </head>
-<body>
+<body onload="initPhonegap()">
     <div class="app-spinner">
         <div class="app-spinner-center">
             <img src="gfx/spinner_bubble.gif">

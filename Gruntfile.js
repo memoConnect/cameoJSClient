@@ -580,10 +580,9 @@ module.exports = function (grunt) {
             'index-phonegap': {
                 'options': {
                     'data': {
-                        'phonegapFiles': '<script src="cordova.js"></script>'+
-                                        '<script src="phonegap.js"></script>'+
-                                        '<script src="vendor/puship/PushipNotification.js"></script>'+
-                                        '<script src="phonegap-adapter.js"></script>'
+                        'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'+
+                                        '<script type="text/javascript" charset="utf-8" src="vendor/puship/PushipNotification.js"></script>'+
+                                        '<script type="text/javascript" charset="utf-8" src="phonegap-adapter.js"></script>'
                     }
                 },
                 'files': {
@@ -593,10 +592,9 @@ module.exports = function (grunt) {
             'local-index-phonegap': {
                 'options': {
                     'data': {
-                        'phonegapFiles': '<script src="cordova.js"></script>'+
-                                        '<script src="phonegap.js"></script>'+
-                                        '<script src="vendor/puship/PushipNotification.js"></script>'+
-                                        '<script src="phonegap-adapter.js"></script>'
+                        'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'+
+                                        '<script type="text/javascript" charset="utf-8" src="vendor/puship/PushipNotification.js"></script>'+
+                                        '<script type="text/javascript" charset="utf-8" src="phonegap-adapter.js"></script>'
                     }
                 },
                 'files': {
