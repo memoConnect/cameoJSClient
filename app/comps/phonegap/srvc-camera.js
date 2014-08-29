@@ -85,9 +85,9 @@ angular.module('cmPhonegap').service('cmCamera', [
                     function(fileUri){
                         console.log(JSON.stringify(arguments))
                         console.log(fileUri)
-                        console.log(window.resolveLocalFileSystemURI)
+                        console.log(window.resolveLocalFileSystemURL)
 
-                        window.resolveLocalFileSystemURI(fileUri, function(file){
+                        window.resolveLocalFileSystemURL(fileUri, function(file){
                             console.log('whoop')
                             console.log(JSON.stringify(file))
                         }, function(){
