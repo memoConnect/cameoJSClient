@@ -34,13 +34,13 @@ angular.module('cmUi')
                 self.instances[id]
                     .setData(data)
                     .open();
+                self.trigger('modal:opened',id);
             } else {
                 self.one('register', function(event, registered_id){
                     return !!(registered_id == id ? self.open(id, data) : false);
                 });
             }
 
-            self.trigger('modal:opened',id);
             
             return self;
         };

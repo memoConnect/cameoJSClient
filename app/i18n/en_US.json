@@ -6,6 +6,10 @@
         "VERSION": "version"
     },
 
+    "APP": {
+        "ERROR": "An Error occured."
+    },
+
     "LOGIN": {
         "HEADING": "Login",
         "LABEL": {

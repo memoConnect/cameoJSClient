@@ -32,6 +32,11 @@ describe('Event chain for Contacts', function(){
         $httpBackend        = _$httpBackend_
     }))
 
+    beforeEach(inject(function(_$httpBackend_){
+        $httpBackend = _$httpBackend_;
+        $httpBackend.whenGET('/identity/my_new_friend').respond({});
+    }))
+
     describe('backend event friendRequest:new.', function(){
 
         it('should add a new friend request', function(){
@@ -62,7 +67,6 @@ describe('Event chain for Contacts', function(){
     })
 
     describe('backend event friendRequest:accepted', function(){
-
         it('should update a contact corresponding to a friend request from another user.', function(){
             var adapter_triggered   =   0,
                 contact             =   cmContactsModel.contacts.create({

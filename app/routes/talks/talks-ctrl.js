@@ -65,7 +65,6 @@ define([
                 $location.path('/conversation/new');
             };
 
-
             /**
              * Event Handling
              */
