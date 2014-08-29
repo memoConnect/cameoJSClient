@@ -71,7 +71,7 @@ angular.module('cmCore').factory('cmFileModel', [
 
                     this.chopIntoChunks(128).then(
                         function(){
-                            console.log('afterChop Into Chunks', this);
+                            console.log('afterChop Into Chunks', self);
                         }
                     );
 

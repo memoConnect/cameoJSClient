@@ -150,6 +150,7 @@ angular.module('cmCore').service('cmFilesAdapter', [
 
             getBlobUrl: function(blob, useUrl){
                 var useFileReader = useUrl ? false : true,
+                //var useFileReader = false,
                     deferred = $q.defer(),
                     objUrl = {
                         src: '',
@@ -160,6 +161,7 @@ angular.module('cmCore').service('cmFilesAdapter', [
                     };
 
                 if(useFileReader){
+                    console.log('FileReader yo!')
                     // filereader
                     var filereader = new FileReader();
                     filereader.onload = function(e){
@@ -171,6 +173,7 @@ angular.module('cmCore').service('cmFilesAdapter', [
                     };
                     filereader.readAsDataURL(blob);
                 } else {
+                    console.log('FileReader n/a!')
                     // URL type
                     var URL = window.URL || window.webkitURL;
                     objUrl = {
@@ -181,6 +184,8 @@ angular.module('cmCore').service('cmFilesAdapter', [
                             return true;
                         }
                     };
+                    console.log('objUrl',objUrl);
+
                     deferred.resolve(objUrl);
                 }
 
