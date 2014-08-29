@@ -75,6 +75,12 @@ describe('Identity key settings: ', function () {
 
             util.clearInput("input-key-name")
             $("[data-qa='input-key-name']").sendKeys(keyName)
+
+            /**
+             * test
+             */
+            $("body").click();
+
             $("[data-qa='btn-save-key']").click()
 
         })
