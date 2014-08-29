@@ -649,6 +649,9 @@
         "IMPRINT": {
             "HEADLINE": "Imprint",
             "CONTENT": "cameoNet is provided by:<br>memo Connect GmbH<br>Große Nikolaistraße 7 06108 Halle (Saale) Germany<br>Fon: +49 345 213 79 66 5<br>Fax: +49 345 213 79 66 59<br>Amtsgericht Stendal HRB 20018<br>Directors: Michael Merz, Dr. Holger Haedrich"
+        },
+        "CONFIRM": {
+            "HEADER": "Please Confirm!"
         }
     },
     "MENU": {

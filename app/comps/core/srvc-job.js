@@ -4,9 +4,10 @@ angular.module('cmCore').service('cmJob', [
     '$rootScope',
     '$window',
     '$location',
-    'cmLogger',
     'cmTranslate',
-    function($rootScope, $window, $location, cmLogger, cmTranslate){
+    'cmHooks',
+    'cmLogger',
+    function($rootScope, $window, $location, cmTranslate, cmHooks, cmLogger){
 
         var jobIsActive = false,
             jobFunction = null;
@@ -15,7 +16,7 @@ angular.module('cmCore').service('cmJob', [
             isActive: function(){
                 return jobIsActive;
             },
-            start: function(message){
+            start: function(message, cancelCallback){
                 cmLogger.debug('job start '+message)
                 jobIsActive = true;
 
@@ -25,11 +26,14 @@ angular.module('cmCore').service('cmJob', [
 
                 jobFunction = $rootScope.$on('$locationChangeStart', function(event, next) {
                     event.preventDefault();
-                    var answer = confirm(cmTranslate(message||'JOB.IN_PROGRESS'))
-                    if (answer) {
+
+                    cmHooks.openModalConfirm(message, function(){
+                        if(typeof cancelCallback == 'function'){
+                            cancelCallback();
+                        }
+
                         $location.url($location.url(next).hash());
-                        $rootScope.$apply();
-                    }
+                    });
                 });
             },
             stop: function(){
