@@ -53,7 +53,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                  */
                 $scope.generate = function(){
                     $scope.active = 'generate';
-                    cmJob.start('DRTV.CONFIRM.HEADER', $scope.cancel);
+                    cmJob.start('DRTV.CONFIRM.STANDARD', $scope.cancel);
 
                     var size = 2048;
                     if($scope.keySize == 4096){
