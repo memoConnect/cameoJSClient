@@ -13,7 +13,7 @@
 
     <log level="ERROR"/>
 
-    <preference name="phonegap-version" value="3.4.0" />
+    <preference name="phonegap-version" value="3.5.0" />
 
     <gap:platform name="android" />
     <gap:platform name="winphone" />
@@ -24,6 +24,7 @@
 
     <!-- plugins -->
     <gap:plugin name="org.apache.cordova.file" version="1.0.1" />
+    <gap:plugin name="org.apache.cordova.file-transfer" version="0.4.2" />
 
     <!-- multiplatform -->
     <preference name="DisallowOverscroll" value="true"/>
