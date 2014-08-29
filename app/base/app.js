@@ -11,6 +11,7 @@ define([
     'pckCore',
     'pckUi',
     'pckContacts',
+    'pckPhonegap',
     'base/config'
 ], function (angularAMD) {
     'use strict';
@@ -24,6 +25,7 @@ define([
         'cmCore',
         'cmUi',
         'cmContacts',
+        'cmPhonegap'
     ])
 
     .constant('cmEnv',cameo_config.env)

@@ -277,6 +277,7 @@ module.exports = function (grunt) {
                     'files': 'app/comps/files',
                     'security_aspects': 'app/comps/security_aspects',
                     'ui': 'app/comps/ui',
+                    'phonegap': 'app/comps/phonegap',
                     'route-conversation': 'app/routes/conversation/comps',
                     'route-settings': 'app/routes/settings/comps',
                     'route-contacts': 'app/routes/contacts/comps',
@@ -575,7 +576,7 @@ module.exports = function (grunt) {
             'index-phonegap': {
                 'options': {
                     'data': {
-                        'phonegapFiles': '<script src="phonegap.js"></script>'
+                        'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'
                     }
                 },
                 'files': {
@@ -585,7 +586,7 @@ module.exports = function (grunt) {
             'local-index-phonegap': {
                 'options': {
                     'data': {
-                        'phonegapFiles': '<script src="phonegap.js"></script>'
+                        'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'
                     }
                 },
                 'files': {

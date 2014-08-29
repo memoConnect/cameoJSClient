@@ -1,7 +1,10 @@
 'use strict';
 
+// https://github.com/apache/cordova-plugin-camera/blob/b76b5ae670bdff4dd4c716e889ab12e049f9c733/doc/index.mdhttps://github.com/apache/cordova-plugin-camera/blob/b76b5ae670bdff4dd4c716e889ab12e049f9c733/doc/index.md
+
 angular.module('cmFiles').directive('cmFileChoose', [
-    function () {
+    'cmPhonegap', 'cmCamera',
+    function (cmPhonegap, cmCamera) {
 
         var tpl = '<input type="file" data-qa="btn-file-choose" />'
 
@@ -18,11 +21,27 @@ angular.module('cmFiles').directive('cmFileChoose', [
                     element.find('input').attr('cm-resets',index);
                 }
 
-                // default fileapi
-                // file is selected
-                element.on('change', function (event) {
-                    cmFilesCtrl.setFile(event.target.files[0]);
-                });
+                // phonegap
+                if (cmPhonegap.isAvailable() && cmPhonegap.isAndroid()){
+                    element.on('click', function (evt) {
+                        evt.preventDefault();
+                        evt.stopPropagation();
+
+//                        cmCamera.takePhoto(function(blob){
+//                            cmFilesCtrl.setFile(blob);
+//                        });
+
+                        cmCamera.chooseFile(function(){
+
+                        });
+                    });
+                } else {
+                    // default fileapi
+                    // file is selected
+                    element.on('change', function (event) {
+                        cmFilesCtrl.setFile(event.target.files[0]);
+                    });
+                }
 
                 // reset files from sended message
                 scope.$on('reset:files',function(){

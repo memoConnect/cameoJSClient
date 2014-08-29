@@ -23,6 +23,8 @@
     <preference name="permissions" value="none" />
 
     <!-- plugins -->
+    <gap:plugin name="org.apache.cordova.device" version="0.2.8" />
+    <gap:plugin name="org.apache.cordova.camera" version="0.2.9" />
     <gap:plugin name="org.apache.cordova.file" version="1.0.1" />
     <gap:plugin name="org.apache.cordova.file-transfer" version="0.4.2" />
 
