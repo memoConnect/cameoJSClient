@@ -14,10 +14,11 @@ angular.module('cmCore').service('cmJob', [
 
         return {
             isActive: function(){
+                cmLogger.debug('cmJob.isActive');
                 return jobIsActive;
             },
             start: function(message, cancelCallback){
-                cmLogger.debug('job start '+message)
+                cmLogger.debug('cmJob.start '+message);
                 jobIsActive = true;
 
                 $window.onbeforeunload = function () {
@@ -37,7 +38,7 @@ angular.module('cmCore').service('cmJob', [
                 });
             },
             stop: function(){
-                cmLogger.debug('job stop')
+                cmLogger.debug('cmJob.stop');
                 jobIsActive = false;
 
                 $window.onbeforeunload = null;

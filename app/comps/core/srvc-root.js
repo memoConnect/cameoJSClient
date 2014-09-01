@@ -6,7 +6,7 @@ angular.module('cmCore').service('cmRoot', [
     '$location',
     function(cmLogger, cmJob, $location){
         this.goTo = function(path, replace){
-            cmLogger.debug('cmRoot.goTo');
+            cmLogger.debug('cmRoot.goTo ' + path);
 
             path = path[0] == '/' ? path : '/'+path;
             $location.path(path);
