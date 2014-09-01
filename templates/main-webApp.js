@@ -51,6 +51,7 @@ require.config({
         'pckConversations': 'packages/comps/conversations/package',
         'pckFiles': 'packages/comps/files/package',
         'pckSecurityAspects': 'packages/comps/security_aspects/package',
+        'pckWidgets': 'packages/widgets/package',
 
         'pckRouteConversation': 'packages/routes/conversation/comps/package',
         'pckRouteSettings': 'packages/routes/settings/comps/package',
@@ -100,6 +101,10 @@ require.config({
             'pckCore',
             'util-spin',
             'emoji'
+        ],
+        'pckWidgets' : [
+            'pckCore',
+            'pckUi'
         ],
         'pckConversations': [
             'angular',
