@@ -22,7 +22,7 @@ angular.module('cmFiles').directive('cmFileChoose', [
                 }
 
                 // phonegap
-                if (cmPhonegap.isAvailable() && cmPhonegap.isAndroid()){
+                if (cmPhonegap.isAndroid()){
                     element.on('click', function (evt) {
                         evt.preventDefault();
                         evt.stopPropagation();
@@ -31,8 +31,8 @@ angular.module('cmFiles').directive('cmFileChoose', [
 //                            cmFilesCtrl.setFile(blob);
 //                        });
 
-                        cmCamera.chooseFile(function(){
-
+                        cmCamera.chooseFile(function(blob){
+                            cmFilesCtrl.setFile(blob);
                         });
                     });
                 } else {
