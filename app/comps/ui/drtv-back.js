@@ -3,8 +3,7 @@
 angular.module('cmUi').directive('cmBack',[
     '$rootScope',
     '$window',
-    '$location',
-    function ($rootScope, $window, $location){
+    function ($rootScope, $window){
         return {
             restrict: 'AE',
             scope: {
@@ -31,7 +30,7 @@ angular.module('cmUi').directive('cmBack',[
                         $window.history.back();
                         // if is set an default path in route
                     } else if($scope.backTo != ''){
-                        $location.path($scope.backTo);
+                        $scope.goto($scope.backTo);
                     }
                 }
             }
