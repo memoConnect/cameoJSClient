@@ -27,10 +27,10 @@ angular.module('cmUi').directive('cmBack',[
                 $scope.goBack = function(){
                     // if history has more then one index
                     if($rootScope.urlHistory.length > 0 && ('plainBack' in $attrs) == false){
-                        $window.history.back();
+                        $rootScope.goBack();
                         // if is set an default path in route
                     } else if($scope.backTo != ''){
-                        $scope.goto($scope.backTo);
+                        $rootScope.goTo($scope.backTo);
                     }
                 }
             }
