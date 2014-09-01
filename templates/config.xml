@@ -26,7 +26,7 @@
     <gap:plugin name="org.apache.cordova.device" version="0.2.8" />
     <gap:plugin name="org.apache.cordova.camera" version="0.2.9" />
     <gap:plugin name="org.apache.cordova.file" version="1.0.1" />
-    <gap:plugin name="org.apache.cordova.file-transfer" version="0.4.2" />
+    <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1" />
 
     <!-- multiplatform -->
     <preference name="DisallowOverscroll" value="true"/>
@@ -38,6 +38,7 @@
     <preference name="LoadUrlTimeoutValue" value="5000" />
     <preference name="SplashScreenDelay" value="5000" />
     <preference name="ErrorUrl" value=""/>
+    <preference name="AndroidPersistentFileLocation" value="Internal" />
     <!-- build -->
     <preference name="android-minSdkVersion" value="7" />
     <preference name="android-maxSdkVersion" value="19" />
@@ -46,6 +47,7 @@
     <preference name="android-windowSoftInputMode" value="adjustResize" />
 
     <!-- ios -->
+    <preference name="iosPersistentFileLocation" value="Library" />
     <preference name="EnableViewportScale" value="true" />
     <preference name="MediaPlaybackRequiresUserAction" value="true" />
     <preference name="AllowInlineMediaPlayback" value="true" />
