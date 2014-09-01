@@ -25,12 +25,14 @@ module.exports = function (grunt) {
 
     // cameo secrets
     var globalCameoSecrets = (function () {
-        src = '../cameoSecrets/cameoJSClientSecrets.json';
-        if (grunt.file.exists(src)) {
-            return grunt.file.readJSON(src);
+        dummySrc = './config/cameoJSClientSecrets_dummy.json';
+        secretSrc = '../cameoSecrets/cameoJSClientSecrets_'+currentTarget+'.json';
+
+        if (grunt.file.exists(secretSrc)) {
+            return grunt.file.readJSON(secretSrc);
         }
         else {
-            return {"phonegap": {"email": "a", "password": "b"}, "testflight": {"apiToken": "a", "teamToken": "b"}};
+            return grunt.file.readJSON(dummySrc);
         }
     })();
 
