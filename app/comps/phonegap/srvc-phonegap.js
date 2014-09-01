@@ -8,6 +8,11 @@ angular.module('cmPhonegap').service('cmPhonegap', [
             },
             isAndroid: function(){
                 return this.isAvailable() && device.platform.toLowerCase() === 'android'
+            },
+            closeApp: function(){
+                document.addEventListener('backbutton', function(e) {
+                    navigator.app.exitApp();
+                });
             }
         }
     }]
