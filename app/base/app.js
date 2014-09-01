@@ -161,6 +161,14 @@ define([
         }
     ])
     // app run handling
+//    .run(['cmPushNotification',function(cmPushNotification){
+//        // register device for pushnotification
+//        cmPushNotification.register();
+//    }])
+    .run(function() {
+        // disabled the 3000 seconds delay on click when touch ;)
+        FastClick.attach(document.body);
+    })
     /**
      * @TODO cmContactsModel anders initialisieren
      */
@@ -181,8 +189,9 @@ define([
         'cmHooks',
         'cmSystemCheck',
         'cmError',
-        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks, cmSystemCheck, cmError) {
-
+        function ($rootScope, $location, $window, $document, $route,
+                  cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar,
+                  cmEnv, cmApi, cmHooks, cmSystemCheck, cmError) {
             //get browser language:
             cmApi.get({
                 path    : '/services/getBrowserInfo'
@@ -321,8 +330,6 @@ define([
                 }
             });
 
-
-
             //check on resize if the screen is too small for header an footer ( i.e. onscreen keyboard is active)
             angular.element($window).bind('resize', function(){
                 var cm_app = $document[0].querySelector('#cm-app')
@@ -341,11 +348,7 @@ define([
             cmSystemCheck.run(true);
 
         }
-    ])
-
-    .run(function() {
-        FastClick.attach(document.body);
-    });
+    ]);
 
     // bootstrap app and all things after here use app.register.{ng-type}
     angularAMD.bootstrap(app);
