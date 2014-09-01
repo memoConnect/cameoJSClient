@@ -170,6 +170,7 @@ define([
         '$route',
         'cmUserModel',
         'cmContactsModel',
+        'cmRoot',
         'cmSettings',
         'cmLanguage',
         'cmLogger',
@@ -179,7 +180,7 @@ define([
         'cmHooks',
         'cmSystemCheck',
         'cmError',
-        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks, cmSystemCheck, cmError) {
+        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRoot, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks, cmSystemCheck, cmError) {
 
             //get browser language:
             cmApi.get({
@@ -197,13 +198,7 @@ define([
             //prep $rootScope with useful tools
             $rootScope.console  =   window.console;
             $rootScope.alert    =   window.alert;
-            $rootScope.goto     =   function(path, replace){
-                                        path = path[0] == '/' ? path : '/'+path;
-                                        $location.path(path);
-                                        //Todo: find foifferent solution:
-                                        if(replace)
-                                            $location.replace()
-                                    };
+            $rootScope.goto     =   cmRoot.goTo;
 
             //add Overlay handles:
             $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };

@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('cmUi').directive('cmMenu',[
-    '$location',
     'cmUserModel',
     'cmConfig',
     'cmNotify',
-    function ($location, cmUserModel, cmConfig, cmNotify){
+    function (cmUserModel, cmConfig, cmNotify){
         return {
             restrict: 'AE',
             scope: true,
@@ -46,7 +45,7 @@ angular.module('cmUi').directive('cmMenu',[
                         $scope.toggleSubs(parentBtn)
 
                     if(typeof url !== 'undefined'){
-                        $location.path('/'+url);
+                        $scope.goto('/'+url);
                     }
 
                     return false;
