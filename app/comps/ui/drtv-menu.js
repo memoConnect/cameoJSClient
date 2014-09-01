@@ -4,7 +4,8 @@ angular.module('cmUi').directive('cmMenu',[
     'cmUserModel',
     'cmConfig',
     'cmNotify',
-    function (cmUserModel, cmConfig, cmNotify){
+    '$location',
+    function (cmUserModel, cmConfig, cmNotify, $location){
         return {
             restrict: 'AE',
             scope: true,
