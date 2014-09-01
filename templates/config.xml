@@ -9,9 +9,10 @@
     <author href="www.cameonet.de" email="support@cameonet.de">cameoNet</author>
 
     <access origin="*" subdomains="true"  />
+    <!-- <access origin="http://puship.cloudapp.net" /> -->
     <content src="index.html" />
 
-    <log level="ERROR"/>
+    <log level="<%= logLevel %>"/>
 
     <preference name="phonegap-version" value="3.5.0" />
 
@@ -27,6 +28,10 @@
     <gap:plugin name="org.apache.cordova.camera" version="0.2.9" />
     <gap:plugin name="org.apache.cordova.file" version="1.0.1" />
     <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1" />
+
+    <!-- <gap:plugin name="nl.x-services.plugins.launchmyapp" version="3.2.0">
+        <param name="URL_SCHEME" value="https://cameonet.de/p/" />
+    </gap:plugin> -->
 
     <!-- multiplatform -->
     <preference name="DisallowOverscroll" value="true"/>

@@ -23,6 +23,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-ngdocs');
     grunt.loadNpmTasks('grunt-testflight-jsonresult');
 
+    // set current target
+    var currentTarget = grunt.option('target') || "default";
+
     // cameo secrets
     var globalCameoSecrets = (function () {
         dummySrc = './config/cameoJSClientSecrets_dummy.json';
@@ -36,8 +39,6 @@ module.exports = function (grunt) {
         }
     })();
 
-    // set current target
-    var currentTarget = grunt.option('target') || "default";
     // cameo build config
     var globalCameoBuildConfig = (function () {
         var buildConfig;
@@ -499,8 +500,11 @@ module.exports = function (grunt) {
                 config: 'resource/phonegap/config.xml',
                 path: 'phonegap-build',
                 plugins: [
-                    './resource/phonegap/plugins/org.apache.cordova.device',
-                    './resource/phonegap/plugins/org.apache.cordova.splashscreen',
+                    'org.apache.cordova.console',
+                    'org.apache.cordova.device',
+                    'com.phonegap.plugins.pushplugin'
+                    //'./resource/phonegap/plugins/org.apache.cordova.device',
+                    //'./resource/phonegap/plugins/org.apache.cordova.splashscreen',
                     //'./resource/phonegap/plugins/com.cesidiodibenedetto.filechooser'
                 ],
                 platforms: ['android'],
@@ -578,7 +582,9 @@ module.exports = function (grunt) {
             'index-phonegap': {
                 'options': {
                     'data': {
-                        'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'
+                        'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'+
+                                        '<script type="text/javascript" charset="utf-8" src="vendor/puship/PushipNotification.js"></script>'+
+                                        '<script type="text/javascript" charset="utf-8" src="phonegap-adapter.js"></script>'
                     }
                 },
                 'files': {
@@ -588,7 +594,9 @@ module.exports = function (grunt) {
             'local-index-phonegap': {
                 'options': {
                     'data': {
-                        'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'
+                        'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'+
+                                        '<script type="text/javascript" charset="utf-8" src="vendor/puship/PushipNotification.js"></script>'+
+                                        '<script type="text/javascript" charset="utf-8" src="phonegap-adapter.js"></script>'
                     }
                 },
                 'files': {
@@ -661,11 +669,23 @@ module.exports = function (grunt) {
                     'data': {
                         'currentName': globalCameoBuildConfig.phonegap.baseName + globalCameoBuildConfig.phonegap.extraName,
                         'currentVersion': globalCameoBuildConfig.phonegap.version,
-                        'currentAppId': globalCameoBuildConfig.phonegap.bundleId
+                        'currentAppId': globalCameoBuildConfig.phonegap.bundleId,
+                        'logLevel' : globalCameoBuildConfig.config.logLevel || 'DEBUG'
                     }
                 },
                 'files': {
                     'phonegap-build/www/config.xml': ['templates/config.xml']
+                }
+            },
+            'phonegap-adapter': {
+                'options': {
+                    'data': {
+                        'pushIpAppId': globalCameoSecrets.puship.appId,
+                        'googleSenderId': globalCameoSecrets.google.senderId
+                    }
+                },
+                'files': {
+                    'phonegap-build/www/phonegap-adapter.js': ['templates/phonegap-adapter.js']
                 }
             },
             'local-config-phonegap': {
@@ -673,7 +693,8 @@ module.exports = function (grunt) {
                     'data': {
                         'currentName': globalCameoBuildConfig.phonegap.baseName,
                         'currentVersion': globalCameoBuildConfig.phonegap.version,
-                        'currentAppId': globalCameoBuildConfig.phonegap.bundleId
+                        'currentAppId': globalCameoBuildConfig.phonegap.bundleId,
+                        'logLevel' : globalCameoBuildConfig.config.logLevel
                     }
                 },
                 'files': {
@@ -863,6 +884,7 @@ module.exports = function (grunt) {
     // phonegap to device
     grunt.registerTask('phonegap-local', [
         'template:local-config-phonegap',
+        'template:phonegap-adapter',
         'phonegap:build',
         'copy:local-resources-phonegap',
         'template:local-index-phonegap'
@@ -876,6 +898,7 @@ module.exports = function (grunt) {
         'copy:resources-phonegap',
         'template:index-phonegap',
         'template:config-phonegap',
+        'template:phonegap-adapter',
         'compress',
         'phonegap-build:debug',
         'copy:phonegap-target',
@@ -890,6 +913,7 @@ module.exports = function (grunt) {
         'copy:resources-phonegap',
         'template:index-phonegap',
         'template:config-phonegap',
+        'template:phonegap-adapter',
         'compress',
         'phonegap-build:only-zip'
     ]);
@@ -910,6 +934,7 @@ module.exports = function (grunt) {
         'template:main-webApp',
         'template:index-www',
         'template:config-phonegap',
+        'template:phonegap-adapter',
         'template:config-protractor',
         'concat:less',
         'less',
