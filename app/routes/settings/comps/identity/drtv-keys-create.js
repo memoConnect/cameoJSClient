@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
-    'cmUserModel', 'cmCrypt', 'cmUtil', 'cmLogger', 'cmNotify', 'cmKey',
+    'cmUserModel', 'cmCrypt', 'cmUtil', 'cmLogger', 'cmNotify', 'cmKey', 'cmJob',
     '$window', '$rootScope',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey,
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey, cmJob,
              $window, $rootScope){
         return {
             restrict: 'E',
@@ -53,6 +53,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                  */
                 $scope.generate = function(){
                     $scope.active = 'generate';
+                    cmJob.start('DRTV.CONFIRM.STANDARD', $scope.cancelGeneration);
 
                     var size = 2048;
                     if($scope.keySize == 4096){
@@ -81,16 +82,27 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                         function(){
                             $scope.active = 'choose';
                         }
+                    ).finally(
+                        function(){
+                            cmJob.stop();
+                        }
                     );
                 };
 
                 /**
                  * cancel keypair generation
                  */
-                $scope.cancel = function(){
+                $scope.cancelGeneration = function(){
+                    cmLogger.debug('cancel key generation');
                     cmCrypt.cancelGeneration();
+                    cmJob.stop();
                     $scope.active = 'choose';
-                    $window.history.back();
+                };
+
+                $scope.cancel = function(){
+                    cmLogger.debug('cancel');
+                    $scope.cancelGeneration();
+                    $scope.goBack();
                 };
 
                 /**

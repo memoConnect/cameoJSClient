@@ -4,19 +4,27 @@ angular.module('cmCore').service('cmJob', [
     '$rootScope',
     '$window',
     '$location',
-    'cmLogger',
     'cmTranslate',
-    function($rootScope, $window, $location, cmLogger, cmTranslate){
+    'cmHooks',
+    'cmLogger',
+    function($rootScope, $window, $location, cmTranslate, cmHooks, cmLogger){
 
         var jobIsActive = false,
-            jobFunction = null;
+            jobFunction = null,
+            pendingUrl = {path:'',replace:false};
+
+        function resetPendingUrl(){
+            cmLogger.debug('cmJob.resetPendingUrl');
+            pendingUrl = {path:'',replace:false}
+        }
 
         return {
             isActive: function(){
+                //cmLogger.debug('cmJob.isActive');
                 return jobIsActive;
             },
-            start: function(message){
-                cmLogger.debug('job start '+message)
+            start: function(message, cancelCallback){
+                //cmLogger.debug('cmJob.start '+message);
                 jobIsActive = true;
 
                 $window.onbeforeunload = function () {
@@ -25,20 +33,43 @@ angular.module('cmCore').service('cmJob', [
 
                 jobFunction = $rootScope.$on('$locationChangeStart', function(event, next) {
                     event.preventDefault();
-                    var answer = confirm(cmTranslate(message||'JOB.IN_PROGRESS'))
-                    if (answer) {
-                        $location.url($location.url(next).hash());
-                        $rootScope.$apply();
-                    }
+
+                    cmHooks.openModalConfirm(message, function(){
+                        if(typeof cancelCallback == 'function'){
+                            cancelCallback();
+                        }
+
+                        stop();
+
+
+                        if(pendingUrl.path != ''){
+                            $rootScope.goTo(pendingUrl.path, pendingUrl.replace);
+                        } else {
+                            $rootScope.goBack();
+                        }
+                    });
                 });
             },
             stop: function(){
-                cmLogger.debug('job stop')
+                //cmLogger.debug('cmJob.stop');
                 jobIsActive = false;
 
                 $window.onbeforeunload = null;
 
                 jobFunction();
+            },
+            setPendingUrl: function(path, replace){
+                //cmLogger.debug('cmJob.setPendingUrl ' + path);
+
+                if(typeof path == 'string' && path.length > 0){
+                    pendingUrl.path = path;
+
+                    if(replace){
+                        pendingUrl.replace = replace;
+                    }
+
+                    $rootScope.$broadcast('$locationChangeStart');
+                }
             }
         }
     }

@@ -652,6 +652,10 @@
         "IMPRINT": {
             "HEADLINE": "Impressum",
             "CONTENT": "cameoNet ein Dienst der:<br>memo Connect GmbH<br>Große Nikolaistraße 7 06108 Halle (Saale) Germany<br>Fon: +49 345 213 79 66 5<br>Fax: +49 345 213 79 66 59<br>Amtsgericht Stendal HRB 20018<br>Geschäftsführer: Michael Merz, Dr. Holger Haedrich"
+        },
+        "CONFIRM": {
+            "HEADER": "Bitte bestätigen!",
+            "STANDARD": "Möchten Sie den Vorgang wirklich abbrechen?"
         }
     },
 
