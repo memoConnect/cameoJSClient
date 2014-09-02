@@ -6,20 +6,36 @@ define([
     'ngload!pckConversations',
     'ngload!pckRouteConversation',
     'ngload!pckWidgets'
+
 ], function (app) {
     'use strict';
 
     app.register.controller('ConversationCtrl', [
 
-        '$scope',
         '$rootScope',
-        '$element',
+        '$scope',
         '$routeParams',
         '$location',
         'cmConversationFactory',
-        'cmUserModel',
-        
-        function($scope, $rootScope, $element, $routeParams, $location, cmConversationFactory, cmUserModel){
+
+        function($rootScope, $scope, $routeParams, $location, cmConversationFactory){
+
+            //route called without any or with 'new'-parameter:
+            if(!$routeParams.conversationId || $routeParams.conversationId == 'new'){
+                $scope.conversation  = $rootScope.pendingConversation || cmConversationFactory.create()
+            }else{
+                $scope.conversation = cmConversationFactory.create($routeParams.conversationId)
+            }
+
+            console.log($location.path())
+
+            if(!$routeParams.conversationId && $scope.conversation.id)
+                $location.path($location.path() + '/' + $scope.conversation.id)
+            
+
+
+
+            /*
             $scope.isPurl           = false;
             $scope.conversationId   = $routeParams.conversationId;
             $scope.calledWithId     = $scope.conversationId && $scope.conversationId != 'new';
@@ -44,7 +60,7 @@ define([
                                         .addRecipient(cmUserModel.data.identity)
 
             }
-
+            */
 
         }
     ]);
