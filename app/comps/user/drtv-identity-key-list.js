@@ -13,7 +13,6 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                 $scope.publicKeys = [];
                 $scope.trustedKeys = [];
                 $scope.signing = false;
-                $scope.canCreate = true;
                 $scope.isHandshakePossible = false;
                 $scope.showNoLocalKeysOnThisDevice = true;
                 $scope.showUntrustedPublickeysExists = true;
@@ -28,7 +27,6 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                     $scope.signing      =   cmUserModel.state.is('signing');
 
                     $scope.isHandshakePossible = ($scope.privateKeys.length > 0);
-                    $scope.canCreate    = !cmUserModel.hasPrivateKey();
 
                     // no key exists
                     $scope.showNoLocalKeysOnThisDevice =

@@ -1,13 +1,3 @@
-<cm-header cm-rubber-space>
-    <cm-back cm-weight="1" back-to="/settings"></cm-back>
-    <cm-identity cm-weight="6"></cm-identity>
-    <cm-menu cm-weight="1"></cm-menu>
-</cm-header>
-
-<header class="inScreen">
-    <i class="fa cm-key cm-lg-icon"></i> {{'SETTINGS.PAGES.IDENTITY.KEYS.HEADER'|cmTranslate}}
-</header>
-
 <ul>
     <li ng-if="showNoLocalKeysOnThisDevice">
         <div
@@ -87,22 +77,3 @@
         <i class="fa cm-checker cm-lg-icon"></i>
     </button>
 </cm-modal>
-
-<cm-footer ng-if="canCreate" data-qa='canCreate'>
-    <a href="#/settings/identity/key/create"
-        class="item w50 no-pad cm-btn-grey"
-        data-qa="btn-create-key">
-        <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE.BUTTON'|cmTranslate}}</span>
-        <i class="fa cm-create-key icon-left cm-lg-icon"></i>
-    </a>
-    <a href="#/settings/identity/key/import"
-        class="item w50 no-pad cm-btn-grey"
-        data-qa="btn-import-key">
-        <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT.BUTTON'|cmTranslate}}</span>
-        <i class="fa cm-import-key icon-left cm-lg-icon"></i>
-    </a>
-</cm-footer>
-
-<cm-footer ng-if="!canCreate" data-qa='canNotCreate' cm-rubber-space>
-    <cm-default-buttons></cm-default-buttons>
-</cm-footer>

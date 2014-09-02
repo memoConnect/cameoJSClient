@@ -1,1 +1,21 @@
-<cm-identity-key-list class="theme-a"></cm-identity-key-list>
+<h2>
+    <i class="fa cm-key cm-lg-icon"></i>
+    {{'SETTINGS.PAGES.IDENTITY.KEYS.HEADER'|cmTranslate}}
+</h2>
+
+<cm-identity-key-list></cm-identity-key-list>
+
+<cm-footer ng-if="canCreate" data-qa='canCreate'>
+    <a href="#/settings/identity/key/create"
+       class="item w50 no-pad cm-btn-grey"
+       data-qa="btn-create-key">
+        <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE.BUTTON'|cmTranslate}}</span>
+        <i class="fa cm-create-key icon-left cm-lg-icon"></i>
+    </a>
+    <a href="#/settings/identity/key/import"
+       class="item w50 no-pad cm-btn-grey"
+       data-qa="btn-import-key">
+        <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT.BUTTON'|cmTranslate}}</span>
+        <i class="fa cm-import-key icon-left cm-lg-icon"></i>
+    </a>
+</cm-footer>

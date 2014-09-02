@@ -10,14 +10,16 @@
  * @example
  */
 angular.module('cmWidgets').directive('cmWidgetIdentityKeyList', [
-    // no dependencies
-    function(){
+    'cmUserModel',
+    function(cmUserModel){
         return {
             restrict:       'AE',
             scope:          true,
             templateUrl:    'widgets/identity/wdgt-identity-key-list.html',
-            controller: function(){
+            controller: function($scope){
                 //console.log('cmWidgetIdentityKeyList')
+
+                $scope.canCreate = !cmUserModel.hasPrivateKey();
             }
         }
     }
