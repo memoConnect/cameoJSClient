@@ -22,7 +22,7 @@
          ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.UNTRUSTED_PUBLICKEYS_EXISTS'|cmTranslate"></div>
     </li>
     <li ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
-        <a href="#/settings/identity/key/{{key.id}}" class="item tal clearfix">
+        <a href="#/settings/identity/key/edit/{{key.id}}" class="item tal clearfix">
             <strong>{{key.name}}</strong>
             <span class="second-row">
                 {{privateKeys.find(key).getSize() || key.getSize() || key.size}}
@@ -40,8 +40,8 @@
             </span>
         </a>
         <div class="short-links">
-            <i class="fa cm-handshake cm-lg-icon" ng-if="!isTrustedKey(key) && isHandshakePossible" ng-click="goto('/authentication/'+key.id, id)" data-qa="btn-start-handshake"></i>
-            <i class="fa cm-export-key cm-lg-icon" ng-if="privateKeys.find(key)" ng-click="goto('settings/identity/key/'+key.id)"></i>
+            <i class="fa cm-handshake cm-lg-icon" ng-if="!isTrustedKey(key) && isHandshakePossible" ng-click="goTo('/authentication/'+key.id, id)" data-qa="btn-start-handshake"></i>
+            <i class="fa cm-export-key cm-lg-icon" ng-if="privateKeys.find(key)" ng-click="goTo('settings/identity/key/edit/'+key.id)"></i>
             <!--
                 <i class="fa cm-export-key cm-lg-icon" ng-if="privateKeys.find(key)" ng-click="openModal('modalExportKeyPair',key)"></i>
             -->
@@ -89,13 +89,13 @@
 </cm-modal>
 
 <cm-footer ng-if="canCreate" data-qa='canCreate'>
-    <a href="#/settings/identity/keys/create"
+    <a href="#/settings/identity/key/create"
         class="item w50 no-pad cm-btn-grey"
         data-qa="btn-create-key">
         <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE.BUTTON'|cmTranslate}}</span>
         <i class="fa cm-create-key icon-left cm-lg-icon"></i>
     </a>
-    <a href="#/settings/identity/keys/import"
+    <a href="#/settings/identity/key/import"
         class="item w50 no-pad cm-btn-grey"
         data-qa="btn-import-key">
         <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT.BUTTON'|cmTranslate}}</span>
