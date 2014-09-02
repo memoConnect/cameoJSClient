@@ -6,6 +6,7 @@ describe('A Chunk', function(){
 
     var chunk = undefined
 
+    beforeEach(module('cmPhonegap'))
     beforeEach(module('cmCore'))
     beforeEach(inject(function(_cmChunk_){
         chunk = new _cmChunk_()

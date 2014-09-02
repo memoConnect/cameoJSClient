@@ -7,12 +7,11 @@ describe('cmMessageModel', function(){
 
     beforeEach(function(){
         module(function($provide){
-            $provide.constant('cmEnv',{});
+            $provide.constant('cmEnv',{})
         })
     })
-    
-   
-    beforeEach(module('cmConversations'));
+    beforeEach(module('cmPhonegap'))
+    beforeEach(module('cmConversations'))
     beforeEach(inject(function(_cmMessageModel_, _$httpBackend_){
         cmMessageModel  = _cmMessageModel_
         $httpBackend    = _$httpBackend_

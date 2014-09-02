@@ -10,6 +10,7 @@ describe('cmFactory', function(){
         this.id = data.id
     }
 
+    beforeEach(module('cmPhonegap'))
     beforeEach(module('cmCore'))
     beforeEach(inject(function(_cmFactory_){
         factory = new _cmFactory_(TestModel)
