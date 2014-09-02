@@ -58,12 +58,21 @@ cameo_config = {
         },
         'conversation': {
             routes:[
-                '/conversation/:conversationId?',
-                '/conversation/:conversationId/:pageChild1?'
+                '/conversation',
+                '/conversation/:conversationId?'
             ],
             hasCtrl: true,
             resolveOnBoot: true
         },
+        'security-settings': {
+            routes:[
+                '/conversation/:conversationId/security-settings'
+            ],
+            hasCtrl: true,
+            resolveOnBoot: true
+        },
+
+
         'purl': {
             routes:[
                 '/purl/:purlId?',
