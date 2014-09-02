@@ -115,6 +115,9 @@ angular.module('cmValidate').directive('cmCameoId',[
                                 deferred.reject();
                             }
                         );
+                    } else {
+                        $scope.parentForm.cameoId.$valid = true;
+                        deferred.resolve();
                     }
 
                     return deferred.promise;
@@ -161,7 +164,7 @@ angular.module('cmValidate').directive('cmCameoId',[
                         function(){
                             $rootScope.$emit('registration:createUser');
                         }, function(){
-                            console.log('check account again fail')
+                            //console.log('check account again fail')
                         }
 
                     );
