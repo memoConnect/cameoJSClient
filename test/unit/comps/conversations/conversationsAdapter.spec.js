@@ -10,7 +10,7 @@ describe('ConversationsAdapter', function(){
             $provide.constant('cmEnv',{});
         })
     })
-
+    beforeEach(module('cmPhonegap'))
     beforeEach(module('cmConversations'))
 
     beforeEach(inject(function(_cmConversationsAdapter_){

@@ -216,3 +216,41 @@ cm-modal.modal-image-fullscreen{
   .spriteFiles(@index + 1);
 }
 .spriteFiles();
+
+cm-choose-source{
+  display:block;
+  position:absolute;
+  bottom:@cm-footer-height;
+  left:0;
+  background-color:@cm-black;
+  div.source {
+    color:@cm-white;
+    white-space:nowrap;
+    text-align:left;
+    height:@cm-unit;
+    line-height:@cm-unit;
+    font-size:@cm-large-font;
+    padding-right:@cm-horizontal-padding*2;
+    i {
+      font-size:@cm-large-font*2;
+      width:@cm-unit;
+      height:@cm-unit;
+      text-align:center;
+      vertical-align:sub;
+    }
+  }
+  i.cm-nose-down{
+    position:absolute;
+    color:black;
+    left: 0;
+    bottom: -2.9rem;
+    &.flip {
+      -moz-transform: scaleX(-1);
+      -webkit-transform: scaleX(-1);
+      -o-transform: scaleX(-1);
+      transform: scaleX(-1);
+      -ms-filter: fliph; /*IE*/
+      filter: fliph; /*IE*/
+    }
+  }
+}

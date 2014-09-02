@@ -10,6 +10,7 @@ describe('cmFileFactory', function(){
             $provide.constant('cmEnv',{});
         })
     })
+    beforeEach(module('cmPhonegap'))
     beforeEach(module('cmCore'));
     beforeEach(inject(function(_cmFileFactory_){
         cmFileFactory = _cmFileFactory_

@@ -80,6 +80,7 @@ describe('cmFileTypes', function() {
             }
         ]
 
+    beforeEach(module('cmPhonegap'))
     beforeEach(module('cmCore'))
 
     beforeEach(inject(function (_cmFileTypes_) {
