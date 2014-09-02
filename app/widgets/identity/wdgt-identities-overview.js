@@ -15,7 +15,7 @@ angular.module('cmWidgets').directive('cmWidgetIdentitiesOverview', [
         return {
             restrict:       'AE',
             scope:          true,
-            templateUrl:    'widgets/settings/wdgt-identities-overview.html',
+            templateUrl:    'widgets/identity/wdgt-identities-overview.html',
             controller: function(){
                 //console.log('cmWidgetIdentitiesOverview')
             }

@@ -15,7 +15,7 @@ angular.module('cmWidgets').directive('cmWidgetIdentityEdit', [
         return {
             restrict:       'AE',
             scope:          true,
-            templateUrl:    'widgets/settings/wdgt-identity-edit.html',
+            templateUrl:    'widgets/identity/wdgt-identity-edit.html',
             controller: function(){
                 //console.log('cmWidgetIdentityEdit')
             }

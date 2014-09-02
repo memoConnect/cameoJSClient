@@ -15,7 +15,7 @@ angular.module('cmWidgets').directive('cmWidgetIdentityCreate', [
         return {
             restrict:       'AE',
             scope:          true,
-            templateUrl:    'widgets/settings/wdgt-identity-create.html',
+            templateUrl:    'widgets/identity/wdgt-identity-create.html',
             controller: function(){
                 //console.log('cmWidgetIdentityCreate')
             }
