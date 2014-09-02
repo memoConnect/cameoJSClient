@@ -317,6 +317,10 @@
                 "SUCCESS": "Die Änderungen wurde erfolgreich gespeichert."
             }
         },
+        "OVERVIEW":{
+            "HEADER": "Übersicht Identitäten",
+            "INFO_TEXT": "IDENTITY.OVERVIEW.INFO_TEXT @ todo"
+        },
         "KEYS": {
             "HEADER": "cameoKeys",
             "KEYLIST": {

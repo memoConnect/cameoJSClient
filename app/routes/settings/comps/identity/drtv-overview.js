@@ -20,7 +20,7 @@ angular.module('cmRouteSettings').directive('cmIdentitiesOverview', [
 
                 $scope.bam = function(identity){
                     if(identity.isActive == true){
-                        $rootScope.goto('/settings/identity');
+                        $rootScope.goto('/settings/identity/edit');
                     } else {
                         $scope.switchToIdentity(identity);
                     }

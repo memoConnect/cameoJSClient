@@ -8,7 +8,7 @@ angular.module('cmContacts')
             template: '<div class="name" data-qa="contact-display-name">' +
                         '{{contact.identity.getDisplayName()}}' +
                       '</div>'+
-                      '<div class="about">about</div>' ,
+                      '' ,
             require: '^cmContactTag',
             priority: 1
         }

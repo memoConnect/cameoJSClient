@@ -19,8 +19,9 @@ angular.module('cmContacts').directive('cmContactType',[
                     element.children().remove()
 
                     element.append(
-                        angular.element('<i></i>')
+                        angular.element('<i class="cm-grey"></i>')
                         .addClass('fa')
+                        .addClass('fa-2x')
                         .addClass(icon)
                     ).addClass(type)
                 }

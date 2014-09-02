@@ -11,8 +11,7 @@ define([
     app.register.controller('SettingsCtrl', [
         'cmUtil',
         '$scope', '$rootScope', '$routeParams', '$location',
-        function(cmUtil,
-            $scope, $rootScope, $routeParams, $location) {
+        function(cmUtil, $scope, $rootScope, $routeParams, $location) {
             $scope.pageTitle = 'SETTINGS.WELCOME';
 
             $scope.pageParent = $routeParams.pageParent || '';
@@ -21,12 +20,14 @@ define([
 
             var isPageChild2AnId = cmUtil.isAlphaNumeric($scope.pageChild2);
 
-            $scope.route = $scope.pageParent +
+            $scope.routeSettings = $scope.pageParent +
                            ($scope.pageChild1 ? '/' + $scope.pageChild1 : '') +
                            (!isPageChild2AnId && $scope.pageChild2 ? '/' + $scope.pageChild2 : '');
 
+            console.log('$scope.routeSettings',$scope.routeSettings)
+
             if($routeParams.keyId)
-                $scope.route = 'identity/key'
+                $scope.routeSettings = 'identity/key'
 
             $scope.createNewConversation = function(){
                 delete($rootScope.pendingConversation);
