@@ -339,15 +339,15 @@ angular.module('cmConversations')
                     });
 
 
+                    // transfer data between routeChanges
+                    var clearTransferScopeData = cmTransferScopeData.create($scope,{
+                        id:'conversation-'+($scope.conversation.id||'new'),
+                        scopeVar:'newMessageText'
+                    });
 
                 }
 
 
-                // transfer data between routeChanges
-                var clearTransferScopeData = cmTransferScopeData.create($scope,{
-                    id:'conversation-'+($scope.conversation.id||'new'),
-                    scopeVar:'newMessageText'
-                });
 
                 $scope.$watch($attrs.cmData, function(conversation){
                     if(conversation)
