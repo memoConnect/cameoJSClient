@@ -29,15 +29,17 @@ cameo_config = {
             css: 'no-header no-footer',
             guests: false
         },
-        'settings/identity/overview': {
+        'settings-identity-overview': {
             hasCtrl: true,
-            guests: false
+            guests: false,
+            routes: ['/settings/identity/overview']
         },
         //'settings': {
         //    hasCtrl: true,
         //    routes: [
         //        '/settings/identity/key/:keyId?',
         //        '/settings/:pageParent?',
+//                  'blub/new',
         //        '/settings/:pageParent/:pageChild1?',
         //        '/settings/:pageParent/:pageChild1/:pageChild2?'
         //    ],
