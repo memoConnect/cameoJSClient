@@ -19,18 +19,25 @@ define([
         'cmConversationFactory',
 
         function($rootScope, $scope, $routeParams, $location, cmConversationFactory){
-            console.log($scope.conversation)
 
-            $scope.conversation =   $routeParams.conversationId 
-                                    ?   cmConversationFactory.create($routeParams.conversationId) 
+            var force_new       =   $routeParams.conversationId == 'new',
+                conversation_id =   force_new ?  undefined : $routeParams.conversationId
+                
+
+            $scope.conversation =   conversation_id
+                                    ?   cmConversationFactory.create(conversation_id) 
                                     :   ($rootScope.pendingConversation || cmConversationFactory.create())
 
 
-            if(!$scope.conversation.state.is('new') && $routeParams.conversationId == 'new')
+            if(!$scope.conversation.state.is('new') && force_new)
                 $scope.conversation = cmConversationFactory.create()
 
-            if(!$routeParams.conversationId && $scope.conversation.id)
-                $location.path($location.path() + '/' + $routeParams.conversationId)
+            if(!conversation_id){
+                $scope.$watchCollection('conversation', function(conversation){
+                    if(conversation.id)
+                        $rootScope.goto('conversation/' + conversation.id)
+                })
+            }
 
         }
     ]);

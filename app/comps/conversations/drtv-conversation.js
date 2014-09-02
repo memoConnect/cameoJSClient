@@ -195,9 +195,9 @@ angular.module('cmConversations')
                     
                     if($scope.conversation.state.is('new')){                        
                         //The conversations has not been saved to the Backend, do it now:
-                        $scope.conversation.save();
+                        $scope.conversation.save()
                         //When that is done try again to send the message:
-                        $scope.conversation.one('save:finished', function(){
+                        .then( function(){ 
                             cmConversationFactory.register($scope.conversation);
                             sendMessage();
                         });
@@ -221,16 +221,12 @@ angular.module('cmConversations')
                     .then(function(){
                         clearTransferScopeData();
                         //@ TODO: solve rekeying another way:
-                        $scope.conversation.numberOfMessages++;
                         $scope.newMessageText = '';
                         files = [];
                         $scope.isSending = false;
 
-                        // route to detailpage of conversation $scope.calledWithId = false
-                        // in purl case stay on purl page $scope.calledWithId = true
-                        if($scope.calledWithId == false){ //calledWithId is set by route Ctrl
-                            $location.path('/conversation/' + $scope.conversation.id);
-                        }
+                        //Todo: This is not the right place to count messages:
+                        $scope.conversation.numberOfMessages ++
                     }, function(){
                         $scope.isSending = false;
                     });
@@ -339,14 +335,14 @@ angular.module('cmConversations')
                     });
 
 
-                    // transfer data between routeChanges
-                    var clearTransferScopeData = cmTransferScopeData.create($scope,{
-                        id:'conversation-'+($scope.conversation.id||'new'),
-                        scopeVar:'newMessageText'
-                    });
 
                 }
 
+                // transfer data between routeChanges
+                var clearTransferScopeData = cmTransferScopeData.create($scope,{
+                    id:'conversation-'+($scope.conversation.id||'new'),
+                    scopeVar:'newMessageText'
+                });
 
 
                 $scope.$watch($attrs.cmData, function(conversation){
