@@ -1,13 +1,13 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmIdentityEdit', [
+angular.module('cmUser').directive('cmIdentityEdit', [
     'cmUserModel',
     'cmNotify',
     '$q',
     function(cmUserModel, cmNotify, $q){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/identity/drtv-identity-edit.html',
+            templateUrl: 'comps/user/drtv-identity-edit.html',
             controller: function ($scope) {
                 $scope.identity = angular.extend({},cmUserModel.data.identity);
 

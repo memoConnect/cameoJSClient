@@ -1,13 +1,17 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmIdentityCreate', [
-    'cmAuth', 'cmNotify', 'cmUserModel',
-    '$location', '$q', '$rootScope',
+angular.module('cmUser').directive('cmIdentityCreate', [
+    'cmAuth',
+    'cmNotify',
+    'cmUserModel',
+    '$location',
+    '$q',
+    '$rootScope',
     function(cmAuth, cmNotify, cmUserModel,
              $location, $q, $rootScope){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/identity/drtv-create.html',
+            templateUrl: 'comps/user/drtv-identity-create.html',
             controller: function ($scope) {
 
                 $scope.formData = {

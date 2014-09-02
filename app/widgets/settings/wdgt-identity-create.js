@@ -2,22 +2,22 @@
 
 /**
  * @ngdoc directive
- * @name cmWidgets.directive:cmWidgetIdentityOverview
+ * @name cmWidgets.directive:cmWidgetIdentityCreate
  * @description
  * List conversations.
  *
  * @restrict AE
  * @example
  */
-angular.module('cmWidgets').directive('cmWidgetIdentitiesOverview', [
+angular.module('cmWidgets').directive('cmWidgetIdentityCreate', [
     // no dependencies
     function(){
         return {
             restrict:       'AE',
             scope:          true,
-            templateUrl:    'widgets/settings/wdgt-identities-overview.html',
+            templateUrl:    'widgets/settings/wdgt-identity-create.html',
             controller: function(){
-                //console.log('cmWidgetIdentitiesOverview')
+                //console.log('cmWidgetIdentityCreate')
             }
         }
     }
