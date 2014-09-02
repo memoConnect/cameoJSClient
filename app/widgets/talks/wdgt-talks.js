@@ -21,7 +21,7 @@ angular.module('cmWidgets')
         return {
             restrict:       'AE',
             scope:          true,   
-            templateUrl:    'widgets/wdgt-talks.html',
+            templateUrl:    'widgets/talks/wdgt-talks.html',
 
             controller: function($scope, $element, $attrs){
 
@@ -60,4 +60,3 @@ angular.module('cmWidgets')
         }
     }
 ]);
-

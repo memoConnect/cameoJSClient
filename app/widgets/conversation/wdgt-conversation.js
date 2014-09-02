@@ -21,7 +21,7 @@ angular.module('cmWidgets')
               $location, $rootScope, $document, $routeParams) {
         return {
             restrict: 'AE',
-            templateUrl: 'widgets/wdgt-conversation.html',
+            templateUrl: 'widgets/conversation/wdgt-conversation.html',
             scope: true,
 
             controller: function ($scope, $element, $attrs) {

@@ -21,6 +21,15 @@ define([
         'cmUserModel',
 
         function($scope, $rootScope, $element, $routeParams, $location, cmConversationFactory, cmUserModel){
+
+            $scope.conversation =   $routeParams.conversationId
+                                    ?   cmConversationFactory.create($routeParams.conversationId).load()
+                                    :   $rootScope.pendingConversation || cmConversationFactory.create()
+
+            if(!$routeParams.conversationId)
+                $location.hash($location.hash + '/' + $scope.conversation.id)
+
+            /*
             $scope.isPurl           = false;
             $scope.conversationId   = $routeParams.conversationId;
             $scope.calledWithId     = $scope.conversationId && $scope.conversationId != 'new';
@@ -45,7 +54,7 @@ define([
                                         .addRecipient(cmUserModel.data.identity)
 
             }
-
+            */
 
         }
     ]);
