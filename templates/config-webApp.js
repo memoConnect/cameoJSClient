@@ -29,16 +29,20 @@ cameo_config = {
             css: 'no-header no-footer',
             guests: false
         },
-        'settings': {
+        'settings/identity/overview': {
             hasCtrl: true,
-            routes: [
-                '/settings/identity/key/:keyId?',
-                '/settings/:pageParent?',
-                '/settings/:pageParent/:pageChild1?',
-                '/settings/:pageParent/:pageChild1/:pageChild2?'
-            ],
-            resolveOnBoot: true
+            guests: false
         },
+        //'settings': {
+        //    hasCtrl: true,
+        //    routes: [
+        //        '/settings/identity/key/:keyId?',
+        //        '/settings/:pageParent?',
+        //        '/settings/:pageParent/:pageChild1?',
+        //        '/settings/:pageParent/:pageChild1/:pageChild2?'
+        //    ],
+        //    resolveOnBoot: true
+        //},
         'authentication' :{
             hasCtrl: true,
             routes: [
