@@ -12,22 +12,26 @@ define([
 
     app.register.controller('ConversationCtrl', [
 
-        '$scope',
         '$rootScope',
-        '$element',
+        '$scope',
         '$routeParams',
         '$location',
         'cmConversationFactory',
-        'cmUserModel',
 
-        function($scope, $rootScope, $element, $routeParams, $location, cmConversationFactory, cmUserModel){
+        function($rootScope, $scope, $element, $routeParams, $location, cmConversationFactory, cmUserModel){
 
-            $scope.conversation =   $routeParams.conversationId
-                                    ?   cmConversationFactory.create($routeParams.conversationId).load()
-                                    :   $rootScope.pendingConversation || cmConversationFactory.create()
+            //route called without any or with 'new'-parameter:
+            if(!$routeParams.conversationId || $routeParams.conversationId == 'new'){
+                $scope.conversation  = $rootScope.pendingConversation || cmConversationFactory.create()
+            }else{
+                $scope.conversation = cmConversationFactory.create($routeParams.conversationId)
+            }
 
-            if(!$routeParams.conversationId)
+            if(!$routeParams.conversationId && $scope.conversation.id)
                 $location.hash($location.hash + '/' + $scope.conversation.id)
+            
+
+
 
             /*
             $scope.isPurl           = false;

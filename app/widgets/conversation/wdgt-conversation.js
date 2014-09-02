@@ -25,6 +25,7 @@ angular.module('cmWidgets')
             scope: true,
 
             controller: function ($scope, $element, $attrs) {
+                
                 var self                 = this,
                     conversation_subject = $scope.$eval($attrs.cmSubject),
                     conversation_offset  = $attrs.offset,
