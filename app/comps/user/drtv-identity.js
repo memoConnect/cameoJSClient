@@ -23,7 +23,7 @@ angular.module('cmUser').directive('cmIdentity',[
                 });
 
                 $scope.goToIdentity = function(){
-                    $rootScope.goto('/settings/identity/overview');
+                    $rootScope.goto('/settings/identities/overview');
                 };
 
                 //$scope.showIdentityModal = function(){
