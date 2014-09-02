@@ -161,10 +161,10 @@ define([
         }
     ])
     // app run handling
-//    .run(['cmPushNotification',function(cmPushNotification){
-//        // register device for pushnotification
-//        cmPushNotification.register();
-//    }])
+    .run(['cmPushIp',function(cmPushIp){
+        // register device for pushnotification
+        cmPushIp.init();
+    }])
     .run(function() {
         // disabled the 3000 seconds delay on click when touch ;)
         FastClick.attach(document.body);

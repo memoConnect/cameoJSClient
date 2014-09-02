@@ -653,6 +653,10 @@
         "CONFIRM": {
             "HEADER": "Please Confirm!",
             "STANDARD": "You sure you want to cancel the operation?"
+        },
+        "CHOOSE_SOURCE": {
+            "CAMERA": "Take a Photo",
+            "FILE": "Choose an existing File"
         }
     },
     "MENU": {

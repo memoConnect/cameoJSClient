@@ -3,10 +3,12 @@
 // https://github.com/apache/cordova-plugin-camera/blob/b76b5ae670bdff4dd4c716e889ab12e049f9c733/doc/index.mdhttps://github.com/apache/cordova-plugin-camera/blob/b76b5ae670bdff4dd4c716e889ab12e049f9c733/doc/index.md
 
 angular.module('cmFiles').directive('cmFileChoose', [
-    'cmPhonegap', 'cmCamera',
-    function (cmPhonegap, cmCamera) {
+    'cmPhonegap',
+    '$rootScope',
+    function (cmPhonegap,
+              $rootScope) {
 
-        var tpl = '<input type="file" data-qa="btn-file-choose" />'
+        var tpl = '<input type="file" data-qa="btn-file-choose" />';
 
         return {
             restrict: 'AE',
@@ -27,13 +29,8 @@ angular.module('cmFiles').directive('cmFileChoose', [
                         evt.preventDefault();
                         evt.stopPropagation();
 
-//                        cmCamera.takePhoto(function(blob){
-//                            cmFilesCtrl.setFile(blob);
-//                        });
-
-                        cmCamera.chooseFile(function(blob){
-                            cmFilesCtrl.setFile(blob);
-                        });
+                        // broadcast choos opener
+                        $rootScope.$broadcast('cmChooseSource:open');
                     });
                 } else {
                     // default fileapi

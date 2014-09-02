@@ -38,8 +38,8 @@
  }*/
 
 angular.module('cmPhonegap').service('cmCamera', [
-    'cmFilesAdapter', 'cmUtil',
-    function (cmFilesAdapter, cmUtil) {
+    'cmFilesAdapter', 'cmUtil', 'cmLogger',
+    function (cmFilesAdapter, cmUtil, cmLogger) {
 
         function FileError(e){
             var msg;
@@ -90,7 +90,7 @@ angular.module('cmPhonegap').service('cmCamera', [
         return {
             existsPlugin: function(){
                 if(!('camera' in navigator)){
-                    alert('CAMERA PLUGIN IS MISSING');
+                    cmLogger.info('CAMERA PLUGIN IS MISSING');
                     return false;
                 }
                 return true;
