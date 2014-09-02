@@ -1,14 +1,13 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmIdentitySettings', [
+angular.module('cmRouteSettings').directive('cmIdentityEdit', [
     'cmUserModel',
     'cmNotify',
-    '$location',
     '$q',
-    function(cmUserModel, cmNotify, $location, $q){
+    function(cmUserModel, cmNotify, $q){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/identity/drtv-settings.html',
+            templateUrl: 'routes/settings/comps/identity/drtv-identity-edit.html',
             controller: function ($scope) {
                 $scope.identity = angular.extend({},cmUserModel.data.identity);
 
@@ -23,7 +22,7 @@ angular.module('cmRouteSettings').directive('cmIdentitySettings', [
                 //////////////////////
 
                 $scope.goToKeys = function(){
-                    $location.path('/settings/identity/keys');
+                    $scope.goTo('/settings/identity/keys');
                 };
 
                 $scope.validateDisplayName = function(){
@@ -31,7 +30,7 @@ angular.module('cmRouteSettings').directive('cmIdentitySettings', [
                         $scope.cmForm.displayName.$pristine = true;
                         $scope.cmForm.displayName.$dirty = false;
                     }
-                }
+                };
 
                 $scope.validateForm = function(){
                     var deferred = $q.defer();
@@ -43,7 +42,7 @@ angular.module('cmRouteSettings').directive('cmIdentitySettings', [
                     }
 
                     return deferred.promise;
-                }
+                };
 
                 $scope.saveIdentity = function(){
                     var objectChange = {};

@@ -1,22 +1,22 @@
 .theme-a{
   color: @cm-grey;
   background-color: @cm-white;
-  padding-bottom: 3rem !important;
+
   >* {
     padding: 0 2rem;
   }
 
-  div.section{
+  .section{
     padding:0!important;
   }
-  div.section > * {
+  .section > * {
     padding: 0 2rem;
   }
 
   h2{
     background:@cm-input-bg-color;
     padding:0 1rem;
-    font-size:@cm-large-font;
+    font-size:@cm-moep-font;
     line-height:@cm-unit;
     font-weight:bold;
     width: 100%;
@@ -26,7 +26,7 @@
     margin-bottom: 1rem;
     i{
       margin-right:0.6rem;
-      font-size:3rem;
+      font-size:2.5rem;
       vertical-align:middle;
     }
   }
@@ -250,6 +250,12 @@
   .cm-special-text {
     .tac;
     font-size:4em;
+  }
+
+  .circle-border {
+    -webkit-border-radius: @cm-unit;
+    -moz-border-radius: @cm-unit;
+    border-radius: @cm-unit;
   }
 }
 

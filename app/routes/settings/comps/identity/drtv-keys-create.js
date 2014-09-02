@@ -53,7 +53,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                  */
                 $scope.generate = function(){
                     $scope.active = 'generate';
-                    cmJob.start('DRTV.CONFIRM.STANDARD', $scope.cancel);
+                    cmJob.start('DRTV.CONFIRM.STANDARD', $scope.cancelGeneration);
 
                     var size = 2048;
                     if($scope.keySize == 4096){
@@ -92,13 +92,17 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
                 /**
                  * cancel keypair generation
                  */
-                $scope.cancel = function(){
+                $scope.cancelGeneration = function(){
                     cmLogger.debug('cancel key generation');
-
                     cmCrypt.cancelGeneration();
                     cmJob.stop();
                     $scope.active = 'choose';
-                    $window.history.back();
+                };
+
+                $scope.cancel = function(){
+                    cmLogger.debug('cancel');
+                    $scope.cancelGeneration();
+                    $scope.goBack();
                 };
 
                 /**

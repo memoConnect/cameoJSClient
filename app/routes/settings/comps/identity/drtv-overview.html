@@ -6,18 +6,18 @@
 
 <h2>
     <i class="fa cm-person cm-lg-icon"></i>
-    {{'IDENTITY.MODAL.HEADER'|cmTranslate}}
+    {{'IDENTITY.OVERVIEW.HEADER'|cmTranslate}}
 </h2>
 
+<article>
+    <cm-info-bubble nose-x="55%">
+        <span ng-bind-html="'IDENTITY.OVERVIEW.INFO_TEXT' | cmParse"></span>
+    </cm-info-bubble>
+</article>
+
+<hr>
+
 <ul>
-    <li ng-click="createNewIdentity()" data-qa="btn-identity-new">
-        <span class="item">
-        {{'IDENTITY.LABEL.NEW' | cmTranslate}}
-        </span>
-        <div class="short-links">
-            <i class="fa cm-checkbox-add cm-lg-icon"></i>
-        </div>
-    </li>
     <li ng-repeat="identity in ownIdentities | orderBy: 'isActive':false" ng-click="bam(identity)" data-qa="identity-list-item">
         <span class="item" cm-rubber-space>
             <cm-avatar cm-data="identity" cm-weight="1"></cm-avatar>
@@ -30,7 +30,3 @@
         </div>
     </li>
 </ul>
-
-<cm-footer cm-rubber-space>
-    <cm-default-buttons></cm-default-buttons>
-</cm-footer>
