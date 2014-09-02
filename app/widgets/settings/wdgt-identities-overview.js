@@ -9,15 +9,15 @@
  * @restrict AE
  * @example
  */
-angular.module('cmWidgets').directive('cmWidgetIdentityOverview', [
+angular.module('cmWidgets').directive('cmWidgetIdentitiesOverview', [
     // no depencies
     function(){
         return {
             restrict:       'AE',
             scope:          true,
-            templateUrl:    'widgets/settings/wdgt-identity-overview.html',
-            controller: function($scope, $element, $attrs){
-                console.log('cmWidgetIdentityOverview')
+            templateUrl:    'widgets/settings/wdgt-identities-overview.html',
+            controller: function(){
+                //console.log('cmWidgetIdentitiesOverview')
             }
         }
     }

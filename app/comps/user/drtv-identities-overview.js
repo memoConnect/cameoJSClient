@@ -1,13 +1,14 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmIdentitiesOverview', [
+angular.module('cmUser').directive('cmIdentitiesOverview', [
     'cmUserModel',
     '$rootScope',
     function(cmUserModel, $rootScope){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/identity/drtv-overview.html',
+            templateUrl: 'comps/user/drtv-identities-overview.html',
             controller: function ($scope) {
+                //console.log('cmIdentitiesOverview');
                 $scope.ownIdentities = cmUserModel.data.identities;
 
                 $scope.createNewIdentity = function(){
