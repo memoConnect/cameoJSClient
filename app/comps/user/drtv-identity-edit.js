@@ -22,7 +22,7 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                 //////////////////////
 
                 $scope.goToKeys = function(){
-                    $scope.goTo('/settings/identity/keys');
+                    $scope.goTo('/settings/identity/key/list');
                 };
 
                 $scope.validateDisplayName = function(){

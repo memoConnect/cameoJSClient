@@ -7,7 +7,7 @@ define([
 ], function (app) {
     'use strict';
 
-    app.register.controller('SettingsIdentitiesOverviewCtrl', [
+    app.register.controller('SettingsIdentityListCtrl', [
         // no dependencies
         function() {
             //nothing to here yet

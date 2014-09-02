@@ -29,10 +29,10 @@ cameo_config = {
             css: 'no-header no-footer',
             guests: false
         },
-        'settings-identities-overview': {
+        'settings-identity-list': {
             hasCtrl: true,
             guests: false,
-            routes: ['/settings/identities/overview']
+            routes: ['/settings/identity/list']
         },
         'settings-identity-create': {
             hasCtrl: true,
@@ -44,6 +44,12 @@ cameo_config = {
             guests: false,
             routes: ['/settings/identity/edit']
         },
+        'settings-identity-key-list': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/settings/identity/key/list']
+        },
+
         //'settings': {
         //    hasCtrl: true,
         //    routes: [

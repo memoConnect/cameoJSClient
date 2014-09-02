@@ -1,11 +1,13 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmIdentityKeysOverview', [
-    'cmUserModel', 'cmModal', 'cmKey',
+angular.module('cmUser').directive('cmIdentityKeyList', [
+    'cmUserModel',
+    'cmModal',
+    'cmKey',
     function(cmUserModel, cmModal, cmKey){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/identity/drtv-keys-overview.html',
+            templateUrl: 'comps/user/drtv-identity-key-list.html',
             controller: function ($scope) {
                 $scope.privateKeys = [];
                 $scope.publicKeys = [];
