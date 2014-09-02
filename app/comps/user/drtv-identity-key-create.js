@@ -1,17 +1,24 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
-    'cmUserModel', 'cmCrypt', 'cmUtil', 'cmLogger', 'cmNotify', 'cmKey', 'cmJob',
-    '$window', '$rootScope',
+angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
+    'cmUserModel',
+    'cmCrypt',
+    'cmUtil',
+    'cmLogger',
+    'cmNotify',
+    'cmKey',
+    'cmJob',
+    '$window',
+    '$rootScope',
     function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey, cmJob,
              $window, $rootScope){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/identity/drtv-keys-create.html',
+            templateUrl: 'comps/user/drtv-identity-key-create.html',
             controller: function ($scope) {
                 // only one privKey!!!
                 if(cmUserModel.hasPrivateKey()){
-                    $scope.goto('/settings/identity/keys');
+                    $scope.goto('/settings/identity/key/list');
                     return false;
                 }
 
@@ -138,7 +145,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeysCreate', [
 
                         //$window.history.back();
                         if(generateAutomatic == false){
-                            $scope.goto('/settings/identity/keys');
+                            $scope.goto('/settings/identity/key/list');
                         } else {
                             $scope.goto('/talks');
                         }

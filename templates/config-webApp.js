@@ -49,6 +49,21 @@ cameo_config = {
             guests: false,
             routes: ['/settings/identity/key/list']
         },
+        'settings-identity-key-create': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/settings/identity/key/create']
+        },
+        'settings-identity-key-edit': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/settings/identity/key/edit']
+        },
+        'settings-identity-key-import': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/settings/identity/key/import']
+        },
 
         //'settings': {
         //    hasCtrl: true,

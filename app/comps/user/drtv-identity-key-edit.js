@@ -1,23 +1,27 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmIdentityKeyDetail', [
-    'cmNotify', 'cmKey', 'cmUtil', 'cmUserModel',
-    '$rootScope', '$routeParams',
+angular.module('cmRouteSettings').directive('cmIdentityKeyEdit', [
+    'cmNotify',
+    'cmKey',
+    'cmUtil',
+    'cmUserModel',
+    '$rootScope',
+    '$routeParams',
     function(cmNotify, cmKey, cmUtil, cmUserModel,
              $rootScope, $routeParams){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/identity/drtv-key-detail.html',
+            templateUrl: 'comps/user/drtv-identity-key-edit.html',
             controller: function ($scope) {
 
                 var localKeys   = cmUserModel.loadLocalKeys(),
                     key         = localKeys.find($routeParams.keyId) || cmUserModel.data.identity.keys.find($routeParams.keyId) || {};
 
-                $scope.privKey      = key && key.getPrivateKey()
-                $scope.pubKey       = key && key.getPublicKey()
+                $scope.privKey      = key && key.getPrivateKey();
+                $scope.pubKey       = key && key.getPublicKey();
                 $scope.keyName      = key && key.name;
-                $scope.keySize      = key && key.getSize()
-                $scope.fingerprint  = key && key.getFingerprint()
+                $scope.keySize      = key && key.getSize();
+                $scope.fingerprint  = key && key.getFingerprint();
                 $scope.isTrusted    = cmUserModel.verifyOwnPublicKey(key);
 
             }

@@ -1,18 +1,21 @@
 'use strict';
 
 angular.module('cmRouteSettings')
-.directive('cmIdentityKeysImport', [
-    'cmNotify', 'cmKey', 'cmUtil', 'cmUserModel', 'cmModal',
-    '$window', '$location',
-    function(cmNotify, cmKey, cmUtil, cmUserModel, cmModal,
-             $window, $location){
+.directive('cmIdentityKeyImport', [
+    'cmNotify',
+    'cmKey',
+    'cmUtil',
+    'cmUserModel',
+    'cmModal',
+    '$window',
+    function(cmNotify, cmKey, cmUtil, cmUserModel, cmModal, $window){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/identity/drtv-keys-import.html',
+            templateUrl: 'comps/user/drtv-identity-key-import.html',
             controller: function ($scope) {
                 // only one privKey!!!
                 if(cmUserModel.hasPrivateKey()){
-                    $location.path('/settings/identity/keys');
+                    $scope.goTo('/settings/identity/key/list');
                     return false;
                 }
 
