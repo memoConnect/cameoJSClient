@@ -317,6 +317,10 @@
                 "SUCCESS": "Changes saved"
             }
         },
+        "OVERVIEW":{
+            "HEADER": "Identities Overview",
+            "INFO_TEXT": "IDENTITY.OVERVIEW.INFO_TEXT @ todo"
+        },
         "KEYS": {
             "HEADER": "cameoKeys",
             "KEYLIST": {
