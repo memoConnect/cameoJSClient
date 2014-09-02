@@ -6,6 +6,7 @@ define([
     'ngload!pckConversations',
     'ngload!pckRouteConversation',
     'ngload!pckWidgets'
+
 ], function (app) {
     'use strict';
 
@@ -18,7 +19,7 @@ define([
         '$location',
         'cmConversationFactory',
         'cmUserModel',
-        
+
         function($scope, $rootScope, $element, $routeParams, $location, cmConversationFactory, cmUserModel){
             $scope.isPurl           = false;
             $scope.conversationId   = $routeParams.conversationId;
