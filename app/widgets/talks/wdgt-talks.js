@@ -7,6 +7,7 @@
  * List conversations.
  *
  * @restrict AE
+ * @example
  */
 
 
@@ -20,7 +21,7 @@ angular.module('cmWidgets')
         return {
             restrict:       'AE',
             scope:          true,   
-            templateUrl:    'widgets/talks/wdgt-talks.html',
+            templateUrl:    'widgets/wdgt-talks.html',
 
             controller: function($scope, $element, $attrs){
 

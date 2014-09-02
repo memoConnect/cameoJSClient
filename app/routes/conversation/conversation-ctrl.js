@@ -4,11 +4,13 @@ define([
     'ngload!pckUser',
     'ngload!pckContacts',
     'ngload!pckConversations',
-    'ngload!pckRouteConversation'
+    'ngload!pckRouteConversation',
+    'ngload!pckWidgets'
 ], function (app) {
     'use strict';
 
     app.register.controller('ConversationCtrl', [
+
         '$scope',
         '$rootScope',
         '$element',
@@ -16,6 +18,7 @@ define([
         '$location',
         'cmConversationFactory',
         'cmUserModel',
+        
         function($scope, $rootScope, $element, $routeParams, $location, cmConversationFactory, cmUserModel){
             $scope.isPurl           = false;
             $scope.conversationId   = $routeParams.conversationId;
