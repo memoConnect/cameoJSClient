@@ -1,6 +1,123 @@
 'use strict';
 //This Module handels api calls
 
+/***
+ All api calls require a config object:
+
+ ie.: api.get(config)
+
+ config works almost like in $http(config)
+
+ most important keys are:
+ path:	api path to call i.e. '/account/check',
+ will give an error message if passed something different from a path (like 'http://dev.cameo.io/...')
+ in that case your call will most likely fail brutally
+
+ data:	data to send, any plain object
+
+ exp_ko: key you expect in response body if your request was granted(see below)
+ exp_ok: key you expect in response body if your request was denied (see below)
+
+
+ Authentication and error handling is dealt with automatically.
+
+
+ example: (!!check tests in cmApi.spec.js!!)
+
+ cmApi.get({
+                    path:     '/pony',
+                    exp_ok:  'pony',
+                })''
+
+
+ ---> response:  {
+                                    "res" : 'OK',
+                                    "data": {
+                                                "pony" : "my_new_pony"
+                                            }
+                                }
+
+ .then(
+ function(pony){         <--- gets called because response.res == 'OK', pony will equal 'my_pony'
+                        yay(pony)
+                    },
+
+ function(alternative, res){
+                        alternative
+                        ? meh(alternative)
+                        : error(alternative) //yet error should have already been handled alesewhere
+                    }
+ )
+
+
+ ---> response:  {
+                                    "res" : 'OK',
+                                    "data": {
+                                                "dog" : "my_new_dog"
+                                            }
+                                }
+
+ .then(
+ function(pony){
+                        yay(pony)
+                    },
+ function(alternative,res){	<--- gets called because response is invalid, "pony" was expected, yet "dog" was delivered
+                                                     alternative will be undefined
+                                                     res however holds all the response
+                        alternative
+                        ? meh(alternative)
+                        : error(alternative) //yet error should have been handled already elesewhere
+                    }
+ )
+
+
+
+
+ ---> response:	{
+                                    "res" : 'KO',
+                                    "data": {
+                                                "alternative" : "kitty"
+                                            }
+                                }
+
+ .then(
+ function(pony){
+                        yay(pony)
+                    },
+ function(data, res){ <--- gets called because response.res == 'KO', data will be {'alternative': 'kitty'},
+                                              because there was no specific key expected for KO.
+                                              res however holds all the response
+                        alternative
+                        ? meh(alternative)
+                        : error(alternative) //yet error should have been handled already elesewhere
+                    }
+ )
+
+
+
+
+ ---> response:	{
+                                    "res" : 'XXX',
+                                    "data": {
+                                                "kitty" : "grumpy cat"
+                                            }
+                                }
+
+ .then(
+ function(pony){
+                        yay(pony)
+                    },
+ function(alternative,res){ <--- gets called because response is invalid for neither response.res == 'OK' nor response.res == 'KO',
+                                                    alternative will be undefined
+                                                    res however holds all the response
+                        alternative
+                        ? meh(alternative)
+                        : error(alternative) //yet error should have been handled already elesewhere
+                    }
+ )
+
+ */
+
 angular.module('cmCore').provider('cmApi',[
 
 //Service to handle all api calls
@@ -55,139 +172,14 @@ angular.module('cmCore').provider('cmApi',[
             return this
         }
 
-
         this.$get = [
+            'cmLogger', 'cmObject', 'cmBoot',
+            '$http', '$httpBackend', '$injector',
+            '$q', '$interval', '$cacheFactory', '$rootScope',
+            function(cmLogger, cmObject, cmBoot,
+                     $http, $httpBackend, $injector,
+                     $q, $interval, $cacheFactory, $rootScope){
 
-            'cmLogger',
-            'cmObject',
-            '$http',
-            '$httpBackend',
-            '$injector',
-            '$q',
-            '$interval',
-            '$cacheFactory',
-            '$rootScope',
-
-            function(cmLogger, cmObject, $http, $httpBackend, $injector, $q, $interval, $cacheFactory, $rootScope){
-                /***
-                All api calls require a config object:
-
-                ie.: api.get(config)
-
-                config works almost like in $http(config)
-
-                most important keys are:
-                    path:	api path to call i.e. '/account/check',
-                            will give an error message if passed something different from a path (like 'http://dev.cameo.io/...')
-                            in that case your call will most likely fail brutally
-
-                    data:	data to send, any plain object
-
-                    exp_ko: key you expect in response body if your request was granted(see below)
-                    exp_ok: key you expect in response body if your request was denied (see below)
-
-
-                Authentication and error handling is dealt with automatically.
-
-
-                example: (!!check tests in cmApi.spec.js!!)
-
-                cmApi.get({
-                    path:     '/pony',
-                    exp_ok:  'pony',
-                })''
-
-
-                ---> response:  {
-                                    "res" : 'OK',
-                                    "data": {
-                                                "pony" : "my_new_pony"
-                                            }
-                                }
-
-                .then(
-                    function(pony){         <--- gets called because response.res == 'OK', pony will equal 'my_pony'
-                        yay(pony)
-                    },
-
-                    function(alternative, res){
-                        alternative
-                        ? meh(alternative)
-                        : error(alternative) //yet error should have already been handled alesewhere
-                    }
-                )
-
-
-                ---> response:  {
-                                    "res" : 'OK',
-                                    "data": {
-                                                "dog" : "my_new_dog"
-                                            }
-                                }
-
-                .then(
-                    function(pony){
-                        yay(pony)
-                    },
-                    function(alternative,res){	<--- gets called because response is invalid, "pony" was expected, yet "dog" was delivered
-                                                     alternative will be undefined
-                                                     res however holds all the response
-                        alternative
-                        ? meh(alternative)
-                        : error(alternative) //yet error should have been handled already elesewhere
-                    }
-                )
-
-
-
-
-                ---> response:	{
-                                    "res" : 'KO',
-                                    "data": {
-                                                "alternative" : "kitty"
-                                            }
-                                }
-
-                .then(
-                    function(pony){
-                        yay(pony)
-                    },
-                    function(data, res){ <--- gets called because response.res == 'KO', data will be {'alternative': 'kitty'},
-                                              because there was no specific key expected for KO.
-                                              res however holds all the response
-                        alternative
-                        ? meh(alternative)
-                        : error(alternative) //yet error should have been handled already elesewhere
-                    }
-                )
-
-
-
-
-                ---> response:	{
-                                    "res" : 'XXX',
-                                    "data": {
-                                                "kitty" : "grumpy cat"
-                                            }
-                                }
-
-                .then(
-                    function(pony){
-                        yay(pony)
-                    },
-                    function(alternative,res){ <--- gets called because response is invalid for neither response.res == 'OK' nor response.res == 'KO',
-                                                    alternative will be undefined
-                                                    res however holds all the response
-                        alternative
-                        ? meh(alternative)
-                        : error(alternative) //yet error should have been handled already elesewhere
-                    }
-                )
-
-
-
-                */
-               
                 //check if the sever's response complies with the api conventions
                 function compliesWithApiConventions(body, exp_ok, exp_ko){
                     var valid =    body
@@ -203,7 +195,7 @@ angular.module('cmCore').provider('cmApi',[
                     return(valid)
                 }
                
-               function handleSuccess(response, deferred){
+                function handleSuccess(response, deferred){
                     //$http call was successfull
                     
                     var config  = response.config,
@@ -408,42 +400,54 @@ angular.module('cmCore').provider('cmApi',[
 
                 if(!call_stack_disabled && commit_interval) $interval(function(){ api.commit() }, commit_interval, false)
 
-
-
                 //API EVENTS:
                 
                 cmObject.addEventHandlingTo(api)
-                api.subscriptionId = undefined
+                api.subscriptionId = undefined;
+                api.eventSubscriptionCallFail = 0;
 
                 api.resetSubscriptionId = function(){
-                    api.subscriptionId = undefined
-                    window._eventSubscriptionId = undefined
-                }
+                    api.subscriptionId = undefined;
+                    window._eventSubscriptionId = undefined;
+                    api.eventSubscriptionCallFail = 0;
+                };
 
                 api.subscribeToEventStream = function(){
-                    return  api.post({
-                                path: events_path,
-                                exp_ok: 'id',
-                                data:{
-                                    secret: 'b4plIJMNITRDeJ9vl0JG' //only working on dev
-                                }
-                            }, true)
-                            .then(
-                                function(id){
-                                    api.subscriptionId = id
-                                    window._eventSubscriptionId = id
-                                }
-                            )
-                }
+                    return api.post({
+                        path: events_path,
+                        exp_ok: 'id',
+                        data:{
+                            secret: 'b4plIJMNITRDeJ9vl0JG' //only working on dev
+                        }
+                    }, true)
+                    .then(
+                        function(id){
+                            api.subscriptionId = id;
+                            window._eventSubscriptionId = id;
+                        },
+                        function(){
+                            // count up for abort the eventsubscription
+                            api.eventSubscriptionCallFail++;
+                        }
+                    )
+                };
 
                 api.getEvents = function(force){
                     if(!api.subscriptionId){
-
                         //if no subscriptionId is present, get one and try again later:
                         api.subscribeToEventStream()
-                        .then(function(){ api.getEvents() })
-
-                    }else{
+                        .then(
+                            function() {
+                                if (api.eventSubscriptionCallFail <= 10){
+                                    api.getEvents();
+                                } else {
+                                    console.log('failed to connect to event subscription');
+//                                    api.stopListeningToEvents();
+//                                    cmBoot.resolve();
+                                }
+                            }
+                        )
+                    } else {
                         api.get({
                             path: events_path + '/' + api.subscriptionId,
                             exp_ok: 'events'
@@ -481,12 +485,11 @@ angular.module('cmCore').provider('cmApi',[
                             api.getEvents(false)
                         }, events_interval, 0, false)
                     }
-                }
+                };
 
                 api.stopListeningToEvents = function(){
                     if(api._events_promise) $interval.cancel(api._events_promise)
-                }
-
+                };
 
                 if(!events_disabled && events_interval){
                     $rootScope.$on('login', function(){ 
@@ -504,7 +507,7 @@ angular.module('cmCore').provider('cmApi',[
                     })
                 }
 
-                return api
+                return api;
             }
         ]
     }
