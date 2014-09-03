@@ -111,6 +111,7 @@ angular.module('cmConversations')
              */
             function init(data){
 //                cmLogger.debug('cmConversationModel:init');
+
                 if(typeof data == 'string' && data.length > 0){
                     self.id = data;
                     self.load();
@@ -125,6 +126,7 @@ angular.module('cmConversations')
                 } else {
                     self.state.set('new');
                     self.enableEncryption(); // have to be there!!! BS klären mit AP 18.06.2014
+                    self.addRecipient(cmUserModel.data.identity)
                 }
 
                 self.trigger('init:finished');
@@ -377,33 +379,28 @@ angular.module('cmConversations')
              * @returns {Promise} for async handling
              */
             this.save = function(){
-                if(this.state.is('new')){
-                    /**
-                     * test export
-                     */
-//                    return false;
+                return  this.state.is('new')
+                        ?   cmConversationsAdapter.newConversation( this.exportData() ).then(
+                                function (conversation_data) {
+                                    self
+                                    .importData(conversation_data)
+                                    .savePassCaptcha();
 
-                    cmConversationsAdapter.newConversation( this.exportData() ).then(
-                        function (conversation_data) {
-                            self
-                            .importData(conversation_data)
-                            .savePassCaptcha();
+                                    if(typeof self.password == 'string' && self.password.length > 0){
+                                        self.localPWHandler.get(conversation_data.id, self.password);
+                                    }
 
-                            if(typeof self.password == 'string' && self.password.length > 0){
-                                self.localPWHandler.get(conversation_data.id, self.password);
-                            }
+                                    self.state.unset('new');
+                                    self.trigger('save:finished');
 
-                            self.state.unset('new');
-                            self.trigger('save:finished');
-                        },
+                                    return conversation_data
+                                },
 
-                        function(){
-                            self.trigger('save:failed');
-                        }
-                    )
-                }
-
-                return this;
+                                function(){
+                                    self.trigger('save:failed');
+                                }
+                            )
+                        :   $q.reject()
             };
 
             this.update = function(conversation_data){

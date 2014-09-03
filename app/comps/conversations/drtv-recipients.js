@@ -1,13 +1,13 @@
 'use strict';
 
-angular.module('cmRouteConversation').directive('cmRecipients', [
+angular.module('cmConversations').directive('cmRecipients', [
     '$rootScope',
     '$location',
     '$window',
     function($rootScope, $location, $window){
         return {
             restrict: 'E',
-            templateUrl: 'routes/conversation/comps/drtv-recipients.html',
+            templateUrl: 'comps/conversations/drtv-recipients.html',
             controller: function ($scope) {
                 // TODO: pending conversation generate in drtv not in route controller
                 var conversation = $rootScope.pendingConversation;

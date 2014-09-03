@@ -10,7 +10,7 @@ define([
 ], function (app) {
     'use strict';
 
-    app.register.controller('ConversationCtrl', [
+    app.register.controller('ConversationSecurityCtrl', [
 
         '$rootScope',
         '$scope',
@@ -31,13 +31,6 @@ define([
 
             if(!$scope.conversation.state.is('new') && force_new)
                 $scope.conversation = cmConversationFactory.create()
-
-            if(!conversation_id){
-                $scope.$watchCollection('conversation', function(conversation){
-                    if(conversation.id)
-                        $rootScope.goto('conversation/' + conversation.id)
-                })
-            }
 
         }
     ]);

@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmSecuritySettings', [
+
     'cmUserModel',
     'cmNotify',
     'cmLogger',
@@ -9,10 +10,11 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
     '$window',
     'cmEnv',
     '$rootScope',
+
     function(cmUserModel, cmNotify, cmLogger, $location, $document, $window, cmEnv, $rootScope){
         return{
             restrict : 'AE',
-            templateUrl : 'routes/conversation/comps/drtv-security_settings.html',
+            templateUrl : 'comps/conversations/drtv-security-settings.html',
             scope : true,
 
             link: function(scope){

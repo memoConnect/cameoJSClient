@@ -1,26 +1,3 @@
-<cm-header cm-rubber-space ng-show="!isPurl">
-    <cm-back cm-weight="1" back-to="conversation/{{conversationId}}"></cm-back>
-    <cm-identity cm-weight="4"></cm-identity>
-    <cm-security-indicator
-        cm-weight       = "2"
-        cm-data         = "conversation.securityAspects"
-        ng-click        = "goto('conversation/'+conversationId+'/security-settings')"
-    ></cm-security-indicator>
-    <cm-menu cm-weight="1"></cm-menu>
-</cm-header>
-
-<cm-header cm-rubber-space ng-show="isPurl">
-    <cm-back cm-weight="1" back-to="purl/{{purlId}}"></cm-back>
-    <div cm-weight="1"></div>
-    <cm-logo cm-weight="4"></cm-logo>
-    <cm-security-indicator
-        cm-weight       = "2"
-        cm-data         = "conversation.securityAspects"
-        cm-leading-icon = "cm-lock"
-        ng-click        = "goto('purl/'+purlId+'/security-settings')"
-    ></cm-security-indicator>
-</cm-header>
-
 <section class="body-group no-border">
     <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getPositiveAspects()" cm-data="aspect"></cm-security-aspect>
     <cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getNegativeAspects()" cm-data="aspect"></cm-security-aspect>

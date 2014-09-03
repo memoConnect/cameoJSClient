@@ -101,15 +101,20 @@ cameo_config = {
             hasCtrl: true,
             resolveOnBoot: true
         },
-        'security-settings': {
+        'conversation-security': {
             routes:[
                 '/conversation/:conversationId/security-settings'
             ],
             hasCtrl: true,
             resolveOnBoot: true
         },
-
-
+        'conversation-recipients': {
+            routes:[
+                '/conversation/:conversationId/recipients'
+            ],
+            hasCtrl: true,
+            resolveOnBoot: true
+        },
         'purl': {
             routes:[
                 '/purl/:purlId?',
@@ -117,10 +122,6 @@ cameo_config = {
             ],
             hasCtrl: true,
             guests: true
-        },
-        'recipients': {
-            hasCtrl: true,
-            resolveOnBoot: true
         },
         'registration': {
             hasCtrl: true,
