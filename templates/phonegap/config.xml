@@ -92,7 +92,7 @@
     <icon src="res/icon/default.png" />
 
 	<!-- Splash -->
-    <gap:splash src="res/screen/android/drawable-ldpi/screen.png" gap:platform="android" gap:density="ldpi" />
+    <gap:splash src="res/screen/android/drawable-ldpi/screen.9.png" gap:platform="android" gap:density="ldpi" />
     <gap:splash src="res/screen/android/drawable-mdpi/screen.9.png" gap:platform="android" gap:density="mdpi" />
     <gap:splash src="res/screen/android/drawable-hdpi/screen.9.png" gap:platform="android" gap:density="hdpi" />
     <gap:splash src="res/screen/android/drawable-xhdpi/screen.9.png" gap:platform="android" gap:density="xhdpi" />
