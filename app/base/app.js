@@ -161,7 +161,10 @@ define([
         }
     ])
     // app run handling
-    .run(['cmPushIp',function(cmPushIp){
+    .run(['cmNetworkInformation', 'cmPushIp',
+          function(cmNetworkInformation, cmPushIp){
+        // check internet connection
+        cmNetworkInformation.init();
         // register device for pushnotification
         cmPushIp.init();
     }])
@@ -193,16 +196,17 @@ define([
         function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks, cmSystemCheck, cmError) {
             //get browser language:
             cmApi.get({
-                path    : '/services/getBrowserInfo'
+                path: '/services/getBrowserInfo'
             })
-            .then(function(data){
-
-                if(!cmUserModel.isAuth()){
-                    var language = data.languageCode.substr(0,2),
-                        lc       = language == 'de' ? 'de_DE' : 'en_US'
-                    cmLanguage.switchLanguage(lc)
+            .then(
+                function(data){
+                    if(!cmUserModel.isAuth()){
+                        var language = data.languageCode.substr(0,2),
+                            lc       = language == 'de' ? 'de_DE' : 'en_US'
+                        cmLanguage.switchLanguage(lc)
+                    }
                 }
-            });
+            );
 
             //prep $rootScope with useful tools
             $rootScope.console  =   window.console;
