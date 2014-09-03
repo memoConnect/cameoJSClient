@@ -10,7 +10,7 @@ define([
 ], function (app) {
     'use strict';
 
-    app.register.controller('RecipientsCtrl', [
+    app.register.controller('ConversationRecipientsCtrl', [
 
         '$rootScope',
         '$scope',

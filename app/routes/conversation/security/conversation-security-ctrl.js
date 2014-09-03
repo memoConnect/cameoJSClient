@@ -10,7 +10,7 @@ define([
 ], function (app) {
     'use strict';
 
-    app.register.controller('SecuritySettingsCtrl', [
+    app.register.controller('ConversationSecurityCtrl', [
 
         '$rootScope',
         '$scope',

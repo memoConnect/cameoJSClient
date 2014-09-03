@@ -101,14 +101,14 @@ cameo_config = {
             hasCtrl: true,
             resolveOnBoot: true
         },
-        'security-settings': {
+        'conversation-security': {
             routes:[
                 '/conversation/:conversationId/security-settings'
             ],
             hasCtrl: true,
             resolveOnBoot: true
         },
-        'recipients': {
+        'conversation-recipients': {
             routes:[
                 '/conversation/:conversationId/recipients'
             ],
