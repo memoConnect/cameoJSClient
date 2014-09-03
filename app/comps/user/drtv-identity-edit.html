@@ -1,9 +1,3 @@
-<cm-header cm-rubber-space>
-    <cm-back cm-weight="1" back-to="/settings"></cm-back>
-    <cm-identity cm-weight="6"></cm-identity>
-    <cm-menu cm-weight="1"></cm-menu>
-</cm-header>
-
 <div class="cm-contact-body">
     <div class="cm-contact-details" cm-rubber-space>
         <div cm-weight="1">
@@ -17,58 +11,63 @@
 
     <div class="cm-contact-inputs">
         <form name="cmForm" novalidate autocomplete="off">
+            <label>{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}</label>
             <div class="cm-input-ctn with-inside-icon cm-icon-grey">
                 <i class="fa cm-rhino-positive"></i>
                 <input
                     tabindex="1" data-qa="input-cameoId" required disabled
-                    type="text" name="cameoId" ng-model="identity.cameoId"
-                    placeholder="{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}" />
+                    type="text" name="cameoId" ng-model="identity.cameoId" />
             </div>
 
+            <br />
+
+            <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
             <div class="cm-input-ctn">
                 <input
                     tabindex="2" data-qa="input-displayname" required
-                    type="text" name="displayName" ng-model="identity.displayName" ng-keyup="validateDisplayName();"
-                    placeholder="{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" />
+                    type="text" name="displayName" ng-model="identity.displayName" ng-keyup="validateDisplayName();" />
             </div>
-
-            <div class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid && cmForm.displayName.length > 0">
+            <cm-info-bubble class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid && cmForm.displayName.length > 0">
                 <div ng-show="cmForm.displayName.$error.required">
                     <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
                 </div>
-            </div>
+            </cm-info-bubble>
 
+            <br />
+
+            <label>{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
             <cm-multi-input cm-collection="identity.phoneNumbers">
                 <ng-form name="formPhone">
                     <div class="cm-input-ctn with-chooser">
                         <input
                             tabindex="3" data-qa="input-phonenumber"
-                            type="text" name="phoneNumber" ng-model="item.value" cm-validate-phone cm-adaptive-change
-                            placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" />
+                            type="text" name="phoneNumber" ng-model="item.value" cm-validate-phone cm-adaptive-change />
                     </div>
                     <div cm-type-chooser cm-choose-value-to="item"></div>
-                    <div class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid" data-qa="form-error-phoneNumber-invalid">
+                    <cm-info-bubble class="cm-alert" data-qa="form-error-phoneNumber-invalid" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
                         <div ng-show="formPhone.phoneNumber.$invalid">
                             <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
                         </div>
-                    </div>
+                    </cm-info-bubble>
                 </ng-form>
             </cm-multi-input>
 
+            <br />
+
+            <label>{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
             <cm-multi-input cm-collection="identity.emails">
                 <ng-form name="formEmail">
                     <div class="cm-input-ctn with-chooser">
                         <input
                             tabindex="4" data-qa="input-email"
-                            name="email" ng-model="item.value" cm-validate-email
-                            placeholder="{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}" />
+                            name="email" ng-model="item.value" cm-validate-email cm-adaptive-change />
                     </div>
                     <div cm-type-chooser cm-choose-value-to="item"></div>
-                    <div class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
+                    <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
                         <div ng-show="formEmail.email.$invalid" data-qa="form-error-email-invalid">
                             <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
                         </div>
-                    </div>
+                    </cm-info-bubble>
                 </ng-form>
             </cm-multi-input>
 

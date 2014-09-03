@@ -1,8 +1,3 @@
-<h2>
-    <i class="fa cm-avatar-add cm-lg-icon"></i>
-    {{'SETTINGS.PAGES.IDENTITY.CREATE.HEADER'|cmTranslate}}
-</h2>
-
 <div class="cm-contact-body">
     <div class="cm-contact-inputs">
         <form name="cmForm" novalidate autocomplete="off">
@@ -18,7 +13,7 @@
                     tabindex="2" data-qa="input-displayname"
                     type="text" name="displayName" ng-model="formData.displayName" ng-keyup="validateDisplayName()" />
             </div>
-            <div
+            <cm-info-bubble
                 class="cm-alert"
                 ng-show="
                     cmForm.displayName.$dirty &&
@@ -29,20 +24,20 @@
                     <i class="fa cm-info"></i>
                     {{'SETTINGS.PAGES.IDENTITY.CREATE.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
                 </div>
-            </div>
+            </cm-info-bubble>
 
             <br />
 
             <label>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
             <cm-multi-input cm-collection="formData.phoneNumbers">
-                <ng-form name="formPhone"autocomplete="off">
+                <ng-form name="formPhone" autocomplete="off">
                     <div class="cm-input-ctn with-chooser">
                         <input
                             tabindex="3" data-qa="input-phonenumber"
                             type="text" name="phoneNumber" ng-model="item.value" cm-validate-phone cm-adaptive-change />
                     </div>
                     <div cm-type-chooser cm-choose-value-to="item"></div>
-                    <div
+                    <cm-info-bubble
                         class="cm-alert"
                         ng-show="
                             formPhone.phoneNumber.$dirty &&
@@ -53,7 +48,7 @@
                             <i class="fa cm-info"></i>
                             {{'SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.PHONENUMBER'|cmTranslate}}
                         </div>
-                    </div>
+                    </cm-info-bubble>
                 </ng-form>
             </cm-multi-input>
 
@@ -68,12 +63,12 @@
                             name="email" ng-model="item.value" cm-validate-email />
                     </div>
                     <div cm-type-chooser cm-choose-value-to="item"></div>
-                    <div class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
+                    <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
                         <div ng-show="formEmail.email.$invalid" data-qa="form-error-email-invalid">
                             <i class="fa cm-info"></i>
                             {{'SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.EMAIL'|cmTranslate}}
                         </div>
-                    </div>
+                    </cm-info-bubble>
                 </ng-form>
             </cm-multi-input>
 

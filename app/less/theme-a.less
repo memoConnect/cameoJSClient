@@ -84,7 +84,6 @@
         margin-left:0;
         margin-right:-0.575*@cm-unit;
       }
-
     }
 
     i.cm-beta {
@@ -231,7 +230,6 @@
         vertical-align: top;
         padding-top:0.65em;
       }
-
     }
   }
 
@@ -273,6 +271,10 @@
     vertical-align: middle;
   }
 
+  .cm-contact-body {
+    .content;
+  }
+
   form {
     label {
       color: @cm-grey-new;
@@ -291,6 +293,11 @@
       padding:0;
       margin:0;
       border:none;
+    }
+    cm-info-bubble{
+      &.cm-alert{
+        color: @cm-grey-new;
+      }
     }
   }
 }

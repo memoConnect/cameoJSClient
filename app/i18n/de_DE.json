@@ -306,10 +306,12 @@
         "LABEL": {
             "KEYMANAGEMENT": "cameoKeys",
             "TRUST": "QR-Code",
-            "NEW": "Neue Identität anlegen"
+            "NEW": "Neue Identität anlegen",
+            "IDENTITY": "Identität",
+            "IDENTITIES": "Identitäten"
         },
         "MODAL": {
-            "HEADER": "Identitäten"
+            "HEADER": "@IDENTITY.LABEL.IDENTITIES"
         },
         "NOTIFY": {
             "UPDATE": {
