@@ -41,12 +41,15 @@ angular.module('cmCore').service('cmRootService', [
 
         $rootScope.gotoRegistration = function(){
             this.goto('/registration')
-        }
+        };
 
         $rootScope.createNewConversation = function(){
-            delete $rootScope.pendingConversation
-            $rootScope.goto('/conversation/new')
-        }
+            delete $rootScope.pendingConversation;
+            $rootScope.goTo('/conversation/new');
+        };
 
+        $rootScope.createNewIdentity = function(){
+            $rootScope.goTo('/settings/identity/create');
+        }
     }
 ]);

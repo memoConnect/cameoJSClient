@@ -1,5 +1,5 @@
 <h2>
-    <i class="fa cm-person cm-lg-icon"></i>
+    <i class="fa cm-avatar cm-lg-icon"></i>
     {{'IDENTITY.OVERVIEW.HEADER'|cmTranslate}}
 </h2>
 
@@ -9,18 +9,8 @@
     </cm-info-bubble>
 </article>
 
-<hr>
-
-<ul>
-    <li ng-repeat="identity in ownIdentities | orderBy: 'isActive':false" ng-click="bam(identity)" data-qa="identity-list-item">
-        <span class="item" cm-rubber-space>
-            <cm-avatar cm-data="identity" cm-weight="1"></cm-avatar>
-            <cm-key-level cm-data="identity.keys.getWeakestKeySize()" cm-weight="1"></cm-key-level>
-            <span cm-weight="4">{{identity.getDisplayName()}}</span>
-        </span>
-        <div class="short-links">
-            <i class="fa cm-change cm-lg-icon" ng-if="!identity.isActive" data-qa="btn-identity-switchto"></i>
-            <i class="fa cm-fix cm-lg-icon" ng-if="identity.isActive"></i>
-        </div>
+<ul class="mt15">
+    <li ng-repeat="identity in identities | orderBy: 'isActive':false" ng-click="bam(identity)" class="isActive" data-qa="identity-list-item">
+        <cm-identity-tag cm-data="identity"></cm-identity-tag>
     </li>
 </ul>

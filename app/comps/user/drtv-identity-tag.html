@@ -1,0 +1,9 @@
+<cm-avatar cm-data="identity" cm-weight="1"></cm-avatar>
+<section cm-weight="4" class="identityName">
+    <div class="displayName">{{identity.getDisplayName()}}</div>
+    <div class="cameoId">{{identity.cameoId}}</div>
+</section>
+<section class="icon-list">
+    <i class="fa cm-write cm-lg-icon" ng-if="identity.isActive" data-qa="btn-identity-switchto"></i>
+    <i class="fa cm-checkbox cm-lg-icon"></i>
+</section>

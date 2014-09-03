@@ -6,14 +6,12 @@ angular.module('cmUser').directive('cmIdentityList', [
     function(cmUserModel, $rootScope){
         return {
             restrict: 'E',
+            scope: {
+                identities: "=cmIdentities"
+            },
             templateUrl: 'comps/user/drtv-identity-list.html',
             controller: function ($scope) {
                 //console.log('cmIdentitiesOverview');
-                $scope.ownIdentities = cmUserModel.data.identities;
-
-                $scope.createNewIdentity = function(){
-                    $rootScope.goto('/settings/identity/new');
-                };
 
                 $scope.switchToIdentity = function(identity){
                     cmUserModel.switchToIdentity(identity);
@@ -21,7 +19,7 @@ angular.module('cmUser').directive('cmIdentityList', [
 
                 $scope.bam = function(identity){
                     if(identity.isActive == true){
-                        $rootScope.goto('/settings/identity/edit');
+                        $rootScope.goTo('/settings/identity/edit');
                     } else {
                         $scope.switchToIdentity(identity);
                     }

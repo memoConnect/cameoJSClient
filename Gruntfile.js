@@ -244,7 +244,8 @@ module.exports = function (grunt) {
                 src: [
                     'app/less/base.less',
                     'app/less/bootstrap.less',
-                    'app/less/!(base|bootstrap).less'
+                    'app/less/theme-a.less',
+                    'app/less/!(base|bootstrap|theme-a).less'
                 ],
                 dest: 'app/css/app.less'
             },

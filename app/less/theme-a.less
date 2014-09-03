@@ -124,11 +124,12 @@
   ul {
     background-color: @cm-white;
     padding:0 !important;
+    .border-top;
     &.cm-submenu {
     }
-    > li:last-child{
-      border-bottom: none;
-    }
+//    > li:last-child{
+//      border-bottom: none;
+//    }
     li {
       .with-cursor;
       .border-bottom;
@@ -167,7 +168,17 @@
           font-size:@cm-small-font;
         }
         cm-avatar {
+          width: @cm-unit*3;
+          height: @cm-unit*3;
+          -webkit-box-shadow: 0 0 0.625em 0.125em @cm-white;
+          box-shadow: 0 0 0.625em 0.125em @cm-white;
         }
+      }
+      .isActive{
+        background-color: #000088;
+        -webkit-box-shadow: inset 0 1rem 1rem 1rem rgba(50, 50, 50, 0.75);
+        -moz-box-shadow:    inset 0 1rem 1rem 1rem rgba(50, 50, 50, 0.75);
+        box-shadow:         inset 0 1rem 1rem 1rem rgba(50, 50, 50, 0.75);
       }
       .short-links{
         position:absolute;
@@ -257,9 +268,19 @@
     -moz-border-radius: @cm-unit;
     border-radius: @cm-unit;
   }
+
+  .icon-list{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 4rem;
+    line-height: 4rem;
+    vertical-align: middle;
+  }
 }
 
 cm-welcome, cm-quick-start, cm-key-info, cm-about-us, div.system-check,
+cm-identity-list,
 cm-widget-identity-key-list, cm-identity-key-list, cm-widget-identity-create, cm-identity-key-create {
   display: block;
   color: @cm-grey-font;
@@ -267,7 +288,7 @@ cm-widget-identity-key-list, cm-identity-key-list, cm-widget-identity-create, cm
     position: relative;
     i.cm-beta {
       position: absolute;
-      top: 0;
+      top: -0.3rem;
       right: 1rem;
       color: @cm-ci-color;
     }
