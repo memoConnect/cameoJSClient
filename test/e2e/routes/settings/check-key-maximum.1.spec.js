@@ -41,7 +41,7 @@ describe('Check key maximum: ',function(){
         util.login()
     })
 
-    it('open keyoverview and a message should be present',function(){
+    it('open key overview and a message should be present',function(){
         util.get('settings/identity/keys')
         expect($("[data-qa='message-no-keys']").isPresent()).toBe(true)
         expect($("cm-footer").isPresent()).toBe(true)

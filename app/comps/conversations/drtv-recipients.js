@@ -16,22 +16,24 @@ angular.module('cmConversations').directive('cmRecipients', [
                 $scope.selected         = {};
                 $scope.contacts         = cmContactsModel.contacts
 
+
                 function init(conversation){
                     $scope.selected = {}
-                    conversation.recipients.forEach(function(recipient){
+                    $scope.conversation = conversation
+                    $scope.conversation.recipients.forEach(function(recipient){
                         $scope.selected[recipient.id] = true;
                     })
                 }
 
                 $scope.addRecipient = function(recipient){
                     $scope.selected[recipient.id] = true;
-                    conversation.addRecipient(recipient);
+                    $scope.conversation.addRecipient(recipient);
                 };
 
                 $scope.removeRecipient = function(recipient){
                     if($scope.disabled_remove) return null;
                     delete $scope.selected[recipient.id];
-                    conversation.removeRecipient(recipient);
+                    $scope.conversation.removeRecipient(recipient);
                 };
 
                 $scope.toggleRecipient = function(recipient){

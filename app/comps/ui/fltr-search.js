@@ -5,7 +5,9 @@ angular.module('cmUi').filter('cmSearch', [
     function(cmUtil){
         return function(arrayToSearch, searchType, searchString){
             
-            if(!cmUtil.isArray(arrayToSearch) || typeof searchString != 'string') return [];
+            if(!arrayToSearch.length || typeof searchString != 'string') return arrayToSearch;
+
+
 
             /**
              * @name isMatch
