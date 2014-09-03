@@ -9,11 +9,13 @@
  * @restrict AE
  */
 
+//Todo: Widget should not acces $roueParams
+
 angular.module('cmWidgets')
-.directive('cmWidgetContactList', [
+.directive('cmWidgetContactDetails', [
 
     '$rootScope',
-    //'$routeParams',
+    '$routeParams',
     'cmContactsModel',
     'cmIdentityFactory',
     'cmUtil',
@@ -27,7 +29,7 @@ angular.module('cmWidgets')
         return {
             restrict:       'AE',
             scope:          true,
-            templateUrl:    '/widgets/contact/contact-details',
+            templateUrl:    'widgets/contact/wdgt-contact-details.html',
 
             controller: function($scope, $element, $attrs){
                 $scope.cmUtil = cmUtil;

@@ -151,8 +151,11 @@ cameo_config = {
             hasCtrl: true,
             resolveOnBoot: true
         },
-        'contact': {
-            routes:['/contact/:id'],
+        'contact-details': {
+            routes:[
+                '/contact/:id/details',
+                '/contact/:id'
+            ],
             hasCtrl: true
         },
 
