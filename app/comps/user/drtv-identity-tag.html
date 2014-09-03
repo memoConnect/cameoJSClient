@@ -5,5 +5,5 @@
 </section>
 <section class="icon-list">
     <i class="fa cm-write cm-lg-icon" ng-if="identity.isActive" data-qa="btn-identity-switchto"></i>
-    <i class="fa cm-checkbox cm-lg-icon"></i>
+    <i class="fa cm-lg-icon" ng-class="{'cm-radio-1':identity.isActive,'cm-radio-0':!identity.isActive}"></i>
 </section>

@@ -1,13 +1,7 @@
-<cm-header cm-rubber-space>
-    <cm-back cm-weight="1" back-to="/settings"></cm-back>
-    <cm-identity cm-weight="6"></cm-identity>
-    <cm-menu cm-weight="1"></cm-menu>
-</cm-header>
-
-<header class="inScreen">
-    <i class="fa cm-person cm-lg-icon"></i>
+<h2>
+    <i class="fa cm-avatar-add cm-lg-icon"></i>
     {{'SETTINGS.PAGES.IDENTITY.CREATE.HEADER'|cmTranslate}}
-</header>
+</h2>
 
 <div class="cm-contact-body">
     <div class="cm-contact-inputs">
@@ -18,11 +12,11 @@
                 placeholder="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.CAMEOID"
             ></cm-cameo-id>
 
+            <label>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
             <div class="cm-input-ctn">
                 <input
                     tabindex="2" data-qa="input-displayname"
-                    type="text" name="displayName" ng-model="formData.displayName" ng-keyup="validateDisplayName()"
-                    placeholder="{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}"  />
+                    type="text" name="displayName" ng-model="formData.displayName" ng-keyup="validateDisplayName()" />
             </div>
             <div
                 class="cm-alert"
@@ -37,13 +31,15 @@
                 </div>
             </div>
 
+            <br />
+
+            <label>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
             <cm-multi-input cm-collection="formData.phoneNumbers">
                 <ng-form name="formPhone"autocomplete="off">
                     <div class="cm-input-ctn with-chooser">
                         <input
                             tabindex="3" data-qa="input-phonenumber"
-                            type="text" name="phoneNumber" ng-model="item.value" cm-validate-phone cm-adaptive-change
-                            placeholder="{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" />
+                            type="text" name="phoneNumber" ng-model="item.value" cm-validate-phone cm-adaptive-change />
                     </div>
                     <div cm-type-chooser cm-choose-value-to="item"></div>
                     <div
@@ -61,13 +57,15 @@
                 </ng-form>
             </cm-multi-input>
 
+            <br />
+
+            <label>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
             <cm-multi-input cm-collection="formData.emails">
                 <ng-form name="formEmail" autocomplete="off">
                     <div class="cm-input-ctn with-chooser">
                         <input
                             tabindex="4" data-qa="input-email"
-                            name="email" ng-model="item.value" cm-validate-email
-                            placeholder="{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.EMAIL'|cmTranslate}}" />
+                            name="email" ng-model="item.value" cm-validate-email />
                     </div>
                     <div cm-type-chooser cm-choose-value-to="item"></div>
                     <div class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">

@@ -1,3 +1,4 @@
+<label>{{placeholder|cmTranslate}} *</label>
 <div
     data-qa="form-input"
     class="cm-input-ctn with-inside-icon"
@@ -5,8 +6,7 @@
     <input
         tabindex="{{tabindex}}" data-qa="input-cameoId" required
         type="text" id="cameoId" name="cameoId" ng-class="{'cm-input-error':hasError()}"
-        ng-model="cameoId" cm-adaptive-change
-        placeholder="{{placeholder|cmTranslate}} *" />
+        ng-model="cameoId" cm-adaptive-change />
     <i
         class="fa cm-input-addon"
         ng-class="{
