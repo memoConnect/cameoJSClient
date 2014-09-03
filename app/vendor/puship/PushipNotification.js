@@ -13,32 +13,32 @@ Puship.GCM = function () {
     var privateFailCallback = GCM_Fail;
 
     function GCM_Event(e) {
-        console.log('GCM_Event: ' + e.event);
+        //console.log('GCM_Event: ' + e.event);
         switch (e.event) {
             case'registered':
                 Puship.gcmregid = e.regid;
                 if (Puship.gcmregid.length > 0) {
-                    console.log('REGISTERED -> REGID:' + e.regid);
+                    //console.log('REGISTERED -> REGID:' + e.regid);
                     Puship.Common.RegisterOnPuship(e.regid, privateAppId, privateDeviceType, {instanceId: privateInstanceIdentifier, successCallback: privateSuccessCallback, failCallback: privateFailCallback});
                 }
                 break;
             case'message':
-                console.log('MESSAGE -> MSG:' + e.message);
-                console.log('MESSAGE -> MSGCNT:' + e.msgcnt);
-                console.log('e:' + JSON.stringify(e));
+                //console.log('MESSAGE -> MSG:' + e.message);
+                //console.log('MESSAGE -> MSGCNT:' + e.msgcnt);
+                //console.log('e:' + JSON.stringify(e));
                 if (e.foreground) {
                     if (e.payload != null) {
-                        console.log('soundname:' + e.payload.sound);
+                        //console.log('soundname:' + e.payload.sound);
                         //var my_media = new Media("/android_asset/www/" + e.payload.sound);
                         //my_media.play();
                     }
                 } else {
-                    console.log('inline');
+                    //console.log('inline');
                     Puship.Common.NotifyPush(ConvertPush(e));
                 }
                 break;
             case'error':
-                console.warn('ERROR -> MSG:' + e.msg);
+                //console.warn('ERROR -> MSG:' + e.msg);
                 privateFailCallback(e);
                 break;
             default:
@@ -48,40 +48,40 @@ Puship.GCM = function () {
     }
 
     function GCM_Success(e) {
-        console.log('success method');
-        console.log('e:' + JSON.stringify(e));
+        //console.log('success method');
+        //console.log('e:' + JSON.stringify(e));
         if (e == "ALREADY REGISTERED" && privateSuccessCallback != GCM_Success) {
             privateSuccessCallback(e);
         }
-        console.log('exit from success');
+        //console.log('exit from success');
     }
 
     function GCM_Fail(e) {
-        console.log('GCM_Fail -> GCM plugin failed to register');
-        console.log('GCM_Fail -> ' + e.msg);
+        //console.log('GCM_Fail -> GCM plugin failed to register');
+        //console.log('GCM_Fail -> ' + e.msg);
         privateFailCallback(e);
     }
 
     function ConvertPush(GCMPush) {
-        console.log("Converting GCM...");
+        //console.log("Converting GCM...");
         var CommonPush = {
             Badge: GCMPush.payload == null ? GCMPush.msgcnt : GCMPush.payload.msgcnt,
             Alert: GCMPush.message,
             Sound: GCMPush.payload == null ? GCMPush.sound : GCMPush.payload.sound
         };
-        console.log("CommonPush: " + JSON.stringify(CommonPush));
+        //console.log("CommonPush: " + JSON.stringify(CommonPush));
         return CommonPush;
     }
 
     return{Register: function (GCMProject, optionalparams) {
-        console.log('Calling GCM Register');
+        //console.log('Calling GCM Register');
         privateAppId = Puship.PushipAppId;
         privateDeviceType = 2;
         if (!optionalparams)optionalparams = {};
         privateSuccessCallback = Puship.Common.DefaultValue(optionalparams.successCallback, GCM_Success);
         privateFailCallback = Puship.Common.DefaultValue(optionalparams.failCallback, GCM_Fail);
         privateInstanceIdentifier = Puship.Common.DefaultValue(optionalparams.instanceId, device.uuid);
-        console.log('Params initialized');
+        //console.log('Params initialized');
         var pushNotification = window.plugins.pushNotification;
         if (pushNotification != null) {
             pushNotification.register(GCM_Success, GCM_Fail, {"senderID": GCMProject, "ecb": "Puship.GCM.GCM_Event"});
@@ -91,19 +91,19 @@ Puship.GCM = function () {
             ]);
         }
     }, UnRegister: function (successCallback, failureCallback) {
-        console.log("Start unregistering app");
+        //console.log("Start unregistering app");
         var UnregisterSuccessCallback = Puship.Common.DefaultValue(successCallback, function () {
-            console.log("Success Unregistering app");
+            //console.log("Success Unregistering app");
         });
         var UnregisterFailCallback = Puship.Common.DefaultValue(failureCallback, function (err) {
-            console.log("Error during Unregistering app");
-            console.log("error:" + JSON.stringify(err));
+            //console.log("Error during Unregistering app");
+            //console.log("error:" + JSON.stringify(err));
         });
         var pushNotification = window.plugins.pushNotification;
         if (pushNotification != null) {
             pushNotification.unregister(UnregisterSuccessCallback, UnregisterFailCallback);
         } else {
-            console.log("Calling native unregister");
+            //console.log("Calling native unregister");
             return cordova.exec(UnregisterSuccessCallback, UnregisterFailCallback, 'GCMPlugin', 'unregister', [
                 {}
             ]);
@@ -121,57 +121,57 @@ Puship.WP = function () {
     var privateFailCallback = GCM_Fail;
 
     function Register(optionalparams) {
-        console.log('Calling WP Register');
+        //console.log('Calling WP Register');
         privateAppId = Puship.PushipAppId;
         privateDeviceType = 3;
         if (!optionalparams)optionalparams = {};
         privateSuccessCallback = Puship.Common.DefaultValue(optionalparams.successCallback, GCM_Success);
         privateFailCallback = Puship.Common.DefaultValue(optionalparams.failCallback, GCM_Fail);
         privateInstanceIdentifier = Puship.Common.DefaultValue(optionalparams.instanceId, device.uuid);
-        console.log('Params initialized');
-        console.log("Getting user token");
+        //console.log('Params initialized');
+        //console.log("Getting user token");
         cordova.exec(RegisterResultCallBack, privateFailCallback, "PushipPlugin", "GetUserToken", []);
     }
 
     function RegisterResultCallBack(tokenresult) {
-        console.log('Result token:' + JSON.stringify(tokenresult));
+        //console.log('Result token:' + JSON.stringify(tokenresult));
         Puship.Common.RegisterOnPuship(tokenresult, privateAppId, privateDeviceType, {instanceId: privateInstanceIdentifier, successCallback: privateSuccessCallback, failCallback: privateFailCallback});
     }
 
     function GCM_Success(e) {
-        console.log('success method');
-        console.log('e:' + JSON.stringify(e));
-        console.log('exit from success');
+        //console.log('success method');
+        //console.log('e:' + JSON.stringify(e));
+        //console.log('exit from success');
     }
 
     function GCM_Fail(e) {
-        console.log('GCM_Fail -> GCM plugin failed to register');
-        console.log('GCM_Fail -> ' + e.msg);
+        //console.log('GCM_Fail -> GCM plugin failed to register');
+        //console.log('GCM_Fail -> ' + e.msg);
         privateFailCallback(e);
     }
 
     function ConvertPush(MPNSPush) {
-        console.log("Converting MPNS...");
+        //console.log("Converting MPNS...");
         var CommonPush = {Badge: 1, Alert: MPNSPush, Sound: "default"};
-        console.log("CommonPush: " + JSON.stringify(CommonPush));
+        //console.log("CommonPush: " + JSON.stringify(CommonPush));
         return CommonPush;
     }
 
     function NotificationCallback(notification) {
-        console.log('raising puship event');
+        //console.log('raising puship event');
         Puship.Common.NotifyPush(ConvertPush(notification));
     }
 
     return{Register: Register, UnRegister: function (successCallback, failureCallback) {
-        console.log("Start unregistering app");
+        //console.log("Start unregistering app");
         var UnregisterSuccessCallback = Puship.Common.DefaultValue(successCallback, function () {
-            console.log("Success Unregistering app");
+            //console.log("Success Unregistering app");
         });
         var UnregisterFailCallback = Puship.Common.DefaultValue(failureCallback, function (err) {
-            console.log("Error during Unregistering app");
-            console.log("error:" + JSON.stringify(err));
+            //console.log("Error during Unregistering app");
+            //console.log("error:" + JSON.stringify(err));
         });
-        console.log("Calling native unregister");
+        //console.log("Calling native unregister");
         return cordova.exec(UnregisterSuccessCallback, UnregisterFailCallback, 'GCMPlugin', 'unregister', [
             {}
         ]);
@@ -187,29 +187,29 @@ Puship.APNS = function () {
     var privateApntoken = '';
 
     function PushCallback(push) {
-        console.log('push received');
+        //console.log('push received');
     }
 
     function GCM_Success(e) {
-        console.log('success method');
-        console.log('e:' + JSON.stringify(e));
-        console.log('exit from success');
+        //console.log('success method');
+        //console.log('e:' + JSON.stringify(e));
+        //console.log('exit from success');
     }
 
     function GCM_Fail(e) {
-        console.log('GCM_Fail -> GCM plugin failed to register');
-        console.log('GCM_Fail -> ' + e.msg);
+        //console.log('GCM_Fail -> GCM plugin failed to register');
+        //console.log('GCM_Fail -> ' + e.msg);
         privateFailCallback(e);
     }
 
     function ConvertPush(APNPush) {
         var CommonPush = {Badge: APNPush.badge, Alert: APNPush.alert, Sound: APNPush.sound};
-        console.log("CommonPush: " + JSON.stringify(CommonPush));
+        //console.log("CommonPush: " + JSON.stringify(CommonPush));
         return CommonPush;
     }
 
     return{Register: function (optionalparams) {
-        console.log('Calling APNS Register');
+        //console.log('Calling APNS Register');
         privateAppId = Puship.PushipAppId;
         privateDeviceType = 1;
         if (!optionalparams)optionalparams = {};
@@ -219,26 +219,26 @@ Puship.APNS = function () {
         privatePushCallback = Puship.Common.DefaultValue(optionalparams.pushCallback, PushCallback);
         var pushNotification = window.plugins.pushNotification;
         if (pushNotification != null) {
-            console.log("Registering with CLI");
+            //console.log("Registering with CLI");
             pushNotification.register(function (resultToken) {
-                console.log("token: " + resultToken);
+                //console.log("token: " + resultToken);
                 privateApntoken = resultToken;
                 Puship.Common.RegisterOnPuship(resultToken, privateAppId, privateDeviceType, {instanceId: privateInstanceIdentifier, successCallback: privateSuccessCallback, failCallback: privateFailCallback});
             }, function (status) {
-                console.warn('Error callback');
-                console.warn('registerDevice:%o', status);
+                //console.warn('Error callback');
+                //console.warn('registerDevice:%o', status);
                 privateFailCallback(status);
             }, {"badge": "true", "sound": "true", "alert": "true", "ecb": "Puship.APNS.notificationCallback"});
         } else {
-            console.log("Registering with Manual Installation");
+            //console.log("Registering with Manual Installation");
             Puship.APNS.registerDevice({alert: true, badge: true, sound: true}, function (status) {
-                console.log("token: " + status.deviceToken);
+                //console.log("token: " + status.deviceToken);
                 privateApntoken = status.deviceToken;
-                console.log('registerDevice:%o', status);
+                //console.log('registerDevice:%o', status);
                 Puship.Common.RegisterOnPuship(status.deviceToken, privateAppId, privateDeviceType, {instanceId: privateInstanceIdentifier, successCallback: privateSuccessCallback, failCallback: privateFailCallback});
             }, function (status) {
-                console.warn('Error callback');
-                console.warn('registerDevice:%o', status);
+                //console.warn('Error callback');
+                //console.warn('registerDevice:%o', status);
                 privateFailCallback(status);
             });
         }
@@ -251,10 +251,10 @@ Puship.APNS = function () {
     }, setApplicationIconBadgeNumber: function (badge, callback) {
         var pushNotification = window.plugins.pushNotification;
         if (pushNotification != null) {
-            console.log("setApplicationIconBadgeNumber with CLI");
+            //console.log("setApplicationIconBadgeNumber with CLI");
             pushNotification.setApplicationIconBadgeNumber(callback, callback, badge);
         } else {
-            console.log("setApplicationIconBadgeNumber with Manual Installation");
+            //console.log("setApplicationIconBadgeNumber with Manual Installation");
             cordova.exec(callback, callback, "PushNotification", "setApplicationIconBadgeNumber", [
                 {badge: badge}
             ]);
@@ -262,24 +262,24 @@ Puship.APNS = function () {
     }, cancelAllLocalNotifications: function (callback) {
         cordova.exec(callback, callback, "PushNotification", "cancelAllLocalNotifications", []);
     }, notificationCallback: function (notification) {
-        console.log('raising puship event');
+        //console.log('raising puship event');
         if (window.plugins.pushNotification != null)
             Puship.Common.NotifyPush(ConvertPush(notification)); else
             Puship.Common.NotifyPush(ConvertPush(notification.aps));
     }, UnRegister: function () {
-        console.log("Start unregistering apple device");
+        //console.log("Start unregistering apple device");
         var UnregisterSuccessCallback = Puship.Common.DefaultValue(successCallback, function () {
-            console.log("Success Unregistering apple device");
+            //console.log("Success Unregistering apple device");
         });
         var UnregisterFailCallback = Puship.Common.DefaultValue(failureCallback, function (err) {
-            console.log("Error during Unregistering apple device");
-            console.log("error:" + JSON.stringify(err));
+            //console.log("Error during Unregistering apple device");
+            //console.log("error:" + JSON.stringify(err));
         });
         var pushNotification = window.plugins.pushNotification;
         if (pushNotification != null) {
             pushNotification.unregister(UnregisterSuccessCallback, UnregisterFailCallback);
         } else {
-            console.log("Calling fake unregister");
+            //console.log("Calling fake unregister");
             UnregisterSuccessCallback();
         }
     }};
@@ -297,26 +297,26 @@ Puship.BPNS = function () {
     var iwakeUpPage = "index.html";
 
     function REG_Success(e) {
-        console.log('success method');
-        console.log('e:' + JSON.stringify(e));
+        //console.log('success method');
+        //console.log('e:' + JSON.stringify(e));
         if (privateSuccessCallback) {
             privateSuccessCallback(e);
         }
-        console.log('exit from success');
+        //console.log('exit from success');
     }
 
     function REG_Fail(e) {
-        console.log('BB Fail -> BB plugin failed to register');
+        //console.log('BB Fail -> BB plugin failed to register');
         if (privateFailCallback) {
             privateFailCallback(e);
         }
-        console.log('BB Fail -> BB plugin failed to register');
+        //console.log('BB Fail -> BB plugin failed to register');
     }
 
     function onRegister(status) {
-        console.log('Service call done with status: ' + status);
+        //console.log('Service call done with status: ' + status);
         if (status == 0) {
-            console.log("Registration done");
+            //console.log("Registration done");
             Puship.Common.RegisterOnPuship(GetToken(), privateAppId, privateDeviceType, {instanceId: privateInstanceIdentifier, successCallback: REG_Success, failCallback: REG_Fail});
         }
         else if (status == 1) {
@@ -338,41 +338,41 @@ Puship.BPNS = function () {
 
     function ConvertPush(BPNPush) {
         var CommonPush = {Badge: 1, Alert: blackberry.utils.blobToString(BPNPush.payload), Sound: "default"};
-        console.log("CommonPush: " + JSON.stringify(CommonPush));
+        //console.log("CommonPush: " + JSON.stringify(CommonPush));
         return CommonPush;
     }
 
     function onData(data) {
-        console.log("Push notifications received");
+        //console.log("Push notifications received");
         try {
-            console.log("data received: " + JSON.stringify(data));
+            //console.log("data received: " + JSON.stringify(data));
             var resultpush = ConvertPush(data);
-            console.log('raising puship event');
+            //console.log('raising puship event');
             Puship.Common.NotifyPush(resultpush);
             return 0;
         }
         catch (err) {
-            console.log("error from push notification data: " + err);
+            //console.log("error from push notification data: " + err);
         }
     }
 
     function onSimChange() {
-        console.log('handle Sim Card change');
+        //console.log('handle Sim Card change');
     }
 
     function OpenBISPushListener() {
         try {
-            console.log('Calling BB services');
+            //console.log('Calling BB services');
             var ops = {port: iport, appId: iappId, serverUrl: iserverUrl, wakeUpPage: iwakeUpPage, maxQueueCap: imax};
             blackberry.push.openBISPushListener(ops, onData, onRegister, onSimChange);
         }
         catch (err) {
-            console.log("Error during open listener:" + err);
+            //console.log("Error during open listener:" + err);
             try {
-                console.log("try shotdown listener");
+                //console.log("try shotdown listener");
                 blackberry.push.closePushListener();
             } catch (er) {
-                console.log("error during closing listener: " + er);
+                //console.log("error during closing listener: " + er);
             }
         }
     }
@@ -382,7 +382,7 @@ Puship.BPNS = function () {
     }
 
     return{Register: function (port, serverUrl, appId, optionalparams) {
-        console.log('Initializing BPNS variables');
+        //console.log('Initializing BPNS variables');
         iport = port;
         iserverUrl = serverUrl;
         iappId = appId;
@@ -394,7 +394,7 @@ Puship.BPNS = function () {
         privateInstanceIdentifier = Puship.Common.DefaultValue(optionalparams.instanceId, device.uuid);
         imax = Puship.Common.DefaultValue(optionalparams.max, imax);
         iwakeUpPage = Puship.Common.DefaultValue(optionalparams.wakeUpPage, iwakeUpPage);
-        console.log('Calling BPNS Register');
+        //console.log('Calling BPNS Register');
         OpenBISPushListener();
     }, UnRegister: function () {
         blackberry.push.closePushListener();
@@ -409,7 +409,7 @@ Puship.Common = function () {
 
     function GetAppId() {
         if (Puship.PushipAppId == null) {
-            console.warn("PushipAppId is NOT setted");
+            //console.warn("PushipAppId is NOT setted");
             return null;
         }
         return Puship.PushipAppId;
@@ -417,244 +417,244 @@ Puship.Common = function () {
 
     function WriteResponceStatus(code) {
         if (code == RESPONSESTATUS.REGISTERED.value) {
-            console.log(RESPONSESTATUS.REGISTERED.name);
+            //console.log(RESPONSESTATUS.REGISTERED.name);
         }
         else if (code == RESPONSESTATUS.GENERICERROR.value) {
-            console.warn(RESPONSESTATUS.GENERICERROR.name);
+            //console.warn(RESPONSESTATUS.GENERICERROR.name);
         }
         else if (code == RESPONSESTATUS.APPLICATIONNOTFOUND.value) {
-            console.warn(RESPONSESTATUS.APPLICATIONNOTFOUND.name);
+            //console.warn(RESPONSESTATUS.APPLICATIONNOTFOUND.name);
         }
         else if (code == RESPONSESTATUS.DEVICENOTFOUND.value) {
-            console.warn(RESPONSESTATUS.DEVICENOTFOUND.name);
+            //console.warn(RESPONSESTATUS.DEVICENOTFOUND.name);
         }
         else {
-            console.warn("Code not found");
+            //console.warn("Code not found");
         }
     }
 
     function NotifyPush(push) {
-        console.log("NotifyPush Callback:" + push);
+        //console.log("NotifyPush Callback:" + push);
         var ev;
-        console.log("dispatch for firefox + others");
+        //console.log("dispatch for firefox + others");
         ev = document.createEvent('HTMLEvents');
         ev.notification = push;
         ev.initEvent('puship-notification', true, true, push);
         document.dispatchEvent(ev);
-        console.log("notificationCallback dispached");
+        //console.log("notificationCallback dispached");
     }
 
     function OnPushReceived(callback) {
-        console.log("setting callback");
+        //console.log("setting callback");
         document.addEventListener("puship-notification", callback);
-        console.log("setting callback done");
+        //console.log("setting callback done");
     }
 
     function AddTagFilter(tag, optionalparams) {
         if (!optionalparams)optionalparams = {};
         var appKey = Puship.PushipAppId;
-        console.log('Optional params: ' + JSON.stringify(optionalparams));
+        //console.log('Optional params: ' + JSON.stringify(optionalparams));
         var privateInstanceIdentifier = DefaultValue(optionalparams.instanceId, device.uuid);
         var pSuccessCallBack = DefaultValue(optionalparams.successCallback, function (pushipresult) {
-            console.log('Internal puship addfilter success managed');
+            //console.log('Internal puship addfilter success managed');
         });
         var pFailCallBack = DefaultValue(optionalparams.failCallback, function (pushipresult) {
-            console.log('Internal puship addfilter fail managed');
+            //console.log('Internal puship addfilter fail managed');
         });
         var pRemovePrevTag = DefaultValue(optionalparams.removePrevTag, false);
-        console.log('Adding Tag Filter...');
+        //console.log('Adding Tag Filter...');
         var request = new XMLHttpRequest();
-        console.log('AppId:' + appKey);
-        console.log('Tag:' + tag);
+        //console.log('AppId:' + appKey);
+        //console.log('Tag:' + tag);
         var deviceId = appKey.toString() + "_" + privateInstanceIdentifier;
-        console.log('DeviceIdentifier:' + deviceId);
+        //console.log('DeviceIdentifier:' + deviceId);
         var getstr = Puship.Domain + "services/puship.svc/AddTagFilter?AppId='" + appKey + "'&DeviceIdentifier='" + deviceId
             + "'&Tag='" + tag + "'&RemovePrevTag=" + pRemovePrevTag + "&$format=json";
-        console.log('RequestTo:' + getstr);
+        //console.log('RequestTo:' + getstr);
         request.open('GET', getstr, true);
         request.onreadystatechange = function () {
             if (request.readyState == 4) {
-                console.log('Processing responce');
+                //console.log('Processing responce');
                 if (request.status == 200 || request.status == 201) {
                     try {
                         var code = JSON.parse(request.responseText).d.AddTagFilter;
                         if (code == 200) {
-                            console.log('Filter added succesfully');
+                            //console.log('Filter added succesfully');
                             pSuccessCallBack(this);
                         } else {
-                            console.warn('Error during filter adding execution');
+                            //console.warn('Error during filter adding execution');
                             WriteResponceStatus(code);
                             pFailCallBack(this);
                         }
                     } catch (e) {
-                        console.warn('Error during responce parsing' + this.statusText);
+                        //console.warn('Error during responce parsing' + this.statusText);
                         pFailCallBack(e);
                     }
                     ;
                 } else {
-                    console.warn('Error during filter adding' + this.statusText);
+                    //console.warn('Error during filter adding' + this.statusText);
                     pFailCallBack(this);
                 }
             }
         }
-        console.log('Calling AddTagFilter endpoint');
+        //console.log('Calling AddTagFilter endpoint');
         request.send();
     }
 
     function RemoveTagFilter(tag, optionalparams) {
         if (!optionalparams)optionalparams = {};
         var appKey = Puship.PushipAppId;
-        console.log('Optional params: ' + JSON.stringify(optionalparams));
+        //console.log('Optional params: ' + JSON.stringify(optionalparams));
         var privateInstanceIdentifier = DefaultValue(optionalparams.instanceId, device.uuid);
         var pSuccessCallBack = DefaultValue(optionalparams.successCallback, function (pushipresult) {
-            console.log('Internal puship removefilter success managed');
+            //console.log('Internal puship removefilter success managed');
         });
         var pFailCallBack = DefaultValue(optionalparams.failCallback, function (pushipresult) {
-            console.log('Internal puship removefilter fail managed');
+            //console.log('Internal puship removefilter fail managed');
         });
-        console.log('Removing Tag Filter...');
+        //console.log('Removing Tag Filter...');
         var request = new XMLHttpRequest();
-        console.log('AppId:' + appKey);
-        console.log('Tag:' + tag);
+        //console.log('AppId:' + appKey);
+        //console.log('Tag:' + tag);
         var deviceId = appKey.toString() + "_" + privateInstanceIdentifier;
-        console.log('DeviceIdentifier:' + deviceId);
+        //console.log('DeviceIdentifier:' + deviceId);
         var getstr = Puship.Domain + "services/puship.svc/RemoveTagFilter?AppId='" + appKey + "'&DeviceIdentifier='" + deviceId
             + "'&Tag='" + tag + "'&$format=json";
-        console.log('RequestTo:' + getstr);
+        //console.log('RequestTo:' + getstr);
         request.open('GET', getstr, true);
         request.onreadystatechange = function () {
             if (request.readyState == 4) {
-                console.log('Processing responce');
+                //console.log('Processing responce');
                 if (request.status == 200 || request.status == 201) {
                     try {
                         var code = JSON.parse(request.responseText).d.RemoveTagFilter;
                         if (code == 200) {
-                            console.log('Filter removed succesfully');
+                            //console.log('Filter removed succesfully');
                             pSuccessCallBack(this);
                         } else {
-                            console.warn('Error during filter removing execution');
+                            //console.warn('Error during filter removing execution');
                             WriteResponceStatus(code);
                             pFailCallBack(this);
                         }
                     } catch (e) {
-                        console.warn('Error during responce parsing' + this.statusText);
+                        //console.warn('Error during responce parsing' + this.statusText);
                         pFailCallBack(e);
                     }
                     ;
                 } else {
-                    console.warn('Error during Filter removing' + this.statusText);
+                    //console.warn('Error during Filter removing' + this.statusText);
                     pFailCallBack(this);
                 }
             }
         }
-        console.log('Calling RemoveTagFilter endpoint');
+        //console.log('Calling RemoveTagFilter endpoint');
         request.send();
     }
 
     function CleanTagFilter(optionalparams) {
         if (!optionalparams)optionalparams = {};
         var appKey = Puship.PushipAppId;
-        console.log('Optional params: ' + JSON.stringify(optionalparams));
+        //console.log('Optional params: ' + JSON.stringify(optionalparams));
         var privateInstanceIdentifier = DefaultValue(optionalparams.instanceId, device.uuid);
         var pSuccessCallBack = DefaultValue(optionalparams.successCallback, function (pushipresult) {
-            console.log('Internal puship cleanfilter success managed');
+            //console.log('Internal puship cleanfilter success managed');
         });
         var pFailCallBack = DefaultValue(optionalparams.failCallback, function (pushipresult) {
-            console.log('Internal puship cleanfilter fail managed');
+            //console.log('Internal puship cleanfilter fail managed');
         });
-        console.log('Cleaning Tag Filter...');
+        //console.log('Cleaning Tag Filter...');
         var request = new XMLHttpRequest();
-        console.log('AppId:' + appKey);
+        //console.log('AppId:' + appKey);
         var deviceId = appKey.toString() + "_" + privateInstanceIdentifier;
-        console.log('DeviceIdentifier:' + deviceId);
+        //console.log('DeviceIdentifier:' + deviceId);
         var getstr = Puship.Domain + "services/puship.svc/CleanTagFilter?AppId='" + appKey + "'&DeviceIdentifier='" + deviceId
             + "'&$format=json";
-        console.log('RequestTo:' + getstr);
+        //console.log('RequestTo:' + getstr);
         request.open('GET', getstr, true);
         request.onload = function () {
-            console.warn('Processing CleanTagFilter responce');
+            //console.warn('Processing CleanTagFilter responce');
             if (this.status == 200 || this.status == 201) {
                 var code = JSON.parse(this.response).d.CleanTagFilter;
                 if (code == 200) {
-                    console.log('Filter cleaned succesfully');
+                    //console.log('Filter cleaned succesfully');
                     pSuccessCallBack(this);
                 } else {
-                    console.warn('Error during filter cleaning execution');
+                    //console.warn('Error during filter cleaning execution');
                     WriteResponceStatus(code);
                     pFailCallBack(this);
                 }
             } else {
-                console.warn('Error during filter cleaning call: ' + this.statusText);
+                //console.warn('Error during filter cleaning call: ' + this.statusText);
                 pFailCallBack(this);
             }
         };
         request.onreadystatechange = function () {
             if (request.readyState == 4) {
-                console.log('Processing responce');
+                //console.log('Processing responce');
                 if (request.status == 200 || request.status == 201) {
                     try {
                         var code = JSON.parse(request.responseText).d.CleanTagFilter;
                         if (code == 200) {
-                            console.log('Filter cleaned succesfully');
+                            //console.log('Filter cleaned succesfully');
                             pSuccessCallBack(this);
                         } else {
-                            console.warn('Error during filter cleaning execution');
+                            //console.warn('Error during filter cleaning execution');
                             WriteResponceStatus(code);
                             pFailCallBack(this);
                         }
                     } catch (e) {
-                        console.warn('Error during responce parsing' + this.statusText);
+                        //console.warn('Error during responce parsing' + this.statusText);
                         pFailCallBack(e);
                     }
                     ;
                 } else {
-                    console.warn('Error during push getting' + this.statusText);
+                    //console.warn('Error during push getting' + this.statusText);
                     pFailCallBack(this);
                 }
             }
         }
-        console.log('Calling CleanTagFilter endpoint');
+        //console.log('Calling CleanTagFilter endpoint');
         request.send();
     }
 
     function GetTagFilters(optionalparams) {
         if (!optionalparams)optionalparams = {};
         var appKey = Puship.PushipAppId;
-        console.log('Optional params: ' + JSON.stringify(optionalparams));
+        //console.log('Optional params: ' + JSON.stringify(optionalparams));
         var privateInstanceIdentifier = DefaultValue(optionalparams.instanceId, device.uuid);
         var pSuccessCallBack = DefaultValue(optionalparams.successCallback, function (pushipresult) {
-            console.log('Internal puship getfilter success managed');
+            //console.log('Internal puship getfilter success managed');
         });
         var pFailCallBack = DefaultValue(optionalparams.failCallback, function (pushipresult) {
-            console.log('Internal puship getfilter fail managed');
+            //console.log('Internal puship getfilter fail managed');
         });
-        console.log('Get Tag Filters...');
+        //console.log('Get Tag Filters...');
         var request = new XMLHttpRequest();
-        console.log('AppId:' + appKey);
+        //console.log('AppId:' + appKey);
         var deviceId = appKey.toString() + "_" + privateInstanceIdentifier;
-        console.log('DeviceIdentifier:' + deviceId);
+        //console.log('DeviceIdentifier:' + deviceId);
         var getstr = Puship.Domain + "services/puship.svc/GetTagFilters?AppId='" + appKey + "'&DeviceIdentifier='" + deviceId
             + "'&$format=json";
-        console.log('RequestTo:' + getstr);
+        //console.log('RequestTo:' + getstr);
         request.open('GET', getstr, true);
         request.onreadystatechange = function () {
             if (request.readyState == 4) {
-                console.log('Processing responce');
+                //console.log('Processing responce');
                 if (request.status == 200 || request.status == 201) {
                     try {
                         pSuccessCallBack(JSON.parse(request.responseText).d);
                     } catch (e) {
-                        console.warn('Error during responce parsing' + this.statusText);
+                        //console.warn('Error during responce parsing' + this.statusText);
                         pFailCallBack(e);
                     }
                     ;
                 } else {
-                    console.warn('Error during filter getting' + this.statusText);
+                    //console.warn('Error during filter getting' + this.statusText);
                     pFailCallBack(this);
                 }
             }
         }
-        console.log('Calling GetTagFilters endpoint');
+        //console.log('Calling GetTagFilters endpoint');
         request.send();
     }
 
@@ -681,7 +681,7 @@ Puship.Common = function () {
     }
 
     function pushCurrentPositionSuccess(position) {
-        console.log('Latitude: ' + position.coords.latitude + '\n' + 'Longitude: ' + position.coords.longitude + '\n' + 'Altitude: ' + position.coords.altitude + '\n' + 'Accuracy: ' + position.coords.accuracy + '\n' + 'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' + 'Heading: ' + position.coords.heading + '\n' + 'Speed: ' + position.coords.speed + '\n' + 'Timestamp: ' + position.timestamp + '\n');
+        //console.log('Latitude: ' + position.coords.latitude + '\n' + 'Longitude: ' + position.coords.longitude + '\n' + 'Altitude: ' + position.coords.altitude + '\n' + 'Accuracy: ' + position.coords.accuracy + '\n' + 'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' + 'Heading: ' + position.coords.heading + '\n' + 'Speed: ' + position.coords.speed + '\n' + 'Timestamp: ' + position.timestamp + '\n');
         pushOptionalParams.Latitude = position.coords.latitude;
         pushOptionalParams.Longitude = position.coords.longitude;
         GetPushMessagesInternal(pushOptionalParams);
@@ -689,33 +689,33 @@ Puship.Common = function () {
 
     function pushCurrentPositionError(error) {
         var pFailCallBack = DefaultValue(pushOptionalParams.failCallback, function (pushipresult) {
-            console.log('Internal puship GetPushMessage fail managed');
+            //console.log('Internal puship GetPushMessage fail managed');
         });
-        console.warn('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+        //console.warn('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
         pFailCallBack(error);
     }
 
     function GetPushMessagesInternal(optionalparams) {
         if (!optionalparams)optionalparams = {};
         var appKey = Puship.PushipAppId;
-        console.log('Optional params: ' + JSON.stringify(optionalparams));
+        //console.log('Optional params: ' + JSON.stringify(optionalparams));
         var privateInstanceIdentifier = DefaultValue(optionalparams.instanceId, device.uuid);
         var privateLimit = DefaultValue(optionalparams.limit, 20);
         var privateOffset = DefaultValue(optionalparams.offset, 0);
         var privateTags = DefaultValue(optionalparams.tag, "");
         var adddevicepush = DefaultValue(optionalparams.addDevicePush, false);
         var pSuccessCallBack = DefaultValue(optionalparams.successCallback, function (pushipresult) {
-            console.log('Internal puship GetPushMessages success managed');
+            //console.log('Internal puship GetPushMessages success managed');
         });
         var pFailCallBack = DefaultValue(optionalparams.failCallback, function (pushipresult) {
-            console.log('Internal puship GetPushMessages fail managed');
+            //console.log('Internal puship GetPushMessages fail managed');
         });
-        console.log('Get Push Messages...');
+        //console.log('Get Push Messages...');
         var request = new XMLHttpRequest();
-        console.log('AppId:' + appKey);
-        console.log('Tag:' + privateTags);
+        //console.log('AppId:' + appKey);
+        //console.log('Tag:' + privateTags);
         var deviceId = appKey.toString() + "_" + privateInstanceIdentifier;
-        console.log('DeviceIdentifier:' + deviceId);
+        //console.log('DeviceIdentifier:' + deviceId);
         var getstr = Puship.Domain + "Services/Puship.svc/GetPushMessages?AppId='" + appKey + "'&DeviceType=" + GetCurrentOs().value + "&Limit=" + privateLimit + "&Offset=" + privateOffset + "&Tags='" + privateTags + "'";
         if (adddevicepush) {
             getstr += "&DeviceId='" + deviceId + "'";
@@ -723,115 +723,115 @@ Puship.Common = function () {
         if (optionalparams.Latitude)getstr += "&Latitude=" + optionalparams.Latitude;
         if (optionalparams.Longitude)getstr += "&Longitude=" + optionalparams.Longitude;
         getstr += "&$format=json";
-        console.log('RequestTo:' + getstr);
+        //console.log('RequestTo:' + getstr);
         request.open('GET', getstr, true);
         request.onreadystatechange = function () {
             if (request.readyState == 4) {
-                console.log('Processing responce');
+                //console.log('Processing responce');
                 if (request.status == 200 || request.status == 201) {
                     try {
                         pSuccessCallBack(JSON.parse(request.responseText).d);
                     } catch (e) {
-                        console.warn('Error during responce parsing' + this.statusText);
+                        //console.warn('Error during responce parsing' + this.statusText);
                         pFailCallBack(e);
                     }
                     ;
                 } else {
-                    console.warn('Error during push getting' + this.statusText);
+                    //console.warn('Error during push getting' + this.statusText);
                     pFailCallBack(this);
                 }
             }
         }
-        console.log('Calling GetPushMessages endpoint');
+        //console.log('Calling GetPushMessages endpoint');
         request.send();
     }
 
     function GetPushMessagesByDevice(optionalparams) {
         if (!optionalparams)optionalparams = {};
         var appKey = Puship.PushipAppId;
-        console.log('Optional params: ' + JSON.stringify(optionalparams));
+        //console.log('Optional params: ' + JSON.stringify(optionalparams));
         var privateInstanceIdentifier = DefaultValue(optionalparams.instanceId, device.uuid);
         var privateLimit = DefaultValue(optionalparams.limit, 20);
         var privateOffset = DefaultValue(optionalparams.offset, 0);
         var pSuccessCallBack = DefaultValue(optionalparams.successCallback, function (pushipresult) {
-            console.log('Internal puship GetPushMessagesByDevice success managed');
+            //console.log('Internal puship GetPushMessagesByDevice success managed');
         });
         var pFailCallBack = DefaultValue(optionalparams.failCallback, function (pushipresult) {
-            console.log('Internal puship GetPushMessagesByDevice fail managed');
+            //console.log('Internal puship GetPushMessagesByDevice fail managed');
         });
-        console.log('Get Push Messages...');
+        //console.log('Get Push Messages...');
         var request = new XMLHttpRequest();
-        console.log('AppId:' + appKey);
+        //console.log('AppId:' + appKey);
         var deviceId = appKey.toString() + "_" + privateInstanceIdentifier;
-        console.log('DeviceIdentifier:' + deviceId);
+        //console.log('DeviceIdentifier:' + deviceId);
         var getstr = Puship.Domain + "Services/Puship.svc/GetPushMessagesByDevice?DeviceId='" + deviceId + "'&Limit=" + privateLimit + "&Offset=" + privateOffset;
         getstr += "&$format=json";
-        console.log('RequestTo:' + getstr);
+        //console.log('RequestTo:' + getstr);
         request.open('GET', getstr, true);
         request.onreadystatechange = function () {
             if (request.readyState == 4) {
-                console.log('Processing responce');
+                //console.log('Processing responce');
                 if (request.status == 200 || request.status == 201) {
                     try {
                         pSuccessCallBack(JSON.parse(request.responseText).d);
                     } catch (e) {
-                        console.warn('Error during responce parsing' + this.statusText);
+                        //console.warn('Error during responce parsing' + this.statusText);
                         pFailCallBack(e);
                     }
                     ;
                 } else {
-                    console.warn('Error during push getting' + this.statusText);
+                    //console.warn('Error during push getting' + this.statusText);
                     pFailCallBack(this);
                 }
             }
         }
-        console.log('Calling GetPushMessagesByDevice endpoint');
+        //console.log('Calling GetPushMessagesByDevice endpoint');
         request.send();
     }
 
     function RegisterOnPuship(deviceToken, appKey, deviceType, optionalparams) {
-        console.log('Registering on Puship...');
+        //console.log('Registering on Puship...');
         if (!optionalparams)optionalparams = {};
-        console.log('Optional params: ' + JSON.stringify(optionalparams));
+        //console.log('Optional params: ' + JSON.stringify(optionalparams));
         var privateInstanceIdentifier = DefaultValue(optionalparams.instanceId, device.uuid);
         var pSuccessCallBack = DefaultValue(optionalparams.successCallback, function (pushipresult) {
-            console.log('Internal puship success managed');
+            //console.log('Internal puship success managed');
         });
         var pFailCallBack = DefaultValue(optionalparams.failCallback, function (pushipresult) {
-            console.log('Internal puship fail managed');
+            //console.log('Internal puship fail managed');
         });
         var request = new XMLHttpRequest();
-        console.log('AppId:' + appKey);
-        console.log('Token:' + deviceToken);
+        //console.log('AppId:' + appKey);
+        //console.log('Token:' + deviceToken);
         var deviceId = appKey.toString() + "_" + privateInstanceIdentifier;
-        console.log('DeviceIdentifier:' + deviceId);
-        console.log('DeviceType:' + deviceType);
+        //console.log('DeviceIdentifier:' + deviceId);
+        //console.log('DeviceType:' + deviceType);
         var getstr = Puship.Domain + "services/puship.svc/RegisterDevice?AppId='" + appKey + "'&DeviceType=" + deviceType + "&Token='" + deviceToken + "'&DeviceIdentifier='" + deviceId + "'&language='en'";
         getstr += '&$format=json';
-        console.log('RequestTo:' + getstr);
+        //console.log('RequestTo:' + getstr);
         request.open('GET', getstr, true);
         request.onreadystatechange = function () {
             if (request.readyState == 4) {
-                console.log('Processing responce');
+                //console.log('Processing responce');
                 if (request.status == 200 || request.status == 201) {
                     var code = JSON.parse(request.responseText).d.RegisterDevice;
                     if (code == 200) {
-                        console.log('Registered succesfully');
+                        //console.log('Registered succesfully');
                         this.DeviceToken = deviceToken;
                         this.DeviceId = deviceId;
                         pSuccessCallBack(this);
                     } else {
-                        console.warn('Error during registration device execution');
+                        //console.warn('Error during registration device execution');
                         WriteResponceStatus(code);
                         pFailCallBack(this);
                     }
                 } else {
-                    console.warn('Error during registration' + this.statusText);
+                    //console.warn('Error during registration' + this.statusText);
                     pFailCallBack(this);
                 }
             }
         }
-        console.log('Calling RegisterOnPuship endpoint');
+        //console.log('Calling RegisterOnPuship endpoint');
         request.send();
     }
 
@@ -870,23 +870,23 @@ Puship.Common = function () {
     }
 
     function currentPositionSuccess(position) {
-        console.log('Optional params: ' + JSON.stringify(positionOptionalParams));
-        console.log('Latitude: ' + position.coords.latitude + '\n' + 'Longitude: ' + position.coords.longitude + '\n' + 'Altitude: ' + position.coords.altitude + '\n' + 'Accuracy: ' + position.coords.accuracy + '\n' + 'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' + 'Heading: ' + position.coords.heading + '\n' + 'Speed: ' + position.coords.speed + '\n' + 'Timestamp: ' + position.timestamp + '\n');
+        //console.log('Optional params: ' + JSON.stringify(positionOptionalParams));
+        //console.log('Latitude: ' + position.coords.latitude + '\n' + 'Longitude: ' + position.coords.longitude + '\n' + 'Altitude: ' + position.coords.altitude + '\n' + 'Accuracy: ' + position.coords.accuracy + '\n' + 'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' + 'Heading: ' + position.coords.heading + '\n' + 'Speed: ' + position.coords.speed + '\n' + 'Timestamp: ' + position.timestamp + '\n');
         var isodate = new Date(position.timestamp);
         var isodatestring = ISODateString(isodate);
-        console.log("ISO date: " + isodatestring);
+        //console.log("ISO date: " + isodatestring);
         var privateInstanceIdentifier = DefaultValue(positionOptionalParams.instanceId, device.uuid);
         var pSuccessCallBack = DefaultValue(positionOptionalParams.successCallback, function (pushipresult) {
-            console.log('Internal puship RegisterPosition success managed');
+            //console.log('Internal puship RegisterPosition success managed');
         });
         var pFailCallBack = DefaultValue(positionOptionalParams.failCallback, function (pushipresult) {
-            console.log('Internal puship RegisterPosition fail managed');
+            //console.log('Internal puship RegisterPosition fail managed');
         });
-        console.log('Registering Position...');
+        //console.log('Registering Position...');
         var request = new XMLHttpRequest();
-        console.log('AppId:' + positionAppKey);
+        //console.log('AppId:' + positionAppKey);
         var deviceId = positionAppKey.toString() + "_" + privateInstanceIdentifier;
-        console.log('DeviceIdentifier:' + deviceId);
+        //console.log('DeviceIdentifier:' + deviceId);
         var getstr = Puship.Domain + "services/puship.svc/RegisterPosition?AppId='" + positionAppKey + "'&DeviceIdentifier='" + deviceId
             + "'&Latitude=" + position.coords.latitude
             + "&Longitude=" + position.coords.longitude
@@ -897,49 +897,49 @@ Puship.Common = function () {
         if (position.coords.altitude)getstr += "&Altitude=" + position.coords.altitude;
         if (position.coords.altitudeAccuracy)getstr += "&AltitudeAccuracy=" + position.coords.altitudeAccuracy;
         getstr += '&$format=json';
-        console.log('RequestTo:' + getstr);
+        //console.log('RequestTo:' + getstr);
         request.open('GET', getstr, true);
         request.onreadystatechange = function () {
             if (request.readyState == 4) {
-                console.log('Processing responce');
+                //console.log('Processing responce');
                 if (request.status == 200 || request.status == 201) {
                     try {
                         var code = JSON.parse(request.responseText).d.RegisterPosition;
                         if (code == 200) {
-                            console.log('Position Registered succesfully');
+                            //console.log('Position Registered succesfully');
                             pSuccessCallBack(this);
                         } else {
-                            console.warn('Error during registration position execution');
+                            //console.warn('Error during registration position execution');
                             WriteResponceStatus(code);
                             pFailCallBack(this);
                         }
                     } catch (e) {
-                        console.warn('Error during responce parsing' + this.statusText);
+                        //console.warn('Error during responce parsing' + this.statusText);
                         pFailCallBack(e);
                     }
                     ;
                 } else {
-                    console.warn('Error during call to registration position' + this.statusText);
+                    //console.warn('Error during call to registration position' + this.statusText);
                     pFailCallBack(this);
                 }
             }
         }
-        console.log('Calling RegisterPosition endpoint');
+        //console.log('Calling RegisterPosition endpoint');
         request.send();
     }
 
     function currentPositionError(error) {
         var pFailCallBack = DefaultValue(positionOptionalParams.failCallback, function (pushipresult) {
-            console.log('Internal puship RegisterPosition fail managed');
+            //console.log('Internal puship RegisterPosition fail managed');
         });
-        console.warn('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+        //console.warn('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
         pFailCallBack(error);
     }
 
     function GetCurrentOs() {
         if (privateCurrentPlatform == null) {
             var cPlatform = device.platform;
-            console.log("returned value as: " + cPlatform);
+            //console.log("returned value as: " + cPlatform);
             if (cPlatform.indexOf("Android") >= 0) {
                 privateCurrentPlatform = Puship.OS.ANDROID;
             }
@@ -985,17 +985,17 @@ Puship.Common = function () {
     return{OnPushReceived: OnPushReceived, NotifyPush: NotifyPush, RegisterOnPuship: RegisterOnPuship, AddTagFilter: AddTagFilter, RemoveTagFilter: RemoveTagFilter, CleanTagFilter: CleanTagFilter, GetTagFilters: GetTagFilters, GetPushMessages: GetPushMessages, GetPushMessagesByDevice: GetPushMessagesByDevice, GetCurrentOs: GetCurrentOs, Clean: Clean, UnRegister: UnRegister, RegisterCurrentPosition: RegisterCurrentPosition, GetAppId: GetAppId, DefaultValue: DefaultValue};
 }();
 window.onbeforeunload = function (e) {
-    console.log('Unloading...');
+    //console.log('Unloading...');
     if (Puship.gcmregid.length > 0) {
-        console.log('Local unregistering app...');
+        //console.log('Local unregistering app...');
         if (window.plugins && window.plugins.GCM) {
-            console.log('Try unregisterding GCM...');
+            //console.log('Try unregisterding GCM...');
             Puship.GCM.UnRegister(function () {
-                console.log("unregistered done");
+                //console.log("unregistered done");
             }, function () {
-                console.log("unregisteder error");
+                //console.log("unregisteder error");
             });
-            console.log('Try unregisterding GCM... Called');
+            //console.log('Try unregisterding GCM... Called');
         }
     }
 };
