@@ -9,10 +9,11 @@ describe('cmConversationFactory', function(){
 
     beforeEach(function(){
         module(function($provide){
-            $provide.constant('cmEnv',{});
+            $provide.constant('cmEnv',{})
         })
     })
-    beforeEach(module('cmConversations'));
+    beforeEach(module('cmPhonegap'))
+    beforeEach(module('cmConversations'))
     beforeEach(inject(function(_cmConversationFactory_, _$q_, _$httpBackend_){
         cmConversationFactory   = _cmConversationFactory_
         $q                      = _$q_

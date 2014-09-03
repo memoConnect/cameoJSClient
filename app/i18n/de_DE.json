@@ -660,6 +660,10 @@
         "CONFIRM": {
             "HEADER": "Bitte bestätigen!",
             "STANDARD": "Möchten Sie den Vorgang wirklich abbrechen?"
+        },
+        "CHOOSE_SOURCE": {
+            "CAMERA": "Foto aufnehmen",
+            "FILE": "Datei auswählen"
         }
     },
 
