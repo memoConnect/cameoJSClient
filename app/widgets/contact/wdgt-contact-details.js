@@ -9,7 +9,7 @@
  * @restrict AE
  */
 
-//Todo: Widget should not acces $roueParams
+//Todo: Widget should not access $roueParams
 
 angular.module('cmWidgets')
 .directive('cmWidgetContactDetails', [
@@ -149,7 +149,7 @@ angular.module('cmWidgets')
                         })
                         .then(
                             function () {
-                                $scope.goto('/contacts');
+                                $scope.gotoContactList();
                             },
                             function () {
                                 cmNotify.error('CONTACT.INFO.ERROR.SAVE',{ttl:5000});

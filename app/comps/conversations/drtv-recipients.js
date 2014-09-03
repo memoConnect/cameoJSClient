@@ -1,28 +1,27 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmRecipients', [
+
     '$rootScope',
     '$location',
     '$window',
-    function($rootScope, $location, $window){
+    'cmContactsModel',
+
+    function($rootScope, $location, $window, cmContactsModel){
         return {
             restrict: 'E',
             templateUrl: 'comps/conversations/drtv-recipients.html',
-            controller: function ($scope) {
-                // TODO: pending conversation generate in drtv not in route controller
-                var conversation = $rootScope.pendingConversation;
-                if(!conversation){
-                    $location.path('/conversation/new');
-                    return null;
+            controller: function ($scope, $element, $attrs) {
+
+                $scope.selected         = {};
+                $scope.contacts         = cmContactsModel.contacts
+
+                function init(conversation){
+                    $scope.selected = {}
+                    conversation.recipients.forEach(function(recipient){
+                        $scope.selected[recipient.id] = true;
+                    })
                 }
-
-                $scope.selected = {};
-                $scope.disabled_remove = !!conversation.id;
-                $scope.conversation = conversation;
-
-                conversation.recipients.forEach(function(recipient){
-                    $scope.selected[recipient.id] = true;
-                });
 
                 $scope.addRecipient = function(recipient){
                     $scope.selected[recipient.id] = true;
@@ -45,6 +44,11 @@ angular.module('cmConversations').directive('cmRecipients', [
                     //goto('conversation/'+(conversation.id||'new'))
                     $window.history.back();
                 }
+
+                $scope.$watch($attrs.cmData, function(conversation){
+                    if(conversation)
+                        init(conversation)
+                })
             }
         }
     }

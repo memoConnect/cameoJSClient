@@ -55,9 +55,6 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
             controller: function($scope, $element, $attrs){
                 $scope.conversation = $scope.$eval($attrs.cmData)
 
-                // TODO: pending conversation generate in drtv not in route controller
-                var conversation = $rootScope.pendingConversation;
-
                 $scope.goBack = function(){
                     //goto('conversation/'+(conversation.id||'new'))
                     $window.history.back();
@@ -74,7 +71,7 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                  */
                 $scope.decrypt = function(){
                     if($scope.conversation.isEncrypted()
-                        && !($scope.conversation.getKeyTransmission() == 'asymmetric' && conversation.userHasPrivateKey() == false)
+                        && !($scope.conversation.getKeyTransmission() == 'asymmetric' && $scope.conversation.userHasPrivateKey() == false)
                     ) {
 
                         $scope.conversation.one('decrypt:failed', function () {

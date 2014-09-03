@@ -51,5 +51,9 @@ angular.module('cmCore').service('cmRootService', [
         $rootScope.createNewIdentity = function(){
             $rootScope.goTo('/settings/identity/create');
         }
+
+        $rootScope.gotoContactList = function(){
+            $rootScope.goTo('/contact/list')
+        }
     }
 ]);

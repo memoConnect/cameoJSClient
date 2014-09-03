@@ -10,12 +10,12 @@
  */
 
 angular.module('cmWidgets')
-.directive('cmWidgetRecipients', [
+.directive('cmWidgetConversationSecurity', [
 
     function () {
         return {
             restrict: 'AE',
-            templateUrl: 'widgets/conversation/wdgt-recipients.html',
+            templateUrl: 'widgets/conversation/wdgt-conversation-security.html',
             scope: true,
 
             controller: function ($scope, $element, $attrs) {
