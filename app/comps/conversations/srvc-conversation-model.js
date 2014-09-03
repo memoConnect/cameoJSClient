@@ -111,6 +111,7 @@ angular.module('cmConversations')
              */
             function init(data){
 //                cmLogger.debug('cmConversationModel:init');
+
                 if(typeof data == 'string' && data.length > 0){
                     self.id = data;
                     self.load();
@@ -125,6 +126,7 @@ angular.module('cmConversations')
                 } else {
                     self.state.set('new');
                     self.enableEncryption(); // have to be there!!! BS klären mit AP 18.06.2014
+                    self.addRecipient(cmUserModel.data.identity)
                 }
 
                 self.trigger('init:finished');
