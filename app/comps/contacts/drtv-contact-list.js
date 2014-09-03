@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmContacts').directive('cmContactsList',[
+angular.module('cmContacts').directive('cmContactList',[
     'cmContactsModel',
     'cmLogger',
     '$rootScope',
@@ -9,13 +9,12 @@ angular.module('cmContacts').directive('cmContactsList',[
         return {
             restrict: 'AE',
             scope: true,
-            //templateUrl: 'comps/contacts/contacts-list.html',
-            //template: ,
+            templateUrl: 'comps/contacts/drtv-contact-list.html',
 
             controller: function ($scope, $element, $attrs) {
-                $scope.isLoading = false;
-                $scope[$attrs.contactsAs] = cmContactsModel.contacts;
-                $scope.contactsQty = cmContactsModel.contacts.length;
+                $scope.isLoading    = false;
+                $scope.contacts     = cmContactsModel.contacts;
+                $scope.contactsQty  = cmContactsModel.contacts.length;
 
 
                 cmContactsModel.on('start:load-contacts', function () {

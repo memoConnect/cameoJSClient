@@ -135,8 +135,19 @@ cameo_config = {
         'filter': {
             hasCtrl: true
         },
-        'contacts': {
-            routes:['/contacts/:section?'],
+        'contact-list': {
+            routes:[
+                '/contact/list/:section?',
+                '/contact'
+            ],
+            hasCtrl: true,
+            resolveOnBoot: true
+        },
+        'contact-request-list': {
+            routes:[
+                '/contact/request/list',
+                '/contact/request',
+            ],
             hasCtrl: true,
             resolveOnBoot: true
         },
@@ -144,6 +155,8 @@ cameo_config = {
             routes:['/contact/:id'],
             hasCtrl: true
         },
+
+
         'verification': {
             routes:['/verification/:secret']
         },
@@ -204,7 +217,7 @@ cameo_config = {
 //        'talks/': {i18n:'MENU.MESSAGES', icon:'cm-envelope-closed', css:'cm-menu-notify'},
         'contacts/requests': {"data-qa":'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
         'talks': {i18n:'MENU.TALKS', icon:'cm-envelope-closed'},
-        'contacts': {i18n:'MENU.CONTACTS', icon:'cm-address-book'},
+        'contact/list': {i18n:'MENU.CONTACTS', icon:'cm-address-book'},
         //'settings/identity/keys': {"data-qa":'btn-menu-key-management', i18n:'MENU.KEYMANAGEMENT', icon:'cm-key'},
         'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings'},
         'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-rhino-positive'}

@@ -9,7 +9,7 @@ angular.module('cmRouteContacts').directive('cmSearch',[
     function (cmContactsModel, cmIdentityFactory, cmNotify, cmModal, $timeout){
         return {
             restrict: 'E',
-            templateUrl: 'routes/contacts/comps/drtv-search.html',
+            templateUrl: 'comps/contacts/drtv-search.html',
             controller: function($scope){
                 $scope.pristine = true;
                 $scope.results = [];

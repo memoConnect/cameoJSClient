@@ -6,7 +6,7 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
     function(cmContactsModel, cmNotify){
         return {
             restrict: 'E',
-            templateUrl: 'routes/contacts/comps/drtv-request-list.html',
+            templateUrl: 'comps/contacts/drtv-request-list.html',
             controller: function ($scope) {
                 $scope.requests = cmContactsModel.requests;
                 $scope.isLoading = false;
