@@ -9,14 +9,14 @@ angular.module('cmCore').service('cmFileTypes',[
          */
         var fileMimeTypes = [
             // image
-            {e:['jpg','jpeg','jpe'],m:'image/jpeg'},
+            {e:'jpg,jpeg,jpe',m:'image/jpeg'},
             {e:'gif',m:'image/gif'},
             {e:'bmp',m:'image/bmp'},
             {e:'png',m:'image/png'},
-            {e:['tif','tiff'],m:'image/tiff'},
+            {e:'tif,tiff',m:'image/tiff'},
             // video
             {e:'mov',m:'video/quicktime'},
-            {e:['mpg','mpa','mp2','mpe','mpeg'],m:'video/mpeg'},
+            {e:'mpg,mpa,mp2,mpe,mpeg',m:'video/mpeg'},
             {e:'mp4',m:'video/mp4'},
             {e:'flv',m:'video/x-flv'},
             {e:'avi',m:'video/x-msvideo'},
@@ -25,18 +25,18 @@ angular.module('cmCore').service('cmFileTypes',[
             {e:'mp3',m:'audio/mp3'},
             {e:'wav',m:'audio/x-wav'},
             {e:'wma',m:'audio/x-ms-wma'},
-            {e:['aif','aiff','aifc'],m:'audio/x-aiff'},
+            {e:'aif,aiff,aifc',m:'audio/x-aiff'},
             {e:'ogg',m:'audio/ogg'},
             {e:'3gpp',m:'video/3gpp'},
             {e:'aac',m:'audio/x-aac'},
             // docs
             {e:'pdf',m:'application/pdf'},
             {e:'txt',m:'text/plain'},
-            {e:['xls','xlsx'],m:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},
+            {e:'xls,xlsx',m:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},
             {e:'xls',m:'application/vnd.ms-excel'},
             {e:'doc',m:'application/msword'},
-            {e:['docx','doc'],m:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'},
-            {e:['pps','ppt'],m:'application/vnd.ms-powerpoint'},
+            {e:'docx,doc',m:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'},
+            {e:'pps,ppt',m:'application/vnd.ms-powerpoint'},
             {e:'pptx',m:'application/vnd.openxmlformats-officedocument.presentationml.presentation'},
             // various
             {e:'php',m:'text/php'},
@@ -47,7 +47,7 @@ angular.module('cmCore').service('cmFileTypes',[
             {e:'sit',m:'application/x-stuffit'},
             {e:'eps',m:'application/postscript'},
             {e:'xml',m:'application/xml'},
-            {e:['html','htm'],m:'text/html'},
+            {e:'html,htm',m:'text/html'},
             {e:'chm',m:'application/vnd.ms-htmlhelp'},
             {e:'ttf',m:'application/x-font-ttf'},
             //{e:'exe',m:'application/octet-stream'},
@@ -76,18 +76,11 @@ angular.module('cmCore').service('cmFileTypes',[
                 var mimeType = unknown;
 
                 angular.forEach(fileMimeTypes, function (type) {
-                    // one extension
-                    if (typeof type.e == 'string') {
-                        if(detectedExtension == type.e)
-                            mimeType = type.m
-                    // more extensions
-                    } else {
-                        var findMime = type.e.filter(function(arrayExtension){
-                            return arrayExtension == detectedExtension
-                        })
-                        if(findMime.length == 1)
-                            mimeType = type.m;
-                    }
+                    var findMime = type.e.split(',').filter(function(arrayExtension){
+                        return arrayExtension == detectedExtension
+                    });
+                    if(findMime.length == 1)
+                        mimeType = type.m;
                 });
 
                 return mimeType;
@@ -111,23 +104,21 @@ angular.module('cmCore').service('cmFileTypes',[
             },
 
             getExtension: function(extensions, filename){
-                var extension = unknown;
+                var extension = unknown,
+                    extensions = extensions.split(','),
+                    clearFilename = filename.toLowerCase();
 
-                // only one extension
-                if (typeof extensions == 'string' && extensions != '')
-                    extension = extensions;
-
-                // more extensions exists
-                else if(typeof extensions == 'object'){
-                    if(filename == undefined || filename == ''){
-                        extension = extensions[0];
-                    } else {
-                        angular.forEach(extensions, function (inExtension) {
-                            if (filename.toLowerCase().search(inExtension+'$') != -1) {
-                                extension = inExtension;
-                            }
-                        })
-                    }
+                if(filename == undefined // no filename given
+                || filename == '' // filen is empty
+                || clearFilename.split('.').length == 1 // filename has no extension
+                ){
+                    extension = extensions[0];
+                } else {
+                    angular.forEach(extensions, function (inExtension) {
+                        if (clearFilename.search(inExtension+'$') != -1) {
+                            extension = inExtension;
+                        }
+                    })
                 }
 
                 return extension;
