@@ -13,7 +13,7 @@ angular.module('cmPhonegap').service('cmPhonegap', [
 //                else if(callback && !phonegap_cameo_config.DeviceReady)
                     callback();
 
-                return phonegap_cameo_config.DeviceReady;
+                return phonegap_cameo_config.deviceReady;
             },
             isAvailable: function () {
                 return typeof device != 'undefined'
@@ -25,21 +25,6 @@ angular.module('cmPhonegap').service('cmPhonegap', [
                 document.addEventListener('backbutton', function(e) {
                     navigator.app.exitApp();
                 });
-            },
-            checkConnection: function(){
-                var networkState = navigator.connection.type;
-
-                var states = {};
-                states[Connection.UNKNOWN] = 'Unknown connection';
-                states[Connection.ETHERNET] = 'Ethernet connection';
-                states[Connection.WIFI] = 'WiFi connection';
-                states[Connection.CELL_2G] = 'Cell 2G connection';
-                states[Connection.CELL_3G] = 'Cell 3G connection';
-                states[Connection.CELL_4G] = 'Cell 4G connection';
-                states[Connection.CELL] = 'Cell generic connection';
-                states[Connection.NONE] = 'No network connection';
-
-                //document.getElementById('networkState').innerHTML = 'Connection type: ' + states[networkState];
             },
             loadContacts: function(){
                 if (!deviceReady)

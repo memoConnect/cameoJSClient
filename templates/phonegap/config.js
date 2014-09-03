@@ -1,12 +1,11 @@
 var phonegap_cameo_config = {
-    DeviceReady: false,
-    PushIpAppId: '<%= pushIpAppId %>',
-    GoogleSenderId: '<%= googleSenderId %>'
+    deviceReady: false,
+    pushIpAppId: '<%= pushIpAppId %>',
+    googleSenderId: '<%= googleSenderId %>'
 };
 
 function deviceReady(){
     document.addEventListener('deviceready', function () {
-        console.log('device:ready bam')
-        phonegap_cameo_config.DeviceReady = true;
+        phonegap_cameo_config.deviceReady = true;
     });
 }

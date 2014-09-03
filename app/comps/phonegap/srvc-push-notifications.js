@@ -27,7 +27,6 @@ angular.module('cmPhonegap').service('cmPushNotification', [
                     return false;
 
                 if ( cmPhonegap.isAndroid() ){
-                    console.log('register with senderId:'+cameo_config.pushNotification.senderID)
                     plugin.register(
                         this.successHandler,
                         this.errorHandler,
