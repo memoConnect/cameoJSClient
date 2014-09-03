@@ -106,7 +106,7 @@ angular.module('cmCore').service('cmFileTypes',[
             getExtension: function(extensions, filename){
                 var extension = unknown,
                     extensions = extensions.split(','),
-                    clearFilename = filename.toLowerCase();
+                    clearFilename = filename ? filename.toLowerCase(): undefined;
 
                 if(filename == undefined // no filename given
                 || filename == '' // filen is empty

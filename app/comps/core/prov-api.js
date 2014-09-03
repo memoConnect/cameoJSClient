@@ -470,12 +470,10 @@ angular.module('cmCore').provider('cmApi',[
                             }
                         )
                     }
-                }
-
-                var eventIntervall;
+                };
 
                 api.listenToEvents = function(){
-                    //Dont listen to Events twice: 
+                    //Dont listen to Events twice:
                     api.stopListeningToEvents()
 
                     //Start listening:
@@ -492,7 +490,7 @@ angular.module('cmCore').provider('cmApi',[
                 };
 
                 if(!events_disabled && events_interval){
-                    $rootScope.$on('login', function(){ 
+                    $rootScope.$on('login', function(){
                         api.resetSubscriptionId()
                         api.listenToEvents() 
 

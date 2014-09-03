@@ -168,8 +168,8 @@
             "RECIPIENTS_MISSING_OKAY": "Ich möchte keinen Empfänger hinzufügen (Nachricht für mich selbst)",
             "PASSPHRASE_INVALID": "Ungültiges Passwort.",
             "PASSWORD_WRONG": "Das eingegebene Passwort ist falsch.",
-            "NO_PASSWORD": "Sie müssen ein Passwort setzen oder die Verschlüsselung deaktivieren, weil nicht alle Empfänger einen cameoKey besitzen.<br /><br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">Hier Verschlüsselung einstellen</a>",
-            "PASSWORD_NEEDED": "Zum Entschlüsseln des Talks geben Sie bitte ein Passwort ein.<br /> <a href=\"#/{{type}}/{{typeId}}/security-settings\">Hier ein Passwort eingeben!</a>",
+            "NO_PASSWORD": "Sie müssen ein Passwort setzen oder die Verschlüsselung deaktivieren, weil nicht alle Empfänger einen cameoKey besitzen.<br><br> <a href=\"#/{{type}}/{{typeId}}/security-settings\">Hier Verschlüsselung einstellen</a>",
+            "PASSWORD_NEEDED": "Zum Entschlüsseln des Talks geben Sie bitte ein Passwort ein.<br> <a href=\"#/{{type}}/{{typeId}}/security-settings\">Hier ein Passwort eingeben!</a>",
             "ASYMMETRIC_DECRYPT_ERROR": "Der cameoKey fehlt.",
             "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
             "FILESIZE_REACHED": "Die maximale Dateigröße von <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> wurde überschritten. Ihre Datei '<strong>{{fileName}}</strong>' ist <strong>{{fileSize | cmBytesHumanReadable}}</strong> groß."
@@ -321,7 +321,7 @@
             "HEADER": "cameoKeys",
             "KEYLIST": {
                 "EXPLANATION": {
-                    "UNTRUSTED_KEYS": "Sie haben für diese Identität auf anderen Geräten cameoKeys, die sich gegenseitig nicht kennen.<br />Um verschlüsselte Nachrichten auf allen Geräten lesen zu können, müssen Sie die cameoKeys miteinander verknüpfen.",
+                    "UNTRUSTED_KEYS": "Sie haben für diese Identität auf anderen Geräten cameoKeys, die sich gegenseitig nicht kennen.<br>Um verschlüsselte Nachrichten auf allen Geräten lesen zu können, müssen Sie die cameoKeys miteinander verknüpfen.",
                     "ALL_KEYS_TRUSTED": "Für '{{Identity}}' haben Sie einen cameoKey auf Ihrem Gerät, mit dem Sie alle Talks lesen können."
                 },
                 "LABEL_LOCALKEY": "lokaler cameoKey",
@@ -335,7 +335,7 @@
             "GENERATE": {
                 "START": {
                     "HEADLINE": "cameoKey erzeugen",
-                    "EXPLANATION": "Sie haben noch keinen cameoKey für Ihre Identität auf diesem Gerät.<br />Um sicher zu kommunizieren, müssen Sie zuerst einen cameoKey für diese Identität erzeugen oder importieren.",
+                    "EXPLANATION": "Sie haben noch keinen cameoKey für Ihre Identität auf diesem Gerät.<br>Um sicher zu kommunizieren, müssen Sie zuerst einen cameoKey für diese Identität erzeugen oder importieren.",
                     "KEY_LENGTH": {
                         "BUTTON_LABEL": "Schlüsselstärke",
                         "LENGTH_2048": "2048Bit (default)",
@@ -345,7 +345,7 @@
                 },
                 "GENERATING": {
                     "HEADLINE": "cameoKey Generierung läuft!",
-                    "EXPLANATION": "Bitte haben Sie einen Moment Geduld. Dieser Prozess kann je nach Gerät und Schlüssellänge einige Zeit in Anspruch nehmen.<br /> Bei Wartenzeiten von über 5 Minuten sollten Sie den Prozess abbrechen und erneut starten.",
+                    "EXPLANATION": "Bitte haben Sie einen Moment Geduld. Dieser Prozess kann je nach Gerät und Schlüssellänge einige Zeit in Anspruch nehmen.<br> Bei Wartenzeiten von über 5 Minuten sollten Sie den Prozess abbrechen und erneut starten.",
                     "TIME_PASSED": "Verbrauchte Zeit:",
                     "GENERATION_TIMER": " {{time}}",
                     "STOP_BUTTON": "Generierung abbrechen"
@@ -377,7 +377,7 @@
                 },
                 "ACCEPT_REQUEST": {
                     "HEADER": "Verknüpfungsanfrage",
-                    "INSTRUCTIONS": "Sie haben auf einem anderen Gerät einen cameoKey, den Sie auf diesem Gerät noch nicht kennen. D.h. Sie können Nachrichten, die Sie hier verschlüsselt haben, auf dem anderen Gerät nicht lesen und umgekehrt.<br />Wollen Sie den cameoKey '{{cameoKey}}' mit Ihrem lokalen cameoKey verknüpfen?",
+                    "INSTRUCTIONS": "Sie haben auf einem anderen Gerät einen cameoKey, den Sie auf diesem Gerät noch nicht kennen. D.h. Sie können Nachrichten, die Sie hier verschlüsselt haben, auf dem anderen Gerät nicht lesen und umgekehrt.<br>Wollen Sie den cameoKey '{{cameoKey}}' mit Ihrem lokalen cameoKey verknüpfen?",
                     "NOTE": "Um die cameoKeys zu verknüpfen, starten Sie die Verknüpfung.",
                     "ACCEPT_BUTTON": "Verknüpfung starten",
                     "CANCEL_BUTTON": "Ablehnen"
@@ -420,7 +420,7 @@
                 },
                 "ACCEPT_REQUEST": {
                     "HEADER": "Vertrauensanfrage",
-                    "INSTRUCTIONS": "'{{identity}}' hat soeben den Prozess gestartet, mit Ihnen eine Vertrauensbasis einzugehen.<br />Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen.",
+                    "INSTRUCTIONS": "'{{identity}}' hat soeben den Prozess gestartet, mit Ihnen eine Vertrauensbasis einzugehen.<br>Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen.",
                     "NOTE": "Wenn Sie '{{identity}}' vertrauen wollen, drücken Sie auf 'Annehmen'.",
                     "ACCEPT_BUTTON": "Annehmen",
                     "CANCEL_BUTTON": "Ablehnen"
@@ -440,7 +440,7 @@
                     "SUBMIT_BUTTON": "Übertragen"
                 },
                 "SUCCESSFUL": {
-                    "INSTRUCTIONS": "Der Vertrauens-Prozess wurde erfogreich durchgeführt!<br />Sie und '{{identity}} vertrauen sich jetzt gegenseitig.",
+                    "INSTRUCTIONS": "Der Vertrauens-Prozess wurde erfogreich durchgeführt!<br>Sie und '{{identity}} vertrauen sich jetzt gegenseitig.",
                     "NOTE": "Sie können den Dialog nun schließen.",
                     "CLOSE_BUTTON": "Schließen"
                 },
@@ -711,6 +711,10 @@
             "ACCEPT": "Annehmen",
             "CANCEL": "Abbrechen",
             "START": "Start"
+        },
+        "OFFLINE_HANDLER": {
+            "MESSAGE": "Es konnte keine Verbindung zu cameoNet hergestellt werden.<br>Bitte versuchen Sie es später noch einmal oder überprüfen Sie ihre Internet Verbindung und drücken 'Neu verbinden'",
+            "FOOTER": "Neu verbinden"
         }
     },
 

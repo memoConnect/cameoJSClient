@@ -21,7 +21,7 @@
 
 angular.module('cmCore')
 .service('cmUserModel',[
-'cmBoot',
+    'cmBoot',
     'cmAuth',
     'cmLocalStorage',
     'cmIdentityFactory',
@@ -209,9 +209,24 @@ angular.module('cmCore')
                             function (r) {
                                 var response = r || {};
 
-                                if (typeof response == 'object' && ('status' in response) && response.status == 401) {
-                                    cmLogger.debug('cmUserModel:init:reject:401');
-                                    self.doLogout(true, 'usermodel load identity reject');
+                                console.log('usermodel getAccount')
+                                console.log(r)
+
+                                if('status' in response){
+                                    switch(response.status){
+                                        case 0:
+                                            cmLogger.debug('cmUserModel:init:failed:0');
+                                            $rootScope.$broadcast('connection:failed', function(){
+                                                //console.log('reconnect!!!');
+                                                self.loadIdentity(accountData);
+                                            });
+                                            return false;
+                                        break;
+                                        case 401:
+                                            cmLogger.debug('cmUserModel:init:reject:401');
+                                            self.doLogout(true, 'usermodel load identity reject');
+                                        break;
+                                    }
                                 }
 
                                 deferred.reject();
