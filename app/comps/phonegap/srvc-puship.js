@@ -29,12 +29,12 @@ angular.module('cmPhonegap').service('cmPushIp', [
             register: function(){
                 this.reset();
 
-                Puship.PushipAppId = phonegap_cameo_config.PushIpAppId;
+                Puship.PushipAppId = phonegap_cameo_config.pushIpAppId;
 
                 this.addTags();
 
                 if (Puship.Common.GetCurrentOs() == Puship.OS.ANDROID) {
-                    Puship.GCM.Register(phonegap_cameo_config.GoogleSenderId,{
+                    Puship.GCM.Register(phonegap_cameo_config.googleSenderId,{
                         successCallback: function (pushipresult) {
                             self.setDeviceData(pushipresult);
                         },

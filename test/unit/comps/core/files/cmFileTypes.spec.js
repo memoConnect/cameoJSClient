@@ -21,7 +21,7 @@ describe('cmFileTypes', function() {
                 },
                 toBe: 'jpg'
             },
-            // bad jpg's
+            // bad images
             {
                 isBadMimeType: true,
                 blob: {
@@ -39,6 +39,23 @@ describe('cmFileTypes', function() {
                     size: 12
                 },
                 toBe: 'jpg'
+            },
+            // bad names in images
+            {
+                blob: {
+                    name: 'content',
+                    size: 10983,
+                    type: 'image/jpeg'
+                },
+                toBe: 'jpg'
+            },
+            {
+                blob: {
+                    name: 'content',
+                    size: 285783,
+                    type: 'image/png'
+                },
+                toBe: 'png'
             },
             // pdf
             {
@@ -110,7 +127,7 @@ describe('cmFileTypes', function() {
     describe('test files', function(){
     files.forEach(function(file){
         it(file.blob.name+' should get mimetype', function(){
-            if('isBadMimeType' in file)
+            if('isBadMimeType' in file || 'isBadFileName' in file)
                 expect(cmFileTypes.find(file.blob.type, file.blob.name)).toBe('unknown')
             else
                 expect(cmFileTypes.find(file.blob.type, file.blob.name)).toBe(file.toBe)

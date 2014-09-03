@@ -8,7 +8,10 @@ define([
         '$scope',
         'cmVersion',
         'cmSystemCheck',
-        function($scope, cmVersion, cmSystemCheck){
+        'cmBoot',
+        function($scope, cmVersion, cmSystemCheck, cmBoot){
+            cmBoot.resolve();
+
             cmSystemCheck.run(true);
 
             $scope.cmVersion = cmVersion;

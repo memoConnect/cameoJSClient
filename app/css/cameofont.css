@@ -203,8 +203,8 @@
 .cm-rhino-bubble{
     background-image:url('../gfx/rhino-bubble.png');
     background-color:transparent;
-    background-size:1em 0.8em;
-    width:1em;
+    background-size:0.8em 0.8em;
+    width:0.8em;
     height:0.8em;
 }
 .cm-rhino-bubble-glyph:before{content:'\f044'}
