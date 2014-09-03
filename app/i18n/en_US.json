@@ -655,8 +655,8 @@
             "STANDARD": "You sure you want to cancel the operation?"
         },
         "CHOOSE_SOURCE": {
-            "CAMERA": "Take a Photo",
-            "FILE": "Choose an existing File"
+            "CAMERA": "Take a photo",
+            "FILE": "Choose an existing file"
         }
     },
     "MENU": {
