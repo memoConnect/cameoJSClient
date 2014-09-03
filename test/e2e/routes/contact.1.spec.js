@@ -7,7 +7,7 @@ describe('Route Contact: ', function () {
     afterEach(function() { util.stopOnError() });
 
 
-    it('at first goto "#/contacts".', function(){
+    it('at first goto "#/contact/list".', function(){
         util.login()
         util.get('/contact/list')
         util.expectCurrentUrl('#/contact/list')

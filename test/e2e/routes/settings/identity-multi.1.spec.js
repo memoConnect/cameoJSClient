@@ -17,8 +17,8 @@ describe('Multi Identity: ', function () {
         login = util.createTestUser()
         util.expectCurrentUrl('/start/welcome')
 
-        util.get('settings/identity/overview')
-        util.expectCurrentUrl('/settings/identity/overview')
+        util.get('settings/identity/list')
+        util.expectCurrentUrl('/settings/identity/list')
     })
 
     it('should be displayed one identity and a button', function(){
@@ -58,8 +58,8 @@ describe('Multi Identity: ', function () {
     })
 
     it('should be two itdentities in list', function(){
-        util.get('settings/identity/overview')
-        util.expectCurrentUrl('/settings/identity/overview')
+        util.get('settings/identity/list')
+        util.expectCurrentUrl('/settings/identity/list')
 
         $$("[data-qa='identity-list-item']").then(function (elements) {
             expect(elements.length).toBe(2)
@@ -77,8 +77,8 @@ describe('Multi Identity: ', function () {
     })
 
     it('switch back to first identity', function(){
-        util.get('/settings/identity/overview')
-        util.expectCurrentUrl('/settings/identity/overview')
+        util.get('/settings/identity/list')
+        util.expectCurrentUrl('/settings/identity/list')
 
         util.click('btn-identity-switchto')
 
