@@ -173,9 +173,7 @@
         }
       }
       &.isActive{
-        -webkit-box-shadow: inset 0 1rem 1rem rgba(50, 50, 50, 0.75);
-        -moz-box-shadow:    inset 0 1rem 1rem rgba(50, 50, 50, 0.75);
-        box-shadow:         inset 0 1rem 1rem rgba(50, 50, 50, 0.75);
+        .box-shadow-bottom;
       }
       .short-links{
         position:absolute;
@@ -277,7 +275,7 @@
 }
 
 cm-welcome, cm-quick-start, cm-key-info, cm-about-us, div.system-check,
-cm-identity-list,
+cm-widget-identity-list, cm-identity-list,
 cm-widget-identity-key-list, cm-identity-key-list, cm-widget-identity-create, cm-identity-key-create {
   display: block;
   color: @cm-grey-font;

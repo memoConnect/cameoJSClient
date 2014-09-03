@@ -1,16 +1,5 @@
-<h2>
-    <i class="fa cm-avatar cm-lg-icon"></i>
-    {{'IDENTITY.OVERVIEW.HEADER'|cmTranslate}}
-</h2>
-
-<article>
-    <cm-info-bubble nose-x="55%">
-        <span ng-bind-html="'IDENTITY.OVERVIEW.INFO_TEXT' | cmParse"></span>
-    </cm-info-bubble>
-</article>
-
-<ul class="mt15">
-    <li ng-repeat="identity in identities | orderBy: 'isActive':false" ng-click="bam(identity)" class="isActive" data-qa="identity-list-item">
+<ul>
+    <li ng-repeat="identity in identities | orderBy: 'isActive':false" ng-click="bam(identity)" ng-class="{'isActive': identity.isActive}" data-qa="identity-list-item">
         <cm-identity-tag cm-data="identity"></cm-identity-tag>
     </li>
 </ul>
