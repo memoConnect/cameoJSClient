@@ -57,7 +57,7 @@ cameo_config = {
         'settings-identity-key-edit': {
             hasCtrl: true,
             guests: false,
-            routes: ['/settings/identity/key/edit']
+            routes: ['/settings/identity/key/edit/:keyId?']
         },
         'settings-identity-key-import': {
             hasCtrl: true,
