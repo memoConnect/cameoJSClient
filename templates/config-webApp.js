@@ -175,13 +175,13 @@ cameo_config = {
             ],
             hasCtrl: true
         },
-        'contact-details': {
-            routes:[
-                '/contact/:id/details',
-                '/contact/:id'
-            ],
-            hasCtrl: true
-        },
+        // 'contact-details': {
+        //     routes:[
+        //         '/contact/:id/details',
+        //         '/contact/:id'
+        //     ],
+        //     hasCtrl: true
+        // },
         'verification': {
             routes:['/verification/:secret']
         },

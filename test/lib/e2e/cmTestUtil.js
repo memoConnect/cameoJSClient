@@ -447,7 +447,7 @@ this.clickBackBtn = function () {
 }
 
 this.sendFriendRequest = function (displayName) {
-    self.get("/contacts/search")
+    self.get("/contact/search")
     $("[data-qa='inp-search-cameo-ids']").sendKeys(displayName)
     self.waitForElement("[data-qa='btn-openModal']")
     $("[data-qa='btn-openModal']").click()
@@ -482,7 +482,7 @@ this.addExternalContact = function (displayName) {
     $("[data-qa='input-displayname']").sendKeys(displayName)
     $("[data-qa='input-phonenumber']").sendKeys("1233")
     $("[data-qa='btn-create-contact']").click()
-    self.waitForPageLoad("/contacts")
+    self.waitForPageLoad("/contact/list")
 }
 
 this.click = function (dataQa) {
