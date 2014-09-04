@@ -18,7 +18,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
             controller: function ($scope) {
                 // only one privKey!!!
                 if(cmUserModel.hasPrivateKey()){
-                    $scope.goto('/settings/identity/key/list');
+                    $scope.goTo('/settings/identity/key/list');
                     return false;
                 }
 
@@ -103,13 +103,22 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     cmLogger.debug('cancel key generation');
                     cmCrypt.cancelGeneration();
                     cmJob.stop();
-                    $scope.active = 'choose';
+                    //$scope.active = 'choose';
                 };
 
                 $scope.cancel = function(){
                     cmLogger.debug('cancel');
                     $scope.cancelGeneration();
-                    $scope.goBack();
+
+                    if(typeof $rootScope.generateAutomatic != 'undefined'){
+                        /**
+                         * @TODO siwtch auch, wenn noch keine Talks vorhanden sind
+                         */
+                        $scope.goTo('/talks');
+                    } else {
+                        $scope.goBack();
+                    }
+
                 };
 
                 /**
@@ -145,9 +154,9 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
 
                         //$window.history.back();
                         if(generateAutomatic == false){
-                            $scope.goto('/settings/identity/key/list');
+                            $scope.goTo('/settings/identity/key/list');
                         } else {
-                            $scope.goto('/talks');
+                            $scope.goTo('/talks');
                         }
 
                     }
