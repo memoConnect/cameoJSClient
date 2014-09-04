@@ -142,20 +142,30 @@ angular.module('cmCore').service('cmFilesAdapter', [
              * @param b64Data
              * @returns {String} clearBase64
              */
+            base64Regexp: '^(data:(.{0,100});base64,|data:(.{0,100})base64,)(.*)$',
+
             clearBase64: function(b64Data){
                 if(typeof b64Data != 'string')
                     return '';
 
-                return b64Data
+                var clearBase64 = b64Data
                 .replace(/\r?\n|\r| /g,'')
-                .replace(new RegExp('^(data:.{0,100};base64,)(.*)$','i'),function(){
-                    return arguments[2];// return the cleared base64
+                .replace(new RegExp(this.base64Regexp,'i'),function(){
+                    return arguments[4];// return the cleared base64
                 });
+
+                //console.log(clearBase64)
+
+                return clearBase64;
             },
 
+            getMimeTypeOfBase64: function(base64){
+                return base64.replace(new RegExp(this.base64Regexp,'i'),'$2');
+            },
 
             getBlobUrl: function(blob, useUrl){
                 var useFileReader = useUrl ? false : true,
+                //var useFileReader = false,
                     deferred = $q.defer(),
                     objUrl = {
                         src: '',
