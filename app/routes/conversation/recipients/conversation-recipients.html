@@ -6,7 +6,7 @@
         <cm-security-indicator
             cm-weight       = "2"
             cm-data         = "conversation.securityAspects"
-            ng-click        = "goto('conversation/'+conversationId+'/security-settings')"
+            ng-click        = "gotoConversation(conversation.id,'security')"
         ></cm-security-indicator>
         <cm-header-list-search cm-weight="1" ng-model="search"></cm-header-list-search>
         <cm-menu cm-weight="1"></cm-menu>
