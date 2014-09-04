@@ -1,13 +1,12 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmOverviewSettings', [
+angular.module('cmWidgets').directive('cmWidgetSettingsList', [
     'cmUserModel',
     'cmConfig',
-    '$location',
-    function(cmUserModel,cmConfig,$location){
+    function(cmUserModel, cmConfig){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/drtv-overview.html',
+            templateUrl: 'widgets/settings/wdgt-settings-list.html',
             controller: function ($scope) {
                 $scope.overview = cmConfig.routeSettings;
                 $scope.Object = Object;
@@ -20,7 +19,7 @@ angular.module('cmRouteSettings').directive('cmOverviewSettings', [
                     if(typeof pageUrl !== 'undefined' && isDisabled == undefined){
                         $event.stopPropagation();
                         $event.preventDefault();
-                        $location.path('/settings/'+pageUrl);
+                        $scope.goTo('/settings/'+pageUrl);
                     }
                 }
             }

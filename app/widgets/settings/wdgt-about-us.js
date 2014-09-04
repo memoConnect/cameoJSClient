@@ -1,12 +1,11 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmAboutUs', [
-    '$rootScope',
+angular.module('cmWidgets').directive('cmWidgetAboutUs', [
     'cmConfig',
-    function($rootScope, cmConfig){
+    function(cmConfig){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/drtv-about-us.html',
+            templateUrl: 'widgets/settings/wdgt-about-us.html',
             controller: function ($scope) {
                 $scope.version = cmConfig.version;
             }

@@ -45,7 +45,17 @@ cameo_config = {
         'settings': {
             routes: ['/settings'],
             hasCtrl: true,
-            guests: false,
+            guests: false
+        },
+        'settings-about': {
+            routes: ['/settings/about'],
+            hasCtrl: true,
+            guests: false
+        },
+        'settings-app': {
+            routes: ['/settings/app'],
+            hasCtrl: true,
+            guests: false
         },
         'settings-identity-list': {
             hasCtrl: true,
@@ -258,7 +268,7 @@ cameo_config = {
         'contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-address-book', disabled:true},
         'app': {i18n:'SETTINGS.APP', icon:'cm-fix'},
         'contracts': {i18n:'SETTINGS.CONTRACTS', icon:'cm-clipboard', disabled:true},
-        'about-us': {i18n:'SETTINGS.PAGES.ABOUT_US.TITLE', icon:'cm-rhino-positive'}
+        'about': {i18n:'SETTINGS.PAGES.ABOUT_US.TITLE', icon:'cm-rhino-positive'}
     }
 };
 // settings config to menu subs

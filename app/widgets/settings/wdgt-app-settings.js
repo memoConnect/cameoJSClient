@@ -1,12 +1,11 @@
 'use strict';
 
-angular.module('cmRouteSettings').directive('cmAppSettings', [
+angular.module('cmWidgets').directive('cmWidgetAppSettings', [
     'cmSettings',
-    '$rootScope',
-    function(cmSettings, $rootScope){
+    function(cmSettings){
         return {
             restrict: 'E',
-            templateUrl: 'routes/settings/comps/drtv-app-settings.html',
+            templateUrl: 'widgets/settings/wdgt-app-settings.html',
             controller: function ($scope) {
                 $scope.settings = cmSettings.properties;
 
