@@ -90,7 +90,7 @@ angular.module('cmPhonegap').service('cmCamera', [
         return {
             existsPlugin: function(){
                 if(!('camera' in navigator)){
-                    cmLogger.info('CAMERA PLUGIN IS MISSING');
+                    //cmLogger.info('CAMERA PLUGIN IS MISSING');
                     return false;
                 }
                 return true;

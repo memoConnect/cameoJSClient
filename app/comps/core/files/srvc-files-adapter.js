@@ -20,7 +20,6 @@ angular.module('cmCore').service('cmFilesAdapter', [
             },
 
             addChunk: function(fileId, index, chunk) {
-                console.log('addChunk:', chunk)
                 return cmApi.postBinary({
                     path: '/file/'+fileId,
                     data: chunk,
@@ -143,17 +142,26 @@ angular.module('cmCore').service('cmFilesAdapter', [
              * @param b64Data
              * @returns {String} clearBase64
              */
+            base64Regexp: '^(data:(.{0,100});base64,|data:(.{0,100})base64,)(.*)$',
+
             clearBase64: function(b64Data){
                 if(typeof b64Data != 'string')
                     return '';
 
-                return b64Data
+                var clearBase64 = b64Data
                 .replace(/\r?\n|\r| /g,'')
-                .replace(new RegExp('^(data:.{0,100};base64,)(.*)$','i'),function(){
-                    return arguments[2];// return the cleared base64
+                .replace(new RegExp(this.base64Regexp,'i'),function(){
+                    return arguments[4];// return the cleared base64
                 });
+
+                //console.log(clearBase64)
+
+                return clearBase64;
             },
 
+            getMimeTypeOfBase64: function(base64){
+                return base64.replace(new RegExp(this.base64Regexp,'i'),'$2');
+            },
 
             getBlobUrl: function(blob, useUrl){
                 var useFileReader = useUrl ? false : true,
@@ -168,19 +176,14 @@ angular.module('cmCore').service('cmFilesAdapter', [
                     };
 
                 if(useFileReader){
-                    console.log('FileReader yo!')
                     // filereader
                     var filereader = new FileReader();
                     filereader.onload = function(e){
                         objUrl.src = e.target.result;
-
-                        console.log('getBlobUrl', objUrl.src);
-
                         deferred.resolve(objUrl);
                     };
                     filereader.readAsDataURL(blob);
                 } else {
-                    console.log('FileReader n/a!')
                     // URL type
                     var URL = window.URL || window.webkitURL;
                     objUrl = {
@@ -191,8 +194,6 @@ angular.module('cmCore').service('cmFilesAdapter', [
                             return true;
                         }
                     };
-                    console.log('objUrl',objUrl);
-
                     deferred.resolve(objUrl);
                 }
 
