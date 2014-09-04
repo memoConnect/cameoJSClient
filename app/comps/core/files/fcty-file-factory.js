@@ -61,9 +61,9 @@ angular.module('cmCore')
                 var bool = false;
 
                 var index = instances.indexOf(file);
+
                 if(index != -1) {
                     instances.splice(index, 1);
-                    delete instances[index];
                     bool = true;
                 }
 
