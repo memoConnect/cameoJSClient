@@ -11,11 +11,13 @@ describe('cmConversationFactory', function(){
 
     beforeEach(function(){
         module(function($provide){
-            $provide.constant('cmEnv',{});
+            $provide.constant('cmEnv',{})
         })
     })
-    beforeEach(module('cmConversations'));
+    beforeEach(module('cmPhonegap'))
+    beforeEach(module('cmConversations'))
     beforeEach(inject(function(_cmConversationFactory_, _$q_, _$httpBackend_, _$rootScope_, _$timeout_){
+
         cmConversationFactory   = _cmConversationFactory_
         $q                      = _$q_
         $httpBackend            = _$httpBackend_

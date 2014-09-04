@@ -20,7 +20,7 @@
     <script data-main="base/main.js" src="vendor/requirejs/require.js"></script>
     <%= phonegapFiles %>
 </head>
-<body>
+<body<%= phonegapOnload %>>
     <div class="app-spinner">
         <div class="app-spinner-center">
             <img src="gfx/spinner_bubble.gif">
@@ -29,7 +29,7 @@
 
     <div id="cm-bg-wrapper"></div>
 
-    <div id="cm-app">
+    <div id="cm-app" cm-offline-handler>
         <div cm-notify></div>
 
         <div ng-view cm-view class="view-frame cm-content" ng-class="css"></div>

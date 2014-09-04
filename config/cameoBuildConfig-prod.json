@@ -3,7 +3,8 @@
         "apiUrl": "https://www.cameonet.de/a/v1",
         "autoLogin": false,
         "loadingBar": false,
-        "enableDebug": false
+        "enableDebug": false,
+        "logLevel": "ERROR"
     } ,
     "phonegap": {
         "baseName" : "cameoNet",
