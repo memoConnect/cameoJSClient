@@ -105,11 +105,16 @@ angular.module('cmCore').service('cmFileTypes',[
 
             getExtension: function(extensions, filename){
                 var extension = unknown,
-                    extensions = extensions.split(','),
-                    clearFilename = filename ? filename.toLowerCase(): undefined;
+                    extensions = extensions ? extensions.split(',') : [],
+                    clearFilename = filename ? filename.toLowerCase() : undefined;
 
-                if(filename == undefined // no filename given
-                || filename == '' // filen is empty
+                // no extensions exists
+                if(!extensions || extensions == '')
+                    return extension;
+
+                // check filename
+                if(clearFilename == undefined // no filename given
+                || clearFilename == '' // filen is empty
                 || clearFilename.split('.').length == 1 // filename has no extension
                 ){
                     extension = extensions[0];

@@ -208,10 +208,6 @@ angular.module('cmCore')
                             },
                             function (r) {
                                 var response = r || {};
-
-                                console.log('usermodel getAccount')
-                                console.log(r)
-
                                 if('status' in response){
                                     switch(response.status){
                                         case 0:
