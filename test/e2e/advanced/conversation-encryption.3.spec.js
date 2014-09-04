@@ -79,10 +79,10 @@ describe('Conversation encryption -', function () {
         it("set encryption settings", function () {
             util.get("/conversation/new/security")
             util.waitForElement("[data-qa='btn-encryption']")
+                    ptor.debugger()
 
             switch (encryptionType) {
                 case "asym" :
-                    ptor.debugger()
                     expect($("[data-qa='btn-encryption']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
                     expect(ptor.isElementPresent(by.css("[data-qa='btn-toggle-captcha']"))).toBe(false)
                     expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(false)
@@ -218,7 +218,7 @@ describe('Conversation encryption -', function () {
                             case "passCaptcha" :
                                 // expect password prompt
                                 util.waitForModalOpen()
-                                util.get(conversationRoute + "/security-settings")
+                                util.get(conversationRoute + "/security")
                                 util.waitForElement("[data-qa='captcha-image']")
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)

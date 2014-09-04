@@ -21,7 +21,7 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                 scope.showPasswordLocalKeyInfo = false;
 
                 function showPasswordInfo(conversation){
-                    if(conversation.isEncrypted() && conversation.userHasPrivateKey() == false){
+                    if(conversation.isEncrypted() && !conversation.userHasPrivateKey()){
                         scope.showPasswordLocalKeyInfo = true;
                     } else {
                         scope.showPasswordLocalKeyInfo = false;
@@ -58,10 +58,6 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                 $scope.goBack = function(){
                     //goto('conversation/'+(conversation.id||'new'))
                     $window.history.back();
-                };
-
-                $scope.isNew = function(){
-                    return $scope.conversation.state.is('new');
                 };
 
                 /**

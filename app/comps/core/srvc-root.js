@@ -59,5 +59,10 @@ angular.module('cmCore').service('cmRootService', [
         $rootScope.gotoPurl = function(purlId, subpath){
             $rootScope.goto('/purl/'+purlId+'/'+subpath)
         }
+
+        $rootScope.gotoConversation = function(conversationId, subpath){
+            $rootScope.goto('/conversation/'+conversationId+'/'+subpath)
+
+        }
     }
 ]);

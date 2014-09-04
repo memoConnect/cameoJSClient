@@ -108,7 +108,7 @@ cameo_config = {
         },
         'conversation-security': {
             routes:[
-                '/conversation/:conversationId/security-settings'
+                '/conversation/:conversationId/security'
             ],
             hasCtrl: true,
             resolveOnBoot: true
