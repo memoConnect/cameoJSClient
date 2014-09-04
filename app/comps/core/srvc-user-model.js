@@ -36,13 +36,13 @@ angular.module('cmCore')
     'cmNotify',
     'cmLogger',
     'cmCallbackQueue',
-    'cmDevices',
+    'cmDevice',
     '$rootScope',
     '$q',
     '$location',
     function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmIdentityModel, cmFactory,
              cmCrypt, cmKeyFactory, cmKey, cmStateManagement, cmObject, cmUtil,
-             cmNotify, cmLogger, cmCallbackQueue, cmDevices,
+             cmNotify, cmLogger, cmCallbackQueue, cmDevice,
              $rootScope, $q, $location){
         var self = this,
             isAuth = false,
@@ -143,7 +143,7 @@ angular.module('cmCore')
                     // handle account data
                     // TODO: set account data
 
-                    cmDevices.checkDeviceId(accountData.pushDevices);
+                    cmDevice.checkRegisteredDevice(accountData.pushDevices);
 
                     return true;
                 }
@@ -314,7 +314,11 @@ angular.module('cmCore')
         this.doLogout = function(goToLogin, where){
             //cmLogger.debug('cmUserModel:doLogout');
 
-            $rootScope.$broadcast('logout', {goToLogin: goToLogin, where: where});
+            $rootScope.$broadcast('logout', {
+                token:this.getToken(),
+                goToLogin: goToLogin,
+                where: where
+            });
         };
 
         this.switchToIdentity = function(identity, identityToken){

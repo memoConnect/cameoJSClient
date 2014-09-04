@@ -3,9 +3,9 @@
 // https://github.com/apache/cordova-plugin-camera/blob/b76b5ae670bdff4dd4c716e889ab12e049f9c733/doc/index.mdhttps://github.com/apache/cordova-plugin-camera/blob/b76b5ae670bdff4dd4c716e889ab12e049f9c733/doc/index.md
 
 angular.module('cmPhonegap').directive('cmChooseSource', [
-    'cmPhonegap', 'cmCamera',
+    'cmDevice', 'cmCamera',
     '$rootScope', '$document',
-    function (cmPhonegap, cmCamera,
+    function (cmDevice, cmCamera,
               $rootScope, $document) {
 
         return {
@@ -20,7 +20,7 @@ angular.module('cmPhonegap').directive('cmChooseSource', [
 
             link: function (scope, element, attrs, cmFilesCtrl) {
                 // only for phonegap
-                if (!cmPhonegap.isAndroid()) {
+                if (!cmDevice.isAndroid()) {
                     return false;
                 }
 

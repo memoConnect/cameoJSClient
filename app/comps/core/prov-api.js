@@ -252,28 +252,30 @@ angular.module('cmCore').provider('cmApi',[
 
 
                 var api = function(method, config){
-                    var deferred	=	$q.defer(),
-
-                    //get authentification token from cmAuth if present
-                        token 		    = 	$injector.has('cmAuth')
-                            ?	$injector.get('cmAuth').getToken()
-                            :	undefined,
-
+                    var deferred = $q.defer(),
+                        token    = undefined,
                     //get twoFactorAuth token from cmAuth if present
-                        twoFactorToken	= 	$injector.has('cmAuth')
+                        twoFactorToken = $injector.has('cmAuth')
                             ?	$injector.get('cmAuth').getTwoFactorToken()
-                            :	undefined
+                            :	undefined;
 
+                    //get authentification token from config if override of from cmAuth if present
+                    if('overrideToken' in config && config.overrideToken != ''){
+                        token = config.overrideToken;
+                        delete config.overrideToken;
+                    } else if($injector.has('cmAuth')){
+                        token = $injector.get('cmAuth').getToken();
+                    }
 
-                    prepareConfig(config, method, token, twoFactorToken)
+                    prepareConfig(config, method, token, twoFactorToken);
 
                     $http(config).then(
                         function(response){ handleSuccess(response, deferred) },
                         function(response){ handleError(response, deferred) }
-                    )
+                    );
 
-                    return deferred.promise
-                }
+                    return deferred.promise;
+                };
 
                 /**
                  * Shortcuts for api()
