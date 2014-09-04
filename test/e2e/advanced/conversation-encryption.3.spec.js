@@ -144,7 +144,6 @@ describe('Conversation encryption -', function () {
             // get conversation Id
             ptor.wait(function () {
                 return ptor.getCurrentUrl().then(function (url) {
-                    console.log(url)
                     conversationId = url.split("/").pop()
                     return conversationId != "new"
                 })
