@@ -433,7 +433,7 @@ this.generateKey = function (keyNum, keyName) {
 
 this.disableEncryption = function () {
     $("cm-header:not(.ng-hide) cm-security-indicator").click()
-    self.waitForPageLoad("/conversation/new/security-settings")
+    self.waitForPageLoad("/conversation/new/security")
     $("[data-qa='btn-encryption']").click()
     $("[data-qa='btn-security-done']").click()
     self.waitForPageLoad("/conversation/new")
