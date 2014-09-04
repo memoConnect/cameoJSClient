@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmRouteStart').directive('cmKeyInfo', [
+angular.module('cmWidgets').directive('cmWidgetKeyinfo', [
     'cmUserModel',
     'cmUtil',
     'cmUserKeyStorageService',
@@ -9,11 +9,11 @@ angular.module('cmRouteStart').directive('cmKeyInfo', [
     function(cmUserModel, cmUtil, cmUserKeyStorageService, $location, $rootScope){
         return {
             restrict: 'E',
-            templateUrl: 'routes/start/comps/drtv-key-info.html',
+            templateUrl: 'widgets/start/wdgt-keyinfo.html',
             controller: function ($scope) {
 
                 if(cmUserModel.hasPrivateKey()){
-                    $location.path('/settings/identity/keys');
+                    $location.path('/settings/identity/key/list');
                     return false;
                 }
 
@@ -35,10 +35,6 @@ angular.module('cmRouteStart').directive('cmKeyInfo', [
                         storageService.set('skipKeyInfo', false);
                         $scope.skipKeyInfo = false;
                     }
-                };
-
-                $scope.goToTalks = function(){
-                    $scope.goto('/talks');
                 };
 
                 $scope.showKeySize = false;
@@ -66,7 +62,7 @@ angular.module('cmRouteStart').directive('cmKeyInfo', [
                         keySize: $scope.keySize
                     };
 
-                    $scope.goto('/settings/identity/keys/create');
+                    $scope.goTo('/settings/identity/key/create');
                 }
             }
         }

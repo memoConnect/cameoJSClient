@@ -18,10 +18,23 @@ cameo_config = {
         'start': {
             hasCtrl: true,
             guests: false,
-            routes: [
-                '/start/:pageParent?'
-            ],
+            routes: ['/start'],
             resolveOnBoot: true
+        },
+        'start-welcome': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/start/welcome']
+        },
+        'start-quickstart': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/start/quickstart']
+        },
+        'start-keyinfo': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/start/keyinfo']
         },
         'login': {
             hasCtrl: true,

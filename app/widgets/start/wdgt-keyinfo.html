@@ -1,17 +1,9 @@
-<cm-header cm-rubber-space>
-    <!--
-    <cm-identity cm-weight="6"></cm-identity>
-    <cm-menu cm-weight="1"></cm-menu>
-    -->
-    <div></div>
-</cm-header>
-
 <h2>
     <i class="fa cm-key"></i>
     {{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}
 </h2>
 
-<article>
+<article class="content">
     <cm-info-bubble nose-x="50%">
         <span ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE' | cmParse"></span>
     </cm-info-bubble>
@@ -40,7 +32,7 @@
         </div>
     </li>
 
-    <li ng-click="goToTalks()">
+    <li ng-click="goTo('/talks')">
         <span class="item">
             {{'START.KEYINFO.SKIP_TEXT' | cmTranslate}}
         </span>

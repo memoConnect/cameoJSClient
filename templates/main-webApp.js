@@ -55,8 +55,7 @@ require.config({
 
         'pckRouteConversation': 'packages/routes/conversation/comps/package',
         'pckRouteSettings': 'packages/routes/settings/comps/package',
-        'pckRouteContacts': 'packages/routes/contacts/comps/package',
-        'pckRouteStart': 'packages/routes/start/comps/package'
+        'pckRouteContacts': 'packages/routes/contacts/comps/package'
 
     },
 
@@ -128,11 +127,6 @@ require.config({
         'pckRouteContacts': [
             'pckCore',
             'pckContacts'
-        ],
-        'pckRouteStart': [
-            'pckCore',
-            'pckUi',
-            'pckUser'
         ]
     },
     // kick start application

@@ -7,7 +7,7 @@ define([
 ], function (app) {
     'use strict';
 
-    app.register.controller('StartCtrl', [
+    app.register.controller('StartKeyinfoCtrl', [
         // no dependencies
         function() {
             // nothing to do
