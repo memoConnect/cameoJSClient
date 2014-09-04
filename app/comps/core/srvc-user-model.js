@@ -36,12 +36,13 @@ angular.module('cmCore')
     'cmNotify',
     'cmLogger',
     'cmCallbackQueue',
+    'cmDevices',
     '$rootScope',
     '$q',
     '$location',
     function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmIdentityModel, cmFactory,
              cmCrypt, cmKeyFactory, cmKey, cmStateManagement, cmObject, cmUtil,
-             cmNotify, cmLogger, cmCallbackQueue,
+             cmNotify, cmLogger, cmCallbackQueue, cmDevices,
              $rootScope, $q, $location){
         var self = this,
             isAuth = false,
@@ -142,6 +143,8 @@ angular.module('cmCore')
                     // handle account data
                     // TODO: set account data
 
+                    cmDevices.checkDeviceId(accountData.pushDevices);
+
                     return true;
                 }
 
@@ -198,6 +201,7 @@ angular.module('cmCore')
                             }
                         )
                     } else {
+                        $rootScope.$broadcast('appSpinner','show');
                         cmAuth.getAccount().then(
                             function (data) {
                                 if (importAccount(data)) {
