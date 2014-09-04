@@ -1,32 +1,33 @@
 define([
+    
     'app',
     'ngload!pckFiles',
     'ngload!pckUser',
     'ngload!pckContacts',
     'ngload!pckConversations',
-    'ngload!pckRouteConversation'
+    'ngload!pckRouteConversation',
+    'ngload!pckWidgets'
+
 ], function(app){
     'use strict';
 
-    app.register.controller('PurlCtrl',[
+    app.register.controller('PurlRecipientCtrl',[
+
         '$scope',
         '$rootScope',
         '$routeParams',
         'cmModal',
         'cmPurlModel',
-        'cmUtil',
         'cmConversationFactory',
-        function($scope, $rootScope, $routeParams, cmModal, cmPurlModel, cmUtil, cmConversationFactory){
-            $scope.isPurl = true;
-            $scope.data = null;
-            $scope.showConversation = false;
-            $scope.showSignIn = false;
-            $rootScope.pendingPurl = null;
-            $scope.pageChild1 = $routeParams.pageChild1 || '';
-            $scope.purlId = $routeParams.purlId || '';
-            $scope.calledWithId = true;
 
-            if(cmUtil.checkKeyExists($routeParams,'purlId') && cmUtil.validateString($routeParams.purlId)){
+        function($scope, $rootScope, $routeParams, cmModal, cmPurlModel, cmConversationFactory){
+
+            $rootScope.pendingPurl      = null;
+
+            $scope.showSignIn           = false;
+            $scope.purlId               = $routeParams.purlId || '';
+
+            if($routeParams.purlId){
                 cmPurlModel.getPurl($routeParams.purlId).then(
                     function(data){
                         // identity check internal || external user
@@ -41,13 +42,13 @@ define([
                             cmPurlModel.handleToken(data.token)
                         }
 
-                        $scope.conversationId = cmPurlModel.handleConversation(data.conversation);
-                        $scope.showConversation = true;
+                        var conversation_id = cmPurlModel.handleConversation(data.conversation);
 
-                        $scope.conversation = cmConversationFactory.create($scope.conversationId)
+                        $scope.conversation = cmConversationFactory.create(conversation_id)
                     },
+
                     function(response){
-                        if(typeof response !== 'undefined' && cmUtil.checkKeyExists(response, 'status')){
+                        if(typeof response !== 'undefined' && 'status' in response){
                             if(response.status == 401){
                                 $rootScope.$broadcast('logout', {goToLogin: false, where: 'purl-ctrl getPurl reject'})
                                 $scope.showLogin();
@@ -61,12 +62,6 @@ define([
                 );
             }
 
-            /**
-             * header btn for fast registration
-             */
-            $scope.goToRegister = function(){
-                $scope.goto('/registration');
-            };
             /**
              * modal for fast registration
              */

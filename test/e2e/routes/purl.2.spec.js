@@ -80,6 +80,7 @@ describe('Route: Purl - ', function () {
              * cm-message describes that messages in purl are loaded and loading process is finish
              */
             util.waitForElement('cm-message');
+            
         })
 
         describe('should checkFormForInternalUser "Test1": ', function(){

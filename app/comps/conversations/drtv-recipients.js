@@ -48,6 +48,7 @@ angular.module('cmConversations').directive('cmRecipients', [
                 }
 
                 $scope.$watch($attrs.cmData, function(conversation){
+                    console.log(conversation)
                     if(conversation)
                         init(conversation)
                 })

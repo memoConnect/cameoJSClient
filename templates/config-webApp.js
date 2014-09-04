@@ -122,7 +122,21 @@ cameo_config = {
         },
         'purl': {
             routes:[
-                '/purl/:purlId?'
+                '/purl/:purlId'
+            ],
+            hasCtrl: true,
+            guests: true
+        },
+        'purl-security': {
+            routes:[
+                '/purl/:purlId/security'
+            ],
+            hasCtrl: true,
+            guests: true
+        },
+        'purl-recipients': {
+            routes:[
+                '/purl/:purlId/recipients'
             ],
             hasCtrl: true,
             guests: true

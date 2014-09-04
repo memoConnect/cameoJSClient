@@ -24,6 +24,7 @@
 
 angular.module('cmConversations')
 .factory('cmConversationModel',[
+
     'cmBoot',
     'cmConversationsAdapter',
     'cmMessageModel',
@@ -44,6 +45,7 @@ angular.module('cmConversations')
     'cmUserKeyStorageService',
     '$q',
     '$rootScope',
+    
     function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
               cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase,
               cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmUserKeyStorageService,
