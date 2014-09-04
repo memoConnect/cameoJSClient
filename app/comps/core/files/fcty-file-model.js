@@ -2,10 +2,10 @@
 
 angular.module('cmCore').factory('cmFileModel', [
     'cmFilesAdapter', 'cmFileDownload', 'cmFileTypes', 'cmLogger', 'cmChunk',
-    'cmCrypt', 'cmObject', 'cmModal', 'cmEnv',
+    'cmCrypt', 'cmObject', 'cmModal', 'cmEnv', 'cmUtil',
     '$q',
     function (cmFilesAdapter, cmFileDownload, cmFileTypes, cmLogger, cmChunk,
-              cmCrypt, cmObject, cmModal, cmEnv,
+              cmCrypt, cmObject, cmModal, cmEnv, cmUtil,
               $q){
 
         function roundToTwo(num) {
@@ -63,11 +63,9 @@ angular.module('cmCore').factory('cmFileModel', [
             // upload for state = new
 
             this.importBase64 = function(base64){
-                if(typeof base64 !== 'undefined'){
-                    this.type = base64.replace(new RegExp('^(data:(.*);base64,.*)','i'),'$2');
-
+                if(base64){
+                    this.type = cmFilesAdapter.getMimeTypeOfBase64(base64);
                     this.blob = cmFilesAdapter.binaryToBlob(cmFilesAdapter.base64ToBinary(base64),this.type);
-
                     this.chopIntoChunks(128);
                 }
                 return this;
@@ -82,58 +80,14 @@ angular.module('cmCore').factory('cmFileModel', [
                 this.type = blob.type;
                 this.size = blob.size;
 
-                // android kitkat fix???
-                // {"name":"image%3A1877","type":"","size":172669}
-                // {"name":"image%3A1541","type":"","size":55781}
-                // {"name":"image%3A1889","type":"","size":1475583}
-                // {"name":"audio%3A267","type":"","size":36437}
-                // {"name":"video%3A1799","type":"","size":18149933}
-                if(this.name.search('%3A') != -1 && this.type == ''){
+                this.detectedExtension = cmFileTypes.find(this.type, this.name);
 
-                    switch(this.name.replace(/%3A\d*/,'')){
-                        case 'image':
-                            this.detectedExtension = 'jpg';
-                            this.type = 'image/jpeg'
-                        break;
-                        case 'audio':
-                            this.detectedExtension = '3gpp';
-                            this.type = 'audio/3gpp'
-                        break;
-                        case 'video':
-                            this.detectedExtension = 'mp4';
-                            this.type = 'video/mp4'
-                        break;
-                    }
-
-                    // A hack that you should include to catch bug on Android 4.4
-                    // (bug < Cordova 3.5):
-                    var split=this.name.split("%3A");
-                    var URI="content://media/external/images/media/"+split[1];
-
-                    console.log(URI)
-
-                    window.resolveLocalFileSystemURI(URI, function(fileEntry) {
-                        //If this doesn't work
-                        console.log('resolveLocalFileSystemURI')
-                        console.log(JSON.stringify(fileEntry))
-                        //$scope.image = fileEntry.nativeURL
-
-                        //Try this
-                        //var image = document.getElementById('myImage');
-                        //image.src = fileEntry.nativeURL;
-                    });
-
-
-                } else {
-                    this.detectedExtension = cmFileTypes.find(this.type, this.name);
-
-                    // broken mimetype???
-                    if (this.detectedExtension == 'unknown') {
-                        var obj = cmFileTypes.getMimeTypeViaFilename(this.name);
-                        if (obj.detectedExtension != 'unknown') {
-                            this.detectedExtension = obj.detectedExtension;
-                            this.type = obj.mimeType;
-                        }
+                // broken mimetype???
+                if (this.detectedExtension == 'unknown') {
+                    var obj = cmFileTypes.getMimeTypeViaFilename(this.name);
+                    if (obj.detectedExtension != 'unknown') {
+                        this.detectedExtension = obj.detectedExtension;
+                        this.type = obj.mimeType;
                     }
                 }
 
@@ -309,7 +263,7 @@ angular.module('cmCore').factory('cmFileModel', [
                             chunks: self.chunks.length
                         })
                         .then(function(id){
-                            return self.id = id
+                            return self.id = id;
                         })
                     :   cmLogger.debug('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
                 )
@@ -317,7 +271,6 @@ angular.module('cmCore').factory('cmFileModel', [
 
             this._uploadChunk = function(index){
                 var chunk = this.chunks[index];
-
                 chunk
                     .encrypt(passphrase)
                     .upload(this.id, index)

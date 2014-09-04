@@ -546,7 +546,7 @@ angular.module('cmConversations')
              * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
-                cmLogger.debug('cmConversationModel.decrypt');
+//                cmLogger.debug('cmConversationModel.decrypt');
                 
                 var passphrase  =   this.getPassphrase(),
                     success     =   passphrase && this.messages.reduce(function (success, message){
@@ -788,7 +788,7 @@ angular.module('cmConversations')
              * @returns {Array} recipients Filter
              */
             this.getBadRecipients = function(){
-                return  this.recipients.filter(function(recipient){
+                return this.recipients.filter(function(recipient){
                     return recipient.keys.getWeakestKeySize() <= 2000
                 })
             };

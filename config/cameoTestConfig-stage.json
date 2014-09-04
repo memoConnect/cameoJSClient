@@ -3,19 +3,19 @@
         "wwwUrl": "https://stage.cameo.io/m/"
     },
     "testData": [
-        "loginUser1 = 'suspicious_goodall'",
+        "loginUser1 = 'naughty_thompson'",
         "passwordUser1 = 'password'",
-        "cameoIdUser1 = 'suspicious_goodall'",
-        "purlUser1 = 'wba63SLHvm'",
-        "displayNameUser1 = 'Suspicious Goodall'",
-        "contactUser1DisplayName ='Backstabbing Ritchie'",
-        "contactUser1Login = 'backstabbing_ritchie'",
+        "cameoIdUser1 = 'naughty_thompson'",
+        "purlUser1 = 'bCCTtKNOfq'",
+        "displayNameUser1 = 'Naughty Thompson'",
+        "contactUser1DisplayName ='High Fermat'",
+        "contactUser1Login = 'high_fermat'",
         "contactUser1password = 'password'",
-        "purlExternal = '2dIiNSpAxE'",
-        "loginUser2 = 'sick_sammet'",
+        "purlExtern = 'EwQy66Y7nT'",
+        "loginUser2 = 'high_jones'",
         "passwordUser2 = 'password'",
-        "cameoIdUser2 = 'sick_sammet'",
-        "displayNameUser2 = 'Sick Sammet'"
+        "cameoIdUser2 = 'high_jones'",
+        "displayNameUser2 = 'High Jones'"
     ]
 }
 
