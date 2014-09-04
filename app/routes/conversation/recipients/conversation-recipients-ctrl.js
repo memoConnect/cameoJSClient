@@ -26,7 +26,7 @@ define([
 
             $scope.conversation =   conversation_id
                                     ?   cmConversationFactory.create(conversation_id) 
-                                    :   ($rootScope.pendingConversation || cmConversationFactory.create())
+                                    :   ($rootScope.pendingConversation || cmConversationFactory.new())
 
 
             if(!$scope.conversation.state.is('new') && force_new)
