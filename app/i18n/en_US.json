@@ -168,8 +168,8 @@
             "RECIPIENTS_MISSING_OKAY": "I do not want any other recipients than myself.",
             "PASSPHRASE_INVALID": "Invalid password",
             "PASSWORD_WRONG": "Wrong password",
-            "NO_PASSWORD": "Password required but not configured.<br> <a href=\"#/{{type}}/{{typeId}}/security-settings\">Configure your encryption settings here</a>",
-            "PASSWORD_NEEDED": "Password required.<br> <a href=\"#/{{type}}/{{typeId}}/security-settings\">enter here</a>",
+            "NO_PASSWORD": "Password required but not configured.<br> <a href=\"#/{{type}}/{{typeId}}/security\">Configure your encryption settings here</a>",
+            "PASSWORD_NEEDED": "Password required.<br> <a href=\"#/{{type}}/{{typeId}}/security\">enter here</a>",
             "ASYMMETRIC_DECRYPT_ERROR": "cameoKey missing",
             "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
             "FILESIZE_REACHED": "The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file '<strong>{{fileName}}</strong>' is <strong>{{fileSize | cmBytesHumanReadable}}</strong> big."

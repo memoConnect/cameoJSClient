@@ -441,7 +441,6 @@ this.disableEncryption = function () {
 
 this.clickBackBtn = function () {
     self.waitForElement("cm-header:not(.ng-hide) cm-back")
-    ptor.debugger()
     $("cm-header:not(.ng-hide) cm-back").click()
     return this
 }

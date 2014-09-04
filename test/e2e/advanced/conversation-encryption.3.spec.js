@@ -79,7 +79,6 @@ describe('Conversation encryption -', function () {
         it("set encryption settings", function () {
             util.get("/conversation/new/security")
             util.waitForElement("[data-qa='btn-encryption']")
-                    ptor.debugger()
 
             switch (encryptionType) {
                 case "asym" :
@@ -125,7 +124,6 @@ describe('Conversation encryption -', function () {
                 util.waitForElement('cm-header:not(.ng-hide)')
 
                 $('cm-header:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
-                    ptor.debugger()
                     if (trust) {
                         expect(icons.length).toBe(positiveAspects + 1)
                     } else {
@@ -143,9 +141,12 @@ describe('Conversation encryption -', function () {
 
             $("[data-qa='btn-send-answer']").click()
 
+            ptor.debugger()
+
             // get conversation Id
             ptor.wait(function () {
                 return ptor.getCurrentUrl().then(function (url) {
+                    console.log(url)
                     conversationId = url.split("/").pop()
                     return conversationId != "new"
                 })
@@ -189,6 +190,7 @@ describe('Conversation encryption -', function () {
                         })
                     } else {
                         switch (encryptionType) {
+
 
                             case "password" :
                                 // expect password prompt
