@@ -127,6 +127,9 @@ require.config({
         'pckRouteContacts': [
             'pckCore',
             'pckContacts'
+        ],
+        'pckPhonegap': [
+            'pckCore'
         ]
     },
     // kick start application

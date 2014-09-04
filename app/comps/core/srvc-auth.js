@@ -192,7 +192,8 @@ angular.module('cmCore').service('cmAuth', [
 
             getAccount: function(){
                 return cmApi.get({
-                    path: '/account'
+                    path: '/account',
+                    timeout: 7000
                 })
             },
 

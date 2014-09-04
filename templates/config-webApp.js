@@ -145,8 +145,21 @@ cameo_config = {
         },
         'purl': {
             routes:[
-                '/purl/:purlId?',
-                '/purl/:purlId/:pageChild1?'
+                '/purl/:purlId'
+            ],
+            hasCtrl: true,
+            guests: true
+        },
+        'purl-security': {
+            routes:[
+                '/purl/:purlId/security'
+            ],
+            hasCtrl: true,
+            guests: true
+        },
+        'purl-recipients': {
+            routes:[
+                '/purl/:purlId/recipients'
             ],
             hasCtrl: true,
             guests: true
@@ -179,15 +192,19 @@ cameo_config = {
             hasCtrl: true,
             resolveOnBoot: true
         },
-        'contact-details': {
+        'contact-search':  {
             routes:[
-                '/contact/:id/details',
-                '/contact/:id'
+                '/contact/search',
             ],
             hasCtrl: true
         },
-
-
+        // 'contact-details': {
+        //     routes:[
+        //         '/contact/:id/details',
+        //         '/contact/:id'
+        //     ],
+        //     hasCtrl: true
+        // },
         'verification': {
             routes:['/verification/:secret']
         },

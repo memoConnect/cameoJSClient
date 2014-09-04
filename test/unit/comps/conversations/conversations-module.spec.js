@@ -7,7 +7,7 @@ describe('cmConversations', function(){
             $provide.constant('cmEnv',{});
         })
     })
-
+    beforeEach(module('cmPhonegap'))
     beforeEach(module('cmConversations'))
 
     it('should provide a service "cmConversationsAdapter"', inject(function(cmConversationsAdapter){

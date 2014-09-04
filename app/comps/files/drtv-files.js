@@ -17,7 +17,7 @@ angular.module('cmFiles').directive('cmFiles',[
                     var bool = true;
 
                     angular.forEach($scope.files, function(value){
-                        if(value.name == blob.name){
+                        if(value.name == blob.name && value.size == blob.size){
                             bool = false;
                         }
                     });

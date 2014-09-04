@@ -3,7 +3,9 @@
         "apiUrl": "https://stage.cameo.io/a/v1",
         "autoLogin": false,
         "loadingBar": true,
-        "enableDebug": true
+        "enableDebug": true,
+        "logLevel": "WARN"
+
     },
     "phonegap": {
         "baseName" : "cameoNet-stage",

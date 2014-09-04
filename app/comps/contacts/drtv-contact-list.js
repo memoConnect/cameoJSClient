@@ -13,8 +13,12 @@ angular.module('cmContacts').directive('cmContactList',[
 
             controller: function ($scope, $element, $attrs) {
                 $scope.isLoading    = false;
+
                 $scope.contacts     = cmContactsModel.contacts;
                 $scope.contactsQty  = cmContactsModel.contacts.length;
+
+
+
 
 
                 cmContactsModel.on('start:load-contacts', function () {

@@ -77,7 +77,7 @@ describe('Conversation encryption -', function () {
         })
 
         it("set encryption settings", function () {
-            util.get("/conversation/new/security-settings")
+            util.get("/conversation/new/security")
             util.waitForElement("[data-qa='btn-encryption']")
 
             switch (encryptionType) {
@@ -193,7 +193,7 @@ describe('Conversation encryption -', function () {
                             case "password" :
                                 // expect password prompt
                                 util.waitForModalOpen()
-                                util.get(conversationRoute + "/security-settings")
+                                util.get(conversationRoute + "/security")
                                 util.waitForElement("[data-qa='input-password']")
 
                                 $("[data-qa='input-password']").click()
@@ -330,7 +330,7 @@ describe('Conversation encryption -', function () {
 
     describe("no keys -", function () {
 
-        describe("conversation with user that has key -", function () {
+        describe("conversation with user that has a key -", function () {
             var recipients = [
                 {login: testUser1, hasKey: false, storedPassword: true},
                 {login: testUser2, hasKey: true}

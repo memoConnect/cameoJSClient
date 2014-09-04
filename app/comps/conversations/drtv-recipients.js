@@ -13,15 +13,18 @@ angular.module('cmConversations').directive('cmRecipients', [
             templateUrl: 'comps/conversations/drtv-recipients.html',
             controller: function ($scope, $element, $attrs) {
 
+
                 $scope.selected         = {};
                 $scope.contacts         = cmContactsModel.contacts
 
 
                 function init(conversation){
-                    $scope.selected = {}
                     $scope.conversation = conversation
-                    $scope.conversation.recipients.forEach(function(recipient){
-                        $scope.selected[recipient.id] = true;
+                    $scope.$watchCollection('conversation.recipients', function(recipients){
+                        $scope.selected = {}
+                        recipients.forEach(function(recipient){
+                            $scope.selected[recipient.id] = true;
+                        })
                     })
                 }
 
@@ -51,6 +54,7 @@ angular.module('cmConversations').directive('cmRecipients', [
                     if(conversation)
                         init(conversation)
                 })
+
             }
         }
     }

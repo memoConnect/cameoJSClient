@@ -19,25 +19,30 @@
     <i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_REQUESTS'|cmTranslate}}
 </div>
 
-<cm-contact-tag ng-repeat="request in requests" ng-class="{'is-new':request.state == undefined,'message-open':request.isOpen, 'show-bar':request.showBar}">
-    <section>
-        <cm-avatar cm-data="request.identity"></cm-avatar>
-        <div class="cm-request-brief w75" ng-class="{'with-message':request.message != '','message-close':!request.isOpen}">
-            <strong>{{request.identity.getDisplayName()}}</strong><br />
-            {{request.message}}
+<ul>
+    <li ng-repeat="request in requests">
+        <cm-contact-tag  ng-class="{'is-new':request.state == undefined,'message-open':request.isOpen, 'show-bar':request.showBar}">
+            <div>
+                <cm-avatar cm-data="request.identity"></cm-avatar>
+                <div class="cm-request-brief w75" ng-class="{'with-message':request.message != '','message-close':!request.isOpen}">
+                    <strong>{{request.identity.getDisplayName()}}</strong><br />
+                    {{request.message}}
+                </div>
+            </div>
+        </cm-contact-tag>
+        
+        <div class="cm-request-bar">
+            <button ng-click="acceptRequest(request)" data-qa="btn-acceptRequest">
+                <i class="fa cm-checkbox-right"></i>{{'CONTACTS.REQUESTS.ACCEPT'|cmTranslate}}
+            </button>
+            <button ng-click="rejectRequest(request)" data-qa="btn-rejectRequest">
+                <i class="fa cm-reject"></i>
+                {{'CONTACTS.REQUESTS.REJECT'|cmTranslate}}
+            </button>
+            <!--<button ng-click="ignoreRequest(request)" ng-if="false">
+                <i class="fa cm-ignore"></i>
+                {{'CONTACTS.REQUESTS.IGNORE'|cmTranslate}}
+            </button>-->
         </div>
-    </section>
-    <section class="cm-request-bar">
-        <button ng-click="acceptRequest(request)" data-qa="btn-acceptRequest">
-            <i class="fa cm-checkbox-right"></i>{{'CONTACTS.REQUESTS.ACCEPT'|cmTranslate}}
-        </button>
-        <button ng-click="rejectRequest(request)" data-qa="btn-rejectRequest">
-            <i class="fa cm-reject"></i>
-            {{'CONTACTS.REQUESTS.REJECT'|cmTranslate}}
-        </button>
-        <!--<button ng-click="ignoreRequest(request)" ng-if="false">
-            <i class="fa cm-ignore"></i>
-            {{'CONTACTS.REQUESTS.IGNORE'|cmTranslate}}
-        </button>-->
-    </section>
-</cm-contact-tag>
+    </li>
+</ul>

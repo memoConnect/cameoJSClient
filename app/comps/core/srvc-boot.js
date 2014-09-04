@@ -15,8 +15,8 @@ angular.module('cmCore')
         this.$get = [
             '$q',
             '$rootScope',
-            '$window',
-            function($q, $rootScope, $window) {
+            '$document',
+            function($q, $rootScope, $document) {
 
                 $rootScope.$on('logout', function(){
                     promise = undefined;
@@ -26,11 +26,22 @@ angular.module('cmCore')
                     promise = undefined;
                 });
 
+                $rootScope.$on('appSpinner', function(event, action){
+                    // hide app spinner
+                    angular.element($document[0].querySelector('.app-spinner')).css('display',action == 'hide'?'none':null);
+                });
+
+                $rootScope.$on('$routeChangeSuccess', function(){
+                    $rootScope.$broadcast('appSpinner','hide');
+                });
+
                 return {
                     resolve: function(){
                         if(promise == undefined) {
                             promise = $q.defer();
                         }
+
+                        $rootScope.$broadcast('appSpinner','hide');
 
                         promise.resolve();
                     }

@@ -2,5 +2,6 @@
 
 angular.module('cmFiles',[
     'cmCore',
-    'cmUi'
+    'cmUi',
+    'cmPhonegap'
 ]);

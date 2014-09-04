@@ -105,17 +105,22 @@ angular.module('cmUi')
                     return this
                 };
                 // close modal
-                scope.close = function(){
+                scope.close = function(fromBackdrop){
+
+                    if(!fromBackdrop && 'onFooterClick' in scope){
+                        scope.onFooterClick();
+                    }
+
                     this.toggle(false);
                     cmModal.trigger('modal:closed', attrs.id);
 
-                    return this
+                    return this;
                 };
 
                 // close modal when clicked on backdrop
-                if(!attrs.cmCloseOnBackdrop) {
+                if(!('cmCloseOnBackdrop' in attrs) || attrs.cmCloseOnBackdrop != "false"){
                     angular.element(element.children()[1]).on('click', function () {
-                        scope.close()
+                        scope.close(true);
                     });
                 }
 

@@ -14,12 +14,8 @@ define([
 
     app.register.controller('ContactListCtrl',[
 
-        '$scope',
-        '$routeParams',
         
-        function($scope, $routeParams){
-            // set active setion
-            $scope.route = $routeParams.section || '';
+        function(){
         }
     ]);
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmRouteContacts').directive('cmSearch',[
+angular.module('cmContacts').directive('cmSearch',[
     'cmContactsModel',
     'cmIdentityFactory',
     'cmNotify',
