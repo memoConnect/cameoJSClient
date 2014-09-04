@@ -122,8 +122,7 @@ cameo_config = {
         },
         'purl': {
             routes:[
-                '/purl/:purlId?',
-                '/purl/:purlId/:pageChild1?'
+                '/purl/:purlId?'
             ],
             hasCtrl: true,
             guests: true

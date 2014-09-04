@@ -45,15 +45,19 @@ angular.module('cmCore').service('cmRootService', [
 
         $rootScope.createNewConversation = function(){
             delete $rootScope.pendingConversation;
-            $rootScope.goTo('/conversation/new');
+            $rootScope.goto('/conversation/new');
         };
 
         $rootScope.createNewIdentity = function(){
-            $rootScope.goTo('/settings/identity/create');
+            $rootScope.goto('/settings/identity/create');
         }
 
         $rootScope.gotoContactList = function(){
-            $rootScope.goTo('/contact/list')
+            $rootScope.goto('/contact/list')
+        }
+
+        $rootScope.gotoPurl = function(purlId, subpath){
+            $rootScope.goto('/purl/'+purlId+'/'+subpath)
         }
     }
 ]);
