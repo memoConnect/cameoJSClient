@@ -42,7 +42,9 @@ angular.module('cmUi').directive('cmRubberSpace',[
 
                 }
 
-                tighten();
+                scope.$watch(function(){
+                    tighten();
+                })
 
                 $rootScope.$on('rubberSpace:tighten',function(){
                     tighten();

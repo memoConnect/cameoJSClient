@@ -29,10 +29,10 @@
         ng-if       =   "contact.contactType != 'pending'"
     >
         <cm-contact-tag cm-rubber-space>
-            <cm-avatar cm-data="contact.identity"></cm-avatar>
-            <cm-key-level cm-data="contact.identity.keys.getWeakestKeySize()"></cm-key-level>
-            <cm-contact-brief cm-data="contact" cm-weight="1"></cm-contact-brief>
-            <cm-contact-type cm-data="contact"></cm-contact-type>
+            <cm-avatar          cm-data="contact.identity"></cm-avatar>
+            <cm-key-level       cm-data="contact.identity.keys.getWeakestKeySize()"></cm-key-level>
+            <cm-contact-brief   cm-data="contact" cm-weight="1"></cm-contact-brief>
+            <cm-contact-type    cm-data="contact"></cm-contact-type>
             <button
                 data-qa="btn-select-contact"
                 ng-click="toggleRecipient(contact.identity)"
