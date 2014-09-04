@@ -15,12 +15,6 @@ angular.module('cmPhonegap').service('cmPhonegap', [
 
                 return phonegap_cameo_config.deviceReady;
             },
-            isAvailable: function () {
-                return typeof device != 'undefined'
-            },
-            isAndroid: function(){
-                return this.isAvailable() && device.platform.toLowerCase() === 'android'
-            },
             closeApp: function(){
                 document.addEventListener('backbutton', function(e) {
                     navigator.app.exitApp();

@@ -4,7 +4,9 @@
 
 angular.module('cmPhonegap').service('cmPushIp', [
     'cmPhonegap', 'cmLogger', 'cmUtil',
-    function (cmPhonegap, cmLogger, cmUtil) {
+    '$q',
+    function (cmPhonegap, cmLogger, cmUtil,
+              $q) {
 
         var self = {
             deviceToken: '',
@@ -62,8 +64,11 @@ angular.module('cmPhonegap').service('cmPushIp', [
                 console.info('Device registered')
                 console.info('DeviceToken: '+pushipresult.DeviceToken)
                 console.info('DeviceId: '+pushipresult.DeviceId)
-                self.deviceToken = pushipresult.DeviceToken;
-                self.deviceId = pushipresult.DeviceId;
+                this.deviceToken = pushipresult.DeviceToken;
+                this.deviceId = pushipresult.DeviceId;
+
+                this.initDevicePromise();
+                this.devicePromise.resolve(this.deviceId);
             },
 
             unregister: function(){
@@ -109,6 +114,16 @@ angular.module('cmPhonegap').service('cmPushIp', [
                         console.warn('error during GetPushMessagesByDevice: '+ regresult);
                     }
                 });
+            },
+
+            devicePromise: undefined,
+            initDevicePromise: function(){
+                if(!this.devicePromise)
+                    this.devicePromise = $q.defer();
+            },
+            getDeviceId: function(){
+                this.initDevicePromise();
+                return this.devicePromise.promise;
             },
 
             jumpTo: function(lastPushNotification, commonPush){

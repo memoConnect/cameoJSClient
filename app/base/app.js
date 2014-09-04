@@ -246,9 +246,6 @@ define([
             };
 
             $rootScope.$on('$routeChangeSuccess', function(){
-
-
-
                 // momentjs
                 //$window.moment.lang(cmLanguage.getCurrentLanguage());
 
