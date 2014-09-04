@@ -19,46 +19,60 @@ angular.module('cmPhonegap').service('cmDevice', [
                 return true;
             },
 
+            getPlatform: function(){
+                return device.platform.toLowerCase();
+            },
+
             isAndroid: function(){
                 return this.existsPlugin()
-                    && device.platform.indexOf('android') >= 0
+                    && this.getPlatform().indexOf('android') >= 0;
             },
+            isiOS: function(){
+                return this.existsPlugin()
+                   && (this.getPlatform().indexOf('iphone') >= 0
+                    || this.getPlatform().indexOf('ipad') >= 0
+                    || this.getPlatform().indexOf('ios') >= 0);
+            },
+            isWinPhone: function(){
+                return this.existsPlugin()
+                    && this.getPlatform().indexOf('win') >= 0;
+            },
+            isBlackBerry: function(){
+                return this.existsPlugin()
+                    && this.getPlatform().indexOf('blackberry') >= 0;
+            },
+
             getCurrentOS: function(){
+                var os = 'unknown';
+
                 if(!this.existsPlugin())
-                    return 'unknown';
+                    return os;
 
-                var platform = device.platform.toLowerCase(),
-                    os = 'unknown';
-
-                if (platform.indexOf('android') >= 0) {
+                if (this.isAndroid()) {
                     os = 'and';
-                }
-                else if (platform.indexOf('win') >= 0) {
+                } else if (this.isWinPhone()) {
                     os = 'win';
-                }
-                else if (platform.indexOf('iphone') >= 0
-                      || platform.indexOf('ipad') >= 0
-                      || platform.indexOf('ios') >= 0) {
+                } else if (this.isiOS()) {
                     os = 'ios';
-                }
-                else if (platform.indexOf('blackberry') >= 0){
+                } else if (this.isBlackBerry()){
                     os = 'bby';
                 }
+
                 return os;
             },
 
             checkRegisteredDevice: function(accountPushDevices){
-            /*
-             accountPushDevices = [
-                 {
-                     "deviceId": "id",
-                     "language": "en-US",
-                     "platform": "android"
-                 }
-             ]
-            */
+                /*
+                 accountPushDevices = [
+                     {
+                         "deviceId": "id",
+                         "language": "en-US",
+                         "platform": "android"
+                     }
+                 ]
+                */
 
-            var accountPushDevices = accountPushDevices || [],
+                var accountPushDevices = accountPushDevices || [],
                 deviceIsRegistered = accountPushDevices.filter(function(deviceId){
                     return deviceId == cmPushIp.deviceId
                 }).length == 1;
