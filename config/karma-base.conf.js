@@ -34,6 +34,7 @@ module.exports = function(config) {
             'app/packages/comps/conversations/package.js',
             'app/packages/comps/files/package.js',
             'app/packages/comps/security_aspects/package.js',
+            'app/packages/comps/phonegap/package.js',
 
             'test/lib/angular/angular-mocks.js',
 

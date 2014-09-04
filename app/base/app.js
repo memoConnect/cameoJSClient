@@ -11,6 +11,7 @@ define([
     'pckCore',
     'pckUi',
     'pckContacts',
+    'pckPhonegap',
     'base/config'
 ], function (angularAMD) {
     'use strict';
@@ -23,7 +24,8 @@ define([
         'angular-loading-bar',
         'cmCore',
         'cmUi',
-        'cmContacts'
+        'cmContacts',
+        'cmPhonegap'
     ])
 
     .constant('cmEnv',cameo_config.env)
@@ -159,6 +161,17 @@ define([
         }
     ])
     // app run handling
+    .run(['cmNetworkInformation', 'cmPushIp',
+          function(cmNetworkInformation, cmPushIp){
+        // check internet connection
+        cmNetworkInformation.init();
+        // register device for pushnotification
+        cmPushIp.init();
+    }])
+    .run(function() {
+        // disabled the 3000 seconds delay on click when touch ;)
+        FastClick.attach(document.body);
+    })
     /**
      * @TODO cmContactsModel anders initialisieren
      */
@@ -170,6 +183,7 @@ define([
         '$route',
         'cmUserModel',
         'cmContactsModel',
+        'cmRootService',
         'cmSettings',
         'cmLanguage',
         'cmLogger',
@@ -178,31 +192,30 @@ define([
         'cmApi',
         'cmHooks',
         'cmSystemCheck',
-        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks, cmSystemCheck) {
+        'cmError',
+        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks, cmSystemCheck, cmError) {
 
-            //get browser language:
-            cmApi.get({
-                path    : '/services/getBrowserInfo'
-            })
-            .then(function(data){
+            $rootScope.$on('getBrowserInfo', function(){
+                //get browser language:
+                cmApi.get({
+                    path: '/services/getBrowserInfo'
+                })
+                .then(
+                    function(data){
+                        if(!cmUserModel.isAuth()){
+                            var language = data.languageCode.substr(0,2),
+                                lc       = language == 'de' ? 'de_DE' : 'en_US'
+                            cmLanguage.switchLanguage(lc)
+                        }
+                    }
+                );
+            });
 
-                if(!cmUserModel.isAuth()){
-                    var language = data.languageCode.substr(0,2),
-                        lc       = language == 'de' ? 'de_DE' : 'en_US'
-                    cmLanguage.switchLanguage(lc)
-                }
-            })
+            $rootScope.$broadcast('getBrowserInfo');
 
             //prep $rootScope with useful tools
             $rootScope.console  =   window.console;
             $rootScope.alert    =   window.alert;
-            $rootScope.goto     =   function(path, replace){
-                                        path = path[0] == '/' ? path : '/'+path;
-                                        $location.path(path);
-                                        //Todo: find foifferent solution:
-                                        if(replace)
-                                            $location.replace()
-                                    };
 
             //add Overlay handles:
             $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };
@@ -233,10 +246,6 @@ define([
             };
 
             $rootScope.$on('$routeChangeSuccess', function(){
-
-                // hide app spinner
-                angular.element($document[0].querySelector('.app-spinner')).css('display','none');
-
                 // momentjs
                 //$window.moment.lang(cmLanguage.getCurrentLanguage());
 
@@ -318,8 +327,6 @@ define([
                 }
             });
 
-
-
             //check on resize if the screen is too small for header an footer ( i.e. onscreen keyboard is active)
             angular.element($window).bind('resize', function(){
                 var cm_app = $document[0].querySelector('#cm-app')
@@ -336,12 +343,9 @@ define([
 
             // Systemcheck
             cmSystemCheck.run(true);
-        }
-    ])
 
-    .run(function() {
-        FastClick.attach(document.body);
-    });
+        }
+    ]);
 
     // bootstrap app and all things after here use app.register.{ng-type}
     angularAMD.bootstrap(app);

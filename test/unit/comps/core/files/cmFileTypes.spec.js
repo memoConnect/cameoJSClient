@@ -21,7 +21,7 @@ describe('cmFileTypes', function() {
                 },
                 toBe: 'jpg'
             },
-            // bad jpg's
+            // bad images
             {
                 isBadMimeType: true,
                 blob: {
@@ -39,6 +39,23 @@ describe('cmFileTypes', function() {
                     size: 12
                 },
                 toBe: 'jpg'
+            },
+            // bad names in images
+            {
+                blob: {
+                    name: 'content',
+                    size: 10983,
+                    type: 'image/jpeg'
+                },
+                toBe: 'jpg'
+            },
+            {
+                blob: {
+                    name: 'content',
+                    size: 285783,
+                    type: 'image/png'
+                },
+                toBe: 'png'
             },
             // pdf
             {
@@ -80,6 +97,7 @@ describe('cmFileTypes', function() {
             }
         ]
 
+    beforeEach(module('cmPhonegap'))
     beforeEach(module('cmCore'))
 
     beforeEach(inject(function (_cmFileTypes_) {
@@ -94,6 +112,18 @@ describe('cmFileTypes', function() {
         expect(cmFileTypes.find).toBeDefined()
     })
 
+    it('without and wrong mime return unknown', function(){
+        expect(cmFileTypes.find('')).toBe('unknown')
+        expect(cmFileTypes.find()).toBe('unknown')
+        expect(cmFileTypes.find('moep/moep')).toBe('unknown')
+    })
+
+    it('with given mime should find extension', function(){
+        expect(cmFileTypes.find('image/png')).toBe('png')
+        expect(cmFileTypes.find('image/gif')).toBe('gif')
+        expect(cmFileTypes.find('audio/mp3')).toBe('mp3')
+    })
+
     it('should have method findMimeType', function () {
         expect(cmFileTypes.findMimeType).toBeDefined()
     })
@@ -106,10 +136,21 @@ describe('cmFileTypes', function() {
         expect(cmFileTypes.getExtension).toBeDefined()
     })
 
+    it('without extensions return unknown', function(){
+        expect(cmFileTypes.getExtension()).toBe('unknown')
+        expect(cmFileTypes.getExtension('')).toBe('unknown')
+    })
+
+    it('with extensions return it', function(){
+        expect(cmFileTypes.getExtension('jpg')).toBe('jpg')
+        expect(cmFileTypes.getExtension('moep,moeper')).toBe('moep')
+        expect(cmFileTypes.getExtension('moep,moeper','huhu.moeper')).toBe('moeper')
+    })
+
     describe('test files', function(){
     files.forEach(function(file){
         it(file.blob.name+' should get mimetype', function(){
-            if('isBadMimeType' in file)
+            if('isBadMimeType' in file || 'isBadFileName' in file)
                 expect(cmFileTypes.find(file.blob.type, file.blob.name)).toBe('unknown')
             else
                 expect(cmFileTypes.find(file.blob.type, file.blob.name)).toBe(file.toBe)

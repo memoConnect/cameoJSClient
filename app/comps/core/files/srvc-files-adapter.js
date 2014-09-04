@@ -97,6 +97,13 @@ angular.module('cmCore').service('cmFilesAdapter', [
                 return blobBuilder;
             },
 
+            base64ToBinary: function(b64Data){
+                if(typeof b64Data != 'string')
+                    return '';
+
+                return atob(this.clearBase64(b64Data));
+            },
+
             binaryToBlob: function (binary, contentType){
                 if(typeof binary != 'string' || binary == '')
                     return false;
@@ -123,6 +130,12 @@ angular.module('cmCore').service('cmFilesAdapter', [
                 return blob;
             },
 
+            base64ToBlob: function(base64, contentType){
+                var binary = this.base64ToBinary(base64, contentType),
+                    blob = this.binaryToBlob(binary, contentType);
+                return blob;
+            },
+
             /**
              * return clear base64 for atob function
              * replace newlines & return
@@ -135,18 +148,12 @@ angular.module('cmCore').service('cmFilesAdapter', [
                     return '';
 
                 return b64Data
-                .replace(/\r?\n|\r/g,'')
-                .replace(new RegExp('^(data:.{0,100};base64,|data:.{0,100}base64,)(.*)$','i'),function(){
+                .replace(/\r?\n|\r| /g,'')
+                .replace(new RegExp('^(data:.{0,100};base64,)(.*)$','i'),function(){
                     return arguments[2];// return the cleared base64
                 });
             },
 
-            base64ToBinary: function(b64Data){
-                if(typeof b64Data != 'string')
-                    return '';
-
-                return atob(this.clearBase64(b64Data));
-            },
 
             getBlobUrl: function(blob, useUrl){
                 var useFileReader = useUrl ? false : true,

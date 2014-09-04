@@ -15,6 +15,7 @@ describe('cmFileDownload', function(){
             }
         }
 
+    beforeEach(module('cmPhonegap'))
     beforeEach(module('cmCore'));
     beforeEach(inject(function(_cmFileDownload_){
         cmFileDownload = _cmFileDownload_

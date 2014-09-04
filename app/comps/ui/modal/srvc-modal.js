@@ -34,13 +34,13 @@ angular.module('cmUi')
                 self.instances[id]
                     .setData(data)
                     .open();
+                self.trigger('modal:opened',id);
             } else {
                 self.one('register', function(event, registered_id){
                     return !!(registered_id == id ? self.open(id, data) : false);
                 });
             }
 
-            self.trigger('modal:opened',id);
             
             return self;
         };
@@ -71,8 +71,8 @@ angular.module('cmUi')
             }
 
             // clear DOM element, if neccessary
-            if(angular.element(document.getElementById(config.id)).length > 0){
-                angular.element(document.getElementById(config.id)).remove();
+            if(angular.element($document[0].getElementById(config.id)).length > 0){
+                angular.element($document[0].getElementById(config.id)).remove();
             }
 
             // create new element
@@ -84,7 +84,12 @@ angular.module('cmUi')
 
             var modal = $compile('<cm-modal '+attrs+' >'+(template||'')+'</cm-modal>')(scope);
             // move modal up the dom hierarchy, if necessary:
-            angular.element(target || document.getElementById('cm-app') || 'body').append(modal);
+
+            if(target == 'body'){
+                target = $document[0].querySelector('body');
+            }
+
+            angular.element(target || $document[0].querySelector('#cm-app') || $document[0].querySelector('body')).append(modal);
 
             // the modal directive (<cm-modal>) will register itself on next digest
 

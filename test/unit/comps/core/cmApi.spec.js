@@ -390,10 +390,11 @@ describe('base config', function(){
             })
 
             it('should try to get an subscription id, when none is present and getEvents() is called.', function(){
-                delete cmApi.subscriptionId
+                cmApi.resetSubscriptionId()
+
                 spyOn(cmApi, 'subscribeToEventStream').andCallThrough()
 
-                $httpBackend.expect('POST', 'my_rest_api/events').respond('200')
+                $httpBackend.expect('POST','my_rest_api/events').respond('200')
 
                 cmApi.getEvents()
 

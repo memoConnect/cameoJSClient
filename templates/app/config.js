@@ -119,6 +119,12 @@ cameo_config = {
         },
         'notifications': {
             hasCtrl: true
+        },
+        'error':{
+            routes: ['/error'],
+            hasCtrl: true,
+            templateUrl: 'routes/error/error.html',
+            guests: true
         }
     },
 

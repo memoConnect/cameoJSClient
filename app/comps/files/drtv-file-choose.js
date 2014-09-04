@@ -1,9 +1,14 @@
 'use strict';
 
-angular.module('cmFiles').directive('cmFileChoose', [
-    function () {
+// https://github.com/apache/cordova-plugin-camera/blob/b76b5ae670bdff4dd4c716e889ab12e049f9c733/doc/index.mdhttps://github.com/apache/cordova-plugin-camera/blob/b76b5ae670bdff4dd4c716e889ab12e049f9c733/doc/index.md
 
-        var tpl = '<input type="file" data-qa="btn-file-choose" capture>'
+angular.module('cmFiles').directive('cmFileChoose', [
+    'cmDevice',
+    '$rootScope',
+    function (cmDevice,
+              $rootScope) {
+
+        var tpl = '<input type="file" data-qa="btn-file-choose" />';
 
         return {
             restrict: 'AE',
@@ -18,23 +23,15 @@ angular.module('cmFiles').directive('cmFileChoose', [
                     element.find('input').attr('cm-resets',index);
                 }
 
-                // phonegap fix for 4.4
-                if (typeof device != 'undefined' &&
-                    device.platform.toLowerCase() === 'android' &&
-                    device.version.indexOf('4.4') === 0) {
+                // phonegap
+                if (cmDevice.isAndroid()){
+                    element.on('click', function (evt) {
+                        evt.preventDefault();
+                        evt.stopPropagation();
 
-                    document.addEventListener("deviceready", function () {
-                        element
-                            .on('click', function () {
-                                filechooser.open({}, function (data) {
-                                    // {"filepath":"\/storage\/emulated\/0\/DCIM\/Camera\/IMG_20140510_154258893_HDR.jpg"}
-//                                    var file = new File(data.filepath);
-//                                    console.log(file)
-//                                    cmFilesCtrl.setFile(file);
-                                });
-                            });
-                    }, false);
-
+                        // broadcast choos opener
+                        $rootScope.$broadcast('cmChooseSource:open');
+                    });
                 } else {
                     // default fileapi
                     // file is selected

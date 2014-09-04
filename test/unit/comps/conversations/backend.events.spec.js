@@ -36,7 +36,7 @@ describe('Event chain for Conversations', function(){
             $provide.constant('cmEnv',{});
         })
     })
-
+    beforeEach(module('cmPhonegap'))
     beforeEach(module('cmConversations'))
 
     beforeEach(inject(function(_cmApi_, _cmConversationsAdapter_, _cmConversationFactory_, _$rootScope_, _$httpBackend_){
@@ -54,8 +54,8 @@ describe('Event chain for Conversations', function(){
 
             cmConversationsAdapter.on('conversation:new', function(){ adapter_triggered = true })
 
-            $httpBackend.expectGET('/account').respond(200, {})
-            $httpBackend.expectGET('/identity/ög9PWZY7xKNbeCO6LPNnx').respond(200, {})
+            $httpBackend.whenGET('/account').respond(200, {})
+            $httpBackend.whenGET('/identity/ög9PWZY7xKNbeCO6LPNnx').respond(200, {})
 
             cmApi.trigger('conversation:new', conversation_data)
 
@@ -75,9 +75,9 @@ describe('Event chain for Conversations', function(){
                 conversation        = cmConversationFactory.create(conversation_data),
                 number_of_messages  = conversation.messages.length
 
-            $httpBackend.expectGET('/account').respond(200, {})
-            $httpBackend.expectGET('/identity/ög9PWZY7xKNbeCO6LPNnx').respond(200, {})
-            $httpBackend.expectGET('/identity/g9PWZY7xKNbeCO6LPNnx').respond(200, {})
+            $httpBackend.whenGET('/account').respond(200, {})
+            $httpBackend.whenGET('/identity/ög9PWZY7xKNbeCO6LPNnx').respond(200, {})
+            $httpBackend.whenGET('/identity/g9PWZY7xKNbeCO6LPNnx').respond(200, {})
 
             cmConversationsAdapter.on('message:new', function(){ adapter_triggered = true })
             conversation.on('message:new', function(){ conversation_triggered = true })

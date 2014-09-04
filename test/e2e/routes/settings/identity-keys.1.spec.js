@@ -61,7 +61,7 @@ describe('Identity key settings: ', function () {
 
     describe('with increased timeout', function () {
         beforeEach(function () {
-            jasmine.getEnv().defaultTimeoutInterval = 60000
+            jasmine.getEnv().defaultTimeoutInterval = 120000
         })
 
         afterEach(function () {
@@ -69,12 +69,18 @@ describe('Identity key settings: ', function () {
         })
 
         it('wait for key generation and display key', function () {
-            util.waitForElementVisible("[data-qa='page-save-key']", 50000)
+            util.waitForElementVisible("[data-qa='page-save-key']", 110000)
 
             expect($("[data-qa='input-key-name']").getAttribute('value')).toBeTruthy()
 
             util.clearInput("input-key-name")
             $("[data-qa='input-key-name']").sendKeys(keyName)
+
+            /**
+             * test
+             */
+            $("body").click();
+
             $("[data-qa='btn-save-key']").click()
 
         })
