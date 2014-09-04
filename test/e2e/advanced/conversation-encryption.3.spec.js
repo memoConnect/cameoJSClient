@@ -209,7 +209,6 @@ describe('Conversation encryption -', function () {
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
                                 $("#cm-app").click()
                                 
-                                ptor.debugger()
                                 util.waitForElement("[data-qa='icon-conversation-decrypted']")
                                 $("[data-qa='btn-security-done']").click()
                                 util.waitForElementDisappear("[data-qa='btn-security-done']")
