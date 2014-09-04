@@ -92,18 +92,6 @@ cameo_config = {
             guests: false,
             routes: ['/settings/identity/key/import']
         },
-
-        //'settings': {
-        //    hasCtrl: true,
-        //    routes: [
-        //        '/settings/identity/key/:keyId?',
-        //        '/settings/:pageParent?',
-//                  'blub/new',
-        //        '/settings/:pageParent/:pageChild1?',
-        //        '/settings/:pageParent/:pageChild1/:pageChild2?'
-        //    ],
-        //    resolveOnBoot: true
-        //},
         'authentication' :{
             hasCtrl: true,
             routes: [
