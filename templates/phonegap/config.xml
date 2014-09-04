@@ -29,6 +29,7 @@
     <gap:plugin name="org.apache.cordova.file" version="1.0.1" />
     <gap:plugin name="org.apache.cordova.network-information" version="0.2.7" />
     <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1" />
+    <gap:plugin name="de.appplant.cordova.plugin.hidden-statusbar-overlay" version="1.2.0" />
 
     <!-- <gap:plugin name="nl.x-services.plugins.launchmyapp" version="3.2.0">
         <param name="URL_SCHEME" value="https://cameonet.de/p/" />
@@ -82,15 +83,45 @@
     <preference name="disable-cursor" value="true" />
 
     <!-- Icons paths relative to /www -->
-    <icon src="res/icon/android/icon-36-ldpi.png" gap:platform="android" gap:density="ldpi" />
-    <icon src="res/icon/android/icon-48-mdpi.png" gap:platform="android" gap:density="mdpi" />
-    <icon src="res/icon/android/icon-72-hdpi.png" gap:platform="android" gap:density="hdpi" />
-    <icon src="res/icon/android/icon-96-xhdpi.png" gap:platform="android" gap:density="xhdpi" />
-
-	<icon src="res/icon/default.png" gap:platform="winphone" />
-	<icon src="res/icon/default.png" gap:platform="winphone" gap:role="background" />
-
     <icon src="res/icon/default.png" />
+
+    <platform name="android">
+        <icon src="res/icon/android/icon-36-ldpi.png" density="ldpi" />
+        <icon src="res/icon/android/icon-48-mdpi.png" density="mdpi" />
+        <icon src="res/icon/android/icon-72-hdpi.png" density="hdpi" />
+        <icon src="res/icon/android/icon-96-xhdpi.png" density="xhdpi" />
+    </platform>
+
+    <platform name="ios">
+        <!-- iOS 7.0+ -->
+        <!-- iPhone / iPod Touch  -->
+        <icon src="res/icon/ios/icon-60.png" width="60" height="60" />
+        <icon src="res/icon/ios/icon-60@2x.png" width="120" height="120" />
+        <!-- iPad -->
+        <icon src="res/icon/ios/icon-76.png" width="76" height="76" />
+        <icon src="res/icon/ios/icon-76@2x.png" width="152" height="152" />
+        <!-- iOS 6.1 -->
+        <!-- Spotlight Icon -->
+        <icon src="res/icon/ios/icon-40.png" width="40" height="40" />
+        <icon src="res/icon/ios/icon-40@2x.png" width="80" height="80" />
+        <!-- iPhone / iPod Touch -->
+        <icon src="res/icon/ios/icon-57.png" width="57" height="57" />
+        <icon src="res/icon/ios/icon-57@2x.png" width="114" height="114" />
+        <!-- iPad -->
+        <icon src="res/icon/ios/icon-72.png" width="72" height="72" />
+        <icon src="res/icon/ios/icon-72@2x.png" width="144" height="144" />
+        <!-- iPhone Spotlight and Settings Icon -->
+        <icon src="res/icon/ios/icon-small-29.png" width="29" height="29" />
+        <icon src="res/icon/ios/icon-small-29@2x.png" width="58" height="58" />
+        <!-- iPad Spotlight and Settings Icon -->
+        <icon src="res/icon/ios/icon-50.png" width="50" height="50" />
+        <icon src="res/icon/ios/icon-50@2x.png" width="100" height="100" />
+    </platform>
+
+    <platform name="wp8">
+        <icon src="res/icon/winphone/icon-62.png" width="99" height="99" />
+        <icon src="res/icon/winphone/tile-173.png" width="159" height="159" />
+    </platform>
 
 	<!-- Splash -->
     <gap:splash src="res/screen/android/drawable-ldpi/screen.9.png" gap:platform="android" gap:density="ldpi" />
