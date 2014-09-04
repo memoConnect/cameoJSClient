@@ -31,6 +31,10 @@ angular.module('cmCore')
                     angular.element($document[0].querySelector('.app-spinner')).css('display',action == 'hide'?'none':null);
                 });
 
+                $rootScope.$on('$routeChangeSuccess', function(){
+                    $rootScope.$broadcast('appSpinner','hide');
+                });
+
                 return {
                     resolve: function(){
                         if(promise == undefined) {
