@@ -13,7 +13,7 @@ angular.module('cmPhonegap').service('cmDevice', [
 
             existsPlugin: function () {
                 if(typeof device == 'undefined'){
-                    cmLogger.info('CAMERA PLUGIN IS MISSING');
+                    //cmLogger.info('DEVICE PLUGIN IS MISSING');
                     return false;
                 }
                 return true;
