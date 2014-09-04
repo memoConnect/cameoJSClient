@@ -10,7 +10,14 @@ angular.module('cmWidgets').directive('cmWidgetQuickstart', [
             },
             templateUrl: 'widgets/start/wdgt-quickstart.html',
             controller: function ($scope) {
-                $scope.goTo = $rootScope.goTo;
+                $scope.generateKey = function(){
+                    $rootScope.generateAutomatic = {
+                        generate:true,
+                        keySize: 2048
+                    };
+
+                    $rootScope.goTo('/settings/identity/key/create');
+                }
             }
         }
     }
