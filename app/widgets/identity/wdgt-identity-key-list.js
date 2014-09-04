@@ -18,8 +18,6 @@ angular.module('cmWidgets').directive('cmWidgetIdentityKeyList', [
             templateUrl:    'widgets/identity/wdgt-identity-key-list.html',
             controller: function($scope){
                 //console.log('cmWidgetIdentityKeyList')
-
-                $scope.canCreate = !cmUserModel.hasPrivateKey();
             }
         }
     }
