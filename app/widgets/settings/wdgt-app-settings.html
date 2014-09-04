@@ -13,26 +13,26 @@
             <div class="content" cm-language-select></div>
         </span>
     </li>
-    <li>
+    <li ng-click="handleBooleans('convertEmoji')">
         <span class="item clearfix">
             <span class="title">
                 <span>{{'SETTINGS.PAGES.APP.EMOJI_CONVERT' | cmTranslate}}</span>
             </span>
 
-            <span class="content">
-                 <button ng-click="handleBooleans('convertEmoji')"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!settings.convertEmoji,'cm-checkbox-right':settings.convertEmoji}"></i></button>
-            </span>
+            <section class="icon-list">
+                 <i class="fa cm-lg-icon" ng-class="{'cm-radio-0':!settings.convertEmoji,'cm-radio-1':settings.convertEmoji}"></i>
+            </section>
         </span>
     </li>
-    <li>
+    <li ng-click="handleBooleans('sendOnReturn')">
         <span class="item clearfix">
             <span class="title">
                 <span>{{'SETTINGS.PAGES.APP.SEND_ON_RETURN' | cmTranslate}}</span>
             </span>
 
-            <span class="content">
-                <button ng-click="handleBooleans('sendOnReturn')"><i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!settings.sendOnReturn, 'cm-checkbox-right':settings.sendOnReturn}"></i></button>
-            </span>
+            <section class="icon-list">
+                <i class="fa cm-lg-icon" ng-class="{'cm-radio-0':!settings.sendOnReturn, 'cm-radio-1':settings.sendOnReturn}"></i>
+            </section>
         </span>
     </li>
 </ul>

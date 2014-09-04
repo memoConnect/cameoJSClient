@@ -132,6 +132,15 @@
     margin-bottom: 0 !important;
   }
 
+  .icon-list{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 4rem;
+    line-height: 4rem;
+    vertical-align: middle;
+  }
+
   ul {
     background-color: @cm-white;
     padding:0 !important;
@@ -184,6 +193,11 @@
           -webkit-box-shadow: 0 0 0.625em 0.125em @cm-white;
           box-shadow: 0 0 0.625em 0.125em @cm-white;
         }
+        .icon-list {
+          i {
+            vertical-align: super !important;
+          }
+        }
       }
       &.isActive{
         .box-shadow-bottom;
@@ -205,6 +219,21 @@
       &.is-disabled{
         .item, .short-links {
           .cm-disabled
+        }
+      }
+      .icon-list{
+        i {
+          width: 3rem;
+          height: 3rem;
+          font-size: 3rem;
+        }
+      }
+      .icon-list{
+        i {
+          color: @cm-grey;
+          width: 3rem;
+          height: 3rem;
+          font-size: 3rem;
         }
       }
     }
@@ -274,15 +303,6 @@
     -webkit-border-radius: @cm-unit;
     -moz-border-radius: @cm-unit;
     border-radius: @cm-unit;
-  }
-
-  .icon-list{
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 4rem;
-    line-height: 4rem;
-    vertical-align: middle;
   }
 
   .cm-contact-body {
