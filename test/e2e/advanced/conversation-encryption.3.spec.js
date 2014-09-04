@@ -141,8 +141,6 @@ describe('Conversation encryption -', function () {
 
             $("[data-qa='btn-send-answer']").click()
 
-            ptor.debugger()
-
             // get conversation Id
             ptor.wait(function () {
                 return ptor.getCurrentUrl().then(function (url) {
@@ -211,6 +209,7 @@ describe('Conversation encryption -', function () {
                                 $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
                                 $("#cm-app").click()
                                 
+                                ptor.debugger()
                                 util.waitForElement("[data-qa='icon-conversation-decrypted']")
                                 $("[data-qa='btn-security-done']").click()
                                 util.waitForElementDisappear("[data-qa='btn-security-done']")

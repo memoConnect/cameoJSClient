@@ -186,13 +186,13 @@ cameo_config = {
             ],
             hasCtrl: true
         },
-        // 'contact-details': {
-        //     routes:[
-        //         '/contact/:id/details',
-        //         '/contact/:id'
-        //     ],
-        //     hasCtrl: true
-        // },
+        'contact-details': {
+            routes:[
+                '/contact/:id/details',
+                '/contact/:id'
+            ],
+            hasCtrl: true
+        },
         'verification': {
             routes:['/verification/:secret']
         },
@@ -251,7 +251,7 @@ cameo_config = {
         'menu': {i18n:'MENU.HEADER', icon:'cm-menu-weight', css:'cm-menu-header', onlyLabel:true},
 //        'notifications': {i18n:'MENU.NOTIFICATIONS', icon:'cm-notification', css:'cm-menu-notify'},
 //        'talks/': {i18n:'MENU.MESSAGES', icon:'cm-envelope-closed', css:'cm-menu-notify'},
-        'contacts/requests': {"data-qa":'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
+        'contact/request/list': {"data-qa":'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
         'talks': {i18n:'MENU.TALKS', icon:'cm-envelope-closed'},
         'contact/list': {i18n:'MENU.CONTACTS', icon:'cm-address-book'},
         //'settings/identity/keys': {"data-qa":'btn-menu-key-management', i18n:'MENU.KEYMANAGEMENT', icon:'cm-key'},
