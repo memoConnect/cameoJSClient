@@ -2,10 +2,10 @@
 
 angular.module('cmCore').factory('cmFileModel', [
     'cmFilesAdapter', 'cmFileDownload', 'cmFileTypes', 'cmLogger', 'cmChunk',
-    'cmCrypt', 'cmObject', 'cmModal', 'cmEnv', 'cmUtil',
+    'cmCrypt', 'cmObject', 'cmModal', 'cmEnv', 'cmUtil', 'cmDeviceDownload',
     '$q',
     function (cmFilesAdapter, cmFileDownload, cmFileTypes, cmLogger, cmChunk,
-              cmCrypt, cmObject, cmModal, cmEnv, cmUtil,
+              cmCrypt, cmObject, cmModal, cmEnv, cmUtil, cmDeviceDownload,
               $q){
 
         function roundToTwo(num) {
@@ -372,10 +372,17 @@ angular.module('cmCore').factory('cmFileModel', [
             };
 
             this.promptSaveAs = function(){
-                // iOS can't save blob via browser
+                //console.log('promptSaveAs')
 
-                var downloadAttrSupported = ( "download" in document.createElement("a") );
-                var iOSWorkingMimeTypes = ( this.type.match(/(application\/pdf)/g) ? true : false );
+                try {
+                    var isFileSaverSupported = !!new Blob;
+                } catch (e) {
+                    cmLogger.debug('Unable to prompt saveAs; FileSaver is\'nt supported');
+                    return false;
+                }
+
+                var downloadAttrSupported = ( "download" in document.createElement("a") ),
+                    iOSWorkingMimeTypes = ( this.type.match(/(application\/pdf)/g) ? true : false );
 
                 if(cmEnv.isiOS && !downloadAttrSupported && !iOSWorkingMimeTypes){
                     cmModal.create({
@@ -384,7 +391,13 @@ angular.module('cmCore').factory('cmFileModel', [
                     },'<span>{{\'NOTIFICATIONS.TYPES.SAVE_AS.IOS_NOT_SUPPORT\'|cmTranslate}}</span>');
                     cmModal.open('saveas');
                 } else {
-                    if(this.blob){
+                    // phonegap download
+                    if(cmDeviceDownload.isSupported()) {
+                        //console.log('cmDeviceDownload called')
+                        cmDeviceDownload.saveAs(this);
+                    // browser download
+                    } else if(this.blob){
+                        //console.log('saveAs called')
                         saveAs(this.blob, this.name != false ? this.name : 'download');
                     } else {
                         cmLogger.debug('Unable to prompt saveAs; cmFile.blob is missing, try cmFile.importByFile().');
