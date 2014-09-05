@@ -16,12 +16,13 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                 $scope.isHandshakePossible = false;
                 $scope.showNoLocalKeysOnThisDevice = true;
                 $scope.showUntrustedPublickeysExists = true;
+                $scope.canCreate = true;
 
                 function refresh(){
                     $scope.canCreate    = !cmUserModel.hasPrivateKey();
-                    $scope.privateKeys  =   cmUserModel.loadLocalKeys() || [];
-                    $scope.publicKeys   =   cmUserModel.data.identity.keys || [];
-                    $scope.trustedKeys  =   $scope.publicKeys.filter(function(key){
+                    $scope.privateKeys  = cmUserModel.loadLocalKeys() || [];
+                    $scope.publicKeys   = cmUserModel.data.identity.keys || [];
+                    $scope.trustedKeys  = $scope.publicKeys.filter(function(key){
                         return cmUserModel.verifyOwnPublicKey(key);
                     });
                     $scope.signing      =   cmUserModel.state.is('signing');
