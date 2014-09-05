@@ -27,7 +27,7 @@ describe('Route Talks:', function () {
     })
 
     it('load 10 elements', function () {
-        util.waitForSpinner()
+        util.waitForLoader()
 
         $$('[data-qa=conversation-list-element]').then(function (elements) {
             expect(elements.length).toBe(10)
@@ -63,7 +63,7 @@ describe('Route Talks:', function () {
     })
 
     it('should open a new conversation on button click', function () {
-        util.waitForSpinner()
+        util.waitForLoader()
         $("body").sendKeys(protractor.Key.HOME)
         // wait for browser to scroll, todo: find a better way to do this
         $("[data-qa='new-conversation-btn']").click()

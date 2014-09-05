@@ -312,6 +312,23 @@ this.waitForSpinner = function () {
     return this
 }
 
+this.waitForLoader = function () {
+    // wait until spinner appears
+    ptor.wait(function () {
+        return $$("cm-loader").then(function (elements) {
+            return elements.length > 0
+        })
+    }, config.routeTimeout, 'waitForLoader start timeout reached').then(function () {
+        ptor.wait(function () {
+            return $("cm-loader").isDisplayed().then(function (isDisplayed) {
+                return !isDisplayed
+            })
+        }, config.routeTimeout, 'waitForSpinner stop timeout reached')
+    })
+
+    return this
+}
+
 this.waitForProgressbar = function (timeout) {
     // wait until progress bar appear
     ptor.wait(function () {
