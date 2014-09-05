@@ -15,7 +15,7 @@ angular.module('cmConversations').directive('cmRecipients', [
 
 
                 $scope.selected         = {};
-                $scope.contacts         = cmContactsModel.contacts
+                $scope.contacts         = cmContactsModel.contacts;
 
 
                 function init(conversation){

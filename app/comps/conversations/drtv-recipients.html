@@ -1,4 +1,4 @@
-<ul>
+<ul class="no-border" ng-if="(conversation.recipients.length > 1)">
     <li ng-repeat   = "contact in contacts|cmRecipients:true:selected|cmSearch:'contacts':search"
         ng-if       = "contact.contactType != 'pending'" 
     >
@@ -21,9 +21,9 @@
     </li>
 </ul>
 
-<hr>
+<hr ng-if="(conversation.recipients.length > 1)">
 
-<ul ng-if="conversation.state.is('new')">
+<ul ng-if="conversation.state.is('new')" class="no-border">
     <li
         ng-repeat   =   "contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search"
         ng-if       =   "contact.contactType != 'pending'"
