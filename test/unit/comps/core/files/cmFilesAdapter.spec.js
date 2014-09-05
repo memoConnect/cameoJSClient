@@ -139,6 +139,28 @@ describe('cmFilesAdapter', function(){
             expect(cmFilesAdapter.binaryToBlob(binary, 'image/jpg').type).toBe('image/jpg')
         })
 
+        it('base64ToBlob', function(){
+            expect(cmFilesAdapter.base64ToBlob).toBeDefined()
+
+            // negative tests
+            expect(cmFilesAdapter.base64ToBlob()).toBeFalsy()
+            expect(cmFilesAdapter.base64ToBlob(undefined)).toBeFalsy()
+            expect(cmFilesAdapter.base64ToBlob(null)).toBeFalsy()
+            expect(cmFilesAdapter.base64ToBlob({})).toBeFalsy()
+            expect(cmFilesAdapter.base64ToBlob([])).toBeFalsy()
+            expect(cmFilesAdapter.base64ToBlob('')).toBeFalsy()
+
+            // positive tests
+            var blob = cmFilesAdapter.base64ToBlob('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NDkxMSwgMjAxMy8xMC8yOS0xMTo0NzoxNiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpCRDhDNkFEOTM0NUExMUU0QUVEOUY4MkQwNUYzODE1OCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpCRDhDNkFEQTM0NUExMUU0QUVEOUY4MkQwNUYzODE1OCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkJEOEM2QUQ3MzQ1QTExRTRBRUQ5RjgyRDA1RjM4MTU4IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkJEOEM2QUQ4MzQ1QTExRTRBRUQ5RjgyRDA1RjM4MTU4Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+3cQoZgAAASBJREFUeNpEj81Kw0AUhWduZprYio21lISiFRFduHMhvoFb94JPoJv6COIb+CiuBAtdRHCjQqgVhEpVUOoPaWzSJvNzHSritzjcc87mHrocdD+FspBQoJT8IxEr3GL9iUCNc9yKc0GkJgUGpqRUSxULCRUL1ov2Zsk22Ua5aAPoXKJSvlNYmTq9780fNWrh9trJqp/FaX3WwShtLlb3PJe457fXcYpTUqVb7/Fx723r8t7Y5sMrWWh38I+rKDH6Ms6NjqTy2x1QWX769PH77ZLDBWLd4ebeuXlMkwlQxg7D/sHd81Aoz+bcrENyNhgGg4jM2BRaoVaKJFnVLe3Wymb6xdeo9z0mQIEz2gi6kVAUAHNJzHTTM0aYZWqXwY8AAwDiqZInt/8tsAAAAABJRU5ErkJggg==','image/png')
+            expect(blob.size).toBe(1195)
+            expect(blob.type).toBe('image/png')
+        })
+
+        it('check regexp', function(){
+            expect(cmFilesAdapter.base64Regexp).toBeDefined()
+            expect(cmFilesAdapter.base64Regexp).toBe('^(data:(.{0,100});base64,|data:(.{0,100})base64,)(.*)$')
+        })
+
         it('clearBase64',function(){
             expect(cmFilesAdapter.clearBase64).toBeDefined()
 
@@ -151,9 +173,31 @@ describe('cmFilesAdapter', function(){
             expect(cmFilesAdapter.clearBase64('')).toBe('')
 
             // positive tests
+            //expect(cmFilesAdapter.clearBase64('data:base64,1234base64,')).toBe('1234base64,')
+            expect(cmFilesAdapter.clearBase64('data:;base64,1234base64,')).toBe('1234base64,')
+            expect(cmFilesAdapter.clearBase64('data:base64,1234')).toBe('1234')
             expect(cmFilesAdapter.clearBase64('data:;base64,1234')).toBe('1234')
             expect(cmFilesAdapter.clearBase64('data:image/png;base64,1234')).toBe('1234')
             expect(cmFilesAdapter.clearBase64('data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,1234')).toBe('1234')
+        })
+
+        it('getMimeTypeOfBase64', function(){
+            expect(cmFilesAdapter.getMimeTypeOfBase64).toBeDefined()
+
+            // negative tests
+            expect(cmFilesAdapter.getMimeTypeOfBase64()).toBe('')
+            expect(cmFilesAdapter.getMimeTypeOfBase64(undefined)).toBe('')
+            expect(cmFilesAdapter.getMimeTypeOfBase64(null)).toBe('')
+            expect(cmFilesAdapter.getMimeTypeOfBase64({})).toBe('')
+            expect(cmFilesAdapter.getMimeTypeOfBase64([])).toBe('')
+            expect(cmFilesAdapter.getMimeTypeOfBase64('')).toBe('')
+
+            // positive tests
+            expect(cmFilesAdapter.getMimeTypeOfBase64('data:base64,1234base64,')).toBe('')
+            expect(cmFilesAdapter.getMimeTypeOfBase64('data:base64,1234')).toBe('')
+            expect(cmFilesAdapter.getMimeTypeOfBase64('data:;base64,1234')).toBe('')
+            expect(cmFilesAdapter.getMimeTypeOfBase64('data:image/png;base64,1234')).toBe('image/png')
+            expect(cmFilesAdapter.getMimeTypeOfBase64('data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,1234')).toBe('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         })
 
         it('base64ToBinary',function(){
