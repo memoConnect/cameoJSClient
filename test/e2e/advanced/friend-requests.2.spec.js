@@ -27,7 +27,7 @@ describe('Friendrequests: ', function () {
                 $$('cm-contact-tag').then(function(elements) {
                     expect(elements.length).toEqual(1)
                 })
-                expect($('cm-contact-tag .cm-request-brief').getText()).toBe(user1ToAccept)
+                expect($('cm-contact-tag [data-qa="contact-display-name"]').getText()).toBe(user1ToAccept)
             })
 
             it('open modal', function(){

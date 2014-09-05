@@ -1,6 +1,7 @@
-<header class="inScreen">
-    <i class="fa cm-search cm-lg-icon"></i> {{'CONTACTS.HEADING.SEARCH'|cmTranslate}}
-</header>
+<h2>
+    <i class="fa cm-search cm-lg-icon"></i>
+    {{'CONTACTS.HEADING.SEARCH'|cmTranslate}}
+</h2>
 
 <cm-modal id="modalSendRequest" class="no-padding" cm-data-as="contact" cm-title="CONTACTS.HEADING.SEND_REQUEST">
     <div class="modal-row" cm-rubber-space>
@@ -18,30 +19,31 @@
     </button>
 </cm-modal>
 
-<header class="cm-list-header">
+<article class="content">
     <form name="searchCameoId" autocomplete="off">
-        <div class="cm-search-input">
-            <input data-qa="inp-search-cameo-ids" type="text" value="" ng-model="string" ng-keyup="sendSearch()" ng-minlength="4" placeholder="{{'CONTACTS.PLACEHOLDER.ADD_NEW_CONTACT'|cmTranslate}}" name="string" />
+        <div class="cm-search-input cm-input-ctn with-inside-icon cm-icon-grey">
             <i class="fa cm-search"></i>
+            <input data-qa="inp-search-cameo-ids" type="text" value="" ng-model="string" ng-keyup="sendSearch()" ng-minlength="4" placeholder="{{'CONTACTS.PLACEHOLDER.ADD_NEW_CONTACT'|cmTranslate}}" name="string" />
         </div>
-        <div class="cm-alert" ng-show="searchCameoId.string.$error.minlength">
+        <cm-info-bubble nose-x="45%" class="cm-alert" ng-show="searchCameoId.string.$error.minlength">
             <i class="fa cm-info"></i> {{'CONTACTS.INFO.MORE_CHARS_NEEDED'|cmTranslate}}
-        </div>
+        </cm-info-bubble>
     </form>
-</header>
+</article>
 
-<section>
-    <div ng-show="searchCameoId.string.$valid && !pristine && results.length < 1" class="empty-list">
-        <i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_RESULTS'|cmTranslate}}
-    </div>
-
-    <cm-contact-tag cm-rubber-space ng-repeat="contact in results" ng-click="openModal('modalSendRequest',contact)">
-        <cm-avatar cm-data="contact" cm-stop-download></cm-avatar>
-        <div class="cm-request-brief" cm-weight="1">
-            <strong>{{contact.getDisplayName()}}</strong>
-        </div>
-        <button ng-click="openModal('modalSendRequest',contact)" data-qa="btn-openModal">
-            <i class="fa cm-contacts"></i>
-        </button>
-    </cm-contact-tag>
+<section class="mt15">
+    <ul>
+        <li ng-show="searchCameoId.string.$valid && !pristine && results.length < 1" class="empty-list">
+            <i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_RESULTS'|cmTranslate}}
+        </li>
+        <li ng-repeat="contact in results" ng-click="openModal('modalSendRequest',contact)" data-qa="btn-openModal" class="contact-search-item">
+            <cm-avatar cm-data="contact"></cm-avatar>
+            <section class="identityName" cm-weight="1">
+                <strong>{{contact.getDisplayName()}}</strong>
+            </section>
+            <section class="icon-list">
+                <i class="fa cm-contacts cm-lg-icon"></i>
+            </section>
+        </li>
+    </ul>
 </section>

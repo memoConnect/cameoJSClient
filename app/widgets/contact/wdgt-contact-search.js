@@ -15,7 +15,6 @@ angular.module('cmWidgets')
     //no dependencies
 
     function () {
-        console.log('im here')
         return {
             restrict: 'AE',
             templateUrl: 'widgets/contact/wdgt-contact-search.html',
