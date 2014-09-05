@@ -45,7 +45,10 @@ describe('Route: contact/list', function () {
             util.waitForElement('cm-contact-list cm-key-level')
         })
 
-        it('should have brief contact details.', function(){
+        /**
+         * @deprecated
+         */
+        xit('should have brief contact details.', function(){
             util.get('/contact/list')
             util.waitForElement('cm-contact-list cm-contact-brief')
             $$('cm-contact-list cm-contact-brief').get(0).click()
