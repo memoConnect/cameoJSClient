@@ -178,7 +178,7 @@ describe('Conversation encryption -', function () {
                         conversationRoute = "/conversation/" + conversationId
                     }
                     util.get(conversationRoute)
-                    util.waitForElement("cm-messages")
+                    util.waitForElement("cm-message")
                 })
 
 
