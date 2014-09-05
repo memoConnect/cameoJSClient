@@ -8,9 +8,13 @@ define([
     'use strict';
 
     app.register.controller('SettingsIdentityKeyCreateCtrl', [
-        // no dependencies
-        function() {
-            //nothing to here yet
+        '$rootScope',
+        '$scope',
+        function($rootScope, $scope) {
+            $scope.backBtn = true;
+            if(typeof $rootScope.generateAutomatic != 'undefined'){
+                $scope.backBtn = false;
+            }
         }
     ]);
 });
