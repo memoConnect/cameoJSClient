@@ -2,22 +2,7 @@
     <li ng-repeat   = "contact in contacts|cmRecipients:true:selected|cmSearch:'contacts':search"
         ng-if       = "contact.contactType != 'pending'" 
     >
-        <cm-contact-tag cm-rubber-space>
-            <cm-avatar cm-data="contact.identity"></cm-avatar>
-            <cm-key-level cm-data="contact.identity.keys.getWeakestKeySize()"></cm-key-level>
-            <cm-contact-brief cm-data="contact" cm-weight="1"></cm-contact-brief>
-            <cm-contact-type cm-data="contact"></cm-contact-type>
-            <button
-                data-qa="btn-select-contact"
-                ng-click="toggleRecipient(contact.identity)"
-                ng-disabled="!conversation.state.is('new')">
-                <i class="fa"
-                    ng-class="{
-                        'cm-checkbox':!selected[contact.identity.id],
-                        'cm-checkbox-right':selected[contact.identity.id]
-                    }"></i>
-            </button>
-        </cm-contact-tag>
+        <cm-recipient-tag cm-data-selected="selected" cm-data-contact="contact" cm-data-conversation="conversation"></cm-recipient-tag>
     </li>
 </ul>
 
@@ -28,23 +13,7 @@
         ng-repeat   =   "contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search"
         ng-if       =   "contact.contactType != 'pending'"
     >
-        <cm-contact-tag cm-rubber-space>
-            <cm-avatar          cm-data="contact.identity"></cm-avatar>
-            <cm-key-level       cm-data="contact.identity.keys.getWeakestKeySize()"></cm-key-level>
-            <cm-contact-brief   cm-data="contact" cm-weight="1"></cm-contact-brief>
-            <cm-contact-type    cm-data="contact"></cm-contact-type>
-            <button
-                data-qa="btn-select-contact"
-                ng-click="toggleRecipient(contact.identity)"
-                ng-disabled="contact.contactType == 'pending' || !conversation.state.is('new')">
-                <i
-                    class="fa"
-                    ng-class="{
-                        'cm-checkbox':!selected[contact.identity.id],
-                        'cm-checkbox-right':selected[contact.identity.id]
-                    }"></i>
-            </button>
-        </cm-contact-tag>
+        <cm-recipient-tag cm-data-selected="selected" cm-data-contact="contact" cm-data-conversation="conversation"></cm-recipient-tag>
     </li>
 </ul>
 

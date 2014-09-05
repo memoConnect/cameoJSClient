@@ -24,7 +24,7 @@ angular.module('cmUi').directive('cmRubberSpace',[
                     //substract padding:
                     available_space -= 100*(element.css('paddingLeft')+element.css('paddingRight'))/width
 
-                        console.log(element.css('paddingRight'))
+                        //console.log(element.css('paddingRight'))
 
                     //substract children's margin:
                     angular.forEach(element.children(), function(child){  

@@ -1,5 +1,3 @@
-
-
 <div ng-show="isLoading" class="empty-list">
     <cm-spinner></cm-spinner>
 </div>
@@ -9,19 +7,6 @@
         <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
     </li>
     <li ng-repeat="contact in contacts | cmSearch:'contacts':search | cmPendingFirst">
-        <cm-contact-tag
-                cm-rubber-space
-                ng-class="{'disabled':contact.contactType == 'pending'}">
-            <cm-avatar cm-data="contact.identity" ng-click="editContact(contact)"></cm-avatar>
-            <!--<div>-->
-                <!--<cm-key-level cm-data="contact.identity.keys.getWeakestKeySize()"></cm-key-level>-->
-                <!-- <i ng-if = "isTrusted(contact)" class="fa cm-handshake"></i> -->
-            <!--</div>-->
-            <cm-contact-brief cm-data="contact" cm-weight="1" ng-click="editContact(contact)"></cm-contact-brief>
-            <cm-contact-type cm-data="contact"></cm-contact-type>
-            <button ng-click="startConversation(contact)" data-qa="start-new-conversation-btn" ng-hide="contact.contactType == 'pending'">
-                <i class="fa cm-new-talk"></i>
-            </button>
-        </cm-contact-tag>
+        <cm-contact-tag cm-contact="contact" ng-class="{'disabled':contact.contactType == 'pending'}"></cm-contact-tag>
     </li>
 </ul>

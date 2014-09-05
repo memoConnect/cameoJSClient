@@ -1,0 +1,8 @@
+<cm-avatar cm-data="contact.identity" ng-click="editContact(contact)" cm-weight="1"></cm-avatar>
+<section cm-weight="4" class="identityName" ng-click="editContact(contact)">
+    <div class="displayName" data-qa="contact-display-name">{{contact.identity.getDisplayName()}}</div>
+</section>
+<section class="icon-list" ng-click="startConversation(contact)" data-qa="start-new-conversation-btn">
+    <cm-contact-type cm-data="contact"></cm-contact-type>
+    <i class="fa cm-new-talk cm-lg-icon" ng-hide="contact.contactType == 'pending'"></i>
+</section>

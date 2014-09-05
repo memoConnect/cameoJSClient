@@ -1,20 +1,52 @@
 'use strict';
 
 angular.module('cmContacts').directive('cmContactTag',[
-
     'cmUserModel',
-
-    function (cmUserModel){
+    '$rootScope',
+    function (cmUserModel,$rootScope){
         return {
             restrict: 'AE',
-            require: '^cmContactsList',
-            priority: 2,
-            controller: function($scope, $element, $attrs){
-                            $scope.isTrusted = function(contact){
-                                return      contact.identity 
-                                        &&  cmUserModel.verifyTrust(contact.identity)
-                            }
+            scope: {
+                contact: "=cmContact"
+            },
+            templateUrl: 'comps/contacts/drtv-contact-tag.html',
+            controller: function($scope){
+                $scope.isTrusted = function(contact){
+                    return      contact.identity
+                            &&  cmUserModel.verifyTrust(contact.identity)
+                };
+
+                /**
+                 * handle every single contact via model
+                 */
+                $scope.startConversation = function (contact) {
+                    if(contact.contactType != 'pending'){
+                        delete $rootScope.pendingConversation
+                        if (contact.identity) {
+                            $rootScope.pendingRecipients = [contact.identity]
+                        } else {
+                            cmLogger.error('Unable to find identity on contact. ' + contact)
                         }
+                        $rootScope.goTo('/conversation/new');
+                    }
+                };
+                /**
+                 * edit contact
+                 * @param id
+                 */
+                $scope.editContact = function (contact) {
+                    if(contact.contactType != 'pending') {
+                        $rootScope.goTo('/contact/' + contact.id);
+                    }
+                };
+                /**
+                 * delete contact via model
+                 * @param id
+                 */
+                $scope.deleteContact = function (contact) {
+                    cmLogger.debug('deleteContact ' + contact.id);
+                };
+            }
         }
     }
 ]);

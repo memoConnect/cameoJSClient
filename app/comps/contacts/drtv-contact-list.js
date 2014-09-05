@@ -18,9 +18,6 @@ angular.module('cmContacts').directive('cmContactList',[
                 $scope.contactsQty  = cmContactsModel.contacts.length;
 
 
-
-
-
                 cmContactsModel.on('start:load-contacts', function () {
                     $scope.isLoading = true;
                 });
@@ -30,37 +27,6 @@ angular.module('cmContacts').directive('cmContactList',[
                 });
 
                 //cmContactsModel.getAll();
-
-                /**
-                 * handle every single contact via model
-                 */
-                $scope.startConversation = function (contact) {
-                    if(contact.contactType != 'pending'){
-                        delete $rootScope.pendingConversation
-                        if (contact.identity) {
-                            $rootScope.pendingRecipients = [contact.identity]
-                        } else {
-                            cmLogger.error('Unable to find identity on contact. ' + contact)
-                        }
-                        $location.path('/conversation/new');
-                    }
-                };
-                /**
-                 * edit contact
-                 * @param id
-                 */
-                $scope.editContact = function (contact) {
-                    if(contact.contactType != 'pending') {
-                        $location.path('/contact/' + contact.id);
-                    }
-                };
-                /**
-                 * delete contact via model
-                 * @param id
-                 */
-                $scope.deleteContact = function (contact) {
-                    cmLogger.debug('deleteContact ' + contact.id);
-                };
             }
         }
     }

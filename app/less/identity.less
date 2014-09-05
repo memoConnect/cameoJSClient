@@ -1,5 +1,5 @@
 .theme-a {
-  cm-identity-tag{
+  cm-identity-tag, cm-contact-tag, cm-recipient-tag{
     width:100%;
     min-height: 4rem;
     line-height: 1rem;
@@ -8,6 +8,9 @@
     padding: 0.3rem;
     cm-avatar {
       margin-right: 1.5rem;
+    }
+    cm-key-level {
+      margin-right: 0.5rem;
     }
     .identityName{
       display: inline-block;
@@ -28,6 +31,11 @@
         width: 8rem;
         height: 8rem;
       }
+    }
+  }
+  cm-recipient-tag {
+    cm-avatar {
+      margin-right: 0.5rem !important;
     }
   }
 }
