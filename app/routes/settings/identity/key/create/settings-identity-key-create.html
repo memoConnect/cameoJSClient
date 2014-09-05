@@ -1,0 +1,14 @@
+<section ng-controller="SettingsIdentityKeyCreateCtrl" class="theme-a">
+    <cm-header cm-rubber-space ng-if="backBtn">
+        <cm-back cm-weight="1" back-to="/settings"></cm-back>
+        <cm-identity cm-weight="6"></cm-identity>
+        <cm-menu cm-weight="1"></cm-menu>
+    </cm-header>
+
+    <cm-header cm-rubber-space ng-if="!backBtn">
+        <cm-identity cm-weight="6"></cm-identity>
+        <cm-menu cm-weight="1"></cm-menu>
+    </cm-header>
+
+    <cm-widget-identity-key-create></cm-widget-identity-key-create>
+</section>

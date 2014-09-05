@@ -312,6 +312,23 @@ this.waitForSpinner = function () {
     return this
 }
 
+this.waitForLoader = function () {
+    // wait until spinner appears
+    ptor.wait(function () {
+        return $$("cm-loader").then(function (elements) {
+            return elements.length > 0
+        })
+    }, config.routeTimeout, 'waitForLoader start timeout reached').then(function () {
+        ptor.wait(function () {
+            return $("cm-loader").isDisplayed().then(function (isDisplayed) {
+                return !isDisplayed
+            })
+        }, config.routeTimeout, 'waitForSpinner stop timeout reached')
+    })
+
+    return this
+}
+
 this.waitForProgressbar = function (timeout) {
     // wait until progress bar appear
     ptor.wait(function () {
@@ -417,7 +434,7 @@ this.generateKey = function (keyNum, keyName) {
     ptor.wait(function () {
         return key != undefined
     }, config.waitForTimeout , 'wait for file timeout reached').then(function(){
-        self.get('/settings/identity/keys/import')
+        self.get('/settings/identity/key/import')
         self.waitForElement("[data-qa='display-private-key']")
         self.setValQuick("display-private-key", key)
         self.setVal("display-private-key", " ")
@@ -433,7 +450,7 @@ this.generateKey = function (keyNum, keyName) {
 
 this.disableEncryption = function () {
     $("cm-header:not(.ng-hide) cm-security-indicator").click()
-    self.waitForPageLoad("/conversation/new/security-settings")
+    self.waitForPageLoad("/conversation/new/security")
     $("[data-qa='btn-encryption']").click()
     $("[data-qa='btn-security-done']").click()
     self.waitForPageLoad("/conversation/new")
@@ -441,13 +458,12 @@ this.disableEncryption = function () {
 
 this.clickBackBtn = function () {
     self.waitForElement("cm-header:not(.ng-hide) cm-back")
-    ptor.debugger()
     $("cm-header:not(.ng-hide) cm-back").click()
     return this
 }
 
 this.sendFriendRequest = function (displayName) {
-    self.get("/contacts/search")
+    self.get("/contact/search")
     $("[data-qa='inp-search-cameo-ids']").sendKeys(displayName)
     self.waitForElement("[data-qa='btn-openModal']")
     $("[data-qa='btn-openModal']").click()
@@ -482,7 +498,7 @@ this.addExternalContact = function (displayName) {
     $("[data-qa='input-displayname']").sendKeys(displayName)
     $("[data-qa='input-phonenumber']").sendKeys("1233")
     $("[data-qa='btn-create-contact']").click()
-    self.waitForPageLoad("/contacts")
+    self.waitForPageLoad("/contact/list")
 }
 
 this.click = function (dataQa) {

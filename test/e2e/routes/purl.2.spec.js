@@ -8,7 +8,7 @@ describe('Route: Purl - ', function () {
     afterEach(function() { util.stopOnError() });
 
 
-    function checkFormForInternUser(param){
+    function checkFormForInternalUser(param){
         var moep = '';
 
         if(typeof param !== 'undefined')
@@ -36,7 +36,7 @@ describe('Route: Purl - ', function () {
         })
     }
 
-    function checkFormForExternUser(param){
+    function checkFormForExternalUser(param){
         var moep = '';
 
         if(typeof param !== 'undefined')
@@ -67,7 +67,7 @@ describe('Route: Purl - ', function () {
 
     /**
      * Test 1
-     * Intern User is logged in and Purl is for that User
+     * Internal User is logged in and Purl is for that User
      */
     describe("Test 1 - User1 opens Purl and is logged in", function(){
         it('should open "#/purl/+' + config.purlUser1 +'" after login.', function(){
@@ -80,16 +80,17 @@ describe('Route: Purl - ', function () {
              * cm-message describes that messages in purl are loaded and loading process is finish
              */
             util.waitForElement('cm-message');
+            
         })
 
-        describe('should checkFormForInternUser "Test1": ', function(){
-            checkFormForInternUser('Test 1');
+        describe('should checkFormForInternalUser "Test1": ', function(){
+            checkFormForInternalUser('Test 1');
         })
     })
 
     /**
      * Test 2
-     * Intern User is logged out and Purl is for that User
+     * Internal User is logged out and Purl is for that User
      */
     describe('Test 2 - User1 opens Purl and is logged out "#/purl/' + config.purlUser1 +'"', function(){
         it('should open after logout before login.', function(){
@@ -126,20 +127,20 @@ describe('Route: Purl - ', function () {
             util.waitForElement('cm-message');
         })
 
-        describe('should checkFormForInternUser', function(){
-            checkFormForInternUser('Test 2');
+        describe('should checkFormForInternalUser', function(){
+            checkFormForInternalUser('Test 2');
         })
     })
 
     /**
      * Test 3
-     * Extern User open Purl when Browser is "empty"
+     * External User open Purl when Browser is "empty"
      */
-    describe('Test 3 - Extern User opens Purl, no User is logged in "#/purl/' + config.purlExtern +'"', function(){
+    describe('Test 3 - External User opens Purl, no User is logged in "#/purl/' + config.purlExternal +'"', function(){
         it('should open', function(){
             util.logout();
-            util.get('/purl/' + config.purlExtern)
-            util.expectCurrentUrl('#/purl/' + config.purlExtern)
+            util.get('/purl/' + config.purlExternal)
+            util.expectCurrentUrl('#/purl/' + config.purlExternal)
 
             /**
              * for next test
@@ -148,21 +149,21 @@ describe('Route: Purl - ', function () {
             util.waitForElement('cm-message');
         })
 
-        describe('should checkFormForInternUser', function(){
-            checkFormForExternUser('Test 3');
+        describe('should checkFormForInternalUser', function(){
+            checkFormForExternalUser('Test 3');
         })
     })
 
     /**
      * Test 4
-     * Extern User open Purl when Browser is Intern User 1 is logged in
+     * External User open Purl when Browser is Internal User 1 is logged in
      */
-    describe('Test 4 - User 1 is logged in, Extern User open Purl "#/purl/' + config.purlExtern +'"', function(){
+    describe('Test 4 - User 1 is logged in, External User open Purl "#/purl/' + config.purlExternal +'"', function(){
         it('should open', function(){
             util.login();
 
-            util.get('/purl/' + config.purlExtern)
-            util.expectCurrentUrl('#/purl/' + config.purlExtern)
+            util.get('/purl/' + config.purlExternal)
+            util.expectCurrentUrl('#/purl/' + config.purlExternal)
 
             /**
              * for next test
@@ -171,21 +172,21 @@ describe('Route: Purl - ', function () {
             util.waitForElement('cm-message');
         })
 
-        describe('should checkFormForInternUser', function(){
-            checkFormForExternUser('Test 4');
+        describe('should checkFormForInternalUser', function(){
+            checkFormForExternalUser('Test 4');
         })
     })
 
     /**
      * Test 5
-     * Extern User has open Purl then Intern User 1 will see his PURL
+     * External User has open Purl then Internal User 1 will see his PURL
      */
-    describe('Test 5 - Extern User opens Purl, then User 1 open Purl "#/purl/' + config.purlExtern +'"', function(){
+    describe('Test 5 - External User opens Purl, then User 1 open Purl "#/purl/' + config.purlExternal +'"', function(){
         it('should open', function(){
             util.logout();
 
-            util.get('/purl/' + config.purlExtern)
-            util.expectCurrentUrl('#/purl/' + config.purlExtern)
+            util.get('/purl/' + config.purlExternal)
+            util.expectCurrentUrl('#/purl/' + config.purlExternal)
 
             /**
              * for next test
@@ -194,7 +195,7 @@ describe('Route: Purl - ', function () {
             util.waitForElement('cm-message');
         })
 
-        it('login modal should be visible, when Intern User1 open his Purl', function(){
+        it('login modal should be visible, when Internal User1 open his Purl', function(){
             util.get('/purl/' + config.purlUser1)
             util.expectCurrentUrl('#/purl/' + config.purlUser1)
 
@@ -224,16 +225,16 @@ describe('Route: Purl - ', function () {
             util.waitForElement('cm-message');
         })
 
-        describe('should checkFormForInternUser', function(){
-            checkFormForInternUser('Test 5');
+        describe('should checkFormForInternalUser', function(){
+            checkFormForInternalUser('Test 5');
         })
     })
 
     /**
      * Test 6
-     * Intern User 2 open Purl, then Intern User 1 will see his PURL
+     * Internal User 2 open Purl, then Internal User 1 will see his PURL
      */
-    describe('Test 6 - Intern User 2 is logged in, User 1 open Purl "#/purl/' + config.purlUser1 +'"', function(){
+    describe('Test 6 - Internal User 2 is logged in, User 1 open Purl "#/purl/' + config.purlUser1 +'"', function(){
         it('should open after User 2 logged in', function(){
             util.logout();
 
@@ -244,7 +245,7 @@ describe('Route: Purl - ', function () {
         })
 
 
-        it('login modal should be visible, when Intern User1 open his Purl', function(){
+        it('login modal should be visible, when Internal User1 open his Purl', function(){
             util.waitForElement("[data-qa='modal-login']");
             expect($("[data-qa='modal-login']").isPresent()).toBe(true)
         })
@@ -271,15 +272,15 @@ describe('Route: Purl - ', function () {
             util.waitForElement('cm-message');
         })
 
-        describe('should checkFormForInternUser', function(){
-            checkFormForInternUser('Test 6');
+        describe('should checkFormForInternalUser', function(){
+            checkFormForInternalUser('Test 6');
         })
     })
 
     /**
      * Test 7
      */
-    describe("Test 7 - Internal user opens Purl that does not exists:", function(){
+    describe("Test 7 - Internalal user opens Purl that does not exists:", function(){
         it('should be 404 path', function(){
             util.login()
             util.waitForPageLoad('/start')
@@ -295,7 +296,7 @@ describe('Route: Purl - ', function () {
     /**
      * Test 8
      */
-    describe("Test 8 - External User tries to open non-existing Purl:", function(){
+    describe("Test 8 - Externalal User tries to open non-existing Purl:", function(){
         it('should be 404 path', function(){
             util.logout()
             util.get('/purl/moep')

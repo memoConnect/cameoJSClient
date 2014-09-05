@@ -77,12 +77,11 @@ describe('Conversation encryption -', function () {
         })
 
         it("set encryption settings", function () {
-            util.get("/conversation/new/security-settings")
+            util.get("/conversation/new/security")
             util.waitForElement("[data-qa='btn-encryption']")
 
             switch (encryptionType) {
                 case "asym" :
-                    ptor.debugger()
                     expect($("[data-qa='btn-encryption']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
                     expect(ptor.isElementPresent(by.css("[data-qa='btn-toggle-captcha']"))).toBe(false)
                     expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(false)
@@ -125,7 +124,6 @@ describe('Conversation encryption -', function () {
                 util.waitForElement('cm-header:not(.ng-hide)')
 
                 $('cm-header:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
-                    ptor.debugger()
                     if (trust) {
                         expect(icons.length).toBe(positiveAspects + 1)
                     } else {
@@ -190,10 +188,11 @@ describe('Conversation encryption -', function () {
                     } else {
                         switch (encryptionType) {
 
+
                             case "password" :
                                 // expect password prompt
                                 util.waitForModalOpen()
-                                util.get(conversationRoute + "/security-settings")
+                                util.get(conversationRoute + "/security")
                                 util.waitForElement("[data-qa='input-password']")
 
                                 $("[data-qa='input-password']").click()
@@ -218,7 +217,7 @@ describe('Conversation encryption -', function () {
                             case "passCaptcha" :
                                 // expect password prompt
                                 util.waitForModalOpen()
-                                util.get(conversationRoute + "/security-settings")
+                                util.get(conversationRoute + "/security")
                                 util.waitForElement("[data-qa='captcha-image']")
                                 util.waitForElement("[data-qa='input-password']")
                                 $("[data-qa='input-password']").sendKeys(password)
@@ -330,7 +329,7 @@ describe('Conversation encryption -', function () {
 
     describe("no keys -", function () {
 
-        describe("conversation with user that has key -", function () {
+        describe("conversation with user that has a key -", function () {
             var recipients = [
                 {login: testUser1, hasKey: false, storedPassword: true},
                 {login: testUser2, hasKey: true}

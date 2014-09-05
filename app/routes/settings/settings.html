@@ -1,14 +1,10 @@
-<div ng-controller="SettingsCtrl">
-    <section ng-switch="routeSettings" class="settings">
-        <cm-overview-settings ng-switch-default></cm-overview-settings>
-        <cm-app-settings ng-switch-when="app"></cm-app-settings>
-        <cm-identity-edit ng-switch-when="identity/edit"></cm-identity-edit>
-        <cm-identity-create ng-switch-when="identity/new"></cm-identity-create>
-        <cm-identity-keys-overview ng-switch-when="identity/keys"></cm-identity-keys-overview>
-        <cm-identity-keys-create ng-switch-when="identity/keys/create" class="theme-a"></cm-identity-keys-create>
-        <cm-identity-keys-import ng-switch-when="identity/keys/import"></cm-identity-keys-import>
-        <cm-identity-key-detail ng-switch-when="identity/key"></cm-identity-key-detail>
-        <cm-identities-overview ng-switch-when="identity/overview" class="theme-a"></cm-identities-overview>
-        <cm-about-us ng-switch-when="about-us" class="theme-a"></cm-about-us>
-    </section>
+<div ng-controller="SettingsCtrl" class="theme-a">
+    <cm-header cm-rubber-space>
+        <cm-back cm-weight="1" back-to="/talks"></cm-back>
+        <cm-identity cm-weight="5"></cm-identity>
+        <cm-add-button cm-weight="1" ng-click="createNewConversation()" cm-icon="new-talk"></cm-add-button>
+        <cm-menu cm-weight="1"></cm-menu>
+    </cm-header>
+
+    <cm-widget-settings-list></cm-widget-settings-list>
 </div>

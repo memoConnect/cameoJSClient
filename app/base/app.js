@@ -110,11 +110,39 @@ define([
                     if (angular.isDefined(_settings_['templateUrl'])) {
                         routeParams.templateUrl = _settings_['templateUrl'];
                     } else {
-                        routeParams.templateUrl = 'routes/' + routeKey + '/' + routeKey + '.html';
+                        if(routeKey.indexOf('-') != -1){
+                            var arr  = routeKey.split('-'),
+                                ctrlRoute = '',
+                                i = 0;
+
+                            while(i < arr.length){
+                                ctrlRoute += '/'+arr[i];
+                                i++;
+                            }
+
+                            routeParams.templateUrl = 'routes' + ctrlRoute + '/' + routeKey + '.html';
+                        } else {
+                            routeParams.templateUrl = 'routes/' + routeKey + '/' + routeKey + '.html';
+                        }
+
                     }
                     // check if route has/need controller
-                    if (angular.isDefined(_settings_['hasCtrl']) && _settings_.hasCtrl === true)
-                        routeParams.controllerUrl = 'routes/' + routeKey + '/' + routeKey + '-ctrl';
+                    if (angular.isDefined(_settings_['hasCtrl']) && _settings_.hasCtrl === true){
+                        if(routeKey.indexOf('-') != -1){
+                            var arr  = routeKey.split('-'),
+                                ctrlRoute = '',
+                                i = 0;
+
+                            while(i < arr.length){
+                                ctrlRoute += '/'+arr[i];
+                                i++;
+                            }
+
+                            routeParams.controllerUrl = 'routes' + ctrlRoute + '/' + routeKey + '-ctrl';
+                        } else {
+                            routeParams.controllerUrl = 'routes/' + routeKey + '/' + routeKey + '-ctrl';
+                        }
+                    }
 
                     if (angular.isDefined(_settings_['css']))
                         routeParams.css = _settings_['css'];

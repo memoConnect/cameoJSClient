@@ -17,21 +17,21 @@ describe('Friendrequests: ', function () {
 
             it('search', function(){
                 util.login(config.loginUser1,config.passwordUser1)
-                util.get('/contacts/search')
+                util.get('/contact/search')
                 util.waitForElement("[data-qa='inp-search-cameo-ids']")
 
                 $("[data-qa='inp-search-cameo-ids']").sendKeys(user1ToAccept)
 
                 // find user 1
-                util.waitForElement('cm-contact-tag')
-                $$('cm-contact-tag').then(function(elements) {
+                util.waitForElement("li.contact-search-item")
+                $$('li.contact-search-item').then(function(elements) {
                     expect(elements.length).toEqual(1)
                 })
-                expect($('cm-contact-tag .cm-request-brief').getText()).toBe(user1ToAccept)
+                expect($('li.contact-search-item .identityName').getText()).toBe(user1ToAccept)
             })
 
             it('open modal', function(){
-                $("cm-contact-tag [data-qa='btn-openModal']").click()
+                $("[data-qa='btn-openModal']").click()
 
                 // fill out modal
                 expect($('cm-modal.active').isPresent()).toBe(true)
@@ -41,7 +41,7 @@ describe('Friendrequests: ', function () {
             })
 
             it('should be now an contacts page', function(){
-                util.expectCurrentUrl('#/contacts')
+                util.expectCurrentUrl('#/contact/list')
             })
 
             it('check if request is pending in list', function(){
@@ -69,7 +69,7 @@ describe('Friendrequests: ', function () {
 
             it('accept request', function(){
                 // accept request
-                util.get('/contacts/requests')
+                util.get('/contact/request/list')
                 util.waitForElement('cm-contact-tag')
 
                 // should have request in list
@@ -79,7 +79,7 @@ describe('Friendrequests: ', function () {
                     requestLen = elements.length
                     expect(requestLen).not.toEqual(0)
                     // click accept
-                    $("cm-contact-tag [data-qa='btn-acceptRequest']").click()
+                    $("[data-qa='btn-acceptRequest']").click()
                     // close notify
 //                    util.waitAndCloseNotify()
                     // list shouldn't have this request anymore
@@ -92,7 +92,7 @@ describe('Friendrequests: ', function () {
             })
 
             it('check if request converted to contact', function(){
-                util.get('/contacts')
+                util.get('/contact/list')
 
                 // search for user2
                 util.headerSearchInList(config.displayNameUser1)

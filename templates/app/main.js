@@ -52,12 +52,10 @@ require.config({
         'pckFiles': 'packages/comps/files/package',
         'pckSecurityAspects': 'packages/comps/security_aspects/package',
         'pckPhonegap': 'packages/comps/phonegap/package',
+        'pckWidgets': 'packages/widgets/package',
 
         'pckRouteConversation': 'packages/routes/conversation/comps/package',
-        'pckRouteSettings': 'packages/routes/settings/comps/package',
-        'pckRouteContacts': 'packages/routes/contacts/comps/package',
-        'pckRouteStart': 'packages/routes/start/comps/package'
-
+        'pckRouteContacts': 'packages/routes/contacts/comps/package'
     },
 
     // Add angular modules that does not support AMD out of the box, put it in a shim
@@ -102,6 +100,10 @@ require.config({
             'util-spin',
             'emoji'
         ],
+        'pckWidgets' : [
+            'pckCore',
+            'pckUi'
+        ],
         'pckConversations': [
             'angular',
             'pckCore',
@@ -118,17 +120,9 @@ require.config({
             'angular-resource',
             'util-base64_decode'
         ],
-        'pckRouteSettings': [
-            'pckCore'
-        ],
         'pckRouteContacts': [
             'pckCore',
             'pckContacts'
-        ],
-        'pckRouteStart': [
-            'pckCore',
-            'pckUi',
-            'pckUser'
         ],
         'pckPhonegap': [
             'pckCore'

@@ -2,11 +2,15 @@
 
 angular.module('cmUi')
 .filter('cmRecipients', [
+
     function(){
         return function(arrayToSearch, shouldBeRecipient, objectOfRecipients){
             // defines
             var arrayFiltered = [],
-                objectOfRecipients = objectOfRecipients || {};
+                objectOfRecipients = objectOfRecipients || {}
+
+
+            if(!arrayToSearch.length) return arrayToSearch;
 
             // iterate all
             for ( var j = 0; j < arrayToSearch.length; j++) {

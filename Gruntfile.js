@@ -247,7 +247,8 @@ module.exports = function (grunt) {
                 src: [
                     'app/less/base.less',
                     'app/less/bootstrap.less',
-                    'app/less/!(base|bootstrap).less'
+                    'app/less/theme-a.less',
+                    'app/less/!(base|bootstrap|theme-a).less'
                 ],
                 dest: 'app/css/app.less'
             },
@@ -282,9 +283,8 @@ module.exports = function (grunt) {
                     'ui': 'app/comps/ui',
                     'phonegap': 'app/comps/phonegap',
                     'route-conversation': 'app/routes/conversation/comps',
-                    'route-settings': 'app/routes/settings/comps',
                     'route-contacts': 'app/routes/contacts/comps',
-                    'route-start': 'app/routes/start/comps'
+                    'widgets': 'app/widgets'
                 })
             },
             'docs': {
@@ -690,7 +690,8 @@ module.exports = function (grunt) {
                 'templates/*',
                 'app/less/*.less',
                 'app/comps/**/*',
-                'app/routes/**/comps/**/*'
+                'app/routes/**/comps/**/*',
+                'app/widgets/**/*'
             ],
             tasks: ['genAllTemplates', 'packages']
         },

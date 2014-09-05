@@ -43,11 +43,9 @@ angular.module('cmUi').directive('cmLoader',[
 
                     if(type == 'spinner'){
                         if(start){
-                            console.dir(spinner)
                             spinner = spinner.spin()
                             loadingContainer.appendChild(spinner.el);
                         }else{
-                            spinner.stop();
                             loadingContainer.innerHTML = '';
                         }
                     }

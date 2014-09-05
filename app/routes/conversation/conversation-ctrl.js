@@ -4,44 +4,40 @@ define([
     'ngload!pckUser',
     'ngload!pckContacts',
     'ngload!pckConversations',
-    'ngload!pckRouteConversation'
+    'ngload!pckRouteConversation',
+    'ngload!pckWidgets'
+
 ], function (app) {
     'use strict';
 
     app.register.controller('ConversationCtrl', [
-        '$scope',
+
         '$rootScope',
-        '$element',
+        '$scope',
         '$routeParams',
         '$location',
         'cmConversationFactory',
-        'cmUserModel',
-        function($scope, $rootScope, $element, $routeParams, $location, cmConversationFactory, cmUserModel){
-            $scope.isPurl           = false;
-            $scope.conversationId   = $routeParams.conversationId;
-            $scope.calledWithId     = $scope.conversationId && $scope.conversationId != 'new';
-            $scope.pageChild1       = $routeParams.pageChild1 || '';
 
-            // existing conversation
-            if($scope.calledWithId){
-                $scope.conversation = cmConversationFactory.create($scope.conversationId);
-            // pending conversation:
-            } else if($rootScope.pendingConversation){
+        function($rootScope, $scope, $routeParams, $location, cmConversationFactory){
 
-                if($rootScope.pendingConversation.id) //todo: state new?
-                   $location.path('conversation/'+$rootScope.pendingConversation.id+($scope.pageChild1 ? '/'+$scope.pageChild1 : '') );
-                else
-                    $scope.conversation = $rootScope.pendingConversation;
+            var force_new       =   $routeParams.conversationId == 'new',
+                conversation_id =   force_new ?  undefined : $routeParams.conversationId
+                
+
+            $scope.conversation =   conversation_id
+                                    ?   cmConversationFactory.create(conversation_id) 
+                                    :   ($rootScope.pendingConversation || cmConversationFactory.new())
 
 
-            // new conversation:
-            } else {
-                // TODO: create at send message not on init!!! Factories should not automatically register new instances.; Done, new() will not register the new instance, do it yourself.
-                $scope.conversation =   cmConversationFactory.new()
-                                        .addRecipient(cmUserModel.data.identity)
+            if(!$scope.conversation.state.is('new') && force_new)
+                $scope.conversation = cmConversationFactory.create()
 
+            if(!conversation_id){
+                $scope.$watchCollection('conversation', function(conversation){
+                    if(conversation.id)
+                        $rootScope.goto('conversation/' + conversation.id)
+                })
             }
-
 
         }
     ]);
