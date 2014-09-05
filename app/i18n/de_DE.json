@@ -321,7 +321,7 @@
         },
         "OVERVIEW":{
             "HEADER": "Übersicht Identitäten",
-            "INFO_TEXT": "IDENTITY.OVERVIEW.INFO_TEXT @ todo"
+            "INFO_TEXT": "Hier können Sie zwischen Ihren Identitäten wechseln und neue Identitäten anlegen."
         },
         "KEYS": {
             "HEADER": "cameoKeys",
