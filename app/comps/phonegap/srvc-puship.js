@@ -4,9 +4,9 @@
 
 angular.module('cmPhonegap').service('cmPushIp', [
     'cmPhonegap', 'cmLogger', 'cmUtil',
-    '$q',
+    '$q', '$rootScope',
     function (cmPhonegap, cmLogger, cmUtil,
-              $q) {
+              $q, $rootScope) {
 
         var self = {
             deviceToken: '',
@@ -61,8 +61,8 @@ angular.module('cmPhonegap').service('cmPushIp', [
             },
 
             setDeviceData: function(pushipresult){
-                console.info('Device registered')
-                console.info('DeviceToken: '+pushipresult.DeviceToken)
+                //console.info('Device registered')
+                //console.info('DeviceToken: '+pushipresult.DeviceToken)
                 console.info('DeviceId: '+pushipresult.DeviceId)
                 this.deviceToken = pushipresult.DeviceToken;
                 this.deviceId = pushipresult.DeviceId;
@@ -103,8 +103,8 @@ angular.module('cmPhonegap').service('cmPushIp', [
                 Puship.Common.GetPushMessagesByDevice({
                     limit:1,
                     successCallback: function (regresult){
-                        console.log('GetPushMessagesByDevice ')
-                        console.log(cmUtil.prettify(commonPush))
+                        //console.log('GetPushMessagesByDevice ')
+                        //console.log(cmUtil.prettify(commonPush))
                         // only coldstart and background
                         if(!('foreground' in commonPush) && regresult.length > 0){
                             self.jumpTo(regresult[0], commonPush);
@@ -127,14 +127,18 @@ angular.module('cmPhonegap').service('cmPushIp', [
             },
 
             jumpTo: function(lastPushNotification, commonPush){
-                console.log('##jumpTo##')
+                //console.log('##jumpTo##')
                 // at coldstart (off to on) deviceId & deviceToken empty
                 // on background (on but not foregound) deviceId & deviceToken exists
-                console.log(this.deviceId+' '+this.deviceToken)
+                //console.log(this.deviceId+' '+this.deviceToken)
                 //lastPushNotification.Date
                 //lastPushNotification.Message
                 //lastPushNotification.PushMessageId
-                console.log(cmUtil.prettify(lastPushNotification))
+                //console.log(cmUtil.prettify(lastPushNotification))
+                // to talks
+                $rootScope.goTo('talks',true);
+                //console.log('kick angular in die ass')
+                //location.hash = '/talks'
             }
         };
 

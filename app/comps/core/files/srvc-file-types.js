@@ -52,7 +52,8 @@ angular.module('cmCore').service('cmFileTypes',[
             {e:'ttf',m:'application/x-font-ttf'},
             //{e:'exe',m:'application/octet-stream'},
             {e:'exe',m:'application/x-msdownload'},
-            {e:'dmg',m:'application/x-apple-diskimage'}
+            {e:'dmg',m:'application/x-apple-diskimage'},
+            {e:'apk',m:'application/vnd.android.package-archive'}
         ],
         unknown = 'unknown';
 
@@ -87,8 +88,8 @@ angular.module('cmCore').service('cmFileTypes',[
             },
 
             getMimeTypeViaFilename: function(filename){
-                var arr_filename = filename.split('.'),
-                    extension = arr_filename[arr_filename.length-1],
+                var arr_filename = filename && typeof filename == 'string' ? filename.split('.') : [],
+                    extension = arr_filename.length > 1 ? arr_filename[arr_filename.length-1] : '',
                     detectedExtension = unknown,
                     mimeType = unknown;
 
@@ -98,15 +99,15 @@ angular.module('cmCore').service('cmFileTypes',[
                 }
 
                 return {
-                    detectedExtension: extension,
+                    detectedExtension: detectedExtension,
                     mimeType: mimeType
                 }
             },
 
             getExtension: function(extensions, filename){
                 var extension = unknown,
-                    extensions = extensions ? extensions.split(',') : [],
-                    clearFilename = filename ? filename.toLowerCase() : undefined;
+                    extensions = extensions && typeof extensions == 'string' ? extensions.split(',') : [],
+                    clearFilename = filename && typeof filename == 'string' ? filename.toLowerCase() : undefined;
 
                 // no extensions exists
                 if(!extensions || extensions == '')

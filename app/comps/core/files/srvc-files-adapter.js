@@ -130,6 +130,16 @@ angular.module('cmCore').service('cmFilesAdapter', [
             },
 
             base64ToBlob: function(base64, contentType){
+                if(typeof base64 != 'string' || base64 == '')
+                    return false;
+                // check mimetype from base64
+                if(!contentType){
+                    var mimeType = this.getMimeTypeOfBase64(base64);
+                    if(mimeType != ''){
+                        contentType = mimeType;
+                    }
+                }
+                // decode and create blob
                 var binary = this.base64ToBinary(base64, contentType),
                     blob = this.binaryToBlob(binary, contentType);
                 return blob;
@@ -160,7 +170,7 @@ angular.module('cmCore').service('cmFilesAdapter', [
             },
 
             getMimeTypeOfBase64: function(base64){
-                return base64.replace(new RegExp(this.base64Regexp,'i'),'$2');
+                return base64 && typeof base64 == 'string' ? base64.replace(new RegExp(this.base64Regexp,'i'),'$2') : '';
             },
 
             getBlobUrl: function(blob, useUrl){
