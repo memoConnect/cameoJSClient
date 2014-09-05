@@ -10,7 +10,7 @@ describe('Registration: ', function () {
     afterEach(function() { util.stopOnError() });
 
 
-    it('should contain 7 input fields with placeholders', function () {
+    it('should contain 7 input fields', function () {
 
         util.logout()
 
@@ -18,15 +18,6 @@ describe('Registration: ', function () {
 
         $$("input").then(function (elements) {
             expect(elements.length).toBe(7)
-            elements.forEach(function (element) {
-                element.getAttribute("placeholder").then(function (text) {
-                    element.getAttribute("type").then(function (type) {
-                        if (type != "checkbox") {
-                            expect(text).not.toBe("")
-                        }
-                    })
-                });
-            })
         })
     })
 
