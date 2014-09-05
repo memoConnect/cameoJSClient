@@ -21,8 +21,20 @@ angular.module('cmUi').directive('cmRubberSpace',[
                         total_weight    = 0,
                         width           = element[0].offsetWidth
 
-                    angular.forEach(element.children(), function(child){                        
+                    //substract padding:
+                    available_space -= 100*(element.css('paddingLeft')+element.css('paddingRight'))/width
+
+                        console.log(element.css('paddingRight'))
+
+                    //substract children's margin:
+                    angular.forEach(element.children(), function(child){  
+                        available_space -= 100*(angular.element(child).css('marginLeft')+angular.element(child).css('marginRight'))/width    
+                    })
+
+                    //substract width of element width undefined weight:
+                    angular.forEach(element.children(), function(child){                         
                         var weight = parseInt( angular.element(child).attr('cm-weight')) || false
+
 
                         if(weight){
                             child.weight     = weight
@@ -31,6 +43,7 @@ angular.module('cmUi').directive('cmRubberSpace',[
                             available_space -= 100 * child.offsetWidth/width
                         }
                     });
+                    
                     // stretch children according to their weight:
                     angular.forEach(element.children(), function (child) {
                         child = angular.element(child)
