@@ -23,15 +23,15 @@ describe('Friendrequests: ', function () {
                 $("[data-qa='inp-search-cameo-ids']").sendKeys(user1ToAccept)
 
                 // find user 1
-                util.waitForElement('cm-contact-tag')
-                $$('cm-contact-tag').then(function(elements) {
+                util.waitForElement("li.contact-search-item")
+                $$('li.contact-search-item').then(function(elements) {
                     expect(elements.length).toEqual(1)
                 })
-                expect($('cm-contact-tag [data-qa="contact-display-name"]').getText()).toBe(user1ToAccept)
+                expect($('li.contact-search-item .identityName').getText()).toBe(user1ToAccept)
             })
 
             it('open modal', function(){
-                $("cm-contact-tag [data-qa='btn-openModal']").click()
+                $("[data-qa='btn-openModal']").click()
 
                 // fill out modal
                 expect($('cm-modal.active').isPresent()).toBe(true)
