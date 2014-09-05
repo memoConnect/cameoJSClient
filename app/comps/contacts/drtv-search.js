@@ -63,7 +63,7 @@ angular.module('cmContacts').directive('cmSearch',[
 //                                cmNotify.success('CONTACTS.INFO.REQUEST.SENDED', {displayType:'modal', ttl:3000});
                                 cmContactsModel.trigger('friendRequest:sent');
                                 cmModal.closeAll();
-                                $scope.goto('/contacts')
+                                $scope.goto('/contact/list')
                             },
                             function(){
                                 cmNotify.error('CONTACTS.INFO.REQUEST.FAILED', {displayType:'modal'});
