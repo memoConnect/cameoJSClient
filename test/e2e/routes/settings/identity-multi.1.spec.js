@@ -34,6 +34,7 @@ describe('Multi Identity: ', function () {
         util.click('create-identity-btn')
         util.expectCurrentUrl('/settings/identity/create')
 
+        util.waitForElement("[data-qa='input-cameoId']")
         util.setVal('input-cameoId',newIdentity.cameoId)
         ptor.sleep(1001)//adaptive change delay
 
@@ -82,9 +83,10 @@ describe('Multi Identity: ', function () {
 
         $("li[data-qa='identity-list-item']:not(.isActive)").click()
 
-        util.waitForPageLoad()
+        util.waitForPageLoad('/start')
         
         util.get('/talks')
+        util.expectCurrentUrl('/talks')
 
         expect($("[data-qa='btn-identity-settings']").getText()).toBe(login)
     })
