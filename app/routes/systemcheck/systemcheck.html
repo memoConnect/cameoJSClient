@@ -1,19 +1,10 @@
-<cm-header cm-rubber-space>
-    <cm-back cm-weight="1" back-to="/login"></cm-back>
-    <cm-logo cm-weight="6"></cm-logo>
-    <div cm-weight="1"></div>
-</cm-header>
+<section ng-controller="SystemcheckCtrl" class="theme-a">
+    <cm-header cm-rubber-space>
+        <cm-back cm-weight="1" back-to="/login"></cm-back>
+        <cm-logo cm-weight="6"></cm-logo>
+        <div cm-weight="1"></div>
+    </cm-header>
 
-<div ng-controller="SystemcheckCtrl" class="system-check theme-a">
-    <h2>{{'SYSTEMCHECK.HEADLINE'|cmTranslate}}</h2>
-
-    <h3 ng-class="{'cm-green':localStorage,'cm-orange':!localStorage}">{{'SYSTEMCHECK.LOCALSTORAGE.HEADLINE'|cmTranslate}} <i class="fa cm-lg-icon" ng-class="{'cm-checker':localStorage,'cm-checkbox-wrong':!localStorage}"></i></h3>
-
-    <article>
-        <cm-info-bubble nose-x="15%">
-            <section ng-if="!localStorage" ng-bind-html="'SYSTEMCHECK.LOCALSTORAGE.TEXT_ERROR'|cmParse"></section>
-            <section ng-if="localStorage" ng-bind-html="'SYSTEMCHECK.LOCALSTORAGE.TEXT_OK'|cmParse"></section>
-        </cm-info-bubble>
-    </article>
-</div>
+    <cm-widget-systemcheck></cm-widget-systemcheck>
+</section>
 
