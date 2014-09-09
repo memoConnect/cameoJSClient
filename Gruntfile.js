@@ -542,7 +542,7 @@ module.exports = function (grunt) {
             'index-www': {
                 'options': {
                     'data': {
-                        'phonegapFiles': '',
+                        'phonegapFiles': globalCameoBuildConfig.phonegap.weinre ? '<script src="http://'+globalCameoBuildConfig.phonegap.weinre+':8080/target/target-script-min.js#anonymous"></script>' : '',
                         'phonegapOnload': ''
                     }
                 },
