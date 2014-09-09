@@ -373,7 +373,7 @@ div.answer{
   position:fixed;
   bottom:0;
   z-index:2;
-  background-color:rgba(255,255,255,0.9);
+  background-color:@cm-white;
   vertical-align:middle;
   margin:0 auto;
   left:0;
@@ -383,23 +383,29 @@ div.answer{
   .wrap{
     position: relative;
   }
-  cm-files {
-    position:absolute;
-    bottom:0.3rem;
-    left:0;
+
+  .btns{
+    &-left{
+      position:absolute;
+      bottom:0.3rem;
+      left:0;
+    }
+    &-right{
+      position:absolute;
+      bottom:0.3rem;
+      right:0;
+    }
+  }
+  // btns-left
+  cm-files{
     text-align:center;
   }
-  .fa.cm-smile-negative{
-    position:absolute;
-    bottom:0.8rem;
+  // btns-right
+  cm-emoji-handler{
+    .cm-unit-btn;
   }
-  .post-wrap {
-    position:absolute;
-    bottom:0.3rem;
-    right:0;
-    width:@cm-unit;
-    height:@cm-unit;
-    text-align:center;
+  .post-wrap{
+    .cm-unit-btn;
     i.cm-post {
       &.is-disabled {
         color:@cm-grey;
@@ -408,14 +414,16 @@ div.answer{
   }
 
   .message{
-    width:24rem;
+    // (@cm-unit*3) = fileupload emojis post
+    width:@cm-app-width - (@cm-unit*3);
+    left:@cm-unit;
     position:relative;
     height:100%;
     bottom:0;
-    margin:0 auto;
+    margin:0;
     text-align:left;
     textarea{
-      width:88%;
+      width:100%;
       border:none !important;
       background:transparent;
       margin-bottom:0.5em;
