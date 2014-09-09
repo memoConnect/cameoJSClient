@@ -8,10 +8,10 @@ angular.module('cmContacts').factory('cmFriendRequestModel',[
     function (cmContactsAdapter, cmIdentityFactory, cmObject, cmLogger){
         var FriendRequestModel = function(data){
 
-            this.message        = ''
-            this.timeOfCreation = 0
-            this.identity       = undefined
-            this.id             = undefined
+            this.message        = '';
+            this.timeOfCreation = 0;
+            this.identity       = undefined;
+            this.id             = undefined;
 
             this.accept = function(){
                 cmLogger.debug('cmFriendRequestModel:accept');
@@ -29,14 +29,14 @@ angular.module('cmContacts').factory('cmFriendRequestModel',[
                 cmLogger.debug('cmFriendRequestModel:ignore');
 
                 return cmContactsAdapter.answerFriendRequest(this.identity.id, 'ignore');
-            }
+            };
 
             this.importData = function(data){
                 this.identity       = 'identity' in data ? cmIdentityFactory.create(data.identity) : this.identity 
                 this.message        = data.message || this.message
                 this.timeOfCreation = data.created || this.timeOfCreation
                 this.id             = this.identity && this.identity.id
-            }
+            };
 
             cmObject.addEventHandlingTo(this)
             this.importData(data)

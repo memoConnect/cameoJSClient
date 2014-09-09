@@ -19,7 +19,10 @@ angular.module('cmContacts').directive('cmContactTag',[
                 /**
                  * handle every single contact via model
                  */
-                $scope.startConversation = function (contact) {
+                $scope.startConversation = function ($event,contact) {
+                    $event.stopPropagation();
+                    $event.preventDefault();
+
                     if(contact.contactType != 'pending'){
                         delete $rootScope.pendingConversation
                         if (contact.identity) {

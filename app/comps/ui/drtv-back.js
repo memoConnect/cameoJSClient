@@ -2,8 +2,7 @@
 
 angular.module('cmUi').directive('cmBack',[
     '$rootScope',
-    '$window',
-    function ($rootScope, $window){
+    function ($rootScope){
         return {
             restrict: 'AE',
             scope: {
@@ -29,8 +28,12 @@ angular.module('cmUi').directive('cmBack',[
                     if($rootScope.urlHistory.length > 0 && ('plainBack' in $attrs) == false){
                         $rootScope.goBack();
                         // if is set an default path in route
-                    } else if($scope.backTo != ''){
+                        return false;
+                    }
+
+                    if($scope.backTo != ''){
                         $rootScope.goTo($scope.backTo);
+                        return false;
                     }
                 }
             }

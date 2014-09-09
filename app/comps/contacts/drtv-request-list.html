@@ -1,11 +1,3 @@
-<!--<div ng-show="isLoading" class="empty-list">
-    <cm-spinner></cm-spinner>
-</div>-->
-
-<!--<div ng-show="!requests.length && !isLoading" class="empty-list">-->
-    <!--<i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_REQUESTS'|cmTranslate}}-->
-<!--</div>-->
-
 <ul>
     <li ng-show="isLoading">
         <cm-spinner></cm-spinner>
@@ -13,16 +5,19 @@
     <li ng-show="!requests.length && !isLoading" class="empty-list">
         <i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_REQUESTS'|cmTranslate}}
     </li>
-    <li ng-repeat="request in requests" class="contact-request-item">
-        <!--<cm-contact-tag  ng-class="{'is-new':request.state == undefined,'message-open':request.isOpen, 'show-bar':request.showBar}">-->
-            <div>
-                <cm-avatar cm-data="request.identity"></cm-avatar>
-                <div class="cm-request-brief w75" ng-class="{'with-message':request.message != '','message-close':!request.isOpen}">
-                    <strong>{{request.identity.getDisplayName()}}</strong><br />
-                    {{request.message}}
-                </div>
-            </div>
-        <!--</cm-contact-tag>-->
+    <li ng-repeat="request in requests" class="contact-request-item" data-qa="contact-list-element">
+        <div>
+            <cm-avatar cm-data="request.identity"></cm-avatar>
+            <section cm-weight="4" class="requestIdentity w75">
+                <div class="displayName" data-qa="contact-display-name" data-qa="contact-display-name">{{request.identity.getDisplayName()}}</div>
+            </section>
+        </div>
+
+        <article class="content mt15 mb15" ng-if="(request.message && request.message != '')">
+            <cm-info-bubble nose-x="30%">
+                {{request.message}}
+            </cm-info-bubble>
+        </article>
         
         <div class="cm-request-bar">
             <button ng-click="acceptRequest(request)" data-qa="btn-acceptRequest">
@@ -39,5 +34,3 @@
         </div>
     </li>
 </ul>
-
-<cm-modal-add-contact id="add-contact" nose-position="2rem"></cm-modal-add-contact>

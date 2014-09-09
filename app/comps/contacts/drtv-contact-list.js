@@ -26,6 +26,15 @@ angular.module('cmContacts').directive('cmContactList',[
                     $scope.isLoading = false;
                 });
 
+                /**
+                 * edit contact
+                 * @param id
+                 */
+                $scope.editContact = function (contact) {
+                    if(contact.contactType != 'pending') {
+                        $rootScope.goTo('/contact/' + contact.id);
+                    }
+                };
                 //cmContactsModel.getAll();
             }
         }

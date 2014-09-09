@@ -1,0 +1,10 @@
+<h2>{{'SYSTEMCHECK.HEADLINE'|cmTranslate}}</h2>
+
+<h3 class="content" ng-class="{'cm-green':localStorage,'cm-orange':!localStorage}">{{'SYSTEMCHECK.LOCALSTORAGE.HEADLINE'|cmTranslate}} <i class="fa cm-lg-icon" ng-class="{'cm-checker':localStorage,'cm-checkbox-wrong':!localStorage}"></i></h3>
+
+<article class="content">
+    <cm-info-bubble nose-x="15%">
+        <section ng-if="!localStorage" ng-bind-html="'SYSTEMCHECK.LOCALSTORAGE.TEXT_ERROR'|cmParse"></section>
+        <section ng-if="localStorage" ng-bind-html="'SYSTEMCHECK.LOCALSTORAGE.TEXT_OK'|cmParse"></section>
+    </cm-info-bubble>
+</article>

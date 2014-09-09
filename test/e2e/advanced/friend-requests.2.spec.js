@@ -70,12 +70,12 @@ describe('Friendrequests: ', function () {
             it('accept request', function(){
                 // accept request
                 util.get('/contact/request/list')
-                util.waitForElement('cm-contact-tag')
+                util.waitForElement("[data-qa='contact-list-element']")
 
                 // should have request in list
                 var requestLen = 0
 
-                $$('cm-contact-tag').then(function(elements){
+                $$("[data-qa='contact-list-element']").then(function(elements){
                     requestLen = elements.length
                     expect(requestLen).not.toEqual(0)
                     // click accept
@@ -84,7 +84,7 @@ describe('Friendrequests: ', function () {
 //                    util.waitAndCloseNotify()
                     // list shouldn't have this request anymore
                     ptor.wait(function () {
-                        return $$('cm-contact-tag').then(function(elements) {
+                        return $$('contact-list-element').then(function(elements) {
                             return elements.length != requestLen
                         })
                     }, 5000, 'waiting for friendrequest to disappear.')
