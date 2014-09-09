@@ -786,8 +786,6 @@ module.exports = function (grunt) {
         }
     });
 
-
-
     // tests unit
     grunt.registerTask('tests-unit', [
         'genAllTemplates',
@@ -806,7 +804,7 @@ module.exports = function (grunt) {
         'template:config-tests',
         'template:config-protractor-multi',
         'protractor:default'
-    ])
+    ]);
 
     // shortcuts
     grunt.registerTask('tests-2e2', ['tests-e2e']);

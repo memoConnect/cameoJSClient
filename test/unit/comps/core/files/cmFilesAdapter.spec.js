@@ -158,7 +158,8 @@ describe('cmFilesAdapter', function(){
 
         it('check regexp', function(){
             expect(cmFilesAdapter.base64Regexp).toBeDefined()
-            expect(cmFilesAdapter.base64Regexp).toBe('^(data:(.{0,100});base64,|data:(.{0,100})base64,)(.*)$')
+//            expect(cmFilesAdapter.base64Regexp).toBe('^(data:(.{0,100});base64,|data:(.{0,100})base64,)(.*)$')
+            expect(cmFilesAdapter.base64Regexp).toBe('^(data:(.*?);?base64,)(.*)$')
         })
 
         it('clearBase64',function(){
@@ -173,8 +174,10 @@ describe('cmFilesAdapter', function(){
             expect(cmFilesAdapter.clearBase64('')).toBe('')
 
             // positive tests
-            //expect(cmFilesAdapter.clearBase64('data:base64,1234base64,')).toBe('1234base64,')
+            expect(cmFilesAdapter.clearBase64('data:base64,1234base64,')).toBe('1234base64,')
+            expect(cmFilesAdapter.clearBase64('data:base64,1234;base64,')).toBe('1234;base64,')
             expect(cmFilesAdapter.clearBase64('data:;base64,1234base64,')).toBe('1234base64,')
+            expect(cmFilesAdapter.clearBase64('data:;base64,1234;base64,')).toBe('1234;base64,')
             expect(cmFilesAdapter.clearBase64('data:base64,1234')).toBe('1234')
             expect(cmFilesAdapter.clearBase64('data:;base64,1234')).toBe('1234')
             expect(cmFilesAdapter.clearBase64('data:image/png;base64,1234')).toBe('1234')

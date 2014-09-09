@@ -152,7 +152,8 @@ angular.module('cmCore').service('cmFilesAdapter', [
              * @param b64Data
              * @returns {String} clearBase64
              */
-            base64Regexp: '^(data:(.{0,100});base64,|data:(.{0,100})base64,)(.*)$',
+            //base64Regexp: '^(data:(.{0,100});base64,|data:(.{0,100})base64,)(.*)$',
+            base64Regexp: '^(data:(.*?);?base64,)(.*)$',
 
             clearBase64: function(b64Data){
                 if(typeof b64Data != 'string')
@@ -161,7 +162,7 @@ angular.module('cmCore').service('cmFilesAdapter', [
                 var clearBase64 = b64Data
                 .replace(/\r?\n|\r| /g,'')
                 .replace(new RegExp(this.base64Regexp,'i'),function(){
-                    return arguments[4];// return the cleared base64
+                    return arguments[3];// return the cleared base64
                 });
 
                 //console.log(clearBase64)
