@@ -1,11 +1,9 @@
 <section ng-controller="StartQuickstartCtrl" class="theme-a">
     <cm-header cm-rubber-space ng-if="startRoute">
-        <!--
-            <cm-identity cm-weight="6"></cm-identity>
-            <cm-menu cm-weight="1"></cm-menu>
-        -->
-        <div></div>
+        <cm-identity cm-weight="4"></cm-identity>
+        <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
+    <div class="cm-header-block" ng-if="startRoute"></div>
 
     <cm-header cm-rubber-space ng-if="!startRoute">
         <cm-back cm-weight="1" back-to="/talks"></cm-back>
