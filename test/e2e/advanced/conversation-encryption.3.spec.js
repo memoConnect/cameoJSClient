@@ -45,6 +45,7 @@ describe('Conversation encryption -', function () {
 
                 $("[data-qa='inp-list-search']").sendKeys(recipient.login)
                 util.waitForElement("[data-qa='btn-select-contact']")
+                ptor.debugger()
                 $("[data-qa='btn-select-contact']").click()
                 $("[data-qa='btn-list-search-clear']").click()
 
@@ -154,6 +155,8 @@ describe('Conversation encryption -', function () {
             if (getPurl) {
                 ptor.wait(function () {
                     return util.getTestUserNotifications(recipients[0].login).then(function (response) {
+                        console.log(response)
+                        ptor.debugger()
                         purl = response['data'][0]['content'].split("/p/")[1]
                         return purl != undefined
                     })
