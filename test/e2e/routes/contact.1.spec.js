@@ -52,7 +52,8 @@ describe('Route Contact: ', function () {
 
         it('click on back button',function(){
             util.clickBackBtn()
-            util.expectCurrentUrl('#/contact')
+
+            util.waitForPageLoad('/contact/list')
         })
     })
 
@@ -60,7 +61,7 @@ describe('Route Contact: ', function () {
         var userName = 'moeper_'+ Date.now();
 
         it('open modal and click create new contact',function(){
-            util.expectCurrentUrl('#/contact')
+            util.expectCurrentUrl('#/contact/list')
 
             $("[data-qa='add-contact-btn']").click()
 

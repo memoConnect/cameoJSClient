@@ -28,10 +28,12 @@ angular.module('cmUi').directive('cmBack',[
                     if($rootScope.urlHistory.length > 0 && ('plainBack' in $attrs) == false){
                         $rootScope.goBack();
                         // if is set an default path in route
+                        return false;
                     }
 
                     if($scope.backTo != ''){
                         $rootScope.goTo($scope.backTo);
+                        return false;
                     }
                 }
             }

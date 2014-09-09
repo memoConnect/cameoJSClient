@@ -40,28 +40,28 @@ angular.module('cmCore').service('cmRootService', [
         $rootScope.goto = $rootScope.goTo;
 
         $rootScope.gotoRegistration = function(){
-            this.goto('/registration')
+            this.goTo('/registration')
         };
 
         $rootScope.createNewConversation = function(){
             delete $rootScope.pendingConversation;
-            $rootScope.goto('/conversation/new');
+            $rootScope.goTo('/conversation/new');
         };
 
         $rootScope.createNewIdentity = function(){
-            $rootScope.goto('/settings/identity/create');
+            $rootScope.goTo('/settings/identity/create');
         }
 
         $rootScope.gotoContactList = function(){
-            $rootScope.goto('/contact/list')
+            $rootScope.goTo('/contact/list')
         }
 
         $rootScope.gotoPurl = function(purlId, subpath){
-            $rootScope.goto('/purl/'+purlId+'/'+subpath)
+            $rootScope.goTo('/purl/'+purlId+'/'+subpath)
         }
 
         $rootScope.gotoConversation = function(conversationId, subpath){
-            $rootScope.goto('/conversation/'+(conversationId || 'new')+'/'+subpath)
+            $rootScope.goTo('/conversation/'+(conversationId || 'new')+'/'+subpath)
 
         }
     }
