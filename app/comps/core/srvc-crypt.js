@@ -284,6 +284,9 @@ angular.module('cmCore')
             },
 
 
+
+            //Todo check if te follwoing is still needed:
+
             /**
              * generateTransactionSecret
              * @returns {String} transactionSecret

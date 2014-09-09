@@ -98,6 +98,10 @@ angular.module('cmUi')
                     return this
                 };
 
+                scope.isActive = function(){
+                    return element.hasClass('active')
+                }
+
                 // open modal
                 scope.open = function(){
                     this.toggle(true);

@@ -11,32 +11,69 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
     'cmModal',
     '$rootScope',
     '$timeout',
+    'cmApi',
 
-    function(cmUtil, cmUserModel, cmContactsModel, cmAuthenticationRequestFactory, cmCrypt, cmCallbackQueue, cmModal, $rootScope, $timeout){
+    function(cmUtil, cmUserModel, cmContactsModel, cmAuthenticationRequestFactory, cmCrypt, cmCallbackQueue, cmModal, $rootScope, $timeout, cmApi){
         return {
             restrict: 'E',
             templateUrl: 'widgets/security/wdgt-authentication.html',
             scope: {
-                keyId:      '@keyId',
-                identityId: '@identityId'
+                keyId:      '=',
+                identityId: '='
             },
 
             controller: function ($scope) {
 
-                $scope.transactionSecret   =    undefined,
-                $scope.toIdentity          =    cmUserModel.identity.id == $scope.identityId
-                                                ?   cmUserModel.identity
-                                                :   cmContactsModel.findByIdentityId($scope.identityId).identity,
-                $scope.fromKey             =    cmUserModel.loadLocalKeys()[0] //first local key is sufficient
+                var timeoutInterval,
+                    timeoutPromise
 
-                if(!fromKey){
+                $scope.step                 =   0
+                $scope.transactionSecret    =   undefined
+                $scope.fromIdentity         =   cmUserModel.data.identity
+                $scope.toIdentity           =   !$scope.identityId || ($scope.fromIdentity.id == $scope.identityId)
+                                                ?   $scope.fromIdentity
+                                                :   cmContactsModel.findByIdentityId($scope.identityId).identity
+                $scope.fromKey              =   cmUserModel.loadLocalKeys()[0] //first local key is sufficient
+                $scope.waiting              =   false
+
+                //Without a key authetication won't work: 
+                if(!$scope.fromKey){
                     $rootScope.goTo('/settings/identity/keys', true)
                 }
+
+                //Without cameo id authentication won't work:
+                if(!$scope.toIdentity.cameoId){
+                    $rootScope.goTo('/settings/identity/keys', true)                  
+                }
+
+
+                $scope.BASE = $scope.identityId
+                ?   'IDENTITY.KEYS.TRUST.'
+                :   'IDENTITY.KEYS.AUTHENTICATION.';
+
+
+                $scope.startTimeout = function(time){
+                    $scope.cancelTimeout();
+                    $scope.timeout = time || 60000;
+                    timeoutPromise = $timeout(function(){
+                        $scope.cancel();
+                        $scope.timeout = undefined;
+                    }, $scope.timeout);
+
+                    timeoutInterval = window.setInterval(function(){
+                        $scope.timeout -= 1000;
+
+                        if($scope.timeout < 0)
+                            $scope.timeout = 0;
+
+                        $scope.$digest()
+                    }, 1000)
+                };
 
 
                 $scope.cancelTimeout = function(){
                     if($scope.timeoutPromise)
-                        $timeout.cancel($scope.timeoutPromise);
+                        $timeout.cancel(timeoutPromise);
 
                     if(timeoutInterval)
                         window.clearInterval(timeoutInterval);
@@ -44,6 +81,91 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     $scope.timeout = undefined;
                 }
 
+                
+                $scope.startAuthenticationRequest = function(){
+
+                    $scope.step = 3;
+                    $scope.transactionSecret = cmCrypt.generatePassword(8)
+
+                    
+                    cmCallbackQueue
+                    .push(function(){
+                        var hashed_data =   cmCrypt.hashObject({
+                                                transactionSecret:  $scope.transactionSecret,
+                                                cameoId:            $scope.fromIdentity.cameoId
+                                            })
+
+                        $scope.startTimeout(120000);
+
+                        $scope.waiting = true;
+
+                        cmApi.broadcast({
+                            name:   'authenticationRequest:start',
+                            data:   {
+                                        keyId:      $scope.fromKey.id,
+                                        identityId: $scope.fromIdentity.id,
+                                        signature:  $scope.fromKey.sign(hashed_data),
+                                    }
+                        }, $scope.toIdentity.id)
+                        // .then(
+                        //     function(){
+                        //         $scope.cancelTimeout();
+                        //         $scope.step     = 4;
+                        //         $scope.waiting  = false;
+                        //         $scope.done();
+                        //     },
+                        //     function(){
+                        //         $scope.cancelTimeout();
+                        //         $scope.waiting  = false;
+                        //     }
+                        // )
+                        
+                        cmApi.one('authenticationRequest:verified', function(data, fromIdentityId){
+                            var hashed_data =   cmCrypt.hashObject({
+                                                    transactionSecret:  $scope.transactionSecret,
+                                                    cameoId:            $scope.toIdentity.cameoId
+                                                })
+
+                            $scope.toKey = $scope.toIdentity.keys.find(data.key)
+                            
+                            if($scope.toKey.verify(hashed_data, data.signature)){
+                                $scope.fromKey.signPublicKey($scope.toKey, $scope.toKey.id, toIdentity) //Todo: $scope.toKey.id, fingerprint
+                            }
+                        }) 
+                    
+
+                        // var dataForRequest =    cmCrypt.signAuthenticationRequest({
+                        //     identityId: cmUserModel.data.identity.id,
+                        //     transactionSecret: $scope.transactionSecret,
+                        //     fromKey: fromKey,
+                        //     toKey: $scope.authenticationRequest.toKey
+                        // });
+
+                        // $scope.authenticationRequest
+                        //     .importData(dataForRequest)
+                        //     .setTransactionSecret($scope.transactionSecret)
+                        //     .setFromKey(fromKey)
+                        //     .send()
+                        //     .then(
+                        //     function(){
+                        //         $scope.cancelTimeout();
+                        //         $scope.step     = 4;
+                        //         $scope.waiting  = false;
+                        //         $scope.done();
+                        //     },
+                        //     function(){
+                        //         $scope.cancelTimeout();
+                        //         $scope.waiting  = false;
+                        //     }
+                        // )
+                    }, 50)
+                }
+
+                $scope.cancel = function(){
+                    cmApi.off('authenticationRequest:verified')
+                    $scope.cancelTimeout()
+                    $scope.step = 0
+                };
 
                 $scope.done = function(){
 
@@ -61,77 +183,6 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     $rootScope.goTo('settings/identity/keys', true);
                     return null;
                 }
-
-                
-                $scope.startAuthetication(){
-                    cmCallbackQueue.push(function(){
-                        return cmCrypt.generateTransactionSecret();
-                    }).then(
-                        function(result){
-                            $scope.step = 3;
-                            $scope.transactionSecret = result[0];
-
-                            if($scope.transactionSecret){
-
-                                var hashed_data =   cmCrypt.hashObject({
-                                                        transactionSecret:  $scope.transactionSecret,
-                                                        cameoId:            cmUserModel.identity.cameoId
-                                                    })
-
-                                $scope.startTimeout(120000);
-
-                                $scope.waiting = true;
-
-                                cmAuth.sendBroadcast({
-                                    name: 'authenticationRequest:start',
-                                    data: fromKey.sign(hashed_data)   
-                                }, this.toIdentity.id)
-                                .then(
-                                    function(){
-                                        $scope.cancelTimeout();
-                                        $scope.step     = 4;
-                                        $scope.waiting  = false;
-                                        $scope.done();
-                                    },
-                                    function(){
-                                        $scope.cancelTimeout();
-                                        $scope.waiting  = false;
-                                    }
-                                )
-
-                                // var dataForRequest =    cmCrypt.signAuthenticationRequest({
-                                //     identityId: cmUserModel.data.identity.id,
-                                //     transactionSecret: $scope.transactionSecret,
-                                //     fromKey: fromKey,
-                                //     toKey: $scope.authenticationRequest.toKey
-                                // });
-
-                                // $scope.authenticationRequest
-                                //     .importData(dataForRequest)
-                                //     .setTransactionSecret($scope.transactionSecret)
-                                //     .setFromKey(fromKey)
-                                //     .send()
-                                //     .then(
-                                //     function(){
-                                //         $scope.cancelTimeout();
-                                //         $scope.step     = 4;
-                                //         $scope.waiting  = false;
-                                //         $scope.done();
-                                //     },
-                                //     function(){
-                                //         $scope.cancelTimeout();
-                                //         $scope.waiting  = false;
-                                //     }
-                                // )
-
-                            } else {
-                                //error
-                            }
-                        }
-                    )
-                }
-
-
 
 
 

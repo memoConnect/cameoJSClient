@@ -11,8 +11,8 @@
  */
 
 angular.module('cmCore').service('cmAuth', [
-    'cmApi','LocalStorageAdapter', 'cmObject', 'cmUtil', 'cmLogger' ,'$rootScope',
-    function(cmApi, LocalStorageAdapter, cmObject, cmUtil, cmLogger, $rootScope){
+    'cmApi','LocalStorageAdapter', 'cmObject', 'cmUtil', 'cmLogger', 'cmCrypt' ,'$rootScope',
+    function(cmApi, LocalStorageAdapter, cmObject, cmUtil, cmLogger, cmCrypr, $rootScope){
         var _TOKEN_ = undefined;
         var auth = {
             /**
@@ -301,35 +301,31 @@ angular.module('cmCore').service('cmAuth', [
              * @ngdoc method
              * @methodOf cmAuth
              *
-             * @name deleteAuthenticationRequest
+             * @name sendAuthenticationRequest
              * @description
-             * delete Authentication Request
+             * Sends and Authentication Request all devices of an identity
              *
-             * @param {String} is id of authentication request
+             * @param {fromIdentity} 
+             * @param {fromkey} 
+             * @param {toIdentity} 
              * @returns {Promise} for async handling
              */
-            deleteAuthenticationRequest: function(id){
-                return cmApi.delete({
-                    path: '/identity/authenticationRequest/' + id
-                });
+            sendAuthenticationRequest: function(fromIdentity, fromKey, toIdentity, secret){
+                var hashed_data =   cmCrypt.hashObject({
+                                        transactionSecret:  secret,
+                                        cameoId:            fromIdentity.cameoId
+                                    })
+
+                return  cmApi.broadcast({
+                            name:   'authenticationRequest:start',
+                            data:   {
+                                        keyId:      fromKey.id,
+                                        identityId: fromIdentity.id,
+                                        signature:  fromKey.sign(hashed_data),
+                                    }
+                        }, toIdentity.id)
             },
-            /**
-             * @ngdoc method
-             * @methodOf cmAuth
-             *
-             * @name saveAuthenticationRequest
-             * @description
-             * save Authentication Request
-             *
-             * @param {Object} data data for authentication request
-             * @returns {Promise} for async handling
-             */
-            saveAuthenticationRequest: function(data){
-                return cmApi.post({
-                    path: '/identity/authenticationRequest',
-                    data: data
-                });
-            },
+
             /**
              * @ngdoc method
              * @methodOf cmAuth
@@ -447,7 +443,9 @@ angular.module('cmCore').service('cmAuth', [
              */
             getTwoFactorToken: function(){
                 return localStorage.getItem('twoFactorToken');
-            }
+            },
+
+
         };
 
         cmObject.addEventHandlingTo(auth);

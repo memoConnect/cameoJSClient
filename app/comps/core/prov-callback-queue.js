@@ -26,47 +26,47 @@ angular.module('cmCore')
 
                 this.state = new cmStateManagement(['working'])
 
-                this.push = function(callbacks){
-
+                this.push = function(callbacks, timeout){
 
                     if(!(callbacks instanceof Array)) 
                         callbacks = [callbacks]
 
-                    return $q.all(
+                    var promise = $q.all(
                         callbacks.map(function(callback){
                             var deferred = $q.defer()
 
                             queue.push({fn: callback, deferred: deferred})
 
-                            if(!self.state.is('working')){
-                                self.state.set('working')
-                                self.advance()
-                            }
-
                             return deferred.promise
                         })
                     )
+
+                    if(!self.state.is('working')){
+                        self.state.set('working')
+                        $timeout(self.advance, timeout || 0)
+                    }
+
+                    return promise
                 }
 
                 this.advance = function(){
-                    $timeout(function(){ 
-                        var callback = queue.shift()
+                    var callback = queue.shift()
+                
+                    if(callback && callback.fn && callback.deferred){
+                        try{                            
+                            callback.deferred.resolve(callback.fn())  
+                        } catch(e) {
+                            callback.deferred.reject(e)
+                        }
+                    }
                     
-                        if(callback && callback.fn && callback.deferred){
-                            try{                            
-                                callback.deferred.resolve(callback.fn())  
-                            } catch(e) {
-                                callback.deferred.reject(e)
-                            }
-                        }
-                        
-                        if(queue.length != 0){
-                            self.advance()                             
-                        } else {
-                            self.state.unset('working')
-                        }
+                    if(queue.length != 0){
+                        $timeout(self.advance, queueTime)
+                    } else {
+                        self.state.unset('working')
+                    }
 
-                    }, queueTime)
+
 
                 }
 

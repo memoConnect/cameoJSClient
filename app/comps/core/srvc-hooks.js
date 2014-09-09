@@ -113,7 +113,41 @@ angular.module('cmCore').service('cmHooks', [
         cmApi.on('authenticationRequest:start', function(event, request){
 //            cmLogger.debug('cmHooks.on:authenticationRequest:start');
 //            
+            var modal = cmModal.instances['incoming-authentication-request']
+        
+            if(modal && modal.isActive()){
+                return null
+            }
 
+            var scope = $rootScope.$new()
+
+            scope.is3rdParty    =   request.identityId != cmUserModel.data.identity.id
+            scope.fromIdentity  =   scope.is3rdParty
+                                    ?   cmContacts.findByIdentityId(request.identityId)
+                                    :   cmUserModel.data.identity
+            scope.fromKey       =   scope.fromIdentity.keys.find(request.keyId)
+            scope.verify        =   function(password){
+                                        var hashed_data =   cmCrypt.hashObject({
+                                                                transactionSecret:  password,
+                                                                cameoId:            $scope.fromIdentity.cameoId
+                                                            })
+
+                                    }
+
+            cmModal.create({
+                id:             'incoming-authentication-request',
+                type:           'plain',
+                'class':        'no-padding',
+                'cm-close-btn': false,
+                'cm-title':     authenticationRequest.is3rdParty()
+                                ?   'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.HEADER'
+                                :   'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.HEADER'
+            },'<cm-incoming-authentication-request></cm-incoming-authentication-request>', null, scope)
+            .open(modalId);
+
+
+
+            /* ALT:
             cmModal.close('key-response')
 
             var authenticationRequest = cmAuthenticationRequestFactory.find(request);
@@ -162,6 +196,7 @@ angular.module('cmCore').service('cmHooks', [
                     }
                 });
             }
+            */
         });
 
 //         cmApi.on('authenticationRequest:verified', function(event, request) {
