@@ -1,11 +1,3 @@
-<!--<div ng-show="isLoading" class="empty-list">
-    <cm-spinner></cm-spinner>
-</div>-->
-
-<!--<div ng-show="!requests.length && !isLoading" class="empty-list">-->
-    <!--<i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_REQUESTS'|cmTranslate}}-->
-<!--</div>-->
-
 <ul>
     <li ng-show="isLoading">
         <cm-spinner></cm-spinner>
@@ -15,13 +7,13 @@
     </li>
     <li ng-repeat="request in requests" class="contact-request-item">
         <!--<cm-contact-tag  ng-class="{'is-new':request.state == undefined,'message-open':request.isOpen, 'show-bar':request.showBar}">-->
-            <div>
-                <cm-avatar cm-data="request.identity"></cm-avatar>
-                <div class="cm-request-brief w75" ng-class="{'with-message':request.message != '','message-close':!request.isOpen}">
-                    <strong>{{request.identity.getDisplayName()}}</strong><br />
-                    {{request.message}}
-                </div>
-            </div>
+        <div>
+            <cm-avatar cm-data="request.identity"></cm-avatar>
+            <section cm-weight="4" class="requestIdentity w75" ng-class="{'with-message':request.message != '','message-close':!request.isOpen}">
+                <div class="displayName" data-qa="contact-display-name" data-qa="contact-display-name">{{request.identity.getDisplayName()}}</div>
+                <div class="message">{{request.message}}</div>
+            </section>
+        </div>
         <!--</cm-contact-tag>-->
         
         <div class="cm-request-bar">
