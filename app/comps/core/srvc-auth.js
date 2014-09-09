@@ -374,23 +374,7 @@ angular.module('cmCore').service('cmAuth', [
                     data: data
                 });
             },
-            /**
-             * @ngdoc method
-             * @methodOf cmAuth
-             *
-             * @name sendBroadcast
-             * @description
-             * post a broadcast event to own devices
-             *
-             * @param {Object} data event data
-             * @returns {Promise} for async handling
-             */
-            sendBroadcast: function(data, identityId){
-                return cmApi.post({
-                    path: '/event/broadcast' + (identityId ? '/identity/' + identityId : ''),
-                    data: data
-                });
-            },
+
             /**
              * @ngdoc method
              * @methodOf cmAuth

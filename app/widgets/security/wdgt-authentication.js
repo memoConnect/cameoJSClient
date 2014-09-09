@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('cmWidgets').directive('cmWidgetAuthentication', [
+
     'cmUtil',
     'cmUserModel',
     'cmContactsModel',
@@ -9,13 +10,134 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
     'cmCallbackQueue',
     'cmModal',
     '$rootScope',
-    '$routeParams',
     '$timeout',
-    function(cmUtil, cmUserModel, cmContactsModel, cmAuthenticationRequestFactory, cmCrypt, cmCallbackQueue, cmModal, $rootScope, $routeParams, $timeout){
+
+    function(cmUtil, cmUserModel, cmContactsModel, cmAuthenticationRequestFactory, cmCrypt, cmCallbackQueue, cmModal, $rootScope, $timeout){
         return {
             restrict: 'E',
             templateUrl: 'widgets/security/wdgt-authentication.html',
+            scope: {
+                keyId:      '@keyId',
+                identityId: '@identityId'
+            },
+
             controller: function ($scope) {
+
+                $scope.transactionSecret   =    undefined,
+                $scope.toIdentity          =    cmUserModel.identity.id == $scope.identityId
+                                                ?   cmUserModel.identity
+                                                :   cmContactsModel.findByIdentityId($scope.identityId).identity,
+                $scope.fromKey             =    cmUserModel.loadLocalKeys()[0] //first local key is sufficient
+
+                if(!fromKey){
+                    $rootScope.goTo('/settings/identity/keys', true)
+                }
+
+
+                $scope.cancelTimeout = function(){
+                    if($scope.timeoutPromise)
+                        $timeout.cancel($scope.timeoutPromise);
+
+                    if(timeoutInterval)
+                        window.clearInterval(timeoutInterval);
+
+                    $scope.timeout = undefined;
+                }
+
+
+                $scope.done = function(){
+
+                    if($scope.keyId){
+                        $rootScope.goTo('settings/identity/keys', true);
+                        return null;
+                    }
+
+
+                    if($scope.identityId){
+                        $rootScope.goTo('contact/'+cmContactsModel.findByIdentityId($scope.identityId).id, true);
+                        return null
+                    }
+
+                    $rootScope.goTo('settings/identity/keys', true);
+                    return null;
+                }
+
+                
+                $scope.startAuthetication(){
+                    cmCallbackQueue.push(function(){
+                        return cmCrypt.generateTransactionSecret();
+                    }).then(
+                        function(result){
+                            $scope.step = 3;
+                            $scope.transactionSecret = result[0];
+
+                            if($scope.transactionSecret){
+
+                                var hashed_data =   cmCrypt.hashObject({
+                                                        transactionSecret:  $scope.transactionSecret,
+                                                        cameoId:            cmUserModel.identity.cameoId
+                                                    })
+
+                                $scope.startTimeout(120000);
+
+                                $scope.waiting = true;
+
+                                cmAuth.sendBroadcast({
+                                    name: 'authenticationRequest:start',
+                                    data: fromKey.sign(hashed_data)   
+                                }, this.toIdentity.id)
+                                .then(
+                                    function(){
+                                        $scope.cancelTimeout();
+                                        $scope.step     = 4;
+                                        $scope.waiting  = false;
+                                        $scope.done();
+                                    },
+                                    function(){
+                                        $scope.cancelTimeout();
+                                        $scope.waiting  = false;
+                                    }
+                                )
+
+                                // var dataForRequest =    cmCrypt.signAuthenticationRequest({
+                                //     identityId: cmUserModel.data.identity.id,
+                                //     transactionSecret: $scope.transactionSecret,
+                                //     fromKey: fromKey,
+                                //     toKey: $scope.authenticationRequest.toKey
+                                // });
+
+                                // $scope.authenticationRequest
+                                //     .importData(dataForRequest)
+                                //     .setTransactionSecret($scope.transactionSecret)
+                                //     .setFromKey(fromKey)
+                                //     .send()
+                                //     .then(
+                                //     function(){
+                                //         $scope.cancelTimeout();
+                                //         $scope.step     = 4;
+                                //         $scope.waiting  = false;
+                                //         $scope.done();
+                                //     },
+                                //     function(){
+                                //         $scope.cancelTimeout();
+                                //         $scope.waiting  = false;
+                                //     }
+                                // )
+
+                            } else {
+                                //error
+                            }
+                        }
+                    )
+                }
+
+
+
+
+
+
+                /* ALT:
+
                 var timeoutPromise,
                     timeoutInterval,
                     fromKey = cmUserModel.loadLocalKeys()[0]; // ! attention ! works only with one local private key
@@ -32,7 +154,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     $scope.authenticationRequest
                         .state.set('outgoing')
 
-                    $scope.toKey        = $routeParams.keyId && cmUserModel.data.identity.keys.find($routeParams.keyId);
+                    //$scope.toKey        = $scope.keyId && cmUserModel.data.identity.keys.find($scope.keyId);
                     $scope.step         = $scope.toKey ? 1 : 0;
 
                     if($scope.toKey){
@@ -41,8 +163,8 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     }
 
 
-                    $scope.toIdentity    =  $routeParams.identityId
-                        ?   cmContactsModel.findByIdentityId($routeParams.identityId).identity
+                    $scope.toIdentity    =  $scope.identityId
+                        ?   cmContactsModel.findByIdentityId($scope.identityId).identity
                         :   cmUserModel.data.identity;
 
 
@@ -52,7 +174,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
 
                     $scope.waiting              =   false;
                     $scope.transactionSecret    =   undefined;
-                    $scope.BASE                 =   $routeParams.identityId
+                    $scope.BASE                 =   $scope.identityId
                         ?   'IDENTITY.KEYS.TRUST.'
                         :   'IDENTITY.KEYS.AUTHENTICATION.';
                 }
@@ -168,14 +290,14 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
 
                 $scope.done = function(){
 
-                    if($routeParams.keyId){
+                    if($scope.keyId){
                         $rootScope.goTo('settings/identity/keys', true);
                         return null;
                     }
 
 
-                    if($routeParams.identityId){
-                        $rootScope.goTo('contact/'+cmContactsModel.findByIdentityId($routeParams.identityId).id, true);
+                    if($scope.identityId){
+                        $rootScope.goTo('contact/'+cmContactsModel.findByIdentityId($scope.identityId).id, true);
                         return null
                     }
 
@@ -184,7 +306,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                 };
 
                 init();
-
+                */
             }
         }
     }

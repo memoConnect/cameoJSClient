@@ -6,9 +6,12 @@ define([
     'use strict';
 
     app.register.controller('AuthenticationCtrl', [
-        // no depedencies
-        function() {
-            // nothing to do here
+        '$scope',
+        '$routeParams',
+
+        function($scope, $routeParams) {
+            $scope.keyId        = $routeParams.keyId
+            $scope.identityId   = $routeParams.identityId
         }
     ]);
 });
