@@ -8,7 +8,7 @@
 
 <hr ng-if="(conversation.recipients.length > 1)">
 
-<ul ng-if="conversation.state.is('new')" class="no-border">
+<ul ng-if="conversation.state.is('new')" class="no-border contact-list">
     <li
         ng-repeat   =   "contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search"
         ng-if       =   "contact.contactType != 'pending'"
