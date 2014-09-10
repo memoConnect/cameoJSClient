@@ -3,7 +3,8 @@
 angular.module('cmCore')
 .service('cmUtil', [
     '$window',
-    function($window){
+    '$injector',
+    function($window, $injector){
         /**
          * Checks if Key exists in an Object or Array
          * @param object
@@ -296,6 +297,13 @@ angular.module('cmCore')
                     browserName = navigator.appName;
                 }
             }
+
+            // TODO: detect Netscape in phonegap especially ios
+            // app check
+            if($injector.get('cmDevice').isApp()){
+                browserName = 'App';
+            }
+
             var OSName = 'unknown OS';
 
             if (nVer.indexOf('Win') != -1)
