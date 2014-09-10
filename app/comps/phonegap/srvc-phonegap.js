@@ -1,28 +1,37 @@
 'use strict';
 
 angular.module('cmPhonegap').service('cmPhonegap', [
-    function () {
+    '$q',
+    function ($q) {
 
-        return {
+        var isReady = $q.defer();
+
+        var self = {
             isReady: function(callback){
-                if(typeof phonegap_cameo_config == 'undefined')
-                    return false;
+                // if config doesn't get device ready watch again
+                if(!phonegap_cameo_config.deviceReady){
+                    document.addEventListener('deviceready', function () {
+                        phonegap_cameo_config.deviceReady = true;
+                        isReady.resolve();
+                    });
 
-//                if(callback && !phonegap_cameo_config.DeviceReady)
-//                    readyStack.push(callback)
-//                else if(callback && !phonegap_cameo_config.DeviceReady)
+                    isReady.promise.then(function(){
+                        callback();
+                    });
+                // nothing to wait phonegap is ready
+                } else {
                     callback();
-
-                return phonegap_cameo_config.deviceReady;
+                }
             },
             closeApp: function(){
+                return false;
+
                 document.addEventListener('backbutton', function(e) {
                     navigator.app.exitApp();
                 });
             },
             loadContacts: function(){
-                if (!deviceReady)
-                    return false;
+                return false;
 
                 var options = new ContactFindOptions();
                 // search string
@@ -53,6 +62,11 @@ angular.module('cmPhonegap').service('cmPhonegap', [
                     }, options
                 );
             }
-        }
+        };
+
+        // on home close app
+        self.closeApp();
+
+        return self;
     }]
 );

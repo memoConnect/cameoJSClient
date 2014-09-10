@@ -531,7 +531,7 @@ module.exports = function (grunt) {
                         'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'+
                                         '<script type="text/javascript" charset="utf-8" src="vendor/puship/PushipNotification.js"></script>'+
                                         '<script type="text/javascript" charset="utf-8" src="config.js"></script>'+
-                                        globalCameoBuildConfig.phonegap.weinre ? '<script src="http://'+globalCameoBuildConfig.phonegap.weinre+':8080/target/target-script-min.js#anonymous"></script>' : '',
+                            (globalCameoBuildConfig.debug.weinre ? '<script src="http://'+globalCameoBuildConfig.debug.weinre+':8080/target/target-script-min.js#anonymous"></script>' : ''),
                         'phonegapOnload': ' onload="deviceReady()"'
                     }
                 },
@@ -542,7 +542,7 @@ module.exports = function (grunt) {
             'index-www': {
                 'options': {
                     'data': {
-                        'phonegapFiles': globalCameoBuildConfig.phonegap.weinre ? '<script src="http://'+globalCameoBuildConfig.phonegap.weinre+':8080/target/target-script-min.js#anonymous"></script>' : '',
+                        'phonegapFiles': globalCameoBuildConfig.debug.weinre ? '<script src="http://'+globalCameoBuildConfig.debug.weinre+':8080/target/target-script-min.js#anonymous"></script>' : '',
                         'phonegapOnload': ''
                     }
                 },
@@ -780,7 +780,15 @@ module.exports = function (grunt) {
                 }
             },
             'weinre': {
-                cmd: 'weinre --boundHost '+globalCameoBuildConfig.phonegap.weinre,
+                cmd: 'weinre --boundHost '+globalCameoBuildConfig.debug.weinre,
+                bg: false
+            },
+            'logcat-cordova': {
+                cmd: 'adb logcat | grep "CordovaLog"',
+                bg: false
+            },
+            'logcat-clear': {
+                cmd: 'adb logcat -c',
                 bg: false
             }
         }
@@ -808,25 +816,6 @@ module.exports = function (grunt) {
 
     // shortcuts
     grunt.registerTask('tests-2e2', ['tests-e2e']);
-
-    // phonegap to build server
-    grunt.registerTask('phonegap-bs', [
-        'clean:phonegap-target',
-        'clean:phonegap-build',
-        'deploy',
-        'copy:resources-phonegap',
-        'template:index-phonegap',
-        'template:config-phonegap',
-        'compress',
-        'phonegap-build:debug',
-        'copy:phonegap-target',
-        'testflight:iOS',
-        'template:index-dl',
-        'copy:resources-dl'
-    ]);
-
-    // deploy www without phonegap
-    grunt.registerTask('www', ['template:index-www']);
 
     // watch
     grunt.registerTask('genAllTemplates', [
@@ -856,6 +845,8 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask(':build:create-docs', ['clean:docs', 'packages', 'concat:docs', 'ngdocs']);
+    // deploy www without phonegap
+    grunt.registerTask(':build:www', ['template:index-www']);
 
     grunt.registerTask(':server:node', ['bgShell:node']);
     grunt.registerTask(':server:weinre', ['bgShell:weinre']);
@@ -863,7 +854,24 @@ module.exports = function (grunt) {
 
     grunt.registerTask(':utils:code-coverage', ['sloc:code-coverage']);
     grunt.registerTask(':utils:count-lines', ['sloc']);
+    grunt.registerTask(':utils:logcat-cordova', ['bgShell:logcat-cordova']);
+    grunt.registerTask(':utils:logcat-clear', ['bgShell:logcat-clear']);
 
+    // phonegap to build server
+    grunt.registerTask(':phonegap:to-build-server', [
+        'clean:phonegap-target',
+        'clean:phonegap-build',
+        'deploy',
+        'copy:resources-phonegap',
+        'template:index-phonegap',
+        'template:config-phonegap',
+        'compress',
+        'phonegap-build:debug',
+        'copy:phonegap-target',
+        'testflight:iOS',
+        'template:index-dl',
+        'copy:resources-dl'
+    ]);
     grunt.registerTask(':phonegap:create-only-zip', [
         'clean:phonegap-target',
         'clean:phonegap-build',
