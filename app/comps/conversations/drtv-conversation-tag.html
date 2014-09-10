@@ -13,7 +13,7 @@
         </span>
     </div>
     <div class="bottom">
-        <cm-recipient-counter>{{conversation.recipients.length||0}}</cm-recipient-counter>
+        <cm-recipient-counter ng-if="conversation.recipients.length > 2">{{conversation.recipients.length||0}}</cm-recipient-counter>
         <span class="message-count" ng-class="{'cm-unread' : conversation.messages.length > 0}"> ({{conversation.numberOfMessages || 0}}) </span>
     </div>
 </div>
