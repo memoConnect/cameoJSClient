@@ -13,6 +13,9 @@ angular.module('cmConversations').directive('cmConversationTag',[
             link: function(scope){
             },
             controller: function($scope){
+                /**
+                 * set Avatar Identity
+                 */
                 if($scope.conversation.recipients.length > 2){
                     $scope.avatarIdentity = $scope.conversation.lastMessage.from;
                 } else {
