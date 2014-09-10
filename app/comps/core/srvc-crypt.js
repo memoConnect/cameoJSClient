@@ -206,12 +206,13 @@ angular.module('cmCore')
                 // init vars
                 async.crypt = new JSEncrypt({default_key_size: keySize}),
                 async.promise = $q.defer();
-                async.interval = $interval(function(){
-                    counts++;
-                    if(typeof onGeneration == "function"){
-                        onGeneration(counts, (time + ((new Date()).getTime())))
-                    }
-                }, 500);
+                async.interval = null;
+//                async.interval = $interval(function(){
+//                    counts++;
+//                    if(typeof onGeneration == "function"){
+//                        onGeneration(counts, (time + ((new Date()).getTime())))
+//                    }
+//                }, 500);
 
                 // start keypair generation
                 async.crypt.getKey(function(){
