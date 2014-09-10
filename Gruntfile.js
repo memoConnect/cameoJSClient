@@ -764,12 +764,22 @@ module.exports = function (grunt) {
                     stdout: false
                 },
                 command: 'cd test/e2e/keys && rm -f *.key && ssh-keygen -N "" -f 1.key && ssh-keygen -N "" -f 2.key && ssh-keygen -N "" -f 3.key && ssh-keygen -N "" -f 4.key && ssh-keygen -N "" -f 5.key&& rm *.key.pub'
+            },
+            pythonServer: {
+                options: {
+                    stdout: true
+                },
+                command: 'python -m SimpleHTTPServer 8000'
             }
         },
 
         bgShell: {
             'node': {
                 cmd: 'node scripts/web-server.js',
+                bg: false
+            },
+            'python': {
+                cmd: 'python -m SimpleHTTPServer 8000',
                 bg: false
             },
             'cameo': {
@@ -848,7 +858,8 @@ module.exports = function (grunt) {
     // deploy www without phonegap
     grunt.registerTask(':build:www', ['template:index-www']);
 
-    grunt.registerTask(':server:node', ['bgShell:node']);
+    grunt.registerTask(':server:web:node', ['bgShell:node']);
+    grunt.registerTask(':server:web:python', ['shell:pythonServer']);
     grunt.registerTask(':server:weinre', ['bgShell:weinre']);
     grunt.registerTask(':server:cameo', ['bgShell:cameo']);
 
