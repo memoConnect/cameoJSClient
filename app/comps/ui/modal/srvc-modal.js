@@ -30,6 +30,7 @@ angular.module('cmUi')
         };
 
         self.open = function(id, data){
+            console.log(id)
             if(self.instances[id]){
                 self.instances[id]
                     .setData(data)
@@ -65,6 +66,8 @@ angular.module('cmUi')
         };
 
         self.create = function(config, template, target, scope){
+            var attrs = ''
+            
             //Todo: könnte man schöner machen:
             angular.forEach(config, function(value, key){ attrs += key+'="'+value+'"' });
 
@@ -79,8 +82,7 @@ angular.module('cmUi')
             }
 
             // create new element
-            var attrs = '',
-                scope = scope || $rootScope.$new();
+            var scope = scope || $rootScope.$new();
 
 
             var modal = $compile('<cm-modal '+attrs+' >'+(template||'')+'</cm-modal>')(scope);
@@ -94,7 +96,7 @@ angular.module('cmUi')
 
             // the modal directive (<cm-modal>) will register itself on next digest
 
-            return modal.scope();
+            return modal
         };
 
         $rootScope.openModal = self.open;

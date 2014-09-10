@@ -104,9 +104,9 @@ angular.module('cmUi')
 
                 // open modal
                 scope.open = function(){
-                    this.toggle(true);
+                    scope.toggle(true);
 
-                    return this
+                    return scope
                 };
                 // close modal
                 scope.close = function(fromBackdrop){

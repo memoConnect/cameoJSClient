@@ -31,7 +31,6 @@
         [
         BASE+"HEADLINE",
         BASE+"HEADLINE",
-        BASE+"HEADLINE",
         BASE+"HEADLINE"
         ][step]
 
@@ -40,7 +39,6 @@
     <cm-info-bubble nose-x = "60%">
         {{
         [
-        BASE+"EXPLANATION",
         BASE+"EXPLANATION",
         BASE+"EXPLANATION",
         BASE+"EXPLANATION"
@@ -55,7 +53,6 @@
             {{
             [
             BASE+"START.INSTRUCTIONS",
-            BASE+"REQUEST_STARTED.INSTRUCTIONS",
             BASE+"SHOW_TRANSACTION_SECRET.INSTRUCTIONS",
             BASE+"SHOW_TRANSACTION_SECRET.INSTRUCTIONS"
             ] [step]
@@ -72,7 +69,6 @@
         {{
         [
         BASE+"START.NOTE",
-        BASE+"REQUEST_STARTED.NOTE",
         BASE+"SHOW_TRANSACTION_SECRET.NOTE",
         BASE+"SHOW_TRANSACTION_SECRET.NOTE"
         ][step]
@@ -81,7 +77,7 @@
     </strong>
 </article>
 
-<article ng-if="step > 1" class="content">
+<article ng-if="step > 0" class="content">
     <div class="transaction-secret" ng-if="transactionSecret">
         {{transactionSecret || '...'}}
     </div>
@@ -125,29 +121,7 @@
             class       = "cm-btn-block cm-btn-grey"
             data-qa     = "btn-start-authentication"
             >
-        {{BASE+"REQUEST_STARTED.CANCEL_BUTTON"|cmTranslate}}
-        <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
-    </button>
-</cm-footer>
-
-<cm-footer ng-if = "step == 3" cm-rubber-space>
-    <button
-            ng-click    = "cancel()"
-            class       = "cm-btn-block cm-btn-grey"
-            data-qa     = "btn-start-authentication"
-            >
         {{BASE+"SHOW_TRANSACTION_SECRET.CLOSE_BUTTON"|cmTranslate}}
         <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
-    </button>
-</cm-footer>
-
-<cm-footer ng-if = "step == 4" cm-rubber-space>
-    <button
-            ng-click    = "startAuthenticationRequest()"
-            class       = "cm-btn-block cm-btn-grey"
-            data-qa     = "btn-start-authentication"
-            >
-        {{BASE+"AUTHENTICATION.START"|cmTranslate}}
-        <i class="fa cm-handshake cm-lg-icon"></i>
     </button>
 </cm-footer>

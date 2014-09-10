@@ -71,18 +71,19 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     if(timeoutInterval)
                         window.clearInterval(timeoutInterval);
 
-                    $scope.timeout = undefined;
+                    $scope.timeout = undefined
                 }
 
                 
                 $scope.startAuthenticationRequest = function(){
 
-                    $scope.step     = 3;
+                    $scope.step     = 1;
                     $scope.waiting  = true;
                     $scope.startTimeout(120000);
 
                     cmAuthenticationRequest.generateTransactionSecret(120000)
-                    
+                    $scope.transactionSecret = cmAuthenticationRequest.getTransactionSecret()
+
                     cmCallbackQueue
                     .push(function(){
                         return cmAuthenticationRequest.send(
@@ -92,16 +93,16 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                         )
                     }, 50)
                     .then(function(){
-                        cmAuthenticationRequest.on('authenticationRequest:start', function(data){
-                            cmAuthenticationRequest.verify(data, cmAuthenticationRequest.getTransactionSecret())
-                            $scope.fromKey.signPublicKey($scope.toKey, $scope.toKey.id, toIdentity) //Todo: $scope.toKey.id, fingerprint
-                        })  
+                        cmAuthenticationRequest.on('verified', function(data){
+                            $scope.step = 2
+                        })
                     })
                 }
 
                 $scope.cancel = function(){
                     $scope.cancelTimeout()
-                    $scope.step = 0
+                    $scope.waiting  = false
+                    $scope.step     = 0
                 };
 
                 $scope.done = function(){

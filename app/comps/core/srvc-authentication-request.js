@@ -17,10 +17,12 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
     'cmLogger', 
     'cmCrypt', 
     'cmUserModel',
-    'cmContactsModel',
+    'cmIdentityFactory',
+    'cmModal',
+    '$rootScope',
 
 
-    function(cmApi, cmObject, cmLogger, cmCrypt, cmUserModel, cmContactsModel){
+    function(cmApi, cmObject, cmLogger, cmCrypt, cmUserModel, cmIdentityFactory, cmModal, $rootScope){
         self = {
             /**
              * @ngdoc method
@@ -33,7 +35,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
             generateTransactionSecret: function(ttl){
                 this.transactionSecret =    {
-                                                content:    cmCrypt.generatePassword(32),
+                                                content:    cmCrypt.generatePassword(8),
                                                 expires:    new Date().getTime() + (ttl || 60000) 
                                             }
             },
@@ -50,7 +52,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
              */
             
             getTransactionSecret: function(){
-                return  new Date().getTime() < this.transactionSecret.expires
+                return  this.transactionSecret && new Date().getTime() < this.transactionSecret.expires
                         ?   this.transactionSecret.content
                         :   null
             },
@@ -102,15 +104,23 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
              * @returns {Boolean} wether or not the request is valid
              */
             verify: function(request, secret){
-                var fromIdentity    =   cmContactsModel.findByIdentityId(request.fromIdentityId).identity,
+                var fromIdentity    =   cmIdentityFactory.find(request.fromIdentityId),
                     hashed_data     =   cmCrypt.hashObject({
                                             transactionSecret:  secret,
                                             cameoId:            fromIdentity.cameoId,
                                             salt:               request.salt
                                         }),
-                    fromKey         =   fromIdentity.keys.find(fromKeyId)
+                    fromKey         =   fromIdentity.keys.find(request.fromKeyId),
+                    result          =   fromKey.verify(hashed_data, request.signature)
 
-                return  fromKey.verify(hashed_data, request.signature)
+                if(result)
+                    self.trigger('verified', {
+                        identity:           fromIdentity,
+                        key:                fromKey,
+                        transactionSecret:  secret,
+                    })
+
+                return result
             } 
         }
 
@@ -124,30 +134,40 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
             if(modal && modal.isActive())
                 return false
 
-
+            console.log(1)
             //There is no need to authenticate local keys:
             if(cmUserModel.loadLocalKeys().find(request.fromKeyId))
                 return false
 
             var transactionSecret = self.getTransactionSecret()
+
+            console.log(2)
             //If we already know the transaction secret, there is no need to prompt the user:
             if(transactionSecret){
-                if(self.verify(request, secret))
-                    console.log('passt, auto')
+                self.verify(request, transactionSecret)
                 return true
             }
 
+            console.log(3)
 
-            var scope = $rootScope.$new()
+            //If a certain key was expected to sign, but that key is not present on this device, dont prompt the user:
+            if(request.toKeyId && !cmUserModel.loadLocalKeys().find(request.toKeyId))
+                return false
 
-            scope.is3rdParty    =   request.identityId != cmUserModel.data.identity.id
-            scope.fromIdentity  =   scope.is3rdParty
-                                    ?   cmContactsModel.findByIdentityId(request.identityId)
-                                    :   cmUserModel.data.identity
-            scope.fromKey       =   scope.fromIdentity.keys.find(request.keyId)
+            console.log(4)
+
+            var scope   =   $rootScope.$new()
+
+            scope.is3rdParty    =   request.fromIdentityId != cmUserModel.data.identity.id
+            scope.fromIdentity  =   cmIdentityFactory.find(request.fromIdentityId)
+
+            //If we dont know the identity that sent the request:
+            if(!scope.fromIdentity)
+                return false
+
+            scope.fromKey       =   scope.fromIdentity.keys.find(request.fromKeyId)
             scope.verify        =   function(secret){
-                                        if(self.verify(request, secret))
-                                            console.log('passt')
+                                        scope.error = !self.verify(request, secret)
                                     }
 
             cmModal.create({
@@ -159,7 +179,20 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                 ?   'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.HEADER'
                                 :   'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.HEADER'
             },'<cm-incoming-authentication-request></cm-incoming-authentication-request>', null, scope)
-            .open(modalId);        
+
+            cmModal.open('incoming-authentication-request')
+        })
+
+        self.on('verified', function(event, data){
+            cmUserModel.signPublicKey(data.key, data.key.id, data.identity)
+            cmModal.close('incoming-authentication-request')
+
+            //Send a request in return:
+            cmAuthenticationRequest.send(
+                cmUserModel.data.identity,  //Ourself
+                data.transactionSecret,     //The secret we used during the last attempt
+                data.fromKey                //The key that should sign our ownkey; may be undefined
+            )
         })
 
         return self

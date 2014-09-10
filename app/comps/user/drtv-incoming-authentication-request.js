@@ -9,6 +9,8 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
             restrict: 'E',
             templateUrl: 'comps/user/drtv-incoming-authentication-request.html',
             controller: function($scope){
+
+                
                 function setErrorsToDefault(){
                     $scope.error = {
                         "emptyInput": false,
@@ -20,8 +22,8 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
                 $scope.spinner = false;
 
                 $scope.modalMessageVars = {
-                    cameoKey: $scope.authenticationRequest.fromKey.name,
-                    identity: cmIdentityFactory.create($scope.authenticationRequest.fromIdentityId).getDisplayName()
+                    cameoKey: $scope.fromKey.name,
+                    identity: $scope.fromIdentity.getDisplayName()
                 };
 
 
@@ -31,18 +33,6 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
                     var input = $document[0].querySelector('#inp-transactSecret');
                     input.focus();
                 }, 50);
-
-                $scope.verifyCode = function(){
-                    setErrorsToDefault();
-                    $scope.showSpinner();
-
-                    if($scope.authenticationRequest.verifyTransactionSecret($scope.transactSecret)){
-                        $scope.hideSpinner();
-                    } else {
-                        $scope.error.wrongSecret = true;
-                        $scope.hideSpinner();
-                    }
-                };
 
                 $scope.showSpinner = function(){
                     $scope.spinner = true;
@@ -56,11 +46,6 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
                     $rootScope.closeModal('incoming-authentication-request');
                 }
 
-                $scope.authenticationRequest.on('secret:verified',closeModal);
-
-                $scope.$on('$destroy', function(){
-                    $scope.authenticationRequest.off('secret:verified',closeModal);
-                });
             }
         }
     }

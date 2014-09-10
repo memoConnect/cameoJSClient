@@ -1,7 +1,8 @@
 define([
     'app',
     'ngload!pckCore',
-    'ngload!pckWidgets'
+    'ngload!pckWidgets',
+    'ngload!pckUser',
 ], function (app) {
     'use strict';
 
