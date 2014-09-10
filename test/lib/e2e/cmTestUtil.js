@@ -435,6 +435,7 @@ this.generateKey = function (keyNum, keyName) {
         return key != undefined
     }, config.waitForTimeout , 'wait for file timeout reached').then(function(){
         self.get('/settings/identity/key/import')
+        self.waitForPageLoad('/settings/identity/key/import')
         self.waitForElement("[data-qa='display-private-key']")
         self.setValQuick("display-private-key", key)
         self.setVal("display-private-key", " ")

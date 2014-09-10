@@ -135,6 +135,7 @@ describe('Identity key settings: ', function () {
         util.clearLocalStorage()
         util.login(login, password)
         util.get('/settings/identity/key/list')
+        util.waitForPageLoad('/settings/identity/key/list')
 
         $$("[data-qa='key-list-item']").then(function (elements) {
             expect(elements.length).toBe(1)
@@ -150,6 +151,7 @@ describe('Identity key settings: ', function () {
     it('generate yet another local key', function () {
         util.generateKey(2)
         util.get('/settings/identity/key/list')
+        util.waitForPageLoad('/settings/identity/key/list')
         util.waitForElements("[data-qa='key-list-item']", 2)
     })
 
