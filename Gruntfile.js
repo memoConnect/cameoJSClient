@@ -531,7 +531,7 @@ module.exports = function (grunt) {
                         'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'+
                                         '<script type="text/javascript" charset="utf-8" src="vendor/puship/PushipNotification.js"></script>'+
                                         '<script type="text/javascript" charset="utf-8" src="config.js"></script>'+
-                            (globalCameoBuildConfig.debug.weinre ? '<script src="http://'+globalCameoBuildConfig.debug.weinre+':8080/target/target-script-min.js#anonymous"></script>' : ''),
+                            (globalCameoBuildConfig.debug.weinre ? '<script src="http://'+globalCameoBuildConfig.debug.weinreIp+':8080/target/target-script-min.js#anonymous"></script>' : ''),
                         'phonegapOnload': ' onload="deviceReady()"'
                     }
                 },
@@ -542,7 +542,7 @@ module.exports = function (grunt) {
             'index-www': {
                 'options': {
                     'data': {
-                        'phonegapFiles': globalCameoBuildConfig.debug.weinre ? '<script src="http://'+globalCameoBuildConfig.debug.weinre+':8080/target/target-script-min.js#anonymous"></script>' : '',
+                        'phonegapFiles': globalCameoBuildConfig.debug.weinre ? '<script src="http://'+globalCameoBuildConfig.debug.weinreIp+':8080/target/target-script-min.js#anonymous"></script>' : '',
                         'phonegapOnload': ''
                     }
                 },
@@ -780,7 +780,7 @@ module.exports = function (grunt) {
                 }
             },
             'weinre': {
-                cmd: 'weinre --boundHost '+globalCameoBuildConfig.debug.weinre,
+                cmd: 'weinre --boundHost '+globalCameoBuildConfig.debug.weinreIp,
                 bg: false
             },
             'logcat-cordova': {
