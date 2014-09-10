@@ -34,7 +34,7 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
                 this.plugin.find(filter,
                     function (contacts) {
                         console.log('contacts success ' + contacts.length)
-                        
+
                         for (var i = 0; i < contacts.length; i++) {
                             var clearContact = contacts[i];
 
