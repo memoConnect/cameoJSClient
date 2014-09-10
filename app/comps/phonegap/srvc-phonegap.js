@@ -8,6 +8,10 @@ angular.module('cmPhonegap').service('cmPhonegap', [
 
         var self = {
             isReady: function(callback){
+                if(typeof phonegap_cameo_config == 'undefined'){
+                    return false;
+                }
+
                 // if config doesn't get device ready watch again
                 if(!phonegap_cameo_config.deviceReady){
                     document.addEventListener('deviceready', function () {
