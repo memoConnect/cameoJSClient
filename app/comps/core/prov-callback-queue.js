@@ -15,10 +15,11 @@ angular.module('cmCore')
 
             'cmObject',
             'cmStateManagement',
+            'cmLogger',
             '$timeout',
             '$q',
 
-            function(cmObject, cmStateManagement, $timeout, $q){
+            function(cmObject, cmStateManagement, cmLogger, $timeout, $q){
                 cmObject.addEventHandlingTo(this)
 
                 var self    = this,
@@ -56,6 +57,7 @@ angular.module('cmCore')
                         try{                            
                             callback.deferred.resolve(callback.fn())  
                         } catch(e) {
+                            cmLogger.error('cmCallbackQueue cought an error: \n'+e)
                             callback.deferred.reject(e)
                         }
                     }

@@ -285,7 +285,7 @@ angular.module('cmCore')
 
 
 
-            //Todo check if te follwoing is still needed:
+            //Todo check if te follwoing is still needed
 
             /**
              * generateTransactionSecret

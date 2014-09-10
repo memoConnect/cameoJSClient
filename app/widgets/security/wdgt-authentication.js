@@ -85,63 +85,21 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     
                     cmCallbackQueue
                     .push(function(){
-                        console.log('999')
-                        cmAuthenticationRequest.send(
-                            $scope.toIdentity,              //The identity we ask to trust our key
-                            $rootScope.transactionSecret,   //The secret we shared through another channel with the person we believe is the owner of the above identity
-                            $scope.keyId                    //The key that should sign our ownkey; may be undefined
+                        return cmAuthenticationRequest.send(
+                            $scope.toIdentity,                              //The identity we ask to trust our key
+                            cmAuthenticationRequest.getTransactionSecret(), //The secret will share through another channel with the person we believe is the owner of the above identity
+                            $scope.keyId                                    //The key that should sign our ownkey; may be undefined
                         )
-
+                    }, 50)
+                    .then(function(){
                         cmAuthenticationRequest.on('authenticationRequest:start', function(data){
                             cmAuthenticationRequest.verify(data, cmAuthenticationRequest.getTransactionSecret())
                             $scope.fromKey.signPublicKey($scope.toKey, $scope.toKey.id, toIdentity) //Todo: $scope.toKey.id, fingerprint
                         })  
-
-                        // .then(
-                        //     function(){
-                        //         $scope.cancelTimeout();
-                        //         $scope.step     = 4;
-                        //         $scope.waiting  = false;
-                        //         $scope.done();
-                        //     },
-                        //     function(){
-                        //         $scope.cancelTimeout();
-                        //         $scope.waiting  = false;
-                        //     }
-                        // )
-                        
-
-                    
-
-                        // var dataForRequest =    cmCrypt.signAuthenticationRequest({
-                        //     identityId: cmUserModel.data.identity.id,
-                        //     transactionSecret: $scope.transactionSecret,
-                        //     fromKey: fromKey,
-                        //     toKey: $scope.authenticationRequest.toKey
-                        // });
-
-                        // $scope.authenticationRequest
-                        //     .importData(dataForRequest)
-                        //     .setTransactionSecret($scope.transactionSecret)
-                        //     .setFromKey(fromKey)
-                        //     .send()
-                        //     .then(
-                        //     function(){
-                        //         $scope.cancelTimeout();
-                        //         $scope.step     = 4;
-                        //         $scope.waiting  = false;
-                        //         $scope.done();
-                        //     },
-                        //     function(){
-                        //         $scope.cancelTimeout();
-                        //         $scope.waiting  = false;
-                        //     }
-                        // )
-                    }, 50)
+                    })
                 }
 
                 $scope.cancel = function(){
-                    cmApi.off('authenticationRequest:verified')
                     $scope.cancelTimeout()
                     $scope.step = 0
                 };
@@ -163,6 +121,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                 }
 
 
+                $scope.$on('$destroy', $scope.cancel)
 
 
                 /* ALT:

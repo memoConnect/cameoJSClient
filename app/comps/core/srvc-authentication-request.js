@@ -35,7 +35,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                 this.transactionSecret =    {
                                                 content:    cmCrypt.generatePassword(32),
                                                 expires:    new Date().getTime() + (ttl || 60000) 
-                                            } 
+                                            }
             },
 
             /**
@@ -69,7 +69,6 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
              * @returns {Promise} for async handling
              */
             send: function(toIdentity, secret, toKey, fromKey){
-                console.log('sdfsdf')
                 var fromIdentity    =   cmUserModel.data.identity,
                     fromKey         =   fromKey || cmUserModel.loadLocalKeys()[0],
                     salt            =   cmCrypt.generatePassword(32),
@@ -84,7 +83,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                             data:   {
                                         fromKeyId:      fromKey.id,
                                         fromIdentityId: fromIdentity.id,
-                                        toKeyId:        toKey.id,
+                                        toKeyId:        toKey ? toKey.id : undefined,
                                         salt:           salt,
                                         signature:      fromKey.sign(hashed_data),
                                     }
@@ -113,7 +112,9 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
                 return  fromKey.verify(hashed_data, request.signature)
             } 
-        } 
+        }
+
+        cmObject.addEventHandlingTo(self)
 
         cmApi.on('authenticationRequest:start', function(event, request){
 
