@@ -820,7 +820,7 @@ module.exports = function (grunt) {
         'compress',
         'phonegap-build:debug',
         'copy:phonegap-target',
-        //'testflight:iOS',
+        'testflight:iOS',
         'template:index-dl',
         'copy:resources-dl'
     ]);
