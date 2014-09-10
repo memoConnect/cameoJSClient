@@ -17,7 +17,10 @@ describe('Friendrequests: ', function () {
 
             it('search', function(){
                 util.login(config.loginUser1,config.passwordUser1)
+
                 util.get('/contact/search')
+                util.waitForPageLoad('/contact/search')
+
                 util.waitForElement("[data-qa='inp-search-cameo-ids']")
 
                 $("[data-qa='inp-search-cameo-ids']").sendKeys(user1ToAccept)
@@ -41,7 +44,8 @@ describe('Friendrequests: ', function () {
             })
 
             it('should be now an contacts page', function(){
-                util.expectCurrentUrl('#/contact/list')
+                //util.expectCurrentUrl('#/contact/list')
+                util.waitForPageLoad('/contact/list')
             })
 
             it('check if request is pending in list', function(){
