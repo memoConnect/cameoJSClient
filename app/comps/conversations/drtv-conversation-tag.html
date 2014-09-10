@@ -5,11 +5,11 @@
     <cm-message cm-data="conversation.lastMessage" text-only="true" data-qa="conversation-last-message"></cm-message>
 </div>
 
-<div class="meta" cm-weight="1">
+<div class="meta" cm-weight="2">
     <div class="top">
         <cm-lock-level cm-level="conversation.lockStatus.level"></cm-lock-level>
         <span class="last-updated small">
-            {{conversation.timeOfLastUpdate | date:'HH:mm'}}
+            <cm-time-converter  cm-timestamp="conversation.timeOfLastUpdate" cm-special-type="'conversation-tag'"></cm-time-converter>
         </span>
     </div>
     <div class="bottom">
