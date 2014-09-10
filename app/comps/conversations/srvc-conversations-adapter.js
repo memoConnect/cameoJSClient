@@ -92,7 +92,7 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
 
             updateCaptcha: function(id, idFile){
                 return  cmApi.put({
-                            path:    '/conversation/%1'.replace(/%1/, id),
+                            path:    '/conversation/'+id,
                             data:   {
                                         passCaptcha: idFile
                                     }

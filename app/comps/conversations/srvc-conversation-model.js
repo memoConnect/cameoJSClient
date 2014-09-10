@@ -709,8 +709,7 @@ angular.module('cmConversations')
 
             this.disablePassCaptcha = function(){
 //                cmLogger.debug('cmConversationModel.disablePassCaptcha');
-                
-                if(!this.state.is('new')) return this
+                if(!this.state.is('new')) return ;
 
                 this.options.hasCaptcha = false;
                 this.trigger('captcha:disabled');
@@ -761,6 +760,8 @@ angular.module('cmConversations')
                 if(this.tmpPassCaptcha != ''){
                     this.passCaptcha = cmFileFactory.create();
                     this.passCaptcha.name = this.passCaptcha.encryptedName = 'captcha';
+                    // public passcaptcha
+                    this.passCaptcha.setPassphrase(null);
 
                     this.passCaptcha
                         .importBase64(this.tmpPassCaptcha)

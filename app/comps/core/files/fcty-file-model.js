@@ -270,22 +270,24 @@ angular.module('cmCore').factory('cmFileModel', [
             };
 
             this._uploadChunk = function(index){
-                var chunk = this.chunks[index];
-                chunk
-                    .encrypt(passphrase)
-                    .upload(this.id, index)
-                    .then(function(){
-                        self.trigger('progress:chunk', (index/self.chunks.length));
+                // waiting for chunk sliceing and blob to base64
+                this.chunks[index].isReady(function(chunk){
+                    chunk
+                        .encrypt(passphrase)
+                        .upload(self.id, index)
+                        .then(function(){
+                            self.trigger('progress:chunk', (index/self.chunks.length));
 
-                        if(index == (self.chunks.length - 1)){
-                            cmFilesAdapter.setFileComplete(self.id, self.onCompleteId).then(function(){
-                                self.setState('complete');
-                                self.trigger('upload:finish');
-                            });
-                        } else {
-                            self.trigger('upload:chunk', index);
-                        }
-                    });
+                            if(index == (self.chunks.length - 1)){
+                                cmFilesAdapter.setFileComplete(self.id, self.onCompleteId).then(function(){
+                                    self.setState('complete');
+                                    self.trigger('upload:finish');
+                                });
+                            } else {
+                                self.trigger('upload:chunk', index);
+                            }
+                        });
+                });
             };
 
             this.uploadChunks = function() {

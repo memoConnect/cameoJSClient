@@ -44,8 +44,8 @@ describe('Conversation encryption -', function () {
                 var recipient = recipients[i]
 
                 $("[data-qa='inp-list-search']").sendKeys(recipient.login)
-                util.waitForElement("[data-qa='btn-select-contact']")
-                $("[data-qa='btn-select-contact']").click()
+                util.waitForElement(".contact-list [data-qa='btn-select-contact']")
+                $(".contact-list [data-qa='btn-select-contact']").click()
                 $("[data-qa='btn-list-search-clear']").click()
 
                 if (recipient.external) {

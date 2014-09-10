@@ -1,5 +1,5 @@
 <ul class="no-border" ng-if="(conversation.recipients.length > 1)">
-    <li ng-repeat   = "contact in contacts|cmRecipients:true:selected|cmSearch:'contacts':search"
+    <li ng-repeat   = "contact in contacts|cmRecipients:true:selected"
         ng-if       = "contact.contactType != 'pending'" 
     >
         <cm-recipient-tag cm-data-selected="selected" cm-data-contact="contact" cm-data-conversation="conversation"></cm-recipient-tag>
@@ -8,7 +8,7 @@
 
 <hr ng-if="(conversation.recipients.length > 1)">
 
-<ul ng-if="conversation.state.is('new')" class="no-border">
+<ul ng-if="conversation.state.is('new')" class="no-border contact-list">
     <li
         ng-repeat   =   "contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search"
         ng-if       =   "contact.contactType != 'pending'"
