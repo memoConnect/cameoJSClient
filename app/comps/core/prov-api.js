@@ -507,6 +507,7 @@ angular.module('cmCore').provider('cmApi',[
                  * @returns {Promise} for async handling
                  */
                 api.broadcast = function(data, identityId){
+                    console.log('11121222')
                     return api.post({
                         path: '/event/broadcast' + (identityId ? '/identity/' + identityId : ''),
                         data: data

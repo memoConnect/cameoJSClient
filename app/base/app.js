@@ -218,10 +218,11 @@ define([
         'cfpLoadingBar',
         'cmEnv',
         'cmApi',
+        'cmAuthenticationRequest',
         'cmHooks',
         'cmSystemCheck',
         'cmError',
-        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks, cmSystemCheck, cmError) {
+        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmAuthenticationRequest, cmHooks, cmSystemCheck, cmError) {
 
             $rootScope.$on('getBrowserInfo', function(){
                 //get browser language:

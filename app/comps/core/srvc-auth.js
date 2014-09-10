@@ -297,34 +297,6 @@ angular.module('cmCore').service('cmAuth', [
                     }
                 });
             },
-            /**
-             * @ngdoc method
-             * @methodOf cmAuth
-             *
-             * @name sendAuthenticationRequest
-             * @description
-             * Sends and Authentication Request all devices of an identity
-             *
-             * @param {fromIdentity} 
-             * @param {fromkey} 
-             * @param {toIdentity} 
-             * @returns {Promise} for async handling
-             */
-            sendAuthenticationRequest: function(fromIdentity, fromKey, toIdentity, secret){
-                var hashed_data =   cmCrypt.hashObject({
-                                        transactionSecret:  secret,
-                                        cameoId:            fromIdentity.cameoId
-                                    })
-
-                return  cmApi.broadcast({
-                            name:   'authenticationRequest:start',
-                            data:   {
-                                        keyId:      fromKey.id,
-                                        identityId: fromIdentity.id,
-                                        signature:  fromKey.sign(hashed_data),
-                                    }
-                        }, toIdentity.id)
-            },
 
             /**
              * @ngdoc method
@@ -464,6 +436,7 @@ angular.module('cmCore').service('cmAuth', [
            //console.log('conversation:new-aePassphrase');
             auth.trigger('conversation:update', data)
         });
+
 
         return auth;
     }

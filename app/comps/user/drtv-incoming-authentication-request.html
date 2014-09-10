@@ -22,7 +22,7 @@
             <i class="fa cm-info"></i>{{'SYSTEM.ERROR.WRONG_INPUT'|cmTranslate}}
         </div>
     </div>
-    <button class="cm-btn cm-btn-block cm-btn-grey" data-qa="btn-acceptRequest" ng-click="verify">
+    <button class="cm-btn cm-btn-block cm-btn-grey" data-qa="btn-acceptRequest" ng-click="verify(transactSecret)">
         <span ng-show="!spinner">
             {{  
                 is3rdParty

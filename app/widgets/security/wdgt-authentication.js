@@ -2,18 +2,13 @@
 
 angular.module('cmWidgets').directive('cmWidgetAuthentication', [
 
-    'cmUtil',
     'cmUserModel',
-    'cmContactsModel',
-    'cmAuthenticationRequestFactory',
-    'cmCrypt',
+    'cmAuthenticationRequest',
     'cmCallbackQueue',
-    'cmModal',
-    '$rootScope',
     '$timeout',
-    'cmApi',
+    '$rootScope',
 
-    function(cmUtil, cmUserModel, cmContactsModel, cmAuthenticationRequestFactory, cmCrypt, cmCallbackQueue, cmModal, $rootScope, $timeout, cmApi){
+    function(cmUserModel, cmAuthenticationRequest, cmCallbackQueue, $timeout, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'widgets/security/wdgt-authentication.html',
@@ -27,17 +22,15 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                 var timeoutInterval,
                     timeoutPromise
 
-                $scope.step                 =   0
-                $scope.transactionSecret    =   undefined
-                $scope.fromIdentity         =   cmUserModel.data.identity
-                $scope.toIdentity           =   !$scope.identityId || ($scope.fromIdentity.id == $scope.identityId)
-                                                ?   $scope.fromIdentity
-                                                :   cmContactsModel.findByIdentityId($scope.identityId).identity
-                $scope.fromKey              =   cmUserModel.loadLocalKeys()[0] //first local key is sufficient
-                $scope.waiting              =   false
+                $scope.step         =   0
+                $scope.waiting      =   false
+                $scope.toIdentity   =   $scope.identityId 
+                                        ?   cmContactsModel.findByIdentityId($scope.identityId).identity
+                                        :   cmUserModel.data.identity
+
 
                 //Without a key authetication won't work: 
-                if(!$scope.fromKey){
+                if(!cmUserModel.loadLocalKeys().length){
                     $rootScope.goTo('/settings/identity/keys', true)
                 }
 
@@ -84,29 +77,26 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                 
                 $scope.startAuthenticationRequest = function(){
 
-                    $scope.step = 3;
-                    $scope.transactionSecret = cmCrypt.generatePassword(8)
+                    $scope.step     = 3;
+                    $scope.waiting  = true;
+                    $scope.startTimeout(120000);
 
+                    cmAuthenticationRequest.generateTransactionSecret(120000)
                     
                     cmCallbackQueue
                     .push(function(){
-                        var hashed_data =   cmCrypt.hashObject({
-                                                transactionSecret:  $scope.transactionSecret,
-                                                cameoId:            $scope.fromIdentity.cameoId
-                                            })
+                        console.log('999')
+                        cmAuthenticationRequest.send(
+                            $scope.toIdentity,              //The identity we ask to trust our key
+                            $rootScope.transactionSecret,   //The secret we shared through another channel with the person we believe is the owner of the above identity
+                            $scope.keyId                    //The key that should sign our ownkey; may be undefined
+                        )
 
-                        $scope.startTimeout(120000);
+                        cmAuthenticationRequest.on('authenticationRequest:start', function(data){
+                            cmAuthenticationRequest.verify(data, cmAuthenticationRequest.getTransactionSecret())
+                            $scope.fromKey.signPublicKey($scope.toKey, $scope.toKey.id, toIdentity) //Todo: $scope.toKey.id, fingerprint
+                        })  
 
-                        $scope.waiting = true;
-
-                        cmApi.broadcast({
-                            name:   'authenticationRequest:start',
-                            data:   {
-                                        keyId:      $scope.fromKey.id,
-                                        identityId: $scope.fromIdentity.id,
-                                        signature:  $scope.fromKey.sign(hashed_data),
-                                    }
-                        }, $scope.toIdentity.id)
                         // .then(
                         //     function(){
                         //         $scope.cancelTimeout();
@@ -120,18 +110,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                         //     }
                         // )
                         
-                        cmApi.one('authenticationRequest:verified', function(data, fromIdentityId){
-                            var hashed_data =   cmCrypt.hashObject({
-                                                    transactionSecret:  $scope.transactionSecret,
-                                                    cameoId:            $scope.toIdentity.cameoId
-                                                })
 
-                            $scope.toKey = $scope.toIdentity.keys.find(data.key)
-                            
-                            if($scope.toKey.verify(hashed_data, data.signature)){
-                                $scope.fromKey.signPublicKey($scope.toKey, $scope.toKey.id, toIdentity) //Todo: $scope.toKey.id, fingerprint
-                            }
-                        }) 
                     
 
                         // var dataForRequest =    cmCrypt.signAuthenticationRequest({
@@ -173,7 +152,6 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                         $rootScope.goTo('settings/identity/keys', true);
                         return null;
                     }
-
 
                     if($scope.identityId){
                         $rootScope.goTo('contact/'+cmContactsModel.findByIdentityId($scope.identityId).id, true);
