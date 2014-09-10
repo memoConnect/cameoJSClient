@@ -142,7 +142,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
             scope.is3rdParty    =   request.identityId != cmUserModel.data.identity.id
             scope.fromIdentity  =   scope.is3rdParty
-                                    ?   cmContacts.findByIdentityId(request.identityId)
+                                    ?   cmContactsModel.findByIdentityId(request.identityId)
                                     :   cmUserModel.data.identity
             scope.fromKey       =   scope.fromIdentity.keys.find(request.keyId)
             scope.verify        =   function(secret){
