@@ -30,7 +30,7 @@ angular.module('cmCore').service('cmHooks', [
         };
 
         this.openBulkRequest = function(data){
-//            cmLogger.debug('cmHooks.openBulkRequest');
+            //cmLogger.debug('cmHooks.openBulkRequest');
 
             if(typeof data == 'object' && cmUtil.checkKeyExists(data,'key1') && cmUtil.checkKeyExists(data, 'key2')){
                 var scope = $rootScope.$new();
