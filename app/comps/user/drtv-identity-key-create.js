@@ -85,6 +85,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
 
                     var startTime = (new Date()).getTime();
 
+                    $scope.i18n.time = cmUtil.millisecondsToStr(0);
+
                     interval = window.setInterval(function(){
                         var newTime = (new Date()).getTime();
 
