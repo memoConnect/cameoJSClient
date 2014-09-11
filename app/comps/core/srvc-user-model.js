@@ -683,17 +683,17 @@ angular.module('cmCore')
                         ).finally(
                             function(){
                                 self.trigger('bulkrekeying:finished');
-                                this.state.unset('rekeying');
+                                self.state.unset('rekeying');
                             }
                         );
                     } else {
                         cmLogger.debug('cmUserModel.bulkReKeying - Key Error - getBulkPassphrases');
                         self.trigger('bulkrekeying:finished');
-                        this.state.unset('rekeying');
+                        self.state.unset('rekeying');
                     }
                 } else {
                     cmLogger.debug('cmUserModel.bulkReKeying - Parameter Error - getBulkPassphrases');
-                    self.trigger('bulkrekeying:finished');
+                    this.trigger('bulkrekeying:aborted');
                     this.state.unset('rekeying');
                 }
             }
