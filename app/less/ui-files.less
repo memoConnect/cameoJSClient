@@ -149,7 +149,7 @@ cm-files-preview{
 cm-modal.modal-image-fullscreen{
   .content{
     display:table;
-    width:100%;
+    width:@cm-app-width;
     height:100%;
     z-index:2;
     position:relative;
@@ -165,8 +165,8 @@ cm-modal.modal-image-fullscreen{
       figure{
         display:inline-block;
         img{
-          max-width:90%;
-          max-height:50%;
+          max-width: 100%;
+          height: auto;
         }
         figcaption{
           text-align: right;
