@@ -2,11 +2,12 @@
 
 angular.module('cmCore').service('cmRootService', [
     '$rootScope',
-    'cmLogger',
-    'cmJob',
     '$window',
     '$location',
-    function($rootScope, cmLogger, cmJob, $window, $location){
+    'cmLogger',
+    'cmJob',
+
+    function($rootScope, $window, $location, cmLogger, cmJob){
 
         $rootScope.goBack = function(){
             $window.history.back();
@@ -37,5 +38,31 @@ angular.module('cmCore').service('cmRootService', [
          * @type {Function|$rootScope.goTo}
          */
         $rootScope.goto = $rootScope.goTo;
+
+        $rootScope.gotoRegistration = function(){
+            this.goTo('/registration')
+        };
+
+        $rootScope.createNewConversation = function(){
+            delete $rootScope.pendingConversation;
+            $rootScope.goTo('/conversation/new');
+        };
+
+        $rootScope.createNewIdentity = function(){
+            $rootScope.goTo('/settings/identity/create');
+        }
+
+        $rootScope.gotoContactList = function(){
+            $rootScope.goTo('/contact/list')
+        }
+
+        $rootScope.gotoPurl = function(purlId, subpath){
+            $rootScope.goTo('/purl/'+purlId+'/'+subpath)
+        }
+
+        $rootScope.gotoConversation = function(conversationId, subpath){
+            $rootScope.goTo('/conversation/'+(conversationId || 'new')+'/'+subpath)
+
+        }
     }
 ]);

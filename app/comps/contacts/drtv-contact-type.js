@@ -4,9 +4,7 @@ angular.module('cmContacts').directive('cmContactType',[
     function (){
         return {
             restrict: 'AE',
-
             link: function(scope, element, attrs){
-
                 function refresh(contact){
                     var type    = contact.contactType,
                         icon    = ''
@@ -19,8 +17,9 @@ angular.module('cmContacts').directive('cmContactType',[
                     element.children().remove()
 
                     element.append(
-                        angular.element('<i></i>')
+                        angular.element('<i class="cm-grey"></i>')
                         .addClass('fa')
+                        .addClass('cm-lg-icon')
                         .addClass(icon)
                     ).addClass(type)
                 }

@@ -22,20 +22,22 @@
 
             <h4>{{'REGISTER.TITLE.HEAD_IDENTITY'|cmTranslate}}</h4>
 
+
+            <label>{{'REGISTER.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
             <div class="cm-input-ctn" data-qa="form-input">
                 <input
                     tabindex="4" data-qa="input-displayName"
-                    type="text" id="displayName" name="displayName" ng-model="formData.displayName"
-                    placeholder="{{'REGISTER.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" />
+                    type="text" id="displayName" name="displayName" ng-model="formData.displayName" />
             </div>
 
+
+            <label>{{'REGISTER.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
             <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':registrationForm.email.$invalid}" data-qa="form-input">
                 <input
                     tabindex="5" data-qa="input-email"
                     type="text" id="email" name="email"
                     ng-model="formData.email" ng-class="{'cm-input-error':registrationForm.email.$invalid}"
-                    cm-validate-email cm-adaptive-change
-                    placeholder="{{'REGISTER.PLACEHOLDER.EMAIL'|cmTranslate}}" />
+                    cm-validate-email cm-adaptive-change />
                 <i
                     class="fa cm-input-addon"
                     ng-class="{
@@ -51,13 +53,13 @@
                 </div>
             </div>
 
+            <label>{{'REGISTER.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
             <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':registrationForm.phone.$invalid}" data-qa="form-input">
                 <input
                     tabindex="6" data-qa="input-phone"
                     type="text" id="phone" name="phone"
                     ng-model="formData.phone" cm-validate-phone cm-adaptive-change ng-minlength="6"
-                    ng-class="{'cm-input-error':registrationForm.phone.$invalid}"
-                    placeholder="{{'REGISTER.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" />
+                    ng-class="{'cm-input-error':registrationForm.phone.$invalid}" />
                 <i
                     class="fa cm-input-addon"
                     ng-class="{

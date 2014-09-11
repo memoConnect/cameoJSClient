@@ -3,7 +3,12 @@
   margin-top: -@cm-header-height
 }
 
-cm-header{
+.cm-header-block {
+  z-index: 12 !important;
+  background:none !important;
+}
+
+cm-header, .cm-header-block{
   display:block;
   position:fixed;
   top:0;
@@ -70,6 +75,7 @@ cm-header{
 
   cm-add-button{
     display: inline-block;
+    border: 0.1rem #000 solid;
   }
 
   cm-header-list-search,

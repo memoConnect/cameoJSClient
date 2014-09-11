@@ -65,11 +65,15 @@
  */
 
 angular.module('cmUi').directive('cmSpinner',[
-    function (){
+    'cmLogger', 
+    function (cmLogger){
         return {
             restrict: 'AE',
             template: '<div class="spinner-wrapper" ng-show="loading"><div class="spinner"></div></div>',
             controller: function($scope, $element, $attrs){
+
+                cmLogger.warn('please use cmLoader instead of cmSpinner')
+
                 $scope.loading = false;
 
                 var opts = {};

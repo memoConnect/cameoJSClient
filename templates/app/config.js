@@ -18,10 +18,23 @@ cameo_config = {
         'start': {
             hasCtrl: true,
             guests: false,
-            routes: [
-                '/start/:pageParent?'
-            ],
+            routes: ['/start'],
             resolveOnBoot: true
+        },
+        'start-welcome': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/start/welcome']
+        },
+        'start-quickstart': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/start/quickstart']
+        },
+        'start-keyinfo': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/start/keyinfo']
         },
         'login': {
             hasCtrl: true,
@@ -30,14 +43,54 @@ cameo_config = {
             guests: false
         },
         'settings': {
+            routes: ['/settings'],
             hasCtrl: true,
-            routes: [
-                '/settings/identity/key/:keyId?',
-                '/settings/:pageParent?',
-                '/settings/:pageParent/:pageChild1?',
-                '/settings/:pageParent/:pageChild1/:pageChild2?'
-            ],
-            resolveOnBoot: true
+            guests: false
+        },
+        'settings-about': {
+            routes: ['/settings/about'],
+            hasCtrl: true,
+            guests: false
+        },
+        'settings-app': {
+            routes: ['/settings/app'],
+            hasCtrl: true,
+            guests: false
+        },
+        'settings-identity-list': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/settings/identity/list']
+        },
+        'settings-identity-create': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/settings/identity/create']
+        },
+        'settings-identity-edit': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/settings/identity/edit']
+        },
+        'settings-identity-key-list': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/settings/identity/key/list']
+        },
+        'settings-identity-key-create': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/settings/identity/key/create']
+        },
+        'settings-identity-key-edit': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/settings/identity/key/edit/:keyId?']
+        },
+        'settings-identity-key-import': {
+            hasCtrl: true,
+            guests: false,
+            routes: ['/settings/identity/key/import']
         },
         'authentication' :{
             hasCtrl: true,
@@ -58,23 +111,46 @@ cameo_config = {
         },
         'conversation': {
             routes:[
-                '/conversation/:conversationId?',
-                '/conversation/:conversationId/:pageChild1?'
+                '/conversation',
+                '/conversation/:conversationId?'
+            ],
+            hasCtrl: true,
+            resolveOnBoot: true
+        },
+        'conversation-security': {
+            routes:[
+                '/conversation/:conversationId/security'
+            ],
+            hasCtrl: true,
+            resolveOnBoot: true
+        },
+        'conversation-recipients': {
+            routes:[
+                '/conversation/:conversationId/recipients'
             ],
             hasCtrl: true,
             resolveOnBoot: true
         },
         'purl': {
             routes:[
-                '/purl/:purlId?',
-                '/purl/:purlId/:pageChild1?'
+                '/purl/:purlId'
             ],
             hasCtrl: true,
             guests: true
         },
-        'recipients': {
+        'purl-security': {
+            routes:[
+                '/purl/:purlId/security'
+            ],
             hasCtrl: true,
-            resolveOnBoot: true
+            guests: true
+        },
+        'purl-recipients': {
+            routes:[
+                '/purl/:purlId/recipients'
+            ],
+            hasCtrl: true,
+            guests: true
         },
         'registration': {
             hasCtrl: true,
@@ -88,13 +164,33 @@ cameo_config = {
         'filter': {
             hasCtrl: true
         },
-        'contacts': {
-            routes:['/contacts/:section?'],
+        'contact-list': {
+            routes:[
+                '/contact/list/:section?',
+                '/contact'
+            ],
             hasCtrl: true,
             resolveOnBoot: true
         },
-        'contact': {
-            routes:['/contact/:id'],
+        'contact-request-list': {
+            routes:[
+                '/contact/request/list',
+                '/contact/request',
+            ],
+            hasCtrl: true,
+            resolveOnBoot: true
+        },
+        'contact-search':  {
+            routes:[
+                '/contact/search',
+            ],
+            hasCtrl: true
+        },
+        'contact-details': {
+            routes:[
+                '/contact/:id/details',
+                '/contact/:id'
+            ],
             hasCtrl: true
         },
         'verification': {
@@ -155,9 +251,9 @@ cameo_config = {
         'menu': {i18n:'MENU.HEADER', icon:'cm-menu-weight', css:'cm-menu-header', onlyLabel:true},
 //        'notifications': {i18n:'MENU.NOTIFICATIONS', icon:'cm-notification', css:'cm-menu-notify'},
 //        'talks/': {i18n:'MENU.MESSAGES', icon:'cm-envelope-closed', css:'cm-menu-notify'},
-        'contacts/requests': {"data-qa":'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
+        'contact/request/list': {"data-qa":'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
         'talks': {i18n:'MENU.TALKS', icon:'cm-envelope-closed'},
-        'contacts': {i18n:'MENU.CONTACTS', icon:'cm-address-book'},
+        'contact/list': {i18n:'MENU.CONTACTS', icon:'cm-address-book'},
         //'settings/identity/keys': {"data-qa":'btn-menu-key-management', i18n:'MENU.KEYMANAGEMENT', icon:'cm-key'},
         'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings'},
         'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-rhino-positive'}
@@ -165,19 +261,19 @@ cameo_config = {
 
     footer: {
         'talks': {i18n:'DRTV.FOOTER.TALKS', icon:'cm-envelope-closed'},
-        'contacts': {i18n:'DRTV.FOOTER.CONTACTS', icon:'cm-address-book'},
+        'contact/list': {i18n:'DRTV.FOOTER.CONTACTS', icon:'cm-address-book'},
         'settings': {i18n:'DRTV.FOOTER.SETTINGS', icon:'cm-settings'}
     },
 
     routeSettings: {
         'account': {i18n:'SETTINGS.ACCOUNT', icon:'cm-person', disabled:true},
-        'identity/overview': {i18n:'SETTINGS.IDENTITY', icon:'cm-person'},
-        'identity/keys': {i18n:'MENU.KEYMANAGEMENT', icon:'cm-key'},
+        'identity/edit': {i18n:'SETTINGS.IDENTITY', icon:'cm-person'},
+        'identity/key/list': {i18n:'MENU.KEYMANAGEMENT', icon:'cm-key'},
         'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell', disabled:true},
-        'settings/contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-address-book', disabled:true},
+        'contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-address-book', disabled:true},
         'app': {i18n:'SETTINGS.APP', icon:'cm-fix'},
         'contracts': {i18n:'SETTINGS.CONTRACTS', icon:'cm-clipboard', disabled:true},
-        'about-us': {i18n:'SETTINGS.PAGES.ABOUT_US.TITLE', icon:'cm-rhino-positive'}
+        'about': {i18n:'SETTINGS.PAGES.ABOUT_US.TITLE', icon:'cm-rhino-positive'}
     }
 };
 // settings config to menu subs

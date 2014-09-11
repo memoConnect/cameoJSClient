@@ -37,7 +37,7 @@ describe('Purl Registration: ', function () {
 
         $('cm-footer button').click()
 
-        util.waitForPageLoad('/contacts')
+        util.waitForPageLoad('/contact/list')
     })
 
     it('start conversation with external user', function () {

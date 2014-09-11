@@ -27,36 +27,27 @@ angular.module('cmCore')
             f.readAsArrayBuffer(blob);
         }
 
-        function binaryStringtoBlob(byteCharacters, contentType, sliceSize) {
-            contentType = contentType || '';
-            sliceSize   = sliceSize   || 512;
-
-            var byteArrays = [];
-
-            for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-                var slice = byteCharacters.slice(offset, offset + sliceSize);
-
-                var byteNumbers = new Array(slice.length);
-                for (var i = 0; i < slice.length; i++) {
-                    byteNumbers[i] = slice.charCodeAt(i);
-                }
-
-                var byteArray = new Uint8Array(byteNumbers);
-
-                byteArrays.push(byteArray);
-            }
-
-            return cmFilesAdapter.blobWrap(byteArrays, contentType, 'binaryStringtoBlob');
-        }
-
         return function Chunk(file, start, end){
 
             cmObject.addEventHandlingTo(this);
+
+            var self = this,
+                isReady = $q.defer();
 
             this.raw = undefined;
             this.blob = undefined;
             this.plain = undefined;
             this.encryptedRaw = undefined;
+
+            this.isReady = function(callback){
+                isReady.promise.then(function(){
+                    if(callback){
+                        callback(self);
+                    }
+                });
+
+                return isReady.promise;
+            };
 
             this.importFileSlice = function (file, start, end){
                 var slicer  = file.webkitSlice || file.mozSlice || file.slice,
@@ -79,13 +70,12 @@ angular.module('cmCore')
                     promise = null;
 
                 this.blob
-                    ?   promise = cmFilesAdapter.getBlobUrl(this.blob).then(
-                    function(objUrl){
-                        self.raw = objUrl.src;
-                    }
-                )
-                    :   cmLogger.debug('Unable ro convert to file; this.blob is empty.');
-                return promise;
+                    ?   cmFilesAdapter.getBlobUrl(this.blob).then(function(objUrl){
+                            self.raw = objUrl.src;
+                            isReady.resolve();
+                        })
+                    :   cmLogger.debug('Unable to convert to file; this.blob is empty.');
+                return this;
             };
 
             this.blobToBinaryString = function(){
@@ -152,7 +142,7 @@ angular.module('cmCore')
 
             this.binaryStringToBlob = function(){
                 this.raw
-                    ?   this.blob = binaryStringtoBlob(this.raw)
+                    ?   this.blob = cmFilesAdapter.binaryToBlob(this.raw)
                     :   cmLogger.debug('Unable to convert to Blob; chunk.raw is empty. Try calling chunk.decrypt() first.');
                 return this;
             };

@@ -14,12 +14,12 @@ describe('Identity key settings: ', function () {
 
     it('create new user and open identity settings', function () {
         login = util.createTestUser()
-        util.get('/settings/identity')
+        util.get('/settings/identity/edit')
     })
 
-    it('key settings should open when clicking on button', function () {
+    it('key settings should open when clicked on the according button', function () {
         $("[data-qa='btn-identity-keys']").click()
-        util.waitForPageLoad('/settings/identity/keys')
+        util.waitForPageLoad('/settings/identity/key/list')
     })
 
     it('there should be no keys', function () {
@@ -30,7 +30,7 @@ describe('Identity key settings: ', function () {
 
     it('click button to create key', function () {
         $("[data-qa='btn-create-key']").click()
-        util.waitForPageLoad('/settings/identity/keys/create')
+        util.waitForPageLoad('/settings/identity/key/create')
     })
 
     it('select key size and generate', function () {
@@ -50,12 +50,12 @@ describe('Identity key settings: ', function () {
 
     it('cancel generation', function () {
         $("[data-qa='btn-cancel-key-generation']").click()
-        util.waitForPageLoad("/settings/identity/keys")
+        util.waitForPageLoad("/settings/identity/key/list")
     })
 
     it('start generation again', function () {
         $("[data-qa='btn-create-key']").click()
-        util.waitForPageLoad('/settings/identity/keys/create')
+        util.waitForPageLoad('/settings/identity/key/create')
         $("[data-qa='btn-generate-key']").click()
     })
 
@@ -87,7 +87,7 @@ describe('Identity key settings: ', function () {
     })
 
     it('the new key should be displayed as local', function () {
-        util.waitForPageLoad('/settings/identity/keys')
+        util.waitForPageLoad('/settings/identity/key/list')
         util.waitForElement("[data-qa='key-list-item']")
 
         $$("[data-qa='key-list-item']").then(function (elements) {
@@ -104,7 +104,7 @@ describe('Identity key settings: ', function () {
     it('the key should still be there after logout/login', function () {
         util.logout()
         util.login(login, password, '/talks')
-        util.get('/settings/identity/keys')
+        util.get('/settings/identity/key/list')
 
         $$("[data-qa='key-list-item']").then(function (elements) {
             expect(elements.length).toBe(1)
@@ -123,22 +123,19 @@ describe('Identity key settings: ', function () {
 
         util.logout()
         util.login(login, password)
+        util.get('/settings/identity/key/list')
         $$("[data-qa='key-list-item']").then(function (elements) {
             expect(elements.length).toBe(0)
         })
     })
 
-    it('generate another local key', function () {
+
+    it('generate another local key and delete local storage', function () {
         util.generateKey(1, keyName)
-        util.get('/settings/identity/keys')
-        util.waitForElements("[data-qa='key-list-item']", 1)
-
-    })
-
-    it('clear local storage and check that key is not local any more', function () {
         util.clearLocalStorage()
         util.login(login, password)
-        util.get('/settings/identity/keys')
+        util.get('/settings/identity/key/list')
+        util.waitForPageLoad('/settings/identity/key/list')
 
         $$("[data-qa='key-list-item']").then(function (elements) {
             expect(elements.length).toBe(1)
@@ -151,9 +148,10 @@ describe('Identity key settings: ', function () {
         })
     })
 
-    it('generate another local key', function () {
+    it('generate yet another local key', function () {
         util.generateKey(2)
-        util.get('/settings/identity/keys')
+        util.get('/settings/identity/key/list')
+        util.waitForPageLoad('/settings/identity/key/list')
         util.waitForElements("[data-qa='key-list-item']", 2)
     })
 

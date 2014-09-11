@@ -19,6 +19,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-bg-shell');
     grunt.loadNpmTasks('grunt-sloc');
     grunt.loadNpmTasks('grunt-ngdocs');
     grunt.loadNpmTasks('grunt-testflight-jsonresult');
@@ -247,7 +248,8 @@ module.exports = function (grunt) {
                 src: [
                     'app/less/base.less',
                     'app/less/bootstrap.less',
-                    'app/less/!(base|bootstrap).less'
+                    'app/less/theme-a.less',
+                    'app/less/!(base|bootstrap|theme-a).less'
                 ],
                 dest: 'app/css/app.less'
             },
@@ -282,9 +284,8 @@ module.exports = function (grunt) {
                     'ui': 'app/comps/ui',
                     'phonegap': 'app/comps/phonegap',
                     'route-conversation': 'app/routes/conversation/comps',
-                    'route-settings': 'app/routes/settings/comps',
                     'route-contacts': 'app/routes/contacts/comps',
-                    'route-start': 'app/routes/start/comps'
+                    'widgets': 'app/widgets'
                 })
             },
             'docs': {
@@ -529,7 +530,8 @@ module.exports = function (grunt) {
                     'data': {
                         'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'+
                                         '<script type="text/javascript" charset="utf-8" src="vendor/puship/PushipNotification.js"></script>'+
-                                        '<script type="text/javascript" charset="utf-8" src="config.js"></script>',
+                                        '<script type="text/javascript" charset="utf-8" src="config.js"></script>'+
+                            (globalCameoBuildConfig.debug.weinre ? '<script src="http://'+globalCameoBuildConfig.debug.weinreIp+':8080/target/target-script-min.js#anonymous"></script>' : ''),
                         'phonegapOnload': ' onload="deviceReady()"'
                     }
                 },
@@ -540,7 +542,7 @@ module.exports = function (grunt) {
             'index-www': {
                 'options': {
                     'data': {
-                        'phonegapFiles': '',
+                        'phonegapFiles': globalCameoBuildConfig.debug.weinre ? '<script src="http://'+globalCameoBuildConfig.debug.weinreIp+':8080/target/target-script-min.js#anonymous"></script>' : '',
                         'phonegapOnload': ''
                     }
                 },
@@ -690,7 +692,8 @@ module.exports = function (grunt) {
                 'templates/*',
                 'app/less/*.less',
                 'app/comps/**/*',
-                'app/routes/**/comps/**/*'
+                'app/routes/**/comps/**/*',
+                'app/widgets/**/*'
             ],
             tasks: ['genAllTemplates', 'packages']
         },
@@ -756,14 +759,47 @@ module.exports = function (grunt) {
 
         // utils
         shell: {
-            'node-webserver': {
-                command: 'node ./scripts/web-server.js'
-            },
             generateKeys: {
                 options: {
                     stdout: false
                 },
                 command: 'cd test/e2e/keys && rm -f *.key && ssh-keygen -N "" -f 1.key && ssh-keygen -N "" -f 2.key && ssh-keygen -N "" -f 3.key && ssh-keygen -N "" -f 4.key && ssh-keygen -N "" -f 5.key&& rm *.key.pub'
+            },
+            pythonServer: {
+                options: {
+                    stdout: true
+                },
+                command: 'python -m SimpleHTTPServer 8000'
+            }
+        },
+
+        bgShell: {
+            'node': {
+                cmd: 'node scripts/web-server.js',
+                bg: false
+            },
+            'python': {
+                cmd: 'python -m SimpleHTTPServer 8000',
+                bg: false
+            },
+            'cameo': {
+                cmd: 'sbt run',
+                bg: false,
+                execOpts: {
+                    cwd: '../cameoServer'
+                }
+            },
+            'weinre': {
+                cmd: 'weinre --boundHost '+globalCameoBuildConfig.debug.weinreIp,
+                bg: false
+            },
+            'logcat-cordova': {
+                cmd: 'adb logcat | grep "CordovaLog"',
+                bg: false
+            },
+            'logcat-clear': {
+                cmd: 'adb logcat -c',
+                bg: false
             }
         }
     });
@@ -780,54 +816,16 @@ module.exports = function (grunt) {
         'packages',
         'protractor:default'
     ]);
-    grunt.registerTask('tests-all', [
-        'tests-unit',
-        'tests-e2e'
-    ]);
+    grunt.registerTask('tests-all', ['tests-unit','tests-e2e']);
     grunt.registerTask('tests-multi', [
         // we only need to generate templates for tests
         'template:config-tests',
         'template:config-protractor-multi',
         'protractor:default'
-    ])
+    ]);
 
     // shortcuts
     grunt.registerTask('tests-2e2', ['tests-e2e']);
-    grunt.registerTask('count-lines', ['sloc']);
-    // phonegap to build server
-    grunt.registerTask('phonegap-bs', [
-        'clean:phonegap-target',
-        'clean:phonegap-build',
-        'deploy',
-        'copy:resources-phonegap',
-        'template:index-phonegap',
-        'template:config-phonegap',
-        'compress',
-        'phonegap-build:debug',
-        'copy:phonegap-target',
-        'testflight:iOS',
-        'template:index-dl',
-        'copy:resources-dl'
-    ]);
-    grunt.registerTask('phonegap-only-zip', [
-        'clean:phonegap-target',
-        'clean:phonegap-build',
-        'deploy',
-        'copy:resources-phonegap',
-        'template:index-phonegap',
-        'template:config-phonegap',
-        'compress',
-        'phonegap-build:only-zip'
-    ]);
-
-    grunt.registerTask('phonegap-splash', [
-        'phonegapsplash:build'
-    ]);
-
-    // deploy www without phonegap
-    grunt.registerTask('www', [
-        'template:index-www'
-    ]);
 
     // watch
     grunt.registerTask('genAllTemplates', [
@@ -856,7 +854,45 @@ module.exports = function (grunt) {
         'uglify:cockpit'
     ]);
 
-    grunt.registerTask('create-docs', ['clean:docs', 'packages', 'concat:docs', 'ngdocs']);
-    grunt.registerTask('node-webserver', ['shell:node-webserver']);
-    grunt.registerTask('code-coverage', ['sloc:code-coverage']);
+    grunt.registerTask(':build:create-docs', ['clean:docs', 'packages', 'concat:docs', 'ngdocs']);
+    // deploy www without phonegap
+    grunt.registerTask(':build:www', ['template:index-www']);
+
+    grunt.registerTask(':server:web:node', ['bgShell:node']);
+    grunt.registerTask(':server:web:python', ['shell:pythonServer']);
+    grunt.registerTask(':server:weinre', ['bgShell:weinre']);
+    grunt.registerTask(':server:cameo', ['bgShell:cameo']);
+
+    grunt.registerTask(':utils:code-coverage', ['sloc:code-coverage']);
+    grunt.registerTask(':utils:count-lines', ['sloc']);
+    grunt.registerTask(':utils:logcat-cordova', ['bgShell:logcat-cordova']);
+    grunt.registerTask(':utils:logcat-clear', ['bgShell:logcat-clear']);
+
+    // phonegap to build server
+    grunt.registerTask(':phonegap:to-build-server', [
+        'clean:phonegap-target',
+        'clean:phonegap-build',
+        'deploy',
+        'copy:resources-phonegap',
+        'template:index-phonegap',
+        'template:config-phonegap',
+        'compress',
+        'phonegap-build:debug',
+        'copy:phonegap-target',
+        'testflight:iOS',
+        'template:index-dl',
+        'copy:resources-dl'
+    ]);
+    grunt.registerTask(':phonegap:create-only-zip', [
+        'clean:phonegap-target',
+        'clean:phonegap-build',
+        'deploy',
+        'copy:resources-phonegap',
+        'template:index-phonegap',
+        'template:config-phonegap',
+        'compress',
+        'phonegap-build:only-zip'
+    ]);
+    grunt.registerTask(':phonegap:create-splashscreens', ['phonegapsplash:build']);
+
 };

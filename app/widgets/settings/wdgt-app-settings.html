@@ -1,0 +1,38 @@
+<h2 class="no-margin-bottom">
+    <i class="fa cm-fix cm-lg-icon"></i>
+    {{'SETTINGS.APP' | cmTranslate}}
+</h2>
+
+<ul>
+    <li>
+        <span class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.APP.LANGUAGE' | cmTranslate}}</span>
+            </span>
+
+            <div class="content" cm-language-select></div>
+        </span>
+    </li>
+    <li ng-click="handleBooleans('convertEmoji')">
+        <span class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.APP.EMOJI_CONVERT' | cmTranslate}}</span>
+            </span>
+
+            <section class="icon-list">
+                 <i class="fa cm-lg-icon" ng-class="{'cm-radio-0':!settings.convertEmoji,'cm-radio-1':settings.convertEmoji}"></i>
+            </section>
+        </span>
+    </li>
+    <li ng-click="handleBooleans('sendOnReturn')">
+        <span class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.APP.SEND_ON_RETURN' | cmTranslate}}</span>
+            </span>
+
+            <section class="icon-list">
+                <i class="fa cm-lg-icon" ng-class="{'cm-radio-0':!settings.sendOnReturn, 'cm-radio-1':settings.sendOnReturn}"></i>
+            </section>
+        </span>
+    </li>
+</ul>

@@ -15,14 +15,17 @@
  *
  */
 angular.module('cmConversations').service('cmConversationFactory', [
+
+    '$rootScope',
     'cmUserModel',
     'cmConversationsAdapter',
     'cmFactory',
     'cmStateManagement',
     'cmConversationModel',
     'cmLogger',
-    '$rootScope',
-    function(cmUserModel, cmConversationsAdapter, cmFactory, cmStateManagement, cmConversationModel, cmLogger, $rootScope) {
+    'cmCallbackQueue',
+
+    function($rootScope, cmUserModel, cmConversationsAdapter, cmFactory, cmStateManagement, cmConversationModel, cmLogger, cmCallbackQueue) {
         var self = cmFactory(cmConversationModel);
 
         var _quantity   = 0,
@@ -48,9 +51,13 @@ angular.module('cmConversations').service('cmConversationFactory', [
                 function (data) {
                     _quantity = data.numberOfConversations;
 
-                    data.conversations.forEach(function (conversation_data) {
-                        self.create(conversation_data);
-                    })
+                    return cmCallbackQueue.push(
+                        data.conversations.map(function (conversation_data) {
+                            return  function(){
+                                        self.create(conversation_data);
+                                    }
+                        })
+                    )
                 }
             ).finally(
                 function(){
@@ -61,7 +68,7 @@ angular.module('cmConversations').service('cmConversationFactory', [
 
         self.getLimit = function(){
             return _limit;
-        }
+        };
 
         /**
          * @ngdoc method
@@ -98,6 +105,33 @@ angular.module('cmConversations').service('cmConversationFactory', [
 
         cmConversationsAdapter.on('conversation:new', function(event,data){
             self.create(data)
+        });
+
+        /**
+         * @TODO CallbackQueue?
+         */
+        cmConversationsAdapter.on('passphrases:updated', function(event, data){
+            //cmLogger.debug('cmConversationFactory.on:passphrase:updated');
+
+            if(typeof data == 'object' && 'keyId' in data && typeof data.keyId == 'string' && data.keyId.length > 0){
+                var localKeys = cmUserModel.loadLocalKeys();
+                var checkKeyId = false;
+
+                localKeys.forEach(function(key){
+                    if(key.id == data.keyId){
+                        checkKeyId = true;
+                    }
+                });
+
+                if(checkKeyId){
+                    self.forEach(function(conversation){
+                       conversation.load();
+                    });
+                }
+            }
+            //cmCallbackQueue.push(
+            //    // iterate over conversations and decrypt
+            //);
         });
 
         return self;

@@ -69,7 +69,7 @@ angular.module('cmUi').directive('cmAvatar',[
             scope: {
                 identity: "=cmData"
             },
-            template: '<img >',
+            template: '<img />',
 
             link: function(scope, element, attrs){
 

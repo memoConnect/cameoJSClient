@@ -6,6 +6,10 @@
         "enableDebug": true,
         "logLevel": "DEBUG"
     },
+    "debug":{
+        "weinre": false,
+        "weinreIp": ""
+    },
     "phonegap": {
         "baseName" : "cameoNet-default",
         "appId" : "864855",

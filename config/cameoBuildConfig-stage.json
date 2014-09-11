@@ -5,11 +5,15 @@
         "loadingBar": true,
         "enableDebug": true,
         "logLevel": "WARN"
-
+    },
+    "debug":{
+        "weinre": false,
+        "weinreIp": ""
     },
     "phonegap": {
-        "baseName" : "cameoNet-stage",
-        "appId" : "1028315",
-        "bundleId" : "de.cameonet.app.test.stage"
+        "baseName": "cameoNet-stage",
+        "appId": "1028315",
+        "bundleId": "de.cameonet.app.test.stage",
+        "extraName": ""
     }
 }

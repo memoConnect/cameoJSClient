@@ -16,25 +16,12 @@ describe('Route Settings Identity: ', function(){
     afterEach(function() { util.stopOnError() });
 
     describe('Test 1 - GUI', function(){
-        it('should be load at "#/settings/identity" after login.', function(){
+        it('should be load at "#/settings/identity/edit" after login.', function(){
             util.login()
             util.expectCurrentUrl('#/start')
 
-            util.get('/settings/identity')
-            util.expectCurrentUrl('#/settings/identity')
-        })
-
-        it('should be possible to go to identity settings, if clicking on name in header', function(){
-
-            util.get('/talks');
-            util.expectCurrentUrl('/talks')
-
-            util.waitForElement("[data-qa='btn-identity-settings']")
-            expect($("[data-qa='btn-identity-settings']").isPresent()).toBe(true)
-
-            $("[data-qa='btn-identity-settings']").click()
-
-            util.waitForPageLoad("/settings/identity")
+            util.get('/settings/identity/edit')
+            util.expectCurrentUrl('#/settings/identity/edit')
         })
 
         it('should exists a key management button', function(){
@@ -72,8 +59,8 @@ describe('Route Settings Identity: ', function(){
         })
 
         it('should go to identity settings', function(){
-            util.get('/settings/identity')
-            util.expectCurrentUrl('#/settings/identity')
+            util.get('/settings/identity/edit')
+            util.expectCurrentUrl('#/settings/identity/edit')
         })
 
         it('cameoId should be exists ('+ newTestUser +')', function(){
@@ -108,12 +95,12 @@ describe('Route Settings Identity: ', function(){
     })
 
     describe('Test 3 - check Data after logout and login', function(){
-        it('should be load at "#/settings/identity" after login.', function(){
+        it('should be load at "#/settings/identity/edit" after login.', function(){
             util.login(newTestUser, password)
             util.expectCurrentUrl('#/start')
 
-            util.get('/settings/identity')
-            util.expectCurrentUrl('#/settings/identity')
+            util.get('/settings/identity/edit')
+            util.expectCurrentUrl('#/settings/identity/edit')
         })
 
         it('displayName should be ('+ newDisplayName +')', function(){
@@ -147,8 +134,8 @@ describe('Route Settings Identity: ', function(){
             util.login()
             util.expectCurrentUrl('#/start')
 
-            util.get('/settings/identity')
-            util.expectCurrentUrl('#/settings/identity')
+            util.get('/settings/identity/edit')
+            util.expectCurrentUrl('#/settings/identity/edit')
         })
 
         it('should be shown an error, if email is wrong', function(){
@@ -203,5 +190,4 @@ describe('Route Settings Identity: ', function(){
             }, 5000, "timeout while waiting for warning to disappear")
         })
     })
-
 });
