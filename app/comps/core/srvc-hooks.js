@@ -299,6 +299,9 @@ angular.module('cmCore').service('cmHooks', [
             cmUserModel.signOwnKeys();
         });
 
-
+        cmAuthenticationRequestFactory.on('authentication:finished', function(event, data){
+            //console.log('authentication:finished', data);
+            self.openBulkRequest(data);
+        });
     }
 ]);
