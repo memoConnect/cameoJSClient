@@ -30,7 +30,7 @@ angular.module('cmCore').service('cmHooks', [
         };
 
         this.openBulkRequest = function(data){
-//            cmLogger.debug('cmHooks.openBulkRequest');
+            //cmLogger.debug('cmHooks.openBulkRequest');
 
             if(typeof data == 'object' && cmUtil.checkKeyExists(data,'key1') && cmUtil.checkKeyExists(data, 'key2')){
                 var scope = $rootScope.$new();
@@ -299,6 +299,9 @@ angular.module('cmCore').service('cmHooks', [
             cmUserModel.signOwnKeys();
         });
 
-
+        cmAuthenticationRequestFactory.on('authentication:finished', function(event, data){
+            //console.log('authentication:finished', data);
+            self.openBulkRequest(data);
+        });
     }
 ]);

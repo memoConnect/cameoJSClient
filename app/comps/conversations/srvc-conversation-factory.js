@@ -68,7 +68,7 @@ angular.module('cmConversations').service('cmConversationFactory', [
 
         self.getLimit = function(){
             return _limit;
-        }
+        };
 
         /**
          * @ngdoc method
@@ -105,6 +105,35 @@ angular.module('cmConversations').service('cmConversationFactory', [
 
         cmConversationsAdapter.on('conversation:new', function(event,data){
             self.create(data)
+        });
+
+        /**
+         * @TODO CallbackQueue? Fingerprint check! Performance!
+         */
+        cmConversationsAdapter.on('passphrases:updated', function(event, data){
+            //cmLogger.debug('cmConversationFactory.on:passphrase:updated');
+
+            if(typeof data == 'object') {
+                if ('keyId' in data && typeof data.keyId == 'string' && data.keyId.length > 0) {
+                    var localKeys = cmUserModel.loadLocalKeys();
+                    var checkKeyId = false;
+
+                    localKeys.forEach(function (key) {
+                        if (key.id == data.keyId) {
+                            checkKeyId = true;
+                        }
+                    });
+
+                    if (checkKeyId) {
+                        self.forEach(function (conversation) {
+                            conversation.load();
+                        });
+                    }
+                }
+            }
+            //cmCallbackQueue.push(
+            //    // iterate over conversations and decrypt
+            //);
         });
 
         return self;
