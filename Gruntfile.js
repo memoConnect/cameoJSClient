@@ -689,6 +689,7 @@ module.exports = function (grunt) {
         // watch
         watch: {
             files: [
+                'config/*.json',
                 'templates/*',
                 'app/less/*.less',
                 'app/comps/**/*',
@@ -780,7 +781,8 @@ module.exports = function (grunt) {
             },
             'python': {
                 cmd: 'python -m SimpleHTTPServer 8000',
-                bg: false
+                bg: false,
+                stdout: false
             },
             'cameo': {
                 cmd: 'sbt run',

@@ -663,9 +663,9 @@ angular.module('cmCore')
                                     cmAuth.saveBulkPassphrases(newKey.id, newList).then(
                                         function(){
                                             cmAuth.sendBroadcast({
-                                                name:'rekeying:finished',
+                                                name: 'rekeying:finished',
                                                 data:{
-                                                    keyId:newKey.id
+                                                    keyId: newKey.id
                                                 }
                                             });
                                         },
