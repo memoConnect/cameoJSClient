@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('cmContacts').directive('cmContactList',[
-    'cmContactsModel',
-    'cmLogger',
+    'cmContactsModel', 'cmLogger',
     '$rootScope',
-    '$location',
-    function (cmContactsModel, cmLogger, $rootScope, $location) {
+    function (cmContactsModel, cmLogger,
+              $rootScope) {
         return {
             restrict: 'AE',
             scope: true,
@@ -35,7 +34,6 @@ angular.module('cmContacts').directive('cmContactList',[
                         $rootScope.goTo('/contact/' + contact.id);
                     }
                 };
-                //cmContactsModel.getAll();
             }
         }
     }

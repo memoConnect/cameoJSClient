@@ -1,7 +1,14 @@
+<article class="content" ng-click="chooseContact()">
+    <cm-info-bubble nose-x="55%">
+        <span ng-bind-html="'CONTACTS.INFO.IMPORT_RIGHTS' | cmParse"></span>
+    </cm-info-bubble>
+</article>
+
 <div class="cm-contact-body">
     <div class="cm-contact-details" cm-rubber-space>
         <div cm-weight="1">
-            <cm-avatar cm-data="identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-if="identity"></cm-avatar>
+            <img ng-if="identity.avatar" src="{{identity.avatar}}" />
+            <cm-avatar ng-if="!identity.avatar" cm-data="identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-if="identity"></cm-avatar>
         </div>
         <div cm-weight="1">
             <div class="cm-contact-actions" cm-rubber-space ng-if="contact.contactType">
@@ -33,14 +40,6 @@
 
     <div class="cm-contact-inputs">
         <form name="cmForm" novalidate autocomplete="off">
-            <div class="cm-input-ctn with-inside-icon cm-icon-grey" ng-class="{'cm-input-disabled':disabled}" ng-if="!showCameoId">
-                <i class="fa cm-rhino-positive"></i>
-                <input
-                        tabindex="1" data-qa="input-cameoId" required disabled
-                        type="text" name="cameoId" ng-model="identity.cameoId"
-                        placeholder="{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}" />
-            </div>
-
             <div class="cm-input-ctn" ng-class="{'cm-input-disabled':disabled}">
                 <input
                     tabindex="1" data-qa="input-displayname"

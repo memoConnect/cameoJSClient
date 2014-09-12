@@ -5,13 +5,13 @@ define([
     'ngload!pckValidate',
     'ngload!pckCore',
     'ngload!pckUser',
-    'ngload!pckWidgets',
+    'ngload!pckWidgets'
 
 ], function(app){
     'use strict';
 
-    app.register.controller('ContactDetailsCtrl',
-        function($scope){
+    app.register.controller('ContactImportCtrl',
+        function(){
             //nothing to do here yet
         }
     );

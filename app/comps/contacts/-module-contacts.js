@@ -1,5 +1,6 @@
 'use strict';
 
 angular.module('cmContacts',[
-    'cmCore'
+    'cmCore',
+    'cmPhonegap'
 ]);

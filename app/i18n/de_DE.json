@@ -210,7 +210,9 @@
             "REQUESTS": "Kontaktanfragen",
             "SEARCH": "Suchen",
             "NEW_CONTACTS": "Neue Kontakte",
-            "SEND_REQUEST": "Kontaktanfrage"
+            "SEND_REQUEST": "Kontaktanfrage",
+            "CREATE": "Neuen Kontakt anlegen",
+            "IMPORT": "Lokalen Kontakt importieren "
         },
         "LIST_EMPTY": "Bisher keine Kontakte vorhanden.",
         "PLACEHOLDER": {
@@ -227,7 +229,9 @@
                 "ACCEPT": "Sie sind nun mit diesem Kontakt verbunden.",
                 "REJECT": "Die Anfrage wurde zurückgewiesen.",
                 "IGNORE": "Der User wird nun ignoriert."
-            }
+            },
+            "IMPORT_POSSIBLE": "Sie können auch aus Ihrem lokalen Adressbuch einen Kontakt zu einem Cameo Kontakt machen. <a href=\"#/contact/import\">jetzt importieren</a>",
+            "IMPORT_RIGHTS": "Jetzt greifen wir auf Ihrem lokalen Adressbuch zu. Sie wählen einen Kontakt, und nur diese Daten die Sie ausgewählt haben, werden für einen Cameo Kontakt verwendet. <a>Neuen Kontakt aussuchen</a>"
         },
         "LABEL": {
             "DISPLAYNAME": "Anzeigename",
@@ -237,7 +241,8 @@
             "FILTER": "Filtern",
             "SEARCH_IDENTITY": "CameoNet durchsuchen",
             "ADD_EXTERN": "Externen Kontakt hinzufügen",
-            "SEND_REQUEST": "Senden"
+            "SEND_REQUEST": "Senden",
+            "IMPORT_LOCAL": "Lokalen Kontakt importieren"
         },
         "BUTTON": {
             "RESET": "Zurücksetzen",
