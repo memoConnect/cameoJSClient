@@ -94,6 +94,10 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
                 return self.plugin != null;
             },
 
+            // TODO: pick error app crashed
+            //E/AndroidRuntime(15951):        at org.apache.cordova.CordovaActivity.onActivityResult(CordovaActivity.java:897)
+            // https://code.cs.nott.ac.uk/p/gp13-ajp/source/tree/83/code/gh-app/platforms/android/CordovaLib/src/org/apache/cordova/CordovaActivity.java
+
             selectOne: function() {
                 var loaded = $q.defer();
 

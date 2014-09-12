@@ -36,52 +36,72 @@ angular.module('cmContacts')
             controller: function($scope, $element, $attrs){
                 $scope.cmUtil = cmUtil;
 
-                $scope.formData = {
-                    phoneNumbers: [{value:''}],
-                    emails: [{value:''}]
-                };
-
-                $scope.contact = {};
-                $scope.identity = {
-                    displayName: '',
-                    phoneNumber: '',
-                    email: '',
-                    exportData: function(){
-                        return {
-                            displayName: this.displayName,
-                            phoneNumber: this.phoneNumber,
-                            email: this.email
-                        }
-                    }
-                };
-                $scope.disabled = false;
                 $scope.chooseAvatar = true;
-                $scope.showCameoId = true;
+
+                $scope.reset = function(){
+                    $scope.formData = {
+                        phoneNumbers: [{value:'',type:''}],
+                        emails: [{value:'',type:''}]
+                    };
+
+                    $scope.identity = {
+                        displayName: '',
+                        phoneNumber: '',
+                        email: '',
+                        exportData: function(){
+                            return {
+                                displayName: this.displayName,
+                                phoneNumber: this.phoneNumber,
+                                email: this.email
+                            }
+                        }
+                    };
+                };
 
                 $scope.chooseContact = function(){
                     cmLocalContacts.selectOne().then(
                         function (contact) {
-
-                            console.log(contact)
+                            $scope.reset();
 
                             if(contact.displayName == '')
                                 contact.displayName = undefined;
 
                             $scope.identity.displayName = contact.displayName || contact.name.formatted;
-                            $scope.formData.phoneNumbers = contact.phoneNumbers;
-                            $scope.formData.emails = contact.emails;
-                            $scope.identity.avatar = contact.photos.length > 0 ? contact.photos[0].value : null
 
+                            if(contact.phoneNumbers.length > 0) {
+                                $scope.formData.phoneNumbers = contact.phoneNumbers;
+                            }
+
+                            if(contact.emails.length > 0) {
+                                $scope.formData.emails = contact.emails;
+                            }
+
+                            //$scope.identity.avatar = contact.photos.length > 0 ? contact.photos[0].value : null
                         }
                     )
                 };
 
-                $scope.saveUser = function(){
+                $scope.chooseItem = function(item, type){
+                    switch(type){
+                        case 'phone':
+                            $scope.identity.phoneNumber = item.value;
+                        break;
+                        case 'email':
+                            $scope.identity.email = item.value;
+                        break;
+                    }
+                };
+
+                $scope.isSelected = function(item, type){
+                    return item.value != '' && item.value == identity[type];
+                };
+
+                $scope.importContact = function(){
                     // declaration
                     var emptyIdentity = {
                         displayName: null,
-                        email: null,
                         phoneNumber: null,
+                        email: null,
                         preferredMessageType: 'default',
                         // TODO: not implemented in BE
                         name: null,
@@ -92,21 +112,18 @@ angular.module('cmContacts')
                     // merge given identity with default
                     identity = angular.extend({}, emptyIdentity, $scope.identity.exportData());
 
-                    // validation
-                    //////////////////////
-                    // TODO: mock workarround for multiinput from array to single string
-                    if($scope.formData.phoneNumbers.length > 0 && $scope.formData.phoneNumbers[0].value != ''){
-                        identity.phoneNumber = $scope.formData.phoneNumbers[0].value;
+                    // handle preferredMessageType
+                    if(identity.phoneNumber != null){
                         identity.preferredMessageType = 'sms';
                     } else {
                         identity.phoneNumber = null;
                     }
-                    if($scope.formData.emails.length > 0 && $scope.formData.emails[0].value != ''){
-                        identity.email = $scope.formData.emails[0].value;
+                    if(identity.email != null){
                         identity.preferredMessageType = 'mail';
                     } else {
                         identity.email = null;
                     }
+
                     //////////////////////
                     if($scope.cmForm.$invalid){
                         return false;
@@ -127,6 +144,8 @@ angular.module('cmContacts')
                         }
                     );
                 };
+
+                $scope.reset();
 
                 // init
                 if(cmLocalContacts.canRead()) {

@@ -4,8 +4,7 @@
     </cm-info-bubble>
 </article>
 
-<div class="cm-contact-body">
-    <div class="cm-contact-details" cm-rubber-space>
+    <!--<div class="cm-contact-details" cm-rubber-space>
         <div cm-weight="1">
             <img ng-if="identity.avatar" src="{{identity.avatar}}" />
             <cm-avatar ng-if="!identity.avatar" cm-data="identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-if="identity"></cm-avatar>
@@ -36,65 +35,74 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 
-    <div class="cm-contact-inputs">
-        <form name="cmForm" novalidate autocomplete="off">
-            <div class="cm-input-ctn" ng-class="{'cm-input-disabled':disabled}">
-                <input
-                    tabindex="1" data-qa="input-displayname"
-                    type="text" name="displayName" ng-model="identity.displayName"
-                    ng-disabled="disabled" required
-                    placeholder="{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" />
+<form name="cmForm" novalidate autocomplete="off">
+
+    <article class="content">
+        <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
+        <div class="cm-input-ctn with-inside-icon cm-icon-grey">
+            <input
+                tabindex="1" data-qa="input-displayname"
+                type="text" name="displayName" ng-model="identity.displayName"
+                ng-disabled="disabled" required />
+        </div>
+        <cm-info-bubble class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid">
+            <div ng-show="cmForm.displayName.$error.required">
+                <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
             </div>
+        </cm-info-bubble>
+    </article>
 
-            <div class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid">
-                <div ng-show="cmForm.displayName.$error.required">
-                    <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
+    <hr class="margin-small" />
+
+    <cm-multi-input cm-collection="formData.phoneNumbers">
+        <article class="content">
+            <ng-form name="formPhone" class="with-radiobutton">
+                <label>{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate:{type:item.type} }}</label>
+                <div class="cm-input-ctn with-inside-icon cm-icon-grey">
+                    <input
+                        tabindex="2" data-qa="input-phonenumber"
+                        type="text" name="phoneNumber" ng-model="item.value"
+                        cm-validate-phone cm-adaptive-change
+                         />
                 </div>
-            </div>
+                <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
+                <cm-info-bubble class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
+                    <div ng-show="formPhone.phoneNumber.$invalid">
+                        <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
+                    </div>
+                </cm-info-bubble>
+                <i class="fa cm-radio-0" ng-class="{'cm-radio-1':isSelected(item,'phoneNumber')}" ng-click="chooseItem(item,'phone')"></i>
+            </ng-form>
+        </article>
+    </cm-multi-input>
 
-            <cm-multi-input cm-collection="formData.phoneNumbers" cm-disabled="disabled">
-                <ng-form name="formPhone">
-                    <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
-                        <input
-                            tabindex="2" data-qa="input-phonenumber"
-                            type="text" name="phoneNumber" ng-model="item.value"
-                            ng-disabled="disabled" cm-validate-phone cm-adaptive-change
-                            placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" />
-                    </div>
-                    <div cm-type-chooser cm-choose-value-to="item" cm-disabled="disabled" ng-class="{'cm-input-disabled':disabled}"></div>
-                    <div class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
-                        <div ng-show="formPhone.phoneNumber.$invalid">
-                            <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
-                        </div>
-                    </div>
-                </ng-form>
-            </cm-multi-input>
+    <hr class="margin-small" />
 
-            <cm-multi-input cm-collection="formData.emails" cm-disabled="disabled">
-                <ng-form name="formEmail">
-                    <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
-                        <input
-                            tabindex="3" data-qa="input-email"
-                            name="email" ng-model="item.value"
-                            ng-disabled="disabled" cm-validate-email
-                            placeholder="{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}" />
+    <cm-multi-input cm-collection="formData.emails">
+        <article class="content">
+            <ng-form name="formEmail" class="with-radiobutton">
+                <label>{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate:{type:item.type} }}</label>
+                <div class="cm-input-ctn with-inside-icon cm-icon-grey">
+                    <input
+                        tabindex="3" data-qa="input-email"
+                        name="email" ng-model="item.value"
+                        cm-validate-email />
+                </div>
+                <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
+                    <div ng-show="formEmail.email.$invalid">
+                        <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
                     </div>
-                    <div cm-type-chooser cm-choose-value-to="item" ng-class="{'cm-input-disabled':disabled}" cm-disabled="disabled"></div>
-                    <div class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
-                        <div ng-show="formEmail.email.$invalid">
-                            <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
-                        </div>
-                    </div>
-                </ng-form>
-            </cm-multi-input>
-        </form>
-    </div>
-</div>
+                </cm-info-bubble>
+                <i class="fa cm-radio-0" ng-class="{'cm-radio-1':isSelected(item,'email')}" ng-click="chooseItem(item,'email')"></i>
+            </ng-form>
+        </article>
+    </cm-multi-input>
+</form>
 
-<cm-footer ng-hide="disabled">
-    <button data-qa="btn-create-contact" class="cm-btn-block cm-btn-grey" id="registerUserButton" ng-click="saveUser()">
+<cm-footer>
+    <button data-qa="btn-create-contact" class="cm-btn-block cm-btn-grey" id="registerUserButton" ng-click="importContact()">
         {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i>
     </button>
 </cm-footer>

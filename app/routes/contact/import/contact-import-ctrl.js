@@ -10,9 +10,10 @@ define([
 ], function(app){
     'use strict';
 
-    app.register.controller('ContactImportCtrl',
+    app.register.controller('ContactImportCtrl',[
+        // no dependencies
         function(){
             //nothing to do here yet
         }
-    );
+    ]);
 });

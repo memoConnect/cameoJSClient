@@ -200,7 +200,7 @@ cameo_config = {
         },
         'contact-edit': {
             routes:[
-                '/contact/edit/:id'
+                '/contact/edit/:id?'
             ],
             hasCtrl: true
         },

@@ -31,7 +31,7 @@ angular.module('cmContacts').directive('cmContactList',[
                  */
                 $scope.editContact = function (contact) {
                     if(contact.contactType != 'pending') {
-                        $rootScope.goTo('/contact/' + contact.id);
+                        $rootScope.goTo('/contact/edit/' + contact.id);
                     }
                 };
             }

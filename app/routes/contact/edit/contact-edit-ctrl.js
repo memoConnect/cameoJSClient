@@ -10,12 +10,12 @@ define([
 ], function(app){
     'use strict';
 
-    app.register.controller('ContactEditCtrl',
+    app.register.controller('ContactEditCtrl',[
         '$routeParams', '$scope',
         function($routeParams, $scope){
             //nothing to do here yet
 
             $scope.contactId = $routeParams.id
         }
-    );
+    ]);
 });

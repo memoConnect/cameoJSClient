@@ -263,8 +263,8 @@
         "PLACEHOLDER": {
             "CAMEOID": "CameoID",
             "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
-            "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER",
-            "EMAIL": "@:DRTV.VALIDATE_EMAIL.PLACEHOLDER",
+            "PHONENUMBER": "Telefonnummer ({{type}})",
+            "EMAIL": "E-Mail ({{type}})",
             "STREET": "Straße",
             "STREETNR": "Nr.",
             "ZIP": "PLZ",
