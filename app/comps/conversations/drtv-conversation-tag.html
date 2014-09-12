@@ -1,7 +1,8 @@
 <cm-avatar cm-data="avatarIdentity"></cm-avatar>
 
 <div class="details" cm-weight="3">
-    <div class="subject" data-qa="conversation-subject" ng-bind-html="conversation | cmTagline"></div>
+    <div class="top"><cm-recipients-comma-seperated cm-data="conversation"></cm-recipients-comma-seperated></div>
+    <!--<div class="subject" data-qa="conversation-subject" ng-bind-html="conversation | cmTagline"></div>-->
     <cm-message cm-data="conversation.lastMessage" text-only="true" data-qa="conversation-last-message"></cm-message>
 </div>
 

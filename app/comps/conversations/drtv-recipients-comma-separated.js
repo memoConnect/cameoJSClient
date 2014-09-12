@@ -1,12 +1,39 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmRecipientsCommaSeperated', [
-    function(){
+    'cmUserModel',
+    function(cmUserModel){
         return {
             restrict: 'E',
-            template: '<span>{{list}}}</span>',
+            scope: {
+                conversation: '=cmData'
+            },
+            template: '<span>{{entries}}</span>',
             controller: function($scope){
-                $scope.list = '';
+                $scope.entries = '';
+
+                if($scope.conversation.recipients.length > 2){
+                    /**
+                     * Groups
+                     */
+                    $scope.entries = $scope.conversation.recipients.filter(function(recipient){
+                        return (recipient.id != cmUserModel.data.identity.id);
+                    }).map(function(recipient){
+                        return recipient.getDisplayName();
+                    }).join(', ');
+                } else if($scope.conversation.recipients.length == 2){
+                    /**
+                     * Chat
+                     */
+                    $scope.entries =  $scope.conversation.recipients.filter(function(recipient){
+                        return (recipient.id != cmUserModel.data.identity.id);
+                    })[0].getDisplayName();
+                } else {
+                    /**
+                     * Own
+                     */
+                    $scope.entries = cmUserModel.data.identity.getDisplayName();
+                }
             }
         }
     }
