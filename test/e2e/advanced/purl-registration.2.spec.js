@@ -30,8 +30,8 @@ describe('Purl Registration: ', function () {
 
     it('add external contact to test user', function () {
 
-        util.get('/contact/new')
-        util.waitForPageLoad('/contact/new')
+        util.get('/contact/create')
+        util.waitForPageLoad('/contact/create')
 
         $("[data-qa='input-displayname']").sendKeys(externalLogin)
         $("[data-qa='input-phonenumber']").sendKeys('12345')
