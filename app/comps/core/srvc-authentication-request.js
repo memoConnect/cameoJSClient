@@ -27,7 +27,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
         self = {
             /**
              * @ngdoc method
-             * @methodOf cmAuth
+             * @methodOf cmAuthenticationRequest
              *
              * @name generateTransactionSecrete
              * @description
@@ -43,7 +43,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
             /**
              * @ngdoc method
-             * @methodOf cmAuth
+             * @methodOf cmAuthenticationRequest
              *
              * @name getTransactionSecret
              * @description
@@ -60,9 +60,9 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
             /**
              * @ngdoc method
-             * @methodOf cmAuth
+             * @methodOf cmAuthenticationRequest
              *
-             * @name sendAuthenticationRequest
+             * @name send
              * @description
              * Sends an Authentication Request to all devices of an identity
              *
@@ -74,30 +74,69 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
             send: function(toIdentity, secret, toKey, fromKey){
                 var fromIdentity    =   cmUserModel.data.identity,
                     fromKey         =   fromKey || cmUserModel.loadLocalKeys()[0],
-                    salt            =   cmCrypt.generatePassword(32),
-                    hashed_data     =   cmCrypt.hashObject({
-                                            transactionSecret:  secret,
-                                            cameoId:            fromIdentity.cameoId,
-                                            salt:               salt
-                                        })
+                    salt            =   cmCrypt.generatePassword(32)
+
                     
-                return  cmApi.broadcast({
+
+                cmCallbackQueue
+                .push(function(){
+                        return  cmCrypt.hashObject({
+                                    transactionSecret:  secret,
+                                    cameoId:            fromIdentity.cameoId,
+                                    salt:               salt
+                                })
+                },100)
+                .then(function(result){
+                    var hashed_data = result[0]
+
+                    return  cmCallbackQueue.push(function(){
+                                return fromKey.sign(hashed_data)
+                            }, 100)
+                })
+                .then(function(result){
+                    var signature = result[0]
+
+                    return cmApi.broadcast({
                             name:   'authenticationRequest:start',
                             data:   {
                                         fromKeyId:      fromKey.id,
                                         fromIdentityId: fromIdentity.id,
                                         toKeyId:        toKey ? toKey.id : undefined,
                                         salt:           salt,
-                                        signature:      fromKey.sign(hashed_data),
+                                        signature:      signature,
                                     }
                         }, toIdentity.id)
+
+                })
             },
+
+            /**
+             * @ngdoc method
+             * @methodOf cmAuthenticationRequest
+             *
+             * @name  cancel
+             * @description
+             * Cancels an Authentication Request on all devices of an identity
+             *
+             * @param {String} [signature]  The signature sent with the authenticationRequest that should be canceled
+             * @returns {Promise}           Promise that will be resolved after the event is posted to the backend.
+             */
+
+            cancel: function(){
+                return  cmApi.broadcast({
+                            name:   'authenticationRequest:cancel',
+                            data:   {
+                                        fromId: cmUserModel.data.identity.id    //Todo: the identity.id should be part of the backend event!
+                                    }
+                        })
+            },
+
 
              /**
              * @ngdoc method
-             * @methodOf cmAuth
+             * @methodOf cmAuthenticationRequest
              *
-             * @name verifyAuthenticationRequest
+             * @name verify
              * @description
              * Verifies an Authentication Request
              *
@@ -122,10 +161,11 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                     })
 
                 return result
-            } 
+            }
         }
 
         cmObject.addEventHandlingTo(self)
+
         cmApi.on('authenticationRequest:start', function(event, request){
 
             var modal = cmModal.instances['incoming-authentication-request']
@@ -142,10 +182,15 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
             if(request.toKeyId && !cmUserModel.loadLocalKeys().find(request.toKeyId))
                 return false
 
-            self.trigger('start', request)
+            self.trigger('started', request)
         })
 
-        self.on('start', function(event, request){
+        cmApi.on('authenticationRequest:cancel', function(event, data){
+            data.fromId = data.fromId       //Todo: should be event.from
+            self.trigger('canceled', data)
+        })
+
+        self.on('started', function(event, request){
 
             var transactionSecret = self.getTransactionSecret()
 
@@ -201,6 +246,21 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
             },'<cm-incoming-authentication-request></cm-incoming-authentication-request>', null, scope)
 
             cmModal.open('incoming-authentication-request')
+
+            self.one('canceled', function(event, data){
+                console.log('canceled')
+                console.dir(data)
+                // If some other authentication request is meant to be caneceled:
+                if(data.fromId != request.fromIdentityId)
+                    return false    // dont remove the event binding
+
+                // Close Modal:
+                var modal = cmModal.instances['incoming-authentication-request']
+                if(modal && modal.isActive())
+                    cmModal.close('incoming-authentication-request')
+                
+                return true     //remove the event binding
+            })
 
         })
 

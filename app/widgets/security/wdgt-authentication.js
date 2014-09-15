@@ -77,7 +77,6 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                 
                 $scope.startAuthenticationRequest = function(){
 
-                    $scope.step     = 1;
                     $scope.waiting  = true;
                     $scope.startTimeout(120000);
 
@@ -93,11 +92,11 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                         )
                     }, 50)
                     .then(function(){
-                        $scope.step = 2
-                        return cmAuthenticationRequest.when('start')        //wait for response
+                        $scope.step = 1
+                        return cmAuthenticationRequest.when('started')        //wait for response
                     })
                     .then(function(request){
-                        $scope.step = 3
+                        $scope.step = 2
                         return cmAuthenticationRequest.when('verified')     //wait for key in response to be verified
                     })
                     .then(function(data){
@@ -106,7 +105,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     })
                     .then(function(){
                         console.log('signed publickeys')
-                        $scope.step     = 4
+                        $scope.step     = 3
                         $scope.waiting  = false
                     })
                 }
@@ -115,6 +114,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     $scope.cancelTimeout()
                     $scope.waiting  = false
                     $scope.step     = 0
+                    cmAuthenticationRequest.cancel()
                 };
 
                 $scope.done = function(){
