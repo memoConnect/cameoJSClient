@@ -91,7 +91,7 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
             },
 
             canRead: function () {
-                return self.plugin != null;
+                return false //self.plugin != null;
             },
 
             // TODO: pick error app crashed
