@@ -23,7 +23,14 @@ cm-conversation-tag{
     .details{      
         text-align:left;
 
-        .subject {
+        .subject, .message, .recipients{
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          width: 21rem;
+        }
+
+        .subject, .message {
             .single-line;
             line-height:0.5*@cm-unit;
             color: @cm-font-color;
@@ -368,6 +375,7 @@ cm-conversation{
 }
 
 div.answer{
+  .box-shadow-top;
   width:@cm-app-width;
   min-height:@cm-footer-height;
   position:fixed;

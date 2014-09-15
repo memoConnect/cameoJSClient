@@ -31,6 +31,7 @@ describe('Purl Registration: ', function () {
     it('add external contact to test user', function () {
 
         util.get('/contact/new')
+        util.waitForPageLoad('/contact/new')
 
         $("[data-qa='input-displayname']").sendKeys(externalLogin)
         $("[data-qa='input-phonenumber']").sendKeys('12345')
@@ -43,6 +44,7 @@ describe('Purl Registration: ', function () {
     it('start conversation with external user', function () {
 
         util.get("/conversation/new")
+        util.waitForPageLoad('/conversation/new')
 
         // add recipient
         $(".cm-add-button").click()
@@ -80,6 +82,7 @@ describe('Purl Registration: ', function () {
     it('open purl as external user purlId:"'+purl+'"', function () {
         util.logout()
         util.get("/purl/" + purl)
+        util.waitForPageLoad('/purl/' + purl)
     })
 
     it('send message as external user', function () {
@@ -97,7 +100,6 @@ describe('Purl Registration: ', function () {
 
     it('directly click on register button', function () {
         util.get("/purl/" + purl)
-
         util.waitForPageLoad("/purl/" + purl)
 
         util.waitForElement("[data-qa='btn-fast-sign-in']")
@@ -120,7 +122,6 @@ describe('Purl Registration: ', function () {
         util.waitForPageLoad("/start/welcome")
 
         util.get("/purl/" + purl)
-
         util.waitForPageLoad("/purl/" + purl)
     })
 
