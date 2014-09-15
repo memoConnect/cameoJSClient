@@ -36,7 +36,7 @@
             <div class="cm-input-ctn with-inside-icon cm-icon-grey" ng-class="{'cm-input-disabled':disabled}" ng-if="!showCameoId">
                 <i class="fa cm-rhino-positive"></i>
                 <input
-                        tabindex="1" data-qa="input-cameoId" required disabled
+                        tabindex="1" data-qa="input-cameoId" disabled
                         type="text" name="cameoId" ng-model="identity.cameoId"
                         placeholder="{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}" />
             </div>
@@ -45,7 +45,7 @@
                 <input
                     tabindex="1" data-qa="input-displayname"
                     type="text" name="displayName" ng-model="identity.displayName"
-                    ng-disabled="disabled" required
+                    ng-disabled="disabled"
                     placeholder="{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" />
             </div>
 
