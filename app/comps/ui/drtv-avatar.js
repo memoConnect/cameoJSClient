@@ -94,10 +94,10 @@ angular.module('cmUi').directive('cmAvatar',[
                     //element.css({'background-image': 'url(' + avatarMocks.none +')'});
                 } else {
                     scope.$watch('identity',function(){
-                        if(typeof scope.identity == 'object' && cmUtil.objLen(scope.identity) > 0){
+                        if(typeof scope.identity == 'object' && cmUtil.objLen(scope.identity) > 0 && typeof scope.identity.state == 'object' && typeof scope.identity.state.is == 'function'){
                             if(scope.identity.state.is('new') || scope.identity.avatarId == undefined) {
                                 scope.identity.on('update:finished',function() {
-                                    refresh();
+                                    refresh();111
                                 });
                             } else {
                                 refresh();
