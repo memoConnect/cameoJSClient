@@ -263,8 +263,8 @@
         "PLACEHOLDER": {
             "CAMEOID": "CameoID",
             "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
-            "PHONENUMBER": "Phonenumber ({{type}})",
-            "EMAIL": "E-Mail ({{type}})",
+            "PHONENUMBER": "Phonenumber",
+            "EMAIL": "E-Mail",
             "STREET": "Street",
             "STREETNR": "Nr",
             "ZIP": "Zip",
