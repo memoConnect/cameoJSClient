@@ -81,7 +81,7 @@ angular.module('cmContacts')
                             } else {
                                 cmLogger.error('Unable to find identity on contact. ' + $scope.contact)
                             }
-                            $scope.goto('/conversation/new');
+                            $rootScope.goTo('/conversation/new');
                         }
                     };
 
