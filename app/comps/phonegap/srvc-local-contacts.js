@@ -91,7 +91,7 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
             },
 
             canRead: function () {
-                return true //self.plugin != null;
+                return self.plugin != null;
             },
 
             selectOne: function() {
