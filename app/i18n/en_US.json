@@ -263,8 +263,8 @@
         "PLACEHOLDER": {
             "CAMEOID": "CameoID",
             "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
-            "PHONENUMBER": "Phonenumber ({{type}})",
-            "EMAIL": "E-Mail ({{type}})",
+            "PHONENUMBER": "Phonenumber",
+            "EMAIL": "EMail",
             "STREET": "Street",
             "STREETNR": "Nr",
             "ZIP": "Zip",
@@ -285,6 +285,10 @@
             "ERROR": {
                 "SAVE": "Could not save contact",
                 "EDIT": "Could not edit contact"
+            },
+            "SELECT": {
+                "EMAIL": "Please select one email",
+                "PHONENUMBER": "Please select one phonenumber"
             }
         },
         "HANDSHAKE_3RD": {

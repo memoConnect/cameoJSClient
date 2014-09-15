@@ -91,17 +91,31 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
             },
 
             canRead: function () {
-                return false //self.plugin != null;
+                return self.plugin != null;
             },
 
-            // TODO: pick error app crashed
-            //E/AndroidRuntime(15951):        at org.apache.cordova.CordovaActivity.onActivityResult(CordovaActivity.java:897)
-            // https://code.cs.nott.ac.uk/p/gp13-ajp/source/tree/83/code/gh-app/platforms/android/CordovaLib/src/org/apache/cordova/CordovaActivity.java
-
             selectOne: function() {
-                var loaded = $q.defer();
+                var loaded = $q.defer(),
+                    mocks = [
+                        {},
+                        {
+                        "displayName": '',
+                        "name": {
+                            "formatted": ""
+                        },
+                        "phoneNumbers": null,
+                        "emails": [
+                            {
+                                "type": "home",
+                                "value": "annegret.lubs@web.de"
+                            }
+                        ]
+                        }
+                    ];
 
                 if(this.canRead()){
+//                      loaded.resolve(mocks[1]);
+
                     this.plugin.pickContact(
                         function (contact) {
                             loaded.resolve(contact);
