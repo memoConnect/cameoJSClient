@@ -499,52 +499,41 @@ angular.module('cmCore')
                 return rejected;
             }
 
-            var localKeys   = this.loadLocalKeys(),
-                promises    = [];
+            return  cmCallbackQueue.push(this.loadLocalKeys().map(function(signingKey){
+                        return function(){
+                            //Keys should not sign themselves
+                            if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() === keyToSign.getFingerprint())){
+                                self.trigger('signatures:cancel');
+                                cmLogger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
+                                return false;
+                            }
 
-            localKeys.forEach(function(signingKey){
-                //Keys should not sign themselves
-                if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() === keyToSign.getFingerprint())){
-                    self.trigger('signatures:cancel');
-                    cmLogger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
-                    return false;
-                }
+                            //Dont sign twice:
+                            if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
+                                self.trigger('signatures:cancel');
+                                cmLogger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
+                                return false; 
+                            }
 
-                //Dont sign twice:
-                if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
-                    self.trigger('signatures:cancel');
-                    cmLogger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
-                    return false; 
-                }
-
-                //Content of the signature:
-                var signature  =  signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId));
-
-                
-                promises.push(
-                    cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
-                        function(signature){
-                            keyToSign.importData({signatures:[signature]})  
-                            return signature                          
-                        },
-                        function(){
-                            self.trigger('signatures:failed');
+                            //Content of the signature:
+                            var signature  =  signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId));
+                            
+                            
+                            return  cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature)
+                                    .then(
+                                        function(signature){
+                                            keyToSign.importData({signatures:[signature]})  
+                                            return signature                          
+                                        },
+                                        function(){
+                                            self.trigger('signatures:failed');
+                                        }
+                                    )
                         }
-                    )
-                )
-            });
-
-            if(promises.length == 0){
-                self.trigger('signature:cancel');
-                return rejected; 
-            }
-
-            return  $q.all(promises).then(
-                        function(result){
-                            self.trigger('signatures:saved', result)
-                            return result
-                        }
-                    );
+                    }))
+                    .then(function(result){
+                        self.trigger('signatures:saved', result)
+                    })
         };
 
         this.verifyOwnPublicKey = function(key){

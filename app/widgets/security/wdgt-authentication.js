@@ -93,9 +93,21 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                         )
                     }, 50)
                     .then(function(){
-                        cmAuthenticationRequest.on('verified', function(data){
-                            $scope.step = 2
-                        })
+                        $scope.step = 2
+                        return cmAuthenticationRequest.when('start')        //wait for response
+                    })
+                    .then(function(request){
+                        $scope.step = 3
+                        return cmAuthenticationRequest.when('verified')     //wait for key in response to be verified
+                    })
+                    .then(function(data){
+                        console.dir(data)
+                        return cmUserModel.signPublicKey(data.key, data.key.id, data.identity)  //wait for key in response to be signed
+                    })
+                    .then(function(){
+                        console.log('signed publickeys')
+                        $scope.step     = 4
+                        $scope.waiting  = false
                     })
                 }
 

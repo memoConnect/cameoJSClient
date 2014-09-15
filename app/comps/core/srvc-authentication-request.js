@@ -19,10 +19,11 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
     'cmUserModel',
     'cmIdentityFactory',
     'cmModal',
+    'cmCallbackQueue',
     '$rootScope',
 
 
-    function(cmApi, cmObject, cmLogger, cmCrypt, cmUserModel, cmIdentityFactory, cmModal, $rootScope){
+    function(cmApi, cmObject, cmLogger, cmCrypt, cmUserModel, cmIdentityFactory, cmModal, cmCallbackQueue, $rootScope){
         self = {
             /**
              * @ngdoc method
@@ -125,36 +126,36 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
         }
 
         cmObject.addEventHandlingTo(self)
-
         cmApi.on('authenticationRequest:start', function(event, request){
 
             var modal = cmModal.instances['incoming-authentication-request']
-        
-            //Prevent other authentication requests to interfer with ongoing process
+
+            //Prevent other authentication requests to interfere with an ongoing process
             if(modal && modal.isActive())
                 return false
 
-            console.log(1)
             //There is no need to authenticate local keys:
             if(cmUserModel.loadLocalKeys().find(request.fromKeyId))
                 return false
-
-            var transactionSecret = self.getTransactionSecret()
-
-            console.log(2)
-            //If we already know the transaction secret, there is no need to prompt the user:
-            if(transactionSecret){
-                self.verify(request, transactionSecret)
-                return true
-            }
-
-            console.log(3)
-
+            
             //If a certain key was expected to sign, but that key is not present on this device, dont prompt the user:
             if(request.toKeyId && !cmUserModel.loadLocalKeys().find(request.toKeyId))
                 return false
 
-            console.log(4)
+            self.trigger('start', request)
+        })
+
+        self.on('start', function(event, request){
+
+            var transactionSecret = self.getTransactionSecret()
+
+            //If we already know the transaction secret, there is no need to prompt the user:
+            if(transactionSecret){
+                cmCallbackQueue.push(function(){
+                    self.verify(request, transactionSecret)
+                })
+                return true
+            }
 
             var scope   =   $rootScope.$new()
 
@@ -165,9 +166,28 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
             if(!scope.fromIdentity)
                 return false
 
+
+            scope.error = {}
+
             scope.fromKey       =   scope.fromIdentity.keys.find(request.fromKeyId)
             scope.verify        =   function(secret){
-                                        scope.error = !self.verify(request, secret)
+                                        scope = this
+                                        scope.error.emptyInput    = !secret
+                                        scope.error.wrongSecret   = !scope.error.emptyInput && !self.verify(request, secret)
+
+                                        if(!scope.error.emptyInput && !scope.error.wrongSecret){
+                                            cmModal.close('incoming-authentication-request')
+                                            cmUserModel
+                                            .signPublicKey(scope.fromKey, scope.fromKey.id, scope.fromIdentity)
+                                            .then(function(){
+                                                //Send a request in return:
+                                                self.send(
+                                                    cmUserModel.data.identity,  //Ourself
+                                                    secret,                     //The secret we successfully used during the last attempt
+                                                    scope.fromKey               //The key that originally requested to be signed
+                                                )                                                
+                                            })
+                                        }
                                     }
 
             cmModal.create({
@@ -181,18 +201,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
             },'<cm-incoming-authentication-request></cm-incoming-authentication-request>', null, scope)
 
             cmModal.open('incoming-authentication-request')
-        })
 
-        self.on('verified', function(event, data){
-            cmUserModel.signPublicKey(data.key, data.key.id, data.identity)
-            cmModal.close('incoming-authentication-request')
-
-            //Send a request in return:
-            cmAuthenticationRequest.send(
-                cmUserModel.data.identity,  //Ourself
-                data.transactionSecret,     //The secret we used during the last attempt
-                data.fromKey                //The key that should sign our ownkey; may be undefined
-            )
         })
 
         return self

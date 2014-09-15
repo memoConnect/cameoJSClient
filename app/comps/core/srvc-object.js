@@ -146,6 +146,19 @@ angular.module('cmCore')
             }
 
             /**
+             * Function to convert an event to a promise
+             * @param  {String} event_names     Names of the events to listen to. Multiple event names should be separated by ' '.
+             * @return {promise}                Promise to be resolved when the event triggers for the first time
+             */
+            obj.when = function(event_names){
+                var deferred = $q.defer()
+                obj.one(event_names, function(event, data){
+                    deferred.resolve(data)
+                })
+                return deferred.promise
+            }
+
+            /**
              * @methodOf 
              * @name  brodcastEventsTo
              *
