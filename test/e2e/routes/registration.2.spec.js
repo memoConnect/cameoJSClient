@@ -15,6 +15,7 @@ describe('Registration: ', function () {
         util.logout()
 
         util.get("/registration");
+        util.waitForPageLoad('/registration')
 
         $$("input").then(function (elements) {
             expect(elements.length).toBe(7)
@@ -34,6 +35,7 @@ describe('Registration: ', function () {
     it('should display error if username too short', function () {
 
         util.get("/registration");
+        util.waitForPageLoad('/registration')
 
         $("[data-qa='input-cameoId']").sendKeys("moep")
         ptor.sleep(1001)//adaptive change delay
@@ -50,6 +52,7 @@ describe('Registration: ', function () {
     it('should display error if username is invalid', function () {
 
         util.get("/registration");
+        util.waitForPageLoad('/registration')
 
         $("[data-qa='input-cameoId']").sendKeys("moep-moep")
 
@@ -65,6 +68,7 @@ describe('Registration: ', function () {
     it('should display error if username exists', function () {
 
         util.get("/registration")
+        util.waitForPageLoad('/registration')
 
         $("[data-qa='input-cameoId']").sendKeys(config.loginUser1)
 
