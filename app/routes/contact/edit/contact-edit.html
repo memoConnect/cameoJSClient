@@ -1,4 +1,4 @@
-<section ng-controller = "ContactDetailsCtrl">
+<section ng-controller="ContactEditCtrl">
     <cm-header cm-rubber-space>
         <cm-back cm-weight="1" back-to="/contact/list"></cm-back>
         <cm-identity cm-weight="6"></cm-identity>
@@ -7,5 +7,6 @@
     </cm-header>
 
     <cm-modal-add-contact id="add-contact" nose-position="6rem"></cm-modal-add-contact>
-    <cm-widget-contact-details></cm-widget-contact-details>
+
+    <cm-widget-contact-edit cm-contact-id="contactId"></cm-widget-contact-edit>
 </section>
