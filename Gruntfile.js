@@ -903,8 +903,9 @@ module.exports = function (grunt) {
         'copy:resources-phonegap',
         'template:index-phonegap',
         'template:config-phonegap',
-        'compress'
-
+        'compress',
+        'phonegap:build',
+        'phonegap:run'
     ])
 
     grunt.registerTask(':phonegap:create-splashscreens', ['phonegapsplash:build']);
