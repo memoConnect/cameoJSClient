@@ -285,6 +285,10 @@
             "ERROR": {
                 "SAVE": "Kontakt konnte nicht angelegt werden.",
                 "EDIT": "Kontakt konnte nicht gespeichert werden."
+            },
+            "SELECT": {
+                "EMAIL": "Bitte wählen Sie eine E-Mail aus",
+                "PHONENUMBER": "Bitte wählen Sie eine Telefonnummer aus"
             }
         },
         "HANDSHAKE_3RD": {

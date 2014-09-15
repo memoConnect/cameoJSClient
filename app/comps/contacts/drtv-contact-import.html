@@ -45,10 +45,10 @@
             <input
                 tabindex="1" data-qa="input-displayname"
                 type="text" name="displayName" ng-model="identity.displayName"
-                ng-disabled="disabled" required />
+                required />
         </div>
-        <cm-info-bubble class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid">
-            <div ng-show="cmForm.displayName.$error.required">
+        <cm-info-bubble class="cm-alert" ng-show="error.displayName">
+            <div ng-show="error.displayName">
                 <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
             </div>
         </cm-info-bubble>
@@ -59,7 +59,10 @@
     <cm-multi-input cm-collection="formData.phoneNumbers">
         <article class="content">
             <ng-form name="formPhone" class="with-radiobutton">
-                <label>{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate:{type:item.type} }}</label>
+                <label>
+                    {{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate }}
+                    <span ng-if="item.type">{{item.type}}</span>
+                </label>
                 <div class="cm-input-ctn with-inside-icon cm-icon-grey">
                     <input
                         tabindex="2" data-qa="input-phonenumber"
@@ -71,20 +74,29 @@
                 <cm-info-bubble class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
                     <div ng-show="formPhone.phoneNumber.$invalid">
                         <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
-                        <span ng-if="item.type">{{item.type}}</span>
                     </div>
                 </cm-info-bubble>
                 <i class="fa cm-radio-0" ng-class="{'cm-radio-1':isSelected(item,'phoneNumber')}" ng-click="chooseItem(item,'phone')"></i>
             </ng-form>
         </article>
     </cm-multi-input>
+    <article class="content">
+        <cm-info-bubble class="cm-alert" ng-show="error.selectPhoneNumber">
+            <div ng-show="error.selectPhoneNumber">
+                <i class="fa cm-info"></i> {{'CONTACT.INFO.SELECT.PHONENUMBER'|cmTranslate}}
+            </div>
+        </cm-info-bubble>
+    </article>
 
     <hr class="margin-small" />
 
     <cm-multi-input cm-collection="formData.emails">
         <article class="content">
             <ng-form name="formEmail" class="with-radiobutton">
-                <label>{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate:{type:item.type} }}</label>
+                <label>
+                    {{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate }}
+                    <span ng-if="item.type">{{item.type}}</span>
+                </label>
                 <div class="cm-input-ctn with-inside-icon cm-icon-grey">
                     <input
                         tabindex="3" data-qa="input-email"
@@ -94,13 +106,19 @@
                 <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
                     <div ng-show="formEmail.email.$invalid">
                         <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
-                        <span ng-if="item.type">{{item.type}}</span>
                     </div>
                 </cm-info-bubble>
                 <i class="fa cm-radio-0" ng-class="{'cm-radio-1':isSelected(item,'email')}" ng-click="chooseItem(item,'email')"></i>
             </ng-form>
         </article>
     </cm-multi-input>
+    <article class="content">
+        <cm-info-bubble class="cm-alert" ng-show="error.selectEmail">
+            <div ng-show="error.selectEmail">
+                <i class="fa cm-info"></i> {{'CONTACT.INFO.SELECT.EMAIL'|cmTranslate}}
+            </div>
+        </cm-info-bubble>
+    </article>
 </form>
 
 <cm-footer>

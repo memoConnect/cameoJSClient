@@ -26,15 +26,14 @@
     <!-- plugins -->
     <gap:plugin name="org.apache.cordova.device" version="0.2.8" />
     <gap:plugin name="org.apache.cordova.camera" version="0.2.9" />
-    <gap:plugin name="org.apache.cordova.file" version="1.0.1" />
     <gap:plugin name="org.apache.cordova.file-transfer" version="0.4.2" />
     <gap:plugin name="org.apache.cordova.network-information" version="0.2.7" />
     <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1" />
+
     <gap:plugin name="de.appplant.cordova.plugin.hidden-statusbar-overlay" version="1.2.0" />
     <gap:plugin name="com.techmuscle.contacts" version="0.2.12" />
-    <!-- <gap:plugin name="nl.x-services.plugins.launchmyapp" version="3.2.0">
-        <param name="URL_SCHEME" value="https://cameonet.de/p/" />
-    </gap:plugin> -->
+    <gap:plugin name="fork.cordova.file" version="1.2.1" />
+    <!--<gap:plugin name="org.apache.cordova.file" version="1.0.1" />-->
 
     <!-- multiplatform -->
     <preference name="DisallowOverscroll" value="true"/>

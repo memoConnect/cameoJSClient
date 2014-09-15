@@ -14,19 +14,15 @@
 angular.module('cmContacts')
 .directive('cmContactImport', [
 
-    '$rootScope', '$routeParams',
+    '$rootScope', '$q',
     'cmContactsModel',
-    'cmIdentityFactory',
     'cmUtil',
     'cmNotify',
-    'cmHooks',
-    'cmUserModel',
     'cmLocalContacts',
 
-    function($rootScope, $routeParams,
-             cmContactsModel, cmIdentityFactory, cmUtil,
-             cmNotify, cmHooks, cmUserModel,
-             cmLocalContacts){
+    function($rootScope, $q,
+             cmContactsModel, cmUtil,
+             cmNotify, cmLocalContacts){
 
         return {
             restrict:       'AE',
@@ -36,9 +32,19 @@ angular.module('cmContacts')
             controller: function($scope, $element, $attrs){
                 $scope.cmUtil = cmUtil;
 
+                $scope.resetErrors = function(){
+                    $scope.error = {
+                        displayName: false,
+                        selectPhoneNumber: false,
+                        selectEmail: false
+                    };
+                };
+
                 $scope.chooseAvatar = true;
 
                 $scope.reset = function(){
+                    $scope.resetErrors();
+
                     $scope.formData = {
                         phoneNumbers: [{value:'',type:''}],
                         emails: [{value:'',type:''}]
@@ -46,8 +52,8 @@ angular.module('cmContacts')
 
                     $scope.identity = {
                         displayName: '',
-                        phoneNumber: '',
-                        email: '',
+                        phoneNumber: null,
+                        email: null,
                         exportData: function(){
                             return {
                                 displayName: this.displayName,
@@ -66,13 +72,13 @@ angular.module('cmContacts')
                             if(contact.displayName == '')
                                 contact.displayName = undefined;
 
-                            $scope.identity.displayName = contact.displayName || contact.name.formatted;
+                            $scope.identity.displayName = contact.displayName || 'name' in contact ? contact.name.formatted : '';
 
-                            if(contact.phoneNumbers.length > 0) {
+                            if(contact.phoneNumbers != null && contact.phoneNumbers.length > 0) {
                                 $scope.formData.phoneNumbers = contact.phoneNumbers;
                             }
 
-                            if(contact.emails.length > 0) {
+                            if(contact.emails != null && contact.emails.length > 0) {
                                 $scope.formData.emails = contact.emails;
                             }
 
@@ -93,56 +99,91 @@ angular.module('cmContacts')
                 };
 
                 $scope.isSelected = function(item, type){
-                    return item.value != '' && item.value == identity[type];
+                    return item.value != '' && item.value == $scope.identity[type];
+                };
+
+                $scope.validateForm = function(){
+                    $scope.resetErrors();
+
+                    var deferred = $q.defer(),
+                        isValid = true;
+
+                    function checkDisplayName() {
+                        if ($scope.identity.displayName == '') {
+                            $scope.error.displayName = true;
+                            isValid = false;
+                        }
+                    }
+
+                    function checkSelection(){
+                        // both is empty
+                        if($scope.identity.phoneNumber == null && $scope.identity.email == null){
+                            $scope.error.selectPhoneNumber = true;
+                            $scope.error.selectEmail = true;
+                            isValid = false;
+                        }
+                    }
+
+                    checkDisplayName();
+                    checkSelection();
+
+                    if(isValid !== false){
+                        deferred.resolve();
+                    } else {
+                        deferred.reject();
+                    }
+
+                    return deferred.promise;
                 };
 
                 $scope.importContact = function(){
-                    // declaration
-                    var emptyIdentity = {
-                        displayName: null,
-                        phoneNumber: null,
-                        email: null,
-                        preferredMessageType: 'default',
-                        // TODO: not implemented in BE
-                        name: null,
-                        surName: null,
-                        phoneProvider: null,
-                        groups: []
-                    },
-                    // merge given identity with default
-                    identity = angular.extend({}, emptyIdentity, $scope.identity.exportData());
+                    $scope.validateForm().then(
+                        function() {
+                            // declaration
+                            var emptyIdentity = {
+                                    displayName: null,
+                                    phoneNumber: null,
+                                    email: null,
+                                    preferredMessageType: 'default',
+                                    // TODO: not implemented in BE
+                                    name: null,
+                                    surName: null,
+                                    phoneProvider: null,
+                                    groups: []
+                                },
+                                // merge given identity with default
+                                identity = angular.extend({}, emptyIdentity, $scope.identity.exportData());
 
-                    // handle preferredMessageType
-                    if(identity.phoneNumber != null){
-                        identity.preferredMessageType = 'sms';
-                    } else {
-                        identity.phoneNumber = null;
-                    }
-                    if(identity.email != null){
-                        identity.preferredMessageType = 'mail';
-                    } else {
-                        identity.email = null;
-                    }
+                            // handle preferredMessageType
+                            if (identity.phoneNumber != null) {
+                                identity.preferredMessageType = 'sms';
+                            } else {
+                                identity.phoneNumber = null;
+                            }
+                            if (identity.email != null) {
+                                identity.preferredMessageType = 'mail';
+                            } else {
+                                identity.email = null;
+                            }
 
-                    //////////////////////
-                    if($scope.cmForm.$invalid){
-                        return false;
-                    }
+                            console.log(cmUtil.prettify(identity))
+                            return false;
 
-                    // everything is fine let's add the contact
-                    cmContactsModel
-                        .addContact({
-                            identity: identity,
-                            groups: identity.groups
-                        })
-                        .then(
-                        function () {
-                            $scope.gotoContactList();
-                        },
-                        function () {
-                            cmNotify.error('CONTACT.INFO.ERROR.SAVE',{ttl:5000});
-                        }
-                    );
+                            // everything is fine let's add the contact
+                            cmContactsModel
+                                .addContact({
+                                    identity: identity,
+                                    groups: identity.groups
+                                })
+                                .then(
+                                function () {
+                                    $scope.gotoContactList();
+                                },
+                                function () {
+                                    cmNotify.error('CONTACT.INFO.ERROR.SAVE', {ttl: 5000});
+                                }
+                            );
+                    });
                 };
 
                 $scope.reset();
