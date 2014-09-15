@@ -7,18 +7,9 @@
         <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
 
-    <cm-modal-add-contact id="add-contact" nose-position="6rem"></cm-modal-add-contact>
+    <cm-default-pages></cm-default-pages>
 
-    <section class="default-pages">
-        <button ng-click="goTo('/talks')">
-            <i class="fa fa-lg-icon cm-talk"></i>
-            Talks
-        </button>
-        <button ng-click="goTo('/contact/list')">
-            <i class="fa fa-lg-icon cm-person"></i>
-            Contacts
-        </button>
-    </section>
+    <cm-modal-add-contact id="add-contact" nose-position="6rem"></cm-modal-add-contact>
 
     <cm-widget-talks></cm-widget-talks>
 </section>
