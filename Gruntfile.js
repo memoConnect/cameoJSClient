@@ -93,6 +93,7 @@ module.exports = function (grunt) {
             console.log("phonegap version: " + buildConfig.phonegap.version);
         } else {
             buildConfig.config.version = "no version";
+            buildConfig.phonegap.version = "0.0.1";
         }
 
         if(buildConfig.config.version == 'no version'){
@@ -360,21 +361,21 @@ module.exports = function (grunt) {
                         flatten: false,
                         cwd: 'dist/app',
                         src: ['**'],
-                        dest: 'phonegap-build/www/'
+                        dest: 'dist/phonegap/www'
                     },
                     // copy all icon and splashs to /www/res
                     {
                         expand: true,
                         cwd: 'resource/phonegap/res/',
                         src: ['**'],
-                        dest: 'phonegap-build/www/res/'
+                        dest: 'dist/phonegap/www/res/'
                     },
                     // add adapter javascript to /www
                     {
                         expand: true,
                         flatten: true,
                         src: 'resource/phonegap/*.js',
-                        dest: 'phonegap-build/www/'
+                        dest: 'dist/phonegap/www/'
                     }
 
                 ]
@@ -434,7 +435,7 @@ module.exports = function (grunt) {
             'dist': ['dist'],
             'docs': ['docs'],
             'phonegap-target': ['phonegap-target'],
-            'phonegap-build': ['phonegap-build']
+            'phonegap-build': ['dist/phonegap']
         },
 
         // unit tests
@@ -471,10 +472,11 @@ module.exports = function (grunt) {
         phonegap: {
             // https://www.npmjs.org/package/grunt-phonegap
             config: {
-                root: 'dist/app',
-                config: 'resource/phonegap/config.xml',
+                root: 'dist/phonegap/www',
+                config: 'dist/phonegap/www/config.xml',
+                cordova: '.cordova',
                 path: 'phonegap-build',
-                plugins: [],
+                plugins: ['./resource/phonegap/plugins/org.apache.cordova.contacts'],
                 platforms: ['android'],
                 maxBuffer: 200, // You may need to raise this for iOS.
                 verbose: true,
@@ -492,10 +494,10 @@ module.exports = function (grunt) {
                     return(1)
                 },
                 minSdkVersion: function () {
-                    return(10)
+                    return(19)
                 },
                 targetSdkVersion: function () {
-                    return(19)
+                    return 19
                 }
             }
         },
@@ -530,13 +532,12 @@ module.exports = function (grunt) {
                     'data': {
                         'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'+
                                         '<script type="text/javascript" charset="utf-8" src="vendor/puship/PushipNotification.js"></script>'+
-                                        '<script type="text/javascript" charset="utf-8" src="config.js"></script>'+
-                            (globalCameoBuildConfig.debug.weinre ? '<script src="http://'+globalCameoBuildConfig.debug.weinreIp+':8080/target/target-script-min.js#anonymous"></script>' : ''),
+                                        '<script type="text/javascript" charset="utf-8" src="config.js"></script>',
                         'phonegapOnload': ' onload="deviceReady()"'
                     }
                 },
                 'files': {
-                    'phonegap-build/www/index.html': ['templates/app/index.html']
+                    'dist/phonegap/www/index.html': ['templates/app/index.html']
                 }
             },
             'index-www': {
@@ -612,8 +613,8 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'phonegap-build/www/config.xml': ['templates/phonegap/config.xml'],
-                    'phonegap-build/www/config.js': ['templates/phonegap/config.js']
+                    'dist/phonegap/www/config.xml': ['templates/phonegap/config.xml'],
+                    'dist/phonegap/www/config.js': ['templates/phonegap/config.js']
                 }
             },
             'config-protractor': {
@@ -670,7 +671,7 @@ module.exports = function (grunt) {
                     mode: 'zip'
                 },
                 expand: true,
-                cwd: 'phonegap-build/www/',
+                cwd: 'dist/phonegap/www/',
                 src: ['**/*']
             }
         },
@@ -895,6 +896,17 @@ module.exports = function (grunt) {
         'compress',
         'phonegap-build:only-zip'
     ]);
+    grunt.registerTask("phonegap:adb-run", [
+        'clean:phonegap-target',
+        'clean:phonegap-build',
+        'deploy',
+        'copy:resources-phonegap',
+        'template:index-phonegap',
+        'template:config-phonegap',
+        'compress'
+
+    ])
+
     grunt.registerTask(':phonegap:create-splashscreens', ['phonegapsplash:build']);
 
 };
