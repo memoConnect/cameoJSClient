@@ -8,6 +8,7 @@ angular.module('cmWidgets').directive('cmWidgetSystemcheck', [
             templateUrl: 'widgets/settings/wdgt-systemcheck.html',
             controller: function ($scope) {
                 $scope.localStorage = cmSystemCheck.checkLocalStorage();
+                $scope.clientVersionCheck = cmSystemCheck.checkClientVersion();
             }
         }
     }

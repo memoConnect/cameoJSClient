@@ -15,6 +15,22 @@ angular.module('cmCore').service('cmSystemCheck', [
 
         cmObject.addEventHandlingTo(this);
 
+        /**
+         * TODO REQUEST im Fall der Faelle
+         * @param forceRedirect
+         * @returns {boolean}
+         */
+        this.checkClientVersion = function(forceRedirect){
+            if('clientVersionCheck' in $rootScope){
+                if($rootScope.clientVersionCheck == false){
+                    this.trigger('check:failed', {forceRedirect:forceRedirect});
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        };
+
         this.checkLocalStorage = function(forceRedirect){
             var test = {key: 'cameoNet', value: 'cameoNet'};
 
@@ -34,6 +50,7 @@ angular.module('cmCore').service('cmSystemCheck', [
         };
 
         this.run = function(forceRedirect){
+            this.checkClientVersion(forceRedirect);
             this.checkLocalStorage(forceRedirect);
         };
 

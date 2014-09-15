@@ -217,15 +217,19 @@ define([
         'cmLogger',
         'cfpLoadingBar',
         'cmEnv',
+        'cmVersion',
         'cmApi',
         'cmHooks',
         'cmSystemCheck',
         'cmError',
-        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks, cmSystemCheck, cmError) {
+        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion, cmApi, cmHooks, cmSystemCheck, cmError) {
             $rootScope.$on('getBrowserInfo', function(){
                 //get browser language:
-                cmApi.get({
-                    path: '/services/getBrowserInfo'
+                cmApi.post({
+                    path: '/services/getBrowserInfo',
+                    data: {
+                        version: cmVersion.version
+                    }
                 })
                 .then(
                     function(data){
@@ -233,6 +237,15 @@ define([
                             var language = data.languageCode.substr(0,2),
                                 lc       = language == 'de' ? 'de_DE' : 'en_US'
                             cmLanguage.switchLanguage(lc)
+                        }
+
+                        /**
+                         * @todo besser checken
+                         */
+                        if('versionIsSupported' in data && data.versionIsSupported == false){
+                            $rootScope.clientVersionCheck = false;
+                        } else {
+                            $rootScope.clientVersionCheck = true;
                         }
                     }
                 );
