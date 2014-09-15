@@ -114,17 +114,16 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
                     ];
 
                 if(this.canRead()){
+//                      loaded.resolve(mocks[1]);
 
-                      loaded.resolve(mocks[1]);
-
-//                    this.plugin.pickContact(
-//                        function (contact) {
-//                            loaded.resolve(contact);
-//                        },
-//                        function onError(contactError) {
-//                            loaded.reject(contactError);
-//                        }
-//                    );
+                    this.plugin.pickContact(
+                        function (contact) {
+                            loaded.resolve(contact);
+                        },
+                        function onError(contactError) {
+                            loaded.reject(contactError);
+                        }
+                    );
                 }
 
                 return loaded.promise;

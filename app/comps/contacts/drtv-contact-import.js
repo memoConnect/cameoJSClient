@@ -166,8 +166,8 @@ angular.module('cmContacts')
                                 identity.email = null;
                             }
 
-                            console.log(cmUtil.prettify(identity))
-                            return false;
+//                            console.log(cmUtil.prettify(identity))
+//                            return false;
 
                             // everything is fine let's add the contact
                             cmContactsModel
