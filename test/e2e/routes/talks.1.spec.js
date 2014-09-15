@@ -22,10 +22,6 @@ describe('Route Talks:', function () {
         expect($('cm-header').isPresent()).toBe(true)
     })
 
-    it('should have a footer.', function () {
-        expect($('cm-footer').isPresent()).toBe(true)
-    })
-
     it('load 10 elements', function () {
         util.waitForLoader()
 

@@ -17,10 +17,6 @@ describe('Route: Contact/List', function () {
         util.waitForElement('cm-header')
     })
 
-    it('should have a footer.', function(){
-        util.waitForElement('cm-footer')
-    })
-
     it('should have a button to add new a contact.', function(){
         //Todo: Funktionalität testen:
         util.waitForElement("[data-qa='add-contact-btn']")
