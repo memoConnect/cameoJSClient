@@ -276,6 +276,11 @@ cameo_config = {
         'settings': {i18n:'DRTV.FOOTER.SETTINGS', icon:'cm-settings'}
     },
 
+    defaultPages: {
+        'talks': {i18n:'DRTV.FOOTER.TALKS', icon:'cm-talk'},
+        'contact/list': {i18n:'DRTV.FOOTER.CONTACTS', icon:'cm-person'}
+    },
+
     routeSettings: {
         'account': {i18n:'SETTINGS.ACCOUNT', icon:'cm-person', disabled:true},
         'identity/edit': {i18n:'SETTINGS.IDENTITY', icon:'cm-person'},
