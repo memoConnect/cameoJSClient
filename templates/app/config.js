@@ -271,9 +271,9 @@ cameo_config = {
     },
 
     footer: {
-        'talks': {i18n:'DRTV.FOOTER.TALKS', icon:'cm-envelope-closed'},
-        'contact/list': {i18n:'DRTV.FOOTER.CONTACTS', icon:'cm-address-book'},
-        'settings': {i18n:'DRTV.FOOTER.SETTINGS', icon:'cm-settings'}
+        'talks': {i18n:'DRTV.FOOTER.TALKS', icon:'cm-talk'},
+        'contact/list': {i18n:'DRTV.FOOTER.CONTACTS', icon:'cm-person'}
+        //'settings': {i18n:'DRTV.FOOTER.SETTINGS', icon:'cm-settings'}
     },
 
     routeSettings: {
