@@ -1,7 +1,7 @@
 var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
-describe('Route: contact/list', function () {
+describe('Route: Contact/List', function () {
     var ptor = util.getPtorInstance()
     afterEach(function() { util.stopOnError() });
 
@@ -36,7 +36,7 @@ describe('Route: contact/list', function () {
         it('should have an avatar.', function(){
             util.waitForElement('cm-contact-list cm-avatar')            
             $$('cm-contact-list cm-avatar:not(.disabled)').get(0).click()
-            util.waitForPageLoad(/\/contact\/[a-zA-Z0-9]+$/)       
+            util.waitForPageLoad(/\/contact\/edit\/[a-zA-Z0-9]+$/)
         })
 
         console.log('test removed.')
