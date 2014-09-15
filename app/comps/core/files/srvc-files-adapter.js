@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmCore').service('cmFilesAdapter', [
-    'cmApi', 'cmLogger',
+    'cmApi', 'cmLogger', 'cmUtil', 'cmDevice',
     '$q',
-    function (cmApi, cmLogger,
+    function (cmApi, cmLogger, cmUtil, cmDevice,
               $q){
         return {
             prepareFile: function(config){
@@ -174,28 +174,34 @@ angular.module('cmCore').service('cmFilesAdapter', [
                 return base64 && typeof base64 == 'string' ? base64.replace(new RegExp(this.base64Regexp,'i'),'$2') : '';
             },
 
-            getBlobUrl: function(blob, useUrl){
-                var useFileReader = useUrl ? false : true,
-                //var useFileReader = false,
+            getBlobUrl: function(blob, useBlobUrl){
+                var useFileReader = useBlobUrl ? false : true,
+                    revokeFnc = function(){
+                        this.src = '';
+                        return true;
+                    },
                     deferred = $q.defer(),
                     objUrl = {
                         src: '',
-                        revoke: function(){
-                            this.src = '';
-                            return true;
-                        }
+                        revoke: revokeFnc
                     };
 
-                if(useFileReader){
-                    // filereader
+                // for app android use the localurl
+                if(cmDevice.isAndroid() && !useFileReader){
+                    deferred.resolve({
+                        src: blob.localURL,
+                        revoke: revokeFnc
+                    });
+                // filereader return base64
+                } else if(useFileReader){
                     var filereader = new FileReader();
                     filereader.onload = function(e){
                         objUrl.src = e.target.result;
                         deferred.resolve(objUrl);
                     };
                     filereader.readAsDataURL(blob);
+                // bloburl returns a url to a blob
                 } else {
-                    // URL type
                     var URL = window.URL || window.webkitURL;
                     objUrl = {
                         src: URL.createObjectURL(blob),
