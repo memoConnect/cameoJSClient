@@ -472,7 +472,8 @@ module.exports = function (grunt) {
             // https://www.npmjs.org/package/grunt-phonegap
             config: {
                 root: 'dist/app',
-                config: 'resource/phonegap/config.xml',
+                config: 'phonegap-build/www/config.xml',
+                cordova: '.cordova',
                 path: 'phonegap-build',
                 plugins: [],
                 platforms: ['android'],

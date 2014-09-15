@@ -175,21 +175,32 @@ cameo_config = {
         'contact-request-list': {
             routes:[
                 '/contact/request/list',
-                '/contact/request',
+                '/contact/request'
             ],
             hasCtrl: true,
             resolveOnBoot: true
         },
         'contact-search':  {
             routes:[
-                '/contact/search',
+                '/contact/search'
             ],
             hasCtrl: true
         },
-        'contact-details': {
+        'contact-create': {
             routes:[
-                '/contact/:id/details',
-                '/contact/:id'
+                '/contact/create'
+            ],
+            hasCtrl: true
+        },
+        'contact-import': {
+            routes:[
+                '/contact/import'
+            ],
+            hasCtrl: true
+        },
+        'contact-edit': {
+            routes:[
+                '/contact/edit/:id?'
             ],
             hasCtrl: true
         },

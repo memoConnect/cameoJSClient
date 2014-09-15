@@ -1,0 +1,109 @@
+<article class="content" ng-click="chooseContact()">
+    <cm-info-bubble nose-x="55%">
+        <span ng-bind-html="'CONTACTS.INFO.IMPORT_RIGHTS' | cmParse"></span>
+    </cm-info-bubble>
+</article>
+
+    <!--<div class="cm-contact-details" cm-rubber-space>
+        <div cm-weight="1">
+            <img ng-if="identity.avatar" src="{{identity.avatar}}" />
+            <cm-avatar ng-if="!identity.avatar" cm-data="identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-if="identity"></cm-avatar>
+        </div>
+        <div cm-weight="1">
+            <div class="cm-contact-actions" cm-rubber-space ng-if="contact.contactType">
+                <div cm-weight="1">
+                    <cm-key-level cm-data="identity.keys.getWeakestKeySize()"></cm-key-level>
+                    <cm-contact-type cm-data="contact"></cm-contact-type>
+                </div>
+                <div cm-weight = "1" class="with-white-bg">
+                    <button
+                        data-qa="start-new-conversation-btn"
+                        ng-click="startConversation()"
+                    >
+                        <i class="fa cm-new-talk"></i>
+                    </button>
+                    <br/>
+                    <button
+                        data-qa="start-trust-handshake-btn"
+                        ng-click="goto('authentication/identity/'+contact.identity.id)"
+                        ng-disabled = "getTrust() || !hasKey() || !hasLocalKey"
+                    >
+                            <i ng-if="!hasKey() || !hasLocalKey"    class="fa cm-close"></i>
+                            <i ng-if="hasKey() && hasLocalKey"      class="fa {{ getTrust() ? 'cm-checkbox-right' : 'cm-handshake'}}"></i>
+                    </button>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+<form name="cmForm" novalidate autocomplete="off">
+
+    <article class="content">
+        <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
+        <div class="cm-input-ctn with-inside-icon cm-icon-grey">
+            <input
+                tabindex="1" data-qa="input-displayname"
+                type="text" name="displayName" ng-model="identity.displayName"
+                ng-disabled="disabled" required />
+        </div>
+        <cm-info-bubble class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid">
+            <div ng-show="cmForm.displayName.$error.required">
+                <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
+            </div>
+        </cm-info-bubble>
+    </article>
+
+    <hr class="margin-small" />
+
+    <cm-multi-input cm-collection="formData.phoneNumbers">
+        <article class="content">
+            <ng-form name="formPhone" class="with-radiobutton">
+                <label>{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate:{type:item.type} }}</label>
+                <div class="cm-input-ctn with-inside-icon cm-icon-grey">
+                    <input
+                        tabindex="2" data-qa="input-phonenumber"
+                        type="text" name="phoneNumber" ng-model="item.value"
+                        cm-validate-phone cm-adaptive-change
+                         />
+                </div>
+                <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
+                <cm-info-bubble class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
+                    <div ng-show="formPhone.phoneNumber.$invalid">
+                        <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
+                    </div>
+                </cm-info-bubble>
+                <i class="fa cm-radio-0" ng-class="{'cm-radio-1':isSelected(item,'phoneNumber')}" ng-click="chooseItem(item,'phone')"></i>
+            </ng-form>
+        </article>
+    </cm-multi-input>
+
+    <hr class="margin-small" />
+
+    <cm-multi-input cm-collection="formData.emails">
+        <article class="content">
+            <ng-form name="formEmail" class="with-radiobutton">
+                <label>{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate:{type:item.type} }}</label>
+                <div class="cm-input-ctn with-inside-icon cm-icon-grey">
+                    <input
+                        tabindex="3" data-qa="input-email"
+                        name="email" ng-model="item.value"
+                        cm-validate-email />
+                </div>
+                <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
+                    <div ng-show="formEmail.email.$invalid">
+                        <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
+                    </div>
+                </cm-info-bubble>
+                <i class="fa cm-radio-0" ng-class="{'cm-radio-1':isSelected(item,'email')}" ng-click="chooseItem(item,'email')"></i>
+            </ng-form>
+        </article>
+    </cm-multi-input>
+</form>
+
+<cm-footer>
+    <button data-qa="btn-create-contact" class="cm-btn-block cm-btn-grey" id="registerUserButton" ng-click="importContact()">
+        {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i>
+    </button>
+</cm-footer>
+
