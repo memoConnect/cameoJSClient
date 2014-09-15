@@ -110,6 +110,7 @@ angular.module('cmContacts')
                         } else {
                             identity.phoneNumber = null;
                         }
+
                         if($scope.formData.emails.length > 0 && $scope.formData.emails[0].value != ''){
                             identity.email = $scope.formData.emails[0].value;
                             identity.preferredMessageType = 'mail';
