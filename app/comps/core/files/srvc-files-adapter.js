@@ -187,13 +187,15 @@ angular.module('cmCore').service('cmFilesAdapter', [
                     };
 
                 // for app android use the localurl
-                if(cmDevice.isAndroid() && !useFileReader){
+                // TODO: optimize overall useBlobUrl and on Android localURL only at pick file preview
+                if(cmDevice.isAndroid() && 'useLocalUri' in blob){
                     deferred.resolve({
                         src: blob.localURL,
                         revoke: revokeFnc
                     });
+                } else
                 // filereader return base64
-                } else if(useFileReader){
+                if(useFileReader){
                     var filereader = new FileReader();
                     filereader.onload = function(e){
                         objUrl.src = e.target.result;
