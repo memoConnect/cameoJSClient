@@ -1,6 +1,6 @@
-<section ng-controller = "PurlCtrl">
+<section ng-controller="PurlCtrl">
 
-    <cm-header cm-rubber-space cm-user-rights>
+    <cm-header cm-rubber-space ng-if="!headerGuest">
         <cm-back cm-weight="1" back-to="/talks" plain-back="true"></cm-back>
         <cm-identity cm-weight="4"></cm-identity>
         <cm-security-indicator
@@ -16,7 +16,7 @@
     Todo: solve headers differently
 -->
 
-    <cm-header cm-rubber-space  cm-user-rights="showForGuest">
+    <cm-header cm-rubber-space ng-if="headerGuest">
         <div class="fast-sign-in" ng-click="gotoRegistration()" data-qa="btn-fast-sign-in" cm-weight="2">
             <i class="fa cm-register"></i>
             <span>{{'PURL.SIGN_IN'|cmTranslate}}</span>
