@@ -30,9 +30,6 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                                         ?   cmContactsModel.findByIdentityId($scope.identityId).identity
                                         :   cmUserModel.data.identity
 
-                console.log($scope.toIdentity.getDisplayName())
-
-
                 //Without a key authetication won't work: 
                 if(!cmUserModel.loadLocalKeys().length){
                     $rootScope.goTo('/settings/identity/keys', true)
@@ -55,7 +52,6 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     var timeout_start       = new Date().getTime()
 
                     timeoutInterval = window.setInterval(function(){
-                        console.log(timeout_start)
                         $scope.timeout = time-Math.ceil((new Date().getTime()-timeout_start));
 
                         if($scope.timeout < 0)
@@ -94,26 +90,29 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     }, 50)
                     .then(function(){
                         $scope.step = 1
-                        return cmAuthenticationRequest.when('started', $scope.timeout)      //wait for response
+                        return cmAuthenticationRequest.when('started', 'canceled', $scope.timeout)      //wait for response
                     })
                     .then(
-                        function(request){
+                        function(result){
                             $scope.cancelTimeout()
                             $scope.step = 2
-                            return cmAuthenticationRequest.when('verified', 5000)           //wait for key in response to be verified
+                            return cmAuthenticationRequest.when('verified', 5000)                       //wait for key in response to be verified
                         },
-                        function(){
-                            $scope.ERROR = $scope.ERROR || 'TIMEOUT' 
-                            return $q.reject()
+                        function(result){
+                            return  result.event && result.event.name == 'canceled'
+                                    ?   $q.reject()
+                                    :   $q.reject('TIMEOUT')
                         }
                     )
                     .then(
-                        function(data){
-                            return cmUserModel.signPublicKey(data.key, data.key.id, data.identity)  //wait for key in response to be signed
+                        function(result){
+                            var data = result.data
+                            return cmUserModel.signPublicKey(data.key, data.key.id, data.identity)      //wait for key in response to be signed
                         },
-                        function(error){
-                            $scope.ERROR = $scope.ERROR || 'VERIFY' 
-                            return $q.reject()
+                        function(result){
+                            return  result == 'timeout'
+                                    ?   $q.reject('TIMEOUT')
+                                    :   $q.reject(result)
                         }
                     )
                     .then(
@@ -122,14 +121,16 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                             $scope.waiting  = false
                         },
                         function(error){
-                            $scope.ERROR = $scope.ERROR || 'SIGNING'
-                            $scope.cancel()
+                            if(error){
+                                $scope.ERROR = error
+                                $scope.cancel()
+                            }
                         }
                     )
 
                 }
 
-                $scope.cancel = function(step){
+                $scope.cancel = function(){
                     $scope.cancelTimeout()
                     $scope.waiting  = false
                     $scope.step     = 0
@@ -144,7 +145,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     }
 
                     if($scope.identityId){
-                        $rootScope.goTo('contact/'+cmContactsModel.findByIdentityId($scope.identityId).id, true);
+                        $rootScope.goTo('contact/edit/'+cmContactsModel.findByIdentityId($scope.identityId).id, true);
                         return null
                     }
 

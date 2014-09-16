@@ -223,7 +223,7 @@ define([
         'cmHooks',
         'cmSystemCheck',
         'cmError',
-        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion, cmApi, cmHooks, cmSystemCheck, cmError) {
+        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion, cmApi, cmAuthenticationRequest, cmHooks, cmSystemCheck, cmError) {
 
             //prep $rootScope with useful tools
             $rootScope.console  =   window.console;

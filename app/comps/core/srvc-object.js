@@ -68,8 +68,9 @@ angular.module('cmCore')
             
             obj.trigger = function(event_name, data, original_source){
                 var event = {
-                                target : obj,  
-                                source : original_source || obj 
+                                target :    obj,  
+                                source :    original_source || obj ,
+                                name :      event_name
                             }
 
                 obj._callbacks[event_name] = obj._callbacks[event_name] || []   //create the according callback array, if neccessary
@@ -151,11 +152,19 @@ angular.module('cmCore')
              * @param  {String} event_names     Names of the events to listen to. Multiple event names should be separated by ' '.
              * @return {promise}                Promise to be resolved when the event triggers for the first time
              */
-            obj.when = function(event_names, timeout){
+            obj.when = function(event_names_to_resolve, event_names_to_reject, timeout){
+                if(isNaN(event_names_to_reject)){
+                    obj.one(event_names_to_reject, function(event, data){
+                        deferred.reject( {event: event, data: data} )
+                    })
+                } else {
+                    timeout = event_names_to_reject
+                }
+
                 var deferred = $q.defer()
 
-                obj.one(event_names, function(event, data){
-                    deferred.resolve(data)
+                obj.one(event_names_to_resolve, function(event, data){
+                    deferred.resolve( {event: event, data: data} )
                 })
 
                 if(timeout){

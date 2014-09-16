@@ -123,11 +123,10 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
              */
 
             cancel: function(toIdentity){
+                self.trigger('canceled')
                 return  cmApi.broadcast({
                             name:   'authenticationRequest:cancel',
-                            data:   {
-                                        fromId: cmUserModel.data.identity.id    //Todo: the identity.id should be part of the backend event!
-                                    }
+                            data:   {}
                         }, toIdentity.id)
             },
 
@@ -168,25 +167,32 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
         cmApi.on('authenticationRequest:start', function(event, request){
 
-            var modal = cmModal.instances['incoming-authentication-request']
+            var modal       = cmModal.instances['incoming-authentication-request']
 
             //Prevent other authentication requests to interfere with an ongoing process
             if(modal && modal.isActive())
                 return false
 
+            var local_keys = cmUserModel.loadLocalKeys()
+
+            //If there are no local keys, there's nothing to authenticate with:
+            if(local_keys.length == 0 )
+                return false
+
             //There is no need to authenticate local keys:
-            if(cmUserModel.loadLocalKeys().find(request.fromKeyId))
+            if(local_keys.find(request.fromKeyId))
                 return false
             
             //If a certain key was expected to sign, but that key is not present on this device, dont prompt the user:
-            if(request.toKeyId && !cmUserModel.loadLocalKeys().find(request.toKeyId))
+            if(request.toKeyId && !local_keys.find(request.toKeyId))
                 return false
 
             self.trigger('started', request)
         })
 
         cmApi.on('authenticationRequest:cancel', function(event, data){
-            data.fromId = data.fromId       //Todo: should be event.from
+            data.fromIdentityId = event.fromIdentityId
+            console.dir(event)
             self.trigger('canceled', data)
         })
 
@@ -248,8 +254,11 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
             cmModal.open('incoming-authentication-request')
 
             self.one('canceled', function(event, data){
-                // If some other authentication request is meant to be caneceled:
-                if(data.fromId != request.fromIdentityId)
+                console.log(data.fromIdentityId)
+                console.log(request.fromIdentityId)
+
+                // If some other authentication request is meant to be canceled:
+                if(data.fromIdentityId != request.fromIdentityId)
                     return false    // dont remove the event binding
 
                 // Close Modal:
