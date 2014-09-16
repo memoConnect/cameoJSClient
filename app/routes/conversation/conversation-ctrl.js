@@ -1,44 +1,31 @@
-define([
-    'app',
-    'ngload!pckFiles',
-    'ngload!pckUser',
-    'ngload!pckContacts',
-    'ngload!pckConversations',
-    'ngload!pckRouteConversation',
-    'ngload!pckWidgets'
+'use strict';
 
-], function (app) {
-    'use strict';
+angular.module('cmRoutes').controller('ConversationCtrl', [
+    '$rootScope',
+    '$scope',
+    '$routeParams',
+    '$location',
+    'cmConversationFactory',
+    function($rootScope, $scope, $routeParams, $location, cmConversationFactory){
 
-    app.register.controller('ConversationCtrl', [
-
-        '$rootScope',
-        '$scope',
-        '$routeParams',
-        '$location',
-        'cmConversationFactory',
-
-        function($rootScope, $scope, $routeParams, $location, cmConversationFactory){
-
-            var force_new       =   $routeParams.conversationId == 'new',
-                conversation_id =   force_new ?  undefined : $routeParams.conversationId
-                
-
-            $scope.conversation =   conversation_id
-                                    ?   cmConversationFactory.create(conversation_id) 
-                                    :   ($rootScope.pendingConversation || cmConversationFactory.new())
+        var force_new       =   $routeParams.conversationId == 'new',
+            conversation_id =   force_new ?  undefined : $routeParams.conversationId
 
 
-            if(!$scope.conversation.state.is('new') && force_new)
-                $scope.conversation = cmConversationFactory.create()
+        $scope.conversation =   conversation_id
+                                ?   cmConversationFactory.create(conversation_id)
+                                :   ($rootScope.pendingConversation || cmConversationFactory.new())
 
-            if(!conversation_id){
-                $scope.$watchCollection('conversation', function(conversation){
-                    if(conversation.id)
-                        $rootScope.goto('conversation/' + conversation.id)
-                })
-            }
 
+        if(!$scope.conversation.state.is('new') && force_new)
+            $scope.conversation = cmConversationFactory.create()
+
+        if(!conversation_id){
+            $scope.$watchCollection('conversation', function(conversation){
+                if(conversation.id)
+                    $rootScope.goto('conversation/' + conversation.id)
+            })
         }
-    ]);
-});
+
+    }
+]);

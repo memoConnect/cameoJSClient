@@ -1,11 +1,6 @@
-define([
-    'app',
-    'ngload!pckValidate',
-    'ngload!pckUi',
-], function (app) {
-    'use strict';
+'use strict';
 
-app.register.controller('RegistrationCtrl', [
+angular.module('cmRoutes').controller('RegistrationCtrl', [
     'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferScopeData', 'cmNotify', 'cmSystemCheck',
     '$scope', '$rootScope', '$location', '$q',
     function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferScopeData, cmNotify, cmSystemCheck,
@@ -203,5 +198,5 @@ app.register.controller('RegistrationCtrl', [
                     $scope.reservationSecrets = privateData
             }
         });
-    }]);
-});
+    }
+]);

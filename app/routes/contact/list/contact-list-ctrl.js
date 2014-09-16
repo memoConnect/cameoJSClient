@@ -1,21 +1,7 @@
-define([
+'use strict';
 
-    'app',
-    'ngload!pckUser',
-    'ngload!pckCore',
-    'ngload!pckContacts',
-    'ngload!pckUi',
-    'ngload!pckValidate',
-    'ngload!pckRouteContacts',
-    'ngload!pckWidgets',
+angular.module('cmRoutes').controller('ContactListCtrl',[
+    function(){
 
-], function(app){
-    'use strict';
-
-    app.register.controller('ContactListCtrl',[
-
-        
-        function(){
-        }
-    ]);
-});
+    }
+]);

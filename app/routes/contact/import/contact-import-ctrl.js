@@ -1,19 +1,8 @@
-define([
-    'app',
-    'ngload!pckContacts',
-    'ngload!pckUi',
-    'ngload!pckValidate',
-    'ngload!pckCore',
-    'ngload!pckUser',
-    'ngload!pckWidgets'
+'use strict';
 
-], function(app){
-    'use strict';
-
-    app.register.controller('ContactImportCtrl',[
-        // no dependencies
-        function(){
-            //nothing to do here yet
-        }
-    ]);
-});
+angular.module('cmRoutes').controller('ContactImportCtrl',[
+    // no dependencies
+    function(){
+        //nothing to do here yet
+    }
+]);
