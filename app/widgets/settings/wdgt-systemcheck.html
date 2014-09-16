@@ -8,7 +8,7 @@
         <section ng-if="clientVersionCheck" ng-bind-html="'SYSTEMCHECK.CLIENTVERSION.TEXT_OK'| cmParse:{'translate':true} | cmTranslate:{'version':version}"></section>
 
         <section class="tac mt15" ng-if="(!clientVersionCheck && $scope.isApp && $scope.storeLink != '')">
-            <a href="{{storeLink}}"><img src="gfx/stores/{{icon}}" /></a>
+            <a href="{{storeLink}}"><img class="storeIcon" ng-src="{{icon}}" /></a>
         </section>
     </cm-info-bubble>
 </article>

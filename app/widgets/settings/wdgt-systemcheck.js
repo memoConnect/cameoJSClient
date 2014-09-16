@@ -8,7 +8,7 @@ angular.module('cmWidgets').directive('cmWidgetSystemcheck', [
         return {
             restrict: 'E',
             templateUrl: 'widgets/settings/wdgt-systemcheck.html',
-            controller: function ($scope) {
+            controller: function ($scope, $element) {
                 $scope.localStorage = cmSystemCheck.checkLocalStorage();
                 $scope.clientVersionCheck = cmSystemCheck.checkClientVersion();
 
@@ -16,10 +16,10 @@ angular.module('cmWidgets').directive('cmWidgetSystemcheck', [
 
                 $scope.isApp = cmDevice.isApp();
                 $scope.storeLink = '';
-                $scope.icon = '';
+                $scope.icon = 'gfx/pixel.png';
                 if($scope.isApp){
                     if(cmDevice.isAndroid()){
-                        $scope.icon = 'playStore_aktiv.png';
+                        $scope.icon = 'gfx/stores/playStore_aktiv.png';
                         $scope.storeLink = 'https://play.google.com/store/apps/details?id=de.cameonet';
                     } else if(cmDevice.isiOS()){
                         $scope.storeLink = '';
