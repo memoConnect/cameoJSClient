@@ -9,11 +9,22 @@ angular.module('cmUi')
         return {
             restrict: 'E',
             scope: {
-                ngModel: '=ngModel'
+                ngModel: '=ngModel',
+                cmOptions: '=cmOptions'
             },
-            template: '<i class="fa with-response cm-search" ng-click="toggleInput($event)" data-qa="btn-header-list-search"></i>' +
-                      '<cm-search-input ng-model="ngModel" cm-without-search-icon="true" cm-hide-elements="cm-footer" ng-class="{visible:visible}"></cm-search-input>',
-            controller: function($scope){
+            template: '<i class="fa with-response cm-search"' +
+                        ' ng-click="toggleInput($event)"' +
+                        ' data-qa="btn-header-list-search"></i>' +
+                      '<cm-search-input' +
+                        ' ng-model="ngModel"' +
+                        ' cm-options="{withoutSearchIcon:true,hideElements:\'cm-footer\',jumpTo:options.jumpTo}"' +
+                        ' ng-class="{visible:visible}"></cm-search-input>',
+            controller: function($scope, $element, $attrs){
+                // option for drtv
+                $scope.options = angular.extend({}, {
+                    jumpTo:false
+                }, $scope.cmOptions || {});
+
                 $scope.visible = false;
                 $scope.toggleInput = function(e){
                     e.stopPropagation();

@@ -23,13 +23,16 @@ angular.module('cmUi').directive('cmScrollTo',[
 
                 if($attrs.ngRepeat && $scope.$last && $attrs.cmScrollTo != ''){
                     initTimeout($attrs.cmScrollTo);
-                    // this because of cm-blob-image
-                    $rootScope.$on('scroll:to',function(event,target){
-                        initTimeout(target);
-                    })
+
                 } else if(!$attrs.ngRepeat){
                     initTimeout($attrs.cmScrollTo);
                 }
+                // because of cm-blob-image
+                // & cm-search-input
+                $rootScope.$on('scroll:to',function(event, target){
+                    console.log('cmScrollTo',target)
+                    initTimeout(target);
+                });
             }
         }
     }

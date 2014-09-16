@@ -6,9 +6,11 @@
     </li>
 </ul>
 
-<hr ng-if="(conversation.recipients.length > 1)">
+<hr ng-if="conversation.state.is('new') && (conversation.recipients.length > 1)">
 
-<ul ng-if="conversation.state.is('new')" class="no-border contact-list">
+<div id="possible-recipient-list"></div>
+
+<ul cm-scroll-to="#possible-recipient-list" ng-if="conversation.state.is('new')" class="no-border contact-list">
     <li
         ng-repeat   =   "contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search"
         ng-if       =   "contact.contactType != 'pending'"
