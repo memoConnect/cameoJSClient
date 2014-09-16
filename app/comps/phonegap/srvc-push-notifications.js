@@ -2,41 +2,52 @@
 
 // https://github.com/phonegap-build/PushPlugin
 
-angular.module('cmPhonegap').service('cmPushNotification', [
+angular.module('cmPhonegap').service('cmPushNotifications', [
     'cmPhonegap', 'cmUtil',
-    function (cmPhonegap, cmUtil) {
+    '$q', '$injector',
+    function (cmPhonegap, cmUtil,
+              $q, $injector) {
 
-        var plugin;
+        var cmDevice = $injector.get('cmDevice');
 
-        if(!('plugins' in window) || !('pushNotification' in window.plugins)) {
-            console.info('PUSHNOTIFICATION PLUGIN IS MISSING');
-        } else {
-            plugin = window.plugins.pushNotification
-        }
+        var self = {
+            plugin: null,
+            deviceToken: '',
+            deviceId: '',
 
-        var service = {
-            existsPlugin: function(){
-                if(plugin == undefined) {
+            init: function(){
+                if(!('plugins' in window) || !('pushNotification' in window.plugins) || !Puship) {
+                    //cmLogger.info('PUSHNOTIFICATION PLUGIN IS MISSING');
                     return false;
                 }
-                return true;
+                console.log('plugins ready check phonegap ready')
+                cmPhonegap.isReady(function(){
+                    console.log('phonegap ready pn register')
+                    self.plugin = window.plugins.pushNotification;
+                    self.register();
+                });
             },
+
+            reset: function(){
+                this.deviceToken = '';
+                this.deviceId = '';
+            },
+
             register: function(){
 
-                if(!this.existsPlugin())
-                    return false;
-
-                if ( cmPhonegap.isAndroid() ){
-                    plugin.register(
+                if ( cmDevice.isAndroid() ){
+                    console.log('register android')
+                    self.plugin.register(
                         this.successHandler,
                         this.errorHandler,
                         {
-                            senderID:cameo_config.pushNotification.senderID,
+                            senderID:phonegap_cameo_config.googleSenderId,
                             ecb:'window.onNotification.Android'
                         }
                     );
                 } else {
-                    plugin.register(
+                    console.log('register other')
+                    self.plugin.register(
                         this.tokenHandler,
                         this.errorHandler,
                         {
@@ -51,18 +62,18 @@ angular.module('cmPhonegap').service('cmPushNotification', [
             successHandler: function(result){
                 // result contains any message sent from the plugin call
                 console.log('##success#################');
-                console.log('result = ' + result);
+                self.setDeviceData(result);
             },
             tokenHandler: function(result){
                 console.log('##device registered token#################');
                 // Your iOS push server needs to know the token before it can push to this device
                 // here is where you might want to send it the token for later use.
-                console.log('device token = ' + result);
+                self.setDeviceData(result);
             },
             errorHandler: function(error) {
                 // result contains any error description text returned from the plugin call
                 console.log('##error#################')
-                console.log('error = ' + error);
+                console.log(error);
             },
 
             onNotification: {
@@ -70,6 +81,7 @@ angular.module('cmPhonegap').service('cmPushNotification', [
                     switch (event.event) {
                         case 'registered':
                             console.log('##device registered regID#####################');
+                            console.log(event)
                             if (event.regid.length > 0) {
                                 // Your GCM push server needs to know the regID before it can push to this device
                                 // here is where you might want to send it the regID for later use.
@@ -120,18 +132,42 @@ angular.module('cmPhonegap').service('cmPushNotification', [
 //                    }
 
                     if (event.badge) {
-                        plugin.setApplicationIconBadgeNumber(
+                        self.plugin.setApplicationIconBadgeNumber(
                             this.successHandler,
                             this.errorHandler,
                             event.badge
                         );
                     }
                 }
+            },
+
+            setDeviceData: function(result){
+                //console.info('Device registered')
+                //console.info('DeviceToken: '+pushipresult.DeviceToken)
+                console.log('setDeviceData')
+                console.log(result)
+
+                return false;
+                //this.deviceToken = result.DeviceToken;
+                //this.deviceId = result.DeviceId;
+
+                this.initDevicePromise();
+                this.devicePromise.resolve(this.deviceId);
+            },
+
+            devicePromise: undefined,
+            initDevicePromise: function(){
+                if(!this.devicePromise)
+                    this.devicePromise = $q.defer();
+            },
+            getDeviceId: function(){
+                this.initDevicePromise();
+                return this.devicePromise.promise;
             }
         };
 
-        window.onNotification = service.onNotification;
+        window.onNotification = self.onNotification;
 
-        return service;
+        return self;
     }]
 );

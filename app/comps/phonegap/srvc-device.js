@@ -3,10 +3,12 @@
 angular.module('cmPhonegap').service('cmDevice', [
     'cmPhonegap', 'cmPushIp', 'cmApi',
     'cmLanguage', 'cmLogger', 'cmUtil',
-    '$rootScope',
+    '$rootScope', '$injector',
     function (cmPhonegap, cmPushIp, cmApi,
               cmLanguage, cmLogger, cmUtil,
-              $rootScope) {
+              $rootScope, $injector) {
+
+        //var cmPushNotifications = $injector.get('cmPushNotifications');
 
         var self = {
             currentDeviceId: '',
@@ -75,14 +77,15 @@ angular.module('cmPhonegap').service('cmDevice', [
                  ]
                 */
 
-                var accountPushDevices = accountPushDevices || [],
-                deviceIsRegistered = accountPushDevices.filter(function(deviceId){
-                    return deviceId == cmPushIp.deviceId
-                }).length == 1;
-
-                if(!deviceIsRegistered){
-                    this.registerPushDevice();
-                }
+//                var accountPushDevices = accountPushDevices || [],
+//                deviceIsRegistered = accountPushDevices.filter(function(deviceId){
+//                    //return deviceId == cmPushIp.deviceId
+//                    return deviceId == cmPushNotifications.deviceId
+//                }).length == 1;
+//
+//                if(!deviceIsRegistered){
+//                    this.registerPushDevice();
+//                }
 
             },
             registerPushDevice: function(){
@@ -93,21 +96,22 @@ angular.module('cmPhonegap').service('cmDevice', [
                      "platform":"android"
                  }
                 */
-                cmPushIp.getDeviceId()
-                .then(
-                    function(deviceId){
-                        self.currentDeviceId = deviceId;
-
-                        cmApi.post({
-                            path: '/pushDevice',
-                            data: {
-                                deviceId: deviceId,
-                                language: cmLanguage.getCurrentLanguage().replace('_','-'),
-                                platform: self.getCurrentOS()
-                            }
-                        });
-                    }
-                );
+                //cmPushIp.getDeviceId()
+//                cmPushNotifications.getDeviceId()
+//                .then(
+//                    function(deviceId){
+//                        self.currentDeviceId = deviceId;
+//
+//                        cmApi.post({
+//                            path: '/pushDevice',
+//                            data: {
+//                                deviceId: deviceId,
+//                                language: cmLanguage.getCurrentLanguage().replace('_','-'),
+//                                platform: self.getCurrentOS()
+//                            }
+//                        });
+//                    }
+//                );
             },
             deleteDevice: function(token){
                 if(this.currentDeviceId != '' && token && token != '') {
