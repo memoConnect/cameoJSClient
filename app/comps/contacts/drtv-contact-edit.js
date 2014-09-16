@@ -85,6 +85,10 @@ angular.module('cmContacts')
                         }
                     };
 
+                    $scope.goToAuthentication = function(identityId){
+                        $rootScope.goTo('authentication/identity/' + identityId);
+                    };
+
                     $scope.saveUser = function(){
                         // declaration
                         var emptyIdentity = {
