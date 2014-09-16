@@ -92,11 +92,11 @@ module.exports = function (grunt) {
             console.log("phonegap name: " + buildConfig.phonegap.baseName + buildConfig.phonegap.extraName);
             console.log("phonegap version: " + buildConfig.phonegap.version);
         } else {
-            buildConfig.config.version = "no version";
+            buildConfig.config.version = "0.2.6"; // default for local dev
             buildConfig.phonegap.version = "0.0.1";
         }
 
-        if(buildConfig.config.version == 'no version'){
+        if(buildConfig.config.version == '0.2.6'){
             buildConfig.config.urlBust =  (new Date()).getTime();
         } else {
             buildConfig.config.urlBust = buildConfig.config.version.replace(/\./g,'');

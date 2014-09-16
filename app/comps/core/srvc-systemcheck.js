@@ -8,15 +8,49 @@
 angular.module('cmCore').service('cmSystemCheck', [
     'cmUserModel',
     'cmObject',
+    'cmApi',
+    'cmVersion',
+    'cmLanguage',
     'LocalStorageAdapter',
     '$rootScope',
-    function(cmUserModel, cmObject, LocalStorageAdapter, $rootScope){
+    '$q',
+    function(cmUserModel, cmObject, cmApi, cmVersion, cmLanguage, LocalStorageAdapter, $rootScope, $q){
         var self = this;
 
         cmObject.addEventHandlingTo(this);
 
+        this.getBrowserInfo = function(){
+            var deferred = $q.defer();
+
+            cmApi.post({
+                path: '/services/getBrowserInfo',
+                data: {
+                    version: cmVersion.version
+                }
+            }).then(
+                function(data){
+                    if(!cmUserModel.isAuth()){
+                        var language = data.languageCode.substr(0,2),
+                            lc       = language == 'de' ? 'de_DE' : 'en_US';
+                        cmLanguage.switchLanguage(lc);
+                    }
+
+                    if('versionIsSupported' in data && data.versionIsSupported == false){
+                        $rootScope.clientVersionCheck = false;
+                    } else {
+                        $rootScope.clientVersionCheck = true;
+                    }
+                    deferred.resolve();
+                },
+                function(){
+                    deferred.reject();
+                }
+            );
+
+            return deferred.promise;
+        };
+
         /**
-         * TODO REQUEST im Fall der Faelle
          * @param forceRedirect
          * @returns {boolean}
          */
@@ -28,6 +62,15 @@ angular.module('cmCore').service('cmSystemCheck', [
                 } else {
                     return true;
                 }
+            } else {
+                this.getBrowserInfo().then(
+                    function(){
+                        return self.checkClientVersion(forceRedirect);
+                    },
+                    function(){
+                        return true;
+                    }
+                )
             }
         };
 

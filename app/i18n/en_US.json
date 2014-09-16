@@ -308,6 +308,11 @@
             "HEADLINE": "LocalStorage",
             "TEXT_OK": "LocalStorage is activated!",
             "TEXT_ERROR": "On the Local Storage can not be accessed!<br>Enable the access, or open the app outside of a private browsing session."
+        },
+        "CLIENTVERSION": {
+            "HEADLINE": "Client Version",
+            "TEXT_OK": "The App version is up-to-date.<br>Version: {{version}}",
+            "TEXT_ERROR": "Please update the App!<br> This version is not supported anymore!<br>Version: {{version}}"
         }
     },
 

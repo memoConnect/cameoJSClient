@@ -223,35 +223,6 @@ define([
         'cmSystemCheck',
         'cmError',
         function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion, cmApi, cmHooks, cmSystemCheck, cmError) {
-            $rootScope.$on('getBrowserInfo', function(){
-                //get browser language:
-                cmApi.post({
-                    path: '/services/getBrowserInfo',
-                    data: {
-                        version: cmVersion.version
-                    }
-                })
-                .then(
-                    function(data){
-                        if(!cmUserModel.isAuth()){
-                            var language = data.languageCode.substr(0,2),
-                                lc       = language == 'de' ? 'de_DE' : 'en_US'
-                            cmLanguage.switchLanguage(lc)
-                        }
-
-                        /**
-                         * @todo besser checken
-                         */
-                        if('versionIsSupported' in data && data.versionIsSupported == false){
-                            $rootScope.clientVersionCheck = false;
-                        } else {
-                            $rootScope.clientVersionCheck = true;
-                        }
-                    }
-                );
-            });
-
-            $rootScope.$broadcast('getBrowserInfo');
 
             //prep $rootScope with useful tools
             $rootScope.console  =   window.console;
