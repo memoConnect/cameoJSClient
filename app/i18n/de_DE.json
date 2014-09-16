@@ -310,8 +310,8 @@
             "TEXT_ERROR": "Auf den LocalStorage kann nicht zugegriffen werden!<br> Schalten die den Zugriff bitte frei, oder öffnen Sie die App nicht mehr einer privaten Browser Session."
         },
         "CLIENTVERSION": {
-            "HEADLINE": "Client Version",
-            "TEXT_OK": "Die App ist auf dem neuesten Stand.<br>Version: {{version}}",
+            "HEADLINE": "App Version",
+            "TEXT_OK": "Version: {{version}}",
             "TEXT_ERROR": "Bitte aktualisieren Sie die App!<br> Die Version wird nicht mehr unterstützt!<br>Version: {{version}}"
         }
     },
