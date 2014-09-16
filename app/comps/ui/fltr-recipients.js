@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('cmUi')
-.filter('cmRecipients', [
+angular.module('cmUi').filter('cmRecipients', [
 
     function(){
         return function(arrayToSearch, shouldBeRecipient, objectOfRecipients){

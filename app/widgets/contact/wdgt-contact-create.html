@@ -1,0 +1,12 @@
+<h2>
+    <i class="fa cm-load-to-rhino"></i>
+    {{'CONTACTS.HEADING.CREATE'|cmTranslate}}
+</h2>
+
+<article class="content" ng-if="canReadLocalContacts()">
+    <cm-info-bubble nose-x="55%">
+        <span ng-bind-html="'CONTACTS.INFO.IMPORT_POSSIBLE' | cmParse"></span>
+    </cm-info-bubble>
+</article>
+
+<cm-contact-create></cm-contact-create>

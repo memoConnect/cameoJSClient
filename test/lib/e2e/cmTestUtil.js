@@ -435,6 +435,7 @@ this.generateKey = function (keyNum, keyName) {
         return key != undefined
     }, config.waitForTimeout , 'wait for file timeout reached').then(function(){
         self.get('/settings/identity/key/import')
+        self.waitForPageLoad('/settings/identity/key/import')
         self.waitForElement("[data-qa='display-private-key']")
         self.setValQuick("display-private-key", key)
         self.setVal("display-private-key", " ")
@@ -494,7 +495,7 @@ this.acceptFriendRequests = function () {
 }
 
 this.addExternalContact = function (displayName) {
-    self.get("/contact/new")
+    self.get("/contact/create")
     $("[data-qa='input-displayname']").sendKeys(displayName)
     $("[data-qa='input-phonenumber']").sendKeys("1233")
     $("[data-qa='btn-create-contact']").click()

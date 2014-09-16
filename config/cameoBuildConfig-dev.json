@@ -6,10 +6,14 @@
         "enableDebug": true,
         "logLevel": "DEBUG"
     },
+    "debug":{
+        "weinre": false,
+        "weinreIp": ""
+    },
     "phonegap": {
-        "baseName" : "cameoNet-dev",
-        "appId" : "864855",
-        "bundleId" : "io.cameo.dev.cameo",
-        "extraName" : ""
+        "baseName": "cameoNet-dev",
+        "appId": "864855",
+        "bundleId": "io.cameo.dev.cameo",
+        "extraName": ""
     }
 }

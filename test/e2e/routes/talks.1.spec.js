@@ -22,30 +22,13 @@ describe('Route Talks:', function () {
         expect($('cm-header').isPresent()).toBe(true)
     })
 
-    it('should have a footer.', function () {
-        expect($('cm-footer').isPresent()).toBe(true)
-    })
-
-    it('load 10 elements', function () {
-        util.waitForLoader()
+    it('load more then 0 elements (conversations)', function () {
+        util.waitForElement('[data-qa=conversation-list-element]')
 
         $$('[data-qa=conversation-list-element]').then(function (elements) {
-            expect(elements.length).toBe(10)
+            expect(elements.length).not.toBe(0)
         })
     })
-
-    // disabled untill spinner is implemented for load more
-//    it('load 10 more elements on load more', function(){
-//
-//        $("[data-qa=load-more-btn]").sendKeys(protractor.Key.END)
-//        $('[data-qa=load-more-btn]').click()
-//
-//        util.waitForSpinner()
-//
-//        $$('[data-qa=conversation-list-element]').then(function(elements){
-//            expect(elements.length).toBeGreaterThan(10)
-//        })
-//    })
 
     it('should open conversation when clicked', function () {
 
@@ -63,7 +46,7 @@ describe('Route Talks:', function () {
     })
 
     it('should open a new conversation on button click', function () {
-        util.waitForLoader()
+        //util.waitForLoader()
         $("body").sendKeys(protractor.Key.HOME)
         // wait for browser to scroll, todo: find a better way to do this
         $("[data-qa='new-conversation-btn']").click()

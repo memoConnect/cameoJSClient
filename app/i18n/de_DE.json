@@ -210,7 +210,9 @@
             "REQUESTS": "Kontaktanfragen",
             "SEARCH": "Suchen",
             "NEW_CONTACTS": "Neue Kontakte",
-            "SEND_REQUEST": "Kontaktanfrage"
+            "SEND_REQUEST": "Kontaktanfrage",
+            "CREATE": "Neuen Kontakt anlegen",
+            "IMPORT": "Lokalen Kontakt importieren "
         },
         "LIST_EMPTY": "Bisher keine Kontakte vorhanden.",
         "PLACEHOLDER": {
@@ -227,7 +229,9 @@
                 "ACCEPT": "Sie sind nun mit diesem Kontakt verbunden.",
                 "REJECT": "Die Anfrage wurde zurückgewiesen.",
                 "IGNORE": "Der User wird nun ignoriert."
-            }
+            },
+            "IMPORT_POSSIBLE": "Sie können auch aus Ihrem lokalen Adressbuch einen Kontakt zu einem Cameo Kontakt machen. <a href=\"#/contact/import\">jetzt importieren</a>",
+            "IMPORT_RIGHTS": "Jetzt greifen wir auf Ihrem lokalen Adressbuch zu. Sie wählen einen Kontakt, und nur diese Daten die Sie ausgewählt haben, werden für einen Cameo Kontakt verwendet. <a>Neuen Kontakt aussuchen</a>"
         },
         "LABEL": {
             "DISPLAYNAME": "Anzeigename",
@@ -237,7 +241,8 @@
             "FILTER": "Filtern",
             "SEARCH_IDENTITY": "CameoNet durchsuchen",
             "ADD_EXTERN": "Externen Kontakt hinzufügen",
-            "SEND_REQUEST": "Senden"
+            "SEND_REQUEST": "Senden",
+            "IMPORT_LOCAL": "Lokalen Kontakt importieren"
         },
         "BUTTON": {
             "RESET": "Zurücksetzen",
@@ -258,8 +263,8 @@
         "PLACEHOLDER": {
             "CAMEOID": "CameoID",
             "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
-            "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER",
-            "EMAIL": "@:DRTV.VALIDATE_EMAIL.PLACEHOLDER",
+            "PHONENUMBER": "Telefonnummer",
+            "EMAIL": "E-Mail",
             "STREET": "Straße",
             "STREETNR": "Nr.",
             "ZIP": "PLZ",
@@ -280,6 +285,10 @@
             "ERROR": {
                 "SAVE": "Kontakt konnte nicht angelegt werden.",
                 "EDIT": "Kontakt konnte nicht gespeichert werden."
+            },
+            "SELECT": {
+                "EMAIL": "Bitte wählen Sie eine E-Mail aus",
+                "PHONENUMBER": "Bitte wählen Sie eine Telefonnummer aus"
             }
         },
         "HANDSHAKE_3RD": {
@@ -299,6 +308,11 @@
             "HEADLINE" : "LocalStorage",
             "TEXT_OK": "Alles in Ordnung!",
             "TEXT_ERROR": "Auf den LocalStorage kann nicht zugegriffen werden!<br> Schalten die den Zugriff bitte frei, oder öffnen Sie die App nicht mehr einer privaten Browser Session."
+        },
+        "CLIENTVERSION": {
+            "HEADLINE": "App Version",
+            "TEXT_OK": "Version: {{version}}",
+            "TEXT_ERROR": "Bitte aktualisieren Sie die App!<br> Die Version wird nicht mehr unterstützt!<br>Version: {{version}}"
         }
     },
 

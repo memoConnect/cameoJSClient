@@ -564,12 +564,12 @@ angular.module('cmCore')
             var local_keys              =   this.loadLocalKeys(),
                 own_ttrusted_keys       =   self.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
                                                 return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
-                                            })
+                                            });
 
 
             var ttrusted_keys           =   identity.keys.getTransitivelyTrustedKeys(own_ttrusted_keys, function trust(trusted_key, key){
                                                 return trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId))
-                                            })
+                                            });
                
 
             var unsigned_ttrusted_keys  =   ttrusted_keys.filter(function(ttrusted_key){
@@ -578,10 +578,10 @@ angular.module('cmCore')
                                                                         return signature.keyId != local_key.id
                                                                     })
                                                         })
-                                            })
+                                            });
 
             if(sign != true || unsigned_ttrusted_keys.length == 0)
-                return ttrusted_keys
+                return ttrusted_keys;
 
             this.state.set('signing');
 
@@ -592,7 +592,7 @@ angular.module('cmCore')
             )
             .finally(function(){
                  self.state.unset('signing')
-            })
+            });
 
             return ttrusted_keys
         };
@@ -600,7 +600,7 @@ angular.module('cmCore')
         this.verifyTrust = function(identity){
             return      identity.keys.length > 0
                     &&  identity.keys.length == this.verifyIdentityKeys(identity, true).length //true: sign keys if needed 
-        }
+        };
 
         this.clearLocalKeys = function(){
             this.storageSave('rsa', []);
@@ -646,7 +646,12 @@ angular.module('cmCore')
                                 if(newList.length > 0){
                                     cmAuth.saveBulkPassphrases(newKey.id, newList).then(
                                         function(){
-//                                            //
+                                            cmAuth.sendBroadcast({
+                                                name: 'rekeying:finished',
+                                                data:{
+                                                    keyId: newKey.id
+                                                }
+                                            });
                                         },
                                         function(){
                                             cmLogger.debug('cmUserModel.bulkReKeying - Request Error - saveBulkPassphrases');
@@ -667,17 +672,17 @@ angular.module('cmCore')
                         ).finally(
                             function(){
                                 self.trigger('bulkrekeying:finished');
-                                this.state.unset('rekeying');
+                                self.state.unset('rekeying');
                             }
                         );
                     } else {
                         cmLogger.debug('cmUserModel.bulkReKeying - Key Error - getBulkPassphrases');
                         self.trigger('bulkrekeying:finished');
-                        this.state.unset('rekeying');
+                        self.state.unset('rekeying');
                     }
                 } else {
                     cmLogger.debug('cmUserModel.bulkReKeying - Parameter Error - getBulkPassphrases');
-                    self.trigger('bulkrekeying:finished');
+                    this.trigger('bulkrekeying:aborted');
                     this.state.unset('rekeying');
                 }
             }

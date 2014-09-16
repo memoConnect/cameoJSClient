@@ -45,7 +45,8 @@ angular.module('cmPhonegap').directive('cmChooseSource', [
                             });
                         break;
                         case "file":
-                            cmCamera.chooseFile(function (blob) {
+                            cmCamera.chooseFile(function(blob){
+                                blob.useLocalUri = true;
                                 cmFilesCtrl.setFile(blob);
                             });
                         break;

@@ -2,11 +2,10 @@
 
 angular.module('cmCore')
 .factory('cmKey', [
-
     'cmLogger',
+    'cmObject',
     '$rootScope',
-
-    function(cmLogger, $rootScope){
+    function(cmLogger, cmObject, $rootScope){
         /**
          * @TODO TEsts!!!!!
          * @param args
@@ -16,7 +15,9 @@ angular.module('cmCore')
             //Wrapper for RSA Keys
             var self        = this,
                 crypt       = undefined, // will be JSEncrypt() once a key is set
-                verified    = {}
+                verified    = {};
+
+            cmObject.addEventHandlingTo(this);
 
             this.created    = 0;
             this.signatures = [];
@@ -29,6 +30,45 @@ angular.module('cmCore')
                 self.created    = 0;
                 self.signatures = [];
             }
+
+            this.importData = function(data){
+                if(!data){
+                    cmLogger.debug('cmKey:importData: missing data')
+                    return self
+                }
+
+                var key =       data.privKey
+                    ||  this.getPrivateKey()
+                    ||  data.key
+                    ||  data.pubKey
+                    ||  undefined;
+
+                if(data.name)       this.setName(data.name);
+                if(data.id)         this.setId(data.id);
+                if(data.created)    this.created = data.created;
+                if(data.signatures) Array().push.apply(this.signatures, data.signatures)
+
+                if(key) this.setKey(key);
+
+                return this;
+            };
+
+            this.exportData = function(){
+                var data        = {},
+                    private_key = this.getPrivateKey(),
+                    public_key  = this.getPublicKey(),
+                    size        = this.getSize();
+
+                if(this.id)         data.id         = this.id;
+                if(this.name)       data.name       = this.name;
+                if(this.signatures) data.signatures = this.signatures;
+                if(this.created)    data.created    = this.created;
+                if(public_key)      data.pubKey     = public_key;
+                if(private_key)     data.privKey    = private_key;
+                if(size)            data.size       = size;
+
+                return data;
+            };
 
             this.setId = function(id){
                 this.id = id;
@@ -54,6 +94,19 @@ angular.module('cmCore')
                 }catch(e){}
 
                 return public_key;
+            };
+
+            /**
+             * @todo sinnvoll einsetzen
+             */
+            this.checkFingerprint = function(){
+                var fingerprint = sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(this.getPublicKey()), true, true);
+
+                if(typeof this.id != 'undefined'){
+                    if(this.id != fingerprint){
+                        this.trigger('fingerprintCheck:failed');
+                    }
+                }
             };
 
             this.getFingerprint = function(){
@@ -128,45 +181,6 @@ angular.module('cmCore')
 
             this.exportJSEncrypt = function(){
                 return crypt
-            };
-
-            this.importData = function(data){
-                if(!data){
-                    cmLogger.debug('cmKey:importData: missing data')
-                    return self
-                }
-
-                var key =       data.privKey
-                            ||  this.getPrivateKey()
-                            ||  data.key
-                            ||  data.pubKey
-                            ||  undefined;
-
-                if(data.name)       this.setName(data.name);
-                if(data.id)         this.setId(data.id);
-                if(data.created)    this.created = data.created;
-                if(data.signatures) Array().push.apply(this.signatures, data.signatures)
-
-                if(key) this.setKey(key);
-
-                return this;
-            };
-
-            this.exportData = function(){
-                var data        = {},
-                    private_key = this.getPrivateKey(),
-                    public_key  = this.getPublicKey(),
-                    size        = this.getSize();
-
-                if(this.id)         data.id         = this.id;
-                if(this.name)       data.name       = this.name;
-                if(this.signatures) data.signatures = this.signatures;
-                if(this.created)    data.created    = this.created;
-                if(public_key)      data.pubKey     = public_key;
-                if(private_key)     data.privKey    = private_key;
-                if(size)            data.size       = size;
-
-                return data;
             };
 
             $rootScope.$on('logout', function(){ reset() });

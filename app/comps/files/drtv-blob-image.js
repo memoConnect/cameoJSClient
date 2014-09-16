@@ -7,11 +7,12 @@ angular.module('cmFiles').directive('cmBlobImage',[
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
-                // TODO: thumbnail
 
                 function showFile(file){
                     if(typeof file.blob == 'object'){
-                        cmFilesAdapter.getBlobUrl(file.blob).then(function(objUrl){
+                        cmFilesAdapter
+                        .getBlobUrl(file.blob, true)
+                        .then(function(objUrl){
                             file.url = objUrl;
                             element.attr('src', file.url.src);
                             element.on('load', function(){

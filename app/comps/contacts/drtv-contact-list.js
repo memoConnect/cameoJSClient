@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('cmContacts').directive('cmContactList',[
-    'cmContactsModel',
-    'cmLogger',
+    'cmContactsModel', 'cmLogger',
     '$rootScope',
-    '$location',
-    function (cmContactsModel, cmLogger, $rootScope, $location) {
+    function (cmContactsModel, cmLogger,
+              $rootScope) {
         return {
             restrict: 'AE',
             scope: true,
@@ -32,10 +31,9 @@ angular.module('cmContacts').directive('cmContactList',[
                  */
                 $scope.editContact = function (contact) {
                     if(contact.contactType != 'pending') {
-                        $rootScope.goTo('/contact/' + contact.id);
+                        $rootScope.goTo('/contact/edit/' + contact.id);
                     }
                 };
-                //cmContactsModel.getAll();
             }
         }
     }

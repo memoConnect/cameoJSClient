@@ -210,7 +210,9 @@
             "REQUESTS": "Contact requests",
             "SEARCH": "Search",
             "NEW_CONTACTS": "New contacts",
-            "SEND_REQUEST": "Send request"
+            "SEND_REQUEST": "Send request",
+            "CREATE": "Create new contact",
+            "IMPORT": "Import local contact"
         },
         "LIST_EMPTY": "No contacts yet!",
         "PLACEHOLDER": {
@@ -227,7 +229,9 @@
                 "ACCEPT": "Request accepted",
                 "REJECT": "Request rejected",
                 "IGNORE": "User ignored"
-            }
+            },
+            "IMPORT_POSSIBLE": "You can also import a contact from your local addressbook. <a href=\"#/contact/import\">Import now</a>",
+            "IMPORT_RIGHTS": "Now we access your local address book. You select a contact and only this data you picked, are used for a cameo contact. <a>Choose new contact</a>"
         },
         "LABEL": {
             "DISPLAYNAME": "Display name",
@@ -237,7 +241,8 @@
             "FILTER": "Filter",
             "SEARCH_IDENTITY": "Search Cameo indentity",
             "ADD_EXTERN": "Create new extern contact",
-            "SEND_REQUEST": "Send"
+            "SEND_REQUEST": "Send",
+            "IMPORT_LOCAL": "Load local contact"
         },
         "BUTTON": {
             "RESET": "Reset",
@@ -258,8 +263,8 @@
         "PLACEHOLDER": {
             "CAMEOID": "CameoID",
             "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
-            "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER",
-            "EMAIL": "@:DRTV.VALIDATE_EMAIL.PLACEHOLDER",
+            "PHONENUMBER": "Phonenumber",
+            "EMAIL": "EMail",
             "STREET": "Street",
             "STREETNR": "Nr",
             "ZIP": "Zip",
@@ -280,6 +285,10 @@
             "ERROR": {
                 "SAVE": "Could not save contact",
                 "EDIT": "Could not edit contact"
+            },
+            "SELECT": {
+                "EMAIL": "Please select one email",
+                "PHONENUMBER": "Please select one phonenumber"
             }
         },
         "HANDSHAKE_3RD": {
@@ -299,6 +308,11 @@
             "HEADLINE": "LocalStorage",
             "TEXT_OK": "LocalStorage is activated!",
             "TEXT_ERROR": "On the Local Storage can not be accessed!<br>Enable the access, or open the app outside of a private browsing session."
+        },
+        "CLIENTVERSION": {
+            "HEADLINE": "App Version",
+            "TEXT_OK": "Version: {{version}}",
+            "TEXT_ERROR": "Please update the App!<br> This version is not supported anymore!<br>Version: {{version}}"
         }
     },
 

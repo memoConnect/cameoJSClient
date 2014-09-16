@@ -2,7 +2,7 @@
     <li ng-show="!conversations.length && !conversations.state.is('loading')" class="empty-list">
         <i class="fa cm-info"></i>  {{'TALKS.LIST_EMPTY'|cmTranslate}}
     </li>
-    <li ng-show="conversations.state.is('loading')" class="empty-list">
+    <li ng-show="conversations.state.is('loading') && conversations.length == 0" class="empty-list">
         <cm-loader></cm-loader>
     </li>
     <li ng-repeat="conversation in conversations | orderBy:'timeOfLastUpdate':true | cmSearch:'talks':search" ng-click="goto('/conversation/'+conversation.id)" data-qa="conversation-list-element">
@@ -12,6 +12,6 @@
 
 <div ng-if="moreTalksAvailable()">
     <button class="full cm-btn-block cm-btn-grey" ng-click="loadMoreTalks()" data-qa="load-more-btn">
-        {{"TALKS.MORE"|cmTranslate}}
+        {{'TALKS.MORE'|cmTranslate}}
     </button>
 </div>

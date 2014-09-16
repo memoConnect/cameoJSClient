@@ -149,22 +149,24 @@ cm-files-preview{
 cm-modal.modal-image-fullscreen{
   .content{
     display:table;
-    width:100%;
+    width:@cm-app-width;
     height:100%;
     z-index:2;
     position:relative;
     cm-spinner{
       position: absolute;
+      top:50%;
     }
     ng-transclude{
       display:table-cell;
       vertical-align:middle;
       text-align:center;
+      width:100%;
       figure{
         display:inline-block;
         img{
-          max-width:90%;
-          max-height:50%;
+          max-width: 100%;
+          height: auto;
         }
         figcaption{
           text-align: right;
@@ -201,7 +203,7 @@ cm-modal.modal-image-fullscreen{
   vertical-align:text-bottom;
   font-size:1em;
 }
-@files:dir dir-download dir-safe dir-public pdf txt xlsx doc php css xls zip rar sit apk jpg gif bmp tif eps png mov mpg mp4 flv avi xml html chm ttf exe dmg mp3 wav wma aif ogg '\33gpp' aac ppt pptx pps unknown;
+@files:dir dir-download dir-safe dir-public pdf txt doc docx php css xls xlsx zip rar sit apk jpg gif bmp tif eps png mov mpg mp4 flv avi xml html chm ttf exe dmg mp3 wav wma aif ogg '\33gpp' aac ppt pptx pps unknown;
 @filesnum:length(@files);
 @unknown-default:@filesnum - 1;
 .spriteFiles(@index:0) when (@index < @filesnum){
@@ -243,7 +245,7 @@ cm-choose-source{
     position:absolute;
     color:black;
     left: 0;
-    bottom: -2.9rem;
+    bottom: -2.7rem;
     &.flip {
       -moz-transform: scaleX(-1);
       -webkit-transform: scaleX(-1);

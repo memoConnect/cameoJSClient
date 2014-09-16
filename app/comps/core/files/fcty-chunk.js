@@ -45,6 +45,8 @@ angular.module('cmCore')
                         callback(self);
                     }
                 });
+
+                return isReady.promise;
             };
 
             this.importFileSlice = function (file, start, end){

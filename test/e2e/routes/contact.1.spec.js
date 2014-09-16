@@ -67,7 +67,7 @@ describe('Route Contact: ', function () {
 
             $$('cm-modal.active .content a').last().click()
 
-            util.expectCurrentUrl('#/contact/new')
+            util.expectCurrentUrl('#/contact/create')
         })
 
         it('all inputs should be enabled',function(){

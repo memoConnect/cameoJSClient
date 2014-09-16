@@ -8,9 +8,10 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
     'cmNotify',
     'cmKey',
     'cmJob',
+    'cmApi',
     '$window',
     '$rootScope',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey, cmJob,
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey, cmJob, cmApi,
              $window, $rootScope){
         return {
             restrict: 'E',
@@ -55,6 +56,14 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     }
                 };
 
+                var interval = null;
+                function stopInterval(){
+                    if(interval != null){
+                        window.clearInterval(interval);
+                        interval = null;
+                    }
+                }
+
                 /**
                  * generate keypair
                  */
@@ -72,6 +81,19 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                      * with keySize and callback for onGeneration
                      * returns a promise
                      */
+                    cmApi.stopListeningToEvents();
+
+                    var startTime = (new Date()).getTime();
+
+                    $scope.i18n.time = cmUtil.millisecondsToStr(0);
+
+                    interval = window.setInterval(function(){
+                        var newTime = (new Date()).getTime();
+
+                        $scope.i18n.time = cmUtil.millisecondsToStr(newTime-startTime);
+                        $scope.$digest();
+                    },500);
+
                     cmCrypt.generateAsyncKeypair(parseInt(size),
                         function(counts, timeElapsed){
                             $scope.i18n.time = cmUtil.millisecondsToStr(timeElapsed);
@@ -92,9 +114,15 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     ).finally(
                         function(){
                             cmJob.stop();
+                            cmApi.listenToEvents();
+                            stopInterval();
                         }
                     );
                 };
+
+                $scope.$on('$destroy',function(){
+                    cmApi.listenToEvents();
+                });
 
                 /**
                  * cancel keypair generation
@@ -103,6 +131,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     cmLogger.debug('cancel key generation');
                     cmCrypt.cancelGeneration();
                     cmJob.stop();
+                    cmApi.listenToEvents();
+                    stopInterval();
                     //$scope.active = 'choose';
                 };
 
@@ -118,7 +148,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     } else {
                         $scope.goBack();
                     }
-
                 };
 
                 /**

@@ -11,19 +11,19 @@
                 </div>
                 <div cm-weight = "1" class="with-white-bg">
                     <button
-                        data-qa="start-new-conversation-btn"
-                        ng-click="startConversation()"
-                    >
+                            data-qa="start-new-conversation-btn"
+                            ng-click="startConversation()"
+                            >
                         <i class="fa cm-new-talk"></i>
                     </button>
                     <br/>
                     <button
-                        data-qa="start-trust-handshake-btn"
-                        ng-click="goto('authentication/identity/'+contact.identity.id)"
-                        ng-disabled = "getTrust() || !hasKey() || !hasLocalKey"
-                    >
-                            <i ng-if="!hasKey() || !hasLocalKey"    class="fa cm-close"></i>
-                            <i ng-if="hasKey() && hasLocalKey"      class="fa {{ getTrust() ? 'cm-checkbox-right' : 'cm-handshake'}}"></i>
+                            data-qa="start-trust-handshake-btn"
+                            ng-click="goToAuthentication(contact.identity.id)"
+                            ng-disabled = "getTrust() || !hasKey() || !hasLocalKey"
+                            >
+                        <i ng-if="!hasKey() || !hasLocalKey"    class="fa cm-close"></i>
+                        <i ng-if="hasKey() && hasLocalKey"      class="fa {{ getTrust() ? 'cm-checkbox-right' : 'cm-handshake'}}"></i>
                     </button>
                     <br/>
                 </div>
@@ -43,10 +43,10 @@
 
             <div class="cm-input-ctn" ng-class="{'cm-input-disabled':disabled}">
                 <input
-                    tabindex="1" data-qa="input-displayname"
-                    type="text" name="displayName" ng-model="identity.displayName"
-                    ng-disabled="disabled" required
-                    placeholder="{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" />
+                        tabindex="1" data-qa="input-displayname"
+                        type="text" name="displayName" ng-model="identity.displayName"
+                        ng-disabled="disabled" required
+                        placeholder="{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}" />
             </div>
 
             <div class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid">
@@ -59,10 +59,10 @@
                 <ng-form name="formPhone">
                     <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
                         <input
-                            tabindex="2" data-qa="input-phonenumber"
-                            type="text" name="phoneNumber" ng-model="item.value"
-                            ng-disabled="disabled" cm-validate-phone cm-adaptive-change
-                            placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" />
+                                tabindex="2" data-qa="input-phonenumber"
+                                type="text" name="phoneNumber" ng-model="item.value"
+                                ng-disabled="disabled" cm-validate-phone cm-adaptive-change
+                                placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" />
                     </div>
                     <div cm-type-chooser cm-choose-value-to="item" cm-disabled="disabled" ng-class="{'cm-input-disabled':disabled}"></div>
                     <div class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
@@ -77,10 +77,10 @@
                 <ng-form name="formEmail">
                     <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
                         <input
-                            tabindex="3" data-qa="input-email"
-                            name="email" ng-model="item.value"
-                            ng-disabled="disabled" cm-validate-email
-                            placeholder="{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}" />
+                                tabindex="3" data-qa="input-email"
+                                name="email" ng-model="item.value"
+                                ng-disabled="disabled" cm-validate-email
+                                placeholder="{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}" />
                     </div>
                     <div cm-type-chooser cm-choose-value-to="item" ng-class="{'cm-input-disabled':disabled}" cm-disabled="disabled"></div>
                     <div class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">

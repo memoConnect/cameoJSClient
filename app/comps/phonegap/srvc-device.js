@@ -23,6 +23,9 @@ angular.module('cmPhonegap').service('cmDevice', [
                 return device.platform.toLowerCase();
             },
 
+            isApp: function(){
+                return this.existsPlugin();
+            },
             isAndroid: function(){
                 return this.existsPlugin()
                     && this.getPlatform().indexOf('android') >= 0;

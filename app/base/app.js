@@ -217,30 +217,13 @@ define([
         'cmLogger',
         'cfpLoadingBar',
         'cmEnv',
+        'cmVersion',
         'cmApi',
         'cmAuthenticationRequest',
         'cmHooks',
         'cmSystemCheck',
         'cmError',
-        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmAuthenticationRequest, cmHooks, cmSystemCheck, cmError) {
-
-            $rootScope.$on('getBrowserInfo', function(){
-                //get browser language:
-                cmApi.get({
-                    path: '/services/getBrowserInfo'
-                })
-                .then(
-                    function(data){
-                        if(!cmUserModel.isAuth()){
-                            var language = data.languageCode.substr(0,2),
-                                lc       = language == 'de' ? 'de_DE' : 'en_US'
-                            cmLanguage.switchLanguage(lc)
-                        }
-                    }
-                );
-            });
-
-            $rootScope.$broadcast('getBrowserInfo');
+        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion, cmApi, cmHooks, cmSystemCheck, cmError) {
 
             //prep $rootScope with useful tools
             $rootScope.console  =   window.console;

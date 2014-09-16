@@ -16,8 +16,6 @@ angular.module('cmFiles').directive('cmFiles',[
                 this.setFile = function(blob){
                     var bool = true;
 
-                    console.log(cmUtil.prettify(blob))
-
                     angular.forEach($scope.files, function(value){
                         if(value.name == blob.name && value.size == blob.size){
                             bool = false;

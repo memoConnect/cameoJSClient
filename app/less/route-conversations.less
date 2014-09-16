@@ -23,7 +23,14 @@ cm-conversation-tag{
     .details{      
         text-align:left;
 
-        .subject {
+        .subject, .message, .recipients{
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          width: 21rem;
+        }
+
+        .subject, .message {
             .single-line;
             line-height:0.5*@cm-unit;
             color: @cm-font-color;
@@ -82,7 +89,7 @@ cm-conversation-tag{
 cm-recipient-counter{
   display: inline-block;
   position:relative;
-  line-height:1em;
+  line-height:1rem;
   .background {
     color: #000;
     position:relative;
@@ -94,10 +101,10 @@ cm-recipient-counter{
     left:0;
     bottom:0;
     right:22%;
-    font-size:0.3em;
+    font-size:0.7rem;
     font-style:normal;
     font-weight:bold;
-    line-height:2.3em;
+    line-height:1.1rem;
     text-align:center;
     z-index:2;
   }
@@ -368,6 +375,7 @@ cm-conversation{
 }
 
 div.answer{
+  .box-shadow-top;
   width:@cm-app-width;
   min-height:@cm-footer-height;
   position:fixed;

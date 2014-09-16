@@ -175,21 +175,32 @@ cameo_config = {
         'contact-request-list': {
             routes:[
                 '/contact/request/list',
-                '/contact/request',
+                '/contact/request'
             ],
             hasCtrl: true,
             resolveOnBoot: true
         },
         'contact-search':  {
             routes:[
-                '/contact/search',
+                '/contact/search'
             ],
             hasCtrl: true
         },
-        'contact-details': {
+        'contact-create': {
             routes:[
-                '/contact/:id/details',
-                '/contact/:id'
+                '/contact/create'
+            ],
+            hasCtrl: true
+        },
+        'contact-import': {
+            routes:[
+                '/contact/import'
+            ],
+            hasCtrl: true
+        },
+        'contact-edit': {
+            routes:[
+                '/contact/edit/:id?'
             ],
             hasCtrl: true
         },
@@ -260,9 +271,9 @@ cameo_config = {
     },
 
     footer: {
-        'talks': {i18n:'DRTV.FOOTER.TALKS', icon:'cm-envelope-closed'},
-        'contact/list': {i18n:'DRTV.FOOTER.CONTACTS', icon:'cm-address-book'},
-        'settings': {i18n:'DRTV.FOOTER.SETTINGS', icon:'cm-settings'}
+        'talks': {i18n:'DRTV.FOOTER.TALKS', icon:'cm-talk'},
+        'contact/list': {i18n:'DRTV.FOOTER.CONTACTS', icon:'cm-person'}
+        //'settings': {i18n:'DRTV.FOOTER.SETTINGS', icon:'cm-settings'}
     },
 
     routeSettings: {

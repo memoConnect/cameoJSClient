@@ -331,7 +331,8 @@
     .content;
   }
 
-  form {
+  form, ng-form {
+    display:block;
     label {
       color: @cm-grey-new;
       font-weight: normal !important;
@@ -353,6 +354,18 @@
     cm-info-bubble{
       &.cm-alert{
         color: @cm-grey-new;
+      }
+    }
+    &.with-radiobutton{
+      position:relative;
+      padding-right:@cm-unit;
+      i.cm-radio-0{
+        position:absolute;
+        right:0;
+        bottom:0;
+        font-size:@cm-mega-font;
+        .cm-unit-btn;
+        line-height:@cm-unit+1;
       }
     }
   }
@@ -385,3 +398,27 @@ pre.error {
   overflow-x: scroll;
 }
 
+
+section.default-pages{
+  background: @cm-input-bg-color;
+  font-size: @cm-moep-font;
+  line-height: @cm-unit;
+  font-weight: bold;
+  width: 100%;
+  margin: 0;
+  .tac;
+  button {
+    margin:0;
+    display: inline-block;
+    width: 49.4%;
+    color:@cm-grey-new;
+    i {
+      font-size: 2rem;
+      color:@cm-grey-new;
+    }
+    &:hover,&.isActive{
+      box-shadow:inset 0 -2rem 0rem -1.4rem @cm-grey-new;
+      text-decoration: none;
+    }
+  }
+}
