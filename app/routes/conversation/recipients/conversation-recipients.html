@@ -8,7 +8,7 @@
             cm-data         = "conversation.securityAspects"
             ng-click        = "gotoConversation(conversation.id,'security')"
         ></cm-security-indicator>
-        <cm-header-list-search cm-weight="1" ng-model="search"></cm-header-list-search>
+        <cm-header-list-search cm-weight="1" ng-model="search" cm-options="{jumpTo:'#possible-recipient-list'}"></cm-header-list-search>
         <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
 
