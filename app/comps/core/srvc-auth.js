@@ -103,7 +103,7 @@ angular.module('cmCore').service('cmAuth', [
              * @returns {String} Token
              */
             getToken: function(){
-                //cmLogger.debug('cmAuth.getToken')
+                cmLogger.debug('cmAuth.getToken')
 
                 var token;
 
@@ -116,6 +116,11 @@ angular.module('cmCore').service('cmAuth', [
                             cmLogger.debug('cmAuth.storeToken - Error - validateToken is different');
 
                             return false;
+                        }
+                    } else {
+                        if(_TOKEN_ != undefined){
+                            this.storeToken(_TOKEN_);
+                            token = _TOKEN_;
                         }
                     }
                 } catch (e){
