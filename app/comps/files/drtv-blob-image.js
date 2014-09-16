@@ -7,7 +7,6 @@ angular.module('cmFiles').directive('cmBlobImage',[
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
-                // TODO: thumbnail
 
                 function showFile(file){
                     if(typeof file.blob == 'object'){
