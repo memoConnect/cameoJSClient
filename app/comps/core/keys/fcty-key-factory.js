@@ -2,13 +2,12 @@
 
 angular.module('cmCore')
 .factory('cmKeyFactory', [
-
     'cmKey',
     'cmFactory',
-    '$rootScope',
+    'cmObject',
     'cmLogger',
-
-    function(cmKey, cmFactory, $rootScope,cmLogger){
+    '$rootScope',
+    function(cmKey, cmFactory, cmObject, cmLogger, $rootScope){
 
         function keyFactory(){
 
@@ -19,7 +18,7 @@ angular.module('cmCore')
                                 },
                                 function sameByInstance(instance_1, instance_2){
                                     return      instance_1.id == instance_2.id
-                                            ||  instance_1.getPublicKey() ==  instance_2.getPublicKey()   
+                                            ||  instance_1.getPublicKey() ==  instance_2.getPublicKey()
                                 }
                             );
 
@@ -78,6 +77,10 @@ angular.module('cmCore')
 
             $rootScope.$on('logout', function(){ self.reset() });
             $rootScope.$on('identity:switched', function(){ self.reset() });
+
+            //self.on('fingerprintCheck:failed', function(event, value){
+            //    console.log(event)
+            //});
 
             return self
         }
