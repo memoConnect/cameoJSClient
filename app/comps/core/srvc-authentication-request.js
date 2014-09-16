@@ -122,13 +122,13 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
              * @returns {Promise}           Promise that will be resolved after the event is posted to the backend.
              */
 
-            cancel: function(){
+            cancel: function(toIdentity){
                 return  cmApi.broadcast({
                             name:   'authenticationRequest:cancel',
                             data:   {
                                         fromId: cmUserModel.data.identity.id    //Todo: the identity.id should be part of the backend event!
                                     }
-                        })
+                        }, toIdentity.id)
             },
 
 
@@ -227,9 +227,9 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                             .then(function(){
                                                 //Send a request in return:
                                                 self.send(
-                                                    cmUserModel.data.identity,  //Ourself
-                                                    secret,                     //The secret we successfully used during the last attempt
-                                                    scope.fromKey               //The key that originally requested to be signed
+                                                    scope.fromIdentity,   //Sender of the initial requests
+                                                    secret,               //The secret we successfully used during the last attempt
+                                                    scope.fromKey         //The key that originally requested to be signed
                                                 )                                                
                                             })
                                         }
@@ -248,16 +248,22 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
             cmModal.open('incoming-authentication-request')
 
             self.one('canceled', function(event, data){
-                console.log('canceled')
-                console.dir(data)
                 // If some other authentication request is meant to be caneceled:
                 if(data.fromId != request.fromIdentityId)
                     return false    // dont remove the event binding
 
                 // Close Modal:
                 var modal = cmModal.instances['incoming-authentication-request']
-                if(modal && modal.isActive())
+                if(modal && modal.isActive()){
                     cmModal.close('incoming-authentication-request')
+
+                    cmModal.create({
+                        id:             'authentication-request-canceled',
+                        type:           'alert',
+                        'cm-close-btn': false,
+                    }, 'IDENTITY.KEYS.AUTHENTICATION.CANCELED')
+                    cmModal.open('authentication-request-canceled')
+                }
                 
                 return true     //remove the event binding
             })

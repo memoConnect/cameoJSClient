@@ -489,14 +489,9 @@ angular.module('cmCore')
 
             identity = identity || self.data.identity
 
-            var deferred    = $q.defer(),
-                rejected    = deferred.promise
-
-            deferred.reject()
-
             if(!(keyToSign instanceof cmKey) || (keyToSign.getFingerprint() !== keyToSignFingerprint)){
                 self.trigger('signatures:cancel');
-                return rejected;
+                return $q.reject()
             }
 
             return  cmCallbackQueue.push(this.loadLocalKeys().map(function(signingKey){

@@ -5,10 +5,12 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
     'cmUserModel',
     'cmAuthenticationRequest',
     'cmCallbackQueue',
+    'cmContactsModel',
     '$timeout',
     '$rootScope',
+    '$q',
 
-    function(cmUserModel, cmAuthenticationRequest, cmCallbackQueue, $timeout, $rootScope){
+    function(cmUserModel, cmAuthenticationRequest, cmCallbackQueue, cmContactsModel, $timeout, $rootScope, $q){
         return {
             restrict: 'E',
             templateUrl: 'widgets/security/wdgt-authentication.html',
@@ -17,7 +19,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                 identityId: '='
             },
 
-            controller: function ($scope) {
+            controller: function ($scope, $element, $attrs) {
 
                 var timeoutInterval,
                     timeoutPromise
@@ -27,6 +29,8 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                 $scope.toIdentity   =   $scope.identityId 
                                         ?   cmContactsModel.findByIdentityId($scope.identityId).identity
                                         :   cmUserModel.data.identity
+
+                console.log($scope.toIdentity.getDisplayName())
 
 
                 //Without a key authetication won't work: 
@@ -47,14 +51,12 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
 
                 $scope.startTimeout = function(time){
                     $scope.cancelTimeout();
-                    $scope.timeout = time || 60000;
-                    timeoutPromise = $timeout(function(){
-                        $scope.cancel();
-                        $scope.timeout = undefined;
-                    }, $scope.timeout);
+                    $scope.timeout          = time || 60000;
+                    var timeout_start       = new Date().getTime()
 
                     timeoutInterval = window.setInterval(function(){
-                        $scope.timeout -= 1000;
+                        console.log(timeout_start)
+                        $scope.timeout = time-Math.ceil((new Date().getTime()-timeout_start));
 
                         if($scope.timeout < 0)
                             $scope.timeout = 0;
@@ -73,10 +75,9 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
 
                     $scope.timeout = undefined
                 }
-
                 
                 $scope.startAuthenticationRequest = function(){
-
+                    $scope.ERROR    = undefined
                     $scope.waiting  = true;
                     $scope.startTimeout(120000);
 
@@ -88,33 +89,51 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                         return cmAuthenticationRequest.send(
                             $scope.toIdentity,                              //The identity we ask to trust our key
                             cmAuthenticationRequest.getTransactionSecret(), //The secret will share through another channel with the person we believe is the owner of the above identity
-                            $scope.keyId                                    //The key that should sign our ownkey; may be undefined
+                            $scope.keyId                                    //The key that should sign our own key; may be undefined
                         )
                     }, 50)
                     .then(function(){
                         $scope.step = 1
-                        return cmAuthenticationRequest.when('started')        //wait for response
+                        return cmAuthenticationRequest.when('started', $scope.timeout)      //wait for response
                     })
-                    .then(function(request){
-                        $scope.step = 2
-                        return cmAuthenticationRequest.when('verified')     //wait for key in response to be verified
-                    })
-                    .then(function(data){
-                        console.dir(data)
-                        return cmUserModel.signPublicKey(data.key, data.key.id, data.identity)  //wait for key in response to be signed
-                    })
-                    .then(function(){
-                        console.log('signed publickeys')
-                        $scope.step     = 3
-                        $scope.waiting  = false
-                    })
+                    .then(
+                        function(request){
+                            $scope.cancelTimeout()
+                            $scope.step = 2
+                            return cmAuthenticationRequest.when('verified', 5000)           //wait for key in response to be verified
+                        },
+                        function(){
+                            $scope.ERROR = $scope.ERROR || 'TIMEOUT' 
+                            return $q.reject()
+                        }
+                    )
+                    .then(
+                        function(data){
+                            return cmUserModel.signPublicKey(data.key, data.key.id, data.identity)  //wait for key in response to be signed
+                        },
+                        function(error){
+                            $scope.ERROR = $scope.ERROR || 'VERIFY' 
+                            return $q.reject()
+                        }
+                    )
+                    .then(
+                        function(){
+                            $scope.step     = 3
+                            $scope.waiting  = false
+                        },
+                        function(error){
+                            $scope.ERROR = $scope.ERROR || 'SIGNING'
+                            $scope.cancel()
+                        }
+                    )
+
                 }
 
-                $scope.cancel = function(){
+                $scope.cancel = function(step){
                     $scope.cancelTimeout()
                     $scope.waiting  = false
                     $scope.step     = 0
-                    cmAuthenticationRequest.cancel()
+                    cmAuthenticationRequest.cancel($scope.toIdentity)
                 };
 
                 $scope.done = function(){
@@ -136,178 +155,6 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
 
                 $scope.$on('$destroy', $scope.cancel)
 
-
-                /* ALT:
-
-                var timeoutPromise,
-                    timeoutInterval,
-                    fromKey = cmUserModel.loadLocalKeys()[0]; // ! attention ! works only with one local private key
-
-                $rootScope.urlHistory.pop();
-
-                if(!fromKey){
-                    $rootScope.goTo('/settings/identity/keys', true)
-                }
-
-                function init(){
-                    $scope.authenticationRequest    = cmAuthenticationRequestFactory.create();
-
-                    $scope.authenticationRequest
-                        .state.set('outgoing')
-
-                    //$scope.toKey        = $scope.keyId && cmUserModel.data.identity.keys.find($scope.keyId);
-                    $scope.step         = $scope.toKey ? 1 : 0;
-
-                    if($scope.toKey){
-                        $scope.authenticationRequest.setToKey($scope.toKey);
-                        $scope.startAuthenticationRequest();
-                    }
-
-
-                    $scope.toIdentity    =  $scope.identityId
-                        ?   cmContactsModel.findByIdentityId($scope.identityId).identity
-                        :   cmUserModel.data.identity;
-
-
-                    if($scope.toIdentity){
-                        $scope.authenticationRequest.setToIdentityId($scope.toIdentity.id);
-                    }
-
-                    $scope.waiting              =   false;
-                    $scope.transactionSecret    =   undefined;
-                    $scope.BASE                 =   $scope.identityId
-                        ?   'IDENTITY.KEYS.TRUST.'
-                        :   'IDENTITY.KEYS.AUTHENTICATION.';
-                }
-
-
-                $scope.cancelTimeout = function(){
-                    if($scope.timeoutPromise)
-                        $timeout.cancel($scope.timeoutPromise);
-
-                    if(timeoutInterval)
-                        window.clearInterval(timeoutInterval);
-
-                    $scope.timeout = undefined;
-                };
-
-                $scope.startTimeout = function(time){
-                    $scope.cancelTimeout();
-                    $scope.timeout = time || 60000;
-                    $scope.timeoutPromise = $timeout(function(){
-                        $scope.cancel();
-                        $scope.timeout = undefined;
-                    }, $scope.timeout);
-
-                    timeoutInterval = window.setInterval(function(){
-                        $scope.timeout -= 1000;
-
-                        if($scope.timeout < 0)
-                            $scope.timeout = 0;
-
-                        $scope.$digest()
-                    }, 1000)
-                };
-
-
-                $scope.requestKey = function(){
-                    $scope.step     = 1;
-                    $scope.waiting  = true;
-
-                    $scope.startTimeout();
-
-                    $scope.authenticationRequest
-                        .setFromKey(fromKey)
-                        .sendKeyRequest()
-                        .then(
-                        function(){
-                            $scope.waiting = false;
-                            $scope.cancelTimeout();
-                            $scope.step = 2;
-                            $scope.startAuthenticationRequest();
-                        },
-                        function(){
-                            $scope.waiting  = false;
-                        }
-                    )
-                };
-
-                $scope.cancel = function(){
-                    $scope.authenticationRequest
-                        .state
-                        .unset('outgoing')
-                        .set('canceled');
-
-                    $scope.cancelTimeout();
-
-                    $scope.done();
-                };
-
-                $scope.startAuthenticationRequest = function(){
-                    cmCallbackQueue.push(function(){
-                        return cmCrypt.generateTransactionSecret();
-                    }).then(
-                        function(result){
-                            $scope.step = 3;
-                            $scope.transactionSecret = result[0];
-
-                            if(fromKey && $scope.transactionSecret != ''){
-
-                                var dataForRequest =    cmCrypt.signAuthenticationRequest({
-                                    identityId: cmUserModel.data.identity.id,
-                                    transactionSecret: $scope.transactionSecret,
-                                    fromKey: fromKey,
-                                    toKey: $scope.authenticationRequest.toKey
-                                });
-
-                                $scope.startTimeout(120000);
-
-                                $scope.waiting = true;
-
-                                $scope.authenticationRequest
-                                    .importData(dataForRequest)
-                                    .setTransactionSecret($scope.transactionSecret)
-                                    .setFromKey(fromKey)
-                                    .send()
-                                    .then(
-                                    function(){
-                                        $scope.cancelTimeout();
-                                        $scope.step     = 4;
-                                        $scope.waiting  = false;
-                                        $scope.done();
-                                    },
-                                    function(){
-                                        $scope.cancelTimeout();
-                                        $scope.waiting  = false;
-                                    }
-                                )
-
-                            } else {
-                                //error
-                            }
-                        }
-                    )
-                };
-
-                $scope.done = function(){
-
-                    if($scope.keyId){
-                        $rootScope.goTo('settings/identity/keys', true);
-                        return null;
-                    }
-
-
-                    if($scope.identityId){
-                        $rootScope.goTo('contact/'+cmContactsModel.findByIdentityId($scope.identityId).id, true);
-                        return null
-                    }
-
-                    $rootScope.goTo('settings/identity/keys', true);
-                    return null;
-                };
-
-                init();
-                */
             }
         }
     }

@@ -11,11 +11,12 @@
 angular.module('cmCore')
 .service('cmObject', [
 
-    '$q',
     'cmLogger',
     'cmUtil',
+    '$q',
+    '$timeout',
 
-    function($q, cmLogger, cmUtil){
+    function(cmLogger, cmUtil, $q, $timeout){
         var self = this
 
         /**
@@ -150,11 +151,19 @@ angular.module('cmCore')
              * @param  {String} event_names     Names of the events to listen to. Multiple event names should be separated by ' '.
              * @return {promise}                Promise to be resolved when the event triggers for the first time
              */
-            obj.when = function(event_names){
+            obj.when = function(event_names, timeout){
                 var deferred = $q.defer()
+
                 obj.one(event_names, function(event, data){
                     deferred.resolve(data)
                 })
+
+                if(timeout){
+                    $timeout(function(){
+                        deferred.reject('timeout')
+                    }, timeout)
+                }
+
                 return deferred.promise
             }
 
