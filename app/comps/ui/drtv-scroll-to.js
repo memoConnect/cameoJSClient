@@ -29,6 +29,11 @@ angular.module('cmUi').directive('cmScrollTo',[
                         bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
                         extraOffset = 0;
 
+                    // anchor isn't exists yet because of routeChange
+                    if(anchor.length == 0) {
+                        return false;
+                    }
+
                     // subscract elements height because of overblending
                     if(scope.options.addElementsHeight) {
                         var extraHeight = angular.element($document[0].querySelectorAll(scope.options.addElementsHeight));
@@ -66,8 +71,12 @@ angular.module('cmUi').directive('cmScrollTo',[
                     }
                 // only via event broadcast
                 } else {
-                    $rootScope.$on('scroll:to',function(event){
+                    var scrollToEvent = $rootScope.$on('scroll:to',function(){
                         initTimeout();
+                    });
+
+                    scope.$on('$destroy', function(){
+                        scrollToEvent();
                     });
                 }
             }
