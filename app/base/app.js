@@ -189,13 +189,12 @@ define([
         }
     ])
     // app run handling
-    .run(['cmNetworkInformation', 'cmPushIp', 'cmPushNotifications',
-          function(cmNetworkInformation, cmPushIp, cmPushNotifications){
+    .run(['cmNetworkInformation', 'cmPushNotificationAdapter',
+        function(cmNetworkInformation, cmPushNotificationAdapter){
         // check internet connection
         cmNetworkInformation.init();
         // register device for pushnotification
-        //cmPushIp.init();
-          cmPushNotifications.init();
+        cmPushNotificationAdapter.init();
     }])
     .run(function() {
         // disabled the 3000 seconds delay on click when touch ;)

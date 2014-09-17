@@ -103,7 +103,7 @@ angular.module('cmCore').service('cmAuth', [
              * @returns {String} Token
              */
             getToken: function(){
-                cmLogger.debug('cmAuth.getToken')
+                //cmLogger.debug('cmAuth.getToken')
 
                 var token;
 
