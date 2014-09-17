@@ -390,38 +390,37 @@
                     "INSTRUCTIONS": "Drücken Sie auf 'Verbinden' um den Vorgang zu starten.",
                     "NOTE": "ACHTUNG! Bevor Sie auf 'Verbinden' klicken müssen Sie auf einem Ihrer Geräte cameoNet als {{identity}} öffnen!"
                 },
-                "REQUEST_STARTED": {
-                    "CANCEL_BUTTON": "Anfrage Abbrechen",
-                    "INSTRUCTIONS": "Drücken Sie auf 'Anfrage abbrechen' um den Vorgang zu beenden.",
-                    "NOTE": "Anfrage gestartet. Bestätigen Sie die Anfrage auf dem zu verknüpfenden Gerät!"
-                },
-                "ACCEPT_REQUEST": {
-                    "HEADER": "Verknüpfungsanfrage",
-                    "INSTRUCTIONS": "Sie haben auf einem anderen Gerät einen cameoKey, den Sie auf diesem Gerät noch nicht kennen. D.h. Sie können Nachrichten, die Sie hier verschlüsselt haben, auf dem anderen Gerät nicht lesen und umgekehrt.<br>Wollen Sie den cameoKey '{{cameoKey}}' mit Ihrem lokalen cameoKey verknüpfen?",
-                    "NOTE": "Um die cameoKeys zu verknüpfen, starten Sie die Verknüpfung.",
-                    "ACCEPT_BUTTON": "Verknüpfung starten",
-                    "CANCEL_BUTTON": "Ablehnen"
-                },
-                "SHOW_TRANSACTION_SECRET": {
+                "WAIT": {
+                    "CANCEL_BUTTON": "Verknüpfung abbrechen",
                     "INSTRUCTIONS": "Drücken Sie auf 'Verknüpfung abbrechen' um den Vorgang zu beenden.",
                     "NOTE": "Übertragen Sie bitte folgenden Code auf Ihr anderes Gerät:",
-                    "LABEL_CODE": "Code",
-                    "CLOSE_BUTTON": "Verknüpfung abbrechen"
-                },
-                "ENTER_TRANSACTION_SECRET": {
-                    "HEADER": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER",
-                    "INSTRUCTIONS": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.INSTRUCTIONS",
-                    "NOTE": "Geben Sie hier bitte den Code ein, der Ihnen auf dem anderen Gerät angezeigt wird:",
-                    "LABEL_CODE": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CODE",
-                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
-                    "SUBMIT_BUTTON": "Übertragen"
+                    "LABEL_CODE": "Code"
                 },
                 "SUCCESSFUL": {
                     "INSTRUCTIONS": "Die Verknüpfung Ihrer cameoKeys war erfolgreich! In Kürze können Sie alle Talks lesen, die Sie mit Ihren verknüpften cameoKeys verschlüsselt haben.",
                     "NOTE": "Sie können den Dialog nun schließen.",
-                    "CLOSE_BUTTON": "Schließen"
+                    "DONE_BUTTON": "Schließen"
                 },
-                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen."
+                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen.",
+                "ERROR": {
+                    "TIMEOUT" :"Zeit überschritten, bitte versuchen sie es erneut.",
+                    "VERIFY" :"Verifizierung fehlgeschlagen, bitte versuchen sie es erneut."
+                },
+                "ENTER_TRANSACTION_SECRET": {
+                    "HEADER": "cameoKeys verknüpfen",
+                    "INSTRUCTIONS": "Sie haben auf einem anderen Gerät einen cameoKey, den Sie auf diesem Gerät noch nicht kennen. D.h. Sie können Nachrichten, die Sie hier verschlüsselt haben, auf dem anderen Gerät nicht lesen und umgekehrt.<br>Wollen Sie den cameoKey '{{cameoKey}}' mit Ihrem lokalen cameoKey verknüpfen?",
+                    "NOTE": "Geben Sie hier bitte den Code ein, der Ihnen auf dem anderen Gerät angezeigt wird:",
+                    "SUBMIT_BUTTON": "Übertragen"
+                },
+                "DONE" :{
+                    "INSTRUCTIONS": "Verknüfung erfolgreich abgeschlossen.",
+                    "NOTE":" Klicken sie auf 'schließen' um den Screen zu verlassen."
+                },
+                "MODAL":{
+                    "SUCCESS": "cameoKeys erfolgreich verknüpft.",
+                    "CANCELED": "Verknüfung abgebrochen."
+                }
+
             },
             "TRUST": {
                 "PAGE_HEADLINE": "Vertrauensprozess",

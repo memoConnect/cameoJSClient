@@ -56,8 +56,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
 
                     cmAuthenticationRequest.generateTransactionSecret(120000)
                     $scope.transactionSecret = cmAuthenticationRequest.getTransactionSecret()
-
-                    console.log(cmAuthenticationRequest.getTTL())
+                    $scope.step = 1
 
                     cmCallbackQueue
                     .push(function(){
@@ -66,15 +65,13 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                             cmAuthenticationRequest.getTransactionSecret(), //The secret will share through another channel with the person we believe is the owner of the above identity
                             $scope.keyId                                    //The key that should sign our own key; may be undefined
                         )
-                    }, 50)
+                    }, 100)
                     .then(function(){
-                        $scope.step = 1
                         //wait for response:
-                        return cmAuthenticationRequest.when('started', 'canceled', $scope.timeout)      
+                        return cmAuthenticationRequest.when('started', 'canceled', cmAuthenticationRequest.getTTL())      
                     })
                     .then(
                         function(result){
-                            $scope.cancelTimeout()
                             $scope.step = 2
                             //wait for key in response to be verified:
                             return cmAuthenticationRequest.when('verification:successful', 'verification:failed', 7000)  

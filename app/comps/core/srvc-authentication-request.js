@@ -330,8 +330,8 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                                     'cm-close-btn': false,
                                                 },  
                                                     scope.is3rdParty
-                                                    ?   '{{"IDENTITY.KEYS.TRUST.SUCCESSFUL"|cmTranslate}}'
-                                                    :   '{{"IDENTITY.KEYS.AUTHENTICATION.SUCCESSFUL"|cmTranslate}}'
+                                                    ?   '{{"IDENTITY.KEYS.TRUST.MODAL.SUCCESS"|cmTranslate}}'
+                                                    :   '{{"IDENTITY.KEYS.AUTHENTICATION.MODAL.SUCCESS"|cmTranslate}}'
                                                 )
 
                                                 cmModal.open('authentication-request-successful')
@@ -378,7 +378,9 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                         id:             'authentication-request-canceled',
                         type:           'alert',
                         'cm-close-btn': false,
-                    }, '{{"IDENTITY.KEYS.AUTHENTICATION.CANCELED"|cmTranslate}}')
+                    },  scope.is3rdParty
+                        ?   '{{"IDENTITY.KEYS.TRUST.MODAL.CANCELED"|cmTranslate}}'
+                        :   '{{"IDENTITY.KEYS.AUTHENTICATION.MODAL.CANCELED"|cmTranslate}}')
                     cmModal.open('authentication-request-canceled')
                 }
                 

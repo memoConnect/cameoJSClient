@@ -21,11 +21,15 @@
     <div class= "space-for-loader">
         <cm-loader cm-halt = "waiting" type="balls"></cm-loader>
     </div>
+    <cm-info-bubble class="cm-alert" ng-show="ERROR">
+        <div>
+            <i class="fa cm-attention"></i> {{BASE+"ERROR."+ERROR |cmTranslate}}
+        </div>
+    </cm-info-bubble>
+    
 </article>
 
-<div class ="error" ng-if = "ERROR">
-    {{BASE+"ERROR."+ERROR |cmTranslate}}
-</div>
+
 
 <hr/>
 
@@ -33,6 +37,7 @@
     <h3>
         {{
         [
+        BASE+"HEADLINE",
         BASE+"HEADLINE",
         BASE+"HEADLINE",
         BASE+"HEADLINE"
@@ -43,6 +48,7 @@
     <cm-info-bubble nose-x = "60%">
         {{
         [
+        BASE+"EXPLANATION",
         BASE+"EXPLANATION",
         BASE+"EXPLANATION",
         BASE+"EXPLANATION"
@@ -57,8 +63,9 @@
             {{
             [
             BASE+"START.INSTRUCTIONS",
-            BASE+"SHOW_TRANSACTION_SECRET.INSTRUCTIONS",
-            BASE+"SHOW_TRANSACTION_SECRET.INSTRUCTIONS"
+            BASE+"WAIT.INSTRUCTIONS",
+            BASE+"WAIT.INSTRUCTIONS",
+            BASE+"DONE.INSTRUCTIONS"
             ] [step]
 
             | cmTranslate }}
@@ -73,15 +80,16 @@
         {{
         [
         BASE+"START.NOTE",
-        BASE+"SHOW_TRANSACTION_SECRET.NOTE",
-        BASE+"SHOW_TRANSACTION_SECRET.NOTE"
+        BASE+"WAIT.NOTE",
+        BASE+"WAIT.NOTE",
+        BASE+"DONE.NOTE"
         ][step]
 
         | cmTranslate:{'identity': toIdentity.getDisplayName()} }}
     </strong>
 </article>
 
-<article ng-if="step > 0" class="content">
+<article ng-if="step > 0 && step <3" class="content">
     <div class="transaction-secret" ng-if="transactionSecret">
         {{transactionSecret || '...'}}
     </div>
@@ -92,7 +100,7 @@
 
 
 
-<article ng-if="!!getTimeout()" class="content">
+<article ng-if="step != 3 && !!getTimeout()" class="content">
     <cm-timeout cm-data = "getTimeout()">
         {{BASE+"TIMEOUT" | cmTranslate: {'timeout' : cmTimeout } }}
     </cm-timeout>
@@ -134,7 +142,7 @@
             class       = "cm-btn-block cm-btn-grey"
             data-qa     = "btn-start-authentication"
             >
-        {{BASE+"CANCEL_BUTTON"|cmTranslate}}
+        {{BASE+"WAIT.CANCEL_BUTTON"|cmTranslate}}
         <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
     </button>
 </cm-footer>
@@ -145,7 +153,7 @@
             class       = "cm-btn-block cm-btn-grey"
             data-qa     = "btn-start-authentication"
             >
-        {{BASE+"DONE_BUTTON"|cmTranslate}}
+        {{BASE+"SUCCESSFUL.DONE_BUTTON"|cmTranslate}}
         <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
     </button>
 </cm-footer>

@@ -174,7 +174,7 @@ angular.module('cmCore')
                     deferred.resolve( {event: event, data: data} )
                 })
 
-                if(timeout){
+                if(typeof timeout == 'number'){
                     $timeout(function(){
                         deferred.reject('timeout')
                     }, timeout)
