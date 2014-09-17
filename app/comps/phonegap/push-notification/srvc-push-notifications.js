@@ -20,7 +20,6 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
             },
 
             register: function(){
-                console.log('pn register')
                 this.reset();
                 // only gcm needs an senderid
                 if (cmDevice.isAndroid()) {
@@ -37,7 +36,6 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                         }
                     );
                 } else if(cmDevice.isiOS()){
-                    console.log('register ios')
                     this.plugin.register(
                         function(result){
                             self.handler.token(result);
@@ -85,8 +83,8 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
             },
 
             setDeviceToken: function(token){
-                console.log('##setDeviceToken#################');
-                console.log(token);
+                //console.log('##setDeviceToken#################');
+                //console.log(token);
                 this.deviceToken = token;
 
                 this.initPromise();
@@ -98,23 +96,22 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                     this.promise = $q.defer();
             },
             getDeviceData: function(){
-                console.log('getDeviceData')
                 this.initPromise();
                 return this.promise.promise;
             },
 
             handler: {
                 success: function(result){
-                    console.log('##succesHandler#################');
-                    console.log(cmUtil.prettify(result));
+                    //console.log('##succesHandler#################');
+                    //console.log(cmUtil.prettify(result));
                 },
                 token: function(token){
-                    console.log('##tokenHandler#################');
+//                    console.log('##tokenHandler#################');
                     self.setDeviceToken(token);
                 },
                 channel: function(result){
-                    console.log('##channelHandler###############');
-                    console.log(cmUtil.prettify(result));
+                    //console.log('##channelHandler###############');
+                    //console.log(cmUtil.prettify(result));
                 },
                 error: function(result) {
                     // result contains any error description text returned from the plugin call
@@ -134,8 +131,8 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                             }
                             break;
                         case 'message':
-                            console.log('##on pn#####################');
-                            console.log(cmUtil.prettify(event))
+//                            console.log('##on pn#####################');
+//                            console.log(cmUtil.prettify(event))
 
                             if(!event.foreground) {
                                 $rootScope.goTo('talks', true);
@@ -172,8 +169,8 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                     }
                 },
                 iOS: function (event) {
-                    console.log('##on pn#####################');
-                    console.log(cmUtil.prettify(event))
+//                    console.log('##on pn#####################');
+//                    console.log(cmUtil.prettify(event))
 
 //                    if ( event.alert ){
 //                        navigator.notification.alert(event.alert);
@@ -189,11 +186,10 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                     if (event.badge) {
                         self.plugin.setApplicationIconBadgeNumber(
                             function(result) {
-                                console.log('##on pn setApplicationIconBadgeNumber#####################');
-                                console.log(cmUtil.prettify(result));
+                                self.handler.success(arguments);
                             },
-                            function(result) {
-                                self.handler.error(result);
+                            function() {
+                                self.handler.error(arguments);
                             },
                             event.badge
                         );

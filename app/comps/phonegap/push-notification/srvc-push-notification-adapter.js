@@ -21,7 +21,6 @@ angular.module('cmPhonegap').service('cmPushNotificationAdapter', [
                     return false;
                 }
                 cmPhonegap.isReady(function(){
-                    console.log('phonegap ready for pn')
                     self.plugin = window.plugins.pushNotification;
                     self.register();
                 });
@@ -41,9 +40,6 @@ angular.module('cmPhonegap').service('cmPushNotificationAdapter', [
             },
 
             checkRegisteredDevice: function(accountPushDevices){
-
-                console.log('checkRegisteredDevice '+cmDevice.isApp())
-
                 if(!cmDevice.isApp())
                     return false;
 
@@ -110,7 +106,6 @@ angular.module('cmPhonegap').service('cmPushNotificationAdapter', [
         };
 
         $rootScope.$on('logout', function(event, data){
-            console.log('rootScope:logout')
             self.deleteDevice(data.token);
         });
 
