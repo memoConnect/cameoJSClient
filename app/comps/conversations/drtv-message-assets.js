@@ -1,10 +1,15 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmMessageAssets', [
-    function () {
+    'cmSettings',
+    function (cmSettings) {
         return {
             restrict: 'E',
-            templateUrl: 'comps/conversations/drtv-message-assets.html'
+            scope: true,
+            templateUrl: 'comps/conversations/drtv-message-assets.html',
+            controller: function($scope){
+                $scope.settings = cmSettings;
+            }
         }
     }
 ]);
