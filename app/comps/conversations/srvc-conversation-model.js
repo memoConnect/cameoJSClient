@@ -42,13 +42,13 @@ angular.module('cmConversations')
     'cmSecurityAspectsConversation',
     'cmUtil',
     'cmFilesAdapter',
-    'cmUserKeyStorageService',
+    'cmKeyStorageService',
     '$q',
     '$rootScope',
     
     function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
               cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase,
-              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmUserKeyStorageService,
+              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmKeyStorageService,
               $q, $rootScope){
 
         function ConversationModel(data){
@@ -99,7 +99,7 @@ angular.module('cmConversations')
 
             cmObject.addEventHandlingTo(this);
 
-            this.localPWHandler = new cmUserKeyStorageService('pw');
+            this.localPWHandler = new cmKeyStorageService('pw');
 
             /**
              * @ngdoc method
