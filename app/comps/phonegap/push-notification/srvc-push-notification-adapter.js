@@ -92,9 +92,11 @@ angular.module('cmPhonegap').service('cmPushNotificationAdapter', [
             },
 
             deleteDevice: function(token){
-                if(this.currentDeviceData.token != '' && token && token != '') {
+                if(cmDevice.getCurrentOS() != ''
+                && this.currentDeviceData.token != ''
+                && token && token != '') {
                     cmApi.delete({
-                        path: '/deviceToken/' + this.currentDeviceData.token,
+                        path: '/deviceToken/'+cmDevice.getCurrentOS()+'/'+this.currentDeviceData.token,
                         overrideToken: token // this token for logout
                     });
                 }
