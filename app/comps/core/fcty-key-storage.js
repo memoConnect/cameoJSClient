@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmUser').factory('cmUserKeyStorageService',[
+angular.module('cmCore').factory('cmKeyStorageService',[
     'cmUserModel',
     'cmUtil',
     'cmLogger',
@@ -20,20 +20,18 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
                 }
             }
 
-            function getAll(){
-                //cmLogger.debug('cmUserKeyStorage.getAll');
-
-                return cmUserModel.storageGet(storageKey) || {};
-            }
-
             function reset(){
                 storageKey = undefined;
             }
 
+            this.getAll = function(){
+                return cmUserModel.storageGet(storageKey) || {};
+            };
+
             this.get = function(key){
                 //cmLogger.debug('cmUserKeyStorage.get');
 
-                var list = getAll(),
+                var list = this.getAll(),
                     value = undefined;
 
                 if(typeof list == 'object' && Object.keys(list).indexOf(key)!= -1){
@@ -47,7 +45,7 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
             this.set = function(key, value){
                 //cmLogger.debug('cmUserKeyStorage.set');
 
-                var list = getAll();
+                var list = this.getAll();
 
                 list[key] = value;
 
@@ -57,7 +55,7 @@ angular.module('cmUser').factory('cmUserKeyStorageService',[
             this.is = function(key){
                 //cmLogger.debug('cmUserKeyStorage.is');
 
-                var list = getAll(),
+                var list = this.getAll(),
                     boolReturn = false;
 
                 if(key != undefined && // key exists

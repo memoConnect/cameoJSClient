@@ -4,7 +4,7 @@
  * @ngdoc service
  * @name cmSettings
  * @description
- *
+ * @todo combine with service-key-storage
  */
 angular.module('cmCore').service('cmSettings', [
     'cmUserModel',
