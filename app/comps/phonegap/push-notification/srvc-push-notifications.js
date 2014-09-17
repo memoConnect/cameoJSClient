@@ -5,9 +5,9 @@
 
 angular.module('cmPhonegap').service('cmPushNotifications', [
     'cmPhonegap', 'cmUtil', 'cmDevice', 'cmLogger',
-    '$q',
+    '$q', '$rootScope',
     function (cmPhonegap, cmUtil, cmDevice, cmLogger,
-              $q) {
+              $q, $rootScope) {
 
         var self = {
             plugin: null,
@@ -137,6 +137,9 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                             console.log('##on pn#####################');
                             console.log(cmUtil.prettify(event))
 
+                            if(!event.foreground) {
+                                $rootScope.goTo('talks', true);
+                            }
 //                            if (event.foreground) {
 //                                console.log('##foreground inline push notification#####################');
 ////                                // on Android soundname is outside the payload.
@@ -180,6 +183,8 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
 //                        var snd = new Media(event.sound);
 //                        snd.play();
 //                    }
+
+                    $rootScope.goTo('talks',true);
 
                     if (event.badge) {
                         self.plugin.setApplicationIconBadgeNumber(
