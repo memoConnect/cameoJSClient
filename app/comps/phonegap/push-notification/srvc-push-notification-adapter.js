@@ -16,7 +16,7 @@ angular.module('cmPhonegap').service('cmPushNotificationAdapter', [
             },
 
             init: function(){
-                if(!('plugins' in window) || !('pushNotification' in window.plugins) || !Puship) {
+                if(!('plugins' in window) || !('pushNotification' in window.plugins)) {
                     //cmLogger.info('PUSHNOTIFICATION PLUGIN IS MISSING');
                     return false;
                 }
