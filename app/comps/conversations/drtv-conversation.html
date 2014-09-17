@@ -72,7 +72,7 @@
 
 <div
     ng-repeat="message in conversation.messages | orderBy:'created':false "
-    cm-scroll-to="#conversation-bottom"
+    cm-scroll-to="{anchor:'#conversation-bottom',force:'bottom'}"
     cm-last-message>
     <cm-date-seperator ng-if="(compareDate(message.created,conversation.messages[$index - 1].created))">
         <cm-time-converter  cm-timestamp="message.created" cm-special-type="'date-seperator'"></cm-time-converter>
