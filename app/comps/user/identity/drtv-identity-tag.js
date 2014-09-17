@@ -8,7 +8,7 @@ angular.module('cmUser').directive('cmIdentityTag', [
             scope: {
                 identity: "=cmData"
             },
-            templateUrl: 'comps/user/drtv-identity-tag.html',
+            templateUrl: 'comps/user/identity/drtv-identity-tag.html',
             controller: function ($scope) {
                 //console.log('cmIdentityTag');
             }

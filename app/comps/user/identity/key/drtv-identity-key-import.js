@@ -11,7 +11,7 @@ angular.module('cmRouteSettings')
     function(cmNotify, cmKey, cmUtil, cmUserModel, cmModal, $window){
         return {
             restrict: 'E',
-            templateUrl: 'comps/user/drtv-identity-key-import.html',
+            templateUrl: 'comps/user/identity/key/drtv-identity-key-import.html',
             controller: function ($scope) {
                 // only one privKey!!!
                 if(cmUserModel.hasPrivateKey()){

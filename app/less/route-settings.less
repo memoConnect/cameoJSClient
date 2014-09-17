@@ -83,8 +83,6 @@ cm-about-us{
   }
 }
 
-
-
 .is-local{
   color:@cm-ci-color;
 }
@@ -103,5 +101,20 @@ cm-about-us{
 .in-screen-message {
   a {
     .classic-link;
+  }
+}
+
+.avatar-block{
+  position:relative;
+  button{
+    position:absolute;
+    right:0;
+    bottom:0;
+    z-index:1;
+    i{
+      font-size:@cm-mega-font;
+      line-height:4rem;
+      .cm-unit-btn;
+    }
   }
 }

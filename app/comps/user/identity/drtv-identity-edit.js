@@ -7,7 +7,7 @@ angular.module('cmUser').directive('cmIdentityEdit', [
     function(cmUserModel, cmNotify, $q){
         return {
             restrict: 'E',
-            templateUrl: 'comps/user/drtv-identity-edit.html',
+            templateUrl: 'comps/user/identity/drtv-identity-edit.html',
             controller: function ($scope) {
                 $scope.identity = angular.extend({},cmUserModel.data.identity);
 
