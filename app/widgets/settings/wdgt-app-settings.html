@@ -10,7 +10,7 @@
                 <span>{{'SETTINGS.PAGES.APP.LANGUAGE' | cmTranslate}}</span>
             </span>
 
-            <div class="content" cm-language-select></div>
+            <section class="content no-pad" cm-language-select></section>
         </span>
     </li>
     <li ng-click="handleBooleans('convertEmoji')">
@@ -33,6 +33,35 @@
             <section class="icon-list">
                 <i class="fa cm-lg-icon" ng-class="{'cm-radio-0':!settings.sendOnReturn, 'cm-radio-1':settings.sendOnReturn}"></i>
             </section>
+        </span>
+    </li>
+    <li ng-click="handleBooleans('skipKeyInfo')">
+        <span class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.APP.SKIP_KEY_INFO' | cmTranslate}}</span>
+            </span>
+
+            <section class="icon-list">
+                <i class="fa cm-lg-icon" ng-class="{'cm-radio-0':!settings.skipKeyInfo, 'cm-radio-1':settings.skipKeyInfo}"></i>
+            </section>
+        </span>
+    </li>
+    <li>
+        <span class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.APP.DATE_FORMAT' | cmTranslate}}</span>
+            </span>
+
+            <section class="content no-pad" cm-date-format-select></section>
+        </span>
+    </li>
+    <li>
+        <span class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.APP.TIME_FORMAT' | cmTranslate}}</span>
+            </span>
+
+            <section class="content no-pad" cm-time-format-select></section>
         </span>
     </li>
 </ul>
