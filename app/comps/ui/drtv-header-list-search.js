@@ -17,12 +17,12 @@ angular.module('cmUi')
                         ' data-qa="btn-header-list-search"></i>' +
                       '<cm-search-input' +
                         ' ng-model="ngModel"' +
-                        ' cm-options="{withoutSearchIcon:true,hideElements:\'cm-footer\',jumpTo:options.jumpTo}"' +
+                        ' cm-options="{withoutSearchIcon:true,hideElements:\'cm-footer\',scrollTo:options.scrollTo}"' +
                         ' ng-class="{visible:visible}"></cm-search-input>',
             controller: function($scope, $element, $attrs){
                 // option for drtv
                 $scope.options = angular.extend({}, {
-                    jumpTo:false
+                    scrollTo:false
                 }, $scope.cmOptions || {});
 
                 $scope.visible = false;

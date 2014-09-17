@@ -1,38 +1,75 @@
 'use strict';
 
 angular.module('cmUi').directive('cmScrollTo',[
+    'cmLogger',
     '$timeout',
     '$rootScope',
     '$document',
-    function ($timeout, $rootScope, $document){
+    function (cmLogger, $timeout, $rootScope, $document){
         return {
             restrict: 'A',
-            link: function($scope, $element, $attrs){
+            scope: true,
+            controller: function($scope, $element, $attrs){
+                $scope.options = angular.extend({},{
+                    anchor: undefined, // #id of element
+                    force: undefined, // force to top or bottom
+                    onEvent: false,// only initalize the rootScope event
+                    timeout: 250,
+                    addElementsHeight: undefined
+                },$scope.$eval($attrs.cmScrollTo)||{});
+            },
+            link: function(scope, element, attrs){
+                if(!scope.options.anchor){
+                    cmLogger.warn('drtv cm-scroll-to anchor is empty');
+                    return false;
+                }
 
-                function initTimeout(target){
-                    var anchor = angular.element($document[0].querySelector(target)),
-                        bodyAndHtml = angular.element($document[0].querySelectorAll('body,html'));
+                function initTimeout(){
+                    var anchor = angular.element($document[0].querySelector(scope.options.anchor)),
+                        bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
+                        extraOffset = 0;
+
+                    // subscract elements height because of overblending
+                    if(scope.options.addElementsHeight) {
+                        var extraHeight = angular.element($document[0].querySelectorAll(scope.options.addElementsHeight));
+                        angular.forEach(extraHeight, function (tag) {
+                            extraOffset = tag.offsetHeight;
+                        });
+                    }
 
                     $timeout(function(){
-                        var bottom = anchor[0].offsetTop + 5000;
-                        angular.forEach(bodyAndHtml,function(tag){
-                            tag.scrollTop = bottom;
+                        var position = anchor[0].offsetTop;
+
+                        switch(scope.options.force){
+                            case 'bottom':
+                                position = position+5000;
+                            break;
+                            case 'top':
+                                position = 0;
+                            break;
+                        }
+
+                        angular.forEach(bodyAndHtml, function (tag) {
+                            tag.scrollTop = position - extraOffset;
                         });
-                    },250);
+                    },scope.options.timeout);
                 }
 
-                if($attrs.ngRepeat && $scope.$last && $attrs.cmScrollTo != ''){
-                    initTimeout($attrs.cmScrollTo);
-
-                } else if(!$attrs.ngRepeat){
-                    initTimeout($attrs.cmScrollTo);
+                // drtv on create
+                if(!scope.options.onEvent) {
+                    // drtv in ng-loop
+                    if (attrs.ngRepeat && scope.$last) {
+                        initTimeout();
+                    // drtv normal
+                    } else if (!attrs.ngRepeat) {
+                        initTimeout();
+                    }
+                // only via event broadcast
+                } else {
+                    $rootScope.$on('scroll:to',function(event){
+                        initTimeout();
+                    });
                 }
-                // because of cm-blob-image
-                // & cm-search-input
-                $rootScope.$on('scroll:to',function(event, target){
-                    console.log('cmScrollTo',target)
-                    initTimeout(target);
-                });
             }
         }
     }
