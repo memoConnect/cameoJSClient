@@ -219,6 +219,10 @@ cm-conversation{
       &.show-scrollbar{
         height: @cm-unit+2;
       }
+      &.disable-scrollbar{
+//        white-space: pre-wrap;
+//        line-height: 1rem;
+      }
     }
     .add-new-recipients{
       span{
@@ -252,6 +256,12 @@ cm-conversation{
         width:@cm-unit;
         line-height:@cm-unit;
       }
+    }
+    cm-recipients-comma-seperated{
+      display: block;
+      height: 100%;
+      line-height: 4rem;
+      vertical-align: middle;
     }
   }
 
