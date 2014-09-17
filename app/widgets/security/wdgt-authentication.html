@@ -90,8 +90,12 @@
 
 <br/>
 
-<article ng-if="timeout" class="content">
-    {{BASE+"TIMEOUT" | cmTranslate: {'timeout' : (timeout|cmTimeoutHumanReadable) } }}
+
+
+<article ng-if="!!getTimeout()" class="content">
+    <cm-timeout cm-data = "getTimeout()">
+        {{BASE+"TIMEOUT" | cmTranslate: {'timeout' : cmTimeout } }}
+    </cm-timeout>
 </article>
 
 
@@ -130,7 +134,7 @@
             class       = "cm-btn-block cm-btn-grey"
             data-qa     = "btn-start-authentication"
             >
-        {{BASE+"SHOW_TRANSACTION_SECRET.CLOSE_BUTTON"|cmTranslate}}
+        {{BASE+"CANCEL_BUTTON"|cmTranslate}}
         <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
     </button>
 </cm-footer>
@@ -141,7 +145,7 @@
             class       = "cm-btn-block cm-btn-grey"
             data-qa     = "btn-start-authentication"
             >
-        {{BASE+"SHOW_TRANSACTION_SECRET.DONE_BUTTON"|cmTranslate}}
+        {{BASE+"DONE_BUTTON"|cmTranslate}}
         <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
     </button>
 </cm-footer>

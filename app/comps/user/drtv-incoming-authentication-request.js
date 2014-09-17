@@ -1,13 +1,16 @@
 'use strict';
 
 angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
-    'cmAuth', 'cmUserModel', 'cmIdentityFactory', 'cmUtil', 'cmCrypt', 'cmLogger',
-    '$timeout', '$document', '$rootScope',
-    function (cmAuth, cmUserModel, cmIdentityFactory, cmUtil, cmCrypt, cmLogger,
-              $timeout, $document, $rootScope){
+
+    '$timeout',
+    '$document',
+    
+    function ($timeout, $document){
         return {
-            restrict: 'E',
-            templateUrl: 'comps/user/drtv-incoming-authentication-request.html',
+            restrict:       'E',
+            scope:          false,
+            templateUrl:    'comps/user/drtv-incoming-authentication-request.html',
+
             controller: function($scope){
 
                 
@@ -19,7 +22,6 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
                 }
 
                 setErrorsToDefault();
-                $scope.spinner = false;
 
                 $scope.modalMessageVars = {
                     cameoKey: $scope.fromKey.name,
@@ -33,18 +35,6 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
                     var input = $document[0].querySelector('#inp-transactSecret');
                     input.focus();
                 }, 50);
-
-                $scope.showSpinner = function(){
-                    $scope.spinner = true;
-                };
-
-                $scope.hideSpinner = function(){
-                    $scope.spinner = false;
-                };
-
-                function closeModal(){
-                    $rootScope.closeModal('incoming-authentication-request');
-                }
 
             }
         }

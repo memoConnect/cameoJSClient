@@ -49,13 +49,30 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
              * @description
              * Retrieves the transaction secret or null if expired
              *
-             *  @return {* | null} transaction secret ir null if expired
+             *  @return {* | null} transaction secret or null if expired
              */
             
             getTransactionSecret: function(){
-                return  this.transactionSecret && new Date().getTime() < this.transactionSecret.expires
+                return  this.transactionSecret && (new Date().getTime() < this.transactionSecret.expires)
                         ?   this.transactionSecret.content
                         :   null
+            },
+
+            /**
+             * @ngdoc method
+             * @methodOf cmAuthenticationRequest
+             *
+             * @name getTTL
+             * @description
+             * Retrieves time to the expireation of the transaction secret
+             *
+             *  @return {Number} Time to expiration of transaction secret in milliseconds or 0, whatever ist greater
+             */
+            getTTL: function(){
+                  return    (
+                                    this.transactionSecret 
+                                &&  Math.max(0, this.transactionSecret.expires - (new Date().getTime()))
+                            )   ||  0
             },
 
             /**
@@ -78,36 +95,37 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
                     
 
-                cmCallbackQueue
-                .push(function(){
-                        return  cmCrypt.hashObject({
-                                    transactionSecret:  secret,
-                                    cameoId:            fromIdentity.cameoId,
-                                    salt:               salt
-                                })
-                },100)
-                .then(function(result){
-                    var hashed_data = result[0]
+                return  cmCallbackQueue
+                        .push(function(){
+                            return  cmCrypt.hashObject({
+                                        transactionSecret:  secret,
+                                        cameoId:            fromIdentity.cameoId,
+                                        salt:               salt
+                                    })
+                        },100)  // Leave the browser a tiny bit of time to breathe
+                        .then(function(result){
+                            return  cmCallbackQueue.push(function(){
 
-                    return  cmCallbackQueue.push(function(){
-                                return fromKey.sign(hashed_data)
-                            }, 100)
-                })
-                .then(function(result){
-                    var signature = result[0]
+                                        // if succesful result[0] contains hashed data returned by cmCrypt.hashObject
+                                        return fromKey.sign(result[0])   
 
-                    return cmApi.broadcast({
-                            name:   'authenticationRequest:start',
-                            data:   {
-                                        fromKeyId:      fromKey.id,
-                                        fromIdentityId: fromIdentity.id,
-                                        toKeyId:        toKey ? toKey.id : undefined,
-                                        salt:           salt,
-                                        signature:      signature,
-                                    }
-                        }, toIdentity.id)
+                                    }, 100) // Leave the browser a tiny bit of time to breathe
+                        })
+                        .then(function(result){
 
-                })
+                            // if succesful result[0] contains the signature returned by fromKey.sign
+                            return cmApi.broadcast({
+                                    name:   'authenticationRequest:start',
+                                    data:   {
+                                                fromKeyId:      fromKey.id,
+                                                fromIdentityId: fromIdentity.id,
+                                                toKeyId:        toKey ? toKey.id : undefined,
+                                                salt:           salt,
+                                                signature:      result[0],  
+                                            }
+                                }, toIdentity.id)
+
+                        })
             },
 
             /**
@@ -123,7 +141,10 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
              */
 
             cancel: function(toIdentity){
+                delete this.transactionSecret
+
                 self.trigger('canceled')
+
                 return  cmApi.broadcast({
                             name:   'authenticationRequest:cancel',
                             data:   {}
@@ -143,6 +164,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
              * @returns {Boolean} wether or not the request is valid
              */
             verify: function(request, secret){
+
                 var fromIdentity    =   cmIdentityFactory.find(request.fromIdentityId),
                     hashed_data     =   cmCrypt.hashObject({
                                             transactionSecret:  secret,
@@ -152,12 +174,15 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                     fromKey         =   fromIdentity.keys.find(request.fromKeyId),
                     result          =   fromKey.verify(hashed_data, request.signature)
 
-                if(result)
-                    self.trigger('verified', {
+                if(result){
+                    self.trigger('verification:successful', {
                         identity:           fromIdentity,
                         key:                fromKey,
                         transactionSecret:  secret,
                     })
+                } else {
+                    self.trigger('verification:failed')
+                }
 
                 return result
             }
@@ -165,72 +190,152 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
         cmObject.addEventHandlingTo(self)
 
+
+        /**
+         * Listen to Api events. When a start event occurs, check wether it is relevant for the current user.
+         * If so trigger a local event in cmAuthenticationRequest.
+         */
+
         cmApi.on('authenticationRequest:start', function(event, request){
-
-            var modal       = cmModal.instances['incoming-authentication-request']
-
-            //Prevent other authentication requests to interfere with an ongoing process
-            if(modal && modal.isActive())
-                return false
 
             var local_keys = cmUserModel.loadLocalKeys()
 
             //If there are no local keys, there's nothing to authenticate with:
-            if(local_keys.length == 0 )
-                return false
+            if(local_keys.length == 0 ){
+                cmLogger.debug('cmAuthenticationRequest: received request, but no local keys present.')
+                return false // do not remove event binding
+            }
+
 
             //There is no need to authenticate local keys:
-            if(local_keys.find(request.fromKeyId))
-                return false
+            if(local_keys.find(request.fromKeyId)){
+                cmLogger.debug('cmAuthenticationRequest: received request, but key to be signed is local.')
+                return false // do not remove event binding
+            }
             
+
             //If a certain key was expected to sign, but that key is not present on this device, dont prompt the user:
-            if(request.toKeyId && !local_keys.find(request.toKeyId))
-                return false
+            if(request.toKeyId && !local_keys.find(request.toKeyId)){
+                cmLogger.debug('cmAuthenticationRequest: received request, but requested private key to sign with is not present.')
+                return false // do not remove event binding
+            }
 
             self.trigger('started', request)
         })
 
+
+        /**
+         * Listen to Api events. When a cancel event occurs, force sender into data object and trigger local event.
+         * It is important to know the sender so that 3rd party identities cannot cancel your events. 
+         */
         cmApi.on('authenticationRequest:cancel', function(event, data){
             data.fromIdentityId = event.fromIdentityId
-            console.dir(event)
             self.trigger('canceled', data)
         })
 
+
+        /**
+         * Listen to events on cmAuthenticationRequest.
+         */
+
         self.on('started', function(event, request){
+
+            //Prevent other authentication requests to interfere with an ongoing process:
+            var modal = cmModal.instances['incoming-authentication-request']
+
+            if(modal && modal.isActive()){
+                // If request comes from the same origin as the ongoing request then update:
+                if(modal.request.fromIdentityId == request.fromIdentityId)
+                    modal.request = request
+                
+                return false // do not remove event binding
+            }
+
+
+            // Close other authentication request related modals:
+            cmModal.close('authentication-request-successful')
+            cmModal.close('authentication-request-canceled')
+
 
             var transactionSecret = self.getTransactionSecret()
 
-            //If we already know the transaction secret, there is no need to prompt the user:
+
+            // If we already know the transaction secret, there is no need to prompt the user:
             if(transactionSecret){
                 cmCallbackQueue.push(function(){
                     self.verify(request, transactionSecret)
                 })
-                return true
+                return false // do not remove event binding
             }
 
+
+            /** Use a modal from here on **/
+
+
+            // new scope for a modal to open below
             var scope   =   $rootScope.$new()
 
             scope.is3rdParty    =   request.fromIdentityId != cmUserModel.data.identity.id
             scope.fromIdentity  =   cmIdentityFactory.find(request.fromIdentityId)
 
+
             //If we dont know the identity that sent the request:
             if(!scope.fromIdentity)
-                return false
-
-
-            scope.error = {}
+                return false // do not remove event binding
 
             scope.fromKey       =   scope.fromIdentity.keys.find(request.fromKeyId)
+
+
+            //If we dont know the key to sign:
+            if(!scope.fromKey)
+                return false // do not remove event binding
+            
+            scope.error         =   {}
+            scope.request       =   request     //stored for later use, if another authentication request with the same origin occurs
+
             scope.verify        =   function(secret){
                                         scope = this
                                         scope.error.emptyInput    = !secret
-                                        scope.error.wrongSecret   = !scope.error.emptyInput && !self.verify(request, secret)
+                                        scope.error.wrongSecret   = !scope.error.emptyInput && !self.verify(scope.request, secret)
 
-                                        if(!scope.error.emptyInput && !scope.error.wrongSecret){
+                                        if(!scope.error.emptyInput && !scope.error.wrongSecret){  
+
+                                            // Modal is no longer needed:
                                             cmModal.close('incoming-authentication-request')
+
+
+
+                                            // Double check and make sure that only the key gets signed that was actually verified above:
+                                            var fromIdentity    = cmIdentityFactory.find(scope.request.fromIdentityId),
+                                                fromKey         = scope.fromIdentity.keys.find(scope.request.fromKeyId)
+
+                                            if(
+                                                    fromIdentity    != scope.fromIdentity
+                                                ||  fromKey         != scope.fromKey
+                                            ){
+                                                cmLogger('cmAuthenticationRequest: modal double check on verify failed.')
+                                                return false
+                                            }
+
+
+
                                             cmUserModel
                                             .signPublicKey(scope.fromKey, scope.fromKey.id, scope.fromIdentity)
                                             .then(function(){
+
+                                                //Open success Modal:
+                                                cmModal.create({
+                                                    id:             'authentication-request-successful',
+                                                    type:           'alert',
+                                                    'cm-close-btn': false,
+                                                },  
+                                                    scope.is3rdParty
+                                                    ?   '{{"IDENTITY.KEYS.TRUST.SUCCESSFUL"|cmTranslate}}'
+                                                    :   '{{"IDENTITY.KEYS.AUTHENTICATION.SUCCESSFUL"|cmTranslate}}'
+                                                )
+
+                                                cmModal.open('authentication-request-successful')
+
                                                 //Send a request in return:
                                                 self.send(
                                                     scope.fromIdentity,   //Sender of the initial requests
@@ -253,16 +358,19 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
             cmModal.open('incoming-authentication-request')
 
+            /**
+             * Listen to local events. Wait for a cancel event to close the Modal.
+             */
+
+
             self.one('canceled', function(event, data){
-                console.log(data.fromIdentityId)
-                console.log(request.fromIdentityId)
+                var modal = cmModal.instances['incoming-authentication-request']
 
                 // If some other authentication request is meant to be canceled:
-                if(data.fromIdentityId != request.fromIdentityId)
+                if(modal && modal.request.fromIdentityId != data.fromIdentityId)
                     return false    // dont remove the event binding
 
-                // Close Modal:
-                var modal = cmModal.instances['incoming-authentication-request']
+                // Only show the cancelation modal if a authentication modal was actually present:
                 if(modal && modal.isActive()){
                     cmModal.close('incoming-authentication-request')
 
@@ -270,7 +378,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                         id:             'authentication-request-canceled',
                         type:           'alert',
                         'cm-close-btn': false,
-                    }, 'IDENTITY.KEYS.AUTHENTICATION.CANCELED')
+                    }, '{{"IDENTITY.KEYS.AUTHENTICATION.CANCELED"|cmTranslate}}')
                     cmModal.open('authentication-request-canceled')
                 }
                 

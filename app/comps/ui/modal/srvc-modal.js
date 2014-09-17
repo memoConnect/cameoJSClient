@@ -30,7 +30,6 @@ angular.module('cmUi')
         };
 
         self.open = function(id, data){
-            console.log(id)
             if(self.instances[id]){
                 self.instances[id]
                     .setData(data)

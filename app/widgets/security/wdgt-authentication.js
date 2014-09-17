@@ -46,39 +46,18 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                 :   'IDENTITY.KEYS.AUTHENTICATION.';
 
 
-                $scope.startTimeout = function(time){
-                    $scope.cancelTimeout();
-                    $scope.timeout          = time || 60000;
-                    var timeout_start       = new Date().getTime()
-
-                    timeoutInterval = window.setInterval(function(){
-                        $scope.timeout = time-Math.ceil((new Date().getTime()-timeout_start));
-
-                        if($scope.timeout < 0)
-                            $scope.timeout = 0;
-
-                        $scope.$digest()
-                    }, 1000)
-                };
-
-
-                $scope.cancelTimeout = function(){
-                    if($scope.timeoutPromise)
-                        $timeout.cancel(timeoutPromise);
-
-                    if(timeoutInterval)
-                        window.clearInterval(timeoutInterval);
-
-                    $scope.timeout = undefined
+                $scope.getTimeout = function(){
+                    return cmAuthenticationRequest.getTTL()
                 }
-                
+               
                 $scope.startAuthenticationRequest = function(){
                     $scope.ERROR    = undefined
                     $scope.waiting  = true;
-                    $scope.startTimeout(120000);
 
                     cmAuthenticationRequest.generateTransactionSecret(120000)
                     $scope.transactionSecret = cmAuthenticationRequest.getTransactionSecret()
+
+                    console.log(cmAuthenticationRequest.getTTL())
 
                     cmCallbackQueue
                     .push(function(){
@@ -90,13 +69,15 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     }, 50)
                     .then(function(){
                         $scope.step = 1
-                        return cmAuthenticationRequest.when('started', 'canceled', $scope.timeout)      //wait for response
+                        //wait for response:
+                        return cmAuthenticationRequest.when('started', 'canceled', $scope.timeout)      
                     })
                     .then(
                         function(result){
                             $scope.cancelTimeout()
                             $scope.step = 2
-                            return cmAuthenticationRequest.when('verified', 5000)                       //wait for key in response to be verified
+                            //wait for key in response to be verified:
+                            return cmAuthenticationRequest.when('verification:successful', 'verification:failed', 7000)  
                         },
                         function(result){
                             return  result.event && result.event.name == 'canceled'
@@ -110,8 +91,8 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                             return cmUserModel.signPublicKey(data.key, data.key.id, data.identity)      //wait for key in response to be signed
                         },
                         function(result){
-                            return  result == 'timeout'
-                                    ?   $q.reject('TIMEOUT')
+                            return  result && result.event &&  result.event.name == 'verification:failed'
+                                    ?   $q.reject('VERIFY')
                                     :   $q.reject(result)
                         }
                     )
@@ -131,7 +112,6 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                 }
 
                 $scope.cancel = function(){
-                    $scope.cancelTimeout()
                     $scope.waiting  = false
                     $scope.step     = 0
                     cmAuthenticationRequest.cancel($scope.toIdentity)

@@ -454,7 +454,7 @@ angular.module('cmCore').provider('cmApi',[
                             .then(
                             function(events){
                                 events.forEach(function(event){
-                                    api.trigger(event.name, event.data)
+                                    api.trigger(event.name, event.data, event)
                                 })
                             },
                             function(){

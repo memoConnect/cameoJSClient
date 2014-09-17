@@ -29,13 +29,14 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                  * scope vars for keypair generation
                  * @type {string[]}
                  */
-                var detect = cmUtil.detectOSAndBrowser();
+                var detect      = cmUtil.detectOSAndBrowser(),
+                    startTime   = undefined,
+                    elapsedTime = 0
 
                 $scope.active = 'choose'; // choose, active, store
                 //$scope.keySizes = cmCrypt.getKeySizes();
                 $scope.keySize = 2048;
                 $scope.keyName = '';
-                $scope.i18n = {time:''};
 
                 $scope.showKeySize = false;
                 $scope.toggleKeySize = function(){
@@ -56,12 +57,12 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     }
                 };
 
-                var interval = null;
-                function stopInterval(){
-                    if(interval != null){
-                        window.clearInterval(interval);
-                        interval = null;
-                    }
+                $scope.getElapsedTime = function(){
+                    elapsedTime =   startTime 
+                                    ?   Math.max(new Date().getTime() - startTime, 0)
+                                    :   elapsedTime
+
+                    return elapsedTime
                 }
 
                 /**
@@ -83,24 +84,18 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                      */
                     cmApi.stopListeningToEvents();
 
-                    var startTime = (new Date()).getTime();
+                    startTime   = new Date().getTime();
+                    elapsedTime = 0
 
-                    $scope.i18n.time = cmUtil.millisecondsToStr(0);
-
-                    interval = window.setInterval(function(){
-                        var newTime = (new Date()).getTime();
-
-                        $scope.i18n.time = cmUtil.millisecondsToStr(newTime-startTime);
-                        $scope.$digest();
-                    },500);
+                   
 
                     cmCrypt.generateAsyncKeypair(parseInt(size),
                         function(counts, timeElapsed){
-                            $scope.i18n.time = cmUtil.millisecondsToStr(timeElapsed);
+                            //$scope.i18n.time = cmUtil.millisecondsToStr(timeElapsed);
                         }
                     ).then(
                         function(result){
-                            $scope.i18n.time = cmUtil.millisecondsToStr(result.timeElapsed);
+                            // $scope.i18n.time = cmUtil.millisecondsToStr(result.timeElapsed);
 
                             $scope.privKey  = result.key.getPrivateKey();
                             $scope.pubKey   = result.key.getPublicKey();
@@ -115,7 +110,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                         function(){
                             cmJob.stop();
                             cmApi.listenToEvents();
-                            stopInterval();
+                            startTime = undefined
+                            // stopInterval();
                         }
                     );
                 };
@@ -132,7 +128,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     cmCrypt.cancelGeneration();
                     cmJob.stop();
                     cmApi.listenToEvents();
-                    stopInterval();
+                    startTime = undefined
+                    // stopInterval();
                     //$scope.active = 'choose';
                 };
 
