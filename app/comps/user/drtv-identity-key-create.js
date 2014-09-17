@@ -9,9 +9,11 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
     'cmKey',
     'cmJob',
     'cmApi',
+    'cmDevice',
     '$window',
     '$rootScope',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey, cmJob, cmApi,
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger,
+             cmNotify, cmKey, cmJob, cmApi, cmDevice,
              $window, $rootScope){
         return {
             restrict: 'E',
@@ -29,7 +31,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                  * scope vars for keypair generation
                  * @type {string[]}
                  */
-                var detect = cmUtil.detectOSAndBrowser();
+                var detect = cmDevice.detectOSAndBrowser();
 
                 $scope.active = 'choose'; // choose, active, store
                 //$scope.keySizes = cmCrypt.getKeySizes();
