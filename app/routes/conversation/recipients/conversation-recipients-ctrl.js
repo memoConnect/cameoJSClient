@@ -4,7 +4,6 @@ define([
     'ngload!pckUser',
     'ngload!pckContacts',
     'ngload!pckConversations',
-    'ngload!pckRouteConversation',
     'ngload!pckWidgets'
 
 ], function (app) {
