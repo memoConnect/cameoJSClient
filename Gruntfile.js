@@ -284,8 +284,6 @@ module.exports = function (grunt) {
                     'security_aspects': 'app/comps/security_aspects',
                     'ui': 'app/comps/ui',
                     'phonegap': 'app/comps/phonegap',
-                    'route-conversation': 'app/routes/conversation/comps',
-                    'route-contacts': 'app/routes/contacts/comps',
                     'widgets': 'app/widgets'
                 })
             },
