@@ -54,17 +54,19 @@ angular.module('cmPhonegap').service('cmPushNotificationAdapter', [
                  ]
                  */
                 // check if BE knows the registered device
-                this.getDeviceData()
-                .then(function(deviceData){
-                    var accountPushDevices = accountPushDevices || [],
-                        deviceIsRegistered = accountPushDevices.filter(function(deviceToken){
-                            return deviceToken == deviceData.token
-                        }).length == 1;
+//                this.getDeviceData()
+//                .then(function(deviceData){
+//                    var accountPushDevices = accountPushDevices || [],
+//                        deviceIsRegistered = accountPushDevices.filter(function(deviceToken){
+//                            return deviceToken == deviceData.token
+//                        }).length == 1;
+//
+//                    if(!deviceIsRegistered){
+//                        self.registerDevice();
+//                    }
+//                });
 
-                    if(!deviceIsRegistered){
-                        self.registerDevice();
-                    }
-                });
+                self.registerDevice();
             },
 
             registerDevice: function(){
