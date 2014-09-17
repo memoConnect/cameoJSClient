@@ -35,4 +35,15 @@
             </section>
         </span>
     </li>
+    <li ng-click="handleBooleans('skipKeyInfo')">
+        <span class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.APP.SKIP_KEY_INFO' | cmTranslate}}</span>
+            </span>
+
+            <section class="icon-list">
+                <i class="fa cm-lg-icon" ng-class="{'cm-radio-0':!settings.skipKeyInfo, 'cm-radio-1':settings.skipKeyInfo}"></i>
+            </section>
+        </span>
+    </li>
 </ul>
