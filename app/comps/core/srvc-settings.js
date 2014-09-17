@@ -17,7 +17,9 @@ angular.module('cmCore').service('cmSettings', [
             defaultProperties = {
                 convertEmoji: true,
                 sendOnReturn: false,
-                skipKeyInfo: false
+                skipKeyInfo: false,
+                dateFormat: 'dd.MM.yyyy',
+                timeFormat: 'HH:mm'
             };
 
 

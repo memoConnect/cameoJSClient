@@ -482,7 +482,18 @@
             "APP": {
                 "LANGUAGE": "Sprache",
                 "EMOJI_CONVERT": "Smileys zu Emojis",
-                "SEND_ON_RETURN": "Senden bei Enter-Eingabe"
+                "SEND_ON_RETURN": "Senden bei Enter-Eingabe",
+                "SKIP_KEY_INFO": "cameoKey Information überspringen",
+                "DATE_FORMAT": {
+                    "TITLE": "Datumsformat",
+                    "KEY": "",
+                    "VALUE": ""
+                },
+                "TIME_FORMAT": {
+                    "TITLE": "Zeitformat",
+                    "KEY": "",
+                    "VALUE": ""
+                }
             },
             "IDENTITY": {
                 "CREATE": {

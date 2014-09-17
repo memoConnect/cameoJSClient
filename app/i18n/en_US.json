@@ -481,7 +481,18 @@
             "APP": {
                 "LANGUAGE": "Language Settings",
                 "EMOJI_CONVERT": "Convert Smileys to Emojis",
-                "SEND_ON_RETURN": "Send on Return"
+                "SEND_ON_RETURN": "Send on Return",
+                "SKIP_KEY_INFO": "Skip cameoKey Information",
+                "DATE_FORMAT": {
+                    "TITLE": "Dateformat",
+                    "KEY": "",
+                    "VALUE": ""
+                },
+                "TIMEFORMAT": {
+                    "TITLE": "Timeformat",
+                    "KEY": "",
+                    "VALUE": ""
+                }
             },
             "IDENTITY": {
                 "CREATE": {
