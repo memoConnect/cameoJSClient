@@ -83,7 +83,8 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
             },
 
             setDeviceToken: function(token){
-                console.log('setDeviceToken '+token);
+                console.log('##setDeviceToken#################');
+                console.log(token);
                 this.deviceToken = token;
 
                 this.initPromise();
