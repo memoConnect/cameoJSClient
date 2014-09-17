@@ -30,7 +30,6 @@ angular.module('cmUi').directive('cmSearchInput',[
                     }
                     // on search jump to anchor
                     if(scope.options.scrollTo){
-                        console.log('keyUp broadcast scroll:to')
                         $rootScope.$broadcast('scroll:to');
                     }
                 });
