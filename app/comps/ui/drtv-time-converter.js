@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('cmUi').directive('cmTimeConverter',[
+    'cmSettings',
     'cmUtil',
-    function (cmUtil){
+    function (cmSettings, cmUtil){
         return {
             restrict: 'AE',
             scope: {
@@ -25,17 +26,18 @@ angular.module('cmUi').directive('cmTimeConverter',[
                 /**
                  * Set default Date Format
                  */
-                $scope.format = 'dd.MM.yyyy HH:mm';
+                //$scope.format = 'dd.MM.yyyy HH:mm';
+                $scope.format = cmSettings.get('dateFormat') + ' ' + cmSettings.get('timeFormat');
                 if(typeof $scope.dateFormat != 'undefined'){
                     $scope.format = $scope.dateFormat;
                 }
 
                 switch($scope.specialType){
                     case 'conversation-tag':
-                        $scope.format = 'HH:mm';
+                        $scope.format = cmSettings.get('timeFormat');
 
                         if(cmUtil.compareDate((new Date().getTime()), $scope.time)){
-                            $scope.format = 'dd.MM.yyyy';
+                            $scope.format = cmSettings.get('dateFormat');
                         }
                         break;
                     default:
