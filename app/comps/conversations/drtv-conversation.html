@@ -75,7 +75,7 @@
     cm-scroll-to="#conversation-bottom"
     cm-last-message>
     <cm-date-seperator ng-if="(compareDate(message.created,conversation.messages[$index - 1].created))">
-        {{message.created | date:'dd.MM.yyyy'}}
+        <cm-time-converter  cm-timestamp="message.created" cm-special-type="'date-seperator'"></cm-time-converter>
     </cm-date-seperator>
     <cm-message cm-data="message" cm-data-conversation="conversation"></cm-message>
 </div>

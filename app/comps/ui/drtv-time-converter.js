@@ -26,7 +26,6 @@ angular.module('cmUi').directive('cmTimeConverter',[
                 /**
                  * Set default Date Format
                  */
-                //$scope.format = 'dd.MM.yyyy HH:mm';
                 $scope.format = cmSettings.get('dateFormat') + ' ' + cmSettings.get('timeFormat');
                 if(typeof $scope.dateFormat != 'undefined'){
                     $scope.format = $scope.dateFormat;
@@ -39,6 +38,9 @@ angular.module('cmUi').directive('cmTimeConverter',[
                         if(cmUtil.compareDate((new Date().getTime()), $scope.time)){
                             $scope.format = cmSettings.get('dateFormat');
                         }
+                        break;
+                    case 'date-seperator':
+                        $scope.format = cmSettings.get('dateFormat');
                         break;
                     default:
                         // date Format does not change

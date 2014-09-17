@@ -1,5 +1,5 @@
 <div class="assets clearfix {{conversation.lockStatus.class}}-wrap">
-    <span class="date cm-fl">{{message.created | date:'HH:mm'}}</span>
+    <span class="date cm-fl"><cm-time-converter  cm-timestamp="message.created" cm-date-format="settings.get('timeFormat')"></cm-time-converter></span>
     <span class="envelope cm-fl"><i class="fa cm-envelope-open"></i></span>
     <span class="security cm-fl">
         <cm-lock-level cm-level="conversation.lockStatus.level"></cm-lock-level>
