@@ -20,6 +20,7 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
             },
 
             register: function(){
+                console.log('pn register')
                 this.reset();
                 // only gcm needs an senderid
                 if (cmDevice.isAndroid()) {
@@ -36,6 +37,7 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                         }
                     );
                 } else if(cmDevice.isiOS()){
+                    console.log('register ios')
                     this.plugin.register(
                         function(result){
                             self.handler.token(result);
@@ -96,6 +98,7 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                     this.promise = $q.defer();
             },
             getDeviceData: function(){
+                console.log('getDeviceData')
                 this.initPromise();
                 return this.promise.promise;
             },
@@ -107,7 +110,7 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                 },
                 token: function(token){
                     console.log('##tokenHandler#################');
-                    this.setDeviceToken(token);
+                    self.setDeviceToken(token);
                 },
                 channel: function(result){
                     console.log('##channelHandler###############');
