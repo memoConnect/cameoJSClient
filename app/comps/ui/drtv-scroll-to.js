@@ -34,8 +34,6 @@ angular.module('cmUi').directive('cmScrollTo',[
                         return false;
                     }
 
-                    console.log(anchor[0])
-
                     // subscract elements height because of overblending
                     if(scope.options.addElementsHeight) {
                         var extraHeight = angular.element($document[0].querySelectorAll(scope.options.addElementsHeight));
