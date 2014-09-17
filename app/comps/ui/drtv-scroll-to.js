@@ -14,27 +14,28 @@ angular.module('cmUi').directive('cmScrollTo',[
                     anchor: undefined, // #id of element
                     force: undefined, // force to top or bottom
                     onEvent: false,// only initalize the rootScope event
-                    timeout: 250
+                    timeout: 250,
+                    addElementsHeight: undefined
                 },$scope.$eval($attrs.cmScrollTo)||{});
             },
             link: function(scope, element, attrs){
-
                 if(!scope.options.anchor){
                     cmLogger.warn('drtv cm-scroll-to anchor is empty');
                     return false;
                 }
 
-                var lastOffset = -1;
-
                 function initTimeout(){
                     var anchor = angular.element($document[0].querySelector(scope.options.anchor)),
                         bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
-                        docTop = 0;
-                    // count scrollTop
-                    angular.forEach(bodyAndHtml,function(tag){
-                        if(tag.scrollTop > docTop)
-                            docTop = tag.scrollTop;
-                    });
+                        extraOffset = 0;
+
+                    // subscract elements height because of overblending
+                    if(scope.options.addElementsHeight) {
+                        var extraHeight = angular.element($document[0].querySelectorAll(scope.options.addElementsHeight));
+                        angular.forEach(extraHeight, function (tag) {
+                            extraOffset = tag.offsetHeight;
+                        });
+                    }
 
                     $timeout(function(){
                         var position = anchor[0].offsetTop;
@@ -47,22 +48,17 @@ angular.module('cmUi').directive('cmScrollTo',[
                                 position = 0;
                             break;
                         }
-                        // set only first init or scrollheight changed
-                        console.log(position,lastOffset,docTop)
-                        if(lastOffset == -1 || docTop != position) {
-                            lastOffset = position;
 
-                            angular.forEach(bodyAndHtml, function (tag) {
-                                tag.scrollTop = position;
-                            });
-                        }
+                        angular.forEach(bodyAndHtml, function (tag) {
+                            tag.scrollTop = position - extraOffset;
+                        });
                     },scope.options.timeout);
                 }
 
                 // drtv on create
                 if(!scope.options.onEvent) {
                     // drtv in ng-loop
-                    if (attrs.ngRepeat && $scope.$last) {
+                    if (attrs.ngRepeat && scope.$last) {
                         initTimeout();
                     // drtv normal
                     } else if (!attrs.ngRepeat) {

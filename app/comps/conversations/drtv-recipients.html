@@ -8,7 +8,7 @@
 
 <hr ng-if="conversation.state.is('new') && (conversation.recipients.length > 1)">
 
-<div id="possible-recipient-list" cm-scroll-to="{anchor:'#possible-recipient-list',onEvent:true,timeout:50}"></div>
+<div id="possible-recipient-list" cm-scroll-to="{anchor:'#possible-recipient-list',onEvent:true,timeout:50,addElementsHeight:'cm-header'}"></div>
 
 <ul ng-if="conversation.state.is('new')" class="no-border contact-list">
     <li
