@@ -5,7 +5,6 @@ define([
     'ngload!pckUser',
     'ngload!pckContacts',
     'ngload!pckConversations',
-    'ngload!pckRouteConversation',
     'ngload!pckWidgets'
 
 ], function(app){
@@ -26,6 +25,7 @@ define([
 
             $scope.showSignIn           = false;
             $scope.purlId               = $routeParams.purlId || '';
+            $scope.headerGuest          = true;
 
             if($routeParams.purlId){
                 cmPurlModel.getPurl($routeParams.purlId).then(
@@ -34,8 +34,9 @@ define([
                         cmPurlModel.handleIdentity(data.identity);
 
                         if(data.identity.userType == 'external'){
-                            $scope.showSignIn = true;
                             $rootScope.pendingPurl = $routeParams.purlId;
+                        } else {
+                            $scope.headerGuest = false;
                         }
 
                         if(typeof data.token !== 'undefined'){

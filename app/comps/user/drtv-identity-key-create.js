@@ -124,7 +124,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                  * cancel keypair generation
                  */
                 $scope.cancelGeneration = function(){
-                    cmLogger.debug('cancel key generation');
+                    //cmLogger.debug('cancel key generation');
                     cmCrypt.cancelGeneration();
                     cmJob.stop();
                     cmApi.listenToEvents();
@@ -134,7 +134,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                 };
 
                 $scope.cancel = function(){
-                    cmLogger.debug('cancel');
+                    //cmLogger.debug('cancel');
                     $scope.cancelGeneration();
 
                     if(typeof $rootScope.generateAutomatic != 'undefined'){

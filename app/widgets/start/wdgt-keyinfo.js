@@ -3,25 +3,22 @@
 angular.module('cmWidgets').directive('cmWidgetKeyinfo', [
     'cmUserModel',
     'cmUtil',
-    'cmUserKeyStorageService',
-    '$location',
+    'cmSettings',
     '$rootScope',
-    function(cmUserModel, cmUtil, cmUserKeyStorageService, $location, $rootScope){
+    function(cmUserModel, cmUtil, cmSettings, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'widgets/start/wdgt-keyinfo.html',
             controller: function ($scope) {
 
                 if(cmUserModel.hasPrivateKey()){
-                    $location.path('/settings/identity/key/list');
+                    $scope.goTo('/settings/identity/key/list');
                     return false;
                 }
 
-                var storageKey = 'appSettings',
-                    storageService = new cmUserKeyStorageService(storageKey);
 
                 $scope.skipKeyInfo = false;
-                $scope.skipKeyInfo = storageService.get('skipKeyInfo') || false;
+                $scope.skipKeyInfo = cmSettings.get('skipKeyInfo') || false;
 
                 if(cmUserModel.loadLocalKeys().length > 0){
                     $scope.skipKeyInfo = true;
@@ -29,10 +26,10 @@ angular.module('cmWidgets').directive('cmWidgetKeyinfo', [
 
                 $scope.toggleSkipKeyInfo = function(){
                     if(!$scope.skipKeyInfo){
-                        storageService.set('skipKeyInfo', true);
+                        cmSettings.set('skipKeyInfo', true);
                         $scope.skipKeyInfo = true;
                     } else {
-                        storageService.set('skipKeyInfo', false);
+                        cmSettings.set('skipKeyInfo', true);
                         $scope.skipKeyInfo = false;
                     }
                 };

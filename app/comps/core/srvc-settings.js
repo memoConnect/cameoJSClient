@@ -4,10 +4,9 @@
  * @ngdoc service
  * @name cmSettings
  * @description
- *
+ * @todo combine with service-key-storage
  */
-angular.module('cmCore')
-.service('cmSettings', [
+angular.module('cmCore').service('cmSettings', [
     'cmUserModel',
     'cmUtil',
     'cmLogger',
@@ -17,7 +16,10 @@ angular.module('cmCore')
             localStorageKey = 'appSettings',
             defaultProperties = {
                 convertEmoji: true,
-                sendOnReturn: false
+                sendOnReturn: false,
+                skipKeyInfo: false,
+                dateFormat: 'dd.MM.yyyy',
+                timeFormat: 'HH:mm'
             };
 
 

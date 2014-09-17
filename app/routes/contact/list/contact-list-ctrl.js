@@ -6,7 +6,6 @@ define([
     'ngload!pckContacts',
     'ngload!pckUi',
     'ngload!pckValidate',
-    'ngload!pckRouteContacts',
     'ngload!pckWidgets',
 
 ], function(app){
