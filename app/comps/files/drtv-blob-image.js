@@ -21,8 +21,8 @@ angular.module('cmFiles').directive('cmBlobImage',[
                                     file.loaded = true;
                                 });
 
-                                if(attrs.cmScrollToTarget) {
-                                    $rootScope.$broadcast('scroll:to',attrs.cmScrollToTarget)
+                                if(attrs.cmScrollTo) {
+                                    $rootScope.$broadcast('scroll:to');
                                 }
                             });
                         });

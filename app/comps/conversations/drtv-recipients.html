@@ -8,12 +8,12 @@
 
 <hr ng-if="conversation.state.is('new') && (conversation.recipients.length > 1)">
 
-<div id="possible-recipient-list"></div>
+<div id="possible-recipient-list" cm-scroll-to="{anchor:'#possible-recipient-list',onEvent:true,timeout:50}"></div>
 
-<ul cm-scroll-to="#possible-recipient-list" ng-if="conversation.state.is('new')" class="no-border contact-list">
+<ul ng-if="conversation.state.is('new')" class="no-border contact-list">
     <li
-        ng-repeat   =   "contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search"
-        ng-if       =   "contact.contactType != 'pending'"
+        ng-repeat = "contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search"
+        ng-if     = "contact.contactType != 'pending'"
     >
         <cm-recipient-tag cm-data-selected="selected" cm-data-contact="contact" cm-data-conversation="conversation"></cm-recipient-tag>
     </li>

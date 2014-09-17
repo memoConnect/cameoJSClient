@@ -13,6 +13,7 @@ angular.module('cmUi').directive('cmSearchInput',[
             template: '<input data-qa="inp-list-search" id="inp-list-search" type="text" value="" ng-model="search" placeholder="{{placeholder}}">' +
                       '<i data-qa="btn-list-search-clear" class="fa" ng-click="clear()" ng-class="{\'cm-search\':showDefaultIcon && counterKeydown == 0,\'cm-checkbox-wrong\':counterKeydown > 0}"></i>',
             link: function(scope, element, attrs){
+
                 scope.placeholder = attrs.placeholder || '';
                 // wrapper events
                 element
@@ -28,9 +29,9 @@ angular.module('cmUi').directive('cmSearchInput',[
                         scope.$apply();
                     }
                     // on search jump to anchor
-                    if(scope.options.jumpTo){
-                        console.log('scope.options.jumpTo',scope.options.jumpTo)
-                        $rootScope.$broadcast('scroll:to',scope.options.jumpTo);
+                    if(scope.options.scrollTo){
+                        console.log('keyUp broadcast scroll:to')
+                        $rootScope.$broadcast('scroll:to');
                     }
                 });
 
@@ -52,7 +53,7 @@ angular.module('cmUi').directive('cmSearchInput',[
                 $scope.options = angular.extend({}, {
                     withoutSearchIcon:false,
                     hideElements:undefined,
-                    jumpTo:undefined
+                    scrollTo:undefined
                 }, $scope.cmOptions || {});
 
                 $scope.counterKeydown = 0;
