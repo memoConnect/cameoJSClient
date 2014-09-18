@@ -123,7 +123,8 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                 };
 
                 $scope.done = function(){
-
+                    $scope.cancel()
+                    
                     if($scope.keyId){
                         $rootScope.goTo('settings/identity/keys', true);
                         return null;

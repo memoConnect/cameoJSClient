@@ -415,8 +415,10 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                 var modal = cmModal.instances['incoming-authentication-request']
 
                 // If some other authentication request is meant to be canceled:
-                if(modal && modal.request.fromIdentityId != data.fromIdentityId)
+                if(modal && modal.request.fromIdentityId != data.fromIdentityId){
+                    cmLogger.debug('cmAuthenticationRequest, received cancel event, but with different origin or inactive modal.')
                     return false    // dont remove the event binding
+                }
 
                 // Only show the cancelation modal if a authentication modal was actually present:
                 if(modal && modal.isActive()){
@@ -430,9 +432,12 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                         ?   '{{"IDENTITY.KEYS.TRUST.MODAL.CANCELED"|cmTranslate}}'
                         :   '{{"IDENTITY.KEYS.AUTHENTICATION.MODAL.CANCELED"|cmTranslate}}')
                     cmModal.open('authentication-request-canceled')
+
+                    return true     //remove the event binding
                 }
+
+                return false
                 
-                return true     //remove the event binding
             })
 
         })
