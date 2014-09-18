@@ -155,7 +155,7 @@ angular.module('cmCore').factory('cmFactory',[
              * @returns @this    for chaining
              */
             self.reset = function(){
-                cmLogger.debug('cmFactory.reset - Conversation Count ' + self.length)
+                cmLogger.debug('cmFactory.reset' + self.length);
                 while(self.length > 0){
                     self.pop()
                 }
