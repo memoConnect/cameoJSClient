@@ -31,7 +31,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                  * scope vars for keypair generation
                  * @type {string[]}
                  */
-                var detect      = cmUtil.detectOSAndBrowser(),
+                var detect      = cmDevice.detectOSAndBrowser(),
                     startTime   = undefined,
                     elapsedTime = 0
 
