@@ -13,11 +13,11 @@ angular.module('cmConversations')
 .directive('cmConversation', [
 
     'cmConversationFactory', 'cmUserModel', 'cmCrypt', 'cmLogger', 'cmNotify',
-    'cmModal', 'cmEnv', 'cmUtil', 'cmTransferScopeData',
+    'cmModal', 'cmEnv', 'cmUtil', 'cmSettings', 'cmKeyStorageService', 'cmTransferScopeData',
     '$location', '$rootScope', '$document', '$routeParams',
 
     function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify,
-              cmModal, cmEnv, cmUtil, cmTransferScopeData,
+              cmModal, cmEnv, cmUtil, cmSettings, cmKeyStorageService, cmTransferScopeData,
               $location, $rootScope, $document, $routeParams) {
         return {
             restrict: 'AE',
@@ -40,6 +40,27 @@ angular.module('cmConversations')
                 $scope.showName = function(identity){
                     if(identity && !('isAppOwner' in identity))
                         $scope.recipientName = identity.getDisplayName();
+                };
+
+                /**
+                 * handle Recipient View
+                 */
+                $scope.showGrid = cmSettings.get('defaultShowRecipientAvatar'); // degault grid off, wenn recipient.legnth > 2
+                if(!$scope.conversation.state.is('new')){
+                    $scope.showGrid = storageService.get($scope.conversation.id)
+                }
+                $scope.toggleRecipientView = function(){
+                    if($scope.showGrid){
+                        $scope.showGrid = false;
+                        if(!$scope.conversation.state.is('new')){
+                            storageService.set($scope.conversation.id, false)
+                        }
+                    } else {
+                        $scope.showGrid = true;
+                        if(!$scope.conversation.state.is('new')){
+                            storageService.set($scope.conversation.id, true)
+                        }
+                    }
                 };
 
                 /**
