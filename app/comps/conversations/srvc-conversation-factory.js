@@ -97,6 +97,13 @@ angular.module('cmConversations').service('cmConversationFactory', [
             })
         });
 
+        $rootScope.$on('login', function(){
+            cmUserModel.one('update:finished', function(){
+                self.reset();
+                self.getList();
+            })
+        });
+
         cmConversationsAdapter.on('message:new', function(event,data){
             self
                 .create(data.conversationId)

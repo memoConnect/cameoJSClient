@@ -12,14 +12,17 @@ angular.module('cmCore').service('cmSystemCheck', [
     'cmVersion',
     'cmLanguage',
     'LocalStorageAdapter',
+    'cmLogger',
     '$rootScope',
     '$q',
-    function(cmUserModel, cmObject, cmApi, cmVersion, cmLanguage, LocalStorageAdapter, $rootScope, $q){
+    function(cmUserModel, cmObject, cmApi, cmVersion, cmLanguage, LocalStorageAdapter, cmLogger, $rootScope, $q){
         var self = this;
 
         cmObject.addEventHandlingTo(this);
 
         this.getBrowserInfo = function(){
+            //cmLogger.debug('cmSystemCheck.getBrowserInfo');
+
             var deferred = $q.defer();
 
             cmApi.post({
@@ -55,6 +58,8 @@ angular.module('cmCore').service('cmSystemCheck', [
          * @returns {boolean}
          */
         this.checkClientVersion = function(forceRedirect){
+            //cmLogger.debug('cmSystemCheck.checkClientVersion');
+
             if('clientVersionCheck' in $rootScope){
                 if($rootScope.clientVersionCheck == false){
                     this.trigger('check:failed', {forceRedirect:forceRedirect});
