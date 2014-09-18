@@ -154,8 +154,8 @@ angular.module('cmCore').factory('cmFactory',[
              * Function to remove all instances from the factory.
              * @returns @this    for chaining
              */
-            self.reset = function(){
-                cmLogger.debug('cmFactory.reset' + self.length);
+            self.reset = function(callFrom){
+                //cmLogger.debug('cmFactory.reset -' + (callFrom ? ' Factory: ' + callFrom : '') + ' Elements: ' + self.length);
                 while(self.length > 0){
                     self.pop()
                 }

@@ -81,9 +81,9 @@ angular.module('cmContacts').service('cmContactsModel',[
          */
         function reset(){
             cmLogger.debug('cmContactsModel:reset');
-            self.contacts.reset();
+            self.contacts.reset('cmContactsModel.contacts');
             self.groups = [];
-            self.requests.reset();
+            self.requests.reset('cmContactsModel.request');
         }
 
         /**
