@@ -208,7 +208,7 @@ angular.module('cmCore')
                 addToString(Math.floor(seconds) + 's');
 
             if(str == '')
-                addToString('< s');
+                addToString('...');
 
             return str;
         };
