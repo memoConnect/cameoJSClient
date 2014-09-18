@@ -529,7 +529,6 @@ module.exports = function (grunt) {
                 'options': {
                     'data': {
                         'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'+
-                                        '<script type="text/javascript" charset="utf-8" src="vendor/puship/PushipNotification.js"></script>'+
                                         '<script type="text/javascript" charset="utf-8" src="config.js"></script>'+
                                         (globalCameoBuildConfig.debug.weinre ? '<script src="http://'+globalCameoBuildConfig.debug.weinreIp+':8080/target/target-script-min.js#anonymous"></script>' : ''),
                         'phonegapOnload': ' onload="deviceReady()"'
