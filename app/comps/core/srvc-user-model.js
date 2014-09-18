@@ -61,7 +61,8 @@ angular.module('cmCore')
             lastUpdated: '',
             userType: '',
             storage: {},
-            identity: {}
+            identity: {},
+            identities: []
         };
 
         cmObject.addEventHandlingTo(this);
@@ -104,7 +105,15 @@ angular.module('cmCore')
             this.data.identity = activeIdentity;
             this.data.identity.isAppOwner = true;
             // new factory for own identities
-            this.data.identities = new cmFactory(cmIdentityModel).importFromDataArray(data_identities);
+
+            /**
+             * @todo may an own factory but not a new identityFactory!
+             */
+            this.data.identities.push(activeIdentity);
+            data_identities.forEach(function(identity){
+                self.data.identities.push(cmIdentityFactory.create(identity));
+            });
+
 
             isAuth = true;
             this.initStorage();
@@ -125,7 +134,7 @@ angular.module('cmCore')
             //cmLogger.debug('cmUserModel:loadIdentity');
 
             var deferred = $q.defer();
-
+            // for login
             function importAccount(accountData){
                 if(typeof accountData !== 'undefined' && 'identities' in accountData){
                     var arr_activeIdentity = accountData.identities.filter(function(identity){
@@ -151,7 +160,7 @@ angular.module('cmCore')
 
                 return false;
             }
-
+            // for purl
             function importIdentity(identity_data){
                 if(typeof identity_data == 'object'){
 

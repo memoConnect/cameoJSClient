@@ -11,8 +11,6 @@ angular.module('cmUser').directive('cmIdentityList', [
             },
             templateUrl: 'comps/user/identity/drtv-identity-list.html',
             controller: function ($scope) {
-                //console.log('cmIdentitiesOverview');
-
                 $scope.switchToIdentity = function(identity){
                     cmUserModel.switchToIdentity(identity);
                 };

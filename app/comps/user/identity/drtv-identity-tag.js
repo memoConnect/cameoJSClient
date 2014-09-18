@@ -10,7 +10,7 @@ angular.module('cmUser').directive('cmIdentityTag', [
             },
             templateUrl: 'comps/user/identity/drtv-identity-tag.html',
             controller: function ($scope) {
-                //console.log('cmIdentityTag');
+
             }
         }
     }

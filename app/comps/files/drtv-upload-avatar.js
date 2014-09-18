@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmFiles').directive('cmUploadAvatar',[
-    'cmNotify',
+    'cmNotify', 'cmUserModel',
     '$rootScope',
-    function(cmNotify,
+    function(cmNotify, cmUserModel,
              $rootScope) {
         return {
             restrict: 'E',
@@ -19,7 +19,16 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                                 files[0].uploadChunks();
                                 files[0].one('upload:finish',function(){
                                     console.log('upload:finish');
-                                    console.log(files[0].id);
+
+                                    cmUserModel
+                                    .data.identity
+                                    .update({
+                                        avatar: files[0].id
+                                    });
+
+                                    cmUserModel.data.identity.one('update:finished',function(){
+                                        console.log('smth other todo??')
+                                    });
                                 });
                             }
                         },

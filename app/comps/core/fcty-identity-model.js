@@ -45,6 +45,7 @@ angular.module('cmCore')
              * @param identity_data
              */
             this.importData = function(data){
+//                cmLogger.debug('cmIdentityModel.importData');
                 if(typeof data !== 'object'){
                     cmLogger.debug('cmIdentityModel:import:failed - no data!');
                     return this;
