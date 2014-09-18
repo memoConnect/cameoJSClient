@@ -4,7 +4,8 @@
 
 angular.module('cmCore').factory('cmFactory',[
     'cmObject',
-    function(cmObject) {
+    'cmLogger',
+    function(cmObject, cmLogger) {
 
         /**
          * generic Factory, has to be setup with a model to create instances from. A model is expected to have .refresh() method, to get data from the backend.
@@ -22,11 +23,11 @@ angular.module('cmCore').factory('cmFactory',[
 
             sameByData = sameByData || function(instance, data){
                 return instance.id && data.id && instance.id == data.id
-            }
+            };
 
             sameByInstance = sameByInstance || function(instance_1, instance_2){
                 return instance_1.id && instance_1.id == instance_2.id
-            }
+            };
 
             /**
              * Function to create an instance of this.model. If an instance with the same id as provided already exist, fetch it instead off creating a new one.
@@ -79,7 +80,7 @@ angular.module('cmCore').factory('cmFactory',[
                 if(typeof args == 'string')
                     args = {id: args}
 
-                var matches = []
+                var matches = [];
 
                 if(args instanceof this.model){
                     matches = self.filter(function(instance){ return sameByInstance(instance, args) })
@@ -120,7 +121,7 @@ angular.module('cmCore').factory('cmFactory',[
 
                     instance.deregister = function(){
                         self.deregister(instance)
-                    }
+                    };
 
                     self.trigger('register', instance);
 
@@ -153,9 +154,13 @@ angular.module('cmCore').factory('cmFactory',[
              * Function to remove all instances from the factory.
              * @returns @this    for chaining
              */
-            self.reset = function(){
-                while(self.length > 0) self.pop()
-                return self
+            self.reset = function(callFrom){
+                //cmLogger.debug('cmFactory.reset -' + (callFrom ? ' Factory: ' + callFrom : '') + ' Elements: ' + self.length);
+                while(self.length > 0){
+                    self.pop()
+                }
+
+                return self;
             };
 
 
@@ -171,4 +176,4 @@ angular.module('cmCore').factory('cmFactory',[
             return self
         }
     }
-])
+]);

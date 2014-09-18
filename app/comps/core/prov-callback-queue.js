@@ -16,14 +16,19 @@ angular.module('cmCore')
             'cmObject',
             'cmStateManagement',
             'cmLogger',
+            '$rootScope',
             '$timeout',
             '$q',
 
-            function(cmObject, cmStateManagement, cmLogger, $timeout, $q){
-                cmObject.addEventHandlingTo(this)
+            function(cmObject, cmStateManagement, cmLogger, $rootScope, $timeout, $q){
+                cmObject.addEventHandlingTo(this);
 
                 var self    = this,
-                    queue   = []
+                    queue   = [];
+
+                $rootScope.$on('logout', function(){
+                    queue   = [];
+                });
 
                 this.state = new cmStateManagement(['working'])
 
