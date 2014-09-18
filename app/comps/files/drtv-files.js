@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmFiles').directive('cmFiles',[
-    'cmFileFactory',
+    'cmFileFactory', 'cmUtil',
     '$q',
-    function (cmFileFactory, $q){
+    function (cmFileFactory, cmUtil, $q){
         return {
             restrict : 'E',
             controller : function($scope){
@@ -17,7 +17,7 @@ angular.module('cmFiles').directive('cmFiles',[
                     var bool = true;
 
                     angular.forEach($scope.files, function(value){
-                        if(value.name == blob.name){
+                        if(value.name == blob.name && value.size == blob.size){
                             bool = false;
                         }
                     });

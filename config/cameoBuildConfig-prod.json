@@ -3,11 +3,17 @@
         "apiUrl": "https://www.cameonet.de/a/v1",
         "autoLogin": false,
         "loadingBar": false,
-        "enableDebug": false
-    } ,
+        "enableDebug": false,
+        "logLevel": "ERROR"
+    },
+    "debug":{
+        "weinre": false,
+        "weinreIp": ""
+    },
     "phonegap": {
-        "baseName" : "cameoNet",
-        "appId" : "1028579",
-        "bundleId" : "de.cameonet"
+        "baseName": "cameoNet",
+        "appId": "1028579",
+        "bundleId": "de.cameonet",
+        "extraName": ""
     }
 }

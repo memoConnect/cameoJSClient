@@ -21,7 +21,7 @@
 
 angular.module('cmCore')
 .service('cmUserModel',[
-'cmBoot',
+    'cmBoot',
     'cmAuth',
     'cmLocalStorage',
     'cmIdentityFactory',
@@ -36,12 +36,13 @@ angular.module('cmCore')
     'cmNotify',
     'cmLogger',
     'cmCallbackQueue',
+    'cmPushNotificationAdapter',
     '$rootScope',
     '$q',
     '$location',
     function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmIdentityModel, cmFactory,
              cmCrypt, cmKeyFactory, cmKey, cmStateManagement, cmObject, cmUtil,
-             cmNotify, cmLogger, cmCallbackQueue,
+             cmNotify, cmLogger, cmCallbackQueue, cmPushNotificationAdapter,
              $rootScope, $q, $location){
         var self = this,
             isAuth = false,
@@ -142,6 +143,9 @@ angular.module('cmCore')
                     // handle account data
                     // TODO: set account data
 
+                    // check device for pushing
+                    cmPushNotificationAdapter.checkRegisteredDevice(accountData.pushDevices);
+
                     return true;
                 }
 
@@ -198,6 +202,7 @@ angular.module('cmCore')
                             }
                         )
                     } else {
+                        $rootScope.$broadcast('appSpinner','show');
                         cmAuth.getAccount().then(
                             function (data) {
                                 if (importAccount(data)) {
@@ -208,10 +213,21 @@ angular.module('cmCore')
                             },
                             function (r) {
                                 var response = r || {};
-
-                                if (typeof response == 'object' && ('status' in response) && response.status == 401) {
-                                    cmLogger.debug('cmUserModel:init:reject:401');
-                                    self.doLogout(true, 'usermodel load identity reject');
+                                if('status' in response){
+                                    switch(response.status){
+                                        case 0:
+                                            cmLogger.debug('cmUserModel:init:failed:0');
+                                            $rootScope.$broadcast('connection:failed', function(){
+                                                //console.log('reconnect!!!');
+                                                self.loadIdentity(accountData);
+                                            });
+                                            return false;
+                                        break;
+                                        case 401:
+                                            cmLogger.debug('cmUserModel:init:reject:401');
+                                            self.doLogout(true, 'usermodel load identity reject');
+                                        break;
+                                    }
                                 }
 
                                 deferred.reject();
@@ -299,7 +315,11 @@ angular.module('cmCore')
         this.doLogout = function(goToLogin, where){
             //cmLogger.debug('cmUserModel:doLogout');
 
-            $rootScope.$broadcast('logout', {goToLogin: goToLogin, where: where});
+            $rootScope.$broadcast('logout', {
+                token:this.getToken(),
+                goToLogin: goToLogin,
+                where: where
+            });
         };
 
         this.switchToIdentity = function(identity, identityToken){
@@ -561,12 +581,12 @@ angular.module('cmCore')
             var local_keys              =   this.loadLocalKeys(),
                 own_ttrusted_keys       =   self.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
                                                 return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
-                                            })
+                                            });
 
 
             var ttrusted_keys           =   identity.keys.getTransitivelyTrustedKeys(own_ttrusted_keys, function trust(trusted_key, key){
                                                 return trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId))
-                                            })
+                                            });
                
 
             var unsigned_ttrusted_keys  =   ttrusted_keys.filter(function(ttrusted_key){
@@ -575,10 +595,10 @@ angular.module('cmCore')
                                                                         return signature.keyId != local_key.id
                                                                     })
                                                         })
-                                            })
+                                            });
 
             if(sign != true || unsigned_ttrusted_keys.length == 0)
-                return ttrusted_keys
+                return ttrusted_keys;
 
             this.state.set('signing');
 
@@ -589,7 +609,7 @@ angular.module('cmCore')
             )
             .finally(function(){
                  self.state.unset('signing')
-            })
+            });
 
             return ttrusted_keys
         };
@@ -597,7 +617,7 @@ angular.module('cmCore')
         this.verifyTrust = function(identity){
             return      identity.keys.length > 0
                     &&  identity.keys.length == this.verifyIdentityKeys(identity, true).length //true: sign keys if needed 
-        }
+        };
 
         this.clearLocalKeys = function(){
             this.storageSave('rsa', []);
@@ -643,7 +663,12 @@ angular.module('cmCore')
                                 if(newList.length > 0){
                                     cmAuth.saveBulkPassphrases(newKey.id, newList).then(
                                         function(){
-//                                            //
+                                            cmAuth.sendBroadcast({
+                                                name: 'rekeying:finished',
+                                                data:{
+                                                    keyId: newKey.id
+                                                }
+                                            });
                                         },
                                         function(){
                                             cmLogger.debug('cmUserModel.bulkReKeying - Request Error - saveBulkPassphrases');
@@ -664,17 +689,17 @@ angular.module('cmCore')
                         ).finally(
                             function(){
                                 self.trigger('bulkrekeying:finished');
-                                this.state.unset('rekeying');
+                                self.state.unset('rekeying');
                             }
                         );
                     } else {
                         cmLogger.debug('cmUserModel.bulkReKeying - Key Error - getBulkPassphrases');
                         self.trigger('bulkrekeying:finished');
-                        this.state.unset('rekeying');
+                        self.state.unset('rekeying');
                     }
                 } else {
                     cmLogger.debug('cmUserModel.bulkReKeying - Parameter Error - getBulkPassphrases');
-                    self.trigger('bulkrekeying:finished');
+                    this.trigger('bulkrekeying:aborted');
                     this.state.unset('rekeying');
                 }
             }
@@ -798,9 +823,9 @@ angular.module('cmCore')
             init();
             self.one('update:finished', function(){
                 if(!self.hasLocalKeys()){
-                    $location.path('/start/keyinfo');
+                    $rootScope.goTo('/start/keyinfo');
                 } else {
-                    $location.path('/talks');
+                    $rootScope.goTo('/talks');
                 }
             });
         });

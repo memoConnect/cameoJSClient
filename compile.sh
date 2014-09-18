@@ -20,10 +20,10 @@ for i in "$@" ; do
 		    version="${i#*=}"
 	    ;;
 		--phonegap)
-			command=phonegap-bs
+			command=:phonegap:to-build-server
 		;;
 	    *)
-	      echo Unkown option: ${i}
+	      echo Unknown option: ${i}
 	      exit 1
 	    ;;
 	esac

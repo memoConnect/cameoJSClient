@@ -2,8 +2,7 @@
 
 angular.module('cmUser').directive('cmUserRights', [
     'cmUserModel',
-    'cmEnv',
-    function (cmUserModel, cmEnv) {
+    function (cmUserModel) {
         return {
             restrict : 'AE',
             link: function(scope, element, attrs){

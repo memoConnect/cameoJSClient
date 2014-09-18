@@ -336,14 +336,16 @@ angular.module('cmCore')
                         .finish()
                         .then(
                             function(){
-                                self.deregister()
-                                    if(
-                                            self.fromIdentityId == self.ToIdentityId
-                                        &&  self.fromIdentityId == cmUserModel.data.identity.id
-                                    ){
-                                        var bulkData = self.exportKeyIdsForBulk();
-                                        self.openBulkRequest(bulkData);
-                                    }
+                                self.deregister();
+
+                                if(
+                                        self.fromIdentityId == self.toIdentityId
+                                    &&  self.fromIdentityId == cmUserModel.data.identity.id
+                                ){
+                                    var bulkData = self.exportKeyIdsForBulk();
+                                    self.trigger('authentication:finished', bulkData);
+                                }
+
                                 deferred.resolve()
                             },
                             function(){
@@ -419,7 +421,7 @@ angular.module('cmCore')
             this.handleKeyRequest = function(){}
 
             this.sendVerified = function(){
-//                cmLogger.debug('cmAuthenticationRequestModel.sendVerified');
+                //cmLogger.debug('cmAuthenticationRequestModel.sendVerified');
 
 
                 if(this.state.is('incoming') && !this.state.is('finished')){
@@ -447,7 +449,7 @@ angular.module('cmCore')
             };
 
             this.finish = function(){
-//                cmLogger.debug('cmAuthenticationRequestModel.finish');
+                cmLogger.debug('cmAuthenticationRequestModel.finish');
 
                 var deferred = $q.defer()
 

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cameoNET App Center</title>
+
+    <link rel="stylesheet" href="../../app/css/cameofont.css">
+    <style>
+        body,html,.table{height:100%;padding:0;margin:0}
+        body{font-size:12px;background:#000;color:#fff;font-family: "Helvetica Neue",Helvetica,Arial,sans-serif}
+        .table{display:table;margin: 0 auto}
+        .cell{display:table-cell;text-align:center;vertical-align:middle}
+        .center-box{padding:25px;margin:50px 0;box-shadow:0 0 10px 10px rgba(255, 255, 255, 0.5);border-radius:50px}
+        .header{color:#02BED2;font-size:40px;line-height:20px;white-space:nowrap;margin-bottom:20px}
+        .header .cm-rhino-positive{font-size:80px}
+        .header span{font-size:20px}
+        a {color:#fff}
+        a:hover, a:focus {color:#02BED2}
+        ul{list-style:none;padding:0;margin:0}
+        li{display:block;border-top:dotted 1px #02BED2}
+        li a{display:block;padding:20px 0}
+    </style>
+</head>
+<body>
+    <div class="table">
+        <div class="cell">
+            <div class="center-box">
+                <div class="header">
+                    <i class="fa cm-rhino-positive"></i><br />
+                    <i class="fa cm-logo-c"></i><i class="fa cm-logo-a"></i><i class="fa cm-logo-m"></i><i class="fa cm-logo-e"></i><i class="fa cm-logo-o"></i><i class="fa cm-logo-net"></i><br />
+                    <span>
+                        App Center<br />
+                        <%= phonegapBaseFilename %>
+                    </span>
+                </div>
+                <ul>
+                    <li>
+                        <a href="/dl/<%= phonegapBaseFilename %>.apk">
+                            <img src="/dl/gfx/172x60_android_store.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<%= testFlightiOSURL() %>">
+                            <img src="/dl/gfx/172x60_apple_store.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/dl/<%= phonegapBaseFilename %>.xap">
+                            <img src="/dl/gfx/172x60_windows_store.png" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

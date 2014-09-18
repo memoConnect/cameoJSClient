@@ -62,7 +62,7 @@ angular.module('cmContacts').service('cmContactsModel',[
             return this.contacts.filter(function(contact){
                 return contact.identity.id == identityId
             })[0]
-        }
+        };
   
         cmObject.addEventHandlingTo(this);
 
@@ -80,9 +80,10 @@ angular.module('cmContacts').service('cmContactsModel',[
          * Reset Object
          */
         function reset(){
-            self.contacts.reset();
+            cmLogger.debug('cmContactsModel:reset');
+            self.contacts.reset('cmContactsModel.contacts');
             self.groups = [];
-            self.requests.reset();
+            self.requests.reset('cmContactsModel.request');
         }
 
         /**
@@ -292,6 +293,10 @@ angular.module('cmContacts').service('cmContactsModel',[
          * event handling
          */
         $rootScope.$on('logout', function(){
+            reset();
+        });
+
+        $rootScope.$on('login', function(){
             reset();
         });
 

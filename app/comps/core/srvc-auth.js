@@ -117,6 +117,11 @@ angular.module('cmCore').service('cmAuth', [
 
                             return false;
                         }
+                    } else {
+                        if(_TOKEN_ != undefined){
+                            this.storeToken(_TOKEN_);
+                            token = _TOKEN_;
+                        }
                     }
                 } catch (e){
                     cmLogger.warn('cmAuth.getToken - Local Storage Error')
@@ -192,7 +197,8 @@ angular.module('cmCore').service('cmAuth', [
 
             getAccount: function(){
                 return cmApi.get({
-                    path: '/account'
+                    path: '/account',
+                    timeout: 7000
                 })
             },
 

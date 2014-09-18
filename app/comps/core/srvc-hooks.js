@@ -10,8 +10,27 @@ angular.module('cmCore').service('cmHooks', [
         var self = this;
         cmObject.addEventHandlingTo(this);
 
+        this.openModalConfirm = function(message, cancelCallback){
+            var scope = $rootScope.$new(),
+                modalId = 'modal-confirm-'+(new Date()).getTime();
+
+            scope.message = message || '';
+            scope.cancelCallback = cancelCallback || null;
+            scope.modalId = modalId;
+
+            var modalId = 'modal-confirm-'+(new Date()).getTime();
+            cmModal.create({
+                id: modalId,
+                type: 'plain',
+                'class': 'no-padding',
+                'cm-close-btn': false,
+                'cm-title': 'DRTV.CONFIRM.HEADER'
+            },'<cm-modal-confirm></cm-modal-confirm>',null,scope);
+            cmModal.open(modalId);
+        };
+
         this.openBulkRequest = function(data){
-//            cmLogger.debug('cmHooks.openBulkRequest');
+            //cmLogger.debug('cmHooks.openBulkRequest');
 
             if(typeof data == 'object' && cmUtil.checkKeyExists(data,'key1') && cmUtil.checkKeyExists(data, 'key2')){
                 var scope = $rootScope.$new();
@@ -37,7 +56,7 @@ angular.module('cmCore').service('cmHooks', [
 //            cmLogger.debug('cmHooks.openKeyRequest');
 
 
-            identity = identity || cmUserModel.data.identity.id    
+            identity = identity || cmUserModel.data.identity.id;
 
 
             var authenticationRequest = cmAuthenticationRequestFactory.create()
@@ -280,6 +299,9 @@ angular.module('cmCore').service('cmHooks', [
             cmUserModel.signOwnKeys();
         });
 
-
+        cmAuthenticationRequestFactory.on('authentication:finished', function(event, data){
+            //console.log('authentication:finished', data);
+            self.openBulkRequest(data);
+        });
     }
 ]);

@@ -3,16 +3,14 @@ define([
     'ngload!pckCore',
     'ngload!pckUi',
     'ngload!pckUser',
-    'ngload!pckRouteStart'
+    'ngload!pckWidgets',
 ], function (app) {
     'use strict';
 
     app.register.controller('StartCtrl', [
-        '$scope',
-        '$routeParams',
-        function($scope, $routeParams) {
-            $scope.pageParent = $routeParams.pageParent || '';
-            $scope.route = $scope.pageParent;
+        // no dependencies
+        function() {
+            // nothing to do
         }
     ]);
 });

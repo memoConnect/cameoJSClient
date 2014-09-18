@@ -149,22 +149,24 @@ cm-files-preview{
 cm-modal.modal-image-fullscreen{
   .content{
     display:table;
-    width:100%;
+    width:@cm-app-width;
     height:100%;
     z-index:2;
     position:relative;
     cm-spinner{
       position: absolute;
+      top:50%;
     }
     ng-transclude{
       display:table-cell;
       vertical-align:middle;
       text-align:center;
+      width:100%;
       figure{
         display:inline-block;
         img{
-          max-width:90%;
-          max-height:50%;
+          max-width: 100%;
+          height: auto;
         }
         figcaption{
           text-align: right;
@@ -201,7 +203,7 @@ cm-modal.modal-image-fullscreen{
   vertical-align:text-bottom;
   font-size:1em;
 }
-@files:dir dir-download dir-safe dir-public pdf txt xlsx doc php css xls zip rar sit jpg gif bmp tif eps png mov mpg mp4 flv avi xml html chm ttf exe dmg mp3 wav wma aif ogg '\33gpp' aac ppt pptx pps unknown;
+@files:dir dir-download dir-safe dir-public pdf txt doc docx php css xls xlsx zip rar sit apk jpg gif bmp tif eps png mov mpg mp4 flv avi xml html chm ttf exe dmg mp3 wav wma aif ogg '\33gpp' aac ppt pptx pps unknown;
 @filesnum:length(@files);
 @unknown-default:@filesnum - 1;
 .spriteFiles(@index:0) when (@index < @filesnum){
@@ -216,3 +218,41 @@ cm-modal.modal-image-fullscreen{
   .spriteFiles(@index + 1);
 }
 .spriteFiles();
+
+cm-choose-source{
+  display:block;
+  position:absolute;
+  bottom:@cm-footer-height;
+  left:0;
+  background-color:@cm-black;
+  div.source {
+    color:@cm-white;
+    white-space:nowrap;
+    text-align:left;
+    height:@cm-unit;
+    line-height:@cm-unit;
+    font-size:@cm-large-font;
+    padding-right:@cm-horizontal-padding*2;
+    i {
+      font-size:@cm-large-font*2;
+      width:@cm-unit;
+      height:@cm-unit;
+      text-align:center;
+      vertical-align:sub;
+    }
+  }
+  i.cm-nose-down{
+    position:absolute;
+    color:black;
+    left: 0;
+    bottom: -2.7rem;
+    &.flip {
+      -moz-transform: scaleX(-1);
+      -webkit-transform: scaleX(-1);
+      -o-transform: scaleX(-1);
+      transform: scaleX(-1);
+      -ms-filter: fliph; /*IE*/
+      filter: fliph; /*IE*/
+    }
+  }
+}

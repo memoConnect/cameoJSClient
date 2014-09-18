@@ -2,10 +2,10 @@
 
 angular.module('cmCore').factory('cmFileModel', [
     'cmFilesAdapter', 'cmFileDownload', 'cmFileTypes', 'cmLogger', 'cmChunk',
-    'cmCrypt', 'cmObject', 'cmModal', 'cmEnv',
+    'cmCrypt', 'cmObject', 'cmModal', 'cmEnv', 'cmUtil', 'cmDeviceDownload',
     '$q',
     function (cmFilesAdapter, cmFileDownload, cmFileTypes, cmLogger, cmChunk,
-              cmCrypt, cmObject, cmModal, cmEnv,
+              cmCrypt, cmObject, cmModal, cmEnv, cmUtil, cmDeviceDownload,
               $q){
 
         function roundToTwo(num) {
@@ -63,11 +63,9 @@ angular.module('cmCore').factory('cmFileModel', [
             // upload for state = new
 
             this.importBase64 = function(base64){
-                if(typeof base64 !== 'undefined'){
-                    this.type = base64.replace(new RegExp('^(data:(.*);base64,.*)','i'),'$2');
-
+                if(base64){
+                    this.type = cmFilesAdapter.getMimeTypeOfBase64(base64);
                     this.blob = cmFilesAdapter.binaryToBlob(cmFilesAdapter.base64ToBinary(base64),this.type);
-
                     this.chopIntoChunks(128);
                 }
                 return this;
@@ -85,9 +83,9 @@ angular.module('cmCore').factory('cmFileModel', [
                 this.detectedExtension = cmFileTypes.find(this.type, this.name);
 
                 // broken mimetype???
-                if(this.detectedExtension == 'unknown'){
+                if (this.detectedExtension == 'unknown') {
                     var obj = cmFileTypes.getMimeTypeViaFilename(this.name);
-                    if(obj.detectedExtension != 'unknown') {
+                    if (obj.detectedExtension != 'unknown') {
                         this.detectedExtension = obj.detectedExtension;
                         this.type = obj.mimeType;
                     }
@@ -265,30 +263,31 @@ angular.module('cmCore').factory('cmFileModel', [
                             chunks: self.chunks.length
                         })
                         .then(function(id){
-                            return self.id = id
+                            return self.id = id;
                         })
                     :   cmLogger.debug('Unable to set up file for Download; cmFile.chunks or cmFile.encryptedName missing. Try calling cmFile.chopIntoChunks() and cmFile.encryptName() first.')
                 )
             };
 
             this._uploadChunk = function(index){
-                var chunk = this.chunks[index];
+                // waiting for chunk sliceing and blob to base64
+                this.chunks[index].isReady(function(chunk){
+                    chunk
+                        .encrypt(passphrase)
+                        .upload(self.id, index)
+                        .then(function(){
+                            self.trigger('progress:chunk', (index/self.chunks.length));
 
-                chunk
-                    .encrypt(passphrase)
-                    .upload(this.id, index)
-                    .then(function(){
-                        self.trigger('progress:chunk', (index/self.chunks.length));
-
-                        if(index == (self.chunks.length - 1)){
-                            cmFilesAdapter.setFileComplete(self.id, self.onCompleteId).then(function(){
-                                self.setState('complete');
-                                self.trigger('upload:finish');
-                            });
-                        } else {
-                            self.trigger('upload:chunk', index);
-                        }
-                    });
+                            if(index == (self.chunks.length - 1)){
+                                cmFilesAdapter.setFileComplete(self.id, self.onCompleteId).then(function(){
+                                    self.setState('complete');
+                                    self.trigger('upload:finish');
+                                });
+                            } else {
+                                self.trigger('upload:chunk', index);
+                            }
+                        });
+                });
             };
 
             this.uploadChunks = function() {
@@ -375,10 +374,17 @@ angular.module('cmCore').factory('cmFileModel', [
             };
 
             this.promptSaveAs = function(){
-                // iOS can't save blob via browser
+                //console.log('promptSaveAs')
 
-                var downloadAttrSupported = ( "download" in document.createElement("a") );
-                var iOSWorkingMimeTypes = ( this.type.match(/(application\/pdf)/g) ? true : false );
+                try {
+                    var isFileSaverSupported = !!new Blob;
+                } catch (e) {
+                    cmLogger.debug('Unable to prompt saveAs; FileSaver is\'nt supported');
+                    return false;
+                }
+
+                var downloadAttrSupported = ( "download" in document.createElement("a") ),
+                    iOSWorkingMimeTypes = ( this.type.match(/(application\/pdf)/g) ? true : false );
 
                 if(cmEnv.isiOS && !downloadAttrSupported && !iOSWorkingMimeTypes){
                     cmModal.create({
@@ -387,7 +393,13 @@ angular.module('cmCore').factory('cmFileModel', [
                     },'<span>{{\'NOTIFICATIONS.TYPES.SAVE_AS.IOS_NOT_SUPPORT\'|cmTranslate}}</span>');
                     cmModal.open('saveas');
                 } else {
-                    if(this.blob){
+                    // phonegap download
+                    if(cmDeviceDownload.isSupported()) {
+                        //console.log('cmDeviceDownload called')
+                        cmDeviceDownload.saveAs(this);
+                    // browser download
+                    } else if(this.blob){
+                        //console.log('saveAs called')
                         saveAs(this.blob, this.name != false ? this.name : 'download');
                     } else {
                         cmLogger.debug('Unable to prompt saveAs; cmFile.blob is missing, try cmFile.importByFile().');

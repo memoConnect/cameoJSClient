@@ -203,8 +203,8 @@
 .cm-rhino-bubble{
     background-image:url('../gfx/rhino-bubble.png');
     background-color:transparent;
-    background-size:1em 0.8em;
-    width:1em;
+    background-size:0.8em 0.8em;
+    width:0.8em;
     height:0.8em;
 }
 .cm-rhino-bubble-glyph:before{content:'\f044'}
@@ -306,3 +306,23 @@
 .cm-beta:before{content:'\f074'}
 .cm-key-request:before{content:'\f075'}
 .cm-key-response:before{content:'\f076'}
+.cm-export:before{content:'\f077'}
+.cm-cameo-beta:before{content:'\f078'}
+.cm-key-plus:before{content:'\f079'}
+.cm-key-minus:before{content:'\f080'}
+.cm-trust:before{content:'\f081'}
+.cm-menue-bell:before{content:'\f082'}
+.cm-talk-full:before{content:'\f083'}
+.cm-new-contact-query:before{content:'\f084'}
+.cm-talk:before{content:'\f085'}
+.cm-contract:before{content:'\f086'}
+.cm-avatar:before{content:'\f087'}
+.cm-save:before{content:'\f088'}
+.cm-trash:before{content:'\f089'}
+.cm-connected:before{content:'\f090'}
+.cm-not-connected:before{content:'\f091'}
+.cm-connection-trusted:before{content:'\f092'}
+.cm-tag:before{content:'\f093'}
+.cm-avatar-add:before{content:'\f094'}
+.cm-radio-0:before{content:'\f095'}
+.cm-radio-1:before{content:'\f096'}

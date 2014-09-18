@@ -7,27 +7,9 @@
         <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
 
+    <cm-default-pages></cm-default-pages>
+
     <cm-modal-add-contact id="add-contact" nose-position="6rem"></cm-modal-add-contact>
 
-    <ul>
-        <li ng-show="loading" class="empty-list">
-            <cm-spinner></cm-spinner>
-        </li>
-        <li ng-show="!conversations.length && !loading" class="empty-list">
-            <i class="fa cm-info"></i>  {{'TALKS.LIST_EMPTY'|cmTranslate}}
-        </li>
-        <li ng-repeat="conversation in conversations | orderBy:'timeOfLastUpdate':true | cmSearch:'talks':search" ng-click="goToConversation(conversation.id)" data-qa="conversation-list-element">
-            <cm-conversation-tag cm-data="conversation" cm-rubber-space></cm-conversation-tag>
-        </li>
-    </ul>
-
-    <div ng-if="showMore()">
-        <button class="full cm-btn-block cm-btn-grey" ng-click="loadMore()" data-qa="load-more-btn">
-            {{"TALKS.MORE"|cmTranslate}}
-        </button>
-    </div>
-
-    <cm-footer cm-rubber-space>
-        <cm-default-buttons></cm-default-buttons>
-    </cm-footer>
+    <cm-widget-talks></cm-widget-talks>
 </section>

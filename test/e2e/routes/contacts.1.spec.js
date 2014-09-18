@@ -1,24 +1,20 @@
 var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
-describe('Route: Contacts', function () {
+describe('Route: Contact/List', function () {
     var ptor = util.getPtorInstance()
     afterEach(function() { util.stopOnError() });
 
 
-    it('should be found at "#/contacts".', function(){
+    it('should be found at "#/contact/list".', function(){
         util
         .login()
-        .get('/contacts')
-        .expectCurrentUrl('#/contacts')
+        .get('/contact/list')
+        .expectCurrentUrl('#/contact/list')
     })
 
     it('should have a header.', function(){
         util.waitForElement('cm-header')
-    })
-
-    it('should have a footer.', function(){
-        util.waitForElement('cm-footer')
     })
 
     it('should have a button to add new a contact.', function(){
@@ -29,38 +25,39 @@ describe('Route: Contacts', function () {
     //Todo:Filter
 
     it('should have a contact list.', function(){
-        util.waitForElement('cm-contacts-list')
+        util.waitForElement('cm-contact-list')
     })
 
     describe('contact list', function(){
         it('should have an avatar.', function(){
-            util.waitForElement('cm-contacts-list cm-avatar')            
-            $$('cm-contacts-list cm-avatar:not(.disabled)').get(0).click()
-            util.waitForPageLoad(/\/contact\/[a-zA-Z0-9]+$/)       
+            util.waitForElement('cm-contact-list cm-avatar')            
+            $$('cm-contact-list cm-avatar:not(.disabled)').get(0).click()
+            util.waitForPageLoad(/\/contact\/edit\/[a-zA-Z0-9]+$/)
         })
 
-        it('should have key security indicator.', function(){
-            util.get('/contacts')
-            util.waitForElement('cm-contacts-list cm-key-level')
+        console.log('test removed.')
+        xit('should have key security indicator.', function(){
+            util.get('/contact/list')
+            util.waitForElement('cm-contact-list cm-key-level')
         })
 
-        it('should have brief contact details.', function(){
-            util.waitForElement('cm-contacts-list cm-contact-brief')
-            $$('cm-contacts-list cm-contact-brief').get(0).click()
+        /**
+         * @deprecated
+         */
+        xit('should have brief contact details.', function(){
+            util.get('/contact/list')
+            util.waitForElement('cm-contact-list cm-contact-brief')
+            $$('cm-contact-list cm-contact-brief').get(0).click()
             util.waitForPageLoad(/\/contact\/[a-zA-Z0-9]+$/)
         })
 
         it('should have contact type indicator.', function(){
-            util.get('/contacts') 
-            util.waitForElement('cm-contacts-list cm-contact-type')
-        })
-
-        it('should have a seperator.', function(){
-            util.waitForElement('cm-contacts-list .separator')           
+            util.get('/contact/list') 
+            util.waitForElement('cm-contact-list cm-contact-type')
         })
 
         it('should have a button to compose a new message.', function(){
-            util.waitForElement("cm-contacts-list [data-qa='start-new-conversation-btn']")
+            util.waitForElement("cm-contact-list [data-qa='start-new-conversation-btn']")
         })
     })
 })

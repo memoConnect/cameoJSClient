@@ -3,7 +3,14 @@
 describe('cmJob', function () {
     var cmJob, $location, $window, handlers
 
+    beforeEach(function(){
+        module(function($provide){
+            $provide.constant('cmEnv',{});
+        })
+    })
+
     beforeEach(module('cmCore'))
+
     beforeEach(inject(function (_cmJob_, _$location_, _$window_) {
         cmJob = _cmJob_
         $location = _$location_

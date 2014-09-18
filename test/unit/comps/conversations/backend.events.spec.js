@@ -36,7 +36,7 @@ describe('Event chain for Conversations', function(){
             $provide.constant('cmEnv',{});
         })
     })
-
+    beforeEach(module('cmPhonegap'))
     beforeEach(module('cmConversations'))
 
     beforeEach(inject(function(_cmApi_, _cmConversationsAdapter_, _cmConversationFactory_, _$rootScope_, _$httpBackend_){

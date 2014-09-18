@@ -7,21 +7,21 @@ describe('Route Contact: ', function () {
     afterEach(function() { util.stopOnError() });
 
 
-    it('at first goto "#/contacts".', function(){
+    it('at first goto "#/contact/list".', function(){
         util.login()
-        util.get('/contacts')
-        util.expectCurrentUrl('#/contacts')
+        util.get('/contact/list')
+        util.expectCurrentUrl('#/contact/list')
     })
 
     it('should have a contact list.', function(){
 //        util.waitForSpinner();
-        util.waitForElement('cm-contacts-list');
-        expect($('cm-contacts-list').isPresent()).toBe(true)
+        util.waitForElement('cm-contact-list');
+        expect($('cm-contact-list').isPresent()).toBe(true)
     })
 
     it('contacts should exists in list', function(){
         util.waitForElement('cm-contact-tag');
-        var tags = $$('cm-contacts-list cm-contact-tag')
+        var tags = $$('cm-contact-list cm-contact-tag')
         tags.count().then(function(count){
             expect(count).not.toEqual(0)
         })
@@ -31,7 +31,7 @@ describe('Route Contact: ', function () {
         it('search and click to detail',function(){
             util.headerSearchInList('internal')
 
-            $$('cm-contacts-list cm-contact-tag cm-avatar').first().click()
+            $$('cm-contact-list cm-contact-tag cm-avatar').first().click()
             util.expectCurrentUrl('#/contact/.*')
         })
 
@@ -52,21 +52,22 @@ describe('Route Contact: ', function () {
 
         it('click on back button',function(){
             util.clickBackBtn()
-            util.expectCurrentUrl('#/contacts')
+
+            util.waitForPageLoad('/contact/list')
         })
     })
 
-    describe('create extern contact', function(){
+    describe('create external contact', function(){
         var userName = 'moeper_'+ Date.now();
 
         it('open modal and click create new contact',function(){
-            util.expectCurrentUrl('#/contacts')
+            util.expectCurrentUrl('#/contact/list')
 
             $("[data-qa='add-contact-btn']").click()
 
             $$('cm-modal.active .content a').last().click()
 
-            util.expectCurrentUrl('#/contact/new')
+            util.expectCurrentUrl('#/contact/create')
         })
 
         it('all inputs should be enabled',function(){
@@ -86,16 +87,16 @@ describe('Route Contact: ', function () {
 
             $('cm-footer button').click()
 
-            util.waitForPageLoad('/contacts')
+            util.waitForPageLoad('/contact')
         })
 
         it('search and click to detail',function(){
-            util.expectCurrentUrl('/contacts')
+            util.expectCurrentUrl('/contact')
             util.waitForElement('cm-contact-tag')
 
             util.headerSearchInList(userName)
 
-            expect($$('cm-contacts-list cm-contact-tag cm-avatar').count()).toBe(1)
+            expect($$('cm-contact-list cm-contact-tag cm-avatar').count()).toBe(1)
         })
     })
 })

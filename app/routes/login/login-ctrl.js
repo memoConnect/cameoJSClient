@@ -6,16 +6,15 @@ define([
 
     app.register.controller('LoginCtrl',[
         '$scope',
-        '$location',
         'cmVersion',
         'cmSystemCheck',
-        function($scope, $location, cmVersion, cmSystemCheck){
+        function($scope, cmVersion, cmSystemCheck){
             cmSystemCheck.run(true);
 
             $scope.cmVersion = cmVersion;
 
             $scope.goToReg = function(){
-                $location.path('/registration');
+                $scope.goTo('/registration');
             };
 
             var app = angular.element(document.querySelector('#cm-app')),

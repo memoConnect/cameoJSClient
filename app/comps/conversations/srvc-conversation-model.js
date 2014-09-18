@@ -24,6 +24,7 @@
 
 angular.module('cmConversations')
 .factory('cmConversationModel',[
+
     'cmBoot',
     'cmConversationsAdapter',
     'cmMessageModel',
@@ -41,12 +42,13 @@ angular.module('cmConversations')
     'cmSecurityAspectsConversation',
     'cmUtil',
     'cmFilesAdapter',
-    'cmUserKeyStorageService',
+    'cmKeyStorageService',
     '$q',
     '$rootScope',
+    
     function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
               cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase,
-              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmUserKeyStorageService,
+              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmKeyStorageService,
               $q, $rootScope){
 
         function ConversationModel(data){
@@ -97,7 +99,7 @@ angular.module('cmConversations')
 
             cmObject.addEventHandlingTo(this);
 
-            this.localPWHandler = new cmUserKeyStorageService('pw');
+            this.localPWHandler = new cmKeyStorageService('pw');
 
             /**
              * @ngdoc method
@@ -111,6 +113,7 @@ angular.module('cmConversations')
              */
             function init(data){
 //                cmLogger.debug('cmConversationModel:init');
+
                 if(typeof data == 'string' && data.length > 0){
                     self.id = data;
                     self.load();
@@ -125,6 +128,7 @@ angular.module('cmConversations')
                 } else {
                     self.state.set('new');
                     self.enableEncryption(); // have to be there!!! BS klären mit AP 18.06.2014
+                    self.addRecipient(cmUserModel.data.identity)
                 }
 
                 self.trigger('init:finished');
@@ -377,33 +381,28 @@ angular.module('cmConversations')
              * @returns {Promise} for async handling
              */
             this.save = function(){
-                if(this.state.is('new')){
-                    /**
-                     * test export
-                     */
-//                    return false;
+                return  this.state.is('new')
+                        ?   cmConversationsAdapter.newConversation( this.exportData() ).then(
+                                function (conversation_data) {
+                                    self
+                                    .importData(conversation_data)
+                                    .savePassCaptcha();
 
-                    cmConversationsAdapter.newConversation( this.exportData() ).then(
-                        function (conversation_data) {
-                            self
-                            .importData(conversation_data)
-                            .savePassCaptcha();
+                                    if(typeof self.password == 'string' && self.password.length > 0){
+                                        self.localPWHandler.get(conversation_data.id, self.password);
+                                    }
 
-                            if(typeof self.password == 'string' && self.password.length > 0){
-                                self.localPWHandler.get(conversation_data.id, self.password);
-                            }
+                                    self.state.unset('new');
+                                    self.trigger('save:finished');
 
-                            self.state.unset('new');
-                            self.trigger('save:finished');
-                        },
+                                    return conversation_data
+                                },
 
-                        function(){
-                            self.trigger('save:failed');
-                        }
-                    )
-                }
-
-                return this;
+                                function(){
+                                    self.trigger('save:failed');
+                                }
+                            )
+                        :   $q.reject()
             };
 
             this.update = function(conversation_data){
@@ -547,7 +546,7 @@ angular.module('cmConversations')
              * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
-                cmLogger.debug('cmConversationModel.decrypt');
+//                cmLogger.debug('cmConversationModel.decrypt');
                 
                 var passphrase  =   this.getPassphrase(),
                     success     =   passphrase && this.messages.reduce(function (success, message){
@@ -710,8 +709,7 @@ angular.module('cmConversations')
 
             this.disablePassCaptcha = function(){
 //                cmLogger.debug('cmConversationModel.disablePassCaptcha');
-                
-                if(!this.state.is('new')) return this
+                if(!this.state.is('new')) return ;
 
                 this.options.hasCaptcha = false;
                 this.trigger('captcha:disabled');
@@ -762,6 +760,8 @@ angular.module('cmConversations')
                 if(this.tmpPassCaptcha != ''){
                     this.passCaptcha = cmFileFactory.create();
                     this.passCaptcha.name = this.passCaptcha.encryptedName = 'captcha';
+                    // public passcaptcha
+                    this.passCaptcha.setPassphrase(null);
 
                     this.passCaptcha
                         .importBase64(this.tmpPassCaptcha)
@@ -789,7 +789,7 @@ angular.module('cmConversations')
              * @returns {Array} recipients Filter
              */
             this.getBadRecipients = function(){
-                return  this.recipients.filter(function(recipient){
+                return this.recipients.filter(function(recipient){
                     return recipient.keys.getWeakestKeySize() <= 2000
                 })
             };

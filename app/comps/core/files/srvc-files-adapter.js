@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmCore').service('cmFilesAdapter', [
-    'cmApi', 'cmLogger',
+    'cmApi', 'cmLogger', 'cmUtil', 'cmDevice',
     '$q',
-    function (cmApi, cmLogger,
+    function (cmApi, cmLogger, cmUtil, cmDevice,
               $q){
         return {
             prepareFile: function(config){
@@ -96,6 +96,13 @@ angular.module('cmCore').service('cmFilesAdapter', [
                 return blobBuilder;
             },
 
+            base64ToBinary: function(b64Data){
+                if(typeof b64Data != 'string')
+                    return '';
+
+                return atob(this.clearBase64(b64Data));
+            },
+
             binaryToBlob: function (binary, contentType){
                 if(typeof binary != 'string' || binary == '')
                     return false;
@@ -122,6 +129,22 @@ angular.module('cmCore').service('cmFilesAdapter', [
                 return blob;
             },
 
+            base64ToBlob: function(base64, contentType){
+                if(typeof base64 != 'string' || base64 == '')
+                    return false;
+                // check mimetype from base64
+                if(!contentType){
+                    var mimeType = this.getMimeTypeOfBase64(base64);
+                    if(mimeType != ''){
+                        contentType = mimeType;
+                    }
+                }
+                // decode and create blob
+                var binary = this.base64ToBinary(base64, contentType),
+                    blob = this.binaryToBlob(binary, contentType);
+                return blob;
+            },
+
             /**
              * return clear base64 for atob function
              * replace newlines & return
@@ -129,45 +152,58 @@ angular.module('cmCore').service('cmFilesAdapter', [
              * @param b64Data
              * @returns {String} clearBase64
              */
+            //base64Regexp: '^(data:(.{0,100});base64,|data:(.{0,100})base64,)(.*)$',
+            base64Regexp: '^(data:(.*?);?base64,)(.*)$',
+
             clearBase64: function(b64Data){
                 if(typeof b64Data != 'string')
                     return '';
 
-                return b64Data
-                .replace(/\r?\n|\r/g,'')
-                .replace(new RegExp('^(data:.{0,100};base64,)(.*)$','i'),function(){
-                    return arguments[2];// return the cleared base64
+                var clearBase64 = b64Data
+                .replace(/\r?\n|\r| /g,'')
+                .replace(new RegExp(this.base64Regexp,'i'),function(){
+                    return arguments[3];// return the cleared base64
                 });
+
+                //console.log(clearBase64)
+
+                return clearBase64;
             },
 
-            base64ToBinary: function(b64Data){
-                if(typeof b64Data != 'string')
-                    return '';
-
-                return atob(this.clearBase64(b64Data));
+            getMimeTypeOfBase64: function(base64){
+                return base64 && typeof base64 == 'string' ? base64.replace(new RegExp(this.base64Regexp,'i'),'$2') : '';
             },
 
-            getBlobUrl: function(blob, useUrl){
-                var useFileReader = useUrl ? false : true,
+            getBlobUrl: function(blob, useBlobUrl){
+                var useFileReader = useBlobUrl ? false : true,
+                    revokeFnc = function(){
+                        this.src = '';
+                        return true;
+                    },
                     deferred = $q.defer(),
                     objUrl = {
                         src: '',
-                        revoke: function(){
-                            this.src = '';
-                            return true;
-                        }
+                        revoke: revokeFnc
                     };
 
+                // for app android use the localurl
+                // TODO: optimize overall useBlobUrl and on Android localURL only at pick file preview
+                if(cmDevice.isAndroid() && 'useLocalUri' in blob){
+                    deferred.resolve({
+                        src: blob.localURL,
+                        revoke: revokeFnc
+                    });
+                } else
+                // filereader return base64
                 if(useFileReader){
-                    // filereader
                     var filereader = new FileReader();
                     filereader.onload = function(e){
                         objUrl.src = e.target.result;
                         deferred.resolve(objUrl);
                     };
                     filereader.readAsDataURL(blob);
+                // bloburl returns a url to a blob
                 } else {
-                    // URL type
                     var URL = window.URL || window.webkitURL;
                     objUrl = {
                         src: URL.createObjectURL(blob),

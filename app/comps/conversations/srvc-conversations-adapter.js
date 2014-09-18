@@ -92,7 +92,7 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
 
             updateCaptcha: function(id, idFile){
                 return  cmApi.put({
-                            path:    '/conversation/%1'.replace(/%1/, id),
+                            path:    '/conversation/'+id,
                             data:   {
                                         passCaptcha: idFile
                                     }
@@ -122,6 +122,11 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
 
         cmApi.on('conversation:new', function(event, data){
             adapter.trigger('conversation:new', data)
+        });
+
+        cmApi.on('rekeying:finished', function(event, data){
+            //cmLogger.debug('cmConversationsAdapter.on rekeying:finished');
+            adapter.trigger('passphrases:updated', data);
         });
 
         return adapter

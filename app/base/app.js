@@ -11,6 +11,7 @@ define([
     'pckCore',
     'pckUi',
     'pckContacts',
+    'pckPhonegap',
     'base/config'
 ], function (angularAMD) {
     'use strict';
@@ -24,6 +25,7 @@ define([
         'cmCore',
         'cmUi',
         'cmContacts',
+        'cmPhonegap'
     ])
 
     .constant('cmEnv',cameo_config.env)
@@ -108,11 +110,39 @@ define([
                     if (angular.isDefined(_settings_['templateUrl'])) {
                         routeParams.templateUrl = _settings_['templateUrl'];
                     } else {
-                        routeParams.templateUrl = 'routes/' + routeKey + '/' + routeKey + '.html';
+                        if(routeKey.indexOf('-') != -1){
+                            var arr  = routeKey.split('-'),
+                                ctrlRoute = '',
+                                i = 0;
+
+                            while(i < arr.length){
+                                ctrlRoute += '/'+arr[i];
+                                i++;
+                            }
+
+                            routeParams.templateUrl = 'routes' + ctrlRoute + '/' + routeKey + '.html';
+                        } else {
+                            routeParams.templateUrl = 'routes/' + routeKey + '/' + routeKey + '.html';
+                        }
+
                     }
                     // check if route has/need controller
-                    if (angular.isDefined(_settings_['hasCtrl']) && _settings_.hasCtrl === true)
-                        routeParams.controllerUrl = 'routes/' + routeKey + '/' + routeKey + '-ctrl';
+                    if (angular.isDefined(_settings_['hasCtrl']) && _settings_.hasCtrl === true){
+                        if(routeKey.indexOf('-') != -1){
+                            var arr  = routeKey.split('-'),
+                                ctrlRoute = '',
+                                i = 0;
+
+                            while(i < arr.length){
+                                ctrlRoute += '/'+arr[i];
+                                i++;
+                            }
+
+                            routeParams.controllerUrl = 'routes' + ctrlRoute + '/' + routeKey + '-ctrl';
+                        } else {
+                            routeParams.controllerUrl = 'routes/' + routeKey + '/' + routeKey + '-ctrl';
+                        }
+                    }
 
                     if (angular.isDefined(_settings_['css']))
                         routeParams.css = _settings_['css'];
@@ -159,6 +189,17 @@ define([
         }
     ])
     // app run handling
+    .run(['cmNetworkInformation', 'cmPushNotificationAdapter',
+        function(cmNetworkInformation, cmPushNotificationAdapter){
+        // check internet connection
+        cmNetworkInformation.init();
+        // register device for pushnotification
+        cmPushNotificationAdapter.init();
+    }])
+    .run(function() {
+        // disabled the 3000 seconds delay on click when touch ;)
+        FastClick.attach(document.body);
+    })
     /**
      * @TODO cmContactsModel anders initialisieren
      */
@@ -170,40 +211,22 @@ define([
         '$route',
         'cmUserModel',
         'cmContactsModel',
+        'cmRootService',
         'cmSettings',
         'cmLanguage',
         'cmLogger',
         'cfpLoadingBar',
         'cmEnv',
+        'cmVersion',
         'cmApi',
         'cmHooks',
         'cmSystemCheck',
         'cmError',
-        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks, cmSystemCheck, cmError) {
-
-            //get browser language:
-            cmApi.get({
-                path    : '/services/getBrowserInfo'
-            })
-            .then(function(data){
-
-                if(!cmUserModel.isAuth()){
-                    var language = data.languageCode.substr(0,2),
-                        lc       = language == 'de' ? 'de_DE' : 'en_US'
-                    cmLanguage.switchLanguage(lc)
-                }
-            })
+        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion, cmApi, cmHooks, cmSystemCheck, cmError) {
 
             //prep $rootScope with useful tools
             $rootScope.console  =   window.console;
             $rootScope.alert    =   window.alert;
-            $rootScope.goto     =   function(path, replace){
-                                        path = path[0] == '/' ? path : '/'+path;
-                                        $location.path(path);
-                                        //Todo: find foifferent solution:
-                                        if(replace)
-                                            $location.replace()
-                                    };
 
             //add Overlay handles:
             $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };
@@ -234,10 +257,6 @@ define([
             };
 
             $rootScope.$on('$routeChangeSuccess', function(){
-
-                // hide app spinner
-                angular.element($document[0].querySelector('.app-spinner')).css('display','none');
-
                 // momentjs
                 //$window.moment.lang(cmLanguage.getCurrentLanguage());
 
@@ -319,8 +338,6 @@ define([
                 }
             });
 
-
-
             //check on resize if the screen is too small for header an footer ( i.e. onscreen keyboard is active)
             angular.element($window).bind('resize', function(){
                 var cm_app = $document[0].querySelector('#cm-app')
@@ -329,7 +346,7 @@ define([
                 } else {
                     angular.element(cm_app).removeClass('reduced-screen')
                 }
-            })
+            });
 
             // Todo: whats is todo??
             if(cmUserModel.getToken())
@@ -339,11 +356,7 @@ define([
             cmSystemCheck.run(true);
 
         }
-    ])
-
-    .run(function() {
-        FastClick.attach(document.body);
-    });
+    ]);
 
     // bootstrap app and all things after here use app.register.{ng-type}
     angularAMD.bootstrap(app);

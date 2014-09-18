@@ -12,12 +12,6 @@ angular.module('cmFiles').directive('cmFilesPreview',[
                 scope.removeFile = function(file){
                     cmFilesCtrl.removeFile(file);
                 }
-            },
-
-            controller: function($scope){
-                $scope.removeFile = function(file){
-                    cmFileFactory.remove(file);
-                };
             }
         }
     }

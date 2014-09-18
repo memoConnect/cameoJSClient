@@ -55,47 +55,41 @@
      </example>
  */
 
+/**
+ * @TODO Doku anpassen
+ */
 angular.module('cmUi').directive('cmAvatar',[
+    'cmUserModel',
     'cmUtil',
-    'cmFilesAdapter',
-    function (cmUtil, cmFilesAdapter){
-
-        var avatarMocks = {
-            none: 'data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAeAB4AAD/4QA6RXhpZgAATU0AKgAAAAgAA1EQAAEAAAABAQAAAFERAAQAAAABAAAAAFESAAQAAAABAAAAAAAAAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAAqACoDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9hKKKuaFHZy6tCt+8kdqW+dkHP/6qAKdFep2GneF7i8+w28VlNNjO0AuTxn73/wBeuO+IvhOHwvqkf2dm8i4Usqk5KEdRn05oA52iiigAooooA9E+GXhuHR9IbWLkrvkRmUnpFGOp+px+X41yfjbxU3ivV/NClIIhsiU9cep9zXX2/wAPUbwov/EwvhI1vu4m/cjIzjb/AHe1ecUAFFFFABRRRQBpL4u1JNJ+wi7k+ykbdnGcemeuPbOKzaKKACiiigD/2Q=='
-        };
-
+    'cmConfig',
+    function (cmUserModel, cmUtil, cmConfig){
         return {
             restrict: 'E',
             scope: {
                 identity: "=cmData"
             },
-            template: '<img >',
-
+            template: '<img />',
             link: function(scope, element, attrs){
 
-                var avatar = null;
-
-                function showBlobAsImage(){
-                    if(avatar['url'] == undefined) {
-                        cmFilesAdapter.getBlobUrl(avatar.blob).then(function(objUrl){
-                            avatar.url = objUrl;
-                            element.find('img').attr('src', avatar.url.src);
-                        });
-                    } else {
-                        element.find('img').attr('src', avatar.url.src);
-                    }
-                }
+                var avatarMocks = {
+                    none: 'data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAeAB4AAD/4QA6RXhpZgAATU0AKgAAAAgAA1EQAAEAAAABAQAAAFERAAQAAAABAAAAAFESAAQAAAABAAAAAAAAAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAAqACoDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9hKKKuaFHZy6tCt+8kdqW+dkHP/6qAKdFep2GneF7i8+w28VlNNjO0AuTxn73/wBeuO+IvhOHwvqkf2dm8i4Usqk5KEdRn05oA52iiigAooooA9E+GXhuHR9IbWLkrvkRmUnpFGOp+px+X41yfjbxU3ivV/NClIIhsiU9cep9zXX2/wAPUbwov/EwvhI1vu4m/cjIzjb/AHe1ecUAFFFFABRRRQBpL4u1JNJ+wi7k+ykbdnGcemeuPbOKzaKKACiiigD/2Q=='
+                };
 
                 function refresh(){
-                    // get avatar image from model
-                    avatar = scope.identity.getAvatar();
-                    if(typeof avatar.on == 'function' && avatar.state != 'cached'){
-                        avatar.on('file:cached', function(){
-                            showBlobAsImage();
-                        });
-                    } else if(avatar.state == 'cached') {
-                        showBlobAsImage();
+                    /**
+                     * without scale
+                     */
+                    //element.find('img').attr('src', cmConfig.restApi + '/file/' + scope.identity.avatarId + '/raw?token=' + cmUserModel.getToken());
+
+                    /**
+                     * with scale
+                     */
+                    var size = 200;
+                    if('cmSize' in attrs && cmUtil.validateInt(attrs.cmSize)){
+                        size = attrs.cmSize;
                     }
+
+                    element.find('img').attr('src', cmConfig.restApi + '/file/' + scope.identity.avatarId + '/scale/' + size + '?token=' + cmUserModel.getToken());
                 }
 
                 // is unknown avatar for add reciepients or choose avatar
@@ -104,7 +98,7 @@ angular.module('cmUi').directive('cmAvatar',[
                     //element.css({'background-image': 'url(' + avatarMocks.none +')'});
                 } else {
                     scope.$watch('identity',function(){
-                        if(typeof scope.identity == 'object' && cmUtil.objLen(scope.identity) > 0){
+                        if(typeof scope.identity == 'object' && cmUtil.objLen(scope.identity) > 0 && typeof scope.identity.state == 'object' && typeof scope.identity.state.is == 'function'){
                             if(scope.identity.state.is('new') || scope.identity.avatarId == undefined) {
                                 scope.identity.on('update:finished',function() {
                                     refresh();
@@ -114,13 +108,6 @@ angular.module('cmUi').directive('cmAvatar',[
                             }
                         }
                     });
-                    if('cmStopDownload' in attrs) {
-                        scope.$on('$destroy', function () {
-                            if(avatar != null){
-                                avatar.downloadStop();
-                            }
-                        });
-                    }
                 }
             }
         }

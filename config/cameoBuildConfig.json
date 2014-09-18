@@ -3,11 +3,17 @@
         "apiUrl": "https://dev.cameo.io/a/v1",
         "autoLogin": true,
         "loadingBar": true,
-        "enableDebug": true
+        "enableDebug": true,
+        "logLevel": "DEBUG"
+    },
+    "debug":{
+        "weinre": false,
+        "weinreIp": ""
     },
     "phonegap": {
         "baseName" : "cameoNet-default",
         "appId" : "864855",
-        "bundleId" : "io.cameo.dev.cameo"
+        "bundleId" : "io.cameo.dev.cameo",
+        "extraName" : ""
     }
 }

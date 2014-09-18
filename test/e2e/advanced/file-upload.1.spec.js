@@ -57,17 +57,17 @@ function chooseFileAndUpload(file, selector, index) {
     it(getFilename(file) + ' choose and check preview', function () {
         $("[data-qa='btn-file-choose']").sendKeys(file)
 
-        util.waitForElement('cm-files-preview ' + selector)
+        util.waitForElements('cm-files-preview ' + selector)
         // preview should be show image
         $$('cm-files-preview ' + selector).then(function (elements) {
             expect(elements.length).toEqual(1)
         })
     })
 
-    it('fill message and send check preview', function () {
+    it(getFilename(file) + ' fill message and send check preview', function () {
         $("[data-qa='btn-send-answer']").click()
 
-        util.waitForElement('cm-message', index)
+        util.waitForElements('cm-message', index)
 
         // preview should be empty
         $$('cm-files-preview ' + selector).then(function (elements) {
