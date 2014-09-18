@@ -85,7 +85,15 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     .then(
                         function(result){
                             var data = result.data
-                            return cmUserModel.signPublicKey(data.key, data.key.id, data.identity)      //wait for key in response to be signed
+                            return  cmUserModel.signPublicKey(data.key, data.key.id, data.identity)      //wait for key in response to be signed
+                                    //Todo: this 'then' should be elsewhere:
+                                    .then(function(){    
+                                        if(data.identity == cmUserModel.data.identity)                                    
+                                        cmAuthenticationRequest.openBulkRequest({
+                                            key1: cmUserModel.loadLocalKeys()[0].id,   // Todo: how to treat multiple local keys?
+                                            key2: data.key.id
+                                        })
+                                    })
                         },
                         function(result){
                             return  result && result.event &&  result.event.name == 'verification:failed'

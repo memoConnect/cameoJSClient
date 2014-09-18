@@ -160,12 +160,12 @@ angular.module('cmCore')
              * @return {promise}                Promise to be resolved when the event triggers for the first time
              */
             obj.when = function(event_names_to_resolve, event_names_to_reject, timeout){
-                if(isNaN(event_names_to_reject)){
+                if(event_names_to_reject && isNaN(event_names_to_reject)){
                     obj.one(event_names_to_reject, function(event, data){
                         deferred.reject( {event: event, data: data} )
                     })
                 } else {
-                    timeout = event_names_to_reject
+                    timeout = timeout || event_names_to_reject
                 }
 
                 var deferred = $q.defer()

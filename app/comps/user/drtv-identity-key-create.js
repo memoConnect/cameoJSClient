@@ -113,7 +113,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                             cmJob.stop();
                             cmApi.listenToEvents();
                             startTime = undefined
-                            // stopInterval();
                         }
                     );
                 };
@@ -131,8 +130,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     cmJob.stop();
                     cmApi.listenToEvents();
                     startTime = undefined
-                    // stopInterval();
-                    //$scope.active = 'choose';
                 };
 
                 $scope.cancel = function(){

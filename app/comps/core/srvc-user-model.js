@@ -37,12 +37,13 @@ angular.module('cmCore')
     'cmLogger',
     'cmCallbackQueue',
     'cmPushNotificationAdapter',
+    'cmApi',
     '$rootScope',
     '$q',
     '$location',
     function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmIdentityModel, cmFactory,
              cmCrypt, cmKeyFactory, cmKey, cmStateManagement, cmObject, cmUtil,
-             cmNotify, cmLogger, cmCallbackQueue, cmPushNotificationAdapter,
+             cmNotify, cmLogger, cmCallbackQueue, cmPushNotificationAdapter, cmApi,
              $rootScope, $q, $location){
         var self = this,
             isAuth = false,
@@ -630,7 +631,8 @@ angular.module('cmCore')
                     var newKey = this.data.identity.keys.find(newKeyId);
 
                     if(localKey instanceof cmKey && newKey instanceof cmKey){
-                        cmAuth.getBulkPassphrases(localKey.id, newKey.id).then(
+                        cmAuth.getBulkPassphrases(localKey.id, newKey.id)
+                        .then(
                             function(list){
                                 var newList = [],
                                     i = 0;
@@ -647,7 +649,7 @@ angular.module('cmCore')
                                 if(newList.length > 0){
                                     cmAuth.saveBulkPassphrases(newKey.id, newList).then(
                                         function(){
-                                            cmAuth.sendBroadcast({
+                                            cmApi.broadcast({
                                                 name: 'rekeying:finished',
                                                 data:{
                                                     keyId: newKey.id

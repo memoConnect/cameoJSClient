@@ -2,10 +2,12 @@
 
 angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
 
+    'cmUserModel',
+    'cmIdentityFactory',
     '$timeout',
     '$document',
     
-    function ($timeout, $document){
+    function (cmUserModel, cmIdentityFactory, $timeout, $document){
         return {
             restrict:       'E',
             scope:          false,
@@ -21,20 +23,28 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
                     };
                 }
 
-                setErrorsToDefault();
+                function refresh(){
+                    $scope.is3rdParty    =   $scope.request.fromIdentityId != cmUserModel.data.identity.id,
+                    $scope.fromIdentity  =   cmIdentityFactory.find($scope.request.fromIdentityId),
+                    $scope.fromKey       =   $scope.fromIdentity.keys.find($scope.request.fromKeyId)
 
-                $scope.modalMessageVars = {
-                    cameoKey: $scope.fromKey.name,
-                    identity: $scope.fromIdentity.getDisplayName()
-                };
+                    $scope.modalMessageVars = {
+                        cameoKey: $scope.fromKey.name,
+                        identity: $scope.fromIdentity.getDisplayName()
+                    };
+
+                    setErrorsToDefault();
+
+                    $scope.transactSecret = '';
+
+                    $timeout(function(){
+                        var input = $document[0].querySelector('#inp-transactSecret');
+                        input.focus();
+                    }, 50);
+                }
 
 
-                $scope.transactSecret = '';
-
-                $timeout(function(){
-                    var input = $document[0].querySelector('#inp-transactSecret');
-                    input.focus();
-                }, 50);
+                $scope.$watch('request', refresh)
 
             }
         }

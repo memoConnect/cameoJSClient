@@ -29,28 +29,28 @@ angular.module('cmCore').service('cmHooks', [
             cmModal.open(modalId);
         };
 
-        this.openBulkRequest = function(data){
-            //cmLogger.debug('cmHooks.openBulkRequest');
+        // this.openBulkRequest = function(data){
+        //     //cmLogger.debug('cmHooks.openBulkRequest');
 
-            if(typeof data == 'object' && cmUtil.checkKeyExists(data,'key1') && cmUtil.checkKeyExists(data, 'key2')){
-                var scope = $rootScope.$new();
-                scope.data = data;
+        //     if(typeof data == 'object' && cmUtil.checkKeyExists(data,'key1') && cmUtil.checkKeyExists(data, 'key2')){
+        //         var scope = $rootScope.$new();
+        //         scope.data = data;
 
-                var modalId = 'bulk-rekeying-modal';
-                cmModal.create({
-                    id: modalId,
-                    type: 'plain',
-                    'class': 'no-padding',
-                    'cm-title': 'DRTV.BULK_REKEYING.HEADER'
-                },'<cm-bulk-rekeying-request></cm-bulk-rekeying-request>',null,scope);
-                cmModal.open(modalId);
+        //         var modalId = 'bulk-rekeying-modal';
+        //         cmModal.create({
+        //             id: modalId,
+        //             type: 'plain',
+        //             'class': 'no-padding',
+        //             'cm-title': 'DRTV.BULK_REKEYING.HEADER'
+        //         },'<cm-bulk-rekeying-request></cm-bulk-rekeying-request>',null,scope);
+        //         cmModal.open(modalId);
 
 
-                cmUserModel.on('bulkrekeying:finished',function(){
-                    $rootScope.closeModal('bulk-rekeying-modal');
-                });
-            }
-        };
+        //         cmUserModel.one('bulkrekeying:finished',function(){
+        //             $rootScope.closeModal('bulk-rekeying-modal');
+        //         });
+        //     }
+        // };
 
         this.openKeyRequest = function(identity){
 //            cmLogger.debug('cmHooks.openKeyRequest');

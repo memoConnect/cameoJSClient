@@ -185,6 +185,29 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                 }
 
                 return result
+            },
+
+            //Todo: maybe find a more suitabble place for this function:
+            openBulkRequest: function(data){
+
+                if(typeof data == 'object' && 'key1' in data && 'key2' in data){
+                    var scope = $rootScope.$new();
+                    scope.data = data;
+
+                    var modalId = 'bulk-rekeying-modal';
+                    cmModal.create({
+                        id: modalId,
+                        type: 'plain',
+                        'class': 'no-padding',
+                        'cm-title': 'DRTV.BULK_REKEYING.HEADER'
+                    },'<cm-bulk-rekeying-request></cm-bulk-rekeying-request>',null,scope);
+
+                    cmModal.open(modalId);
+
+                    cmUserModel.one('bulkrekeying:finished',function(){
+                        $rootScope.closeModal('bulk-rekeying-modal');
+                    })
+                }
             }
         }
 
@@ -200,23 +223,36 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
             var local_keys = cmUserModel.loadLocalKeys()
 
-            //If there are no local keys, there's nothing to authenticate with:
+            // If there are no local keys, there's nothing to authenticate with:
             if(local_keys.length == 0 ){
                 cmLogger.debug('cmAuthenticationRequest: received request, but no local keys present.')
                 return false // do not remove event binding
             }
 
 
-            //There is no need to authenticate local keys:
+            // There is no need to authenticate local keys:
             if(local_keys.find(request.fromKeyId)){
                 cmLogger.debug('cmAuthenticationRequest: received request, but key to be signed is local.')
                 return false // do not remove event binding
             }
             
 
-            //If a certain key was expected to sign, but that key is not present on this device, dont prompt the user:
+            // If a certain key was expected to sign, but that key is not present on this device, dont prompt the user:
             if(request.toKeyId && !local_keys.find(request.toKeyId)){
                 cmLogger.debug('cmAuthenticationRequest: received request, but requested private key to sign with is not present.')
+                return false // do not remove event binding
+            }
+
+            var fromIdentity = cmIdentityFactory.find(event.fromIdentityId)
+
+            if(!fromIdentity){
+                cmLogger.debug('cmAuthenticationRequest: received request, but sender is unknown.')
+                return false // do not remove event binding
+            }
+
+            //If we dont know the key to sign:
+            if(!fromIdentity.keys.find(request.fromKeyId)){
+                cmLogger.debug('cmAuthenticationRequest: received request, key to be signed not at the proper identity.')
                 return false // do not remove event binding
             }
 
@@ -239,6 +275,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
          */
 
         self.on('started', function(event, request){
+
 
             //Prevent other authentication requests to interfere with an ongoing process:
             var modal = cmModal.instances['incoming-authentication-request']
@@ -273,28 +310,18 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
 
             // new scope for a modal to open below
-            var scope   =   $rootScope.$new()
-
-            scope.is3rdParty    =   request.fromIdentityId != cmUserModel.data.identity.id
-            scope.fromIdentity  =   cmIdentityFactory.find(request.fromIdentityId)
-
-
-            //If we dont know the identity that sent the request:
-            if(!scope.fromIdentity)
-                return false // do not remove event binding
-
-            scope.fromKey       =   scope.fromIdentity.keys.find(request.fromKeyId)
+            var modal_scope   =   $rootScope.$new(),
+                is3rdParty    =   request.fromIdentityId != cmUserModel.data.identity.id,
+                fromIdentity  =   cmIdentityFactory.find(request.fromIdentityId),
+                fromKey       =   fromIdentity.keys.find(request.fromKeyId)
 
 
-            //If we dont know the key to sign:
-            if(!scope.fromKey)
-                return false // do not remove event binding
             
-            scope.error         =   {}
-            scope.request       =   request     //stored for later use, if another authentication request with the same origin occurs
+            modal_scope.error   =   {}    
+            modal_scope.request =   request     //stored for later use, if another authentication request with the same origin occurs
 
-            scope.verify        =   function(secret){
-                                        scope = this
+            modal_scope.verify  =   function(secret){
+                                        var scope = this
                                         scope.error.emptyInput    = !secret
                                         scope.error.wrongSecret   = !scope.error.emptyInput && !self.verify(scope.request, secret)
 
@@ -306,8 +333,19 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
 
                                             // Double check and make sure that only the key gets signed that was actually verified above:
-                                            var fromIdentity    = cmIdentityFactory.find(scope.request.fromIdentityId),
-                                                fromKey         = scope.fromIdentity.keys.find(scope.request.fromKeyId)
+                                            // Also: We need variables, because scope gets destroyed once the modal is closed.
+                                            var fromIdentity    =   cmIdentityFactory.find(scope.request.fromIdentityId),
+                                                fromKey         =   fromIdentity.keys.find(scope.request.fromKeyId),
+                                                is3rdParty      =   fromIdentity != cmUserModel.data.identity,
+                                                toKey           =   (
+                                                                            scope.request.toKeyId 
+                                                                        &&  cmUserModel.loadLocalKeys().find(scope.request.toKeyId)
+                                                                    )   
+                                                                    ||  cmUserModel.loadLocalKeys()[0]
+                                                                    
+
+                                            console.log('3rd:')
+                                            console.log(is3rdParty)
 
                                             if(
                                                     fromIdentity    != scope.fromIdentity
@@ -317,30 +355,40 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                                 return false
                                             }
 
-
-
                                             cmUserModel
                                             .signPublicKey(scope.fromKey, scope.fromKey.id, scope.fromIdentity)
                                             .then(function(){
 
-                                                //Open success Modal:
-                                                cmModal.create({
-                                                    id:             'authentication-request-successful',
-                                                    type:           'alert',
-                                                    'cm-close-btn': false,
-                                                },  
-                                                    scope.is3rdParty
-                                                    ?   '{{"IDENTITY.KEYS.TRUST.MODAL.SUCCESS"|cmTranslate}}'
-                                                    :   '{{"IDENTITY.KEYS.AUTHENTICATION.MODAL.SUCCESS"|cmTranslate}}'
-                                                )
+                                                if(is3rdParty === false){
 
-                                                cmModal.open('authentication-request-successful')
+                                                    // Open modal for bulk rekeying:
+                                                    self.openBulkRequest({
+                                                        key1: toKey.id,
+                                                        key2: fromKey.id
+                                                    })
+                                                    
+                                                }else{
+
+                                                    // Open success Modal:
+                                                    cmModal.create({
+                                                        id:             'authentication-request-successful',
+                                                        type:           'alert',
+                                                        'cm-close-btn': false,
+                                                    },  
+                                                        is3rdParty
+                                                        ?   '{{"IDENTITY.KEYS.TRUST.MODAL.SUCCESS"|cmTranslate}}'
+                                                        :   '{{"IDENTITY.KEYS.AUTHENTICATION.MODAL.SUCCESS"|cmTranslate}}'
+                                                    )
+
+                                                    cmModal.open('authentication-request-successful')
+                                                    
+                                                }
 
                                                 //Send a request in return:
                                                 self.send(
-                                                    scope.fromIdentity,   //Sender of the initial requests
-                                                    secret,               //The secret we successfully used during the last attempt
-                                                    scope.fromKey         //The key that originally requested to be signed
+                                                    fromIdentity,   //Sender of the initial requests
+                                                    secret,         //The secret we successfully used during the last attempt
+                                                    fromKey         //The key that originally requested to be signed
                                                 )                                                
                                             })
                                         }
@@ -351,10 +399,10 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                 type:           'plain',
                 'class':        'no-padding',
                 'cm-close-btn': false,
-                'cm-title':     scope.is3rdParty
+                'cm-title':     is3rdParty
                                 ?   'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.HEADER'
                                 :   'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.HEADER'
-            },'<cm-incoming-authentication-request></cm-incoming-authentication-request>', null, scope)
+            },'<cm-incoming-authentication-request></cm-incoming-authentication-request>', null, modal_scope)
 
             cmModal.open('incoming-authentication-request')
 
@@ -378,7 +426,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                         id:             'authentication-request-canceled',
                         type:           'alert',
                         'cm-close-btn': false,
-                    },  scope.is3rdParty
+                    },  is3rdParty
                         ?   '{{"IDENTITY.KEYS.TRUST.MODAL.CANCELED"|cmTranslate}}'
                         :   '{{"IDENTITY.KEYS.AUTHENTICATION.MODAL.CANCELED"|cmTranslate}}')
                     cmModal.open('authentication-request-canceled')
