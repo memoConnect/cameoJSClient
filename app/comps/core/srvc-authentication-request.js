@@ -22,9 +22,9 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
     'cmCallbackQueue',
     '$rootScope',
 
-
     function(cmApi, cmObject, cmLogger, cmCrypt, cmUserModel, cmIdentityFactory, cmModal, cmCallbackQueue, $rootScope){
-        self = {
+
+        var self = {
             /**
              * @ngdoc method
              * @methodOf cmAuthenticationRequest
