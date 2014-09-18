@@ -111,9 +111,9 @@ angular.module('cmCore')
              */
             this.data.identities.push(activeIdentity);
             data_identities.forEach(function(identity){
-                self.data.identities.push(cmIdentityFactory.create(identity));
+                if(identity.id != self.data.identity.id)
+                    self.data.identities.push(cmIdentityFactory.clear(identity).create(identity));
             });
-
 
             isAuth = true;
             this.initStorage();

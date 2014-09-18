@@ -31,7 +31,8 @@ angular.module('cmConversations')
                     conversation_offset  = $attrs.offset,
                     conversation_limit   = $attrs.limit,
                     filesForMessage      = [],
-                    showedAsymmetricKeyError = false;
+                    showedAsymmetricKeyError = false,
+                    storageService = new cmKeyStorageService('conversation-recipient-view');
 
                 $scope.isSending        = false;
                 $scope.isSendingAbort   = false;
