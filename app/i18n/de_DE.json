@@ -384,6 +384,7 @@
                 "PAGE_HEADLINE": "cameoKeys",
                 "HEADLINE": "cameoKeys verknüpfen",
                 "EXPLANATION": "Um Ihre Nachrichten die Sie als {{identity}} geschrieben haben auf allen Geräten lesen zu können, müssen Sie ihren lokalen cameoKey mit Ihren cameoKeys auf anderen Geräten verknüpfen.",
+                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen.",
                 "START": {
                     "START_BUTTON": "Verbinden",
                     "CANCEL_BUTTON": "Nicht jetzt",
@@ -401,7 +402,6 @@
                     "NOTE": "Sie können den Dialog nun schließen.",
                     "DONE_BUTTON": "Schließen"
                 },
-                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen.",
                 "ERROR": {
                     "TIMEOUT" :"Zeit überschritten, bitte versuchen sie es erneut.",
                     "VERIFY" :"Verifizierung fehlgeschlagen, bitte versuchen sie es erneut."
@@ -426,6 +426,7 @@
                 "PAGE_HEADLINE": "Vertrauensprozess",
                 "HEADLINE": "Kontakt vertrauen",
                 "EXPLANATION": "Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität zu einer Person gehört, die Sie persönlich kennen.",
+                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen.",
                 "START": {
                     "START_BUTTON": "Anfragen",
                     "CANCEL_BUTTON": "Nicht jetzt",
@@ -462,8 +463,7 @@
                     "INSTRUCTIONS": "Der Vertrauens-Prozess wurde erfogreich durchgeführt!<br>Sie und '{{identity}} vertrauen sich jetzt gegenseitig.",
                     "NOTE": "Sie können den Dialog nun schließen.",
                     "CLOSE_BUTTON": "Schließen"
-                },
-                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen."
+                }
             }
         }
     },

@@ -384,44 +384,42 @@
                 "PAGE_HEADLINE": "cameoKeys",
                 "HEADLINE": "Link cameoKey",
                 "EXPLANATION": "To read encrypted messages written under {{identity}} on other devices, please link the local cameoKey with all other keys that you are using there.",
+                "TIMEOUT": "Linking will be canceled in {{timeout}}.",
                 "START": {
                     "START_BUTTON": "Link up",
                     "CANCEL_BUTTON": "Not now",
                     "INSTRUCTIONS": "Please press 'Link up' to start the process.",
                     "NOTE": "Attention! Before pressing 'Link up' you should first choose your identity {{identity}} (Settings > Identity Settings)!"
                 },
-                "REQUEST_STARTED": {
+                "WAIT": {
                     "CANCEL_BUTTON": "Abort request",
                     "INSTRUCTIONS": "Please press 'Abort request' to stop the process.",
-                    "NOTE": "Request has been started. Please confirm the request on the other device."
+                    "NOTE": "Request has been started. Please confirm the request on the other device.",
+                    "LABEL_CODE": "Code"
                 },
-                "ACCEPT_REQUEST": {
-                    "HEADER": "Linking Request",
-                    "INSTRUCTIONS": "On another device a cameoKey is stored that is not linked to this device. Therefore it is not possible to read encrypted data on this device and vice versa.<br> Do you want to link your local cameoKey '{{cameoKey}}' with the other device?",
-                    "NOTE": "To link cameoKeys, please start the link up process.",
-                    "ACCEPT_BUTTON": "Start linking",
-                    "CANCEL_BUTTON": "Decline"
+                "SUCCESSFUL": {
+                    "INSTRUCTIONS": "You have successfully linked your cameoKey! In a few seconds, all previous talks that have been created by the linked cameoKeys will be egible.",
+                    "NOTE": "Please close this dialogue.",
+                    "DONE_BUTTON": "Close"
                 },
-                "SHOW_TRANSACTION_SECRET": {
-                    "INSTRUCTIONS": "Please press 'Stop linking' to stop the process.",
-                    "NOTE": "Please enter the code into the other device:",
-                    "LABEL_CODE": "Code",
-                    "CLOSE_BUTTON": "Stop linking"
+                "ERROR": {
+                    "TIMEOUT" :"MISSING",
+                    "VERIFY" :"MISSING"
                 },
                 "ENTER_TRANSACTION_SECRET": {
                     "HEADER": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER",
                     "INSTRUCTIONS": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.INSTRUCTIONS",
                     "NOTE": "Please enter the code displayed on the other device:",
-                    "LABEL_CODE": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CODE",
-                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
                     "SUBMIT_BUTTON": "Submit"
                 },
-                "SUCCESSFUL": {
-                    "INSTRUCTIONS": "You have successfully linked your cameoKey! In a few seconds, all previous talks that have been created by the linked cameoKeys will be egible.",
-                    "NOTE": "Please close this dialogue.",
-                    "CLOSE_BUTTON": "Close"
+                "DONE" :{
+                    "INSTRUCTIONS": "Verknüfung erfolgreich abgeschlossen.",
+                    "NOTE":" Klicken sie auf 'schließen' um den Screen zu verlassen."
                 },
-                "TIMEOUT": "Der Vorgang wird in {{timeout}} abgebrochen."
+                "MODAL":{
+                    "SUCCESS": "cameoKeys erfolgreich verknüpft.",
+                    "CANCELED": "Verknüfung abgebrochen."
+                }
             },
             "TRUST": {
                 "PAGE_HEADLINE": "Trust Process",
