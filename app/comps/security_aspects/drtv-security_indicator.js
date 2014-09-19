@@ -33,22 +33,25 @@ angular.module('cmSecurityAspects').directive('cmSecurityIndicator',[
                     $scope.leading_icon = ($scope.positive >= $scope.negative)?'cm-lock':'cm-unlock';
                 }
 
-                $scope.conversation.securityAspects.on('refresh', refresh);
+                if($scope.conversation){
+                    $scope.conversation.securityAspects.on('refresh', refresh);
 
 
-                $scope.conversation.on('update:finished encryption:enabled encryption:disabled captcha:enabled captcha:disabled aspects:added', function () {
+                    $scope.conversation.on('update:finished encryption:enabled encryption:disabled captcha:enabled captcha:disabled aspects:added', function () {
+                        $scope.conversation.securityAspects.refresh();
+                    });
+
+                    $scope.conversation.recipients.on('register update:finished deregister', function(){
+                        $scope.conversation.securityAspects.refresh();
+                    });
+
+                    cmUserModel.on('key:stored key:removed', function(){
+                        $scope.conversation.securityAspects.refresh();
+                    });
+
                     $scope.conversation.securityAspects.refresh();
-                });
+                }
 
-                $scope.conversation.recipients.on('register update:finished deregister', function(){
-                    $scope.conversation.securityAspects.refresh();
-                });
-
-                cmUserModel.on('key:stored key:removed', function(){
-                    $scope.conversation.securityAspects.refresh();
-                });
-
-                $scope.conversation.securityAspects.refresh();
 
                 //$scope.$watchCollection($attrs.cmData, function(security_aspects){
                 //    if(security_aspects){
