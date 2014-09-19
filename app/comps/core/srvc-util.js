@@ -146,7 +146,7 @@ angular.module('cmCore')
          *
          * @param current (integer) unix timestamp in ms
          * @param prev (integer) unix timestamp in ms
-         * @returns {boolean}
+         * @returns {boolean} returns true, if day is different
          */
         this.compareDate = function(current, prev){
             if (typeof current !== 'undefined' && typeof prev !== 'undefined') {
