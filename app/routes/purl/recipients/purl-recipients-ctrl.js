@@ -12,7 +12,6 @@ angular.module('cmRoutes').controller('PurlRecipientCtrl',[
     function($scope, $rootScope, $routeParams, cmModal, cmPurlModel, cmConversationFactory){
 
         $rootScope.pendingPurl      = null;
-
         $scope.showSignIn           = false;
         $scope.purlId               = $routeParams.purlId || '';
 
