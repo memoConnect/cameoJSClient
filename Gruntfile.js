@@ -839,7 +839,7 @@ module.exports = function (grunt) {
     grunt.registerTask('genAllTemplates', [
         'template:config-tests',
         'template:config-webApp',
-        'template:main-webApp',
+        //'template:main-webApp',
         'template:index-www',
         'template:config-phonegap',
         'template:config-protractor',
