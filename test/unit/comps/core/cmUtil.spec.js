@@ -314,6 +314,22 @@ describe('cmUtil', function() {
                 expect(cmUtil.compareDate(current, prev)).toBe(true)
             })
         })
+
+        describe('test with real date which create a gui error', function(){
+            it('test 1 should be true', function(){
+                var current = 1411153446045 // 19.09.2014 21:04:06
+                var prev = 1411151556026 // 19.09.2014 20:32:36
+
+                expect(cmUtil.compareDate(current, prev)).toBe(false)
+            })
+
+            it('test 2 should be true', function(){
+                var current = 1411154387354 // 19.09.2014 21:19:47
+                var prev = 1411153446045 // 19.09.2014 21:04:06
+
+                expect(cmUtil.compareDate(current, prev)).toBe(false)
+            })
+        })
     })
 
     describe('millisecondsToStr', function () {
