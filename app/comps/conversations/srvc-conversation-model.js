@@ -708,10 +708,11 @@ angular.module('cmConversations')
             };
 
             this.disablePassCaptcha = function(){
-//                cmLogger.debug('cmConversationModel.disablePassCaptcha');
+                cmLogger.debug('cmConversationModel.disablePassCaptcha');
                 if(!this.state.is('new')) return ;
 
                 this.options.hasCaptcha = false;
+                this.tmpPassCaptcha = '';
                 this.trigger('captcha:disabled');
 
                 return this;
