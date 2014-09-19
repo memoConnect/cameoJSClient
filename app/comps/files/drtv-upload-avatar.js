@@ -9,17 +9,18 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
             restrict: 'E',
             templateUrl: 'comps/files/drtv-upload-avatar.html',
 
-            link: function (scope, element) {
+            link: function (scope) {
+                scope.imageUpload = false;
                 // after add a image
                 var watcher = $rootScope.$on('cmFiles:fileSetted', function(){
                     $rootScope.$broadcast('checkFiles', {
                         passphrase: undefined,
                         success: function(files) {
                             if (files.length > 0) {
+                                scope.imageUpload = true;
                                 files[0].uploadChunks();
                                 files[0].one('upload:finish',function(){
-                                    console.log('upload:finish');
-
+                                    scope.imageUpload = false;
                                     cmUserModel
                                     .data.identity
                                     .update({

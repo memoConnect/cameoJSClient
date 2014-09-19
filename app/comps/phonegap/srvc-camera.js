@@ -116,7 +116,7 @@ angular.module('cmPhonegap').service('cmCamera', [
                         encodingType: Camera.EncodingType.JPEG,
                         destinationType: Camera.DestinationType.DATA_URL,
                         mediaType: Camera.MediaType.PICTURE,
-                        cameraDirection: Camera.Direction[!useFrontCamera?'FRONT':'BACK'],
+                        cameraDirection: Camera.Direction[useFrontCamera?'FRONT':'BACK'],
                         saveToPhotoAlbum: true
                     }
                 );

@@ -284,6 +284,8 @@ cm-upload-avatar {
     height:100%;
   }
   button {
+    height:@cm-unit;
+    width:@cm-unit;
     position: absolute;
     left: 0;
     bottom: 0;
@@ -294,6 +296,10 @@ cm-upload-avatar {
     -webkit-box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
     -moz-box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
     box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
+    cm-spinner{
+      height:@cm-unit;
+      top:@cm-unit/2;
+    }
     i {
       color:@cm-grey;
       font-size: @cm-mega-font;

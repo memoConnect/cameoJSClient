@@ -8,13 +8,21 @@ angular.module('cmFiles').directive('cmFileChoose', [
     function (cmDevice,
               $rootScope) {
 
-        var tpl = '<input type="file" data-qa="btn-file-choose" />';
+        var tpl = '<input type="file" data-qa="btn-file-choose" accept="{{accept}}" />';
 
         return {
             restrict: 'AE',
             require: '^cmFiles',
             template: tpl,
 
+            controller: function($scope, $element, $attrs){
+                // use accept var
+                console.log($attrs)
+                $scope.accept = '*';//file_extension|audio/*|video/*|image/*|media_type
+                if('cmAccept' in $attrs){
+                    $scope.accept = $attrs.cmAccept;
+                }
+            },
             link: function (scope, element, attrs, cmFilesCtrl) {
                 var index = 1;
 
@@ -42,7 +50,8 @@ angular.module('cmFiles').directive('cmFileChoose', [
 
                 // reset files from sended message
                 scope.$on('reset:files',function(){
-                    element.html(tpl);
+                    console.log()
+                    element.html(tpl.replace('{{accept}}',scope.accept));
                     index++;
                     addCounter();
                 });
