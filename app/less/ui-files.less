@@ -84,8 +84,10 @@ cm-files{
     position:absolute;
     right:0;
     top:0;
+    bottom:0;
+    left:0;
     width:100%;
-
+    z-index: 1;
     input{
       .with-cursor;
       bottom:0;
@@ -221,10 +223,38 @@ cm-modal.modal-image-fullscreen{
 
 cm-choose-source{
   display:block;
-  position:absolute;
-  bottom:@cm-footer-height;
-  left:0;
-  background-color:@cm-black;
+  font-size:3rem;
+  .wrapper{
+    position:absolute;
+    left:0;
+    background-color:@cm-black;
+    > i.fa{// cm-nose
+      position:absolute;
+      color:black;
+      left: 0;
+      &.flip {
+        -moz-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        transform: scaleX(-1);
+        -ms-filter: fliph; /*IE*/
+        filter: fliph; /*IE*/
+      }
+    }
+    &.down{
+      top:7.8rem;
+      > i.fa{
+        top: -3.2rem;
+      }
+    }
+    &.up{
+      bottom:@cm-unit;
+      > i.fa{
+        bottom: -2.7rem;
+      }
+    }
+  }
+
   div.source {
     color:@cm-white;
     white-space:nowrap;
@@ -241,18 +271,40 @@ cm-choose-source{
       vertical-align:sub;
     }
   }
-  i.cm-nose-down{
-    position:absolute;
-    color:black;
+}
+
+cm-upload-avatar {
+  display:block;
+  position:absolute;
+  width:100%;
+  height:100%;
+  z-index: 1;
+  cm-files{
+    width:100%;
+    height:100%;
+  }
+  button {
+    height:@cm-unit;
+    width:@cm-unit;
+    position: absolute;
     left: 0;
-    bottom: -2.7rem;
-    &.flip {
-      -moz-transform: scaleX(-1);
-      -webkit-transform: scaleX(-1);
-      -o-transform: scaleX(-1);
-      transform: scaleX(-1);
-      -ms-filter: fliph; /*IE*/
-      filter: fliph; /*IE*/
+    bottom: 0;
+    background: @cm-overlay-light-transparent;
+    -webkit-border-top-right-radius: 1rem;
+    -moz-border-radius-topright: 1rem;
+    border-top-right-radius: 1rem;
+    -webkit-box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
+    -moz-box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
+    cm-spinner{
+      height:@cm-unit;
+      top:@cm-unit/2;
+    }
+    i {
+      color:@cm-grey;
+      font-size: @cm-mega-font;
+      line-height: 4rem !important;
+      .cm-unit-btn;
     }
   }
 }

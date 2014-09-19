@@ -7,26 +7,29 @@ angular.module('cmConversations').directive('cmRecipientTag',[
             restrict: 'AE',
             scope: {
                 selected: "=cmDataSelected",
-                contact: "=cmDataContact",
+                identity: "=cmData",
                 conversation: "=cmDataConversation"
             },
             templateUrl: 'comps/conversations/drtv-recipient-tag.html',
             controller: function($scope){
-                $scope.addRecipient = function(recipient){
-                    $scope.selected[recipient.id] = true;
-                    $scope.conversation.addRecipient(recipient);
+                $scope.addRecipient = function(){
+                    $scope.selected[$scope.identity.id] = true;
+                    $scope.conversation.addRecipient($scope.identity);
                 };
 
-                $scope.removeRecipient = function(recipient){
+                $scope.removeRecipient = function(){
                     if($scope.disabled_remove) return null;
-                    delete $scope.selected[recipient.id];
-                    $scope.conversation.removeRecipient(recipient);
+                    delete $scope.selected[$scope.identity.id];
+                    $scope.conversation.removeRecipient($scope.identity);
                 };
 
-                $scope.toggleRecipient = function(recipient){
-                    $scope.selected[recipient.id]
-                        ?   $scope.removeRecipient(recipient)
-                        :   $scope.addRecipient(recipient);
+                $scope.toggleRecipient = function(){
+                    if(!$scope.conversation.state.is('new'))
+                        return false;
+
+                    $scope.selected[$scope.identity.id]
+                        ?   $scope.removeRecipient($scope.identity)
+                        :   $scope.addRecipient($scope.identity);
                 };
             }
         }

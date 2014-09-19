@@ -1,14 +1,16 @@
 <section class="body-group recipients" ng-if="conversation.state.is('new') || !conversation.state.is('new') && conversation.recipients.length > 1">
-    <label>
+    <label ng-click="toggleRecipientView()">
+        <i class="fa cm-lg-icon" ng-class="{'cm-grid':!showGrid,'cm-menu-weight':showGrid}"></i>
         {{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}
         <span class="recipients-counter">({{conversation.recipients.length-1}})</span>
-        <span class="recipient-name">{{recipientName}}</span>
+        <span class="recipient-name" ng-show="showGrid">{{recipientName}}</span>
     </label>
     <div class="recipients-list">
         <div
             class="scroller"
             ng-class="{
-                'show-scrollbar': conversation.recipients.length > 7
+                'show-scrollbar': conversation.recipients.length > 7 && showGrid,
+                'disable-scrollbar': !showGrid
             }">
             <div
                 class="add-new-recipients"
@@ -17,14 +19,17 @@
                 <cm-avatar cm-view="unknown"></cm-avatar>
                 <span>{{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS'|cmTranslate}}</span>
             </div>
-            <cm-avatar
-                cm-data="recipient"
-                ng-click="showName(recipient)"
-                ng-class="{
-                    'name-shown': recipientName == recipient.getDisplayName()
-                }"
-                ng-repeat="recipient in conversation.recipients|cmHideAppOwner|orderBy:'getDisplayName()':false"
-                cm-first-of-repeat="showName(recipient)"></cm-avatar>
+                <cm-avatar
+                    cm-data="recipient"
+                    ng-click="showName(recipient)"
+                    ng-class="{
+                        'name-shown': recipientName == recipient.getDisplayName()
+                    }"
+                    ng-repeat="recipient in conversation.recipients|cmHideAppOwner|orderBy:'getDisplayName()':false"
+                    cm-first-of-repeat="showName(recipient)"
+                    ng-show="showGrid">
+                </cm-avatar>
+            <cm-recipients-comma-seperated cm-data="conversation" ng-show="!showGrid"></cm-recipients-comma-seperated>
         </div>
         <div
             class="cm-add-button"
@@ -72,10 +77,10 @@
 
 <div
     ng-repeat="message in conversation.messages | orderBy:'created':false "
-    cm-scroll-to="#conversation-bottom"
+    cm-scroll-to="{anchor:'#conversation-bottom',force:'bottom'}"
     cm-last-message>
     <cm-date-seperator ng-if="(compareDate(message.created,conversation.messages[$index - 1].created))">
-        {{message.created | date:'dd.MM.yyyy'}}
+        <cm-time-converter  cm-timestamp="message.created" cm-special-type="'date-seperator'"></cm-time-converter>
     </cm-date-seperator>
     <cm-message cm-data="message" cm-data-conversation="conversation"></cm-message>
 </div>
@@ -90,7 +95,7 @@
                 <div cm-user-rights>
                     <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
                     <cm-files-preview></cm-files-preview>
-                    <cm-choose-source></cm-choose-source>
+                    <cm-choose-source cm-options="{tooltip:'up'}"></cm-choose-source>
                 </div>
                 <div
                     data-qa="btn-fast-registration"

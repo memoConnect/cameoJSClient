@@ -8,7 +8,6 @@ angular.module('cmUi').filter('cmRecipients', [
             var arrayFiltered = [],
                 objectOfRecipients = objectOfRecipients || {}
 
-
             if(!arrayToSearch.length) return arrayToSearch;
 
             // iterate all

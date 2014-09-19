@@ -11,7 +11,7 @@ angular.module('cmUser').directive('cmIdentityCreate', [
              $location, $q, $rootScope){
         return {
             restrict: 'E',
-            templateUrl: 'comps/user/drtv-identity-create.html',
+            templateUrl: 'comps/user/identity/drtv-identity-create.html',
             controller: function ($scope) {
 
                 $scope.formData = {

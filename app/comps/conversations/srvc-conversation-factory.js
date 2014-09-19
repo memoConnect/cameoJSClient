@@ -88,11 +88,18 @@ angular.module('cmConversations').service('cmConversationFactory', [
         /**
          * EventHandling
          */
-        $rootScope.$on('logout', function(){ self.reset() });
+        $rootScope.$on('logout', function(){ self.reset('cmConversations') });
 
         $rootScope.$on('identity:switched', function(){
             cmUserModel.one('update:finished', function(){
-                self.reset();
+                self.reset('cmConversations');
+                self.getList();
+            })
+        });
+
+        $rootScope.$on('login', function(){
+            cmUserModel.one('update:finished', function(){
+                self.reset('cmConversations');
                 self.getList();
             })
         });

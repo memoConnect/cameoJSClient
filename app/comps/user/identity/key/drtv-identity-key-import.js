@@ -7,11 +7,13 @@ angular.module('cmRouteSettings')
     'cmUtil',
     'cmUserModel',
     'cmModal',
+    'cmDevice',
     '$window',
-    function(cmNotify, cmKey, cmUtil, cmUserModel, cmModal, $window){
+    function(cmNotify, cmKey, cmUtil, cmUserModel, cmModal, cmDevice,
+             $window){
         return {
             restrict: 'E',
-            templateUrl: 'comps/user/drtv-identity-key-import.html',
+            templateUrl: 'comps/user/identity/key/drtv-identity-key-import.html',
             controller: function ($scope) {
                 // only one privKey!!!
                 if(cmUserModel.hasPrivateKey()){
@@ -21,7 +23,7 @@ angular.module('cmRouteSettings')
 
                 $scope.isValid = false;
 
-                var detect = cmUtil.detectOSAndBrowser();
+                var detect = cmDevice.detectOSAndBrowser();
 
                 $scope.import = function(){
                     var key = (new cmKey()).importData({

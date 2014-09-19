@@ -11,12 +11,17 @@ angular.module('cmPhonegap').directive('cmChooseSource', [
         return {
             restrict: 'E',
             require: '^cmFiles',
-            template: '<div class="wrapper" ng-show="showList">'+
-                        '<div class="source" ng-repeat="type in types" ng-click="choosedType(type)">' +
-                            '<i class="fa {{type.icon}}"></i>{{\'DRTV.CHOOSE_SOURCE.\'+type.i18n|cmTranslate}}' +
-                        '</div>'+
-                        '<i class="fa cm-nose-down flip"></i>'+
-                      '</div>',
+            templateUrl: 'comps/phonegap/drtv-choose-source.html',
+            scope: {
+                cmOptions: '=cmOptions'
+            },
+            controller: function($scope){
+                // option for drtv
+                $scope.options = angular.extend({}, {
+                    tooltip:'up', // up | down
+                    useFrontCamera: false
+                }, $scope.cmOptions || {});
+            },
 
             link: function (scope, element, attrs, cmFilesCtrl) {
                 // only for phonegap
@@ -32,6 +37,9 @@ angular.module('cmPhonegap').directive('cmChooseSource', [
 
                 // watch for extern handler
                 $rootScope.$on('cmChooseSource:open', function(){
+
+                    console.log('juhu cmChooseSource:open')
+
                     scope.toggleList('show',true);
                 });
 
@@ -42,10 +50,11 @@ angular.module('cmPhonegap').directive('cmChooseSource', [
                         case "camera":
                             cmCamera.takePhoto(function(blob){
                                 cmFilesCtrl.setFile(blob);
-                            });
+                            },scope.options.useFrontCamera);
                         break;
                         case "file":
-                            cmCamera.chooseFile(function (blob) {
+                            cmCamera.chooseFile(function(blob){
+                                blob.useLocalUri = true;
                                 cmFilesCtrl.setFile(blob);
                             });
                         break;
@@ -57,7 +66,7 @@ angular.module('cmPhonegap').directive('cmChooseSource', [
 
                 function findParent (tag_name, el) {
                     // loop up until parent element is found
-                    while (el && el.nodeName !== tag_name) {
+                    while (el && el.nodeName.toLowerCase() !== tag_name) {
                         el = el.parentNode;
                     }
                     // return found element
@@ -66,15 +75,20 @@ angular.module('cmPhonegap').directive('cmChooseSource', [
 
                 function clickOutside(e){
                     if(e.target != element[0] && // target not emojilist
-                        !findParent('CM-CHOOSE-SOURCE',e.target) && // chooselist isnt parent
-                        !findParent('CM-FILES',e.target) // isnt handler
+                        !findParent('cm-choose-source',e.target) // chooselist isnt parent
+                     && !findParent('cm-files',e.target) // isnt handler
                         ) {
                         scope.toggleList('close',true);
                     }
                 }
 
                 scope.toggleList = function(action, withApply){
-                    scope.showList = action != undefined && action == 'close' || action == undefined && scope.showList ? false : true;
+                    scope.showList = action && action == 'close'
+                                  || action && action == 'show' && scope.showList
+                                  || !action && scope.showList
+                                  ? false : true;
+
+                    console.log(action, scope.showList)
 
                     if(scope.showList){
                         body.on('click',clickOutside);

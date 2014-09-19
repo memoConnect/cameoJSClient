@@ -9,13 +9,15 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
     'cmKey',
     'cmJob',
     'cmApi',
+    'cmDevice',
     '$window',
     '$rootScope',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify, cmKey, cmJob, cmApi,
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger,
+             cmNotify, cmKey, cmJob, cmApi, cmDevice,
              $window, $rootScope){
         return {
             restrict: 'E',
-            templateUrl: 'comps/user/drtv-identity-key-create.html',
+            templateUrl: 'comps/user/identity/key/drtv-identity-key-create.html',
             controller: function ($scope) {
                 // only one privKey!!!
                 if(cmUserModel.hasPrivateKey()){
@@ -29,7 +31,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                  * scope vars for keypair generation
                  * @type {string[]}
                  */
-                var detect = cmUtil.detectOSAndBrowser();
+                var detect = cmDevice.detectOSAndBrowser();
 
                 $scope.active = 'choose'; // choose, active, store
                 //$scope.keySizes = cmCrypt.getKeySizes();
@@ -128,7 +130,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                  * cancel keypair generation
                  */
                 $scope.cancelGeneration = function(){
-                    cmLogger.debug('cancel key generation');
+                    //cmLogger.debug('cancel key generation');
                     cmCrypt.cancelGeneration();
                     cmJob.stop();
                     cmApi.listenToEvents();
@@ -137,7 +139,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                 };
 
                 $scope.cancel = function(){
-                    cmLogger.debug('cancel');
+                    //cmLogger.debug('cancel');
                     $scope.cancelGeneration();
 
                     if(typeof $rootScope.generateAutomatic != 'undefined'){

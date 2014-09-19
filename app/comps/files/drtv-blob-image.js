@@ -7,7 +7,6 @@ angular.module('cmFiles').directive('cmBlobImage',[
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
-                // TODO: thumbnail
 
                 function showFile(file){
                     if(typeof file.blob == 'object'){
@@ -22,8 +21,8 @@ angular.module('cmFiles').directive('cmBlobImage',[
                                     file.loaded = true;
                                 });
 
-                                if(attrs.cmScrollToTarget) {
-                                    $rootScope.$broadcast('scroll:to',attrs.cmScrollToTarget)
+                                if(attrs.cmScrollTo) {
+                                    $rootScope.$broadcast('scroll:to');
                                 }
                             });
                         });

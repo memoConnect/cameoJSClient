@@ -36,13 +36,13 @@ angular.module('cmCore')
     'cmNotify',
     'cmLogger',
     'cmCallbackQueue',
-    'cmDevice',
+    'cmPushNotificationAdapter',
     '$rootScope',
     '$q',
     '$location',
     function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmIdentityModel, cmFactory,
              cmCrypt, cmKeyFactory, cmKey, cmStateManagement, cmObject, cmUtil,
-             cmNotify, cmLogger, cmCallbackQueue, cmDevice,
+             cmNotify, cmLogger, cmCallbackQueue, cmPushNotificationAdapter,
              $rootScope, $q, $location){
         var self = this,
             isAuth = false,
@@ -61,7 +61,8 @@ angular.module('cmCore')
             lastUpdated: '',
             userType: '',
             storage: {},
-            identity: {}
+            identity: {},
+            identities: []
         };
 
         cmObject.addEventHandlingTo(this);
@@ -104,7 +105,15 @@ angular.module('cmCore')
             this.data.identity = activeIdentity;
             this.data.identity.isAppOwner = true;
             // new factory for own identities
-            this.data.identities = new cmFactory(cmIdentityModel).importFromDataArray(data_identities);
+
+            /**
+             * @todo may an own factory but not a new identityFactory!
+             */
+            this.data.identities.push(activeIdentity);
+            data_identities.forEach(function(identity){
+                if(identity.id != self.data.identity.id)
+                    self.data.identities.push(cmIdentityFactory.clear(identity).create(identity));
+            });
 
             isAuth = true;
             this.initStorage();
@@ -125,7 +134,7 @@ angular.module('cmCore')
             //cmLogger.debug('cmUserModel:loadIdentity');
 
             var deferred = $q.defer();
-
+            // for login
             function importAccount(accountData){
                 if(typeof accountData !== 'undefined' && 'identities' in accountData){
                     var arr_activeIdentity = accountData.identities.filter(function(identity){
@@ -143,14 +152,15 @@ angular.module('cmCore')
                     // handle account data
                     // TODO: set account data
 
-                    cmDevice.checkRegisteredDevice(accountData.pushDevices);
+                    // check device for pushing
+                    cmPushNotificationAdapter.checkRegisteredDevice(accountData.pushDevices);
 
                     return true;
                 }
 
                 return false;
             }
-
+            // for purl
             function importIdentity(identity_data){
                 if(typeof identity_data == 'object'){
 

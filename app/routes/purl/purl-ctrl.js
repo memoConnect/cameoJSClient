@@ -15,17 +15,19 @@ angular.module('cmRoutes').controller('PurlCtrl',[
 
         $scope.showSignIn           = false;
         $scope.purlId               = $routeParams.purlId || '';
+        $scope.headerGuest          = true;
 
-        if($routeParams.purlId){
-            cmPurlModel.getPurl($routeParams.purlId).then(
-                function(data){
-                    // identity check internal || external user
-                    cmPurlModel.handleIdentity(data.identity);
+            if($routeParams.purlId){
+                cmPurlModel.getPurl($routeParams.purlId).then(
+                    function(data){
+                        // identity check internal || external user
+                        cmPurlModel.handleIdentity(data.identity);
 
-                    if(data.identity.userType == 'external'){
-                        $scope.showSignIn = true;
-                        $rootScope.pendingPurl = $routeParams.purlId;
-                    }
+                        if(data.identity.userType == 'external'){
+                            $rootScope.pendingPurl = $routeParams.purlId;
+                        } else {
+                            $scope.headerGuest = false;
+                        }
 
                     if(typeof data.token !== 'undefined'){
                         cmPurlModel.handleToken(data.token)

@@ -92,11 +92,11 @@ module.exports = function (grunt) {
             console.log("phonegap name: " + buildConfig.phonegap.baseName + buildConfig.phonegap.extraName);
             console.log("phonegap version: " + buildConfig.phonegap.version);
         } else {
-            buildConfig.config.version = "no version";
+            buildConfig.config.version = "0.2.6"; // default for local dev
             buildConfig.phonegap.version = "0.0.1";
         }
 
-        if(buildConfig.config.version == 'no version'){
+        if(buildConfig.config.version == '0.2.6'){
             buildConfig.config.urlBust =  (new Date()).getTime();
         } else {
             buildConfig.config.urlBust = buildConfig.config.version.replace(/\./g,'');
@@ -535,7 +535,6 @@ module.exports = function (grunt) {
                 'options': {
                     'data': {
                         'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'+
-                                        '<script type="text/javascript" charset="utf-8" src="vendor/puship/PushipNotification.js"></script>'+
                                         '<script type="text/javascript" charset="utf-8" src="config.js"></script>'+
                                         (globalCameoBuildConfig.debug.weinre ? '<script src="http://'+globalCameoBuildConfig.debug.weinreIp+':8080/target/target-script-min.js#anonymous"></script>' : ''),
                         'phonegapOnload': ' onload="deviceReady()"'

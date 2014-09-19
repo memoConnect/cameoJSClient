@@ -195,12 +195,12 @@
         }
     ])
     // app run handling
-    .run(['cmNetworkInformation', 'cmPushIp',
-          function(cmNetworkInformation, cmPushIp){
+    .run(['cmNetworkInformation', 'cmPushNotificationAdapter',
+        function(cmNetworkInformation, cmPushNotificationAdapter){
         // check internet connection
         cmNetworkInformation.init();
         // register device for pushnotification
-        cmPushIp.init();
+        cmPushNotificationAdapter.init();
     }])
     .run(function() {
         // disabled the 3000 seconds delay on click when touch ;)
@@ -223,28 +223,12 @@
         'cmLogger',
         'cfpLoadingBar',
         'cmEnv',
+        'cmVersion',
         'cmApi',
         'cmHooks',
         'cmSystemCheck',
         'cmError',
-        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmApi, cmHooks, cmSystemCheck, cmError) {
-            $rootScope.$on('getBrowserInfo', function(){
-                //get browser language:
-                cmApi.get({
-                    path: '/services/getBrowserInfo'
-                })
-                .then(
-                    function(data){
-                        if(!cmUserModel.isAuth()){
-                            var language = data.languageCode.substr(0,2),
-                                lc       = language == 'de' ? 'de_DE' : 'en_US'
-                            cmLanguage.switchLanguage(lc)
-                        }
-                    }
-                );
-            });
-
-            $rootScope.$broadcast('getBrowserInfo');
+        function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion, cmApi, cmHooks, cmSystemCheck, cmError) {
 
             //prep $rootScope with useful tools
             $rootScope.console  =   window.console;

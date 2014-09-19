@@ -3,11 +3,11 @@
 angular.module('cmUser').directive('cmLogin', [
     'cmNotify',
     'cmUserModel',
-    'cmUserKeyStorageService',
+    'cmKeyStorageService',
     'cmCrypt',
     'cmConfig',
     '$location',
-    function (cmNotify, cmUserModel, cmUserKeyStorageService, cmCrypt, cmConfig, $location) {
+    function (cmNotify, cmUserModel, cmKeyStorageService, cmCrypt, cmConfig, $location) {
         return  {
             restrict    :   'A',
             templateUrl :   'comps/user/drtv-login.html',
@@ -74,7 +74,7 @@ angular.module('cmUser').directive('cmLogin', [
                     )
                     .then(
                         function(){
-                            var storageService = new cmUserKeyStorageService('appSettings'),
+                            var storageService = new cmKeyStorageService('appSettings'),
                                 skipKeyInfo = storageService.get('skipKeyInfo') || false;
 
                             if(!$location.$$path.match(/\/purl\/.*/)){

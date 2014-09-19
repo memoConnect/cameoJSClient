@@ -7,9 +7,13 @@ angular.module('cmUser').directive('cmIdentityEdit', [
     function(cmUserModel, cmNotify, $q){
         return {
             restrict: 'E',
-            templateUrl: 'comps/user/drtv-identity-edit.html',
+            templateUrl: 'comps/user/identity/drtv-identity-edit.html',
             controller: function ($scope) {
+
                 $scope.identity = angular.extend({},cmUserModel.data.identity);
+                cmUserModel.data.identity.on('update:finished',function(){
+                    $scope.identity = angular.extend({},cmUserModel.data.identity);
+                });
 
                 //////////////////////
                 // TODO: mock workarround json in array
@@ -72,7 +76,6 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                             checkPhoneNumber();
 
                             cmUserModel.data.identity.update(objectChange);
-
 
                             function callback_save_identity(){
                                 cmNotify.info('IDENTITY.NOTIFY.UPDATE.SUCCESS',{ttl:3000,displayType:'modal'});

@@ -13,11 +13,11 @@ angular.module('cmConversations')
 .directive('cmConversation', [
 
     'cmConversationFactory', 'cmUserModel', 'cmCrypt', 'cmLogger', 'cmNotify',
-    'cmModal', 'cmEnv', 'cmUtil', 'cmTransferScopeData',
+    'cmModal', 'cmEnv', 'cmUtil', 'cmSettings', 'cmKeyStorageService', 'cmTransferScopeData',
     '$location', '$rootScope', '$document', '$routeParams',
 
     function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify,
-              cmModal, cmEnv, cmUtil, cmTransferScopeData,
+              cmModal, cmEnv, cmUtil, cmSettings, cmKeyStorageService, cmTransferScopeData,
               $location, $rootScope, $document, $routeParams) {
         return {
             restrict: 'AE',
@@ -30,8 +30,9 @@ angular.module('cmConversations')
                     conversation_subject = $scope.$eval($attrs.cmSubject),
                     conversation_offset  = $attrs.offset,
                     conversation_limit   = $attrs.limit,
-                    files                = [],
-                    showedAsymmetricKeyError = false;
+                    filesForMessage      = [],
+                    showedAsymmetricKeyError = false,
+                    storageService = new cmKeyStorageService('conversation-recipient-view');
 
                 $scope.isSending        = false;
                 $scope.isSendingAbort   = false;
@@ -40,6 +41,27 @@ angular.module('cmConversations')
                 $scope.showName = function(identity){
                     if(identity && !('isAppOwner' in identity))
                         $scope.recipientName = identity.getDisplayName();
+                };
+
+                /**
+                 * handle Recipient View
+                 */
+                $scope.showGrid = cmSettings.get('defaultShowRecipientAvatar'); // degault grid off, wenn recipient.legnth > 2
+                if(!$scope.conversation.state.is('new')){
+                    $scope.showGrid = storageService.get($scope.conversation.id)
+                }
+                $scope.toggleRecipientView = function(){
+                    if($scope.showGrid){
+                        $scope.showGrid = false;
+                        if(!$scope.conversation.state.is('new')){
+                            storageService.set($scope.conversation.id, false)
+                        }
+                    } else {
+                        $scope.showGrid = true;
+                        if(!$scope.conversation.state.is('new')){
+                            storageService.set($scope.conversation.id, true)
+                        }
+                    }
                 };
 
                 /**
@@ -68,41 +90,33 @@ angular.module('cmConversations')
                         }
 
                         /**
-                         * Nested functions in comps/files/drtv-files.js
                          * check if files exists
-                         * after success resolve step again in here without files
+                         * after success sendMessage
                          */
-//                        console.log('send',$scope.hasFiles(),$scope.conversation.getPassphrase())
-                        if($scope.hasFiles()) {
-                            $scope.prepareFilesForUpload($scope.conversation.getPassphrase(), $scope.conversation.id).then(
-                                function(){
-                                    angular.forEach($scope.files, function(file){
-                                        if(file.id != undefined){
-                                            files.push(file);
-                                        }
-                                    });
-
-                                    /**
-                                     * Nested Function in drtv-attachments
-                                     */
-                                    $scope.resetFiles();
-
+                        $rootScope.$broadcast('checkFiles', {
+                            passphrase: $scope.conversation.getPassphrase(),
+                            conversationId: $scope.conversation.id,
+                            success: function(files) {
+                                if (files.length > 0) {
+                                    filesForMessage = files;
                                     sendMessage();
-                                },function(r){
-                                    $scope.isSending = false;
-                                    $scope.isSendingAbort = true;
-                                    cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED',{
-                                        ttl:0,
-                                        i18n: {
-                                            maxFileSize: r.data.error.maxFileSize,
-                                            fileSize: r.config.headers['X-File-Size'],
-                                            fileName: r.config.headers['X-File-Name']
-                                        }
-                                    });
+                                } else {
+                                    sendMessage();
+                                }
+                            },
+                            error: function(error, header) {
+                                $scope.isSending = false;
+                                $scope.isSendingAbort = true;
+                                cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
+                                    ttl: 0,
+                                    i18n: {
+                                        maxFileSize: error,
+                                        fileSize: header['X-File-Size'],
+                                        fileName: header['X-File-Name']
+                                    }
                                 });
-                        } else {
-                            sendMessage();
-                        }
+                            }
+                        });
                     }
                 };
 
@@ -155,9 +169,7 @@ angular.module('cmConversations')
                  * @returns {boolean}
                  */
                 function isMessageValid(){
-//                    console.log('isMessageValid', $scope.newMessageText, files.length)
-                   
-                    if((typeof $scope.newMessageText == 'string' &&  $scope.newMessageText != '') || files.length > 0){
+                    if((typeof $scope.newMessageText == 'string' &&  $scope.newMessageText != '') || filesForMessage.length > 0){
                         return true;
                     }
                     return false;
@@ -209,7 +221,7 @@ angular.module('cmConversations')
 
                     $scope.conversation.messages
                     .create({conversation:$scope.conversation})
-                    .addFiles(files)
+                    .addFiles(filesForMessage)
                     .setText($scope.newMessageText)
                     .setPublicData(
                         $scope.conversation.getPassphrase() === null
@@ -222,7 +234,7 @@ angular.module('cmConversations')
                         clearTransferScopeData();
                         //@ TODO: solve rekeying another way:
                         $scope.newMessageText = '';
-                        files = [];
+                        filesForMessage = [];
                         $scope.isSending = false;
 
                         //Todo: This is not the right place to count messages:
