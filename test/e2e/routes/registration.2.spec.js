@@ -96,15 +96,14 @@ describe('Registration: ', function () {
         util.waitForPageLoad("/terms")
     })
 
-    it('should create account with valid credentials', function() {
+    it('should create account with valid credentials and have a support talk', function() {
         var loginName = util.createTestUser()
         util.waitForPageLoad('/start/welcome')
 
         util.get('/talks')
         util.waitForPageLoad('/talks')
-
-        expect($(".empty-list").isPresent()).toBe(true)
-
+        // support talks should be present
+        util.waitForElement("[data-qa='conversation-list-element']")
         $$("[data-qa='conversation-list-element']").then(function (elements) {
             expect(elements.length).toBe(1)
         })
