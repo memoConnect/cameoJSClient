@@ -827,7 +827,7 @@ angular.module('cmCore')
             }
 
             if(typeof data == 'object' && 'goToLogin' in data && typeof data.goToLogin === 'undefined' || data.goToLogin !== false){
-                $location.path('/login');
+                $rootScope.goTo('/login');
             }
         });
 
