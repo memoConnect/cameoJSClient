@@ -51,8 +51,6 @@ angular.module('cmCore')
                     return this;
                 }
 
-                console.log(data)
-
                 this.id                     = data.id || this.id;
                 this.displayName            = data.displayName || this.displayName;
                 this.userKey                = data.userKey || this.userKey;
