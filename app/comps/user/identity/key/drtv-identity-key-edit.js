@@ -11,9 +11,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyEdit', [
              $rootScope, $routeParams){
         return {
             restrict: 'E',
-            templateUrl: 'comps/user/drtv-identity-key-edit.html',
+            templateUrl: 'comps/user/identity/key/drtv-identity-key-edit.html',
             controller: function ($scope) {
-
                 var localKeys   = cmUserModel.loadLocalKeys(),
                     key         = localKeys.find($routeParams.keyId) || cmUserModel.data.identity.keys.find($routeParams.keyId) || {};
 

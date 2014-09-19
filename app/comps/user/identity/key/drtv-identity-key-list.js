@@ -7,7 +7,7 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
     function(cmUserModel, cmModal, cmKey){
         return {
             restrict: 'E',
-            templateUrl: 'comps/user/drtv-identity-key-list.html',
+            templateUrl: 'comps/user/identity/key/drtv-identity-key-list.html',
             controller: function ($scope) {
                 $scope.privateKeys = [];
                 $scope.publicKeys = [];

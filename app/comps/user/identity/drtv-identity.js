@@ -7,7 +7,7 @@ angular.module('cmUser').directive('cmIdentity',[
               $rootScope){
         return {
             restrict: 'AE',
-            templateUrl: 'comps/user/drtv-identity.html',
+            templateUrl: 'comps/user/identity/drtv-identity.html',
             scope: true,
             controller: function($scope){
                 $scope.randModalId = Math.floor((Math.random()*6)+1);

@@ -47,6 +47,7 @@
     <preference name="ErrorUrl" value=""/>
     <preference name="AndroidPersistentFileLocation" value="Internal" />
     <!-- build -->
+    <!-- http://de.wikipedia.org/wiki/Liste_von_Android-Versionen -->
     <preference name="android-minSdkVersion" value="7" />
     <preference name="android-maxSdkVersion" value="19" />
     <preference name="android-targetSdkVersion" value="15" />

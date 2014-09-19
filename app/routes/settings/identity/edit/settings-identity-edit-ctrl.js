@@ -4,7 +4,8 @@ define([
     'ngload!pckUi',
     'ngload!pckUser',
     'ngload!pckWidgets',
-    'ngload!pckValidate'
+    'ngload!pckValidate',
+    'ngload!pckFiles'
 ], function (app) {
     'use strict';
 

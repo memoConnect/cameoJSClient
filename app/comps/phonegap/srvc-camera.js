@@ -95,13 +95,13 @@ angular.module('cmPhonegap').service('cmCamera', [
                 }
                 return true;
             },
-            takePhoto: function (callback){
+            takePhoto: function (callback, useFrontCamera){
                 if(!this.existsPlugin()){
                     return false;
                 }
 
                 if(callback == undefined)
-                    callback = function(){}
+                    callback = function(){};
 
                 navigator.camera.getPicture(
                     function(base64){
@@ -115,7 +115,9 @@ angular.module('cmPhonegap').service('cmCamera', [
                         quality: 60,
                         encodingType: Camera.EncodingType.JPEG,
                         destinationType: Camera.DestinationType.DATA_URL,
-                        mediaType: Camera.MediaType.PICTURE
+                        mediaType: Camera.MediaType.PICTURE,
+                        cameraDirection: Camera.Direction[!useFrontCamera?'FRONT':'BACK'],
+                        saveToPhotoAlbum: true
                     }
                 );
             },
