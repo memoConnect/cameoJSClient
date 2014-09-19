@@ -31,6 +31,7 @@ angular.module('cmCore')
             if (options.privateData != undefined) {
                 privateData[options.id] = options.privateData;
             }
+
             // clear data exp.: password
             if (options.ignoreVar != '') {
                 delete scopeData[options.id][options.ignoreVar];

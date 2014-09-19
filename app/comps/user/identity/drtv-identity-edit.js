@@ -10,19 +10,26 @@ angular.module('cmUser').directive('cmIdentityEdit', [
             templateUrl: 'comps/user/identity/drtv-identity-edit.html',
             controller: function ($scope) {
 
-                $scope.identity = angular.extend({},cmUserModel.data.identity);
-                cmUserModel.data.identity.on('update:finished',function(){
+                function reset(){
                     $scope.identity = angular.extend({},cmUserModel.data.identity);
-                });
+                    console.log($scope.identity.phoneNumber)
+                    console.log($scope.identity.email)
+                    $scope.identity.phoneNumbers = [
+                        $scope.identity.phoneNumber || {value:''}
+                    ];
+                    $scope.identity.emails = [
+                        $scope.identity.email || {value:''}
+                    ];
+                }
+
+                // TODO on is undefined
+                cmUserModel.data.identity.on('update:finished',reset);
+
+                reset();
 
                 //////////////////////
                 // TODO: mock workarround json in array
-                $scope.identity.phoneNumbers = [
-                    $scope.identity.phoneNumber || {value:''}
-                ];
-                $scope.identity.emails = [
-                    $scope.identity.email || {value:''}
-                ];
+
                 //////////////////////
 
                 $scope.goToKeys = function(){
