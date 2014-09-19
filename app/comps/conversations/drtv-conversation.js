@@ -37,10 +37,21 @@ angular.module('cmConversations')
                 $scope.isSending        = false;
                 $scope.isSendingAbort   = false;
 
+
+                $scope.recipientName = '';
+                function showRecipientName(identity){
+                    $scope.recipientName = identity.getDisplayName();
+                }
+
                 // show name of incoming identity
                 $scope.showName = function(identity){
-                    if(identity && !('isAppOwner' in identity))
-                        $scope.recipientName = identity.getDisplayName();
+                    if(identity && !('isAppOwner' in identity) && $scope.recipientName != identity.getDisplayName()){
+                        showRecipientName(identity);
+
+                        identity.on('update:finished', function(){
+                            showRecipientName(identity);
+                        });
+                    }
                 };
 
                 /**
