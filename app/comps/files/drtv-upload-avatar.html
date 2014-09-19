@@ -1,9 +1,7 @@
-<div id="files-droparea">
-    <button>
-        <i class="fa cm-settings"></i>
-    </button>
-    <cm-files ng-model="files" data-qa="attachments-btn">
-        <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
-        <cm-choose-source></cm-choose-source>
-    </cm-files>
-</div>
+<button>
+    <i class="fa cm-settings"></i>
+</button>
+<cm-files ng-model="files" id="files-droparea">
+    <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
+    <cm-choose-source cm-options="{tooltip:'down',useFrontCamera:true}"></cm-choose-source>
+</cm-files>
