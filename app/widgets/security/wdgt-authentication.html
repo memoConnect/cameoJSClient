@@ -90,7 +90,7 @@
 </article>
 
 <article ng-if="step > 0 && step <3" class="content">
-    <div class="transaction-secret" ng-if="transactionSecret">
+    <div class="transaction-secret" ng-if="transactionSecret" data-qa="transaction-secret-value">
         {{transactionSecret || '...'}}
     </div>
     <ng-loader ng-if = "!transactionSecret"></ng-loader>
@@ -112,7 +112,7 @@
     <button
             ng-click    = "done()"
             class       = "cm-btn-block cm-btn-grey"
-            data-qa     = "btn-start-authentication"
+            data-qa     = "btn-cancel-authentication"
             cm-weight   = "1"
             >
         {{BASE+"START.CANCEL_BUTTON"|cmTranslate}}
@@ -140,7 +140,7 @@
     <button
             ng-click    = "cancel()"
             class       = "cm-btn-block cm-btn-grey"
-            data-qa     = "btn-start-authentication"
+            data-qa     = "btn-cancel-authentication"
             >
         {{BASE+"WAIT.CANCEL_BUTTON"|cmTranslate}}
         <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
