@@ -32,8 +32,6 @@ angular.module('cmPhonegap').service('cmDevice', [
                 return this.existsPlugin();
             },
             isAndroid: function(){
-                return true;
-
                 return this.existsPlugin()
                     && this.getPlatform().indexOf('android') >= 0;
             },
