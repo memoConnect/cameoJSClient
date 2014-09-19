@@ -17,7 +17,6 @@ angular.module('cmFiles').directive('cmFileChoose', [
 
             controller: function($scope, $element, $attrs){
                 // use accept var
-                console.log($attrs)
                 $scope.accept = '*';//file_extension|audio/*|video/*|image/*|media_type
                 if('cmAccept' in $attrs){
                     $scope.accept = $attrs.cmAccept;
