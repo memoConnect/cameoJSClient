@@ -94,12 +94,20 @@ angular.module('cmSecurityAspects')
                     dependencies: ['ENCRYPTED', 'NO_SYMMETRIC_KEY_TRANSMISSION'],
                     value: 1,
                     check: function(conversation){
-                        this.bad_recipients = conversation.recipients.filter(function(recipient){
-                            return !cmUserModel.verifyTrust(recipient)
-                        })
-                        return this.bad_recipients.length == 0
+                        /**
+                         * @todo work around hack from BB 19.09.2014
+                         */
+                        if(conversation.recipients.length < 3){
+                            this.bad_recipients = conversation.recipients.filter(function(recipient){
+                                return !cmUserModel.verifyTrust(recipient)
+                            })
+                        } else {
+                            this.bad_recipients = conversation.recipients.length;
+                        }
+
+                        return this.bad_recipients.length == 0;
                     }
-                })
+                });
 
             return self;
         }

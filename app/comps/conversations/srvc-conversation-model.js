@@ -1008,7 +1008,7 @@ angular.module('cmConversations')
 //                cmBoot.resolve();
                 self.setLastMessage();
                 self.decrypt();
-                self.securityAspects.refresh();
+                //self.securityAspects.refresh();
                 self.updateLockStatus();
                 //self.handleMissingAePassphrases();
             });
@@ -1016,14 +1016,14 @@ angular.module('cmConversations')
             this.on('encryption:enabled', function(){
 //                cmLogger.debug('cmConversationModel:on:encryption:enabled');
                 self.checkPreferences();
-                self.securityAspects.refresh();
+                //self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
             this.on('encryption:disabled', function(){
 //                cmLogger.debug('cmConversationModel:on:encryption:disabled');
                 self.checkPreferences();
-                self.securityAspects.refresh();
+                //self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
@@ -1036,37 +1036,36 @@ angular.module('cmConversations')
 
                     message_data.conversation = self;
                     self.messages.create(message_data).decrypt();
-                    self.setLastMessage()
+                    self.setLastMessage();
 
                     self.trigger('message:reInitFiles');
                 }
             });
 
-            this.recipients.on(['register', 'update:finished'], function(event, recipient){
-//                cmLogger.debug('cmConversationModel:on:recipient:register');                
-                self.checkPreferences();
-                self.securityAspects.refresh();
+            this.recipients.on(['register', 'update:finished', 'deregister'], function(){
+                //cmLogger.debug('cmConversationModel:recipients.on');
+                //self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
-            this.recipients.on('deregister', function(){
-//                cmLogger.debug('cmConversationModel:on:recipient:unregistered');                
-                self.checkPreferences();
-                self.securityAspects.refresh();
-                self.updateLockStatus();
-            });
+//            this.recipients.on('deregister', function(){
+////                cmLogger.debug('cmConversationModel:on:recipient:unregistered');
+//                self.checkPreferences();
+//                //self.securityAspects.refresh();
+//                self.updateLockStatus();
+//            });
 
-            this.on('captcha:enabled', function(){
+            this.on('captcha:enabled captcha:disabled', function(){
 //                cmLogger.debug('cmConversationModel:on:captcha:enabled');
-                self.securityAspects.refresh();
+//                self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
-            this.on('captcha:disabled', function(){
-//                cmLogger.debug('cmConversationModel:on:captcha:disabled');
-                self.securityAspects.refresh();
-                self.updateLockStatus();
-            });
+//            this.on('captcha:disabled', function(){
+////                cmLogger.debug('cmConversationModel:on:captcha:disabled');
+//                self.securityAspects.refresh();
+//                self.updateLockStatus();
+//            });
 
             this.messages.on('message:saved', function(){
                 self.setLastMessage();
@@ -1081,7 +1080,7 @@ angular.module('cmConversations')
 
             cmUserModel.on('key:stored key:removed', function(){
                 self.checkPreferences();
-                self.securityAspects.refresh();
+                //self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
