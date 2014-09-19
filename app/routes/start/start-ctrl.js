@@ -1,16 +1,8 @@
-define([
-    'app',
-    'ngload!pckCore',
-    'ngload!pckUi',
-    'ngload!pckUser',
-    'ngload!pckWidgets',
-], function (app) {
-    'use strict';
+'use strict';
 
-    app.register.controller('StartCtrl', [
-        // no dependencies
-        function() {
-            // nothing to do
-        }
-    ]);
-});
+angular.module('cmRoutes').controller('StartCtrl', [
+    // no dependencies
+    function() {
+        // nothing to do
+    }
+]);

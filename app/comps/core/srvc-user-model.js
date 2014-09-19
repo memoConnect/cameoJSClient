@@ -109,6 +109,12 @@ angular.module('cmCore')
             /**
              * @todo may an own factory but not a new identityFactory!
              */
+//            console.log(data_identities)
+            console.log(this.data.identities)
+            if(this.data.identities.length > 0)
+                this.data.identities = [];
+            console.log(this.data.identities)
+
             this.data.identities.push(activeIdentity);
             data_identities.forEach(function(identity){
                 if(identity.id != self.data.identity.id)

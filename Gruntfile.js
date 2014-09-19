@@ -254,7 +254,7 @@ module.exports = function (grunt) {
                 ],
                 dest: 'app/css/app.less'
             },
-            'css': {
+            'app-css': {
                 src: [
                     'app/css/bootstrap.min.css',
                     'app/css/!(style|bootstrap).css',
@@ -262,7 +262,7 @@ module.exports = function (grunt) {
                 ],
                 dest: 'app/css/style.css'
             },
-            'packages': {
+            'app-packages': {
                 options: {
                     banner: "'use strict';\n\n",
                     process: concatConvertCmFiles
@@ -284,23 +284,29 @@ module.exports = function (grunt) {
                     'security_aspects': 'app/comps/security_aspects',
                     'ui': 'app/comps/ui',
                     'phonegap': 'app/comps/phonegap',
+                    'routes': 'app/routes',
                     'widgets': 'app/widgets'
                 })
             },
-            'docs': {
+
+            'app-vendor': {
                 src: [
-                    'app/vendor/requirejs/require.js',
-                    'app/vendor/angular/angular.js',
-                    'app/vendor/angular/angular-route.js',
-                    'app/vendor/angular/angular-animate.js',
-                    'app/vendor/angular/angular-sanitize.js',
-                    'app/vendor/angular-growl/angular-growl.js',
-                    'app/vendor/angular-translate/angular-translate.js',
-                    'app/vendor/util/spin.js',
-                    'app/vendor/emoji/emoji.js',
+                    'app/vendor/!(angular)/*.js',
+                    'app/vendor/!(angular)/**/*.js',
+                    'app/vendor/angular/base/angular.js',
+                    'app/vendor/angular/base/angular-*.js',
+                    'app/vendor/angular/!(base)/*.js',
+                ],
+                dest: 'app/vendor.js'
+            },
+
+            'app-cameo': {
+                src: [
+                    'app/base/config.js',
+                    'app/base/app.js',
                     'app/packages/**/package.js'
                 ],
-                dest: 'docs/grunt-scripts/cameo-package.js'
+                dest: 'app/cameo.js'
             }
         },
         coffee: {
@@ -689,13 +695,14 @@ module.exports = function (grunt) {
         watch: {
             files: [
                 'config/*.json',
-                'templates/*',
                 'app/less/*.less',
+                'app/base/app.js',
+                'templates/**/*',
                 'app/comps/**/*',
-                'app/routes/**/comps/**/*',
+                'app/routes/**/*',
                 'app/widgets/**/*'
             ],
-            tasks: ['genAllTemplates', 'packages']
+            tasks: ['genAllTemplates', ':app:js-files']
         },
         less: {
             development: {
@@ -808,13 +815,13 @@ module.exports = function (grunt) {
     // tests unit
     grunt.registerTask('tests-unit', [
         'genAllTemplates',
-        'packages',
+        ':app:js-files',
         'karma:jenkins'
     ]);
     grunt.registerTask('tests-e2e', [
         'genAllTemplates',
         'shell:generateKeys',
-        'packages',
+        ':app:js-files',
         'protractor:default'
     ]);
     grunt.registerTask('tests-all', ['tests-unit','tests-e2e']);
@@ -838,16 +845,16 @@ module.exports = function (grunt) {
         'template:config-protractor',
         'concat:less',
         'less',
-        'concat:css'
+        'concat:app-css'
     ]);
-    grunt.registerTask('watcher', ['genAllTemplates', 'packages', 'watch']);
-    grunt.registerTask('packages', ['concat:packages']);
+    grunt.registerTask('watcher', ['genAllTemplates', ':app:js-files', 'watch']);
+    grunt.registerTask(':app:js-files', ['concat:app-vendor','concat:app-packages','concat:app-cameo']);
 
     // deploy it for me babe !!
     grunt.registerTask('deploy', [
         'clean:dist',
         'genAllTemplates',
-        'packages',
+        ':app:js-files',
         'copy:dev-deploy',
         'clean:dev-deploy',
         'uglify:dev-deploy',
@@ -855,7 +862,7 @@ module.exports = function (grunt) {
         'uglify:cockpit'
     ]);
 
-    grunt.registerTask(':build:create-docs', ['clean:docs', 'packages', 'concat:docs', 'ngdocs']);
+    grunt.registerTask(':build:create-docs', ['clean:docs', ':app:js-files', 'concat:docs', 'ngdocs']);
     // deploy www without phonegap
     grunt.registerTask(':build:www', ['template:index-www']);
 
