@@ -83,7 +83,7 @@ angular.module('cmConversations')
              * reset object
              */
             function reset(){
-                cmLogger.debug('cmMessageModel.reset');
+                //cmLogger.debug('cmMessageModel.reset');
                 self.files = [];
                 self.fileIds = [];
             }
