@@ -50,6 +50,8 @@ angular.module('cmSecurityAspects').directive('cmSecurityIndicator',[
                     });
 
                     $scope.conversation.securityAspects.refresh();
+                } else {
+                    cmLogger.debug('cmSecurityIndicator - Conversation not found!')
                 }
 
 
