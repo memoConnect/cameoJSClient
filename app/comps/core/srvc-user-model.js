@@ -114,8 +114,14 @@ angular.module('cmCore')
 
             this.data.identities.push(activeIdentity);
             data_identities.forEach(function(identity){
-                if(identity.id != self.data.identity.id)
-                    self.data.identities.push(cmIdentityFactory.clear(identity).create(identity));
+                if(identity.id != self.data.identity.id){
+                    var tmpIdentity = cmIdentityFactory.clear(identity).create(identity);
+                    tmpIdentity.on('update:finished', function(){
+                       cmUserModel.trigger('identity:updated');
+                    });
+                    self.data.identities.push(tmpIdentity);
+                }
+
             });
 
             isAuth = true;

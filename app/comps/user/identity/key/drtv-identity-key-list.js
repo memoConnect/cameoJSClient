@@ -59,7 +59,7 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                 };
 
                 cmUserModel.state.on('change', refresh);
-                cmUserModel.on('key:stored key:removed signatures:saved', refresh);
+                cmUserModel.on('key:stored key:removed signatures:saved identity:updated', refresh);
 
                 cmUserModel.on('update:finished', function(){
                     cmUserModel.data.identity.on('update:finished', refresh);
