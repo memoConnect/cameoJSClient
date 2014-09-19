@@ -50,7 +50,6 @@ describe('Registration: ', function () {
     })
 
     it('should display error if username is invalid', function () {
-
         util.get("/registration");
         util.waitForPageLoad('/registration')
 
@@ -66,7 +65,6 @@ describe('Registration: ', function () {
     })
 
     it('should display error if username exists', function () {
-
         util.get("/registration")
         util.waitForPageLoad('/registration')
 
@@ -82,7 +80,6 @@ describe('Registration: ', function () {
     })
 
     it('should return error on wrong password repeat', function () {
-
         $("[data-qa='input-password']").sendKeys(password)
         $("[data-qa='input-passwordConfirm']").sendKeys("moep")
         $("[data-qa='icon-passwordConfirm']").getAttribute("class").then(function(cl){
@@ -100,7 +97,6 @@ describe('Registration: ', function () {
     })
 
     it('should create account with valid credentials', function() {
-
         var loginName = util.createTestUser()
         util.waitForPageLoad('/start/welcome')
 
@@ -109,10 +105,8 @@ describe('Registration: ', function () {
 
         expect($(".empty-list").isPresent()).toBe(true)
 
-        // modal should only be displayed on first visit
-        ptor.refresh()
-        $$("cm-modal").then(function(elements) {
-            expect(elements.length).toBe(0)
+        $$("[data-qa='conversation-list-element']").then(function (elements) {
+            expect(elements.length).toBe(1)
         })
 
         util.deleteTestUser(loginName)
