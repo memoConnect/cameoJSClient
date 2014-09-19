@@ -805,6 +805,7 @@ angular.module('cmCore')
          * clear identity storage
          */
         this.resetUser = function(){
+            this.data.identities = [];
             this.data = angular.extend({}, dataModel);
         };
 
