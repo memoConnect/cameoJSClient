@@ -1,21 +1,10 @@
-define([
-    'app',
-    'ngload!pckContacts',
-    'ngload!pckUi',
-    'ngload!pckValidate',
-    'ngload!pckCore',
-    'ngload!pckUser',
-    'ngload!pckWidgets'
+'use strict';
 
-], function(app){
-    'use strict';
+angular.module('cmRoutes').controller('ContactEditCtrl',[
+    '$routeParams', '$scope',
+    function($routeParams, $scope){
+        //nothing to do here yet
 
-    app.register.controller('ContactEditCtrl',[
-        '$routeParams', '$scope',
-        function($routeParams, $scope){
-            //nothing to do here yet
-
-            $scope.contactId = $routeParams.id
-        }
-    ]);
-});
+        $scope.contactId = $routeParams.id
+    }
+]);

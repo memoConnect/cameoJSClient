@@ -3,7 +3,8 @@
 angular.module('cmSecurityAspects')
 .factory('cmSecurityAspects',[
     'cmObject',
-    function (cmObject){
+    'cmLogger',
+    function (cmObject, cmLogger){
         /**
          * Generic security aspect
          * @param {Object} [config] contains id, dependencies, value and a function check() that checks if the security aspect applies, returning its value. 
@@ -69,26 +70,28 @@ angular.module('cmSecurityAspects')
          */
         
         function cmSecurityAspects(config){
-            config = config || {}
+            config = config || {};
 
             var self = this;
 
-            cmObject.addEventHandlingTo(this)
+            cmObject.addEventHandlingTo(this);
 
             // Array of SecurityAspect instances
             this.aspects = [];
             // Object all aspects should apply to
             this.target = undefined;
-            this.applyingAspects = []
+            this.applyingAspects = [];
 
             this.countForDigest = 0;
 
-            this.languagePrefix = config.languagePrefix
+            this.languagePrefix = config.languagePrefix;
 
             this.refresh = function(){
+                //cmLogger.debug('cmSecurityAspects.refresh');
+
                 this.countForDigest++;
-                this.trigger('refresh')
-                this.applyingAspects = this.getApplyingAspects()
+                this.applyingAspects = this.getApplyingAspects();
+                this.trigger('refresh');
             };
 
             /**
@@ -96,8 +99,10 @@ angular.module('cmSecurityAspects')
              * @param {*} target 
              */
             this.setTarget = function(target){
+                //cmLogger.debug('cmSecurityAspects.setTarget');
+
                 this.target = target;
-                this.applyingAspects = this.getApplyingAspects()
+                this.applyingAspects = this.getApplyingAspects();
                 return this;
             };
 
@@ -107,6 +112,8 @@ angular.module('cmSecurityAspects')
              * @return {self}   returns self for chaining
              */
             this.addAspect = function(config){
+                //cmLogger.debug('cmSecurityAspects.addAspect');
+
                 config.languagePrefix = config.languagePrefix || this.languagePrefix
 
                 var aspect = new SecurityAspect(config);
@@ -139,6 +146,8 @@ angular.module('cmSecurityAspects')
              * @return  {Array}                             Array of all applying aspects
              */
             this.getApplyingAspects = function(applying_aspects){
+                //cmLogger.debug('cmSecurityAspects.getApplyingAspects');
+
                 applying_aspects = applying_aspects || [];
 
                 var additional_aspects = this.aspects.filter(function(aspect){

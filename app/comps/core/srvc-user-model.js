@@ -61,7 +61,8 @@ angular.module('cmCore')
             lastUpdated: '',
             userType: '',
             storage: {},
-            identity: {}
+            identity: {},
+            identities: []
         };
 
         cmObject.addEventHandlingTo(this);
@@ -104,7 +105,24 @@ angular.module('cmCore')
             this.data.identity = activeIdentity;
             this.data.identity.isAppOwner = true;
             // new factory for own identities
-            this.data.identities = new cmFactory(cmIdentityModel).importFromDataArray(data_identities);
+
+            /**
+             * @todo may an own factory but not a new identityFactory!
+             */
+            if(this.data.identities.length > 0)
+                this.data.identities = [];
+
+            this.data.identities.push(activeIdentity);
+            data_identities.forEach(function(identity){
+                if(identity.id != self.data.identity.id){
+                    var tmpIdentity = cmIdentityFactory.clear(identity).create(identity);
+                    tmpIdentity.on('update:finished', function(){
+                       cmUserModel.trigger('identity:updated');
+                    });
+                    self.data.identities.push(tmpIdentity);
+                }
+
+            });
 
             isAuth = true;
             this.initStorage();
@@ -125,7 +143,7 @@ angular.module('cmCore')
             //cmLogger.debug('cmUserModel:loadIdentity');
 
             var deferred = $q.defer();
-
+            // for login
             function importAccount(accountData){
                 if(typeof accountData !== 'undefined' && 'identities' in accountData){
                     var arr_activeIdentity = accountData.identities.filter(function(identity){
@@ -151,7 +169,7 @@ angular.module('cmCore')
 
                 return false;
             }
-
+            // for purl
             function importIdentity(identity_data){
                 if(typeof identity_data == 'object'){
 
@@ -793,6 +811,7 @@ angular.module('cmCore')
          * clear identity storage
          */
         this.resetUser = function(){
+            this.data.identities = [];
             this.data = angular.extend({}, dataModel);
         };
 
@@ -814,7 +833,7 @@ angular.module('cmCore')
             }
 
             if(typeof data == 'object' && 'goToLogin' in data && typeof data.goToLogin === 'undefined' || data.goToLogin !== false){
-                $location.path('/login');
+                $rootScope.goTo('/login');
             }
         });
 

@@ -1,11 +1,11 @@
-<section ng-controller = "ConversationRecipientsCtrl" class="theme-a">
+<section class="theme-a">
 
     <cm-header cm-rubber-space>
         <cm-back cm-weight="1" back-to="conversation/{{conversation.id}}"></cm-back>
         <cm-identity cm-weight="3"></cm-identity>
         <cm-security-indicator
             cm-weight       = "2"
-            cm-data         = "conversation.securityAspects"
+            cm-data         = "conversation"
             ng-click        = "gotoConversation(conversation.id,'security')"
         ></cm-security-indicator>
         <cm-header-list-search cm-weight="1" ng-model="search" cm-options="{scrollTo:true}"></cm-header-list-search>

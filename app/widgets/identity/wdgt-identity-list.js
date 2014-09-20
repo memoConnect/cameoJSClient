@@ -17,8 +17,6 @@ angular.module('cmWidgets').directive('cmWidgetIdentityList', [
             scope:          true,
             templateUrl:    'widgets/identity/wdgt-identity-list.html',
             controller: function($scope){
-                //console.log('cmWidgetIdentityList')
-
                 $scope.identities = cmUserModel.data.identities;
             }
         }

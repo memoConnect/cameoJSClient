@@ -45,6 +45,7 @@ angular.module('cmCore')
              * @param identity_data
              */
             this.importData = function(data){
+//                cmLogger.debug('cmIdentityModel.importData');
                 if(typeof data !== 'object'){
                     cmLogger.debug('cmIdentityModel:import:failed - no data!');
                     return this;
@@ -55,8 +56,16 @@ angular.module('cmCore')
                 this.userKey                = data.userKey || this.userKey;
                 this.cameoId                = data.cameoId || this.cameoId;
                 this.avatarId               = data.avatar || this.avatarId;
-                this.email                  = data.email || this.email;
-                this.phoneNumber            = data.phoneNumber || this.phoneNumber;
+                // TODO: hack for identity/edit update
+                if(typeof data.email != 'string')
+                    this.email              = data.email || this.email;
+                else
+                    this.email              = {value:data.email};
+                if(typeof data.email != 'string')
+                    this.phoneNumber        = data.phoneNumber || this.phoneNumber;
+                else
+                    this.phoneNumber        = {value:data.phoneNumber};
+
                 this.preferredMessageType   = data.preferredMessageType || this.preferredMessageType;
                 this.userType               = data.userType || this.userType;
                 this.created                = data.created || this.created;

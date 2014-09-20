@@ -2,14 +2,15 @@
 
 angular.module('cmFiles').directive('cmFiles',[
     'cmFileFactory', 'cmUtil',
-    '$q',
-    function (cmFileFactory, cmUtil, $q){
+    '$q', '$rootScope',
+    function (cmFileFactory, cmUtil,
+              $q, $rootScope){
         return {
             restrict : 'E',
             controller : function($scope){
                 $scope.files = [];
                 /**
-                 * function called via <input type=file>
+                 * function called via <input type=file> or
                  * @param blob
                  * @returns {boolean}
                  */
@@ -28,6 +29,8 @@ angular.module('cmFiles').directive('cmFiles',[
 
                     var file = cmFileFactory.create(blob,true);
                     $scope.files.push(file);
+
+                    $rootScope.$broadcast('cmFiles:fileSetted');
                 };
 
                 this.removeFile = function(file){
@@ -37,6 +40,30 @@ angular.module('cmFiles').directive('cmFiles',[
                         $scope.$broadcast('reset:files');
                     }
                 };
+
+                /**
+                 * external get files
+                 * prepare files and return to caller
+                 * @type {Array}
+                 */
+                $rootScope.$$listeners.checkFiles = [];
+                $rootScope.$on('checkFiles', function(event, options){
+                    $scope.prepareFilesForUpload(options.passphrase, options.conversationId)
+                    .then(
+                        function(){
+                            if(typeof options.success == 'function'){
+                                options.success($scope.files);
+                                $scope.resetFiles();
+                            }
+                        },
+                        function(result){
+                            if(typeof options.error == 'function'){
+                                options.error(result.data.error.maxFileSize, result.config.header);
+                            }
+                        }
+                    )
+                });
+
                 /**
                  * prepare all files for upload
                  * encrypt name & chunks
@@ -51,21 +78,15 @@ angular.module('cmFiles').directive('cmFiles',[
                     angular.forEach($scope.files, function(file){
                         promises.push(
                             file
-                            .setPassphrase(passphrase)
-                            .encryptName()
-                            .prepareForUpload(conversationId)
+                                .setPassphrase(passphrase)
+                                .encryptName()
+                                .prepareForUpload(conversationId)
                         )
                     });
 
                     return $q.all(promises);
                 };
-                /**
-                 * function for parent to check if files in queue
-                 * @returns {boolean}
-                 */
-                $scope.hasFiles = function(){
-                    return $scope.files.length > 0;
-                };
+
                 /**
                  * clear files
                  */
