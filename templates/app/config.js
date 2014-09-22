@@ -1,4 +1,4 @@
-cameo_config = {
+var cameo_config = {
     restApi: '<%= currentApiUrl %>',
     version: '<%= currentVersion %>',
 
