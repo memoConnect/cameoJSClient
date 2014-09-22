@@ -28,7 +28,7 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                                     });
 
                                     cmUserModel.data.identity.one('update:finished',function(){
-                                        //console.log('smth other todo')
+                                        /*console.log('smth other todo')*/
                                     });
                                 });
                             }
