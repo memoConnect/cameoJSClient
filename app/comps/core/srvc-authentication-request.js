@@ -141,6 +141,10 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
              */
 
             cancel: function(toIdentityId){
+                if(!typeof toIdentityId == 'string'){
+                    cmLogger.debug('cmAuthenticationRequest: cancel() toIdentityId must be string.')
+                    return false
+                }
                 delete this.transactionSecret
 
                 self.trigger('canceled')
