@@ -398,7 +398,7 @@ describe('Conversation encryption -', function () {
 
             it("should not be able to open conversation with asym key transmission", function () {
 
-                util.get("/talks")
+                util.get("/talks")                
                 util.headerSearchInList("asym_" + date)
                 ptor.debugger()
                 $("cm-conversation-tag").click()
