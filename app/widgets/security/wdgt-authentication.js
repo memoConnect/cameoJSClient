@@ -132,7 +132,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     $scope.cancel()
                     
                     if($scope.keyId){
-                        $rootScope.goTo('settings/identity/keys', true);
+                        $rootScope.goTo('settings/identity/key/list', true);
                         return null;
                     }
 
@@ -141,7 +141,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                         return null
                     }
 
-                    $rootScope.goTo('settings/identity/keys', true);
+                    $rootScope.goTo('settings/identity/key/list', true);
                     return null;
                 }
 

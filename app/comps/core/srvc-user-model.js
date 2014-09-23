@@ -530,6 +530,8 @@ angular.module('cmCore')
                                 return false; 
                             }
 
+                            cmLogger.debug('cmUserModel.signPublicKey: signing...')
+
                             //Content of the signature:
                             var signature  =  signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId));
                             
