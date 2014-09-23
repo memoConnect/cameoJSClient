@@ -376,12 +376,15 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
                                                 if(is3rdParty === false){
 
-
+                                                    /*
                                                     // Open modal for bulk rekeying:
                                                     self.openBulkRequest({
                                                         key1: toKey.id,
                                                         key2: fromKey.id
                                                     })
+                                                    */
+
+                                                    this.bulkReKeying(toKey.id, fromKey.id)
 
                                                     
                                                 }else{
