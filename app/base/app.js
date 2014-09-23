@@ -197,10 +197,12 @@ angular.module('cameoClient', [
 // app run handling
 .run(['cmNetworkInformation', 'cmPushNotificationAdapter',
     function(cmNetworkInformation, cmPushNotificationAdapter){
-    // check internet connection
-    cmNetworkInformation.init();
-    // register device for pushnotification
-    cmPushNotificationAdapter.init();
+        cmPhonegap.isReady(function(){
+            // check internet connection
+            cmNetworkInformation.init();
+            // register device for pushnotification
+            cmPushNotificationAdapter.init();
+        });
 }])
 .run(function() {
     // disabled the 3000 seconds delay on click when touch ;)
