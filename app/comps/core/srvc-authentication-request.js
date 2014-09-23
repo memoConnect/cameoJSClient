@@ -269,6 +269,21 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
             self.trigger('canceled', data)
         })
 
+        /**
+         * Listen to user model events. When a new key is saved trigger authentication:
+         */
+
+        cmUserModel.on('key:saved ', function(event, data){
+//            console.log('cmHooks - key:saved');
+
+            var localKeys = cmUserModel.loadLocalKeys();
+            var publicKeys = cmUserModel.data.identity.keys;
+
+            if(localKeys.length < publicKeys.length){
+                $rootScope.goto('/authentication')
+            }
+        });
+
 
         /**
          * Listen to events on cmAuthenticationRequest.
@@ -361,14 +376,17 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
                                                 if(is3rdParty === false){
 
+
                                                     // Open modal for bulk rekeying:
                                                     self.openBulkRequest({
                                                         key1: toKey.id,
                                                         key2: fromKey.id
                                                     })
+
                                                     
                                                 }else{
 
+                                                    /*
                                                     // Open success Modal:
                                                     cmModal.create({
                                                         id:             'authentication-request-successful',
@@ -381,7 +399,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                                     )
 
                                                     cmModal.open('authentication-request-successful')
-                                                    
+                                                    */
                                                 }
 
                                                 //Send a request in return:
