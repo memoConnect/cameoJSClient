@@ -7,7 +7,7 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
     function(cmUserModel, cmModal, cmKey){
         return {
             restrict: 'E',
-            templateUrl: 'comps/user/drtv-identity-key-list.html',
+            templateUrl: 'comps/user/identity/key/drtv-identity-key-list.html',
             controller: function ($scope) {
                 $scope.privateKeys = [];
                 $scope.publicKeys = [];
@@ -59,8 +59,12 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                 };
 
                 cmUserModel.state.on('change', refresh);
-                cmUserModel.on('key:stored key:removed signatures:saved', refresh);
-                cmUserModel.data.identity.on('update:finished', refresh);
+                cmUserModel.on('key:stored key:removed signatures:saved identity:updated', refresh);
+
+                cmUserModel.on('update:finished', function(){
+                    cmUserModel.data.identity.on('update:finished', refresh);
+                });
+
 
                 refresh()
             }

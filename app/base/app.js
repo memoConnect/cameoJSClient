@@ -1,31 +1,20 @@
-define([
-    'angularAMD',
-    'angular-route',
-    'angular-cookies',
-    'angular-swipe',
-    'angular-moment-wrap',
-    'angular-loading-bar',
-    'fastclick',
-
-    // cameo files
-    'pckCore',
-    'pckUi',
-    'pckContacts',
-    'pckPhonegap',
-    'base/config'
-], function (angularAMD) {
     'use strict';
 
-    var app = angular.module('cameoClient', [
+    angular.module('cameoClient', [
         'ngRoute',
         'ngCookies',
         'swipe',
-        //'angularMoment',
         'angular-loading-bar',
+        // cameo dependencies
+        'cmRoutes',
+        'cmWidgets',
         'cmCore',
+        'cmPhonegap',
         'cmUi',
+        'cmUser',
         'cmContacts',
-        'cmPhonegap'
+        'cmConversations',
+        'cmValidate'
     ])
 
     .constant('cmEnv',cameo_config.env)
@@ -95,12 +84,27 @@ define([
              * and template 'routes/terms/terms.html'
              *
              */
+
+            function ucfirst(str) {
+                //  discuss at: http://phpjs.org/functions/ucfirst/
+                // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+                // bugfixed by: Onno Marsman
+                // improved by: Brett Zamir (http://brett-zamir.me)
+                //   example 1: ucfirst('kevin van zonneveld');
+                //   returns 1: 'Kevin van zonneveld'
+
+                str += '';
+                var f = str.charAt(0)
+                    .toUpperCase();
+                return f + str.substr(1);
+            }
+
             function createRoutes(settings){
                 angular.forEach(settings,function(_settings_, routeKey) {
                     var routes = [],
                         routeParams = {
                             templateUrl: '',
-                            controllerUrl: '',
+                            controller: '',
                             css: '',
                             guests: false,
                             resolve: {},
@@ -128,19 +132,21 @@ define([
                     }
                     // check if route has/need controller
                     if (angular.isDefined(_settings_['hasCtrl']) && _settings_.hasCtrl === true){
+
                         if(routeKey.indexOf('-') != -1){
                             var arr  = routeKey.split('-'),
                                 ctrlRoute = '',
                                 i = 0;
 
                             while(i < arr.length){
-                                ctrlRoute += '/'+arr[i];
+                                ctrlRoute += ucfirst(arr[i]);
                                 i++;
                             }
 
-                            routeParams.controllerUrl = 'routes' + ctrlRoute + '/' + routeKey + '-ctrl';
+                            routeParams.controller = ctrlRoute+'Ctrl';
+                        // root ctrl
                         } else {
-                            routeParams.controllerUrl = 'routes/' + routeKey + '/' + routeKey + '-ctrl';
+                            routeParams.controller = ucfirst(routeKey)+'Ctrl';
                         }
                     }
 
@@ -173,7 +179,7 @@ define([
                     // add route to provider
                     angular.forEach(routes,function(route){
                         $routeProvider.
-                            when(route, angularAMD.route(routeParams));
+                            when(route, routeParams);
                     });
                     // check otherwise
                     if(angular.isDefined(_settings_['isDefault'])){
@@ -358,9 +364,3 @@ define([
 
         }
     ]);
-
-    // bootstrap app and all things after here use app.register.{ng-type}
-    angularAMD.bootstrap(app);
-
-    return app;
-});

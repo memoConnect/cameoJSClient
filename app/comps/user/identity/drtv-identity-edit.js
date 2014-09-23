@@ -7,18 +7,29 @@ angular.module('cmUser').directive('cmIdentityEdit', [
     function(cmUserModel, cmNotify, $q){
         return {
             restrict: 'E',
-            templateUrl: 'comps/user/drtv-identity-edit.html',
+            templateUrl: 'comps/user/identity/drtv-identity-edit.html',
             controller: function ($scope) {
-                $scope.identity = angular.extend({},cmUserModel.data.identity);
+
+                function reset(){
+                    $scope.identity = angular.extend({},cmUserModel.data.identity);
+                    console.log($scope.identity.phoneNumber)
+                    console.log($scope.identity.email)
+                    $scope.identity.phoneNumbers = [
+                        $scope.identity.phoneNumber || {value:''}
+                    ];
+                    $scope.identity.emails = [
+                        $scope.identity.email || {value:''}
+                    ];
+                }
+
+                // TODO on is undefined
+                cmUserModel.data.identity.on('update:finished',reset);
+
+                reset();
 
                 //////////////////////
                 // TODO: mock workarround json in array
-                $scope.identity.phoneNumbers = [
-                    $scope.identity.phoneNumber || {value:''}
-                ];
-                $scope.identity.emails = [
-                    $scope.identity.email || {value:''}
-                ];
+
                 //////////////////////
 
                 $scope.goToKeys = function(){
@@ -72,7 +83,6 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                             checkPhoneNumber();
 
                             cmUserModel.data.identity.update(objectChange);
-
 
                             function callback_save_identity(){
                                 cmNotify.info('IDENTITY.NOTIFY.UPDATE.SUCCESS',{ttl:3000,displayType:'modal'});

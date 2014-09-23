@@ -1,4 +1,4 @@
-<section ng-controller = "ConversationCtrl">
+<section>
     <cm-header cm-rubber-space>
         <div cm-weight="1">
             <cm-back back-to="/talks" ng-if="conversationId == 'new'"></cm-back>
@@ -7,15 +7,13 @@
         <cm-identity cm-weight="4"></cm-identity>
         <cm-security-indicator
             cm-weight       = "2"
-            cm-data         = "conversation.securityAspects"
+            cm-data         = "conversation"
             ng-click        = "gotoConversation(conversation.id,'security')"
         ></cm-security-indicator>
         <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
 
-    <cm-widget-conversation cmData = "conversation">
-    </cm-widget-conversation>
-
+    <cm-widget-conversation cmData="conversation"></cm-widget-conversation>
 </section>
 
 

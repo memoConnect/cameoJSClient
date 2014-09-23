@@ -82,6 +82,7 @@
     <cm-date-seperator ng-if="(compareDate(message.created,conversation.messages[$index - 1].created))">
         <cm-time-converter  cm-timestamp="message.created" cm-special-type="'date-seperator'"></cm-time-converter>
     </cm-date-seperator>
+    <!-- moep - don't delete - ask empu^^ -->
     <cm-message cm-data="message" cm-data-conversation="conversation"></cm-message>
 </div>
 
@@ -95,7 +96,7 @@
                 <div cm-user-rights>
                     <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
                     <cm-files-preview></cm-files-preview>
-                    <cm-choose-source></cm-choose-source>
+                    <cm-choose-source cm-options="{tooltip:'up'}"></cm-choose-source>
                 </div>
                 <div
                     data-qa="btn-fast-registration"
