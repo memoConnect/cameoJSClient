@@ -870,7 +870,7 @@ module.exports = function (grunt) {
         ':app:js-files',
         'copy:dev-deploy',
         'clean:dev-deploy',
-        //'uglify:dev-deploy',
+        'uglify:dev-deploy',
         'copy:cockpit',
         'uglify:cockpit'
     ]);

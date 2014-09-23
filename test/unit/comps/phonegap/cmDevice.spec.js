@@ -171,13 +171,21 @@ var cmDevice,
 
         beforeEach(function () {
             module('cmPhonegap', function ($provide) {
+                $provide.factory('$phonegapCameoConfig', function () {
+                    return {deviceReady:true}
+                })
                 $provide.factory('$device', function () {
-                    return deviceMock
+                    return {
+                        get:function(){
+                            return deviceMock
+                        }
+                    }
                 })
             })
         })
         beforeEach(inject(function (_cmDevice_) {
             cmDevice = _cmDevice_
+            cmDevice.init()
         }))
 
         describe('method existsPlugin',function(){
@@ -375,7 +383,7 @@ var cmDevice,
                     })
 
                     $provide.factory('$device', function () {
-                        return undefined
+                        return {get:function(){return undefined}}
                     })
                 })
             })
@@ -395,14 +403,19 @@ var cmDevice,
                         return $windowMock
                     })
 
+                    $provide.factory('$phonegapCameoConfig', function () {
+                        return {deviceReady:true}
+                    })
+
                     $provide.factory('$device', function () {
-                        return {}
+                        return {get:function(){return{}}}
                     })
                 })
             })
 
             beforeEach(inject(function (_cmDevice_) {
                 cmDevice = _cmDevice_
+                cmDevice.init()
             }))
 
             createUserAgents(true)

@@ -1,6 +1,7 @@
 'use strict';
 
 var cmCamera,
+    $rootScope,
     unknown = 'unknown'
 
 describe('cmCamera default none app', function() {
@@ -54,6 +55,11 @@ describe('cmCamera default none app', function() {
 describe('cmCamera is app', function() {
     beforeEach(function () {
         module('cmPhonegap', function ($provide) {
+            $provide.factory('$phonegapCameoConfig', function () {
+                return {
+                    deviceReady: true
+                }
+            })
             $provide.factory('$navigator', function () {
                 return {
                     camera: {
@@ -77,7 +83,7 @@ describe('cmCamera is app', function() {
     }))
 
     describe('method existsPlugin', function(){
-        it('should be false', function(){
+        it('should be true', function(){
             expect(cmCamera.existsPlugin()).toBeTruthy()
         })
     })

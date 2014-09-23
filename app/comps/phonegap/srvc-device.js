@@ -23,8 +23,12 @@ angular.module('cmPhonegap')
                 this.plugin = $device.get()
             },
 
-            isApp: function(){
+            existsPlugin: function(){
                 return this.plugin != null;
+            },
+
+            isApp: function(){
+                return this.existsPlugin();
             },
 
             getPlatform: function(){
@@ -35,7 +39,6 @@ angular.module('cmPhonegap')
             },
 
             isAndroid: function(){
-                console.log('isAndroid',this.isApp(),this.getPlatform())
                 return this.isApp()
                     && this.getPlatform().indexOf('android') >= 0;
             },
@@ -85,21 +88,21 @@ angular.module('cmPhonegap')
                 if(!this.isApp())
                     return unknown;
 
-                return $device.uuid;
+                return this.plugin.uuid;
             },
 
             getName: function(){
                 if(!this.isApp())
                     return unknown;
 
-                return $device.name;
+                return this.plugin.name;
             },
 
             getVersion: function(){
                 if(!this.isApp())
                     return unknown;
 
-                return $device.version;
+                return this.plugin.version;
             },
 
             detectOSAndBrowser: function() {

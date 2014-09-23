@@ -79,6 +79,9 @@ describe('cmLocalContacts is app', function() {
                     }
                 }
             })
+            $provide.factory('$phonegapCameoConfig', function () {
+                return {deviceReady:true}
+            })
         })
     })
     beforeEach(inject(function (_cmLocalContacts_, _$rootScope_) {

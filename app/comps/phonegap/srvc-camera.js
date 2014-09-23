@@ -38,8 +38,8 @@
  }*/
 
 angular.module('cmPhonegap').service('cmCamera', [
-    'cmFilesAdapter', '$navigator', '$window',
-    function (cmFilesAdapter, $navigator, $window) {
+    'cmPhonegap', 'cmFilesAdapter', '$navigator', '$window',
+    function (cmPhonegap, cmFilesAdapter, $navigator, $window) {
 
         function FileError(e){
             var msg;
@@ -120,32 +120,38 @@ angular.module('cmPhonegap').service('cmCamera', [
             }
         };
 
-        return {
+        var self = {
             plugin: null,
 
-            existsPlugin: function(){
-                if(typeof $navigator == 'undefined' || !('camera' in $navigator)){
+            init: function () {
+                if (typeof $navigator == 'undefined' || !('camera' in $navigator)) {
                     //cmLogger.info('CAMERA PLUGIN IS MISSING');
                     return false;
                 }
 
-                cmPhonegap.isReady(function(){
+                cmPhonegap.isReady(function () {
                     self.plugin = $navigator.camera;
                 });
 
                 return true;
             },
-            takePhoto: function (callback, useFrontCamera){
-                if(!this.existsPlugin()){
+
+            existsPlugin: function () {
+                return this.plugin != null;
+            },
+
+            takePhoto: function (callback, useFrontCamera) {
+                if (!this.existsPlugin()) {
                     return false;
                 }
 
-                if(callback == undefined)
-                    callback = function(){};
+                if (callback == undefined)
+                    callback = function () {
+                    };
 
                 this.plugin.getPicture(
-                    function(base64){
-                        var blob = cmFilesAdapter.base64ToBlob(base64,'image/jpeg');
+                    function (base64) {
+                        var blob = cmFilesAdapter.base64ToBlob(base64, 'image/jpeg');
                         blob.name = 'NewCameoPicture.jpg';
                         callback(blob);
                     },
@@ -156,7 +162,7 @@ angular.module('cmPhonegap').service('cmCamera', [
                         encodingType: CameraVars.EncodingType.JPEG,
                         destinationType: CameraVars.DestinationType.DATA_URL,
                         mediaType: CameraVars.MediaType.PICTURE,
-                        cameraDirection: CameraVars.Direction[useFrontCamera?'FRONT':'BACK'],
+                        cameraDirection: CameraVars.Direction[useFrontCamera ? 'FRONT' : 'BACK'],
                         saveToPhotoAlbum: true,
                         correctOrientation: true
                     }
@@ -164,21 +170,22 @@ angular.module('cmPhonegap').service('cmCamera', [
 
                 return true;
             },
-            chooseFile: function(callback){
-                if(!this.existsPlugin()) {
+            chooseFile: function (callback) {
+                if (!this.existsPlugin()) {
                     return false;
                 }
 
-                if(callback == undefined)
-                    callback = function(){}
+                if (callback == undefined)
+                    callback = function () {
+                    };
 
                 this.plugin.getPicture(
-                    function(fileUri){
-                        if(!('resolveLocalFileSystemURL' in $window))
+                    function (fileUri) {
+                        if (!('resolveLocalFileSystemURL' in $window))
                             return false;
 
                         // uri to blob
-                        $window.resolveLocalFileSystemURL(fileUri, function(fileEntry){
+                        $window.resolveLocalFileSystemURL(fileUri, function (fileEntry) {
                             // TODO: get displayname (filename) of file (exp.: data.extension)
 //                            console.log('resolveLocalFileSystemURL')
 //                            console.log(fileEntry.fullPath)
@@ -191,7 +198,7 @@ angular.module('cmPhonegap').service('cmCamera', [
 //                                }, FileError);
 //                            }, FileError)
 
-                            fileEntry.file( function(blob) {
+                            fileEntry.file(function (blob) {
                                 callback(blob);
                             }, FileError);
                         });
@@ -206,6 +213,10 @@ angular.module('cmPhonegap').service('cmCamera', [
 
                 return true;
             }
-        }
-    }]
-);
+        };
+
+        self.init();
+
+    return self;
+    }
+]);
