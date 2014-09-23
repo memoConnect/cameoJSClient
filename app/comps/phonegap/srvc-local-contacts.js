@@ -4,49 +4,13 @@
 
 /*  android & ios contact json
  {
-    addresses: Array[
-      {
-        country: "Germany"
-        formatted: "Street 123↵12345 City"
-        id: "811"
-        locality: "City"
-        postalCode: "12345"
-        pref: false
-        streetAddress: "Street 123"
-        type: "home"
-      }
-    ]
-    birthday: null
-    categories: null
     displayName: "GiverName FamilyName"
-    emails: Array[
-     {
-         id: "1246"
-         pref: false
-         type: "work" // other
-         value: "some.coworker@cameo.io"
-     }
-     length: 1
-    ]
-    id: "225"
-    ims: null
     name: {
         familyName: "FamilyName"
         formatted: "GiverName FamilyName"
         givenName: "GiverName"
         middleName: "MiddleName"
     }
-    nickname: null
-    note: ""
-    organizations: Array[
-     {
-        id: "1245"
-        name: "cameoNet"
-        pref: false
-        type: "custom"
-     }
-     length: 1
-    ]
     phoneNumbers: Array[
      {
         id: "1234"
@@ -56,66 +20,45 @@
      }
      length: 1
     ]
-    photos: Array[
+    emails: Array[
      {
-        id: "1236"
-        pref: false
-        type: "url"
-        value: "content://com.android.contacts/contacts/225/photo"
+         id: "1246"
+         pref: false
+         type: "work" // other
+         value: "some.coworker@cameo.io"
      }
      length: 1
     ]
-    rawId: "225"
-    urls: null
  }
  */
 
 angular.module('cmPhonegap').service('cmLocalContacts', [
     'cmPhonegap', 'cmUtil', 'cmLogger',
-    '$q',
-    function (cmPhonegap, cmUtil, cmLogger, $q) {
+    '$q', '$navigator',
+    function (cmPhonegap, cmUtil, cmLogger, $q, $navigator) {
 
         var self = {
-            state: '',
             plugin: null,
 
             init: function () {
-                if (!('contacts' in navigator)) {
+                if (!('contacts' in $navigator)) {
                     //cmLogger.info('CONTACTS PLUGIN IS MISSING');
                     return false;
                 }
 
-                cmPhonegap.isReady(function () {
-                    self.plugin = navigator.contacts;
-                });
+                self.plugin = $navigator.contacts;
+
+                return true;
             },
 
             canRead: function () {
-                return self.plugin != null;
+                return this.plugin != null;
             },
 
             selectOne: function() {
-                var loaded = $q.defer(),
-                    mocks = [
-                        {},
-                        {
-                        "displayName": '',
-                        "name": {
-                            "formatted": ""
-                        },
-                        "phoneNumbers": null,
-                        "emails": [
-                            {
-                                "type": "home",
-                                "value": "annegret.lubs@web.de"
-                            }
-                        ]
-                        }
-                    ];
+                var loaded = $q.defer();
 
                 if(this.canRead()){
-//                      loaded.resolve(mocks[1]);
-
                     this.plugin.pickContact(
                         function (contact) {
                             loaded.resolve(contact);
@@ -127,37 +70,10 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
                 }
 
                 return loaded.promise;
-            },
-
-            loadAll: function (stringFilter) {
-                var loaded = $q.defer();
-
-                if(this.canRead()) {
-                    var options = new ContactFindOptions();
-                    // search string
-                    options.filter = stringFilter ? stringFilter : '';
-                    options.multiple = true;
-                    // looks specific type
-                    var filter = ['name', 'displayName', 'phoneNumbers', 'emails'];
-                    // find contacts
-                    this.plugin
-                        .find(
-                        function (contacts) {
-                            loaded.resolve(contacts);
-                        },
-                        function onError(contactError) {
-                            loaded.reject(contactError);
-                        },
-                        filter,
-                        options
-                    );
-                }
-
-                return loaded.promise;
             }
         };
 
-        self.init();
+        self.init(true);
 
         return self;
     }

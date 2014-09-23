@@ -14,7 +14,7 @@ module.exports = function(config) {
             'app/cameo.js',
 
             // specs
-            'test/unit/**/phonegap/*.spec.js',
+            'test/unit/**/*.spec.js',
 
             'app/**/*.json'
         ],

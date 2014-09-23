@@ -14,9 +14,7 @@ angular.module('cmPhonegap').service('cmPhonegap', [
 
                 // if config doesn't get device ready watch again
                 if(!$phonegapCameoConfig.deviceReady){
-                    console.log('init')
                     $document[0].addEventListener('deviceready', function () {
-                        console.log('huhu')
                         $phonegapCameoConfig.deviceReady = true;
                         isReady.resolve();
                     });
@@ -30,8 +28,6 @@ angular.module('cmPhonegap').service('cmPhonegap', [
                     if(typeof callback == 'function')
                         callback();
                 }
-
-                console.log($phonegapCameoConfig)
 
                 return false;
             },

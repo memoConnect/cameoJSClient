@@ -40,12 +40,16 @@ describe('cmPhonegap default none app', function() {
 })
 
 describe('cmPhonegap is app', function() {
+
+    var $rootScope,
+        $phonegapCameoConfig = {
+            deviceReady: false
+        }
+
     beforeEach(function () {
         module('cmPhonegap', function ($provide) {
             $provide.factory('$phonegapCameoConfig', function () {
-                return {
-                    deviceReady: false
-                }
+                return $phonegapCameoConfig
             })
 
             $provide.factory('$navigator', function () {
@@ -59,27 +63,40 @@ describe('cmPhonegap is app', function() {
             })
         })
     })
-    beforeEach(inject(function (_cmPhonegap_) {
-        cmPhonegap = _cmPhonegap_
-    }))
 
-    it('should be defined', function () {
-        expect(cmPhonegap).toBeDefined()
-    })
+    describe('method isReady', function() {
+        var spy = {
+            promiseCallback: function() {
+                console.log('ready event triggered')
+            },
+            directlyCallback: function(){
+                console.log('ready event is already triggered')
+            }
+        }
 
-    xdescribe('method isReady', function () {
-        it('after dom:event deviceready should be ready', function(){
-            var initFunction = false
+        beforeEach(inject(function (_cmPhonegap_, _$rootScope_) {
+            cmPhonegap = _cmPhonegap_
+            $rootScope = _$rootScope_
+        }))
 
-            cmPhonegap.isReady(function(){
-                initFunction = true
-            })
-            //http://stackoverflow.com/questions/17264376/testing-the-handling-of-a-custom-event-in-jasmine
-            expect(initFunction).toBeFalsy()
-            console.log('trigger')
-            $(document).trigger('deviceready')
-            expect(initFunction).toBeTruthy()
+        it('fast ready function go to promise queue and wait for "deviceready"', function(){
+            spyOn(spy, 'promiseCallback')
+            cmPhonegap.isReady(spy.promiseCallback)
+            // trigger event
+            var event = document.createEvent('HTMLEvents')
+            event.initEvent('deviceready', true, true)
+            document.dispatchEvent(event)
+            $rootScope.$apply()
+
+            expect(spy.promiseCallback).toHaveBeenCalled()
         })
+
+        it('after "deviceready" called without proise',function(){
+            spyOn(spy, 'directlyCallback')
+            cmPhonegap.isReady(spy.directlyCallback)
+            expect(spy.directlyCallback).toHaveBeenCalled()
+        })
+
     })
 
     xdescribe('method initCloseApp', function () {
