@@ -12,10 +12,13 @@ describe('Authentication requests -', function () {
 
     var testUserId = Math.random().toString(36).substring(2, 9)
     var testUser = "testUser23_" + testUserId
+    var testUser2Id = Math.random().toString(36).substring(2, 9)
+    var testUser2 = "testUser23_" + testUser2Id
 
     var keyName1 = "moeps key 1"
     var keyName2 = "moeps key 2"
     var keyName3 = "moeps key 3"
+    var keyName4 = "moeps key 4"
 
     var subject1 = "subject1"
     var subject2 = "subject2"
@@ -24,6 +27,7 @@ describe('Authentication requests -', function () {
     var encryptedMessage1 = "moep die moep die moep"
     var encryptedMessage2 = "moeps die moeps die moeps"
     var encryptedMessage3 = "foo baa foo baa foo baa foo baa"
+
 
     var keyId2
 
@@ -111,14 +115,14 @@ describe('Authentication requests -', function () {
             })
         })
 
-        it("delete localstorage", function () {
+        xit("delete localstorage", function () {
             util.logout()
             util.clearLocalStorage()
         })
 
     })
 
-    describe("key3:", function () {
+    xdescribe("key3:", function () {
 
         it("generate key3", function () {
             util.login(testUser, "password")
@@ -164,7 +168,7 @@ describe('Authentication requests -', function () {
         })
     })
 
-    describe("key1 again:", function () {
+    xdescribe("key1 again:", function () {
 
         it("import key", function () {
             util.setLocalStorage(localStorage1.key, localStorage1.value)
@@ -230,7 +234,7 @@ describe('Authentication requests -', function () {
 
     })
 
-    describe("key3 again:", function () {
+    xdescribe("key3 again:", function () {
 
         it("import key3", function () {
             util.setLocalStorage(localStorage3.key, localStorage3.value)
@@ -275,7 +279,7 @@ describe('Authentication requests -', function () {
 
     })
 
-    describe("key2:", function () {
+    xdescribe("key2:", function () {
 
         it("generate key2", function () {
             util.login(testUser, "password", "/start")
@@ -349,7 +353,7 @@ describe('Authentication requests -', function () {
         })
     })
 
-    describe("key1 yet again:", function () {
+    xdescribe("key1 yet again:", function () {
 
         it("import key1", function () {
             util.setLocalStorage(localStorage1.key, localStorage1.value)
@@ -398,7 +402,7 @@ describe('Authentication requests -', function () {
         })
     })
 
-    describe("key3 yet again:", function () {
+    xdescribe("key3 yet again:", function () {
 
         it("import key3", function () {
             util.setLocalStorage(localStorage3.key, localStorage3.value)
@@ -424,7 +428,7 @@ describe('Authentication requests -', function () {
         })
     })
 
-    describe("key2 again:", function () {
+    xdescribe("key2 again:", function () {
         it("import key2", function () {
             util.setLocalStorage(localStorage2.key, localStorage2.value)
             util.login(testUser, "password")
@@ -446,6 +450,32 @@ describe('Authentication requests -', function () {
 
         it("should be able to read conversation from key3", function () {
             util.readConversation(subject3, encryptedMessage3)
+        })
+    })
+
+    describe("trust other user:", function () {
+
+        it("create testuser2 and generate key", function () {
+            util.createTestUser(testUser2Id)
+            util.generateKey(4, keyName4)
+        })
+
+        it("send friendrequest to testuser1", function () {
+            util.sendFriendRequest(testUser)
+        })
+
+        it("login as testuser1 and accept friendRequest", function () {
+            util.login(testUser, "password")
+            util.acceptFriendRequests()
+        })
+
+        it("testuser2 should not be trusted", function () {
+            util.get("/contact/list")
+            util.waitForElements("cm-contact-tag", 2)
+            util.headerSearchInList(testUser2)
+            util.waitAndClick("cm-contact-tag")
+            ptor.debugger()
+
         })
     })
 
