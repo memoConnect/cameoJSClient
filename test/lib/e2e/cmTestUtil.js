@@ -375,7 +375,7 @@ this.getFileExtension = function (file) {
 }
 
 this.headerSearchInList = function (searchString) {
-    $("[data-qa='btn-header-list-search']").click()
+    self.waitAndClickQa("btn-header-list-search")
     this.searchInList(searchString)
 }
 
