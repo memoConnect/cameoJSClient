@@ -359,9 +359,6 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                                                     ||  cmUserModel.loadLocalKeys()[0]
                                                                     
 
-                                            console.log('3rd:')
-                                            console.log(is3rdParty)
-
                                             if(
                                                     fromIdentity    != scope.fromIdentity
                                                 ||  fromKey         != scope.fromKey
