@@ -135,7 +135,8 @@ describe('Conversation encryption -', function () {
                 })
             })
         }
-        checkSecurityAspects(encryptionType == "asym" && sender.hasKey)
+//        checkSecurityAspects(encryptionType == "asym" && sender.hasKey)
+        checkSecurityAspects()
 
         it("send initial message", function () {
 
@@ -186,7 +187,6 @@ describe('Conversation encryption -', function () {
                             expect(modals.length).toBe(0)
                         })
                     } else {
-
                         if(['password', 'passCaptcha'].indexOf(encryptionType) != -1){
 
                             // expect password prompt
@@ -400,7 +400,7 @@ describe('Conversation encryption -', function () {
 
                 util.get("/talks")
                 util.headerSearchInList("asym_" + date)
-                //ptor.debugger()
+                ptor.debugger()
                 $("cm-conversation-tag").click()
 
                 util.waitForElement("cm-message")

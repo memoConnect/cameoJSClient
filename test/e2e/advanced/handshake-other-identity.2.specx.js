@@ -25,7 +25,6 @@ describe('Authentication requests -', function () {
     var encryptedMessage2 = "moeps die moeps die moeps"
     var encryptedMessage3 = "foo baa foo baa foo baa foo baa"
 
-
     var keyId2
 
     var localStorage1
