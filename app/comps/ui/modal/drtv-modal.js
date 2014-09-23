@@ -43,9 +43,10 @@ angular.module('cmUi')
             templateUrl: function(tElement, tAttrs){
                 var type = tAttrs.type || 'plain',
                     templateUrl = {
-                        plain: 'comps/ui/modal/drtv-modal-plain.html',
+                        plain:      'comps/ui/modal/drtv-modal-plain.html',
                         fullscreen: 'comps/ui/modal/drtv-modal-fullscreen.html',
-                        alert: 'comps/ui/modal/drtv-modal-alert.html'
+                        alert:      'comps/ui/modal/drtv-modal-alert.html',
+                        confirm:    'comps/ui/modal/drtv-modal-confirm.html'
                     };
 
                 return templateUrl[type];
@@ -98,11 +99,15 @@ angular.module('cmUi')
                     return this
                 };
 
+                scope.isActive = function(){
+                    return element.hasClass('active')
+                }
+
                 // open modal
                 scope.open = function(){
-                    this.toggle(true);
+                    scope.toggle(true);
 
-                    return this
+                    return scope
                 };
                 // close modal
                 scope.close = function(fromBackdrop){

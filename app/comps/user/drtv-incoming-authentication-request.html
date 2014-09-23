@@ -1,8 +1,8 @@
 <div>
     <div class="modal-row cm-form-group">
 
-        <strong ng-if="authenticationRequest.is3rdParty()"    ng-bind-html="'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.NOTE'|cmTranslate:modalMessageVars"></strong>
-        <strong ng-if="!authenticationRequest.is3rdParty()"    ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.NOTE'|cmTranslate:modalMessageVars"></strong>
+        <strong ng-if="is3rdParty"    ng-bind-html="'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.NOTE'|cmTranslate:modalMessageVars"></strong>
+        <strong ng-if="!is3rdParty"    ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.NOTE'|cmTranslate:modalMessageVars"></strong>
 
 
         <div class="cm-form-control white-control with-inputter">
@@ -10,8 +10,8 @@
         </div>
 
 
-        <span ng-if="authenticationRequest.is3rdParty()"    ng-bind-html="'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.INSTRUCTIONS'|cmTranslate:modalMessageVars"></span>
-        <span ng-if="!authenticationRequest.is3rdParty()"   ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.INSTRUCTIONS'|cmTranslate:modalMessageVars"></span>
+        <span ng-if="is3rdParty"    ng-bind-html="'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.INSTRUCTIONS'|cmTranslate:modalMessageVars"></span>
+        <span ng-if="!is3rdParty"   ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.INSTRUCTIONS'|cmTranslate:modalMessageVars"></span>
 
 
         <div class="cm-warning" ng-show="error.emptyInput">
@@ -22,10 +22,10 @@
             <i class="fa cm-info"></i>{{'SYSTEM.ERROR.WRONG_INPUT'|cmTranslate}}
         </div>
     </div>
-    <button class="cm-btn cm-btn-block cm-btn-grey" data-qa="btn-acceptRequest" ng-click="verifyCode()">
-        <span ng-show="!spinner">
+    <button class="cm-btn cm-btn-block cm-btn-grey" data-qa="btn-acceptRequest" ng-click="verify(transactSecret)">
+        <span>
             {{  
-                authenticationRequest.is3rdParty()
+                is3rdParty
                 ?   'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.SUBMIT_BUTTON'
                 :   'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.SUBMIT_BUTTON'
                 |cmTranslate
@@ -33,6 +33,5 @@
 
             <i class="fa cm-checker cm-lg-icon"></i>
         </span>
-        <cm-spinner ng-show="spinner" cm-color="#02BED2"></cm-spinner>
     </button>
 </div>

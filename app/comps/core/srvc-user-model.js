@@ -37,12 +37,13 @@ angular.module('cmCore')
     'cmLogger',
     'cmCallbackQueue',
     'cmPushNotificationAdapter',
+    'cmApi',
     '$rootScope',
     '$q',
     '$location',
     function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmIdentityModel, cmFactory,
              cmCrypt, cmKeyFactory, cmKey, cmStateManagement, cmObject, cmUtil,
-             cmNotify, cmLogger, cmCallbackQueue, cmPushNotificationAdapter,
+             cmNotify, cmLogger, cmCallbackQueue, cmPushNotificationAdapter, cmApi,
              $rootScope, $q, $location){
         var self = this,
             isAuth = false,
@@ -508,62 +509,46 @@ angular.module('cmCore')
 
             identity = identity || self.data.identity
 
-            var deferred    = $q.defer(),
-                rejected    = deferred.promise
-
-            deferred.reject()
-
             if(!(keyToSign instanceof cmKey) || (keyToSign.getFingerprint() !== keyToSignFingerprint)){
                 self.trigger('signatures:cancel');
-                return rejected;
+                return $q.reject()
             }
 
-            var localKeys   = this.loadLocalKeys(),
-                promises    = [];
+            return  cmCallbackQueue.push(this.loadLocalKeys().map(function(signingKey){
+                        return function(){
+                            //Keys should not sign themselves
+                            if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() === keyToSign.getFingerprint())){
+                                self.trigger('signatures:cancel');
+                                cmLogger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
+                                return false;
+                            }
 
-            localKeys.forEach(function(signingKey){
-                //Keys should not sign themselves
-                if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() === keyToSign.getFingerprint())){
-                    self.trigger('signatures:cancel');
-                    cmLogger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
-                    return false;
-                }
+                            //Dont sign twice:
+                            if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
+                                self.trigger('signatures:cancel');
+                                cmLogger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
+                                return false; 
+                            }
 
-                //Dont sign twice:
-                if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
-                    self.trigger('signatures:cancel');
-                    cmLogger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
-                    return false; 
-                }
-
-                //Content of the signature:
-                var signature  =  signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId));
-
-                
-                promises.push(
-                    cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature).then(
-                        function(signature){
-                            keyToSign.importData({signatures:[signature]})  
-                            return signature                          
-                        },
-                        function(){
-                            self.trigger('signatures:failed');
+                            //Content of the signature:
+                            var signature  =  signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId));
+                            
+                            
+                            return  cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature)
+                                    .then(
+                                        function(signature){
+                                            keyToSign.importData({signatures:[signature]})  
+                                            return signature                          
+                                        },
+                                        function(){
+                                            self.trigger('signatures:failed');
+                                        }
+                                    )
                         }
-                    )
-                )
-            });
-
-            if(promises.length == 0){
-                self.trigger('signature:cancel');
-                return rejected; 
-            }
-
-            return  $q.all(promises).then(
-                        function(result){
-                            self.trigger('signatures:saved', result)
-                            return result
-                        }
-                    );
+                    }))
+                    .then(function(result){
+                        self.trigger('signatures:saved', result)
+                    })
         };
 
         this.verifyOwnPublicKey = function(key){
@@ -664,7 +649,8 @@ angular.module('cmCore')
                     var newKey = this.data.identity.keys.find(newKeyId);
 
                     if(localKey instanceof cmKey && newKey instanceof cmKey){
-                        cmAuth.getBulkPassphrases(localKey.id, newKey.id).then(
+                        cmAuth.getBulkPassphrases(localKey.id, newKey.id)
+                        .then(
                             function(list){
                                 var newList = [],
                                     i = 0;
@@ -681,7 +667,7 @@ angular.module('cmCore')
                                 if(newList.length > 0){
                                     cmAuth.saveBulkPassphrases(newKey.id, newList).then(
                                         function(){
-                                            cmAuth.sendBroadcast({
+                                            cmApi.broadcast({
                                                 name: 'rekeying:finished',
                                                 data:{
                                                     keyId: newKey.id

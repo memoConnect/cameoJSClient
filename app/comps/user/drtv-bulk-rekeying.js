@@ -9,23 +9,16 @@ angular.module('cmUser').directive('cmBulkRekeyingRequest',[
             restrict: 'E',
             templateUrl: 'comps/user/drtv-bulk-rekeying.html',
             controller: function($scope){
-                $scope.spinner = false;
+                $scope.working = false;
 
-                function startrekeying(){
-                    $scope.spinner = true;
 
+                $scope.startrekeying = function(){
+                    $scope.working = true;
                     cmUserModel.bulkReKeying($scope.data.key1, $scope.data.key2);
                 }
 
-                startrekeying();
+                //startrekeying();
 
-                $scope.showSpinner = function(){
-                    $scope.spinner = true;
-                };
-
-                $scope.hideSpinner = function(){
-                    $scope.spinner = false;
-                };
             }
         }
     }

@@ -271,7 +271,7 @@ angular.module('cmCore')
                     bad_random_passphrase += this.random().toString(36).replace('0.','')
                 }
 
-                return bad_random_passphrase.slice(-(length));
+                return bad_random_passphrase.slice(bad_random_passphrase.length-length);
             },
 
             generatePassphrase: function(){
@@ -284,6 +284,9 @@ angular.module('cmCore')
                 return bad_random_passphrase;
             },
 
+
+
+            //Todo check if te follwoing is still needed
 
             /**
              * generateTransactionSecret

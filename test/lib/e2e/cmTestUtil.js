@@ -506,6 +506,17 @@ this.click = function (dataQa) {
     $("[data-qa='" + dataQa + "']").click()
 }
 
+this.waitAndClickQa = function (dataQa) {
+    self.waitForElement("[data-qa='" + dataQa + "']")
+    $("[data-qa='" + dataQa + "']").click()
+}
+
+this.waitAndClick = function (selector) {
+    self.waitForElement(selector)
+    $(selector).click()
+}
+
+
 this.setVal = function (dataQa, text) {
     $("[data-qa='" + dataQa + "']").sendKeys(text)
 }

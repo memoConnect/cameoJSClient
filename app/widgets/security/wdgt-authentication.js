@@ -1,189 +1,146 @@
 'use strict';
 
 angular.module('cmWidgets').directive('cmWidgetAuthentication', [
-    'cmUtil',
+
     'cmUserModel',
-    'cmContactsModel',
-    'cmAuthenticationRequestFactory',
-    'cmCrypt',
+    'cmAuthenticationRequest',
     'cmCallbackQueue',
-    'cmModal',
-    '$rootScope',
-    '$routeParams',
+    'cmContactsModel',
     '$timeout',
-    function(cmUtil, cmUserModel, cmContactsModel, cmAuthenticationRequestFactory, cmCrypt, cmCallbackQueue, cmModal, $rootScope, $routeParams, $timeout){
+    '$rootScope',
+    '$q',
+
+    function(cmUserModel, cmAuthenticationRequest, cmCallbackQueue, cmContactsModel, $timeout, $rootScope, $q){
         return {
             restrict: 'E',
             templateUrl: 'widgets/security/wdgt-authentication.html',
-            controller: function ($scope) {
-                var timeoutPromise,
-                    timeoutInterval,
-                    fromKey = cmUserModel.loadLocalKeys()[0]; // ! attention ! works only with one local private key
+            scope: {
+                keyId:      '=',
+                identityId: '='
+            },
 
-                $rootScope.urlHistory.pop();
+            controller: function ($scope, $element, $attrs) {
 
-                if(!fromKey){
+                var timeoutInterval,
+                    timeoutPromise
+
+                $scope.step         =   0
+                $scope.waiting      =   false
+                $scope.toIdentity   =   $scope.identityId 
+                                        ?   cmContactsModel.findByIdentityId($scope.identityId).identity
+                                        :   cmUserModel.data.identity
+
+                //Without a key authetication won't work: 
+                if(!cmUserModel.loadLocalKeys().length){
                     $rootScope.goTo('/settings/identity/keys', true)
                 }
 
-                function init(){
-                    $scope.authenticationRequest    = cmAuthenticationRequestFactory.create();
-
-                    $scope.authenticationRequest
-                        .state.set('outgoing')
-
-                    $scope.toKey        = $routeParams.keyId && cmUserModel.data.identity.keys.find($routeParams.keyId);
-                    $scope.step         = $scope.toKey ? 1 : 0;
-
-                    if($scope.toKey){
-                        $scope.authenticationRequest.setToKey($scope.toKey);
-                        $scope.startAuthenticationRequest();
-                    }
-
-
-                    $scope.toIdentity    =  $routeParams.identityId
-                        ?   cmContactsModel.findByIdentityId($routeParams.identityId).identity
-                        :   cmUserModel.data.identity;
-
-
-                    if($scope.toIdentity){
-                        $scope.authenticationRequest.setToIdentityId($scope.toIdentity.id);
-                    }
-
-                    $scope.waiting              =   false;
-                    $scope.transactionSecret    =   undefined;
-                    $scope.BASE                 =   $routeParams.identityId
-                        ?   'IDENTITY.KEYS.TRUST.'
-                        :   'IDENTITY.KEYS.AUTHENTICATION.';
+                //Without cameo id authentication won't work:
+                if(!$scope.toIdentity.cameoId){
+                    $rootScope.goTo('/settings/identity/keys', true)                  
                 }
 
 
-                $scope.cancelTimeout = function(){
-                    if($scope.timeoutPromise)
-                        $timeout.cancel($scope.timeoutPromise);
-
-                    if(timeoutInterval)
-                        window.clearInterval(timeoutInterval);
-
-                    $scope.timeout = undefined;
-                };
-
-                $scope.startTimeout = function(time){
-                    $scope.cancelTimeout();
-                    $scope.timeout = time || 60000;
-                    $scope.timeoutPromise = $timeout(function(){
-                        $scope.cancel();
-                        $scope.timeout = undefined;
-                    }, $scope.timeout);
-
-                    timeoutInterval = window.setInterval(function(){
-                        $scope.timeout -= 1000;
-
-                        if($scope.timeout < 0)
-                            $scope.timeout = 0;
-
-                        $scope.$digest()
-                    }, 1000)
-                };
+                $scope.BASE = $scope.identityId
+                ?   'IDENTITY.KEYS.TRUST.'
+                :   'IDENTITY.KEYS.AUTHENTICATION.';
 
 
-                $scope.requestKey = function(){
-                    $scope.step     = 1;
+                $scope.getTimeout = function(){
+                    return cmAuthenticationRequest.getTTL()
+                }
+               
+                $scope.startAuthenticationRequest = function(){
+                    $scope.ERROR    = undefined
                     $scope.waiting  = true;
 
-                    $scope.startTimeout();
+                    cmAuthenticationRequest.generateTransactionSecret(120000)
+                    $scope.transactionSecret = cmAuthenticationRequest.getTransactionSecret()
+                    $scope.step = 1
 
-                    $scope.authenticationRequest
-                        .setFromKey(fromKey)
-                        .sendKeyRequest()
-                        .then(
-                        function(){
-                            $scope.waiting = false;
-                            $scope.cancelTimeout();
-                            $scope.step = 2;
-                            $scope.startAuthenticationRequest();
+                    cmCallbackQueue
+                    .push(function(){
+                        return cmAuthenticationRequest.send(
+                            $scope.toIdentity,                              //The identity we ask to trust our key
+                            cmAuthenticationRequest.getTransactionSecret(), //The secret will share through another channel with the person we believe is the owner of the above identity
+                            $scope.keyId                                    //The key that should sign our own key; may be undefined
+                        )
+                    }, 100)
+                    .then(function(){
+                        //wait for response:
+                        return cmAuthenticationRequest.when('started', 'canceled', cmAuthenticationRequest.getTTL())      
+                    })
+                    .then(
+                        function(result){
+                            $scope.step = 2
+                            //wait for key in response to be verified:
+                            return cmAuthenticationRequest.when('verification:successful', 'verification:failed', 7000)  
                         },
-                        function(){
-                            $scope.waiting  = false;
+                        function(result){
+                            return  result.event && result.event.name == 'canceled'
+                                    ?   $q.reject()
+                                    :   $q.reject('TIMEOUT')
                         }
                     )
-                };
-
-                $scope.cancel = function(){
-                    $scope.authenticationRequest
-                        .state
-                        .unset('outgoing')
-                        .set('canceled');
-
-                    $scope.cancelTimeout();
-
-                    $scope.done();
-                };
-
-                $scope.startAuthenticationRequest = function(){
-                    cmCallbackQueue.push(function(){
-                        return cmCrypt.generateTransactionSecret();
-                    }).then(
+                    .then(
                         function(result){
-                            $scope.step = 3;
-                            $scope.transactionSecret = result[0];
-
-                            if(fromKey && $scope.transactionSecret != ''){
-
-                                var dataForRequest =    cmCrypt.signAuthenticationRequest({
-                                    identityId: cmUserModel.data.identity.id,
-                                    transactionSecret: $scope.transactionSecret,
-                                    fromKey: fromKey,
-                                    toKey: $scope.authenticationRequest.toKey
-                                });
-
-                                $scope.startTimeout(120000);
-
-                                $scope.waiting = true;
-
-                                $scope.authenticationRequest
-                                    .importData(dataForRequest)
-                                    .setTransactionSecret($scope.transactionSecret)
-                                    .setFromKey(fromKey)
-                                    .send()
-                                    .then(
-                                    function(){
-                                        $scope.cancelTimeout();
-                                        $scope.step     = 4;
-                                        $scope.waiting  = false;
-                                        $scope.done();
-                                    },
-                                    function(){
-                                        $scope.cancelTimeout();
-                                        $scope.waiting  = false;
-                                    }
-                                )
-
-                            } else {
-                                //error
+                            var data = result.data
+                            return  cmUserModel.signPublicKey(data.key, data.key.id, data.identity)      //wait for key in response to be signed
+                                    //Todo: this 'then' should be elsewhere:
+                                    .then(function(){    
+                                        if(data.identity == cmUserModel.data.identity)                                    
+                                        cmAuthenticationRequest.openBulkRequest({
+                                            key1: cmUserModel.loadLocalKeys()[0].id,   // Todo: how to treat multiple local keys?
+                                            key2: data.key.id
+                                        })
+                                    })
+                        },
+                        function(result){
+                            return  result && result.event &&  result.event.name == 'verification:failed'
+                                    ?   $q.reject('VERIFY')
+                                    :   $q.reject(result)
+                        }
+                    )
+                    .then(
+                        function(){
+                            $scope.step     = 3
+                            $scope.waiting  = false
+                        },
+                        function(error){
+                            if(error){
+                                $scope.ERROR = error
+                                $scope.cancel()
                             }
                         }
                     )
+
+                }
+
+                $scope.cancel = function(){
+                    $scope.waiting  = false
+                    $scope.step     = 0
+                    cmAuthenticationRequest.cancel($scope.toIdentity)
                 };
 
                 $scope.done = function(){
-
-                    if($routeParams.keyId){
+                    $scope.cancel()
+                    
+                    if($scope.keyId){
                         $rootScope.goTo('settings/identity/keys', true);
                         return null;
                     }
 
-
-                    if($routeParams.identityId){
-                        $rootScope.goTo('contact/'+cmContactsModel.findByIdentityId($routeParams.identityId).id, true);
+                    if($scope.identityId){
+                        $rootScope.goTo('contact/edit/'+cmContactsModel.findByIdentityId($scope.identityId).id, true);
                         return null
                     }
 
                     $rootScope.goTo('settings/identity/keys', true);
                     return null;
-                };
+                }
 
-                init();
+
+                $scope.$on('$destroy', $scope.cancel)
 
             }
         }
