@@ -98,22 +98,22 @@ angular.module('cmUi')
             return modal
         };
 
-        $rootScope.openModal = self.open;
-        $rootScope.closeModal   = self.close;
-        $rootScope.isModalVisible = false;
+        $rootScope.openModal        = self.open;
+        $rootScope.closeModal       = self.close;
+        $rootScope.isModalVisible   = false;
 //        $rootScope.$watch('isModalVisible' ,function(newValue){
 //            console.log('watch modal '+newValue)
 //            $rootScope.isModalVisible = newValue;
 //        });
 
         // close all modals on route change:
-        $rootScope.$on('$routeChangeStart', function(){
+        $rootScope.$on('$routeChangeStart logout', function(){
             self.closeAll();
         });
 
         // closeAll on ESC
-        $document.bind('keydown', function (evt) {
-            if (evt.which === 27) {
+        $document.bind('keydown', function (event) {
+            if (event.which === 27) {
                 self.closeAll();
             }
         });

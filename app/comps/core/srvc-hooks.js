@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('cmCore').service('cmHooks', [
-    'cmUserModel', 'cmObject', 'cmApi', 'cmModal', 'cmLogger',
-    'cmAuthenticationRequestFactory', 'cmAuthenticationRequestModel', 'cmUtil', 'cmKey',
+    'cmUserModel', 'cmObject', 'cmApi', 'cmModal', 'cmLogger','cmUtil', 'cmKey',
     '$location', '$rootScope',
     function(cmUserModel, cmObject, cmApi, cmModal, cmLogger,
-             cmAuthenticationRequestFactory, cmAuthenticationRequestModel, cmUtil, cmKey,
+             cmUtil, cmKey,
              $location, $rootScope){
         var self = this;
         cmObject.addEventHandlingTo(this);
@@ -52,60 +51,60 @@ angular.module('cmCore').service('cmHooks', [
         //     }
         // };
 
-        this.openKeyRequest = function(identity){
-//            cmLogger.debug('cmHooks.openKeyRequest');
+//         this.openKeyRequest = function(identity){
+// //            cmLogger.debug('cmHooks.openKeyRequest');
 
 
-            identity = identity || cmUserModel.data.identity.id;
+//             identity = identity || cmUserModel.data.identity.id;
 
 
-            var authenticationRequest = cmAuthenticationRequestFactory.create()
-                                        .setToIdentityId(identity.id);
+//             var authenticationRequest = cmAuthenticationRequestFactory.create()
+//                                         .setToIdentityId(identity.id);
 
-            authenticationRequest.state.set('outgoing');
+//             authenticationRequest.state.set('outgoing');
 
-            var scope = $rootScope.$new();
-            scope.authenticationRequest = authenticationRequest;
+//             var scope = $rootScope.$new();
+//             scope.authenticationRequest = authenticationRequest;
 
-            var modalId = 'key-request';
-            cmModal.create({
-                id: modalId,
-                type: 'plain',
-                'class': 'no-padding',
-                'cm-title': 'DRTV.KEY_REQUEST.HEADER'
-            },'<cm-key-request></cm-key-request>',null,scope);
-            cmModal.open(modalId);
-        };
+//             var modalId = 'key-request';
+//             cmModal.create({
+//                 id: modalId,
+//                 type: 'plain',
+//                 'class': 'no-padding',
+//                 'cm-title': 'DRTV.KEY_REQUEST.HEADER'
+//             },'<cm-key-request></cm-key-request>',null,scope);
+//             cmModal.open(modalId);
+//         };
 
-        this.openOutgoingAuthenticationRequest = function(authenticationRequest){
-            cmLogger.debug('cmHooks.openOutgoingAuthenticationRequest');
+//         this.openOutgoingAuthenticationRequest = function(authenticationRequest){
+//             cmLogger.debug('cmHooks.openOutgoingAuthenticationRequest');
 
-            if(authenticationRequest instanceof cmAuthenticationRequestModel){
-                var scope = $rootScope.$new();
-                scope.authenticationRequest = authenticationRequest;
+//             if(authenticationRequest instanceof cmAuthenticationRequestModel){
+//                 var scope = $rootScope.$new();
+//                 scope.authenticationRequest = authenticationRequest;
 
-                var modalId = 'outgoing-authentication-request';
-                cmModal.create({
-                    id: modalId,
-                    type: 'plain',
-                    'class': 'no-padding',
-                    'cm-close-btn': false,
-                    'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
-                },'<cm-outgoing-authentication-request></cm-outgoing-authentication-request>', null, scope);
-                cmModal.open(modalId)
+//                 var modalId = 'outgoing-authentication-request';
+//                 cmModal.create({
+//                     id: modalId,
+//                     type: 'plain',
+//                     'class': 'no-padding',
+//                     'cm-close-btn': false,
+//                     'cm-title': 'SETTINGS.PAGES.IDENTITY.HANDSHAKE.MODAL_HEADER'
+//                 },'<cm-outgoing-authentication-request></cm-outgoing-authentication-request>', null, scope);
+//                 cmModal.open(modalId)
 
-                cmModal.on('modal:closed', function(event, id){
-                    if(id == modalId){
-//                        console.log('Andreas hats drauf!')
-                    }
-                });
+//                 cmModal.on('modal:closed', function(event, id){
+//                     if(id == modalId){
+// //                        console.log('Andreas hats drauf!')
+//                     }
+//                 });
 
-                authenticationRequest.one('request:finished', function(){
-                    $rootScope.closeModal(modalId);
-                    cmAuthenticationRequestFactory.deregister(authenticationRequest);
-                });
-            }
-        };
+//                 authenticationRequest.one('request:finished', function(){
+//                     $rootScope.closeModal(modalId);
+//                     cmAuthenticationRequestFactory.deregister(authenticationRequest);
+//                 });
+//             }
+//         };
 
         /**
          * authenticationRequest:new
@@ -224,45 +223,45 @@ angular.module('cmCore').service('cmHooks', [
 //             }
 //         });
 
-        cmApi.on('authenticationRequest:canceled', function(event, request) {
-//            cmLogger.debug('cmHooks.on:authenticationRequest:canceled');
+//         cmApi.on('authenticationRequest:canceled', function(event, request) {
+// //            cmLogger.debug('cmHooks.on:authenticationRequest:canceled');
 
-            var authenticationRequest = cmAuthenticationRequestFactory.find(request);
-            if(authenticationRequest !== null){
-                cmAuthenticationRequestFactory.deregister(authenticationRequest);
-            }
-        });
+//             var authenticationRequest = cmAuthenticationRequestFactory.find(request);
+//             if(authenticationRequest !== null){
+//                 cmAuthenticationRequestFactory.deregister(authenticationRequest);
+//             }
+//         });
 
-        cmApi.on('authenticationRequest:key-request', function(event, request){
-//            cmLogger.debug('cmHooks.authenticationRequest:key-request');
+//         cmApi.on('authenticationRequest:key-request', function(event, request){
+// //            cmLogger.debug('cmHooks.authenticationRequest:key-request');
 
 
-            if(cmAuthenticationRequestFactory.find(request) == null && cmUserModel.loadLocalKeys().length > 0){
-                var authenticationRequest = cmAuthenticationRequestFactory.create(request, true);
-                authenticationRequest.state.set('incoming');
+//             if(cmAuthenticationRequestFactory.find(request) == null && cmUserModel.loadLocalKeys().length > 0){
+//                 var authenticationRequest = cmAuthenticationRequestFactory.create(request, true);
+//                 authenticationRequest.state.set('incoming');
 
-                var scope = $rootScope.$new();
-                scope.authenticationRequest = authenticationRequest;
+//                 var scope = $rootScope.$new();
+//                 scope.authenticationRequest = authenticationRequest;
 
-                var modalId = 'key-response';
-                cmModal.create({
-                    id: modalId,
-                    type: 'plain',
-                    'class': 'no-padding',
-                    'cm-title': authenticationRequest.is3rdParty()
-                                ?   'IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.HEADER'
-                                :   'IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER'
-                },'<cm-key-response></cm-key-response>',null,scope);
-                cmModal.open(modalId);
+//                 var modalId = 'key-response';
+//                 cmModal.create({
+//                     id: modalId,
+//                     type: 'plain',
+//                     'class': 'no-padding',
+//                     'cm-title': authenticationRequest.is3rdParty()
+//                                 ?   'IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.HEADER'
+//                                 :   'IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER'
+//                 },'<cm-key-response></cm-key-response>',null,scope);
+//                 cmModal.open(modalId);
 
-                cmModal.on('modal:closed', function(event, id){
-                    if(id == modalId){
-//                        $rootScope.keyRequestSender = false;
-                    }
-                });
+//                 cmModal.on('modal:closed', function(event, id){
+//                     if(id == modalId){
+// //                        $rootScope.keyRequestSender = false;
+//                     }
+//                 });
 
-            }
-        });
+//             }
+//         });
 
 //         cmApi.on('authenticationRequest:key-response', function(event, response){
 // //            cmLogger.debug('cmHooks.authenticationRequest:key-response');
@@ -287,35 +286,35 @@ angular.module('cmCore').service('cmHooks', [
 //             }
 //         });
 
-        cmUserModel.on('handshake:start', function(event, data){
+//         cmUserModel.on('handshake:start', function(event, data){
 
-            var toKey       = data.key,
-                identity    = data.identity || cmUserModel.data.identity
+//             var toKey       = data.key,
+//                 identity    = data.identity || cmUserModel.data.identity
 
-            if(cmUserModel.verifyPublicKeyForAuthenticationRequest(toKey, identity)){
+//             if(cmUserModel.verifyPublicKeyForAuthenticationRequest(toKey, identity)){
 
-                var authenticationRequest = cmAuthenticationRequestFactory.create();
-                authenticationRequest.state.set('outgoing');
+//                 var authenticationRequest = cmAuthenticationRequestFactory.create();
+//                 authenticationRequest.state.set('outgoing');
 
-                authenticationRequest
-                .setToKey(toKey)
-                .setToIdentityId(identity.id)
-                .setFromIdentityId(cmUserModel.data.identity.id)
+//                 authenticationRequest
+//                 .setToKey(toKey)
+//                 .setToIdentityId(identity.id)
+//                 .setFromIdentityId(cmUserModel.data.identity.id)
 
-                self.openOutgoingAuthenticationRequest(authenticationRequest);
-            }
-        });
+//                 self.openOutgoingAuthenticationRequest(authenticationRequest);
+//             }
+//         });
 
-        cmUserModel.on('key:saved ', function(event, data){
-//            console.log('cmHooks - key:saved');
+//         cmUserModel.on('key:saved ', function(event, data){
+// //            console.log('cmHooks - key:saved');
 
-            var localKeys = cmUserModel.loadLocalKeys();
-            var publicKeys = cmUserModel.data.identity.keys;
+//             var localKeys = cmUserModel.loadLocalKeys();
+//             var publicKeys = cmUserModel.data.identity.keys;
 
-            if(localKeys.length < publicKeys.length){
-                $rootScope.goto('/authentication')
-            }
-        });
+//             if(localKeys.length < publicKeys.length){
+//                 $rootScope.goto('/authentication')
+//             }
+//         });
 
 
         // cmAuthenticationRequestFactory.on('key-response:accepted', function(event, data){
@@ -329,14 +328,14 @@ angular.module('cmCore').service('cmHooks', [
         //     }
         // });
 
-        cmAuthenticationRequestFactory.on('deregister', function(){
-//            console.log('cmHooks - cmAuthenticationRequestFactory:deregister');
-            cmUserModel.signOwnKeys();
-        });
+//         cmAuthenticationRequestFactory.on('deregister', function(){
+// //            console.log('cmHooks - cmAuthenticationRequestFactory:deregister');
+//             cmUserModel.signOwnKeys();
+//         });
 
-        cmAuthenticationRequestFactory.on('authentication:finished', function(event, data){
-            //console.log('authentication:finished', data);
-            self.openBulkRequest(data);
-        });
+//         cmAuthenticationRequestFactory.on('authentication:finished', function(event, data){
+//             //console.log('authentication:finished', data);
+//             self.openBulkRequest(data);
+//         });
     }
 ]);
