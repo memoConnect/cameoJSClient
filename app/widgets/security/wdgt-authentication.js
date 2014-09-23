@@ -6,11 +6,12 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
     'cmAuthenticationRequest',
     'cmCallbackQueue',
     'cmIdentityFactory',
+    'cmContactsModel',
     '$timeout',
     '$rootScope',
     '$q',
 
-    function(cmUserModel, cmAuthenticationRequest, cmCallbackQueue, cmIdentityFactory, $timeout, $rootScope, $q){
+    function(cmUserModel, cmAuthenticationRequest, cmCallbackQueue, cmIdentityFactory, cmContactsModel, $timeout, $rootScope, $q){
         return {
             restrict: 'E',
             templateUrl: 'widgets/security/wdgt-authentication.html',
@@ -136,7 +137,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     }
 
                     if($scope.identityId){
-                        $rootScope.goTo('contact/edit/'+cmIdentityFactory.find($scope.identityId).id, true);
+                        $rootScope.goTo('contact/edit/'+cmContactsModel.findByIdentityId($scope.identityId).id, true);
                         return null
                     }
 
