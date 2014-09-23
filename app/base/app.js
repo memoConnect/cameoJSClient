@@ -195,8 +195,8 @@ angular.module('cameoClient', [
     }
 ])
 // app run handling
-.run(['cmNetworkInformation', 'cmPushNotificationAdapter',
-    function(cmNetworkInformation, cmPushNotificationAdapter){
+.run(['cmNetworkInformation', 'cmPushNotificationAdapter', 'cmPhonegap',
+    function(cmNetworkInformation, cmPushNotificationAdapter, cmPhonegap){
         cmPhonegap.isReady(function(){
             // check internet connection
             cmNetworkInformation.init();
