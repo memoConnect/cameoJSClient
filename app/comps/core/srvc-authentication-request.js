@@ -269,6 +269,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
          * It is important to know the sender so that 3rd party identities cannot cancel your events. 
          */
         cmApi.on('authenticationRequest:cancel', function(event, data){
+            data = data || {}
             data.fromIdentityId = event.fromIdentityId
             self.trigger('canceled', data)
         })

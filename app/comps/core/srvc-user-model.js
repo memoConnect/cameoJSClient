@@ -101,6 +101,7 @@ angular.module('cmCore')
         }
 
         this.importData = function(activeIdentity, data_identities){
+            //Todo: dont extend!
             angular.extend(this.data, activeIdentity);
 
             this.data.identity = activeIdentity;
