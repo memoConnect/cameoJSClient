@@ -384,7 +384,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                                     })
                                                     */
 
-                                                    this.bulkReKeying(toKey.id, fromKey.id)
+                                                    cmUserModel.bulkReKeying(toKey.id, fromKey.id)
 
                                                     
                                                 }else{
