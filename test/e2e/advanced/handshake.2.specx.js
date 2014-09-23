@@ -12,10 +12,13 @@ describe('Authentication requests -', function () {
 
     var testUserId = Math.random().toString(36).substring(2, 9)
     var testUser = "testUser23_" + testUserId
+    var testUser2Id = Math.random().toString(36).substring(2, 9)
+    var testUser2 = "testUser23_" + testUser2Id
 
     var keyName1 = "moeps key 1"
     var keyName2 = "moeps key 2"
     var keyName3 = "moeps key 3"
+    var keyName4 = "moeps key 4"
 
     var subject1 = "subject1"
     var subject2 = "subject2"
@@ -25,7 +28,6 @@ describe('Authentication requests -', function () {
     var encryptedMessage2 = "moeps die moeps die moeps"
     var encryptedMessage3 = "foo baa foo baa foo baa foo baa"
 
-
     var keyId2
 
     var localStorage1
@@ -33,10 +35,13 @@ describe('Authentication requests -', function () {
     var localStorage3
 
     var eventSubscription
+    var eventSubscription2
 
     var token
+    var token2
 
     var transactionSecret
+    var transactionSecret2
 
     var authEvents = []
     var cancelEvent = {
@@ -66,6 +71,9 @@ describe('Authentication requests -', function () {
         var events = []
         var get = function () {
             util.getEvents(token, eventSubscription).then(function (res) {
+
+                console.log("EVENTS:",res)
+
                 var e = res.data.events.filter(function (event) {
                     return event.name == "authenticationRequest:start"
                 })
@@ -85,25 +93,6 @@ describe('Authentication requests -', function () {
         get()
     }
 
-    var createEncryptedConversation = function (subject, message) {
-        util.get("/conversation/new")
-        util.waitForElement("[data-qa='input-subject']")
-        util.setVal("input-subject", subject)
-        util.setVal("input-answer", message)
-        util.waitAndClickQa("btn-send-answer")
-        util.waitAndClick("cm-modal.active [data-qa='checkbox-dont-ask-me-again']")
-        util.waitAndClick("cm-modal.active [data-qa='cm-modal-close-btn']")
-        util.waitAndClickQa("btn-send-answer")
-    }
-
-    var readConversation = function (subject, message) {
-        util.get("/talks")
-        util.headerSearchInList(subject)
-        util.waitAndClick("cm-conversation-tag")
-        util.waitForElement("cm-message")
-        expect($("cm-message").getText()).toContain(message)
-    }
-
     describe("key1:", function () {
 
         it("create test user, generate key and export localStorage", function () {
@@ -113,7 +102,7 @@ describe('Authentication requests -', function () {
         })
 
         it("create encrypted conversation", function () {
-            createEncryptedConversation(subject1, encryptedMessage1)
+            util.createEncryptedConversation(subject1, encryptedMessage1)
         })
 
         it("export localstorage (key1) and get token", function () {
@@ -131,14 +120,14 @@ describe('Authentication requests -', function () {
             })
         })
 
-        it("delete localstorage", function () {
+        xit("delete localstorage", function () {
             util.logout()
             util.clearLocalStorage()
         })
 
     })
 
-    describe("key3:", function () {
+    xdescribe("key3:", function () {
 
         it("generate key3", function () {
             util.login(testUser, "password")
@@ -175,7 +164,7 @@ describe('Authentication requests -', function () {
         })
 
         it("create encrypted conversation", function () {
-            createEncryptedConversation(subject3, encryptedMessage3)
+            util.createEncryptedConversation(subject3, encryptedMessage3)
         })
 
         it("delete localstorage", function () {
@@ -184,7 +173,7 @@ describe('Authentication requests -', function () {
         })
     })
 
-    describe("key1 again:", function () {
+    xdescribe("key1 again:", function () {
 
         it("import key", function () {
             util.setLocalStorage(localStorage1.key, localStorage1.value)
@@ -240,7 +229,7 @@ describe('Authentication requests -', function () {
         })
 
         it("should be able to read conversation from key3", function () {
-            readConversation(subject3, encryptedMessage3)
+            util.readConversation(subject3, encryptedMessage3)
         })
 
         it("delete localstorage", function () {
@@ -250,7 +239,7 @@ describe('Authentication requests -', function () {
 
     })
 
-    describe("key3 again:", function () {
+    xdescribe("key3 again:", function () {
 
         it("import key3", function () {
             util.setLocalStorage(localStorage3.key, localStorage3.value)
@@ -285,7 +274,7 @@ describe('Authentication requests -', function () {
         })
 
         it("should be able to read conversation from key1", function () {
-            readConversation(subject1, encryptedMessage1)
+            util.readConversation(subject1, encryptedMessage1)
         })
 
         it("delete localstorage", function () {
@@ -295,7 +284,7 @@ describe('Authentication requests -', function () {
 
     })
 
-    describe("key2:", function () {
+    xdescribe("key2:", function () {
 
         it("generate key2", function () {
             util.login(testUser, "password", "/start")
@@ -328,7 +317,7 @@ describe('Authentication requests -', function () {
         })
 
         it("create encrypted conversation", function () {
-            createEncryptedConversation(subject2, encryptedMessage2)
+            util.createEncryptedConversation(subject2, encryptedMessage2)
         })
 
         it("send authentication:start event from key1", function () {
@@ -369,7 +358,7 @@ describe('Authentication requests -', function () {
         })
     })
 
-    describe("key1 yet again:", function () {
+    xdescribe("key1 yet again:", function () {
 
         it("import key1", function () {
             util.setLocalStorage(localStorage1.key, localStorage1.value)
@@ -405,11 +394,11 @@ describe('Authentication requests -', function () {
         })
 
         it("should be able to read conversation from key2", function () {
-            readConversation(subject2, encryptedMessage2)
+            util.readConversation(subject2, encryptedMessage2)
         })
 
         it("should be able to read conversation from key3", function () {
-            readConversation(subject3, encryptedMessage3)
+            util.readConversation(subject3, encryptedMessage3)
         })
 
         it("delete localstorage", function () {
@@ -418,7 +407,7 @@ describe('Authentication requests -', function () {
         })
     })
 
-    describe("key3 yet again:", function () {
+    xdescribe("key3 yet again:", function () {
 
         it("import key3", function () {
             util.setLocalStorage(localStorage3.key, localStorage3.value)
@@ -436,16 +425,15 @@ describe('Authentication requests -', function () {
         })
 
         it("should be able to read conversation from key1", function () {
-            readConversation(subject1, encryptedMessage1)
+            util.readConversation(subject1, encryptedMessage1)
         })
 
         it("should be able to read conversation from key2", function () {
-            readConversation(subject2, encryptedMessage2)
+            util.readConversation(subject2, encryptedMessage2)
         })
     })
 
-    describe("key2 again:", function () {
-
+    xdescribe("key2 again:", function () {
         it("import key2", function () {
             util.setLocalStorage(localStorage2.key, localStorage2.value)
             util.login(testUser, "password")
@@ -462,12 +450,93 @@ describe('Authentication requests -', function () {
         })
 
         it("should be able to read conversation from key1", function () {
-            readConversation(subject1, encryptedMessage1)
+            util.readConversation(subject1, encryptedMessage1)
         })
 
         it("should be able to read conversation from key3", function () {
-            readConversation(subject3, encryptedMessage3)
+            util.readConversation(subject3, encryptedMessage3)
         })
+    })
+
+    describe("trust other user -", function () {
+
+        it("create testuser2 and generate key", function () {
+            util.createTestUser(testUser2Id)
+            util.generateKey(4, keyName4)
+        })
+
+        it("send friendrequest to testuser1", function () {
+            util.sendFriendRequest(testUser)
+        })
+
+        it("get token", function () {
+            util.getToken().then(function (res) {
+                token2 = res
+            })
+        })
+
+        it("get event subscription", function () {
+            util.getEventSubscription(token2).then(function (res) {
+                eventSubscription2 = res
+            })
+        })
+
+        it("login as testuser1 and accept friendRequest", function () {
+            util.login(testUser, "password")
+            util.acceptFriendRequests()
+        })
+
+        it("testuser2 should not be trusted", function () {
+            util.get("/contact/list")
+            util.waitForElements("cm-contact-tag", 2)
+            util.headerSearchInList(testUser2)
+            util.waitAndClick("cm-contact-tag")
+            // to make sure that checkmark is not present
+
+        })
+
+        it("start handshake", function () {
+            util.waitAndClickQa("start-trust-handshake-btn")
+            util.waitAndClickQa("btn-start-authentication")
+        })
+
+        it("get transaction secret", function () {
+            util.waitForElement("[data-qa='transaction-secret-value']")
+            $("[data-qa='transaction-secret-value']").getText().then(function (text) {
+                transactionSecret2 = text
+            })
+        })
+
+        it("login as testuser2", function(){
+            util.login(testUser, "password")
+        })
+
+        // this is a bit dirty, redo this at some point
+        var tmpToken
+        var tmpEventSubscription
+
+        it("get authentication:start event", function () {
+            tmpToken = token
+            tmpEventSubscription = eventSubscription
+            token = token2
+            eventSubscription = eventSubscription2
+            getAuthEvent(4)
+            ptor.wait(function () {
+                return authEvents[4] != undefined
+            })
+        })
+
+        it("resend event", function(){
+            util.remoteBroadcastEvent(token, authEvents[4], authEvents[4].fromIdentityId)
+            ptor.debugger()
+        })
+
+
+        it("debug", function(){
+            console.log("events", authEvents)
+        })
+
+
     })
 
 })

@@ -5,12 +5,13 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
     'cmUserModel',
     'cmAuthenticationRequest',
     'cmCallbackQueue',
+    'cmIdentityFactory',
     'cmContactsModel',
     '$timeout',
     '$rootScope',
     '$q',
 
-    function(cmUserModel, cmAuthenticationRequest, cmCallbackQueue, cmContactsModel, $timeout, $rootScope, $q){
+    function(cmUserModel, cmAuthenticationRequest, cmCallbackQueue, cmIdentityFactory, cmContactsModel, $timeout, $rootScope, $q){
         return {
             restrict: 'E',
             templateUrl: 'widgets/security/wdgt-authentication.html',
@@ -27,7 +28,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                 $scope.step         =   0
                 $scope.waiting      =   false
                 $scope.toIdentity   =   $scope.identityId 
-                                        ?   cmContactsModel.findByIdentityId($scope.identityId).identity
+                                        ?   cmIdentityFactory.find($scope.identityId)
                                         :   cmUserModel.data.identity
 
                 //Without a key authetication won't work: 
@@ -41,9 +42,9 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                 }
 
 
-                $scope.BASE = $scope.identityId
-                ?   'IDENTITY.KEYS.TRUST.'
-                :   'IDENTITY.KEYS.AUTHENTICATION.';
+                $scope.BASE =   ($scope.identityId != cmUserModel.data.identity)
+                                ?   'IDENTITY.KEYS.TRUST.'
+                                :   'IDENTITY.KEYS.AUTHENTICATION.';
 
 
                 $scope.getTimeout = function(){
@@ -61,7 +62,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     cmCallbackQueue
                     .push(function(){
                         return cmAuthenticationRequest.send(
-                            $scope.toIdentity,                              //The identity we ask to trust our key
+                            $scope.toIdentity.id,                           //The identity we ask to trust our key
                             cmAuthenticationRequest.getTransactionSecret(), //The secret will share through another channel with the person we believe is the owner of the above identity
                             $scope.keyId                                    //The key that should sign our own key; may be undefined
                         )
@@ -107,6 +108,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     )
                     .then(
                         function(){
+                            $scope.cancel()
                             $scope.step     = 3
                             $scope.waiting  = false
                         },
@@ -114,26 +116,23 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                             if(error){
                                 $scope.ERROR = error                                
                             }
+                            $scope.cancel()
                         }
                     )
-                    .finally(function(){
-                        // Tell all devices that the authentication request came to an end
-                        $scope.cancel()
-                    })
 
                 }
 
                 $scope.cancel = function(){
                     $scope.waiting  = false
                     $scope.step     = 0
-                    cmAuthenticationRequest.cancel($scope.toIdentity)
+                    cmAuthenticationRequest.cancel($scope.toIdentity.id)
                 };
 
                 $scope.done = function(){
                     $scope.cancel()
                     
                     if($scope.keyId){
-                        $rootScope.goTo('settings/identity/keys', true);
+                        $rootScope.goTo('settings/identity/key/list', true);
                         return null;
                     }
 
@@ -142,7 +141,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                         return null
                     }
 
-                    $rootScope.goTo('settings/identity/keys', true);
+                    $rootScope.goTo('settings/identity/key/list', true);
                     return null;
                 }
 
