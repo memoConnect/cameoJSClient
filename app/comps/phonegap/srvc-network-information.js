@@ -4,18 +4,27 @@
 
 angular.module('cmPhonegap')
 .service('cmNetworkInformation', [
-    'cmPhonegap', 'cmUtil', 'cmLogger', '$navigator', '$document',
-    function (cmPhonegap, cmUtil, cmLogger, $navigator, $document) {
+    'cmPhonegap', 'cmUtil', 'cmLogger',
+    '$navigator', '$document', '$phonegapCameoConfig',
+    function (cmPhonegap, cmUtil, cmLogger,
+              $navigator, $document, $phonegapCameoConfig) {
         var self = {
             state: '',
 
             init: function(){
-                if(!('connection' in $navigator) || !('type' in $navigator.connection)) {
-                    //cmLogger.info('NETWORK-INFORMATION PLUGIN IS MISSING');
+                if(typeof $phonegapCameoConfig == 'undefined') {
                     return false;
                 }
 
-                this.checkConnection();
+                cmPhonegap.isReady(function(){
+                    if(!('connection' in $navigator)
+                    || !('type' in $navigator.connection)) {
+                        //cmLogger.info('NETWORK-INFORMATION PLUGIN IS MISSING');
+                        return false;
+                    }
+
+                    self.checkConnection();
+                })
             },
 
             checkConnection: function(){

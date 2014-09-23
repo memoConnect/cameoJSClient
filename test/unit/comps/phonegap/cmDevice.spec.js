@@ -185,7 +185,6 @@ var cmDevice,
         })
         beforeEach(inject(function (_cmDevice_) {
             cmDevice = _cmDevice_
-            cmDevice.init()
         }))
 
         describe('method existsPlugin',function(){
@@ -415,7 +414,6 @@ var cmDevice,
 
             beforeEach(inject(function (_cmDevice_) {
                 cmDevice = _cmDevice_
-                cmDevice.init()
             }))
 
             createUserAgents(true)

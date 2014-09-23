@@ -195,11 +195,10 @@
         }
     ])
     // app run handling
-    .run(['cmPhonegap', 'cmDevice', 'cmNetworkInformation', 'cmPushNotificationAdapter',
-        function(cmPhonegap, cmDevice, cmNetworkInformation, cmPushNotificationAdapter){
+    .run(['cmPhonegap', 'cmNetworkInformation', 'cmPushNotificationAdapter',
+        function(cmPhonegap, cmNetworkInformation, cmPushNotificationAdapter){
             cmPhonegap.isReady(function(){
-                // device init
-                cmDevice.init();
+                console.log('app.run cmPhonegap.isReady');
                 // check internet connection
                 cmNetworkInformation.init();
                 // register device for pushnotification

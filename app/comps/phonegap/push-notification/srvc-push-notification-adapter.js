@@ -6,10 +6,10 @@ angular.module('cmPhonegap')
 .service('cmPushNotificationAdapter', [
     'cmPhonegap', 'cmDevice', 'cmPushNotifications',
     'cmUtil', 'cmLanguage', 'cmApi',
-    '$rootScope', '$window',
+    '$rootScope', '$window', '$phonegapCameoConfig',
     function (cmPhonegap, cmDevice, cmPushNotifications,
               cmUtil, cmLanguage, cmApi,
-              $rootScope, $window) {
+              $rootScope, $window, $phonegapCameoConfig) {
 
         var self = {
             plugin: null,
@@ -20,14 +20,20 @@ angular.module('cmPhonegap')
             },
 
             init: function(){
-                if(!('plugins' in $window) || !('pushNotification' in $window.plugins)) {
-                    //cmLogger.info('PUSHNOTIFICATION PLUGIN IS MISSING');
+
+                if (typeof $phonegapCameoConfig == 'undefined'){
                     return false;
                 }
 
-                this.plugin = $window.plugins.pushNotification;
+                cmPhonegap.isReady(function(){
+                    if(!('plugins' in $window) || !('pushNotification' in $window.plugins)) {
+                        //cmLogger.info('PUSHNOTIFICATION PLUGIN IS MISSING');
+                        return false;
+                    }
 
-                this.register();
+                    self.plugin = $window.plugins.pushNotification;
+                    self.register();
+                })
             },
 
             register: function(){

@@ -37,9 +37,12 @@
  }
  }*/
 
-angular.module('cmPhonegap').service('cmCamera', [
-    'cmPhonegap', 'cmFilesAdapter', '$navigator', '$window',
-    function (cmPhonegap, cmFilesAdapter, $navigator, $window) {
+angular.module('cmPhonegap')
+.service('cmCamera', [
+    'cmPhonegap', 'cmFilesAdapter',
+    '$navigator', '$window', '$phonegapCameoConfig',
+    function (cmPhonegap, cmFilesAdapter,
+              $navigator, $window, $phonegapCameoConfig) {
 
         function FileError(e){
             var msg;
@@ -124,12 +127,17 @@ angular.module('cmPhonegap').service('cmCamera', [
             plugin: null,
 
             init: function () {
-                if (typeof $navigator == 'undefined' || !('camera' in $navigator)) {
-                    //cmLogger.info('CAMERA PLUGIN IS MISSING');
+                if (typeof $phonegapCameoConfig == 'undefined'){
                     return false;
                 }
 
                 cmPhonegap.isReady(function () {
+                    if(typeof $navigator == 'undefined'
+                    || !('camera' in $navigator)) {
+                        //cmLogger.info('CAMERA PLUGIN IS MISSING');
+                        return false;
+                    }
+
                     self.plugin = $navigator.camera;
                 });
 

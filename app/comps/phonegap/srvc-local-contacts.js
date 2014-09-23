@@ -34,19 +34,24 @@
 
 angular.module('cmPhonegap').service('cmLocalContacts', [
     'cmPhonegap', 'cmUtil', 'cmLogger',
-    '$q', '$navigator',
-    function (cmPhonegap, cmUtil, cmLogger, $q, $navigator) {
+    '$q', '$navigator', '$phonegapCameoConfig',
+    function (cmPhonegap, cmUtil, cmLogger,
+              $q, $navigator, $phonegapCameoConfig) {
 
         var self = {
             plugin: null,
 
             init: function () {
-                if (!('contacts' in $navigator)) {
-                    //cmLogger.info('CONTACTS PLUGIN IS MISSING');
+                if(typeof $phonegapCameoConfig == 'undefined') {
                     return false;
                 }
 
                 cmPhonegap.isReady(function(){
+                    if(!('contacts' in $navigator)) {
+                        //cmLogger.info('CONTACTS PLUGIN IS MISSING');
+                        return false;
+                    }
+                    console.log('localContacts ready',$navigator.contacts)
                     self.plugin = $navigator.contacts;
                 });
 

@@ -5,9 +5,9 @@
 angular.module('cmPhonegap')
 .service('cmDevice', [
     'cmPhonegap', 'cmLogger', 'cmUtil',
-    '$window', '$device',
+    '$window', '$device', '$phonegapCameoConfig',
     function (cmPhonegap, cmLogger, cmUtil,
-              $window, $device) {
+              $window, $device, $phonegapCameoConfig) {
 
         var unknown = 'unknown';
 
@@ -15,12 +15,18 @@ angular.module('cmPhonegap')
             plugin: null,
 
             init: function(){
-                if(typeof $device.get() == 'undefined'){
-                    //cmLogger.info('DEVICE PLUGIN IS MISSING');
+                if(typeof $phonegapCameoConfig == 'undefined') {
                     return false;
                 }
 
-                this.plugin = $device.get()
+                cmPhonegap.isReady(function(){
+                    if(typeof $device.get() == 'undefined'){
+                        //cmLogger.info('DEVICE PLUGIN IS MISSING');
+                        return false;
+                    }
+
+                    self.plugin = $device.get()
+                });
             },
 
             existsPlugin: function(){
@@ -173,6 +179,8 @@ angular.module('cmPhonegap')
                 };
             }
         };
+
+        self.init();
 
         return self;
     }

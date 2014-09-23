@@ -9,9 +9,9 @@ describe('Textarea Resize', function () {
 
     afterEach(function() { util.stopOnError() })
 
-    var avatarSrc = '',
+    var avatarStyle = '',
         newAvatar = path.resolve(__dirname, '../data/avatar-upload.jpg'),
-        newAvatarSrc = ''
+        newAvatarStyle = ''
 
 
     it('login & got to identity list', function () {
@@ -24,8 +24,8 @@ describe('Textarea Resize', function () {
 
     it('choose active identity and cache active avatar', function(){
         // get active avatarUrl
-        $('cm-identity-tag cm-avatar img').getAttribute('src').then(function(src){
-            avatarSrc = newAvatar
+        $('cm-identity-tag cm-avatar i').getAttribute('style').then(function(src){
+            avatarStyle = src
             util.click('identity-list-item')
         })
     })
@@ -36,19 +36,19 @@ describe('Textarea Resize', function () {
 
         util.waitForLoader()
 
-        $('cm-identity-edit cm-avatar img').getAttribute('src').then(function(src){
-            newAvatarSrc = src
-            expect(newAvatarSrc).not.toBe(avatarSrc)
+        $('cm-identity-edit cm-avatar i').getAttribute('style').then(function(src){
+            newAvatarStyle = src
+            expect(newAvatarStyle).not.toBe(avatarStyle)
         })
 
-        $('cm-identity cm-avatar img').getAttribute('src').then(function(src){
-            expect(src).not.toBe(avatarSrc)
+        $('cm-identity cm-avatar i').getAttribute('style').then(function(src){
+            expect(src).not.toBe(avatarStyle)
         })
 
         util.get('/settings/identity/list')
         util.waitForPageLoad('/settings/identity/list')
-        $('cm-identity-tag cm-avatar img').getAttribute('src').then(function(src){
-            expect(src).not.toBe(avatarSrc)
+        $('cm-identity-tag cm-avatar i').getAttribute('style').then(function(src){
+            expect(src).not.toBe(avatarStyle)
         })
     })
 
