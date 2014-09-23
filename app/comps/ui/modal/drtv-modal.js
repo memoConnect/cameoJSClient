@@ -104,9 +104,8 @@ angular.module('cmUi')
                 }
 
                 // open modal
-                scope.open = function(){
+                scope.open = function(ttl){
                     scope.toggle(true);
-
                     return scope
                 };
                 // close modal

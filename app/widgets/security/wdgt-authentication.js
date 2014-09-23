@@ -88,11 +88,15 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                             return  cmUserModel.signPublicKey(data.key, data.key.id, data.identity)      //wait for key in response to be signed
                                     //Todo: this 'then' should be elsewhere:
                                     .then(function(){    
-                                        if(data.identity == cmUserModel.data.identity)                                    
+                                        if(data.identity == cmUserModel.data.identity)      
+                                        /*                              
                                         cmAuthenticationRequest.openBulkRequest({
                                             key1: cmUserModel.loadLocalKeys()[0].id,   // Todo: how to treat multiple local keys?
                                             key2: data.key.id
                                         })
+                                        */
+                                       
+                                        cmUserModel.bulkReKeying(cmUserModel.loadLocalKeys()[0].id, data.key.id)
                                     })
                         },
                         function(result){
