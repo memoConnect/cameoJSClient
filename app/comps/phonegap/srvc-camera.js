@@ -38,8 +38,8 @@
  }*/
 
 angular.module('cmPhonegap').service('cmCamera', [
-    'cmFilesAdapter', 'cmUtil', 'cmLogger',
-    function (cmFilesAdapter, cmUtil, cmLogger) {
+    'cmFilesAdapter', '$navigator', '$window',
+    function (cmFilesAdapter, $navigator, $window) {
 
         function FileError(e){
             var msg;
@@ -87,9 +87,42 @@ angular.module('cmPhonegap').service('cmCamera', [
             console.log('errror readEntries '+msg)
         }
 
+        var CameraVars = {
+            "DestinationType":{
+                "DATA_URL":0, //base64
+                "FILE_URI":1,
+                "NATIVE_URI":2
+            },
+            "EncodingType":{
+                "JPEG":0,
+                "PNG":1
+            },
+            "MediaType":{
+                "PICTURE":0,
+                "VIDEO":1,
+                "ALLMEDIA":2
+            },
+            "PictureSourceType":{
+                "PHOTOLIBRARY":0,
+                "CAMERA":1,
+                "SAVEDPHOTOALBUM":2
+            },
+            "PopoverArrowDirection":{
+                "ARROW_UP":1,
+                "ARROW_DOWN":2,
+                "ARROW_LEFT":4,
+                "ARROW_RIGHT":8,
+                "ARROW_ANY":15
+            },
+            "Direction":{
+                "BACK":0,
+                "FRONT":1
+            }
+        };
+
         return {
             existsPlugin: function(){
-                if(!('camera' in navigator)){
+                if(typeof $navigator == 'undefined' || !('camera' in $navigator)){
                     //cmLogger.info('CAMERA PLUGIN IS MISSING');
                     return false;
                 }
@@ -103,7 +136,7 @@ angular.module('cmPhonegap').service('cmCamera', [
                 if(callback == undefined)
                     callback = function(){};
 
-                navigator.camera.getPicture(
+                $navigator.camera.getPicture(
                     function(base64){
                         var blob = cmFilesAdapter.base64ToBlob(base64,'image/jpeg');
                         blob.name = 'NewCameoPicture.jpg';
@@ -111,15 +144,17 @@ angular.module('cmPhonegap').service('cmCamera', [
                     },
                     null,
                     {
-                        sourceType: Camera.PictureSourceType.CAMERA,
+                        sourceType: CameraVars.PictureSourceType.CAMERA,
                         quality: 60,
-                        encodingType: Camera.EncodingType.JPEG,
-                        destinationType: Camera.DestinationType.DATA_URL,
-                        mediaType: Camera.MediaType.PICTURE,
-                        cameraDirection: Camera.Direction[useFrontCamera?'FRONT':'BACK'],
+                        encodingType: CameraVars.EncodingType.JPEG,
+                        destinationType: CameraVars.DestinationType.DATA_URL,
+                        mediaType: CameraVars.MediaType.PICTURE,
+                        cameraDirection: CameraVars.Direction[useFrontCamera?'FRONT':'BACK'],
                         saveToPhotoAlbum: true
                     }
                 );
+
+                return true;
             },
             chooseFile: function(callback){
                 if(!this.existsPlugin()) {
@@ -129,10 +164,13 @@ angular.module('cmPhonegap').service('cmCamera', [
                 if(callback == undefined)
                     callback = function(){}
 
-                navigator.camera.getPicture(
+                $navigator.camera.getPicture(
                     function(fileUri){
+                        if(!('resolveLocalFileSystemURL' in $window))
+                            return false;
+
                         // uri to blob
-                        window.resolveLocalFileSystemURL(fileUri, function(fileEntry){
+                        $window.resolveLocalFileSystemURL(fileUri, function(fileEntry){
                             // TODO: get displayname (filename) of file (exp.: data.extension)
 //                            console.log('resolveLocalFileSystemURL')
 //                            console.log(fileEntry.fullPath)
@@ -152,11 +190,13 @@ angular.module('cmPhonegap').service('cmCamera', [
                     },
                     null,
                     {
-                        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-                        destinationType: Camera.DestinationType.FILE_URI,
-                        mediaType: Camera.MediaType.ALLMEDIA
+                        sourceType: CameraVars.PictureSourceType.PHOTOLIBRARY,
+                        destinationType: CameraVars.DestinationType.FILE_URI,
+                        mediaType: CameraVars.MediaType.ALLMEDIA
                     }
                 );
+
+                return true;
             }
         }
     }]

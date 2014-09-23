@@ -2,30 +2,27 @@
 
 // https://github.com/apache/cordova-plugin-device/blob/master/doc/index.md
 
-angular.module('cmPhonegap').service('cmDevice', [
+angular.module('cmPhonegap')
+.service('cmDevice', [
     'cmPhonegap', 'cmLogger', 'cmUtil',
-    '$window',
+    '$window', '$device',
     function (cmPhonegap, cmLogger, cmUtil,
-              $window) {
+              $window, $device) {
 
         var unknown = 'unknown';
 
         var self = {
-            plugin: null,
-
             existsPlugin: function() {
-                if(typeof device == 'undefined'){
+                if(typeof $device == 'undefined'){
                     //cmLogger.info('DEVICE PLUGIN IS MISSING');
                     return false;
                 }
-
-                this.plugin = device;
 
                 return true;
             },
 
             getPlatform: function(){
-                return this.plugin.platform.toLowerCase();
+                return $device ? $device.platform.toLowerCase() : unknown;
             },
 
             isApp: function(){
@@ -47,7 +44,7 @@ angular.module('cmPhonegap').service('cmDevice', [
             },
             isWinPhone8: function(){
                 return this.existsPlugin()
-                    && this.getPlatform().indexOf('Win32NT') >= 0;
+                    && this.getPlatform().indexOf('win32nt') >= 0;
             },
             isBlackBerry: function(){
                 return this.existsPlugin()
@@ -81,21 +78,21 @@ angular.module('cmPhonegap').service('cmDevice', [
                 if(!this.existsPlugin())
                     return unknown;
 
-                return this.plugin.uuid;
+                return $device.uuid;
             },
 
             getName: function(){
                 if(!this.existsPlugin())
                     return unknown;
 
-                return this.plugin.name;
+                return $device.name;
             },
 
             getVersion: function(){
                 if(!this.existsPlugin())
                     return unknown;
 
-                return this.plugin.version;
+                return $device.version;
             },
 
             detectOSAndBrowser: function() {
@@ -169,4 +166,4 @@ angular.module('cmPhonegap').service('cmDevice', [
 
         return self;
     }
-]);
+])
