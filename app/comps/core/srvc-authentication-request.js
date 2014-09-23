@@ -452,7 +452,8 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                     },  is3rdParty
                         ?   '{{"IDENTITY.KEYS.TRUST.MODAL.CANCELED"|cmTranslate}}'
                         :   '{{"IDENTITY.KEYS.AUTHENTICATION.MODAL.CANCELED"|cmTranslate}}')
-                    cmModal.open('authentication-request-canceled')
+
+                    cmModal.open('authentication-request-canceled', null, 2000)
 
                     return true     //remove the event binding
                 }

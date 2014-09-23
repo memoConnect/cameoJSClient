@@ -3,9 +3,9 @@
 angular.module('cmUi')
 .service('cmModal',[
     'cmObject', 'cmLogger',
-    '$rootScope', '$compile', '$document', '$q',
+    '$rootScope', '$compile', '$document', '$q', '$timeout',
     function(cmObject, cmLogger,
-             $rootScope, $compile, $document, $q){
+             $rootScope, $compile, $document, $q, $timeout){
         var self = {};
 
         cmObject.addEventHandlingTo(self);
@@ -29,7 +29,7 @@ angular.module('cmUi')
             return self;
         };
 
-        self.open = function(id, data){
+        self.open = function(id, data, ttl){
             if(self.instances[id]){
                 self.instances[id]
                     .setData(data)
@@ -41,7 +41,8 @@ angular.module('cmUi')
                 });
             }
 
-            
+            if(ttl){ $timeout(function(){ self.close(id)}, ttl) }
+
             return self;
         };
 
