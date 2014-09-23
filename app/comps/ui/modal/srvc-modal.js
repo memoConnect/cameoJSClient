@@ -3,9 +3,9 @@
 angular.module('cmUi')
 .service('cmModal',[
     'cmObject', 'cmLogger',
-    '$rootScope', '$compile', '$document',
+    '$rootScope', '$compile', '$document', '$q',
     function(cmObject, cmLogger,
-             $rootScope, $compile, $document){
+             $rootScope, $compile, $document, $q){
         var self = {};
 
         cmObject.addEventHandlingTo(self);
@@ -98,16 +98,60 @@ angular.module('cmUi')
             return modal
         };
 
-        $rootScope.openModal        = self.open;
-        $rootScope.closeModal       = self.close;
-        $rootScope.isModalVisible   = false;
+        self.confirm = function(config){
+
+            config  =   {
+                            text:   config.text,
+                            cancel: config.cancel,
+                            okay:   config.okay,
+                        }
+
+            var deferred    = $q.defer()
+                scope       = $rootScope.$new(),
+                modalId     = 'modal-confirm-'+(new Date()).getTime();
+
+            scope.text              =   config.text       || '';
+            scope.labelOkay         =   config.okay
+            scope.labelCancel       =   config.cancel
+            scope.cancel            =   function(){ 
+                                            $rootScope.closeModal(modalId)
+                                        }
+            scope.confirm           =   function(){
+                                            deferred.resolve()
+                                            $rootScope.closeModal(modalId) 
+                                        }
+            self.create({
+                id:             modalId,
+                type:           'confirm',
+                'class':        'no-padding',
+                'cm-close-btn': false,
+                'cm-title':     'DRTV.CONFIRM.HEADER'
+            },'<cm-modal-confirm></cm-modal-confirm>',null,scope);
+
+            self.open(modalId);
+
+            self.one('modal:closed', function(event, id){
+                if(id == modalId)
+                    deferred.reject()
+
+                return true //remove event binding
+            })
+
+            return deferred.promise
+        };
+
+        $rootScope.openModal        = self.open
+        $rootScope.closeModal       = self.close
+        $rootScope.isModalVisible   = false
+        $rootScope.confirm          = self.confirm
+
 //        $rootScope.$watch('isModalVisible' ,function(newValue){
 //            console.log('watch modal '+newValue)
 //            $rootScope.isModalVisible = newValue;
 //        });
 
         // close all modals on route change:
-        $rootScope.$on('$routeChangeStart logout', function(){
+        $rootScope.$on('$routeChangeStart', function(){
             self.closeAll();
         });
 

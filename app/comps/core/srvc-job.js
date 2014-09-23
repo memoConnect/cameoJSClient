@@ -5,9 +5,9 @@ angular.module('cmCore').service('cmJob', [
     '$window',
     '$location',
     'cmTranslate',
-    'cmHooks',
+    'cmModal',
     'cmLogger',
-    function($rootScope, $window, $location, cmTranslate, cmHooks, cmLogger){
+    function($rootScope, $window, $location, cmTranslate, cmModal, cmLogger){
 
         var jobIsActive = false,
             jobFunction = null,
@@ -34,7 +34,12 @@ angular.module('cmCore').service('cmJob', [
                 jobFunction = $rootScope.$on('$locationChangeStart', function(event, next) {
                     event.preventDefault();
 
-                    cmHooks.openModalConfirm(message, function(){
+                    cmModal.confirm({ 
+                        text:   message,
+                        cancel: 'NO',
+                        okay:   'YES'
+                    })
+                    .then(function(){
                         if(typeof cancelCallback == 'function'){
                             cancelCallback();
                         }

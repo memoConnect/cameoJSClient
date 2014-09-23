@@ -47,8 +47,9 @@
                     type        = "text" 
                     ng-model    = "conversation.password" 
                     placeholder = "{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}"
-                    ng-blur     = "decrypt()"
+                    ng-change   = "decrypt()"
                     ng-disabled = "conversation.state.is('decrypted')"
+                    cm-adaptive-change = "2000"
                 />
                 <i class="fa cm-checker"    ng-if="conversation.state.is('decrypted')"  data-qa="icon-conversation-decrypted"></i>
             </div>

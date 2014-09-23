@@ -1,4 +1,8 @@
 {
+
+    "YES":  "Yes",
+    "NO":   "No",
+
     "CAMEO": {
         "SLOGAN": "Safer Communication - Made in Germany!",
         "DESCRIBE": "Register for free.\nWithout obligation.\nEasy and secure communication. Mobile and desktop\nConnect with all your contacts.\nExplore our smart features.\nRegister today!",
@@ -418,7 +422,7 @@
                     "NOTE": "Please close this dialogue."
                 },
                 "MODAL":{
-                    "INSTRUCTIONS": "You have successfully linked your cameoKeys!",
+                    "SUCCESS": "You have successfully linked your cameoKeys!",
                     "CANCELED": "Linking canceled."
                 }
             },

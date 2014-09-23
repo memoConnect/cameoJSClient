@@ -51,7 +51,7 @@ angular.module('cmUi').directive('cmAdaptiveChange', [
                             ngModel.$setViewValue(element.val());
                             $rootScope.$broadcast('multi-input:changed',ngModel);
                         });
-                    },1000);
+                    },attrs.cmAdaptiveChange || 1000);
                 });
             }
         }
