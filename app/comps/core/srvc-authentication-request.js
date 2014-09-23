@@ -88,9 +88,9 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
              * @param {fromkey} 
              * @returns {Promise} for async handling
              */
-            send: function(toIdentity, secret, toKey, fromKey){
+            send: function(toIdentityId, secret, toKeyId, fromKeyId){
                 var fromIdentity    =   cmUserModel.data.identity,
-                    fromKey         =   fromKey || cmUserModel.loadLocalKeys()[0],
+                    fromKey         =   cmUserModel.loadLocalKeys().find(fromKeyId) || cmUserModel.loadLocalKeys()[0],
                     salt            =   cmCrypt.generatePassword(32)
 
                     
@@ -119,11 +119,11 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                     data:   {
                                                 fromKeyId:      fromKey.id,
                                                 fromIdentityId: fromIdentity.id,
-                                                toKeyId:        toKey ? toKey.id : undefined,
+                                                toKeyId:        toKeyId, // may be undefined
                                                 salt:           salt,
                                                 signature:      result[0],  
                                             }
-                                }, toIdentity.id)
+                                }, toIdentityId)
 
                         })
             },
@@ -140,7 +140,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
              * @returns {Promise}           Promise that will be resolved after the event is posted to the backend.
              */
 
-            cancel: function(toIdentity){
+            cancel: function(toIdentityId){
                 delete this.transactionSecret
 
                 self.trigger('canceled')
@@ -148,7 +148,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                 return  cmApi.broadcast({
                             name:   'authenticationRequest:cancel',
                             data:   {}
-                        }, toIdentity.id)
+                        }, toIdentityId)
             },
 
 
@@ -191,7 +191,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
             openBulkRequest: function(data){
 
                 if(typeof data == 'object' && 'key1' in data && 'key2' in data){
-                    var scope = $rootScope.$new();
+                    var scope = $rootScope.$new();l
                     scope.data = data;
 
                     var modalId = 'bulk-rekeying-modal';
@@ -274,8 +274,6 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
          */
 
         cmUserModel.on('key:saved ', function(event, data){
-//            console.log('cmHooks - key:saved');
-
             var localKeys = cmUserModel.loadLocalKeys();
             var publicKeys = cmUserModel.data.identity.keys;
 
@@ -290,7 +288,6 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
          */
 
         self.on('started', function(event, request){
-
 
             //Prevent other authentication requests to interfere with an ongoing process:
             var modal = cmModal.instances['incoming-authentication-request']
@@ -404,9 +401,9 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
                                                 //Send a request in return:
                                                 self.send(
-                                                    fromIdentity,   //Sender of the initial requests
-                                                    secret,         //The secret we successfully used during the last attempt
-                                                    fromKey         //The key that originally requested to be signed
+                                                    fromIdentity.id,    //Sender of the initial requests
+                                                    secret,             //The secret we successfully used during the last attempt
+                                                    fromKey.id          //The key that originally requested to be signed
                                                 )                                                
                                             })
                                         }
