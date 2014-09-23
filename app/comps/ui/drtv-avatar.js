@@ -68,7 +68,7 @@ angular.module('cmUi').directive('cmAvatar',[
             scope: {
                 identity: "=cmData"
             },
-            template: '<img />',
+            template: '<i></i>',
             link: function(scope, element, attrs){
 
                 var avatarMocks = {
@@ -89,12 +89,12 @@ angular.module('cmUi').directive('cmAvatar',[
                         size = attrs.cmSize;
                     }
 
-                    element.find('img').attr('src', cmConfig.restApi + '/file/' + scope.identity.avatarId + '/scale/' + size + '?token=' + cmUserModel.getToken());
+                    element.find('i').css('background-image','url('+cmConfig.restApi + '/file/' + scope.identity.avatarId + '/scale/' + size + '?token=' + cmUserModel.getToken()+')');
                 }
 
                 // is unknown avatar for add reciepients or choose avatar
                 if('cmView' in attrs && attrs.cmView == 'unknown'){
-                    element.find('img').attr('src', avatarMocks.none );
+                    element.find('i').css('background-image', 'url('+avatarMocks.none+')');
                     //element.css({'background-image': 'url(' + avatarMocks.none +')'});
                 } else {
                     scope.$watch('identity',function(){
