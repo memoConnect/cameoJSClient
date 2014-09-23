@@ -110,7 +110,7 @@ angular.module('cmCore')
             };
 
             this.getFingerprint = function(){
-                return this.id;
+                return this.id //Todo: rework Fingerprints, was:  sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(this.getPublicKey()), true, true)
             };
 
             this.getPrivateKey = function(){

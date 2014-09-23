@@ -186,48 +186,35 @@ describe('Conversation encryption -', function () {
                             expect(modals.length).toBe(0)
                         })
                     } else {
-                        switch (encryptionType) {
 
+                        if(['password', 'passCaptcha'].indexOf(encryptionType) != -1){
 
-                            case "password" :
-                                // expect password prompt
-                                util.waitForModalOpen()
-                                util.get(conversationRoute + "/security")
-                                util.waitForElement("[data-qa='input-password']")
+                            // expect password prompt
+                            util.waitForModalOpen()
+                            util.get(conversationRoute + "/security")
 
-                                $("[data-qa='input-password']").click()
-                                $("[data-qa='input-password']").sendKeys(password)
-
-                                ptor.wait(function(){
-                                    return util.getVal('input-password').then(function(val){
-                                        return val == password
-                                    })
-                                })
-
-                                //make sure that the input loses focus and ng-blur gets fired:
-                                $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
-                                $("#cm-app").click()
-                                
-                                util.waitForElement("[data-qa='icon-conversation-decrypted']")
-                                $("[data-qa='btn-security-done']").click()
-                                util.waitForElementDisappear("[data-qa='btn-security-done']")
-                                break;
-
-
-                            case "passCaptcha" :
-                                // expect password prompt
-                                util.waitForModalOpen()
-                                util.get(conversationRoute + "/security")
+                            if(encryptionType == "passCaptcha")
                                 util.waitForElement("[data-qa='captcha-image']")
-                                util.waitForElement("[data-qa='input-password']")
-                                $("[data-qa='input-password']").sendKeys(password)
-                                $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
-                                util.waitForElement("[data-qa='icon-conversation-decrypted']")
-                                $("[data-qa='btn-security-done']").click()
-                                util.waitForElementDisappear("[data-qa='btn-security-done']")
-                                break;
-                        }
+                            
+                            util.waitForElement("[data-qa='input-password']")
 
+                            util.click('input-password')
+                            util.setVal('input-password', password)
+
+                            ptor.wait(function(){
+                                return util.getVal('input-password').then(function(val){
+                                    return val == password
+                                })
+                            })
+
+                            //make sure that the input loses focus and ng-blur gets fired:
+                            $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
+                            $("#cm-app").click()
+
+                            util.waitForElement("[data-qa='icon-conversation-decrypted']")
+                            $("[data-qa='btn-security-done']").click()
+                            util.waitForElementDisappear("[data-qa='btn-security-done']")
+                        }
                     }
                 })
 
@@ -365,7 +352,7 @@ describe('Conversation encryption -', function () {
             checkConversation(recipients, 0, 2, "asym")
         })
 
-        describe("password transmission -", function () {
+       describe("password transmission -", function () {
             var recipients = [
                 {login: testUser1, hasKey: true},
                 {login: testUser2, hasKey: true},
@@ -397,15 +384,13 @@ describe('Conversation encryption -', function () {
 
     })
 
-    console.log('test removed')
-    xdescribe("no local private key -", function () {
+    describe("no local private key -", function () {
 
         it("delete key and create local key for user2", function () {
             util.logout()
             util.clearLocalStorage()
             util.login(testUser2, "password")
             util.generateKey(3)
-            util.closeKeyRequestModal()
             util.login(testUser1, "password")
         })
 
@@ -415,6 +400,7 @@ describe('Conversation encryption -', function () {
 
                 util.get("/talks")
                 util.headerSearchInList("asym_" + date)
+                //ptor.debugger()
                 $("cm-conversation-tag").click()
 
                 util.waitForElement("cm-message")
@@ -431,7 +417,6 @@ describe('Conversation encryption -', function () {
 
                 util.get("/talks")
                 util.headerSearchInList("password_" + date)
-
                 $$("cm-conversation-tag").then(function (tags) {
                     tags[0].click()
 

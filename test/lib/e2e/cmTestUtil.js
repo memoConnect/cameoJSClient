@@ -375,7 +375,7 @@ this.getFileExtension = function (file) {
 }
 
 this.headerSearchInList = function (searchString) {
-    $("[data-qa='btn-header-list-search']").click()
+    self.waitAndClickQa("btn-header-list-search")
     this.searchInList(searchString)
 }
 
@@ -505,6 +505,17 @@ this.addExternalContact = function (displayName) {
 this.click = function (dataQa) {
     $("[data-qa='" + dataQa + "']").click()
 }
+
+this.waitAndClickQa = function (dataQa) {
+    self.waitForElement("[data-qa='" + dataQa + "']")
+    $("[data-qa='" + dataQa + "']").click()
+}
+
+this.waitAndClick = function (selector) {
+    self.waitForElement(selector)
+    $(selector).click()
+}
+
 
 this.setVal = function (dataQa, text) {
     $("[data-qa='" + dataQa + "']").sendKeys(text)
