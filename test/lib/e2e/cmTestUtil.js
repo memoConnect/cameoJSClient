@@ -201,6 +201,24 @@ this.broadcastEvent = function (token, event) {
     }, token, event, config.apiUrl)
 }
 
+this.remoteBroadcastEvent = function (token, event, identityId) {
+
+    return ptor.executeAsyncScript(function (token, event, apiUrl, identityId) {
+
+        var callback = arguments[arguments.length - 1];
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", apiUrl + "/event/broadcast/" + identityId, true);
+        xhr.setRequestHeader("Authorization", token);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                callback(JSON.parse(xhr.responseText))
+            }
+        }
+        xhr.send(JSON.stringify(event));
+    }, token, event, config.apiUrl, identityId)
+}
+
 this.waitForPageLoad = function (expectedRoute) {
     ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route').then(function (route) {

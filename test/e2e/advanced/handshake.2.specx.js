@@ -28,7 +28,6 @@ describe('Authentication requests -', function () {
     var encryptedMessage2 = "moeps die moeps die moeps"
     var encryptedMessage3 = "foo baa foo baa foo baa foo baa"
 
-
     var keyId2
 
     var localStorage1
@@ -36,10 +35,13 @@ describe('Authentication requests -', function () {
     var localStorage3
 
     var eventSubscription
+    var eventSubscription2
 
     var token
+    var token2
 
     var transactionSecret
+    var transactionSecret2
 
     var authEvents = []
     var cancelEvent = {
@@ -69,6 +71,9 @@ describe('Authentication requests -', function () {
         var events = []
         var get = function () {
             util.getEvents(token, eventSubscription).then(function (res) {
+
+                console.log("EVENTS:",res)
+
                 var e = res.data.events.filter(function (event) {
                     return event.name == "authenticationRequest:start"
                 })
@@ -453,7 +458,7 @@ describe('Authentication requests -', function () {
         })
     })
 
-    describe("trust other user:", function () {
+    describe("trust other user -", function () {
 
         it("create testuser2 and generate key", function () {
             util.createTestUser(testUser2Id)
@@ -462,6 +467,18 @@ describe('Authentication requests -', function () {
 
         it("send friendrequest to testuser1", function () {
             util.sendFriendRequest(testUser)
+        })
+
+        it("get token", function () {
+            util.getToken().then(function (res) {
+                token2 = res
+            })
+        })
+
+        it("get event subscription", function () {
+            util.getEventSubscription(token2).then(function (res) {
+                eventSubscription2 = res
+            })
         })
 
         it("login as testuser1 and accept friendRequest", function () {
@@ -474,9 +491,52 @@ describe('Authentication requests -', function () {
             util.waitForElements("cm-contact-tag", 2)
             util.headerSearchInList(testUser2)
             util.waitAndClick("cm-contact-tag")
-            ptor.debugger()
+            // to make sure that checkmark is not present
 
         })
+
+        it("start handshake", function () {
+            util.waitAndClickQa("start-trust-handshake-btn")
+            util.waitAndClickQa("btn-start-authentication")
+        })
+
+        it("get transaction secret", function () {
+            util.waitForElement("[data-qa='transaction-secret-value']")
+            $("[data-qa='transaction-secret-value']").getText().then(function (text) {
+                transactionSecret2 = text
+            })
+        })
+
+        it("login as testuser2", function(){
+            util.login(testUser, "password")
+        })
+
+        // this is a bit dirty, redo this at some point
+        var tmpToken
+        var tmpEventSubscription
+
+        it("get authentication:start event", function () {
+            tmpToken = token
+            tmpEventSubscription = eventSubscription
+            token = token2
+            eventSubscription = eventSubscription2
+            getAuthEvent(4)
+            ptor.wait(function () {
+                return authEvents[4] != undefined
+            })
+        })
+
+        it("resend event", function(){
+            util.remoteBroadcastEvent(token, authEvents[4], authEvents[4].fromIdentityId)
+            ptor.debugger()
+        })
+
+
+        it("debug", function(){
+            console.log("events", authEvents)
+        })
+
+
     })
 
 })
