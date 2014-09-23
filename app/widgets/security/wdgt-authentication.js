@@ -112,11 +112,14 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                         },
                         function(error){
                             if(error){
-                                $scope.ERROR = error
-                                $scope.cancel()
+                                $scope.ERROR = error                                
                             }
                         }
                     )
+                    .finally(function(){
+                        // Tell all devices that the authentication request came to an end
+                        $scope.cancel()
+                    })
 
                 }
 
