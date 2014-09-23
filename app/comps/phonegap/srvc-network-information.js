@@ -1,15 +1,15 @@
 'use strict';
 
-//https://github.com/apache/cordova-plugin-network-information/blob/cd67d7a30f51efe7b2e3adb098ae65409d292d21/doc/index.md
+// https://github.com/apache/cordova-plugin-network-information/blob/cd67d7a30f51efe7b2e3adb098ae65409d292d21/doc/index.md
 
-angular.module('cmPhonegap').service('cmNetworkInformation', [
+angular.module('cmPhonegap')
+.service('cmNetworkInformation', [
     'cmPhonegap', 'cmUtil', 'cmLogger', '$navigator', '$document',
     function (cmPhonegap, cmUtil, cmLogger, $navigator, $document) {
         var self = {
             state: '',
 
             init: function(){
-
                 if(!('connection' in $navigator) || !('type' in $navigator.connection)) {
                     //cmLogger.info('NETWORK-INFORMATION PLUGIN IS MISSING');
                     return false;
@@ -31,7 +31,7 @@ angular.module('cmPhonegap').service('cmNetworkInformation', [
                 states[Connection.CELL] = 'Cell generic connection';
                 states[Connection.NONE] = 'No network connection';
 
-                console.log('Connection type: ' + states[networkState]);
+//                console.log('Connection type: ' + states[networkState]);
                 this.state = states[networkState];
             },
             goesOffline: function(){

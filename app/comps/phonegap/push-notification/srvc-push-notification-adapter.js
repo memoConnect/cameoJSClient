@@ -1,14 +1,18 @@
 'use strict';
 
-angular.module('cmPhonegap').service('cmPushNotificationAdapter', [
+// https://github.com/phonegap-build/PushPlugin
+
+angular.module('cmPhonegap')
+.service('cmPushNotificationAdapter', [
     'cmPhonegap', 'cmDevice', 'cmPushNotifications',
     'cmUtil', 'cmLanguage', 'cmApi',
-    '$rootScope',
+    '$rootScope', '$window',
     function (cmPhonegap, cmDevice, cmPushNotifications,
               cmUtil, cmLanguage, cmApi,
-              $rootScope) {
+              $rootScope, $window) {
 
         var self = {
+            plugin: null,
 
             currentDeviceData: {
                 token: undefined,
@@ -16,14 +20,14 @@ angular.module('cmPhonegap').service('cmPushNotificationAdapter', [
             },
 
             init: function(){
-                if(!('plugins' in window) || !('pushNotification' in window.plugins)) {
+                if(!('plugins' in $window) || !('pushNotification' in $window.plugins)) {
                     //cmLogger.info('PUSHNOTIFICATION PLUGIN IS MISSING');
                     return false;
                 }
-                cmPhonegap.isReady(function(){
-                    self.plugin = window.plugins.pushNotification;
-                    self.register();
-                });
+
+                this.plugin = $window.plugins.pushNotification;
+
+                this.register();
             },
 
             register: function(){

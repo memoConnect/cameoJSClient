@@ -121,11 +121,18 @@ angular.module('cmPhonegap').service('cmCamera', [
         };
 
         return {
+            plugin: null,
+
             existsPlugin: function(){
                 if(typeof $navigator == 'undefined' || !('camera' in $navigator)){
                     //cmLogger.info('CAMERA PLUGIN IS MISSING');
                     return false;
                 }
+
+                cmPhonegap.isReady(function(){
+                    self.plugin = $navigator.camera;
+                });
+
                 return true;
             },
             takePhoto: function (callback, useFrontCamera){
@@ -136,7 +143,7 @@ angular.module('cmPhonegap').service('cmCamera', [
                 if(callback == undefined)
                     callback = function(){};
 
-                $navigator.camera.getPicture(
+                this.plugin.getPicture(
                     function(base64){
                         var blob = cmFilesAdapter.base64ToBlob(base64,'image/jpeg');
                         blob.name = 'NewCameoPicture.jpg';
@@ -150,7 +157,8 @@ angular.module('cmPhonegap').service('cmCamera', [
                         destinationType: CameraVars.DestinationType.DATA_URL,
                         mediaType: CameraVars.MediaType.PICTURE,
                         cameraDirection: CameraVars.Direction[useFrontCamera?'FRONT':'BACK'],
-                        saveToPhotoAlbum: true
+                        saveToPhotoAlbum: true,
+                        correctOrientation: true
                     }
                 );
 
@@ -164,7 +172,7 @@ angular.module('cmPhonegap').service('cmCamera', [
                 if(callback == undefined)
                     callback = function(){}
 
-                $navigator.camera.getPicture(
+                this.plugin.getPicture(
                     function(fileUri){
                         if(!('resolveLocalFileSystemURL' in $window))
                             return false;

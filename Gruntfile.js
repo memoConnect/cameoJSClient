@@ -340,7 +340,13 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: 'dist/app',
-                        src: '**/*.js',
+                        src: 'base/*.js',
+                        dest: 'dist/app'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'dist/app',
+                        src: '*.js',
                         dest: 'dist/app'
                     }
                 ]
@@ -434,7 +440,14 @@ module.exports = function (grunt) {
         },
         clean: {
             'dalek-report': ['report'],
-            'dev-deploy': ['dist/app/less','dist/app/comps'],
+            'dev-deploy': [
+                'dist/app/comps',
+                'dist/app/less',
+                'dist/app/packages',
+                'dist/app/routes',
+                'dist/app/vendor',
+                'dist/app/widgets'
+            ],
             'dist-app': ['dist/app'],
             'dist': ['dist'],
             'docs': ['docs'],
@@ -857,7 +870,7 @@ module.exports = function (grunt) {
         ':app:js-files',
         'copy:dev-deploy',
         'clean:dev-deploy',
-        'uglify:dev-deploy',
+        //'uglify:dev-deploy',
         'copy:cockpit',
         'uglify:cockpit'
     ]);

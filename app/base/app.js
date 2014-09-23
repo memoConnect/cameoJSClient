@@ -195,13 +195,18 @@
         }
     ])
     // app run handling
-    .run(['cmNetworkInformation', 'cmPushNotificationAdapter',
-        function(cmNetworkInformation, cmPushNotificationAdapter){
-        // check internet connection
-        cmNetworkInformation.init();
-        // register device for pushnotification
-        cmPushNotificationAdapter.init();
-    }])
+    .run(['cmPhonegap', 'cmDevice', 'cmNetworkInformation', 'cmPushNotificationAdapter',
+        function(cmPhonegap, cmDevice, cmNetworkInformation, cmPushNotificationAdapter){
+            cmPhonegap.isReady(function(){
+                // device init
+                cmDevice.init();
+                // check internet connection
+                cmNetworkInformation.init();
+                // register device for pushnotification
+                cmPushNotificationAdapter.init();
+            });
+        }
+    ])
     .run(function() {
         // disabled the 3000 seconds delay on click when touch ;)
         FastClick.attach(document.body);

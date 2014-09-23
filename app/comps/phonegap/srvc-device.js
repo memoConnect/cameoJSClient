@@ -12,53 +12,60 @@ angular.module('cmPhonegap')
         var unknown = 'unknown';
 
         var self = {
-            existsPlugin: function() {
-                if(typeof $device == 'undefined'){
+            plugin: null,
+
+            init: function(){
+                if(typeof $device.get() == 'undefined'){
                     //cmLogger.info('DEVICE PLUGIN IS MISSING');
                     return false;
                 }
 
-                return true;
-            },
-
-            getPlatform: function(){
-                return $device ? $device.platform.toLowerCase() : unknown;
+                this.plugin = $device.get()
             },
 
             isApp: function(){
-                return this.existsPlugin();
+                return this.plugin != null;
             },
+
+            getPlatform: function(){
+                return this.isApp()
+                    && 'platform' in this.plugin
+                     ? this.plugin.platform.toLowerCase()
+                     : unknown;
+            },
+
             isAndroid: function(){
-                return this.existsPlugin()
+                console.log('isAndroid',this.isApp(),this.getPlatform())
+                return this.isApp()
                     && this.getPlatform().indexOf('android') >= 0;
             },
             isiOS: function(){
-                return this.existsPlugin()
+                return this.isApp()
                    && (this.getPlatform().indexOf('iphone') >= 0
                     || this.getPlatform().indexOf('ipad') >= 0
                     || this.getPlatform().indexOf('ios') >= 0);
             },
             isWinPhone: function(){
-                return this.existsPlugin()
+                return this.isApp()
                     && this.getPlatform().indexOf('win') >= 0;
             },
             isWinPhone8: function(){
-                return this.existsPlugin()
+                return this.isApp()
                     && this.getPlatform().indexOf('win32nt') >= 0;
             },
             isBlackBerry: function(){
-                return this.existsPlugin()
+                return this.isApp()
                     && this.getPlatform().indexOf('blackberry') >= 0;
             },
             isAmazonFireOS: function(){
-                return this.existsPlugin()
+                return this.isApp()
                     && this.getPlatform().indexOf('amazon-fireos') >= 0;
             },
 
             getCurrentOS: function(){
                 var os = 'unknown';
 
-                if(!this.existsPlugin())
+                if(!this.isApp())
                     return os;
 
                 if (this.isAndroid()) {
@@ -75,21 +82,21 @@ angular.module('cmPhonegap')
             },
 
             getId: function(){
-                if(!this.existsPlugin())
+                if(!this.isApp())
                     return unknown;
 
                 return $device.uuid;
             },
 
             getName: function(){
-                if(!this.existsPlugin())
+                if(!this.isApp())
                     return unknown;
 
                 return $device.name;
             },
 
             getVersion: function(){
-                if(!this.existsPlugin())
+                if(!this.isApp())
                     return unknown;
 
                 return $device.version;
@@ -166,4 +173,4 @@ angular.module('cmPhonegap')
 
         return self;
     }
-])
+]);

@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('cmPhonegap')
-.service('$navigator', function(){
+.factory('$navigator', function(){
     return typeof navigator != 'undefined' ? navigator : undefined;
 });

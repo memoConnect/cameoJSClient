@@ -12,8 +12,6 @@ angular.module('cmUser').directive('cmIdentityEdit', [
 
                 function reset(){
                     $scope.identity = angular.extend({},cmUserModel.data.identity);
-                    console.log($scope.identity.phoneNumber)
-                    console.log($scope.identity.email)
                     $scope.identity.phoneNumbers = [
                         $scope.identity.phoneNumber || {value:''}
                     ];
@@ -22,15 +20,17 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                     ];
                 }
 
-                // TODO on is undefined
-                cmUserModel.data.identity.on('update:finished',reset);
+                if(('identity' in cmUserModel.data)
+                && !('on' in cmUserModel.data.identity)){
+                    cmUserModel.on('update:finished', function(){
+                        reset();
+                        cmUserModel.data.identity.on('update:finished', reset);
+                    });
+                } else {
+                    cmUserModel.data.identity.on('update:finished', reset);
+                }
 
                 reset();
-
-                //////////////////////
-                // TODO: mock workarround json in array
-
-                //////////////////////
 
                 $scope.goToKeys = function(){
                     $scope.goTo('/settings/identity/key/list');
