@@ -51,7 +51,6 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
                         //cmLogger.info('CONTACTS PLUGIN IS MISSING');
                         return false;
                     }
-                    console.log('localContacts ready',$navigator.contacts)
                     self.plugin = $navigator.contacts;
                 });
 
