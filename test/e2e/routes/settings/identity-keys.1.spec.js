@@ -50,14 +50,14 @@ describe('Identity key settings: ', function () {
     })
 
     it('cancel generation', function () {
-        $("[data-qa='btn-cancel-key-generation']").click()
+        util.waitAndClickQa("btn-cancel-key-generation")
         util.waitForPageLoad("/settings/identity/key/list")
     })
 
     it('start generation again', function () {
-        $("[data-qa='btn-create-key']").click()
+        util.waitAndClickQa("btn-create-key")
         util.waitForPageLoad('/settings/identity/key/create')
-        $("[data-qa='btn-generate-key']").click()
+        util.waitAndClickQa("btn-generate-key")
     })
 
     describe('with increased timeout', function () {
@@ -82,7 +82,7 @@ describe('Identity key settings: ', function () {
              */
             $("body").click();
 
-            $("[data-qa='btn-save-key']").click()
+            util.waitAndClickQa("btn-save-key")
 
         })
     })
