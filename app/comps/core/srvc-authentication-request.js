@@ -275,20 +275,6 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
         })
 
         /**
-         * Listen to user model events. When a new key is saved trigger authentication:
-         */
-
-        cmUserModel.on('key:saved ', function(event, data){
-            var localKeys   = cmUserModel.loadLocalKeys();
-            var publicKeys  = cmUserModel.data.identity.keys;
-
-            if(localKeys.length < publicKeys.length){
-                $rootScope.goto('/authentication')
-            }
-        });
-
-
-        /**
          * Listen to events on cmAuthenticationRequest.
          */
 
