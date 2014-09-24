@@ -208,7 +208,7 @@ this.remoteBroadcastEvent = function (token, event, identityId) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", apiUrl + "/event/broadcast/" + identityId, true);
+        xhr.open("POST", apiUrl + "/event/broadcast/identity/" + identityId, true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
