@@ -23,9 +23,8 @@ angular.module('cmConversations').service('cmConversationFactory', [
     'cmStateManagement',
     'cmConversationModel',
     'cmLogger',
-    'cmCallbackQueue',
 
-    function($rootScope, cmUserModel, cmConversationsAdapter, cmFactory, cmStateManagement, cmConversationModel, cmLogger, cmCallbackQueue) {
+    function($rootScope, cmUserModel, cmConversationsAdapter, cmFactory, cmStateManagement, cmConversationModel, cmLogger) {
         var self = cmFactory(cmConversationModel);
 
         var _quantity   = 0,
@@ -51,13 +50,10 @@ angular.module('cmConversations').service('cmConversationFactory', [
                 function (data) {
                     _quantity = data.numberOfConversations;
 
-                    return cmCallbackQueue.push(
-                        data.conversations.map(function (conversation_data) {
-                            return  function(){
-                                        self.create(conversation_data);
-                                    }
-                        })
-                    )
+                    data.conversations.forEach(function (conversation_data) {
+                        self.create(conversation_data);
+                    })
+
                 }
             ).finally(
                 function(){

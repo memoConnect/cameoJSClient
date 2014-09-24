@@ -43,12 +43,13 @@ angular.module('cmConversations')
     'cmUtil',
     'cmFilesAdapter',
     'cmKeyStorageService',
+    'cmCallbackQueue',
     '$q',
     '$rootScope',
     
     function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
               cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphrase,
-              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmKeyStorageService,
+              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmKeyStorageService, cmCallbackQueue,
               $q, $rootScope){
 
         function ConversationModel(data){
@@ -547,11 +548,12 @@ angular.module('cmConversations')
              */
             this.decrypt = function () {
 //                cmLogger.debug('cmConversationModel.decrypt');
-                
+
                 var passphrase  =   this.getPassphrase(),
                     success     =   passphrase && this.messages.reduce(function (success, message){
                                         return success && message.decrypt();
                                     }, true);
+
                 /**
                  * @TODO check, problem micha!
                  */
@@ -1008,7 +1010,9 @@ angular.module('cmConversations')
 //                cmLogger.debug('cmConversationModel:on:update:finished');
 //                cmBoot.resolve();
                 self.setLastMessage();
-                self.decrypt();
+                cmCallbackQueue.push(function(){
+                    self.decrypt();
+                }, 200)
                 //self.securityAspects.refresh();
                 self.updateLockStatus();
                 //self.handleMissingAePassphrases();
