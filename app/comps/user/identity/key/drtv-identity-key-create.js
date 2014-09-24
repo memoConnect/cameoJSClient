@@ -184,7 +184,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                                     if(cmUserModel.data.identity.keys.some(function(key){
                                         return key.id != data.keyId
                                     })){
-                                        $rootScope.goto('/authentication')
+                                        $scope.goto('/authentication')
                                     } else {
                                         $scope.goTo('/talks');
                                     }

@@ -1,4 +1,4 @@
-<article class="cm-modal-plain">
+<article class="cm-modal-plain" data-qa = "modal-confirm">
     <header>
         <button ng-click="close()" class="close" ng-show="closeBtn" data-qa="cm-modal-close-btn"><i class="fa cm-close"></i></button>
         <h2 class="{{severity}}">{{title}}</h2>
@@ -11,11 +11,21 @@
         </div>
 
         <div cm-rubber-space>
-            <button class="cm-btn cm-btn-block cm-btn-grey cm-inline-block cm-white-border-right" cm-weight="1" ng-click="cancel()">
+            <button 
+                class       = "cm-btn cm-btn-block cm-btn-grey cm-inline-block cm-white-border-right" 
+                data-qa     = "btn-cancel" 
+                cm-weight   = "1" 
+                ng-click    = "cancel()"
+            >
                 {{ (labelCancel || 'MODAL.LABEL.CANCEL') | cmTranslate }}
                 <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
             </button>
-            <button class="cm-btn cm-btn-block cm-btn-grey cm-inline-block" cm-weight="1" ng-click="confirm()">
+            <button 
+                class       = "cm-btn cm-btn-block cm-btn-grey cm-inline-block" 
+                data-qa     = "btn-confirm" 
+                cm-weight   = "1" 
+                ng-click    =   "confirm()"
+            >
                 {{ (labelOkay || 'MODAL.LABEL.OK') | cmTranslate }}
                 <i class="fa cm-checker cm-lg-icon"></i>
             </button>
