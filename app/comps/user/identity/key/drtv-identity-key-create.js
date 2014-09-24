@@ -168,21 +168,28 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     }
 
                     if(error !== true){
-                        var key = (new cmKey()).importData({
-                            name: $scope.keyName,
-                            privKey: $scope.privKey
-                        });
+                        var key = new   cmKey({
+                                            name: $scope.keyName,
+                                            privKey: $scope.privKey
+                                        });
 
                         cmUserModel
                             .storeKey(key)
                             .syncLocalKeys();
 
-                        //$window.history.back();
-                        if(generateAutomatic == false){
-                            $scope.goTo('/settings/identity/key/list');
-                        } else {
-                            $scope.goTo('/talks');
-                        }
+                        cmUserModel
+                            .when('key:saved', null, 5000)
+                            .then(
+                                function(data){
+                                    if(cmUserModel.data.identity.keys.some(function(key){
+                                        return key.id != data.keyId
+                                    })){
+                                        $rootScope.goto('/authentication')
+                                    } else {
+                                        $scope.goTo('/talks');
+                                    }
+                                }
+                            )
 
                     }
                 };

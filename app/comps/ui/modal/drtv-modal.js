@@ -3,9 +3,9 @@
 angular.module('cmUi')
 .directive('cmModal', [
     'cmModal', 'cmTranslate',
-    '$rootScope', '$timeout',
+    '$rootScope', '$timeout', '$q',
     function (cmModal, cmTranslate,
-              $rootScope, $timeout){
+              $rootScope, $timeout, $q){
 
         // handle nose position
         function addNose(element, attrs){

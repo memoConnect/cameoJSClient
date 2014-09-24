@@ -279,8 +279,8 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
          */
 
         cmUserModel.on('key:saved ', function(event, data){
-            var localKeys = cmUserModel.loadLocalKeys();
-            var publicKeys = cmUserModel.data.identity.keys;
+            var localKeys   = cmUserModel.loadLocalKeys();
+            var publicKeys  = cmUserModel.data.identity.keys;
 
             if(localKeys.length < publicKeys.length){
                 $rootScope.goto('/authentication')

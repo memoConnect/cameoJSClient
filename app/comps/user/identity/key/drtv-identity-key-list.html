@@ -40,7 +40,7 @@
             <!--
                 <i class="fa cm-export-key cm-lg-icon" ng-if="privateKeys.find(key)" ng-click="openModal('modalExportKeyPair',key)"></i>
             -->
-            <i class="fa cm-cancel-key cm-lg-icon" ng-if="privateKeys.find(key)" ng-click="openModal('modalRemoveKeypair',key)" data-qa="btn-remove-modal"></i>
+            <i class="fa cm-cancel-key cm-lg-icon" ng-click="remove(key)" data-qa="btn-remove-modal"></i>
         </div>
     </li>
     <li ng-if="signing">
@@ -73,14 +73,17 @@
 </cm-modal>
 -->
 
-<cm-modal id="modalRemoveKeypair" class="no-padding" cm-data-as="key" cm-title="SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY">
+<cm-modal 
+    id          = "modalRemoveKeypair" 
+    class       = "no-padding" 
+    cm-data-as  = "key" 
+    cm-title    = "SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY"
+    type        = "confirm"
+>
+    {{'SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY_REALLY'|cmTranslate}}
     <div class="modal-row">
         <h3>{{key.name}} - {{key.getSize()}} - {{key.created | date:'dd.MM.yy - HH:mm'}}</h3>
     </div>
-    <button class="cm-btn-block cm-btn-grey" ng-click="remove(key)" data-qa="btn-remove-key">
-        {{'SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY_REALLY'|cmTranslate}}
-        <i class="fa cm-checker cm-lg-icon"></i>
-    </button>
 </cm-modal>
 
 <cm-footer ng-if="canCreate" data-qa="canCreate">
