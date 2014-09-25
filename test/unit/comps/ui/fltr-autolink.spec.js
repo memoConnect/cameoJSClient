@@ -5,6 +5,7 @@ describe('Filter cmAutolink', function () {
         scope,
         textDefault = 'hallo moeper',
         textWithLink = 'juhu http://www.moep.de alter verwalter',
+        textWithTwoLinksAndBreak = 'juhu http://www.moep.de\nhttp://www.peom.de alter verwalter',
         noneLink = 'moep.de/123',
         linkFull = 'http://www.moep.de/123',
         linkFullHttps = 'https://www.moep.de/123',
@@ -36,6 +37,13 @@ describe('Filter cmAutolink', function () {
         expect(element.html()).not.toBe(textWithLink)
         expect(element.find('a').length).toBe(1)
         expect(element.text()).toBe(textWithLink)
+    })
+
+    it('text with link will replaced by a html a-tag', function(){
+        createDrtv(textWithTwoLinksAndBreak)
+        expect(element.html()).not.toBe(textWithTwoLinksAndBreak)
+        expect(element.find('a').length).toBe(2)
+        expect(element.text()).toBe(textWithTwoLinksAndBreak)
     })
 
     it('that not should replaced by autolink', function(){
