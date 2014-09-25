@@ -845,6 +845,7 @@ angular.module('cmCore')
         cmAuth.on('identity:updated signatures:updated', function(event, data){
             if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
                 self.data.identity.importData(data);
+                self.syncLocalKeys();
             }
         });
 
