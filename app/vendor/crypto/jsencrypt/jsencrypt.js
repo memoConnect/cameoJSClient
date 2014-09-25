@@ -4357,7 +4357,6 @@ var JSEncryptExports = {};
     };
 
     JSEncrypt.prototype.cancelAsync = function(){
-        console.log('JSEncrypt.prototype.cancelAsync',this.key)
         if (this.key) {
             this.key.cancelAsync();
         }
