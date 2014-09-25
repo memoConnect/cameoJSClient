@@ -572,6 +572,9 @@
             "ABOUT_US": {
                 "TITLE": "About us",
                 "TEXT": "cameoNet 2014"
+            },
+            "PERFORMANCE": {
+                "TITLE": "Performance"
             }
         }
     },
