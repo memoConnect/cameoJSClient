@@ -135,8 +135,19 @@ angular.module('cmPhonegap')
                             console.log('##on pn#####################');
                             console.log(cmUtil.prettify(event))
 
-                            if(!event.foreground) {
-                                $rootScope.goTo('talks', true);
+                            if(!event.foreground){
+                                var context = event.payload.context.split(':');
+                                switch(context[0]){
+                                    case 'message':
+                                        $rootScope.goTo('conversation/'+context[1], true);
+                                    break;
+                                    case 'friendRequest':
+                                        $rootScope.goTo('contact/request/list', true);
+                                    break;
+                                }
+                                //$rootScope.goTo('talks', true);
+                            } else {
+                                console.log('cmBimmel!!!',event.payload.context)
                             }
 //                            if (event.foreground) {
 //                                console.log('##foreground inline push notification#####################');
@@ -182,7 +193,17 @@ angular.module('cmPhonegap')
 //                        snd.play();
 //                    }
 
-                    $rootScope.goTo('talks',true);
+                    if('sound' in event && event.sound != '') {
+                        var context = event.sound.split(':');
+                        switch (context[0]) {
+                            case 'message':
+                                $rootScope.goTo('conversation/' + context[1], true);
+                            break;
+                            case 'friendRequest':
+                                $rootScope.goTo('contact/request/list', true);
+                            break;
+                        }
+                    }
 
                     if (event.badge) {
                         self.plugin.setApplicationIconBadgeNumber(
