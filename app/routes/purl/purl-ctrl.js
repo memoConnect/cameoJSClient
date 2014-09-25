@@ -1,15 +1,11 @@
 'use strict';
 
-angular.module('cmRoutes').controller('PurlCtrl',[
-
-    '$scope',
-    '$rootScope',
-    '$routeParams',
-    'cmModal',
-    'cmPurlModel',
-    'cmConversationFactory',
-
-    function($scope, $rootScope, $routeParams, cmModal, cmPurlModel, cmConversationFactory){
+angular.module('cmRoutes')
+.controller('PurlCtrl',[
+    'cmModal', 'cmPurlModel', 'cmConversationFactory',
+    '$scope', '$rootScope', '$routeParams', '$timeout',
+    function(cmModal, cmPurlModel, cmConversationFactory,
+             $scope, $rootScope, $routeParams, $timeout){
 
         $rootScope.pendingPurl      = null;
         $scope.showSignIn           = false;
@@ -34,7 +30,11 @@ angular.module('cmRoutes').controller('PurlCtrl',[
 
                     var conversation_id = cmPurlModel.handleConversation(data.conversation);
 
-                    $scope.conversation = cmConversationFactory.create(conversation_id)
+                    $scope.conversation = cmConversationFactory.create(conversation_id);
+                    console.log($scope.conversation)
+                    $timeout(function(){
+                        $scope.$apply()
+                    })
                 },
 
                 function(response){

@@ -1,17 +1,21 @@
 'use strict';
 
 angular.module('cmSecurityAspects').directive('cmSecurityIndicator',[
-    'cmUserModel',
-    'cmLogger',
+    'cmUserModel', 'cmLogger',
     '$timeout',
-    function(cmUserModel, cmLogger, $timeout){
+    function(cmUserModel, cmLogger,
+             $timeout){
         return {
-            restrict:   'AE',
+            restrict:   'E',
             templateUrl:'comps/security_aspects/drtv-security_indicator.html',
             scope: {
                 conversation: '=cmData'
             },
             controller: function($scope, $element, $attrs){
+
+                console.log('cmSecurityIndicator')
+                console.log($scope.conversation)
+
                 $scope.missing_aspects  = true;
                 $scope.leading_icon     = 'cm-lock';
 
@@ -27,7 +31,7 @@ angular.module('cmSecurityAspects').directive('cmSecurityIndicator',[
                     }
 
                     //console.log('$scope.conversation.recipients', $scope.conversation.recipients.length)
-                    //console.log('aspects.length', $scope.conversation.securityAspects.aspects.length)
+                    console.log('aspects.length', $scope.conversation.securityAspects.aspects.length)
                     //console.log('aspects', $scope.positive, $scope.negative)
 
                     $scope.leading_icon = ($scope.positive >= $scope.negative)?'cm-lock':'cm-unlock';
