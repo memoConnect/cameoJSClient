@@ -59,7 +59,6 @@ describe('Filter cmAutolink', function () {
 
         createDrtv(linkWithHashTag)
         expect(element.find('a').length).toBe(1)
-        console.log(element.text())
         expect(element.text()).toBe(linkWithHashTag)
 
         createDrtv(linkFullHttps)
