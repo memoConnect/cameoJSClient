@@ -713,7 +713,8 @@ module.exports = function (grunt) {
                 'templates/**/*',
                 'app/comps/**/*',
                 'app/routes/**/*',
-                'app/widgets/**/*'
+                'app/widgets/**/*',
+                'app/vendor/**/*'
             ],
             tasks: ['genAllTemplates', ':app:js-files']
         },

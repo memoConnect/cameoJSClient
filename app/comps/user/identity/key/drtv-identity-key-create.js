@@ -33,7 +33,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                  */
                 var detect      = cmDevice.detectOSAndBrowser(),
                     startTime   = undefined,
-                    elapsedTime = 0
+                    elapsedTime = 0;
 
                 $scope.active = 'choose'; // choose, active, store
                 //$scope.keySizes = cmCrypt.getKeySizes();
@@ -62,10 +62,10 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                 $scope.getElapsedTime = function(){
                     elapsedTime =   startTime 
                                     ?   Math.max(new Date().getTime() - startTime, 0)
-                                    :   elapsedTime
+                                    :   elapsedTime;
 
-                    return elapsedTime
-                }
+                    return elapsedTime;
+                };
 
                 /**
                  * generate keypair
@@ -87,9 +87,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     cmApi.stopListeningToEvents();
 
                     startTime   = new Date().getTime();
-                    elapsedTime = 0
-
-                   
+                    elapsedTime = 0;
 
                     cmCrypt.generateAsyncKeypair(parseInt(size),
                         function(counts, timeElapsed){
@@ -110,7 +108,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                         }
                     ).finally(
                         function(){
-                            cmJob.stop();
                             cmApi.listenToEvents();
                             startTime = undefined
                         }
@@ -133,7 +130,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                 };
 
                 $scope.cancel = function(){
-                    //cmLogger.debug('cancel');
+//                    cmLogger.debug('cancel');
                     $scope.cancelGeneration();
 
                     if(typeof $rootScope.generateAutomatic != 'undefined'){
@@ -177,13 +174,14 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                             .storeKey(key)
                             .syncLocalKeys();
 
+                        cmJob.stop();
+
                         //$window.history.back();
                         if(generateAutomatic == false){
                             $scope.goTo('/settings/identity/key/list');
                         } else {
                             $scope.goTo('/talks');
                         }
-
                     }
                 };
 

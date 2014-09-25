@@ -88,6 +88,7 @@ describe('Identity key settings: ', function () {
     })
 
     it('the new key should be displayed as local', function () {
+        ptor.debugger()
         util.waitForPageLoad('/settings/identity/key/list')
         util.waitForElement("[data-qa='key-list-item']")
 

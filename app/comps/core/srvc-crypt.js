@@ -193,8 +193,7 @@ angular.module('cmCore')
              */
             generateAsyncKeypair: function(keySize, onGeneration){
                 if (keySize == undefined ||
-                    typeof keySize != 'number' ||
-                    async.interval != null ) {
+                    typeof keySize != 'number') {
                     return false;
                 }
 
@@ -206,13 +205,6 @@ angular.module('cmCore')
                 // init vars
                 async.crypt = new JSEncrypt({default_key_size: keySize}),
                 async.promise = $q.defer();
-                async.interval = null;
-//                async.interval = $interval(function(){
-//                    counts++;
-//                    if(typeof onGeneration == "function"){
-//                        onGeneration(counts, (time + ((new Date()).getTime())))
-//                    }
-//                }, 500);
 
                 // start keypair generation
                 async.crypt.getKey(function(){
@@ -241,10 +233,7 @@ angular.module('cmCore')
              * @returns {boolean}
              */
             cancelGeneration: function(withoutReject){
-                if(async.interval != null){
-                    // clear interval
-                    $interval.cancel(async.interval);
-                    async.interval = null;
+                if(async.crypt != null){
                     // clear promise and library vars if param withReject is true
                     if(withoutReject == undefined) {
                         async.crypt.cancelAsync();
