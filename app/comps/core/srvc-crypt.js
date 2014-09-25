@@ -191,10 +191,16 @@ angular.module('cmCore')
              * @param $scopeState
              * @returns {Promise.promise|*|webdriver.promise.Deferred.promise}
              */
-            generateAsyncKeypair: function(keySize, onGeneration){
+            generateAsyncKeypair: function(keySize){
                 if (keySize == undefined ||
                     typeof keySize != 'number') {
                     return false;
+                }
+
+                async.promise = $q.defer();
+
+                if(window.Worker){
+
                 }
 
                 // Create the encryption object.
@@ -202,9 +208,11 @@ angular.module('cmCore')
                     time = -((new Date()).getTime()),
                     counts = 0;
 
+
+
                 // init vars
                 async.crypt = new JSEncrypt({default_key_size: keySize}),
-                async.promise = $q.defer();
+
 
                 // start keypair generation
                 async.crypt.getKey(function(){

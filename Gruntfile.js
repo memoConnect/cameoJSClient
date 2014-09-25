@@ -597,14 +597,14 @@ module.exports = function (grunt) {
                     'app/base/config.js': ['templates/app/config.js']
                 }
             },
-            'main-webApp': {
+            'app-webworker': {
                 'options': {
                     'data': {
-                        'urlBust': globalCameoBuildConfig.config.urlBust
+                        'currentVersion': globalCameoBuildConfig.config.version
                     }
                 },
                 'files': {
-                    'app/base/main.js': ['templates/app/main.js']
+                    'app/webworker/keygen.js': ['templates/app//webworker/keygen.js']
                 }
             },
             'config-tests': {
