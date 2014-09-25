@@ -588,7 +588,8 @@ module.exports = function (grunt) {
                         'currentVersion': globalCameoBuildConfig.config.version,
                         'autoLogin': globalCameoBuildConfig.config.autoLogin,
                         'loadingBar': globalCameoBuildConfig.config.loadingBar,
-                        'enableDebug': globalCameoBuildConfig.config.enableDebug
+                        'enableDebug': globalCameoBuildConfig.config.enableDebug,
+                        'performancePage': globalCameoBuildConfig.config.performancePage
                     }
                 },
                 'files': {
