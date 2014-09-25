@@ -12,22 +12,21 @@ angular.module('cmRoutes').controller('PurlCtrl',[
     function($scope, $rootScope, $routeParams, cmModal, cmPurlModel, cmConversationFactory){
 
         $rootScope.pendingPurl      = null;
-
         $scope.showSignIn           = false;
         $scope.purlId               = $routeParams.purlId || '';
         $scope.headerGuest          = true;
 
-            if($routeParams.purlId){
-                cmPurlModel.getPurl($routeParams.purlId).then(
-                    function(data){
-                        // identity check internal || external user
-                        cmPurlModel.handleIdentity(data.identity);
+        if($routeParams.purlId){
+            cmPurlModel.getPurl($routeParams.purlId).then(
+                function(data){
+                    // identity check internal || external user
+                    cmPurlModel.handleIdentity(data.identity);
 
-                        if(data.identity.userType == 'external'){
-                            $rootScope.pendingPurl = $routeParams.purlId;
-                        } else {
-                            $scope.headerGuest = false;
-                        }
+                    if(data.identity.userType == 'external'){
+                        $rootScope.pendingPurl = $routeParams.purlId;
+                    } else {
+                        $scope.headerGuest = false;
+                    }
 
                     if(typeof data.token !== 'undefined'){
                         cmPurlModel.handleToken(data.token)
@@ -77,6 +76,9 @@ angular.module('cmRoutes').controller('PurlCtrl',[
         };
 
         $scope.showLogin = function () {
+
+            $scope.showSignIn = true;
+
             cmModal.create({
                 id: 'login',
                 'class': 'with-title no-padding',
