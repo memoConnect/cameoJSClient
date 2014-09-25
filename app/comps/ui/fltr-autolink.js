@@ -8,13 +8,20 @@ angular.module('cmUi')
         return function(text, attrStrLen){
             var pattern = /(^|[\s\n]|<br\/?>)(((?:https?|ftp)(:\/\/)|(www|\/\/))[\-A-Z0-9+\u0026\u2019@#\/%?=()~_|!:,.;]*[\-A-Z0-9+\u0026@#\/%=~()_|])/gi;
             var strLen = attrStrLen||50;
-            var slash = '&#x2F;&#x2F;'; // // double Forward Slash
+            var slash = '&#x2F;'; // find forward slash '/'
+
+            // unescaped links
+            /*
+             http://localhost:8000/app/#/conversation/zy6ofOMu5h0W5O1sPB70
+             http:&#x2F;&#x2F;localhost:8000&#x2F;app&#x2F;#&#x2F;conversation&#x2F;zy6ofOMu5h0W5O1sPB70
+            */
 
             if(text == undefined)
                 return '';
 
+            // unescaped slashes to normal slashes
             if(text.indexOf(slash) > -1) {
-                text = text.replace(/[&#x2F;]{6}/g, '/');
+                text = text.replace(/&#x2F;/g, '/');
             }
 
             return text.replace(pattern, function(link){
