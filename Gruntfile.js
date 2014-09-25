@@ -260,7 +260,7 @@ module.exports = function (grunt) {
                     'app/css/!(style|bootstrap).css',
                     'app/vendor/**/*.css'
                 ],
-                dest: 'app/css/style.css'
+                dest: 'app/css/style.'+globalCameoBuildConfig.config.version+'.css'
             },
             'app-packages': {
                 options: {
@@ -297,7 +297,7 @@ module.exports = function (grunt) {
                     'app/vendor/angular/base/angular-*.js',
                     'app/vendor/angular/!(base)/*.js',
                 ],
-                dest: 'app/vendor.js'
+                dest: 'app/vendor.'+globalCameoBuildConfig.config.version+'.js'
             },
 
             'app-cameo': {
@@ -306,7 +306,7 @@ module.exports = function (grunt) {
                     'app/base/app.js',
                     'app/packages/**/package.js'
                 ],
-                dest: 'app/cameo.js'
+                dest: 'app/cameo.'+globalCameoBuildConfig.config.version+'.js'
             }
         },
         coffee: {
@@ -547,6 +547,7 @@ module.exports = function (grunt) {
             'index-phonegap': {
                 'options': {
                     'data': {
+                        'currentVersion': globalCameoBuildConfig.config.version,
                         'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'+
                                         '<script type="text/javascript" charset="utf-8" src="config.js"></script>'+
                                         (globalCameoBuildConfig.debug.weinre ? '<script src="http://'+globalCameoBuildConfig.debug.weinreIp+':8080/target/target-script-min.js#anonymous"></script>' : ''),
@@ -560,6 +561,7 @@ module.exports = function (grunt) {
             'index-www': {
                 'options': {
                     'data': {
+                        'currentVersion': globalCameoBuildConfig.config.version,
                         'phonegapFiles': globalCameoBuildConfig.debug.weinre ? '<script src="http://'+globalCameoBuildConfig.debug.weinreIp+':8080/target/target-script-min.js#anonymous"></script>' : '',
                         'phonegapOnload': ''
                     }
