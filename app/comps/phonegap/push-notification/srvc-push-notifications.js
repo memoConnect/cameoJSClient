@@ -84,8 +84,8 @@ angular.module('cmPhonegap')
             },
 
             setDeviceToken: function(token){
-                //console.log('##setDeviceToken#################');
-                //console.log(token);
+                console.log('##setDeviceToken#################');
+                console.log(token);
                 this.deviceToken = token;
 
                 this.initPromise();
