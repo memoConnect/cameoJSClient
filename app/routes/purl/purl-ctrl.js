@@ -31,10 +31,6 @@ angular.module('cmRoutes')
                     var conversation_id = cmPurlModel.handleConversation(data.conversation);
 
                     $scope.conversation = cmConversationFactory.create(conversation_id);
-                    console.log($scope.conversation)
-                    $timeout(function(){
-                        $scope.$apply()
-                    })
                 },
 
                 function(response){

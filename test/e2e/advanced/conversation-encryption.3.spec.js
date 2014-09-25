@@ -120,7 +120,7 @@ describe('Conversation encryption -', function () {
         })
 
         var checkSecurityAspects = function (trust) {
-            xit("check security aspects", function () {
+            it("check security aspects", function () {
                 util.waitForElement('cm-header:not(.ng-hide)')
 
                 $('cm-header:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
