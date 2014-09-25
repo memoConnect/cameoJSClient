@@ -1010,9 +1010,11 @@ angular.module('cmConversations')
 //                cmLogger.debug('cmConversationModel:on:update:finished');
 //                cmBoot.resolve();
                 self.setLastMessage();
+                /* @Todo: temporarily removed until webworker joins in:
                 cmCallbackQueue.push(function(){
                     self.decrypt();
                 }, 200)
+                */          
                 //self.securityAspects.refresh();
                 self.updateLockStatus();
                 //self.handleMissingAePassphrases();

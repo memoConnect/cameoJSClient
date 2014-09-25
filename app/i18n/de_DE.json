@@ -146,6 +146,7 @@
     },
 
     "CONVERSATION": {
+        "NO_SUBJECT": "Kein Betreff",
         "HEADING": "Talk",
         "LABEL": {
             "SEND": "Abschicken",
