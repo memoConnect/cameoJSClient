@@ -30,6 +30,8 @@ angular.module('cmUi')
         };
 
         self.open = function(id, data, ttl){
+            self.closeAll();
+
             if(self.instances[id]){
                 self.instances[id]
                     .setData(data)
@@ -47,7 +49,7 @@ angular.module('cmUi')
         };
 
         self.close = function(id){
-            var instance = self.instances[id]
+            var instance = self.instances[id];
             
             if(instance){
                 self.instances[id].close();
@@ -58,15 +60,17 @@ angular.module('cmUi')
         };
 
         self.closeAll = function(){
-            angular.forEach(self.instances, function(modal_instance){
-                modal_instance.close();
-            });
+            if(self.instances.length > 0) {
+                angular.forEach(self.instances, function (modal_instance) {
+                    modal_instance.close();
+                });
+            }
 
             return self;
         };
 
         self.create = function(config, template, target, scope){
-            var attrs = ''
+            var attrs = '';
             
             //Todo: könnte man schöner machen:
             angular.forEach(config, function(value, key){ attrs += key+'="'+value+'"' });
@@ -109,7 +113,7 @@ angular.module('cmUi')
                             html:   config.html || ''
                         }
 
-            var deferred    = $q.defer()
+            var deferred    = $q.defer(),
                 scope       = $rootScope.$new(),
                 modalId     = 'modal-confirm-'+(new Date()).getTime();
 

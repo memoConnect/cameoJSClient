@@ -247,13 +247,13 @@ this.waitForEventSubscription = function () {
     return this
 }
 
-this.waitForElement = function (selector) {
+this.waitForElement = function (selector, timeout) {
 
     ptor.wait(function () {
         return $$(selector).then(function (elements) {
             return elements.length > 0
         })
-    }, config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
+    }, timeout || config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
 
     return this
 }
