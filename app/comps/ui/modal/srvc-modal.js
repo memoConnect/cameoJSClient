@@ -30,8 +30,6 @@ angular.module('cmUi')
         };
 
         self.open = function(id, data, ttl){
-            self.closeAll();
-
             if(self.instances[id]){
                 self.instances[id]
                     .setData(data)
@@ -60,11 +58,9 @@ angular.module('cmUi')
         };
 
         self.closeAll = function(){
-            if(self.instances.length > 0) {
-                angular.forEach(self.instances, function (modal_instance) {
-                    modal_instance.close();
-                });
-            }
+            angular.forEach(self.instances, function (modal_instance) {
+                modal_instance.close();
+            });
 
             return self;
         };
