@@ -70,7 +70,7 @@ describe('Identity key settings: ', function () {
         })
 
         it('wait for key generation and display key', function () {
-            util.waitForElement("[data-qa='page-save-key']")
+            util.waitForElementVisible("[data-qa='page-save-key']",120000)
             expect($("[data-qa='input-key-name']").getAttribute('value')).toBeTruthy()
             util.clearInput("input-key-name")
             $("[data-qa='input-key-name']").sendKeys(keyName)
@@ -86,7 +86,6 @@ describe('Identity key settings: ', function () {
     })
 
     it('the new key should be displayed as local', function () {
-        ptor.debugger()
         util.waitForPageLoad('/settings/identity/key/list')
         util.waitForElement("[data-qa='key-list-item']")
 
