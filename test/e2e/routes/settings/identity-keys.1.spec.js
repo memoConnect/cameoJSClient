@@ -86,6 +86,7 @@ describe('Identity key settings: ', function () {
     })
 
     it('the new key should be displayed as local', function () {
+        util.get('/settings/identity/key/list')
         util.waitForPageLoad('/settings/identity/key/list')
         util.waitForElement("[data-qa='key-list-item']")
 
@@ -117,8 +118,9 @@ describe('Identity key settings: ', function () {
     })
 
     it('delete key and confirm that it is deleted after logout/login', function () {
-        $("[data-qa='btn-remove-modal']").click()
-        $("[data-qa='btn-remove-key']").click()
+
+        util.waitAndClickQa('btn-remove-modal')
+        util.waitAndClickQa('btn-confirm')
 
         util.logout()
         util.login(login, password)
