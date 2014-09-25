@@ -597,14 +597,14 @@ module.exports = function (grunt) {
                     'app/base/config.js': ['templates/app/config.js']
                 }
             },
-            'app-webworker': {
+            'webworker': {
                 'options': {
                     'data': {
                         'currentVersion': globalCameoBuildConfig.config.version
                     }
                 },
                 'files': {
-                    'app/webworker/keygen.js': ['templates/app//webworker/keygen.js']
+                    'app/webworker/keygen.js': ['templates/webworker/keygen.js']
                 }
             },
             'config-tests': {
@@ -857,6 +857,7 @@ module.exports = function (grunt) {
         'template:config-webApp',
         //'template:main-webApp',
         'template:index-www',
+        'template:webworker',
         'template:config-phonegap',
         'template:config-protractor',
         'concat:less',

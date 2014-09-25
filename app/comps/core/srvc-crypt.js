@@ -13,8 +13,54 @@ angular.module('cmCore')
             crypt: null
         };
 
+        var webworker = {
+            stack: [],
+            isAvailable: function(){
+                return !(window.Worker === undefined)
+            },
+            start: function(jsPath, data, onFinished){
+
+                var worker = new Worker(jsPath);
+
+                worker.addEventListener('message', function(e){
+                    var result = e.data;
+                    switch(result.msg){
+                        case 'finished':
+                            onFinished(result);
+                        break;
+                    }
+                });
+
+                worker.postMessage = worker.webkitPostMessage || worker.postMessage;
+
+                worker.postMessage(data);
+
+                this.stack.push({jsPath:jsPath,instance:worker});
+            },
+            cancel: function(jsPath, data, onFinished){
+                var worker = this.stack.filter(function(worker){
+                    return worker.jsPath == jsPath
+                });
+
+                if(worker.length > 0){
+                    worker = worker[0].instance;
+
+                    worker.addEventListener('message', function(e){
+                        var result = e.data;
+                        switch(result.msg){
+                            case 'canceled':
+                                onFinished(result);
+                            break;
+                        }
+                    });
+
+                    worker.postMessage(data);
+                }
+            }
+        };
+
         return {
-         
+
             random: function(size){
                 //@Todo:
                 
@@ -198,40 +244,46 @@ angular.module('cmCore')
                 }
 
                 async.promise = $q.defer();
-
-                if(window.Worker){
-
-                }
-
-                // Create the encryption object.
-                var self = this,
-                    time = -((new Date()).getTime()),
-                    counts = 0;
-
-
-
-                // init vars
-                async.crypt = new JSEncrypt({default_key_size: keySize}),
-
-
-                // start keypair generation
-                async.crypt.getKey(function(){
-
-                    // only resolve if keypair exists
-                    if(async.crypt.getPrivateKey() == undefined)
-                        return false;
-
-                    self.cancelGeneration(true);
-                    if(async.promise != null) {
+                // start keygen over webworker
+                if(webworker.isAvailable()){
+                    webworker.start('webworker/keygen.js',{
+                        keySize: keySize,
+                        cmd: 'start-async'
+                    }, function(result){
+                        var key = (new cmKey()).setKey(result.privKey);
                         async.promise.resolve({
-                            timeElapsed: (time + ((new Date()).getTime())),
-                            counts: counts,
-                            key: async.crypt
+                            timeElapsed: result.timeElapsed,
+                            key: key
                         });
-                        // !!! important for unit test, don't remove !!!
-                        $rootScope.$apply();
-                    }
-                });
+                    });
+                // otherwise use browser instance
+                } else {
+                    var self = this,
+                        time = -((new Date()).getTime()),
+                        counts = 0;
+
+                    // init vars
+                    async.crypt = new JSEncrypt({default_key_size: keySize}),
+
+                    // start keypair generation
+                    async.crypt.getKey(function () {
+
+                        // only resolve if keypair exists
+                        if (async.crypt.getPrivateKey() == undefined)
+                            return false;
+
+                        self.cancelGeneration(true);
+                        if (async.promise != null) {
+                            async.promise.resolve({
+                                timeElapsed: (time + ((new Date()).getTime())),
+                                counts: counts,
+                                key: async.crypt
+                            });
+                            // !!! important for unit test, don't remove !!!
+                            $rootScope.$apply();
+                        }
+                    });
+                }
 
                 return async.promise.promise;
             },
@@ -241,7 +293,14 @@ angular.module('cmCore')
              * @returns {boolean}
              */
             cancelGeneration: function(withoutReject){
-                if(async.crypt != null){
+                if(webworker.isAvailable()){
+                    webworker.cancel('webworker/keygen.js', {
+                        cmd:'stop-async'
+                    }, function(){
+                        async.promise.reject();
+                    });
+                    return true;
+                } else if(async.crypt != null){
                     // clear promise and library vars if param withReject is true
                     if(withoutReject == undefined) {
                         async.crypt.cancelAsync();

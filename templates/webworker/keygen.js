@@ -47,14 +47,14 @@ var emptyFunction = function(){return this},
         }}
     };
 
-importScripts('../vendor.<% currentVersion %>.js');
+importScripts('../vendor.<%= currentVersion %>.js');
 
 var crypt = null,
     time = 0;
 
 self.addEventListener('message', function(e) {
     var data = e.data;
-    console.log(JSON.stringify(data))
+    //console.log(JSON.stringify(data))
     switch (data.cmd) {
         case 'start-sync':
             time = -((new Date()).getTime());
@@ -63,27 +63,22 @@ self.addEventListener('message', function(e) {
             self.postMessage({
                 msg:        'finished',
                 timeElapsed:(time + ((new Date()).getTime())),
-                privKey:    crypt.key.getPrivateKey(),
-                pubKey:     crypt.key.getPublicKey()
+                privKey:    crypt.key.getPrivateKey()
             });
         break;
         case 'stop-sync':
             if(crypt != null)
                 crypt = null;
-            self.postMessage({'msg':'stopped'});
+            self.postMessage({'msg':'worker[0].instance'});
         break;
         case 'start-async':
             time = -((new Date()).getTime());
             crypt = new JSEncrypt({default_key_size: data.keySize});
-//                function(counts, timeElapsed){
-//                    self.postMessage({'msg':'generation',time:timeElapsed});
-//                }
             crypt.getKey(function(){
                 self.postMessage({
                     msg:        'finished',
                     timeElapsed:(time + ((new Date()).getTime())),
-                    privKey:    crypt.key.getPrivateKey(),
-                    pubKey:     crypt.key.getPublicKey()
+                    privKey:    crypt.key.getPrivateKey()
                 });
             });
         break;
@@ -92,7 +87,7 @@ self.addEventListener('message', function(e) {
                 crypt.cancelAsync();
                 crypt = null;
             }
-            self.postMessage({'msg':'stopped'});
+            self.postMessage({'msg':'worker[0].instance'});
         break;
     }
 }, false);
