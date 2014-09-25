@@ -25,6 +25,7 @@ angular.module('cmUi')
 
             if(!('nl2br' in ignore))
                 html = $filter('nl2br')(html);//$sce
+
             return html;
         }
     }
