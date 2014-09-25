@@ -132,8 +132,8 @@ angular.module('cmPhonegap')
                             }
                             break;
                         case 'message':
-//                            console.log('##on pn#####################');
-//                            console.log(cmUtil.prettify(event))
+                            console.log('##on pn#####################');
+                            console.log(cmUtil.prettify(event))
 
                             if(!event.foreground) {
                                 $rootScope.goTo('talks', true);
@@ -170,8 +170,8 @@ angular.module('cmPhonegap')
                     }
                 },
                 iOS: function (event) {
-//                    console.log('##on pn#####################');
-//                    console.log(cmUtil.prettify(event))
+                    console.log('##on pn#####################');
+                    console.log(cmUtil.prettify(event))
 
 //                    if ( event.alert ){
 //                        navigator.notification.alert(event.alert);
