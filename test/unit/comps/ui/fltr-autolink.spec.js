@@ -8,6 +8,7 @@ describe('Filter cmAutolink', function () {
         textWithTwoLinksAndBreak = 'juhu http://www.moep.de\nhttp://www.peom.de alter verwalter',
         noneLink = 'moep.de/123',
         linkFull = 'http://www.moep.de/123',
+        linkWithHashTag = 'http://localhost:8000/app/#/conversation/123',
         linkFullHttps = 'https://www.moep.de/123',
         linkWww = 'www.moep.de/123',
         linkLong = 'https://memo-berlin.atlassian.net/secure/RapidBoard.jspa?rapidView=1&view=detail&selectedIssue=CAM-500'
@@ -55,6 +56,11 @@ describe('Filter cmAutolink', function () {
         createDrtv(linkFull)
         expect(element.find('a').length).toBe(1)
         expect(element.text()).toBe(linkFull)
+
+        createDrtv(linkWithHashTag)
+        expect(element.find('a').length).toBe(1)
+        console.log(element.text())
+        expect(element.text()).toBe(linkWithHashTag)
 
         createDrtv(linkFullHttps)
         expect(element.find('a').length).toBe(1)

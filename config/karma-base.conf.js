@@ -14,7 +14,8 @@ module.exports = function(config) {
             'app/cameo.js',
 
             // specs
-            'test/unit/**/*.spec.js',
+            //'test/unit/**/*.spec.js',
+            'test/unit/**/fltr-autolink.spec.js',
 
             'app/**/*.json'
         ],
