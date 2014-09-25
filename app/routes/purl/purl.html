@@ -1,8 +1,9 @@
-<section ng-if="!showSignIn">
+<section ng-show="!showSignIn">
     <cm-header cm-rubber-space ng-if="!headerGuest">
         <cm-back cm-weight="1" back-to="/talks" plain-back="true"></cm-back>
         <cm-identity cm-weight="4"></cm-identity>
         <cm-security-indicator
+            ng-if           = "conversation"
             cm-weight       = "2"
             cm-data         = "conversation"
             cm-leading-icon = "cm-lock"
@@ -23,7 +24,8 @@
         <cm-logo cm-weight="4"></cm-logo>
         <cm-security-indicator
             cm-weight       = "2"
-            cm-data         = "conversation.securityAspects"
+            ng-if           = "conversation"
+            cm-data         = "conversation"
             cm-leading-icon = "cm-lock"
             ng-click        = "gotoPurl(purlId, 'security')"
         ></cm-security-indicator>
