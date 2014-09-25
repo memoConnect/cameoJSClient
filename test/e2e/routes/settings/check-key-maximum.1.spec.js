@@ -66,12 +66,13 @@ describe('Check key maximum: ',function(){
         util.expectCurrentUrl("settings/identity/key")
     })
 
-    console.log('removed parts of the test')
     it('remove key and check if message and footer for create/import appear', function(){
+        util.waitAndClickQa("btn-remove-modal")
         util.waitForElement("[data-qa='modal-confirm']")
-        util.waitAndClickQa("btn-confirm")
-
         ptor.debugger()
+        util.waitAndClickQa("btn-confirm")
+        ptor.debugger()
+
         util.waitForElement("[data-qa='message-no-keys']")
         expect($("[data-qa='message-no-keys']").isPresent()).toBe(true)
 

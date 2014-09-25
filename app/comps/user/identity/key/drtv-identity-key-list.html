@@ -48,44 +48,6 @@
     </li>
 </ul>
 
-<!--
-<cm-modal id="modalExportKeyPair" class="no-padding" cm-data-as="key" cm-title="SETTINGS.PAGES.IDENTITY.KEYS.EXPORT_KEY">
-    <div class="modal-row">
-        <h3>{{key.name}}</h3>
-        <span ng-if="privateKeys.find(key)">{{'SETTINGS.PAGES.IDENTITY.KEYS.EXPORT_KEY_DESCRIPTION'|cmTranslate}}</span>
-        <h4 ng-if="privateKeys.find(key)" class="is-local">{{'SETTINGS.PAGES.IDENTITY.KEYS.IS_LOCAL_ON_THIS_DEVICE'|cmTranslate}}</h4>
-        <h4>
-            <strong>{{'SETTINGS.PAGES.IDENTITY.KEYS.TRUSTING'|cmTranslate}}:</strong>
-            <span ng-if="isTrustedKey(key)" class="is-trusted">
-                {{'SETTINGS.PAGES.IDENTITY.KEYS.IS_TRUSTED'|cmTranslate}}
-            </span>
-            <span ng-if="!isTrustedKey(key)" class="is-untrusted">
-                {{'SETTINGS.PAGES.IDENTITY.KEYS.IS_UNTRUSTED'|cmTranslate}}
-            </span>
-        </h4>
-        <h4>
-            <strong>{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_SIZE'|cmTranslate}}:</strong>
-            {{privateKeys.find(key).getSize() || key.getSize() || key.size}}
-        </h4>
-        <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
-        <textarea class="form-control" cm-clipboard readonly>{{privateKeys.find(key).getPrivateKey()}}</textarea>
-    </div>
-</cm-modal>
--->
-
-<cm-modal 
-    id          = "modalRemoveKeypair" 
-    class       = "no-padding" 
-    cm-data-as  = "key" 
-    cm-title    = "SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY"
-    type        = "confirm"
->
-    {{'SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY_REALLY'|cmTranslate}}
-    <div class="modal-row">
-        <h3>{{key.name}} - {{key.getSize()}} - {{key.created | date:'dd.MM.yy - HH:mm'}}</h3>
-    </div>
-</cm-modal>
-
 <cm-footer ng-if="canCreate" data-qa="canCreate">
     <a href="#/settings/identity/key/create"
        class="item w50 no-pad cm-btn-grey"

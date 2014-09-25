@@ -143,6 +143,7 @@ angular.module('cmUi')
                 $scope.title    = cmTranslate($attrs.cmTitle);
                 $scope.severity = $attrs.severity || 'info';
                 $scope.options  = $scope.$eval($attrs.cmOptions) || {withoutBackdrop:false}
+                $scope.id       = $attrs.id
             }
         }
     }
