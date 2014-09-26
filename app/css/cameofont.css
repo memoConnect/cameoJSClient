@@ -201,7 +201,7 @@
    readers do not read off random characters that represent icons
 */
 .cm-rhino-bubble{
-    background-image:url('../gfx/rhino-bubble.png');
+    background-image:url('gfx/rhino-bubble.png');
     background-color:transparent;
     background-size:0.8em 0.8em;
     width:0.8em;

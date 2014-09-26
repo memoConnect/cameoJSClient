@@ -6,10 +6,10 @@ angular.module('cmPhonegap')
 .service('cmPushNotificationAdapter', [
     'cmPhonegap', 'cmDevice', 'cmPushNotifications',
     'cmUtil', 'cmLanguage', 'cmApi',
-    '$rootScope', '$window', '$phonegapCameoConfig',
+    '$rootScope', '$window', '$phonegapCameoConfig', '$injector',
     function (cmPhonegap, cmDevice, cmPushNotifications,
               cmUtil, cmLanguage, cmApi,
-              $rootScope, $window, $phonegapCameoConfig) {
+              $rootScope, $window, $phonegapCameoConfig, $injector) {
 
         var self = {
             plugin: null,
@@ -52,9 +52,7 @@ angular.module('cmPhonegap')
             },
 
             checkRegisteredDevice: function(accountPushDevices){
-                if(!cmDevice.isApp())
-                    return false;
-
+                console.log('checkRegisteredDevice','settings: '+($injector.get('cmSettings').get('pushNotifications')))
                 // BE MOCK
                 /*
                  accountPushDevices = [
@@ -78,9 +76,11 @@ angular.module('cmPhonegap')
 //                    }
 //                });
 
-                if(cmSettings.get('pushNotifications')){
-                    self.registerDevice();
-                }
+                cmPhonegap.isReady(function(){
+                    if($injector.get('cmSettings').get('pushNotifications')) {
+                        self.registerDevice();
+                    }
+                });
             },
 
             registerDevice: function(){
@@ -111,12 +111,17 @@ angular.module('cmPhonegap')
 
             deleteDevice: function(token){
                 if(cmDevice.getCurrentOS() != 'unknown'
-                && this.currentDeviceData.token
-                && token && token != '') {
-                    cmApi.delete({
-                        path: '/deviceToken/'+cmDevice.getCurrentOS()+'/'+this.currentDeviceData.token,
-                        overrideToken: token // this token for logout
-                    }).then(function(){
+                && this.currentDeviceData.token) {
+
+                    var data = {
+                        path: '/pushDevice/'+cmDevice.getCurrentOS()+'/'+this.currentDeviceData.token,
+                    };
+
+                    // this token for logout
+                    if(token)
+                        data.overrideToken = token;
+
+                    cmApi.delete(data).then(function(){
                         self.deviceIsRegistrated = false;
                     });
                 }
