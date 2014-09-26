@@ -3,6 +3,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-less');
@@ -257,10 +258,10 @@ module.exports = function (grunt) {
             'app-css': {
                 src: [
                     'app/css/bootstrap.min.css',
-                    'app/css/!(style|bootstrap).css',
+                    'app/css/!(bootstrap).css',
                     'app/vendor/**/*.css'
                 ],
-                dest: 'app/css/style.'+globalCameoBuildConfig.config.version+'.css'
+                dest: 'app/style.'+globalCameoBuildConfig.config.version+'.css'
             },
             'app-packages': {
                 options: {
@@ -362,6 +363,14 @@ module.exports = function (grunt) {
                 ]
             }
         },
+        cssmin: {
+            'dev-deploy': {
+                expand: true,
+                cwd: 'dist/app',
+                src: '*.css',
+                dest: 'dist/app'
+            }
+        },
 
         copy: {
             'resources-phonegap': {
@@ -446,7 +455,8 @@ module.exports = function (grunt) {
                 'dist/app/packages',
                 'dist/app/routes',
                 'dist/app/vendor',
-                'dist/app/widgets'
+                'dist/app/widgets',
+                'dist/app/css/*.css'
             ],
             'dist-app': ['dist/app'],
             'dist': ['dist'],
@@ -824,6 +834,10 @@ module.exports = function (grunt) {
             'logcat-clear': {
                 cmd: 'adb logcat -c',
                 bg: false
+            },
+            'firefox-remote-debugging': {
+                cmd: 'adb forward tcp:6000 tcp:6000',
+                bg: false
             }
         }
     });
@@ -875,6 +889,7 @@ module.exports = function (grunt) {
         'copy:dev-deploy',
         'clean:dev-deploy',
         'uglify:dev-deploy',
+        'cssmin:dev-deploy',
         'copy:cockpit',
         'uglify:cockpit'
     ]);

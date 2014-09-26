@@ -13,10 +13,13 @@ angular.module('cmPhonegap')
 
         var self = {
             plugin: null,
-
             currentDeviceData: {
                 token: undefined,
                 id: undefined
+            },
+            deviceIsRegistrated: false,
+            isDeviceRegistrated: function(){
+                return this.deviceIsRegistrated;
             },
 
             init: function(){
@@ -100,6 +103,8 @@ angular.module('cmPhonegap')
                             language: cmLanguage.getCurrentLanguage().replace('_','-'),
                             platform: cmDevice.getCurrentOS()
                         }
+                    }).then(function(){
+                        self.deviceIsRegistrated = true;
                     });
                 });
             },
@@ -111,6 +116,8 @@ angular.module('cmPhonegap')
                     cmApi.delete({
                         path: '/deviceToken/'+cmDevice.getCurrentOS()+'/'+this.currentDeviceData.token,
                         overrideToken: token // this token for logout
+                    }).then(function(){
+                        self.deviceIsRegistrated = false;
                     });
                 }
             }

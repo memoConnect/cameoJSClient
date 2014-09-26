@@ -20,10 +20,13 @@ angular.module('cmWidgets').directive('cmWidgetNotify', [
                 };
 
                 $scope.handlePushNotifications = function() {
+
                     var key = 'pushNotifications';
                     var newValue = $scope.settings[key] ? false : true;
 
-                    if(!newValue){//unregister checked to unchecked
+                    console.log(cmPushNotificationAdapter.isDeviceRegistrated(),$scope.settings[key],newValue)
+
+                    if(newValue){//unregister checked to unchecked
                         cmPushNotificationAdapter.deleteDevice();
                     } else {
                         cmPushNotificationAdapter.registerDevice();
