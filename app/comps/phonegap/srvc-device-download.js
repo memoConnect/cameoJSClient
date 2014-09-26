@@ -57,7 +57,6 @@ angular.module('cmPhonegap').service('cmDeviceDownload', [
 
                     directoryReader.readEntries(function(entries){
                         var sOutput = "";
-                        console.log()
                         for(var i=0; i < entries.length; i++){
                             if(!entries[i].isDirectory){
                                 console.log(entries[i].name)

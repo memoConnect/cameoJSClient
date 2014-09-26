@@ -20,11 +20,10 @@ angular.module('cmContacts')
         'cmIdentityFactory',
         'cmUtil',
         'cmNotify',
-        'cmHooks',
         'cmUserModel',
 
         function( $rootScope,$routeParams,
-                  cmContactsModel, cmIdentityFactory, cmUtil, cmNotify, cmHooks, cmUserModel){
+                  cmContactsModel, cmIdentityFactory, cmUtil, cmNotify, cmUserModel){
 
             return {
                 restrict:       'AE',

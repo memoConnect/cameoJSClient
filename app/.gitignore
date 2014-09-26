@@ -1,3 +1,5 @@
 /.DS_Store
-cameo.js
-vendor.js
+/webworker
+cameo*.js
+vendor*.js
+style*.css

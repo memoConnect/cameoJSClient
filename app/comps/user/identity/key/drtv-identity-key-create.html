@@ -39,7 +39,7 @@
     </cm-footer>
 </div>
 
-<div class="section" ng-if="active == 'generate'" data-qa="page-generating-key">
+<div class="section" ng-show="active == 'generate'" data-qa="page-generating-key">
     <h3 class="content" ng-bind-html="'IDENTITY.KEYS.GENERATE.GENERATING.HEADLINE' | cmParse"></h3>
 
     <article class="key-generates content">
@@ -50,7 +50,7 @@
 
     <hr>
 
-    <article class="content">
+    <article class="content" ng-if = "active == 'generate'">
         <span ng-bind-html="'IDENTITY.KEYS.GENERATE.GENERATING.TIME_PASSED'|cmParse"></span>
         <cm-timeout cm-data = "getElapsedTime()">
             <section class="cm-special-text">
@@ -88,9 +88,11 @@
 
     <hr>
 
-    <article class="content">
+    <article class="content" ng-if="active == 'store'">
         <span ng-bind-html="'IDENTITY.KEYS.GENERATE.SAVE.TIME_PASSED'|cmParse"></span>
-        <section class="cm-special-text">{{'IDENTITY.KEYS.GENERATE.SAVE.GENERATION_TIMER'|cmTranslate:i18n}}</section>
+        <cm-timeout cm-data = "getElapsedTime()">
+            <section class="cm-special-text">{{'IDENTITY.KEYS.GENERATE.SAVE.GENERATION_TIMER'|cmTranslate:{ 'time':cmTimeout} }}</section>
+        </cm-timeout>
     </article>
 
     <hr>

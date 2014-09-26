@@ -1,8 +1,17 @@
-<cm-avatar cm-data="avatarIdentity"></cm-avatar>
+<cm-avatar class="border-complete" cm-data="avatarIdentity"></cm-avatar>
 
 <div class="details" cm-weight="3">
-    <div class="subject" data-qa="conversation-subject" ng-bind-html="conversation | cmTagline" ng-if="(conversation.subject != '')"></div>
-    <cm-message class="message" cm-data="conversation.lastMessage" text-only="true" data-qa="conversation-last-message" ng-if="(conversation.subject == '')"></cm-message>
+    <div class="subject" data-qa="conversation-subject"> {{(conversation.subject || ('CONVERSATION.NO_SUBJECT' | cmTranslate)) |cmParse }}</div>
+
+    
+    <cm-message 
+        class       = "message" 
+        cm-data     = "conversation.lastMessage" 
+        text-only   = "true" 
+        data-qa     = "conversation-last-message" 
+        ng-hide     = true >
+    </cm-message>
+    
     <div class="recipients"><cm-recipients-comma-seperated cm-data="conversation"></cm-recipients-comma-seperated></div>
 </div>
 

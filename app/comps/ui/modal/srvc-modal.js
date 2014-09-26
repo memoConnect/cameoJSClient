@@ -47,7 +47,7 @@ angular.module('cmUi')
         };
 
         self.close = function(id){
-            var instance = self.instances[id]
+            var instance = self.instances[id];
             
             if(instance){
                 self.instances[id].close();
@@ -58,7 +58,7 @@ angular.module('cmUi')
         };
 
         self.closeAll = function(){
-            angular.forEach(self.instances, function(modal_instance){
+            angular.forEach(self.instances, function (modal_instance) {
                 modal_instance.close();
             });
 
@@ -66,7 +66,7 @@ angular.module('cmUi')
         };
 
         self.create = function(config, template, target, scope){
-            var attrs = ''
+            var attrs = '';
             
             //Todo: könnte man schöner machen:
             angular.forEach(config, function(value, key){ attrs += key+'="'+value+'"' });
@@ -105,9 +105,11 @@ angular.module('cmUi')
                             text:   config.text,
                             cancel: config.cancel,
                             okay:   config.okay,
+                            title:  config.title || 'DRTV.CONFIRM.HEADER',
+                            html:   config.html || ''
                         }
 
-            var deferred    = $q.defer()
+            var deferred    = $q.defer(),
                 scope       = $rootScope.$new(),
                 modalId     = 'modal-confirm-'+(new Date()).getTime();
 
@@ -126,8 +128,8 @@ angular.module('cmUi')
                 type:           'confirm',
                 'class':        'no-padding',
                 'cm-close-btn': false,
-                'cm-title':     'DRTV.CONFIRM.HEADER'
-            },'<cm-modal-confirm></cm-modal-confirm>',null,scope);
+                'cm-title':     config.title,
+            },'<cm-modal-confirm>'+config.html+'</cm-modal-confirm>',null,scope);
 
             self.open(modalId);
 

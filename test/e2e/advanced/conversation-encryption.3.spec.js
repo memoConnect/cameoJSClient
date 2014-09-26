@@ -120,7 +120,7 @@ describe('Conversation encryption -', function () {
         })
 
         var checkSecurityAspects = function (trust) {
-            xit("check security aspects", function () {
+            it("check security aspects", function () {
                 util.waitForElement('cm-header:not(.ng-hide)')
 
                 $('cm-header:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
@@ -135,7 +135,8 @@ describe('Conversation encryption -', function () {
                 })
             })
         }
-        checkSecurityAspects(encryptionType == "asym" && sender.hasKey)
+//        checkSecurityAspects(encryptionType == "asym" && sender.hasKey)
+        checkSecurityAspects()
 
         it("send initial message", function () {
 
@@ -186,7 +187,6 @@ describe('Conversation encryption -', function () {
                             expect(modals.length).toBe(0)
                         })
                     } else {
-
                         if(['password', 'passCaptcha'].indexOf(encryptionType) != -1){
 
                             // expect password prompt
@@ -398,9 +398,9 @@ describe('Conversation encryption -', function () {
 
             it("should not be able to open conversation with asym key transmission", function () {
 
-                util.get("/talks")
+                util.get("/talks")                
                 util.headerSearchInList("asym_" + date)
-                //ptor.debugger()
+                ptor.debugger()
                 $("cm-conversation-tag").click()
 
                 util.waitForElement("cm-message")

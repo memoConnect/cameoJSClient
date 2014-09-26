@@ -101,6 +101,7 @@ angular.module('cmCore')
         }
 
         this.importData = function(activeIdentity, data_identities){
+            //Todo: dont extend!
             angular.extend(this.data, activeIdentity);
 
             this.data.identity = activeIdentity;
@@ -530,6 +531,8 @@ angular.module('cmCore')
                                 return false; 
                             }
 
+                            cmLogger.debug('cmUserModel.signPublicKey: signing...')
+
                             //Content of the signature:
                             var signature  =  signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId));
                             
@@ -842,6 +845,7 @@ angular.module('cmCore')
         cmAuth.on('identity:updated signatures:updated', function(event, data){
             if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
                 self.data.identity.importData(data);
+                self.syncLocalKeys();
             }
         });
 

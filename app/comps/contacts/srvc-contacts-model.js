@@ -80,7 +80,7 @@ angular.module('cmContacts').service('cmContactsModel',[
          * Reset Object
          */
         function reset(){
-            cmLogger.debug('cmContactsModel:reset');
+            //cmLogger.debug('cmContactsModel:reset');
             self.contacts.reset('cmContactsModel.contacts');
             self.groups = [];
             self.requests.reset('cmContactsModel.request');

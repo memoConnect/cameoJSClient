@@ -146,6 +146,7 @@
     },
 
     "CONVERSATION": {
+        "NO_SUBJECT": "no subject",
         "HEADING": "Talk",
         "LABEL": {
             "SEND": "Send",

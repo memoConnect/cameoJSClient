@@ -42,7 +42,7 @@
             "SUBMIT": "Benutzerkonto anlegen",
             "USERNAME": "Benutzername",
             "NAME": "Anzeigename",
-            "TERMS": " die AGB",
+            "TERMS": "die AGB",
             "TERMS_ACCEPT": "Ich akzeptiere"
         },
         "PLACEHOLDER": {
@@ -146,6 +146,7 @@
     },
 
     "CONVERSATION": {
+        "NO_SUBJECT": "Kein Betreff",
         "HEADING": "Talk",
         "LABEL": {
             "SEND": "Abschicken",
