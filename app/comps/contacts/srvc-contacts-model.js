@@ -238,21 +238,14 @@ angular.module('cmContacts').service('cmContactsModel',[
 
             this.trigger('before-add-contact')
 
-            cmContactsAdapter
-                .addContact(data)
-                .then(
-                function(data){
-                    self.trigger('add-contact', data)
-                    _add(data);
-                    self.trigger('after-add-contact', data)
-                    defer.resolve();
-                },
-                function(){
-                    defer.reject();
-                }
-            );
-
-            return defer.promise;
+            return  cmContactsAdapter
+                    .addContact(data)
+                    .then(function(data){
+                            self.trigger('add-contact', data)
+                            _add(data);
+                            self.trigger('after-add-contact', data)
+                            return data
+                    })
         };
 
         this.editContact = function(id, data){

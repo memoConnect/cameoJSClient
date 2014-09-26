@@ -17,12 +17,14 @@ angular.module('cmContacts')
     '$rootScope', '$q',
     'cmContactsModel',
     'cmUtil',
+    'cmModal',
     'cmNotify',
     'cmLocalContacts',
+    'cmConversationFactory',
 
     function($rootScope, $q,
-             cmContactsModel, cmUtil,
-             cmNotify, cmLocalContacts){
+             cmContactsModel, cmUtil, cmModal,
+             cmNotify, cmLocalContacts, cmConversationFactory){
 
         return {
             restrict:       'AE',
@@ -140,7 +142,7 @@ angular.module('cmContacts')
                     $scope.validateForm().then(
                         function() {
                             // declaration
-                            var emptyIdentity = {
+                            var emptyIdentity_data = {
                                     displayName: null,
                                     phoneNumber: null,
                                     email: null,
@@ -152,7 +154,7 @@ angular.module('cmContacts')
                                     groups: []
                                 },
                                 // merge given identity with default
-                                identity = angular.extend({}, emptyIdentity, $scope.identity.exportData());
+                                identity = angular.extend({}, emptyIdentity_data, $scope.identity.exportData());
 
                             // handle preferredMessageType
                             if (identity.phoneNumber != null) {
@@ -169,6 +171,7 @@ angular.module('cmContacts')
 //                            console.log(cmUtil.prettify(identity))
 //                            return false;
 
+
                             // everything is fine let's add the contact
                             cmContactsModel
                                 .addContact({
@@ -176,13 +179,42 @@ angular.module('cmContacts')
                                     groups: identity.groups
                                 })
                                 .then(
-                                function () {
+                                    function (data) {
+                                        identity = cmIdentityFactory.create(data.identity, true)
+
+                                        return  cmModal.confirm({
+                                                    title:      '',
+                                                    text:       'CONTACT.NOTIFICATION.CONFIRM'
+                                                })
+                                    },
+                                    function () {
+                                        cmNotify.error('CONTACT.INFO.ERROR.SAVE', {ttl: 5000});
+                                        return $q.reject()
+                                    }
+                                )
+                                .then(function(){
+
+                                    var conversation =  cmConversationFactory
+                                                        .create()
+                                                        .addRecipient(identity)
+
+                                    return conversation
+                                    .save()
+                                    .then(function(){
+                                        return  conversation
+                                                .messages
+                                                .create({conversation:conversation})
+                                                .setText('$${CONTACT.NOTIFICATION.MESSAGE}')
+                                                .setPublicData(['text'])
+                                                .encrypt()
+                                                .save()
+                                    })
+
+                                })
+                                .finally(function(){
                                     $scope.gotoContactList();
-                                },
-                                function () {
-                                    cmNotify.error('CONTACT.INFO.ERROR.SAVE', {ttl: 5000});
-                                }
-                            );
+                                })
+
                     });
                 };
 

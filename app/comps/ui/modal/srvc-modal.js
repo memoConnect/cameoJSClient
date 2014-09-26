@@ -106,7 +106,7 @@ angular.module('cmUi')
                             cancel: config.cancel,
                             okay:   config.okay,
                             title:  config.title || 'DRTV.CONFIRM.HEADER',
-                            html:   config.html || ''
+                            html:   config.html || '',
                         }
 
             var deferred    = $q.defer(),
@@ -116,6 +116,7 @@ angular.module('cmUi')
             scope.text              =   config.text       || '';
             scope.labelOkay         =   config.okay
             scope.labelCancel       =   config.cancel
+
             scope.cancel            =   function(){ 
                                             $rootScope.closeModal(modalId)
                                         }
