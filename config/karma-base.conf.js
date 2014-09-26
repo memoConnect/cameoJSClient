@@ -9,9 +9,9 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             'test/lib/jquery/*.js',
-            'app/vendor.js',
+            'app/vendor*.js',
             'test/lib/angular/angular-mocks.js',
-            'app/cameo.js',
+            'app/cameo*.js',
 
             // specs
             'test/unit/**/*.spec.js',
