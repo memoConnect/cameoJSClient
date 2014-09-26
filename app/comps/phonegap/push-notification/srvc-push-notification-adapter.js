@@ -52,7 +52,6 @@ angular.module('cmPhonegap')
             },
 
             checkRegisteredDevice: function(accountPushDevices){
-                console.log('checkRegisteredDevice','settings: '+($injector.get('cmSettings').get('pushNotifications')))
                 // BE MOCK
                 /*
                  accountPushDevices = [
@@ -75,7 +74,6 @@ angular.module('cmPhonegap')
 //                        self.registerDevice();
 //                    }
 //                });
-
                 cmPhonegap.isReady(function(){
                     if($injector.get('cmSettings').get('pushNotifications')) {
                         self.registerDevice();
@@ -95,7 +93,6 @@ angular.module('cmPhonegap')
                 this.getDeviceData()
                 .then(function(deviceData){
                     self.currentDeviceData = deviceData;
-
                     cmApi.post({
                         path: '/pushDevice',
                         data: {
