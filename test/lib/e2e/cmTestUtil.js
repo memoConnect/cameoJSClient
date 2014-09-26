@@ -201,6 +201,24 @@ this.broadcastEvent = function (token, event) {
     }, token, event, config.apiUrl)
 }
 
+this.remoteBroadcastEvent = function (token, event, identityId) {
+
+    return ptor.executeAsyncScript(function (token, event, apiUrl, identityId) {
+
+        var callback = arguments[arguments.length - 1];
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", apiUrl + "/event/broadcast/identity/" + identityId, true);
+        xhr.setRequestHeader("Authorization", token);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                callback(JSON.parse(xhr.responseText))
+            }
+        }
+        xhr.send(JSON.stringify(event));
+    }, token, event, config.apiUrl, identityId)
+}
+
 this.waitForPageLoad = function (expectedRoute) {
     ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route').then(function (route) {
@@ -229,13 +247,13 @@ this.waitForEventSubscription = function () {
     return this
 }
 
-this.waitForElement = function (selector) {
+this.waitForElement = function (selector, timeout) {
 
     ptor.wait(function () {
         return $$(selector).then(function (elements) {
             return elements.length > 0
         })
-    }, config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
+    }, timeout || config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
 
     return this
 }
@@ -375,7 +393,7 @@ this.getFileExtension = function (file) {
 }
 
 this.headerSearchInList = function (searchString) {
-    $("[data-qa='btn-header-list-search']").click()
+    self.waitAndClickQa("btn-header-list-search")
     this.searchInList(searchString)
 }
 
@@ -385,6 +403,7 @@ this.searchInList = function (searchString) {
 
 this.clearLocalStorage = function () {
     ptor.executeScript('localStorage.clear()')
+    return this
 }
 
 this.getLocalStorage = function () {
@@ -408,6 +427,7 @@ this.setLocalStorage = function (key, value) {
     ptor.executeScript(function (key, value) {
         localStorage.setItem(key, value)
     }, key, value)
+    return this
 }
 
 this.getToken = function () {
@@ -506,6 +526,17 @@ this.click = function (dataQa) {
     $("[data-qa='" + dataQa + "']").click()
 }
 
+this.waitAndClickQa = function (dataQa) {
+    self.waitForElement("[data-qa='" + dataQa + "']")
+    $("[data-qa='" + dataQa + "']").click()
+}
+
+this.waitAndClick = function (selector) {
+    self.waitForElement(selector)
+    $(selector).click()
+}
+
+
 this.setVal = function (dataQa, text) {
     $("[data-qa='" + dataQa + "']").sendKeys(text)
 }
@@ -528,6 +559,25 @@ this.stopOnError = function () {
             };
         }
     }
+}
+
+this.createEncryptedConversation = function (subject, message) {
+    self.get("/conversation/new")
+    self.waitForElement("[data-qa='input-subject']")
+    self.setVal("input-subject", subject)
+    self.setVal("input-answer", message)
+    self.waitAndClickQa("btn-send-answer")
+    self.waitAndClick("cm-modal.active [data-qa='checkbox-dont-ask-me-again']")
+    self.waitAndClick("cm-modal.active [data-qa='cm-modal-close-btn']")
+    self.waitAndClickQa("btn-send-answer")
+}
+
+this.readConversation = function (subject, message) {
+    self.get("/talks")
+    self.headerSearchInList(subject)
+    self.waitAndClick("cm-conversation-tag")
+    self.waitForElement("cm-message")
+    expect($("cm-message").getText()).toContain(message)
 }
 
 

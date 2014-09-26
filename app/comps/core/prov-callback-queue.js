@@ -5,21 +5,22 @@ angular.module('cmCore')
 
     function(){
 
-        var queueTime = 250;
+        var queueTime = 250
 
         this.setQueueTime = function(time){
-            queueTime = time;
-        };
+            queueTime = time
+        }
 
         this.$get = [
 
             'cmObject',
             'cmStateManagement',
+            'cmLogger',
             '$rootScope',
             '$timeout',
             '$q',
 
-            function(cmObject, cmStateManagement, $rootScope, $timeout, $q){
+            function(cmObject, cmStateManagement, cmLogger, $rootScope, $timeout, $q){
                 cmObject.addEventHandlingTo(this);
 
                 var self    = this,
@@ -29,53 +30,55 @@ angular.module('cmCore')
                     queue   = [];
                 });
 
-                this.state = new cmStateManagement(['working']);
+                this.state = new cmStateManagement(['working'])
 
-                this.push = function(callbacks){
+                this.push = function(callbacks, timeout){
 
                     if(!(callbacks instanceof Array)) 
-                        callbacks = [callbacks];
+                        callbacks = [callbacks]
 
-                    return $q.all(
+                    var promise = $q.all(
                         callbacks.map(function(callback){
-                            var deferred = $q.defer();
+                            var deferred = $q.defer()
 
-                            queue.push({fn: callback, deferred: deferred});
+                            queue.push({fn: callback, deferred: deferred})
 
-                            if(!self.state.is('working')){
-                                self.state.set('working');
-                                self.advance();
-                            }
-
-                            return deferred.promise;
+                            return deferred.promise
                         })
                     )
-                };
+
+                    if(!self.state.is('working')){
+                        self.state.set('working')
+                        $timeout(self.advance, timeout || 0)
+                    }
+
+                    return promise
+                }
 
                 this.advance = function(){
-                    $timeout(function(){ 
-                        var callback = queue.shift();
+                    var callback = queue.shift()
+                
+                    if(callback && callback.fn && callback.deferred){
+                        try{                            
+                            callback.deferred.resolve(callback.fn())  
+                        } catch(e) {
+                            cmLogger.error('cmCallbackQueue cought an error: \n'+e)
+                            callback.deferred.reject(e)
+                        }
+                    }
                     
-                        if(callback && callback.fn && callback.deferred){
-                            try{                            
-                                callback.deferred.resolve(callback.fn());
-                            } catch(e) {
-                                callback.deferred.reject(e);
-                            }
-                        }
-                        
-                        if(queue.length != 0){
-                            self.advance();
-                        } else {
-                            self.state.unset('working');
-                        }
+                    if(queue.length != 0){
+                        $timeout(self.advance, queueTime)
+                    } else {
+                        self.state.unset('working')
+                    }
 
-                    }, queueTime)
 
-                };
 
-                return this;
+                }
+
+                return this
             }
         ]
     }
-]);
+])

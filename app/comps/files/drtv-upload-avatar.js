@@ -2,9 +2,9 @@
 
 angular.module('cmFiles').directive('cmUploadAvatar',[
     'cmNotify', 'cmUserModel',
-    '$rootScope',
+    '$rootScope', '$timeout',
     function(cmNotify, cmUserModel,
-             $rootScope) {
+             $rootScope, $timeout) {
         return {
             restrict: 'E',
             templateUrl: 'comps/files/drtv-upload-avatar.html',
@@ -20,15 +20,18 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                                 scope.imageUpload = true;
                                 files[0].uploadChunks();
                                 files[0].one('upload:finish',function(){
-                                    scope.imageUpload = false;
                                     cmUserModel
                                     .data.identity
                                     .update({
                                         avatar: files[0].id
                                     });
 
-                                    cmUserModel.data.identity.one('update:finished',function(){
-                                        /*console.log('smth other todo')*/
+                                    cmUserModel.data.identity.one('update:finished', function(){
+                                        $timeout(function(){
+                                            cmUserModel.data.identity.one('avatar:loaded',function(){
+                                                scope.imageUpload = false;
+                                            });
+                                        });
                                     });
                                 });
                             }

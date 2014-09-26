@@ -260,7 +260,7 @@ module.exports = function (grunt) {
                     'app/css/!(style|bootstrap).css',
                     'app/vendor/**/*.css'
                 ],
-                dest: 'app/css/style.css'
+                dest: 'app/css/style.'+globalCameoBuildConfig.config.version+'.css'
             },
             'app-packages': {
                 options: {
@@ -297,7 +297,7 @@ module.exports = function (grunt) {
                     'app/vendor/angular/base/angular-*.js',
                     'app/vendor/angular/!(base)/*.js',
                 ],
-                dest: 'app/vendor.js'
+                dest: 'app/vendor.'+globalCameoBuildConfig.config.version+'.js'
             },
 
             'app-cameo': {
@@ -306,7 +306,7 @@ module.exports = function (grunt) {
                     'app/base/app.js',
                     'app/packages/**/package.js'
                 ],
-                dest: 'app/cameo.js'
+                dest: 'app/cameo.'+globalCameoBuildConfig.config.version+'.js'
             }
         },
         coffee: {
@@ -340,7 +340,13 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: 'dist/app',
-                        src: '**/*.js',
+                        src: 'base/*.js',
+                        dest: 'dist/app'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'dist/app',
+                        src: '*.js',
                         dest: 'dist/app'
                     }
                 ]
@@ -434,7 +440,14 @@ module.exports = function (grunt) {
         },
         clean: {
             'dalek-report': ['report'],
-            'dev-deploy': ['dist/app/less','dist/app/comps'],
+            'dev-deploy': [
+                'dist/app/comps',
+                'dist/app/less',
+                'dist/app/packages',
+                'dist/app/routes',
+                'dist/app/vendor',
+                'dist/app/widgets'
+            ],
             'dist-app': ['dist/app'],
             'dist': ['dist'],
             'docs': ['docs'],
@@ -534,6 +547,7 @@ module.exports = function (grunt) {
             'index-phonegap': {
                 'options': {
                     'data': {
+                        'currentVersion': globalCameoBuildConfig.config.version,
                         'phonegapFiles': '<script type="text/javascript" charset="utf-8" src="cordova.js"></script>'+
                                         '<script type="text/javascript" charset="utf-8" src="config.js"></script>'+
                                         (globalCameoBuildConfig.debug.weinre ? '<script src="http://'+globalCameoBuildConfig.debug.weinreIp+':8080/target/target-script-min.js#anonymous"></script>' : ''),
@@ -547,6 +561,7 @@ module.exports = function (grunt) {
             'index-www': {
                 'options': {
                     'data': {
+                        'currentVersion': globalCameoBuildConfig.config.version,
                         'phonegapFiles': globalCameoBuildConfig.debug.weinre ? '<script src="http://'+globalCameoBuildConfig.debug.weinreIp+':8080/target/target-script-min.js#anonymous"></script>' : '',
                         'phonegapOnload': ''
                     }
@@ -582,14 +597,14 @@ module.exports = function (grunt) {
                     'app/base/config.js': ['templates/app/config.js']
                 }
             },
-            'main-webApp': {
+            'webworker': {
                 'options': {
                     'data': {
-                        'urlBust': globalCameoBuildConfig.config.urlBust
+                        'currentVersion': globalCameoBuildConfig.config.version
                     }
                 },
                 'files': {
-                    'app/base/main.js': ['templates/app/main.js']
+                    'app/webworker/keygen.js': ['templates/webworker/keygen.js']
                 }
             },
             'config-tests': {
@@ -700,7 +715,8 @@ module.exports = function (grunt) {
                 'templates/**/*',
                 'app/comps/**/*',
                 'app/routes/**/*',
-                'app/widgets/**/*'
+                'app/widgets/**/*',
+                'app/vendor/**/*'
             ],
             tasks: ['genAllTemplates', ':app:js-files']
         },
@@ -841,6 +857,7 @@ module.exports = function (grunt) {
         'template:config-webApp',
         //'template:main-webApp',
         'template:index-www',
+        'template:webworker',
         'template:config-phonegap',
         'template:config-protractor',
         'concat:less',

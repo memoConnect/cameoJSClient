@@ -1,4 +1,8 @@
 {
+
+    "YES":  "Yes",
+    "NO":   "No",
+
     "CAMEO": {
         "SLOGAN": "Safer Communication - Made in Germany!",
         "DESCRIBE": "Register for free.\nWithout obligation.\nEasy and secure communication. Mobile and desktop\nConnect with all your contacts.\nExplore our smart features.\nRegister today!",
@@ -142,6 +146,7 @@
     },
 
     "CONVERSATION": {
+        "NO_SUBJECT": "no subject",
         "HEADING": "Talk",
         "LABEL": {
             "SEND": "Send",
@@ -384,87 +389,85 @@
                 "PAGE_HEADLINE": "cameoKeys",
                 "HEADLINE": "Link cameoKey",
                 "EXPLANATION": "To read encrypted messages written under {{identity}} on other devices, please link the local cameoKey with all other keys that you are using there.",
+                "TIMEOUT": "Linking will be canceled in {{timeout}}.",
                 "START": {
                     "START_BUTTON": "Link up",
                     "CANCEL_BUTTON": "Not now",
+                    "RETRY_BUTTON": "Retry",
                     "INSTRUCTIONS": "Please press 'Link up' to start the process.",
-                    "NOTE": "Attention! Before pressing 'Link up' you should first choose your identity {{identity}} (Settings > Identity Settings)!"
+                    "NOTE": "Attention! Before pressing 'Link up' you should first open cameoNet with your identity {{identity}} on another device!"
                 },
-                "REQUEST_STARTED": {
+                "WAIT": {
                     "CANCEL_BUTTON": "Abort request",
                     "INSTRUCTIONS": "Please press 'Abort request' to stop the process.",
-                    "NOTE": "Request has been started. Please confirm the request on the other device."
-                },
-                "ACCEPT_REQUEST": {
-                    "HEADER": "Linking Request",
-                    "INSTRUCTIONS": "On another device a cameoKey is stored that is not linked to this device. Therefore it is not possible to read encrypted data on this device and vice versa.<br> Do you want to link your local cameoKey '{{cameoKey}}' with the other device?",
-                    "NOTE": "To link cameoKeys, please start the link up process.",
-                    "ACCEPT_BUTTON": "Start linking",
-                    "CANCEL_BUTTON": "Decline"
-                },
-                "SHOW_TRANSACTION_SECRET": {
-                    "INSTRUCTIONS": "Please press 'Stop linking' to stop the process.",
-                    "NOTE": "Please enter the code into the other device:",
-                    "LABEL_CODE": "Code",
-                    "CLOSE_BUTTON": "Stop linking"
-                },
-                "ENTER_TRANSACTION_SECRET": {
-                    "HEADER": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER",
-                    "INSTRUCTIONS": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.INSTRUCTIONS",
-                    "NOTE": "Please enter the code displayed on the other device:",
-                    "LABEL_CODE": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CODE",
-                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
-                    "SUBMIT_BUTTON": "Submit"
+                    "NOTE": "Request has been started. Please confirm the request on the other device.",
+                    "LABEL_CODE": "Code"
                 },
                 "SUCCESSFUL": {
-                    "INSTRUCTIONS": "You have successfully linked your cameoKey! In a few seconds, all previous talks that have been created by the linked cameoKeys will be egible.",
+                    "INSTRUCTIONS": "You have successfully linked your cameoKeys! In a few seconds, all previous talks that have been created by the linked cameoKeys will be egible.",
                     "NOTE": "Please close this dialogue.",
-                    "CLOSE_BUTTON": "Close"
+                    "DONE_BUTTON": "Close"
                 },
-                "TIMEOUT": "Der Vorgang wird in {{timeout}} abgebrochen."
+                "ERROR": {
+                    "TIMEOUT" :"Timeout - please try again.",
+                    "VERIFY" :"Linking missed - please try again."
+                },
+                "ENTER_TRANSACTION_SECRET": {
+                    "HEADER": "Linking Request",
+                    "INSTRUCTIONS": "On another device a cameoKey is stored that is not linked to this device. Therefore it is not possible to read encrypted data on this device and vice versa.",
+                    "NOTE": "If you want to link cameoKey '{{cameoKey}}' with your local cameoKey, please enter the code displayed on the other device:",
+                    "SUBMIT_BUTTON": "Submit"
+                },
+                "DONE" :{
+                    "INSTRUCTIONS": "You have successfully linked your cameoKeys!",
+                    "NOTE": "Please close this dialogue."
+                },
+                "MODAL":{
+                    "SUCCESS": "You have successfully linked your cameoKeys!",
+                    "CANCELED": "Linking canceled."
+                }
             },
             "TRUST": {
                 "PAGE_HEADLINE": "Trust Process",
                 "HEADLINE": "Trust contact",
                 "EXPLANATION": "By using the trust process you can verify whether an identity is of an individual that you know in person.",
+                "TIMEOUT":"The process will be stopped in {{timeout}} seconds.",
                 "START": {
                     "START_BUTTON": "Request",
                     "CANCEL_BUTTON": "Not now",
+                    "RETRY_BUTTON": "Retry",
                     "INSTRUCTIONS": "If you like to trust this contact please press 'Request', to send an inquiry for trusting each other.",
                     "NOTE": "Attention! Before you press 'Request' the contact has to be registered to cameoNet as {{identity}}."
                 },
-                "REQUEST_STARTED": {
+                "WAIT": {
                     "CANCEL_BUTTON": "Stop request",
                     "INSTRUCTIONS": "Please press 'Stop request' to stop the process.",
-                    "NOTE": "Please wait until the opposite party has confirmed your inquiry."
-                },
-                "ACCEPT_REQUEST": {
-                    "HEADER": "Inquiry of trust",
-                    "INSTRUCTIONS": "Recently {{identity}} has started a trust process with you.<br> By using the trust process you can verify whether an identity is of an individual that you know in person.",
-                    "NOTE": "If you like to trust {{identity}}, please press 'Confirm'.",
-                    "ACCEPT_BUTTON": "Confirm",
-                    "CANCEL_BUTTON": "Deny"
-                },
-                "SHOW_TRANSACTION_SECRET": {
-                    "INSTRUCTIONS": "Please press 'Stop process' to skip the process.",
-                    "NOTE": "'{{identity}}' has to enter this code below:",
-                    "LABEL_CODE": "Code",
-                    "CLOSE_BUTTON": "Stop process"
-                },
-                "ENTER_TRANSACTION_SECRET": {
-                    "HEADER": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.HEADER",
-                    "INSTRUCTIONS": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.INSTRUCTIONS",
-                    "NOTE": "Please enter a code below, that will be displayed to '{{identity}}':",
-                    "LABEL_CODE": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CODE",
-                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
-                    "SUBMIT_BUTTON": "Transmit"
+                    "NOTE": "'{{identity}}' has to enter the following code to confirme your inquiry:",
+                    "LABEL_CODE": "Code"
                 },
                 "SUCCESSFUL": {
                     "INSTRUCTIONS": "The trust process has been executed successfully.<br> Now '{{identity}} and you are trusting each other.",
-                    "NOTE": "Please close this dialogue now.",
-                    "CLOSE_BUTTON": "Close"
+                    "NOTE": "You can close this dialogue now.",
+                    "DONE_BUTTON": "Close"
                 },
-                "TIMEOUT":"The process will be stopped in {{timeout}} seconds."
+                "ERROR": {
+                    "TIMEOUT" :"Timeout - please try again.",
+                    "VERIFY" :"Trust process missed - please try again."
+                },
+                "ENTER_TRANSACTION_SECRET": {
+                    "HEADER": "Inquiry of trust",
+                    "INSTRUCTIONS": "Recently {{identity}} has started a trust process with you.<br> By using the trust process you can verify whether an identity is of an individual that you know in person.",
+                    "NOTE": "If you like to trust {{identity}}, please enter the code displayed on the device of {{identity}} here:",
+                    "SUBMIT_BUTTON": "Transmit"
+                },
+                "DONE" :{
+                    "INSTRUCTIONS": "Trust process successfull!",
+                    "NOTE": "Please close this dialogue."
+                },
+                "MODAL":{
+                    "SUCCESS": "Trust process successfull!",
+                    "CANCELED": "Trust process canceled."
+                }
             }
         }
     },
@@ -570,6 +573,9 @@
             "ABOUT_US": {
                 "TITLE": "About us",
                 "TEXT": "cameoNet 2014"
+            },
+            "NOTIFY": {
+                "PUSH_NOTIFICATIONS": "Push Notifications"
             }
         }
     },

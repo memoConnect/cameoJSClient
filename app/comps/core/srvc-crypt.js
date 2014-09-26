@@ -13,8 +13,54 @@ angular.module('cmCore')
             crypt: null
         };
 
+        var webworker = {
+            stack: [],
+            isAvailable: function(){
+                return !(window.Worker === undefined)
+            },
+            start: function(jsPath, data, onFinished){
+
+                var worker = new Worker(jsPath);
+
+                worker.addEventListener('message', function(e){
+                    var result = e.data;
+                    switch(result.msg){
+                        case 'finished':
+                            onFinished(result);
+                        break;
+                    }
+                });
+
+                worker.postMessage = worker.webkitPostMessage || worker.postMessage;
+
+                worker.postMessage(data);
+
+                this.stack.push({jsPath:jsPath,instance:worker});
+            },
+            cancel: function(jsPath, data, onFinished){
+                var worker = this.stack.filter(function(worker){
+                    return worker.jsPath == jsPath
+                });
+
+                if(worker.length > 0){
+                    worker = worker[0].instance;
+
+                    worker.addEventListener('message', function(e){
+                        var result = e.data;
+                        switch(result.msg){
+                            case 'canceled':
+                                onFinished(result);
+                            break;
+                        }
+                    });
+
+                    worker.postMessage(data);
+                }
+            }
+        };
+
         return {
-         
+
             random: function(size){
                 //@Todo:
                 
@@ -191,47 +237,53 @@ angular.module('cmCore')
              * @param $scopeState
              * @returns {Promise.promise|*|webdriver.promise.Deferred.promise}
              */
-            generateAsyncKeypair: function(keySize, onGeneration){
+            generateAsyncKeypair: function(keySize){
                 if (keySize == undefined ||
-                    typeof keySize != 'number' ||
-                    async.interval != null ) {
+                    typeof keySize != 'number') {
                     return false;
                 }
 
-                // Create the encryption object.
-                var self = this,
-                    time = -((new Date()).getTime()),
-                    counts = 0;
-
-                // init vars
-                async.crypt = new JSEncrypt({default_key_size: keySize}),
                 async.promise = $q.defer();
-                async.interval = null;
-//                async.interval = $interval(function(){
-//                    counts++;
-//                    if(typeof onGeneration == "function"){
-//                        onGeneration(counts, (time + ((new Date()).getTime())))
-//                    }
-//                }, 500);
-
-                // start keypair generation
-                async.crypt.getKey(function(){
-
-                    // only resolve if keypair exists
-                    if(async.crypt.getPrivateKey() == undefined)
-                        return false;
-
-                    self.cancelGeneration(true);
-                    if(async.promise != null) {
+                // start keygen over webworker
+                if(webworker.isAvailable()){
+                    webworker.start('webworker/keygen.js',{
+                        keySize: keySize,
+                        cmd: 'start-async'
+                    }, function(result){
+                        var key = (new cmKey()).setKey(result.privKey);
                         async.promise.resolve({
-                            timeElapsed: (time + ((new Date()).getTime())),
-                            counts: counts,
-                            key: async.crypt
+                            timeElapsed: result.timeElapsed,
+                            key: key
                         });
-                        // !!! important for unit test, don't remove !!!
-                        $rootScope.$apply();
-                    }
-                });
+                    });
+                // otherwise use browser instance
+                } else {
+                    var self = this,
+                        time = -((new Date()).getTime()),
+                        counts = 0;
+
+                    // init vars
+                    async.crypt = new JSEncrypt({default_key_size: keySize}),
+
+                    // start keypair generation
+                    async.crypt.getKey(function () {
+
+                        // only resolve if keypair exists
+                        if (async.crypt.getPrivateKey() == undefined)
+                            return false;
+
+                        self.cancelGeneration(true);
+                        if (async.promise != null) {
+                            async.promise.resolve({
+                                timeElapsed: (time + ((new Date()).getTime())),
+                                counts: counts,
+                                key: async.crypt
+                            });
+                            // !!! important for unit test, don't remove !!!
+                            $rootScope.$apply();
+                        }
+                    });
+                }
 
                 return async.promise.promise;
             },
@@ -241,10 +293,14 @@ angular.module('cmCore')
              * @returns {boolean}
              */
             cancelGeneration: function(withoutReject){
-                if(async.interval != null){
-                    // clear interval
-                    $interval.cancel(async.interval);
-                    async.interval = null;
+                if(webworker.isAvailable()){
+                    webworker.cancel('webworker/keygen.js', {
+                        cmd:'stop-async'
+                    }, function(){
+                        async.promise.reject();
+                    });
+                    return true;
+                } else if(async.crypt != null){
                     // clear promise and library vars if param withReject is true
                     if(withoutReject == undefined) {
                         async.crypt.cancelAsync();
@@ -271,7 +327,7 @@ angular.module('cmCore')
                     bad_random_passphrase += this.random().toString(36).replace('0.','')
                 }
 
-                return bad_random_passphrase.slice(-(length));
+                return bad_random_passphrase.slice(bad_random_passphrase.length-length);
             },
 
             generatePassphrase: function(){
@@ -284,6 +340,9 @@ angular.module('cmCore')
                 return bad_random_passphrase;
             },
 
+
+
+            //Todo check if te follwoing is still needed
 
             /**
              * generateTransactionSecret

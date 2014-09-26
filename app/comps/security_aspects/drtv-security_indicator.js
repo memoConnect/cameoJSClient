@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('cmSecurityAspects').directive('cmSecurityIndicator',[
-    'cmUserModel',
-    'cmLogger',
+    'cmUserModel', 'cmLogger',
     '$timeout',
-    function(cmUserModel, cmLogger, $timeout){
+    function(cmUserModel, cmLogger,
+             $timeout){
         return {
-            restrict:   'AE',
+            restrict:   'E',
             templateUrl:'comps/security_aspects/drtv-security_indicator.html',
             scope: {
                 conversation: '=cmData'

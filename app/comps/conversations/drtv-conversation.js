@@ -269,6 +269,15 @@ angular.module('cmConversations')
                     $scope.conversation = conversation
                     $rootScope.pendingConversation = $scope.conversation;
 
+                    //@Todo: temporarily decrypt here util webworker joins in:
+                    $scope.conversation.decrypt()
+                    $scope.conversation.when('update:finished')
+                    .then(function(){
+                        $scope.conversation.decrypt()
+                    })
+
+                    
+
                     // reload detail of conversation
                     $scope.conversation.load();
                     self.addPendingRecipients();

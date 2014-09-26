@@ -3,11 +3,12 @@
 // https://github.com/phonegap-build/PushPlugin
 // https://github.com/phonegap-build/PushPlugin#plugin_api
 
-angular.module('cmPhonegap').service('cmPushNotifications', [
+angular.module('cmPhonegap')
+.service('cmPushNotifications', [
     'cmPhonegap', 'cmUtil', 'cmDevice', 'cmLogger',
-    '$q', '$rootScope',
+    '$q', '$rootScope', '$phonegapCameoConfig',
     function (cmPhonegap, cmUtil, cmDevice, cmLogger,
-              $q, $rootScope) {
+              $q, $rootScope, $phonegapCameoConfig) {
 
         var self = {
             plugin: null,
@@ -19,7 +20,10 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                 this.deviceToken = '';
             },
 
-            register: function(){
+            register: function(plugin){
+
+                this.plugin = plugin;
+
                 this.reset();
                 // only gcm needs an senderid
                 if (cmDevice.isAndroid()) {
@@ -31,7 +35,7 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                             self.handler.error(arguments);
                         },
                         {
-                            senderID: phonegap_cameo_config.googleSenderId,
+                            senderID: $phonegapCameoConfig.googleSenderId,
                             ecb: 'window.PushNotificationsCB.onNotification.Android'
                         }
                     );
@@ -212,7 +216,7 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                     }
 
                     if (event.type == "raw" && event.jsonContent) {
-                        alert(evente.jsonContent.Body);
+                        alert(event.jsonContent.Body);
                     }
                 }
             }
@@ -221,5 +225,5 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
         window.PushNotificationsCB = self;
 
         return self;
-    }]
-);
+    }
+]);

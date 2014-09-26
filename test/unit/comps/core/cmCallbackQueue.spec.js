@@ -33,7 +33,7 @@ describe('cmCallbackQueue', function(){
 
             expect(cmCallbackQueue.state.is('working')).toBe(false)
 
-            cmCallbackQueue.push([fnX, fnY, fnZ])
+            cmCallbackQueue.push([fnX, fnY, fnZ], 6)
             .then(function(){
                 all_resolved = true
             })

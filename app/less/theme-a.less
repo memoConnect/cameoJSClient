@@ -146,8 +146,8 @@
 
   .icon-list{
     position: absolute;
-    top: 0;
-    right: 0.3rem;
+    top: 0.3rem;
+    right: 0;
     height: 4rem;
     line-height: 4rem;
     vertical-align: middle;
@@ -209,6 +209,7 @@
           height: @cm-unit*3;
           -webkit-box-shadow: 0 0 0.625em 0.125em @cm-white;
           box-shadow: 0 0 0.625em 0.125em @cm-white;
+          vertical-align: top;
         }
         .icon-list {
           i {
@@ -240,17 +241,12 @@
       }
       .icon-list{
         i {
-          width: 3rem;
-          height: 3rem;
+          width: @cm-unit;
+          height: @cm-unit;
           font-size: 3rem;
-        }
-      }
-      .icon-list{
-        i {
           color: @cm-grey;
-          width: 3rem;
-          height: 3rem;
-          font-size: 3rem;
+          text-align:center;
+          line-height: 3rem;
         }
       }
     }
@@ -276,6 +272,7 @@
         font-size:1em;
         left:0;
         top:0;
+        transition:600ms;
       }
 
       &.cm-key-response{
@@ -283,12 +280,14 @@
         font-size:1em;
         right:0;
         top:0;
+        transition:600ms;
       }
 
       &.cm-handshake{
         font-size: 0.4em;
         vertical-align: top;
-        padding-top:0.65em;
+        padding-top:0.75em;
+        transition:600ms;
       }
     }
   }
@@ -305,6 +304,8 @@
     font-size: @cm-unit;
     text-align:center;
   }
+
+
 
   .timeout{
     text-align:center;
@@ -368,6 +369,12 @@
   .about-us {
     i {
       font-size: 10rem !important;
+    }
+  }
+
+  .cm-alert{
+    i {
+      color:@cm-warning-color;
     }
   }
 }
