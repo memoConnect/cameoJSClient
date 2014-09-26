@@ -37,8 +37,7 @@ angular.module('cmPhonegap')
             },
 
             register: function(){
-                cmPushNotifications.plugin = self.plugin;
-                cmPushNotifications.register();
+                cmPushNotifications.register(self.plugin);
             },
 
             unregister: function(){
@@ -76,7 +75,9 @@ angular.module('cmPhonegap')
 //                    }
 //                });
 
-                self.registerDevice();
+                if(cmSettings.get('pushNotifications')){
+                    self.registerDevice();
+                }
             },
 
             registerDevice: function(){

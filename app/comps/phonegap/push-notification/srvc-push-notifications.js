@@ -20,7 +20,10 @@ angular.module('cmPhonegap')
                 this.deviceToken = '';
             },
 
-            register: function(){
+            register: function(plugin){
+
+                this.plugin = plugin;
+
                 this.reset();
                 // only gcm needs an senderid
                 if (cmDevice.isAndroid()) {
