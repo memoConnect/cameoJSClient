@@ -7,11 +7,11 @@
  * @todo combine with service-key-storage
  */
 angular.module('cmCore').service('cmSettings', [
-    'cmUserModel',
-    'cmUtil',
-    'cmLogger',
+    'cmUserModel', 'cmUtil', 'cmLogger', 'cmObject',
     '$rootScope',
-    function(cmUserModel, cmUtil, cmLogger, $rootScope) {
+    function(cmUserModel, cmUtil, cmLogger, cmObject,
+             $rootScope) {
+
         var self = this,
             localStorageKey = 'appSettings',
             defaultProperties = {
@@ -19,15 +19,18 @@ angular.module('cmCore').service('cmSettings', [
                 sendOnReturn: false,
                 skipKeyInfo: false,
                 dateFormat: 'dd.MM.yyyy',
-                timeFormat: 'HH:mm'
+                timeFormat: 'HH:mm',
+                pushNotifications: true
             };
 
+        cmObject.addEventHandlingTo(this);
 
         this.properties = {};
 
         function init(){
 //            cmLogger.debug('cmSettings.init');
             self.properties = angular.extend({}, defaultProperties, (cmUserModel.storageGet(localStorageKey) || {}));
+            self.trigger('update:finished');
         }
 
         /**

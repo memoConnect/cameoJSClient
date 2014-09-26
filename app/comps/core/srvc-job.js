@@ -10,7 +10,7 @@ angular.module('cmCore').service('cmJob', [
     function($rootScope, $window, $location, cmTranslate, cmModal, cmLogger){
 
         var jobIsActive = false,
-            jobFunction = null,
+            jobFunctionUnbind = null,
             pendingUrl = {path:'',replace:false};
 
         function resetPendingUrl(){
@@ -24,17 +24,17 @@ angular.module('cmCore').service('cmJob', [
                 return jobIsActive;
             },
             start: function(message, cancelCallback){
-                //cmLogger.debug('cmJob.start '+message);
+//                cmLogger.debug('cmJob.start '+message);
                 jobIsActive = true;
 
                 $window.onbeforeunload = function () {
                     return cmTranslate(message||'JOB.IN_PROGRESS')
                 };
 
-                jobFunction = $rootScope.$on('$locationChangeStart', function(event, next) {
+                jobFunctionUnbind = $rootScope.$on('$locationChangeStart', function(event, next) {
                     event.preventDefault();
 
-                    cmModal.confirm({ 
+                    cmModal.confirm({
                         text:   message,
                         cancel: 'NO',
                         okay:   'YES'
@@ -46,7 +46,6 @@ angular.module('cmCore').service('cmJob', [
 
                         stop();
 
-
                         if(pendingUrl.path != ''){
                             $rootScope.goTo(pendingUrl.path, pendingUrl.replace);
                         } else {
@@ -56,12 +55,12 @@ angular.module('cmCore').service('cmJob', [
                 });
             },
             stop: function(){
-                //cmLogger.debug('cmJob.stop');
+//                cmLogger.debug('cmJob.stop');
                 jobIsActive = false;
 
                 $window.onbeforeunload = null;
 
-                jobFunction();
+                jobFunctionUnbind();
             },
             setPendingUrl: function(path, replace){
                 //cmLogger.debug('cmJob.setPendingUrl ' + path);

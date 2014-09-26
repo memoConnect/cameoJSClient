@@ -101,6 +101,7 @@ angular.module('cmCore')
         }
 
         this.importData = function(activeIdentity, data_identities){
+            //Todo: dont extend!
             angular.extend(this.data, activeIdentity);
 
             this.data.identity = activeIdentity;
@@ -118,7 +119,8 @@ angular.module('cmCore')
                 if(identity.id != self.data.identity.id){
                     var tmpIdentity = cmIdentityFactory.clear(identity).create(identity);
                     tmpIdentity.on('update:finished', function(){
-                       cmUserModel.trigger('identity:updated');
+                        /* we have to trigger an other event identity:updated is an backend event */
+                       /*cmUserModel.trigger('identity:updated');*/
                     });
                     self.data.identities.push(tmpIdentity);
                 }
@@ -844,6 +846,7 @@ angular.module('cmCore')
         cmAuth.on('identity:updated signatures:updated', function(event, data){
             if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
                 self.data.identity.importData(data);
+                self.syncLocalKeys();
             }
         });
 

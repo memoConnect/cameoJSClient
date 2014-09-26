@@ -208,7 +208,7 @@ this.remoteBroadcastEvent = function (token, event, identityId) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", apiUrl + "/event/broadcast/" + identityId, true);
+        xhr.open("POST", apiUrl + "/event/broadcast/identity/" + identityId, true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -247,13 +247,13 @@ this.waitForEventSubscription = function () {
     return this
 }
 
-this.waitForElement = function (selector) {
+this.waitForElement = function (selector, timeout) {
 
     ptor.wait(function () {
         return $$(selector).then(function (elements) {
             return elements.length > 0
         })
-    }, config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
+    }, timeout || config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
 
     return this
 }
@@ -403,6 +403,7 @@ this.searchInList = function (searchString) {
 
 this.clearLocalStorage = function () {
     ptor.executeScript('localStorage.clear()')
+    return this
 }
 
 this.getLocalStorage = function () {
@@ -426,6 +427,7 @@ this.setLocalStorage = function (key, value) {
     ptor.executeScript(function (key, value) {
         localStorage.setItem(key, value)
     }, key, value)
+    return this
 }
 
 this.getToken = function () {

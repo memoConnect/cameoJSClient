@@ -9,6 +9,10 @@ angular.module('cmWidgets').directive('cmWidgetAppSettings', [
             controller: function ($scope) {
                 $scope.settings = cmSettings.properties;
 
+                cmSettings.on('update:finished',function(){
+                    $scope.settings = cmSettings.properties;
+                });
+
                 $scope.handleBooleans = function(key) {
                     var newValue = $scope.settings[key] ? false : true;
 

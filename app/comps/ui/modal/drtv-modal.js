@@ -3,9 +3,9 @@
 angular.module('cmUi')
 .directive('cmModal', [
     'cmModal', 'cmTranslate',
-    '$rootScope', '$timeout',
+    '$rootScope', '$timeout', '$q',
     function (cmModal, cmTranslate,
-              $rootScope, $timeout){
+              $rootScope, $timeout, $q){
 
         // handle nose position
         function addNose(element, attrs){
@@ -143,6 +143,7 @@ angular.module('cmUi')
                 $scope.title    = cmTranslate($attrs.cmTitle);
                 $scope.severity = $attrs.severity || 'info';
                 $scope.options  = $scope.$eval($attrs.cmOptions) || {withoutBackdrop:false}
+                $scope.id       = $attrs.id
             }
         }
     }

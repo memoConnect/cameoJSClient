@@ -57,6 +57,11 @@ var cameo_config = {
             hasCtrl: true,
             guests: false
         },
+        'settings-notify': {
+            routes: ['/settings/notify'],
+            hasCtrl: true,
+            guests: false
+        },
         'settings-identity-list': {
             hasCtrl: true,
             guests: false,
@@ -96,7 +101,7 @@ var cameo_config = {
             hasCtrl: true,
             routes: [
                 '/authentication/:keyId?',
-                '/authentication/identity/:identityId?',
+                '/authentication/identity/:identityId?'
             ],
             resolveOnBoot: true,
             guests: false
@@ -262,9 +267,9 @@ var cameo_config = {
         'menu': {i18n:'MENU.HEADER', icon:'cm-menu-weight', css:'cm-menu-header', onlyLabel:true},
 //        'notifications': {i18n:'MENU.NOTIFICATIONS', icon:'cm-notification', css:'cm-menu-notify'},
 //        'talks/': {i18n:'MENU.MESSAGES', icon:'cm-envelope-closed', css:'cm-menu-notify'},
-        'contact/request/list': {'data-qa':'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
-        'talks': {i18n:'MENU.TALKS', icon:'cm-envelope-closed'},
-        'contact/list': {i18n:'MENU.CONTACTS', icon:'cm-address-book'},
+        'contact/request/list': {"data-qa":'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-contacts', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
+        'talks': {i18n:'MENU.TALKS', icon:'cm-talk'},
+        'contact/list': {i18n:'MENU.CONTACTS', icon:'cm-person'},
         //'settings/identity/keys': {"data-qa":'btn-menu-key-management', i18n:'MENU.KEYMANAGEMENT', icon:'cm-key'},
         'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings'},
         'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-rhino-positive'}
@@ -280,7 +285,7 @@ var cameo_config = {
         'account': {i18n:'SETTINGS.ACCOUNT', icon:'cm-person', disabled:true},
         'identity/edit': {i18n:'SETTINGS.IDENTITY', icon:'cm-person'},
         'identity/key/list': {i18n:'MENU.KEYMANAGEMENT', icon:'cm-key'},
-        'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell', disabled:true},
+        'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell'},
         'contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-address-book', disabled:true},
         'app': {i18n:'SETTINGS.APP', icon:'cm-fix'},
         'contracts': {i18n:'SETTINGS.CONTRACTS', icon:'cm-clipboard', disabled:true},
