@@ -56,7 +56,7 @@ self.addEventListener('message', function(e) {
     var data = e.data;
     //console.log(JSON.stringify(data))
     switch (data.cmd) {
-        case 'start-sync':
+        case 'start':
             time = -((new Date()).getTime());
             crypt = new JSEncrypt({default_key_size: data.keySize});
             crypt.getKey();
@@ -66,10 +66,12 @@ self.addEventListener('message', function(e) {
                 privKey:    crypt.key.getPrivateKey()
             });
         break;
-        case 'stop-sync':
+        case 'cancel':
             if(crypt != null)
                 crypt = null;
-            self.postMessage({'msg':'worker[0].instance'});
+            self.postMessage({
+                msg:'canceled'
+            });
         break;
         case 'start-async':
             time = -((new Date()).getTime());

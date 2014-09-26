@@ -2,9 +2,9 @@
 
 angular.module('cmCore')
 .service('cmCrypt',[
-    'cmLogger', 'cmKey',
+    'cmLogger', 'cmKey', 'cmWebworker',
     '$q', '$interval', '$rootScope',
-    function (cmLogger, cmKey,
+    function (cmLogger, cmKey, cmWebworker,
               $q, $interval, $rootScope) {
         // private vars
         var async = {
@@ -13,6 +13,9 @@ angular.module('cmCore')
             crypt: null
         };
 
+        var keygenWorker 
+
+        /*
         var webworker = {
             stack: [],
             isAvailable: function(){
@@ -58,6 +61,7 @@ angular.module('cmCore')
                 }
             }
         };
+        */
 
         return {
 
@@ -245,17 +249,26 @@ angular.module('cmCore')
 
                 async.promise = $q.defer();
                 // start keygen over webworker
-                if(webworker.isAvailable()){
-                    webworker.start('webworker/keygen.js',{
-                        keySize: keySize,
-                        cmd: 'start-async'
-                    }, function(result){
-                        var key = (new cmKey()).setKey(result.privKey);
-                        async.promise.resolve({
-                            timeElapsed: result.timeElapsed,
-                            key: key
-                        });
-                    });
+                if(cmWebworker){
+                    keygenWorker = new cmWebworker('keygen')
+
+                    keygenWorker
+                    .start( {keySize: keySize} )
+                    .then(
+                        function(result){
+
+                            var key = (new cmKey()).setKey(result.privKey);
+
+                            async.promise.resolve({
+                                timeElapsed: result.timeElapsed,
+                                key: key
+                            });
+                        },
+                        function(){
+                            async.promise.reject();
+                        }
+                    )
+
                 // otherwise use browser instance
                 } else {
                     var self = this,
@@ -293,12 +306,8 @@ angular.module('cmCore')
              * @returns {boolean}
              */
             cancelGeneration: function(withoutReject){
-                if(webworker.isAvailable()){
-                    webworker.cancel('webworker/keygen.js', {
-                        cmd:'stop-async'
-                    }, function(){
-                        async.promise.reject();
-                    });
+                if(cmWebworker){
+                    keygenWorker.cancel()
                     return true;
                 } else if(async.crypt != null){
                     // clear promise and library vars if param withReject is true
