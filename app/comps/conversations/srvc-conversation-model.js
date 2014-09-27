@@ -550,13 +550,31 @@ angular.module('cmConversations')
 //                cmLogger.debug('cmConversationModel.decrypt');
 
                 var passphrase  =   this.getPassphrase(),
-                    success     =   passphrase && this.messages.reduce(function (success, message){
-                                        return success && message.decrypt();
-                                    }, true);
+                    result      =   passphrase
+                                    ?   $q.all(this.messages.map(function (message){
+                                            return message.decrypt()
+                                        }))
+                                    :   $q.reject()
+
+                result.then(
+                    function(){
+                        self.trigger('decrypt:success');
+
+                        // save password to localstorage
+                        if (typeof self.password == 'string' && self.password.length > 0)
+                            self.localPWHandler.set(this.id, this.password);
+                        
+                    },
+                    function(){
+                        self.trigger('decrypt:failed');
+                    }
+                )
+
 
                 /**
                  * @TODO check, problem micha!
                  */
+                /*
                 if (success) {
                     this.trigger('decrypt:success');
 
@@ -570,6 +588,7 @@ angular.module('cmConversations')
                 }
 
                 return success;
+                */
             };
 
             /**

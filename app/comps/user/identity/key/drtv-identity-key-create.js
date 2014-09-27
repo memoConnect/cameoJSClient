@@ -177,8 +177,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                             .then(
                                 function(result){
                                     if(cmUserModel.data.identity.keys.some(function(key){
-                                        console.log(key.id)
-                                        console.log(result.data.keyId)
                                         return key.id != result.data.keyId
                                     })){
                                         $scope.goto('/authentication')

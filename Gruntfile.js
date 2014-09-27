@@ -604,7 +604,8 @@ module.exports = function (grunt) {
                     }
                 },
                 'files': {
-                    'app/webworker/keygen.js': ['templates/webworker/keygen.js']
+                    'app/webworker/keygen.js': ['templates/webworker/keygen.js'],
+                    'app/webworker/rsa_decrypt.js': ['templates/webworker/rsa_decrypt.js']
                 }
             },
             'config-tests': {

@@ -2,10 +2,14 @@
 
 angular.module('cmCore')
 .factory('cmKey', [
+
     'cmLogger',
     'cmObject',
+    'cmWebworker',
     '$rootScope',
-    function(cmLogger, cmObject, $rootScope){
+    '$q',
+
+    function(cmLogger, cmObject, cmWebworker, $rootScope, $q){
         /**
          * @TODO TEsts!!!!!
          * @param args
@@ -38,10 +42,10 @@ angular.module('cmCore')
                 }
 
                 var key =       data.privKey
-                    ||  this.getPrivateKey()
-                    ||  data.key
-                    ||  data.pubKey
-                    ||  undefined;
+                            ||  this.getPrivateKey()
+                            ||  data.key
+                            ||  data.pubKey
+                            ||  undefined;
 
                 if(data.name)       this.setName(data.name);
                 if(data.id)         this.setId(data.id);
@@ -145,7 +149,12 @@ angular.module('cmCore')
             };
 
             this.decrypt = function(encrypted_secret){
-                return crypt && crypt.decrypt(encrypted_secret);
+                return  cmWebworker
+                        ?   new cmWebworker('rsa_decrypt').start({
+                                privKey:            this.getPrivateKey(),
+                                encryptedSecret:    encrypted_secret
+                            })
+                        :   $q.when(crypt && crypt.decrypt(encrypted_secret))
             };
 
             this.verifyKey = function(key, data){
