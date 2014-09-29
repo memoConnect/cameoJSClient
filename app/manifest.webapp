@@ -1,0 +1,13 @@
+{
+  "name": "cameoNet",
+  "description": "Safer Communication",
+  "icons": {
+    "512": "/m/gfx/icon-512.png",
+    "128": "/m/gfx/icon-128.png"
+  },
+  "developer": {
+    "name": "memo Connect GmbH",
+    "url": "http://cameonet.de"
+  },
+  "default_locale": "en"
+}
