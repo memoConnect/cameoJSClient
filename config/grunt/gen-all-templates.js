@@ -41,6 +41,7 @@ module.exports = function(grunt, options) {
                     },
                     'files': {
                         'app/index.html': ['resource/templates/app/index.html'],
+                        'app/icons.html': ['resource/templates/app/icons.html'],
                         'app/base/config.js': ['resource/templates/app/config.js'],
                         // performance page
                         'app/performance.html': ['resource/templates/app/performance.html'],
