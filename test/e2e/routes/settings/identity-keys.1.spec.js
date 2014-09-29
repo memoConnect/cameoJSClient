@@ -34,7 +34,6 @@ describe('Identity key settings: ', function () {
     })
 
     it('select key size and generate', function () {
-        ptor.debugger()
         util.waitForElement("[data-qa='select-key-size']")
 
         util.click("select-key-size")

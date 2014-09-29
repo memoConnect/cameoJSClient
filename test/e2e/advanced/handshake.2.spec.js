@@ -336,7 +336,6 @@ describe('Authentication requests -', function () {
 
         it("enter transaction secret and submit", function () {
             util.setVal("inp-transactSecret", transactionSecret)
-            ptor.debugger()
             util.waitAndClickQa('btn-acceptRequest')
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
         })
@@ -472,7 +471,6 @@ describe('Authentication requests -', function () {
             checkKeyTrust(keyName1, true)
             checkKeyTrust(keyName2, true)
             checkKeyTrust(keyName3, true)
-            ptor.debugger()
         })
 
         it("should be able to read conversation from key1", function () {

@@ -400,7 +400,6 @@ describe('Conversation encryption -', function () {
 
                 util.get("/talks")                
                 util.headerSearchInList("asym_" + date)
-                ptor.debugger()
                 $("cm-conversation-tag").click()
 
                 util.waitForElement("cm-message")
