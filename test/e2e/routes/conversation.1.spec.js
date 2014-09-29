@@ -95,7 +95,7 @@ describe('Route conversation:', function () {
 
         util.waitForElement("cm-conversation-tag")
 
-        console.log('removed part of test temporarily, wont decrypt in talks')
+        //console.log('removed part of test temporarily, wont decrypt in talks')
         /*
         $$("cm-conversation-tag").then(function (elements) {
             //expect(elements[0].$("[data-qa='conversation-subject']").getText()).toContain(newSubject.substring(0.10))
@@ -105,7 +105,9 @@ describe('Route conversation:', function () {
     })
 
     it('the conversation should contain the message', function () {
-        util.waitAndClick("cm-conversation-tag")
+        $$("cm-conversation-tag").then(function (elements) {
+            elements[0].click()
+        })
         util.waitForPageLoad("/conversation/.*")
         $$('cm-message').then(function (elements) {
             expect(elements.length).toBe(1)
@@ -136,7 +138,7 @@ describe('Route conversation:', function () {
         util.expectCurrentUrl('#/talks')
 
         util.waitForElement("cm-conversation-tag")
-        console.log('removed part of test temporarily, wont decrypt in talks')
+        //console.log('removed part of test temporarily, wont decrypt in talks')
         /*
         $$("cm-conversation-tag").then(function (elements) {
             //expect(elements[0].$("[data-qa='conversation-subject']").getText()).toContain(newSubject.substring(0.10))

@@ -32,7 +32,6 @@ angular.module('cmUi').directive('cmMenu',[
                 $scope.goTo = function(parentBtn, url, isSub){
 
                     if('link' in parentBtn){
-                        console.log($location)
                         // file:///android_asset/www/index.html#/login
                         if(cmUtil.startsWith($location.$$absUrl, 'file:///')) {
                             $window.location = parentBtn.link;

@@ -47,7 +47,7 @@ var emptyFunction = function(){return this},
         }}
     };
 
-importScripts('../../vendor.0.2.6.js');
+importScripts('../../vendor.<%= currentVersion %>.js');
 
 var crypt = null,
     time = 0;

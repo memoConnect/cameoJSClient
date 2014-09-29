@@ -6,7 +6,6 @@ describe('Route Contact: ', function () {
     var ptor = util.getPtorInstance();
     afterEach(function() { util.stopOnError() });
 
-
     it('at first goto "#/contact/list".', function(){
         util.login()
         util.get('/contact/list')
@@ -37,7 +36,7 @@ describe('Route Contact: ', function () {
 
         it('should be an internal cameo user', function(){
             util.waitForElement('cm-contact-type')
-            expect($('cm-contact-type').getAttribute('class')).toBe('internal')
+            expect($('cm-contact-type').getAttribute('class')).toContain('internal')
         })
 
         it('all inputs should be disabled', function(){

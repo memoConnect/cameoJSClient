@@ -5,14 +5,13 @@ var path = require('path')
 var ptor = util.getPtorInstance()
 
 // start init tests
-describe('Textarea Resize', function () {
+describe('Avatar Upload: ', function () {
 
     afterEach(function() { util.stopOnError() })
 
     var avatarStyle = '',
         newAvatar = path.resolve(__dirname, '../data/avatar-upload.jpg'),
         newAvatarStyle = ''
-
 
     it('login & got to identity list', function () {
         util.login()

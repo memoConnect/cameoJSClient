@@ -9,17 +9,11 @@
 /project/
 /dist/
 /docs/
-/test-require/
-/app/index.html
-/app/css/app.less
-/app/css/app.css
-/app/packages/
 *.iml
 *.log
 *.fcp
 *.sublime-workspace
 *.sublime-project
-/grunt
 /atlassian-ide-plugin.xml
 /projectFilesBackup/
 .DS_Store
