@@ -46,5 +46,3 @@ var emptyFunction = function(){return this},
             filter:emptyFunction
         }}
     };
-
-importScripts('../vendor.<%= currentVersion %>.js');
