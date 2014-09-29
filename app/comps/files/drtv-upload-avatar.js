@@ -13,7 +13,7 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                 scope.imageUpload = false;
                 // after add a image
                 var watcher = $rootScope.$on('cmFilesFileSetted', function(){
-                    $rootScope.$broadcast('checkFiles', {
+                    $rootScope.$broadcast('cmFilesCheckFiles', {
                         passphrase: undefined,
                         success: function(files) {
                             if (files.length > 0) {

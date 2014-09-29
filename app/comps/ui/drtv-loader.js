@@ -63,8 +63,7 @@ angular.module('cmUi').directive('cmLoader',[
                     if(bool != false){
                         $scope.animate(true)
                         $scope.loading = true
-                        $element.attr('cm-count', ($element.attr('cm-count') || 0)+1)
-                        console.log($element.attr('cm-count'))
+                        $element.attr('cm-count', parseInt($element.attr('cm-count') || 0)+1)
                     } else {
                         $scope.animate(false)
                         $scope.loading = false

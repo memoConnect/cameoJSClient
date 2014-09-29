@@ -313,13 +313,14 @@ this.waitForModalClose = function () {
     return this
 }
 
-this.waitForLoader = function () {
+this.waitForLoader = function (count) {
+    count = count || 1
     // wait for loader appear
     ptor.wait(function() {
-        return $$("cm-loader:not(.ng-hide)")
-        .then(function (elements) {
-            return elements.length > 0
-        })
+        return  $("cm-loader").getAttribute('cm-count')
+                .then(function(value){
+                    return value >= count
+                })
     }, config.routeTimeout, 'waitForLoader start timeout reached')
     .then(function () {
         // wait for loader disappear
