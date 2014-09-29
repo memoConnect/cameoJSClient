@@ -173,7 +173,7 @@ angular.module('cmCore')
          * @param milliseconds
          * @returns {string}
          */
-        this.millisecondsToStr = function(milliseconds) {
+        this.millisecondsToStr = function(milliseconds, printOutMs) {
             // TIP: to find current time in milliseconds, use:
             // var current_time_milliseconds = new Date().getTime();
 
@@ -204,8 +204,11 @@ angular.module('cmCore')
                 addToString(minutes + 'm');
 
             var seconds = temp % 60;
-            if (seconds)
+            if (seconds && !printOutMs)
                 addToString(Math.floor(seconds) + 's');
+
+            if(seconds && printOutMs)
+                addToString(temp + 's');
 
             if(str == '')
                 addToString('...');

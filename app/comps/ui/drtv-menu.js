@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('cmUi').directive('cmMenu',[
-    'cmUserModel',
-    'cmConfig',
-    'cmNotify',
-    '$location',
-    function (cmUserModel, cmConfig, cmNotify, $location){
+    'cmUserModel', 'cmConfig', 'cmNotify', 'cmUtil',
+    '$location', '$window',
+    function (cmUserModel, cmConfig, cmNotify, cmUtil,
+              $location, $window){
         return {
             restrict: 'AE',
             scope: true,
@@ -31,6 +30,21 @@ angular.module('cmUi').directive('cmMenu',[
                 };
 
                 $scope.goTo = function(parentBtn, url, isSub){
+
+                    if('link' in parentBtn){
+                        console.log($location)
+                        // file:///android_asset/www/index.html#/login
+                        if(cmUtil.startsWith($location.$$absUrl, 'file:///')) {
+                            $window.location = parentBtn.link;
+                            // http://localhost:8000/app/#/settings
+                        } else if($location.$$absUrl.indexOf('/#/') != -1) {
+                            var arr_location = $location.$$absUrl.split('/#/');
+                            location.href = arr_location[0] + '/' + parentBtn.link;
+                        }
+
+                        return false;
+                    }
+
                     /**
                      * if current location == url, then only close menu
                      */
