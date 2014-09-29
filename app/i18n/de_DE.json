@@ -304,7 +304,8 @@
         },
         "FOOTER": {
             "SAVE": "Speichern"
-        }
+        },
+        "IMPORT_NOTIFICATION" : "Hallo {{to}}, I have transfered your contact data into may cameo addressbook. Bye {{from}}"
     },
 
     "SYSTEMCHECK": {

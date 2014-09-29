@@ -3,31 +3,29 @@
 // https://github.com/wildabeast/cordova-plugin-contacts/blob/b8f6ce5bd04298f7fd4cba7c136389cf66eddc6b/doc/index.md
 
 /*  android & ios contact json
- {
-    displayName: "GiverName FamilyName"
+{
+    displayName: "GiverName FamilyName",
     name: {
-        familyName: "FamilyName"
-        formatted: "GiverName FamilyName"
-        givenName: "GiverName"
-        middleName: "MiddleName"
-    }
-    phoneNumbers: Array[
+        familyName: "FamilyName",
+        formatted: "GiverName FamilyName",
+        givenName: "GiverName",
+        middleName: "MiddleName",
+    },
+    phoneNumbers: [
      {
-        id: "1234"
-        pref: false
-        type: "mobile" // mobile | work | fax
-        value: "+49 123 4567890"
+        id: "1234",
+        pref: false,
+        type: "mobile", // mobile | work | fax
+        value: "+49 123 4567890",
      }
-     length: 1
-    ]
-    emails: Array[
+    ],
+    emails: [
      {
-         id: "1246"
-         pref: false
-         type: "work" // other
-         value: "some.coworker@cameo.io"
+         id: "1246",
+         pref: false,
+         type: "work", // other
+         value: "some.coworker@cameo.io",
      }
-     length: 1
     ]
  }
  */

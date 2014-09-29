@@ -17,12 +17,17 @@ angular.module('cmContacts')
     '$rootScope', '$q',
     'cmContactsModel',
     'cmUtil',
+    'cmModal',
     'cmNotify',
     'cmLocalContacts',
+    'cmConversationFactory',
+    'cmIdentityFactory',
+    'cmTranslate',
+    'cmUserModel',
 
     function($rootScope, $q,
-             cmContactsModel, cmUtil,
-             cmNotify, cmLocalContacts){
+             cmContactsModel, cmUtil, cmModal,
+             cmNotify, cmLocalContacts, cmConversationFactory, cmIdentityFactory, cmTranslate, cmUserModel){
 
         return {
             restrict:       'AE',
@@ -140,7 +145,7 @@ angular.module('cmContacts')
                     $scope.validateForm().then(
                         function() {
                             // declaration
-                            var emptyIdentity = {
+                            var emptyIdentity_data = {
                                     displayName: null,
                                     phoneNumber: null,
                                     email: null,
@@ -152,7 +157,7 @@ angular.module('cmContacts')
                                     groups: []
                                 },
                                 // merge given identity with default
-                                identity = angular.extend({}, emptyIdentity, $scope.identity.exportData());
+                                identity = angular.extend({}, emptyIdentity_data, $scope.identity.exportData());
 
                             // handle preferredMessageType
                             if (identity.phoneNumber != null) {
@@ -169,6 +174,7 @@ angular.module('cmContacts')
 //                            console.log(cmUtil.prettify(identity))
 //                            return false;
 
+
                             // everything is fine let's add the contact
                             cmContactsModel
                                 .addContact({
@@ -176,13 +182,45 @@ angular.module('cmContacts')
                                     groups: identity.groups
                                 })
                                 .then(
-                                function () {
+                                    function (data) {
+                                        identity = cmIdentityFactory.create(data.identity, true)
+
+                                        return  cmModal.confirm({
+                                                    title:      '',
+                                                    text:       'CONTACT.NOTIFICATION.CONFIRM',
+                                                    html:       '<textarea cm-resize-textarea cm-max-rows = "10" ng-model = "data.message"></textarea>',
+                                                    data:       {message: cmTranslate("CONTACT.IMPORT_NOTIFICATION", {from: cmUserModel.data.identity.getDisplayName(), to: identity.getDisplayName() })}
+                                                })
+                                    },
+                                    function () {
+                                        cmNotify.error('CONTACT.INFO.ERROR.SAVE', {ttl: 5000});
+                                        return $q.reject()
+                                    }
+                                )
+                                .then(function(modal_scope){
+
+                                    var conversation =  cmConversationFactory
+                                                        .create()
+                                                        .addRecipient(identity)
+                                                        .disableEncryption()
+
+                                    return  conversation
+                                            .save()
+                                            .then(function(){
+                                                return  conversation
+                                                        .messages
+                                                        .create({conversation:conversation})
+                                                        .setText(modal_scope.data.message)
+                                                        .setPublicData(['text'])
+                                                        .encrypt()
+                                                        .save()
+                                            })
+
+                                })
+                                .finally(function(){
                                     $scope.gotoContactList();
-                                },
-                                function () {
-                                    cmNotify.error('CONTACT.INFO.ERROR.SAVE', {ttl: 5000});
-                                }
-                            );
+                                })
+
                     });
                 };
 

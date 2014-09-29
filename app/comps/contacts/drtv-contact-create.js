@@ -95,11 +95,11 @@ angular.module('cmContacts')
 
                         // everything is fine let's add the contact
                         cmContactsModel
-                            .addContact({
-                                identity: identity,
-                                groups: identity.groups
-                            })
-                            .then(
+                        .addContact({
+                            identity: identity,
+                            groups: identity.groups
+                        })
+                        .then(
                             function () {
                                 $scope.gotoContactList();
                             },

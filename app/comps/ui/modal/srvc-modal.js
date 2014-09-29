@@ -106,7 +106,8 @@ angular.module('cmUi')
                             cancel: config.cancel,
                             okay:   config.okay,
                             title:  config.title || 'DRTV.CONFIRM.HEADER',
-                            html:   config.html || ''
+                            html:   config.html || '',
+                            data:   config.data,
                         }
 
             var deferred    = $q.defer(),
@@ -116,11 +117,12 @@ angular.module('cmUi')
             scope.text              =   config.text       || '';
             scope.labelOkay         =   config.okay
             scope.labelCancel       =   config.cancel
+
             scope.cancel            =   function(){ 
                                             $rootScope.closeModal(modalId)
                                         }
             scope.confirm           =   function(){
-                                            deferred.resolve()
+                                            deferred.resolve(this)
                                             $rootScope.closeModal(modalId) 
                                         }
             self.create({
@@ -131,7 +133,7 @@ angular.module('cmUi')
                 'cm-title':     config.title,
             },'<cm-modal-confirm>'+config.html+'</cm-modal-confirm>',null,scope);
 
-            self.open(modalId);
+            self.open(modalId, config.data);
 
             self.one('modal:closed', function(event, id){
                 if(id == modalId)
