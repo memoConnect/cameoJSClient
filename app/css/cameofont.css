@@ -203,9 +203,9 @@
 .cm-rhino-bubble{
     background-image:url('gfx/rhino-bubble.png');
     background-color:transparent;
-    background-size:1em 0.8em;
+    background-size:1em 1em;
     width:1em;
-    height:0.8em;
+    height:1em;
 }
 .cm-rhino-bubble-glyph:before{content:'\f044'}
 .cm-rhino-positive:before{content:'\f002'}
