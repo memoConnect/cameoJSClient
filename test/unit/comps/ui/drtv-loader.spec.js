@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive cmSpinner', function () {
+describe('Directive cmLoader', function () {
     var el,
         scope
 
@@ -8,7 +8,7 @@ describe('Directive cmSpinner', function () {
 
     beforeEach(inject(function ($rootScope, $compile) {
         scope = $rootScope.$new()
-        el =  angular.element('<div cm-spinner></div>')
+        el =  angular.element('<cm-loader></cm-loader>')
         el = $compile(el)(scope)
         scope.$digest()
     }))
