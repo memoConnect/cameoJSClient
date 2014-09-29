@@ -6,6 +6,7 @@ angular.module('cmCore')
     '$location', '$rootScope',
     function(cmUtil,
              $location, $rootScope) {
+
         var scopeData = {},
             noneScopeData = {},
             defaultOptions = {
@@ -63,6 +64,11 @@ angular.module('cmCore')
             delete noneScopeData[options.id];
             noneScopeData[options.id] = null;
         }
+
+        $rootScope.$on('logout', function(){
+            scopeData = {};
+            noneScopeData = {};
+        });
 
         return {
             create: function ($scope, _options_) {
