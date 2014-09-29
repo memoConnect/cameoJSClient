@@ -3,6 +3,8 @@
 describe('cmCrypt', function () {
     var cmCrypt;
 
+    window.Worker = undefined;
+
     beforeEach(module('cmCore'))
     beforeEach(inject(function(_cmCrypt_) {
         cmCrypt = _cmCrypt_;
@@ -62,7 +64,7 @@ describe('cmCrypt', function () {
 
             if(! (typeof obj != "object") ) return obj
 
-            var keys        = Object.keys()
+            var keys        = Object.keys(),
                 shuffled    = {},
                 i
 

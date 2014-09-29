@@ -1,5 +1,5 @@
 <button>
-    <i class="fa cm-settings" ng-show="imageUpload == false"></i>
+    <i class="fa cm-settings" ng-show="!imageUpload"></i>
     <cm-loader ng-show="imageUpload"></cm-loader>
 </button>
 <cm-files ng-model="files" id="files-droparea" data-qa="avatar-upload-btn">

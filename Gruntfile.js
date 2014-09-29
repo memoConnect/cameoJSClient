@@ -1,36 +1,21 @@
+'use strict';
+
 module.exports = function (grunt) {
 
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-compress');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
-    grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-phonegap');
-    grunt.loadNpmTasks('grunt-template');
-    grunt.loadNpmTasks('grunt-phonegap-build');
-    grunt.loadNpmTasks('grunt-phonegapsplash');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-coffee');
-    grunt.loadNpmTasks('grunt-protractor-runner');
-    grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-bg-shell');
-    grunt.loadNpmTasks('grunt-sloc');
-    grunt.loadNpmTasks('grunt-ngdocs');
-    grunt.loadNpmTasks('grunt-testflight-jsonresult');
+//    grunt.loadNpmTasks('grunt-contrib-jasmine');
+//    grunt.loadNpmTasks('grunt-contrib-connect');
+
+    // Time how long tasks take. Can help when optimizing build times
+    // https://www.npmjs.org/package/time-grunt
+    require('time-grunt')(grunt);
 
     // set current target
     var currentTarget = grunt.option('target') || "default";
 
     // cameo secrets
     var globalCameoSecrets = (function () {
-        dummySrc = './config/cameoJSClientSecrets_dummy.json';
-        secretSrc = '../cameoSecrets/cameoJSClientSecrets_'+currentTarget+'.json';
+        var dummySrc = './config/cameoJSClientSecrets_dummy.json';
+        var secretSrc = '../cameoSecrets/cameoJSClientSecrets_'+currentTarget+'.json';
 
         if (grunt.file.exists(secretSrc)) {
             return grunt.file.readJSON(secretSrc);
@@ -159,6 +144,7 @@ module.exports = function (grunt) {
         return testConfig;
     })();
 
+<<<<<<< HEAD
     // create packages
     var concatCmTemplatesFound = [];
 
@@ -795,142 +781,23 @@ module.exports = function (grunt) {
                 },
                 command: 'python -m SimpleHTTPServer 8000'
             }
+=======
+    // load grunt configs and passing vars
+    // http://creynders.github.io/load-grunt-configs/
+    var configs = require('load-grunt-configs')(grunt, {
+        config : {
+            src: 'config/grunt/*.js'
+>>>>>>> dev
         },
-
-        bgShell: {
-            'node': {
-                cmd: 'node scripts/web-server.js',
-                bg: false
-            },
-            'python': {
-                cmd: 'python -m SimpleHTTPServer 8000',
-                bg: false,
-                stdout: false
-            },
-            'cameo': {
-                cmd: 'sbt run',
-                bg: false,
-                execOpts: {
-                    cwd: '../cameoServer'
-                }
-            },
-            'weinre': {
-                cmd: 'weinre --boundHost '+globalCameoBuildConfig.debug.weinreIp,
-                bg: false
-            },
-            'logcat-cordova': {
-                cmd: 'adb logcat | grep "CordovaLog"',
-                bg: false
-            },
-            'logcat-clear': {
-                cmd: 'adb logcat -c',
-                bg: false
-            }
-        }
+        globalCameoSecrets: globalCameoSecrets,
+        globalCameoBuildConfig: globalCameoBuildConfig,
+        globalCameoTestConfig: globalCameoTestConfig
     });
 
-    // tests unit
-    grunt.registerTask('tests-unit', [
-        'genAllTemplates',
-        ':app:js-files',
-        'karma:jenkins'
-    ]);
-    grunt.registerTask('tests-e2e', [
-        'genAllTemplates',
-        'shell:generateKeys',
-        ':app:js-files',
-        'protractor:default'
-    ]);
+    configs.pkg = grunt.file.readJSON('package.json');
+
+    grunt.initConfig(configs);
+
+    grunt.registerTask('default', []);
     grunt.registerTask('tests-all', ['tests-unit','tests-e2e']);
-    grunt.registerTask('tests-multi', [
-        // we only need to generate templates for tests
-        'template:config-tests',
-        'template:config-protractor-multi',
-        'protractor:default'
-    ]);
-
-    // shortcuts
-    grunt.registerTask('tests-2e2', ['tests-e2e']);
-
-    // watch
-    grunt.registerTask('genAllTemplates', [
-        'template:config-tests',
-        'template:config-webApp',
-        //'template:main-webApp',
-        'template:index-www',
-        'template:webworker',
-        'template:config-phonegap',
-        'template:config-protractor',
-        'concat:less',
-        'less',
-        'concat:app-css'
-    ]);
-    grunt.registerTask('watcher', ['genAllTemplates', ':app:js-files', 'watch']);
-    grunt.registerTask(':app:js-files', ['concat:app-vendor','concat:app-packages','concat:app-cameo']);
-
-    // deploy it for me babe !!
-    grunt.registerTask('deploy', [
-        'clean:dist',
-        'genAllTemplates',
-        ':app:js-files',
-        'copy:dev-deploy',
-        'clean:dev-deploy',
-        'uglify:dev-deploy',
-        'copy:cockpit',
-        'uglify:cockpit'
-    ]);
-
-    grunt.registerTask(':build:create-docs', ['clean:docs', ':app:js-files', 'concat:docs', 'ngdocs']);
-    // deploy www without phonegap
-    grunt.registerTask(':build:www', ['template:index-www']);
-
-    grunt.registerTask(':server:web:node', ['bgShell:node']);
-    grunt.registerTask(':server:web:python', ['shell:pythonServer']);
-    grunt.registerTask(':server:weinre', ['bgShell:weinre']);
-    grunt.registerTask(':server:cameo', ['bgShell:cameo']);
-
-    grunt.registerTask(':utils:code-coverage', ['sloc:code-coverage']);
-    grunt.registerTask(':utils:count-lines', ['sloc']);
-    grunt.registerTask(':utils:logcat-cordova', ['bgShell:logcat-cordova']);
-    grunt.registerTask(':utils:logcat-clear', ['bgShell:logcat-clear']);
-
-    // phonegap to build server
-    grunt.registerTask(':phonegap:to-build-server', [
-        'clean:phonegap-target',
-        'clean:phonegap-build',
-        'deploy',
-        'copy:resources-phonegap',
-        'template:index-phonegap',
-        'template:config-phonegap',
-        'compress',
-        'phonegap-build:debug',
-        'copy:phonegap-target',
-        'testflight:iOS',
-        'template:index-dl',
-        'copy:resources-dl'
-    ]);
-    grunt.registerTask(':phonegap:create-only-zip', [
-        'clean:phonegap-target',
-        'clean:phonegap-build',
-        'deploy',
-        'copy:resources-phonegap',
-        'template:index-phonegap',
-        'template:config-phonegap',
-        'compress',
-        'phonegap-build:only-zip'
-    ]);
-    grunt.registerTask("phonegap:adb-run", [
-        'clean:phonegap-target',
-        'clean:phonegap-build',
-        'deploy',
-        'copy:resources-phonegap',
-        'template:index-phonegap',
-        'template:config-phonegap',
-        'compress',
-        'phonegap:build',
-        'phonegap:run'
-    ])
-
-    grunt.registerTask(':phonegap:create-splashscreens', ['phonegapsplash:build']);
-
 };

@@ -6,17 +6,20 @@ angular.module('cmPhonegap')
 .service('cmPushNotificationAdapter', [
     'cmPhonegap', 'cmDevice', 'cmPushNotifications',
     'cmUtil', 'cmLanguage', 'cmApi',
-    '$rootScope', '$window', '$phonegapCameoConfig',
+    '$rootScope', '$window', '$phonegapCameoConfig', '$injector',
     function (cmPhonegap, cmDevice, cmPushNotifications,
               cmUtil, cmLanguage, cmApi,
-              $rootScope, $window, $phonegapCameoConfig) {
+              $rootScope, $window, $phonegapCameoConfig, $injector) {
 
         var self = {
             plugin: null,
-
             currentDeviceData: {
                 token: undefined,
                 id: undefined
+            },
+            deviceIsRegistrated: false,
+            isDeviceRegistrated: function(){
+                return this.deviceIsRegistrated;
             },
 
             init: function(){
@@ -37,8 +40,7 @@ angular.module('cmPhonegap')
             },
 
             register: function(){
-                cmPushNotifications.plugin = self.plugin;
-                cmPushNotifications.register();
+                cmPushNotifications.register(self.plugin);
             },
 
             unregister: function(){
@@ -50,9 +52,6 @@ angular.module('cmPhonegap')
             },
 
             checkRegisteredDevice: function(accountPushDevices){
-                if(!cmDevice.isApp())
-                    return false;
-
                 // BE MOCK
                 /*
                  accountPushDevices = [
@@ -75,8 +74,11 @@ angular.module('cmPhonegap')
 //                        self.registerDevice();
 //                    }
 //                });
-
-                self.registerDevice();
+                cmPhonegap.isReady(function(){
+                    if($injector.get('cmSettings').get('pushNotifications')) {
+                        self.registerDevice();
+                    }
+                });
             },
 
             registerDevice: function(){
@@ -91,7 +93,6 @@ angular.module('cmPhonegap')
                 this.getDeviceData()
                 .then(function(deviceData){
                     self.currentDeviceData = deviceData;
-
                     cmApi.post({
                         path: '/pushDevice',
                         data: {
@@ -99,17 +100,26 @@ angular.module('cmPhonegap')
                             language: cmLanguage.getCurrentLanguage().replace('_','-'),
                             platform: cmDevice.getCurrentOS()
                         }
+                    }).then(function(){
+                        self.deviceIsRegistrated = true;
                     });
                 });
             },
 
             deleteDevice: function(token){
                 if(cmDevice.getCurrentOS() != 'unknown'
-                && this.currentDeviceData.token
-                && token && token != '') {
-                    cmApi.delete({
-                        path: '/deviceToken/'+cmDevice.getCurrentOS()+'/'+this.currentDeviceData.token,
-                        overrideToken: token // this token for logout
+                && this.currentDeviceData.token) {
+
+                    var data = {
+                        path: '/pushDevice/'+cmDevice.getCurrentOS()+'/'+this.currentDeviceData.token,
+                    };
+
+                    // this token for logout
+                    if(token)
+                        data.overrideToken = token;
+
+                    cmApi.delete(data).then(function(){
+                        self.deviceIsRegistrated = false;
                     });
                 }
             }

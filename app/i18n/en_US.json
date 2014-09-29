@@ -573,6 +573,9 @@
             "ABOUT_US": {
                 "TITLE": "About us",
                 "TEXT": "cameoNet 2014"
+            },
+            "NOTIFY": {
+                "PUSH_NOTIFICATIONS": "Push Notifications"
             }
         }
     },

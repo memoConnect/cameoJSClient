@@ -119,7 +119,8 @@ angular.module('cmCore')
                 if(identity.id != self.data.identity.id){
                     var tmpIdentity = cmIdentityFactory.clear(identity).create(identity);
                     tmpIdentity.on('update:finished', function(){
-                       cmUserModel.trigger('identity:updated');
+                        /* we have to trigger an other event identity:updated is an backend event */
+                       /*cmUserModel.trigger('identity:updated');*/
                     });
                     self.data.identities.push(tmpIdentity);
                 }
@@ -164,7 +165,7 @@ angular.module('cmCore')
                     // TODO: set account data
 
                     // check device for pushing
-                    cmPushNotificationAdapter.checkRegisteredDevice(accountData.pushDevices);
+                    cmPushNotificationAdapter.checkRegisteredDevice();
 
                     return true;
                 }
