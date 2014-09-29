@@ -41,7 +41,7 @@ cm-message-file{
   .file-image, .file-html5{
     min-height:@cm-unit;
     position:relative;
-    div[cm-spinner]{
+    cm-loader.spinner{
       z-index:1;
       position:absolute;
       left:50%;
@@ -129,7 +129,7 @@ cm-files-preview{
     height:@cm-unit * 2;
     margin:0 auto;
 
-    div[cm-spinner]{
+    cm-loader.spinner{
       z-index:1;
       position:absolute;
       left:50%;
@@ -155,7 +155,7 @@ cm-modal.modal-image-fullscreen{
     height:100%;
     z-index:2;
     position:relative;
-    cm-spinner{
+    cm-loader.spinner{
       position: absolute;
       top:50%;
     }

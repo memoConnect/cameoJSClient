@@ -217,6 +217,7 @@ angular.module('cameoClient', [
     '$window',
     '$document',
     '$route',
+    '$timeout',
     'cmUserModel',
     'cmContactsModel',
     'cmRootService',
@@ -230,7 +231,10 @@ angular.module('cameoClient', [
     'cmAuthenticationRequest',
     'cmSystemCheck',
     'cmError',
-    function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion, cmApi, cmAuthenticationRequest, cmSystemCheck, cmError) {
+    function ($rootScope, $location, $window, $document, $route, $timeout,
+              cmUserModel, cmContactsModel, cmRootService, cmSettings,
+              cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
+              cmApi, cmAuthenticationRequest, cmSystemCheck, cmError) {
 
         //prep $rootScope with useful tools
         $rootScope.console  =   window.console;
@@ -328,8 +332,14 @@ angular.module('cameoClient', [
         // Actually set view width to 32 rem
         initScreenWidth(32);
 
+        $timeout(function(){
+            initScreenWidth(32);
+        },1000);
+
         // For dev purposes only:
-//            window.onresize = function() { initScreenWidth(32) }
+//            window.onresize = function() {
+//                initScreenWidth(32)
+//            }
 
         /**
          * Loading Bar on RouteChange
