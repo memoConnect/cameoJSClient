@@ -1,4 +1,53 @@
 'use strict';
+
+        /*
+        var webworker = {
+            stack: [],
+            isAvailable: function(){
+                return !(window.Worker === undefined)
+            },
+            start: function(jsPath, data, onFinished){
+
+                var worker = new Worker(jsPath);
+
+                worker.addEventListener('message', function(e){
+                    var result = e.data;
+                    switch(result.msg){
+                        case 'finished':
+                            onFinished(result);
+                        break;
+                    }
+                });
+
+                worker.postMessage = worker.webkitPostMessage || worker.postMessage;
+
+                worker.postMessage(data);
+
+                this.stack.push({jsPath:jsPath,instance:worker});
+            },
+            cancel: function(jsPath, data, onFinished){
+                var worker = this.stack.filter(function(worker){
+                    return worker.jsPath == jsPath
+                });
+
+                if(worker.length > 0){
+                    worker = worker[0].instance;
+
+                    worker.addEventListener('message', function(e){
+                        var result = e.data;
+                        switch(result.msg){
+                            case 'canceled':
+                                onFinished(result);
+                            break;
+                        }
+                    });
+
+                    worker.postMessage(data);
+                }
+            }
+        };
+        */
+
 angular.module('cmCore')
 .service('cmWebworker',[
 
