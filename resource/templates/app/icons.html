@@ -7,24 +7,34 @@
     <title>cameoAwesome</title>
 
     <link rel="stylesheet" href="style.<%= currentVersion %>.css">
-    <script src="vendor/angular/base/angular.js"></script>
-    <script src="vendor/angular/emoji/emoji.js"></script>
+    <script type="text/javascript" src="vendor.<%= currentVersion %>.js"></script>
     <style>
 		html {background:none !important}
-        header{height:3em;position:fixed;left:0;top:0;padding:0.5em 1em;background:#fff;z-index:2;box-sizing:border-box;;width:100%}
-        body{font-size:2rem;font-family:verdana;width:auto;padding:1em;padding-top:4em;background:none !important;}
+        header{height:8rem;position:fixed;left:0;top:0;padding:0.5rem 1rem;background:#fff;z-index:2;box-sizing:border-box;width:100%}
+        body{font-size:6rem;font-family:verdana;width:auto;padding:1rem;padding-top:8rem;background:none !important;}
         a{font-size:40px;color:#02BED2}
-        h1{font-size:2rem;color:#02BED2}
-        h3{font-size:1rem;margin:2px 0;border-bottom:solid 1px #02BED2;color:#02BED2,font-weight:normal}
+        h1{font-size:5rem;color:#02BED2}
+        h3{font-size:3rem;border-bottom:solid 1px #02BED2;color:#02BED2,font-weight:normal}
         figure{margin:5px;position:relative;display:inline-block;text-align:center}
         figure i{background-color:#02BED2!important}
         figure figcaption{display:none;white-space:nowrap;background:rgba(255,255,255,0.9);padding-right:10px}
         figure:hover i{background-color:transparent!important}
         figure:hover figcaption, .captions-show figcaption{z-index:1;display:inline-block!important}
-        label{font-size:0.5em;cursor:pointer}
+        label{font-size:2rem;cursor:pointer}
         .maincat{padding-left:0.25rem}
         .subcat{padding-left:0.5rem}
-        .anchor{top:-6rem;left:0;position:relative;display:block}
+        .anchor{top:-10rem;left:0;position:relative;display:block}
+        .baseline-check{position:relative}
+        .baseline{position:absolute;height:0.1rem;width:100%;background:#02BED2;top:6.6rem;z-index:-1}
+        .baseline-check select{font-size:2rem;width:30rem}
+        .nose-check{position:relative;height:12rem}
+        .nose-check i{position:absolute}
+        .nose-check i.cm-nose-left{left: 0.3rem;
+            top: 2.8rem;}
+        .nose-check i.cm-nose-right{}
+        .nose-check i.cm-nose-up{}
+        .nose-check i.cm-nose-down{}
+        .nose-check .box{position:absolute;border:solid 0.1rem #000;height:8rem;width:8rem;left:2rem}
     </style>
 </head>
 <body ng-app="icons" ng-controller="ctrl" ng-class="{'captions-show':withFigcaption}">
@@ -40,6 +50,32 @@
     </header>
 
     <h1><span class="anchor" id="icons"></span>cameofont</h1>
+
+    <h1><span></span>baseline check</h1>
+
+    <div class="baseline-check">
+        <div class="baseline"></div>
+        <i class="fa {{baselineIcon}}"></i>
+        Texty
+        <select ng-model="baselineIcon">
+            <option>choose icon</option>
+            <optgroup ng-repeat="bundle in icons" label="{{bundle.title}}">
+                <option ng-repeat="css in bundle.css.split(' ')">{{css}}</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <h1><span></span>nose check</h1>
+
+    <div class="nose-check">
+        <i class="fa cm-nose-left"></i>
+        <i class="fa cm-nose-right"></i>
+        <i class="fa cm-nose-down"></i>
+        <i class="fa cm-nose-up"></i>
+        <div class="box"></div>
+    </div>
+
+    <h1><span></span>glyphs</h1>
 
     <div ng-repeat="bundle in icons" class="maincat">
         <h3 ng-if="bundle.title">{{bundle.title}}</h3>
@@ -73,6 +109,7 @@
         angular
         .module('icons',['emoji'])
         .controller('ctrl',function ($scope, emoji){
+            $scope.baselineIcon = 'cm-checkbox-wrong';
 			$scope.withFigcaption = false;
             $scope.Object = Object;
             $scope.icons = [
