@@ -53,7 +53,7 @@ describe('login screen', function () {
 
         $("[data-qa='login-submit-btn']").click();
 
-        util.waitForSpinner()
+        util.waitForLoader()
         util.checkWarning("login-info")
 
         $("body").sendKeys(protractor.Key.ESCAPE);

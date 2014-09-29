@@ -313,23 +313,6 @@ this.waitForModalClose = function () {
     return this
 }
 
-this.waitForSpinner = function () {
-    // wait until spinner appears
-    ptor.wait(function () {
-        return $$("cm-spinner").then(function (elements) {
-            return elements.length > 0
-        })
-    }, config.routeTimeout, 'waitForSpinner start timeout reached').then(function () {
-        ptor.wait(function () {
-            return $("cm-spinner").isDisplayed().then(function (isDisplayed) {
-                return !isDisplayed
-            })
-        }, config.routeTimeout, 'waitForSpinner stop timeout reached')
-    })
-
-    return this
-}
-
 this.waitForLoader = function () {
     // wait for loader appear
     ptor.wait(function() {

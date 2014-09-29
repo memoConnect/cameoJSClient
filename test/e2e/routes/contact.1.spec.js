@@ -13,7 +13,6 @@ describe('Route Contact: ', function () {
     })
 
     it('should have a contact list.', function(){
-//        util.waitForSpinner();
         util.waitForElement('cm-contact-list');
         expect($('cm-contact-list').isPresent()).toBe(true)
     })

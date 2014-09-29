@@ -191,11 +191,11 @@ angular.module('cmRoutes').controller('RegistrationCtrl', [
             ignoreVar:'password',
             scopeVar:'formData',
             onSet: function(){
-                this.privateData = $scope.reservationSecrets;
+                this.noneScopeData = $scope.reservationSecrets;
             },
-            onGet: function(formData, privateData){
-                if(privateData != null)
-                    $scope.reservationSecrets = privateData
+            onGet: function(formData, noneScopeData){
+                if(noneScopeData != null)
+                    $scope.reservationSecrets = noneScopeData
             }
         });
     }

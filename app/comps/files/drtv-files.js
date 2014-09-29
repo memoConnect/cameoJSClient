@@ -8,7 +8,8 @@ angular.module('cmFiles').directive('cmFiles',[
         return {
             restrict : 'E',
             controller : function($scope){
-                $scope.files = [];
+                $scope.files = $scope.files || [];
+
                 /**
                  * function called via <input type=file> or
                  * @param blob
@@ -30,7 +31,7 @@ angular.module('cmFiles').directive('cmFiles',[
                     var file = cmFileFactory.create(blob,true);
                     $scope.files.push(file);
 
-                    $rootScope.$broadcast('cmFiles:fileSetted');
+                    $rootScope.$broadcast('cmFilesFileSetted');
                 };
 
                 this.removeFile = function(file){
@@ -46,8 +47,8 @@ angular.module('cmFiles').directive('cmFiles',[
                  * prepare files and return to caller
                  * @type {Array}
                  */
-                $rootScope.$$listeners.checkFiles = [];
-                $rootScope.$on('checkFiles', function(event, options){
+                $rootScope.$$listeners.cmFilesCheckFiles = [];
+                $rootScope.$on('cmFilesCheckFiles', function(event, options){
                     $scope.prepareFilesForUpload(options.passphrase, options.conversationId)
                     .then(
                         function(){
@@ -92,7 +93,7 @@ angular.module('cmFiles').directive('cmFiles',[
                  */
                 $scope.resetFiles = function(){
                     $scope.files = [];
-                    $scope.$broadcast('reset:files');
+                    $scope.$broadcast('cmFileChooseResetFiles');
                 };
             }
         }

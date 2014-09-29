@@ -37,7 +37,6 @@ angular.module('cmConversations')
                 $scope.isSending        = false;
                 $scope.isSendingAbort   = false;
 
-
                 $scope.recipientName = '';
                 function showRecipientName(identity){
                     $scope.recipientName = identity.getDisplayName();
@@ -104,7 +103,7 @@ angular.module('cmConversations')
                          * check if files exists
                          * after success sendMessage
                          */
-                        $rootScope.$broadcast('checkFiles', {
+                        $rootScope.$broadcast('cmFilesCheckFiles', {
                             passphrase: $scope.conversation.getPassphrase(),
                             conversationId: $scope.conversation.id,
                             success: function(files) {
@@ -274,9 +273,7 @@ angular.module('cmConversations')
                     $scope.conversation.when('update:finished')
                     .then(function(){
                         $scope.conversation.decrypt()
-                    })
-
-                    
+                    });
 
                     // reload detail of conversation
                     $scope.conversation.load();
@@ -365,15 +362,19 @@ angular.module('cmConversations')
                         stop_listening_to_logout();
                         stop_listening_to_idenity_switch();
                     });
-
-
-
                 }
 
                 // transfer data between routeChanges
                 var clearTransferScopeData = cmTransferScopeData.create($scope,{
                     id:'conversation-'+($scope.conversation.id||'new'),
-                    scopeVar:'newMessageText'
+                    scopeVar:'newMessageText',
+                    onSet: function(){
+                        this.noneScopeData = $scope.files;
+                    },
+                    onGet: function(formData, noneScopeData){
+                        if(noneScopeData != null)
+                            $scope.files = noneScopeData;
+                    }
                 });
 
 
