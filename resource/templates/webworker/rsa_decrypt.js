@@ -32,6 +32,7 @@ self.addEventListener('message', function(event) {
             self.postMessage({
                 msg:'canceled'
             });
+            self.close()
         break;
     }
 }, false);

@@ -383,7 +383,11 @@ angular.module('cmConversations')
              */
             this.save = function(){
                 return  this.state.is('new')
-                        ?   cmConversationsAdapter.newConversation( this.exportData() ).then(
+                        ?   this.exportData()
+                            .then(function(converesation_data){
+                                return  cmConversationsAdapter.newConversation(conversation_data)
+                            })
+                            .then(
                                 function (conversation_data) {
                                     self
                                     .importData(conversation_data)
@@ -401,6 +405,7 @@ angular.module('cmConversations')
 
                                 function(){
                                     self.trigger('save:failed');
+                                    return $q.reject()
                                 }
                             )
                         :   $q.reject()
@@ -496,8 +501,8 @@ angular.module('cmConversations')
             this.enableEncryption = function(){
 //                cmLogger.debug('cmConversationModel:enableEncryption');
 
-                if(this.state.is('new') && !passphrase.get()){
-                    passphrase.generate();
+                if(this.state.is('new')){
+                    passphrase.enable();
                     this.trigger('encryption:enabled');
                 }
 
@@ -516,7 +521,7 @@ angular.module('cmConversations')
              */
             this.isEncrypted = function(){
 //                cmLogger.debug('cmConversationModel.isEncrypted');
-                var bool = false;
+                var bool = true;
 
                 if(this.state.is('new')){
                     bool = !passphrase.disabled();
@@ -549,24 +554,27 @@ angular.module('cmConversations')
             this.decrypt = function () {
 //                cmLogger.debug('cmConversationModel.decrypt');
 
-                var passphrase  =   this.getPassphrase(),
-                    result      =   passphrase
-                                    ?   $q.all(this.messages.map(function (message){
+
+                this.getPassphrase()
+                .then(function(passphrase){
+                    return $q.all(this.messages.map(function (message){
                                             return message.decrypt()
                                         }))
-                                    :   $q.reject()
-
-                result.then(
+                })
+                .then(
                     function(){
                         self.trigger('decrypt:success');
 
                         // save password to localstorage
                         if (typeof self.password == 'string' && self.password.length > 0)
                             self.localPWHandler.set(this.id, this.password);
+
+                        return $q.resolve()
                         
                     },
                     function(){
                         self.trigger('decrypt:failed');
+                        return $q.reject()
                     }
                 )
 
@@ -636,7 +644,7 @@ angular.module('cmConversations')
                 return  passphrase
                         .setPassword(this.password)
                         .setIdentities(this.recipients)
-                        .get();
+                        .get()
             };
 
             /**

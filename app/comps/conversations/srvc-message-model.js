@@ -160,7 +160,7 @@ angular.module('cmConversations')
                 }
             };
 
-            this.encrypt = function () {
+            this.encrypt = function (passphrase) {
                 // merge secret_data into json string:
                 var secret_data = {};
 
@@ -170,11 +170,7 @@ angular.module('cmConversations')
 
                 var secret_JSON = JSON.stringify(secret_data);
 
-                //this.encryptedData = cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(passphrase, secret_JSON));
-                if(conversation.getPassphrase() !== null) {
-                    this.encryptedData = cmCrypt.encrypt(conversation.getPassphrase(), secret_JSON);
-                }
-                //@ TODO!!!!
+                this.encryptedData = cmCrypt.encrypt(passphrase, secret_JSON);
 
                 return this;
             };

@@ -6,6 +6,7 @@ var crypt = null,
 
 self.addEventListener('message', function(event) {
     var data = event.data;
+
     switch (data.cmd) {
         case 'start':
             time = -((new Date()).getTime());
@@ -27,4 +28,5 @@ self.addEventListener('message', function(event) {
             self.close()
         break;
     }
+    
 }, false);

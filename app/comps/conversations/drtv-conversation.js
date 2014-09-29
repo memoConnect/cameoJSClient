@@ -194,17 +194,17 @@ angular.module('cmConversations')
                      * validate answer form
                      * @type {boolean}
                      */
-                    var message_invalid         = !isMessageValid(),
-                        passphrase_invalid      = !$scope.conversation.passphraseValid()
+                    var message_invalid         = !isMessageValid()
+                        // passphrase_invalid      = !$scope.conversation.passphraseValid()
 
                     //If anything is invalid, abort and notify the user:
-                    if(message_invalid || passphrase_invalid){
+                    if(message_invalid){
 
                         if (message_invalid)
                             cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY', {ttl:5000});
 
-                        if (passphrase_invalid)
-                            cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID', {ttl:5000});
+                        // if (passphrase_invalid)
+                        //     cmNotify.warn('CONVERSATION.WARN.PASSPHRASE_INVALID', {ttl:5000});
 
 
                         // enable send button
@@ -230,20 +230,32 @@ angular.module('cmConversations')
                     //If we got this far the conversation has been saved to the backend.
                     //Create a new message:
 
-                    $scope.conversation.messages
-                    .create({conversation:$scope.conversation})
-                    .addFiles(filesForMessage)
-                    .setText($scope.newMessageText)
-                    .setPublicData(
-                        $scope.conversation.getPassphrase() === null
-                            ? ['text','fileIds']
-                            : []
+                    $scope.conversation.getPassphrase()
+                    .then(
+                        //If we get a proper passphrase:
+                        function(passphrase){
+                            return  $scope.conversation.messages
+                                    .create({conversation:$scope.conversation})
+                                    .addFiles(filesForMessage)
+                                    .setText($scope.newMessageText)
+                                    .encrypt(passphrase)
+                                    .save()
+                        },
+                        //If we dont get a proper passphrase
+                        function(){
+                            return  $scope.conversation.isEncrypted()
+                                    ?   $q.reject('access denied')
+                                    :   $scope.conversation.messages
+                                        .create({conversation:$scope.conversation})
+                                        .addFiles(filesForMessage)
+                                        .setText($scope.newMessageText)
+                                        .setPublicData(['text','fileIds'])
+                                        .save()                                    
+                        }
                     )
-                    .encrypt()
-                    .save()
                     .then(function(){
+                        // tidy up:
                         clearTransferScopeData();
-                        //@ TODO: solve rekeying another way:
                         $scope.newMessageText = '';
                         filesForMessage = [];
                         $scope.isSending = false;
@@ -269,7 +281,7 @@ angular.module('cmConversations')
                     $scope.conversation = conversation
                     $rootScope.pendingConversation = $scope.conversation;
 
-                    //@Todo: temporarily decrypt here util webworker joins in:
+                    //@Todo: temporarily decrypt here until webworker joins in:
                     $scope.conversation.decrypt()
                     $scope.conversation.when('update:finished')
                     .then(function(){

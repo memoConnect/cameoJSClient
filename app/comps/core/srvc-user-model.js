@@ -631,13 +631,18 @@ angular.module('cmCore')
         };
 
         this.decryptPassphrase = function(encrypted_passphrase, keyId){
-            var keys = this.loadLocalKeys() || []
+            var keys    =   this.loadLocalKeys().filter(function(key){
+                                return (key.id == keyId || !keyId)
+                            }) || []
 
-            return  keys.reduce(function(decrypted_passphrase, key){
-                        return      decrypted_passphrase 
-                                ||  ( (key.id == keyId || !keyId) && key.decrypt(encrypted_passphrase) )
 
-                    }, undefined)
+            return keys.reduce(function(ongoing, key){
+                return  ongoing
+                        .catch(function(){
+                                return key.decrypt(encrypted_passphrase)
+                        })
+            }, $q.reject())
+
         };
 
         this.bulkReKeying = function(localKeyId, newKeyId){
