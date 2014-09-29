@@ -56,6 +56,7 @@ describe('Check key maximum: ',function(){
         util.click("btn-import-key")
         util.waitForElement("[data-qa='btn-save-key']")
         util.click("btn-save-key")
+        util.waitForPageLoad("/authentication")
         util.expectCurrentUrl("/authentication")
     })
 

@@ -52,7 +52,7 @@
 
     <article class="content" ng-if = "active == 'generate'">
         <span ng-bind-html="'IDENTITY.KEYS.GENERATE.GENERATING.TIME_PASSED'|cmParse"></span>
-        <cm-timeout cm-data = "getElapsedTime()">
+        <cm-timeout cm-data="getElapsedTime()">
             <section class="cm-special-text">
                 {{'IDENTITY.KEYS.GENERATE.GENERATING.GENERATION_TIMER'|cmTranslate:{ 'time':cmTimeout} }}
             </section>
@@ -90,7 +90,7 @@
 
     <article class="content" ng-if="active == 'store'">
         <span ng-bind-html="'IDENTITY.KEYS.GENERATE.SAVE.TIME_PASSED'|cmParse"></span>
-        <cm-timeout cm-data = "getElapsedTime()">
+        <cm-timeout cm-data="getElapsedTime()">
             <section class="cm-special-text">{{'IDENTITY.KEYS.GENERATE.SAVE.GENERATION_TIMER'|cmTranslate:{ 'time':cmTimeout} }}</section>
         </cm-timeout>
     </article>

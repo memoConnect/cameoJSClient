@@ -331,17 +331,22 @@ this.waitForSpinner = function () {
 }
 
 this.waitForLoader = function () {
-    // wait until spinner appears
-    ptor.wait(function () {
-        return $$("cm-loader").then(function (elements) {
+    // wait for loader appear
+    ptor.wait(function() {
+        return $$("cm-loader:not(.ng-hide)")
+        .then(function (elements) {
             return elements.length > 0
         })
-    }, config.routeTimeout, 'waitForLoader start timeout reached').then(function () {
+    }, config.routeTimeout, 'waitForLoader start timeout reached')
+    .then(function () {
+        // wait for loader disappear
         ptor.wait(function () {
-            return $("cm-loader").isDisplayed().then(function (isDisplayed) {
+            return $("cm-loader").isDisplayed()
+            .then(function (isDisplayed) {
                 return !isDisplayed
             })
-        }, config.routeTimeout, 'waitForSpinner stop timeout reached')
+        }, config.routeTimeout, 'waitForLoader stop timeout reached')
+
     })
 
     return this
