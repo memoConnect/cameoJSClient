@@ -43,8 +43,8 @@
             <i class="fa cm-cancel-key cm-lg-icon" ng-click="remove(key)" data-qa="btn-remove-modal"></i>
         </div>
     </li>
-    <li ng-if="signing">
-        <cm-spinner></cm-spinner>
+    <li ng-show="signing">
+        <cm-loader></cm-loader>
     </li>
 </ul>
 
