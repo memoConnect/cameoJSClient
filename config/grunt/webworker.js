@@ -8,6 +8,22 @@ module.exports = function(grunt, options){
         'template:app-webworker'
     ]);
 
+
+    var webworker   =   ['-mock-vendor', 'keygen', 'rsa_decrypt'],
+        files       =   webworker.map(function(job_name){
+                            console.log(job_name)
+                            var path    = 'app/webworker/'+job_name+'.js',
+                                object  = {}
+
+                            object[path] =  [
+                                                'resource/templates/webworker/'+job_name+'.js'
+                                            ]
+                            return object
+                        })
+
+
+
+
     return {
         tasks:{
             clean: {
@@ -20,12 +36,8 @@ module.exports = function(grunt, options){
                             'currentVersion': options.globalCameoBuildConfig.config.version
                         }
                     },
-                    'files': {
-                        'app/webworker/keygen.js': [
-                            'resource/templates/webworker/keygen.js'
-                        ]
-                    }
-                }
+                    'files': files
+                }                
             }
         }
     }
