@@ -23,8 +23,8 @@ angular.module('cmPhonegap')
             register: function(plugin){
 
                 this.plugin = plugin;
-
                 this.reset();
+
                 // only gcm needs an senderid
                 if (cmDevice.isAndroid()) {
                     this.plugin.register(
@@ -87,8 +87,8 @@ angular.module('cmPhonegap')
             },
 
             setDeviceToken: function(token){
-                console.log('##setDeviceToken#################');
-                console.log(token);
+//                console.log('##setDeviceToken#################');
+//                console.log(token);
                 this.deviceToken = token;
 
                 this.initPromise();
@@ -135,9 +135,8 @@ angular.module('cmPhonegap')
                             }
                             break;
                         case 'message':
-                            console.log('##on pn#####################');
-                            console.log(cmUtil.prettify(event))
-
+                            //console.log('##on pn#####################');
+                            //console.log(cmUtil.prettify(event))
                             if(!event.foreground){
                                 var context = event.payload.context.split(':');
                                 switch(context[0]){
@@ -152,25 +151,6 @@ angular.module('cmPhonegap')
                             } else {
                                 console.log('cmBimmel!!!',event.payload.context)
                             }
-//                            if (event.foreground) {
-//                                console.log('##foreground inline push notification#####################');
-////                                // on Android soundname is outside the payload.
-////                                // On Amazon FireOS all custom attributes are contained within payload
-////                                var soundfile = e.soundname || e.payload.sound;
-////                                // if the notification contains a soundname, play it.
-////                                var my_media = new Media("/android_asset/www/"+ soundfile);
-////                                my_media.play();
-//                            } else {
-//                                if (event.coldstart) {
-//                                    console.log('##coldstart push notification#####################');
-//                                } else {
-//                                    console.log('##background push notification#####################');
-//                                }
-//                            }
-//
-//                            console.log('message: ' + event.payload.message);
-//                            console.log('count: ' + event.payload.msgcnt);
-//                            console.log('time: ' + event.payload.timeStamp);
                             break;
 
                         case 'error':
@@ -184,8 +164,8 @@ angular.module('cmPhonegap')
                     }
                 },
                 iOS: function (event) {
-                    console.log('##on pn#####################');
-                    console.log(cmUtil.prettify(event))
+                    //console.log('##on pn#####################');
+                    //console.log(cmUtil.prettify(event))
 
 //                    if ( event.alert ){
 //                        navigator.notification.alert(event.alert);

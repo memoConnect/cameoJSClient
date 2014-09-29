@@ -5,7 +5,6 @@
 
 <ul>
     <li ng-click="handlePushNotifications()"
-        ng-disabled="!isApp()"
         ng-class="{'is-disabled':!isApp()}">
         <span class="item clearfix">
             <span class="title">
@@ -14,8 +13,8 @@
 
             <section class="icon-list">
                  <i class="fa cm-lg-icon" ng-class="{
-                    'cm-radio-0':!settings.convertEmoji,
-                    'cm-radio-1':settings.convertEmoji
+                    'cm-radio-0':!settings.pushNotifications,
+                    'cm-radio-1':settings.pushNotifications
                 }"></i>
             </section>
         </span>

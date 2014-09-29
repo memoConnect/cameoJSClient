@@ -21,6 +21,10 @@ angular.module('cmWidgets').directive('cmWidgetNotify', [
 
                 $scope.handlePushNotifications = function() {
                     var key = 'pushNotifications';
+
+                    if(!$scope.isApp())
+                        return false;
+
                     var newValue = $scope.settings[key] ? false : true;
 
                     if(!newValue){//unregister checked to unchecked

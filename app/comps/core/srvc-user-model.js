@@ -165,7 +165,7 @@ angular.module('cmCore')
                     // TODO: set account data
 
                     // check device for pushing
-                    cmPushNotificationAdapter.checkRegisteredDevice(accountData.pushDevices);
+                    cmPushNotificationAdapter.checkRegisteredDevice();
 
                     return true;
                 }
