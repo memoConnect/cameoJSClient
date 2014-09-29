@@ -21,10 +21,13 @@ angular.module('cmContacts')
     'cmNotify',
     'cmLocalContacts',
     'cmConversationFactory',
+    'cmIdentityFactory',
+    'cmTranslate',
+    'cmUserModel',
 
     function($rootScope, $q,
              cmContactsModel, cmUtil, cmModal,
-             cmNotify, cmLocalContacts, cmConversationFactory){
+             cmNotify, cmLocalContacts, cmConversationFactory, cmIdentityFactory, cmTranslate, cmUserModel){
 
         return {
             restrict:       'AE',
@@ -184,7 +187,9 @@ angular.module('cmContacts')
 
                                         return  cmModal.confirm({
                                                     title:      '',
-                                                    text:       'CONTACT.NOTIFICATION.CONFIRM'
+                                                    text:       'CONTACT.NOTIFICATION.CONFIRM',
+                                                    html:       '<textarea cm-resize-textarea cm-max-rows = "10" ng-model = "data.message"></textarea>',
+                                                    data:       {message: cmTranslate("CONTACT.IMPORT_NOTIFICATION", {from: cmUserModel.data.identity.getDisplayName(), to: identity.getDisplayName() })}
                                                 })
                                     },
                                     function () {
@@ -192,23 +197,24 @@ angular.module('cmContacts')
                                         return $q.reject()
                                     }
                                 )
-                                .then(function(){
+                                .then(function(modal_scope){
 
                                     var conversation =  cmConversationFactory
                                                         .create()
                                                         .addRecipient(identity)
+                                                        .disableEncryption()
 
-                                    return conversation
-                                    .save()
-                                    .then(function(){
-                                        return  conversation
-                                                .messages
-                                                .create({conversation:conversation})
-                                                .setText('$${CONTACT.NOTIFICATION.MESSAGE}')
-                                                .setPublicData(['text'])
-                                                .encrypt()
-                                                .save()
-                                    })
+                                    return  conversation
+                                            .save()
+                                            .then(function(){
+                                                return  conversation
+                                                        .messages
+                                                        .create({conversation:conversation})
+                                                        .setText(modal_scope.data.message)
+                                                        .setPublicData(['text'])
+                                                        .encrypt()
+                                                        .save()
+                                            })
 
                                 })
                                 .finally(function(){

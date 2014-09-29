@@ -127,8 +127,8 @@ angular.module('cmContacts')
 
                         // everything is fine let's add the contact
                         cmContactsModel
-                            .editContact($routeParams.id, identity)
-                            .then(
+                        .editContact($routeParams.id, identity)
+                        .then(
                             function () {
                                 cmNotify.info('CONTACT.INFO.SUCCESS.EDIT',{ttl:5000,displayType:'modal'});
                             },
