@@ -92,7 +92,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     cmCrypt.generateAsyncKeypair(parseInt(size))
                     .then(
                         function(result){
-                            // $scope.i18n.time = cmUtil.millisecondsToStr(result.timeElapsed);
+                            $scope.i18n.time = cmUtil.millisecondsToStr(result.timeElapsed);
 
                             $scope.privKey  = result.key.getPrivateKey();
                             $scope.pubKey   = result.key.getPublicKey();

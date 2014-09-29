@@ -575,6 +575,11 @@
                 "TITLE": "Über uns",
                 "TEXT": "cameoNet 2014"
             },
+
+            "PERFORMANCE": {
+                "TITLE": "Performance"
+            },
+
             "NOTIFY": {
                 "PUSH_NOTIFICATIONS": "Push Notifications"
             }

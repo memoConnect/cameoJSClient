@@ -1,0 +1,10 @@
+<cm-navigation cm-title="En-& decrypt"></cm-navigation>
+<button ng-click="genPassphrase()">gen passphrase</button>
+<button ng-click="startEncrypt()" ng-class="{'is-idle':isIdle}" ng-disabled="isIdle">encrypt</button>
+<button ng-click="startDecrypt()" ng-class="{'is-idle':isIdle}" ng-disabled="isIdle">decrypt</button>
+<div class="alert">
+    passphrase: {{passphrase}}<br />
+    <hr />
+    state: {{state}}<br />
+    history: <pre ng-dblclick="clearHistory()">{{print(history)}}</pre>
+</div>

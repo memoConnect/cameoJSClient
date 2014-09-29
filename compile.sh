@@ -2,7 +2,7 @@
 
 buildMode=test
 buildPhonegap=false
-command=deploy
+command="app:deploy"
 version="no version"
 
 #handle arguments

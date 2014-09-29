@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('cmWidgets').directive('cmWidgetSettingsList', [
-    'cmUserModel',
-    'cmConfig',
-    function(cmUserModel, cmConfig){
+    'cmUserModel', 'cmConfig', 'cmUtil',
+    '$window', '$location',
+    function(cmUserModel, cmConfig, cmUtil,
+             $window, $location){
         return {
             restrict: 'E',
             templateUrl: 'widgets/settings/wdgt-settings-list.html',
@@ -15,7 +16,21 @@ angular.module('cmWidgets').directive('cmWidgetSettingsList', [
                     cmUserModel.doLogout(true,'settings overview logout');
                 };
 
-                $scope.goToSettingsPage = function($event, pageUrl, isDisabled){
+                $scope.goToSettingsPage = function($event, pageUrl, isDisabled, route){
+
+                    if('link' in route){
+                        // file:///android_asset/www/index.html#/login
+                        if(cmUtil.startsWith($location.$$absUrl, 'file:///')) {
+                            $window.location = route.link;
+                        // http://localhost:8000/app/#/settings
+                        } else if($location.$$absUrl.indexOf('/#/') != -1) {
+                            var arr_location = $location.$$absUrl.split('/#/');
+                            location.href = arr_location[0] + '/' + route.link;
+                        }
+
+                        return false;
+                    }
+
                     if(typeof pageUrl !== 'undefined' && isDisabled == undefined){
                         $event.stopPropagation();
                         $event.preventDefault();

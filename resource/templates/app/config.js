@@ -294,3 +294,7 @@ var cameo_config = {
 };
 // settings config to menu subs
 //cameo_config.menu.settings.subs = cameo_config.routeSettings;
+// performance page
+if('<%= performancePage %>' == 'true') {
+    cameo_config.menu['performance'] = {i18n: 'SETTINGS.PAGES.PERFORMANCE.TITLE', icon: 'cm-not-connected', link: 'performance.html'};
+}
