@@ -41,7 +41,7 @@ angular.module('cmContacts')
                     };
 
                     $scope.chooseAvatar = false;
-                    cmContactsModel.getOne($routeParams.id).then(
+                    cmContactsModel.getOne($scope.contactId).then(
                         function (data) {
                             // set data froom api
                             $scope.contact = data;

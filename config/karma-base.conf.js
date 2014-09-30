@@ -16,15 +16,17 @@ module.exports = function(config) {
             // specs
             'test/unit/**/*.spec.js',
 
-            'app/**/*.json'
+            'app/**/*.json',
+            'dist/i18n/language-keys.json'
         ],
 
         ngJson2JsPreprocessor: {
-            stripPrefix: 'app/'
+            stripPrefix: ['app/', 'dist/i18n/']
         },
 
         preprocessors: {
-            'app/**/*.json': ['json2js']
+            'app/**/*.json': ['json2js'],
+            'dist/i18n/language-keys.json': ['json2js']
         },
 
         // list of files to exclude

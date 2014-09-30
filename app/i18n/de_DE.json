@@ -296,12 +296,6 @@
                 "PHONENUMBER": "Bitte wählen Sie eine Telefonnummer aus"
             }
         },
-        "HANDSHAKE_3RD": {
-            "HANDSHAKE_NOW": "Der Kontakt hat den Vertrauens-Prozess angenommen. Wollen Sie den nächsten Schritt nun durchführen?",
-            "TRANSACTION_SECRET": "Ihr Kontakt muss folgenden Code eingeben:",
-            "HANDSHAKE_NEED_TRANSACTID": "Bitte geben Sie hier den Code ein, der Ihrem Gegenüber angezeigt wird:",
-            "HANDSHAKE_OK": "Durchführen"
-        },
         "FOOTER": {
             "SAVE": "Speichern"
         },
@@ -401,7 +395,7 @@
                 "WAIT": {
                     "CANCEL_BUTTON": "Verknüpfung abbrechen",
                     "INSTRUCTIONS": "Drücken Sie auf 'Verknüpfung abbrechen' um den Vorgang zu beenden.",
-                    "NOTE": "Übertragen Sie bitte folgenden Code auf Ihr anderes Gerät:",
+                    "NOTE": "Übertragen Sie bitte obigen Code auf Ihr anderes Gerät.",
                     "LABEL_CODE": "Code"
                 },
                 "SUCCESSFUL": {
@@ -443,7 +437,7 @@
                 "WAIT": {
                     "CANCEL_BUTTON": "Anfrage abbrechen",
                     "INSTRUCTIONS": "Drücken Sie auf 'Anfrage abbrechen' um den Vorgang zu beenden.",
-                    "NOTE": "'{{identity}}' muss folgenden Code auf seinem/ihrem Gerät eingeben, um mit Ihnen eine Vertrauensbasis einzugehen:",
+                    "NOTE": "'{{identity}}' muss obigen Code auf seinem/ihrem Gerät eingeben, um mit Ihnen eine Vertrauensbasis einzugehen.",
                     "LABEL_CODE": "Code"
                 },
                 "SUCCESSFUL": {
@@ -557,19 +551,6 @@
                         "CHECK_PUBKEY": "Überprüfe den öffentlichen Schlüssel!",
                         "CHECK_KEYNAME": "Überprüfe den Schlüsselnamen!"
                     }
-                },
-                "HANDSHAKE": {
-                    "MODAL_HEADER": "Authentifikation",
-                    "HANDSHAKE_DESCRIPTION": "HANDSHAKE_DESCRIPTION",
-                    "HANDSHAKE_NOW": "Wollen Sie dieses Gerät gegen <strong>'{{device}}'</strong> authentifizieren, so dass Sie auf beiden Geräten geschriebene und verschlüsselte Nachrichten dieser Identität lesen können?<br> Sie müssen dazu auf Ihrem Gerät <strong>'{{device}}'</strong> cameoNet mit der selben Identität <strong>'{{identity}}'</strong> öffnen.",
-                    "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
-                    "CHOOSE_OLD_DEVICE": "Bitte wählen Sie das Gerät aus, mit dem Sie die Authentifikation durchführen möchten!",
-                    "CHOOSE": "Bitte wählen",
-                    "TRANSACTION_SECRET": "Geben Sie bitte folgenden Code im Dialog auf Ihrem anderen Gerät ein:",
-                    "HANDSHAKE_START": "Authentifikation starten",
-                    "HANDSHAKE_RECEIVED": "Möchten Sie die Authentifikation durchführen?",
-                    "HANDSHAKE_NEED_TRANSACTID": "Geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
-                    "HANDSHAKE_DONE": "Authentifikation war erfolgreich!<br>"
                 }
             },
             "ABOUT_US": {
@@ -661,22 +642,6 @@
             "HEADER": "Neuverschlüsselung",
             "CONTENT": "Die Talks auf diesem Gerät werden für den neuen cameoKey verschlüsselt.",
             "START": "Start"
-        },
-        "KEY_REQUEST": {
-            "HEADER": "Authentifizierung",
-            "CONTENT": "Sie haben einen neuen cameoKey auf diesem Gerät, der noch nicht authentifiziert wurde. D.h. Sie können ältere Nachrichten dieser Identität nicht entschlüsseln. Dies geschieht zu Ihrer Sicherheit.<br>Möchten Sie die Authentifikation jetzt durchführen?<br> Sie müssen dazu auf einem anderen Geräte cameoNet mit der selben Identität <strong>'{{identity}}'</strong> öffnen."
-        },
-        "KEY_RESPONSE": {
-            "HEADER": "Authentifizierungsanfrage",
-            "CONTENT": "Haben Sie soeben auf einem anderen Gerät einen neuen cameoKey erzeugt und möchten dort den Zugriff auf Ihre verschlüsselten Nachrichten erlauben?"
-        },
-        "KEY_REQUEST_3RD": {
-            "HEADER": "Vertrauens-Prozess",
-            "CONTENT": "Wollen Sie den Vertrauens-Prozess für diesen Kontakt starten?<br>Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen.<br><br>ACHTUNG!! Der Kontakt muss im cameoNet mit der Identität angemeldet sein, bevor Sie den Prozess starten!"
-        },
-        "KEY_RESPONSE_3RD": {
-            "HEADER": "Vertrauens-Prozess",
-            "CONTENT": "Ein Kontakt hat soeben den Vertrauens-Prozess mit Ihnen gestartet. Wollen Sie ihn mit diesem Gerät durchführen?<br><br>Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen."
         },
         "FOOTER": {
             "TALKS": "Talks",
