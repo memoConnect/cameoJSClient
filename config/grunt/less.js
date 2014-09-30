@@ -1,5 +1,6 @@
 module.exports = function(grunt, options){
 
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-less');
 
@@ -13,12 +14,21 @@ module.exports = function(grunt, options){
     ]);
 
     grunt.registerTask('app:create-style-via-less', [
+        'clean:all-generated-css',
         'app:concat-less',
         'app:concat-css'
     ]);
 
     return {
         tasks:{
+            clean: {
+                'all-generated-css': [
+                    'app/css/style.css',
+                    'app/css/app.css',
+                    'app/css/app.less',
+                    'app/style*.css'
+                ]
+            },
             concat: {
                 'options': {
                     separator: '\n'
