@@ -566,7 +566,12 @@ this.readConversation = function (subject, message) {
     self.headerSearchInList(subject)
     self.waitAndClick("cm-conversation-tag")
     self.waitForElement("cm-message")
-    expect($("cm-message").getText()).toContain(message)
+//    ptor.debugger()
+    ptor.wait(function(){
+        return $("cm-message").getText().then(function(text){
+            return text.search(message) != -1
+        })
+    })
 }
 
 

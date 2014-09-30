@@ -171,6 +171,10 @@ describe('Authentication requests -', function () {
             util.createEncryptedConversation(subject3, encryptedMessage3)
         })
 
+        it("should be not able to read conversation from key1", function () {
+            util.readConversation(subject1, "- encrypted -")
+        })
+
         it("delete localstorage", function () {
             util.logout()
             util.clearLocalStorage()
@@ -200,7 +204,6 @@ describe('Authentication requests -', function () {
         it("send cancel event", function () {
             util.broadcastEvent(token, cancelEvent)
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
-
             util.waitAndClick("cm-modal.active [data-qa='cm-modal-close-btn']")
         })
 
@@ -216,6 +219,7 @@ describe('Authentication requests -', function () {
             util.setVal("inp-transactSecret", transactionSecret)
             util.waitAndClick("cm-modal.active [data-qa='btn-acceptRequest']")
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
+            ptor.sleep(5000)
         })
 
         it("get authentication:start event", function () {
@@ -266,7 +270,6 @@ describe('Authentication requests -', function () {
         it("enter transaction secret and submit", function () {
             util.setVal("inp-transactSecret", transactionSecret)
             util.waitAndClickQa('btn-acceptRequest')
-
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
         })
 
@@ -361,6 +364,14 @@ describe('Authentication requests -', function () {
             })
         })
 
+        it("should be not able to read conversation from key1", function () {
+            util.readConversation(subject1 , "- encrypted -")
+        })
+
+        it("should be not able to read conversation from key3", function () {
+            util.readConversation(subject3, "- encrypted -")
+        })
+
         it("delete localstorage", function () {
             util.logout()
             util.clearLocalStorage()
@@ -390,6 +401,7 @@ describe('Authentication requests -', function () {
 
         it("enter transaction secret and submit", function () {
             util.setVal("inp-transactSecret", transactionSecret)
+            ptor.debugger()
             util.waitAndClickQa('btn-acceptRequest')
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
         })
