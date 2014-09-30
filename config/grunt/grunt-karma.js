@@ -1,15 +1,16 @@
-module.exports = function(grunt, options){
+module.exports = function (grunt, options) {
 
     grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('tests-unit', [
         'app:gen-all-templates',
+        'search:language-keys',
         'app:js-files',
         'karma:jenkins'
     ]);
 
     return {
-        tasks:{
+        tasks: {
             karma: {
                 options: {
                     configFile: 'config/karma-base.conf.js'
