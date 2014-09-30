@@ -21,7 +21,7 @@ module.exports = function(config) {
         ],
 
         ngJson2JsPreprocessor: {
-            stripPrefix: ['app/', 'dist/i18n/']
+            stripPrefix: '(app/)|(dist/i18n/)'
         },
 
         preprocessors: {
