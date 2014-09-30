@@ -2,9 +2,11 @@
 
 angular.module('cmCore')
 .service('cmUtil', [
+
+    'cmLogger',
     '$window',
     '$injector',
-    function($window, $injector){
+    function(cmLogger, $window, $injector){
         /**
          * Checks if Key exists in an Object or Array
          * @param object
