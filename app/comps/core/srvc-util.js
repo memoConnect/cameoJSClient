@@ -62,9 +62,13 @@ angular.module('cmCore')
          * @returns {boolean}
          */
         this.validateString = function(val){
-            var reg = /^[a-zA-Z0-9\-_]{1,}$/;
+            var reg     = /^[a-zA-Z0-9\-_]{1,}$/,
+                valid   = reg.test(val)
 
-            return reg.test(val);
+            if(!valid)
+                cmLogger.debug('cmUtil: validateString() failed for: ' + val)
+
+            return valid;
         };
 
         /**
