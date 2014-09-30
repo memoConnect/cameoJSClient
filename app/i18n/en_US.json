@@ -550,7 +550,7 @@
                         "CHECK_PUBKEY": "Check public key",
                         "CHECK_KEYNAME": "Check key name"
                     }
-                },
+                }
             },
             "ABOUT_US": {
                 "TITLE": "About us",
