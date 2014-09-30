@@ -7,7 +7,7 @@ describe('cmCrypt', function () {
 
     beforeEach(module('cmCore'))
     beforeEach(inject(function(_cmCrypt_) {
-        cmCrypt = _cmCrypt_;
+       cmCrypt = _cmCrypt_;
     }))
 
     describe('should provide the function',function(){
@@ -258,6 +258,23 @@ describe('cmCrypt', function () {
             expect(cmCrypt.cancelGeneration()).toBeFalsy()
         })
         
+
+    })
+
+    describe('random string generator', function(){
+
+        it("generate long random string using with big alphabet", function(){
+            expect(cmCrypt.randomString(70, false).length).toBe(70)
+        })
+
+        it("generate long random string using with short alphabet", function(){
+            expect(cmCrypt.randomString(100, true).length).toBe(100)
+            expect(cmCrypt.randomString(100, true)).not.toMatch(/[A-Z]/)
+        })
+
+        it("generate short random string using with short alphabet", function(){
+            expect(cmCrypt.randomString(10, true).length).toBe(10)
+        })
 
     })
 

@@ -131,18 +131,6 @@ angular.module('cmCore')
         };
 
         /**
-         * return a int between the range of min and max
-         * @param min
-         * @param max
-         * @returns {int}
-         */
-        this.getRandomInt = function (min, max) {
-            if(min == undefined || typeof min != 'number')
-                return 0;
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        };
-
-        /**
          *
          * @param current (integer) unix timestamp in ms
          * @param prev (integer) unix timestamp in ms
