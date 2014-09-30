@@ -208,6 +208,10 @@ angular.module('cameoClient', [
     // disabled the 3000 seconds delay on click when touch ;)
     FastClick.attach(document.body);
 })
+.run(function(){
+    // start entropy collection for random number generator
+    sjcl.random.startCollectors();
+})
 /**
  * @TODO cmContactsModel anders initialisieren
  */
@@ -294,7 +298,7 @@ angular.module('cameoClient', [
                 $rootScope.urlHistory.push($location.$$path);
             }
         });
-        
+
         // Make it easy for e2e-tests to monitor route changes:
         window._route = {};
 
