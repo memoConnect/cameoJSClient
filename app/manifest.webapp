@@ -2,12 +2,23 @@
   "name": "cameoNet",
   "description": "Safer Communication",
   "icons": {
-    "512": "/m/gfx/icon_512x512.png",
-    "128": "/m/gfx/icon_128x128.png"
+    "512": "gfx/icon_512x512.png",
+    "128": "gfx/icon_128x128.png"
   },
+  "default_locale": "de",
+  "locales": {
+    "de": {
+      "name": "cameoNet",
+      "description": "Sichere Kommunikation - Made in Germany!"
+    },
+    "en": {
+          "name": "cameoNet",
+          "description": "Safer Communication - Made in Germany!"
+    }
+  },
+  "orientation": [ "portrait-primary" ],
   "developer": {
     "name": "memo Connect GmbH",
     "url": "http://cameonet.de"
-  },
-  "default_locale": "en"
+  }
 }
