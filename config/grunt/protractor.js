@@ -1,4 +1,4 @@
-module.exports = function(grunt, options){
+module.exports = function (grunt, options) {
 
     grunt.loadNpmTasks('grunt-protractor-runner');
 
@@ -6,7 +6,9 @@ module.exports = function(grunt, options){
         'test:generate-keys',
         'app:gen-all-templates',
         'app:js-files',
-        'protractor:default'
+        'protractor:tier1',
+        'protractor:tier2',
+        'protractor:tier3'
     ]);
     grunt.registerTask('tests-2e2', ['tests-e2e']);
     grunt.registerTask('tests-multi', [
@@ -25,7 +27,7 @@ module.exports = function(grunt, options){
     ]);
 
     return {
-        tasks:{
+        tasks: {
             protractor: {
                 options: {
                     configFile: "config/ptor.e2e.conf.js", // Default config file
@@ -36,7 +38,33 @@ module.exports = function(grunt, options){
                     },
                     debug: options.globalCameoTestConfig.config.protractorDebug
                 },
-                default: {
+                "tier1": {
+                    options: {
+                        "args": {
+                            "specs": [
+                                "test/e2e/**/*.1.spec.js"
+                            ]
+                        }
+                    }
+                },
+                "tier2": {
+                    options: {
+
+                        "args": {
+                            "specs": [
+                                "test/e2e/**/*.2.spec.js"
+                            ]
+                        }
+                    }
+                },
+                "tier3": {
+                    options: {
+                        "args": {
+                            "specs": [
+                                "test/e2e/**/*.3.spec.js"
+                            ]
+                        }
+                    }
                 }
             },
             template: {
