@@ -23,7 +23,8 @@ module.exports = function(grunt, options){
         tasks:{
             clean: {
                 'all-generated-css': [
-                    'app/css/style.css',
+                    'dist/css/',
+                    'app/css/style*.css',
                     'app/css/app.css',
                     'app/css/app.less',
                     'app/style*.css'
@@ -40,12 +41,13 @@ module.exports = function(grunt, options){
                         'app/less/theme-a.less',
                         'app/less/!(base|bootstrap|theme-a).less'
                     ],
-                    dest: 'app/css/app.less'
+                    dest: 'dist/css/app.less'
                 },
                 'app-css': {
                     src: [
                         'app/css/bootstrap.min.css',
-                        'app/css/!(bootstrap).css',
+                        'dist/css/app.css',
+                        'app/css/cameofont.css',
                         'app/vendor/**/*.css'
                     ],
                     dest: 'app/style.' + options.globalCameoBuildConfig.config.version + '.css'
@@ -57,7 +59,7 @@ module.exports = function(grunt, options){
                         yuicompress: true
                     },
                     files: {
-                        'app/css/app.css': 'app/css/app.less'
+                        'dist/css/app.css': 'dist/css/app.less'
                     }
                 }
             }
