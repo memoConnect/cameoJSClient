@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmCaptcha',[
-    function (){
+    'cmCrypt', function (cmCrypt){
         return {
             restrict: 'AE',
             scope: true,
@@ -20,7 +20,7 @@ angular.module('cmConversations').directive('cmCaptcha',[
                     captcha = new Captchagen({
                         width: dim[0]
                         ,height: dim[1]
-                        ,text: $scope.conversation.password || ''
+                        ,text: $scope.conversation.password || cmCrypt.generatePassword(6)
                         ,font: $scope.captchaFont
                     });
                     captcha.generate();
