@@ -1,4 +1,3 @@
-var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 
@@ -15,8 +14,6 @@ describe('Conversation encryption -', function () {
      Helper functions
      */
     var checkConversation = function (recipients, negativeAspects, positiveAspects, encryptionType, password) {
-
-        console.log("password: " + password)
 
         var conversationId
         var messages = []
@@ -186,12 +183,7 @@ describe('Conversation encryption -', function () {
                 it("enter password (if required)", function () {
                     if (recipient.hasKey || recipient.storedPassword) {
                         $$("cm-modal.active").then(function (modals) {
-                            if(modals[0]) {
-                                modals[0].getText.then(function (m) {
-                                    console.log("modal", m)
-                                })
-                            }
-//                            expect(modals.length).toBe(0)
+                            expect(modals.length).toBe(0)
                         })
                     } else {
                         if(['password', 'passCaptcha'].indexOf(encryptionType) != -1){
