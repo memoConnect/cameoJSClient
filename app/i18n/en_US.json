@@ -245,7 +245,7 @@
             "SORT": "Sort",
             "FILTER": "Filter",
             "SEARCH_IDENTITY": "Search Cameo indentity",
-            "ADD_EXTERN": "Create new extern contact",
+            "ADD_EXTERN": "Create new external contact",
             "SEND_REQUEST": "Send",
             "IMPORT_LOCAL": "Load local contact"
         },
