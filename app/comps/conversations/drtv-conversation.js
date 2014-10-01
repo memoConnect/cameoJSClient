@@ -114,13 +114,13 @@ angular.module('cmConversations')
                                     sendMessage();
                                 }
                             },
-                            error: function(error, header) {
+                            error: function(maxFileSize, header) {
                                 $scope.isSending = false;
                                 $scope.isSendingAbort = true;
                                 cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
                                     ttl: 0,
                                     i18n: {
-                                        maxFileSize: error,
+                                        maxFileSize: maxFileSize,
                                         fileSize: header['X-File-Size'],
                                         fileName: header['X-File-Name']
                                     }

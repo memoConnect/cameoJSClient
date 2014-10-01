@@ -5,7 +5,9 @@ var phonegap_cameo_config = {
 };
 
 function deviceReady(){
+    console.log('deviceReady:deviceready???')
     document.addEventListener('deviceready', function () {
+        console.log('deviceReady:deviceready!!!')
         phonegap_cameo_config.deviceReady = true;
     });
 }

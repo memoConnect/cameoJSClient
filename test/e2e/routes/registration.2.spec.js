@@ -85,7 +85,7 @@ describe('Registration: ', function () {
     })
 
     it('should link to term of use', function() {
-        $("body").sendKeys(protractor.Key.END)
+        util.scrollToBottom()
 
         util.waitForElement("[data-qa='link-terms']")
         $("[data-qa='link-terms']").click()

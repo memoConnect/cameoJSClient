@@ -20,7 +20,8 @@ angular.module('cmPhonegap')
                 this.deviceToken = '';
             },
 
-            register: function(plugin){
+            registerAtService: function(plugin){
+                cmLogger.info('cmPushNotifications.registerAtService')
 
                 this.plugin = plugin;
                 this.reset();
@@ -29,10 +30,10 @@ angular.module('cmPhonegap')
                 if (cmDevice.isAndroid()) {
                     this.plugin.register(
                         function() {
-                            self.handler.success(arguments);
+                            self.handler.success('registerAtService.isAndroid',arguments);
                         },
                         function() {
-                            self.handler.error(arguments);
+                            self.handler.error('registerAtService.isAndroid',arguments);
                         },
                         {
                             senderID: $phonegapCameoConfig.googleSenderId,
@@ -40,12 +41,16 @@ angular.module('cmPhonegap')
                         }
                     );
                 } else if(cmDevice.isiOS()){
+
+                    this.unregisterAtService();
+
                     this.plugin.register(
                         function(result){
+                            self.handler.success('registerAtService.isiOS',arguments);
                             self.handler.token(result);
                         },
                         function(){
-                            self.handler.error(arguments);
+                            self.handler.error('registerAtService.isiOS',arguments);
                         },
                         {
                             badge: true,
@@ -60,7 +65,7 @@ angular.module('cmPhonegap')
                             self.handler.channel(result);
                         },
                         function() {
-                            self.handler.error(arguments);
+                            self.handler.error('registerAtService.isWinPhone8',arguments);
                         },
                         {
                             channelName: this.channelName,
@@ -72,13 +77,13 @@ angular.module('cmPhonegap')
                 }
             },
 
-            unregister: function(){
+            unregisterAtService: function(){
                 this.plugin.unregister(
                     function(){
-                        self.handler.success(arguments)
+                        self.handler.success('unregisterAtService',arguments)
                     },
                     function(){
-                        self.handler.error(arguments)
+                        self.handler.error('unregisterAtService',arguments)
                     },
                     {
                         channelName: this.channelName
@@ -87,8 +92,7 @@ angular.module('cmPhonegap')
             },
 
             setDeviceToken: function(token){
-//                console.log('##setDeviceToken#################');
-//                console.log(token);
+                cmLogger.info('cmPushNotifications.setDeviceToken: '+token)
                 this.deviceToken = token;
 
                 this.initPromise();
@@ -106,11 +110,9 @@ angular.module('cmPhonegap')
 
             handler: {
                 success: function(result){
-                    //console.log('##succesHandler#################');
-                    //console.log(cmUtil.prettify(result));
+                    cmLogger.info('cmPushNotifications.handler.success: '+cmUtil.prettify(result))
                 },
                 token: function(token){
-//                    console.log('##tokenHandler#################');
                     self.setDeviceToken(token);
                 },
                 channel: function(result){
@@ -118,9 +120,7 @@ angular.module('cmPhonegap')
                     //console.log(cmUtil.prettify(result));
                 },
                 error: function(result) {
-                    // result contains any error description text returned from the plugin call
-                    console.log('##errorHandler#################');
-                    console.log(cmUtil.prettify(result));
+                    cmLogger.error('cmPushNotifications.handler.error: '+cmUtil.prettify(result))
                 }
             },
 
@@ -135,66 +135,33 @@ angular.module('cmPhonegap')
                             }
                             break;
                         case 'message':
-                            //console.log('##on pn#####################');
-                            //console.log(cmUtil.prettify(event))
                             if(!event.foreground){
-                                var context = event.payload.context.split(':');
-                                switch(context[0]){
-                                    case 'message':
-                                        $rootScope.goTo('conversation/'+context[1], true);
-                                    break;
-                                    case 'friendRequest':
-                                        $rootScope.goTo('contact/request/list', true);
-                                    break;
-                                }
-                                //$rootScope.goTo('talks', true);
+                                self.onContext(event.payload.context);
                             } else {
-                                console.log('cmBimmel!!!',event.payload.context)
+                                //console.log('cmBimmel!!!',event.payload.context)
                             }
                             break;
 
                         case 'error':
-                            console.log('##on pn error#####################');
-                            console.log(cmUtil.prettify(event));
-                            break;
+                            self.handler.error('onNotification.Android.error',event);
+                        break;
                         default:
-                            console.log('##on pn default###################');
-                            console.log(cmUtil.prettify(event));
-                            break;
+                            self.handler.error('onNotification.Android.default',event);
+                        break;
                     }
                 },
                 iOS: function (event) {
-                    //console.log('##on pn#####################');
-                    //console.log(cmUtil.prettify(event))
-
-//                    if ( event.alert ){
-//                        navigator.notification.alert(event.alert);
-//                    }
-
-//                    if ( event.sound ){
-//                        var snd = new Media(event.sound);
-//                        snd.play();
-//                    }
-
                     if('sound' in event && event.sound != '') {
-                        var context = event.sound.split(':');
-                        switch (context[0]) {
-                            case 'message':
-                                $rootScope.goTo('conversation/' + context[1], true);
-                            break;
-                            case 'friendRequest':
-                                $rootScope.goTo('contact/request/list', true);
-                            break;
-                        }
+                        self.onContext(event.sound);
                     }
 
                     if (event.badge) {
                         self.plugin.setApplicationIconBadgeNumber(
                             function(result) {
-                                self.handler.success(arguments);
+                                self.handler.success('onNotification.iOS.setApplicationIconBadgeNumber',arguments);
                             },
                             function() {
-                                self.handler.error(arguments);
+                                self.handler.error('onNotification.iOS.error',arguments);
                             },
                             event.badge
                         );
@@ -204,10 +171,10 @@ angular.module('cmPhonegap')
                     if (event.type == "toast" && event.jsonContent) {
                         self.plugin.showToastNotification(
                             function(){
-                                self.handler.success(arguments);
+                                self.handler.success('onNotification.WP8.showToastNotification',arguments);
                             },
                             function(){
-                                self.handler.error(arguments);
+                                self.handler.error('onNotification.WP8.error',arguments);
                             },
                             {
                                 Title: event.jsonContent["wp:Text1"],
@@ -217,8 +184,21 @@ angular.module('cmPhonegap')
                     }
 
                     if (event.type == "raw" && event.jsonContent) {
-                        alert(event.jsonContent.Body);
+                        self.onContext(event.jsonContent.Body);
                     }
+                }
+            },
+
+            onContext: function(data){
+                cmLogger.error('cmPushNotifications.onContext: '+data);
+                var context = data.split(':');
+                switch(context[0]){
+                    case 'message':
+                        $rootScope.goTo('conversation/'+context[1], true);
+                    break;
+                    case 'friendRequest':
+                        $rootScope.goTo('contact/request/list', true);
+                    break;
                 }
             }
         };

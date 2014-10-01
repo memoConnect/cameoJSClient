@@ -58,7 +58,7 @@ this.login = function (username, password, expectedRoute) {
     self.logout()
     self.get('/login')
 
-    $("body").sendKeys(protractor.Key.HOME)
+    this.scrollToTop()
     $("[data-qa='login-btn']").click();
 
     var user = $("input[name=user]");
@@ -99,7 +99,7 @@ this.createTestUser = function (testUserId) {
 
     $("[data-qa='input-displayName']").sendKeys(loginName)
 
-    $("[data-qa='link-terms']").sendKeys(protractor.Key.END)
+    this.scrollToBottom()
     $("[data-qa='icon-checkbox-agb']").click()
 
     $("[data-qa='btn-createUser']").click()
@@ -574,6 +574,13 @@ this.readConversation = function (subject, message) {
     })
 }
 
+this.scrollToTop = function(){
+    $("body").sendKeys(protractor.Key.HOME)
+}
+
+this.scrollToBottom = function(){
+    $("body").sendKeys(protractor.Key.END)
+}
 
 
 

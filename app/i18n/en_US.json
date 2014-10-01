@@ -1,5 +1,4 @@
 {
-
     "YES":  "Yes",
     "NO":   "No",
 
@@ -269,7 +268,7 @@
             "CAMEOID": "CameoID",
             "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
             "PHONENUMBER": "Phonenumber",
-            "EMAIL": "EMail",
+            "EMAIL": "Email",
             "STREET": "Street",
             "STREETNR": "Nr",
             "ZIP": "Zip",
@@ -466,6 +465,7 @@
             }
         }
     },
+
     "SETTINGS": {
         "WELCOME": "Settings",
         "LABEL": "Settings",
@@ -564,6 +564,34 @@
             }
         }
     },
+
+    "ACCOUNT": {
+        "PLACEHOLDER": {
+            "LOGINNAME": "Login name",
+            "PHONENUMBER": "Phonenumber",
+            "EMAIL": "Email",
+            "PASSWORD_CHANGE": "Password change",
+            "OLD_PASSWORD": "Old password"
+        },
+        "INFO": {
+            "EMPTY": {
+                "LOGINAME": "The login name is empty.",
+                "OLD_PASSWORD": "Please enter a password."
+            },
+            "INVALID": {
+                "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
+                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+                "OLD_PASSWORD": "Your password is invalid."
+            },
+            "NOTE_ABOUT_THIS_DATA": "Your account data can be edited here. This data is not public. Email and/or phonenumber are used for notifications and password reset.",
+            "LOGINAME": "The login name cannot be changed."
+        },
+        "FOOTER": {
+            "BACK": "Done",
+            "SAVE": "Save"
+        }
+    },
+
     "NAVIGATION": {
         "TABS": {
             "BACK": "Back",
@@ -575,6 +603,7 @@
             "TALKS": "Talks"
         }
     },
+
     "DRTV": {
         "PASSWORD": {
             "PASSWORD": "Password",
@@ -657,19 +686,16 @@
             "FILE": "Choose an existing file"
         }
     },
+
     "MENU": {
-        "HEADER": "Menu",
-        "NOTIFICATIONS": "@:NOTIFICATIONS.HEADER",
-        "CONTACTS": "Contacts",
+        "NEW_CONTACT": "New contact",
+        "NEW_TALK": "New talk",
         "REQUESTS": "Contact requests",
-        "TALKS": "Talks",
-        "KEYMANAGEMENT": "@:IDENTITY.LABEL.KEYMANAGEMENT",
+        "OWN_KEYS": "Own keys",
         "SETTINGS": "@:SETTINGS.LABEL",
-        "MESSAGES": "Messages",
-        "HINTS": "Hints",
-        "ACTIVITY": "Activity",
         "LOGOUT": "Logout"
     },
+
     "NOTIFICATIONS": {
         "HEADER": "Notifications",
         "MODAL_HEADER": {
@@ -688,6 +714,7 @@
             "FRIEND_REQUEST": "New contact request"
         }
     },
+
     "MODAL": {
         "ALERT": {
             "OK": "OK"
@@ -709,10 +736,12 @@
             "FOOTER": "Reconnect"
         }
     },
+
     "JOB": {
         "IN_PROGRESS": "You have edited this site without saving. Do you really want to leave this page?",
         "FILES_IN_UPLOAD_PROGRESS": "Files are being uploaded. Do you really want to leave this page?"
     },
+
     "SECURITY_ASPECT": {
         "CONVERSATION": {
             "ENCRYPTED": {
@@ -747,6 +776,7 @@
             "MISSING_DATA": "Security aspects missing"
         }
     },
+
     "SYSTEM": {
         "WELCOME": {
             "MESSAGE": "Hello, I am the cameoNet support. \n\nIf you have any questions or problems do not hesitate to reply on this message. You can also use our help system at http://support.cameonet.de,\n\nthe cameoNet team.",
