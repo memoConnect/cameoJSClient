@@ -16,6 +16,8 @@ describe('Conversation encryption -', function () {
      */
     var checkConversation = function (recipients, negativeAspects, positiveAspects, encryptionType, password) {
 
+        console.log("password: " + password)
+
         var conversationId
         var messages = []
         var sender = recipients[0]
@@ -184,7 +186,12 @@ describe('Conversation encryption -', function () {
                 it("enter password (if required)", function () {
                     if (recipient.hasKey || recipient.storedPassword) {
                         $$("cm-modal.active").then(function (modals) {
-                            expect(modals.length).toBe(0)
+                            if(modals[0]) {
+                                modals[0].getText.then(function (m) {
+                                    console.log("modal", m)
+                                })
+                            }
+//                            expect(modals.length).toBe(0)
                         })
                     } else {
                         if(['password', 'passCaptcha'].indexOf(encryptionType) != -1){
