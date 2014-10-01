@@ -33,27 +33,30 @@ angular.module('cmCore')
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
 
-        var dataModel = {
-            isActive: false,
-            id: '',
-            userKey: '',
-            displayName: '',
-            cameoId: 'loading...',
-            email: {},
-            phoneNumber: {},
-            preferredMessageType: 'default',
-            created: '',
-            lastUpdated: '',
-            userType: '',
-            storage: {},
-            identity: {},
-            identities: [],
-            account: {}
-        };
-
         cmObject.addEventHandlingTo(this);
 
-        this.data = angular.extend({}, dataModel);
+        this.reset = function(){
+            this.data = {
+                isActive: false,
+                id: '',
+                userKey: '',
+                displayName: '',
+                cameoId: 'loading...',
+                email: {},
+                phoneNumber: {},
+                preferredMessageType: 'default',
+                created: '',
+                lastUpdated: '',
+                userType: '',
+                storage: {},
+                identity: {},
+                identities: [],
+                account: {}
+            };
+        }
+
+        this.reset();
+
         this.state = new cmStateManagement(['signing']);
 
         this.comesFromRegistration = false;
@@ -805,8 +808,7 @@ angular.module('cmCore')
          * clear identity storage
          */
         this.resetUser = function(){
-            this.data.identities = [];
-            this.data = angular.extend({}, dataModel);
+            this.reset();
         };
 
         init();
