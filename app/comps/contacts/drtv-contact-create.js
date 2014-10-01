@@ -92,8 +92,6 @@ angular.module('cmContacts')
                             return false;
                         }
 
-                        return false;
-
                         // everything is fine let's add the contact
                         cmContactsModel
                         .addContact({
