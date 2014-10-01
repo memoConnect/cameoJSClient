@@ -3,13 +3,33 @@ module.exports = function (grunt, options) {
     grunt.loadNpmTasks('grunt-protractor-runner');
 
     grunt.registerTask('tests-e2e', [
-        'test:generate-keys',
-        'app:gen-all-templates',
-        'app:js-files',
+        'tests-e2e:prepare',
         'protractor:tier1',
         'protractor:tier2',
         'protractor:tier3'
     ]);
+    grunt.registerTask('tests-e2e:tier1', [
+        'tests-e2e:prepare',
+        'protractor:tier1',
+    ]);
+    grunt.registerTask('tests-e2e:tier2', [
+        'tests-e2e:prepare',
+        'protractor:tier2',
+    ]);
+    grunt.registerTask('tests-e2e:tier3', [
+        'tests-e2e:prepare',
+        'protractor:tier3'
+    ]);
+    grunt.registerTask('tests-e2e:all', [
+        'tests-e2e:prepare',
+        'protractor:all',
+    ]);
+    grunt.registerTask('tests-e2e:prepare', [
+        'test:generate-keys',
+        'app:gen-all-templates',
+        'app:js-files'
+    ]);
+
     grunt.registerTask('tests-2e2', ['tests-e2e']);
     grunt.registerTask('tests-multi', [
         // we only need to generate templates for tests
@@ -37,6 +57,15 @@ module.exports = function (grunt, options) {
                         // Arguments passed to the command
                     },
                     debug: options.globalCameoTestConfig.config.protractorDebug
+                },
+                "all": {
+                    options: {
+                        "args": {
+                            "specs": [
+                                "test/e2e/**/*.spec.js"
+                            ]
+                        }
+                    }
                 },
                 "tier1": {
                     options: {
