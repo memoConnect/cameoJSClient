@@ -313,11 +313,12 @@ this.waitForModalClose = function () {
     return this
 }
 
-this.waitForLoader = function (count) {
-    count = count || 1
+this.waitForLoader = function (count, parentSelector) {
+    count = count || 1,
+    parentSelector = parentSelector+' ' || '' // that used for more then one loader on page
     // wait for loader appear
     ptor.wait(function() {
-        return  $("cm-loader").getAttribute('cm-count')
+        return  $(parentSelector+'cm-loader').getAttribute('cm-count')
                 .then(function(value){
                     return value >= count
                 })
@@ -325,7 +326,7 @@ this.waitForLoader = function (count) {
     .then(function () {
         // wait for loader disappear
         ptor.wait(function () {
-            return $("cm-loader").isDisplayed()
+            return $(parentSelector+'cm-loader').isDisplayed()
             .then(function (isDisplayed) {
                 return !isDisplayed
             })
