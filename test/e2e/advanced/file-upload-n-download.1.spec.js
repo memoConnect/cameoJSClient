@@ -156,7 +156,7 @@ describe('FileDownload: ',function(){
     })
 
     it('see all files ready for download', function(){
-        util.waitForElements('cm-message cm-message-file .file-download')
+        util.waitForElements('cm-message cm-message-file .file-download',testFilesNum)
         $$('cm-message cm-message-file .file-download').then(function(elements){
             expect(elements.length).toEqual(testFilesNum)
         })
