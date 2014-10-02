@@ -69,7 +69,9 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     }, 100)
                     .then(function(){
                         //wait for response:
-                        return cmAuthenticationRequest.when('started', 'canceled', cmAuthenticationRequest.getTTL())      
+                        return  cmAuthenticationRequest.getTTL()
+                             ?  cmAuthenticationRequest.when('started', 'canceled', cmAuthenticationRequest.getTTL())      
+                             :  $q.reject()
                     })
                     .then(
                         function(result){
@@ -78,9 +80,9 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                             return cmAuthenticationRequest.when('verification:successful', 'verification:failed', 7000)  
                         },
                         function(result){
-                            return  result.event && result.event.name == 'canceled'
-                                    ?   $q.reject()
-                                    :   $q.reject('TIMEOUT')
+                            return  result == 'timeout'
+                                    ?   $q.reject('TIMEOUT')
+                                    :   $q.reject()
                         }
                     )
                     .then(
