@@ -516,6 +516,11 @@ this.click = function (dataQa) {
     $("[data-qa='" + dataQa + "']").click()
 }
 
+
+this.waitForQa = function(dataQa){
+    self.waitForElement("[data-qa='" + dataQa + "']")
+}
+
 this.waitAndClickQa = function (dataQa) {
     self.waitForElement("[data-qa='" + dataQa + "']")
     $("[data-qa='" + dataQa + "']").click()

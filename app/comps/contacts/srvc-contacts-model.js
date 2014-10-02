@@ -93,7 +93,7 @@ angular.module('cmContacts').service('cmContactsModel',[
          */
 
         function _add(contact){
-            self.contacts.create(contact)
+            return self.contacts.create(contact)
             /*
             var check = false,
                 i = 0;
@@ -242,9 +242,9 @@ angular.module('cmContacts').service('cmContactsModel',[
                     .addContact(data)
                     .then(function(data){
                             self.trigger('add-contact', data)
-                            _add(data);
+                            var contact = _add(data);
                             self.trigger('after-add-contact', data)
-                            return data
+                            return contact
                     })
         };
 
