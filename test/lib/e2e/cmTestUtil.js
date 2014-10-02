@@ -536,6 +536,11 @@ this.setVal = function (dataQa, text) {
     $("[data-qa='" + dataQa + "']").sendKeys(text)
 }
 
+
+this.blurQa = function (dataQa) {
+    $("[data-qa='" + dataQa + "']").sendKeys(protractor.Key.TAB)
+}
+
 this.getVal = function (dataQa) {
     return $("[data-qa='" + dataQa + "']").getAttribute('value')
 }
