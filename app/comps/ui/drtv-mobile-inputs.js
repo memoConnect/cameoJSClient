@@ -64,15 +64,19 @@
 
 angular.module('cmUi').directive('input',[
      '$rootScope',
-     function ($rootScope) {
+     '$timeout',
+     function ($rootScope, $timeout) {
 
          return {
              restrict: 'EA',
              link: function (scope, element, attrs) {
 
                  element.on('focus', function(){
-                     $rootScope.$broadcast('pristine:false');
-                     scope.$apply();
+                    $rootScope.$broadcast('pristine:false');
+                    //Todo: solve differenntly:
+                    $timeout(function(){
+                        scope.$apply();
+                    }, 100)
                  });
 
 //                 // only for mobile devices or enabled inputs

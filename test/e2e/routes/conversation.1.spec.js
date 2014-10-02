@@ -76,17 +76,19 @@ describe('Route conversation:', function () {
 
         expect()
         */
-        util.waitForQa('btn-submit-on-the-fly-contact')
+        util.waitForQa('input-on-the-fly-mixed')
         util.clearInput('input-on-the-fly-mixed')
         util.setVal('input-on-the-fly-mixed', 'test@mail.com')
        
-
+        ptor.sleep(1000)
         util.waitAndClickQa('btn-submit-on-the-fly-contact')
 
-        //ptor.debugger()
+        ptor.sleep(1000)
+
+
         ptor.wait(function(){
             return $$('cm-recipient-tag .displayName').then(function(elements){
-                return elements[1].getText().then(function(value){
+                return elements[1] && elements[1].getText().then(function(value){
                     return value == "On-the-fly Contact" 
                 }) 
             })

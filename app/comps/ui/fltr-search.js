@@ -18,7 +18,10 @@ angular.module('cmUi').filter('cmSearch', [
              */
             var isMatch = function(text){
                 if(text == undefined) return false;
-                return (''+text).toLowerCase().indexOf((''+searchString).toLowerCase()) > -1;
+                var haystack    = String(text).toLowerCase(),
+                    needle      = String(searchString).toLowerCase().replace(/^0|\+\d\d/g, '') //ignore leading zeros for phonenumbers
+
+                return haystack.indexOf(needle) > -1;
             };
 
             /**
@@ -51,7 +54,7 @@ angular.module('cmUi').filter('cmSearch', [
                         if('contactType' in item && isMatch(item.contactType) ||
                             'identity' in item && isMatch(item.identity.getDisplayName()) ||
                             'identity' in item && isMatch(item.identity.email.value) ||
-                            'identity' in item && isMatch(item.identity.phoneNumber.value)
+                            'identity' in item && isMatch(item.identity.phoneNumber.value && item.identity.phoneNumber.value.replace(/^0|\+\d\d/g, ''))
                             )
                             boolean = true;
                         break;
