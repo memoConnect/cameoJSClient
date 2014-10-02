@@ -64,13 +64,45 @@ describe('Route conversation:', function () {
         $("[data-qa='btn-select-contact']").click()
     })
 
+    it('should add an external contact on the fly', function(){
+        util.waitForQa('input-on-the-fly-displayname')
+        util.setVal('input-on-the-fly-displayname', 'On-the-fly Contact')
+
+        /*
+        util.waitForQa('input-on-the-fly-mixed')
+        util.setVal('input-on-the-fly-mixed', 'bababa @ 123')
+
+        util.waitAndClick('btn-submit-on-the-fly-contact')
+
+        expect()
+        */
+        util.waitForQa('input-on-the-fly-mixed')
+        util.clearInput('input-on-the-fly-mixed')
+        util.setVal('input-on-the-fly-mixed', 'test@mail.com')
+       
+        ptor.sleep(1000)
+        util.waitAndClickQa('btn-submit-on-the-fly-contact')
+
+        ptor.sleep(1000)
+
+
+        ptor.wait(function(){
+            return $$('cm-recipient-tag .displayName').then(function(elements){
+                return elements[1] && elements[1].getText().then(function(value){
+                    return value == "On-the-fly Contact" 
+                }) 
+            })
+        })
+
+    })
+
     it('go back to conversation on click on "done"', function () {
         $("[data-qa='btn-done']").click()
         util.waitForPageLoad("/conversation/new")
     })
 
     it('added recipient should be displayed', function () {
-        expect($(".recipients-counter").getText()).toBe('(1)')
+        expect($(".recipients-counter").getText()).toBe('(2)')      //one internal contact an one external on-the-fly contact
         expect($(".recipient-name").getText()).toBe(config.contactUser1DisplayName)
     })
 
