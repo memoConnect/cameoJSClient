@@ -80,10 +80,7 @@ describe('Route conversation:', function () {
         util.clearInput('input-on-the-fly-mixed')
         util.setVal('input-on-the-fly-mixed', 'test@mail.com')
        
-        ptor.sleep(1000)
         util.waitAndClickQa('btn-submit-on-the-fly-contact')
-
-        ptor.sleep(1000)
 
 
         ptor.wait(function(){
