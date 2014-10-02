@@ -1,7 +1,11 @@
-<div>
-    <cm-progressbar cm-percent="progress" ng-if="file.state != 'cached'"></cm-progressbar>
+<div class="file-download" ng-if="file.state.is('readyForDownload')" ng-click="file.startDownloadChunks()">
+    <div class="file {{file.detectedExtension}}"></div>
+    <span class="file-informations">{{file.encryptedName}}<br />{{cmUtil.bytesToStr(file.size)}} <i class="fa cm-save"></i></span>
+</div>
+<div ng-if="!file.state.is('readyForDownload')">
+    <cm-progressbar cm-percent="progress" ng-if="!file.state.is('cached')"></cm-progressbar>
 
-    <div ng-if="file.state == 'cached'">
+    <div ng-if="file.state.is('cached')">
         <div class="file-image" ng-if="file.isEmbed('image')">
             <cm-loader cm-color="ci-color" class="full-inline" ng-show="!file.loaded"></cm-loader>
             <img cm-blob-image="file" ng-click="showFullscreen()" />

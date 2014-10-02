@@ -2,6 +2,18 @@ cm-message{
   &.file-view{
     article{
       color:@cm-white;
+
+      .file-download {
+        font-size:@cm-small-font;
+        > * {
+          vertical-align:top;
+        }
+        span.file-informations{
+          display:inline-block;
+          width:10rem;
+        }
+      }
+
       .author span{
         color:@cm-light-grey;
       }

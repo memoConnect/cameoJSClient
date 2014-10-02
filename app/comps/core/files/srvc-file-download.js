@@ -44,13 +44,10 @@ angular.module('cmCore')
          * @param index
          */
         this.run = function(file){
-            if(typeof file == 'object' && file.state == 'exists'){
+            if(typeof file == 'object' && file.state.is('onlyFileId')){
                 file.downloadChunks();
 
-                file.on('file:cached', function(){
-                    self.run(self.stack.shift());
-                });
-                file.on('file:crashed', function(){
+                file.on('file:readyForDownload file:crashed file:cached', function(){
                     self.run(self.stack.shift());
                 });
             } else {
