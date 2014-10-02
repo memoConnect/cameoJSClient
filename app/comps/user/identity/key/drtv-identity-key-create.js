@@ -35,8 +35,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     startTime   = undefined,
                     elapsedTime = 0;
 
-                console.log(detect)
-
                 $scope.active = 'choose'; // choose, active, store
                 //$scope.keySizes = cmCrypt.getKeySizes();
                 $scope.keySize = 2048;
