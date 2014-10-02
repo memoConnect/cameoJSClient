@@ -8,14 +8,14 @@
 
 <form name="cmForm" novalidate autocomplete="off">
 
-    <article class="content">
+    <article class="content" ng-click="toggleReadOnly()">
         <label>{{'ACCOUNT.PLACEHOLDER.LOGINNAME'|cmTranslate}}</label>
-        <div class="cm-input-ctn cm-icon-grey">
+        <div class="cm-input-ctn cm-input-readonly">
             <input
                     tabindex="1" data-qa="input-loginName" disabled
                     type="text" name="loginName" ng-model="account.loginName" />
         </div>
-        <cm-info-bubble class="cm-alert">
+        <cm-info-bubble class="cm-alert" ng-show="showReadOnly">
             <i class="fa cm-info cm-ci-color"></i> {{'ACCOUNT.INFO.LOGINAME'|cmTranslate}}
         </cm-info-bubble>
     </article>
@@ -58,43 +58,44 @@
         </ng-form>
     </cm-multi-input>
 
-    <hr class="margin-small" />
-
-    <button class="cm-btn" ng-click="passwordChange()" data-qa="btn-passwordChange">
-        {{'ACCOUNT.PLACEHOLDER.PASSWORD_CHANGE'|cmTranslate}}
-        <i class="fa" ng-class="{'cm-down':!showPasswordChange,'cm-up':showPasswordChange}"></i>
-    </button>
-
-    <section ng-show="showPasswordChange">
-
-        <hr class="margin-small" />
-
-        <article class="content">
-            <label>{{'ACCOUNT.PLACEHOLDER.OLD_PASSWORD'|cmTranslate}}</label>
-            <div class="cm-input-ctn">
-                <input
-                        tabindex="4" data-qa="input-oldPassword"
-                        type="password" name="oldPassword" ng-model="account.oldPassword" />
+    <ul class="border-top border-bottom">
+        <li class="no-border">
+            <span class="item" ng-click="togglePasswordChange()" data-qa="btn-passwordChange" >
+            {{'ACCOUNT.PLACEHOLDER.PASSWORD_CHANGE'|cmTranslate}}
+            </span>
+            <div class="short-links" ng-click="togglePasswordChange()">
+                <i class="fa" ng-class="{'cm-down':!showPasswordChange,'cm-up':showPasswordChange}"></i>
             </div>
-            <cm-info-bubble class="cm-alert"
-                            ng-show="cmForm.oldPassword.$error.empty || cmForm.oldPassword.$error.invalid">
-                <div ng-show="cmForm.oldPassword.$error.empty" data-qa="form-error-oldPassword-empty">
-                    <i class="fa cm-info"></i> {{'ACCOUNT.INFO.INVALID.OLD_PASSWORD'|cmTranslate}}
-                </div>
-                <div ng-show="cmForm.oldPassword.$error.invalid" data-qa="form-error-oldPassword-invalid">
-                    <i class="fa cm-info"></i> {{'ACCOUNT.INFO.INVALID.OLD_PASSWORD'|cmTranslate}}
-                </div>
-            </cm-info-bubble>
-        </article>
+            <section ng-show="showPasswordChange">
+                <hr class="margin-small" />
 
-        <hr class="margin-small" />
+                <article class="content">
+                    <label>{{'ACCOUNT.PLACEHOLDER.OLD_PASSWORD'|cmTranslate}}</label>
+                    <div class="cm-input-ctn">
+                        <input
+                                tabindex="4" data-qa="input-oldPassword"
+                                type="password" name="oldPassword" ng-model="account.oldPassword" />
+                    </div>
+                    <cm-info-bubble class="cm-alert"
+                                    ng-show="cmForm.oldPassword.$error.empty || cmForm.oldPassword.$error.invalid">
+                        <div ng-show="cmForm.oldPassword.$error.empty" data-qa="form-error-oldPassword-empty">
+                            <i class="fa cm-info"></i> {{'ACCOUNT.INFO.INVALID.OLD_PASSWORD'|cmTranslate}}
+                        </div>
+                        <div ng-show="cmForm.oldPassword.$error.invalid" data-qa="form-error-oldPassword-invalid">
+                            <i class="fa cm-info"></i> {{'ACCOUNT.INFO.INVALID.OLD_PASSWORD'|cmTranslate}}
+                        </div>
+                    </cm-info-bubble>
+                </article>
 
-        <article class="content">
-            <cm-password ng-model="account.password" cm-with-stars="false" cm-tabindex="5"></cm-password>
-        </article>
+                <hr class="margin-small" />
 
-    </section>
-    <hr class="margin-small" />
+                <article class="content">
+                    <cm-password ng-model="account.password" cm-with-stars="false" cm-tabindex="5"></cm-password>
+                </article>
+            </section>
+        </li>
+    </ul>
+
 </form>
 
 <cm-footer cm-always-on-top>

@@ -13,9 +13,7 @@ angular.module('cmUi').directive('cmMenu',[
 
                 $scope.Object = Object;
                 $scope.menu = cmConfig.menu;
-
                 $scope.version = cmConfig.version;
-
                 $scope.menuVisible = false;
 
                 $scope.handleMenu = function(){
@@ -25,12 +23,15 @@ angular.module('cmUi').directive('cmMenu',[
                         cmNotify.trigger('bell:unring');
                 };
 
-                $scope.toggleSubs = function(parent){
-                    parent.subsVisible = parent.subsVisible ? false : true;
+                $scope.checkActive = function(url){
+                    if('/' + url == $location.$$url){
+                        return true;
+                    }
+                    return false;
                 };
 
                 $scope.goTo = function(parentBtn, url, isSub){
-
+                    // for extern and performance
                     if('link' in parentBtn){
                         // file:///android_asset/www/index.html#/login
                         if(cmUtil.startsWith($location.$$absUrl, 'file:///')) {
@@ -51,12 +52,6 @@ angular.module('cmUi').directive('cmMenu',[
                         $scope.handleMenu();
                         return false;
                     }
-
-                    if(parentBtn.onlyLabel && isSub == undefined)
-                        return false;
-
-                    if(isSub != undefined)
-                        $scope.toggleSubs(parentBtn)
 
                     if(typeof url !== 'undefined'){
                         $scope.goto('/'+url);
